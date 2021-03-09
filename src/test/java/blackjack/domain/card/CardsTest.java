@@ -18,10 +18,10 @@ public class CardsTest {
     @Test
     void setUp() {
         cards = new Cards();
-        king = new Card(Suit.CLUB, CardNumber.KING);
-        queen = new Card(Suit.CLUB, CardNumber.QUEEN);
-        ace = new Card(Suit.CLUB, CardNumber.ACE);
-        two = new Card(Suit.CLUB, CardNumber.TWO);
+        king = new Card(Suit.CLUB, Denomination.KING);
+        queen = new Card(Suit.CLUB, Denomination.QUEEN);
+        ace = new Card(Suit.CLUB, Denomination.ACE);
+        two = new Card(Suit.CLUB, Denomination.TWO);
     }
 
     @DisplayName("가진 패의 점수를 계산할 수 있다.")

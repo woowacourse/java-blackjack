@@ -2,7 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,8 +28,8 @@ class DealerTest {
     void dealerHasToDrawACardWhenUnder17Score() {
         Dealer dealer = new Dealer();
 
-        Card card1 = new Card(Suit.CLUB, CardNumber.JACK);
-        Card card2 = new Card(Suit.CLUB, CardNumber.SIX);
+        Card card1 = new Card(Suit.CLUB, Denomination.JACK);
+        Card card2 = new Card(Suit.CLUB, Denomination.SIX);
 
         dealer.addCard(card1);
         dealer.addCard(card2);
@@ -42,8 +42,8 @@ class DealerTest {
     void dealerCannotDrawACardWhenOver16Score() {
         Dealer dealer = new Dealer();
 
-        Card card1 = new Card(Suit.CLUB, CardNumber.JACK);
-        Card card2 = new Card(Suit.CLUB, CardNumber.SEVEN);
+        Card card1 = new Card(Suit.CLUB, Denomination.JACK);
+        Card card2 = new Card(Suit.CLUB, Denomination.SEVEN);
 
         dealer.addCard(card1);
         dealer.addCard(card2);

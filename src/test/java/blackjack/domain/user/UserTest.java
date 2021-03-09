@@ -1,7 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +13,8 @@ class UserTest {
     @Test
     void isBlackJackTrueTest() {
         User user = new Player("youngE");
-        user.addCard(new Card(Suit.SPADE, CardNumber.ACE));
-        user.addCard(new Card(Suit.SPADE, CardNumber.JACK));
+        user.addCard(new Card(Suit.SPADE, Denomination.ACE));
+        user.addCard(new Card(Suit.SPADE, Denomination.JACK));
         assertTrue(user.isBlackJack());
     }
 
@@ -22,8 +22,8 @@ class UserTest {
     @Test
     void isBlackJackFalseTest() {
         User user = new Player("youngE");
-        user.addCard(new Card(Suit.SPADE, CardNumber.ACE));
-        user.addCard(new Card(Suit.SPADE, CardNumber.NINE));
+        user.addCard(new Card(Suit.SPADE, Denomination.ACE));
+        user.addCard(new Card(Suit.SPADE, Denomination.NINE));
         assertFalse(user.isBlackJack());
     }
 }

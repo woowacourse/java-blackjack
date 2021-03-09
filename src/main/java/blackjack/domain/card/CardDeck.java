@@ -16,7 +16,7 @@ public class CardDeck {
     }
 
     public static CardDeck createDeck() {
-        List<Card> cards = Arrays.stream(CardNumber.values())
+        List<Card> cards = Arrays.stream(Denomination.values())
                 .flatMap(CardDeck::mapToSuit)
                 .collect(Collectors.toList());
         Collections.shuffle(cards);
@@ -25,9 +25,9 @@ public class CardDeck {
         return new CardDeck(deck);
     }
 
-    private static Stream<Card> mapToSuit(CardNumber cardNumber) {
+    private static Stream<Card> mapToSuit(Denomination denomination) {
         return Arrays.stream(Suit.values())
-                .map(suit -> new Card(suit, cardNumber));
+                .map(suit -> new Card(suit, denomination));
     }
 
     public Card drawCard() {

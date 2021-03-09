@@ -2,19 +2,19 @@ package blackjack.domain.card;
 
 public class Card {
     private final Suit suit;
-    private final CardNumber cardNumber;
+    private final Denomination denomination;
 
-    public Card(Suit suit, CardNumber cardNumber) {
+    public Card(Suit suit, Denomination denomination) {
         this.suit = suit;
-        this.cardNumber = cardNumber;
+        this.denomination = denomination;
     }
 
     public int getScore() {
-        return cardNumber.getScore();
+        return denomination.getScore();
     }
 
     @Override
     public String toString() {
-        return this.cardNumber.getScore() + this.suit.getName();
+        return this.denomination.getScore() + this.suit.getName();
     }
 }

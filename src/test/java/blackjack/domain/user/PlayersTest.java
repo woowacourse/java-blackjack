@@ -2,7 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,10 +19,10 @@ public class PlayersTest {
     private Player player1;
     private Player player2;
     private Dealer dealer;
-    private Card jack = new Card(Suit.CLUB, CardNumber.JACK);
-    private Card ace = new Card(Suit.CLUB, CardNumber.ACE);
-    private Card seven = new Card(Suit.CLUB, CardNumber.SEVEN);
-    private Card six = new Card(Suit.CLUB, CardNumber.SIX);
+    private Card jack = new Card(Suit.CLUB, Denomination.JACK);
+    private Card ace = new Card(Suit.CLUB, Denomination.ACE);
+    private Card seven = new Card(Suit.CLUB, Denomination.SEVEN);
+    private Card six = new Card(Suit.CLUB, Denomination.SIX);
 
     @BeforeEach
     void setUp() {
