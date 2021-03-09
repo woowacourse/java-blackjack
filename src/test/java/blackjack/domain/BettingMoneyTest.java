@@ -42,16 +42,16 @@ class BettingMoneyTest {
     @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
     void getProfit(int bettingMoney) {
 
-        assertThat(new BettingMoney(bettingMoney).getProfit(ResultTypeNew.LOSS))
+        assertThat(new BettingMoney(bettingMoney).getProfit(ResultType.LOSS))
             .isEqualTo(-bettingMoney);
 
-        assertThat(new BettingMoney(bettingMoney).getProfit(ResultTypeNew.DRAW))
+        assertThat(new BettingMoney(bettingMoney).getProfit(ResultType.DRAW))
             .isEqualTo(0);
 
-        assertThat(new BettingMoney(bettingMoney).getProfit(ResultTypeNew.WIN_WITH_BLACKJACK))
+        assertThat(new BettingMoney(bettingMoney).getProfit(ResultType.WIN_WITH_BLACKJACK))
             .isEqualTo((int) ((double) bettingMoney * 1.5));
 
-        assertThat(new BettingMoney(bettingMoney).getProfit(ResultTypeNew.WIN_NOT_WITH_BLACKJACK))
+        assertThat(new BettingMoney(bettingMoney).getProfit(ResultType.WIN_NOT_WITH_BLACKJACK))
             .isEqualTo(bettingMoney);
     }
 

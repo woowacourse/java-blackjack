@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.ResultType;
 import blackjack.domain.UserDrawContinue;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.type.CardNumberType;
@@ -140,9 +139,6 @@ public class UserTest {
         assertThat(user.isBust()).isTrue();
         assertThat(user.getScore()).isEqualTo(22);
 
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.LOSS);
-
         assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
 
@@ -164,9 +160,6 @@ public class UserTest {
         assertThat(user.isBlackJack()).isTrue();
         assertThat(user.isBust()).isFalse();
         assertThat(user.getScore()).isEqualTo(21);
-
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.WIN);
 
         assertThat(user.getProfit(dealer)).isEqualTo((int) (1.5 * (double) bettingMoney));
     }
@@ -191,9 +184,6 @@ public class UserTest {
         assertThat(user.isBust()).isFalse();
         assertThat(user.getScore()).isEqualTo(21);
 
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.WIN);
-
         assertThat(user.getProfit(dealer)).isEqualTo(bettingMoney);
     }
 
@@ -217,9 +207,6 @@ public class UserTest {
         assertThat(user.isBust()).isFalse();
         assertThat(user.getScore()).isEqualTo(20);
 
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.WIN);
-
         assertThat(user.getProfit(dealer)).isEqualTo(bettingMoney);
     }
 
@@ -242,9 +229,6 @@ public class UserTest {
         assertThat(user.isBust()).isTrue();
         assertThat(user.getScore()).isEqualTo(22);
 
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.LOSS);
-
         assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
 
@@ -264,9 +248,6 @@ public class UserTest {
         assertThat(user.isBlackJack()).isTrue();
         assertThat(user.isBust()).isFalse();
         assertThat(user.getScore()).isEqualTo(21);
-
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.DRAW);
 
         assertThat(user.getProfit(dealer)).isEqualTo(0);
     }
@@ -290,9 +271,6 @@ public class UserTest {
         assertThat(user.isBust()).isFalse();
         assertThat(user.getScore()).isEqualTo(21);
 
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.LOSS);
-
         assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
 
@@ -314,9 +292,6 @@ public class UserTest {
         assertThat(user.isBlackJack()).isFalse();
         assertThat(user.isBust()).isFalse();
         assertThat(user.getScore()).isEqualTo(20);
-
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.LOSS);
 
         assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
@@ -341,9 +316,6 @@ public class UserTest {
         assertThat(user.isBust()).isTrue();
         assertThat(user.getScore()).isEqualTo(22);
 
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.LOSS);
-
         assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
 
@@ -365,9 +337,6 @@ public class UserTest {
         assertThat(user.isBlackJack()).isTrue();
         assertThat(user.isBust()).isFalse();
         assertThat(user.getScore()).isEqualTo(21);
-
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.WIN);
 
         assertThat(user.getProfit(dealer)).isEqualTo((int) (1.5 * (double) bettingMoney));
     }
@@ -391,9 +360,6 @@ public class UserTest {
         assertThat(user.isBust()).isFalse();
         assertThat(user.getScore()).isEqualTo(21);
 
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.DRAW);
-
         assertThat(user.getProfit(dealer)).isEqualTo(0);
     }
 
@@ -415,9 +381,6 @@ public class UserTest {
         assertThat(user.isBlackJack()).isFalse();
         assertThat(user.isBust()).isFalse();
         assertThat(user.getScore()).isEqualTo(20);
-
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.LOSS);
 
         assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
@@ -442,9 +405,6 @@ public class UserTest {
         assertThat(user.isBust()).isTrue();
         assertThat(user.getScore()).isEqualTo(22);
 
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.LOSS);
-
         assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
 
@@ -466,9 +426,6 @@ public class UserTest {
         assertThat(user.isBlackJack()).isTrue();
         assertThat(user.isBust()).isFalse();
         assertThat(user.getScore()).isEqualTo(21);
-
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.WIN);
 
         assertThat(user.getProfit(dealer)).isEqualTo((int) (1.5 * (double) bettingMoney));
     }
@@ -495,9 +452,6 @@ public class UserTest {
         assertThat(user.isBust()).isFalse();
         assertThat(user.getScore()).isEqualTo(21);
 
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.WIN);
-
         assertThat(user.getProfit(dealer)).isEqualTo(bettingMoney);
     }
 
@@ -518,9 +472,6 @@ public class UserTest {
         assertThat(user.isBlackJack()).isFalse();
         assertThat(user.isBust()).isFalse();
         assertThat(user.getScore()).isEqualTo(20);
-
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.DRAW);
 
         assertThat(user.getProfit(dealer)).isEqualTo(0);
     }
@@ -543,9 +494,6 @@ public class UserTest {
         assertThat(user.isBlackJack()).isFalse();
         assertThat(user.isBust()).isFalse();
         assertThat(user.getScore()).isEqualTo(19);
-
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.LOSS);
 
         assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }

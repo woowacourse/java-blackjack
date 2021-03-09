@@ -23,14 +23,14 @@ public class BettingMoney {
         }
     }
 
-    public int getProfit(ResultTypeNew resultType) {
-        if (resultType == ResultTypeNew.LOSS) {
+    public int getProfit(ResultType resultType) {
+        if (resultType == ResultType.LOSS) {
             return -value;
         }
-        if (resultType == ResultTypeNew.DRAW) {
+        if (resultType == ResultType.DRAW) {
             return NO_PROFIT;
         }
-        if (resultType == ResultTypeNew.WIN_WITH_BLACKJACK) {
+        if (resultType == ResultType.WIN_WITH_BLACKJACK) {
             return (int) ((double) value * BLACKJACK_WIN_PROFIT_RATE);
         }
         return value;

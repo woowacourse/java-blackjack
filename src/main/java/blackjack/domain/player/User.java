@@ -1,14 +1,13 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.ResultTypeNew.DRAW;
-import static blackjack.domain.ResultTypeNew.LOSS;
-import static blackjack.domain.ResultTypeNew.NONE;
-import static blackjack.domain.ResultTypeNew.WIN_NOT_WITH_BLACKJACK;
-import static blackjack.domain.ResultTypeNew.WIN_WITH_BLACKJACK;
+import static blackjack.domain.ResultType.DRAW;
+import static blackjack.domain.ResultType.LOSS;
+import static blackjack.domain.ResultType.NONE;
+import static blackjack.domain.ResultType.WIN_NOT_WITH_BLACKJACK;
+import static blackjack.domain.ResultType.WIN_WITH_BLACKJACK;
 
 import blackjack.domain.BettingMoney;
 import blackjack.domain.ResultType;
-import blackjack.domain.ResultTypeNew;
 import blackjack.domain.UserDrawContinue;
 
 public class User extends AbstractPlayer {
@@ -42,68 +41,23 @@ public class User extends AbstractPlayer {
         return false;
     }
 
-    public ResultType getResult(Dealer dealer) {
-        ResultType bustResult = getBustResult(dealer);
-        if (bustResult != null) {
-            return bustResult;
-        }
-        ResultType blackJackResult = getBlackJackResult(dealer);
-        if (blackJackResult != null) {
-            return blackJackResult;
-        }
-        return getRestResult(dealer);
-    }
-
-    private ResultType getBustResult(Dealer dealer) {
-        if (isBust()) {
-            return ResultType.LOSS;
-        }
-        if (dealer.isBust()) {
-            return ResultType.WIN;
-        }
-        return null;
-    }
-
-    private ResultType getBlackJackResult(Dealer dealer) {
-        if (isBlackJack() && dealer.isBlackJack()) {
-            return ResultType.DRAW;
-        }
-        if (isBlackJack() && !dealer.isBlackJack()) {
-            return ResultType.WIN;
-        }
-        if (!isBlackJack() && dealer.isBlackJack()) {
-            return ResultType.LOSS;
-        }
-        return null;
-    }
-
-    private ResultType getRestResult(Dealer dealer) {
-        if (getScore() > dealer.getScore()) {
-            return ResultType.WIN;
-        }
-        if (getScore() == dealer.getScore()) {
-            return ResultType.DRAW;
-        }
-        return ResultType.LOSS;
-    }
-
     public int getProfit(Dealer dealer) {
         return bettingMoney.getProfit(getResultNew(dealer));
     }
 
-    private ResultTypeNew getResultNew(Dealer dealer) {
-        ResultTypeNew lossResult = getLossResult(dealer);
+    private ResultType getResultNew(Dealer dealer) {
+        ResultType lossResult = getLossResult(dealer);
         if (lossResult != NONE) {
             return lossResult;
         }
-        ResultTypeNew drawResult = getDrawResult(dealer);
+        ResultType drawResult = getDrawResult(dealer);
         if (drawResult != NONE) {
             return drawResult;
         }
         return getWinResult(dealer);
     }
 
-    private ResultTypeNew getLossResult(Dealer dealer) {
+    private ResultType getLossResult(Dealer dealer) {
         if (isBust()) {
             return LOSS;
         }
@@ -113,7 +67,7 @@ public class User extends AbstractPlayer {
         return NONE;
     }
 
-    private ResultTypeNew getNobodyBustResult(Dealer dealer) {
+    private ResultType getNobodyBustResult(Dealer dealer) {
         if (!isBlackJack() && dealer.isBlackJack()) {
             return LOSS;
         }
@@ -127,7 +81,7 @@ public class User extends AbstractPlayer {
         return !isBust() && !dealer.isBust();
     }
 
-    private ResultTypeNew getDrawResult(Dealer dealer) {
+    private ResultType getDrawResult(Dealer dealer) {
         if (isBlackJack() && dealer.isBlackJack()) {
             return DRAW;
         }
@@ -145,7 +99,7 @@ public class User extends AbstractPlayer {
         return getScore() == dealer.getScore();
     }
 
-    private ResultTypeNew getWinResult(Dealer dealer) {
+    private ResultType getWinResult(Dealer dealer) {
         if (isBlackJack() && !dealer.isBlackJack()) {
             return WIN_WITH_BLACKJACK;
         }
