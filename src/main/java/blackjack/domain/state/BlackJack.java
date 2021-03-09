@@ -1,4 +1,4 @@
 package blackjack.domain.state;
 
-public class BlackJack implements State {
+public class BlackJack extends Finished {
 }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class HitTest {
 
@@ -56,4 +57,13 @@ class HitTest {
         assertThat(state).isInstanceOf(Stay.class);
     }
 
+    @Test
+    @DisplayName("Hit 상태인 경우 키드를 더 뽑을 수 있다.")
+    void isFinished() {
+        State state = new Hit(Arrays.asList(
+                new Card(Shape.HEART, Denomination.KING),
+                new Card(Shape.HEART, Denomination.QUEEN)
+        ));
+        assertFalse(state.isFinished());
+    }
 }

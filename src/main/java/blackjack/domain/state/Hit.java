@@ -16,9 +16,9 @@ public class Hit implements State {
         this.cards = cards;
     }
 
+    @Override
     public State draw(Card card) {
         cards.addCard(card);
-
         if (cards.isBust()) {
             return new Bust();
         }
@@ -30,5 +30,10 @@ public class Hit implements State {
 
     public State stay() {
         return new Stay();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 }

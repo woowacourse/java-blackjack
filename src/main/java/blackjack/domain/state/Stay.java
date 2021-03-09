@@ -1,5 +1,5 @@
 package blackjack.domain.state;
 
-public class Stay implements State {
+public class Stay extends Finished {
 
 }
