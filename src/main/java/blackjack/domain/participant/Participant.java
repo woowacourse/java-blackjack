@@ -12,7 +12,7 @@ public abstract class Participant {
     protected final String name;
     protected final CardHand cardHand;
     
-    public Participant(String name, CardHand cardHand) {
+    Participant(String name, CardHand cardHand) {
         this.name = name;
         this.cardHand = cardHand;
     }
