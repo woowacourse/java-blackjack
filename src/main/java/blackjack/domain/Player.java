@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.utils.CardDeck;
+import blackjack.utils.IllegalNameException;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -18,7 +19,7 @@ public class Player extends Participant {
 
     private static String validateWord(String nameValue) {
         if (!NAME_PATTERN.matcher(nameValue).matches()) {
-            throw new IllegalArgumentException();
+            throw new IllegalNameException("이름은 알파벳 대소문자로 이루어져야 합니다.");
         }
         return nameValue;
     }
