@@ -15,6 +15,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return this.denomination.getScore() + this.suit.getName();
+        return this.denomination.getName() + this.suit.getName();
     }
 }
