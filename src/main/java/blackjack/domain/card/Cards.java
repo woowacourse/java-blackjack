@@ -58,17 +58,17 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return checkSumOfFirstTwoCards();
+        return cards.size() == 2 && calculate() == BLACKJACK;
     }
 
-    private boolean checkSumOfFirstTwoCards() {
-        int sum = properSum(
-                IntStream.range(0, 2)
-                        .map(i -> getPoint(cards.get(i)))
-                        .sum()
-        );
-        return BLACKJACK == sum;
-    }
+//    private boolean checkSumOfFirstTwoCards() {
+//        int sum = properSum(
+//                IntStream.range(0, 2)
+//                        .map(i -> getPoint(cards.get(i)))
+//                        .sum()
+//        );
+//        return BLACKJACK == sum;
+//    }
 
     public int calculate() {
         int sum = sumWithoutAce() + (Denomination.ACE.getScore() * countAce());
