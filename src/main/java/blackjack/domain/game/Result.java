@@ -1,55 +1,47 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Name;
 import blackjack.domain.player.Player;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class Result {
     private final Map<Player, WinOrLose> gamblerResults = new LinkedHashMap<>();
-    private final Cards dealerCards;
+    private final Dealer dealer;
 
-    public Result(final Cards dealerCards){
-        this.dealerCards = dealerCards;
+    public Result(Dealer dealer) {
+        this.dealer = dealer;
     }
 
-    public void add(final Player player, final WinOrLose winOrLose){
-        if(!(player instanceof Gambler)){
-            return;
-        }
-
+    public void add(final Player player, final WinOrLose winOrLose) {
         gamblerResults.put(player, winOrLose);
     }
 
-    public int countDealerWin(){
-        return (int)gamblerResults.keySet().stream()
-                .filter(name-> gamblerResults.get(name) == WinOrLose.LOSE)
+    public int countDealerWin() {
+        return (int) gamblerResults.keySet().stream()
+                .filter(name -> gamblerResults.get(name) == WinOrLose.LOSE)
                 .count();
     }
 
-    public int countDealerLose(){
-        return (int)gamblerResults.keySet().stream()
-                .filter(name-> gamblerResults.get(name) == WinOrLose.WIN)
+    public int countDealerLose() {
+        return (int) gamblerResults.keySet().stream()
+                .filter(name -> gamblerResults.get(name) == WinOrLose.WIN)
                 .count();
     }
 
-    public int countDealerDraw(){
-        return (int)gamblerResults.keySet().stream()
-                .filter(name-> gamblerResults.get(name) == WinOrLose.DRAW)
+    public int countDealerDraw() {
+        return (int) gamblerResults.keySet().stream()
+                .filter(name -> gamblerResults.get(name) == WinOrLose.DRAW)
                 .count();
     }
 
-    public Map<Player, WinOrLose> getGamblerMap(){
-        return gamblerResults;
+    public Map<Player, WinOrLose> getGamblerResult() {
+        return Collections.unmodifiableMap(gamblerResults);
     }
 
-    public Cards getDealerCards(){
-        return dealerCards;
+    public Dealer getDealerInfo() {
+        return dealer;
     }
 }
