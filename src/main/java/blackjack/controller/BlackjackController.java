@@ -17,7 +17,7 @@ public class BlackjackController {
     private static final String DEALER = "딜러";
 
     public void run() {
-        List<Player> players = createPlayers(InputView.inputPlayerNames());
+        List<Player> players = createPlayersWithBetMoney(InputView.inputPlayerNames());
         OutputView.printParticipate(players);
 
         Dealer dealer = new Dealer(DEALER);
@@ -36,13 +36,13 @@ public class BlackjackController {
         showResult(dealer, players);
     }
 
-    public List<Player> createPlayers(List<String> names) {
+    private List<Player> createPlayersWithBetMoney(List<String> names) {
         return names.stream()
                 .map(name -> new Player(name, InputView.inputBetMoney(name)))
                 .collect(Collectors.toList());
     }
 
-    public void distributeCards(List<Player> players, Deck deck) {
+    private void distributeCards(List<Player> players, Deck deck) {
         for (Player player : players) {
             distributePlayer(deck, player);
         }
@@ -57,17 +57,17 @@ public class BlackjackController {
         }
     }
 
-    public void initialDrawDealer(Deck deck, Dealer dealer) {
+    private void initialDrawDealer(Deck deck, Dealer dealer) {
         dealer.initializeDraw(deck);
     }
 
-    public void initialDrawPlayer(Deck deck, List<Player> players) {
+    private void initialDrawPlayer(Deck deck, List<Player> players) {
         for (Player player : players) {
             player.initializeDraw(deck);
         }
     }
 
-    public void showCards(Dealer dealer, List<Player> players) {
+    private void showCards(Dealer dealer, List<Player> players) {
         OutputView.printCards(dealer, SHOW_INITIAL_DEALER_CARD_COUNT);
 
         for(Player player : players){
@@ -77,7 +77,7 @@ public class BlackjackController {
         OutputView.printNewLine();
     }
 
-    public void distributeDealer(Deck deck, Dealer dealer) {
+    private void distributeDealer(Deck deck, Dealer dealer) {
         while (dealer.canDrawOneMore()){
             OutputView.printOneMoreCard();
             dealer.draw(deck);
@@ -86,13 +86,13 @@ public class BlackjackController {
         OutputView.printNewLine();
     }
 
-    public void compareAllPlayersWithDealer(Dealer dealer, List<Player> players) {
+    private void compareAllPlayersWithDealer(Dealer dealer, List<Player> players) {
         for (Player player : players) {
             player.compareWithDealer(dealer);
         }
     }
 
-    public void showResult(Dealer dealer, List<Player> players) {
+    private void showResult(Dealer dealer, List<Player> players) {
         for (Player player : players) {
             OutputView.printCardsWithScore(player);
         }
