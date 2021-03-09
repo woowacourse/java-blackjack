@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.controller.dto.PlayerCardsDTO;
 import blackjack.controller.dto.PlayerResultDTO;
-import blackjack.controller.dto.ResultDTO;
+import blackjack.controller.dto.UsersProfitDTO;
 import blackjack.controller.dto.UserNameDTO;
 import blackjack.domain.UserDrawContinue;
 import blackjack.domain.card.Cards;
@@ -33,7 +33,7 @@ public class BlackJackController {
         dealerDraw(dealer);
         dealer.setCardOpenStrategy(new AllCardsOpenStrategy());
         OutputView.printFinalCardsMessage(getUserResultDTOs(users), new PlayerResultDTO(dealer));
-        OutputView.printResultMessage(new ResultDTO(users.getResult(dealer)));
+        OutputView.printFinalProfits(new UsersProfitDTO(users.getProfits(dealer)));
     }
 
     private void betMoney(User user) {

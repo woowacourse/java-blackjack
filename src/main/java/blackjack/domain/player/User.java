@@ -87,6 +87,10 @@ public class User extends AbstractPlayer {
         return ResultType.LOSS;
     }
 
+    public int getProfit(Dealer dealer) {
+        return bettingMoney.getProfit(getResultNew(dealer));
+    }
+
     private ResultTypeNew getResultNew(Dealer dealer) {
         ResultTypeNew lossResult = getLossResult(dealer);
         if (lossResult != NONE) {
@@ -146,9 +150,5 @@ public class User extends AbstractPlayer {
             return WIN_WITH_BLACKJACK;
         }
         return WIN_NOT_WITH_BLACKJACK;
-    }
-
-    public int getProfit(Dealer dealer) {
-        return bettingMoney.getProfit(getResultNew(dealer));
     }
 }

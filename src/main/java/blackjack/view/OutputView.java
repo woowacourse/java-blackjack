@@ -2,10 +2,9 @@ package blackjack.view;
 
 import blackjack.controller.dto.PlayerCardsDTO;
 import blackjack.controller.dto.PlayerResultDTO;
-import blackjack.controller.dto.ResultDTO;
+import blackjack.controller.dto.UsersProfitDTO;
 import blackjack.domain.ResultType;
 import blackjack.domain.player.Name;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -55,35 +54,28 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printResultMessage(ResultDTO resultDTO) {
+    public static void printFinalProfits(UsersProfitDTO usersProfitDTO) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        Map<Name, ResultType> result = resultDTO.getResult();
-        Map<ResultType, Integer> resultCount = new HashMap<>();
+        System.out.println("## 최종 수익");
+        Map<Name, Integer> profits = usersProfitDTO.getProfits();
         StringBuilder stringBuilder = new StringBuilder();
-        printPlayersResultMessage(result, stringBuilder);
-        for (Name name : result.keySet()) {
-            resultCount.put(result.get(name), resultCount.getOrDefault(result.get(name), 0) + 1);
+        buildUsersProfitMessage(profits, stringBuilder);
+        int dealerProfit = 0;
+        for (Name name : profits.keySet()) {
+            dealerProfit -= profits.get(name);
         }
-        printDealerResultMessage(resultCount);
+        System.out.printf("딜러: %d", dealerProfit);
         System.out.print(stringBuilder.toString());
     }
 
-    private static void printPlayersResultMessage(Map<Name, ResultType> result,
+    private static void buildUsersProfitMessage(Map<Name, Integer> result,
         StringBuilder stringBuilder) {
         for (Name name : result.keySet()) {
             stringBuilder
                 .append(name.getName())
                 .append(": ")
-                .append(result.get(name).getResult())
+                .append(result.get(name))
                 .append(NEW_LINE);
         }
-    }
-
-    private static void printDealerResultMessage(Map<ResultType, Integer> resultCount) {
-        System.out.println("딜러: " +
-            resultCount.getOrDefault(ResultType.LOSS, 0) + "승 " +
-            resultCount.getOrDefault(ResultType.WIN, 0) + "패 " +
-            resultCount.getOrDefault(ResultType.DRAW, 0) + "무승부");
     }
 }

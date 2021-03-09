@@ -4,7 +4,6 @@ import static blackjack.domain.player.UserTest.MAX_BETTING_MONEY_BOUND;
 import static blackjack.domain.player.UserTest.MIN_BETTING_MONEY_BOUND;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.ResultTypeNew;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.type.CardNumberType;
@@ -65,7 +64,7 @@ public class UsersTest {
 
         Users users = new Users(Arrays.asList(pobi, inbi, mungto));
 
-        Map<Name, Integer> profits = users.getProfit(dealer);
+        Map<Name, Integer> profits = users.getProfits(dealer);
 
         assertThat(profits.get(new Name(POBI))).isEqualTo(0);
         assertThat(profits.get(new Name(INBI))).isEqualTo(-bettingMoney);
@@ -96,7 +95,7 @@ public class UsersTest {
 
         Users users = new Users(Arrays.asList(pobi, inbi, mungto));
 
-        Map<Name, Integer> profits = users.getProfit(dealer);
+        Map<Name, Integer> profits = users.getProfits(dealer);
 
         assertThat(profits.get(new Name(POBI))).isEqualTo((int)(1.5 * (double)bettingMoney));
         assertThat(profits.get(new Name(INBI))).isEqualTo(bettingMoney);
@@ -132,7 +131,7 @@ public class UsersTest {
 
         Users users = new Users(Arrays.asList(pobi, jason, inbi, mungto));
 
-        Map<Name, Integer> profits = users.getProfit(dealer);
+        Map<Name, Integer> profits = users.getProfits(dealer);
 
         assertThat(profits.get(new Name(POBI))).isEqualTo((int)(1.5 * (double)bettingMoney));
         assertThat(profits.get(new Name(JASON))).isEqualTo(0);
@@ -167,7 +166,7 @@ public class UsersTest {
 
         Users users = new Users(Arrays.asList(pobi, jason, inbi, mungto));
 
-        Map<Name, Integer> profits = users.getProfit(dealer);
+        Map<Name, Integer> profits = users.getProfits(dealer);
 
         assertThat(profits.get(new Name(POBI))).isEqualTo(bettingMoney);
         assertThat(profits.get(new Name(JASON))).isEqualTo(0);

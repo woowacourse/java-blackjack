@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.ResultType;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,12 +18,12 @@ public class Users {
         users.forEach(user -> user.drawRandomTwoCards(allCards));
     }
 
-    public Map<Name, ResultType> getResult(Dealer dealer) {
-        Map<Name, ResultType> result = new LinkedHashMap<>();
+    public Map<Name, Integer> getProfits(Dealer dealer) {
+        Map<Name, Integer> profits = new LinkedHashMap<>();
         for (User user : users) {
-            result.put(user.getName(), user.getResult(dealer));
+            profits.put(user.getName(), user.getProfit(dealer));
         }
-        return result;
+        return profits;
     }
 
     public List<User> getUsers() {
