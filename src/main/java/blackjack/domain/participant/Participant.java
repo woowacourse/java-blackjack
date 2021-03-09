@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 
 import java.util.List;
+import java.util.Objects;
 
 import static blackjack.domain.BlackjackConstant.BLACKJACK_SCORE;
 
@@ -38,4 +39,21 @@ public abstract class Participant {
     }
     
     public abstract boolean canReceive();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Participant that = (Participant) o;
+        return Objects.equals(name, that.name) && Objects.equals(cardHand, that.cardHand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, cardHand);
+    }
 }
