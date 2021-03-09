@@ -16,12 +16,11 @@ import java.util.stream.Collectors;
 public class BlackjackController {
 
     public void run() {
-        final CardDeck cardDeck = new CardDeck();
         final Participants participants = new Participants(requestName());
-        participants.distributeCard(cardDeck);
+        participants.distributeCard();
         OutputView.showNameAndCardInfo(participants);
 
-        gameProgress(participants.getPlayers(), participants.getDealer(), cardDeck);
+        gameProgress(participants.getPlayers(), participants.getDealer());
         OutputView.showCardsResult(participants.getParticipantGroup());
         showGameResult(participants.getDealer(), participants.getPlayers());
     }
@@ -42,17 +41,16 @@ public class BlackjackController {
         return new Names(names);
     }
 
-    private void gameProgress(final List<Participant> participants, final Participant dealer,
-        final CardDeck cardDeck) {
+    private void gameProgress(final List<Participant> participants, final Participant dealer) {
         for (final Participant participant : participants) {
-            singlePlayerGameProgress(cardDeck, participant);
+            singlePlayerGameProgress(participant);
         }
-        dealerGameProgress(dealer, cardDeck);
+        dealerGameProgress(dealer);
     }
 
-    private void singlePlayerGameProgress(final CardDeck cardDeck, final Participant participant) {
+    private void singlePlayerGameProgress(final Participant participant) {
         while (!participant.isBust() && InputView.askMoreCard(participant.getName())) {
-            participant.receiveCard(cardDeck.distribute());
+            participant.receiveCard(CardDeck.distribute());
             OutputView.showParticipantCard(participant, participant.getPlayerCards());
         }
         if (participant.isBust()) {
@@ -62,10 +60,10 @@ public class BlackjackController {
         OutputView.showParticipantCard(participant, participant.getPlayerCards());
     }
 
-    private void dealerGameProgress(final Participant dealer, final CardDeck cardDeck) {
+    private void dealerGameProgress(final Participant dealer) {
         while (dealer.checkMoreCardAvailable()) {
             OutputView.dealerMoreCard();
-            dealer.receiveCard(cardDeck.distribute());
+            dealer.receiveCard(CardDeck.distribute());
         }
     }
 

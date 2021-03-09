@@ -22,10 +22,10 @@ public class Participants {
         return new ArrayList<>(participants);
     }
 
-    public void distributeCard(final CardDeck cardDeck) {
+    public void distributeCard() {
         participantGroup.forEach(participant -> {
-            participant.receiveCard(cardDeck.distribute());
-            participant.receiveCard(cardDeck.distribute());
+            participant.receiveCard(CardDeck.distribute());
+            participant.receiveCard(CardDeck.distribute());
         });
     }
 
