@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.scoreboard.DealerGameResult;
 import blackjack.domain.scoreboard.UserGameResult;
@@ -52,12 +53,12 @@ public class BlackjackGame {
                 .collect(Collectors.toList());
     }
 
-    public UserGameResult createScoreBoard() {
+    public UserGameResult createUserGameResult() {
         Map<User, WinOrLose> userResult = users.toList().stream()
                 .collect(toMap(
                         Function.identity(),
                         this::makeUserWinOrLose,
-                        (a, b) -> b,
+                        (existed, newer) -> newer,
                         LinkedHashMap::new));
 
         return new UserGameResult(userResult);
@@ -79,8 +80,8 @@ public class BlackjackGame {
         return new DealerGameResult(dealer, dealer.getCards());
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public Card getDealerFirstCard() {
+        return dealer.getFirstCard();
     }
 
     public List<User> getUsers() {

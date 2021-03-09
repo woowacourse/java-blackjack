@@ -21,7 +21,7 @@ public class BlackjackGameController {
         playGame(blackjackGame);
 
         DealerGameResult dealerGameResult = blackjackGame.createDealerGameResult();
-        UserGameResult userGameResult = blackjackGame.createScoreBoard();
+        UserGameResult userGameResult = blackjackGame.createUserGameResult();
 
         printParticipantsCardsAndScore(dealerGameResult, userGameResult);
         printFinalWinOrLose(dealerGameResult, userGameResult);
@@ -57,7 +57,7 @@ public class BlackjackGameController {
     }
 
     private static void printFirstDrawCards(BlackjackGame blackjackGame) {
-        OutputView.printDealerFirstCard(blackjackGame.getDealer());
+        OutputView.printDealerFirstCard(blackjackGame.getDealerFirstCard());
         blackjackGame.getUsers().forEach(OutputView::printCardList);
     }
 

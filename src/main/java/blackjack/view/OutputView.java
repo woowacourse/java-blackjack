@@ -26,10 +26,10 @@ public class OutputView {
         System.out.println(firstDrawMessage);
     }
 
-    public static void printDealerFirstCard(Dealer dealer) {
-        String dealerFirstCard = dealer.getFirstCard().getLetterOfValueAndSuit();
+    public static void printDealerFirstCard(Card card) {
+        String dealerFirstCard = card.getLetterOfValueAndSuit();
 
-        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, dealer.getName(), dealerFirstCard);
+        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, Dealer.DEALER_NAME, dealerFirstCard);
     }
 
     public static void printCardList(Participant participant) {
