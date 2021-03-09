@@ -28,7 +28,7 @@ public class Players {
 
     private void validatePlayerCount(List<String> names) {
         if (names.size() > MAX_PLAYER) {
-            throw new IllegalArgumentException("최대 참여 플레이어는 7명입니다.");
+            throw new IllegalArgumentException("최대 참여 플레이어는 " + MAX_PLAYER + "명입니다.");
         }
     }
 
