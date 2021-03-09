@@ -1,0 +1,39 @@
+package blackjack.domain.participants;
+
+import blackjack.domain.Result;
+import blackjack.domain.card.Card;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Player extends Participant {
+
+    public Player(final String name) {
+        super(name);
+    }
+
+    public Player(final Name name) {
+        super(name);
+    }
+
+    @Override
+    public Result decideWinner(Participant participant) {
+        if (this.calculate() == participant.calculate() || (this.isBust() && participant.isBust())) {
+            return Result.DRAW;
+        }
+        if (this.isBust() || (!participant.isBust() && participant.calculate() > this.calculate())) {
+            return Result.LOSE;
+        }
+        return Result.WIN;
+    }
+
+    @Override
+    public List<Card> showCards() {
+        return new ArrayList<>(getPlayerCards());
+    }
+
+    @Override
+    public boolean checkMoreCardAvailable() {
+        return !isBust();
+    }
+
+}
