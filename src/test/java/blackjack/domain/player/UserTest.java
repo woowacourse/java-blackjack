@@ -142,6 +142,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
 
     @DisplayName("수익 계산 - 딜러가 bust, 유저가 블랙잭 일 때 = 승")
@@ -165,6 +167,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.WIN);
+
+        assertThat(user.getProfit(dealer)).isEqualTo((int)(1.5 * (double)bettingMoney));
     }
 
     @DisplayName("수익 계산 - 딜러가 bust, 유저가 블랙잭이 아닌 21 일 때 = 승")
@@ -189,6 +193,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.WIN);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(bettingMoney);
     }
 
     @DisplayName("수익 계산 - 딜러가 bust, 유저가 21 미만일 때 = 승")
@@ -213,6 +219,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.WIN);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(bettingMoney);
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭, 유저가 bust 일 때 = 패")
@@ -236,6 +244,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭, 유저가 블랙잭 일 때 = 무승부")
@@ -258,6 +268,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.DRAW);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(0);
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭, 유저가 블랙잭이 아닌 21 일 때 = 패")
@@ -281,6 +293,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭, 유저가 21 미만일 때 = 패")
@@ -304,6 +318,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭이 아닌 21, 유저가 bust일 때 = 패")
@@ -328,6 +344,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭이 아닌 21, 유저가 블랙잭일 때 = 승")
@@ -351,12 +369,13 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.WIN);
+
+        assertThat(user.getProfit(dealer)).isEqualTo((int)(1.5 * (double)bettingMoney));
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭이 아닌 21, 유저가 블랙잭이 아닌 21일 때 = 무승부")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealerNotBlackJack21UserNotBlackJack21(int bettingMoney) {
+    @Test
+    void dealerNotBlackJack21UserNotBlackJack21() {
         Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
         dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
         dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
@@ -375,6 +394,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.DRAW);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(0);
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭이 아닌 21, 유저가 21미만일 때 = 패")
@@ -398,6 +419,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
 
     @DisplayName("수익 계산 - 딜러가 20, 유저가 bust일 때 = 패")
@@ -422,6 +445,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
 
     @DisplayName("수익 계산 - 딜러가 20, 유저가 블랙잭일 때 = 승")
@@ -445,6 +470,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.WIN);
+
+        assertThat(user.getProfit(dealer)).isEqualTo((int)(1.5 * (double)bettingMoney));
     }
 
     @DisplayName("수익 계산 - 딜러가 20, 유저가 블랙잭이 아닌 21일 때 = 승")
@@ -471,12 +498,13 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.WIN);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(bettingMoney);
     }
 
     @DisplayName("수익 계산 - 딜러가 20, 유저가 20일 때 = 무승부")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealer20User20(int bettingMoney) {
+    @Test
+    void dealer20User20() {
         Dealer dealer = new Dealer(); // 20
         dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
         dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TWO));
@@ -494,6 +522,8 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.DRAW);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(0);
     }
 
     @DisplayName("수익 계산 - 딜러가 20, 유저가 19일 때 = 패")
@@ -517,5 +547,7 @@ public class UserTest {
 
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
+
+        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
     }
 }
