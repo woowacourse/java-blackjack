@@ -20,4 +20,8 @@ public class BettingMoney {
             throw new IllegalArgumentException("배팅 금액은 20억원을 초과할 수 없습니다.");
         }
     }
+
+    public int getMoney() {
+        return value;
+    }
 }

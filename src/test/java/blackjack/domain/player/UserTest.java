@@ -501,4 +501,15 @@ public class UserTest {
         ResultType resultType = user.getResult(dealer);
         assertThat(resultType).isEqualTo(ResultType.LOSS);
     }
+
+    @DisplayName("유저가 지면, 배팅한 금액을 딜러에게 준다.")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50000, 1234567, MAX_BETTING_MONEY_BOUND})
+    void userLossProfit(int bettingMoney) {
+        Dealer dealer = new Dealer();
+        User user = new User(POBI, bettingMoney);
+        user.applyResult(ResultType.LOSS, dealer);
+        assertThat(user.getProfit()).isEqualTo(-bettingMoney);
+        assertThat(dealer.getProfit()).isEqualTo(bettingMoney);
+    }
 }

@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.player.strategy.CardOpenStrategy;
 import blackjack.domain.player.strategy.OneCardOpenStrategy;
 import java.util.List;
@@ -10,11 +9,14 @@ import java.util.List;
 public class Dealer extends AbstractPlayer {
     private static final String DEALER_NAME = "딜러";
     private static final int DRAW_BOUND = 16;
+
     private CardOpenStrategy cardOpenStrategy;
 
     public Dealer() {
         super(DEALER_NAME);
         this.cardOpenStrategy = new OneCardOpenStrategy();
+        bettingMoney = 0;
+        currentMoney = bettingMoney;
     }
 
     public void setCardOpenStrategy(CardOpenStrategy cardOpenStrategy) {

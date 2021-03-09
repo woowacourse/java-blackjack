@@ -10,6 +10,8 @@ public abstract class AbstractPlayer implements Player {
 
     private final Cards cards;
     private final Name name;
+    protected int bettingMoney;
+    protected int currentMoney;
 
     public AbstractPlayer(String name) {
         cards = Cards.createEmptyCards();
@@ -56,5 +58,20 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public boolean isBust() {
         return cards.isBust();
+    }
+
+    @Override
+    public int getProfit() {
+        return currentMoney - bettingMoney;
+    }
+
+    @Override
+    public void addMoney(int money) {
+        currentMoney += money;
+    }
+
+    @Override
+    public void subtractMoney(int money) {
+        currentMoney -= money;
     }
 }
