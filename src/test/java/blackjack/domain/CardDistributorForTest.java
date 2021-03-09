@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.participants.Participant;
 
 public class CardDistributorForTest {
+
     private final CardDistributor cardDistributor;
 
     private CardDistributorForTest(CardDistributor cardDistributor) {

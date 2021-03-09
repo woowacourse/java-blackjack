@@ -94,7 +94,8 @@ public class GameResultTest {
     @MethodSource("provideDeck")
     void gameResultTest(Deck deck, Map<ResultType, Integer> expected) {
         CardDistributor cardDistributor = new CardDistributor(deck);
-        CardDistributorForTest cardDistributorForTest = CardDistributorForTest.valueOf(cardDistributor);
+        CardDistributorForTest cardDistributorForTest = CardDistributorForTest
+            .valueOf(cardDistributor);
         Dealer dealer = new Dealer();
         cardDistributorForTest.distributeCardsTo(dealer, 3);
         Player pobi = new Player("pobi");

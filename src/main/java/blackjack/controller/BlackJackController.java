@@ -6,9 +6,9 @@ import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Deck;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
+import blackjack.domain.participants.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.participants.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 

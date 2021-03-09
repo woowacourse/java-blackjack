@@ -1,7 +1,6 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.ResultType;
-import blackjack.domain.cards.Deck;
 import blackjack.dto.GameResult;
 import java.util.ArrayList;
 import java.util.Arrays;

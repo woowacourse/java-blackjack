@@ -17,6 +17,15 @@ public enum ResultType {
         this.name = name;
     }
 
+    public static ResultType getResultTypeByScore(Participant participant1,
+        Participant participant2) {
+        return Arrays.stream(ResultType.values())
+            .filter(resultType -> resultType.matcher.apply(participant1.getScore() - participant2
+                .getScore()))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("불가능한 결과입니다."));
+    }
+
     public ResultType opposite() {
         if (this == WIN) {
             return LOSE;
@@ -25,15 +34,6 @@ public enum ResultType {
             return WIN;
         }
         return TIE;
-    }
-
-    public static ResultType getResultTypeByScore(Participant participant1,
-        Participant participant2) {
-        return Arrays.stream(ResultType.values())
-            .filter(resultType -> resultType.matcher.apply(participant1.getScore() - participant2
-                .getScore()))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("불가능한 결과입니다."));
     }
 
     public String getName() {

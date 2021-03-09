@@ -92,7 +92,8 @@ public class PlayerTest {
     @Test
     @DisplayName("승패 결과")
     void match() {
-        CardDistributorForTest cardDistributorForTest = CardDistributorForTest.valueOf(cardDistributor);
+        CardDistributorForTest cardDistributorForTest = CardDistributorForTest
+            .valueOf(cardDistributor);
         Dealer dealer = new Dealer();
         cardDistributorForTest.distributeCardsTo(dealer, 2);
         Player pobi = new Player("pobi");

@@ -25,8 +25,8 @@ public class ResultTypeTest {
             Card.valueOf(Shape.CLOVER, CardValue.SEVEN),
             Card.valueOf(Shape.CLOVER, CardValue.TEN),
             Card.valueOf(Shape.SPADE, CardValue.EIGHT)));
-        CardDistributorForTest cardDistributorForTest = CardDistributorForTest.valueOf(new CardDistributor(deck));
-
+        CardDistributorForTest cardDistributorForTest = CardDistributorForTest
+            .valueOf(new CardDistributor(deck));
 
         Player eighteen = new Player("eighteen");
         cardDistributorForTest.distributeCardsTo(eighteen, 2);

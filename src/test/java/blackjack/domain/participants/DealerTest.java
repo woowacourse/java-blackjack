@@ -23,7 +23,8 @@ public class DealerTest {
             Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
         Dealer dealer = new Dealer();
         CardDistributor cardDistributor = new CardDistributor(deck);
-        CardDistributorForTest cardDistributorForTest = CardDistributorForTest.valueOf(cardDistributor);
+        CardDistributorForTest cardDistributorForTest = CardDistributorForTest
+            .valueOf(cardDistributor);
         cardDistributorForTest.distributeCardsTo(dealer, 2);
 
         assertThat(dealer.isContinue()).isFalse();
@@ -37,7 +38,8 @@ public class DealerTest {
             Card.valueOf(Shape.SPADE, CardValue.SEVEN),
             Card.valueOf(Shape.SPADE, CardValue.ACE)));
         CardDistributor cardDistributor = new CardDistributor(deck);
-        CardDistributorForTest cardDistributorForTest = CardDistributorForTest.valueOf(cardDistributor);
+        CardDistributorForTest cardDistributorForTest = CardDistributorForTest
+            .valueOf(cardDistributor);
         Dealer dealer = new Dealer();
         cardDistributorForTest.distributeCardsTo(dealer, 2);
 
