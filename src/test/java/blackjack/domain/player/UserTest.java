@@ -509,6 +509,7 @@ public class UserTest {
         Dealer dealer = new Dealer();
         User user = new User(POBI, bettingMoney);
         user.applyResult(ResultType.LOSS, dealer);
+
         assertThat(user.getProfit()).isEqualTo(-bettingMoney);
         assertThat(dealer.getProfit()).isEqualTo(bettingMoney);
     }
