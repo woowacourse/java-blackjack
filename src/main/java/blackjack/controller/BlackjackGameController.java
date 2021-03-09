@@ -1,17 +1,15 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.scoreboard.ScoreBoard;
+import blackjack.domain.scoreboard.DealerGameResult;
 import blackjack.domain.scoreboard.UserGameResult;
 import blackjack.domain.user.Name;
-import blackjack.domain.user.Participant;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackGameController {
@@ -22,16 +20,11 @@ public class BlackjackGameController {
 
         playGame(blackjackGame);
 
-        ScoreBoard scoreBoard = blackjackGame.createScoreBoard();
-        Map<User, UserGameResult> userResult = scoreBoard.getUserResults();
+        DealerGameResult dealerGameResult = blackjackGame.createDealerGameResult();
+        UserGameResult userGameResult = blackjackGame.createScoreBoard();
 
-        printParticipantsCardsAndScore(blackjackGame.getDealer(), userResult);
-        printFinalWinOrLose(scoreBoard, userResult);
-    }
-
-    private void playGame(BlackjackGame blackjackGame) {
-        processUserRound(blackjackGame);
-        processDealerRound(blackjackGame);
+        printParticipantsCardsAndScore(dealerGameResult, userGameResult);
+        printFinalWinOrLose(dealerGameResult, userGameResult);
     }
 
     private static BlackjackGame startGameAndFirstDraw() {
@@ -58,6 +51,11 @@ public class BlackjackGameController {
         OutputView.println();
     }
 
+    private void playGame(BlackjackGame blackjackGame) {
+        processUserRound(blackjackGame);
+        processDealerRound(blackjackGame);
+    }
+
     private static void printFirstDrawCards(BlackjackGame blackjackGame) {
         OutputView.printDealerFirstCard(blackjackGame.getDealer());
         blackjackGame.getUsers().forEach(OutputView::printCardList);
@@ -73,22 +71,22 @@ public class BlackjackGameController {
 
     private static void decideHitOrStay(BlackjackGame blackjackGame, User user) {
         while (user.canContinueGame()) {  // 유저가 카드를 더 받을 수 있는 상태라면 물어봄
-            askHitOrStay2(user, blackjackGame);
+            askHitOrStay(user, blackjackGame);
         }
     }
 
-    private static void askHitOrStay2(User user, BlackjackGame blackjackGame) {
+    private static void askHitOrStay(User user, BlackjackGame blackjackGame) {
         try {
             boolean hitOrStay = InputView.askMoreDraw(user.getName());
-            userDrawOrStop2(user, hitOrStay, blackjackGame);
+            userDrawOrStop(user, hitOrStay, blackjackGame);
             printUserCurrentCards(user);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
-            askHitOrStay2(user, blackjackGame);
+            askHitOrStay(user, blackjackGame);
         }
     }
 
-    private static void userDrawOrStop2(User user, boolean hitOrStay, BlackjackGame blackjackGame) {
+    private static void userDrawOrStop(User user, boolean hitOrStay, BlackjackGame blackjackGame) {
         if (hitOrStay) {
             blackjackGame.drawCardToUser(user);
             return;
@@ -107,15 +105,16 @@ public class BlackjackGameController {
         }
     }
 
-    private void printParticipantsCardsAndScore(Participant dealer, Map<User, UserGameResult> userResult) {
-        OutputView.printCardListAndScore(dealer);
+    private void printParticipantsCardsAndScore(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
+        OutputView.printCardListAndScore(dealerGameResult.getDealer());
 
 
-        userResult.keySet().forEach(OutputView::printCardListAndScore);
+        userGameResult.getUserSet().forEach(OutputView::printCardListAndScore);
         OutputView.println();
     }
 
-    private void printFinalWinOrLose(ScoreBoard scoreBoard, Map<User, UserGameResult> userResult) {
-        OutputView.printFinalWinOrLose(scoreBoard, userResult);
+    private void printFinalWinOrLose(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
+        OutputView.printFinalDealerWinOrLose(dealerGameResult, userGameResult);
+        OutputView.printFinalUserWinOrLose(userGameResult);
     }
 }

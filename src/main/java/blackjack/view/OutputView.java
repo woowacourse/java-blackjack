@@ -1,17 +1,12 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.scoreboard.GameResult;
-import blackjack.domain.scoreboard.ScoreBoard;
+import blackjack.domain.scoreboard.DealerGameResult;
 import blackjack.domain.scoreboard.UserGameResult;
-import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Participant;
-import blackjack.domain.user.User;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -60,23 +55,25 @@ public class OutputView {
         println();
     }
 
-    public static void printFinalWinOrLose(ScoreBoard scoreBoard, Map<User, UserGameResult> userResult) {
+    public static void printFinalDealerWinOrLose(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
         System.out.println(FINAL_WIN_OR_LOSE_MSG);
-        System.out.println(createDealerResultMessage(scoreBoard));
+        System.out.println(createDealerResultMessage(dealerGameResult, userGameResult));
+    }
 
-        userResult.entrySet().stream()
-                .map(result -> result.getKey().getName() + COLON + result.getValue().getStringWinOrLose())
+    private static String createDealerResultMessage(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
+
+        return dealerGameResult.getDealerName() + COLON + makeDealersFinalWinOrLose(dealerGameResult, userGameResult);
+    }
+
+    private static String makeDealersFinalWinOrLose(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
+
+        return String.join(BLANK, dealerGameResult.countDealerWinOrLose(userGameResult));
+    }
+
+    public static void printFinalUserWinOrLose(UserGameResult userGameResult) {
+        userGameResult.getResultEntrySet().stream()
+                .map(result -> result.getKey().getName() + COLON + result.getValue().getCharacter())
                 .forEach(System.out::println);
-    }
-
-    private static String createDealerResultMessage(ScoreBoard scoreBoard) {
-        return Dealer.DEALER_NAME.getName() + COLON + makeDealersFinalWinOrLose(scoreBoard);
-    }
-
-    private static String makeDealersFinalWinOrLose(ScoreBoard scoreBoard) {
-        return Arrays.stream(WinOrLose.values())
-                .map(winOrLose -> scoreBoard.countDealerWinOrLose(winOrLose) + winOrLose.getCharacter())
-                .collect(Collectors.joining(BLANK));
     }
 
     public static void println() {
@@ -85,13 +82,6 @@ public class OutputView {
 
     public static void printMessage(String message) {
         System.out.println(message);
-    }
 
-    public static void printCardListAndScore2(GameResult dealerGameResult) {
-        String cards = dealerGameResult.getResultCards().stream()
-                .map(Card::getLetterOfValueAndSuit)
-                .collect(Collectors.joining(DELIMITER));
-
-        System.out.printf(PRINT_CARD_LIST_AND_SCORE_MSG_FORMAT, dealerGameResult.getName(), cards, dealerGameResult.calculateScore());
     }
 }
