@@ -48,4 +48,10 @@ class BlackjackTest {
     void testIsFinishedTrue() {
         assertThat(this.blackjack.isFinished()).isTrue();
     }
+
+    @Test
+    @DisplayName("Blackjack 에서 카드목록을 요구했을 시 가져갔던 카드개수가 맞는지 확인")
+    void testHitCards() {
+        assertThat(this.blackjack.cards()).hasSize(2);
+    }
 }

@@ -37,4 +37,9 @@ public class Hit implements State {
     public boolean isFinished() {
         return false;
     }
+
+    @Override
+    public List<Card> cards() {
+        return new ArrayList<>(this.cards);
+    }
 }

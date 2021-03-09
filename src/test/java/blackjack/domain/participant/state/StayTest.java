@@ -41,4 +41,10 @@ class StayTest {
     void testIsFinishedTrue() {
         assertThat(this.stay.isFinished()).isTrue();
     }
+
+    @Test
+    @DisplayName("Stay 에서 카드목록을 요구했을 시 가져갔던 카드개수가 맞는지 확인")
+    void testHitCards() {
+        assertThat(this.stay.cards()).hasSize(1);
+    }
 }

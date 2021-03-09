@@ -7,6 +7,7 @@ import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.Number;
 import blackjack.domain.carddeck.Pattern;
 import java.util.Arrays;
+import org.assertj.core.api.AbstractBooleanAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,5 +43,11 @@ class BustTest {
     @DisplayName("Bust 가 종료된 상태임을 확인")
     void testIsFinishedTrue() {
         assertThat(this.bust.isFinished()).isTrue();
+    }
+
+    @Test
+    @DisplayName("Bust 에서 카드목록을 요구했을 시 가져갔던 카드개수가 맞는지 확인")
+    void testHitCards() {
+        assertThat(this.bust.cards()).hasSize(2);
     }
 }

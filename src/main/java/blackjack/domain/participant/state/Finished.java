@@ -1,6 +1,7 @@
 package blackjack.domain.participant.state;
 
 import blackjack.domain.carddeck.Card;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Finished implements State {
@@ -19,6 +20,11 @@ public abstract class Finished implements State {
     @Override
     public State stay() {
         throw new IllegalStateException();
+    }
+
+    @Override
+    public List<Card> cards() {
+        return new ArrayList<>(this.cards);
     }
 
     @Override

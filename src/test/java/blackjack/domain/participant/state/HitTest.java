@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.Number;
 import blackjack.domain.carddeck.Pattern;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,5 +53,11 @@ public class HitTest {
     @DisplayName("Hit 에서 더 이상 뽑을 수 없는 상태인지 질문이 왔을 때 false 를 반환하는지 테스트")
     void testIfAskedFinishedThenReplyNo() {
         assertThat(this.hit.isFinished()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Hit 에서 카드목록을 요구했을 시 가져갔던 카드개수가 맞는지 확인")
+    void testHitCards() {
+        assertThat(this.hit.cards()).hasSize(2);
     }
 }
