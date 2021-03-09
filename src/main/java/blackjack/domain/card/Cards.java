@@ -42,4 +42,8 @@ public class Cards {
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
     }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && getScore() == 21;
+    }
 }

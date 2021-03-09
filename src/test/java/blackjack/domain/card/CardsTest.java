@@ -46,4 +46,25 @@ public class CardsTest {
 
         assertThat(cards.isBust()).isTrue();
     }
+
+    @Test
+    @DisplayName("카드를 두장일때 합이 21이면, 블랙잭이다.")
+    void blackJackTwoCardsSum21() {
+        Cards blackJackScoreCards = new Cards(Arrays.asList(
+                new Card(Suit.HEART, Face.KING),
+                new Card(Suit.CLOVER, Face.ACE)
+        ));
+        assertThat(blackJackScoreCards.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드를 세장일때 합이 21이면, 블랙잭이 아니다.")
+    void nonBlackJackThreeCardsSum21() {
+        Cards blackJackScoreCards = new Cards(Arrays.asList(
+                new Card(Suit.HEART, Face.KING),
+                new Card(Suit.CLOVER, Face.ACE),
+                new Card(Suit.DIAMOND, Face.ACE)
+        ));
+        assertThat(blackJackScoreCards.isBlackJack()).isFalse();
+    }
 }
