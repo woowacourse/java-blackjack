@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.money.Money;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,11 +24,11 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static List<String> receiveMoney(List<String> names) {
-        List<String> money = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            System.out.printf(INPUT_MONEY_MSG, names.get(i));
-            money.add(SCANNER.nextLine().trim());
+    public static List<Money> receiveMoney(List<String> names) {
+        List<Money> money = new ArrayList<>();
+        for (String name : names) {
+            System.out.printf((INPUT_MONEY_MSG) + "%n", name);
+            money.add(new Money(SCANNER.nextLine().trim()));
         }
         return money;
     }

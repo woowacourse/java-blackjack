@@ -1,8 +1,11 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.money.Money;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Players implements Iterable<Player> {
     private final List<Player> players;
@@ -11,9 +14,9 @@ public class Players implements Iterable<Player> {
         this.players = players;
     }
 
-    public static Players of(List<String> names) {
-        List<Player> players = names.stream()
-                .map(Player::new)
+    public static Players of(List<String> names, List<Money> money) {
+        List<Player> players = IntStream.range(0, names.size())
+                .mapToObj(i -> new Player(names.get(i), money.get(i)))
                 .collect(Collectors.toList());
         return new Players(players);
     }
