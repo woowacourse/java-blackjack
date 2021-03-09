@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackjackManagerTest {
+public class StateFactoryManagerTest {
 
     private Dealer dealer;
     private Players players;
@@ -58,5 +58,21 @@ public class BlackjackManagerTest {
 
         assertThat(dealerResultDto).isInstanceOf(ResultDto.class);
         playerResultDtos.forEach(dto -> assertThat(dto).isInstanceOf(ResultDto.class));
+    }
+
+    @Test
+    @DisplayName("한 명의 플레이어 카드뽑기 완료 테스트")
+    void testOnePlayerCompleteHitOrStay() {
+//        this.blackjackManager.initDrawCards();
+//        this.blackjackManager.currentPlayerHitOrStay(true);
+//        assertThat(this.blackjackManager.isCurrentPlayerMoreHitable()).isTrue();
+//        assertThat(this.blackjackManager.getCurrentPlayerStatus()).isTrue();
+    }
+
+    @Test
+    @DisplayName("모든 플레이어들이 게임을 진행할때까지 카드뽑기 반복")
+    void testDrawCardsUntilAllPlayerPlayed() {
+        this.blackjackManager.initDrawCards();
+        //this.blackjackManager.currentPlayerHitOrStay(true);
     }
 }
