@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.Score;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,6 +9,7 @@ import java.util.stream.IntStream;
 public class Hands {
 
     private static final int INITIAL_SIZE = 2;
+    private static final int TEN = 10;
     private static final int WINNING_BASELINE = 21;
 
     private final List<Card> cards;
@@ -67,7 +69,7 @@ public class Hands {
         return Collections.unmodifiableList(cards);
     }
 
-    public List<Card> getCardOf(int number) {
+    public List<Card> cardsOf(int number) {
         return IntStream.range(0, number)
                 .mapToObj(cards::get)
                 .collect(Collectors.toList());

@@ -115,7 +115,7 @@ class HandsTest {
         Hands hands = new Hands(cards);
         hands.addCard(Card.of(Suit.CLUB, Denomination.THREE));
 
-        assertThat(hands.getCardOf(2).size()).isEqualTo(2);
+        assertThat(hands.cardsOf(2).size()).isEqualTo(2);
     }
 
     @DisplayName("blackjack인지 확인")

@@ -45,7 +45,7 @@ public class Player {
     }
 
     public List<Card> showOpenHands() {
-        return hands.getCardOf(2);
+        return hands.cardsOf(2);
     }
 
     public int calculateProfit(ResultType resultType) {
