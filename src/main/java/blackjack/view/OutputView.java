@@ -1,6 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.compete.CompeteResult;
+import blackjack.domain.compete.CompeteResultGroup;
 import blackjack.domain.participant.*;
 
 import java.util.List;

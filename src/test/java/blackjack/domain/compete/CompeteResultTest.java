@@ -1,8 +1,12 @@
-package blackjack.domain.participant;
+package blackjack.domain.compete;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
+import blackjack.domain.compete.CompeteResult;
+import blackjack.domain.compete.CompeteResultGroup;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
