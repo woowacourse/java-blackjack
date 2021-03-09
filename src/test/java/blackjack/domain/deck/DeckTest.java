@@ -24,8 +24,8 @@ public class DeckTest {
         Deck deck = new Deck(cards);
 
         // then
-        assertThat(deck.draw()).isEqualTo(card2);
         assertThat(deck.draw()).isEqualTo(card1);
+        assertThat(deck.draw()).isEqualTo(card2);
     }
 
     @DisplayName("빈 덱에서 드로우를 하면 예외가 발생한다.")

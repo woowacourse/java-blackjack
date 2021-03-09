@@ -25,6 +25,13 @@ public abstract class Player {
         return cards.isBust();
     }
 
+    public final boolean isDealer() {
+        if (this instanceof Dealer) {
+            return true;
+        }
+        return false;
+    }
+
     public String getName() {
         return name;
     }

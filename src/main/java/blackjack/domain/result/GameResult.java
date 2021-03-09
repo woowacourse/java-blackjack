@@ -24,7 +24,7 @@ public class GameResult {
     public List<ResultType> getDealerResult() {
         Player dealer = gameResult.keySet()
             .stream()
-            .filter(player -> player.getName().equals("딜러"))
+            .filter(Player::isDealer)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 게임 결과에 딜러가 존재하지 않습니다."));
         return gameResult.get(dealer);
@@ -33,7 +33,7 @@ public class GameResult {
     public Map<Player, ResultType> getGamersResult() {
         return gameResult.keySet()
             .stream()
-            .filter(player -> !player.getName().equals("딜러"))
+            .filter(player -> !player.isDealer())
             .collect(Collectors.toMap(key -> key, key -> gameResult.get(key).get(0)));
     }
 }
