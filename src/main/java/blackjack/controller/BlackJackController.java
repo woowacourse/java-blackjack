@@ -26,7 +26,8 @@ public class BlackJackController {
     public void run() {
         initialDealingCards(users);
         OutputView.printInitialComment(dealer, players);
-        OutputView.printCardsOfUsersWithScore(users);
+        OutputView.printCardsOfDealerWithOneCardOpened(dealer);
+        OutputView.printCardsOfPlayersWithoutScore(players);
 
         if (dealer.isBlackJack()) {
             OutputView.printResult(players.generateResultsMapAgainstDealer(dealer));

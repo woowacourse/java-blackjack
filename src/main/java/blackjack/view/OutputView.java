@@ -2,10 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Cards;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Players;
-import blackjack.domain.user.User;
-import blackjack.domain.user.Users;
+import blackjack.domain.user.*;
 import blackjack.domain.card.Card;
 
 import java.util.Arrays;
@@ -16,9 +13,17 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String COMMA_WITH_BLANK = ", ";
+    private static final int INDEX_ZERO = 0;
 
     public static void printInitialComment(Dealer dealer, Players players) {
         System.out.printf("%s와 %s에게 2장의 카드를 나누어주었습니다.\n", dealer.getName(), createUsersCardStringFormat(players.players()));
+    }
+
+    public static void printCardsOfPlayersWithoutScore(Players players) {
+        for (User user : players.players()) {
+            System.out.print(makeCardsStringFormat(user) + "\n");
+        }
+        System.out.println();
     }
 
     public static void printCardsOfUsersWithScore(Users users) {
@@ -87,5 +92,9 @@ public class OutputView {
 
     public static void printDealerGetNewCardsMessage() {
         System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+    }
+
+    public static void printCardsOfDealerWithOneCardOpened(Dealer dealer) {
+        System.out.printf("%s 카드: %s\n", dealer.getName(), dealer.getCards().cards().get(INDEX_ZERO).toString());
     }
 }
