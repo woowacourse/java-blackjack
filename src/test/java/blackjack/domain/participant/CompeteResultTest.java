@@ -107,7 +107,7 @@ class CompeteResultTest {
     
     @Test
     @DisplayName("플레이어가 버스트일 경우 무조건 플레이어 패배")
-    void compete_isBurst_Defeat() {
+    void compete_isBust_Defeat() {
         
         // given
         Dealer dealer = Dealer.create();

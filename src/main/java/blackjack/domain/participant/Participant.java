@@ -33,7 +33,7 @@ public abstract class Participant {
         cardHand.add(card);
     }
     
-    public boolean isBurst() {
+    public boolean isBust() {
         return sumCardHand() > BLACKJACK_SCORE;
     }
     

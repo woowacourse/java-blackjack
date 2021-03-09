@@ -46,11 +46,11 @@ public enum CompeteResult {
     }
     
     private static boolean isDealerWin(Dealer dealer, Player player) {
-        return ((dealer.sumCardHand() > player.sumCardHand()) && !dealer.isBurst()) || player.isBurst();
+        return ((dealer.sumCardHand() > player.sumCardHand()) && !dealer.isBust()) || player.isBust();
     }
     
     private static boolean isDealerDefeat(Dealer dealer, Player player) {
-        return (dealer.sumCardHand() < player.sumCardHand()) && !player.isBurst();
+        return (dealer.sumCardHand() < player.sumCardHand()) && !player.isBust();
     }
     
     public static String getCompeteResultAgainstDealer(Dealer dealer, Player player) {
