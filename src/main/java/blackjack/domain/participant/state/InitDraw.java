@@ -11,7 +11,7 @@ public class InitDraw {
     public static State draw(final Card firstCard, final Card secondCard) {
         List<Card> cards = Arrays.asList(firstCard, secondCard);
         if (isBlackjack(cards)) {
-            return new Blackjack();
+            return new Blackjack(cards);
         }
         return new Hit(cards);
     }
