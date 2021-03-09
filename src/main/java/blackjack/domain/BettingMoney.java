@@ -2,7 +2,7 @@ package blackjack.domain;
 
 public class BettingMoney {
     private static final int MIN_BETTING_MONEY_BOUND = 1_000;
-    private static final int MAX_BETTING_MONEY_BOUND = 2_000_000_000;
+    private static final int MAX_BETTING_MONEY_BOUND = 100_000_000;
 
     private final int value;
 
@@ -17,7 +17,7 @@ public class BettingMoney {
 
     private void validate(int value) {
         if (!(MIN_BETTING_MONEY_BOUND <= value && value <= MAX_BETTING_MONEY_BOUND)) {
-            throw new IllegalArgumentException("배팅 금액은 20억원을 초과할 수 없습니다.");
+            throw new IllegalArgumentException("배팅 금액은 1억원을 초과할 수 없습니다.");
         }
     }
 

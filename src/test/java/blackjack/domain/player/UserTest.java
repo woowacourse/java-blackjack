@@ -17,7 +17,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class UserTest {
     private static final int MIN_BETTING_MONEY_BOUND = 1_000;
-    protected static final int MAX_BETTING_MONEY_BOUND = 2_000_000_000;
+    protected static final int MAX_BETTING_MONEY_BOUND = 100_000_000;
 
     @DisplayName("유저를 이름만으로 생성한 경우")
     @Test
@@ -26,7 +26,7 @@ public class UserTest {
             .doesNotThrowAnyException();
     }
 
-    @DisplayName("배팅 금액이 1000원 이상, 20억 이하이면, 배팅 가능")
+    @DisplayName("배팅 금액이 1000원 이상, 1억원 이하이면, 배팅 가능")
     @Test
     void validBetting() {
         assertThatCode(() -> new User(POBI, MAX_BETTING_MONEY_BOUND))
@@ -42,7 +42,7 @@ public class UserTest {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("배팅 금액이 20억 초과이면, 예외 발생")
+    @DisplayName("배팅 금액이 1억원 초과이면, 예외 발생")
     @Test
     void overBettingBoundException() {
         assertThatThrownBy(() -> new User(POBI, MAX_BETTING_MONEY_BOUND + 1))
@@ -518,6 +518,18 @@ public class UserTest {
     @ParameterizedTest
     @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50000, 1234567, MAX_BETTING_MONEY_BOUND})
     void drawProfit(int bettingMoney) {
+        Dealer dealer = new Dealer();
+        User user = new User(POBI, bettingMoney);
+        user.applyResult(ResultType.DRAW, dealer);
+
+        assertThat(user.getProfit()).isEqualTo(0);
+        assertThat(dealer.getProfit()).isEqualTo(0);
+    }
+
+    @DisplayName("유저가 블랙잭으로 이기면, 배팅한 금액의 1.5배 만큼을 딜러로부터 받는다.")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50000, 1234567, MAX_BETTING_MONEY_BOUND})
+    void userWinWithBlackJack(int bettingMoney) {
         Dealer dealer = new Dealer();
         User user = new User(POBI, bettingMoney);
         user.applyResult(ResultType.DRAW, dealer);
