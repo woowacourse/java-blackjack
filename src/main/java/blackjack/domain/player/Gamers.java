@@ -16,11 +16,15 @@ public class Gamers {
     private final List<Player> gamers;
 
     public Gamers(List<Pair<String, Integer>> nameAndBettingMonies) {
-        validateDuplicate(nameAndBettingMonies.stream()
-                .map(Pair::getKey)
-                .collect(toList()));
+        validateDuplicate(asGamerNames(nameAndBettingMonies));
 
         this.gamers = nameAndBettingMoneyToGamer(nameAndBettingMonies);
+    }
+
+    private List<String> asGamerNames(List<Pair<String, Integer>> nameAndBettingMonies) {
+        return nameAndBettingMonies.stream()
+                .map(Pair::getKey)
+                .collect(toList());
     }
 
     private void validateDuplicate(List<String> names) {

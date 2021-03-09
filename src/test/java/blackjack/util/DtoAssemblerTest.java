@@ -70,7 +70,7 @@ class DtoAssemblerTest {
 
         for (int i = 0; i < 2; i++) {
             assertThat(playerDtos.get(i).getName()).isEqualTo(gamer[i].getName());
-            assertThat(playerDtos.get(i).getScore()).isEqualTo(cards[i].getScore());
+            assertThat(playerDtos.get(i).getScore()).isEqualTo(cards[i].getAccumulateScore());
 
             assertThat(playerDtos.get(i).getCardList().get(0).getName()).isEqualTo(cards[i].getName());
 

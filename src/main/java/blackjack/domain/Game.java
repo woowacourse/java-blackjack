@@ -8,6 +8,7 @@ import blackjack.util.Pair;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
@@ -61,19 +62,30 @@ public class Game {
         return calculateGamerResult().entrySet().stream()
                 .collect(toMap(
                         Map.Entry::getKey,
-                        entry -> new Pair<>(
-                                entry.getValue().getKey().getMessage(),
-                                entry.getValue().getValue()))
+                        getGamersGameResultAsStringAndRevenue())
                 );
+    }
+
+    private Function<Map.Entry<String, Pair<GameResult, Integer>>, Pair<String, Integer>>
+    getGamersGameResultAsStringAndRevenue() {
+        return entry -> new Pair<>(
+                entry.getValue().getKey().getMessage(),
+                entry.getValue().getValue());
     }
 
     private Map<String, Pair<GameResult, Integer>> calculateGamerResult() {
         return gamers.getGamers().stream()
-                .collect(toMap(Player::getName,
-                        player -> new Pair<>(
-                                calculateWinning(player),
-                                calculateGamerRevenue(player)
-                        )));
+                .collect(toMap(
+                        Player::getName,
+                        getGamersGameResultAndRevenue()
+                ));
+    }
+
+    private Function<Player, Pair<GameResult, Integer>> getGamersGameResultAndRevenue() {
+        return player -> new Pair<>(
+                calculateWinning(player),
+                calculateGamerRevenue(player)
+        );
     }
 
     private GameResult calculateWinning(Player player) {
@@ -81,13 +93,17 @@ public class Game {
     }
 
     private int calculateDealerRevenue() {
-        return - gamers.getGamers().stream()
+        return -getDealerLoss();
+    }
+
+    private int getDealerLoss() {
+        return gamers.getGamers().stream()
                 .mapToInt(this::calculateGamerRevenue)
                 .sum();
     }
 
     private int calculateGamerRevenue(Player gamer) {
-        if(calculateWinning(gamer) == GameResult.WIN) {
+        if (calculateWinning(gamer) == GameResult.WIN) {
             return gamer.getBettingMoney();
         }
 
@@ -95,11 +111,15 @@ public class Game {
     }
 
     public Pair<List<String>, Integer> getDealerResult() {
-        return new Pair<>(calculateGamerResult().values().stream()
+        return new Pair<>(calculateDealerResult(), calculateDealerRevenue());
+    }
+
+    private List<String> calculateDealerResult() {
+        return calculateGamerResult().values().stream()
                 .map(Pair::getKey)
                 .map(GameResult::reverse)
                 .map(GameResult::getMessage)
-                .collect(toList()), calculateDealerRevenue());
+                .collect(toList());
     }
 
     public Player findGamerByName(String name) {

@@ -2,6 +2,8 @@ package blackjack.domain;
 
 import blackjack.domain.player.Player;
 
+import static blackjack.domain.Status.BURST;
+
 public enum GameResult {
     WIN("승"),
     LOSE("패");
@@ -14,20 +16,20 @@ public enum GameResult {
 
     public static GameResult calculate(Player dealer, Player gamer) {
         if (isOnlyDealerBurst(dealer, gamer) || hasPlayerHigherScoreThanDealer(dealer, gamer)) {
-            return GameResult.WIN;
+            return WIN;
         }
 
-        return GameResult.LOSE;
+        return LOSE;
     }
 
     private static boolean isOnlyDealerBurst(Player dealer, Player gamer) {
-        return dealer.getStatus() == Status.BURST &&
-            gamer.getStatus() != Status.BURST;
+        return dealer.getStatus() == BURST &&
+            gamer.getStatus() != BURST;
     }
 
     private static boolean hasPlayerHigherScoreThanDealer(Player dealer, Player gamer) {
-        return dealer.getStatus() != Status.BURST &&
-            gamer.getStatus() != Status.BURST &&
+        return dealer.getStatus() != BURST &&
+            gamer.getStatus() != BURST &&
             dealer.getScore() < gamer.getScore();
     }
 

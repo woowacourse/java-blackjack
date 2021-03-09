@@ -29,11 +29,11 @@ public class Deck {
 
     public int getScore() {
         List<Card> deckForCalculate = new ArrayList<>(deck);
-        deckForCalculate.sort(comparing(Card::getScore, reverseOrder()));
+        deckForCalculate.sort(comparing(Card::getAccumulateScore, reverseOrder()));
 
         int score = 0;
         for (Card card : deckForCalculate) {
-            score += card.getScore(score);
+            score += card.getAccumulateScore(score);
         }
 
         return score;

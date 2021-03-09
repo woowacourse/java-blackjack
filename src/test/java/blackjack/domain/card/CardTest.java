@@ -21,6 +21,6 @@ public class CardTest {
     void getSocre_getScoreFromCard() {
         Card card = new Card(Symbol.SPADE, CardNumber.TWO);
 
-        assertThat(card.getScore()).isEqualTo(2);
+        assertThat(card.getAccumulateScore()).isEqualTo(2);
     }
 }

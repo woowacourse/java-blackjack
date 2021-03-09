@@ -12,9 +12,9 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.PlayerDto;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -89,14 +89,18 @@ public class BlackjackController {
     }
 
     private void printCurrentDeckAndScore(List<Player> gamers, Player dealer) {
-        List<Player> allPlayers = new ArrayList<>(Collections.singletonList(dealer));
-        allPlayers.addAll(gamers);
+        List<Player> allPlayers = Stream.of(gamers.stream(), Stream.of(dealer))
+                .flatMap(Function.identity())
+                .collect(toList());
 
-        OutputView.printCurrentDeckAndScore(
-                allPlayers.stream()
-                        .map(DtoAssembler::createPlayerDto)
-                        .collect(toList())
-        );
+        OutputView.printCurrentDeckAndScore(getAllPlayerDtos(allPlayers));
+
+    }
+
+    private List<PlayerDto> getAllPlayerDtos(List<Player> allPlayers) {
+        return allPlayers.stream()
+                .map(DtoAssembler::createPlayerDto)
+                .collect(toList());
     }
 
 }
