@@ -1,29 +1,29 @@
 package blackjack.domain.scoreboard;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.user.User;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Stream;
 
 public class UserGameResult {
-    private final GameResult gameResult;
-    private final WinOrLose winOrLose;
+    private final Map<User, WinOrLose> userResults;
 
-    public UserGameResult(List<Card> resultCards, String name, WinOrLose winOrLose) {
-        this.gameResult = new GameResult(resultCards, name);
-        this.winOrLose = winOrLose;
+    public UserGameResult(Map<User, WinOrLose> userResults) {
+        this.userResults = userResults;
     }
 
-    public int calculateScore() {
-        return gameResult.calculateScore();
+    public Stream<WinOrLose> getUserWinOrLose() {
+        return userResults.values().stream();
     }
 
-    public WinOrLose getWinOrLose() {
-        return winOrLose;
+    public Set<Map.Entry<User, WinOrLose>> getResultEntrySet() {
+        return userResults.entrySet();
     }
 
-    public String getStringWinOrLose() {
-        return winOrLose.getCharacter();
+    public Set<User> getUserSet() {
+        return userResults.keySet();
     }
 
     @Override
@@ -31,11 +31,11 @@ public class UserGameResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserGameResult that = (UserGameResult) o;
-        return Objects.equals(gameResult, that.gameResult) && winOrLose == that.winOrLose;
+        return Objects.equals(userResults, that.userResults);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(gameResult, winOrLose);
+        return Objects.hash(userResults);
     }
 }

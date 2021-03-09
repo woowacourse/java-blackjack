@@ -1,30 +1,47 @@
 package blackjack.domain.scoreboard;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Suit;
-import blackjack.domain.card.Value;
+import blackjack.domain.user.Name;
+import blackjack.domain.user.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserGameResultTest {
-    @DisplayName("결과로 갖고 있는 카드목록의 점수를 구하는 테스트")
+public class UserGameResultTest {
+    private Map<User, WinOrLose> temp;
+    private User first;
+    private User second;
+    private User third;
+    private User fourth;
+
+    @BeforeEach
+    void setUp() {
+        first = new User(Name.from("욘"));
+        second = new User(Name.from("웨지"));
+        third = new User(Name.from("포비"));
+        fourth = new User(Name.from("제이슨"));
+
+        WinOrLose firstUserGameResult = WinOrLose.DRAW;
+        WinOrLose secondUserGameResult = WinOrLose.WIN;
+        WinOrLose thirdUserGameResult = WinOrLose.LOSE;
+        WinOrLose fourthUserGameResult = WinOrLose.LOSE;
+
+        temp = new HashMap<>();
+        temp.put(first, firstUserGameResult);
+        temp.put(second, secondUserGameResult);
+        temp.put(third, thirdUserGameResult);
+        temp.put(fourth, fourthUserGameResult);
+    }
+
+    @DisplayName("유저 게임 결과 생성 테스트")
     @Test
-    void testCalculateScore() {
-        //given
-        List<Card> resultCards = Arrays.asList(
-                new Card(Suit.SPADE, Value.EIGHT), new Card(Suit.HEART, Value.FIVE),
-                new Card(Suit.CLOVER, Value.SEVEN)
-        );
+    void testUserGameResult() {
+        UserGameResult userGameResult = new UserGameResult(temp);
+        Set<User> userSet = new HashSet<>(Arrays.asList(first, second, third, fourth));
 
-        //when
-        UserGameResult userGameResult = new UserGameResult(resultCards, "유저", WinOrLose.WIN);
-
-        //then
-        assertThat(userGameResult.calculateScore()).isEqualTo(20);
+        assertThat(userGameResult.getUserSet()).isEqualTo(userSet);
     }
 }
