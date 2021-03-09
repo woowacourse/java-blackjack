@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,7 @@ public enum CompeteResult {
     }
     
     public static String getCompeteResultAgainstPlayers(Dealer dealer, List<Player> players) {
-        final EnumMap<CompeteResult, Long> competeResultLongEnumMap = competeAgainstPlayers(dealer, players);
+        final Map<CompeteResult, Long> competeResultLongEnumMap = competeAgainstPlayers(dealer, players);
         
         return competeResultLongEnumMap.entrySet()
                                        .stream()
@@ -25,7 +26,7 @@ public enum CompeteResult {
                                        .collect(Collectors.joining(RESULT_DELIMITER));
     }
     
-    public static EnumMap<CompeteResult, Long> competeAgainstPlayers(Dealer dealer, List<Player> players) {
+    public static Map<CompeteResult, Long> competeAgainstPlayers(Dealer dealer, List<Player> players) {
         return players.stream()
                       .map(player -> competeAgainstPlayer(dealer, player))
                       .collect(Collectors.groupingBy(Function.identity(), () -> new EnumMap<>(CompeteResult.class),
