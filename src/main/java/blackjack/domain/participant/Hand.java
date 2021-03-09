@@ -10,10 +10,10 @@ public class Hand {
 
     public static final int MAX_SCORE = 21;
 
-    private final Set<Card> cards;
+    private final List<Card> cards;
 
     public Hand() {
-        this.cards = new HashSet<>();
+        this.cards = new ArrayList<>();
     }
 
     public void addCard(final Card card) {
