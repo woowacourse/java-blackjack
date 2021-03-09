@@ -25,7 +25,7 @@ public class DealerTest {
         }
         assertThatThrownBy(() -> {
             dealer.drawCard();
-        }).isInstanceOf(NoSuchElementException.class);
+        }).isInstanceOf(NoSuchElementException.class).hasMessage("더이상 뽑을 카드가 없습니다.");
     }
 
     @Test

@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.CardDeck;
 
+import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
 
 public class Dealer extends Participant {
@@ -16,7 +17,11 @@ public class Dealer extends Participant {
     }
 
     public Card drawCard() {
-        return cardDeck.draw();
+        try {
+            return cardDeck.draw();
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("더이상 뽑을 카드가 없습니다.");
+        }
     }
 
     @Override
