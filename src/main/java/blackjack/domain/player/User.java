@@ -1,7 +1,5 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.card.type.CardNumberType.BLACKJACK;
-
 import blackjack.domain.ResultType;
 import blackjack.domain.UserDrawContinue;
 
@@ -18,11 +16,7 @@ public class User extends AbstractPlayer {
 
     @Override
     public boolean isCanDraw() {
-        return !(isDrawStop() || isOverBlackJack());
-    }
-
-    private boolean isOverBlackJack() {
-        return this.getScore() > BLACKJACK;
+        return !(isDrawStop() || isBust());
     }
 
     public boolean isDrawContinue(UserDrawContinue userDrawContinue) {
