@@ -2,6 +2,7 @@ package blackjack.domain.compete;
 
 import blackjack.domain.participant.Player;
 
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ public class CompeteResultGroup {
         return competeResultsOfPlayer.values()
                                      .stream()
                                      .map(this::reverseResult)
-                                     .collect(groupingBy(Function.identity(), counting()));
+                                     .collect(groupingBy(Function.identity(), () -> new EnumMap<>(CompeteResult.class), counting()));
     }
     
     private CompeteResult reverseResult(CompeteResult competeResult) {
