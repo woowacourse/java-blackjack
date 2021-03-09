@@ -18,7 +18,9 @@ public class BlackjackGameController {
         BlackjackGame blackjackGame = startGameAndFirstDraw();
         printFirstDrawInformation(blackjackGame);
 
-        playGame(blackjackGame);
+        processUserRound(blackjackGame);
+        blackjackGame.processDealerRound();
+        OutputView.printDealerMoreDrawMessage();
 
         DealerGameResult dealerGameResult = blackjackGame.createDealerGameResult();
         UserGameResult userGameResult = blackjackGame.createUserGameResult();
@@ -49,11 +51,6 @@ public class BlackjackGameController {
 
         printFirstDrawCards(blackjackGame);
         OutputView.println();
-    }
-
-    private void playGame(BlackjackGame blackjackGame) {
-        processUserRound(blackjackGame);
-        processDealerRound(blackjackGame);
     }
 
     private static void printFirstDrawCards(BlackjackGame blackjackGame) {
@@ -96,13 +93,6 @@ public class BlackjackGameController {
 
     private static void printUserCurrentCards(User currentUser) {
         OutputView.printCardList(currentUser);
-    }
-
-    private static void processDealerRound(BlackjackGame blackjackGame) {
-        while (blackjackGame.dealerScoreUnderSixTeen()) {
-            blackjackGame.drawCardToDealer();
-            OutputView.printDealerMoreDrawMessage();
-        }
     }
 
     private void printParticipantsCardsAndScore(DealerGameResult dealerGameResult, UserGameResult userGameResult) {

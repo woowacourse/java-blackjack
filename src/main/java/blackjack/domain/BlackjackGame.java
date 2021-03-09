@@ -43,6 +43,12 @@ public class BlackjackGame {
         }
     }
 
+    public void processDealerRound() {
+        while (dealerScoreUnderSixTeen()) {
+            drawCardToDealer();
+        }
+    }
+
     public boolean dealerScoreUnderSixTeen() {
         return dealer.calculateScore() < DEALER_MINIMUM_SCORE;
     }
