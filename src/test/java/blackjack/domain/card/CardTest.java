@@ -21,7 +21,7 @@ public class CardTest {
 
         int cardValue = card.value();
 
-        assertThat(cardValue).isEqualTo(11);
+        assertThat(cardValue).isEqualTo(1);
     }
 
     @Test

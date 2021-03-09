@@ -8,7 +8,8 @@ import java.util.List;
 
 public class Cards implements Comparable<Cards> {
     private static final int FIRST_CARD = 0;
-    private static final int BUST = 21;
+    private static final int BUST_VALUE = 21;
+    private static final int TEN = 10;
 
     private final List<Card> cards;
 
@@ -26,8 +27,9 @@ public class Cards implements Comparable<Cards> {
 
     public int calculateTotalValue() {
         int totalValue = sum();
-        if (this.isSoftHand() && totalValue > BUST) {
-            totalValue -= 10;
+        int aceCount = getAceCount();
+        for (int i = 0; i < aceCount; i++) {
+            totalValue += decideAceValue(totalValue);
         }
         return totalValue;
     }
@@ -38,10 +40,17 @@ public class Cards implements Comparable<Cards> {
                 .sum();
     }
 
-    public int getAceCount() {
+    private int getAceCount() {
         return (int) cards.stream()
                 .filter(Card::isAceCard)
                 .count();
+    }
+
+    private int decideAceValue(int totalValue) {
+        if (isSoftHand() && totalValue + TEN < BUST_VALUE) {
+            return TEN;
+        }
+        return 0;
     }
 
     public boolean isSoftHand() {
@@ -54,7 +63,7 @@ public class Cards implements Comparable<Cards> {
     }
 
     public boolean isBust() {
-        return calculateTotalValue() > BUST;
+        return calculateTotalValue() > BUST_VALUE;
     }
 
     @Override

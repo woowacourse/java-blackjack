@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CardsTest {
     @DisplayName("Card 객체 하나를 보여준다.")
@@ -37,7 +36,7 @@ public class CardsTest {
         assertThat(totalValue).isEqualTo(18);
     }
 
-    @DisplayName("Ace 카드를 포함하고 있고, 카드 합계가 21이 넘은 경우 총합에서 -10을 한다.")
+    @DisplayName("Ace 카드를 포함하고 있고, 카드 합계가 21이 넘은 경우")
     @Test
     public void containsAce() {
         Cards cards = new Cards(Arrays.asList(
@@ -98,18 +97,5 @@ public class CardsTest {
         boolean isBust = cards.isBust();
 
         assertThat(isBust).isFalse();
-    }
-
-    @Test
-    @DisplayName("에이스 카드 개수를 확인한다.")
-    void name() {
-        Cards cards = new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.ACE),
-                new Card(Shape.HEART, Value.ACE),
-                new Card(Shape.DIAMOND, Value.TEN)));
-
-        int aceCount = cards.getAceCount();
-
-        assertThat(aceCount).isEqualTo(2);
     }
 }
