@@ -34,7 +34,7 @@ public abstract class Participant {
         return cards.getCards();
     }
 
-    public int calculateFinalScore() {
+    public int calculateScore() {
         return cards.calculateScore();
     }
 

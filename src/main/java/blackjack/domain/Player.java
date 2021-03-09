@@ -10,13 +10,13 @@ public class Player extends Participant {
 
     @Override
     public boolean isAbleToReceiveCard() {
-        int minimumScore = calculateFinalScore();
+        int minimumScore = calculateScore();
         return minimumScore < MAXIMUM_SCORE_LIMIT;
     }
 
     public Result judgeResult(Dealer dealer) {
-        int dealerScore = dealer.calculateFinalScore();
-        int playerScore = calculateFinalScore();
+        int dealerScore = dealer.calculateScore();
+        int playerScore = calculateScore();
         if (isDealerWin(dealerScore, playerScore)) {
             return Result.LOSE;
         }

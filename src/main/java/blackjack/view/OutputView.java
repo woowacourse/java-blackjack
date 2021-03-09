@@ -74,7 +74,7 @@ public class OutputView {
         String cards = getCardsInformation(participant.getCards());
         System.out.println(
             participant.getName() + " 카드: " + cards + " - 결과: "
-                + participant.calculateFinalScore());
+                + participant.calculateScore());
     }
 
     public static void printFinalResult(StatisticResult statisticResult) {
