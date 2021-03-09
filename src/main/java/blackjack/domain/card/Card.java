@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Card {
-    private static final Map<String, Card> cards;
+    private static final Map<String, Card> CARDS;
     public static final int CARDS_CAPACITY = 52;
 
     private final Suits suit;
@@ -18,7 +18,7 @@ public class Card {
             assembleWithDenominations(cardValues, suits);
         }
 
-        cards = Collections.unmodifiableMap(cardValues);
+        CARDS = Collections.unmodifiableMap(cardValues);
     }
 
     private static void assembleWithDenominations(Map<String, Card> cardValues, Suits suits) {
@@ -34,7 +34,7 @@ public class Card {
     }
 
     public static Card from(Suits suit, Denominations denomination) {
-        Card card = cards.get(denomination.getName() + suit.getName());
+        Card card = CARDS.get(denomination.getName() + suit.getName());
         if (card == null) {
             throw new IllegalArgumentException();
         }
@@ -42,7 +42,7 @@ public class Card {
     }
 
     public static Card from(Denominations denomination, Suits suit) {
-        Card card = cards.get(denomination.getName() + suit.getName());
+        Card card = CARDS.get(denomination.getName() + suit.getName());
         if (card == null) {
             throw new IllegalArgumentException();
         }
