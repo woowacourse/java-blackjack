@@ -3,14 +3,13 @@ package blackjack.domain;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
-import blackjack.util.Pair;
+import blackjack.domain.result.ResultOfGamer;
+import blackjack.domain.result.ResultOfPlayers;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toList;
 
 public class Game {
 
@@ -61,19 +60,13 @@ public class Game {
         return new ResultOfPlayers(calculateResultOfGamers());
     }
 
-    private Map<String, Pair<WinOrLose, Integer>> calculateResultOfGamers() {
+    private List<ResultOfGamer> calculateResultOfGamers() {
         return gamers.getGamers().stream()
-                .collect(toMap(
-                        Player::getName,
-                        getResultOfGamersAndRevenue()
-                ));
-    }
-
-    private Function<Player, Pair<WinOrLose, Integer>> getResultOfGamersAndRevenue() {
-        return player -> new Pair<>(
-                calculateWinning(player),
-                calculateGamerRevenue(player)
-        );
+                .map(player -> new ResultOfGamer(
+                        player.getName(),
+                        calculateWinning(player),
+                        calculateGamerRevenue(player))
+                ).collect(toList());
     }
 
     private WinOrLose calculateWinning(Player player) {

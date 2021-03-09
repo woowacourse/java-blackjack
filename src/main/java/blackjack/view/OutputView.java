@@ -1,6 +1,7 @@
 package blackjack.view;
 
-import blackjack.util.Pair;
+import blackjack.domain.result.ResultOfDealer;
+import blackjack.domain.result.ResultOfGamer;
 import blackjack.view.dto.CardDto;
 import blackjack.view.dto.PlayerDto;
 
@@ -68,22 +69,22 @@ public class OutputView {
         }
     }
 
-    public static void printFinalWinAndLoseResult(Pair<List<String>, Integer> dealerResult,
-                                                  Map<String, Pair<String, Integer>> gamerResult) {
+    public static void printFinalWinAndLoseResult(ResultOfDealer resultOfDealer,
+                                                  List<ResultOfGamer> resultOfGamers) {
         System.out.println(FINAL_WIN_AND_LOSE_RESULT);
-        System.out.println(dealerResultToString(dealerResult.getKey()));
+        System.out.println(dealerResultToString(resultOfDealer.getWinOrLosesAsString()));
 
-        gamerResult.forEach(
-                (name, result) -> System.out.printf(PLAYER_FINAL_WIN_AND_LOSE_RESULT, name, result.getKey()));
+        resultOfGamers.forEach(
+                result -> System.out.printf(PLAYER_FINAL_WIN_AND_LOSE_RESULT, result.getName(), result.getWinOrLoseAsString()));
     }
     
-    public static void printFinalRevenueResult(Pair<List<String>, Integer> dealerResult,
-                                               Map<String, Pair<String, Integer>> gamerResult) {
+    public static void printFinalRevenueResult(ResultOfDealer resultOfDealer,
+                                               List<ResultOfGamer> resultOfGamers) {
         System.out.println(REVENUE_RESULT);
-        System.out.printf(REVENUE_RESULT_FORMAT, "딜러", dealerResult.getValue());
+        System.out.printf(REVENUE_RESULT_FORMAT, "딜러", resultOfDealer.getRevenue());
 
-        gamerResult.forEach(
-                (name, result) -> System.out.printf(REVENUE_RESULT_FORMAT, name, result.getValue()));
+        resultOfGamers.forEach(
+                result -> System.out.printf(REVENUE_RESULT_FORMAT, result.getName(), result.getRevenue()));
     }
 
     private static String dealerResultToString(List<String> dealerResult) {
