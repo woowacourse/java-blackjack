@@ -49,7 +49,7 @@ class BettingMoneyTest {
             .isEqualTo(0);
 
         assertThat(new BettingMoney(bettingMoney).getProfit(ResultTypeNew.WIN_WITH_BLACKJACK))
-            .isEqualTo((int)((double)bettingMoney * 1.5));
+            .isEqualTo((int) ((double) bettingMoney * 1.5));
 
         assertThat(new BettingMoney(bettingMoney).getProfit(ResultTypeNew.WIN_NOT_WITH_BLACKJACK))
             .isEqualTo(bettingMoney);

@@ -31,7 +31,7 @@ public class BettingMoney {
             return NO_PROFIT;
         }
         if (resultType == ResultTypeNew.WIN_WITH_BLACKJACK) {
-            return (int)((double)value * BLACKJACK_WIN_PROFIT_RATE);
+            return (int) ((double) value * BLACKJACK_WIN_PROFIT_RATE);
         }
         return value;
     }

@@ -97,7 +97,7 @@ public class UsersTest {
 
         Map<Name, Integer> profits = users.getProfits(dealer);
 
-        assertThat(profits.get(new Name(POBI))).isEqualTo((int)(1.5 * (double)bettingMoney));
+        assertThat(profits.get(new Name(POBI))).isEqualTo((int) (1.5 * (double) bettingMoney));
         assertThat(profits.get(new Name(INBI))).isEqualTo(bettingMoney);
         assertThat(profits.get(new Name(MUNGTO))).isEqualTo(-bettingMoney);
     }
@@ -133,7 +133,7 @@ public class UsersTest {
 
         Map<Name, Integer> profits = users.getProfits(dealer);
 
-        assertThat(profits.get(new Name(POBI))).isEqualTo((int)(1.5 * (double)bettingMoney));
+        assertThat(profits.get(new Name(POBI))).isEqualTo((int) (1.5 * (double) bettingMoney));
         assertThat(profits.get(new Name(JASON))).isEqualTo(0);
         assertThat(profits.get(new Name(INBI))).isEqualTo(-bettingMoney);
         assertThat(profits.get(new Name(MUNGTO))).isEqualTo(-bettingMoney);
