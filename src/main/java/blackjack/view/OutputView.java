@@ -2,6 +2,8 @@ package blackjack.view;
 
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Cards;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 import blackjack.domain.card.Card;
@@ -15,12 +17,12 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String COMMA_WITH_BLANK = ", ";
 
-    public static void printInitialComment(Users users) {
-        System.out.printf("%s와 %s에게 2장의 카드를 나누어주었습니다.\n", users.getDealer().getName(), createUsersCardStringFormat(users.getPlayers()));
+    public static void printInitialComment(Dealer dealer, Players players) {
+        System.out.printf("%s와 %s에게 2장의 카드를 나누어주었습니다.\n", dealer.getName(), createUsersCardStringFormat(players.players()));
     }
 
     public static void printCardsOfUsersWithScore(Users users) {
-        for (User user : users.gerUsers()) {
+        for (User user : users.users()) {
             System.out.print(makeCardsStringFormat(user) + " - 결과: " + makeResultComment(user.getCards()) + "\n");
         }
         System.out.println();
