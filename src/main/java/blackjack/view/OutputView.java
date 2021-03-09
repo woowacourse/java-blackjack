@@ -71,10 +71,10 @@ public class OutputView {
     }
 
     public static void printProfitPlayers(Dealer dealer, List<Player> players) {
-        for (int i = 0; i < players.size(); i++) {
-            System.out.println(players.get(i).getName()
+        for (Player player : players) {
+            System.out.println(player.getName()
                     + SEPARATOR
-                    + players.get(i).profit(dealer.getPlayerResult(i)));
+                    + player.profit(dealer.getPlayerResult(player)));
         }
     }
 

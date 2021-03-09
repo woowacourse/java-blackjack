@@ -36,7 +36,7 @@ public class Player extends Participant {
         }
 
         if (isLose(result)) {
-            return -betMoney.getBetMoney();
+            return -1 * betMoney.getBetMoney();
         }
 
         return betMoney.getBetMoney();

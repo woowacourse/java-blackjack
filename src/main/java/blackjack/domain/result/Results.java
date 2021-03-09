@@ -1,25 +1,30 @@
 package blackjack.domain.result;
 
-import java.util.ArrayList;
-import java.util.List;
+import blackjack.domain.player.Player;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Results {
 
-    private final List<Result> results;
+    private final Map<Player, Result> results;
 
     public Results() {
-        results = new ArrayList<>();
+        results = new HashMap<>();
     }
 
-    public void addResult(Result playerResult) {
-        results.add(playerResult);
+    public void addResult(Player player, Result playerResult) {
+        results.put(player, playerResult);
     }
 
-    public List<Result> findDealerResult() {
-        return results.stream()
-                .map(this::convertResult)
-                .collect(Collectors.toList());
+    public Map<Result, Integer> findDealerResult() {
+        Map<Result, Integer> dealerResults = new EnumMap<>(Result.class);
+
+        for (Player player : results.keySet()) {
+            dealerResults.getOrDefault(convertResult(results.get(player)), 0);
+        }
+
+        return dealerResults;
     }
 
     private Result convertResult(Result playerResult) {
@@ -34,7 +39,7 @@ public class Results {
         return Result.LOSE;
     }
 
-    public List<Result> findPlayerResult() {
-        return results;
+    public Result getResults(Player player) {
+        return results.get(player);
     }
 }
