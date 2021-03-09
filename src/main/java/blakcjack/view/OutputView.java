@@ -70,7 +70,7 @@ public class OutputView {
 		Map<Participant, Float> participantsProfit = outcomeStatistics.getParticipantsProfit();
 		for (final Participant participant : participantsProfit.keySet()) {
 			final float participantProfit = participantsProfit.get(participant);
-			System.out.printf("%s: %f%n", participant.getName(), participantProfit);
+			System.out.printf("%s: %.2f%n", participant.getName(), participantProfit);
 		}
 	}
 }
