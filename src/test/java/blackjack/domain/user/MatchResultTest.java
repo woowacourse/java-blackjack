@@ -20,14 +20,14 @@ class MatchResultTest {
     public User dealer;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         this.player = Player.create("A");
         this.dealer = new Dealer();
     }
 
     @DisplayName("MatchResult 반대 이름 가져오기 테스트")
     @Test
-    public void getReverseName() {
+    void getReverseName() {
         assertAll(
             () -> assertEquals(MatchResult.WIN.getReverseName(), "패"),
             () -> assertEquals(MatchResult.LOSE.getReverseName(), "승"),
@@ -37,7 +37,7 @@ class MatchResultTest {
 
     @DisplayName("플레이어 결과 테스트 : 플레이어가 이긴 경우")
     @Test
-    public void calculateResult_Win() {
+    void calculateResult_Win() {
         player.initialHands(getPlayerCards(), 21);
         dealer.initialHands(getDealerLosingCards(), 16);
         assertEquals(MatchResult.WIN, MatchResult.calculateResult(player, dealer));
@@ -45,7 +45,7 @@ class MatchResultTest {
 
     @DisplayName("플레이어 결과 테스트 : 플레이어가 진 경우")
     @Test
-    public void calculateResult_Lose() {
+    void calculateResult_Lose() {
         player.initialHands(getPlayerCards(), 21);
         dealer.initialHands(getDealerBlackjackCards(), 16);
         assertEquals(MatchResult.LOSE, MatchResult.calculateResult(player, dealer));
@@ -53,7 +53,7 @@ class MatchResultTest {
 
     @DisplayName("플레이어 결과 테스트 : 블랙잭으로 비긴 경우")
     @Test
-    public void calculateResult_DrawWithBlackjack() {
+    void calculateResult_DrawWithBlackjack() {
         player.initialHands(getPlayerBlackjackCards(), 21);
         dealer.initialHands(getDealerBlackjackCards(), 16);
         assertEquals(MatchResult.DRAW, MatchResult.calculateResult(player, dealer));
@@ -61,7 +61,7 @@ class MatchResultTest {
 
     @DisplayName("플레이어 결과 테스트 : 동점으로 비긴 경우")
     @Test
-    public void calculateResult_DrawWithScore() {
+    void calculateResult_DrawWithScore() {
         player.initialHands(getPlayerCards(), 21);
         dealer.initialHands(getDealerDrawCards(), 16);
         assertEquals(MatchResult.DRAW, MatchResult.calculateResult(player, dealer));

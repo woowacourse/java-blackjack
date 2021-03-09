@@ -24,7 +24,7 @@ class PlayerTest {
 
     @DisplayName("카드 추가 테스트")
     @Test
-    public void draw_additionalCard() {
+    void draw_additionalCard() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
         cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));
@@ -37,7 +37,7 @@ class PlayerTest {
 
     @DisplayName("player의 HandStatus.STAY 로 번경")
     @Test
-    public void convertToStay() {
+    void convertToStay() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
         cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));

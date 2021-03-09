@@ -16,7 +16,7 @@ class HandTest {
 
     @DisplayName("Hand 에 들고 있는 카드 점수 계산 : ACE 없는 경우")
     @Test
-    public void calculateHandScore() {
+    void calculateHandScore() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
         cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));
@@ -27,7 +27,7 @@ class HandTest {
 
     @DisplayName("Hand 에 들고 있는 카드 점수 계산 : ACE 있는 경우")
     @Test
-    public void countAce() {
+    void countAce() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.ACE, Suit.CLUBS));
         cards.add(new Card(Denomination.ACE, Suit.DIAMONDS));
@@ -40,7 +40,7 @@ class HandTest {
 
     @DisplayName("카드 추가 메소드 테스트")
     @Test
-    public void addCard() {
+    void addCard() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.ACE, Suit.CLUBS));
         cards.add(new Card(Denomination.SEVEN, Suit.DIAMONDS));
@@ -53,7 +53,7 @@ class HandTest {
 
     @DisplayName("카드 추가 메소드 테스트 : 추가 후 BUST")
     @Test
-    public void addCard_Bust() {
+    void addCard_Bust() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.EIGHT, Suit.CLUBS));
         cards.add(new Card(Denomination.SEVEN, Suit.DIAMONDS));
@@ -65,7 +65,7 @@ class HandTest {
 
     @DisplayName("플레이어가 Hit 인 경우 테스트 = 21점 이하면 hit")
     @Test
-    public void isHit_forPlayer() {
+    void isHit_forPlayer() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.TEN, Suit.CLUBS));
         cards.add(new Card(Denomination.SEVEN, Suit.DIAMONDS));

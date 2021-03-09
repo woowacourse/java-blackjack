@@ -10,14 +10,14 @@ class DeckTest {
 
     @DisplayName("카드 덱 2개 뽑기")
     @Test
-    public void pickInitialCards() {
+    void pickInitialCards() {
         Deck deck = new Deck();
         assertThat(deck.pickInitialCards().size()).isEqualTo(2);
     }
 
     @DisplayName("카드 덱 1개 뽑기")
     @Test
-    public void pickSingleCard() {
+    void pickSingleCard() {
         Deck deck = new Deck();
         assertThat(deck.pickSingleCard()).isNotNull();
     }
