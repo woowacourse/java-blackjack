@@ -23,8 +23,8 @@ class EarningRateTest {
     @MethodSource
     void calculatePrize(List<Card> cards, WinOrLose winOrLose, long expectedMoney) {
         //given
-        BettingMoney bettingMoney = new BettingMoney(1000L);
-        User user = new User("웨지", bettingMoney);
+        long bettingMoneyAmount = 1000L;
+        User user = new User("웨지", bettingMoneyAmount);
         user.drawCards(cards);
         //when
         BettingMoney resultMoney = EarningRate.calculate(user, winOrLose);

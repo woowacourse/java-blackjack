@@ -6,18 +6,12 @@ import blackjack.domain.user.status.Status;
 import static blackjack.domain.user.Dealer.DEALER_NAME;
 
 public class User extends Participant {
-    public static final long ZERO_MONEY = 0L;
-
     private final BettingMoney bettingMoney;
 
-    public User(String name, BettingMoney bettingMoney){
+    public User(String name, long bettingMoney){
         super(name);
         whenUserNameEqualsDealerName(name);
-        this.bettingMoney = bettingMoney;
-    }
-
-    public User(String name) {
-        this(name, new BettingMoney(ZERO_MONEY));
+        this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
     private void whenUserNameEqualsDealerName(String name) {

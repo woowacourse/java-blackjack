@@ -1,15 +1,18 @@
 package blackjack.view;
 
 import blackjack.domain.user.ParticipantName;
+import blackjack.dto.UserRequestDto;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String ASK_PLAYERS_NAME_MSG = "게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)";
+    private static final String ASK_PLAYER_BETTING_MONEY_MSG_FORMAT = "%s의 배팅 금액은? %n";
     private static final String DELIMITER = ",";
     private static final String MORE_DRAW_MSG_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
     private static final String YES = "y";
@@ -28,7 +31,26 @@ public class InputView {
     private static List<String> trimNames(List<String> splitNames) {
         return splitNames.stream()
                 .map(String::trim)
-                .collect(Collectors.toList());
+                .collect(toList());
+    }
+
+    public static List<UserRequestDto> askPlayersBettingMoney(List<ParticipantName> userNames){
+        return userNames.stream()
+                .map(InputView::askEachPlayerBettingMoney)
+                .collect(toList());
+    }
+
+    public static UserRequestDto askEachPlayerBettingMoney(ParticipantName userName) {
+        System.out.printf(ASK_PLAYER_BETTING_MONEY_MSG_FORMAT, userName);
+        return new UserRequestDto(userName.toString(), parseLong(SCANNER.nextLine()));
+    }
+
+    private static long parseLong(String input) {
+        try {
+            return Long.parseLong(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("금액은 숫자로 입력해주세요.");
+        }
     }
 
     public static Boolean askMoreDraw(ParticipantName userName) {

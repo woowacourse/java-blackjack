@@ -20,7 +20,7 @@ public class StatusTest {
     @ParameterizedTest
     @MethodSource
     void testOf(List<Card> cards, Status status) {
-        User user = new User("웨지");
+        User user = new User("웨지", 0);
         cards.forEach(user::drawCard);
 
         assertThat(Status.of(user)).isEqualTo(status);

@@ -1,5 +1,6 @@
 package blackjack.domain.scoreboard;
 
+import blackjack.domain.betting.BettingMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.painting.Suit;
@@ -23,7 +24,7 @@ class UserGameResultTest {
         ));
 
         //when
-        UserGameResult userGameResult = new UserGameResult(resultCards, "유저", WinOrLose.WIN);
+        UserGameResult userGameResult = new UserGameResult(resultCards, "유저", WinOrLose.WIN, new BettingMoney(1000L));
 
         //then
         assertThat(userGameResult.getScore()).isEqualTo(20);

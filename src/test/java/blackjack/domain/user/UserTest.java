@@ -17,7 +17,7 @@ class UserTest {
     @Test
     void testDrawCard() {
         //given
-        User user = new User("욘");
+        User user = new User("욘", 0);
 
         //when
         user.drawCard(new Card(Suit.DIAMOND, Symbol.ACE));
@@ -36,7 +36,7 @@ class UserTest {
         String dealerName = "딜러";
         //when
         //then
-        assertThatThrownBy(() -> new User(dealerName))
+        assertThatThrownBy(() -> new User(dealerName, 0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("딜러는 이름으로 사용할 수 없습니다.");
     }

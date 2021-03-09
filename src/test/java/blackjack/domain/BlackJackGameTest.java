@@ -14,7 +14,7 @@ public class BlackJackGameTest {
     @Test
     void testStartGame() {
         //given
-        User user = new User("욘");
+        User user = new User("욘", 0);
         //when
         BlackjackGame blackJackGame = BlackjackGame.create(new Users(Arrays.asList(user)));
         blackJackGame.firstDraw();
@@ -26,9 +26,9 @@ public class BlackJackGameTest {
     @Test
     void testFindPlayingUser() {
         //given
-        User firstUser = new User("욘");
-        User secondUser = new User("웨지");
-        User thirdUser = new User("포비");
+        User firstUser = new User("욘", 0);
+        User secondUser = new User("웨지", 0);
+        User thirdUser = new User("포비", 0);
         //when
         BlackjackGame blackJackGame = BlackjackGame.create(new Users(Arrays.asList(firstUser, secondUser, thirdUser)));
         blackJackGame.firstDraw();
