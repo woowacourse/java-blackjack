@@ -7,13 +7,9 @@ import java.util.List;
 
 public class CardDeck {
 
-    private final List<Card> cards = new ArrayList<>();
+    private static final List<Card> cards = new ArrayList<>();
 
-    public CardDeck() {
-        initialize();
-    }
-
-    private void initialize() {
+    static {
         for (final CardType type : CardType.values()) {
             Arrays.stream(CardNumber.values())
                 .forEach(number -> cards.add(new Card(number, type)));
@@ -21,11 +17,14 @@ public class CardDeck {
         Collections.shuffle(cards);
     }
 
-    public List<Card> getCards() {
+    private CardDeck() {
+    }
+
+    public static List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 
-    public Card distribute() {
+    public static Card distribute() {
         return cards.remove(0);
     }
 }
