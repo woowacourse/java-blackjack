@@ -194,4 +194,22 @@ public class UserTest {
         user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
         assertThat(user.profit(dealer)).isEqualTo(10000);
     }
+    
+    @DisplayName("딜러가 버스트일때 승, 버스트")
+    @Test
+    void dealerBustUserProfit() {
+        Dealer dealer = new Dealer();
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.TWO));
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+        User user = new User(TEST_NAME);
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.TWO));
+        user.setBetAmount("10000");
+        assertThat(user.profit(dealer)).isEqualTo(10000);
+
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+        user.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.JACK));
+        user.setBetAmount("10000");
+        assertThat(user.profit(dealer)).isEqualTo(-10000);
+    }
 }

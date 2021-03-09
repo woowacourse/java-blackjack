@@ -55,7 +55,7 @@ public class User extends AbstractPlayer {
         if (isBlackjack() && !dealer.isBlackjack()) {
             return ResultType.BLACKJACK;
         }
-        if (userScore > BLACKJACK || userScore < dealerScore) {
+        if (userScore > BLACKJACK || (userScore < dealerScore) && !dealer.isBust()) {
             return ResultType.LOSS;
         }
         if (userScore == dealerScore) {
