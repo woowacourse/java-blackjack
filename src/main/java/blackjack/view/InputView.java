@@ -29,14 +29,14 @@ public class InputView {
         System.out.printf(ASK_RECEIVE_CARD, player.getName(), LINE_SEPARATOR);
         
         String input = scanner.nextLine();
-        if (!isYorN(input)) {
+        if (!isCharacterInMenu(input)) {
             throw new IllegalArgumentException(ERROR_IS_NOT_Y_OR_N);
         }
         
         return input.equalsIgnoreCase("y");
     }
     
-    private static boolean isYorN(String input) {
+    private static boolean isCharacterInMenu(String input) {
         return input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n");
     }
 }
