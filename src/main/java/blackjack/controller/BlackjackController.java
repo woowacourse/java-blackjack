@@ -53,10 +53,14 @@ public class BlackjackController {
 
     private void progressGamersHitOrStand(List<Gamer> gamers) {
         for (Gamer gamer : gamers) {
-            while (gamer.canDraw() && InputView.inputHitOrStand(gamer.getName())) {
-                gamer.addCard(deck.draw());
-                OutputView.printPlayerCardInfo(gamer);
-            }
+            progressGamersHitOrStandInput(gamer);
+        }
+    }
+
+    private void progressGamersHitOrStandInput(Gamer gamer) {
+        while(gamer.canDraw() && InputView.inputHitOrStand(gamer.getName())) {
+            gamer.addCard(deck.draw());
+            OutputView.printPlayerCardInfo(gamer);
         }
     }
 
