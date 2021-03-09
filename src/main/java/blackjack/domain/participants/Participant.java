@@ -27,7 +27,7 @@ public abstract class Participant {
     protected abstract ParticipantStatus updateStatus(ParticipantStatus currentStatus);
 
     public void draw(Deck deck) {
-        if (!isContinue()) {
+        if (isNotContinue()) {
             throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
         }
         hand.addCard(deck.draw());
@@ -40,6 +40,10 @@ public abstract class Participant {
 
     public boolean isContinue() {
         return status == ParticipantStatus.HIT;
+    }
+
+    public boolean isNotContinue() {
+        return !isContinue();
     }
 
     public boolean isBust() {

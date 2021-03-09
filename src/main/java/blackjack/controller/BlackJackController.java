@@ -48,7 +48,7 @@ public class BlackJackController {
     }
 
     private static void preparePlayers(Players players) {
-        while (!players.isPrepared()) {
+        while (players.isNotPrepared()) {
             preparePlayer(players.nextPlayerToPrepare());
         }
     }

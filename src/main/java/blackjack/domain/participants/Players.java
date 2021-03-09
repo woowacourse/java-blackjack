@@ -48,8 +48,8 @@ public class Players {
             .orElseThrow(() -> new IllegalStateException("이미 모든 플레이어가 준비가 되었습니다."));
     }
 
-    public boolean isPrepared() {
-        return players.stream().noneMatch(Player::isContinue);
+    public boolean isNotPrepared() {
+        return !players.stream().noneMatch(Player::isContinue);
     }
 
     public List<Player> unwrap() {
