@@ -39,10 +39,10 @@ public class Dealer extends Participant {
         float profit = 0;
 
         for (int i = 0; i < players.size(); i++) {
-            profit += players.get(i).profit(getPlayerResult(i));
+            profit -= players.get(i).profit(getPlayerResult(i));
         }
 
-        return -profit;
+        return profit;
     }
 
     public List<Result> getDealerResults() {
