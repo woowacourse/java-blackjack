@@ -48,8 +48,9 @@ public class Player extends Participant {
         return ResultType.WIN;
     }
 
-    public int matchForProfit(Dealer dealer){
-        double profitMultiplier = match(dealer).getProfitMultiplier() * getState().getProfitMultiplier();
+    public int matchForProfit(Dealer dealer) {
+        double profitMultiplier =
+            match(dealer).getProfitMultiplier() * getState().getProfitMultiplier();
         return (int) (profitMultiplier * betting.unwrap());
     }
 }

@@ -1,7 +1,5 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.ResultType;
-import blackjack.domain.names.Name;
 import blackjack.dto.GameResult;
 import java.util.ArrayList;
 import java.util.HashSet;

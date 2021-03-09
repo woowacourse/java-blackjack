@@ -6,12 +6,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.CardDistributor;
 import blackjack.domain.Response;
-import blackjack.domain.ResultType;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.CardValue;
 import blackjack.domain.cards.Deck;
 import blackjack.domain.cards.Shape;
-import blackjack.domain.names.Name;
 import blackjack.domain.names.Names;
 import blackjack.dto.GameResult;
 import java.util.Arrays;
