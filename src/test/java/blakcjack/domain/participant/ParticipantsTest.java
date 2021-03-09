@@ -61,10 +61,10 @@ class ParticipantsTest {
 		assertThatThrownBy(customDeck::drawCard).isInstanceOf(EmptyDeckException.class)
 				.hasMessage(EMPTY_DECK_ERROR);
 
-		Cards dealerExepectedCards = new Cards();
-		dealerExepectedCards.add(Card.of(CardSymbol.SPADE, CardNumber.KING));
-		dealerExepectedCards.add(Card.of(CardSymbol.SPADE, CardNumber.ACE));
-		assertThat(participants.getParticipants().get(0).getCards()).isEqualTo(dealerExepectedCards);
+		Cards dealerExpectedCards = new Cards();
+		dealerExpectedCards.add(Card.of(CardSymbol.SPADE, CardNumber.KING));
+		dealerExpectedCards.add(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+		assertThat(participants.getParticipants().get(0).getCards()).isEqualTo(dealerExpectedCards);
 
 		Cards pobiExpectedCards = new Cards();
 		pobiExpectedCards.add(Card.of(CardSymbol.DIAMOND, CardNumber.KING));
