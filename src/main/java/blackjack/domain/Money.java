@@ -9,6 +9,7 @@ public class Money {
 
     private static final Pattern VALID_MONEY_FORMAT = Pattern.compile("^[-]?[0-9]*$");
     private static final String DEFAULT_MONEY_VALUE = "0";
+    private static final String TO_STRING_FORMAT = "%.0f";
     private final double value;
 
     public Money(String value) {
@@ -22,8 +23,20 @@ public class Money {
 
     private void validateMoneyInput(String value) {
         if (value == null || value.isEmpty() || !VALID_MONEY_FORMAT.matcher(value).matches()) {
-            throw new InvalidMoneyInputException("1 이상의 숫자를 입력해야 합니다.");
+            throw new InvalidMoneyInputException("숫자를 입력해야 합니다.");
         }
+    }
+
+    public Money update(Double updateAmount) {
+        return new Money(format(value + updateAmount));
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    private String format(Double value) {
+        return String.format(TO_STRING_FORMAT, value);
     }
 
     @Override
@@ -37,9 +50,5 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(value);
-    }
-
-    public double getValue() {
-        return value;
     }
 }

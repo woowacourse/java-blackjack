@@ -40,6 +40,10 @@ public abstract class BlackJackParticipant {
         return money.getValue();
     }
 
+    public void updateMoney(double input) {
+        money = money.update(input);
+    }
+
     protected void cannotDraw() {
         this.hit = false;
     }

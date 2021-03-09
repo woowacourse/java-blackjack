@@ -82,7 +82,12 @@ public class PlayerTest {
         assertThat(money.getValue()).isEqualTo(Double.parseDouble(input));
     }
 
-    @Test
-    void name() {
+    @ParameterizedTest
+    @ValueSource(doubles = {1, 10000, -1234, 0})
+    @DisplayName("돈 변경 기능")
+    void updateMoney(double input) {
+        Player aaron = new Player("aaorn");
+        aaron.updateMoney(input);
+        assertThat(aaron.getMoney()).isEqualTo(input);
     }
 }
