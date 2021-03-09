@@ -52,8 +52,8 @@ public abstract class Participant {
 
     public abstract boolean canDraw();
 
-    public void addMoney(Money money){
-        this.money =  this.money.add(money);
+    public void addMoney(Money money) {
+        this.money = this.money.add(money);
     }
 
 }
