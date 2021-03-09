@@ -19,55 +19,55 @@ import java.util.stream.Collectors;
 
 public class BlackjackController {
 
-    private final Deck deck;
-
-    public BlackjackController() {
-        List<Card> wholeCards = Arrays.stream(Denomination.values())
-            .flatMap(denomination -> Arrays.stream(Shape.values())
-                .map(shape -> Card.of(denomination, shape)))
-            .collect(Collectors.toList());
-        deck = new Deck(wholeCards);
-        deck.shuffle();
-    }
-
     public void play() {
-        List<Gamer> gamers = initGamers();
-        Dealer dealer = initDealer();
+        Deck deck = initDeck();
+        List<Gamer> gamers = initGamers(deck);
+        Dealer dealer = initDealer(deck);
         OutputView.printGameStartMessage(DealerDto.from(dealer), PlayersDto.from(gamers));
 
-        progressGamersHitOrStand(gamers);
-        progressDealerHitOrStand(dealer);
+        progressGamersHitOrStand(gamers, deck);
+        progressDealerHitOrStand(dealer, deck);
 
         OutputView.printPlayersScoreInfo(PlayerDto.from(dealer), PlayersDto.from(gamers));
         GameResult gameResult = dealer.judgeGameResultWithGamers(gamers);
         OutputView.printGameResult(gameResult);
     }
 
-    private List<Gamer> initGamers() {
+    private Deck initDeck() {
+        List<Card> wholeCards = Arrays.stream(Denomination.values())
+            .flatMap(denomination -> Arrays.stream(Shape.values())
+                .map(shape -> Card.of(denomination, shape)))
+            .collect(Collectors.toList());
+        Deck deck = new Deck(wholeCards);
+        deck.shuffle();
+        return deck;
+    }
+
+    private List<Gamer> initGamers(Deck deck) {
         String[] gamerNames = InputView.inputGamerNames();
         return Arrays.stream(gamerNames)
             .map(gamerName -> new Gamer(gamerName, Cards.of(deck.drawTwoStartCards())))
             .collect(Collectors.toList());
     }
 
-    private Dealer initDealer() {
+    private Dealer initDealer(Deck deck) {
         return new Dealer(Cards.of(deck.drawTwoStartCards()));
     }
 
-    private void progressGamersHitOrStand(List<Gamer> gamers) {
+    private void progressGamersHitOrStand(List<Gamer> gamers, Deck deck) {
         for (Gamer gamer : gamers) {
-            progressGamersHitOrStandInput(gamer);
+            progressGamersHitOrStandInput(gamer, deck);
         }
     }
 
-    private void progressGamersHitOrStandInput(Gamer gamer) {
+    private void progressGamersHitOrStandInput(Gamer gamer, Deck deck) {
         while(gamer.canDraw() && InputView.inputHitOrStand(gamer.getName())) {
             gamer.addCard(deck.draw());
             OutputView.printPlayerCardInfo(PlayerDto.from(gamer));
         }
     }
 
-    private void progressDealerHitOrStand(Dealer dealer) {
+    private void progressDealerHitOrStand(Dealer dealer, Deck deck) {
         while (dealer.canDraw()) {
             dealer.addCard(deck.draw());
             OutputView.printDealerOnemoreDrawedMessage();
