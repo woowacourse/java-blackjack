@@ -4,8 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Face;
 import blackjack.domain.card.Suit;
-import blackjack.domain.participant.Challenger;
-import blackjack.domain.participant.Challengers;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,11 +38,11 @@ public class ResultStatisticsTest {
         cardList.add(new Card(Suit.DIAMOND, Face.ACE));
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
-        List<Challenger> challengers = new ArrayList<>();
-        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
-        challengers.add(challenger);
+        List<Player> players = new ArrayList<>();
+        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        players.add(player);
 
-        ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
+        ResultStatistics resultStatistics = new ResultStatistics(new Players(players), dealer);
 
         assertThat(resultStatistics.getDealerLoseCounts()).isEqualTo(1);
     }
@@ -54,11 +54,11 @@ public class ResultStatisticsTest {
         cardList.add(new Card(Suit.DIAMOND, Face.JACK));
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
-        List<Challenger> challengers = new ArrayList<>();
-        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
-        challengers.add(challenger);
+        List<Player> players = new ArrayList<>();
+        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        players.add(player);
 
-        ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
+        ResultStatistics resultStatistics = new ResultStatistics(new Players(players), dealer);
 
         assertThat(resultStatistics.getDealerDrawCounts()).isEqualTo(1);
 
@@ -71,11 +71,11 @@ public class ResultStatisticsTest {
         cardList.add(new Card(Suit.DIAMOND, Face.JACK));
         cardList.add(new Card(Suit.DIAMOND, Face.TWO));
 
-        List<Challenger> challengers = new ArrayList<>();
-        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
-        challengers.add(challenger);
+        List<Player> players = new ArrayList<>();
+        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        players.add(player);
 
-        ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
+        ResultStatistics resultStatistics = new ResultStatistics(new Players(players), dealer);
 
         assertThat(resultStatistics.getDealerWinCounts()).isEqualTo(1);
     }
@@ -88,11 +88,11 @@ public class ResultStatisticsTest {
         cardList.add(new Card(Suit.HEART, Face.JACK));
         cardList.add(new Card(Suit.SPADE, Face.JACK));
 
-        List<Challenger> challengers = new ArrayList<>();
-        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
-        challengers.add(challenger);
+        List<Player> players = new ArrayList<>();
+        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        players.add(player);
 
-        ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer);
+        ResultStatistics resultStatistics = new ResultStatistics(new Players(players), dealer);
 
         assertThat(resultStatistics.getDealerWinCounts()).isEqualTo(1);
     }
@@ -105,15 +105,15 @@ public class ResultStatisticsTest {
         cardList.add(new Card(Suit.HEART, Face.JACK));
         cardList.add(new Card(Suit.SPADE, Face.JACK));
 
-        List<Challenger> challengers = new ArrayList<>();
-        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
-        challengers.add(challenger);
+        List<Player> players = new ArrayList<>();
+        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        players.add(player);
 
         Cards cards = new Cards(dealer.getCardsAsList());
         cards.add(new Card(Suit.HEART, Face.JACK));
 
         Dealer dealer1 = new Dealer(cards);
-        ResultStatistics resultStatistics = new ResultStatistics(new Challengers(challengers), dealer1);
+        ResultStatistics resultStatistics = new ResultStatistics(new Players(players), dealer1);
 
         assertThat(resultStatistics.getDealerWinCounts()).isEqualTo(1);
     }

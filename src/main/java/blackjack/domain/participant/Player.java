@@ -5,9 +5,9 @@ import blackjack.domain.card.Cards;
 
 import java.util.List;
 
-public class Challenger extends Participant {
+public class Player extends Participant {
 
-    public Challenger(final Cards cards, final Name name) {
+    public Player(final Cards cards, final Name name) {
         super(cards, name);
     }
 

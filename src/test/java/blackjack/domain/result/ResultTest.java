@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Face;
 import blackjack.domain.card.Suit;
-import blackjack.domain.participant.Challenger;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,46 +30,46 @@ public class ResultTest {
 
     @Test
     @DisplayName("챌린저의 점수가 딜러의 점수보다 높으면, 승리를 반환한다.")
-    void getChallengerResultIsWinner() {
+    void getPlayerResultIsWinner() {
         List<Card> cardList = new ArrayList<>();
 
         cardList.add(new Card(Suit.DIAMOND, Face.ACE));
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
-        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), new Name("pobi"));
 
-        assertThat(Result.getChallengerResult(challenger, dealer)).isEqualTo(Result.WIN);
+        assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.WIN);
     }
 
     @Test
     @DisplayName("챌린저의 점수가 딜러의 점수와 같으면, 무승부를 반환한다.")
-    void getChallengerResultIsDrawer() {
+    void getPlayerResultIsDrawer() {
         List<Card> cardList = new ArrayList<>();
 
         cardList.add(new Card(Suit.DIAMOND, Face.QUEEN));
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
-        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), new Name("pobi"));
 
-        assertThat(Result.getChallengerResult(challenger, dealer)).isEqualTo(Result.DRAW);
+        assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.DRAW);
     }
 
     @Test
     @DisplayName("챌린저의 점수가 딜러의 점수보다 낮으면, 패배를 반환한다.")
-    void getChallengerResultIsLoser() {
+    void getPlayerResultIsLoser() {
         List<Card> cardList = new ArrayList<>();
 
         cardList.add(new Card(Suit.DIAMOND, Face.ACE));
         cardList.add(new Card(Suit.DIAMOND, Face.ACE));
 
-        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), new Name("pobi"));
 
-        assertThat(Result.getChallengerResult(challenger, dealer)).isEqualTo(Result.LOSE);
+        assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.LOSE);
     }
 
     @Test
     @DisplayName("챌린저가 bust되면, 챌린저의 패배를 반환한다.")
-    void getChallengerResultIsLoserWhenChallengerIsBusted() {
+    void getPlayerResultIsLoserWhenPlayerIsBusted() {
         List<Card> cardList = new ArrayList<>();
 
         cardList.add(new Card(Suit.DIAMOND, Face.ACE));
@@ -77,22 +77,22 @@ public class ResultTest {
         cardList.add(new Card(Suit.DIAMOND, Face.JACK));
         cardList.add(new Card(Suit.DIAMOND, Face.QUEEN));
 
-        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), new Name("pobi"));
 
-        assertThat(Result.getChallengerResult(challenger, dealer)).isEqualTo(Result.LOSE);
+        assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.LOSE);
     }
 
     @Test
     @DisplayName("딜러가 bust되면, 챌린저의 승리를 반환한다.")
-    void getChallengerResultIsWinnerWhenDealerIsBusted() {
+    void getPlayerResultIsWinnerWhenDealerIsBusted() {
         List<Card> cardList = new ArrayList<>();
 
         cardList.add(new Card(Suit.DIAMOND, Face.ACE));
         cardList.add(new Card(Suit.DIAMOND, Face.ACE));
         dealer.receiveMoreCard(new Card(Suit.DIAMOND, Face.QUEEN));
 
-        Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), new Name("pobi"));
 
-        assertThat(Result.getChallengerResult(challenger, dealer)).isEqualTo(Result.WIN);
+        assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.WIN);
     }
 }

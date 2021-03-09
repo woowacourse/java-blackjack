@@ -1,7 +1,7 @@
 package blackjack.domain.result;
 
-import blackjack.domain.participant.Challenger;
-import blackjack.domain.participant.Challengers;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Dealer;
 
 import java.util.Collections;
@@ -10,14 +10,14 @@ import java.util.Map;
 
 public class ResultStatistics {
 
-    private final Map<Challenger, Result> resultStatistics = new LinkedHashMap<>();
+    private final Map<Player, Result> resultStatistics = new LinkedHashMap<>();
 
-    public ResultStatistics(final Challengers challengers, final Dealer dealer) {
-        challengers.getChallengersAsList()
-                .forEach(challenger -> resultStatistics.put(challenger, Result.getChallengerResult(challenger, dealer)));
+    public ResultStatistics(final Players players, final Dealer dealer) {
+        players.getPlayersAsList()
+                .forEach(player -> resultStatistics.put(player, Result.getPlayerResult(player, dealer)));
     }
 
-    public Map<Challenger, Result> getResultStatistics() {
+    public Map<Player, Result> getResultStatistics() {
         return resultStatistics;
     }
 

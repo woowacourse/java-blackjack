@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.participant.Challenger;
+import blackjack.domain.participant.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,16 +17,16 @@ public class InputView {
         return Arrays.asList(scanner.nextLine().split(","));
     }
 
-    public static boolean wantMoreCard(final Challenger challenger) {
+    public static boolean wantMoreCard(final Player player) {
         try {
             printNewLine();
-            System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", challenger.getNameAsString()));
+            System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getNameAsString()));
             String yesOrNo = scanner.nextLine();
             validateYesOrNo(yesOrNo);
             return "y".equals(yesOrNo);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return wantMoreCard(challenger);
+            return wantMoreCard(player);
         }
     }
 

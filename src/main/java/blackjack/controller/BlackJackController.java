@@ -1,7 +1,7 @@
 package blackjack.controller;
 
-import blackjack.domain.participant.Challenger;
-import blackjack.domain.participant.Challengers;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.result.ResultStatistics;
 import blackjack.service.BlackJackService;
@@ -26,7 +26,7 @@ public class BlackJackController {
 
     private void initBlackJackGame() {
         try {
-            blackJackService.initChallengers(requestNames());
+            blackJackService.initPlayers(requestNames());
             blackJackService.initDealer();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -34,7 +34,7 @@ public class BlackJackController {
             return;
         }
         OutputView.printInitSetting(blackJackService.getParticipants());
-        OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getChallengers());
+        OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getPlayers());
     }
 
     private void distributeCards() {
@@ -42,9 +42,9 @@ public class BlackJackController {
             return;
         }
 
-        Challengers challengers = blackJackService.getChallengers();
-        for (Challenger challenger : challengers.getChallengersAsList()) {
-            receiveChallengerMoreCard(challenger);
+        Players players = blackJackService.getPlayers();
+        for (Player player : players.getPlayersAsList()) {
+            receivePlayerMoreCard(player);
         }
         receiveDealerMoreCard(blackJackService.getDealer());
     }
@@ -54,7 +54,7 @@ public class BlackJackController {
     }
 
     private void gameResult() {
-        ResultStatistics resultStatistics = new ResultStatistics(blackJackService.getChallengers(), blackJackService.getDealer());
+        ResultStatistics resultStatistics = new ResultStatistics(blackJackService.getPlayers(), blackJackService.getDealer());
         OutputView.printSummary(resultStatistics);
     }
 
@@ -62,10 +62,10 @@ public class BlackJackController {
         return InputView.getNames();
     }
 
-    private void receiveChallengerMoreCard(final Challenger challenger) {
-        while (!challenger.isBust() && InputView.wantMoreCard(challenger)) {
-            blackJackService.receiveMoreCard(challenger);
-            OutputView.printParticipantCards(challenger);
+    private void receivePlayerMoreCard(final Player player) {
+        while (!player.isBust() && InputView.wantMoreCard(player)) {
+            blackJackService.receiveMoreCard(player);
+            OutputView.printParticipantCards(player);
         }
     }
 

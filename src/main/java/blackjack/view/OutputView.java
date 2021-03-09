@@ -1,8 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Challenger;
-import blackjack.domain.participant.Challengers;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.result.ResultStatistics;
@@ -15,26 +15,26 @@ public class OutputView {
     public static String NEW_LINE = System.lineSeparator();
 
     public static void printInitSetting(final List<Participant> participants) {
-        List<String> challengerNames = participants.stream()
-                .filter(participant -> participant instanceof Challenger)
+        List<String> playerNames = participants.stream()
+                .filter(participant -> participant instanceof Player)
                 .map(Participant::getNameAsString)
                 .collect(Collectors.toList());
         System.out.println(String.format
-                (NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.", String.join(", ", challengerNames)));
+                (NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.", String.join(", ", playerNames)));
     }
 
-    public static void printInitCards(final Dealer dealer, final Challengers challengers) {
+    public static void printInitCards(final Dealer dealer, final Players players) {
         printDealerInitCard(dealer);
-        printChallengersInitCards(challengers);
+        printPlayersInitCards(players);
     }
 
     public static void printParticipantCards(final Participant participant) {
         System.out.print(participant.getNameAsString() + "카드: ");
-        List<String> challengersCards = participant
+        List<String> playersCards = participant
                 .getCardsAsList()
                 .stream()
                 .map(card -> card.getFaceValueAsInt() + card.getSuitAsString()).collect(Collectors.toList());
-        System.out.print(String.join(", ", challengersCards));
+        System.out.print(String.join(", ", playersCards));
     }
 
     public static void printDealerReceiveMessage() {
@@ -70,9 +70,9 @@ public class OutputView {
         dealerCards.forEach(dealerCard -> System.out.println(dealerCard.getFaceValueAsInt() + dealerCard.getSuitAsString()));
     }
 
-    private static void printChallengersInitCards(final Challengers challengers) {
-        for (Challenger challenger : challengers.getChallengersAsList()) {
-            printParticipantCards(challenger);
+    private static void printPlayersInitCards(final Players players) {
+        for (Player player : players.getPlayersAsList()) {
+            printParticipantCards(player);
             printNewLine();
         }
     }

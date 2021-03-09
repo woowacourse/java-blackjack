@@ -12,25 +12,25 @@ import java.util.List;
 public class BlackJackService {
 
     private Deck deck = new Deck();
-    private Challengers challengers;
+    private Players players;
     private Dealer dealer;
 
     public void initDealer() {
         this.dealer = new Dealer(getInitCards());
     }
 
-    public void initChallengers(final List<String> requestNames) {
-        List<Challenger> challengers = new ArrayList<>();
+    public void initPlayers(final List<String> requestNames) {
+        List<Player> players = new ArrayList<>();
         for (String name : requestNames) {
-            challengers.add(new Challenger(getInitCards(), new Name(name)));
+            players.add(new Player(getInitCards(), new Name(name)));
         }
-        this.challengers = new Challengers(challengers);
+        this.players = new Players(players);
     }
 
     public List<Participant> getParticipants() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
-        participants.addAll(challengers.getChallengersAsList());
+        participants.addAll(players.getPlayersAsList());
         return participants;
     }
 
@@ -38,8 +38,8 @@ public class BlackJackService {
         return this.dealer;
     }
 
-    public Challengers getChallengers() {
-        return this.challengers;
+    public Players getPlayers() {
+        return this.players;
     }
 
     public void receiveMoreCard(final Participant participant) {
