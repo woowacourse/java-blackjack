@@ -15,7 +15,7 @@ public class OutputView {
     public static String DEALER_PREFIX = "딜러: ";
 
     public static void printInitSetting(final Challengers challengers) {
-        List<String> challengerNames = challengers.getList()
+        List<String> challengerNames = challengers.toList()
                 .stream()
                 .map(Challenger::getName)
                 .collect(Collectors.toList());
@@ -53,18 +53,16 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printSummary(final ResultStatistics resultStatistics) {
-        System.out.println("## 최종 승패");
+    public static void printSummary(final ResultStatistics resultStatistics, final Challengers challengers) {
+        System.out.println("## 최종 수익");
         System.out.print(DEALER_PREFIX);
-//        System.out.printf("%d승 %d무 %d패%n",
-//                resultStatistics.getDealerWinProfit(), resultStatistics.getDealerDraws(), resultStatistics.getDealerLoss());
-
-//        resultStatistics.getResultStatistics()
-//                .forEach((key, value) -> System.out.println(key.getName() + ": " + value.toString()));
+        System.out.println(resultStatistics.getDealerProfit());
+        challengers.toList().forEach(challenger ->
+                System.out.println(challenger.getName() + ": " + resultStatistics.getChallengerProfit(challenger)));
     }
 
     private static void printChallengersInitCards(final Challengers challengers) {
-        for (Challenger challenger : challengers.getList()) {
+        for (Challenger challenger : challengers.toList()) {
             printPlayerCards(challenger);
             printNewLine();
         }

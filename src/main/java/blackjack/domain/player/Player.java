@@ -25,7 +25,7 @@ public abstract class Player {
         return hand.getList();
     }
 
-    public void betting(BetMoney betMoney) {
+    public void betting(final BetMoney betMoney) {
         this.betMoney = new BetMoney(betMoney.toInt());
     }
 

@@ -30,7 +30,7 @@ public class BlackJackService {
     public List<Player> getPlayers() {
         List<Player> players = new ArrayList<>();
         players.add(dealer);
-        players.addAll(challengers.getList());
+        players.addAll(challengers.toList());
         return players;
     }
 

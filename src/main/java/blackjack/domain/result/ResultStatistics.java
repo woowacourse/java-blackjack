@@ -13,17 +13,13 @@ public class ResultStatistics {
     private final Map<Challenger, Result> resultStatistics = new LinkedHashMap<>();
 
     public ResultStatistics(final Challengers challengers, final Dealer dealer) {
-        challengers.getList()
+        challengers.toList()
                 .forEach(challenger -> resultStatistics.put(challenger, challenger.getChallengerResult(dealer)));
     }
 
-//    public Map<Challenger, Result> getResultStatistics() {
-//        return resultStatistics;
-//    }
-
-    public double getChallengerProfit(final Challenger challenger) {
+    public int getChallengerProfit(final Challenger challenger) {
         if (resultStatistics.get(challenger) == Result.BLACKJACK) {
-            return challenger.getBetMoney() * BLACKJACK_BONUS;
+            return (int) (challenger.getBetMoney() * BLACKJACK_BONUS);
         }
         if (resultStatistics.get(challenger) == Result.WIN) {
             return challenger.getBetMoney();
