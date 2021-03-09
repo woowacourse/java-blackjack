@@ -21,4 +21,6 @@ public interface Participant {
     boolean isDealer();
 
     GameResult calculateResult(int enemyScore);
+
+    void betting(int money);
 }

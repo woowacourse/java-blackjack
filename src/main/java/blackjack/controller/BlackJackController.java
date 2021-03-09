@@ -54,8 +54,16 @@ public class BlackJackController {
         List<Participant> participants = names.stream()
                 .map(name -> new Player(name, new BlackJackScoreRule()))
                 .collect(Collectors.toList());
+        bettingPlayer(participants);
         participants.add(0, new Dealer(new BlackJackScoreRule()));
         return new Participants(participants);
+    }
+
+    private void bettingPlayer(List<Participant> participantList) {
+        for (Participant participant: participantList) {
+            int bettingMoney = InputView.inputBettingMoney(participant);
+            participant.betting(bettingMoney);
+        }
     }
 
     public DealerResultDto getDealerResultDto(Dealer dealer, List<Player> players) {

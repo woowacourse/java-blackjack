@@ -14,6 +14,7 @@ public class Dealer implements Participant {
     private final String name;
     private final List<Card> cards;
     private final ScoreRule scoreRule;
+    private int money = 0;
 
     public Dealer(ScoreRule scoreRule) {
         this.name = DEALER_NAME;
@@ -61,5 +62,10 @@ public class Dealer implements Participant {
     public GameResult calculateResult(int enemyScore) {
         return GameResult.valueOf(enemyScore, sumTotalScore());
 
+    }
+
+    @Override
+    public void betting(int money) {
+        this.money = money;
     }
 }

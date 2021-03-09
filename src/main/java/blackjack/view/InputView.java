@@ -17,6 +17,13 @@ public class InputView {
         return Arrays.asList(input.split(DELIMITER_COMMA));
     }
 
+
+    public static int inputBettingMoney(Participant participant) {
+        System.out.println(participant.getName() + "의 배팅 금액은?");
+        int money = Integer.parseInt(scanner.nextLine());
+        return money;
+    }
+
     public static boolean inputAskMoreCard(Participant participant) {
         if (participant.isDealer()) {
             return true;

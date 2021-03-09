@@ -12,9 +12,10 @@ public class Player implements Participant {
     private static final int TO = 2;
     private static final int DRAW_BOUND_SCORE = 21;
 
-    private String name;
-    private List<Card> cards;
-    private ScoreRule scoreRule;
+    private final String name;
+    private final List<Card> cards;
+    private final ScoreRule scoreRule;
+    private int money;
 
     public Player(String name, ScoreRule scoreRule) {
         this.name = name;
@@ -61,5 +62,10 @@ public class Player implements Participant {
     @Override
     public GameResult calculateResult(int enemyScore) {
         return GameResult.valueOf(sumTotalScore(), enemyScore);
+    }
+
+    @Override
+    public void betting(int money) {
+        this.money = money;
     }
 }
