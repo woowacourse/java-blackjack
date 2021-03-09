@@ -4,7 +4,10 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Symbol;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CardFactory {
 
@@ -15,18 +18,15 @@ public class CardFactory {
     }
 
     private static List<Card> initNormalCards() {
-        List<Card> cards = new ArrayList<>();
 
-        for (Symbol symbol : Symbol.values()) {
-            createCards(cards, symbol);
-        }
-
-        return cards;
+        return Arrays.stream(Symbol.values())
+            .flatMap(CardFactory::createCard)
+            .collect(Collectors.toList());
     }
 
-    private static void createCards(List<Card> cards, Symbol symbol) {
-        for (CardNumber cardNumber : CardNumber.values()) {
-            cards.add(new Card(symbol, cardNumber));
-        }
+    private static Stream<Card> createCard(Symbol symbol) {
+        return Arrays.stream(CardNumber.values())
+            .map(cardNumber -> new Card(symbol, cardNumber));
     }
+
 }
