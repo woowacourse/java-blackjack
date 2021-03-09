@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.Score;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,18 +12,12 @@ public class Hands {
     private static final int WINNING_BASELINE = 21;
 
     private final List<Card> cards;
-    private final boolean isBlackjack;
 
     public Hands(final List<Card> cards) {
         if (cards.size() != INITIAL_SIZE) {
             throw new IllegalArgumentException("[ERROR] 초기 카드는 2장입니다.");
         }
         this.cards = cards;
-        isBlackjack = validateBlackjack();
-    }
-
-    private boolean validateBlackjack() {
-        return calculate() == WINNING_BASELINE;
     }
 
     public void addCard(Card card) {
@@ -40,7 +33,7 @@ public class Hands {
     }
 
     private int properSum(int sum) {
-        if (sum + 10 > WINNING_BASELINE) {
+        if (sum + TEN > WINNING_BASELINE) {
             return sum;
         }
         return sum + 10;
@@ -76,6 +69,6 @@ public class Hands {
     }
 
     public boolean isBlackjack() {
-        return isBlackjack;
+        return cards.size() == INITIAL_SIZE && calculate() == WINNING_BASELINE;
     }
 }
