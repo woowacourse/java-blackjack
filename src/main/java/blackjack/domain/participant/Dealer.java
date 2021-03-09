@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
-import blackjack.domain.result.DealerResultDto;
+import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResultDto;
 import blackjack.domain.result.MatchResult;
 import blackjack.domain.result.PlayerResultDto;
@@ -57,7 +57,7 @@ public class Dealer extends Participant {
 
     public GameResultDto getGameResult(List<Player> players) {
         List<PlayerResultDto> playersResults = new ArrayList<>();
-        DealerResultDto dealerMatchCount = new DealerResultDto();
+        DealerResult dealerMatchCount = new DealerResult();
         int dealerTotal = getHandTotal();
 
         for (Player player : players) {

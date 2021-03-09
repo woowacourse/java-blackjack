@@ -7,11 +7,11 @@ public class GameResultDto {
 
     private final List<Card> dealerCards;
     private final int dealerSum;
-    private final DealerResultDto dealerResult;
+    private final DealerResult dealerResult;
     private final List<PlayerResultDto> playersResults;
 
     public GameResultDto(List<Card> dealerCards, int dealerSum,
-            DealerResultDto dealerResult,
+            DealerResult dealerResult,
             List<PlayerResultDto> playersResults) {
         this.dealerCards = dealerCards;
         this.dealerSum = dealerSum;
@@ -27,7 +27,7 @@ public class GameResultDto {
         return dealerSum;
     }
 
-    public DealerResultDto getDealerResult() {
+    public DealerResult getDealerResult() {
         return dealerResult;
     }
 

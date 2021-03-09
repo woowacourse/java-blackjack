@@ -6,7 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.DealerResultDto;
+import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResultDto;
 import blackjack.domain.result.PlayerResultDto;
 import java.util.List;
@@ -71,7 +71,7 @@ public class OutputView {
         System.out.printf("%s 카드: %s - 결과: %d\n", name, cards, result);
     }
 
-    private static void printDealerResult(DealerResultDto dealerResult) {
+    private static void printDealerResult(DealerResult dealerResult) {
         int win = dealerResult.getWinCount();
         int lose = dealerResult.getLoseCount();
         int tie = dealerResult.getTieCount();

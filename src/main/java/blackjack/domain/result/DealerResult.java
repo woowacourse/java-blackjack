@@ -3,11 +3,11 @@ package blackjack.domain.result;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class DealerResultDto {
+public class DealerResult {
 
     private final Map<MatchResult, Integer> result;
 
-    public DealerResultDto() {
+    public DealerResult() {
         result = new EnumMap<>(MatchResult.class);
         result.put(MatchResult.WIN, 0);
         result.put(MatchResult.LOSE, 0);
