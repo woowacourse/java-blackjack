@@ -1,11 +1,8 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-import static blackjack.controller.BlackJackGame.BLACKJACK_NUMBER;
+import static blackjack.domain.state.BlackJack.BLACKJACK_NUMBER;
 
 public class Cards {
     private static final String NO_REMAIN_CARD_ERROR_MESSAGE = "남은 카드가 없습니다.";
@@ -14,8 +11,8 @@ public class Cards {
 
     private final List<Card> cards;
 
-    public Cards() {
-        this(Collections.emptyList());
+    public Cards(Card... cards) {
+        this(Arrays.asList(cards));
     }
 
     public Cards(List<Card> cards) {

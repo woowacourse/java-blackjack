@@ -1,6 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +15,7 @@ class StayTest {
     @Test
     @DisplayName("Stay 상태인 경우 카드를 더 뽑을 수 없다.")
     void isFinished() {
-        State state = new Stay();
+        State state = new Stay(new Cards());
         assertTrue(state.isFinished());
     }
 
@@ -22,7 +23,7 @@ class StayTest {
     @DisplayName("카드를 뽑을 수 없는 상태 예외처리")
     void cannotDraw() {
         assertThatThrownBy(() -> {
-            State state = new Stay();
+            State state = new Stay(new Cards());
             state.draw(new Card(Shape.DIAMOND, Denomination.KING));
         }).isInstanceOf(IllegalStateException.class);
     }

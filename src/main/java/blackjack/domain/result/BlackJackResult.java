@@ -6,7 +6,6 @@ import blackjack.dto.PlayersResultDto;
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class BlackJackResult {
     private final Map<Player, MatchResult> result;
@@ -35,18 +34,5 @@ public class BlackJackResult {
 
     public PlayersResultDto toPlayersResultDto() {
         return new PlayersResultDto(result);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BlackJackResult that = (BlackJackResult) o;
-        return Objects.equals(result, that.result);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(result);
     }
 }

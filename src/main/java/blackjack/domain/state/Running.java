@@ -2,8 +2,8 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
 
-public class Bust extends Finished {
-    public Bust(Cards cards) {
+public abstract class Running extends Started {
+    public Running(Cards cards) {
         super(cards);
     }
 }

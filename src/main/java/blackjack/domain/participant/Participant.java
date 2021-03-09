@@ -2,31 +2,37 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
 import blackjack.dto.ParticipantDto;
 
 import java.util.Objects;
 
 public abstract class Participant {
     protected Nickname nickname;
-    protected Cards cards;
+    protected State state;
 
-    protected Participant(Nickname nickname, Cards cards) {
+    protected Participant(Nickname nickname) {
         this.nickname = nickname;
-        this.cards = cards;
     }
 
     public abstract boolean canDraw();
 
-    public final void receiveCard(Card card) {
-        cards.addCard(card);
+    public void firstDraw(Card firstCard, Card secondCard) {
+        this.state = StateFactory.draw(firstCard, secondCard);
+    }
+
+    public void draw(Card card) {
+        state = state.draw(card);
     }
 
     public final ParticipantDto toParticipantDto() {
-        return new ParticipantDto(this.nickname, this.cards, this.cards.calculateScore());
+        Cards cards = state.getCards();
+        return new ParticipantDto(this.nickname, cards, cards.calculateScore());
     }
 
     public final Cards getCurrentCards() {
-        return cards;
+        return state.getCards();
     }
 
     public final Nickname getName() {
@@ -38,11 +44,11 @@ public abstract class Participant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Participant that = (Participant) o;
-        return Objects.equals(nickname, that.nickname) && Objects.equals(cards, that.cards);
+        return Objects.equals(nickname, that.nickname) && Objects.equals(state, that.state);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nickname, cards);
+        return Objects.hash(nickname, state);
     }
 }

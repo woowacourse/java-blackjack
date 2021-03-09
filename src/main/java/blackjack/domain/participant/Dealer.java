@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Cards;
 import blackjack.domain.result.MatchResult;
 
 public class Dealer extends Participant {
@@ -8,16 +7,18 @@ public class Dealer extends Participant {
     private static final int DEALER_DRAW_CONDITION = 16;
 
     public Dealer() {
-        super(DEALER_NAME, new Cards());
+        super(DEALER_NAME);
     }
 
     public MatchResult matchGame(Player player) {
-        return MatchResult.getPlayerMatchResult(player.cards.calculateScore(), cards.calculateScore());
+        int playerScore = player.state.getCards().calculateScore();
+        int dealerScore = state.getCards().calculateScore();
+        return MatchResult.getPlayerMatchResult(playerScore, dealerScore);
     }
 
     @Override
     public boolean canDraw() {
-        return this.cards.calculateScore() <= DEALER_DRAW_CONDITION;
+        return this.state.getCards().calculateScore() <= DEALER_DRAW_CONDITION;
     }
 }
 

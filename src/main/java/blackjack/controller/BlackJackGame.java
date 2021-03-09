@@ -16,9 +16,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
-    private static final int INIT_DRAW_COUNT = 2;
-    public static final int BLACKJACK_NUMBER = 21;
-
     public void start() {
         try {
             Players players = registerPlayers();
@@ -60,19 +57,14 @@ public class BlackJackGame {
     }
 
     private void distributeCards(Players players, Dealer dealer, CardDeck cardDeck) {
-        eachDrawTwoCards(players, dealer, cardDeck);
+        dealer.firstDraw(cardDeck.drawCard(), cardDeck.drawCard());
+        players.eachPlayerFirstDraw(cardDeck);
+
         List<ParticipantDto> playersDto = players.toPlayersDto();
         OutputView.distributeCardMessage(playersDto);
         OutputView.showDealerFirstCard(dealer.toParticipantDto());
         OutputView.showCards(playersDto);
         OutputView.printNewLine();
-    }
-
-    private void eachDrawTwoCards(Players players, Dealer dealer, CardDeck cardDeck) {
-        for (int i = 0; i < INIT_DRAW_COUNT; i++) {
-            dealer.receiveCard(cardDeck.drawCard());
-            players.eachPlayerDrawCard(cardDeck);
-        }
     }
 
     private void playersTurn(Players players, CardDeck cardDeck) {
@@ -82,31 +74,27 @@ public class BlackJackGame {
     }
 
     private void eachPlayerTurn(CardDeck cardDeck, Player player) {
-        while (playerDrawCard(player)) {
-            player.receiveCard(cardDeck.drawCard());
+        while (player.canDraw() && askDrawCard(player)) {
+            player.draw(cardDeck.drawCard());
             OutputView.showCards(player.toParticipantDto());
             OutputView.printNewLine();
         }
     }
 
-    private boolean playerDrawCard(Player player) {
-        return player.canDraw() && askDrawCard(player);
-    }
-
     private boolean askDrawCard(Player player) {
         try {
             OutputView.askOneMoreCard(player.toParticipantDto());
-            boolean isDraw = InputView.inputAnswer();
-            showCurrentCard(player, isDraw);
-            return isDraw;
+            boolean wantDraw = InputView.inputAnswer();
+            showCurrentCardWhenStopDraw(player, wantDraw);
+            return wantDraw;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
             return askDrawCard(player);
         }
     }
 
-    private void showCurrentCard(Player player, boolean isDraw) {
-        if (!isDraw) {
+    private void showCurrentCardWhenStopDraw(Player player, boolean wantDraw) {
+        if (!wantDraw) {
             OutputView.showCards(player.toParticipantDto());
             OutputView.printNewLine();
         }
@@ -114,7 +102,7 @@ public class BlackJackGame {
 
     private void dealerTurn(Dealer dealer, CardDeck cardDeck) {
         while (dealer.canDraw()) {
-            dealer.receiveCard(cardDeck.drawCard());
+            dealer.draw(cardDeck.drawCard());
             OutputView.dealerReceiveOneCard();
         }
     }

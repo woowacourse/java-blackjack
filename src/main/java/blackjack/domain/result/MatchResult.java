@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import java.util.Arrays;
 
-import static blackjack.controller.BlackJackGame.BLACKJACK_NUMBER;
+import static blackjack.domain.state.BlackJack.BLACKJACK_NUMBER;
 
 public enum MatchResult {
     WIN("승") {

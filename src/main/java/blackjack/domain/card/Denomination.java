@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.controller.BlackJackGame.BLACKJACK_NUMBER;
+import static blackjack.domain.state.BlackJack.BLACKJACK_NUMBER;
 
 public enum Denomination {
     ACE("A", 1),

@@ -47,9 +47,9 @@ public class Players {
         return result;
     }
 
-    public void eachPlayerDrawCard(CardDeck cardDeck) {
+    public void eachPlayerFirstDraw(CardDeck cardDeck) {
         for (Player player : players) {
-            player.receiveCard(cardDeck.drawCard());
+            player.firstDraw(cardDeck.drawCard(), cardDeck.drawCard());
         }
     }
 
