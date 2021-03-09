@@ -48,4 +48,12 @@ public class Participants {
     List<Participant> getParticipants() {
         return participants;
     }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
 }

@@ -1,9 +1,5 @@
 package blackjack.domain;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-
 public class Dealer extends Participant {
 
     private static final int MAXIMUM_SCORE_FOR_ADDITIONAL_CARD = 16;
@@ -21,14 +17,14 @@ public class Dealer extends Participant {
         return score <= MAXIMUM_SCORE_FOR_ADDITIONAL_CARD;
     }
 
-    public Map<Result, Long> getStatisticResult(List<Player> players) {
-        Map<Result, Long> statisticResult = new EnumMap<>(Result.class);
-        for (Player player : players) {
-            Result result = player.judgeResult(this);
-            Result replacedResult = result.replaceWinWithLose();
-            statisticResult.put(replacedResult,
-                statisticResult.getOrDefault(replacedResult, DEFAULT_VALUE) + INCREASE_COUNT);
-        }
-        return statisticResult;
-    }
+//    public Map<Result, Long> getStatisticResult(List<Player> players) {
+//        Map<Result, Long> statisticResult = new EnumMap<>(Result.class);
+//        for (Player player : players) {
+//            Result result = player.judgeResult(this);
+//            Result replacedResult = result.replaceWinWithLose();
+//            statisticResult.put(replacedResult,
+//                statisticResult.getOrDefault(replacedResult, DEFAULT_VALUE) + INCREASE_COUNT);
+//        }
+//        return statisticResult;
+//    }
 }

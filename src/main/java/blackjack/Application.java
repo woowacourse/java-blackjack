@@ -5,6 +5,7 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.domain.Result;
+import blackjack.domain.StatisticResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -30,8 +31,10 @@ public class Application {
         players.forEach(player -> drawMoreCard(player, cardDeck));
         receiveDealerCard(dealer, cardDeck);
         OutputView.printFinalCardsAndScore(participants);
-        Map<Result, Long> statisticResult = dealer.getStatisticResult(players);
-        OutputView.printFinalResult(dealer, players, statisticResult);
+
+        StatisticResult statisticResult = new StatisticResult(participants);
+        Map<Result, Long> dealerStatisticResult = statisticResult.aggregateDealerStatisticResult();
+        OutputView.printFinalResult(dealer, players, dealerStatisticResult);
     }
 
     private static void drawMoreCard(Player player, CardDeck cardDeck) {
