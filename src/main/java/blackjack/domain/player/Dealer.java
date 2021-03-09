@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.player.strategy.CardOpenStrategy;
 import blackjack.domain.player.strategy.OneCardOpenStrategy;
 import java.util.List;
@@ -28,5 +29,11 @@ public class Dealer extends AbstractPlayer {
     @Override
     public List<Card> getCards() {
         return cardOpenStrategy.getCardsWithStrategy(super.getCards());
+    }
+
+    public void drawCardsWhileUnder17(Cards cards) {
+        while (isCanDraw()) {
+            drawRandomOneCard(cards);
+        }
     }
 }
