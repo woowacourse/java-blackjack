@@ -3,11 +3,12 @@ package blackjack.domain.state;
 import blackjack.domain.Hand;
 
 public class StateFactory {
+    private StateFactory() {}
 
     public static State getInstance(Hand hand) {
-        if (hand.getScore() == 21) {
+        if (hand.isBlackJack()) {
             return new BlackJackState();
         }
-        return null;
+        return new Hit();
     }
 }
