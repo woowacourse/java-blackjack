@@ -49,7 +49,7 @@ public class UserTest {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
+    @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 isCanDraw() true")
     @Test
     void canDrawCardWhen1() {
         User user = new User(POBI);
