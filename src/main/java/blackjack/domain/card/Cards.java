@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static blackjack.domain.card.Score.BLACK_JACK;
+import static blackjack.domain.card.Score.*;
 
 public class Cards {
-
-    public static final int ZERO_COUNT = 0;
-    public static final int ADDITIONAL_ACE_SCORE = 10;
 
     private final List<Card> cards;
 
@@ -21,28 +18,54 @@ public class Cards {
         cards.add(card);
     }
 
-    public Score getScore() {
-        int score = 0;
+    public Score totalScore() {
+        Score totalScore = ZERO_SCORE;
         for (Card card : cards) {
-            score += card.getDenomination().getScore();
+            Score cardScore = card.getCardScore();
+            totalScore = totalScore.addScore(cardScore);
         }
-        if (countAce() != ZERO_COUNT && score + ADDITIONAL_ACE_SCORE <= BLACK_JACK) {
-            score += ADDITIONAL_ACE_SCORE;
+
+        if (hasAce() && totalScore.addScore(ADDITIONAL_ACE_SCORE)
+                .isLessThan(Score.of(MIN_BUST_SCORE))) {
+            totalScore = totalScore.addScore(ADDITIONAL_ACE_SCORE);
         }
-        return new Score(score);
+        return totalScore;
     }
 
-    public int countAce() {
-        return (int) cards.stream()
-                .filter(card -> card.isAce())
-                .count();
+    public int countCards() {
+        return cards.size();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    public boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackJack() {
+        return isTwentyOne() && isOnlyTwoCard();
+    }
+
+    public boolean isTwentyOne() {
+        return totalScore().isTwentyOne();
+    }
+
+    public boolean isOnlyTwoCard() {
+        return countCards() == 2;
     }
 
     public boolean isBust() {
-        return getScore().isBust();
+        return totalScore().isBust();
     }
 
-    public List<Card> cards() {
-        return Collections.unmodifiableList(cards);
+    public boolean isBiggerThan(Cards cards) {
+        return totalScore().isBiggerThan(cards.totalScore());
+    }
+
+    public boolean isLessThan(Cards cards) {
+        return totalScore().isLessThan(cards.totalScore());
     }
 }
