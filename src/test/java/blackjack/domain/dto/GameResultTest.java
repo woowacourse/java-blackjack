@@ -41,11 +41,11 @@ public class GameResultTest {
                 Card.valueOf(Shape.CLOVER, CardValue.TEN),
                 Card.valueOf(Shape.SPADE, CardValue.SEVEN),
                 Card.valueOf(Shape.HEART, CardValue.TWO))),
-                new HashMap<ResultType, Integer>() {
+                new HashMap<String, Integer>() {
                     {
-                        put(ResultType.WIN, 1);
-                        put(ResultType.TIE, 1);
-                        put(ResultType.LOSE, 1);
+                        put("pobi", 1000);
+                        put("jason", 0);
+                        put("root", -1000);
                     }
                 }
             ),
@@ -62,10 +62,11 @@ public class GameResultTest {
                 Card.valueOf(Shape.CLOVER, CardValue.TEN),
                 Card.valueOf(Shape.SPADE, CardValue.SEVEN),
                 Card.valueOf(Shape.HEART, CardValue.TWO))),
-                new HashMap<ResultType, Integer>() {
+                new HashMap<String, Integer>() {
                     {
-                        put(ResultType.WIN, 2);
-                        put(ResultType.LOSE, 1);
+                        put("pobi", -1000);
+                        put("jason", 1000);
+                        put("root", 1000);
                     }
                 }
             ),
@@ -82,9 +83,11 @@ public class GameResultTest {
                 Card.valueOf(Shape.CLOVER, CardValue.TEN),
                 Card.valueOf(Shape.SPADE, CardValue.SEVEN),
                 Card.valueOf(Shape.DIAMOND, CardValue.NINE))),
-                new HashMap<ResultType, Integer>() {
+                new HashMap<String, Integer>() {
                     {
-                        put(ResultType.LOSE, 3);
+                        put("pobi", -1000);
+                        put("jason", -1000);
+                        put("root", -1000);
                     }
                 }
             )
@@ -100,16 +103,16 @@ public class GameResultTest {
             .valueOf(cardDistributor);
         Dealer dealer = new Dealer();
         cardDistributorForTest.distributeCardsTo(dealer, 3);
-        Player pobi = new Player(new Name("pobi"), Betting.valueOf("1"));
+        Player pobi = new Player(new Name("pobi"), Betting.valueOf("1000"));
         cardDistributorForTest.distributeCardsTo(pobi, 3);
-        Player jason = new Player(new Name("jason"), Betting.valueOf("1"));
+        Player jason = new Player(new Name("jason"), Betting.valueOf("1000"));
         cardDistributorForTest.distributeCardsTo(jason, 3);
-        Player root = new Player(new Name("root"), Betting.valueOf("1"));
+        Player root = new Player(new Name("root"), Betting.valueOf("1000"));
         cardDistributorForTest.distributeCardsTo(root, 3);
 
         Players players = new Players(Arrays.asList(pobi, jason, root));
         GameResult gameResult = players.match(dealer);
 
-        assertThat(gameResult.getStatistics()).isEqualTo(expected);
+        assertThat(gameResult.unwrap()).isEqualTo(expected);
     }
 }

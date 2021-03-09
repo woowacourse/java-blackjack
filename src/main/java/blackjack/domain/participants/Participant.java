@@ -31,6 +31,10 @@ public abstract class Participant {
         state = updateStatus(state);
     }
 
+    protected ParticipantState getState() {
+        return state;
+    }
+
     protected void setState(ParticipantState state) {
         this.state = state;
     }

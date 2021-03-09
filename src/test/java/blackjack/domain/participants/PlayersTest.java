@@ -29,7 +29,7 @@ public class PlayersTest {
     private Players newPlayers(String unparsedNames) {
         Names names = Names.valueOf(unparsedNames);
         return names.unwrap().stream()
-            .map(name -> new Player(name, Betting.valueOf("1")))
+            .map(name -> new Player(name, Betting.valueOf("1000")))
             .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
     }
 
@@ -65,10 +65,10 @@ public class PlayersTest {
 
         GameResult gameResult = players.match(dealer);
 
-        Map<Player, ResultType> expected = new HashMap<>();
-        expected.put(new Player(new Name("pobi"), Betting.valueOf("1")), ResultType.WIN);
-        expected.put(new Player(new Name("jason"), Betting.valueOf("1")), ResultType.TIE);
-        expected.put(new Player(new Name("root"), Betting.valueOf("1")), ResultType.LOSE);
+        Map<String, Integer> expected = new HashMap<>();
+        expected.put("pobi", 1000);
+        expected.put("jason", 0);
+        expected.put("root", -1000);
 
         assertThat(gameResult).isEqualTo(new GameResult(expected));
     }

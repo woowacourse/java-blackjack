@@ -1,6 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.ResultType;
+import blackjack.domain.names.Name;
 import blackjack.domain.participants.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -8,21 +9,17 @@ import java.util.Objects;
 
 public class GameResult {
 
-    private final Map<Player, ResultType> results;
+    private final Map<String, Integer> results;
 
-    public GameResult(Map<Player, ResultType> results) {
+    public GameResult(Map<String, Integer> results) {
         this.results = new LinkedHashMap<>(results);
     }
 
-    public Map<ResultType, Integer> getStatistics() {
-        Map<ResultType, Integer> result = new LinkedHashMap<>();
-        results.values()
-            .forEach(resultType -> result.put(resultType, result.getOrDefault(resultType, 0) + 1));
-
-        return result;
+    public int getDealerProfit() {
+        return (-1) * results.values().stream().reduce(0, Integer::sum);
     }
 
-    public Map<Player, ResultType> unwrap() {
+    public Map<String, Integer> unwrap() {
         return new LinkedHashMap<>(results);
     }
 

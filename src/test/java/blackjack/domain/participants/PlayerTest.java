@@ -108,4 +108,65 @@ public class PlayerTest {
         assertThat(jason.match(dealer)).isEqualTo(ResultType.TIE);
         assertThat(root.match(dealer)).isEqualTo(ResultType.LOSE);
     }
+
+    @Test
+    @DisplayName("승패 결과에 따른 수익 계산")
+    void matchForProfit() {
+        CardDistributorForTest cardDistributorForTest =
+            CardDistributorForTest.valueOf(cardDistributor);
+        Dealer dealer = new Dealer();
+        cardDistributorForTest.distributeCardsTo(dealer, 2);
+        Player pobi = new Player(new Name("pobi"), Betting.valueOf("1000"));
+        cardDistributorForTest.distributeCardsTo(pobi, 2);
+        Player jason = new Player(new Name("jason"), Betting.valueOf("1000"));
+        cardDistributorForTest.distributeCardsTo(jason, 2);
+        Player root = new Player(new Name("root"), Betting.valueOf("1000"));
+        cardDistributorForTest.distributeCardsTo(root, 2);
+
+        assertThat(pobi.matchForProfit(dealer)).isEqualTo(1000);
+        assertThat(jason.matchForProfit(dealer)).isEqualTo(0);
+        assertThat(root.matchForProfit(dealer)).isEqualTo(-1000);
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트인 경우")
+    void matchForBustPlayer() {
+        Player root = new Player(new Name("root"), Betting.valueOf("1000"));
+        root.draw(Card.valueOf(Shape.SPADE, CardValue.TEN));
+        root.draw(Card.valueOf(Shape.HEART, CardValue.TEN));
+        root.draw(Card.valueOf(Shape.DIAMOND, CardValue.TEN));
+
+        Dealer dealer = new Dealer();
+        dealer.draw(Card.valueOf(Shape.SPADE, CardValue.SEVEN));
+        dealer.draw(Card.valueOf(Shape.HEART, CardValue.SIX));
+        dealer.draw(Card.valueOf(Shape.HEART, CardValue.QUEEN));
+        assertThat(root.matchForProfit(dealer)).isEqualTo(-1000);
+
+        dealer = new Dealer();
+        dealer.draw(Card.valueOf(Shape.SPADE, CardValue.SEVEN));
+        dealer.draw(Card.valueOf(Shape.HEART, CardValue.SEVEN));
+        dealer.draw(Card.valueOf(Shape.DIAMOND, CardValue.SEVEN));
+        assertThat(root.matchForProfit(dealer)).isEqualTo(-1000);
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭인 경우")
+    void matchForBlackJackPlayer() {
+        Player root = new Player(new Name("root"), Betting.valueOf("1000"));
+        root.draw(Card.valueOf(Shape.SPADE, CardValue.TEN));
+        root.draw(Card.valueOf(Shape.HEART, CardValue.ACE));
+
+        Dealer dealer = new Dealer();
+        dealer.draw(Card.valueOf(Shape.SPADE, CardValue.SEVEN));
+        dealer.draw(Card.valueOf(Shape.HEART, CardValue.SEVEN));
+        dealer.draw(Card.valueOf(Shape.DIAMOND, CardValue.SEVEN));
+
+        assertThat(root.matchForProfit(dealer)).isEqualTo(1500);
+
+        dealer = new Dealer();
+        dealer.draw(Card.valueOf(Shape.DIAMOND, CardValue.TEN));
+        dealer.draw(Card.valueOf(Shape.CLOVER, CardValue.ACE));
+
+        assertThat(root.matchForProfit(dealer)).isEqualTo(0);
+    }
 }

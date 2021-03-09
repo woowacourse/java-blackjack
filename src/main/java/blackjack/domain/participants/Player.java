@@ -35,7 +35,21 @@ public class Player extends Participant {
         if (dealer.isBust()) {
             return ResultType.WIN;
         }
+        if (isBlackJack()) {
+            return matchWhenBlackJack(dealer);
+        }
         return ResultType.getResultTypeByScore(this, dealer);
     }
 
+    private ResultType matchWhenBlackJack(Dealer dealer) {
+        if (dealer.isBlackJack()) {
+            return ResultType.TIE;
+        }
+        return ResultType.WIN;
+    }
+
+    public int matchForProfit(Dealer dealer){
+        double profitMultiplier = match(dealer).getProfitMultiplier() * getState().getProfitMultiplier();
+        return (int) (profitMultiplier * betting.unwrap());
+    }
 }

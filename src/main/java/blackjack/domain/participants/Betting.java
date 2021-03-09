@@ -29,4 +29,8 @@ public class Betting {
             throw new IllegalArgumentException("존재할 수 없는 배팅 금액입니다.");
         }
     }
+
+    public int unwrap() {
+        return price;
+    }
 }

@@ -1,6 +1,7 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.ResultType;
+import blackjack.domain.names.Name;
 import blackjack.dto.GameResult;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,21 +11,12 @@ import java.util.Map;
 
 public class Players {
 
-    private static final String DELIMITER = ",";
     private final List<Player> players;
 
     public Players(List<Player> players) {
         validateDuplication(players);
         this.players = new ArrayList<>(players);
     }
-//
-//    public static Players valueOf(String unParsedNames) {
-//        List<Player> parsedPlayers = Arrays.stream(unParsedNames.split(DELIMITER, -1))
-//            .map(name -> new Player(name))
-//            .collect(Collectors.toList());
-//        validateDuplication(parsedPlayers);
-//        return new Players(parsedPlayers);
-//    }
 
     private static void validateDuplication(List<Player> players) {
         if (players.size() != new HashSet<>(players).size()) {
@@ -33,8 +25,8 @@ public class Players {
     }
 
     public GameResult match(Dealer dealer) {
-        Map<Player, ResultType> result = new LinkedHashMap<>();
-        players.forEach(player -> result.put(player, player.match(dealer)));
+        Map<String, Integer> result = new LinkedHashMap<>();
+        players.forEach(player -> result.put(player.getName(), player.matchForProfit(dealer)));
 
         return new GameResult(result);
     }
@@ -47,7 +39,7 @@ public class Players {
     }
 
     public boolean isNotPrepared() {
-        return !players.stream().noneMatch(Player::isContinue);
+        return players.stream().anyMatch(Player::isContinue);
     }
 
     public List<Player> unwrap() {
