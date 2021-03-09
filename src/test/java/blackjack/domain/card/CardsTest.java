@@ -34,13 +34,13 @@ public class CardsTest {
 
     @DisplayName("카드 합계를 구한다.")
     @Test
-    public void calculateTotalCards() {
+    public void calculateScore() {
         Cards cards = new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         ));
 
-        assertThat(cards.calculateTotalValue()).isEqualTo(18);
+        assertThat(cards.calculateScore()).isEqualTo(18);
     }
 
     @DisplayName("Ace 카드를 포함하고 있고, 카드 합계가 21이 넘은 경우 총합에서 -10을 한다.")
@@ -51,7 +51,7 @@ public class CardsTest {
                 new Card(Shape.SPACE, Value.ACE),
                 new Card(Shape.CLOVER, Value.KING)));
 
-        assertThat(cards.calculateTotalValue()).isEqualTo(19);
+        assertThat(cards.calculateScore()).isEqualTo(19);
     }
 
     @DisplayName("카드들에 ACE 카드가 포함되는지 확인한다.")

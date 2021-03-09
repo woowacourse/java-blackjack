@@ -1,9 +1,12 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class User {
     protected final Cards cards;
@@ -30,8 +33,12 @@ public abstract class User {
         return this.cards.isBust();
     }
 
-    public Cards getCards(){
-        return this.cards;
+    public int getScore() {
+        return this.cards.calculateScore();
+    }
+
+    public List<Card> getCards(){
+        return Collections.unmodifiableList(this.cards.getCards());
     }
 
     public String getName() {

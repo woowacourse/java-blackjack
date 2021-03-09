@@ -66,9 +66,8 @@ public class PlayerTest {
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
-        Cards cards = player.getCards();
 
-        assertThat(cards.getCards()).hasSize(2);
+        assertThat(player.getCards()).hasSize(2);
     }
 
     @DisplayName("딜러에 버스트가 있고 플레이어에 버스트가 없는 경우를 확인한다. - 플레이어 승")

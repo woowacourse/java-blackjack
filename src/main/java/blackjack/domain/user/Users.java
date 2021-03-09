@@ -3,10 +3,11 @@ package blackjack.domain.user;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 public class Users {
     private final Dealer dealer;
@@ -24,9 +25,10 @@ public class Users {
     }
 
     public List<Cards> showCardsByPlayers() {
-        return this.players.stream()
-                .map(Player::getCards)
-                .collect(toList());
+        List<Cards> cards = new ArrayList<>();
+        this.players
+                .forEach(player -> cards.add(new Cards(player.getCards())));
+        return cards;
     }
 
     public List<String> getPlayerNames() {

@@ -23,17 +23,17 @@ public class Cards implements Comparable<Cards> {
     }
 
     public boolean isBust() {
-        return this.calculateTotalValue() > BUST;
+        return this.calculateScore() > BUST;
     }
 
-    public int calculateTotalValue() {
-        int totalValue = cards.stream()
+    public int calculateScore() {
+        int score = cards.stream()
                 .mapToInt(Card::getValue)
                 .sum();
-        if (this.containAce() && totalValue > BUST) {
-            totalValue -= 10;
+        if (this.containAce() && score > BUST) {
+            score -= 10;
         }
-        return totalValue;
+        return score;
     }
 
     public boolean containAce() {
@@ -47,6 +47,6 @@ public class Cards implements Comparable<Cards> {
 
     @Override
     public int compareTo(Cards otherCards) {
-        return Integer.compare(this.calculateTotalValue(), otherCards.calculateTotalValue());
+        return Integer.compare(this.calculateScore(), otherCards.calculateScore());
     }
 }

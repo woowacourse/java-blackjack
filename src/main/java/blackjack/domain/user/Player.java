@@ -30,6 +30,6 @@ public class Player extends User {
 
     @Override
     public boolean isHit() {
-        return cards.calculateTotalValue() <= BUST;
+        return cards.calculateScore() <= BUST;
     }
 }

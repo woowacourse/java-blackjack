@@ -6,13 +6,12 @@ import blackjack.domain.result.Result;
 import blackjack.domain.result.ResultBoard;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.Users;
 import blackjack.domain.user.User;
+import blackjack.domain.user.Users;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.joining;
 
 public class OutputView {
     private static final String COLON = ": ";
@@ -38,9 +37,8 @@ public class OutputView {
         printCards(player.getCards());
     }
 
-    private static void printCards(Cards cards) {
-        String cardsGroup = cards.getCards()
-                .stream()
+    private static void printCards(List<Card> cards) {
+        String cardsGroup = cards.stream()
                 .map(Card::toString)
                 .collect(joining(COMMA_WITH_BLANK));
         System.out.println(cardsGroup);
@@ -59,18 +57,18 @@ public class OutputView {
     }
 
     public static void printResults(Users users) {
-        List<User> userGroup = new ArrayList<>();
-        userGroup.add(users.getDealer());
-        userGroup.addAll(users.getPlayers());
-        for (User user : userGroup) {
-            System.out.println(user.getName() + "카드: " +
-                    user.getCards()
-                            .getCards()
-                            .stream()
-                            .map(Card::toString)
-                            .collect(joining(COMMA_WITH_BLANK)) + " - 결과: " +
-                    user.getCards().calculateTotalValue());
-        }
+        printResult(users.getDealer());
+        users.getPlayers()
+                .forEach(OutputView::printResult);
+    }
+
+    private static void printResult(User user) {
+        System.out.println(user.getName() + "카드: " +
+                user.getCards()
+                        .stream()
+                        .map(Card::toString)
+                        .collect(joining(COMMA_WITH_BLANK)) + " - 결과: " +
+                user.getScore());
     }
 
     public static void printResultBoard(Dealer dealer, ResultBoard resultBoard) {
