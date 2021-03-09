@@ -10,7 +10,7 @@ class CardTest {
     @Test
     void create() {
         Card card = new Card(Type.DIAMOND, Denomination.FOUR);
-        assertThat(card).isEqualTo(CardFactory.of(Type.DIAMOND, Denomination.FOUR));
+        assertThat(card).isEqualTo(new Card(Type.DIAMOND, Denomination.FOUR));
     }
 
     @DisplayName("카드 출력 테스트")
