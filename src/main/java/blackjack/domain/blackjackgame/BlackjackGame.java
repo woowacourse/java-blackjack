@@ -5,7 +5,6 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class BlackjackGame {
