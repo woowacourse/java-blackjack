@@ -45,10 +45,6 @@ public class WinningResult {
         return gamblerResults;
     }
 
-    public WinOrLose findPlayerWinOrLose(Player player) {
-        return gamblerResults.get(player);
-    }
-
     public Cards getDealerCards() {
         return dealerCards;
     }

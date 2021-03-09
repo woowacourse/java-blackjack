@@ -14,11 +14,13 @@ public class BlackJackGame {
     private final int NUMBER_OF_INITIAL_CARDS = 2;
 
     private final Deck deck = new Deck();
-    private final Dealer dealer = new Dealer();
+    private final Dealer dealer;
     private final Gamblers gamblers;
 
-    public BlackJackGame(String nameLine) {
+    public BlackJackGame(String nameLine){
+        dealer = new Dealer();
         gamblers = initGamblerWithNames(splitAndParseToNames(nameLine));
+
         giveInitialCards();
     }
 
@@ -35,7 +37,7 @@ public class BlackJackGame {
         return new Gamblers(gamblers);
     }
 
-    private void giveInitialCards() {
+    private void giveInitialCards(){
         giveCards(dealer, NUMBER_OF_INITIAL_CARDS);
         for (Gambler gambler : gamblers) {
             giveCards(gambler, NUMBER_OF_INITIAL_CARDS);
@@ -56,75 +58,44 @@ public class BlackJackGame {
     }
 
     public void checkBlackJack() {
-        // TODO :: 정리 -> Gamblers로 넘기기
         for (Gambler gambler : gamblers) {
-            if (!gambler.hasBlackJack()) {
-                continue;
-            }
-
-            if (dealer.hasBlackJack()) {
-                dealer.giveBackBettingMoney(gambler);
-            }
-
-            dealer.giveMoneyByBlackJack(gambler);
+            dealer.checkBlackJack(gambler);
         }
     }
 
     public void calculateMoney() {
-        if (dealer.isBust()) {
-            calculateBettingMoneyWhenDealerBust();
-        }
-
-        if (!dealer.isBust()) {
-            calculateBettingMoneyWhenDealerNotBust();
-        }
-    }
-
-    private void calculateBettingMoneyWhenDealerBust() {
-        // TODO :: 정리 -> Gamblers로 넘기기
         for (Gambler gambler : gamblers) {
             if (gambler.hasBlackJack()) {
                 continue;
             }
+            giveWinningMoney(gambler);
+        }
+    }
 
-            if (gambler.isBust()) {
-                dealer.giveBackBettingMoney(gambler);
-                continue;
-            }
+    private void giveWinningMoney(Gambler gambler){
+        if(dealer.calculateWinOrLose(gambler).equals(WinOrLose.LOSE)){
             dealer.giveWinningMoney(gambler);
         }
-    }
 
-    private void calculateBettingMoneyWhenDealerNotBust() {
-        // TODO :: 정리 -> Gamblers로 넘기기
-        for (Gambler gambler : gamblers) {
-            // TODO :: dealer.isWin(player)로 고치기
-            if (gambler.hasBlackJack()) {
-                continue;
-            }
-
-            if (dealer.calculateGamblerWinOrNot(gambler).equals(WinOrLose.WIN)) {
-                dealer.giveWinningMoney(gambler);
-            }
-
-            if (dealer.calculateGamblerWinOrNot(gambler).equals(WinOrLose.DRAW)) {
-                dealer.giveBackBettingMoney(gambler);
-            }
+        if(dealer.calculateWinOrLose(gambler).equals(WinOrLose.DRAW)){
+            dealer.giveBackBettingMoney(gambler);
         }
+
+        "1".hashCode();
     }
 
-    public WinningResult calculateWinningResult() {
-        WinningResult result = new WinningResult(dealer.getCards());
-        for (Player player : gamblers) {
-            addGamblerResult(result, player);
-        }
-        return result;
-    }
+//    public WinningResult calculateWinningResult() {
+//        WinningResult result = new WinningResult(dealer.getCards());
+//        for (Player player : gamblers) {
+//            addGamblerResult(result, player);
+//        }
+//        return result;
+//    }
 
-    private void addGamblerResult(final WinningResult winningResult, final Player player) {
-        WinOrLose winOrLose = dealer.calculateGamblerWinOrNot(player);
-        winningResult.addGamblerResults(player, winOrLose);
-    }
+//    private void addGamblerResult(final WinningResult winningResult, final Player player) {
+//        WinOrLose winOrLose = dealer.calculateGamblerWinOrNot(player);
+//        winningResult.addGamblerResults(player, winOrLose);
+//    }
 
     public Dealer getDealer() {
         return dealer;
@@ -133,4 +104,5 @@ public class BlackJackGame {
     public Gamblers getGamblers() {
         return gamblers;
     }
+
 }

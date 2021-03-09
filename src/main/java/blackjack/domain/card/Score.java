@@ -24,12 +24,20 @@ public class Score {
         return value == BLACK_JACK;
     }
 
-    public boolean isBelow(int score) {
-        return value <= score;
+    public boolean isHigherScore(Score score){
+        return this.value > score.value;
     }
 
-    public boolean isLessThan(final Score target) {
-        return value < target.value;
+    public boolean isLowerScore(Score score){
+        return this.value < score.value;
+    }
+
+    public boolean isSameScore(Score score){
+        return this.value == score.value;
+    }
+
+    public boolean isBelow(int score) {
+        return value <= score;
     }
 
     public boolean isNotBustAndHigh(final Score target) {

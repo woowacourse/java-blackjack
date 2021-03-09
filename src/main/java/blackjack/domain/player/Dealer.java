@@ -16,19 +16,9 @@ public class Dealer implements Player {
         return cards.calculateScore().isBelow(LIMIT_SCORE_TO_HIT);
     }
 
-    public void giveBackBettingMoney(Gambler gambler) {
-        giveMoney(gambler, gambler.getBettingMoney());
-    }
-
     public void giveWinningMoney(Gambler gambler) {
         Money bettingMoney = gambler.getBettingMoney();
         Money winningMoney = bettingMoney.add(bettingMoney);
-        giveMoney(gambler, winningMoney);
-    }
-
-    public void giveMoneyByBlackJack(Gambler gambler) {
-        Money bettingMoney = gambler.getBettingMoney();
-        Money winningMoney = bettingMoney.add(bettingMoney.multiply(1.5));
         giveMoney(gambler, winningMoney);
     }
 
@@ -42,16 +32,38 @@ public class Dealer implements Player {
         gambler.earn(money);
     }
 
-    public WinOrLose calculateGamblerWinOrNot(final Player player) {
-        if (cards.isBust() && !player.isBust()) {
+    public WinOrLose calculateWinOrLose(final Gambler gambler){
+
+
+        if (cards.isBust() && !gambler.isBust()) {
             return WinOrLose.WIN;
         }
 
-        if (!cards.isBust() && player.isBust()) {
+        if (!cards.isBust() && gambler.isBust()) {
             return WinOrLose.LOSE;
         }
 
-        return player.getCards().compareCardsScore(cards);
+        return gambler.getCards().compareCardsScore(cards);
+    }
+
+    public void checkBlackJack(Gambler gambler){
+        if(hasBlackJack() && gambler.hasBlackJack()){
+            giveBackBettingMoney(gambler);
+        }
+
+        if(!hasBlackJack() && gambler.hasBlackJack()){
+            giveBlackJackMoney(gambler);
+        }
+    }
+
+    public void giveBackBettingMoney(Gambler gambler) {
+        giveMoney(gambler, gambler.getBettingMoney());
+    }
+
+    public void giveBlackJackMoney(Gambler gambler) {
+        Money bettingMoney = gambler.getBettingMoney();
+        Money winningMoney = bettingMoney.add(bettingMoney.multiply(1.5));
+        giveMoney(gambler, winningMoney);
     }
 
     public Money getMoney(){
@@ -87,6 +99,4 @@ public class Dealer implements Player {
     public Cards getCards() {
         return cards;
     }
-
-
 }
