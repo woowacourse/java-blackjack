@@ -6,10 +6,10 @@ import blackjack.domain.card.Value;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Hand {
     private static final int FIRST_INDEX = 0;
+    private static final int SURPLUS = 10;
     private final List<Card> cards;
 
     public Hand(List<Card> cards) {
@@ -30,29 +30,25 @@ public class Hand {
 
     public int calculateScore() {
         int score = sumScore();
+        long numberOfAce = countNumberOfAce();
 
-        while (score > Status.BLACKJACK_SCORE && hasAce()) {
-            decideCardValue();
-            score = sumScore();
+        for (int count = 0; count < numberOfAce; count++) {
+            score = decideAceScore(score);
         }
-
         return score;
     }
 
-    private void decideCardValue() {
-        IntStream.range(FIRST_INDEX, cards.size())
-                .filter(i -> isAce(cards.get(i)))
-                .forEach(this::decideAceValue);
+    private int decideAceScore(int score) {
+        if (score > Status.BLACKJACK_SCORE) {
+            score -= SURPLUS;
+        }
+        return score;
     }
 
-    private Card decideAceValue(int i) {
-        return cards.set(i, new Card(cards.get(i).getSuit(), cards.get(i).selectValue(sumScore())));
-    }
-
-    private boolean hasAce() {
+    private long countNumberOfAce() {
         return cards.stream()
-                .map(Card::getValue)
-                .anyMatch(value -> value == Value.ACE);
+                .filter(this::isAce)
+                .count();
     }
 
     private boolean isAce(Card card) {

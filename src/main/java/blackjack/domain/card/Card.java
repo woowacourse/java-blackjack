@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.user.Status;
-
 import java.util.Objects;
 
 public class Card {
@@ -27,13 +25,6 @@ public class Card {
 
     public int getScore() {
         return value.getScore();
-    }
-
-    public Value selectValue(int score) {
-        if (score > Status.BLACKJACK_SCORE) {
-            return Value.ACE_OF_ONE;
-        }
-        return value;
     }
 
     @Override

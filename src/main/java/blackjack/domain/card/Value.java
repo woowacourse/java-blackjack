@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum Value {
-    ACE_OF_ONE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -21,7 +20,6 @@ public enum Value {
     ACE("A", 11);
 
     private static final List<Value> values = Arrays.stream(Value.values())
-            .filter(value -> value != ACE_OF_ONE)
             .collect(Collectors.toList());
 
     private final String letter;
