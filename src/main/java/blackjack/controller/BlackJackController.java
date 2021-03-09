@@ -24,10 +24,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        initialDealingCards(users);
-        OutputView.printInitialComment(dealer, players);
-        OutputView.printCardsOfDealerWithOneCardOpened(dealer);
-        OutputView.printCardsOfPlayersWithoutScore(players);
+        dealingTwoCards(users);
 
         if (dealer.isBlackJack()) {
             OutputView.printResult(players.generateResultsMapAgainstDealer(dealer));
@@ -37,8 +34,7 @@ public class BlackJackController {
         players.players().forEach(this::playGameForEachPlayer);
         drawCardsOfDealerUntilOver16Score();
 
-        OutputView.printCardsOfUsersWithScore(users);
-        OutputView.printResult(players.generateResultsMapAgainstDealer(dealer));
+        printOverallResults();
     }
 
     private void drawCardsOfDealerUntilOver16Score() {
@@ -48,10 +44,13 @@ public class BlackJackController {
         }
     }
 
-    private void initialDealingCards(Users users) {
+    private void dealingTwoCards(Users users) {
         for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
             users.users().forEach(user -> user.addCard(cardDeck.drawCard()));
         }
+        OutputView.printInitialComment(dealer, players);
+        OutputView.printCardsOfDealerWithOneCardOpened(dealer);
+        OutputView.printCardsOfPlayersWithoutScore(players);
     }
 
     private void playGameForEachPlayer(Player player) {
@@ -59,5 +58,10 @@ public class BlackJackController {
             player.addCard(cardDeck.drawCard());
             OutputView.printCardsOfUser(player);
         }
+    }
+
+    private void printOverallResults() {
+        OutputView.printCardsOfUsersWithScore(users);
+        OutputView.printResult(players.generateResultsMapAgainstDealer(dealer));
     }
 }
