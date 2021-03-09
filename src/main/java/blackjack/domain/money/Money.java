@@ -7,7 +7,7 @@ public class Money {
 
     public Money(String money) {
         validate(money);
-        validateMoreThanZero(parseInt(money));
+        this.money = validateMoreThanZero(parseInt(money));
     }
 
     private int validateMoreThanZero(int money) {
