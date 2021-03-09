@@ -15,6 +15,10 @@ public class OutputView {
     private static final String COMMA_WITH_BLANK = ", ";
     private static final int INDEX_ZERO = 0;
 
+    public static void printError(Exception e) {
+        System.out.println(e.getMessage());
+    }
+
     public static void printInitialComment(Dealer dealer, Players players) {
         System.out.printf("%s와 %s에게 2장의 카드를 나누어주었습니다.\n", dealer.getName(), createUsersCardStringFormat(players.players()));
     }

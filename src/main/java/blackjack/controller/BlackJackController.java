@@ -5,6 +5,7 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.Users;
+import blackjack.util.Repeater;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -17,7 +18,7 @@ public class BlackJackController {
     public BlackJackController() {
         this.dealer = new Dealer();
         this.cardDeck = CardDeck.createDeck();
-        this.players = Players.of(InputView.scanPlayerNames());
+        this.players = Repeater.repeatOnError(() -> Players.of(InputView.scanPlayerNames()));
         this.users = new Users(this.dealer, this.players);
     }
 
@@ -50,7 +51,7 @@ public class BlackJackController {
     }
 
     private void playGameForEachPlayer(Player player) {
-        while (!player.isBust() && !player.isBlackJack() && InputView.isHit(player.getName())) {
+        while (!player.isBust() && !player.isBlackJack() && Repeater.repeatOnError(() -> InputView.isHit(player.getName()))) {
             player.addCard(cardDeck.drawCard());
             OutputView.printCardsOfUser(player);
         }
