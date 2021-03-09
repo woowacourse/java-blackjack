@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import static blakcjack.view.OutputView.DELIMITER;
 
 public class Cards {
-	public static final int ACE_ADDITIONAL_VALUE = 10;
 	public static final int BLACKJACK_VALUE = 21;
+	private static final int ACE_ADDITIONAL_VALUE = 10;
 	private static final int FIRST_CARD_POSITION = 0;
 
 	private final List<Card> cards = new ArrayList<>();
