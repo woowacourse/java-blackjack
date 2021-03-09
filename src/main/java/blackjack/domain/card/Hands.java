@@ -25,27 +25,27 @@ public class Hands {
     }
 
     public int calculate() {
-        int sum = sumWithoutAce() + Denomination.ACE.getValue() * countAce();
+        int sum = calculateWithoutAce() + Denomination.ACE.getValue() * countAce();
         if (containsAce()) {
-            sum = properSum(sum);
+            sum = calculateWithAce(sum);
         }
         return sum;
     }
 
-    private int properSum(int sum) {
+    private int calculateWithAce(int sum) {
         if (sum + TEN > WINNING_BASELINE) {
             return sum;
         }
-        return sum + 10;
+        return sum + TEN;
     }
 
-    public boolean containsAce() {
+    private boolean containsAce() {
         return cards.stream()
                 .map(Card::getCardValue)
                 .anyMatch(Denomination::isAce);
     }
 
-    private int sumWithoutAce() {
+    private int calculateWithoutAce() {
         return cards.stream()
                 .filter(card -> !Denomination.isAce(card.getCardValue()))
                 .map(Card::getValue)
