@@ -32,7 +32,7 @@ public class PlayersTest {
             cardList.add(new Card(Suit.DIAMOND, Face.ACE));
             cardList.add(new Card(Suit.DIAMOND, Face.ACE));
 
-            Player player = new Player(new Cards(cardList), new Name("pobi"));
+            Player player = new Player(new Cards(cardList), "pobi");
             players.add(player);
         }
         assertThatThrownBy(() -> new Players(players)).isInstanceOf(IllegalArgumentException.class)

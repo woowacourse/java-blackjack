@@ -5,7 +5,6 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Face;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +38,7 @@ public class ResultStatisticsTest {
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
         List<Player> players = new ArrayList<>();
-        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), "pobi");
         players.add(player);
 
         ResultStatistics resultStatistics = new ResultStatistics(new Players(players), dealer);
@@ -55,7 +54,7 @@ public class ResultStatisticsTest {
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
         List<Player> players = new ArrayList<>();
-        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), "pobi");
         players.add(player);
 
         ResultStatistics resultStatistics = new ResultStatistics(new Players(players), dealer);
@@ -72,7 +71,7 @@ public class ResultStatisticsTest {
         cardList.add(new Card(Suit.DIAMOND, Face.TWO));
 
         List<Player> players = new ArrayList<>();
-        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), "pobi");
         players.add(player);
 
         ResultStatistics resultStatistics = new ResultStatistics(new Players(players), dealer);
@@ -89,7 +88,7 @@ public class ResultStatisticsTest {
         cardList.add(new Card(Suit.SPADE, Face.JACK));
 
         List<Player> players = new ArrayList<>();
-        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), "pobi");
         players.add(player);
 
         ResultStatistics resultStatistics = new ResultStatistics(new Players(players), dealer);
@@ -106,7 +105,7 @@ public class ResultStatisticsTest {
         cardList.add(new Card(Suit.SPADE, Face.JACK));
 
         List<Player> players = new ArrayList<>();
-        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), "pobi");
         players.add(player);
 
         Cards cards = new Cards(dealer.getCardsAsList());

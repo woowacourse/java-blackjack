@@ -5,7 +5,6 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Face;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,7 +35,7 @@ public class ResultTest {
         cardList.add(new Card(Suit.DIAMOND, Face.ACE));
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
-        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), "pobi");
 
         assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.WIN);
     }
@@ -49,7 +48,7 @@ public class ResultTest {
         cardList.add(new Card(Suit.DIAMOND, Face.QUEEN));
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
-        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), "pobi");
 
         assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.DRAW);
     }
@@ -62,7 +61,7 @@ public class ResultTest {
         cardList.add(new Card(Suit.DIAMOND, Face.ACE));
         cardList.add(new Card(Suit.DIAMOND, Face.ACE));
 
-        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), "pobi");
 
         assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.LOSE);
     }
@@ -77,7 +76,7 @@ public class ResultTest {
         cardList.add(new Card(Suit.DIAMOND, Face.JACK));
         cardList.add(new Card(Suit.DIAMOND, Face.QUEEN));
 
-        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), "pobi");
 
         assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.LOSE);
     }
@@ -91,7 +90,7 @@ public class ResultTest {
         cardList.add(new Card(Suit.DIAMOND, Face.ACE));
         dealer.receiveMoreCard(new Card(Suit.DIAMOND, Face.QUEEN));
 
-        Player player = new Player(new Cards(cardList), new Name("pobi"));
+        Player player = new Player(new Cards(cardList), "pobi");
 
         assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.WIN);
     }
