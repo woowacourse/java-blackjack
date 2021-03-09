@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.DealerResult;
@@ -30,7 +31,9 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void showInitiate(Dealer dealer, Players players) {
+    public static void showInitiate(BlackJackGame blackJackGame) {
+        Dealer dealer = blackJackGame.getDealer();
+        Players players = blackJackGame.getPlayers();
         showName(players);
         showCards(dealer, players);
     }
@@ -72,7 +75,9 @@ public class OutputView {
         System.out.println(DEALER_DRAW_MESSAGE);
     }
 
-    public static void showScoreResult(Dealer dealer, Players players) {
+    public static void showScoreResult(BlackJackGame blackJackGame) {
+        Dealer dealer = blackJackGame.getDealer();
+        Players players = blackJackGame.getPlayers();
         System.out.println();
         showDealerEntireCard(dealer);
         showPlayersEntireCard(players);
@@ -122,7 +127,10 @@ public class OutputView {
         return "";
     }
 
-    public static void showIndividualTable(Dealer dealer, Players players) {
+    public static void showIndividualTable(BlackJackGame blackJackGame) {
+        Players players = blackJackGame.getPlayers();
+        Dealer dealer = blackJackGame.getDealer();
+
         for (Player player : players.getPlayers()) {
             String playerName = player.getName();
             OneGameResult gameIndividualResult = player.betResult(dealer);
