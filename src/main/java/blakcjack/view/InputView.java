@@ -22,7 +22,7 @@ public class InputView {
 	}
 
 	public static int takeBettingAmountInput(final Name name) {
-		System.out.printf("%s의 베팅 금액은?", name.getName());
+		System.out.printf("%s의 베팅 금액은?%n", name.getName());
 		String bettingAmount = SCANNER.nextLine();
 		validateInteger(bettingAmount);
 		validateAmount(bettingAmount);
