@@ -9,8 +9,16 @@ import static blakcjack.domain.outcome.Outcome.LOSE;
 import static blakcjack.domain.outcome.Outcome.WIN;
 
 public class Player extends Participant {
+	private final int bettingAmount;
+	//TODO
+	// 나중에 없애기!
 	public Player(final Name name) {
+		this(name, 0);
+	}
+
+	public Player(final Name name, final int bettingAmount) {
 		super(name);
+		this.bettingAmount = bettingAmount;
 	}
 
 	@Override

@@ -13,8 +13,7 @@ import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
-import static blakcjack.view.InputView.isYes;
-import static blakcjack.view.InputView.takePlayerNamesInput;
+import static blakcjack.view.InputView.*;
 import static blakcjack.view.OutputView.*;
 
 public class BlackJackController {
@@ -38,7 +37,8 @@ public class BlackJackController {
 		final Names playerNames = new Names(takePlayerNamesInput());
 		final List<Player> players = new ArrayList<>();
 		for (Name name : playerNames.toList()) {
-			players.add(new Player(name));
+			int bettingAmount = takeBettingAmountInput(name);
+			players.add(new Player(name, bettingAmount));
 		}
 		return players;
 	}

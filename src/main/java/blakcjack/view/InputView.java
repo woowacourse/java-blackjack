@@ -1,5 +1,6 @@
 package blakcjack.view;
 
+import blakcjack.domain.name.Name;
 import blakcjack.domain.participant.Player;
 
 import java.util.Arrays;
@@ -20,8 +21,8 @@ public class InputView {
 				.collect(Collectors.toList());
 	}
 
-	public static int takeBettingAmountInput(final Player player) {
-		System.out.printf("%s의 베팅 금액은?", player.getName());
+	public static int takeBettingAmountInput(final Name name) {
+		System.out.printf("%s의 베팅 금액은?", name.getName());
 		String bettingAmount = SCANNER.nextLine();
 		validateInteger(bettingAmount);
 		validateAmount(bettingAmount);
