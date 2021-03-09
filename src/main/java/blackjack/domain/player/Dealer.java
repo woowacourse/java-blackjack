@@ -41,4 +41,5 @@ public class Dealer extends Player {
     public boolean canDraw() {
         return calculateScore() <= DRAW_STANDARD;
     }
+
 }

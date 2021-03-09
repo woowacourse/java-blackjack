@@ -1,9 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Gamer;
+import blackjack.domain.card.CardDto;
+import blackjack.domain.player.DealerDto;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.PlayerDto;
+import blackjack.domain.player.PlayersDto;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.ResultType;
 import java.util.Arrays;
@@ -21,36 +22,37 @@ public class OutputView {
         System.out.println(value);
     }
 
-    public static void printGameStartMessage(Dealer dealer, List<Gamer> gamers) {
+    public static void printGameStartMessage(DealerDto dealer, PlayersDto gamers) {
         String dealerName = dealer.getName();
-        String gamerNames = gamers.stream()
-            .map(gamer -> gamer.getName())
+        String gamerNames = gamers.getPlayerDtos().stream()
+            .map(gamerDto -> gamerDto.getName())
             .collect(Collectors.joining(", "));
         System.out.printf("\n%s와 %s에게 2장을 나누었습니다.\n", dealerName, gamerNames);
         printDealerCardInfo(dealer);
-        gamers.forEach(gamer -> printPlayerCardInfo(gamer));
+        gamers.getPlayerDtos()
+            .forEach(gamerDto -> printPlayerCardInfo(gamerDto));
         System.out.println();
     }
 
-    private static void printDealerCardInfo(Dealer dealer) {
-        Card card = dealer.getCards().getFirstCard();
+    private static void printDealerCardInfo(DealerDto dealer) {
+        CardDto card = dealer.getCard();
         System.out.println(dealer.getName() + ": " + cardToString(card));
     }
 
-    public static void printPlayerCardInfo(Player player) {
+    public static void printPlayerCardInfo(PlayerDto player) {
         System.out.println(playerInfoToString(player));
     }
 
-    private static String playerInfoToString(Player player) {
+    private static String playerInfoToString(PlayerDto player) {
         final String playerName = player.getName();
-        final String playerCardInfo = player.getCards().getCards()
+        final String playerCardInfo = player.getCardsDto().getCards()
             .stream()
             .map(card -> cardToString(card))
             .collect(Collectors.joining(", "));
         return playerName + " 카드: " + playerCardInfo;
     }
 
-    private static String cardToString(Card card) {
+    private static String cardToString(CardDto card) {
         final String demomination = card.getDenomination().getName();
         final String shape = card.getShape().getName();
         return demomination + shape;
@@ -60,11 +62,11 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printPlayersScoreInfo(Dealer dealer, List<Gamer> gamers) {
+    public static void printPlayersScoreInfo(PlayerDto dealer, PlayersDto gamers) {
         System.out.println();
-        System.out.printf("%s - 결과: %d\n", playerInfoToString(dealer), dealer.calculateScore());
-        gamers.forEach(gamer -> System.out
-                .printf("%s - 결과: %d\n", playerInfoToString(gamer), gamer.calculateScore()));
+        System.out.printf("%s - 결과: %d\n", playerInfoToString(dealer), dealer.getScore());
+        gamers.getPlayerDtos()
+            .forEach(gamer -> System.out.printf("%s - 결과: %d\n", playerInfoToString(gamer), gamer.getScore()));
     }
 
     public static void printGameResult(GameResult gameResult) {

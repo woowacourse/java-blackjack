@@ -6,7 +6,10 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.DealerDto;
 import blackjack.domain.player.Gamer;
+import blackjack.domain.player.PlayerDto;
+import blackjack.domain.player.PlayersDto;
 import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -30,12 +33,12 @@ public class BlackjackController {
     public void play() {
         List<Gamer> gamers = initGamers();
         Dealer dealer = initDealer();
-        OutputView.printGameStartMessage(dealer, gamers);
+        OutputView.printGameStartMessage(DealerDto.from(dealer), PlayersDto.from(gamers));
 
         progressGamersHitOrStand(gamers);
         progressDealerHitOrStand(dealer);
 
-        OutputView.printPlayersScoreInfo(dealer, gamers);
+        OutputView.printPlayersScoreInfo(PlayerDto.from(dealer), PlayersDto.from(gamers));
         GameResult gameResult = dealer.judgeGameResultWithGamers(gamers);
         OutputView.printGameResult(gameResult);
     }
@@ -60,7 +63,7 @@ public class BlackjackController {
     private void progressGamersHitOrStandInput(Gamer gamer) {
         while(gamer.canDraw() && InputView.inputHitOrStand(gamer.getName())) {
             gamer.addCard(deck.draw());
-            OutputView.printPlayerCardInfo(gamer);
+            OutputView.printPlayerCardInfo(PlayerDto.from(gamer));
         }
     }
 
