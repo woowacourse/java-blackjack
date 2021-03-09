@@ -18,4 +18,16 @@ public enum HandStatus {
         }
         return HIT;
     }
+
+    public boolean isHit() {
+        return this == HIT;
+    }
+
+    public boolean isBlackjack() {
+        return this == BLACK_JACK;
+    }
+
+    public boolean isBust() {
+        return this == BUST;
+    }
 }
