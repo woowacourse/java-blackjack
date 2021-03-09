@@ -1,19 +1,15 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.UserDeck;
+import blackjack.domain.state.StateFactory;
 
 public class Player extends User {
 
     private final String name;
 
     public Player(String name, UserDeck userDeck) {
-        super(userDeck);
+        super(StateFactory.draw(userDeck, UserDeck.BLACK_JACK_NUMBER));
         this.name = name;
-    }
-
-    @Override
-    public boolean isAvailableDraw() {
-        return super.checkDrawRule(UserDeck.BLACK_JACK_NUMBER);
     }
 
     public OneGameResult betResult(Dealer dealer) {

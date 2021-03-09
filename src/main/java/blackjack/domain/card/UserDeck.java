@@ -6,6 +6,7 @@ import java.util.List;
 public class UserDeck {
 
     private static final int ACE_CALIBRATION = 10;
+    private static final int BLACKJACK_SIZE = 2;
     public static final int BLACK_JACK_NUMBER = 21;
     public static final int BURST_CONDITION = 0;
 
@@ -26,6 +27,13 @@ public class UserDeck {
             return BURST_CONDITION;
         }
         return originalScore;
+    }
+
+    public boolean isBlackJack() {
+        if ((score() == BLACK_JACK_NUMBER) && (userCards.size() == BLACKJACK_SIZE)) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isBust() {

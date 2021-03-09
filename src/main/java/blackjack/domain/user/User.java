@@ -2,35 +2,38 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.UserDeck;
+import blackjack.domain.state.Bust;
+import blackjack.domain.state.State;
 
 public abstract class User {
 
-    private final UserDeck userDeck;
+    private State state;
 
-    public User(UserDeck userDeck) {
-        this.userDeck = userDeck;
+    public User(State state) {
+        this.state = state;
     }
-
-    abstract boolean isAvailableDraw();
 
     public void draw(Card card) {
-        userDeck.add(card);
+        this.state = state.draw(card);
     }
 
-    public boolean checkDrawRule(int userCriteria) {
-        return !isBurstCondition() && (getPoint() <= userCriteria);
+    public boolean isAvailableDraw() {
+        return !state.isFinished();
     }
 
     public boolean isBurstCondition() {
-        return this.getPoint() == UserDeck.BURST_CONDITION;
+        if (state instanceof Bust) {
+            return true;
+        }
+        return false;
     }
 
     public UserDeck getUserDeck() {
-        return userDeck;
+        return state.getUserDeck();
     }
 
     public int getPoint() {
-        return userDeck.score();
+        return state.getUserDeck().score();
     }
 
 }
