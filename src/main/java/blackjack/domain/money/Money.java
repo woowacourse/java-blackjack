@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Money {
     private final int money;
-    
+
     public Money(String money) {
         validate(money);
         this.money = parseInt(money);

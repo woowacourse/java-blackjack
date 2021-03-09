@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,15 +60,6 @@ public class Cards {
         return cards.size() == 2 && calculate() == BLACKJACK;
     }
 
-//    private boolean checkSumOfFirstTwoCards() {
-//        int sum = properSum(
-//                IntStream.range(0, 2)
-//                        .map(i -> getPoint(cards.get(i)))
-//                        .sum()
-//        );
-//        return BLACKJACK == sum;
-//    }
-
     public int calculate() {
         int sum = sumWithoutAce() + (Denomination.ACE.getScore() * countAce());
         if (containsAce()) {
@@ -83,10 +73,6 @@ public class Cards {
             return sum;
         }
         return sum + ACE_CONVERSION;
-    }
-
-    private int getPoint(Card card) {
-        return card.getScore();
     }
 
     public boolean isBust() {

@@ -1,11 +1,11 @@
 package blackjack.domain.card;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Card {
-
-    private final Suit suit;
-    private final Denomination denomination;
 
     private static final Map<String, Card> CARDS = new HashMap<>();
 
@@ -15,15 +15,18 @@ public class Card {
         }
     }
 
-    private static void putDenomination(Suit suit) {
-        for (final Denomination denomination : Denomination.values()) {
-            CARDS.put(toKey(suit, denomination), new Card(suit, denomination));
-        }
-    }
+    private final Suit suit;
+    private final Denomination denomination;
 
     private Card(final Suit suit, final Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
+    }
+
+    private static void putDenomination(Suit suit) {
+        for (final Denomination denomination : Denomination.values()) {
+            CARDS.put(toKey(suit, denomination), new Card(suit, denomination));
+        }
     }
 
     public static Card of(final Suit suit, final Denomination denomination) {
@@ -32,6 +35,10 @@ public class Card {
 
     private static String toKey(final Suit suit, final Denomination denomination) {
         return denomination.name() + suit.name();
+    }
+
+    public static List<Card> makeAllCards() {
+        return new ArrayList<>(CARDS.values());
     }
 
     public String getName() {
@@ -44,9 +51,5 @@ public class Card {
 
     public int getScore() {
         return denomination.getScore();
-    }
-
-    public static List<Card> makeAllCards() {
-        return new ArrayList<>(CARDS.values());
     }
 }

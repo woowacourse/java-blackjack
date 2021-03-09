@@ -9,7 +9,6 @@ public class Hands {
     private final Cards cards;
 
     public Hands() {
-//        cards = new Cards();
         cards = Cards.of(new ArrayList<>());
     }
 
