@@ -30,8 +30,8 @@ public class BlackjackController {
     }
 
     private void initHandsOf(Deck deck, Dealer dealer, Players players) {
-        StateInitializer.init2(deck, dealer, players);
-        OutputView.printInitialCards2(dealer, players);
+        StateInitializer.init(deck, dealer, players);
+        OutputView.printInitialCards(dealer, players);
     }
 
     private void hitOrStand(Deck deck, Dealer dealer, Players players) {
@@ -42,24 +42,22 @@ public class BlackjackController {
     }
 
     private void hitOrStandForPlayer(Deck deck, Player player) {
-        while (player.canDraw2() && InputView.receiveAnswer(player.getName())) {
+        while (player.canDraw() && InputView.receiveAnswer(player.getName())) {
             player.receiveCard2(deck.pick());
-            OutputView.printAllCards2(player);
+            OutputView.printAllCards(player);
         }
     }
 
     private void hitOrStandForDealer(Deck deck, Dealer dealer) {
-        if (dealer.canDraw2()) {
+        if (dealer.canDraw()) {
             dealer.receiveCard2(deck.pick());
             OutputView.printDealerHitMessage();
         }
     }
 
     private void printResult(Dealer dealer, Players players) {
-        OutputView.showAllCards2(dealer, players);
+        OutputView.showAllCards(dealer, players);
         OutputView.printResultTitle();
         OutputView.printProfit(ProfitCalculator.calculateProfitOf(dealer, players));
-//        OutputView.printDealerResult(ResultMapper.resultOfDealer(dealer, players));
-//        OutputView.printPlayersResult(ResultMapper.resultOfPlayers(dealer, players));
     }
 }
