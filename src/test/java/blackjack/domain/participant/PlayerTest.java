@@ -33,7 +33,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("플레이어가 버스트라면 무조건 패배한다")
-    void checkResultWhenPlayerIsBust() {
+    void generateResultWhenPlayerIsBust() {
         player.receiveAdditionalCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
         player.receiveAdditionalCard(new Card(CardLetter.QUEEN, CardSuit.CLOVER));
         player.receiveAdditionalCard(new Card(CardLetter.KING, CardSuit.CLOVER));
@@ -41,12 +41,12 @@ public class PlayerTest {
         dealer.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.DIAMOND));
         dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.DIAMOND));
 
-        assertThat(player.checkResult(dealer)).isEqualTo(Result.LOSE);
+        assertThat(player.generateResult(dealer)).isEqualTo(Result.LOSE);
     }
 
     @Test
     @DisplayName("플레이어가 버스트가 아니고, 상대 버스트라면 승리한다")
-    void checkResultWhenOpponentIsBust() {
+    void generateResultWhenOpponentIsBust() {
         player.receiveAdditionalCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
         player.receiveAdditionalCard(new Card(CardLetter.QUEEN, CardSuit.CLOVER));
 
@@ -54,13 +54,13 @@ public class PlayerTest {
         dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.DIAMOND));
         dealer.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.DIAMOND));
 
-        Assertions.assertThat(player.checkResult(dealer)).isEqualTo(Result.WIN);
+        Assertions.assertThat(player.generateResult(dealer)).isEqualTo(Result.WIN);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"TEN,NINE:WIN", "TEN,SEVEN:DRAW", "SIX,SEVEN:LOSE"}, delimiter = ':')
     @DisplayName("플레이어와 상대 모두 버스트가 아니라면, 점수 합계로 승무패를 가린다")
-    void checkResultByScore(final String playerCardInput, final String expectedResult) {
+    void generateResultByScore(final String playerCardInput, final String expectedResult) {
         dealer.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
         dealer.receiveAdditionalCard(new Card(CardLetter.SEVEN, CardSuit.CLOVER));
 
@@ -69,6 +69,6 @@ public class PlayerTest {
             final CardLetter cardLetter = CardLetter.valueOf(playerCard);
             player.receiveAdditionalCard(new Card(cardLetter, CardSuit.DIAMOND));
         }
-        assertThat(player.checkResult(dealer)).isEqualTo(Result.valueOf(expectedResult));
+        assertThat(player.generateResult(dealer)).isEqualTo(Result.valueOf(expectedResult));
     }
 }

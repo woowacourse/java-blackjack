@@ -68,7 +68,7 @@ public class BlackjackController {
         OutputView.showNewLine();
         OutputView.showCardResult(dealer);
         OutputView.showEveryPlayerCardResult(players);
-        OutputView.showDealerGameResult(dealer, dealer.checkEveryResult(players));
-        OutputView.showPlayerGameResult(players.checkEveryPlayerResult(dealer));
+        OutputView.showDealerGameResult(dealer, dealer.generateEveryResult(players));
+        OutputView.showPlayerGameResult(players.generateEveryPlayerResult(dealer));
     }
 }

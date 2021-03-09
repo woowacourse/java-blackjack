@@ -66,7 +66,7 @@ public class PlayersTest {
 
     @Test
     @DisplayName("모든 플레이어에 대해 Dealer와의 결과를 조회한다.")
-    void checkEveryPlayerResult() {
+    void generateEveryPlayerResult() {
         Player player1 = new Player("joel");
         Player player2 = new Player("bada");
         Player player3 = new Player("j.on");
@@ -86,7 +86,7 @@ public class PlayersTest {
         dealer.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.SPADE));
         dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.SPADE));
 
-        final Map<Player, Result> allPlayerResult = players.checkEveryPlayerResult(dealer);
+        final Map<Player, Result> allPlayerResult = players.generateEveryPlayerResult(dealer);
         assertThat(allPlayerResult.get(player1)).isEqualTo(Result.WIN);
         assertThat(allPlayerResult.get(player2)).isEqualTo(Result.DRAW);
         assertThat(allPlayerResult.get(player3)).isEqualTo(Result.LOSE);

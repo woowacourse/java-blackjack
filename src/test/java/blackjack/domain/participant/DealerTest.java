@@ -51,7 +51,7 @@ public class DealerTest {
 
     @Test
     @DisplayName("상대가 버스트라면 무조건 딜러는 승리한다.")
-    void checkResultWhenOpponentIsBust() {
+    void generateResultWhenOpponentIsBust() {
         player.receiveAdditionalCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
         player.receiveAdditionalCard(new Card(CardLetter.QUEEN, CardSuit.CLOVER));
         player.receiveAdditionalCard(new Card(CardLetter.KING, CardSuit.CLOVER));
@@ -59,12 +59,12 @@ public class DealerTest {
         dealer.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.DIAMOND));
         dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.DIAMOND));
 
-        assertThat(dealer.checkResult(player)).isEqualTo(Result.WIN);
+        assertThat(dealer.generateResult(player)).isEqualTo(Result.WIN);
     }
 
     @Test
     @DisplayName("상대가 버스트가 아니고 딜러가 버스트라면 패배한다.")
-    void checkResultWhenDealerIsBust() {
+    void generateResultWhenDealerIsBust() {
         player.receiveAdditionalCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
         player.receiveAdditionalCard(new Card(CardLetter.QUEEN, CardSuit.CLOVER));
 
@@ -72,13 +72,13 @@ public class DealerTest {
         dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.DIAMOND));
         dealer.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.DIAMOND));
 
-        assertThat(dealer.checkResult(player)).isEqualTo(Result.LOSE);
+        assertThat(dealer.generateResult(player)).isEqualTo(Result.LOSE);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"TEN,NINE:WIN", "TEN,SEVEN:DRAW", "SIX,SEVEN:LOSE"}, delimiter = ':')
     @DisplayName("상대와 딜러 모두 버스트가 아니라면, 점수 합계로 승무패를 가린다")
-    void checkResultByScore(final String dealerCardInput, final String expectedResult) {
+    void generateResultByScore(final String dealerCardInput, final String expectedResult) {
         player.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
         player.receiveAdditionalCard(new Card(CardLetter.SEVEN, CardSuit.CLOVER));
 
@@ -87,12 +87,12 @@ public class DealerTest {
             final CardLetter cardLetter = CardLetter.valueOf(dealerCard);
             dealer.receiveAdditionalCard(new Card(cardLetter, CardSuit.DIAMOND));
         }
-        assertThat(dealer.checkResult(player)).isEqualTo(Result.valueOf(expectedResult));
+        assertThat(dealer.generateResult(player)).isEqualTo(Result.valueOf(expectedResult));
     }
 
     @Test
     @DisplayName("딜러와 플레이어 사이의 모든 게임 결과를 계산한다")
-    void checkEveryResult() {
+    void generateEveryResult() {
         //Given
         Player player1 = new Player("joel");
         Player player2 = new Player("bada");
@@ -111,7 +111,7 @@ public class DealerTest {
         dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.SPADE));
         //When
         final Map<Result, Integer> dealerResult =
-                dealer.checkEveryResult(new Players(Arrays.asList(player1, player2, player3)));
+                dealer.generateEveryResult(new Players(Arrays.asList(player1, player2, player3)));
         //Then
         assertThat(dealerResult.getOrDefault(Result.WIN, 0)).isEqualTo(1);
         assertThat(dealerResult.getOrDefault(Result.DRAW, 0)).isEqualTo(1);

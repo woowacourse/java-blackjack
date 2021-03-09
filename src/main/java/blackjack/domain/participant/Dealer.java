@@ -19,20 +19,20 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public Result checkResult(final Participant participant) {
+    public Result generateResult(final Participant participant) {
         if (participant.isBust()) {
             return Result.WIN;
         }
         if (this.isBust()) {
             return Result.LOSE;
         }
-        return checkResultByScore(participant);
+        return generateResultByScore(participant);
     }
 
-    public Map<Result, Integer> checkEveryResult(final Players players) {
+    public Map<Result, Integer> generateEveryResult(final Players players) {
         final Map<Result, Integer> dealerResult = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            Result result = this.checkResult(player);
+            Result result = this.generateResult(player);
             dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
         }
         return Collections.unmodifiableMap(dealerResult);

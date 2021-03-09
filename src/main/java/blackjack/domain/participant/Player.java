@@ -8,13 +8,13 @@ public class Player extends Participant {
     }
 
     @Override
-    public Result checkResult(Participant participant) {
+    public Result generateResult(Participant participant) {
         if (this.isBust()) {
             return Result.LOSE;
         }
         if (participant.isBust()) {
             return Result.WIN;
         }
-        return checkResultByScore(participant);
+        return generateResultByScore(participant);
     }
 }

@@ -35,9 +35,9 @@ public abstract class Participant {
         return hand.isBust();
     }
 
-    abstract public Result checkResult(final Participant participant);
+    abstract public Result generateResult(final Participant participant);
 
-    protected Result checkResultByScore(final Participant participant) {
+    protected Result generateResultByScore(final Participant participant) {
         final int score = this.hand.calculateScore();
         final int opponentScore = participant.hand.calculateScore();
         return Result.checkResult(score, opponentScore);

@@ -40,10 +40,10 @@ public class Players {
         }
     }
 
-    public Map<Player, Result> checkEveryPlayerResult(final Dealer dealer) {
+    public Map<Player, Result> generateEveryPlayerResult(final Dealer dealer) {
         final Map<Player, Result> playerResult = new LinkedHashMap<>();
         for (Player player : players) {
-            playerResult.put(player, player.checkResult(dealer));
+            playerResult.put(player, player.generateResult(dealer));
         }
         return Collections.unmodifiableMap(playerResult);
     }
