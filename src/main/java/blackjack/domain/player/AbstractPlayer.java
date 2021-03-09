@@ -42,8 +42,14 @@ public abstract class AbstractPlayer implements Player {
         drawCard(cards.draw());
     }
 
-    protected boolean isBlackJack() {
+    @Override
+    public boolean isBlackjack() {
         return cards.isBlackjack();
+    }
+
+    @Override
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     @Override

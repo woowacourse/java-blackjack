@@ -15,15 +15,11 @@ public class User extends AbstractPlayer {
 
     @Override
     public boolean isCanDraw() {
-        return !(isDrawStop() || isOverBlackJack());
+        return !(isDrawStop() || isBust());
     }
 
     public boolean isDrawStop() {
         return isDrawStop;
-    }
-
-    private boolean isOverBlackJack() {
-        return getScore() > BLACKJACK;
     }
 
     public boolean isDrawContinue(String input) {
@@ -56,7 +52,7 @@ public class User extends AbstractPlayer {
     public ResultType getResult(Dealer dealer) {
         int userScore = getScore();
         int dealerScore = dealer.getScore();
-        if (isBlackJack() && !dealer.isBlackJack()) {
+        if (isBlackjack() && !dealer.isBlackjack()) {
             return ResultType.BLACKJACK;
         }
         if (userScore > BLACKJACK || userScore < dealerScore) {

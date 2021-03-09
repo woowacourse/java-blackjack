@@ -17,4 +17,8 @@ public interface Player {
     int getScore();
 
     void drawRandomOneCard();
+
+    boolean isBlackjack();
+
+    boolean isBust();
 }
