@@ -18,7 +18,7 @@ public class Dealer extends User {
     }
 
     public boolean canHit() {
-        return getScore() <= DEALER_HIT_THRESHOLD;
+        return getScore().isLowerThan(DEALER_HIT_THRESHOLD);
     }
 
     public List<Integer> calculateMatchResult(Map<Player, Status> result) {

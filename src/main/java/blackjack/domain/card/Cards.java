@@ -1,14 +1,12 @@
 package blackjack.domain.card;
 
+import blackjack.domain.Score;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Cards {
-
-    private static final int BLACKJACK = 21;
-    private static final int GAP_BETWEEN_ACE_MAX_AND_MIN = 10;
 
     private final List<Card> cards;
 
@@ -34,15 +32,17 @@ public class Cards {
             .collect(Collectors.joining(", "));
     }
 
-    public int calculateTotalScore() {
-        int total = cards.stream().mapToInt(Card::findScore).sum();
-        return addIfAceExist(total);
+    public Score calculateTotalScore() {
+        Score score =  new Score(cards.stream()
+            .mapToInt(Card::findScore)
+            .sum());
+        return addIfAceExist(score);
     }
 
-    private int addIfAceExist(int total) {
+    private Score addIfAceExist(Score total) {
         int aceCount = countAce();
-        while (total + GAP_BETWEEN_ACE_MAX_AND_MIN <= BLACKJACK && aceCount != 0) {
-            total += GAP_BETWEEN_ACE_MAX_AND_MIN;
+        while (total.isLessThanEleven() && aceCount != 0) {
+            total = total.plus();
             aceCount--;
         }
         return total;

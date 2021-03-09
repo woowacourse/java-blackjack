@@ -10,6 +10,7 @@ public enum Denomination {
     SEVEN(7),
     EIGHT(8),
     NINE(9),
+    TEN(10),
     JACK(10, "J"),
     QUEEN(10, "Q"),
     KING(10, "K");

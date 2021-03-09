@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Score;
 import blackjack.domain.Status;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -52,13 +53,13 @@ public class OutputView {
 
     public static void printCardsAndScore(Dealer dealer, Players players) {
         System.out
-            .println(System.lineSeparator() + dealer.showCards() + printScore(dealer));
+            .println(System.lineSeparator() + dealer.showCards() + printScore(dealer.getScore()));
         players.getPlayers().forEach(
-            player -> System.out.println(player.showCards() + printScore(player)));
+            player -> System.out.println(player.showCards() + printScore(player.getScore())));
     }
 
-    private static String printScore(User user) {
-        return RESULT_SUFFIX + user.getScore();
+    private static String printScore(Score score) {
+        return RESULT_SUFFIX + score.toInt();
     }
 
     public static void printResult(List<Integer> matchResult,

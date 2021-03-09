@@ -22,7 +22,7 @@ public class Result {
     }
 
     private Status compareWithDealer(Dealer dealer, Player player) {
-        return Status.compare(dealer.getScore(), player.getScore());
+        return Status.compare(dealer.getScore(),player.getScore());
     }
 
     public Map<Player, Status> getResult() {

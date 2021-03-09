@@ -1,29 +1,30 @@
 package blackjack.domain;
 
-public enum Status {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+import java.util.function.BiPredicate;
+import java.util.stream.Stream;
 
-    private static final int BLACKJACK = 21;
+public enum Status {
+    WIN("승", (dealer,player) -> (dealer.isBust() && player.isNotBust()) || player.compareTo(dealer) > 0),
+    DRAW("무",(dealer,player) -> player.compareTo(dealer) == 0),
+    LOSE("패",(dealer,player) -> player.isBust());
 
     private final String status;
+    private final BiPredicate<Score,Score> match;
 
-    Status(String status) {
+    Status(String status, BiPredicate<Score,Score> match) {
         this.status = status;
+        this.match = match;
     }
 
-    public static Status compare(int dealerScore, int playerScore) {
-        if (playerScore > BLACKJACK) {
-            return LOSE;
-        }
-        if (dealerScore > BLACKJACK || playerScore > dealerScore) {
-            return WIN;
-        }
-        if (playerScore == dealerScore) {
-            return DRAW;
-        }
-        return LOSE;
+    public static Status compare(Score dealerScore, Score playerScore) {
+        return Stream.of(values())
+            .filter(status -> status.isMatch(dealerScore,playerScore))
+            .findFirst()
+            .orElse(LOSE);
+    }
+
+    private boolean isMatch(Score dealerScore, Score playerScore) {
+        return match.test(dealerScore,playerScore);
     }
 
     public String getStatus() {
