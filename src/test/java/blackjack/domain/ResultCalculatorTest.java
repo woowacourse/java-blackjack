@@ -25,28 +25,28 @@ class ResultCalculatorTest {
         player.initHands(createInitialCardOfPlayer());
         dealer.initHands(createInitialCardOfDealer());
 
-        player.receiveCard(Card.create(Suit.HEART, Denomination.ACE));
-        player.receiveCard(Card.create(Suit.CLUB, Denomination.QUEEN));
+        player.receiveCard(Card.of(Suit.HEART, Denomination.ACE));
+        player.receiveCard(Card.of(Suit.CLUB, Denomination.QUEEN));
 
-        dealer.receiveCard(Card.create(Suit.SPADE, Denomination.ACE));
-        dealer.receiveCard(Card.create(Suit.CLUB, Denomination.ACE));
-        dealer.receiveCard(Card.create(Suit.HEART, Denomination.ACE));
-        dealer.receiveCard(Card.create(Suit.CLUB, Denomination.QUEEN));
+        dealer.receiveCard(Card.of(Suit.SPADE, Denomination.ACE));
+        dealer.receiveCard(Card.of(Suit.CLUB, Denomination.ACE));
+        dealer.receiveCard(Card.of(Suit.HEART, Denomination.ACE));
+        dealer.receiveCard(Card.of(Suit.CLUB, Denomination.QUEEN));
 
         assertThat(ResultCalculator.decideWinner(player, dealer)).isEqualTo(ResultType.WIN);
     }
 
     private List<Card> createInitialCardOfPlayer() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.SPADE, Denomination.ACE));
-        cards.add(Card.create(Suit.CLUB, Denomination.ACE));
+        cards.add(Card.of(Suit.SPADE, Denomination.ACE));
+        cards.add(Card.of(Suit.CLUB, Denomination.ACE));
         return cards;
     }
 
     private List<Card> createInitialCardOfDealer() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.HEART, Denomination.TEN));
-        cards.add(Card.create(Suit.HEART, Denomination.THREE));
+        cards.add(Card.of(Suit.HEART, Denomination.TEN));
+        cards.add(Card.of(Suit.HEART, Denomination.THREE));
         return cards;
     }
 }

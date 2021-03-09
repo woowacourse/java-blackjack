@@ -30,20 +30,22 @@ public class Cards {
 
     public boolean containsAce() {
         return cards.stream()
-                .map(Card::getCardValue)
-                .anyMatch(Denomination::isAce);
+                .anyMatch(Card::isAce);
+//        return cards.stream()
+//                .map(Card::getCardValue)
+//                .anyMatch(Denomination::isAce);
     }
 
     public int sumWithoutAce() {
         return cards.stream()
-                .filter(card -> !Denomination.isAce(card.getCardValue()))
-                .map(Card::getPoint)
+                .filter(card -> !card.isAce())
+                .map(Card::getScore)
                 .reduce(0, Integer::sum);
     }
 
     public int countAce() {
         return (int) cards.stream()
-                .filter(card -> Denomination.isAce(card.getCardValue()))
+                .filter(Card::isAce)
                 .count();
     }
 
@@ -71,7 +73,7 @@ public class Cards {
     }
 
     public int calculate() {
-        int sum = sumWithoutAce() + (Denomination.ACE.getPoint() * countAce());
+        int sum = sumWithoutAce() + (Denomination.ACE.getScore() * countAce());
         if (containsAce()) {
             sum = properSum(sum);
         }
@@ -86,7 +88,7 @@ public class Cards {
     }
 
     private int getPoint(Card card) {
-        return card.getPoint();
+        return card.getScore();
     }
 
     public boolean isBust() {

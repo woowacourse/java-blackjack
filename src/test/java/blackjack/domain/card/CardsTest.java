@@ -15,8 +15,8 @@ class CardsTest {
     @Test
     void create() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(Card.create(Suit.CLUB, Denomination.KING));
-        cardList.add(Card.create(Suit.CLUB, Denomination.QUEEN));
+        cardList.add(Card.of(Suit.CLUB, Denomination.KING));
+        cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
 
         assertThatCode(() -> {
             Cards cards = new Cards();
@@ -28,8 +28,8 @@ class CardsTest {
     @Test
     void containsAce() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(Card.create(Suit.CLUB, Denomination.ACE));
-        cardList.add(Card.create(Suit.CLUB, Denomination.QUEEN));
+        cardList.add(Card.of(Suit.CLUB, Denomination.ACE));
+        cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
         Cards cards = new Cards();
         cards.of(cardList);
 
@@ -40,8 +40,8 @@ class CardsTest {
     @Test
     void sumWithoutAce() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(Card.create(Suit.CLUB, Denomination.ACE));
-        cardList.add(Card.create(Suit.CLUB, Denomination.QUEEN));
+        cardList.add(Card.of(Suit.CLUB, Denomination.ACE));
+        cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
         Cards cards = new Cards();
         cards.of(cardList);
 
@@ -52,9 +52,9 @@ class CardsTest {
     @Test
     void getCardsWithSize() {
         List<Card> cardList = new ArrayList<>();
-        final Card card = Card.create(Suit.CLUB, Denomination.ACE);
+        final Card card = Card.of(Suit.CLUB, Denomination.ACE);
         cardList.add(card);
-        cardList.add(Card.create(Suit.CLUB, Denomination.QUEEN));
+        cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
         Cards cards = new Cards();
         cards.of(cardList);
 
@@ -66,8 +66,8 @@ class CardsTest {
     @Test
     void isBlackjack() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(Card.create(Suit.CLUB, Denomination.ACE));
-        cardList.add(Card.create(Suit.CLUB, Denomination.QUEEN));
+        cardList.add(Card.of(Suit.CLUB, Denomination.ACE));
+        cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
         Cards cards = new Cards();
         cards.of(cardList);
 
@@ -78,8 +78,8 @@ class CardsTest {
     @Test
     void calculate() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(Card.create(Suit.CLUB, Denomination.ACE));
-        cardList.add(Card.create(Suit.CLUB, Denomination.QUEEN));
+        cardList.add(Card.of(Suit.CLUB, Denomination.ACE));
+        cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
         Cards cards = new Cards();
         cards.of(cardList);
 

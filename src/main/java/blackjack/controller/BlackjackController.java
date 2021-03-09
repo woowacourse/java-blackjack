@@ -33,7 +33,7 @@ public class BlackjackController {
     }
 
     private void hitOrStandForPlayer(Deck deck, Player player) {
-        while (InputView.receiveAnswer(player.getName()) && player.canDraw()) {
+        while (player.canDraw() && InputView.receiveAnswer(player.getName())) {
             player.receiveCard(deck.pick());
             OutputView.printAllCards(player);
         }

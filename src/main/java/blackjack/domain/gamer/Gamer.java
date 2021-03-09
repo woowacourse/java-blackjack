@@ -29,7 +29,7 @@ public abstract class Gamer {
     }
 
     public boolean canDraw() {
-        return !hands.isBust();
+        return !(hands.isBust() && hands.isBlackjack());
     }
 
     public boolean isBlackjack() {

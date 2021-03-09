@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String INPUT_NAME_MSG = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String INPUT_ANSWER_MSG = "%s는 한 장의 카드를 더 받으시겠습니까?";
+    private static final String INPUT_MONEY_MSG = "%s의 배팅 금액은?";
 
     private static final String YES_OR_NO_REGEX = "^[YNyn]$";
 
@@ -18,6 +20,15 @@ public class InputView {
                 .map(String::trim)
                 .map(InputView::validateName)
                 .collect(Collectors.toList());
+    }
+
+    public static List<String> receiveMoney(List<String> names) {
+        List<String> money = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            System.out.printf(INPUT_MONEY_MSG, names.get(i));
+            money.add(SCANNER.nextLine().trim());
+        }
+        return money;
     }
 
     public static boolean receiveAnswer(String name) {

@@ -45,7 +45,7 @@ public class OutputView {
     }
 
     public static void printAllCards(Gamer gamer) {
-        System.out.println(gamer.getName() + " : " + cardToString(gamer.showHands()));
+        System.out.printf(CARD_INFO_FORMAT + NEWLINE, gamer.getName(), cardToString(gamer.showHands()));
     }
 
     public static void showAllCards(Dealer dealer, Players players) {

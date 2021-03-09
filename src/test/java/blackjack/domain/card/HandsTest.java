@@ -18,9 +18,9 @@ class HandsTest {
     @Test
     void limit_2() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.CLUB, Denomination.KING));
-        cards.add(Card.create(Suit.CLUB, Denomination.QUEEN));
-        cards.add(Card.create(Suit.HEART, Denomination.QUEEN));
+        cards.add(Card.of(Suit.CLUB, Denomination.KING));
+        cards.add(Card.of(Suit.CLUB, Denomination.QUEEN));
+        cards.add(Card.of(Suit.HEART, Denomination.QUEEN));
         Hands hands = new Hands();
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> hands.initialize(cards));
@@ -30,8 +30,8 @@ class HandsTest {
     @Test
     void create() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.CLUB, Denomination.KING));
-        cards.add(Card.create(Suit.CLUB, Denomination.QUEEN));
+        cards.add(Card.of(Suit.CLUB, Denomination.KING));
+        cards.add(Card.of(Suit.CLUB, Denomination.QUEEN));
         assertThatCode(() -> {
             Hands hands = new Hands();
             hands.initialize(cards);
@@ -42,8 +42,8 @@ class HandsTest {
     @Test
     void add() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.CLUB, Denomination.KING));
-        cards.add(Card.create(Suit.CLUB, Denomination.QUEEN));
+        cards.add(Card.of(Suit.CLUB, Denomination.KING));
+        cards.add(Card.of(Suit.CLUB, Denomination.QUEEN));
         Hands hands = new Hands();
         hands.initialize(cards);
 
@@ -54,11 +54,11 @@ class HandsTest {
     @Test
     void calculate_containsA_maxExceed() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.CLUB, Denomination.ACE));
-        cards.add(Card.create(Suit.CLUB, Denomination.TWO));
+        cards.add(Card.of(Suit.CLUB, Denomination.ACE));
+        cards.add(Card.of(Suit.CLUB, Denomination.TWO));
         Hands hands = new Hands();
         hands.initialize(cards);
-        hands.addCard(Card.create(Suit.CLUB, Denomination.KING));
+        hands.addCard(Card.of(Suit.CLUB, Denomination.KING));
 
         assertThat(hands.calculate()).isEqualTo(13);
     }
@@ -67,11 +67,11 @@ class HandsTest {
     @Test
     void calculate_containsA_maxNotExceed() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.CLUB, Denomination.ACE));
-        cards.add(Card.create(Suit.CLUB, Denomination.TWO));
+        cards.add(Card.of(Suit.CLUB, Denomination.ACE));
+        cards.add(Card.of(Suit.CLUB, Denomination.TWO));
         Hands hands = new Hands();
         hands.initialize(cards);
-        hands.addCard(Card.create(Suit.CLUB, Denomination.THREE));
+        hands.addCard(Card.of(Suit.CLUB, Denomination.THREE));
 
         assertThat(hands.calculate()).isEqualTo(16);
     }
@@ -80,11 +80,11 @@ class HandsTest {
     @Test
     void calculate_excludeA() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.HEART, Denomination.TWO));
-        cards.add(Card.create(Suit.CLUB, Denomination.TWO));
+        cards.add(Card.of(Suit.HEART, Denomination.TWO));
+        cards.add(Card.of(Suit.CLUB, Denomination.TWO));
         Hands hands = new Hands();
         hands.initialize(cards);
-        hands.addCard(Card.create(Suit.CLUB, Denomination.THREE));
+        hands.addCard(Card.of(Suit.CLUB, Denomination.THREE));
 
         assertThat(hands.calculate()).isEqualTo(7);
     }
@@ -93,11 +93,11 @@ class HandsTest {
     @Test
     void calculate_with_A_2_8() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.HEART, Denomination.ACE));
-        cards.add(Card.create(Suit.CLUB, Denomination.TWO));
+        cards.add(Card.of(Suit.HEART, Denomination.ACE));
+        cards.add(Card.of(Suit.CLUB, Denomination.TWO));
         Hands hands = new Hands();
         hands.initialize(cards);
-        hands.addCard(Card.create(Suit.CLUB, Denomination.EIGHT));
+        hands.addCard(Card.of(Suit.CLUB, Denomination.EIGHT));
 
         assertThat(hands.calculate()).isEqualTo(21);
     }
@@ -106,14 +106,14 @@ class HandsTest {
     @Test
     void calculate_with_10_3_A_A_A_Q() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.HEART, Denomination.TEN));
-        cards.add(Card.create(Suit.HEART, Denomination.THREE));
+        cards.add(Card.of(Suit.HEART, Denomination.TEN));
+        cards.add(Card.of(Suit.HEART, Denomination.THREE));
         Hands hands = new Hands();
         hands.initialize(cards);
-        hands.addCard(Card.create(Suit.SPADE, Denomination.ACE));
-        hands.addCard(Card.create(Suit.CLUB, Denomination.ACE));
-        hands.addCard(Card.create(Suit.HEART, Denomination.ACE));
-        hands.addCard(Card.create(Suit.CLUB, Denomination.QUEEN));
+        hands.addCard(Card.of(Suit.SPADE, Denomination.ACE));
+        hands.addCard(Card.of(Suit.CLUB, Denomination.ACE));
+        hands.addCard(Card.of(Suit.HEART, Denomination.ACE));
+        hands.addCard(Card.of(Suit.CLUB, Denomination.QUEEN));
 
         assertThat(hands.calculate()).isEqualTo(26);
     }
@@ -122,11 +122,11 @@ class HandsTest {
     @Test
     void containsAce() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.HEART, Denomination.ACE));
-        cards.add(Card.create(Suit.CLUB, Denomination.TWO));
+        cards.add(Card.of(Suit.HEART, Denomination.ACE));
+        cards.add(Card.of(Suit.CLUB, Denomination.TWO));
         Hands hands = new Hands();
         hands.initialize(cards);
-        hands.addCard(Card.create(Suit.CLUB, Denomination.THREE));
+        hands.addCard(Card.of(Suit.CLUB, Denomination.THREE));
 
         assertTrue(hands.containsAce());
     }
@@ -135,11 +135,11 @@ class HandsTest {
     @Test
     void getCardOf() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.HEART, Denomination.TWO));
-        cards.add(Card.create(Suit.CLUB, Denomination.TWO));
+        cards.add(Card.of(Suit.HEART, Denomination.TWO));
+        cards.add(Card.of(Suit.CLUB, Denomination.TWO));
         Hands hands = new Hands();
         hands.initialize(cards);
-        hands.addCard(Card.create(Suit.CLUB, Denomination.THREE));
+        hands.addCard(Card.of(Suit.CLUB, Denomination.THREE));
 
         assertThat(hands.getCardsWithSize(2).size()).isEqualTo(2);
     }
@@ -148,8 +148,8 @@ class HandsTest {
     @Test
     void isBlackjack() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.HEART, Denomination.ACE));
-        cards.add(Card.create(Suit.CLUB, Denomination.TEN));
+        cards.add(Card.of(Suit.HEART, Denomination.ACE));
+        cards.add(Card.of(Suit.CLUB, Denomination.TEN));
         Hands hands = new Hands();
         hands.initialize(cards);
         assertTrue(hands.isBlackjack());
@@ -159,8 +159,8 @@ class HandsTest {
     @Test
     public void isBust() {
         List<Card> cards = new ArrayList<>();
-        cards.add(Card.create(Suit.HEART, Denomination.ACE));
-        cards.add(Card.create(Suit.CLUB, Denomination.TEN));
+        cards.add(Card.of(Suit.HEART, Denomination.ACE));
+        cards.add(Card.of(Suit.CLUB, Denomination.TEN));
         Hands hands = new Hands();
         hands.initialize(cards);
         assertFalse(hands.isBust());
