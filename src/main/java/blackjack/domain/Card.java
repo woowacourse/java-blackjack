@@ -18,6 +18,6 @@ public class Card {
     }
 
     public boolean isAce() {
-        return number.equals(CardNumber.ACE);
+        return number.isAce();
     }
 }
