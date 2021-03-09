@@ -8,6 +8,7 @@ import java.util.List;
 public abstract class Player {
     protected final Cards hand;
     private final Name name;
+    private BetMoney betMoney;
 
     public Player(final Cards cards, final Name name) {
         this.hand = new Cards(cards.getList());
@@ -24,16 +25,24 @@ public abstract class Player {
         return hand.getList();
     }
 
+    public void betting(BetMoney betMoney) {
+        this.betMoney = new BetMoney(betMoney.toInt());
+    }
+
     public boolean isBust() {
         return hand.isBust();
     }
 
-    public int getScore() {
-        return this.hand.getScore();
-    }
-
     public boolean isBlackJack() {
         return hand.isBlackJack();
+    }
+
+    public int getBetMoney() {
+        return betMoney.toInt();
+    }
+
+    public int getScore() {
+        return hand.getScore();
     }
 
     public String getName() {

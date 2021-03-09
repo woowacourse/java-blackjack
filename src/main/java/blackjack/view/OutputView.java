@@ -56,11 +56,11 @@ public class OutputView {
     public static void printSummary(final ResultStatistics resultStatistics) {
         System.out.println("## 최종 승패");
         System.out.print(DEALER_PREFIX);
-        System.out.printf("%d승 %d무 %d패%n",
-                resultStatistics.getDealerWins(), resultStatistics.getDealerDraws(), resultStatistics.getDealerLoses());
+//        System.out.printf("%d승 %d무 %d패%n",
+//                resultStatistics.getDealerWinProfit(), resultStatistics.getDealerDraws(), resultStatistics.getDealerLoss());
 
-        resultStatistics.getResultStatistics()
-                .forEach((key, value) -> System.out.println(key.getName() + ": " + value.toString()));
+//        resultStatistics.getResultStatistics()
+//                .forEach((key, value) -> System.out.println(key.getName() + ": " + value.toString()));
     }
 
     private static void printChallengersInitCards(final Challengers challengers) {
