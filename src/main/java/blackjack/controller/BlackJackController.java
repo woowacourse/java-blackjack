@@ -16,7 +16,7 @@ public class BlackJackController {
     public void run() {
         List<Player> players = enterPlayers();
         Dealer dealer = Dealer.create();
-        dealBaseCards(players, dealer);
+        dealBaseCards(dealer, players);
         progressPlayersTurn(dealer, players);
         progressDealerTurn(dealer);
         printResult(dealer, players);
@@ -31,7 +31,7 @@ public class BlackJackController {
                      .collect(Collectors.toList());
     }
     
-    private void dealBaseCards(List<Player> players, Dealer dealer) {
+    private void dealBaseCards(Dealer dealer, List<Player> players) {
         for (int i = 0; i < BASE_CARD_COUNT; i++) {
             dealer.deal(dealer);
             players.forEach(dealer::deal);

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,12 +35,12 @@ class CompeteResultTest {
         List<Player> players = Arrays.asList(jason, cu);
         
         // when
-        final String competeResult = CompeteResult.getCompeteResultAgainstPlayers(dealer, players);
+        final CompeteResultGroup competeResultGroup = CompeteResult.compete(dealer, players);
+        final String result = competeResultGroup.getCompeteResultOfDealer();
         
         // then
-        assertThat(competeResult).isEqualTo("1승 1무");
+        assertThat(result).isEqualTo("1승 1무");
     }
-    
     
     
     @Test
@@ -57,8 +58,11 @@ class CompeteResultTest {
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
         pobi.receive(new Card(Suit.DIAMOND, Rank.ACE));
         
+        List<Player> players = Collections.singletonList(pobi);
+        
         // when
-        String result = CompeteResult.getCompeteResultAgainstDealer(dealer, pobi);
+        final CompeteResultGroup competeResultGroup = CompeteResult.compete(dealer, players);
+        final String result = competeResultGroup.getCompeteResultOfPlayer(pobi);
         
         // then
         assertThat(result).isEqualTo("승");
@@ -77,8 +81,11 @@ class CompeteResultTest {
         pobi.receive(new Card(Suit.CLOVER, Rank.TEN));
         pobi.receive(new Card(Suit.CLOVER, Rank.FIVE));
         
+        List<Player> players = Collections.singletonList(pobi);
+        
         // when
-        String result = CompeteResult.getCompeteResultAgainstDealer(dealer, pobi);
+        final CompeteResultGroup competeResultGroup = CompeteResult.compete(dealer, players);
+        final String result = competeResultGroup.getCompeteResultOfPlayer(pobi);
         
         // then
         assertThat(result).isEqualTo("패");
@@ -98,8 +105,11 @@ class CompeteResultTest {
         pobi.receive(new Card(Suit.DIAMOND, Rank.TEN));
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
         
+        List<Player> players = Collections.singletonList(pobi);
+        
         // when
-        String result = CompeteResult.getCompeteResultAgainstDealer(dealer, pobi);
+        final CompeteResultGroup competeResultGroup = CompeteResult.compete(dealer, players);
+        final String result = competeResultGroup.getCompeteResultOfPlayer(pobi);
         
         // then
         assertThat(result).isEqualTo("무");
@@ -121,8 +131,11 @@ class CompeteResultTest {
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
         
+        List<Player> players = Collections.singletonList(pobi);
+        
         // when
-        String result = CompeteResult.getCompeteResultAgainstDealer(dealer, pobi);
+        final CompeteResultGroup competeResultGroup = CompeteResult.compete(dealer, players);
+        final String result = competeResultGroup.getCompeteResultOfPlayer(pobi);
         
         // then
         assertThat(result).isEqualTo("패");

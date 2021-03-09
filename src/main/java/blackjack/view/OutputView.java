@@ -1,10 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.CompeteResult;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,9 +72,10 @@ public class OutputView {
     public static void printGameResult(Dealer dealer, List<Player> players) {
         System.out.println();
         
-        printCompeteResult(dealer.getName(), CompeteResult.getCompeteResultAgainstPlayers(dealer, players));
+        CompeteResultGroup competeResultGroup = CompeteResult.compete(dealer, players);
+        printCompeteResult(dealer.getName(), competeResultGroup.getCompeteResultOfDealer());
         for (Player player : players) {
-            printCompeteResult(player.getName(), CompeteResult.getCompeteResultAgainstDealer(dealer, player));
+            printCompeteResult(player.getName(), competeResultGroup.getCompeteResultOfPlayer(player));
         }
     }
     
