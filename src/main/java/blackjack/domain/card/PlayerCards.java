@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class PlayerCards {
+    private static final int ACE_DIFF = 10;
+    protected static final int BLACKJACK = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
+
     private final List<Card> cards;
 
     public PlayerCards() {
@@ -19,11 +23,34 @@ public class PlayerCards {
         return Collections.unmodifiableList(cards);
     }
 
-    public int size() {
-        return cards.size();
+    public int score() {
+        int lowScore = getLowScore();
+        int highScore = getHighScore(lowScore);
+        if (highScore > BLACKJACK) {
+            return lowScore;
+        }
+        return highScore;
+    }
+
+    private int getLowScore() {
+        return cards.stream()
+            .mapToInt(Card::getCardValue)
+            .sum();
+    }
+
+    private int getHighScore(int lowValue) {
+        int highValue = lowValue;
+        if (isContains(CardNumber.ACE)) {
+            highValue += ACE_DIFF;
+        }
+        return highValue;
     }
 
     public boolean isContains(CardNumber number) {
         return cards.stream().anyMatch(card -> card.getNumber() == number);
+    }
+
+    public boolean isBlackjack() {
+        return score() == BLACKJACK && cards.size() == BLACKJACK_CARD_SIZE;
     }
 }

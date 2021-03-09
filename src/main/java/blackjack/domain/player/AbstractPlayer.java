@@ -1,15 +1,12 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.PlayerCards;
 import java.util.List;
 
 public abstract class AbstractPlayer implements Player {
-    private static final int ACE_DIFF = 10;
     protected static final int BLACKJACK = 21;
-    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final PlayerCards cards;
     private final Name name;
@@ -29,26 +26,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public int getScore() {
-        int lowValue = getLowValue();
-        int highValue = getHighValue(lowValue);
-        if (highValue > BLACKJACK) {
-            return lowValue;
-        }
-        return highValue;
-    }
-
-    private int getLowValue() {
-        return cards.getCards().stream()
-            .mapToInt(Card::getCardValue)
-            .sum();
-    }
-
-    private int getHighValue(int lowValue) {
-        int highValue = lowValue;
-        if (cards.isContains(CardNumber.ACE)) {
-            highValue += ACE_DIFF;
-        }
-        return highValue;
+        return cards.score();
     }
 
     @Override
@@ -65,7 +43,7 @@ public abstract class AbstractPlayer implements Player {
     }
 
     protected boolean isBlackJack() {
-        return getScore() == BLACKJACK && cards.size() == BLACKJACK_CARD_SIZE;
+        return cards.isBlackjack();
     }
 
     @Override

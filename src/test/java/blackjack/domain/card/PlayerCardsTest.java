@@ -6,15 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerCardsTest {
-    @DisplayName("추가 및 사이즈 테스트")
-    @Test
-    void create() {
-        PlayerCards cards = new PlayerCards();
-        assertThat(cards.size()).isEqualTo(0);
-        cards.add(Card.valueOf(CardShape.CLUB, CardNumber.ACE));
-        assertThat(cards.size()).isEqualTo(1);
-    }
-
     @DisplayName("카드 포함 테스트")
     @Test
     void crate() {
@@ -22,5 +13,27 @@ public class PlayerCardsTest {
         assertThat(cards.isContains(CardNumber.ACE)).isFalse();
         cards.add(Card.valueOf(CardShape.CLUB, CardNumber.ACE));
         assertThat(cards.isContains(CardNumber.ACE)).isTrue();
+    }
+
+    @DisplayName("스코어 테스트")
+    @Test
+    void score() {
+        PlayerCards cards = new PlayerCards();
+        cards.add(Card.valueOf(CardShape.CLUB, CardNumber.ACE));
+        cards.add(Card.valueOf(CardShape.CLUB, CardNumber.JACK));
+        assertThat(cards.score()).isEqualTo(21);
+        cards.add(Card.valueOf(CardShape.CLUB, CardNumber.ACE));
+        assertThat(cards.score()).isEqualTo(12);
+    }
+
+    @DisplayName("블랙잭 테스트")
+    @Test
+    void isBlackjack() {
+        PlayerCards cards = new PlayerCards();
+        cards.add(Card.valueOf(CardShape.CLUB, CardNumber.ACE));
+        cards.add(Card.valueOf(CardShape.CLUB, CardNumber.JACK));
+        assertThat(cards.isBlackjack()).isTrue();
+        cards.add(Card.valueOf(CardShape.CLUB, CardNumber.TEN));
+        assertThat(cards.isBlackjack()).isFalse();
     }
 }
