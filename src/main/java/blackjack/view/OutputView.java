@@ -1,7 +1,5 @@
 package blackjack.view;
 
-import static blackjack.domain.Players.COUPLER_COMMA_SPACE;
-
 import blackjack.controller.GameResultController;
 import blackjack.domain.Gamer;
 import blackjack.domain.Player;
@@ -18,6 +16,7 @@ public class OutputView {
     private static final String SKELETON_DEALER_RESULT = "딜러: %d%s %d%s %d%s";
     private static final String SKELETON_NOTICE_GET_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String SKELETON_DEALER_INFO = "%s: %s";
+    private static final String COUPLER_COLON_SPACE = ": ";
 
     public static void noticeDrawTwoCards(Players players) {
         System.out.println();
@@ -67,7 +66,7 @@ public class OutputView {
 
     public static void printPlayerResult(Players players) {
         for (Player player : players.getAllPlayers()) {
-            System.out.println(player.getName() + COUPLER_COMMA_SPACE + player.getResult());
+            System.out.println(player.getName() + COUPLER_COLON_SPACE + player.getResult());
         }
     }
 
@@ -82,5 +81,9 @@ public class OutputView {
     public static void printDealerInfo(Gamer dealer) {
         System.out.println(
             String.format(SKELETON_DEALER_INFO, dealer.getName(), dealer.getDealerCards()));
+    }
+
+    public static void noticeBettingMoney(Player player) {
+        System.out.println(player.getName() + "의 배팅 금액은?");
     }
 }

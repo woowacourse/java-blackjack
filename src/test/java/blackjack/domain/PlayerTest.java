@@ -80,4 +80,34 @@ public class PlayerTest {
         player.receiveCard(new Card(CardPattern.SPADE, CardNumber.KING));
         assertEquals(player.getPoint(), 21);
     }
+
+    @Test
+    @DisplayName("기본 배팅 금액 확인")
+    void Betting() {
+        assertEquals(player.getMoney(), 0);
+    }
+
+    @Test
+    @DisplayName("임의 배팅 금액 확인")
+    void MoreBetting() {
+        Player testUser = new Player("testUser", "10000");
+
+        assertEquals(testUser.getMoney(), 10000);
+    }
+
+    @Test
+    @DisplayName("올바르지 않은 배팅 금액 확인")
+    void ErrorBetting() {
+        assertThatThrownBy(() -> {
+            Player testUser = new Player("testUser", "100 00");
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("소숫값 입력 금액은 불가능합니다.")
+    void FloatBetting() {
+        assertThatThrownBy(() -> {
+            Player testUser = new Player("testUser", "100.5");
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
 }
