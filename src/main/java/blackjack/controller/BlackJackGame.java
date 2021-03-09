@@ -3,11 +3,13 @@ package blackjack.controller;
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Participants;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,8 +23,9 @@ public class BlackJackGame {
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
         cardDeck.shuffleCard();
+        List<Participants> participants = generateAllParticipants(players, dealer);
 
-        firstDraw(players, dealer, cardDeck);
+        firstDraw(participants, cardDeck);
         playerTurn(players, cardDeck);
         dealerTurn(dealer, cardDeck);
         showResult(players, dealer);
@@ -46,20 +49,25 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    private void firstDraw(Players players, Dealer dealer, CardDeck cardDeck) {
-        eachDrawTwoCards(players, dealer, cardDeck);
-        OutputView.distributeCardMessage(players);
-        OutputView.showDealerFirstCard(dealer.getTakenCards().peekCard());
-        for (Player player : players.getPlayers()) {
-            OutputView.showCards(player);
-        }
+    private List<Participants> generateAllParticipants(Players players, Dealer dealer) {
+        List<Participants> participants = new ArrayList<>(players.getPlayers());
+        participants.add(0, dealer);
+
+        return participants;
     }
 
-    private void eachDrawTwoCards(Players players, Dealer dealer, CardDeck cardDeck) {
+    private void firstDraw(List<Participants> participants, CardDeck cardDeck) {
+        eachDrawTwoCards(participants, cardDeck);
+        OutputView.distributeCardMessage(participants);
+        OutputView.showDealerFirstCard(participants.get(0).getTakenCards().peekCard());
+        participants.stream()
+                    .filter(participant -> !participant.getName().equals(Dealer.DEALER_NAME))
+                    .forEach(OutputView::showCards);
+    }
+
+    private void eachDrawTwoCards(List<Participants> participants, CardDeck cardDeck) {
         for (int i = 0; i < INIT_DRAW_COUNT; i++) {
-            dealer.receiveCard(cardDeck.drawCard());
-            players.getPlayers()
-                    .forEach(player -> player.receiveCard(cardDeck.drawCard()));
+            participants.forEach(participant -> participant.receiveCard(cardDeck.drawCard()));
         }
     }
 

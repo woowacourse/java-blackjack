@@ -11,6 +11,7 @@ import blackjack.domain.gamer.Participants;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,6 @@ public class OutputView {
     private static final String ASK_DRAW_CARD_FORM = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String CARD_AND_SCORE_RESULT = "%s - 결과 : %d";
     private static final String PLAYER_RESULT_FORM = "%s: %s";
-
 
     private OutputView() {
 
@@ -35,8 +35,12 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void distributeCardMessage(Players players) {
-        String playerName = players.getPlayers().stream().map(Participants::getName).collect(Collectors.joining(","));
+    public static void distributeCardMessage(List<Participants> participants) {
+        String playerName = participants
+                .stream()
+                .map(Participants::getName)
+                .filter(name -> !name.equals(Dealer.DEALER_NAME))
+                .collect(Collectors.joining(","));
         System.out.printf((DISTRIBUTE_MESSAGE_FORM) + "%n", playerName);
     }
 

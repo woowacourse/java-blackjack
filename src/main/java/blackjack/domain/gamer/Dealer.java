@@ -6,7 +6,7 @@ import blackjack.domain.Score;
 public class Dealer extends Participants {
 
     private static final int DEALER_MAX_SCORE = 16;
-    private static final String DEALER_NAME = "딜러";
+    public static final String DEALER_NAME = "딜러";
 
     public Dealer() {
         super(DEALER_NAME);
