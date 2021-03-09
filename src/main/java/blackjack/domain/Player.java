@@ -13,7 +13,6 @@ public class Player extends Gamer {
     private static final String PATTERN_Y_OR_N = "[yn]";
     private static final int START_BETTING_MONEY = 0;
 
-
     private String result;
     private Money money;
 
@@ -50,8 +49,14 @@ public class Player extends Gamer {
         return draw.equals(GET_CARD);
     }
 
-    public void recordMatchResult(String result) {
-        this.result = result;
+    public void recordMatchResult(Result result) {
+        if (result == Result.WIN) {
+            this.result = Result.LOSE.getMessage();
+        } else if (result == Result.LOSE) {
+            this.result = Result.WIN.getMessage();
+        } else if (result == Result.DRAW) {
+            this.result = Result.DRAW.getMessage();
+        }
     }
 
     public String getResult() {
@@ -63,7 +68,7 @@ public class Player extends Gamer {
 
         Result result = Result.getInstance(playerPoint, dealerPoint);
         inputMatchResult(dealerHistory, result.name());
-        recordMatchResult(result.getMessage());
+        recordMatchResult(result);
     }
 
     private void inputMatchResult(Map<String, Integer> dealerHistory, String result) {

@@ -15,12 +15,23 @@ public class ResultTest {
     }
 
     @Test
-    @DisplayName("최종 결과 출력")
-    void resultTest() {
+    @DisplayName("딜러가 승리하는 경우")
+    void dealerWinTest() {
         Player player = new Player("pobi");
         Dealer dealer = new Dealer();
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.FIVE));
         dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.TEN));
+        Players players = new Players(Collections.singletonList(player), dealer);
+        GameResultController.getResult(players);
+    }
+
+    @Test
+    @DisplayName("플레이어가 승리하는 경우")
+    void playerWinTest() {
+        Player player = new Player("pobi");
+        Dealer dealer = new Dealer();
+        player.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.FIVE));
         Players players = new Players(Collections.singletonList(player), dealer);
         GameResultController.getResult(players);
     }
