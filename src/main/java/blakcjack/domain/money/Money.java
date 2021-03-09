@@ -1,7 +1,5 @@
 package blakcjack.domain.money;
 
-import blakcjack.domain.outcome.Outcome;
-
 import java.util.Collection;
 import java.util.Objects;
 
@@ -12,15 +10,15 @@ public class Money {
 		this.money = money;
 	}
 
-	public Money calculateProfit(final Outcome outcome) {
-		return new Money(money * outcome.getEarningRate());
-	}
-
 	public static Money calculateDealerProfitFrom(final Collection<Money> moneys) {
 		final float dealerProfit = (float) moneys.stream()
 				.mapToDouble(amount -> -amount.money)
 				.sum();
 		return new Money(dealerProfit);
+	}
+
+	public Money calculateProfit(final float rate) {
+		return new Money(money * rate);
 	}
 
 	public float getMoney() {

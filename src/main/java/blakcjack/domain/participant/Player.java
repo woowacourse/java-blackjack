@@ -25,6 +25,7 @@ public class Player extends Participant {
 	}
 
 	public Money calculateProfit(final Outcome outcome) {
-		return bettingAmount.calculateProfit(outcome);
+		final float earningRate = outcome.getEarningRate();
+		return bettingAmount.calculateProfit(earningRate);
 	}
 }
