@@ -7,7 +7,14 @@ public class Money {
 
     public Money(String money) {
         validate(money);
-        this.money = parseInt(money);
+        validateMoreThanZero(parseInt(money));
+    }
+
+    private int validateMoreThanZero(int money) {
+        if (money <= 0) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 최소 1원 이상이어야합니다.");
+        }
+        return money;
     }
 
     public Money(int money) {
@@ -15,8 +22,12 @@ public class Money {
     }
 
     private void validate(String money) {
+        validateEmptyOrNull(money);
+    }
+
+    private void validateEmptyOrNull(String money) {
         if (Objects.isNull(money) || money.length() == 0) {
-            throw new IllegalArgumentException("[ERROR] Money는 숫자만 입력 가능합니다.");
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자만 입력 가능합니다.");
         }
     }
 
@@ -24,7 +35,7 @@ public class Money {
         try {
             return Integer.parseInt(money);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] Money는 숫자만 입력 가능합니다.");
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자만 입력 가능합니다.");
         }
     }
 
