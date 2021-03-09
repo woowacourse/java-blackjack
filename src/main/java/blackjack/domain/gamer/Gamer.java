@@ -1,7 +1,6 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hands;
 import blackjack.domain.state.FirstTurn;
 import blackjack.domain.state.State;
 
@@ -13,7 +12,7 @@ public abstract class Gamer {
     //
     protected State state;
 
-    protected final Hands hands = new Hands();
+//    protected final Hands hands = new Hands();
     private final String name;
 
     protected Gamer(String name) {
@@ -53,9 +52,9 @@ public abstract class Gamer {
         return !state.isFinished();
     }
 
-    public boolean isBlackjack() {
-        return hands.isBlackjack();
-    }
+//    public boolean isBlackjack() {
+//        return hands.isBlackjack();
+//    }
 
 //    public void receiveCard(Card card) {
 //        hands.addCard(card);

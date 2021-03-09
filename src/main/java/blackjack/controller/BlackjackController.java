@@ -5,7 +5,7 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.money.Money;
-import blackjack.domain.utils.HandInitializer;
+import blackjack.domain.utils.StateInitializer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -29,7 +29,7 @@ public class BlackjackController {
     }
 
     private void initHandsOf(Deck deck, Dealer dealer, Players players) {
-        HandInitializer.init2(deck, dealer, players);
+        StateInitializer.init2(deck, dealer, players);
         OutputView.printInitialCards2(dealer, players);
     }
 
