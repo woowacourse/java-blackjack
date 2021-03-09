@@ -18,8 +18,8 @@ public class OutputView {
     private static final String CARD_INFO_FORMAT = "%s 카드: %s";
     private static final String DEALER_ADD_CARD_MSG = "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEWLINE;
     private static final String RESULT_WITH_POINTS = "%s - 결과: %d" + NEWLINE;
-    private static final String RESULT = "%s: %s" + NEWLINE;
-    private static final String RESULT_TITLE = "## 최종 승패";
+    private static final String RESULT = "%s: %.0f" + NEWLINE;
+    private static final String RESULT_TITLE = "## 최종 수익";
 
 //    public static void printInitialCards(Dealer dealer, Players players) {
 //        printNewLine();
@@ -104,6 +104,12 @@ public class OutputView {
     public static void printResultTitle() {
         printNewLine();
         System.out.println(RESULT_TITLE);
+    }
+
+    public static void printProfit(Map<String, Double> result) {
+        for (Map.Entry<String, Double> entry : result.entrySet()) {
+            System.out.printf(RESULT, entry.getKey(), entry.getValue());
+        }
     }
 
 //    public static void printDealerResult(Map<ResultType, Integer> resultWithCount) {

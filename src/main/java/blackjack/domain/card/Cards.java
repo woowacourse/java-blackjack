@@ -20,10 +20,6 @@ public class Cards {
         return new Cards(cards);
     }
 
-    public void addAll(List<Card> addedCards) {
-        cards.addAll(addedCards);
-    }
-
     public void add(Card card) {
         cards.add(card);
     }
@@ -31,19 +27,6 @@ public class Cards {
     public boolean containsAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
-    }
-
-    public int sumWithoutAce() {
-        return cards.stream()
-                .filter(card -> !card.isAce())
-                .map(Card::getScore)
-                .reduce(0, Integer::sum);
-    }
-
-    public int countAce() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
     }
 
     public List<Card> getCardsWithSize(int number) {
@@ -66,6 +49,19 @@ public class Cards {
             sum = properSum(sum);
         }
         return sum;
+    }
+
+    public int sumWithoutAce() {
+        return cards.stream()
+                .filter(card -> !card.isAce())
+                .map(Card::getScore)
+                .reduce(0, Integer::sum);
+    }
+
+    public int countAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     private int properSum(int sum) {

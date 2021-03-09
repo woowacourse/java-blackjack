@@ -5,6 +5,7 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.money.Money;
+import blackjack.domain.utils.ProfitCalculator;
 import blackjack.domain.utils.StateInitializer;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -57,6 +58,7 @@ public class BlackjackController {
     private void printResult(Dealer dealer, Players players) {
         OutputView.showAllCards2(dealer, players);
         OutputView.printResultTitle();
+        OutputView.printProfit(ProfitCalculator.calculateProfitOf(dealer, players));
 //        OutputView.printDealerResult(ResultMapper.resultOfDealer(dealer, players));
 //        OutputView.printPlayersResult(ResultMapper.resultOfPlayers(dealer, players));
     }

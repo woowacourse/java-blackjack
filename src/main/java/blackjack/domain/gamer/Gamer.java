@@ -1,11 +1,13 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.state.Blackjack;
+import blackjack.domain.state.Bust;
 import blackjack.domain.state.FirstTurn;
 import blackjack.domain.state.State;
 
-import javax.naming.spi.StateFactory;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Gamer {
 
@@ -73,4 +75,11 @@ public abstract class Gamer {
         state = FirstTurn.draw(initCards);
     }
 
+    public boolean isBust() {
+        return Objects.equals(state, Bust.class);
+    }
+
+    public boolean isBlackjack() {
+        return Objects.equals(state, Blackjack.class);
+    }
 }

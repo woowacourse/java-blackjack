@@ -29,4 +29,7 @@ public class Money {
     }
 
 
+    public double getMoney() {
+        return money;
+    }
 }
