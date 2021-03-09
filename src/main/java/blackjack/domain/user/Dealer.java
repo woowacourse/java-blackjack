@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class Dealer extends User {
     public static final int TURN_OVER_COUNT = 16;
+
     private static final Name name = new Name("딜러");
     protected final List<Card> cards = new ArrayList<>();
 

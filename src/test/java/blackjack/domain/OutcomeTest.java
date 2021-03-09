@@ -26,6 +26,6 @@ class OutcomeTest {
     @ParameterizedTest
     @CsvSource(value = {"WIN:LOSE", "LOSE:WIN", "DRAW:DRAW"}, delimiter = ':')
     void reverse_test(String result, String reverse) {
-        assertThat(Outcome.reverseResult(Outcome.valueOf(result))).isEqualTo(Outcome.valueOf(reverse));
+        assertThat(Outcome.valueOf(result).reverse()).isEqualTo(Outcome.valueOf(reverse));
     }
 }

@@ -18,7 +18,7 @@ public class Result {
                 .collect(Collectors.toList());
 
         for (int i = 0; i < dealerOutcomes.size(); i++) {
-            playerOutcomes.put(users.getPlayers().get(i).getName(), Outcome.reverseResult(dealerOutcomes.get(i)));
+            playerOutcomes.put(users.getPlayers().get(i).getName(), dealerOutcomes.get(i).reverse());
         }
     }
 

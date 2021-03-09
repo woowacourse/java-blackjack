@@ -8,13 +8,31 @@ import static blackjack.controller.GameController.GAME_OVER_SCORE;
 public enum Outcome {
     WIN("승",
             (dealerScore, playerScore) -> (playerScore > GAME_OVER_SCORE),
-            (dealerScore, playerScore) -> dealerScore > playerScore),
+            (dealerScore, playerScore) -> dealerScore > playerScore)
+            {
+                @Override
+                public Outcome reverse() {
+                    return LOSE;
+                }
+            },
     LOSE("패",
             (dealerScore, playerScore) -> (dealerScore > GAME_OVER_SCORE),
-            (dealerScore, playerScore) -> dealerScore < playerScore),
+            (dealerScore, playerScore) -> dealerScore < playerScore)
+            {
+                @Override
+                public Outcome reverse() {
+                    return WIN;
+                }
+            },
     DRAW("무",
             (dealerScore, playerScore) -> (false),
-            (dealerScore, playerScore) -> dealerScore == playerScore);
+            (dealerScore, playerScore) -> dealerScore == playerScore)
+            {
+                @Override
+                public Outcome reverse() {
+                    return DRAW;
+                }
+            };
 
     private final String name;
     private final BiPredicate<Integer, Integer> compareFunctionWhenBuster;
@@ -67,4 +85,6 @@ public enum Outcome {
     public static boolean isDraw(Outcome outcome) {
         return outcome == DRAW;
     }
+
+    abstract public Outcome reverse();
 }
