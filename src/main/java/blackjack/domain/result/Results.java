@@ -2,8 +2,9 @@ package blackjack.domain.result;
 
 import blackjack.domain.player.Player;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Results {
 
@@ -21,7 +22,8 @@ public class Results {
         Map<Result, Integer> dealerResults = new EnumMap<>(Result.class);
 
         for (Player player : results.keySet()) {
-            dealerResults.getOrDefault(convertResult(results.get(player)), 0);
+            Result result = convertResult(results.get(player));
+            dealerResults.put(result, dealerResults.getOrDefault(result, 0) + 1);
         }
 
         return dealerResults;

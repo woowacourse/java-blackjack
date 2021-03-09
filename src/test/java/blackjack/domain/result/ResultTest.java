@@ -10,10 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Deque;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -194,6 +191,7 @@ class ResultTest {
     void dealerGameResult() {
         Player player1 = new Player();
         Player player2 = new Player();
+        Player player3 = new Player();
         Deque<Card> cards = new ArrayDeque<>(Arrays.asList(
                 new Card(Type.SPADE, Denomination.THREE),
                 new Card(Type.DIAMOND, Denomination.QUEEN),
@@ -209,9 +207,16 @@ class ResultTest {
                 new Card(Type.SPADE, Denomination.ACE),
                 new Card(Type.DIAMOND, Denomination.TWO),
                 new Card(Type.HEART, Denomination.ACE),
-                new Card(Type.CLUB, Denomination.EIGHT)
+                new Card(Type.CLUB, Denomination.EIGHT),
+                new Card(Type.CLUB, Denomination.ACE),
+                new Card(Type.CLUB, Denomination.ACE),
+                new Card(Type.HEART, Denomination.ACE),
+                new Card(Type.HEART, Denomination.EIGHT)
         ));
         Deck deck = new Deck(cards);
+        Map<Result, Integer> expecting = new EnumMap<>(Result.class);
+        expecting.put(Result.LOSE, 2);
+        expecting.put(Result.WIN, 1);
 
         dealer.draw(deck); // 3 스페이드
         dealer.draw(deck); // Q 다이아몬드
@@ -232,11 +237,16 @@ class ResultTest {
         player2.draw(deck); // A 하트
         player2.draw(deck); // 8 클로버
 
-        dealer.compare(player1);
+        player3.draw(deck); // A 클로버
+        player3.draw(deck); // A 클로버
+        player3.draw(deck); // A 하트
+        player3.draw(deck); // 8 하트
+
         dealer.compare(player1);
         dealer.compare(player2);
+        dealer.compare(player3);
 
-        assertThat(dealer.getDealerResults()).isEqualTo(Arrays.asList(Result.LOSE, Result.LOSE, Result.WIN));
+        assertThat(dealer.getDealerResults()).isEqualTo(expecting);
     }
 
     @DisplayName("딜러와 플레이어가 둘 다 버스트면, 딜러가 이긴다.")
@@ -251,6 +261,8 @@ class ResultTest {
                 new Card(Type.DIAMOND, Denomination.KING)
         ));
         Deck deck = new Deck(cards);
+        Map<Result, Integer> expecting = new EnumMap<>(Result.class);
+        expecting.put(Result.WIN, 1);
 
         dealer.draw(deck);
         dealer.draw(deck);
@@ -262,7 +274,7 @@ class ResultTest {
 
         dealer.compare(player);
 
-        assertThat(dealer.getDealerResults()).isEqualTo(Collections.singletonList(Result.WIN));
+        assertThat(dealer.getDealerResults()).isEqualTo(expecting);
     }
 
     @DisplayName("딜러만 버스트다.")
@@ -276,6 +288,8 @@ class ResultTest {
                 new Card(Type.CLUB, Denomination.NINE)
         ));
         Deck deck = new Deck(cards);
+        Map<Result, Integer> expecting = new EnumMap<>(Result.class);
+        expecting.put(Result.LOSE, 1);
 
         dealer.draw(deck);
         dealer.draw(deck);
@@ -286,7 +300,7 @@ class ResultTest {
 
         dealer.compare(player);
 
-        assertThat(dealer.getDealerResults()).isEqualTo(Collections.singletonList(Result.LOSE));
+        assertThat(dealer.getDealerResults()).isEqualTo(expecting);
     }
 
     @DisplayName("플레이어만 버스트다.")
@@ -300,6 +314,8 @@ class ResultTest {
                 new Card(Type.DIAMOND, Denomination.KING)
         ));
         Deck deck = new Deck(cards);
+        Map<Result, Integer> expecting = new EnumMap<>(Result.class);
+        expecting.put(Result.WIN, 1);
 
         dealer.draw(deck);
         dealer.draw(deck);
@@ -310,7 +326,7 @@ class ResultTest {
 
         dealer.compare(player);
 
-        assertThat(dealer.getDealerResults()).isEqualTo(Collections.singletonList(Result.WIN));
+        assertThat(dealer.getDealerResults()).isEqualTo(expecting);
     }
 
     @DisplayName("플레이어가 승리 했을 경우 딜러는 패배기록이 생긴다.")
@@ -323,6 +339,8 @@ class ResultTest {
                 new Card(Type.DIAMOND, Denomination.KING)
         ));
         Deck deck = new Deck(cards);
+        Map<Result, Integer> expecting = new EnumMap<>(Result.class);
+        expecting.put(Result.LOSE, 1);
 
         dealer.draw(deck);
         dealer.draw(deck);
@@ -332,7 +350,7 @@ class ResultTest {
 
         dealer.compare(player);
 
-        assertThat(dealer.getDealerResults()).isEqualTo(Collections.singletonList(Result.LOSE));
+        assertThat(dealer.getDealerResults()).isEqualTo(expecting);
     }
 
     @DisplayName("플레이어가 블랙잭을 했을 경우 딜러는 패배기록이 생긴다.")
@@ -346,6 +364,8 @@ class ResultTest {
                 new Card(Type.DIAMOND, Denomination.TEN)
         ));
         Deck deck = new Deck(cards);
+        Map<Result, Integer> expecting = new EnumMap<>(Result.class);
+        expecting.put(Result.LOSE, 1);
 
         dealer.draw(deck);
         dealer.draw(deck);
@@ -355,6 +375,6 @@ class ResultTest {
 
         dealer.compare(player);
 
-        assertThat(dealer.getDealerResults()).isEqualTo(Collections.singletonList(Result.LOSE));
+        assertThat(dealer.getDealerResults()).isEqualTo(expecting);
     }
 }
