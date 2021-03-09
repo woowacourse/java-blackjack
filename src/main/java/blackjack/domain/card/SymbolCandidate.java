@@ -1,5 +1,8 @@
 package blackjack.domain.card;
 
+import blackjack.exception.BlackJackException;
+import java.util.Arrays;
+
 public enum SymbolCandidate {
 
     CLOVER("클로버"),
@@ -11,6 +14,17 @@ public enum SymbolCandidate {
 
     SymbolCandidate(String symbol) {
         this.symbol = symbol;
+    }
+
+    public static SymbolCandidate matchSymbol(String inputSymbol) throws BlackJackException {
+        return Arrays.stream(values())
+            .filter(element -> element.isSameNumber(inputSymbol))
+            .findAny()
+            .get();
+    }
+
+    private boolean isSameNumber(String inputSymbol) {
+        return this.symbol.equals(inputSymbol);
     }
 
     public String getSymbol() {

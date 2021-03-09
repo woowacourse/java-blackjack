@@ -1,19 +1,19 @@
 package blackjack.domain.card;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 import java.util.Objects;
 
 public class CardSymbol {
 
-    private static final Map<String, CardSymbol> SYMBOL_CACHE = new HashMap<>();
+    private static final EnumMap<SymbolCandidate, CardSymbol> SYMBOL_CACHE =
+        new EnumMap<>(SymbolCandidate.class);
 
     private String symbol;
 
     static {
         for (SymbolCandidate symbolCandidate : SymbolCandidate.values()) {
             CardSymbol cardSymbol = new CardSymbol(symbolCandidate);
-            SYMBOL_CACHE.put(symbolCandidate.getSymbol(), cardSymbol);
+            SYMBOL_CACHE.put(symbolCandidate, cardSymbol);
         }
     }
 
@@ -22,7 +22,8 @@ public class CardSymbol {
     }
 
     public static CardSymbol from(String symbol) {
-        return SYMBOL_CACHE.get(symbol);
+        SymbolCandidate symbolCandidate = SymbolCandidate.matchSymbol(symbol);
+        return SYMBOL_CACHE.get(symbolCandidate);
     }
 
     public String getSymbol() {
