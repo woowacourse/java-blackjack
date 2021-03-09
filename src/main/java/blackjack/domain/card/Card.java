@@ -14,10 +14,7 @@ public class Card {
     static {
         Arrays.stream(CardShape.values())
             .forEach(shape -> Arrays.stream(CardNumber.values())
-                .forEach(number ->
-                    cards[shape.getValue() * shapeSize + number.getValue() - 1]
-                        = new Card(shape, number)
-                ));
+                .forEach(number -> cards[getIndex(shape, number)] = new Card(shape, number)));
     }
 
     private Card(final CardShape shape, final CardNumber number) {
@@ -26,7 +23,11 @@ public class Card {
     }
 
     public static Card valueOf(final CardShape shape, final CardNumber number) {
-        return cards[shape.getValue() * shapeSize + number.getValue() - 1];
+        return cards[getIndex(shape, number)];
+    }
+
+    private static int getIndex(final CardShape shape, final CardNumber number) {
+        return shape.getValue() * shapeSize + number.getValue() - 1;
     }
 
     public CardNumber getNumber() {
