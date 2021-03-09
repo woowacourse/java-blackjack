@@ -16,6 +16,39 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class UserTest {
+    private static final int MIN_BETTING_MONEY_BOUND = 1_000;
+    protected static final int MAX_BETTING_MONEY_BOUND = 2_000_000_000;
+
+    @DisplayName("유저를 이름만으로 생성한 경우")
+    @Test
+    void onlyNameConstructor() {
+        assertThatCode(() -> new User(POBI))
+            .doesNotThrowAnyException();
+    }
+
+    @DisplayName("배팅 금액이 1000원 이상, 20억 이하이면, 배팅 가능")
+    @Test
+    void validBetting() {
+        assertThatCode(() -> new User(POBI, MAX_BETTING_MONEY_BOUND))
+            .doesNotThrowAnyException();
+        assertThatCode(() -> new User(POBI, MIN_BETTING_MONEY_BOUND))
+            .doesNotThrowAnyException();
+    }
+
+    @DisplayName("배팅 금액이 1000원 미만이면, 예외 발생")
+    @Test
+    void underBettingBoundException() {
+        assertThatThrownBy(() -> new User(POBI, MIN_BETTING_MONEY_BOUND - 1))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("배팅 금액이 20억 초과이면, 예외 발생")
+    @Test
+    void overBettingBoundException() {
+        assertThatThrownBy(() -> new User(POBI, MAX_BETTING_MONEY_BOUND + 1))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
     @Test
     void canDrawCardWhen1() {

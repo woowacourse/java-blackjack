@@ -1,13 +1,21 @@
 package blackjack.domain.player;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.ResultType;
 import blackjack.domain.UserDrawContinue;
 
 public class User extends AbstractPlayer {
     private boolean isDrawStop = false;
+    private final BettingMoney bettingMoney;
 
     public User(String name) {
         super(name);
+        this.bettingMoney = new BettingMoney();
+    }
+
+    public User(String name, int bettingMoney) {
+        super(name);
+        this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
     public boolean isDrawStop() {

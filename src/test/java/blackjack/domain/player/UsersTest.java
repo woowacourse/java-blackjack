@@ -8,6 +8,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.type.CardNumberType;
 import blackjack.domain.card.type.CardShapeType;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 import org.junit.jupiter.api.DisplayName;
@@ -22,20 +23,19 @@ public class UsersTest {
     @DisplayName("Users 생성 테스트")
     @Test
     void createUsers() {
-        StringJoiner joiner = new StringJoiner(",");
-        joiner.add(POBI);
-        joiner.add(INBI);
-        joiner.add(MUNGTO);
-        String joinedUsersNames = joiner.toString();
+        List<User> usersInput = Arrays.asList(
+            new User(POBI),
+            new User(JASON),
+            new User(INBI),
+            new User(MUNGTO)
+        );
 
-        Users users = new Users(joinedUsersNames);
+        Users users = new Users(usersInput);
+        assertThat(users.getUsers()).hasSize(4);
 
-        assertThat(users.getUsers()).hasSize(3);
-
-        String[] splitUserNames = joinedUsersNames.split(",");
         for (int i = 0; i < 3; i++) {
             assertThat(users.getUsers().get(i).getName().getName())
-                .isEqualTo(splitUserNames[i]);
+                .isEqualTo(usersInput.get(i).getName().getName());
         }
     }
 
@@ -171,10 +171,17 @@ public class UsersTest {
     @DisplayName("모든 유저들 랜덤카드 2개 뽑기 테스트")
     @Test
     void usersDrawRandomTwoCards() {
-        Users users1 = new Users("pobi,jason,inbi");
-        users1.getUsers().forEach(user -> assertThat(user.getCards()).hasSize(0));
+        List<User> usersInput = Arrays.asList(
+            new User(POBI),
+            new User(JASON),
+            new User(INBI),
+            new User(MUNGTO)
+        );
 
-        users1.drawRandomTwoCards(Cards.createAllShuffledCards());
-        users1.getUsers().forEach(user -> assertThat(user.getCards()).hasSize(2));
+        Users users = new Users(usersInput);
+        users.getUsers().forEach(user -> assertThat(user.getCards()).hasSize(0));
+
+        users.drawRandomTwoCards(Cards.createAllShuffledCards());
+        users.getUsers().forEach(user -> assertThat(user.getCards()).hasSize(2));
     }
 }
