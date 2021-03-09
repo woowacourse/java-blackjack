@@ -7,14 +7,10 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum Outcome {
-	BLACKJACK_WIN(1.5f,
-			(dealer, player) -> player.isBlackJack() && !dealer.isBlackJack()),
-	WIN(1f,
-			(dealer, player) -> (!player.isBust() && dealer.isBust()) || (!player.isBust() && player.getScore() > dealer.getScore())),
-	DRAW(0f,
-			(dealer, player) -> !player.isBust() && player.getScore() == dealer.getScore()),
-	LOSE(-1f,
-			(dealer, player) -> true);
+	BLACKJACK_WIN(1.5f, Outcome::isWinningByBlackjack),
+	WIN(1f, Outcome::isWinningByScoreOrDealerBust),
+	DRAW(0f, Outcome::isDrawByScore),
+	LOSE(-1f, (dealer, player) -> true);
 
 	private final float earningRate;
 	private final BiFunction<Dealer, Player, Boolean> expression;
@@ -24,7 +20,19 @@ public enum Outcome {
 		this.expression = expression;
 	}
 
-	public static Outcome of(final Dealer dealer, final Player player) {
+	private static boolean isWinningByBlackjack(final Dealer dealer, final Player player) {
+		return player.isBlackJack() && !dealer.isBlackJack();
+	}
+
+	private static boolean isWinningByScoreOrDealerBust(final Dealer dealer, final Player player) {
+		return !player.isBust() && (player.getScore() > dealer.getScore() || dealer.isBust());
+	}
+
+	private static boolean isDrawByScore(final Dealer dealer, final Player player) {
+		return !player.isBust() && player.getScore() == dealer.getScore();
+	}
+
+	static Outcome of(final Dealer dealer, final Player player) {
 		return Arrays.stream(values())
 				.filter(outcome -> outcome.expression.apply(dealer, player))
 				.findFirst()

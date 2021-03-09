@@ -1,19 +1,16 @@
 package blakcjack.domain.participant;
 
 import blakcjack.domain.card.Cards;
+import blakcjack.domain.money.Money;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
 
 import static blakcjack.domain.card.Cards.BLACKJACK_VALUE;
 
 public class Player extends Participant {
-	private final int bettingAmount;
+	private final Money bettingAmount;
 
-	public Player(final Name name) {
-		this(name, 0);
-	}
-
-	public Player(final Name name, final int bettingAmount) {
+	public Player(final Name name, final Money bettingAmount) {
 		super(name);
 		this.bettingAmount = bettingAmount;
 	}
@@ -27,7 +24,7 @@ public class Player extends Participant {
 		return cards.calculateScore() < BLACKJACK_VALUE;
 	}
 
-	public float calculateProfit(final Outcome outcome) {
-		return bettingAmount * outcome.getEarningRate();
+	public Money calculateProfit(final Outcome outcome) {
+		return bettingAmount.calculateProfit(outcome);
 	}
 }

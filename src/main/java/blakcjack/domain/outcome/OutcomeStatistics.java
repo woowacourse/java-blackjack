@@ -1,43 +1,39 @@
 package blakcjack.domain.outcome;
 
+import blakcjack.domain.money.Money;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+
+import static blakcjack.domain.money.Money.calculateDealerProfitFrom;
 
 public class OutcomeStatistics {
-	private final Map<Participant, Float> participantsProfit = new LinkedHashMap<>();
+	private final Map<Participant, Money> participantsProfit = new LinkedHashMap<>();
 
 	public OutcomeStatistics(final Dealer dealer, final List<Player> players) {
-		Map<Player, Float> playersProfit = getPlayersProfit(dealer, players);
-		participantsProfit.put(dealer, aggregateDealerProfit(playersProfit));
+		Map<Player, Money> playersProfit = getPlayersProfit(dealer, players);
+		participantsProfit.put(dealer, aggregateDealerProfitFrom(playersProfit));
 		participantsProfit.putAll(playersProfit);
 	}
 
-	private Map<Player, Float> getPlayersProfit(final Dealer dealer, final List<Player> players) {
-		final Map<Player, Float> playersProfit = new LinkedHashMap<>();
+	private Map<Player, Money> getPlayersProfit(final Dealer dealer, final List<Player> players) {
+		final Map<Player, Money> playersProfit = new LinkedHashMap<>();
 		for (final Player player : players) {
 			final Outcome playerOutcome = Outcome.of(dealer, player);
-			final float playerProfit = player.calculateProfit(playerOutcome);
+			final Money playerProfit = player.calculateProfit(playerOutcome);
 			playersProfit.put(player, playerProfit);
 		}
 		return playersProfit;
 	}
 
-	private float aggregateDealerProfit(final Map<Player, Float> playersProfit) {
-		float profit = 0f;
-		for (final Player player : playersProfit.keySet()) {
-			final float playerProfit = playersProfit.get(player);
-			profit -= playerProfit;
-		}
-		return profit;
+	private Money aggregateDealerProfitFrom(final Map<Player, Money> playersProfit) {
+		Collection<Money> playersProfitValues = playersProfit.values();
+		return calculateDealerProfitFrom(playersProfitValues);
 	}
 
-	public Map<Participant, Float> getParticipantsProfit() {
+	public Map<Participant, Money> getParticipantsProfit() {
 		return participantsProfit;
 	}
 

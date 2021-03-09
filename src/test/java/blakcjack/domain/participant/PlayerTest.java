@@ -1,6 +1,7 @@
 package blakcjack.domain.participant;
 
 import blakcjack.domain.card.*;
+import blakcjack.domain.money.Money;
 import blakcjack.domain.name.Name;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,14 +16,14 @@ public class PlayerTest {
 
 	@BeforeEach
 	void setUp() {
-		player = new Player(new Name("pobi"));
+		player = new Player(new Name("pobi"), new Money(10));
 	}
 
 	@DisplayName("플레이어 객체 생성 제대로 하는지")
 	@Test
 	void create() {
-		final Player player = new Player(new Name("pobi"));
-		assertThat(player).isEqualTo(new Player(new Name("pobi")));
+		final Player player = new Player(new Name("pobi"), new Money(10));
+		assertThat(player).isEqualTo(new Player(new Name("pobi"), new Money(10)));
 	}
 
 	@DisplayName("카드 제대로 뽑는지")

@@ -1,6 +1,7 @@
 package blakcjack.domain.participant;
 
 import blakcjack.domain.card.*;
+import blakcjack.domain.money.Money;
 import blakcjack.domain.name.Name;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +17,7 @@ public class DealerTest {
 
 	@BeforeEach
 	void setUp() {
-		player = new Player(new Name("pobi"));
+		player = new Player(new Name("pobi"), new Money(10));
 		dealer = new Dealer();
 	}
 

@@ -2,6 +2,7 @@ package blakcjack.view;
 
 import blakcjack.domain.card.Card;
 import blakcjack.domain.card.Cards;
+import blakcjack.domain.money.Money;
 import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Participants;
@@ -67,10 +68,10 @@ public class OutputView {
 
 	public static void printFinalOutcomeSummary(final OutcomeStatistics outcomeStatistics) {
 		System.out.println("## 최종 승패");
-		Map<Participant, Float> participantsProfit = outcomeStatistics.getParticipantsProfit();
+		Map<Participant, Money> participantsProfit = outcomeStatistics.getParticipantsProfit();
 		for (final Participant participant : participantsProfit.keySet()) {
-			final float participantProfit = participantsProfit.get(participant);
-			System.out.printf("%s: %.2f%n", participant.getName(), participantProfit);
+			final Money participantProfit = participantsProfit.get(participant);
+			System.out.printf("%s: %.2f%n", participant.getName(), participantProfit.getMoney());
 		}
 	}
 }

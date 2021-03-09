@@ -36,10 +36,6 @@ public abstract class Participant {
 		return BLACKJACK_VALUE < cards.calculateScore();
 	}
 
-	protected boolean hasAnyBust(final Participant thisParticipant, final Participant thatParticipant) {
-		return thisParticipant.isBust() || thatParticipant.isBust();
-	}
-
 	public Cards getHand() {
 		return cards;
 	}

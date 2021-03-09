@@ -1,6 +1,7 @@
 package blakcjack.controller;
 
 import blakcjack.domain.card.Deck;
+import blakcjack.domain.money.Money;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.name.Names;
 import blakcjack.domain.outcome.OutcomeStatistics;
@@ -37,7 +38,7 @@ public class BlackJackController {
 		final Names playerNames = new Names(takePlayerNamesInput());
 		final List<Player> players = new ArrayList<>();
 		for (Name name : playerNames.toList()) {
-			int bettingAmount = takeBettingAmountInput(name);
+			final Money bettingAmount = new Money(takeBettingAmountInput(name));
 			players.add(new Player(name, bettingAmount));
 		}
 		return players;

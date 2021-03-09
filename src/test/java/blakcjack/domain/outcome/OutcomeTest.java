@@ -4,6 +4,7 @@ import blakcjack.domain.card.Card;
 import blakcjack.domain.card.CardNumber;
 import blakcjack.domain.card.CardSymbol;
 import blakcjack.domain.card.Deck;
+import blakcjack.domain.money.Money;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Player;
@@ -21,7 +22,7 @@ class OutcomeTest {
 
 	@BeforeEach
 	void setUp() {
-		player = new Player(new Name("pobi"));
+		player = new Player(new Name("pobi"), new Money(10));
 		dealer = new Dealer();
 	}
 

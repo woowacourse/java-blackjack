@@ -1,6 +1,7 @@
 package blakcjack.domain.participant;
 
 import blakcjack.domain.card.*;
+import blakcjack.domain.money.Money;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.OutcomeStatistics;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,12 +19,14 @@ class ParticipantsTest {
 	private Participants participants;
 	private List<Player> players;
 	private Dealer dealer;
+	private Money money;
 
 	@BeforeEach
 	void setUp() {
-		Player player1 = new Player(new Name("pobi"), 100);
-		Player player2 = new Player(new Name("sakjung"), 200);
-		Player player3 = new Player(new Name("mediumBear"), 100);
+		money = new Money(10);
+		Player player1 = new Player(new Name("pobi"), new Money(100));
+		Player player2 = new Player(new Name("sakjung"), new Money(200));
+		Player player3 = new Player(new Name("mediumBear"), new Money(100));
 		dealer = new Dealer();
 		players = Arrays.asList(player1, player2, player3);
 		participants = new Participants(dealer, players);
@@ -34,9 +37,9 @@ class ParticipantsTest {
 	void create_playerNames_createDealerAndPlayers() {
 		assertThat(participants.getParticipants()).isEqualTo(Arrays.asList(
 				new Dealer(),
-				new Player(new Name("pobi")),
-				new Player(new Name("sakjung")),
-				new Player(new Name("mediumBear"))
+				new Player(new Name("pobi"), money),
+				new Player(new Name("sakjung"), money),
+				new Player(new Name("mediumBear"), money)
 		));
 	}
 

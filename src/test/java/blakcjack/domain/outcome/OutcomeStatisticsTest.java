@@ -4,6 +4,7 @@ import blakcjack.domain.card.Card;
 import blakcjack.domain.card.CardNumber;
 import blakcjack.domain.card.CardSymbol;
 import blakcjack.domain.card.Deck;
+import blakcjack.domain.money.Money;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
@@ -38,9 +39,9 @@ class OutcomeStatisticsTest {
 				Card.of(CardSymbol.HEART, CardNumber.JACK), // dealer
 				Card.of(CardSymbol.HEART, CardNumber.ACE)
 		);
-		Player player1 = new Player(new Name("pobi"), 100);
-		Player player2 = new Player(new Name("sakjung"), 200);
-		Player player3 = new Player(new Name("mediumBear"), 100);
+		Player player1 = new Player(new Name("pobi"), new Money(100));
+		Player player2 = new Player(new Name("sakjung"), new Money(200));
+		Player player3 = new Player(new Name("mediumBear"), new Money(100));
 		dealer = new Dealer();
 		drawCards(customDeck, dealer, player1, player2, player3);
 		players = Arrays.asList(player1, player2, player3);
@@ -49,11 +50,11 @@ class OutcomeStatisticsTest {
 	@DisplayName("객체 생성 제대로 하는지")
 	@Test
 	void create() {
-		final Map<Participant, Float> expectedParticipantsProfit = new LinkedHashMap<>();
-		expectedParticipantsProfit.put(dealer, 200f);
-		expectedParticipantsProfit.put(players.get(0), -100f);
-		expectedParticipantsProfit.put(players.get(1), 0f);
-		expectedParticipantsProfit.put(players.get(2), -100f);
+		final Map<Participant, Money> expectedParticipantsProfit = new LinkedHashMap<>();
+		expectedParticipantsProfit.put(dealer, new Money(200));
+		expectedParticipantsProfit.put(players.get(0), new Money(-100));
+		expectedParticipantsProfit.put(players.get(1), new Money(0));
+		expectedParticipantsProfit.put(players.get(2), new Money(-100));
 
 		OutcomeStatistics outcomeStatistics = new OutcomeStatistics(dealer, players);
 		assertThat(outcomeStatistics.getParticipantsProfit()).isEqualTo(expectedParticipantsProfit);
