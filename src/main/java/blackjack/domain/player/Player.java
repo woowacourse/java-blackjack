@@ -6,13 +6,21 @@ import blackjack.domain.card.Score;
 
 public interface Player {
 
+    int NUMBER_OF_INITIAL_CARDS = 2;
+
     void initializeCards(final Deck deck);
 
     void drawCard(final Deck deck);
 
-    Name getName();
+    boolean isBust();
 
-    Score getScore();
+    boolean isBlackJack();
 
-    Cards getCards();
+    boolean isTwentyOne();
+
+    Cards cards();
+
+    String name();
+
+    Score score();
 }
