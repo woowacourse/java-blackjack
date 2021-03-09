@@ -12,9 +12,16 @@ public class Player {
     private final Hands hands;
 
     public Player(String name, int money,  Hands hands) {
+        validate(money);
         this.name = name;
         this.money = money;
         this.hands = hands;
+    }
+
+    private void validate(int money) {
+        if (money < 0) {
+            throw new IllegalArgumentException("[에러]: 베팅 금액은 음수가 될 수 없습니다.");
+        }
     }
 
     public List<Card> showHands() {
@@ -25,7 +32,7 @@ public class Player {
         return name;
     }
 
-    public int getPoint() {
+    public int calculateScore() {
         return hands.calculate();
     }
 

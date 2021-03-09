@@ -35,7 +35,7 @@ public class OutputView {
 
     public static void allCardsWithPoint(Player player) {
         System.out.printf(RESULT, player.getName() + " : " + cardToString(player.showHands()),
-                player.getPoint());
+                player.calculateScore());
     }
 
     public static void allCardsWithPoint(Dealer dealer) {

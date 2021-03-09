@@ -11,7 +11,7 @@ public class ResultCalculator {
     }
 
     public static ResultType decideWinner(Player player, Dealer dealer) {
-        if (player.getPoint() > MAX_WINNING_POINT) {
+        if (player.calculateScore() > MAX_WINNING_POINT) {
             return ResultType.LOSE;
         }
         if (dealer.getPoint() > MAX_WINNING_POINT) {
@@ -31,18 +31,18 @@ public class ResultCalculator {
     }
 
     private static ResultType confirmPlayerWinningPoint(Player player) {
-        if (player.getPoint() == MAX_WINNING_POINT) {
+        if (player.calculateScore() == MAX_WINNING_POINT) {
             return ResultType.WIN;
         }
         return ResultType.LOSE;
     }
 
     private static boolean bothWinningPoint(Player player, Dealer dealer) {
-        return player.getPoint() == MAX_WINNING_POINT && dealer.getPoint() == MAX_WINNING_POINT;
+        return player.calculateScore() == MAX_WINNING_POINT && dealer.getPoint() == MAX_WINNING_POINT;
     }
 
     private static boolean bothUnderWinningPoint(Player player, Dealer dealer) {
-        return player.getPoint() < MAX_WINNING_POINT &&
+        return player.calculateScore() < MAX_WINNING_POINT &&
                 dealer.getPoint() < MAX_WINNING_POINT;
     }
 
@@ -61,7 +61,7 @@ public class ResultCalculator {
 
 
     private static ResultType compare(Player player, Dealer dealer) {
-        int compare = Integer.compare(player.getPoint(), dealer.getPoint());
+        int compare = Integer.compare(player.calculateScore(), dealer.getPoint());
         if (compare < 0) {
             return ResultType.LOSE;
         }

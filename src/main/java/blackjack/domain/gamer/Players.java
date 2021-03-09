@@ -2,7 +2,6 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.ResultCalculator;
 import blackjack.domain.ResultType;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -35,10 +34,6 @@ public class Players implements Iterable<Player> {
             result.put(player.getName(), profit);
         }
         return result;
-    }
-
-    public List<Player> players() {
-        return players;
     }
 
     public Stream<Player> stream() {
