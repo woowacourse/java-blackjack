@@ -32,6 +32,7 @@ public class BlackJackResultTest {
                 new Card(Shape.SPADE, Denomination.SEVEN),
                 new Card(Shape.SPADE, Denomination.ACE)
         );
+        dealer.stay();
 
         player1.firstDraw(
                 new Card(Shape.SPADE, Denomination.JACK),
@@ -41,6 +42,7 @@ public class BlackJackResultTest {
                 new Card(Shape.SPADE, Denomination.JACK),
                 new Card(Shape.SPADE, Denomination.SEVEN)
         );
+        player2.stay();
 
         players = new Players(Arrays.asList(player1, player2));
     }

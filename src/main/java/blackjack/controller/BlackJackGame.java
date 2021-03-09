@@ -77,7 +77,7 @@ public class BlackJackGame {
         try {
             OutputView.askOneMoreCard(player.toParticipantDto());
             boolean wantDraw = InputView.inputAnswer();
-            showCurrentCardWhenStopDraw(player, wantDraw);
+            playerWantStopDraw(player, wantDraw);
             return wantDraw;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
@@ -85,9 +85,10 @@ public class BlackJackGame {
         }
     }
 
-    private void showCurrentCardWhenStopDraw(Player player, boolean wantDraw) {
+    private void playerWantStopDraw(Player player, boolean wantDraw) {
         if (!wantDraw) {
             OutputView.showCards(player.toParticipantDto());
+            player.stay();
         }
     }
 
@@ -95,6 +96,9 @@ public class BlackJackGame {
         while (dealer.canDraw()) {
             dealer.draw(cardDeck.drawCard());
             OutputView.dealerReceiveOneCard();
+        }
+        if (!dealer.isBust() && dealer.isHit()) {
+            dealer.stay();
         }
     }
 

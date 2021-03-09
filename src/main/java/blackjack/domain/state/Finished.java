@@ -19,4 +19,9 @@ public abstract class Finished extends Started {
     public State draw(Card card) {
         throw new IllegalStateException(CANNOT_DRAW_CARD_ERROR_MESSAGE);
     }
+
+    @Override
+    public State stay() {
+        throw new IllegalStateException();
+    }
 }

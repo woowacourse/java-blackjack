@@ -26,6 +26,18 @@ public abstract class Participant {
         state = state.draw(card);
     }
 
+    public void stay() {
+        state = state.stay();
+    }
+
+    public boolean isBust() {
+        return state.getCards().isBust();
+    }
+
+    public boolean isHit() {
+        return !state.isFinished();
+    }
+
     public final ParticipantDto toParticipantDto() {
         Cards cards = state.getCards();
         return new ParticipantDto(this.nickname, cards, cards.calculateScore());

@@ -7,6 +7,7 @@ import static blackjack.domain.state.BlackJack.BLACKJACK_NUMBER;
 public class Cards {
     private static final String NO_REMAIN_CARD_ERROR_MESSAGE = "남은 카드가 없습니다.";
     private static final String DUPLICATE_CARD_ERROR_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
+    private static final int DEALER_DRAW_CONDITION = 16;
     public static final int TOP_CARD = 0;
 
     private final List<Card> cards;
@@ -47,6 +48,18 @@ public class Cards {
 
     public boolean isStay() {
         return cards.size() > 2 && isBlackJack();
+    }
+
+    public boolean isWin(Cards cards) {
+        return calculateScore() > cards.calculateScore();
+    }
+
+    public boolean isDraw(Cards cards) {
+        return calculateScore() == cards.calculateScore();
+    }
+
+    public boolean lessThanSixteen() {
+        return calculateScore() <= DEALER_DRAW_CONDITION;
     }
 
     public int calculateScore() {

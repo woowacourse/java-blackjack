@@ -1,26 +1,51 @@
 package blackjack.domain.result;
 
-import java.util.Arrays;
+import blackjack.domain.card.Cards;
+import blackjack.domain.state.BlackJack;
+import blackjack.domain.state.Bust;
+import blackjack.domain.state.State;
+import blackjack.domain.state.Stay;
 
-import static blackjack.domain.state.BlackJack.BLACKJACK_NUMBER;
+import java.util.Arrays;
 
 public enum MatchResult {
     WIN("승") {
         @Override
-        boolean match(int playerScore, int dealerScore) {
-            return (playerScore <= BLACKJACK_NUMBER && dealerScore > BLACKJACK_NUMBER) || ((playerScore > dealerScore) && playerScore <= BLACKJACK_NUMBER);
+        boolean match(State playerState, State dealerState) {
+            if (playerState instanceof BlackJack && !(dealerState instanceof BlackJack)) {
+                return true;
+            }
+            if (playerState instanceof Stay && dealerState instanceof Bust) {
+                return true;
+            }
+            Cards playerCard = playerState.getCards();
+            Cards dealerCard = dealerState.getCards();
+            return playerState instanceof Stay && playerCard.isWin(dealerCard);
         }
     },
     LOSE("패") {
         @Override
-        boolean match(int playerScore, int dealerScore) {
-            return (playerScore > BLACKJACK_NUMBER && dealerScore <= BLACKJACK_NUMBER) || ((playerScore < dealerScore) && dealerScore <= BLACKJACK_NUMBER);
+        boolean match(State playerState, State dealerState) {
+            if (dealerState instanceof BlackJack && !(playerState instanceof BlackJack)) {
+                return true;
+            }
+            if (dealerState instanceof Stay && playerState instanceof Bust) {
+                return true;
+            }
+            Cards playerCard = playerState.getCards();
+            Cards dealerCard = dealerState.getCards();
+            return dealerState instanceof Stay && dealerCard.isWin(playerCard);
         }
     },
     DRAW("무") {
         @Override
-        boolean match(int playerScore, int dealerScore) {
-            return (playerScore > BLACKJACK_NUMBER && dealerScore > BLACKJACK_NUMBER) || (playerScore == dealerScore);
+        boolean match(State playerState, State dealerState) {
+            if (playerState instanceof Bust && dealerState instanceof Bust) {
+                return true;
+            }
+            Cards playerCard = playerState.getCards();
+            Cards dealerCard = dealerState.getCards();
+            return playerCard.isDraw(dealerCard);
         }
     };
 
@@ -30,11 +55,11 @@ public enum MatchResult {
         this.result = result;
     }
 
-    abstract boolean match(int playerScore, int dealerScore);
+    abstract boolean match(State playerState, State dealerState);
 
-    public static MatchResult getPlayerMatchResult(int playerScore, int dealerScore) {
+    public static MatchResult getPlayerMatchResult(State playerState, State dealerState) {
         return Arrays.stream(values())
-                .filter(matchResult -> matchResult.match(playerScore, dealerScore))
+                .filter(matchResult -> matchResult.match(playerState, dealerState))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
     }
