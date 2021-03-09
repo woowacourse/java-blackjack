@@ -40,8 +40,7 @@ public class OutputView {
         System.out.printf((DISTRIBUTE_MESSAGE_FORM) + "%n", playerName);
     }
 
-    public static void showDealerFirstCard(Dealer dealer) {
-        Card card = dealer.getTakenCards().peekCard();
+    public static void showDealerFirstCard(Card card) {
         System.out.println("딜러: " + cardForm(card));
     }
 

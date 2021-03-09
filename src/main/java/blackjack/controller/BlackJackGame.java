@@ -49,7 +49,7 @@ public class BlackJackGame {
     private void firstDraw(Players players, Dealer dealer, CardDeck cardDeck) {
         eachDrawTwoCards(players, dealer, cardDeck);
         OutputView.distributeCardMessage(players);
-        OutputView.showDealerFirstCard(dealer);
+        OutputView.showDealerFirstCard(dealer.getTakenCards().peekCard());
         for (Player player : players.getPlayers()) {
             OutputView.showCards(player);
         }
