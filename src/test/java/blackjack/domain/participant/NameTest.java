@@ -1,13 +1,13 @@
 package blackjack.domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class NameTest {
 
@@ -23,14 +23,14 @@ public class NameTest {
     @NullSource
     void testValidateNull(String name) {
         assertThatThrownBy(() -> new Name(name)).isInstanceOf(NullPointerException.class)
-        .hasMessage("이름은 null 일 수 없습니다.");
+                .hasMessage("이름은 null 일 수 없습니다.");
     }
 
     @ParameterizedTest(name = "이름 입력값에 공백만 있거나 빈값이라면 예외가 발생한다.")
     @ValueSource(strings = {"", " ", "  "})
     void testCreateName(String name) {
         assertThatThrownBy(() -> new Name(name)).isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("이름은 빈값 일 수 없습니다.");
+                .hasMessage("이름은 빈값 일 수 없습니다.");
     }
 
     @Test

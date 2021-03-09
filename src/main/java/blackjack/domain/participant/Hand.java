@@ -1,10 +1,9 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.carddeck.Card;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Hand {
 
@@ -30,8 +29,8 @@ public class Hand {
 
     private int calculateScore() {
         return cards.stream()
-            .mapToInt(Card::getScore)
-            .reduce(0, Integer::sum);
+                .mapToInt(Card::getScore)
+                .reduce(0, Integer::sum);
     }
 
     private int calculateHardAceScore(int totalScore) {
@@ -45,8 +44,8 @@ public class Hand {
 
     private int getAceCount() {
         return (int) cards.stream()
-            .filter(Card::isAce)
-            .count();
+                .filter(Card::isAce)
+                .count();
     }
 
     private boolean hasAce(int aceCount) {

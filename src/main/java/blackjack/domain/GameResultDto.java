@@ -8,7 +8,7 @@ public class GameResultDto {
     Map<GameResult, Integer> dealerResult;
 
     public GameResultDto(Map<String, GameResult> playerResult,
-        Map<GameResult, Integer> dealerResult) {
+                         Map<GameResult, Integer> dealerResult) {
         this.playerResult = playerResult;
         this.dealerResult = dealerResult;
     }

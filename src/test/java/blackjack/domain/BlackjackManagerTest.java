@@ -1,13 +1,14 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Players;
-import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BlackjackManagerTest {
 
@@ -26,10 +27,10 @@ public class BlackjackManagerTest {
         BlackjackManager.initGame(players, dealer);
 
         assertThat(players.toList()
-            .stream()
-            .filter(player -> player.toHandList().size() == 2)
-            .count())
-            .isEqualTo(2);
+                .stream()
+                .filter(player -> player.toHandList().size() == 2)
+                .count())
+                .isEqualTo(2);
     }
 
     @Test

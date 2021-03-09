@@ -4,6 +4,7 @@ import blackjack.domain.GameResultDto;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,8 +29,8 @@ public class OutputView {
 
     private static String joinPlayerNames(final List<Player> players) {
         return players.stream()
-            .map(Player::getName)
-            .collect(Collectors.joining(DELIMITER));
+                .map(Player::getName)
+                .collect(Collectors.joining(DELIMITER));
     }
 
     public static void printHandResult(List<Player> players, Dealer dealer) {
@@ -41,11 +42,11 @@ public class OutputView {
     private static String joinDealerResult(Dealer dealer) {
         StringBuilder sb = new StringBuilder();
         sb.append("딜러")
-            .append(HAND_FORMAT)
-            .append(joinCards(dealer.toHandList()))
-            .append(SCORE_FORMAT)
-            .append(dealer.getTotalScore())
-            .append(NEW_LINE);
+                .append(HAND_FORMAT)
+                .append(joinCards(dealer.toHandList()))
+                .append(SCORE_FORMAT)
+                .append(dealer.getTotalScore())
+                .append(NEW_LINE);
         return sb.toString();
     }
 
@@ -53,11 +54,11 @@ public class OutputView {
         StringBuilder sb = new StringBuilder();
         for (Player player : players) {
             sb.append(player.getName())
-                .append(HAND_FORMAT)
-                .append(joinCards(player.toHandList()))
-                .append(SCORE_FORMAT)
-                .append(player.getTotalScore())
-                .append(NEW_LINE);
+                    .append(HAND_FORMAT)
+                    .append(joinCards(player.toHandList()))
+                    .append(SCORE_FORMAT)
+                    .append(player.getTotalScore())
+                    .append(NEW_LINE);
         }
         return sb.toString();
     }
@@ -74,18 +75,18 @@ public class OutputView {
     public static void printCards(final Player player) {
         StringBuilder sb = new StringBuilder();
         sb.append(player.getName())
-            .append(HAND_FORMAT)
-            .append(joinCards(player.toHandList()))
-            .append(NEW_LINE);
+                .append(HAND_FORMAT)
+                .append(joinCards(player.toHandList()))
+                .append(NEW_LINE);
         System.out.print(sb);
     }
 
     public static void printCards(final Dealer dealer) {
         StringBuilder sb = new StringBuilder();
         sb.append("딜러")
-            .append(HAND_FORMAT)
-            .append(formatsCardName(dealer.toHandList().get(0)))
-            .append(NEW_LINE);
+                .append(HAND_FORMAT)
+                .append(formatsCardName(dealer.toHandList().get(0)))
+                .append(NEW_LINE);
         System.out.print(sb);
     }
 

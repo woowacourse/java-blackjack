@@ -1,13 +1,14 @@
 package blackjack.domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayersTest {
 
@@ -24,7 +25,7 @@ class PlayersTest {
     void testDuplicateException() {
         List<String> names = Arrays.asList("pobi", "pobi", "jason");
         assertThatThrownBy(() -> new Players(names))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -32,13 +33,13 @@ class PlayersTest {
     void testNullOrBlankException() {
         List<String> blank1 = Collections.singletonList("");
         assertThatThrownBy(() -> new Players(blank1))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
         List<String> blank2 = Collections.singletonList(" ");
         assertThatThrownBy(() -> new Players(blank2))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
         List<String> nullList = null;
         assertThatThrownBy(() -> new Players(nullList))
-            .isInstanceOf(NullPointerException.class);
+                .isInstanceOf(NullPointerException.class);
     }
 
     @Test
@@ -49,9 +50,9 @@ class PlayersTest {
         Dealer dealer = new Dealer();
         players.initHandByDealer(dealer, 2);
         assertThat(players.toList()
-            .stream()
-            .filter(player -> player.toHandList().size() == 2)
-            .count())
-            .isEqualTo(2);
+                .stream()
+                .filter(player -> player.toHandList().size() == 2)
+                .count())
+                .isEqualTo(2);
     }
 }
