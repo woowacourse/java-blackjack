@@ -43,10 +43,10 @@ public class DealerTest {
 
     @Test
     @DisplayName("딜러가 카드를 더 받을 수 있는지 확인")
-    void checkMoreCardAvailable() {
+    void canGetMoreCard() {
         dealer.receiveAdditionalCard(new Card(CardLetter.TWO, CardSuit.CLOVER));
         dealer.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
-        assertThat(dealer.checkMoreCardAvailable()).isTrue();
+        assertThat(dealer.canGetMoreCard()).isTrue();
     }
 
     @Test

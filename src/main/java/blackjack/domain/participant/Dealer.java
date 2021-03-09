@@ -14,7 +14,7 @@ public class Dealer extends Participant {
         super(FIXED_DEALER_NAME);
     }
 
-    public boolean checkMoreCardAvailable() {
+    public boolean canGetMoreCard() {
         return hand.calculateScore() <= MAX_SUM_FOR_MORE_CARD;
     }
 

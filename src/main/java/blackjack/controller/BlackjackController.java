@@ -58,7 +58,7 @@ public class BlackjackController {
     }
 
     private void progressDealerGame(final Dealer dealer, final CardDeck cardDeck) {
-        while (dealer.checkMoreCardAvailable()) {
+        while (dealer.canGetMoreCard()) {
             OutputView.showDealerGotMoreCard(dealer);
             dealer.receiveAdditionalCard(cardDeck.distribute());
         }
