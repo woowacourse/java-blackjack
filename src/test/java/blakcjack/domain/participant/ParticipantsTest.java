@@ -2,14 +2,13 @@ package blakcjack.domain.participant;
 
 import blakcjack.domain.card.*;
 import blakcjack.domain.name.Name;
-import blakcjack.domain.name.Names;
-import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.outcome.OutcomeStatistics;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 import static blakcjack.domain.card.EmptyDeckException.EMPTY_DECK_ERROR;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,15 +16,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ParticipantsTest {
 	private Participants participants;
+	private List<Player> players;
+	private Dealer dealer;
 
 	@BeforeEach
 	void setUp() {
-		final Names names = new Names(Arrays.asList("pobi", "sakjung", "mediumBear"));
-		List<Player> players = new ArrayList<>();
-		for (Name name : names.toList()) {
-			players.add(new Player(name));
-		}
-		participants = new Participants(new Dealer(), players);
+		Player player1 = new Player(new Name("pobi"), 100);
+		Player player2 = new Player(new Name("sakjung"), 200);
+		Player player3 = new Player(new Name("mediumBear"), 100);
+		dealer = new Dealer();
+		players = Arrays.asList(player1, player2, player3);
+		participants = new Participants(dealer, players);
 	}
 
 	@DisplayName("딜러와 플레이어들을 정상적으로 잘 생성하는지")
@@ -88,15 +89,9 @@ class ParticipantsTest {
 				Card.of(CardSymbol.HEART, CardNumber.JACK), // dealer
 				Card.of(CardSymbol.HEART, CardNumber.ACE)
 		);
-
 		participants.initializeHandsFrom(customDeck);
 
-		final Map<String, Outcome> expectedPlayersOutcome = new LinkedHashMap<>();
-		expectedPlayersOutcome.put("pobi", Outcome.LOSE);
-		expectedPlayersOutcome.put("sakjung", Outcome.DRAW);
-		expectedPlayersOutcome.put("mediumBear", Outcome.LOSE);
-
-		assertThat(participants.getOutcomeStatistics()).isEqualTo(new OutcomeStatistics(expectedPlayersOutcome));
+		assertThat(participants.getOutcomeStatistics()).isEqualTo(new OutcomeStatistics(dealer, players));
 	}
 
 	private Deck createCustomDeck(final Card... cards) {

@@ -4,7 +4,8 @@ import blakcjack.domain.card.Cards;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
 
-import static blakcjack.domain.outcome.Outcome.*;
+import static blakcjack.domain.outcome.Outcome.DRAW;
+import static blakcjack.domain.outcome.Outcome.LOSE;
 
 public class Dealer extends Participant {
 	public static final String DEALER_NAME = "딜러";
@@ -17,7 +18,7 @@ public class Dealer extends Participant {
 	@Override
 	public Cards getInitialHand() {
 		Cards hand = new Cards();
-		hand.add(this.cards.getFirstCard());
+		hand.add(cards.getFirstCard());
 		return hand;
 	}
 
@@ -37,7 +38,7 @@ public class Dealer extends Participant {
 		final int dealerScore = this.getScore();
 
 		if (playerScore > dealerScore) {
-			return WIN;
+			return player.getWinOutcome();
 		}
 		if (playerScore < dealerScore) {
 			return LOSE;

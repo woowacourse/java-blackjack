@@ -1,40 +1,44 @@
 package blakcjack.domain.outcome;
 
+import blakcjack.domain.participant.Dealer;
+import blakcjack.domain.participant.Participant;
+import blakcjack.domain.participant.Player;
+
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class OutcomeStatistics {
-	public static final int INITIAL_VALUE = 0;
+	private final Map<Participant, Float> participantsProfit = new LinkedHashMap<>();
 
-	private final Map<String, Outcome> playersOutcome;
-	private final Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
-
-	public OutcomeStatistics(final Map<String, Outcome> playersOutcome) {
-		this.playersOutcome = playersOutcome;
-		initializeDealerOutcome(dealerOutcome);
-		aggregateDealerOutcome();
+	public OutcomeStatistics(final Dealer dealer, final List<Player> players) {
+		Map<Player, Float> playersProfit = getPlayersProfit(dealer, players);
+		participantsProfit.put(dealer, aggregateDealerProfit(playersProfit));
+		participantsProfit.putAll(playersProfit);
 	}
 
-	private void aggregateDealerOutcome() {
-		for (final String playerName : playersOutcome.keySet()) {
-			final Outcome playerOutcome = playersOutcome.get(playerName);
-			dealerOutcome.computeIfPresent(playerOutcome.getCounterpartOutcome(), (outcome, count) -> count + 1);
+	private Map<Player, Float> getPlayersProfit(final Dealer dealer, final List<Player> players) {
+		final Map<Player, Float> playersProfit = new LinkedHashMap<>();
+		for (final Player player : players) {
+			final Outcome playerOutcome = dealer.judgeOutcomeOf(player);
+			final float playerProfit = player.calculateProfit(playerOutcome);
+			playersProfit.put(player, playerProfit);
 		}
+		return playersProfit;
 	}
 
-	private void initializeDealerOutcome(final Map<Outcome, Integer> dealerOutcome) {
-		for (Outcome outcome : Outcome.values()) {
-			dealerOutcome.put(outcome, INITIAL_VALUE);
+	private float aggregateDealerProfit(final Map<Player, Float> playersProfit) {
+		float profit = 0f;
+		for (final Player player : playersProfit.keySet()) {
+			final float playerProfit = playersProfit.get(player);
+			profit -= playerProfit;
 		}
+		return profit;
 	}
 
-	public Map<String, Outcome> getPlayersOutcome() {
-		return playersOutcome;
-	}
-
-	public Map<Outcome, Integer> getDealerOutcome() {
-		return dealerOutcome;
+	public Map<Participant, Float> getParticipantsProfit() {
+		return participantsProfit;
 	}
 
 	@Override
@@ -42,11 +46,11 @@ public class OutcomeStatistics {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		final OutcomeStatistics that = (OutcomeStatistics) o;
-		return Objects.equals(dealerOutcome, that.dealerOutcome) && Objects.equals(playersOutcome, that.playersOutcome);
+		return Objects.equals(participantsProfit, that.participantsProfit);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dealerOutcome, playersOutcome);
+		return Objects.hash(participantsProfit);
 	}
 }

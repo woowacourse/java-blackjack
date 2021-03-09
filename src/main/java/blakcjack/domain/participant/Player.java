@@ -5,13 +5,11 @@ import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
 
 import static blakcjack.domain.card.Cards.BLACKJACK_VALUE;
-import static blakcjack.domain.outcome.Outcome.LOSE;
-import static blakcjack.domain.outcome.Outcome.WIN;
+import static blakcjack.domain.outcome.Outcome.*;
 
 public class Player extends Participant {
 	private final int bettingAmount;
-	//TODO
-	// 나중에 없애기!
+
 	public Player(final Name name) {
 		this(name, 0);
 	}
@@ -31,9 +29,20 @@ public class Player extends Participant {
 	}
 
 	public Outcome judgeOutcomeByBust() {
-		if (this.isBust()) {
+		if (isBust()) {
 			return LOSE;
 		}
+		return getWinOutcome();
+	}
+
+	public Outcome getWinOutcome() {
+		if (isBlackJack()) {
+			return BLACKJACK_WIN;
+		}
 		return WIN;
+	}
+
+	public float calculateProfit(final Outcome outcome) {
+		return bettingAmount * outcome.getEarningRate();
 	}
 }

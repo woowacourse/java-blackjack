@@ -1,10 +1,12 @@
 package blakcjack.domain.participant;
 
 import blakcjack.domain.card.Deck;
-import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.outcome.OutcomeStatistics;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Participants {
@@ -35,13 +37,16 @@ public class Participants {
 	public OutcomeStatistics getOutcomeStatistics() {
 		final Dealer dealer = getDealer();
 		final List<Player> players = getPlayers();
-		final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
+		return new OutcomeStatistics(dealer, players);
+	}
 
-		for (final Player player : players) {
-			final Outcome playerOutcome = dealer.judgeOutcomeOf(player);
-			playersOutcome.put(player.getName(), playerOutcome);
+	private float aggregateDealerProfit(final Map<Player, Float> playersProfit) {
+		float profit = 0f;
+		for (final Player player : playersProfit.keySet()) {
+			final float playerProfit = playersProfit.get(player);
+			profit -= playerProfit;
 		}
-		return new OutcomeStatistics(playersOutcome);
+		return profit;
 	}
 
 	private Dealer getDealer() {

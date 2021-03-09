@@ -1,23 +1,18 @@
 package blakcjack.domain.outcome;
 
 public enum Outcome {
-	WIN("승"),
-	DRAW("무"),
-	LOSE("패");
+	BLACKJACK_WIN(1.5f),
+	WIN(1f),
+	DRAW(0f),
+	LOSE(-1f);
 
-	private static final int MAXIMUM_INDEX = 2;
+	private final float earningRate;
 
-	private final String message;
-
-	Outcome(final String message) {
-		this.message = message;
+	Outcome(final float earningRate) {
+		this.earningRate = earningRate;
 	}
 
-	public Outcome getCounterpartOutcome() {
-		return values()[MAXIMUM_INDEX - ordinal()];
-	}
-
-	public String getMessage() {
-		return message;
+	public float getEarningRate() {
+		return earningRate;
 	}
 }
