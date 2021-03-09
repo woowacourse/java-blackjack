@@ -1,8 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.scoreboard.GameResult;
-import blackjack.domain.scoreboard.ScoreBoard;
+import blackjack.domain.scoreboard.DealerGameResult;
 import blackjack.domain.scoreboard.UserGameResult;
 import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.user.Dealer;
@@ -20,7 +19,7 @@ import static java.util.stream.Collectors.toMap;
 
 public class BlackjackGame {
     private static final int DEALER_MINIMUM_SCORE = 16;
-    public static final int FIRST_DRAW_COUNT = 2;
+    private static final int FIRST_DRAW_COUNT = 2;
 
     private final Deck deck = Deck.createDeck();
     private final Users users;
@@ -53,14 +52,19 @@ public class BlackjackGame {
                 .collect(Collectors.toList());
     }
 
-    public ScoreBoard createScoreBoard() {
-        Map<User, UserGameResult> userResult = users.toList().stream()
+    public UserGameResult createScoreBoard() {
+        Map<User, WinOrLose> userResult = users.toList().stream()
                 .collect(toMap(
                         Function.identity(),
-                        this::createGameResult,
-                        (exist, newer) -> newer, LinkedHashMap::new));
+                        this::makeUserWinOrLose,
+                        (a, b) -> b,
+                        LinkedHashMap::new));
 
-        return new ScoreBoard(userResult, createDealerGameResult());
+        return new UserGameResult(userResult);
+    }
+
+    private WinOrLose makeUserWinOrLose(User user) {
+        return WinOrLose.decideWinOrLose(user, dealer);
     }
 
     public void drawCardToDealer() {
@@ -71,12 +75,8 @@ public class BlackjackGame {
         user.drawCard(deck.draw());
     }
 
-    public GameResult createDealerGameResult() {
-        return new GameResult(dealer.getCards(), dealer.getName());
-    }
-
-    private UserGameResult createGameResult(User user) {
-        return new UserGameResult(user.getCards(), user.getName(), WinOrLose.decideWinOrLose(user, dealer));
+    public DealerGameResult createDealerGameResult() {
+        return new DealerGameResult(dealer, dealer.getCards());
     }
 
     public Dealer getDealer() {
