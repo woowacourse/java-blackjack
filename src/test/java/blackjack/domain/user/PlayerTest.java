@@ -72,7 +72,7 @@ public class PlayerTest {
 
     @DisplayName("딜러에 버스트가 있고 플레이어에 버스트가 없는 경우를 확인한다. - 플레이어 승")
     @Test
-    public void decideResultByBustPlayerWin() {
+    public void decideBustPlayerWin() {
         Dealer dealer = new Dealer();
         dealer.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
@@ -84,30 +84,12 @@ public class PlayerTest {
                 new Card(Shape.CLOVER, Value.KING)
         )));
 
-        assertThat(player.decideResultByBust(dealer)).isEqualTo(Result.WIN);
+        assertThat(player.decide(dealer)).isEqualTo(Result.WIN);
     }
 
-    @DisplayName("딜러에 버스트가 있고 플레이어에도 버스트가 있는 경우를 확인한다. - 무승부")
+    @DisplayName("플레이어에 버스트가 있는 경우를 확인한다. - 플레이어 패")
     @Test
-    public void decideResultByBustStandoff() {
-        Dealer dealer = new Dealer();
-        dealer.distribute(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING),
-                new Card(Shape.HEART, Value.QUEEN)
-        )));
-        player.distribute(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING),
-                new Card(Shape.HEART, Value.QUEEN)
-        )));
-
-        assertThat(player.decideResultByBust(dealer)).isEqualTo(Result.STANDOFF);
-    }
-
-    @DisplayName("딜러에 버스트가 없고 플레이어에 버스트가 있는 경우를 확인한다. - 플레이어 패")
-    @Test
-    public void decideResultByBustPlayerLose() {
+    public void decideBustPlayerLose() {
         Dealer dealer = new Dealer();
         dealer.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
@@ -119,6 +101,56 @@ public class PlayerTest {
                 new Card(Shape.HEART, Value.QUEEN)
         )));
 
-        assertThat(player.decideResultByBust(dealer)).isEqualTo(Result.LOSE);
+        assertThat(player.decide(dealer)).isEqualTo(Result.LOSE);
+    }
+
+    @DisplayName("딜러와 플레이어 버스트가 없는 경우를 확인한다. - 플레이어 승")
+    @Test
+    public void decideWin() {
+        Dealer dealer = new Dealer();
+        dealer.distribute(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.TWO)
+        )));
+        player.distribute(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.TWO),
+                new Card(Shape.HEART, Value.NINE)
+        )));
+
+        assertThat(player.decide(dealer)).isEqualTo(Result.WIN);
+    }
+
+    @DisplayName("딜러와 플레이어 버스트가 없는 경우를 확인한다. - 무승부")
+    @Test
+    public void decideLose() {
+        Dealer dealer = new Dealer();
+        dealer.distribute(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.TWO)
+        )));
+        player.distribute(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.TWO)
+        )));
+
+        assertThat(player.decide(dealer)).isEqualTo(Result.STANDOFF);
+    }
+
+    @DisplayName("딜러와 플레이어 버스트가 없는 경우를 확인한다. - 플레이어 패")
+    @Test
+    public void decideStandoff() {
+        Dealer dealer = new Dealer();
+        dealer.distribute(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.TWO),
+                new Card(Shape.HEART, Value.NINE)
+        )));
+        player.distribute(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.TWO)
+        )));
+
+        assertThat(player.decide(dealer)).isEqualTo(Result.LOSE);
     }
 }

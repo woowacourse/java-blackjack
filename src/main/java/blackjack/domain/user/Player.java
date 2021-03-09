@@ -11,21 +11,17 @@ public class Player extends User {
         super(new Name(name));
     }
 
-    public Result decideResultByBust(Dealer dealer) {
-        if (dealer.isBust() && !this.isBust()) {
-            return Result.WIN;
-        }
-        if (!dealer.isBust() && this.isBust()) {
+    public Result decide(Dealer dealer) {
+        if (isBust()) {
             return Result.LOSE;
         }
-        return Result.STANDOFF;
-    }
-
-    public Result decideResultByCompare(Dealer dealer) {
+        if (dealer.isBust() && !isBust()) {
+            return Result.WIN;
+        }
         return Arrays.stream(Result.values())
                 .filter(value -> value.getCompareResult() == this.cards.compareTo(dealer.cards))
                 .findFirst()
-                .orElseThrow(IllegalAccessError::new);
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     @Override

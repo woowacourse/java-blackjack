@@ -20,11 +20,7 @@ public class ResultBoard {
 
     private void putResultByPlayer(Dealer dealer, List<Player> players) {
         players.forEach(player -> {
-            if (dealer.isBust() || player.isBust()) {
-                this.resultBoard.put(player, player.decideResultByBust(dealer));
-                return;
-            }
-            this.resultBoard.put(player, player.decideResultByCompare(dealer));
+            this.resultBoard.put(player, player.decide(dealer));
         });
     }
 
