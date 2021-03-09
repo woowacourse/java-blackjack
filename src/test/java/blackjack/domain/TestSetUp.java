@@ -14,7 +14,7 @@ import java.util.List;
 
 public class TestSetUp {
 
-    public static Player createWinner() throws InvalidNameInputException {
+    public static Player createWinner() {
         Player winner = new Player("winner");
         for (Card card : getWinningDeck()) {
             winner.draw(card);
@@ -22,7 +22,7 @@ public class TestSetUp {
         return winner;
     }
 
-    public static Player createTiePlayer() throws InvalidNameInputException {
+    public static Player createTiePlayer() {
         Player tiePlayer = new Player("tie player");
         for (Card card : getCompareDeck()) {
             tiePlayer.draw(card);
@@ -30,7 +30,7 @@ public class TestSetUp {
         return tiePlayer;
     }
 
-    public static Player createLoser() throws InvalidNameInputException {
+    public static Player createLoser() {
         Player loser = new Player("loser");
         for (Card card : getLosingDeck()) {
             loser.draw(card);
@@ -38,7 +38,7 @@ public class TestSetUp {
         return loser;
     }
 
-    public static Player createBustPlayer() throws InvalidNameInputException {
+    public static Player createBustPlayer() {
         Player bust = new Player("bust player");
         for (Card card : getBustDeck()) {
             bust.draw(card);
@@ -46,7 +46,7 @@ public class TestSetUp {
         return bust;
     }
 
-    public static Dealer createDealer() throws InvalidNameInputException {
+    public static Dealer createDealer() {
         Dealer dealer = new Dealer();
         for (Card card : getCompareDeck()) {
             dealer.draw(card);
@@ -54,7 +54,7 @@ public class TestSetUp {
         return dealer;
     }
 
-    public static Dealer createBustDealer() throws InvalidNameInputException {
+    public static Dealer createBustDealer() {
         Dealer bustDealer = new Dealer();
         for (Card card : getBustDeck()) {
             bustDealer.draw(card);

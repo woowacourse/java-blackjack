@@ -17,7 +17,7 @@ import java.util.List;
 
 public class BlackJackController {
 
-    public static void play() throws InvalidNameInputException {
+    public static void play() {
         Deck deck = GameInitializer.initializeDeck();
         Players players = initializePlayers(deck);
         Dealer dealer = GameInitializer.initializeDealer(deck);

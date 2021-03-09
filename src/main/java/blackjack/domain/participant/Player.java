@@ -7,7 +7,7 @@ import blackjack.exception.InvalidNameInputException;
 
 public class Player extends BlackJackParticipant {
 
-    public Player(String name) throws InvalidNameInputException {
+    public Player(String name) {
         super(name);
     }
 

@@ -13,7 +13,7 @@ public abstract class BlackJackParticipant {
     private final Name name;
     private boolean hit;
 
-    public BlackJackParticipant(String name) throws InvalidNameInputException {
+    public BlackJackParticipant(String name) {
         this.hand = new Hand(new ArrayList<>());
         this.hit = true;
         this.name = new Name(name);
