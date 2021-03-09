@@ -512,4 +512,16 @@ public class UserTest {
         assertThat(user.getProfit()).isEqualTo(-bettingMoney);
         assertThat(dealer.getProfit()).isEqualTo(bettingMoney);
     }
+
+    @DisplayName("비기면, 돈의 이동은 일어나지 않는다.")
+    @ParameterizedTest
+    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50000, 1234567, MAX_BETTING_MONEY_BOUND})
+    void drawProfit(int bettingMoney) {
+        Dealer dealer = new Dealer();
+        User user = new User(POBI, bettingMoney);
+        user.applyResult(ResultType.DRAW, dealer);
+
+        assertThat(user.getProfit()).isEqualTo(0);
+        assertThat(dealer.getProfit()).isEqualTo(0);
+    }
 }
