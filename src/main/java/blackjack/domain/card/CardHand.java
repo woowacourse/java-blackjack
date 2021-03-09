@@ -8,7 +8,8 @@ import static blackjack.domain.BlackjackConstant.BLACKJACK_SCORE;
 
 public class CardHand {
     
-    private static final int DIFF_OF_ACE_VALUES = 10;
+    private static final int ELEVEN_OF_ACE_VALUE = 11;
+    private static final int ONE_OF_ACE_VALUE = 1;
     
     private final List<Card> cards;
     
@@ -29,19 +30,26 @@ public class CardHand {
                        .mapToInt(Card::getRankValue)
                        .sum();
         
-        if (hasAce() && canChangeAceValueToEleven(sum)) {
-            sum += DIFF_OF_ACE_VALUES;
+        if (hasAce()) {
+            sum -= ONE_OF_ACE_VALUE;
+            sum = addAceValue(sum);
         }
-        
         return sum;
+    }
+    
+    private int addAceValue(int sum) {
+        if (isBustIfAddEleven(sum)) {
+            return sum + ONE_OF_ACE_VALUE;
+        }
+        return sum + ELEVEN_OF_ACE_VALUE;
+    }
+    
+    private boolean isBustIfAddEleven(int sum) {
+        return sum + ELEVEN_OF_ACE_VALUE > BLACKJACK_SCORE;
     }
     
     private boolean hasAce() {
         return cards.stream()
                     .anyMatch(Card::isAce);
-    }
-    
-    private boolean canChangeAceValueToEleven(int sum) {
-        return sum + DIFF_OF_ACE_VALUES <= BLACKJACK_SCORE;
     }
 }
