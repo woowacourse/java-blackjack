@@ -19,8 +19,7 @@ class CardsTest {
         cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
 
         assertThatCode(() -> {
-            Cards cards = new Cards();
-            cards.of(cardList);
+            Cards cards = Cards.of(cardList);
         }).doesNotThrowAnyException();
     }
 
@@ -30,8 +29,7 @@ class CardsTest {
         List<Card> cardList = new ArrayList<>();
         cardList.add(Card.of(Suit.CLUB, Denomination.ACE));
         cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
-        Cards cards = new Cards();
-        cards.of(cardList);
+        Cards cards = Cards.of(cardList);
 
         assertTrue(cards.containsAce());
     }
@@ -42,9 +40,7 @@ class CardsTest {
         List<Card> cardList = new ArrayList<>();
         cardList.add(Card.of(Suit.CLUB, Denomination.ACE));
         cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
-        Cards cards = new Cards();
-        cards.of(cardList);
-
+        Cards cards = Cards.of(cardList);
         assertThat(cards.sumWithoutAce()).isEqualTo(10);
     }
 
@@ -55,8 +51,7 @@ class CardsTest {
         final Card card = Card.of(Suit.CLUB, Denomination.ACE);
         cardList.add(card);
         cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
-        Cards cards = new Cards();
-        cards.of(cardList);
+        Cards cards = Cards.of(cardList);
 
         assertThat(cards.getCardsWithSize(1))
                 .contains(card);
@@ -68,8 +63,7 @@ class CardsTest {
         List<Card> cardList = new ArrayList<>();
         cardList.add(Card.of(Suit.CLUB, Denomination.ACE));
         cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
-        Cards cards = new Cards();
-        cards.of(cardList);
+        Cards cards = Cards.of(cardList);
 
         assertTrue(cards.isBlackjack());
     }
@@ -80,8 +74,7 @@ class CardsTest {
         List<Card> cardList = new ArrayList<>();
         cardList.add(Card.of(Suit.CLUB, Denomination.ACE));
         cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
-        Cards cards = new Cards();
-        cards.of(cardList);
+        Cards cards = Cards.of(cardList);
 
         assertThat(cards.calculate()).isEqualTo(21);
     }

@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Card {
 

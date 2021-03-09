@@ -1,17 +1,27 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hands {
 
+    public static final int INITIAL_HANDS_SIZE = 2;
     private final Cards cards;
 
     public Hands() {
-        cards = new Cards();
+//        cards = new Cards();
+        cards = Cards.of(new ArrayList<>());
     }
 
     public void initialize(List<Card> initialCards) {
-        cards.of(initialCards);
+        validate(initialCards);
+        cards.addAll(initialCards);
+    }
+
+    private void validate(List<Card> initialCards) {
+        if (initialCards.size() != INITIAL_HANDS_SIZE) {
+            throw new IllegalArgumentException("[ERROR] 초기 카드는 2장입니다.");
+        }
     }
 
     public boolean isBlackjack() {

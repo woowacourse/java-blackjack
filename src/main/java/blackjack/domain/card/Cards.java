@@ -9,19 +9,20 @@ import java.util.stream.IntStream;
 public class Cards {
 
     public static final int BLACKJACK = 21;
-    public static final int INITIAL_CARDS_SIZE = 2;
     private static final int ACE_CONVERSION = 10;
+
     private final List<Card> cards;
 
-    public Cards() {
-        cards = new ArrayList<>();
+    private Cards(List<Card> cards) {
+        this.cards = cards;
     }
 
-    public void of(List<Card> cards) {
-        if (cards.size() != INITIAL_CARDS_SIZE) {
-            throw new IllegalArgumentException("[ERROR] 초기 카드는 2장입니다.");
-        }
-        this.cards.addAll(cards);
+    public static Cards of(List<Card> cards) {
+        return new Cards(cards);
+    }
+
+    public void addAll(List<Card> addedCards) {
+        cards.addAll(addedCards);
     }
 
     public void add(Card card) {
@@ -31,9 +32,6 @@ public class Cards {
     public boolean containsAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
-//        return cards.stream()
-//                .map(Card::getCardValue)
-//                .anyMatch(Denomination::isAce);
     }
 
     public int sumWithoutAce() {
@@ -65,7 +63,7 @@ public class Cards {
 
     private boolean checkSumOfFirstTwoCards() {
         int sum = properSum(
-                IntStream.range(0, INITIAL_CARDS_SIZE)
+                IntStream.range(0, 2)
                         .map(i -> getPoint(cards.get(i)))
                         .sum()
         );
