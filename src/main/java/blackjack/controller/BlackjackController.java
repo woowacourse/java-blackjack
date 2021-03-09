@@ -1,7 +1,7 @@
 package blackjack.controller;
 
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.GameResult;
-import blackjack.domain.Result;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Names;
@@ -10,7 +10,6 @@ import blackjack.domain.participants.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
@@ -22,7 +21,10 @@ public class BlackjackController {
 
         gameProgress(participants.getPlayers(), participants.getDealer());
         OutputView.showCardsResult(participants.getParticipantGroup());
-        showGameResult(participants.getDealer(), participants.getPlayers());
+
+        final GameResult gameResult = new BlackjackGame().createGameResult(participants);
+        OutputView.showGameResult(gameResult.getDealerCounts(), participants.getDealer());
+        OutputView.showPlayerGameResult(gameResult.getPlayerResults());
     }
 
     private Names requestName() {
@@ -65,13 +67,6 @@ public class BlackjackController {
             OutputView.dealerMoreCard();
             dealer.receiveCard(CardDeck.distribute());
         }
-    }
-
-    private void showGameResult(final Participant dealer, final List<Participant> players) {
-        final GameResult gameResult = new GameResult();
-        OutputView.showGameResult(dealer, players, gameResult);
-        final Map<Name, Result> results = gameResult.makePlayerResults(players, dealer);
-        OutputView.showPlayerGameResult(results);
     }
 
 }

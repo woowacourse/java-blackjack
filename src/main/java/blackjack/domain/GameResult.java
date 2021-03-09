@@ -1,28 +1,25 @@
 package blackjack.domain;
 
 import blackjack.domain.participants.Name;
-import blackjack.domain.participants.Participant;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class GameResult {
+    private final List<Integer> dealerCounts;
+    private final Map<Name, Result> playerResults;
 
-    public int calculateDealerResult(final Participant dealer, final List<Participant> players,
-        final Result result) {
-        return (int) players.stream()
-            .filter(player -> dealer.decideWinner(player).isSameResult(result))
-            .count();
+    public GameResult(final List<Integer> dealerCounts, final Map<Name, Result> playerResults) {
+        this.dealerCounts = new ArrayList<>(dealerCounts);
+        this.playerResults = new LinkedHashMap<>(playerResults);
     }
 
-    public Map<Name, Result> makePlayerResults(final List<Participant> players,
-        final Participant dealer) {
-        final Map<Name, Result> results = new LinkedHashMap<>();
-        for (final Participant player : players) {
-            final Result result = player.decideWinner(dealer);
-            results.put(player.getName(), result);
-        }
-        return results;
+    public List<Integer> getDealerCounts() {
+        return dealerCounts;
     }
 
+    public Map<Name, Result> getPlayerResults() {
+        return playerResults;
+    }
 }

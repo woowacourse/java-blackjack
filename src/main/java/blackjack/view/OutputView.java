@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
@@ -9,7 +8,6 @@ import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -72,18 +70,11 @@ public class OutputView {
         return cardStatuses;
     }
 
-    public static void showGameResult(final Participant dealer, final List<Participant> players,
-        final GameResult gameResult) {
-        final List<Result> dealerResults = Arrays.stream(Result.values())
-            .collect(Collectors.toList());
-        final List<Integer> counts = dealerResults.stream()
-            .map(result -> gameResult.calculateDealerResult(dealer, players, result))
-            .collect(Collectors.toList());
-
+    public static void showGameResult(final List<Integer> counts, final Participant dealer) {
+        final Name name = dealer.getName();
         System.out.println(NEWLINE + GAME_RESULT_MESSAGE);
-        System.out
-            .printf(GAME_RESULT_FORMAT + NEWLINE, dealer.getName().getValue(), counts.get(0),
-                counts.get(1), counts.get(2));
+        System.out.printf(GAME_RESULT_FORMAT + NEWLINE, name.getValue(), counts.get(0),
+            counts.get(1), counts.get(2));
     }
 
     public static void showPlayerGameResult(final Map<Name, Result> results) {
