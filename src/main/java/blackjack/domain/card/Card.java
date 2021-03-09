@@ -17,7 +17,7 @@ public class Card {
         return cardNumber.getValue();
     }
 
-    public int getValue(int scoreSum) {
+    public int getBestValue(int scoreSum) {
         return cardNumber.getValue(cardNumber, scoreSum);
     }
 
