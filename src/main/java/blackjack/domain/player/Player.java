@@ -32,6 +32,10 @@ public abstract class Player {
         return this.hand.getScore();
     }
 
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
     public String getName() {
         return name.value();
     }

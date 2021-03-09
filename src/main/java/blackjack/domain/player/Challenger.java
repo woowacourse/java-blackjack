@@ -13,6 +13,9 @@ public class Challenger extends Player {
     }
 
     public Result getChallengerResult(final Dealer dealer) {
+        if (isBlackJack()) {
+            return blackJackResult(dealer);
+        }
         if (isChallengerLose(dealer)) {
             return Result.LOSE;
         }
@@ -21,6 +24,14 @@ public class Challenger extends Player {
         }
         return Result.DRAW;
     }
+
+    private Result blackJackResult(final Dealer dealer) {
+        if (dealer.isBlackJack()) {
+            return Result.DRAW;
+        }
+        return Result.BLACKJACK;
+    }
+
 
     private boolean isChallengerLose(final Dealer dealer) {
         return isBust() || (!dealer.isBust() && this.getScore() < dealer.getScore());
