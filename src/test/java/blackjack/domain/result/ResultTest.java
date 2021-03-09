@@ -10,8 +10,8 @@ public class ResultTest {
     @ParameterizedTest
     @CsvSource(value = {"20,10,WIN", "15,15,DRAW", "10,20,LOSE"})
     @DisplayName("Result Enum의 checkResult에 대한 테스트")
-    void checkResultTest(final int score, final int opponentScore, final String expectedResult) {
-        final Result result = Result.checkResult(score, opponentScore);
+    void findResultTest(final int score, final int opponentScore, final String expectedResult) {
+        final Result result = Result.findResult(score, opponentScore);
         assertThat(result).isEqualTo(Result.valueOf(expectedResult));
     }
 }

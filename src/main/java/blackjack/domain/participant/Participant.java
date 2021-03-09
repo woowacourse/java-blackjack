@@ -40,7 +40,7 @@ public abstract class Participant {
     protected Result generateResultByScore(final Participant participant) {
         final int score = this.hand.calculateScore();
         final int opponentScore = participant.hand.calculateScore();
-        return Result.checkResult(score, opponentScore);
+        return Result.findResult(score, opponentScore);
     }
 
     public String getName() {

@@ -34,7 +34,7 @@ public enum Result {
         this.result = result;
     }
 
-    public static Result checkResult(final int score, final int opponentScore) {
+    public static Result findResult(final int score, final int opponentScore) {
         return Stream.of(values())
                 .filter(resultEnum -> resultEnum.condition(score, opponentScore))
                 .findAny()
