@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import static blackjack.domain.card.Cards.BLACKJACK_NUMBER;
 
-import blackjack.domain.card.GameResult;
+import blackjack.domain.blackjackgame.Money;
 
 public class Player extends Participant {
 
@@ -53,6 +53,10 @@ public class Player extends Participant {
             dealer.addGameResult(GameResult.WIN);
             gameResult = GameResult.LOSE;
         }
+    }
+
+    public Money profit() {
+        return money.profit(gameResult, isBlackjack());
     }
 
 }
