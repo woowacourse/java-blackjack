@@ -45,4 +45,12 @@ public class Participants {
     public List<Participant> getParticipants() {
         return new ArrayList<>(participants);
     }
+
+    public Participant getParticipant(int idx) {
+        return participants.get(idx);
+    }
+
+    public int size() {
+        return participants.size();
+    }
 }

@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface Participant {
     String getName();
 
     boolean isDealer();
+
+    GameResult calculateResult(int enemyScore);
 }

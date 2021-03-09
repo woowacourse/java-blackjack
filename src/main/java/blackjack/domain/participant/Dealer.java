@@ -3,11 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.rule.ScoreRule;
-import blackjack.dto.DealerResultDto;
-import blackjack.dto.ScoreResultDto;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Dealer implements Participant {
     private static final int FROM = 0;
@@ -61,30 +57,9 @@ public class Dealer implements Participant {
         return true;
     }
 
-    public DealerResultDto getDealerResult(List<Player> players) {
-        List<ScoreResultDto> scoreResultDtos = decideWinOrLoseResults(players);
-        Map<GameResult, Long> dealerResult = statisticsDealerResult(scoreResultDtos);
+    @Override
+    public GameResult calculateResult(int enemyScore) {
+        return GameResult.valueOf(enemyScore, sumTotalScore());
 
-        Arrays.stream(GameResult.values())
-                .forEach(gameResult -> dealerResult.putIfAbsent(gameResult, 0L));
-        return new DealerResultDto(name, dealerResult);
-    }
-
-    public List<ScoreResultDto> decideWinOrLoseResults(List<Player> players) {
-        return players.stream()
-                .map(player -> new ScoreResultDto(player.getName(), this.judgeResult(player)))
-                .collect(Collectors.toList());
-    }
-
-    private Map<GameResult, Long> statisticsDealerResult(List<ScoreResultDto> scoreResultDtos) {
-        return scoreResultDtos.stream()
-                .map(scoreResultDto -> scoreResultDto.getGameResult())
-                .collect(Collectors.groupingBy(GameResult::reverse,
-                        () -> new EnumMap<>(GameResult.class),
-                        Collectors.counting()));
-    }
-
-    private GameResult judgeResult(Player player) {
-        return GameResult.valueOf(player.sumTotalScore(), sumTotalScore());
     }
 }

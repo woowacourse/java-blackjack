@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.rule.ScoreRule;
 
@@ -54,6 +55,11 @@ public class Player implements Participant {
 
     @Override
     public boolean isDealer() {
-        return true;
+        return false;
+    }
+
+    @Override
+    public GameResult calculateResult(int enemyScore) {
+        return GameResult.valueOf(sumTotalScore(), enemyScore);
     }
 }
