@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
-    private static final int BUST = 21;
+    public static final int BUST = 21;
     private final List<Card> cards;
 
     private Cards(List<Card> cards) {
@@ -57,7 +57,7 @@ public class Cards {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(new ArrayList<>(cards));
+        return Collections.unmodifiableList(cards);
     }
 
     public Card getFirstCard() {

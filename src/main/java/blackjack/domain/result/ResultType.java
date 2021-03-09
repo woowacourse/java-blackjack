@@ -1,10 +1,10 @@
 package blackjack.domain.result;
 
+import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public enum ResultType {
@@ -39,8 +39,8 @@ public enum ResultType {
 
     private static Map<Player, ResultType> judgeNoneBustResult(Dealer dealer, Gamer gamer) {
         Map<Player, ResultType> result = new HashMap<>();
-        int dealerScore = 21 - dealer.calculateScore();
-        int gamerScore = 21 - gamer.calculateScore();
+        int dealerScore = Cards.BUST - dealer.calculateScore();
+        int gamerScore = Cards.BUST - gamer.calculateScore();
         if (dealerScore < gamerScore) {
             result.put(dealer, WIN);
             result.put(gamer, LOSE);
