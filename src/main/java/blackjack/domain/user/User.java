@@ -11,7 +11,6 @@ public abstract class User {
     protected final Cards cards;
     protected final Name name;
 
-
     public User(String name) {
         this.cards = new Cards();
         this.name = new Name(name);

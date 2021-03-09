@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import static blackjack.domain.user.Dealer.DEALER_HIT_THRESHOLD;
+
 import blackjack.domain.Score;
 import blackjack.domain.Status;
 import blackjack.domain.user.Dealer;
@@ -18,8 +20,7 @@ public class OutputView {
     private static final String RESULT_TITLE_MESSAGE = "## 최종 승패";
     private static final String RESULT_SUFFIX = " - 결과: ";
     private static final String DEALER_WINNING_RESULT_REPORT_MESSAGE = "딜러: %d 승 %d 무 %d 패%n";
-    private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-
+    private static final String DEALER_HIT_MESSAGE = "딜러는" + DEALER_HIT_THRESHOLD + " 이하라 한장의 카드를 더 받았습니다.";
     private static final String SEPARATOR = ": ";
     private static final int DEALER_WIN = 2;
     private static final int DEALER_DRAW = 1;
