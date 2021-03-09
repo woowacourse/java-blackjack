@@ -27,6 +27,7 @@ public class Cards {
     }
 
     public int getScore() {
+        List<Card> cards = new ArrayList<>(this.cards);
         cards.sort(Comparator.comparing(Card::getValue).reversed());
         int scoreSum = 0;
         for (Card card : cards) {
