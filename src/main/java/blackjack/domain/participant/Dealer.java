@@ -16,7 +16,7 @@ public class Dealer extends Participant {
         super(cards, new Name(DEALER_NAME));
     }
 
-    public boolean scoreGreaterThanSixteen() {
+    public boolean doneReceiving() {
         return getScore() > DEALER_SCORE_PIVOT;
     }
 
