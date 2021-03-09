@@ -25,13 +25,23 @@ public class Cards implements Comparable<Cards> {
     }
 
     public int calculateTotalValue() {
-        int totalValue = cards.stream()
-                .mapToInt(Card::value)
-                .sum();
+        int totalValue = sum();
         if (this.isSoftHand() && totalValue > BUST) {
             totalValue -= 10;
         }
         return totalValue;
+    }
+
+    private int sum() {
+        return cards.stream()
+                .mapToInt(Card::value)
+                .sum();
+    }
+
+    public int getAceCount() {
+        return (int) cards.stream()
+                .filter(Card::isAceCard)
+                .count();
     }
 
     public boolean isSoftHand() {
