@@ -1,6 +1,5 @@
 package blackjack.domain.scoreboard;
 
-import blackjack.domain.betting.BettingMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.painting.Suit;
@@ -34,7 +33,7 @@ public class ScoreBoardTest {
                                 new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.FOUR),
                                 new Card(Suit.HEART, Symbol.ACE))
                 )
-                , first.getName().toString(), WinOrLose.DRAW, new BettingMoney(1000L)); //15
+                , first.getName().toString(), WinOrLose.DRAW, 1000); //15
 
         UserGameResult secondUserGameResult = new UserGameResult(
                 new Cards(
@@ -42,19 +41,19 @@ public class ScoreBoardTest {
                                 new Card(Suit.CLOVER, Symbol.JACK), new Card(Suit.DIAMOND, Symbol.TEN),
                                 new Card(Suit.HEART, Symbol.ACE))
                 )
-                , second.getName().toString(), WinOrLose.WIN, new BettingMoney(1000L)); //21
+                , second.getName().toString(), WinOrLose.WIN, 2500); //21
 
         UserGameResult thirdUserGameResult = new UserGameResult(
                 new Cards(
                         Arrays.asList(new Card(Suit.CLOVER, Symbol.TWO), new Card(Suit.HEART, Symbol.TWO))
                 ),
-                third.getName().toString(), WinOrLose.LOSE, new BettingMoney(1000L));
+                third.getName().toString(), WinOrLose.LOSE, 0);
 
         UserGameResult fourthUserGameResult = new UserGameResult(
                 new Cards(
                         Arrays.asList(new Card(Suit.DIAMOND, Symbol.TWO), new Card(Suit.SPADE, Symbol.TWO))
                 ),
-                fourth.getName().toString(), WinOrLose.LOSE, new BettingMoney(1000L));
+                fourth.getName().toString(), WinOrLose.LOSE, 0);
 
         Map<User, UserGameResult> temp = new HashMap<>();
         temp.put(first, firstUserGameResult);

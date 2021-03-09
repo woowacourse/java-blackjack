@@ -13,19 +13,23 @@ public class BettingMoney {
     }
 
     private boolean isNegative(long money) {
-        return money < 0L;
+        return money < 0;
     }
 
     public long getMoney() {
         return money;
     }
 
+    public BettingMoney multiply(double ratio) {
+        return new BettingMoney((long)(money * ratio));
+    }
+
     public long subtract(BettingMoney that) {
         return this.money - that.money;
     }
 
-    public BettingMoney multiply(double ratio) {
-        return new BettingMoney((long)(money * ratio));
+    public static long toNegative(long bettingMoney){
+        return -1 * bettingMoney;
     }
 
     @Override

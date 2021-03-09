@@ -1,5 +1,6 @@
 package blackjack.domain.scoreboard;
 
+import blackjack.domain.betting.BettingMoney;
 import blackjack.domain.scoreboard.result.GameResult;
 import blackjack.domain.scoreboard.result.UserGameResult;
 import blackjack.domain.user.User;
@@ -27,6 +28,13 @@ public class ScoreBoard {
                 .collect(groupingBy(WinOrLose::opposite, counting()));
     }
 
+    public long calculateDealerIncome(){
+        return userResults.keySet().stream()
+                .map(userResults::get)
+                .mapToLong(UserGameResult::getBettingMoney)
+                .map(BettingMoney::toNegative)
+                .sum();
+    }
     public Map<User, UserGameResult> getUserResults(){
         return Collections.unmodifiableMap(userResults);
     }
