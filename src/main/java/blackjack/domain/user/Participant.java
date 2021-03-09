@@ -14,11 +14,6 @@ public abstract class Participant {
         this.name = name;
     }
 
-    public void firstDraw(Card first, Card second) {
-        drawCard(first);
-        drawCard(second);
-    }
-
     public void drawCard(Card card) {
         hand.add(card);
         changeStatus();
