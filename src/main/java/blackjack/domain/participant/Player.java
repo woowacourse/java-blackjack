@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    public Player(final Cards cards, final Name name) {
+    public Player(final Cards cards, final String name) {
         super(cards, name);
     }
 

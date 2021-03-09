@@ -13,7 +13,7 @@ public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
 
     public Dealer(final Cards cards) {
-        super(cards, new Name(DEALER_NAME));
+        super(cards, DEALER_NAME);
     }
 
     public boolean doneReceiving() {

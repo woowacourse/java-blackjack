@@ -34,7 +34,7 @@ public enum Result {
                 );
     }
 
-    public String getResultAsString(){
+    public String getResultAsString() {
         return this.value;
     }
 

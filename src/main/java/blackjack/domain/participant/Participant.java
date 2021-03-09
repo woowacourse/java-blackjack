@@ -13,9 +13,9 @@ public abstract class Participant {
     protected final Cards hand;
     private final Name name;
 
-    public Participant(final Cards cards, final Name name) {
+    public Participant(final Cards cards, final String name) {
         this.hand = new Cards(cards.getCardsAsList());
-        this.name = new Name(name.getName());
+        this.name = new Name(name);
     }
 
     public abstract List<Card> getInitCardsAsList();
