@@ -1,5 +1,5 @@
 package blackjack.domain.participants;
 
-public enum ParticipantStatus {
+public enum ParticipantState {
     HIT, STAY, BUST
 }

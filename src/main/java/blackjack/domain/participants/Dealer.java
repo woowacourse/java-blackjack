@@ -10,12 +10,12 @@ public class Dealer extends Participant {
     }
 
     @Override
-    protected ParticipantStatus updateStatus(ParticipantStatus currentStatus) {
+    protected ParticipantState updateStatus(ParticipantState currentStatus) {
         if (isBust()) {
-            return ParticipantStatus.BUST;
+            return ParticipantState.BUST;
         }
         if (isOverLimit()) {
-            return ParticipantStatus.STAY;
+            return ParticipantState.STAY;
         }
         return currentStatus;
     }

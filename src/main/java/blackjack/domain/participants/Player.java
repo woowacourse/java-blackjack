@@ -2,7 +2,6 @@ package blackjack.domain.participants;
 
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
-import blackjack.domain.cards.Deck;
 
 public class Player extends Participant {
 
@@ -11,15 +10,15 @@ public class Player extends Participant {
     }
 
     @Override
-    protected ParticipantStatus updateStatus(ParticipantStatus currentStatus) {
+    protected ParticipantState updateStatus(ParticipantState currentStatus) {
         if (isBust()) {
-            return ParticipantStatus.BUST;
+            return ParticipantState.BUST;
         }
         return currentStatus;
     }
 
     public void updateStatusByResponse(Response response) {
-        setStatus(response.getPlayerStatus());
+        setState(response.getPlayerStatus());
     }
 
     public ResultType match(Dealer dealer) {
