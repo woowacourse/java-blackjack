@@ -34,9 +34,10 @@ public class InputView {
     }
 
     private static void validateYesOrNo(String yesOrNo) {
-        if (!yesOrNo.equalsIgnoreCase(YES) && !yesOrNo.equalsIgnoreCase(NO)) {
-            throw new IllegalArgumentException(String.format(ANSWER_MUST_BE_YES_OR_NO_ERROR_MSG_FORMAT, YES, NO));
+        if (YES.equalsIgnoreCase(yesOrNo) || NO.equalsIgnoreCase(yesOrNo)) {
+            return;
         }
+        throw new IllegalArgumentException(String.format(ANSWER_MUST_BE_YES_OR_NO_ERROR_MSG_FORMAT, YES, NO));
     }
 
 }
