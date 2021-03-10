@@ -40,7 +40,7 @@ public class Players {
 
     public void initHandByDealer(Dealer dealer, int receiveCount) {
         for (Player player : this.players) {
-            IntStream.range(0, receiveCount).forEach(i -> player.receiveCard(dealer.drawCard()));
+            player.initPlayerHand(dealer, receiveCount);
         }
     }
 

@@ -5,7 +5,6 @@ import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.CardDeck;
 
 import java.util.NoSuchElementException;
-import java.util.stream.IntStream;
 
 import static blackjack.domain.GameResult.*;
 
@@ -43,6 +42,8 @@ public class Dealer extends Participant {
     }
 
     public void initDealerHand(int receiveCount) {
-        IntStream.range(0, receiveCount).forEach(i -> receiveCard(drawCard()));
+        for (int i = 0; i < receiveCount; i++) {
+            receiveCard(drawCard());
+        }
     }
 }
