@@ -7,18 +7,12 @@ import java.util.regex.Pattern;
 
 public class Money {
 
-    private static final Pattern VALID_MONEY_FORMAT = Pattern.compile("^[-]?[0-9]*$");
-    private static final String DEFAULT_MONEY_VALUE = "0";
-    private static final String TO_STRING_FORMAT = "%.0f";
+    private static final Pattern VALID_MONEY_FORMAT = Pattern.compile("^[0-9]*$");
     private final double value;
 
     public Money(String value) {
         validateMoneyInput(value);
         this.value = Integer.parseInt(value);
-    }
-
-    public Money() {
-        this(DEFAULT_MONEY_VALUE);
     }
 
     private void validateMoneyInput(String value) {
@@ -27,16 +21,8 @@ public class Money {
         }
     }
 
-    public Money update(Double updateAmount) {
-        return new Money(format(value + updateAmount));
-    }
-
     public double getValue() {
         return value;
-    }
-
-    private String format(Double value) {
-        return String.format(TO_STRING_FORMAT, value);
     }
 
     @Override

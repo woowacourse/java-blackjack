@@ -14,6 +14,7 @@ import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
 
@@ -32,11 +33,18 @@ public class BlackJackController {
     private static Players initializePlayers(Deck deck) {
         try {
             OutputView.printInputNames();
-            return GameInitializer.initializePlayers(InputView.inputString(), deck);
+            List<Player> players = createPlayersByNameAndMoney(InputView.inputStringAndSplitByComma());
+            return GameInitializer.initializePlayers(players, deck);
         } catch (InvalidNameInputException e) {
             ErrorView.printErrorMessage(e.getMessage());
             return initializePlayers(deck);
         }
+    }
+
+    private static List<Player> createPlayersByNameAndMoney(List<String> nameInputs) {
+        return nameInputs.stream()
+                .map(name -> new Player(name, InputView.inputString()))
+                .collect(Collectors.toList());
     }
 
     private static List<BlackJackParticipant> getBlackJackParticipants(Players players, Dealer dealer) {

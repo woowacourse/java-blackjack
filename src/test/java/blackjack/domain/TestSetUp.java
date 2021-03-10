@@ -15,7 +15,7 @@ import java.util.List;
 public class TestSetUp {
 
     public static Player createWinner() {
-        Player winner = new Player("winner");
+        Player winner = new Player("winner", "0");
         for (Card card : getWinningDeck()) {
             winner.draw(card);
         }
@@ -23,7 +23,7 @@ public class TestSetUp {
     }
 
     public static Player createTiePlayer() {
-        Player tiePlayer = new Player("tie player");
+        Player tiePlayer = new Player("tie player", "0");
         for (Card card : getCompareDeck()) {
             tiePlayer.draw(card);
         }
@@ -31,7 +31,7 @@ public class TestSetUp {
     }
 
     public static Player createLoser() {
-        Player loser = new Player("loser");
+        Player loser = new Player("loser", "0");
         for (Card card : getLosingDeck()) {
             loser.draw(card);
         }
@@ -39,7 +39,7 @@ public class TestSetUp {
     }
 
     public static Player createBustPlayer() {
-        Player bust = new Player("bust player");
+        Player bust = new Player("bust player", "0");
         for (Card card : getBustDeck()) {
             bust.draw(card);
         }

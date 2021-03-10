@@ -20,14 +20,14 @@ public class PlayerTest {
     @DisplayName("플레이어 생성")
     @Test
     void create() throws InvalidNameInputException {
-        Player root = new Player("root");
-        assertThat(root).isEqualTo(new Player("root"));
+        Player root = new Player("root", "0");
+        assertThat(root).isEqualTo(new Player("root", "0"));
     }
 
     @Test
     @DisplayName("카드 한 장 뽑는 기능")
     void drawCard() throws InvalidNameInputException {
-        Player root = new Player("root");
+        Player root = new Player("root", "0");
 
         root.draw(Card.valueOf(Shape.DIAMOND, CardValue.ACE));
         assertThat(root.getHand()).isEqualToComparingFieldByField(
@@ -75,7 +75,7 @@ public class PlayerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"1", "10000", "-1234567"})
+    @ValueSource(strings = {"1", "10000", "1234567"})
     @DisplayName("돈 생성 기능")
     void checkMoney(String input) {
         Money money = new Money(input);
@@ -83,19 +83,10 @@ public class PlayerTest {
         assertThat(money.getValue()).isEqualTo(Double.parseDouble(input));
     }
 
-    @ParameterizedTest
-    @ValueSource(doubles = {1, 10000, -1234, 0})
-    @DisplayName("돈 변경 기능")
-    void updateMoney(double input) {
-        Player aaron = new Player("aaorn");
-        aaron.updateMoney(input);
-        assertThat(aaron.getMoney()).isEqualTo(input);
-    }
-
     @Test
     @DisplayName("상태 변화 기능")
     void updateState() {
-        Player aaron = new Player("aaron");
+        Player aaron = new Player("aaron", "0");
         assertThat(aaron.getState()).isInstanceOf(NotStarted.class);
         assertThat(TestSetUp.createWinner().getState()).isInstanceOf(BlackJackState.class);
 

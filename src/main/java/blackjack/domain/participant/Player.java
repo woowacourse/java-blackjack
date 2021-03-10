@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Money;
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
@@ -7,8 +8,11 @@ import blackjack.exception.InvalidNameInputException;
 
 public class Player extends BlackJackParticipant {
 
-    public Player(String name) {
+    private final Money money;
+
+    public Player(String name, String money) {
         super(name);
+        this.money = new Money(money);
     }
 
     @Override
@@ -32,5 +36,9 @@ public class Player extends BlackJackParticipant {
             return ResultType.WIN;
         }
         return ResultType.getResultType(getScore() - dealer.getScore());
+    }
+
+    public double getMoney() {
+        return money.getValue();
     }
 }

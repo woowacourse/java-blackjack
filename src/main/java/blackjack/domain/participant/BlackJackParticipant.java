@@ -14,13 +14,11 @@ public abstract class BlackJackParticipant {
     private final Hand hand;
     private final Name name;
     private State state;
-    private Money money;
 
     public BlackJackParticipant(String name) {
         this.hand = new Hand(new ArrayList<>());
         this.name = new Name(name);
         this.state = StateFactory.getInstance();
-        this.money = new Money();
     }
 
     abstract public void draw(Card card);
@@ -35,14 +33,6 @@ public abstract class BlackJackParticipant {
 
     public String getName() {
         return name.value();
-    }
-
-    public double getMoney() {
-        return money.getValue();
-    }
-
-    public void updateMoney(double input) {
-        money = money.update(input);
     }
 
     public State getState() {

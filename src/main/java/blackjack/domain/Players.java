@@ -8,28 +8,14 @@ import java.util.*;
 
 public class Players {
 
-    private static final String DELIMITER = ",";
     private static final int MINIMUM_PLAYERS = 2;
     private static final int MAXIMUM_PLAYERS = 8;
     private final List<Player> playersList;
 
     public Players(List<Player> players) {
+        validateDuplication(players);
+        validatePlayersCount(players);
         this.playersList = new ArrayList<>(players);
-    }
-
-    public static Players valueOf(String unParsedNames) {
-        List<Player> parsedPlayers = createPlayersByName(unParsedNames);
-        validateDuplication(parsedPlayers);
-        validatePlayersCount(parsedPlayers);
-        return new Players(parsedPlayers);
-    }
-
-    private static List<Player> createPlayersByName(String unParsedNames) {
-        List<Player> players = new ArrayList<>();
-        for (String name : unParsedNames.split(DELIMITER)) {
-            players.add(new Player(name.trim()));
-        }
-        return players;
     }
 
     private static void validateDuplication(List<Player> players) {
