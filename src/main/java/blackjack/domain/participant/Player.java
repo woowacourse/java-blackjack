@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.rule.ScoreRule;
+import blackjack.domain.state.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,40 +14,40 @@ public class Player implements Participant {
     private static final int DRAW_BOUND_SCORE = 21;
 
     private final String name;
-    private final List<Card> cards;
-    private final ScoreRule scoreRule;
+    private State state;
     private int money;
 
-    public Player(String name, ScoreRule scoreRule) {
+    public Player(String name, int money, State state) {
         this.name = name;
-        this.cards = new ArrayList<>();
-        this.scoreRule = scoreRule;
+        this.money = money;
+        this.state = state;
+        state.changeState();
     }
 
     @Override
     public void receiveCard(Card card) {
-        cards.add(card);
+        state.draw(card);
+        state.changeState();
     }
 
     @Override
     public List<Card> showInitCards() {
-        return cards.subList(FROM, TO);
+        return state.getCards().splitCardsFromTo(FROM, TO);
     }
 
     @Override
     public List<Card> showCards() {
-        return cards;
+        return state.getCards().toCardList();
     }
 
     @Override
     public boolean isReceiveCard() {
-        int totalScore = scoreRule.sumTotalScore(cards);
-        return totalScore <= DRAW_BOUND_SCORE;
+        return true;
     }
 
     @Override
     public int sumTotalScore() {
-        return scoreRule.sumTotalScore(cards);
+        return 0;
     }
 
     @Override
@@ -67,5 +68,15 @@ public class Player implements Participant {
     @Override
     public void betting(int money) {
         this.money = money;
+    }
+
+    @Override
+    public State getStatus() {
+        return null;
+    }
+
+    @Override
+    public void stay() {
+        state = state.stay();
     }
 }
