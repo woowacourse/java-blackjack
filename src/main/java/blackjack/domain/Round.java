@@ -13,7 +13,7 @@ public class Round {
     private final Deck deck;
     private final Users users;
 
-    public Round(Deck deck, Users users) {
+    public Round(Deck deck, Users<?> users) {
         this.deck = deck;
         this.users = users;
     }
