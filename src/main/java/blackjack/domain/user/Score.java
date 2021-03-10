@@ -4,7 +4,7 @@ public class Score {
     private static final int BLACKJACK_VALUE = 21;
     private static final int TEN = 10;
 
-    private int value;
+    private final int value;
 
     public Score(int value) {
         this.value = value;

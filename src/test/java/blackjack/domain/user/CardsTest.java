@@ -118,7 +118,7 @@ public class CardsTest {
     void isBlackjack() {
         Cards cards = new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.ACE),
-                new Card(Suit.SPACE, Denomination.TEN)));
+                new Card(Suit.SPACE, Denomination.QUEEN)));
 
         boolean isBlackjack = cards.isBlackjack();
 

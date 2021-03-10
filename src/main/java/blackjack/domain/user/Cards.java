@@ -45,7 +45,7 @@ public class Cards implements Comparable<Cards> {
 
     private int sum() {
         return cards.stream()
-                .mapToInt(Card::value)
+                .mapToInt(Card::getScore)
                 .sum();
     }
 

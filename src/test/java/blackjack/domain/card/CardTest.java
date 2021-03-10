@@ -19,9 +19,9 @@ public class CardTest {
     public void checkValue() {
         Card card = new Card(Suit.SPACE, Denomination.ACE);
 
-        int cardValue = card.value();
+        int score = card.getScore();
 
-        assertThat(cardValue).isEqualTo(1);
+        assertThat(score).isEqualTo(1);
     }
 
     @Test

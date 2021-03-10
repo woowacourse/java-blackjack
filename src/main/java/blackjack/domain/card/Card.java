@@ -9,8 +9,8 @@ public class Card {
         this.denomination = denomination;
     }
 
-    public int value() {
-        return this.denomination.getValue();
+    public int getScore() {
+        return denomination.getValue();
     }
 
     public boolean isAceCard() {

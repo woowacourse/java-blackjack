@@ -15,7 +15,7 @@ public class StateFactoryTest {
     void createState1() {
         Cards cards = new Cards(
                 new Card(Suit.CLOVER, Denomination.JACK),
-                new Card(Suit.HEART, Denomination.TEN));
+                new Card(Suit.HEART, Denomination.QUEEN));
         State state = StateFactory.generateStateByCards(cards);
 
         assertThat(state).isInstanceOf(Hit.class);
@@ -26,7 +26,7 @@ public class StateFactoryTest {
     void createState2() {
         Cards cards = new Cards(
                 new Card(Suit.CLOVER, Denomination.ACE),
-                new Card(Suit.HEART, Denomination.ACE));
+                new Card(Suit.HEART, Denomination.JACK));
         State state = StateFactory.generateStateByCards(cards);
 
         assertThat(state).isInstanceOf(Blackjack.class);
