@@ -9,6 +9,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class PlayerTest {
 
@@ -36,7 +37,10 @@ class PlayerTest {
         Player player = new Player("pobi", makeCards(), 21);
 
         player.convertToStay();
-        assertThat(player.getStatus()).isEqualTo(HandStatus.STAY);
+        assertFalse(player.isBlackjack());
+        assertFalse(player.isHit());
+        assertFalse(player.isBust());
+
     }
 
     @DisplayName("플레이어 이름 가져오기")

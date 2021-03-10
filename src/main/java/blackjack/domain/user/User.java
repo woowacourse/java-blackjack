@@ -44,20 +44,12 @@ public abstract class User {
         hand.convertStatusToStay();
     }
 
-    public ResultDto createResultDTO() {
-        return new ResultDto(getName(), getCards(), getScore());
-    }
-
     public List<Card> getCards() {
         return hand.getCards();
     }
 
     public int getScore() {
         return hand.getScore();
-    }
-
-    public HandStatus getStatus() {
-        return hand.getStatus();
     }
 
     public String getName() {

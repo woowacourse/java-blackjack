@@ -67,10 +67,6 @@ public class Hand {
         return calculateHandScore();
     }
 
-    public HandStatus getStatus() {
-        return status;
-    }
-
     public List<Card> getCards() {
         return cards;
     }

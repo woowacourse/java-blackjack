@@ -34,16 +34,10 @@ class GameTest {
         );
     }
 
-    @DisplayName("게임 결과 DTO 반환 테스트")
-    @Test
-    void getResultDtos_validSize() {
-        assertThat(game.getResultDTOs()).hasSize(4);
-    }
-
     @DisplayName("게임 승패 DTO 반환 테스트")
     @Test
-    void getWinningResultDtos_validSize() {
-        assertThat(game.getWinningResultDTOs()).hasSize(3);
+    void getWinningResults_validSize() {
+        assertThat(game.getWinningResults()).hasSize(3);
     }
 
     @DisplayName("딜러 getter 테스트")
@@ -52,7 +46,13 @@ class GameTest {
         assertThat(game.getDealer()).isNotNull();
     }
 
-    @DisplayName("플레이어 리스 getter 테스트")
+    @DisplayName("게임 전체 유저 리스트 getter 테스트")
+    @Test
+    void getUsers_validSize() {
+        assertThat(game.getUsers()).hasSize(4);
+    }
+
+    @DisplayName("플레이어 리스트 getter 테스트")
     @Test
     void getPlayers_notNull() {
         assertThat(game.getPlayers()).isNotNull();

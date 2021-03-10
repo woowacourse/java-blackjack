@@ -1,13 +1,13 @@
 package blackjack.domain.user;
 
-public class WinningResultDto {
+public class WinningResult {
 
     private final String name;
     private final MatchResult result;
 
-    public WinningResultDto(String name, MatchResult matchResult) {
+    public WinningResult(User user, MatchResult matchResult) {
+        this.name = user.getName();
         this.result = matchResult;
-        this.name = name;
     }
 
     public String getName() {

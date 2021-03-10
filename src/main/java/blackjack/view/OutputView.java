@@ -2,9 +2,8 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.user.MatchResult;
-import blackjack.domain.user.ResultDto;
 import blackjack.domain.user.User;
-import blackjack.domain.user.WinningResultDto;
+import blackjack.domain.user.WinningResult;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -12,7 +11,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 public class OutputView {
     private static final String COMMA = ", ";
@@ -62,26 +62,26 @@ public class OutputView {
         System.out.println("\n딜러는 16초과로 카드를 받지 않았습니다.\n");
     }
 
-    public static void printUserResult(List<ResultDto> resultDtos) {
-        resultDtos.forEach(OutputView::printResultDto);
+    public static void printUserResult(List<User> users) {
+        users.forEach(OutputView::printScoreResult);
     }
 
-    private static PrintStream printResultDto(ResultDto resultDTO) {
+    private static PrintStream printScoreResult(User user) {
         return System.out.printf("%s 카드 : %s - 결과: %d%n",
-            resultDTO.getName(),
-            makeCardString(resultDTO.getCards()),
-            resultDTO.getScore());
+            user.getName(),
+            makeCardString(user.getCards()),
+            user.getScore());
     }
 
-    public static void printWinningResult(List<WinningResultDto> winningResultDtos) {
+    public static void printWinningResult(List<WinningResult> winningResults) {
         System.out.println("\n## 최종 승패");
-        System.out.println("딜러 : " + calculateDealerResult(winningResultDtos));
-        winningResultDtos.forEach(winningResultDto ->
-            System.out.printf("%s: %s%n", winningResultDto.getName(), winningResultDto.getResult().getName()));
+        System.out.println("딜러 : " + calculateDealerResult(winningResults));
+        winningResults.forEach(winningResult ->
+            System.out.printf("%s: %s%n", winningResult.getName(), winningResult.getResult().getName()));
     }
 
-    private static String calculateDealerResult(List<WinningResultDto> winningResultDtos) {
-        Map<MatchResult, Long> calculate = countEachResults(winningResultDtos);
+    private static String calculateDealerResult(List<WinningResult> winningResults) {
+        Map<MatchResult, Long> calculate = countEachResults(winningResults);
 
         return calculate.keySet().stream()
             .filter(matchResult -> calculate.get(matchResult) > 0)
@@ -89,9 +89,9 @@ public class OutputView {
             .collect(Collectors.joining(" "));
     }
 
-    public static Map<MatchResult, Long> countEachResults(List<WinningResultDto> winningResultDtos) {
-        return winningResultDtos.stream()
-            .map(WinningResultDto::getResult)
+    public static Map<MatchResult, Long> countEachResults(List<WinningResult> winningResults) {
+        return winningResults.stream()
+            .map(WinningResult::getResult)
             .collect(groupingBy(Function.identity(), counting()));
     }
 }

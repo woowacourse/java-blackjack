@@ -48,7 +48,7 @@ class HandTest {
 
         hand.addCard(new Card(Denomination.ACE, Suit.HEARTS));
         assertThat(hand.getScore()).isEqualTo(19);
-        assertThat(hand.getStatus()).isEqualTo(HandStatus.HIT);
+        assertTrue(hand.isHit());
     }
 
     @DisplayName("카드 추가 메소드 테스트 : 추가 후 BUST")
@@ -60,7 +60,7 @@ class HandTest {
         Hand hand = new Hand(cards, 21);
 
         hand.addCard(new Card(Denomination.QUEEN, Suit.HEARTS));
-        assertThat(hand.getStatus()).isEqualTo(HandStatus.BUST);
+        assertTrue(hand.isBust());
     }
 
     @DisplayName("플레이어가 Hit 인 경우 테스트 = 21점 이하면 hit")

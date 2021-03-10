@@ -1,15 +1,18 @@
 package blackjack.domain;
 
-import blackjack.domain.card.*;
+import blackjack.domain.card.CardGenerator;
+import blackjack.domain.card.Deck;
 import blackjack.domain.user.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Game {
 
     private static final int PLAYER_STAY_LIMIT = 21;
     private static final int DEALER_STAY_LIMIT = 16;
+
     private final User dealer;
     private final List<User> players;
     private final Deck deck;
@@ -46,17 +49,16 @@ public class Game {
         player.draw(deck);
     }
 
-    public List<ResultDto> getResultDTOs() {
-        List<ResultDto> resultDtos = new ArrayList<>();
-        resultDtos.add(dealer.createResultDTO());
-        players.forEach(player -> resultDtos.add(player.createResultDTO()));
-
-        return resultDtos;
+    public List<User> getUsers() {
+        List<User> users = new ArrayList<>();
+        users.add(dealer);
+        users.addAll(players);
+        return users;
     }
 
-    public List<WinningResultDto> getWinningResultDTOs() {
-        return players.stream().map(player ->
-            new WinningResultDto(player.getName(), MatchResult.calculateResult(player, dealer)))
+    public List<WinningResult> getWinningResults() {
+        return players.stream()
+            .map(player -> new WinningResult(player, MatchResult.calculateResult(player, dealer)))
             .collect(Collectors.toList());
     }
 
