@@ -1,31 +1,16 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.names.Name;
+import blackjack.domain.state.hitstrategy.DealerStrategy;
+import blackjack.domain.state.hitstrategy.HitStrategy;
 
 public class Dealer extends Participant {
 
     public static final int DEALER_LIMIT = 16;
     private static final String DEALER_NAME = "딜러";
+    private static final HitStrategy HIT_STRATEGY = new DealerStrategy();
 
     public Dealer() {
-        super(new Name(DEALER_NAME));
-    }
-
-    @Override
-    protected ParticipantState updateStatus(ParticipantState currentStatus) {
-        if (isBust()) {
-            return ParticipantState.BUST;
-        }
-        if (isOverLimit()) {
-            return ParticipantState.STAY;
-        }
-        if (isBlackJack()) {
-            return ParticipantState.BLACKJACK;
-        }
-        return currentStatus;
-    }
-
-    private boolean isOverLimit() {
-        return getScore() > DEALER_LIMIT;
+        super(new Name(DEALER_NAME), HIT_STRATEGY);
     }
 }

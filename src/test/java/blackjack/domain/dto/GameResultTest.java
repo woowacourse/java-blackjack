@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.CardDistributor;
 import blackjack.domain.CardDistributorForTest;
-import blackjack.domain.ResultType;
+import blackjack.domain.Response;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.CardValue;
 import blackjack.domain.cards.Deck;
@@ -97,18 +97,30 @@ public class GameResultTest {
     @ParameterizedTest
     @DisplayName("게임 승패 테스트")
     @MethodSource("provideDeck")
-    void gameResultTest(Deck deck, Map<ResultType, Integer> expected) {
+    void gameResultTest(Deck deck, Map<String, Integer> expected) {
         CardDistributor cardDistributor = new CardDistributor(deck);
         CardDistributorForTest cardDistributorForTest = CardDistributorForTest
             .valueOf(cardDistributor);
         Dealer dealer = new Dealer();
         cardDistributorForTest.distributeCardsTo(dealer, 3);
+
         Player pobi = new Player(new Name("pobi"), Betting.valueOf("1000"));
         cardDistributorForTest.distributeCardsTo(pobi, 3);
+        if (pobi.isContinue()) {
+            pobi.updateStateByResponse(Response.NEGATIVE);
+        }
+
         Player jason = new Player(new Name("jason"), Betting.valueOf("1000"));
         cardDistributorForTest.distributeCardsTo(jason, 3);
+        if (jason.isContinue()) {
+            jason.updateStateByResponse(Response.NEGATIVE);
+        }
+
         Player root = new Player(new Name("root"), Betting.valueOf("1000"));
         cardDistributorForTest.distributeCardsTo(root, 3);
+        if (root.isContinue()) {
+            root.updateStateByResponse(Response.NEGATIVE);
+        }
 
         Players players = new Players(Arrays.asList(pobi, jason, root));
         GameResult gameResult = players.match(dealer);

@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Deck;
 import blackjack.domain.participants.Participant;
-import blackjack.domain.participants.Participants;
+import blackjack.dto.Participants;
 import java.util.stream.IntStream;
 
 public class CardDistributor {

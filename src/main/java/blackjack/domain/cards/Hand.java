@@ -15,6 +15,10 @@ public class Hand {
         hand = new ArrayList<>(cards);
     }
 
+    public Hand() {
+        this(new ArrayList<>());
+    }
+
     public int getScore() {
         return calculateScore(new ArrayList<>(hand), DEFAULT_SCORE);
     }

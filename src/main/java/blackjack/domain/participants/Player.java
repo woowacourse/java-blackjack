@@ -3,29 +3,21 @@ package blackjack.domain.participants;
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
 import blackjack.domain.names.Name;
+import blackjack.domain.state.hitstrategy.HitStrategy;
+import blackjack.domain.state.hitstrategy.PlayerStrategy;
 
 public class Player extends Participant {
 
+    private static final HitStrategy HIT_STRATEGY = new PlayerStrategy();
     private final Betting betting;
 
     public Player(Name name, Betting betting) {
-        super(name);
+        super(name, HIT_STRATEGY);
         this.betting = betting;
     }
 
-    @Override
-    protected ParticipantState updateStatus(ParticipantState currentStatus) {
-        if (isBust()) {
-            return ParticipantState.BUST;
-        }
-        if (isBlackJack()) {
-            return ParticipantState.BLACKJACK;
-        }
-        return currentStatus;
-    }
-
-    public void updateStatusByResponse(Response response) {
-        setState(response.getParticipantState());
+    public void updateStateByResponse(Response response) {
+        setState(getState().moveStateByResponse(response));
     }
 
     public ResultType match(Dealer dealer) {
@@ -50,7 +42,7 @@ public class Player extends Participant {
 
     public int matchForProfit(Dealer dealer) {
         double profitMultiplier =
-            match(dealer).getProfitMultiplier() * getState().getProfitMultiplier();
+            match(dealer).getProfitMultiplier() * getState().getEarningRate();
         return (int) (profitMultiplier * betting.unwrap());
     }
 }

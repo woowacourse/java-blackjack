@@ -9,7 +9,7 @@ import blackjack.domain.names.Names;
 import blackjack.domain.participants.Betting;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
-import blackjack.domain.participants.Participants;
+import blackjack.dto.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import blackjack.view.InputView;
@@ -84,7 +84,7 @@ public class BlackJackController {
         while (playerToPrepare.isContinue()) {
             OutputView.willDrawCard(playerToPrepare);
             Response response = Response.getResponse(InputView.inputString());
-            playerToPrepare.updateStatusByResponse(response);
+            playerToPrepare.updateStateByResponse(response);
             drawCardByResponse(playerToPrepare, response);
         }
     }

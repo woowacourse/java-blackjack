@@ -3,7 +3,11 @@ package blackjack.domain.participants;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Hand;
 import blackjack.domain.names.Name;
-import java.util.ArrayList;
+import blackjack.domain.state.finished.Blackjack;
+import blackjack.domain.state.finished.Bust;
+import blackjack.domain.state.running.Hit;
+import blackjack.domain.state.State;
+import blackjack.domain.state.hitstrategy.HitStrategy;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,36 +15,31 @@ public abstract class Participant {
 
     public static final int STARTING_CARD_COUNT = 2;
 
-    private final Hand hand;
     private final Name name;
-    private ParticipantState state;
+    private State state;
 
-    public Participant(Name name) {
-        this.hand = new Hand(new ArrayList<>());
+    public Participant(Name name, HitStrategy hitStrategy) {
         this.name = name;
-        this.state = ParticipantState.HIT;
+        this.state = new Hit(new Hand(), hitStrategy);
     }
-
-    protected abstract ParticipantState updateStatus(ParticipantState currentStatus);
 
     public void draw(Card card) {
         if (isNotContinue()) {
             throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
         }
-        hand.addCard(card);
-        state = updateStatus(state);
+        state = state.draw(card);
     }
 
-    protected ParticipantState getState() {
+    protected State getState() {
         return state;
     }
 
-    protected void setState(ParticipantState state) {
+    protected void setState(State state) {
         this.state = state;
     }
 
     public boolean isContinue() {
-        return state == ParticipantState.HIT;
+        return !state.isFinished();
     }
 
     public boolean isNotContinue() {
@@ -48,11 +47,11 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return hand.isBust();
+        return state instanceof Bust;
     }
 
     public boolean isBlackJack() {
-        return hand.isBlackJack();
+        return state instanceof Blackjack;
     }
 
     public String getName() {
@@ -60,11 +59,11 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        return hand.getScore();
+        return state.getScore();
     }
 
     public List<Card> getHand() {
-        return hand.unwrap();
+        return state.getHand().unwrap();
     }
 
     @Override

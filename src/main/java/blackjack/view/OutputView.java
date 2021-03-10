@@ -4,7 +4,7 @@ import blackjack.domain.cards.Card;
 import blackjack.domain.names.Name;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
-import blackjack.domain.participants.Participants;
+import blackjack.dto.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.dto.GameResult;
 import java.util.Map;

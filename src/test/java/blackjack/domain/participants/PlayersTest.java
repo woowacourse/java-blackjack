@@ -12,6 +12,7 @@ import blackjack.domain.cards.Deck;
 import blackjack.domain.cards.Shape;
 import blackjack.domain.names.Names;
 import blackjack.dto.GameResult;
+import blackjack.dto.Participants;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +61,9 @@ public class PlayersTest {
         Players players = newPlayers("pobi,jason,root");
         Participants participants = Participants.valueOf(dealer, players);
         cardDistributor.distributeStartingCardsTo(participants);
+        for (Player player : players.unwrap()) {
+            player.updateStateByResponse(Response.NEGATIVE);
+        }
 
         GameResult gameResult = players.match(dealer);
 
@@ -76,7 +80,7 @@ public class PlayersTest {
     void nextPlayerToPrepare() {
         Players players = newPlayers("pobi,jason,root");
         for (int i = 0; i < 3; i++) {
-            players.nextPlayerToPrepare().updateStatusByResponse(Response.NEGATIVE);
+            players.nextPlayerToPrepare().updateStateByResponse(Response.NEGATIVE);
         }
 
         assertThatIllegalStateException().isThrownBy(players::nextPlayerToPrepare)

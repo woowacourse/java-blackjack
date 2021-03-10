@@ -78,14 +78,14 @@ public class PlayerTest {
     void willContinue() {
         Player root = new Player(new Name("root"), Betting.valueOf("1"));
 
-        root.updateStatusByResponse(Response.getResponse("y"));
+        root.updateStateByResponse(Response.getResponse("y"));
         assertThat(root.isContinue()).isTrue();
 
-        root.updateStatusByResponse(Response.getResponse("n"));
+        root.updateStateByResponse(Response.getResponse("n"));
         assertThat(root.isContinue()).isFalse();
 
         assertThatThrownBy(() ->
-            root.updateStatusByResponse(Response.getResponse("x")))
+            root.updateStateByResponse(Response.getResponse("x")))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("불가능한 입력 입니다.");
     }
@@ -118,10 +118,13 @@ public class PlayerTest {
         cardDistributorForTest.distributeCardsTo(dealer, 2);
         Player pobi = new Player(new Name("pobi"), Betting.valueOf("1000"));
         cardDistributorForTest.distributeCardsTo(pobi, 2);
+        pobi.updateStateByResponse(Response.NEGATIVE);
         Player jason = new Player(new Name("jason"), Betting.valueOf("1000"));
         cardDistributorForTest.distributeCardsTo(jason, 2);
+        jason.updateStateByResponse(Response.NEGATIVE);
         Player root = new Player(new Name("root"), Betting.valueOf("1000"));
         cardDistributorForTest.distributeCardsTo(root, 2);
+        root.updateStateByResponse(Response.NEGATIVE);
 
         assertThat(pobi.matchForProfit(dealer)).isEqualTo(1000);
         assertThat(jason.matchForProfit(dealer)).isEqualTo(0);
