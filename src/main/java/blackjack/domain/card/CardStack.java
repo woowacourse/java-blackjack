@@ -15,7 +15,7 @@ public class CardStack {
         return new CardStack(Card.makeAllCards());
     }
 
-    public List<Card> getTwoCards() {
+    public List<Card> pickTwoCards() {
         return new ArrayList<>(
                 Arrays.asList(cards.pop(), cards.pop())
         );
@@ -25,7 +25,7 @@ public class CardStack {
         return cards.isEmpty();
     }
 
-    public Card getSingleCard() {
+    public Card pick() {
         return cards.pop();
     }
 }

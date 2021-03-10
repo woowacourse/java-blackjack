@@ -40,7 +40,11 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && calculate() == BLACKJACK;
+        return isProperSizeForBlackjack() && calculate() == BLACKJACK;
+    }
+
+    public boolean isBust() {
+        return calculate() > BLACKJACK;
     }
 
     public int calculate() {
@@ -71,7 +75,7 @@ public class Cards {
         return sum + ACE_CONVERSION;
     }
 
-    public boolean isBust() {
-        return calculate() > BLACKJACK;
+    private boolean isProperSizeForBlackjack() {
+        return cards.size() == 2;
     }
 }
