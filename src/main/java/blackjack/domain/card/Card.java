@@ -30,7 +30,7 @@ public class Card {
         return CARDS.stream()
                 .filter(card -> card.symbol == symbol && card.number == number)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("없는 카드임!"));
+                .orElseThrow(() -> new IllegalArgumentException("없는 카드입니다."));
     }
 
     public static List<Card> getShuffledCards() {
@@ -43,7 +43,7 @@ public class Card {
         return number.getScore();
     }
 
-    public boolean containAce() {
+    public boolean isAce() {
         return number.isAce();
     }
 

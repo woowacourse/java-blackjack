@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Cards {
-    public static final int GAME_OVER_SCORE = 21;
+//    public static final int GAME_OVER_SCORE = 21;
     private final List<Card> cards;
 
     public Cards(Card... cards) {
@@ -16,13 +16,40 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
-    private int scores() {
-        return cards.stream()
+    public Score scores() {
+        Score score = sum();
+        int aceNumbers = numberOfAces();
+        for (int i = 0; i < aceNumbers; i++) {
+            score = score.plusTenIfNotBust();
+        }
+        return score;
+    }
+
+    private int numberOfAces() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+    }
+
+    private Score sum() {
+        return new Score(cards.stream()
                 .mapToInt(Card::score)
-                .sum();
+                .sum());
     }
 
     public boolean isBlackjack() {
-        return scores() == GAME_OVER_SCORE;
+        return scores().isBlackjack();
+    }
+
+    public boolean isBust() {
+        return scores().isBust();
+    }
+
+    public void add(Card card) {
+        this.cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
     }
 }
