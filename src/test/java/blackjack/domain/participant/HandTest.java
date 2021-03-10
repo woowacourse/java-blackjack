@@ -47,6 +47,16 @@ public class HandTest {
     }
 
     @Test
+    @DisplayName("Hand에 초기에 추가된 2장의 점수가 21이라면 isBlackjack에 대해 참을 반환")
+    void isBlackjackTest() {
+        hand.add(new Card(CardLetter.ACE, CardSuit.CLOVER));
+        assertThat(hand.isBlackjack()).isFalse();
+
+        hand.add(new Card(CardLetter.KING, CardSuit.CLOVER));
+        assertThat(hand.isBlackjack()).isTrue();
+    }
+
+    @Test
     @DisplayName("Hand에 추가된 카드들의 합을 확인")
     void calculateScoreTest() {
         hand.add(new Card(CardLetter.EIGHT, CardSuit.CLOVER));

@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hand {
-    private static final int BUST_LIMIT = 22;
+    private static final int MAXIMUM_SCORE = 21;
     private static final int NO_ACE = 0;
 
     private final List<Card> cards;
@@ -22,7 +22,11 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateScore() >= BUST_LIMIT;
+        return calculateScore() > MAXIMUM_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return (cards.size() == 2 && calculateScore() == MAXIMUM_SCORE);
     }
 
     public int calculateScore() {
@@ -30,7 +34,7 @@ public class Hand {
                 .mapToInt(card -> card.getCardLetter().getValue())
                 .sum();
 
-        if (maximumSum >= BUST_LIMIT && countAce() > NO_ACE) {
+        if (maximumSum > MAXIMUM_SCORE && countAce() > NO_ACE) {
             return adjustScoreWithAce(maximumSum);
         }
         return maximumSum;
@@ -45,7 +49,7 @@ public class Hand {
     private int adjustScoreWithAce(final int maximumSum) {
         int aceCount = countAce();
         int adjustSum = maximumSum;
-        while (aceCount > 0 && adjustSum >= BUST_LIMIT) {
+        while (aceCount > 0 && adjustSum > MAXIMUM_SCORE) {
             adjustSum = adjustSum - CardLetter.ACE.getValue() + CardLetter.ACE.getExtraValue();
             aceCount--;
         }
