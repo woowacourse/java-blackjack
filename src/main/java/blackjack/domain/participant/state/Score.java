@@ -1,4 +1,6 @@
-package blackjack.domain.participant;
+package blackjack.domain.participant.state;
+
+import blackjack.domain.Result;
 
 public class Score {
 
@@ -20,6 +22,20 @@ public class Score {
 
     public boolean isBust() {
         return this.value > BLACKJACK;
+    }
+
+    public boolean isBlackjack() {
+        return this.value == BLACKJACK;
+    }
+
+    public Result compare(final Score score) {
+        if (this.value > score.value) {
+            return Result.WIN;
+        }
+        if(this.value < score.value) {
+            return Result.LOSE;
+        }
+        return Result.DRAW;
     }
 
     public int getValue() {
