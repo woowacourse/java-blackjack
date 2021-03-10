@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import java.util.Objects;
+import blackjack.domain.Result;
 
 public class Player extends Participant {
 
@@ -10,33 +10,11 @@ public class Player extends Participant {
         this.name = name;
     }
 
+    public Result judgeByDealerState(final Dealer dealer) {
+        return this.state.calculatePlayerResult(dealer.state);
+    }
+
     public String getName() {
         return this.name.getValue();
-    }
-
-    public boolean equalsName(final Name name) {
-        return this.name.equals(name);
-    }
-
-    @Override
-    public boolean isHitable() {
-        return !isBurst();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Player player = (Player) o;
-        return Objects.equals(name, player.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 }

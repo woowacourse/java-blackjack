@@ -1,6 +1,8 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Result;
+import blackjack.domain.carddeck.Card;
+import java.util.Collections;
+import java.util.List;
 
 public class Dealer extends Participant {
 
@@ -9,26 +11,11 @@ public class Dealer extends Participant {
     public Dealer() {
     }
 
-    public Result judge(final Player player) {
-        if (isDealerWinThePlayer(player)) {
-            return Result.LOSE;
-        }
-        if (isDealerLoseThePlayer(player)) {
-            return Result.WIN;
-        }
-        return Result.DRAW;
+    public boolean isOverThenLimitScore() {
+        return getScoreToInt() >= LIMIT_SCORE;
     }
 
-    private boolean isDealerWinThePlayer(final Player player) {
-        return player.isBurst() || getScore() > player.getScore();
-    }
-
-    private boolean isDealerLoseThePlayer(final Player player) {
-        return getScore() < player.getScore();
-    }
-
-    @Override
-    public boolean isHitable() {
-        return getScore() < LIMIT_SCORE;
+    public List<Card> getInitCard() {
+        return Collections.singletonList(getCards().get(0));
     }
 }

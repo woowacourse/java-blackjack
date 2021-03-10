@@ -2,56 +2,51 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Result;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.CardDeck;
 import blackjack.domain.carddeck.Number;
 import blackjack.domain.carddeck.Pattern;
+import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 
-    Dealer dealer;
-    CardDeck cardDeck;
+    private Dealer dealer;
 
     @BeforeEach
     void setUp() {
         this.dealer = new Dealer();
-        this.cardDeck = CardDeck.newShuffledDeck();
     }
 
     @Test
     @DisplayName("딜러는 총점수 17이상일시 카드 뽑기를 멈춘다.")
     void testStopDrawDealerWhenTotalScoreOverSeventeen() {
+        CardDeck cardDeck = getCustomCardDeck();
+        this.dealer.initDraw(cardDeck);
+
         for (int i = 0; i < 999999; i++) {
-            while (this.dealer.isHitable()) {
-                this.dealer.addCard(this.cardDeck.draw());
+            while (!this.dealer.isOverThenLimitScore()) {
+                this.dealer.draw(cardDeck.draw());
             }
-            assertThat(this.dealer.getScore()).isGreaterThanOrEqualTo(17);
+            assertThat(this.dealer.getScoreToInt()).isEqualTo(17);
         }
     }
 
     @Test
-    @DisplayName("플레이어 승패 테스트")
-    void testPlayerWinOrLose() {
-        Player player = new Player(new Name("미립"));
+    @DisplayName("초기 출력을 위한 카드 요청시 첫 1장만 반환한다.")
+    void testGetInitFirstOneCard() {
+        this.dealer.initDraw(getCustomCardDeck());
+        assertThat(this.dealer.getInitCard()).hasSize(1);
+        assertThat(this.dealer.getInitCard().get(0).getScore()).isEqualTo(11);
+    }
 
-        this.dealer.addCard(Card.valueOf(Pattern.HEART, Number.FIVE));  // 5
-        player.addCard(Card.valueOf(Pattern.DIAMOND, Number.THREE));    // 3
-        assertThat(this.dealer.judge(player)).isEqualTo(Result.LOSE);
-
-        this.dealer.addCard(Card.valueOf(Pattern.HEART, Number.THREE)); // 8
-        player.addCard(Card.valueOf(Pattern.DIAMOND, Number.FIVE));     // 8
-        assertThat(this.dealer.judge(player)).isEqualTo(Result.DRAW);
-
-        this.dealer.addCard(Card.valueOf(Pattern.HEART, Number.SIX));   // 14
-        player.addCard(Card.valueOf(Pattern.DIAMOND, Number.SEVEN));    // 15
-        assertThat(this.dealer.judge(player)).isEqualTo(Result.WIN);
-
-        this.dealer.addCard(Card.valueOf(Pattern.HEART, Number.KING));  // Burst
-        player.addCard(Card.valueOf(Pattern.DIAMOND, Number.KING));     // Burst
-        assertThat(this.dealer.judge(player)).isEqualTo(Result.LOSE);
+    private CardDeck getCustomCardDeck() {
+        Card firstCard = Card.valueOf(Pattern.HEART, Number.ACE);
+        Card secondCard = Card.valueOf(Pattern.HEART, Number.SIX);
+        Card thirdCard = Card.valueOf(Pattern.HEART, Number.TEN);
+        Card fourthCard = Card.valueOf(Pattern.HEART, Number.KING);
+        return CardDeck.customDeck(Arrays.asList(firstCard, secondCard, thirdCard, fourthCard));
     }
 }
