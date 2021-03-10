@@ -1,14 +1,15 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 import java.util.List;
 
 public class BlackJack implements State {
-    private List<Card> cards;
+    private Cards cards;
 
-    public BlackJack(List<Card> cars) {
-        this.cards = cars;
+    public BlackJack(List<Card> cards) {
+        this.cards = new Cards(cards);
     }
 
     @Override
