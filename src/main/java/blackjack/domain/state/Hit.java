@@ -36,7 +36,7 @@ public class Hit implements State {
         }
 
         if (sum > 21) {
-            return new Bust();
+            return new Bust(cards.toCardList());
         }
 
         return this;
