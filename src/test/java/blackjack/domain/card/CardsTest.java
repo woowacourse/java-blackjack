@@ -1,15 +1,12 @@
 package blackjack.domain.card;
 
-import blackjack.domain.gamer.Name;
-import blackjack.domain.gamer.Participant;
-import blackjack.domain.gamer.Player;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class CardsTest {
     @Test
@@ -21,7 +18,6 @@ public class CardsTest {
 
         assertThatCode(() -> new Cards(cards)).doesNotThrowAnyException();
     }
-
 
     @Test
     @DisplayName("생성된 리스트에 카드 포함여부 확인")
@@ -37,7 +33,7 @@ public class CardsTest {
 
     @Test
     @DisplayName("카드추가")
-    void add() {
+    void takeCard() {
         List<Card> cards = Arrays.asList(
             Card.from(Suits.DIAMOND, Denominations.ACE),
             Card.from(Suits.HEART, Denominations.ACE));
@@ -52,7 +48,7 @@ public class CardsTest {
 
     @Test
     @DisplayName("지급된 카드 합계")
-    void sum_cards() {
+    void sumCards() {
         List<Card> cardValues = Arrays.asList(
             Card.from(Suits.CLOVER, Denominations.ACE),
             Card.from(Suits.CLOVER, Denominations.TWO));
@@ -64,7 +60,7 @@ public class CardsTest {
 
     @Test
     @DisplayName("결과를 위한 ACE 포함된 카드 합계")
-    void sum_cards_for_result() {
+    void sumCardsForResult() {
         List<Card> cardValues = Arrays.asList(
             Card.from(Suits.DIAMOND, Denominations.ACE),
             Card.from(Suits.DIAMOND, Denominations.SIX));
@@ -77,16 +73,15 @@ public class CardsTest {
 
     @Test
     @DisplayName("Ace 4장인 경우 지지않는 최대 합계")
-    void sum_cards_for_result1() {
-        List<Card> cards = Arrays.asList(
+    void sumCardsForResult1() {
+        List<Card> cardsValues = Arrays.asList(
+            Card.from(Suits.DIAMOND, Denominations.ACE),
+            Card.from(Suits.DIAMOND, Denominations.ACE),
             Card.from(Suits.DIAMOND, Denominations.ACE),
             Card.from(Suits.DIAMOND, Denominations.ACE));
-        Participant player = new Player(new Name("sarah"), new Cards(cards));
+        final Cards cards = new Cards(cardsValues);
 
-        player.takeCard(Card.from(Suits.DIAMOND, Denominations.ACE));
-        player.takeCard(Card.from(Suits.DIAMOND, Denominations.ACE));
-
-        Score score = player.sumCardsForResult();
+        Score score = cards.sumCardsForResult();
 
         assertThat(score).isEqualTo(Score.of(14));
     }

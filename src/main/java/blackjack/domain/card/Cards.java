@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
-    private static final int INITIAL_CARDS_SIZE = 2;
     private static final int ACE_EXTRA_VALUE = 10;
     private final List<Card> cards;
 
