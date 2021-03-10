@@ -1,7 +1,6 @@
 package blackjack.state;
 
 import blackjack.domain.card.Card;
-import blackjack.util.BlackJackConstant;
 
 import java.util.List;
 
@@ -21,27 +20,27 @@ public class Cards {
     }
 
     public boolean isBust() {
-        if (this.cards.stream().mapToInt(Card::getScore).sum() > 21){
+        if (this.cards.stream().mapToInt(Card::getScore).sum() > Score.BLACKJACK_SCORE){
             return true;
         }
         return false;
     }
 
-    public int score(){
-        int score = this.cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-
-        score += checkAce(score);
-
-        return score;
+    public Score score(){
+        return checkAce(cardsScoreSum());
     }
 
-    private int checkAce(int score) {
+    private Score cardsScoreSum() {
+        return new Score(this.cards.stream()
+                .mapToInt(Card::getScore)
+                .sum());
+    }
+
+    private Score checkAce(Score score) {
         if (this.cards.stream()
-                .anyMatch(Card::isAce) && score <= BlackJackConstant.ACE_CHECK_SCORE) {
-            return BlackJackConstant.TEN_SCORE;
+                .anyMatch(Card::isAce) && score.isChangeAceNumber()) {
+            return new Score(score.aceNumberChange());
         }
-        return 0;
+        return score;
     }
 }
