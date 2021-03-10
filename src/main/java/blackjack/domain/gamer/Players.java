@@ -10,12 +10,8 @@ import java.util.List;
 public class Players {
     private final List<Player> players;
 
-    public Players(String s, GameTable gameTable) {
-        players = new ArrayList<>();
-        String[] names = s.split(",");
-        for (String name : names) {
-            players.add(new Player(name, gameTable));
-        }
+    public Players(List<Player> players) {
+        this.players = new ArrayList<>(players);
     }
 
     public List<Player> getUnmodifiableList() {

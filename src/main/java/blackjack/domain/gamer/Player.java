@@ -8,22 +8,16 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class Player extends Participant {
-    private static final Pattern NAME_PATTERN = Pattern.compile("^[a-z|A-Z]+");
 
-    public Player(String name, GameTable gameTable) {
+    public Player(Name name, GameTable gameTable) {
         this(name, gameTable.initCards());
     }
 
-    public Player(String name, List<Card> cards) {
-        super(validateWord(name.trim()), cards);
+    public Player(Name name, List<Card> cards) {
+        super(name, cards);
     }
 
-    private static String validateWord(String nameValue) {
-        if (!NAME_PATTERN.matcher(nameValue).matches()) {
-            throw new IllegalArgumentException();
-        }
-        return nameValue;
-    }
+
 
     @Override
     public boolean isAvailableToTake() {

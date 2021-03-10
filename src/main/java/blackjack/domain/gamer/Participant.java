@@ -5,10 +5,10 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public abstract class Participant {
-    private final String name;
+    private final Name name;
     private final Cards cards;
 
-    public Participant(String name, List<Card> cards) {
+    public Participant(Name name, List<Card> cards) {
         this.name = name;
         this.cards = new Cards(cards);
     }
@@ -16,7 +16,7 @@ public abstract class Participant {
     public abstract boolean isAvailableToTake();
 
     public String getName(){
-        return this.name;
+        return this.name.toString();
     }
 
     public int sumCards() {

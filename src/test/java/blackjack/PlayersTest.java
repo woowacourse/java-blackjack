@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayersTest {
-    private GameTable gameTable;
+    /*private GameTable gameTable;
 
     @BeforeEach
     void setGameTable(){
@@ -52,4 +52,5 @@ public class PlayersTest {
     void create6() {
         assertThatThrownBy(() -> new Players("b oni,gr am,ki lo", gameTable)).isInstanceOf(IllegalArgumentException.class);
     }
+    */
 }

@@ -4,6 +4,7 @@ import blackjack.domain.GameTable;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denominations;
 import blackjack.domain.card.Suits;
+import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
 import blackjack.utils.FixedCardDeck;
@@ -19,14 +20,18 @@ public class PlayerTest {
     @Test
     void create() {
         final GameTable gameTable = new GameTable(new FixedCardDeck());
-        Participant player = new Player("john", gameTable);
+        final Name john = new Name("john");
+
+        Participant player = new Player(john, gameTable);
         assertThat(player.getName()).isEqualTo("john");
     }
 
     @Test
     void create2() {
         final GameTable gameTable = new GameTable(new FixedCardDeck());
-        Participant player = new Player("sarah", gameTable);
+        final Name sarah = new Name("sarah");
+
+        Participant player = new Player(sarah, gameTable);
         assertThat(player.getName()).isEqualTo("sarah");
     }
 
@@ -35,7 +40,8 @@ public class PlayerTest {
     void create3() {
         final GameTable gameTable = new GameTable(new FixedCardDeck());
         List<Card> cards = gameTable.initCards();
-        Participant player = new Player("sarah", cards);
+        final Name sarah = new Name("sarah");
+        Participant player = new Player(sarah, cards);
 
         List<Card> playerCards = player.getUnmodifiableCards();
         assertThat(playerCards)
@@ -49,7 +55,8 @@ public class PlayerTest {
     void add_card() {
         final GameTable gameTable = new GameTable(new FixedCardDeck());
         List<Card> cards = gameTable.initCards();
-        Participant player = new Player("sarah", cards);
+        final Name sarah = new Name("sarah");
+        Participant player = new Player(sarah, cards);
 
         gameTable.giveCard(player);
         assertThat(player.getUnmodifiableCards())
@@ -64,7 +71,8 @@ public class PlayerTest {
     void sum_cards() {
         final GameTable gameTable = new GameTable(new FixedCardDeck());
         List<Card> cards = gameTable.initCards();
-        Participant player = new Player("sarah", cards);
+        final Name sarah = new Name("sarah");
+        Participant player = new Player(sarah, cards);
         int score = player.sumCards();
         assertThat(score).isEqualTo(3);
     }
@@ -75,8 +83,9 @@ public class PlayerTest {
         List<Card> cards = Arrays.asList(
             Card.from(Suits.DIAMOND, Denominations.ACE),
             Card.from(Suits.DIAMOND, Denominations.SIX));
+        final Name sarah = new Name("sarah");
 
-        Participant player = new Player("john", cards);
+        Participant player = new Player(sarah, cards);
         int score = player.sumCardsForResult();
         assertThat(score).isEqualTo(17);
     }
@@ -87,7 +96,8 @@ public class PlayerTest {
         List<Card> cards = Arrays.asList(
             Card.from(Suits.DIAMOND, Denominations.ACE),
             Card.from(Suits.DIAMOND, Denominations.ACE));
-        Participant player = new Player("john", cards);
+        final Name sarah = new Name("sarah");
+        Participant player = new Player(sarah, cards);
         player.takeCard(Card.from(Suits.DIAMOND, Denominations.ACE));
         player.takeCard(Card.from(Suits.DIAMOND, Denominations.ACE));
 
