@@ -4,12 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardType;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.state.*;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +32,20 @@ class DealerTest {
         Card card = new Card(CardType.DIAMOND, CardValue.THREE);
         dealer.receiveCard(card);
         assertThat(dealer.showCards().contains(card)).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러는 한장의 카드만 보여준다.")
+    void test_dealer_show_card() {
+        //given
+        State state = new Hit(defaultInitialCard);
+        Participant dealer = new Dealer(state);
+
+        //when
+        List<Card> cards = dealer.showInitCards();
+
+        //then
+        assertThat(cards).hasSize(1);
     }
 
     @Test
@@ -75,21 +86,7 @@ class DealerTest {
         dealer.stay();
         assertThat(dealer.getStatus()).isInstanceOf(Stay.class);
     }
-
-    @Test
-    @DisplayName("딜러는 한장의 카드만 보여준다.")
-    void test_dealer_show_card() {
-        //given
-        State state = new Hit(defaultInitialCard);
-        Participant dealer = new Dealer(state);
-
-        //when
-        List<Card> cards = dealer.showInitCards();
-
-        //then
-        assertThat(cards).hasSize(1);
-    }
-
+    
 //    @ParameterizedTest
 //    @DisplayName("딜러가 카드를 한장을 더 뽑을 수 있는지 확인한다")
 //    @CsvSource(value = {
