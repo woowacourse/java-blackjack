@@ -1,8 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import blackjack.domain.participant.*;
 import blackjack.domain.result.BlackJackResult;
 import blackjack.dto.DealerResultDto;
@@ -19,10 +19,10 @@ public class BlackJackGame {
         try {
             Players players = registerPlayers();
             Dealer dealer = new Dealer();
-            CardDeck cardDeck = cardDeckSetting();
-            distributeCards(players, dealer, cardDeck);
-            playersTurn(players, cardDeck);
-            dealerTurn(dealer, cardDeck);
+            Deck deck = cardDeckSetting();
+            distributeCards(players, dealer, deck);
+            playersTurn(players, deck);
+            dealerTurn(dealer, deck);
             showResult(players, dealer);
         } catch (IllegalStateException e) {
             OutputView.printError(e.getMessage());
@@ -47,16 +47,18 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    private CardDeck cardDeckSetting() {
-        Cards deck = new Cards(Card.values());
-        CardDeck cardDeck = new CardDeck(deck);
-        cardDeck.shuffleCard();
-        return cardDeck;
+    private Deck cardDeckSetting() {
+        Deck deck = new Deck(Card.values());
+//        Cards deck = new Cards(Card.values());
+//        CardDeck cardDeck = new CardDeck(deck);
+        deck.shuffleDeck();
+//        cardDeck.shuffleCard();
+        return deck;
     }
 
-    private void distributeCards(Players players, Dealer dealer, CardDeck cardDeck) {
-        dealer.firstDraw(cardDeck.drawCard(), cardDeck.drawCard());
-        players.eachPlayerFirstDraw(cardDeck);
+    private void distributeCards(Players players, Dealer dealer, Deck deck) {
+        dealer.firstDraw(deck.drawCard(), deck.drawCard());
+        players.eachPlayerFirstDraw(deck);
         OutputView.distributeFirstTwoCard(toPlayersDto(players), toParticipantDto(dealer));
     }
 
@@ -71,15 +73,15 @@ public class BlackJackGame {
         return new ParticipantDto(participant.getName(), cards, cards.calculateScore());
     }
 
-    private void playersTurn(Players players, CardDeck cardDeck) {
+    private void playersTurn(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            eachPlayerTurn(cardDeck, player);
+            eachPlayerTurn(deck, player);
         }
     }
 
-    private void eachPlayerTurn(CardDeck cardDeck, Player player) {
+    private void eachPlayerTurn(Deck deck, Player player) {
         while (player.canDraw() && askDrawCard(player)) {
-            player.draw(cardDeck.drawCard());
+            player.draw(deck.drawCard());
             OutputView.showCards(toParticipantDto(player));
         }
     }
@@ -103,9 +105,9 @@ public class BlackJackGame {
         }
     }
 
-    private void dealerTurn(Dealer dealer, CardDeck cardDeck) {
+    private void dealerTurn(Dealer dealer, Deck deck) {
         while (dealer.canDraw()) {
-            dealer.draw(cardDeck.drawCard());
+            dealer.draw(deck.drawCard());
             OutputView.dealerReceiveOneCard();
         }
         if (!dealer.isBust() && dealer.isHit()) {

@@ -10,7 +10,7 @@ import blackjack.dto.PlayersResultDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.card.Cards.TOP_CARD;
+import static blackjack.domain.card.Deck.TOP_CARD;
 import static blackjack.domain.participant.Dealer.DEALER_NAME;
 
 public class OutputView {

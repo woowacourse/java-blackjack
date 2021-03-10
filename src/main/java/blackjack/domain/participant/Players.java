@@ -1,11 +1,9 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Deck;
 import blackjack.domain.result.MatchResult;
-import blackjack.dto.ParticipantDto;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Players {
     private static final String PLAYER_NUMBER_ERROR_MESSAGE = "인원 수는 2 ~ 8명입니다.";
@@ -42,9 +40,9 @@ public class Players {
         return result;
     }
 
-    public void eachPlayerFirstDraw(CardDeck cardDeck) {
+    public void eachPlayerFirstDraw(Deck deck) {
         for (Player player : players) {
-            player.firstDraw(cardDeck.drawCard(), cardDeck.drawCard());
+            player.firstDraw(deck.drawCard(), deck.drawCard());
         }
     }
 
