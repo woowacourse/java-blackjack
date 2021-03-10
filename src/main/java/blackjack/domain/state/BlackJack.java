@@ -8,4 +8,19 @@ public class BlackJack extends Finished {
     public BlackJack(Cards cards) {
         super(cards);
     }
+
+    @Override
+    public boolean isBlackJack() {
+        return true;
+    }
+
+    @Override
+    public boolean isStay() {
+        return false;
+    }
+
+    @Override
+    public boolean isBust() {
+        return false;
+    }
 }

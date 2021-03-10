@@ -10,6 +10,10 @@ public abstract class Finished extends Started {
         super(cards);
     }
 
+    public boolean isWin(State state) {
+        return this.cards.calculateScore() > state.getCards().calculateScore();
+    }
+
     @Override
     public boolean isFinished() {
         return true;

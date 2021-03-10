@@ -31,10 +31,6 @@ public abstract class Participant {
         state = state.stay();
     }
 
-    public boolean isBust() {
-        return state.getCards().isBust();
-    }
-
     public boolean isHit() {
         return !state.isFinished();
     }

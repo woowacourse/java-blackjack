@@ -1,10 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.Cards;
-import blackjack.domain.state.BlackJack;
-import blackjack.domain.state.Bust;
 import blackjack.domain.state.State;
-import blackjack.domain.state.Stay;
 
 import java.util.Arrays;
 
@@ -12,40 +8,34 @@ public enum MatchResult {
     WIN("승") {
         @Override
         boolean match(State playerState, State dealerState) {
-            if (playerState instanceof BlackJack && !(dealerState instanceof BlackJack)) {
+            if (playerState.isBlackJack() && !dealerState.isBlackJack()) {
                 return true;
             }
-            if (playerState instanceof Stay && dealerState instanceof Bust) {
+            if (playerState.isStay() && dealerState.isBust()) {
                 return true;
             }
-            Cards playerCard = playerState.getCards();
-            Cards dealerCard = dealerState.getCards();
-            return playerState instanceof Stay && playerCard.isWin(dealerCard);
+            return playerState.isStay() && playerState.isWin(dealerState);
         }
     },
     LOSE("패") {
         @Override
         boolean match(State playerState, State dealerState) {
-            if (dealerState instanceof BlackJack && !(playerState instanceof BlackJack)) {
+            if (playerState.isBust()) {
                 return true;
             }
-            if (dealerState instanceof Stay && playerState instanceof Bust) {
+            if (!playerState.isBlackJack() && dealerState.isBlackJack()) {
                 return true;
             }
-            Cards playerCard = playerState.getCards();
-            Cards dealerCard = dealerState.getCards();
-            return dealerState instanceof Stay && dealerCard.isWin(playerCard);
+            return dealerState.isStay() && dealerState.isWin(playerState);
         }
     },
     DRAW("무") {
         @Override
         boolean match(State playerState, State dealerState) {
-            if (playerState instanceof Bust && dealerState instanceof Bust) {
+            if (playerState.isBlackJack() && dealerState.isBlackJack()) {
                 return true;
             }
-            Cards playerCard = playerState.getCards();
-            Cards dealerCard = dealerState.getCards();
-            return playerCard.isDraw(dealerCard);
+            return playerState.isDraw(dealerState);
         }
     };
 

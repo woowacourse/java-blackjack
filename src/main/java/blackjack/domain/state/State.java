@@ -11,4 +11,14 @@ public interface State {
     Cards getCards();
 
     State stay();
+
+    boolean isBlackJack();
+
+    boolean isStay();
+
+    boolean isBust();
+
+    boolean isWin(State state);
+
+    boolean isDraw(State state);
 }

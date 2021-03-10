@@ -119,7 +119,7 @@ public class BlackJackGame {
             dealer.draw(deck.drawCard());
             OutputView.dealerReceiveOneCard();
         }
-        if (!dealer.isBust() && dealer.isHit()) {
+        if (dealer.isHit()) {
             dealer.stay();
         }
     }
