@@ -3,6 +3,7 @@
 ## 리팩토링 리스트
 src/main/java/blackjack/domain/card/Card.java
 - [ ] Card를 캐싱하는 객체를 분리 (Card는 카드 자체에 대한 관리만 진행. 객체의 무게 줄이기)
+-> Card를 캐싱하는게 Card에 대한 관리라고 생각했어요. 혹시 어떤 의미인지 알 수 있을까요?
 
 src/main/java/blackjack/domain/GameTable.java
 - [x]  Queue를 꺼내지 말고 그냥 GameTable이 CardDeck을 가지고 있는게 좋아보여요 :)
@@ -11,7 +12,9 @@ src/main/java/blackjack/domain/Game.java
 - [ ] Game 객체의 역할이 모호하다. 
   생성자에서도 사용자가 보기에 쉽게 이해할 수 없는 String 타입의 무언가를 받아서 Game 이 만들어지고 있네요 (Game이라는 이름도 너무 추상적이구요)
   Game이 명확한 역할로 정의될 수 있는 객체가 아니라면, Controller에서 GameTable, Dealer 등등의 다른 객체들을 생성해도 충분할 것 같아요.
-
+-> GameTable과 합치려고 시도했는데 그러기엔 Controller나 GameTable 객체가 커지고 지저분해지는 것 같아서 Game 객체가 있는게 좋다고 생각이 들었어요.
+  Controller에서 Players, Dealer 등등을 만들어서 넣어주려니 너무 커지는 듯 싶어서요ㅠㅠ Controller가 커지는 건 괜찮을까요..?ㅠㅠ
+  
 src/main/java/blackjack/domain/gamer/Players.java
 - [x] Players 일급컬렉션은 Player List를 생성자로 받아서 단순하게 생성하는 것이 좋아보입니다.
   `,`으로 String을 분리하고 Player를 생성하는 역할은 외부에서 진행
@@ -19,9 +22,11 @@ src/main/java/blackjack/domain/gamer/Players.java
 src/main/java/blackjack/domain/gamer/Dealer.java
 - [ ] int 타입을 받아서 진행하니, 어떤 int인지, 또 외부에서 추가로 적절한 int를 넣어줘야만 하겠네요.
   Player를 받으면 어떨까??
+-> 승패로직을 결정하는데에는 Score 값!만 알면 좋을 것 같아서 Player나 Dealer 객체를 넘겨주지 않으려고 했는데.. 혹시 어떻게 생각하시나요?
   
-- [ ] 점수계산 로직을 더 깔끔하게 리팩토링 해보자! (중복조건 제거)
-
+- [x] 점수계산 로직을 더 깔끔하게 리팩토링 해보자! (중복조건 제거)
+-> 점수 계산 자체는 Score 객체에서 하도록 수정해 보았습니다.
+  
 src/test/java/blackjack/DealerTest.java
 - [x] 테스트들도 프로덕션 코드와 동일한 패키지 경로를 가지고 있어야 합니다.
   확인하시고 올바르게 배치
