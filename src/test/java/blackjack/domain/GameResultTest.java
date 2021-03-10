@@ -87,4 +87,12 @@ public class GameResultTest {
         assertThat(GameResult.reverseResult(playerWin)).isEqualTo(GameResult.LOSE);
         assertThat(GameResult.reverseResult(playerLose)).isEqualTo(GameResult.WIN);
     }
+
+    @Test
+    @DisplayName("플레이어가 무승부 상태면 딜러도 무승부 여야한다.")
+    void testPlayDrawAsSameDealerDraw() {
+        GameResult playerDraw = dealer.judgeHand(player);
+
+        assertThat(GameResult.reverseResult(playerDraw)).isEqualTo(GameResult.TIE);
+    }
 }
