@@ -44,7 +44,7 @@ public class OutputView {
     }
 
     public static void printAllCards(Gamer gamer) {
-        System.out.printf(CARD_INFO_FORMAT + NEWLINE, gamer.getName(), cardToString(gamer.showHands2()));
+        System.out.printf(CARD_INFO_FORMAT + NEWLINE, gamer.getName(), cardToString(gamer.showHands()));
     }
 
     public static void showAllCards(Dealer dealer, Players players) {
@@ -54,7 +54,7 @@ public class OutputView {
 
     public static void allCardsWithPoint(Gamer gamer) {
         System.out.printf(RESULT_WITH_POINTS,
-                String.format(CARD_INFO_FORMAT, gamer.getName(), cardToString(gamer.showHands2())), gamer.getScore());
+                String.format(CARD_INFO_FORMAT, gamer.getName(), cardToString(gamer.showHands())), gamer.getScore());
     }
 
     private static String cardToString(List<Card> cards) {

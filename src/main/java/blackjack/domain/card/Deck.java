@@ -15,7 +15,7 @@ public class Deck {
     }
 
     public List<Card> makeInitialHands() {
-        return cards.getTwoCards();
+        return cards.pickTwoCards();
     }
 
     public boolean isEmpty() {
@@ -26,6 +26,6 @@ public class Deck {
         if (isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 덱의 카드가 모두 소진되었습니다.");
         }
-        return cards.getSingleCard();
+        return cards.pick();
     }
 }

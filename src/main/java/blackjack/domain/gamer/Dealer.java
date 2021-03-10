@@ -19,11 +19,11 @@ public class Dealer extends Gamer {
 
     @Override
     public List<Card> showOpenHands() {
-        return state.cards().getCardsWithSize(1);
+        return cards().getCardsWithSize(1);
     }
 
     @Override
     public boolean canDraw() {
-        return (state.cards().calculate() <= ADD_CARD_BOUNDARY);
+        return (cards().calculate() <= ADD_CARD_BOUNDARY);
     }
 }

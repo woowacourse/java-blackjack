@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.state.Blackjack;
 import blackjack.domain.state.Bust;
 import blackjack.domain.state.FirstTurn;
@@ -18,8 +19,8 @@ public abstract class Gamer {
         this.name = name;
     }
 
-    public List<Card> showHands2() {
-        return state.cards().toList();
+    public List<Card> showHands() {
+        return cards().toList();
     }
 
     public String getName() {
@@ -27,11 +28,7 @@ public abstract class Gamer {
     }
 
     public int getScore() {
-        return state.cards().calculate();
-    }
-
-    public boolean canDraw() {
-        return !state.isFinished();
+        return cards().calculate();
     }
 
     public void receiveCard(final Card card) {
@@ -50,5 +47,9 @@ public abstract class Gamer {
         return Objects.equals(state, Blackjack.class);
     }
 
+    public Cards cards() { return state.cards(); }
+
     public abstract List<Card> showOpenHands();
+
+    public abstract boolean canDraw();
 }

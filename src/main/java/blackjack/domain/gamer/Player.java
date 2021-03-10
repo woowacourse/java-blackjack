@@ -23,7 +23,12 @@ public class Player extends Gamer {
     }
 
     @Override
+    public boolean canDraw() {
+        return !state.isFinished();
+    }
+
+    @Override
     public List<Card> showOpenHands() {
-        return state.cards().toList();
+        return cards().toList();
     }
 }
