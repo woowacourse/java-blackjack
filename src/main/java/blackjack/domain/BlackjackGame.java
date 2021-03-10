@@ -12,8 +12,9 @@ public class BlackjackGame {
         final List<Participant> players) {
         final Map<Name, Integer> participantResults = new LinkedHashMap<>();
         participantResults.put(dealer.getName(), -calculateTotalPlayersRate(dealer, players));
+
         for (final Participant player : players) {
-            final Result result = dealer.decideWinner(player);
+            final Result result = player.decideWinner(dealer);
             participantResults.put(player.getName(), (int) result.calculateRate(player.getMoney()));
         }
         return participantResults;
@@ -23,7 +24,7 @@ public class BlackjackGame {
         final List<Participant> players) {
         double total = 0;
         for (final Participant player : players) {
-            final Result result = dealer.decideWinner(player);
+            final Result result = player.decideWinner(dealer);
             total += result.calculateRate(player.getMoney());
         }
         return (int) total;
