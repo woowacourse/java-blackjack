@@ -1,10 +1,9 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.*;
 import blackjack.domain.user.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Game {
@@ -16,7 +15,7 @@ public class Game {
     private final Deck deck;
 
     public Game(List<String> names) {
-        deck = new Deck();
+        deck = new Deck(CardGenerator.makeShuffledNewDeck());
         dealer = new Dealer(deck.pickInitialCards(), DEALER_STAY_LIMIT);
         players = createPlayer(names);
     }

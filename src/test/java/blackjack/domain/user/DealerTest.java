@@ -1,9 +1,6 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
+import blackjack.domain.card.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +17,7 @@ class DealerTest {
     @Test
     void draw_underStayLimit_addCard() {
         User dealer = new Dealer(underStayLimitCards(), 16);
-        Deck deck = new Deck();
+        Deck deck = new Deck(CardGenerator.makeShuffledNewDeck());
         assertTrue(dealer.draw(deck));
     }
 
@@ -28,7 +25,7 @@ class DealerTest {
     @Test
     void draw_overStayLimit_noChange() {
         User dealer = new Dealer(overStayLimitCards(), 16);
-        Deck deck = new Deck();
+        Deck deck = new Deck(CardGenerator.makeShuffledNewDeck());
         assertFalse(dealer.draw(deck));
     }
 
