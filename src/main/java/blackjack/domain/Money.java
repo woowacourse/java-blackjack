@@ -4,10 +4,22 @@ import java.util.Objects;
 
 public class Money {
 
-    private final int money;
+    private final double money;
 
-    public Money(int money) {
+    public Money(double money) {
         this.money = money;
+    }
+
+    public Money multiply(double earningRate) {
+        return new Money(money * earningRate);
+    }
+
+    public Money sum(Money that) {
+        return new Money(money + that.money);
+    }
+
+    public int getMoney() {
+        return (int) money;
     }
 
     @Override

@@ -4,16 +4,17 @@ import java.util.function.BiPredicate;
 import java.util.stream.Stream;
 
 public enum Status {
-    LOSE("패", (dealer, player) -> player.isBust()),
-    DRAW("무", (dealer, player) -> player.compareTo(dealer) == 0),
-    WIN("승", (dealer, player) -> (dealer.isBust() && player.isNotBust())
+    LOSE(-1, (dealer, player) -> player.isBust()),
+    BLACKJACK(1.5, (dealer, player) -> player.isBlackJack() && !dealer.isBlackJack()),
+    DRAW(0, (dealer, player) -> player.compareTo(dealer) == 0),
+    WIN(1, (dealer, player) -> (dealer.isBust() && player.isNotBust())
         || player.compareTo(dealer) > 0);
 
-    private final String status;
+    private final double earningRate;
     private final BiPredicate<Score, Score> match;
 
-    Status(String status, BiPredicate<Score, Score> match) {
-        this.status = status;
+    Status(double earningRate, BiPredicate<Score, Score> match) {
+        this.earningRate = earningRate;
         this.match = match;
     }
 
@@ -28,7 +29,7 @@ public enum Status {
         return match.test(dealerScore, playerScore);
     }
 
-    public String getStatus() {
-        return status;
+    public double getEarningRate() {
+        return earningRate;
     }
 }
