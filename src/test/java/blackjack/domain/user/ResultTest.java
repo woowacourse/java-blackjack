@@ -18,11 +18,12 @@ public class ResultTest {
         userDeck.add(one);
         userDeck.add(two);
     }
+    private final Money money = new Money(100);
 
     @Test
     @DisplayName("플레이어 승리 체크")
     void playerWin() {
-        Player player = new Player("sorong", userDeck);
+        Player player = new Player(userDeck, "sorong", money);
 
         Card dealerCard = new Card("J", "클로버");
         UserDeck dealerDeck = new UserDeck();
@@ -35,7 +36,7 @@ public class ResultTest {
     @Test
     @DisplayName("플레이어 무승부 체크")
     void playerTie() {
-        Player player = new Player("sorong", userDeck);
+        Player player = new Player(userDeck, "sorong", money);
 
         Card dealerCard = new Card("J", "클로버");
         Card dealerCard2 = new Card("5", "하트");
@@ -52,7 +53,7 @@ public class ResultTest {
     void playerBurst() {
         Card card3 = new Card("J", "다이아몬드");
         userDeck.add(card3);
-        Player player = new Player("sorong", userDeck);
+        Player player = new Player(userDeck, "sorong", money);
 
         Card dealerCard = new Card("J", "클로버");
         UserDeck dealerDeck = new UserDeck();
@@ -65,7 +66,7 @@ public class ResultTest {
     @Test
     @DisplayName("플레이어 패배 체크")
     void playerLose() {
-        Player player = new Player("sorong", userDeck);
+        Player player = new Player(userDeck, "sorong", money);
 
         Card dealerCard = new Card("J", "클로버");
         Card dealerCard2 = new Card("K", "하트");

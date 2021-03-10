@@ -6,29 +6,13 @@ import java.util.List;
 
 public class Players {
 
-    public static final String DELIMITER = ",";
     private final List<Player> players = new ArrayList<>();
 
-    public Players(CardDeck cardDeck, String input) {
-        List<String> playerNames = makePlayerName(input);
-        for (String playerName : playerNames) {
-            players.add(new Player(playerName, cardDeck.generateUserDeck()));
-        }
-    }
-
-    private List<String> makePlayerName(String input) {
-        List<String> playerNames = new ArrayList<>();
-        for (String value : input.split(DELIMITER)) {
-            value = value.trim();
-            validateDuplicate(playerNames, value);
-            playerNames.add(value);
-        }
-        return playerNames;
-    }
-
-    private void validateDuplicate(List<String> names, String value) {
-        if (names.contains(value)) {
-            throw new IllegalArgumentException("[ERROR] 중복되는 이름을 입력할 수 없습니다.");
+    public Players(CardDeck cardDeck, Names names, List<Double> moneys) {
+        for (int i=0; i<moneys.size(); i++) {
+            players.add(new Player(cardDeck.generateUserDeck(),
+                names.getNames().get(i),
+                new Money(moneys.get(i))));
         }
     }
 

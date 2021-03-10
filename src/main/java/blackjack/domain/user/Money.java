@@ -4,10 +4,18 @@ import java.util.Objects;
 
 public class Money {
 
+    private static final String MIN_MONEY_ERROR = "[ERROR] 배팅 금액은 0원이 될 수 없습니다.";
     private final double money;
 
     public Money(double money) {
+        validate(money);
         this.money = money;
+    }
+
+    private void validate(double money) {
+        if (money < 1) {
+            throw new IllegalArgumentException(MIN_MONEY_ERROR);
+        }
     }
 
     public double getEarning(double earningRate) {

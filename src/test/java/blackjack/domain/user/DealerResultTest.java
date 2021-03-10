@@ -21,6 +21,7 @@ public class DealerResultTest {
     {
         dealerDeck.add(one);
     }
+    private final Money money = new Money(100);
 
     @Test
     @DisplayName("딜러의 게임 결과 확인")
@@ -36,10 +37,10 @@ public class DealerResultTest {
 
         List<Player> players = new ArrayList<>(
             Arrays.asList(
-                new Player("win", winDeck),
-                new Player("win", winDeck),
-                new Player("tie", tieDeck),
-                new Player("lose", loseDeck)
+                new Player(winDeck, "win", money),
+                new Player(winDeck, "win", money),
+                new Player(tieDeck, "tie", money),
+                new Player(loseDeck, "lose", money)
             )
         );
         DealerResult dealerResult = new DealerResult(dealer, players);
@@ -62,9 +63,9 @@ public class DealerResultTest {
 
         List<Player> players = new ArrayList<>(
             Arrays.asList(
-                new Player("win", winDeck),
-                new Player("tie", tieDeck),
-                new Player("lose", loseDeck)
+                new Player(winDeck, "win", money),
+                new Player(tieDeck, "tie", money),
+                new Player(loseDeck, "lose", money)
             )
         );
         DealerResult dealerResult = new DealerResult(dealer, players);

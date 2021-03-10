@@ -16,12 +16,13 @@ public class PlayerTest {
         userDeck.add(one);
         userDeck.add(two);
     }
+    private final Money money = new Money(100);
 
     @Test
     @DisplayName("플레이어 점수 테스트")
     void getPlayerPoint() {
         String name = "Sorong";
-        Player player = new Player(name, userDeck);
+        Player player = new Player(userDeck, name, money);
         int playerScore = 15;
         assertThat(player.getScore()).isEqualTo(playerScore);
     }
@@ -30,7 +31,7 @@ public class PlayerTest {
     @DisplayName("플레이어 드로우 성공 테스트")
     void getAvailableDraw() {
         String name = "Sorong";
-        Player player = new Player(name, userDeck);
+        Player player = new Player(userDeck, name, money);
         assertThat(player.isAvailableDraw()).isTrue();
     }
 
@@ -40,7 +41,7 @@ public class PlayerTest {
         String name = "Sorong";
         Card card3 = new Card("J", "다이아몬드");
         userDeck.add(card3);
-        Player player = new Player(name, userDeck);
+        Player player = new Player(userDeck, name, money);
         assertThat(!player.isAvailableDraw()).isTrue();
     }
 }

@@ -4,6 +4,7 @@ import blackjack.domain.card.UserDeck;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Player extends User {
 
@@ -11,16 +12,22 @@ public class Player extends User {
     private static final List<String> YES_OR_NO_VALIDATION = new ArrayList<>(
         Arrays.asList("y", "n", "Y", "N"));
 
-    private final String name;
+    private final Name name;
+    private final Money money;
 
-    public Player(String name, UserDeck userDeck) {
+    public Player(UserDeck userDeck, Name name, Money money) {
         super(userDeck);
         super.DRAWABLE_NUMBER = UserDeck.BLACK_JACK_NUMBER;
         this.name = name;
+        this.money = money;
+    }
+
+    public Player(UserDeck userDeck, String name, Money money) {
+        this(userDeck, new Name(name), money);
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public boolean isYes(String input) {
