@@ -4,9 +4,9 @@ import blackjack.domain.cards.Card;
 import blackjack.domain.names.Name;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Participant;
-import blackjack.dto.Participants;
 import blackjack.domain.participants.Player;
 import blackjack.dto.GameResult;
+import blackjack.dto.Participants;
 import java.util.Map;
 import java.util.stream.Collectors;
 

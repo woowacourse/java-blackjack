@@ -3,11 +3,11 @@ package blackjack.domain.participants;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Hand;
 import blackjack.domain.names.Name;
+import blackjack.domain.state.State;
 import blackjack.domain.state.finished.Blackjack;
 import blackjack.domain.state.finished.Bust;
-import blackjack.domain.state.running.Hit;
-import blackjack.domain.state.State;
 import blackjack.domain.state.hitstrategy.HitStrategy;
+import blackjack.domain.state.running.Hit;
 import java.util.List;
 import java.util.Objects;
 

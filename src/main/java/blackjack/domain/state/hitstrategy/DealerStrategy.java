@@ -1,11 +1,11 @@
 package blackjack.domain.state.hitstrategy;
 
 import blackjack.domain.cards.Hand;
+import blackjack.domain.state.State;
 import blackjack.domain.state.finished.Blackjack;
 import blackjack.domain.state.finished.Bust;
-import blackjack.domain.state.running.Hit;
-import blackjack.domain.state.State;
 import blackjack.domain.state.finished.Stay;
+import blackjack.domain.state.running.Hit;
 
 public class DealerStrategy implements HitStrategy {
 
