@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.controller.GameResultController;
+import blackjack.view.OutputView;
 import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ public class ResultTest {
     void scoreTest() {
         Players players = new Players("pobi,jason", new Dealer());
         players.giveCards(new Deck());
-        GameResultController.getPlayersCardsAndResult(players);
+        OutputView.noticeResult(players);
     }
 
     @Test
@@ -22,7 +22,7 @@ public class ResultTest {
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.FIVE));
         dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.TEN));
         Players players = new Players(Collections.singletonList(player), dealer);
-        GameResultController.getResult(players);
+        OutputView.noticeResult(players);
     }
 
     @Test
@@ -33,6 +33,6 @@ public class ResultTest {
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
         dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.FIVE));
         Players players = new Players(Collections.singletonList(player), dealer);
-        GameResultController.getResult(players);
+        OutputView.noticeResult(players);
     }
 }

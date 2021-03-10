@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.controller.GameResultController;
 import blackjack.domain.Gamer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
@@ -10,7 +9,7 @@ import java.util.Map;
 public class OutputView {
 
     private static final String SKELETON_NOTICE_DRAW_TWO_CARDS = "%s와 %s에게 %d장씩 나누었습니다.";
-    public static final String NOTICE_RESULT = "## 최종 승패";
+    public static final String NOTICE_RESULT = "## 최종 수익";
     public static final String NOTICE_DEALER_GET_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String SKELETON_GAME_RESULT_POINT = "%s 카드 : %s - 결과: %d";
     private static final String SKELETON_DEALER_RESULT = "딜러: %d%s %d%s %d%s";
@@ -32,13 +31,18 @@ public class OutputView {
 
     public static void noticePlayersPoint(Players players) {
         System.out.println();
-        GameResultController.getPlayersCardsAndResult(players);
+        for (Gamer gamer : players.getAllParticipant()) {
+            OutputView.printGameResultPoint(gamer);
+        }
     }
 
     public static void noticeResult(Players players) {
         System.out.println();
         System.out.println(NOTICE_RESULT);
-        GameResultController.getResult(players);
+        Map<String, Integer> result = players.calculateResult();
+
+        OutputView.printDealerResult(result);
+        OutputView.printPlayerResult(players);
     }
 
     public static void printExceptionMessage(IllegalArgumentException exception) {
