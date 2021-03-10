@@ -94,4 +94,19 @@ public class ResultTest {
 
         assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.WIN);
     }
+
+    @Test
+    @DisplayName("챌린저와 딜러 둘다 bust되면, 딜러의 승리를 반환한다.")
+    void getPlayerResultWhenBothAreBusted() {
+        List<Card> cardList = new ArrayList<>();
+
+        cardList.add(new Card(Suit.DIAMOND, Face.ACE));
+        cardList.add(new Card(Suit.DIAMOND, Face.ACE));
+        cardList.add(new Card(Suit.DIAMOND, Face.JACK));
+        cardList.add(new Card(Suit.DIAMOND, Face.QUEEN));
+
+        Player player = new Player(new Cards(cardList), "pobi");
+
+        assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.LOSE);
+    }
 }
