@@ -34,6 +34,11 @@ public class Hit implements State {
         if (sum == 21 && isInitialState()) {
             return new BlackJack(cards.toCardList());
         }
+
+        if (sum > 21) {
+            return new Bust();
+        }
+
         return this;
     }
 

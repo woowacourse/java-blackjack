@@ -28,7 +28,8 @@ public class Dealer implements Participant {
 
     @Override
     public void receiveCard(Card card) {
-        cards.receiveCard(card);
+        state.draw(card);
+        state = state.changeState();
     }
 
     @Override
