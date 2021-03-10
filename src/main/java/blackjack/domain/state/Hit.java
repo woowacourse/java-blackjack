@@ -1,15 +1,16 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.rule.BlackJackScoreRule;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Hit implements State {
-    private List<Card> cards;
+    private Cards cards;
 
-    public Hit(ArrayList<Card> initialCard) {
-        cards = initialCard;
+    public Hit(List<Card> initialCard) {
+        cards = new Cards(initialCard);
     }
 
     @Override
@@ -23,7 +24,21 @@ public class Hit implements State {
     }
 
     @Override
+    public void draw(Card card) {
+        cards.receiveCard(card);
+    }
+
+    @Override
     public State changeState() {
-        return null;
+        int sum = cards.getTotalScore(new BlackJackScoreRule());
+        if (sum == 21 && isInitialState()) {
+            return new BlackJack(cards.toCardList());
+        }
+        return this;
+    }
+
+
+    private boolean isInitialState() {
+        return cards.size() == 2;
     }
 }
