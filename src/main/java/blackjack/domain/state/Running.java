@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.user.Cards;
 
 public abstract class Running extends Started {
-    public Running(Cards cards) {
+    protected Running(Cards cards) {
         super(cards);
     }
 
