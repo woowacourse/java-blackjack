@@ -18,13 +18,13 @@ class DeckTest {
 		final Deck deck = new Deck(new RandomShuffleStrategy());
 
 		assertThatCode(() -> consumeAllCards(deck)).doesNotThrowAnyException();
-		assertThatThrownBy(deck::drawCard).isInstanceOf(EmptyDeckException.class)
+		assertThatThrownBy(deck::pop).isInstanceOf(EmptyDeckException.class)
 				.hasMessage(EMPTY_DECK_ERROR);
 	}
 
 	private void consumeAllCards(final Deck deck) {
 		for (int i = 0; i < 52; i++) {
-			deck.drawCard();
+			deck.pop();
 		}
 	}
 
@@ -36,7 +36,7 @@ class DeckTest {
 		final Set<Card> cards = new HashSet<>();
 
 		for (int i = 0; i < cardSize; i++) {
-			cards.add(deck.drawCard());
+			cards.add(deck.pop());
 		}
 
 		assertThat(cards).hasSize(cardSize);
@@ -53,8 +53,8 @@ class DeckTest {
 		final CardNumber q = CardNumber.values()[11];
 		final CardNumber j = CardNumber.values()[10];
 
-		assertThat(deck.drawCard()).isEqualTo(Card.of(spade, k));
-		assertThat(deck.drawCard()).isEqualTo(Card.of(spade, q));
-		assertThat(deck.drawCard()).isEqualTo(Card.of(spade, j));
+		assertThat(deck.pop()).isEqualTo(Card.of(spade, k));
+		assertThat(deck.pop()).isEqualTo(Card.of(spade, q));
+		assertThat(deck.pop()).isEqualTo(Card.of(spade, j));
 	}
 }

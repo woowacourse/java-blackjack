@@ -21,7 +21,7 @@ public abstract class Participant {
 	}
 
 	public void drawOneCardFrom(Deck deck) {
-		cards.add(deck.drawCard());
+		cards.add(deck.pop());
 	}
 
 	public String getName() {

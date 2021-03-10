@@ -23,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class OutcomeStatisticsTest {
 	private Dealer dealer;
 	private List<Player> players;
+
 	//TODO
 	// win, blackjack win case 추가
 	@BeforeEach

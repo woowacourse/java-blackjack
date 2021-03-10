@@ -62,7 +62,7 @@ class ParticipantsTest {
 
 		participants.initializeHandsFrom(customDeck);
 
-		assertThatThrownBy(customDeck::drawCard).isInstanceOf(EmptyDeckException.class)
+		assertThatThrownBy(customDeck::pop).isInstanceOf(EmptyDeckException.class)
 				.hasMessage(EMPTY_DECK_ERROR);
 
 		Cards dealerExpectedCards = new Cards();

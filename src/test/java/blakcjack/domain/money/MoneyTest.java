@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 import static blakcjack.domain.money.Money.calculateDealerProfitFrom;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class MoneyTest {
 	@DisplayName("수익들로부터 딜러의 수익을 제대로 계산해 내는지")

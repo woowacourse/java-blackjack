@@ -72,7 +72,33 @@ public class PlayerTest {
 		assertThat(player.isBust()).isTrue();
 	}
 
+	@DisplayName("초기 패를 보여줄 때 플레이어들은 2장 다 공개하는지")
+	@Test
+	void getInitialHand() {
+		Deck customDeck = createCustomDeck(
+				Card.of(CardSymbol.CLUB, CardNumber.ACE),
+				Card.of(CardSymbol.CLUB, CardNumber.TWO),
+				Card.of(CardSymbol.CLUB, CardNumber.THREE),
+				Card.of(CardSymbol.CLUB, CardNumber.FOUR)
+		);
+		Player player = new Player(new Name("pobi"), new Money(10));
+		player.drawOneCardFrom(customDeck);
+		player.drawOneCardFrom(customDeck);
+
+		assertThat(player.getInitialHand()).isEqualTo(createCustomCards(
+				Card.of(CardSymbol.CLUB, CardNumber.FOUR),
+				Card.of(CardSymbol.CLUB, CardNumber.THREE)));
+	}
+
 	private Deck createCustomDeck(final Card... cards) {
 		return new Deck(Arrays.asList(cards));
+	}
+
+	private Cards createCustomCards(final Card... cards) {
+		Cards customCards = new Cards();
+		for (Card card : cards) {
+			customCards.add(card);
+		}
+		return customCards;
 	}
 }
