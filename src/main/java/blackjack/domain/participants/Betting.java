@@ -22,9 +22,9 @@ public class Betting {
         }
     }
 
-    private static int validateNumber(String price) {
+    private static int validateNumber(String input) {
         try {
-            return Integer.parseInt(price);
+            return Integer.parseInt(input);
         } catch (NumberFormatException numberFormatException) {
             throw new IllegalArgumentException("존재할 수 없는 배팅 금액입니다.");
         }

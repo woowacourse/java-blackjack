@@ -11,7 +11,7 @@ import blackjack.domain.state.running.Hit;
 import java.util.List;
 import java.util.Objects;
 
-public class Participant {
+public abstract class Participant {
 
     public static final int STARTING_CARD_COUNT = 2;
 

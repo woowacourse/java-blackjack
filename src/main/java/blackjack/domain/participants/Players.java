@@ -2,7 +2,6 @@ package blackjack.domain.participants;
 
 import blackjack.dto.GameResult;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,7 @@ public class Players {
     }
 
     private static void validateDuplication(List<Player> players) {
-        if (players.size() != new HashSet<>(players).size()) {
+        if (players.size() != players.stream().distinct().count()) {
             throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
         }
     }

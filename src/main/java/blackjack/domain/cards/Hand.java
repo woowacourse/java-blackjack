@@ -23,13 +23,25 @@ public class Hand {
     }
 
     public int getScore() {
-        int score = cards.stream().mapToInt(Card::getScore).sum();
-        long multipleValueCardCount = cards.stream().filter(Card::hasMultipleValue).count();
+        int score = totalScore();
+        long multipleValueCardCount = countMultipleValue();
 
         for (int i = 0; i < multipleValueCardCount; i++) {
             score = changeAnotherValueIfNotBust(score);
         }
         return score;
+    }
+
+    private long countMultipleValue() {
+        return cards.stream()
+            .filter(Card::hasMultipleValue)
+            .count();
+    }
+
+    private int totalScore() {
+        return cards.stream()
+            .mapToInt(Card::getScore)
+            .sum();
     }
 
     private int changeAnotherValueIfNotBust(int score) {

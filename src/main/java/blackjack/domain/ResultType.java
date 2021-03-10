@@ -22,10 +22,13 @@ public enum ResultType {
     public static ResultType getResultTypeByScore(Participant participant1,
         Participant participant2) {
         return Arrays.stream(ResultType.values())
-            .filter(resultType -> resultType.matcher.apply(participant1.getScore() - participant2
-                .getScore()))
+            .filter(resultType -> resultType.matchResultType(participant1, participant2))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("불가능한 결과입니다."));
+    }
+
+    private boolean matchResultType(Participant participant1, Participant participant2) {
+        return matcher.apply(participant1.getScore() - participant2.getScore());
     }
 
     public String getName() {
