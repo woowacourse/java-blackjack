@@ -28,6 +28,10 @@ public abstract class User {
         return this.cards.isBlackJack();
     }
 
+    public boolean isBust() {
+        return this.cards.isBust();
+    }
+
     public int getScore() {
         return this.cards.getScore();
     }
