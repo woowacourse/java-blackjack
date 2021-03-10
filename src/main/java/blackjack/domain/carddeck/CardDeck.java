@@ -19,6 +19,10 @@ public class CardDeck {
         return new CardDeck(new ArrayDeque<>(cards));
     }
 
+    public static CardDeck customDeck(final List<Card> cards) {
+        return new CardDeck(new ArrayDeque<>(cards));
+    }
+
     public Card draw() {
         return this.deck.pop();
     }
