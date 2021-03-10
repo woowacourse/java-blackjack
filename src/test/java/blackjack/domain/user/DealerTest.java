@@ -38,6 +38,7 @@ public class DealerTest {
         Card card3 = new Card("2", "다이아몬드");
         userDeck.add(card3);
         Dealer dealer = new Dealer(userDeck);
-        assertThat(!dealer.isAvailableDraw()).isTrue();
+        System.out.println(dealer.getScore());
+        assertThat(dealer.isAvailableDraw()).isFalse();
     }
 }
