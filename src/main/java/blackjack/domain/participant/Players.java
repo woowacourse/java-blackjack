@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
-    private static final String PLAYER_COUNT_ERROR_MESSAGE = "플레이어 수는 1명 이상이어야 합니다.";
     private static final int MIN_PLAYERS_NUMBER = 1;
+    private static final String PLAYER_COUNT_ERROR_MESSAGE = "플레이어 수는 " + MIN_PLAYERS_NUMBER + "명 이상이어야 합니다.";
 
     private final List<Player> players;
 
@@ -35,6 +35,6 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(new ArrayList<>(this.players));
+        return Collections.unmodifiableList(this.players);
     }
 }

@@ -47,7 +47,8 @@ public class OutputView {
                 );
     }
 
-    public static void printMatchTypeResult(List<Integer> matchResultTypeCount, MatchResult result) {
+    public static void printMatchResult(MatchResult result) {
+        List<Integer> matchResultTypeCount = result.getMatchResultTypeCount();
         System.out.println("## 최종 승패");
         System.out.println("딜러: " + matchResultTypeCount.get(2) + "승" + matchResultTypeCount.get(1) + "무" + matchResultTypeCount.get(0) + "패");
         Map<Player, MatchResultType> matchResult = result.getMatchResult();

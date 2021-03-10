@@ -77,7 +77,6 @@ public class BlackJackController {
     private void showResult(Dealer dealer, Players players) {
         OutputView.printCardsAndScore(dealer, players);
         MatchResult matchResult = new MatchResult(dealer, players);
-        List<Integer> matchResultCount = matchResult.getMatchResultTypeCount();
-        OutputView.printMatchTypeResult(matchResultCount, matchResult);
+        OutputView.printMatchResult(matchResult);
     }
 }
