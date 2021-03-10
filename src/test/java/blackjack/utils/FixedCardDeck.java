@@ -27,8 +27,17 @@ public class FixedCardDeck implements CardDeck {
     }
 
     @Override
-    public Queue<Card> getCards() {
-        return cards;
+    public Card pop() {
+        if(isEmpty()){
+            throw new IllegalArgumentException();
+        }
+        return cards.poll();
     }
+
+    @Override
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
 
 }

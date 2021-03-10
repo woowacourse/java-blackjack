@@ -25,8 +25,18 @@ public class RandomCardDeck implements CardDeck {
         }
     }
 
-    public Queue<Card> getCards() {
-        return cards;
+    @Override
+    public Card pop() {
+        if(isEmpty()){
+            throw new IllegalArgumentException();
+        }
+        return cards.poll();
     }
+
+    @Override
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
 
 }

@@ -1,53 +1,61 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Cards;
-import blackjack.domain.Outcome;
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import java.util.Collections;
 import java.util.List;
 
-public class Dealer extends Participant {
-    private static final int MAX_AVAILABLE_TO_GET_CARD = 16;
+public class Dealer implements Participant {
+    private static final Score MINIMUM_SCORE_OF_NOT_TAKING_CARD = Score.of(17);
+    private final Name name;
+    private final Cards cards;
 
-    public Dealer(List<Card> cards){
-        super(new Name("딜러"), cards);
+    public Dealer(){
+        this(new Name("딜러"), new Cards(Collections.emptyList()));
+    }
+    public Dealer(Cards cards) {
+        this(new Name("딜러"), cards);
+    }
+
+    public Dealer(Name name, Cards cards) {
+        this.name = name;
+        this.cards = cards;
     }
 
     @Override
-    public boolean isAvailableToTake() {
-        return super.sumCards() <= MAX_AVAILABLE_TO_GET_CARD;
+    public boolean isNotAbleToTake() {
+        return sumCards().isHigherThan(MINIMUM_SCORE_OF_NOT_TAKING_CARD);
     }
 
-    public Outcome resultOfPlayer(int playerResult) {
-        int dealerResult = sumCardsForResult();
-
-        if (win(playerResult, dealerResult)) {
-            return Outcome.LOSE;
-        }
-
-        if (lose(playerResult, dealerResult)) {
-            return Outcome.WIN;
-        }
-
-        return Outcome.DRAW;
+    @Override
+    public void takeCard(Card card) {
+        cards.takeCard(card);
     }
 
-    private boolean lose(int playerResult, int dealerResult) {
-        if (playerResult <= Cards.BLACK_JACK && dealerResult > Cards.BLACK_JACK) {
-            return true;
-        }
-        if (playerResult <= Cards.BLACK_JACK && playerResult > dealerResult) {
-            return true;
-        }
-        return false;
+    @Override
+    public String getName() {
+        return this.name.toString();
     }
 
-    private boolean win(int playerResult, int dealerResult) {
-        if (playerResult > Cards.BLACK_JACK && dealerResult <= Cards.BLACK_JACK) {
-            return true;
-        }
-        if (dealerResult <= Cards.BLACK_JACK && playerResult < dealerResult) {
-            return true;
-        }
-        return false;
+    @Override
+    public Score sumCards() {
+        return cards.sumCards();
     }
+
+    @Override
+    public Score sumCardsForResult() {
+        return cards.sumCardsForResult();
+    }
+
+    @Override
+    public Cards getCards() {
+        return cards;
+    }
+
+    @Override
+    public List<Card> getUnmodifiableCards() {
+        return cards.getUnmodifiableList();
+    }
+
 }

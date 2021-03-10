@@ -10,11 +10,8 @@ import java.util.Queue;
 public interface CardDeck {
     void assembleWithDenominations(LinkedList<Card> cardsValue, Suits suit);
 
-    Queue<Card> getCards();
-//
-//    Card pop();
-//
-//    boolean isEmpty();
-//
-//    List<Card> initCards();
+    Card pop();
+
+    boolean isEmpty();
+
 }

@@ -23,7 +23,7 @@ public class Application {
     }
 
     private static void turnForPlayer(Game game, Player player) {
-        while (player.isAvailableToTake() && InputView.requestOneMoreCard(player.getName())) {
+        while (!player.isNotAbleToTake() && InputView.requestOneMoreCard(player.getName())) {
             OutputView.printCards(game.turnForPlayer(player));
         }
     }

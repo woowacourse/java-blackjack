@@ -1,19 +1,16 @@
 package blackjack.domain.card;
 
+import blackjack.domain.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Cards {
-    public static final int BLACK_JACK = 21;
     private static final int INITIAL_CARDS_SIZE = 2;
     private static final int ACE_EXTRA_VALUE = 10;
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
-        if (cards.size() != INITIAL_CARDS_SIZE) {
-            throw new IllegalArgumentException();
-        }
         this.cards = new ArrayList<>(cards);
     }
 
@@ -21,19 +18,22 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
-    public void add(Card card) {
+    public void takeCard(Card card) {
         cards.add(card);
     }
 
-    public int sumCards() {
-        return cards.stream().mapToInt(Card::getScore).sum();
+    public Score sumCards() {
+        final int sum = cards.stream()
+            .mapToInt(Card::getScore)
+            .sum();
+        return Score.of(sum);
     }
 
-    public int sumCardsForResult() {
+    public Score sumCardsForResult() {
         int aceCount = (int) cards.stream().filter(Card::isAce).count();
-        int sum = sumCards() + aceCount * ACE_EXTRA_VALUE;
-        while (sum > BLACK_JACK && aceCount > 0) {
-            sum -= ACE_EXTRA_VALUE;
+        Score sum = sumCards().add(aceCount * ACE_EXTRA_VALUE);
+        while (sum.isBurst() && aceCount > 0) {
+            sum = sum.subtract(ACE_EXTRA_VALUE);
             aceCount--;
         }
         return sum;
