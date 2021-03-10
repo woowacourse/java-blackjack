@@ -9,7 +9,7 @@ public class CardTest {
     @DisplayName("Card 객체를 생성한다.")
     @Test
     public void createCard() {
-        Card card = new Card(Shape.SPACE, Value.ACE);
+        Card card = new Card(Suit.SPACE, Denomination.ACE);
 
         assertThat(card).isInstanceOf(Card.class);
     }
@@ -17,7 +17,7 @@ public class CardTest {
     @DisplayName("Card 객체의 값을 확인한다.")
     @Test
     public void checkValue() {
-        Card card = new Card(Shape.SPACE, Value.ACE);
+        Card card = new Card(Suit.SPACE, Denomination.ACE);
 
         int cardValue = card.value();
 
@@ -27,7 +27,7 @@ public class CardTest {
     @Test
     @DisplayName("에이스카드인지 확인한다.")
     void isAceCard() {
-        Card card = new Card(Shape.CLOVER, Value.ACE);
+        Card card = new Card(Suit.CLOVER, Denomination.ACE);
 
         boolean isAce = card.isAceCard();
 

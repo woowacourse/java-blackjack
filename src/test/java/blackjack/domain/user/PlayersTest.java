@@ -1,8 +1,8 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Value;
+import blackjack.domain.card.Suit;
+import blackjack.domain.card.Denomination;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,8 +38,8 @@ public class PlayersTest {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         Players players = Players.of(names);
         Cards cards = new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.KING)
         ));
         players.getPlayers()
                 .forEach(player -> player.receiveCards(cards));

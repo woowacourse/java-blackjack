@@ -2,8 +2,8 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Value;
+import blackjack.domain.card.Suit;
+import blackjack.domain.card.Denomination;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,8 +27,8 @@ public class CardsTest {
     @Test
     public void calculateTotalCards() {
         Cards cards = new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.KING)
         ));
 
         int totalValue = cards.calculateTotalValue();
@@ -40,9 +40,9 @@ public class CardsTest {
     @Test
     public void containsAce() {
         Cards cards = new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.SPACE, Value.ACE),
-                new Card(Shape.CLOVER, Value.KING)));
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.KING)));
 
         int totalValue = cards.calculateTotalValue();
 
@@ -53,8 +53,8 @@ public class CardsTest {
     @Test
     void contains() {
         Cards cards = new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.QUEEN),
-                new Card(Shape.SPACE, Value.ACE)));
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.SPACE, Denomination.ACE)));
 
         boolean isSoftHand = cards.isSoftHand();
 
@@ -78,9 +78,9 @@ public class CardsTest {
     @Test
     void isBustTrue() {
         Cards cards = new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.QUEEN),
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.SPACE, Value.JACK)));
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.SPACE, Denomination.JACK)));
 
         boolean isBust = cards.isBust();
 
@@ -91,8 +91,8 @@ public class CardsTest {
     @Test
     void isBustFalse() {
         Cards cards = new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.QUEEN),
-                new Card(Shape.SPACE, Value.ACE)));
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.SPACE, Denomination.ACE)));
 
         boolean isBust = cards.isBust();
 

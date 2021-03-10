@@ -1,8 +1,8 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Value;
+import blackjack.domain.card.Suit;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.result.ResultBoard;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -52,9 +52,9 @@ public class BlackjackGameTest {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
         Player player = new Player(Arrays.asList(
-                new Card(Shape.SPACE, Value.QUEEN),
-                new Card(Shape.HEART, Value.QUEEN),
-                new Card(Shape.SPACE, Value.EIGHT)), "amazzzi");
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.HEART, Denomination.QUEEN),
+                new Card(Suit.SPACE, Denomination.EIGHT)), "amazzzi");
 
         boolean isNotGameOver = blackjackGame.isNotGameOver(player);
 

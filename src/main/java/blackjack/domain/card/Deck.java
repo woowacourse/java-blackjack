@@ -16,15 +16,15 @@ public class Deck {
 
     private Deque<Card> createDeck() {
         List<Card> cards = new ArrayList<>();
-        Arrays.stream(Shape.values())
+        Arrays.stream(Suit.values())
                 .forEach(shape -> cards.addAll(createByShape(shape)));
         shuffle(cards);
         return new ArrayDeque<>(cards);
     }
 
-    private List<Card> createByShape(Shape shape) {
-        return Arrays.stream(Value.values())
-                .map(value -> new Card(shape, value))
+    private List<Card> createByShape(Suit suit) {
+        return Arrays.stream(Denomination.values())
+                .map(value -> new Card(suit, value))
                 .collect(Collectors.toList());
     }
 

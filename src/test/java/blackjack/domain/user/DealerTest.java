@@ -1,8 +1,8 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Value;
+import blackjack.domain.card.Suit;
+import blackjack.domain.card.Denomination;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,8 +25,8 @@ public class DealerTest {
         Dealer dealer = new Dealer();
 
         dealer.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.KING)
         )));
         int cardCount = dealer.cards.getCards().size();
 
@@ -38,8 +38,8 @@ public class DealerTest {
     public void isDrawableTrue() {
         Dealer dealer = new Dealer();
         dealer.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.TWO),
-                new Card(Shape.CLOVER, Value.KING)
+                new Card(Suit.SPACE, Denomination.TWO),
+                new Card(Suit.CLOVER, Denomination.KING)
         )));
 
         boolean isAbleToHit = dealer.isAbleToHit();
@@ -52,9 +52,9 @@ public class DealerTest {
     public void isDrawableFalse() {
         Dealer dealer = new Dealer();
         dealer.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.TWO),
-                new Card(Shape.CLOVER, Value.KING),
-                new Card(Shape.SPACE, Value.QUEEN)
+                new Card(Suit.SPACE, Denomination.TWO),
+                new Card(Suit.CLOVER, Denomination.KING),
+                new Card(Suit.SPACE, Denomination.QUEEN)
         )));
 
         boolean isAbleToHit = dealer.isAbleToHit();
@@ -67,8 +67,8 @@ public class DealerTest {
     void show() {
         Dealer dealer = new Dealer();
         dealer.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.KING)
         )));
 
         assertThat(dealer.showOneCard()).isInstanceOf(Card.class);

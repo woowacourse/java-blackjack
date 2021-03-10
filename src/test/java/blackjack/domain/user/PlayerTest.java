@@ -1,8 +1,8 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Value;
+import blackjack.domain.card.Suit;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.result.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,8 +26,8 @@ public class PlayerTest {
         Player player = new Player("amazzi");
 
         player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.HEART, Value.NINE),
-                new Card(Shape.DIAMOND, Value.JACK)
+                new Card(Suit.HEART, Denomination.NINE),
+                new Card(Suit.DIAMOND, Denomination.JACK)
         )));
         int cardCount = player.cards.getCards().size();
 
@@ -39,8 +39,8 @@ public class PlayerTest {
     public void isDrawableTrue() {
         Player player = new Player("amazzi");
         player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.HEART, Value.TWO),
-                new Card(Shape.DIAMOND, Value.JACK)
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.DIAMOND, Denomination.JACK)
         )));
 
         boolean isAbleToHit = player.isAbleToHit();
@@ -53,9 +53,9 @@ public class PlayerTest {
     public void isDrawableFalse() {
         Player player = new Player("amazzi");
         player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.HEART, Value.TWO),
-                new Card(Shape.DIAMOND, Value.JACK),
-                new Card(Shape.CLOVER, Value.QUEEN)
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.DIAMOND, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.QUEEN)
         )));
 
         boolean isAbleToHit = player.isAbleToHit();
@@ -68,8 +68,8 @@ public class PlayerTest {
     void show() {
         Player player = new Player("amazzi");
         player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.KING)
         )));
 
         int cardCount = player.cards
@@ -84,13 +84,13 @@ public class PlayerTest {
         Dealer dealer = new Dealer();
         Player player = new Player("amazzi");
         dealer.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.KING)
         )));
         player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING),
-                new Card(Shape.HEART, Value.QUEEN)
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.KING),
+                new Card(Suit.HEART, Denomination.QUEEN)
         )));
 
         Result result = player.produceResult(dealer);
@@ -104,12 +104,12 @@ public class PlayerTest {
         Dealer dealer = new Dealer();
         Player player = new Player("amazzi");
         dealer.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.KING)
         )));
         player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.TWO)
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.TWO)
         )));
 
         Result result = player.produceResult(dealer);
@@ -123,12 +123,12 @@ public class PlayerTest {
         Dealer dealer = new Dealer();
         Player player = new Player("amazzi");
         dealer.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.KING)
         )));
         player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.KING)
         )));
 
         Result result = player.produceResult(dealer);
