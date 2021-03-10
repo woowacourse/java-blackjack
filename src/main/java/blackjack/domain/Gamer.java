@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.state.Hit;
+import blackjack.domain.state.State;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +16,7 @@ public abstract class Gamer {
     private static final String COMMA = ", ";
     public static final String ERROR_NAME_LENGTH = "이름이 공백일 수는 없습니다.";
     private final String name;
-    protected final Cards cards = new Cards();
+    protected final State state = new Hit(new Cards());
 
     protected Gamer(String name) {
         validateSpace(name);
@@ -35,11 +37,11 @@ public abstract class Gamer {
     }
 
     protected void receiveCard(Card card) {
-        cards.add(card);
+        state.draw(card);
     }
 
     public int getPoint() {
-        return cards.getPoint(Cards.HIGHEST_POINT);
+        return state.cards().getPoint();
     }
 
     public abstract boolean canReceiveCard();
@@ -51,16 +53,16 @@ public abstract class Gamer {
     }
 
     public String getAllCards() {
-        return cards.getCards().
+        return state.cards().getCards().
             stream()
             .map(Card::getPatternAndNumber)
             .collect(Collectors.joining(COMMA));
     }
 
-    public String getDealerCards() {
+    public String getOpenCards() {
         List<Card> dealerCards = new ArrayList<>();
-        for (int i = 0; i < cards.size() - 1; i++) {
-            dealerCards.add(cards.get(i));
+        for (int i = 0; i < state.cards().size() - 1; i++) {
+            dealerCards.add(state.cards().get(i));
         }
         return dealerCards.stream()
             .map(Card::getPatternAndNumber)
@@ -72,16 +74,16 @@ public abstract class Gamer {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Gamer)) {
             return false;
         }
         Gamer gamer = (Gamer) o;
         return Objects.equals(name, gamer.name) &&
-            Objects.equals(cards, gamer.cards);
+            Objects.equals(state, gamer.state);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cards);
+        return Objects.hash(name, state);
     }
 }

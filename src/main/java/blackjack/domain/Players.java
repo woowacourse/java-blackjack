@@ -94,7 +94,7 @@ public class Players {
         return Collections.unmodifiableList(this.players);
     }
 
-    public Map<String, Integer> calculateResult() {
+    public Map<String, Integer> judgeResult() {
         Map<String, Integer> matchResult = new HashMap<>();
         int dealerValue = dealer.getPoint();
 

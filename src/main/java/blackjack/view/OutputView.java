@@ -9,7 +9,7 @@ import java.util.Map;
 public class OutputView {
 
     private static final String SKELETON_NOTICE_DRAW_TWO_CARDS = "%s와 %s에게 %d장씩 나누었습니다.";
-    public static final String NOTICE_RESULT = "## 최종 수익";
+    public static final String NOTICE_RESULT = "## 최종 결과";
     public static final String NOTICE_DEALER_GET_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String SKELETON_GAME_RESULT_POINT = "%s 카드 : %s - 결과: %d";
     private static final String SKELETON_DEALER_RESULT = "딜러: %d%s %d%s %d%s";
@@ -36,10 +36,10 @@ public class OutputView {
         }
     }
 
-    public static void noticeResultProfit(Players players) {
+    public static void noticeMatchResult(Players players) {
         System.out.println();
         System.out.println(NOTICE_RESULT);
-        Map<String, Integer> result = players.calculateResult();
+        Map<String, Integer> result = players.judgeResult();
 
         OutputView.printDealerResult(result);
         OutputView.printPlayerResult(players);
@@ -84,7 +84,7 @@ public class OutputView {
 
     public static void printDealerInfo(Gamer dealer) {
         System.out.println(
-            String.format(SKELETON_DEALER_INFO, dealer.getName(), dealer.getDealerCards()));
+            String.format(SKELETON_DEALER_INFO, dealer.getName(), dealer.getOpenCards()));
     }
 
     public static void noticeBettingMoney(Player player) {

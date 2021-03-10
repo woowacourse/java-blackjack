@@ -4,7 +4,7 @@ import blackjack.domain.Card;
 import blackjack.domain.Cards;
 import blackjack.domain.Money;
 
-public abstract class Finished extends Started {
+public abstract class Finished extends StartState {
 
     private static final String ERROR_DRAW = "드로우를 할 기회가 없습니다.";
 

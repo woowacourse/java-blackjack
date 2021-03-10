@@ -11,7 +11,7 @@ public class ResultTest {
     void scoreTest() {
         Players players = new Players("pobi,jason", new Dealer());
         players.giveCards(new Deck());
-        OutputView.noticeResultProfit(players);
+        OutputView.noticeMatchResult(players);
     }
 
     @Test
@@ -22,7 +22,7 @@ public class ResultTest {
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.FIVE));
         dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.TEN));
         Players players = new Players(Collections.singletonList(player), dealer);
-        OutputView.noticeResultProfit(players);
+        OutputView.noticeMatchResult(players);
     }
 
     @Test
@@ -33,6 +33,6 @@ public class ResultTest {
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
         dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.FIVE));
         Players players = new Players(Collections.singletonList(player), dealer);
-        OutputView.noticeResultProfit(players);
+        OutputView.noticeMatchResult(players);
     }
 }

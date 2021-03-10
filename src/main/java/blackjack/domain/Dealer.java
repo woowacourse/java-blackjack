@@ -13,7 +13,7 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canReceiveCard() {
-        return cards.getPoint(POINT_BOUNDARY_VALUE) <= POINT_BOUNDARY_VALUE;
+        return state.cards().getPoint(POINT_BOUNDARY_VALUE) <= POINT_BOUNDARY_VALUE;
     }
 
     @Override

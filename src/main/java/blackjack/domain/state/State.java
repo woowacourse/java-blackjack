@@ -5,12 +5,11 @@ import blackjack.domain.Cards;
 import blackjack.domain.Money;
 
 public interface State {
-
     public State draw(Card card);
 
     boolean isFinished();
 
     public int profit(Money money);
 
-    Cards getCards();
+    Cards cards();
 }
