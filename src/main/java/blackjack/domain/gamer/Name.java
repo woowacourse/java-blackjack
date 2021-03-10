@@ -6,8 +6,8 @@ public class Name {
     private static final Pattern NAME_PATTERN = Pattern.compile("^[가-힣ㄱ-ㅎㅏ-ㅣ|a-z|A-Z]+");
     private final String name;
 
-    public Name(String name){
-       this.name = validateWord(name.trim());
+    public Name(String name) {
+        this.name = validateWord(name.trim());
     }
 
     private String validateWord(String nameValue) {
@@ -21,4 +21,5 @@ public class Name {
     public String toString() {
         return name;
     }
+
 }

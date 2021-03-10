@@ -16,9 +16,10 @@ public class GameTable implements Playable {
     private final Players players;
     private final CardDeck cardDeck;
 
-    public GameTable(Participant dealer, CardDeck cardDeck){
+    public GameTable(Participant dealer, CardDeck cardDeck) {
         this(dealer, new Players(Collections.emptyList()), cardDeck);
     }
+
     public GameTable(Player player, CardDeck cardDeck) {
         this(new Dealer(new Cards(Collections.emptyList())), new Players(Arrays.asList(player)),
             cardDeck);

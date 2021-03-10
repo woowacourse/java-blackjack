@@ -13,7 +13,7 @@ public enum Outcome {
         this.word = word;
     }
 
-    public String getWord(){
+    public String getWord() {
         return word;
     }
 
@@ -33,7 +33,7 @@ public enum Outcome {
         if (base.isBurst() && counterpart.isBurst()) {
             return true;
         }
-        if (!base.isBurst() && !counterpart.isBurst() && base.isSameAs(counterpart) ) {
+        if (!base.isBurst() && !counterpart.isBurst() && base.isSameAs(counterpart)) {
             return true;
         }
         return false;

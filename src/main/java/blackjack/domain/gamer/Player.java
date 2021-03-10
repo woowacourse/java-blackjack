@@ -1,9 +1,8 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-
+import blackjack.domain.card.Score;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,9 +10,10 @@ public class Player implements Participant {
     private final Name name;
     private final Cards cards;
 
-    public Player(Name name){
+    public Player(Name name) {
         this(name, new Cards(Collections.emptyList()));
     }
+
     public Player(Name name, Cards cards) {
         this.name = name;
         this.cards = cards;
@@ -27,7 +27,7 @@ public class Player implements Participant {
 
     @Override
     public void takeCard(Card card) {
-            cards.takeCard(card);
+        cards.takeCard(card);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class Player implements Participant {
     }
 
     @Override
-    public Score sumCardsForResult(){
+    public Score sumCardsForResult() {
         return cards.sumCardsForResult();
     }
 

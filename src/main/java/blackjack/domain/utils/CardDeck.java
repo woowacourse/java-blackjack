@@ -1,7 +1,6 @@
 package blackjack.domain.utils;
 
 import blackjack.domain.card.Card;
-
 import blackjack.domain.card.Suits;
 import java.util.LinkedList;
 

@@ -1,8 +1,8 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Score;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Score;
 import java.util.List;
 
 public interface Participant {

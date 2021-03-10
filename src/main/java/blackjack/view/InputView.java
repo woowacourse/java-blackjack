@@ -24,4 +24,5 @@ public class InputView {
         }
         throw new IllegalArgumentException("y 또는 n을 입력해주세요.");
     }
+
 }

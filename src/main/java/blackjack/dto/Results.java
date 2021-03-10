@@ -1,12 +1,16 @@
 package blackjack.dto;
 
-import blackjack.domain.card.Cards;
 import blackjack.domain.Outcome;
+import blackjack.domain.card.Cards;
 import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Results {
@@ -24,9 +28,10 @@ public class Results {
             .collect(Collectors.toList());
     }
 
-    public String dealerName(){
+    public String dealerName() {
         return dealer.getName();
     }
+
     public Map<String, Cards> cards() {
         final Map<String, Cards> results = new LinkedHashMap<>();
 

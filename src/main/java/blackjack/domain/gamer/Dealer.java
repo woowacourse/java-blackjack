@@ -1,8 +1,8 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Score;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,9 +11,10 @@ public class Dealer implements Participant {
     private final Name name;
     private final Cards cards;
 
-    public Dealer(){
+    public Dealer() {
         this(new Name("딜러"), new Cards(Collections.emptyList()));
     }
+
     public Dealer(Cards cards) {
         this(new Name("딜러"), cards);
     }
