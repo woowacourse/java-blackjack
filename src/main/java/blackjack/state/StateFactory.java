@@ -9,9 +9,10 @@ import java.util.List;
 public class StateFactory {
 
     public static State draw(Card firstCard, Card secondCard) {
-        List<Card> cards = new ArrayList<>(Arrays.asList(firstCard, secondCard));
+        Cards cards = new Cards(Arrays.asList(firstCard, secondCard));
 
-        if(cards.stream().anyMatch(Card::isAce) && cards.stream().anyMatch(Card::isTen)) {
+        if(cards.getCards().stream().anyMatch(Card::isAce) &&
+                cards.getCards().stream().anyMatch(Card::isTen)) {
             return new BlackJack(cards);
         }
 

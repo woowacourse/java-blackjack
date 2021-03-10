@@ -6,9 +6,9 @@ import java.util.List;
 
 public class Hit implements State{
 
-    private List<Card> cards;
+    private Cards cards;
 
-    public Hit(List<Card> cards){
+    public Hit(Cards cards){
         this.cards = cards;
     }
 }
