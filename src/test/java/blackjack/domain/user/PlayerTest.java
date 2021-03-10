@@ -47,8 +47,8 @@ public class PlayerTest {
     void getUnavailableDraw() {
         String name = "Sorong";
         Card card3 = new Card(CardNumber.from("J"), CardSymbol.from("다이아몬드"));
-        userDeck.add(card3);
         Player player = new Player(name, userDeck);
+        player.draw(card3);
 
         boolean actualDraw = player.isAvailableDraw();
 

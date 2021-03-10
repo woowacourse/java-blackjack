@@ -43,9 +43,9 @@ public class DealerTest {
     @Test
     @DisplayName("딜러 드로우 실패 테스트")
     void getUnavailableDraw() {
-        Card card3 = new Card(CardNumber.from("2"), CardSymbol.from("다이아몬드"));
-        userDeck.add(card3);
+        Card card3 = new Card(CardNumber.from("J"), CardSymbol.from("다이아몬드"));
         Dealer dealer = new Dealer(userDeck);
+        dealer.draw(card3);
 
         boolean actualDraw = dealer.isAvailableDraw();
 
