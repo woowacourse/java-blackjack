@@ -17,7 +17,6 @@ public class Player extends User {
 
     public Player(UserDeck userDeck, Name name, Money money) {
         super(userDeck);
-        super.DRAWABLE_NUMBER = UserDeck.BLACK_JACK_NUMBER;
         this.name = name;
         this.money = money;
     }
@@ -30,6 +29,10 @@ public class Player extends User {
         return name.getName();
     }
 
+    public Double getMoney(double earningRate) {
+        return money.getEarning(earningRate);
+    }
+
     public boolean isYes(String input) {
         validateYorN(input);
         input = input.toLowerCase();
@@ -40,5 +43,10 @@ public class Player extends User {
         if (!YES_OR_NO_VALIDATION.contains(input)) {
             throw new IllegalArgumentException(YES_OR_NO_ERROR);
         }
+    }
+
+    @Override
+    public boolean isAvailableDraw() {
+        return !this.isBust() && !this.isBlackjack();
     }
 }

@@ -7,7 +7,6 @@ import java.util.List;
 public abstract class User {
 
     private final UserDeck userDeck;
-    protected int DRAWABLE_NUMBER;
 
     public User(UserDeck userDeck) {
         this.userDeck = userDeck;
@@ -17,21 +16,24 @@ public abstract class User {
         userDeck.add(card);
     }
 
-    public boolean isBustCondition() {
-        return this.getScore() == UserDeck.BUST_CONDITION;
+    public int getScore() {
+        return userDeck.deckScore();
     }
 
-    public boolean isAvailableDraw() {
-        return !this.isBustCondition() && this.getScore() < DRAWABLE_NUMBER;
+    public boolean isBust() {
+        return this.getScore() > UserDeck.BLACK_JACK_NUMBER;
     }
+
+    public boolean isBlackjack() {
+        return this.getScore() == UserDeck.BLACK_JACK_NUMBER;
+    }
+
+    abstract boolean isAvailableDraw();
 
     public List<Card> getCards() {
         return userDeck.getUserCards();
     }
 
-    public int getScore() {
-        return userDeck.deckScore();
-    }
 
     public int compare(User user) {
         return this.getScore() - user.getScore();
