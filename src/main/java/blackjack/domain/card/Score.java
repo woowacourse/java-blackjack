@@ -29,7 +29,7 @@ public class Score {
         return score;
     }
 
-    public boolean isOver(int turnOverCount) {
-        return this.score > turnOverCount;
+    public boolean isBelow(int turnOverCount) {
+        return this.score <= turnOverCount;
     }
 }

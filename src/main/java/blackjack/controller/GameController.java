@@ -29,7 +29,7 @@ public class GameController {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
             int battingAmount = inputView.getBattingAmount(playerName);
-            players.add(new Player(playerName, battingAmount, deck.drawCard(2)));
+            players.add(new Player(playerName, battingAmount, deck.drawCard(FIRST_TWO_CARD)));
         }
         OutputView.showInitialStatus(createRoundStatusDto(dealer, players));
         addUsersCardOrPass(dealer, players, deck);
@@ -63,7 +63,7 @@ public class GameController {
 
     private void addUsersCardOrPass(Dealer dealer, List<Player> players, Deck deck) {
         players.forEach(player -> askAddCardOrPass(player, deck));
-        while (!dealer.canAddCard()) {
+        while (dealer.canAddCard()) {
             dealer.addCard(deck.drawCard());
             OutputView.showDealerAddCard(Dealer.TURN_OVER_COUNT);
         }

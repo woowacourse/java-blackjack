@@ -19,7 +19,7 @@ public class Dealer extends User {
     }
 
     public boolean canAddCard() {
-        return !state.score().isOver(TURN_OVER_COUNT);
+        return state.score().isBelow(TURN_OVER_COUNT);
     }
 
     @Override
