@@ -1,7 +1,11 @@
 package blackjack.domain.state;
 
-public interface PlayerState {
-    boolean isFinished();
+import blackjack.domain.card.Cards;
 
-    PlayerState keepContinue(boolean input);
+public interface PlayerState {
+	boolean isFinished();
+
+	PlayerState keepContinue(boolean input);
+
+	PlayerState checkStateWithNewCard(Cards cards);
 }

@@ -2,25 +2,19 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
 
-public class Hit implements PlayerState {
+public abstract class Finished implements PlayerState {
 	@Override
 	public boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public PlayerState keepContinue(boolean input) {
-		if (!input) {
-			return new Stay();
-		}
-		return this;
+		throw new IllegalArgumentException("옳지 않은 곳에서 호출");
 	}
 
 	@Override
 	public PlayerState checkStateWithNewCard(Cards cards) {
-		if (cards.calculateIncludeAce() > 21) {
-			return new Burst();
-		}
-		return this;
+		throw new IllegalArgumentException("옳지 않은 곳에서 호출");
 	}
 }
