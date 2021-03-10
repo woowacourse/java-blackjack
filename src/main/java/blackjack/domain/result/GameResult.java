@@ -24,15 +24,18 @@ public class GameResult {
     public static GameResult calculate(Dealer dealer, List<Player> players) {
         int dealerTotal = dealer.getHandTotal();
 
-        // 딜러 버스트
         if (dealer.isBust()) {
-            return getGameResultWhenDealerBust(dealer, players, dealerTotal);
+            return resultOfDealerBust(dealer, players, dealerTotal);
         }
 
-        return getGameResult(dealer, players, dealerTotal);
+        if (dealer.isBlackjack()) {
+            return resultOfDealerBlackjack(dealer, players, dealerTotal);
+        }
+
+        return result(dealer, players, dealerTotal);
     }
 
-    private static GameResult getGameResultWhenDealerBust(Dealer dealer, List<Player> players, int dealerTotal) {
+    private static GameResult resultOfDealerBust(Dealer dealer, List<Player> players, int dealerTotal) {
         List<PlayerResult> playersResults = new ArrayList<>();
         DealerResult dealerMatchCount = new DealerResult();
         for (Player player : players) {
@@ -47,11 +50,31 @@ public class GameResult {
         return new GameResult(dealer.getCards(), dealerTotal, dealerMatchCount, playersResults);
     }
 
-    private static GameResult getGameResult(Dealer dealer, List<Player> players, int dealerTotal) {
+    private static GameResult resultOfDealerBlackjack(Dealer dealer, List<Player> players, int dealerTotal) {
+        List<PlayerResult> playersResults = new ArrayList<>();
+        DealerResult dealerMatchCount = new DealerResult();
+        for (Player player : players) {
+            if (player.isBlackjack()) {
+                playersResults.add(PlayerResult.from(player, MatchResult.TIE));
+                dealerMatchCount.add(MatchResult.TIE);
+                continue;
+            }
+            playersResults.add(PlayerResult.from(player, MatchResult.LOSE));
+            dealerMatchCount.add(MatchResult.WIN);
+        }
+        return new GameResult(dealer.getCards(), dealerTotal, dealerMatchCount, playersResults);
+    }
+
+    private static GameResult result(Dealer dealer, List<Player> players, int dealerTotal) {
         List<PlayerResult> playersResults = new ArrayList<>();
         DealerResult dealerMatchCount = new DealerResult();
 
         for (Player player : players) {
+            if (player.isBlackjack()) {
+                playersResults.add(PlayerResult.from(player, MatchResult.WIN));
+                dealerMatchCount.add(MatchResult.LOSE);
+                continue;
+            }
             MatchResult matchResult = player.getMatchResult(dealerTotal);
 
             playersResults.add(PlayerResult.from(player, matchResult));

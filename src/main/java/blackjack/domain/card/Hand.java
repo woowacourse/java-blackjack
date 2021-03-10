@@ -40,6 +40,10 @@ public class Hand {
         return getTotalByMapper(this::getAceValue);
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == 2 && getTotalByMapper(this::getAceValue) == 21;
+    }
+
     private int getTotalByMapper(ToIntFunction<Card> mapper) {
         return cards.stream()
                 .mapToInt(mapper)

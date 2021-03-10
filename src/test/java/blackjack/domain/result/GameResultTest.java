@@ -18,8 +18,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class GameResultTest {
 
-    private static final Card ace = new Card(Suit.CLOVER, Rank.ACE);
-    private static final Card king = new Card(Suit.CLOVER, Rank.KING);
+    private static final Card aceCard = new Card(Suit.CLOVER, Rank.ACE);
+    private static final Card kingCard = new Card(Suit.CLOVER, Rank.KING);
+    private static final Card sevenCard = new Card(Suit.CLOVER, Rank.SEVEN);
+
+    private static final Hand blackjack = new Hand(Arrays.asList(aceCard, kingCard));
+    private static final Hand twentyOne = new Hand(Arrays.asList(sevenCard, sevenCard, sevenCard));
+    private static final Hand twenty = new Hand(Arrays.asList(kingCard, kingCard));
+    private static final Hand bust = new Hand(Arrays.asList(kingCard, kingCard, kingCard));
 
     @ParameterizedTest(name = "딜러 승무패 계산이 올바른지")
     @MethodSource("calculateTestcase")
@@ -37,15 +43,26 @@ class GameResultTest {
 
     private static Stream<Arguments> calculateTestcase() {
         return Stream.of(
+                // 딜러 승리
+                Arguments.of(twentyOne, twenty, 1, 0, 0),
+                // 플레이어 승리
+                Arguments.of(twenty, twentyOne, 0, 1, 0),
+                // 무승부
+                Arguments.of(twentyOne, twentyOne, 0, 0, 1),
+
                 // 딜러 블랙잭 승리
-                Arguments.of(createHand(ace, king), createHand(king, king), 1, 0, 0),
+                Arguments.of(blackjack, twentyOne, 1, 0, 0),
                 // 플레이어 블랙잭 승리
-                Arguments.of(createHand(king, king), createHand(ace, king), 0, 1, 0),
+                Arguments.of(twentyOne, blackjack, 0, 1, 0),
                 // 블랙잭 무승부
-                Arguments.of(createHand(ace, king), createHand(ace, king), 0, 0, 1),
+                Arguments.of(blackjack, blackjack, 0, 0, 1),
+
                 // 딜러 버스트, 플레이어 승리
-                Arguments.of(createHand(king, king, king), createHand(ace, king), 0, 1, 0)
-                // todo 블랙잭 아닌 걸로 승패 결과 테스트
+                Arguments.of(bust, twentyOne, 0, 1, 0),
+                // 딜러 버스트, 플레이어 버스트
+                Arguments.of(bust, bust, 1, 0, 0),
+                // 딜러 승리, 플레이어 버스트
+                Arguments.of(twentyOne, bust, 1, 0, 0)
         );
     }
 
@@ -53,9 +70,5 @@ class GameResultTest {
         return Arrays.stream(hands)
                 .map(hand -> new Player("플레이어", hand))
                 .collect(Collectors.toList());
-    }
-
-    private static Hand createHand(Card... cards) {
-        return new Hand(Arrays.asList(cards));
     }
 }

@@ -35,5 +35,9 @@ public abstract class Participant {
         return cardHand.isBust();
     }
 
+    public boolean isBlackjack() {
+        return cardHand.isBlackjack();
+    }
+
     public abstract int getHandTotal();
 }
