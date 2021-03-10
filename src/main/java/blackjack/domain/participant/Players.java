@@ -51,10 +51,4 @@ public class Players {
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
-
-    public List<ParticipantDto> toPlayersDto() {
-        return players.stream()
-                .map(Player::toParticipantDto)
-                .collect(Collectors.toList());
-    }
 }

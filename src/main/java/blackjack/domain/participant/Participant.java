@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
-import blackjack.dto.ParticipantDto;
 
 import java.util.Objects;
 
@@ -36,11 +35,6 @@ public abstract class Participant {
 
     public boolean isHit() {
         return !state.isFinished();
-    }
-
-    public final ParticipantDto toParticipantDto() {
-        Cards cards = state.getCards();
-        return new ParticipantDto(this.nickname, cards, cards.calculateScore());
     }
 
     public final Cards getCurrentCards() {

@@ -1,8 +1,6 @@
 package blackjack.domain.result;
 
 import blackjack.domain.participant.Player;
-import blackjack.dto.DealerResultDto;
-import blackjack.dto.PlayersResultDto;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -26,13 +24,5 @@ public class BlackJackResult {
         return (int) result.values().stream()
                 .filter(result -> result.equals(MatchResult.getDealerMatchResultByPlayer(matchResult)))
                 .count();
-    }
-
-    public DealerResultDto toDealerResultDto() {
-        return new DealerResultDto(getDealerResult());
-    }
-
-    public PlayersResultDto toPlayersResultDto() {
-        return new PlayersResultDto(result);
     }
 }
