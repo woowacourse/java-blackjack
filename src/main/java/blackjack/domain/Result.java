@@ -12,10 +12,6 @@ public enum Result {
         this.value = value;
     }
 
-    public boolean isSameResult(final Result result) {
-        return this == result;
-    }
-
     public double calculateRate(final double money) {
         if (this == BLACKJACK) {
             return money * 1.5;

@@ -3,6 +3,7 @@ package blackjack.domain.participants;
 import java.util.Objects;
 
 public class Name {
+
     private final String value;
 
     public Name(final String value) {
