@@ -5,7 +5,7 @@ import blackjack.domain.state.State;
 import java.util.Arrays;
 
 public enum MatchResult {
-    WIN("승") {
+    WIN {
         @Override
         boolean match(State playerState, State dealerState) {
             if (playerState.isBlackJack() && !dealerState.isBlackJack()) {
@@ -17,7 +17,7 @@ public enum MatchResult {
             return playerState.isStay() && playerState.isWin(dealerState);
         }
     },
-    LOSE("패") {
+    LOSE {
         @Override
         boolean match(State playerState, State dealerState) {
             if (playerState.isBust()) {
@@ -29,7 +29,7 @@ public enum MatchResult {
             return dealerState.isStay() && dealerState.isWin(playerState);
         }
     },
-    DRAW("무") {
+    DRAW {
         @Override
         boolean match(State playerState, State dealerState) {
             if (playerState.isBlackJack() && dealerState.isBlackJack()) {
@@ -39,12 +39,6 @@ public enum MatchResult {
         }
     };
 
-    private final String result;
-
-    MatchResult(String result) {
-        this.result = result;
-    }
-
     abstract boolean match(State playerState, State dealerState);
 
     public static MatchResult getPlayerMatchResult(State playerState, State dealerState) {
@@ -52,19 +46,5 @@ public enum MatchResult {
                 .filter(matchResult -> matchResult.match(playerState, dealerState))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
-    }
-
-    public static MatchResult getDealerMatchResultByPlayer(MatchResult matchResult) {
-        if (matchResult.equals(MatchResult.WIN)) {
-            return MatchResult.LOSE;
-        }
-        if (matchResult.equals(MatchResult.LOSE)) {
-            return MatchResult.WIN;
-        }
-        return MatchResult.DRAW;
-    }
-
-    public String getResult() {
-        return result;
     }
 }

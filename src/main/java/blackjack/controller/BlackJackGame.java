@@ -23,7 +23,6 @@ public class BlackJackGame {
             playersTurn(players, deck);
             dealerTurn(dealer, deck);
             showProfitResult(players, dealer);
-//            showResult(players, dealer);
         } catch (IllegalStateException e) {
             OutputView.printError(e.getMessage());
         }

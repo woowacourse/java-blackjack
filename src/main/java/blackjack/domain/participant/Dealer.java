@@ -17,9 +17,4 @@ public class Dealer extends Participant {
     public boolean canDraw() {
         return !state.isFinished() && state.getCards().lessThanSixteen();
     }
-
-    public void accumulate(double money) {
-        this.bettingMoney.add(money);
-    }
 }
-
