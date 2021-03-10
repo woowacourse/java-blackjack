@@ -8,7 +8,7 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.result.PlayerResultDto;
+import blackjack.domain.result.PlayerResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,18 +49,18 @@ public class OutputView {
     public static void printGameResult(GameResult result) {
         printCardResult(DEALER_NAME, cardsToString(result.getDealerCards()), result.getDealerSum());
 
-        for (PlayerResultDto playerResult : result.getPlayersResults()) {
+        for (PlayerResult playerResult : result.getPlayersResults()) {
             printPlayerCardResult(playerResult);
         }
 
         System.out.println("\n## 최종 승패");
         printDealerResult(result.getDealerResult());
-        for (PlayerResultDto playersResult : result.getPlayersResults()) {
+        for (PlayerResult playersResult : result.getPlayersResults()) {
             System.out.printf("%s: %s\n", playersResult.getName(), playersResult.getWinOrLose());
         }
     }
 
-    private static void printPlayerCardResult(PlayerResultDto playerResult) {
+    private static void printPlayerCardResult(PlayerResult playerResult) {
         printCardResult(
                 playerResult.getName(),
                 cardsToString(playerResult.getCards()),

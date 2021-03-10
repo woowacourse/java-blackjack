@@ -37,12 +37,15 @@ class GameResultTest {
 
     private static Stream<Arguments> calculateTestcase() {
         return Stream.of(
-                // 딜러 승리
+                // 딜러 블랙잭 승리
                 Arguments.of(createHand(ace, king), createHand(king, king), 1, 0, 0),
-                // 플레이어 승리
+                // 플레이어 블랙잭 승리
                 Arguments.of(createHand(king, king), createHand(ace, king), 0, 1, 0),
-                // 무승부
-                Arguments.of(createHand(ace, king), createHand(ace, king), 0, 0, 1)
+                // 블랙잭 무승부
+                Arguments.of(createHand(ace, king), createHand(ace, king), 0, 0, 1),
+                // 딜러 버스트, 플레이어 승리
+                Arguments.of(createHand(king, king, king), createHand(ace, king), 0, 1, 0)
+                // todo 블랙잭 아닌 걸로 승패 결과 테스트
         );
     }
 
