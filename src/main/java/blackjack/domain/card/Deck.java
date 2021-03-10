@@ -11,7 +11,7 @@ public class Deck {
 
     private final Deque<Card> deck;
 
-    private Deck(List<Card> deck) {
+    public Deck(List<Card> deck) {
         this.deck = new ArrayDeque<>(deck);
     }
 

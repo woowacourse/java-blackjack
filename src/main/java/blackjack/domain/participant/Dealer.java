@@ -14,8 +14,12 @@ public class Dealer extends Participant {
     private final Deck deck;
 
     public Dealer(Hand hand) {
-        super(DEALER_NAME, hand);
-        this.deck = Deck.createShuffledDeck();
+        this(DEALER_NAME, hand, Deck.createShuffledDeck());
+    }
+
+    public Dealer(String name, Hand hand, Deck deck) {
+        super(name, hand);
+        this.deck = deck;
     }
 
     public static Dealer getInstance() {
