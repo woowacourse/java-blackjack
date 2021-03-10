@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import blackjack.domain.result.BlackjackResult;
 import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.UserDeck;
@@ -30,7 +31,7 @@ public class ResultTest {
         dealerDeck.add(dealerCard);
         Dealer dealer = new Dealer(dealerDeck);
 
-        assertThat(Result.getResult(player, dealer)).isEqualTo("승");
+        assertThat(Result.getResult(player, dealer)).isEqualTo(BlackjackResult.WIN);
     }
 
     @Test
@@ -45,7 +46,7 @@ public class ResultTest {
         dealerDeck.add(dealerCard2);
         Dealer dealer = new Dealer(dealerDeck);
 
-        assertThat(Result.getResult(player, dealer)).isEqualTo("무");
+        assertThat(Result.getResult(player, dealer)).isEqualTo(BlackjackResult.TIE);
     }
 
     @Test
@@ -60,7 +61,7 @@ public class ResultTest {
         dealerDeck.add(dealerCard);
         Dealer dealer = new Dealer(dealerDeck);
 
-        assertThat(Result.getResult(player, dealer)).isEqualTo("패");
+        assertThat(Result.getResult(player, dealer)).isEqualTo(BlackjackResult.BUST);
     }
 
     @Test
@@ -75,6 +76,6 @@ public class ResultTest {
         dealerDeck.add(dealerCard2);
         Dealer dealer = new Dealer(dealerDeck);
 
-        assertThat(Result.getResult(player, dealer)).isEqualTo("패");
+        assertThat(Result.getResult(player, dealer)).isEqualTo(BlackjackResult.LOSE);
     }
 }
