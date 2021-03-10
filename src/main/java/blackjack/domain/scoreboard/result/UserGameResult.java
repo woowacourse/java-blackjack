@@ -3,6 +3,7 @@ package blackjack.domain.scoreboard.result;
 import blackjack.domain.card.Cards;
 import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.user.ParticipantName;
+import blackjack.domain.user.User;
 
 import java.util.Objects;
 
@@ -11,8 +12,8 @@ public class UserGameResult implements Resultable {
     private final WinOrLose winOrLose;
     private final long income;
 
-    public UserGameResult(Cards resultCards, String name, WinOrLose winOrLose, long income) {
-        this.gameResult = new GameResult(resultCards, name);
+    public UserGameResult(User user, WinOrLose winOrLose, long income) {
+        this.gameResult = new GameResult(user.getCards(), user.getName().toString());
         this.winOrLose = winOrLose;
         this.income = income;
     }

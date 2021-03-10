@@ -72,7 +72,7 @@ public class BlackjackGame {
     private UserGameResult createGameResult(User user) {
         WinOrLose winOrLose = WinOrLose.decideWinOrLose(user, dealer);
         BettingMoney prizeMoney = EarningRate.calculate(user, winOrLose);
-        return new UserGameResult(user.getCards(), user.getName().toString(), winOrLose, calculateIncome(user, prizeMoney));
+        return new UserGameResult(user, winOrLose, calculateIncome(user, prizeMoney));
     }
 
     private long calculateIncome(User user, BettingMoney prizeMoney) {
