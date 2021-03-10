@@ -50,7 +50,7 @@ public class OutputView {
         System.out.println();
         System.out.println(NOTICE_PROFIT_RESULT);
         for (Gamer gamer : players.getAllParticipant()) {
-            System.out.println(gamer.getName() + "  " + gamer.getProfit());
+            System.out.println(gamer.getName() + COUPLER_COLON_SPACE + gamer.getProfit());
         }
     }
 
