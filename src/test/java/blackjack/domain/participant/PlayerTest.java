@@ -30,14 +30,14 @@ public class PlayerTest {
     }
 
     @ParameterizedTest(name = "플레이어 카드 합계 산출")
-    @MethodSource("sumCard_testcase")
-    void sumCard(List<Card> cards, int expectedSum) {
+    @MethodSource("getHandTotalTestcase")
+    void getHandTotal(List<Card> cards, int expectedSum) {
         Player player = new Player("joy", new Hand(cards));
 
         assertThat(player.getHandTotal()).isEqualTo(expectedSum);
     }
 
-    private static Stream<Arguments> sumCard_testcase() {
+    private static Stream<Arguments> getHandTotalTestcase() {
         return Stream.of(
                 Arguments.of(createCards(Rank.TWO, Rank.THREE), 5),
                 Arguments.of(createCards(Rank.ACE, Rank.THREE), 14),
@@ -48,14 +48,14 @@ public class PlayerTest {
     }
 
     @ParameterizedTest(name = "플레이어 패가 버스트했는지 검사")
-    @MethodSource("isBust_testcase")
+    @MethodSource("isBustTestcase")
     void isBust(List<Card> cards, boolean expected) {
         Player player = new Player("joy", new Hand(cards));
 
         assertThat(player.isBust()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> isBust_testcase() {
+    private static Stream<Arguments> isBustTestcase() {
         return Stream.of(
                 Arguments.of(createCards(Rank.TWO, Rank.KING), false),
                 Arguments.of(createCards(Rank.KING, Rank.KING), false),

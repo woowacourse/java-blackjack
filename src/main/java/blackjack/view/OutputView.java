@@ -7,7 +7,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.GameResultDto;
+import blackjack.domain.result.GameResult;
 import blackjack.domain.result.PlayerResultDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,7 +46,7 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printGameResult(GameResultDto result) {
+    public static void printGameResult(GameResult result) {
         printCardResult(DEALER_NAME, cardsToString(result.getDealerCards()), result.getDealerSum());
 
         for (PlayerResultDto playerResult : result.getPlayersResults()) {

@@ -3,11 +3,6 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.GameResultDto;
-import blackjack.domain.result.MatchResult;
-import blackjack.domain.result.PlayerResultDto;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -18,9 +13,13 @@ public class Dealer extends Participant {
 
     private final Deck deck;
 
-    public Dealer() {
-        super(DEALER_NAME, Hand.createEmptyHand());
+    public Dealer(Hand hand) {
+        super(DEALER_NAME, hand);
         this.deck = Deck.createShuffledDeck();
+    }
+
+    public static Dealer getInstance() {
+        return new Dealer(Hand.createEmptyHand());
     }
 
     public void drawBaseCard() {
@@ -53,23 +52,6 @@ public class Dealer extends Participant {
 
     public boolean shouldReceive() {
         return cardHand.getDealerTotal() <= DEALER_UNDER;
-    }
-
-    public GameResultDto getGameResult(List<Player> players) {
-        List<PlayerResultDto> playersResults = new ArrayList<>();
-        DealerResult dealerMatchCount = new DealerResult();
-        int dealerTotal = getHandTotal();
-
-        for (Player player : players) {
-            MatchResult matchResult = player.getMatchResult(dealerTotal);
-
-            playersResults.add(PlayerResultDto.from(player, matchResult));
-
-            MatchResult dealerMatch = matchResult.reverse();
-            dealerMatchCount.add(dealerMatch);
-        }
-
-        return new GameResultDto(getCards(), dealerTotal, dealerMatchCount, playersResults);
     }
 
     @Override

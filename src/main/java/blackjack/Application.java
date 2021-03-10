@@ -2,7 +2,7 @@ package blackjack;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.GameResultDto;
+import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class Application {
 
     public static void main(String[] args) {
-        Dealer dealer = new Dealer();
+        Dealer dealer = Dealer.getInstance();
         List<Player> players = getPlayers();
 
         initializeParticipants(dealer, players);
@@ -21,8 +21,7 @@ public class Application {
         progressPlayersTurn(dealer, players);
         progressDealerTurn(dealer);
 
-        GameResultDto result = getResult(dealer, players);
-        OutputView.printGameResult(result);
+        OutputView.printGameResult(GameResult.calculate(dealer, players));
     }
 
     private static void initializeParticipants(Dealer dealer, List<Player> players) {
@@ -73,9 +72,5 @@ public class Application {
             OutputView.printDealerDrawMessage();
             dealer.selfDraw();
         }
-    }
-
-    private static GameResultDto getResult(Dealer dealer, List<Player> players) {
-        return dealer.getGameResult(players);
     }
 }
