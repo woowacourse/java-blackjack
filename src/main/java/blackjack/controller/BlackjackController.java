@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.participants.Money;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Names;
 import blackjack.domain.participants.Participant;
@@ -32,11 +31,10 @@ public class BlackjackController {
 
     private Participants createParticipants() {
         final Names names = requestName();
-        final List<Money> moneys = new ArrayList<>();
+        final List<Double> moneys = new ArrayList<>();
         for (final Name name : names.toList()) {
             final double value = InputView.requestMoney(name);
-            final Money money = new Money(value);
-            moneys.add(money);
+            moneys.add(value);
         }
         return new Participants(names, new ArrayList<>(moneys));
     }

@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.participants.Money;
-
 public enum Result {
     BLACKJACK("블랙잭"),
     WIN("승"),
@@ -18,17 +16,17 @@ public enum Result {
         return this == result;
     }
 
-    public double calculateRate(final Money money) {
+    public double calculateRate(final double money) {
         if (this == BLACKJACK) {
-            return money.getValue() * 1.5;
+            return money * 1.5;
         }
         if (this == WIN) {
-            return money.getValue();
+            return money;
         }
         if (this == DRAW) {
             return 0;
         }
-        return -money.getValue();
+        return -money;
     }
 
     public String getValue() {

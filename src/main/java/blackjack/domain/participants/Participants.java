@@ -10,7 +10,7 @@ public class Participants {
 
     private final List<Participant> participantGroup;
 
-    public Participants(final Names names, final List<Money> moneys) {
+    public Participants(final Names names, final List<Double> moneys) {
         participantGroup = participantsSetUp(names, moneys);
     }
 
@@ -18,7 +18,7 @@ public class Participants {
         participantGroup = participantsSetUp(names);
     }
 
-    private List<Participant> participantsSetUp(final Names names, final List<Money> moneys) {
+    private List<Participant> participantsSetUp(final Names names, final List<Double> moneys) {
         final List<Participant> participants = new ArrayList<>();
         final List<Name> nameGroup = names.toList();
         for (int i = 0; i < nameGroup.size(); i++) {

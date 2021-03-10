@@ -39,15 +39,14 @@ public class DealerTest {
     @DisplayName("딜러의 초기 돈을 확인")
     void checkInitialMoney() {
         final Participant dealer = new Dealer();
-        assertThat(dealer.getMoney()).isEqualTo(new Money(0));
-        assertThat(dealer.getMoney()).isEqualTo(new Money());
+        assertThat(dealer.getMoney()).isEqualTo(0);
     }
 
     @Test
     @DisplayName("딜러의 현재 돈을 확인")
     void checkMoney() {
         final Participant dealer = new Dealer(1000.0);
-        assertThat(dealer.getMoney()).isEqualTo(new Money(1000.0));
+        assertThat(dealer.getMoney()).isEqualTo(1000.0);
     }
 
     @Test

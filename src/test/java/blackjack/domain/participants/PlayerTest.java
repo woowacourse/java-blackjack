@@ -36,15 +36,14 @@ public class PlayerTest {
     @DisplayName("참가자의 초기 돈을 확인")
     void checkInitialMoney() {
         final Participant player = new Player("j.on");
-        assertThat(player.getMoney()).isEqualTo(new Money(0));
-        assertThat(player.getMoney()).isEqualTo(new Money());
+        assertThat(player.getMoney()).isEqualTo(0);
     }
 
     @Test
     @DisplayName("참가자의 현재 돈을 확인")
     void checkMoney() {
         final Participant player = new Player("j.on", 1000.0);
-        assertThat(player.getMoney()).isEqualTo(new Money(1000.0));
+        assertThat(player.getMoney()).isEqualTo(1000.0);
     }
 
     @Test

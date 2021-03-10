@@ -10,10 +10,10 @@ public abstract class Participant {
     private static final int BLACKJACK_SCORE = 21;
     private static final int INITIAL_CARDS_COUNT = 2;
     private final Name name;
-    private final Money money;
+    private final double money;
     private final PlayerCards playerCards;
 
-    public Participant(final Name name, final Money money) {
+    public Participant(final Name name, final double money) {
         this.name = name;
         this.money = money;
         this.playerCards = new PlayerCards();
@@ -21,7 +21,7 @@ public abstract class Participant {
 
     public Participant(final Name name) {
         this.name = name;
-        money = new Money();
+        money = 0;
         this.playerCards = new PlayerCards();
     }
 
@@ -37,7 +37,7 @@ public abstract class Participant {
         return name;
     }
 
-    public Money getMoney() {
+    public double getMoney() {
         return money;
     }
 
