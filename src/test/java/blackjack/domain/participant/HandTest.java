@@ -15,7 +15,7 @@ public class HandTest {
     void testAddCardInHand() {
         Hand hand = new Hand();
         hand.addCard(new Card(Pattern.DIAMOND, Number.TWO));
-        assertThat(hand.totalScore()).isEqualTo(2);
+        assertThat(hand.totalScore()).isEqualTo(new Score(2));
     }
 
     @Test
@@ -25,7 +25,7 @@ public class HandTest {
         hand.addCard(new Card(Pattern.CLOVER, Number.EIGHT));
         hand.addCard(new Card(Pattern.CLOVER, Number.NINE));
         hand.addCard(new Card(Pattern.CLOVER, Number.QUEEN));
-        assertThat(hand.totalScore()).isEqualTo(27);
+        assertThat(hand.totalScore()).isEqualTo(new Score(27));
     }
 
     @Test
@@ -35,6 +35,6 @@ public class HandTest {
         hand.addCard(new Card(Pattern.DIAMOND, Number.ACE));
         hand.addCard(new Card(Pattern.CLOVER, Number.ACE));
         hand.addCard(new Card(Pattern.HEART, Number.ACE));
-        assertThat(hand.totalScore()).isEqualTo(13);
+        assertThat(hand.totalScore()).isEqualTo(new Score(13));
     }
 }

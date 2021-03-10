@@ -11,9 +11,6 @@ import static blackjack.domain.GameResult.*;
 
 public class Dealer extends Participant {
 
-    private static final int LIMIT_SCORE = 17;
-    private static final int MAX_SCORE_NUMBER = 21;
-
     private final CardDeck cardDeck;
 
     public Dealer() {
@@ -29,12 +26,12 @@ public class Dealer extends Participant {
     }
 
     public GameResult judgeHand(final Player player) {
-        int playerScore = player.getTotalScore();
-        int dealerScore = this.getTotalScore();
-        if (playerScore > MAX_SCORE_NUMBER || (dealerScore <= MAX_SCORE_NUMBER && dealerScore > playerScore)) {
+        Score playerScore = player.getTotalScore();
+        Score dealerScore = this.getTotalScore();
+        if (playerScore.isBust() || (!dealerScore.isBust() && dealerScore.compareTo(playerScore))) {
             return LOSE;
         }
-        if (dealerScore < playerScore || dealerScore > MAX_SCORE_NUMBER) {
+        if (playerScore.compareTo(dealerScore) || dealerScore.isBust()) {
             return WIN;
         }
         return TIE;
@@ -42,7 +39,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isOverLimitScore() {
-        return getTotalScore() >= LIMIT_SCORE;
+        return getTotalScore().isDealerStateStay();
     }
 
     public void initDealerHand(int receiveCount) {

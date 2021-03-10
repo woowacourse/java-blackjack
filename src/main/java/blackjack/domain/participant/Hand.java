@@ -19,41 +19,29 @@ public class Hand {
         cards.add(card);
     }
 
-    public int totalScore() {
-        int totalScore = calculateScore();
-        if (isBurst(totalScore)) {
-            totalScore = calculateHardAceScore(totalScore);
+    public Score totalScore() {
+        Score score = new Score(calculateScore());
+        long acesCount = acesCount();
+        for (int i = 0; i < acesCount; i++) {
+            score = score.changeHardAce();
         }
-        return totalScore;
+        return score;
     }
 
     private int calculateScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)
-                .reduce(0, Integer::sum);
+                .sum();
     }
 
-    private int calculateHardAceScore(int totalScore) {
-        int aceCount = getAceCount();
-        while (isBurst(totalScore) && hasAce(aceCount)) {
-            totalScore -= 10;
-            aceCount -= 1;
-        }
-        return totalScore;
-    }
-
-    private int getAceCount() {
-        return (int) cards.stream()
+    private long acesCount() {
+        return cards.stream()
                 .filter(Card::isAce)
                 .count();
     }
 
-    private boolean hasAce(int aceCount) {
-        return aceCount > 0;
-    }
-
-    private boolean isBurst(final int score) {
-        return score > MAX_SCORE;
+    private boolean isBust() {
+        return calculateScore() > MAX_SCORE;
     }
 
     public List<Card> toList() {

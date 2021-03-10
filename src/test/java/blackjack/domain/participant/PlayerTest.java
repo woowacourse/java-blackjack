@@ -24,6 +24,6 @@ public class PlayerTest {
         Card card = new Card(Pattern.DIAMOND, Number.EIGHT);
         player.receiveCard(card);
 
-        assertThat(player.getTotalScore()).isEqualTo(8);
+        assertThat(player.getTotalScore()).isEqualTo(new Score(8));
     }
 }

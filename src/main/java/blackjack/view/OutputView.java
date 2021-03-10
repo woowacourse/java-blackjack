@@ -16,6 +16,7 @@ public class OutputView {
     private static final String INIT_GAME_FORMAT = "딜러와 %s에게 2장을 나누었습니다.";
     private static final String HAND_FORMAT = " 카드: ";
     private static final int DEALER_HIT_LIMIT = 16;
+    private static final int BUST_SCORE = 21;
     private static final String SCORE_FORMAT = " - 결과: ";
     private static final String BLANK = " ";
 
@@ -45,7 +46,7 @@ public class OutputView {
                 .append(HAND_FORMAT)
                 .append(joinCards(dealer.toHandList()))
                 .append(SCORE_FORMAT)
-                .append(dealer.getTotalScore())
+                .append(dealer.getTotalScore().getValue())
                 .append(NEW_LINE);
         return sb.toString();
     }
@@ -57,7 +58,7 @@ public class OutputView {
                     .append(HAND_FORMAT)
                     .append(joinCards(player.toHandList()))
                     .append(SCORE_FORMAT)
-                    .append(player.getTotalScore())
+                    .append(player.getTotalScore().getValue())
                     .append(NEW_LINE);
         }
         return sb.toString();
@@ -119,7 +120,7 @@ public class OutputView {
     }
 
     public static void printPlayerBurst(final String playerName) {
-        System.out.printf("%s의 점수 총합이 21점을 넘어 버스트 되었습니다.", playerName);
+        System.out.printf("%s의 점수 총합이 "+ BUST_SCORE + "점을 넘어 버스트 되었습니다.", playerName);
         System.out.print(NEW_LINE);
     }
 

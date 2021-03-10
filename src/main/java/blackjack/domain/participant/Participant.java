@@ -19,7 +19,7 @@ public abstract class Participant {
         this.hand.addCard(card);
     }
 
-    public int getTotalScore() {
+    public Score getTotalScore() {
         return hand.totalScore();
     }
 
