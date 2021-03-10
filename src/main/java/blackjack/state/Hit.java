@@ -8,6 +8,7 @@ public class Hit extends Running{
         super(cards);
     }
 
+    @Override
     public State hit(Card card) {
         cards.add(card);
 
@@ -16,5 +17,10 @@ public class Hit extends Running{
         }
 
         return new Hit(cards);
+    }
+
+    @Override
+    public State stay() {
+        return new Stay(cards);
     }
 }
