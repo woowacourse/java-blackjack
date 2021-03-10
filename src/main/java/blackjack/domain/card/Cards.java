@@ -1,35 +1,37 @@
 package blackjack.domain.card;
 
-import blackjack.exception.CardDuplicateException;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Cards {
-
     private final List<Card> cards;
     private int index = 0;
 
-    public Cards(final List<Card> cards) {
-        duplicateValidate(cards);
-
+    private Cards(List<Card> cards) {
         this.cards = cards;
     }
 
-    private void duplicateValidate(List<Card> cards) {
-        Set<Card> cardSet = new HashSet<>(cards);
-        if (cards.size() != cardSet.size()) {
-            throw new CardDuplicateException();
-        }
+    public static Cards createNormalCards() {
+        List<Card> cards =
+            Arrays.stream(Symbol.values())
+                .flatMap(Cards::createCard)
+                .collect(Collectors.toList());
+        return new Cards(cards);
     }
 
-    public Card next() {
-        return cards.get(index++);
+    private static Stream<Card> createCard(Symbol symbol) {
+        return Arrays.stream(CardNumber.values())
+            .map(cardNumber -> Card.from(cardNumber, symbol));
     }
 
     public void shuffle() {
         Collections.shuffle(cards);
     }
 
+    public Card next() {
+        return cards.get(index++);
+    }
 }

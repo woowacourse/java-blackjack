@@ -1,20 +1,15 @@
 package blackjack.domain.card;
 
-import blackjack.exception.CardDuplicateException;
-import java.util.Arrays;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardsTest {
+class CardsTest {
 
     @Test
-    @DisplayName("동일한 카드를 넣을 수 없다.")
-    void createCards_duplicationException() {
-        Assertions.assertThatThrownBy(() -> new Cards(Arrays.asList(
-            new Card(Symbol.CLOVER, CardNumber.EIGHT),
-            new Card(Symbol.CLOVER, CardNumber.EIGHT)
-        ))).isInstanceOf(CardDuplicateException.class);
+    @DisplayName("cards의 next() 호출 시 다른 카드가 나오는 지 테스트")
+    void next() {
+        Cards cards = Cards.createNormalCards();
+        Assertions.assertThat(cards.next()).isNotEqualTo(cards.next());
     }
-
 }

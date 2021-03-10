@@ -10,28 +10,24 @@ public enum CardNumber {
     SEVEN("7", 7),
     EIGHT("8", 8),
     NINE("9", 9),
-    KING("K", 10),
+    TEN("10", 10),
+    JACK("J", 10),
     QUEEN("Q", 10),
-    JACK("J", 10);
+    KING("K", 10);
 
-    private static final int ACE_EXCEPTION_NUMBER = 10;
-    private final String name;
+    private final String cardName;
     private final int score;
 
-    CardNumber(String name, int score) {
-        this.name = name;
+    CardNumber(String cardName, int score) {
+        this.cardName = cardName;
         this.score = score;
     }
 
-    public static int acePlusNumber() {
-        return ACE_EXCEPTION_NUMBER;
+    public String cardName() {
+        return cardName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getScore() {
+    public int score() {
         return score;
     }
 }
