@@ -5,6 +5,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.player.BettingMoney;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Name;
@@ -41,7 +42,11 @@ public class BlackjackController {
 
     private List<Gamer> initGamers(String[] gamerNames, Deck deck) {
         return Arrays.stream(gamerNames)
-                .map(gamerName -> new Gamer(new Name(gamerName), Cards.of(deck.drawFirstCards())))
+                .map(gamerName -> new Gamer(
+                        new Name(gamerName),
+                        Cards.of(deck.drawFirstCards()),
+                        new BettingMoney(InputView.inputBettingMoney(gamerName))
+                ))
                 .collect(Collectors.toList());
     }
 
@@ -57,16 +62,18 @@ public class BlackjackController {
     }
 
     private void drawPerGamer(Gamer gamer, Deck deck) {
-        while (gamer.canDraw() && InputView.inputHitOrStand(gamer.getName())) {
-            gamer.addCard(deck.draw());
+        while (gamer.canDraw() && InputView.inputHitOrStay(gamer.getName())) {
+            gamer.draw(deck.draw());
             OutputView.printPlayerCardInfo(gamer);
         }
+        gamer.stay();
     }
 
     private void drawDealerCard(Dealer dealer, Deck deck) {
         while (dealer.canDraw()) {
-            dealer.addCard(deck.draw());
+            dealer.draw(deck.draw());
             OutputView.printDealerOneMoreDrawMessage();
         }
+        dealer.stay();
     }
 }

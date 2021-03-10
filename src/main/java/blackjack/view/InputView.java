@@ -18,7 +18,7 @@ public class InputView {
         return scanner.nextLine().split(",", -1);
     }
 
-    public static boolean inputHitOrStand(String gamerName) {
+    public static boolean inputHitOrStay(String gamerName) {
         System.out.printf(INPUT_HIT_OR_STAND, gamerName);
         String input = scanner.nextLine().toLowerCase();
         validateInput(input);
@@ -28,6 +28,16 @@ public class InputView {
     private static void validateInput(String input) {
         if (!YES.equals(input) && !NO.equals(input)) {
             throw new IllegalArgumentException(Y_OR_N_ERROR);
+        }
+    }
+
+    public static int inputBettingMoney(String gamerName) {
+        try {
+            System.out.println();
+            System.out.printf("%s의 베팅 금액은?\n", gamerName);
+            return Integer.parseInt(scanner.nextLine());
+        }catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("[ERROR] 숫자를 입력해주세요.");
         }
     }
 }
