@@ -19,6 +19,10 @@ public class Card {
         return cardNumber.getScore() == BlackJackConstant.ACE_SCORE;
     }
 
+    public boolean isTen() {
+        return cardNumber.getScore() == BlackJackConstant.TEN_SCORE;
+    }
+
     @Override
     public String toString() {
         return this.cardNumber.getScore() + this.suit.getName();
