@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 public class InputView {
     public static final String WRONG_INPUT_ERROR_MESSAGE = "유효한 대답이 아닙니다.";
+    public static final String BETTING_MONEY_IS_NUMBER_ERROR_MESSAGE = "숫자를 입력해야합니다.";
     public static final String OK = "y";
     private static final String NO = "n";
     private static final String DELIMITER = ",";
@@ -30,5 +31,13 @@ public class InputView {
             throw new IllegalArgumentException(WRONG_INPUT_ERROR_MESSAGE);
         }
         return answer.equals(OK);
+    }
+
+    public static int inputBettingMoney() {
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(BETTING_MONEY_IS_NUMBER_ERROR_MESSAGE);
+        }
     }
 }

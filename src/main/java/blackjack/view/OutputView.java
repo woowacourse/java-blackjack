@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
+import blackjack.domain.participant.Player;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.PlayersResultDto;
@@ -15,6 +16,7 @@ import static blackjack.domain.participant.Dealer.DEALER_NAME;
 
 public class OutputView {
     private static final String ENTER_PLAYERS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String ENTER_BETTING_MONEY = "%s의 베팅 금액은?";
     private static final String DISTRIBUTE_MESSAGE_FORM = "딜러와 %s에게 2장의 카드를 나누었습니다.";
     private static final String CURRENT_CARD_FORM = "%s카드 : %s";
     private static final String ASK_DRAW_CARD_FORM = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
@@ -33,6 +35,11 @@ public class OutputView {
 
     public static void enterPlayersName() {
         System.out.println(ENTER_PLAYERS_NAME);
+    }
+
+    public static void askBettingMoney(Player player) {
+        System.out.printf(ENTER_BETTING_MONEY, player.getName().getName());
+        printNewLine();
     }
 
     public static void distributeFirstTwoCard(List<ParticipantDto> playersDto, ParticipantDto dealerDto) {

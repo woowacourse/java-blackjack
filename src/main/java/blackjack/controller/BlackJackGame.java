@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
@@ -32,8 +33,9 @@ public class BlackJackGame {
     private Players registerPlayers() {
         try {
             OutputView.enterPlayersName();
-            List<String> allPlayersName = InputView.inputName();
-            return new Players(generatePlayers(allPlayersName));
+            List<Player> players = generatePlayers(InputView.inputName());
+            players.forEach(this::bettingEachPlayer);
+            return new Players(players);
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
             return registerPlayers();
@@ -47,12 +49,19 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
+    private void bettingEachPlayer(Player player) {
+        try {
+            OutputView.askBettingMoney(player);
+            player.betting(new BettingMoney(InputView.inputBettingMoney()));
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+            bettingEachPlayer(player);
+        }
+    }
+
     private Deck cardDeckSetting() {
         Deck deck = new Deck(Card.values());
-//        Cards deck = new Cards(Card.values());
-//        CardDeck cardDeck = new CardDeck(deck);
         deck.shuffleDeck();
-//        cardDeck.shuffleCard();
         return deck;
     }
 
