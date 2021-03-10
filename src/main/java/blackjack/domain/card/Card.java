@@ -12,7 +12,7 @@ public class Card {
         this.symbol = symbol;
     }
 
-    public static Card from(CardNumber cardNumber, Symbol symbol) {
+    public static Card of(CardNumber cardNumber, Symbol symbol) {
         return new Card(cardNumber, symbol);
     }
 
@@ -22,6 +22,10 @@ public class Card {
 
     public String name() {
         return cardNumber.cardName() + symbol.getName();
+    }
+
+    public boolean isAce() {
+        return cardNumber == CardNumber.ACE;
     }
 
     @Override

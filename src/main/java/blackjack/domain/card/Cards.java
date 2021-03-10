@@ -24,7 +24,7 @@ public class Cards {
 
     private static Stream<Card> createCard(Symbol symbol) {
         return Arrays.stream(CardNumber.values())
-            .map(cardNumber -> Card.from(cardNumber, symbol));
+            .map(cardNumber -> Card.of(cardNumber, symbol));
     }
 
     public void shuffle() {

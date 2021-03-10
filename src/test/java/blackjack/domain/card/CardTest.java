@@ -7,7 +7,7 @@ class CardTest {
 
     @Test
     void createCard() {
-        Card card = Card.from(CardNumber.ACE, Symbol.HEART);
-        Assertions.assertThat(card).isEqualTo(Card.from(CardNumber.ACE, Symbol.HEART));
+        Card card = Card.of(CardNumber.ACE, Symbol.HEART);
+        Assertions.assertThat(card).isEqualTo(Card.of(CardNumber.ACE, Symbol.HEART));
     }
 }
