@@ -1,18 +1,15 @@
-package blackjack;
+package blackjack.domain.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Score;
 import blackjack.domain.card.Cards;
-import blackjack.domain.gamer.Players;
 import blackjack.domain.gametable.GameTable;
-import blackjack.domain.Outcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denominations;
 import blackjack.domain.card.Suits;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Participant;
-import blackjack.utils.FixedCardDeck;
+import blackjack.domain.utils.FixedCardDeck;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

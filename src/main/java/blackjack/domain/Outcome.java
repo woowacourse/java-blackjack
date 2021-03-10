@@ -1,9 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Cards;
-import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Participant;
-import blackjack.domain.gamer.Player;
+import blackjack.domain.card.Score;
 
 public enum Outcome {
     WIN("승"),

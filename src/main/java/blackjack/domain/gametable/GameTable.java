@@ -5,8 +5,7 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.dto.Results;
-import blackjack.utils.CardDeck;
+import blackjack.domain.utils.CardDeck;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -44,7 +43,6 @@ public class GameTable implements Playable {
 
     }
 
-
     @Override
     public void giveCard(Participant participant) {
         validateRestCards();
@@ -57,14 +55,6 @@ public class GameTable implements Playable {
         if (cardDeck.isEmpty()) {
             throw new IllegalArgumentException("카드가 소진되었습니다.");
         }
-    }
-
-    public Results getParticipants() {
-        return new Results(players, dealer);
-    }
-
-    public List<Player> getPlayers() {
-        return players.getUnmodifiableList();
     }
 
 }

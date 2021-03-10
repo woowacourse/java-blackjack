@@ -1,6 +1,5 @@
-package blackjack;
+package blackjack.domain.gamer;
 
-import blackjack.domain.Score;
 import blackjack.domain.card.Cards;
 import blackjack.domain.gametable.GameTable;
 import blackjack.domain.card.Card;
@@ -9,12 +8,11 @@ import blackjack.domain.card.Suits;
 import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
-import blackjack.utils.FixedCardDeck;
+import blackjack.domain.utils.FixedCardDeck;
 import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
