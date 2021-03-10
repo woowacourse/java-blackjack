@@ -26,6 +26,6 @@ public class MoneyTest {
     void validate(String input) {
         assertThatThrownBy(() -> new Money(input))
                 .isInstanceOf(InvalidMoneyInputException.class)
-                .hasMessage("1 이상의 숫자를 입력해야 합니다.");
+                .hasMessage("숫자를 입력해야 합니다.");
     }
 }

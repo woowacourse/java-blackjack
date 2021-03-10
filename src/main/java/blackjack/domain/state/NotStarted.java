@@ -1,11 +1,15 @@
 package blackjack.domain.state;
 
 import blackjack.domain.Hand;
+import blackjack.util.GameInitializer;
 
-public abstract class Finished extends Started {
+public class NotStarted implements State{
     @Override
     public State update(Hand hand) {
-        throw new IllegalStateException();
+        if (hand.unwrap().size() == GameInitializer.STARTING_CARD_COUNT) {
+            return StateFactory.getInstance(hand);
+        }
+        return this;
     }
 
     @Override
@@ -15,6 +19,6 @@ public abstract class Finished extends Started {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 }

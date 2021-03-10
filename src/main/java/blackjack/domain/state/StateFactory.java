@@ -12,4 +12,8 @@ public class StateFactory {
         }
         return new Hit();
     }
+
+    public static State getInstance() {
+        return new NotStarted();
+    }
 }

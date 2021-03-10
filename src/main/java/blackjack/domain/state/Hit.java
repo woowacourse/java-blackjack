@@ -5,7 +5,7 @@ import blackjack.domain.Hand;
 public class Hit extends Running {
 
     @Override
-    public State draw(Hand hand) {
+    public State update(Hand hand) {
         if (hand.isBust()) {
             return new Bust();
         }

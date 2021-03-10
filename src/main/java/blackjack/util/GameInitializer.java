@@ -29,7 +29,6 @@ public class GameInitializer {
         for (int i = 0; i < STARTING_CARD_COUNT; i++) {
             players.unwrap().forEach(player -> player.draw(deck.draw()));
         }
-        players.unwrap().forEach(Player::initializeState);
         return players;
     }
 
@@ -38,7 +37,6 @@ public class GameInitializer {
         for (int i = 0; i < STARTING_CARD_COUNT; i++) {
             dealer.draw(deck.draw());
         }
-        dealer.initializeState();
         return dealer;
     }
 }

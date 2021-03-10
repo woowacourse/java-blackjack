@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.exception.InvalidNameInputException;
 
 public class Dealer extends BlackJackParticipant {
 
@@ -15,12 +14,13 @@ public class Dealer extends BlackJackParticipant {
     @Override
     public void draw(Card card) {
         getHand().addCard(card);
-        if (isOverLimit()) {
-            cannotDraw();
+        updateState();
+        if (isStay()) {
+            stay();
         }
     }
 
-    private boolean isOverLimit() {
-        return getScore() > DEALER_LIMIT;
+    private boolean isStay() {
+        return getScore() > DEALER_LIMIT && !isBust();
     }
 }

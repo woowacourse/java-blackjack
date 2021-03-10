@@ -78,7 +78,7 @@ public class TestSetUp {
 
     private static List<Card> getBustDeck() {
         return new ArrayList<>(Arrays.asList(Card.valueOf(Shape.SPADE, CardValue.KING),
-                Card.valueOf(Shape.SPADE, CardValue.QUEEN),
+                Card.valueOf(Shape.SPADE, CardValue.SIX),
                 Card.valueOf(Shape.SPADE, CardValue.JACK)));
     }
 }

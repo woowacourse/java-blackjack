@@ -15,7 +15,7 @@ class HitTest {
     void checkState() throws InvalidNameInputException {
         State hit = new Hit();
         Hand bustHand = TestSetUp.createBustPlayer().getHand();
-        assertThat(hit.draw(bustHand)).isInstanceOf(Bust.class);
+        assertThat(hit.update(bustHand)).isInstanceOf(Bust.class);
         assertThat(hit.stay()).isInstanceOf(Stay.class);
     }
 }

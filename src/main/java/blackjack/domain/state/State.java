@@ -4,7 +4,7 @@ import blackjack.domain.Hand;
 
 public interface State {
 
-    State draw(Hand hand);
+    State update(Hand hand);
 
     State stay();
 

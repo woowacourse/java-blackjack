@@ -14,17 +14,14 @@ public class Player extends BlackJackParticipant {
     @Override
     public void draw(Card card) {
         getHand().addCard(card);
-        if (isBust()) {
-            cannotDraw();
-        }
+        updateState();
     }
 
     public boolean willContinue(String input) {
         if (!Response.getHitStatus(input)) {
-            cannotDraw();
-            return false;
+            stay();
         }
-        return true;
+        return isContinue();
     }
 
     public ResultType match(Dealer dealer) {

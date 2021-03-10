@@ -4,8 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Player;
-import blackjack.domain.state.BlackJackState;
-import blackjack.domain.state.Hit;
+import blackjack.domain.state.*;
 import blackjack.exception.InvalidNameInputException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,16 +37,16 @@ public class PlayerTest {
     @Test
     @DisplayName("유저가 카드를 계속 더 받을건지 입력")
     void willContinue() throws InvalidNameInputException {
-        Player root = new Player("root");
+        Player player = TestSetUp.createTiePlayer();
 
-        root.willContinue("y");
-        assertThat(root.isContinue()).isTrue();
+        player.willContinue("y");
+        assertThat(player.isContinue()).isTrue();
 
-        root.willContinue("n");
-        assertThat(root.isContinue()).isFalse();
+        player.willContinue("n");
+        assertThat(player.isContinue()).isFalse();
 
         assertThatThrownBy(() ->
-                root.willContinue("x"))
+                player.willContinue("x"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("불가능한 입력 입니다.");
     }
@@ -94,13 +93,17 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("상태 초기화 기능")
-    void initializeState() {
-        Player blackJackPlayer = TestSetUp.createWinner();
-        Player hitPlayer = TestSetUp.createTiePlayer();
-        blackJackPlayer.initializeState();
-        hitPlayer.initializeState();
-        assertThat(blackJackPlayer.getState()).isInstanceOf(BlackJackState.class);
-        assertThat(hitPlayer.getState()).isInstanceOf(Hit.class);
+    @DisplayName("상태 변화 기능")
+    void updateState() {
+        Player aaron = new Player("aaron");
+        assertThat(aaron.getState()).isInstanceOf(NotStarted.class);
+        assertThat(TestSetUp.createWinner().getState()).isInstanceOf(BlackJackState.class);
+
+        aaron = TestSetUp.createTiePlayer();
+        assertThat(aaron.getState()).isInstanceOf(Hit.class);
+        assertThat(TestSetUp.createBustPlayer().getState()).isInstanceOf(Bust.class);
+
+        aaron.willContinue("n");
+        assertThat(aaron.getState()).isInstanceOf(Stay.class);
     }
 }
