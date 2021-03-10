@@ -1,8 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackManager;
+import blackjack.domain.DtoAssembler;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -17,58 +17,62 @@ public class BlackjackController {
         Players players = new Players(InputView.getPlayerNames());
         BlackjackManager blackjackManager = new BlackjackManager(dealer, players);
 
-        initBlackjack(blackjackManager);
-        hitCardPlayersAndDealer(blackjackManager);
-        printHitCardResult(blackjackManager);
-        printGameResult(blackjackManager);
+        initDrawCardsDealerAndAllPlayers(blackjackManager);
+        hitOrStayAllPlayers(blackjackManager);
+        hitDealerUntilOverLimitScore(blackjackManager);
+        printCardsWithScoreOfDealerAndAllPlayers(blackjackManager);
+        printBlackjackResult(blackjackManager);
     }
 
-    private void initBlackjack(final BlackjackManager blackjackManager) {
+    private void initDrawCardsDealerAndAllPlayers(BlackjackManager blackjackManager) {
         blackjackManager.initDrawCards();
-        ParticipantDto dealerDto = blackjackManager.createDealerDto();
-        List<ParticipantDto> playerDtos = blackjackManager.createPlayerDtos();
-        OutputView.printInitHands(dealerDto, playerDtos);
+        ParticipantDto dealerInitStatus = DtoAssembler.createDealerInitStatusDto(blackjackManager.getDealer());
+        List<ParticipantDto> playerStatuses = DtoAssembler.createPlayerStatusDtos(blackjackManager.getPlayers());
+        OutputView.printInitStatuses(dealerInitStatus, playerStatuses);
     }
 
-    private void hitCardPlayersAndDealer(final BlackjackManager blackjackManager) {
-        hitCardPlayers(blackjackManager);
+    private void hitOrStayAllPlayers(BlackjackManager blackjackManager) {
+        while (!blackjackManager.isFinishedAllPlayers()) {
+            hitOrStayCurrentPlayer(blackjackManager);
+            blackjackManager.passTurnToNextPlayer();
+        }
+        blackjackManager.passTurnToNextPlayer();
+    }
+
+    private void hitOrStayCurrentPlayer(BlackjackManager blackjackManager) {
+        if (!blackjackManager.isFinishedCurrentPlayer()) {
+            blackjackManager.hitOrStayCurrentPlayer(InputView.getHitOrStay(blackjackManager.getCurrentPlayerName()));
+            OutputView.printPlayerStatus(DtoAssembler.createPlayerStatusDto(blackjackManager.getCurrentPlayer()));
+        }
+    }
+
+    private void hitDealerUntilOverLimitScore(BlackjackManager blackjackManager) {
         OutputView.printNewLine();
-        hitCardDealer(blackjackManager);
-    }
-
-    private void hitCardPlayers(BlackjackManager blackjackManager) {
-        for (String name : blackjackManager.getPlayerNames()) {
-            hitCardPlayer(blackjackManager.findPlayerByName(name), blackjackManager);
+        while(!blackjackManager.isFinishedDealer()){
+            hitOrStayDealer(blackjackManager);
         }
+        OutputView.printNewLine();
     }
 
-    private void hitCardPlayer(final Player player, final BlackjackManager blackjackManager) {
-        while (player.isHitable() && InputView.getHitOrStay(player.getName())) {
-            blackjackManager.drawCardPlayer(player);
-            OutputView.printPlayerHand(blackjackManager.createPlayerDto(player));
+    private void hitOrStayDealer(BlackjackManager blackjackManager) {
+        if(blackjackManager.isDealerScoreOverThenLimit()){
+            blackjackManager.stayDealer();
+            return;
         }
-        if (player.isBurst()) {
-            OutputView.printPlayerBurst(blackjackManager.createPlayerDto(player));
-        }
-        OutputView.printPlayerHand(blackjackManager.createPlayerDto(player));
+        blackjackManager.hitDealer();
+        OutputView.printDealerHit();
     }
 
-    private void hitCardDealer(final BlackjackManager blackjackManager) {
-        while (blackjackManager.isDealerHitable()) {
-            blackjackManager.drawCardDealer();
-            OutputView.printDealerHit(blackjackManager.createDealerDto());
-        }
+    private void printCardsWithScoreOfDealerAndAllPlayers(BlackjackManager blackjackManager) {
+        OutputView.printStatusWithScore(DtoAssembler.createDealerStatusDto(blackjackManager.getDealer()));
+        DtoAssembler.createPlayerStatusDtos(blackjackManager.getPlayers()).forEach(OutputView::printStatusWithScore);
     }
 
-    private void printHitCardResult(final BlackjackManager blackjackManager) {
-        ParticipantDto dealerDto = blackjackManager.createDealerDto();
-        List<ParticipantDto> playerDtos = blackjackManager.createPlayerDtos();
-        OutputView.printDealerAndPlayersHandWithScore(dealerDto, playerDtos);
-    }
-
-    private void printGameResult(final BlackjackManager blackjackManager) {
-        ResultDto dealerResult = blackjackManager.createDealerResultDto();
-        List<ResultDto> playerResultDtos = blackjackManager.createPlayerResultDtos();
-        OutputView.printGameResult(dealerResult, playerResultDtos);
+    private void printBlackjackResult(BlackjackManager blackjackManager) {
+        Dealer dealer = blackjackManager.getDealer();
+        Players players = blackjackManager.getPlayers();
+        ResultDto dealerResult = DtoAssembler.createDealerResultDto(dealer, players);
+        List<ResultDto> playerResultDtos = DtoAssembler.createPlayerResultDtos(dealer, players);
+        OutputView.printBlackjackResult(dealerResult, playerResultDtos);
     }
 }

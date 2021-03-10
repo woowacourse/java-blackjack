@@ -4,6 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.BlackjackManager;
+import blackjack.domain.carddeck.Card;
+import blackjack.domain.carddeck.CardDeck;
+import blackjack.domain.carddeck.Number;
+import blackjack.domain.carddeck.Pattern;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -59,15 +63,65 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("원하는 플레이어를 찾아낸다.")
-    void testFindPlayer() {
-        List<String> names = Arrays.asList("pobi", "jason", "미립");
+    @DisplayName("모든 플레이어가 플레이를 완료했는지 확인한다.")
+    void testIsAllPlayerPlayedBlackJack() {
+        List<String> names = Arrays.asList("미립", "현구막");
         Players players = new Players(names);
+        players.initDraw(getCustomCardDeck());
 
-        assertThat(players.findPlayerByName(new Name("pobi")))
-            .isEqualTo(new Player(new Name("pobi")));
+        players.drawFirstOrderPlayer(Card.valueOf(Pattern.SPADE, Number.JACK));
+        players.passTurnToNextPlayer();
+        players.drawFirstOrderPlayer(Card.valueOf(Pattern.DIAMOND, Number.JACK));
 
-        assertThat(players.findPlayerByName(new Name("미립")))
-            .isEqualTo(new Player(new Name("미립")));
+        assertThat(players.isAllPlayerFinished()).isTrue();
+    }
+
+    private CardDeck getCustomCardDeck() {
+        Card firstCard = Card.valueOf(Pattern.HEART, Number.TEN);
+        Card secondCard = Card.valueOf(Pattern.HEART, Number.KING);
+        Card thirdCard = Card.valueOf(Pattern.HEART, Number.QUEEN);
+        Card fourthCard = Card.valueOf(Pattern.HEART, Number.JACK);
+        return CardDeck.customDeck(Arrays.asList(firstCard, secondCard, thirdCard, fourthCard));
+    }
+
+    @Test
+    @DisplayName("가장 앞 차례 플레이어 턴이 넘어갔는지 확인한다.")
+    void testIsSuccessPassThePlayerTurn() {
+        List<String> names = Arrays.asList("미립", "현구막");
+        Players players = new Players(names);
+        players.initDraw(getCustomCardDeck());
+
+        assertThat(players.getFirstOrderPlayerName()).isEqualTo("미립");
+        players.passTurnToNextPlayer();
+        assertThat(players.getFirstOrderPlayerName()).isEqualTo("현구막");
+    }
+
+    @Test
+    @DisplayName("가장 앞 차례 플레이어가 카드를 뽑았는지 확인한다.")
+    void testPlayerDrawCard() {
+        List<String> name = Collections.singletonList("미립");
+        Players players = new Players(name);
+        players.initDraw(getDrawTestCardDeck());
+
+        assertThat(players.getFirstOrderPlayer().getScoreToInt()).isEqualTo(12);
+        players.drawFirstOrderPlayer(Card.valueOf(Pattern.DIAMOND, Number.THREE));
+        assertThat(players.getFirstOrderPlayer().getScoreToInt()).isEqualTo(15);
+    }
+
+    @Test
+    @DisplayName("가장 앞 차례 플레이어가 Stay 상태로 변화에 성공했는지 확인한다.")
+    void testPlayerStateToStay() {
+        List<String> name = Collections.singletonList("미립");
+        Players players = new Players(name);
+        players.initDraw(getDrawTestCardDeck());
+        players.stayFirstOrderPlayer();
+
+        assertThat(players.isFinishedCurrentPlayer()).isTrue();
+    }
+
+    private CardDeck getDrawTestCardDeck() {
+        Card firstCard = Card.valueOf(Pattern.HEART, Number.TWO);
+        Card secondCard = Card.valueOf(Pattern.HEART, Number.KING);
+        return CardDeck.customDeck(Arrays.asList(firstCard, secondCard));
     }
 }
