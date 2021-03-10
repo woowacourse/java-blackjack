@@ -48,10 +48,21 @@ public class InputView {
     public static double requestMoney(final Name name) {
         try {
             System.out.printf(REQUEST_MONEY_MESSAGE + NEWLINE, name.getValue());
-            return Double.parseDouble(scanner.nextLine());
+            return validateNonZeroPositive(scanner.nextLine());
         } catch (NumberFormatException e) {
             OutputView.getErrorMessage("[ERROR] 숫자를 입력해야 합니다.");
             return requestMoney(name);
+        } catch (IllegalArgumentException e) {
+            OutputView.getErrorMessage(e.getMessage());
+            return requestMoney(name);
         }
+    }
+
+    private static double validateNonZeroPositive(final String input) {
+        final double money = Double.parseDouble(input);
+        if (money <= 0) {
+            throw new IllegalArgumentException("배팅 금액은 0원보다 많아야 합니다.");
+        }
+        return money;
     }
 }
