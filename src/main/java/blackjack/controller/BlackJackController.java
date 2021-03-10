@@ -1,14 +1,16 @@
 package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.BlackjackResult;
+import blackjack.domain.result.Result;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Names;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import jdk.internal.util.xml.impl.Input;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlackJackController {
 
@@ -51,8 +53,13 @@ public class BlackJackController {
 
     private void endBlackJack(Dealer dealer, Players players) {
         OutputView.showScoreResult(dealer, players);
-        DealerResult dealerResult = new DealerResult(dealer, players.getPlayers());
-        OutputView.showDealerTable(dealerResult);
-        OutputView.showPlayerTable(dealer, players);
+        double dealerEarning = 0;
+        for (Player player : players.getPlayers()) {
+            BlackjackResult result = Result.getResult(player, dealer);
+            double earning = player.getMoney(result.getEarningRate());
+            dealerEarning += earning;
+            OutputView.showEarning(player.getName(), earning);
+        }
+        OutputView.showEarning(dealerEarning * -1);
     }
 }
