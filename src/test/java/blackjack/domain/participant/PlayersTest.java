@@ -18,6 +18,7 @@ public class PlayersTest {
     @DisplayName("참여인원이 1명 미만일 경우, 예외 처리한다")
     void whenPlayerIsLessThanOneThrowsException() {
         List<Player> players = new ArrayList<>();
+
         assertThatThrownBy(() -> new Players(players)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임 참가자의수는 1명 이상 7명 이하여야 합니다.");
     }
@@ -35,6 +36,7 @@ public class PlayersTest {
             Player player = new Player(new Cards(cardList), "pobi");
             players.add(player);
         }
+
         assertThatThrownBy(() -> new Players(players)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("게임 참가자의수는 1명 이상 7명 이하여야 합니다.");
     }

@@ -30,7 +30,7 @@ public class ResultStatisticsTest {
     }
 
     @Test
-    @DisplayName("챌린저가 딜러보다 점수가 높으면, 챌린저가 승리한다.")
+    @DisplayName("플레이어가 딜러보다 점수가 높으면, 플레이어가 승리한다.")
     void winner() {
         List<Card> cardList = new ArrayList<>();
 
@@ -47,7 +47,7 @@ public class ResultStatisticsTest {
     }
 
     @Test
-    @DisplayName("챌린저가 딜러보다 점수가 같으면, 무승부가 발생한다.")
+    @DisplayName("플레이어가 딜러보다 점수가 같으면, 무승부가 발생한다.")
     void drawer() {
         List<Card> cardList = new ArrayList<>();
         cardList.add(new Card(Suit.DIAMOND, Face.JACK));
@@ -64,7 +64,7 @@ public class ResultStatisticsTest {
     }
 
     @Test
-    @DisplayName("챌린저가 딜러보다 점수가 낮으면, 챌린저가 패배한다.")
+    @DisplayName("플레이어가 딜러보다 점수가 낮으면, 플레이어가 패배한다.")
     void loser() {
         List<Card> cardList = new ArrayList<>();
         cardList.add(new Card(Suit.DIAMOND, Face.JACK));
@@ -80,7 +80,7 @@ public class ResultStatisticsTest {
     }
 
     @Test
-    @DisplayName("챌린저가 버스트가 나면 챌린저는 항상 패배한다.")
+    @DisplayName("플레이어가 버스트가 나면 플레이어는 항상 패배한다.")
     void bustLoser() {
         List<Card> cardList = new ArrayList<>();
         cardList.add(new Card(Suit.DIAMOND, Face.JACK));
@@ -97,7 +97,7 @@ public class ResultStatisticsTest {
     }
 
     @Test
-    @DisplayName("챌린저가 버스트가 나고 딜러도 버스트가 나면 챌린저가 패배한다.")
+    @DisplayName("플레이어가 버스트가 나고 딜러도 버스트가 나면 플레이어가 패배한다.")
     void bothBustLoser() {
         List<Card> cardList = new ArrayList<>();
         cardList.add(new Card(Suit.DIAMOND, Face.JACK));

@@ -28,7 +28,7 @@ public class ResultTest {
     }
 
     @Test
-    @DisplayName("챌린저의 점수가 딜러의 점수보다 높으면, 승리를 반환한다.")
+    @DisplayName("플레이어의 점수가 딜러의 점수보다 높으면, 승리를 반환한다.")
     void getPlayerResultIsWinner() {
         List<Card> cardList = new ArrayList<>();
 
@@ -41,7 +41,7 @@ public class ResultTest {
     }
 
     @Test
-    @DisplayName("챌린저의 점수가 딜러의 점수와 같으면, 무승부를 반환한다.")
+    @DisplayName("플레이어의 점수가 딜러의 점수와 같으면, 무승부를 반환한다.")
     void getPlayerResultIsDrawer() {
         List<Card> cardList = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class ResultTest {
     }
 
     @Test
-    @DisplayName("챌린저의 점수가 딜러의 점수보다 낮으면, 패배를 반환한다.")
+    @DisplayName("플레이어의 점수가 딜러의 점수보다 낮으면, 패배를 반환한다.")
     void getPlayerResultIsLoser() {
         List<Card> cardList = new ArrayList<>();
 
@@ -67,7 +67,7 @@ public class ResultTest {
     }
 
     @Test
-    @DisplayName("챌린저가 bust되면, 챌린저의 패배를 반환한다.")
+    @DisplayName("플레이어가 bust되면, 플레이어의 패배를 반환한다.")
     void getPlayerResultIsLoserWhenPlayerIsBusted() {
         List<Card> cardList = new ArrayList<>();
 
@@ -82,7 +82,7 @@ public class ResultTest {
     }
 
     @Test
-    @DisplayName("딜러가 bust되면, 챌린저의 승리를 반환한다.")
+    @DisplayName("딜러가 bust되면, 플레이어의 승리를 반환한다.")
     void getPlayerResultIsWinnerWhenDealerIsBusted() {
         List<Card> cardList = new ArrayList<>();
 
@@ -96,7 +96,7 @@ public class ResultTest {
     }
 
     @Test
-    @DisplayName("챌린저와 딜러 둘다 bust되면, 딜러의 승리를 반환한다.")
+    @DisplayName("플레이어와 딜러 둘다 bust되면, 딜러의 승리를 반환한다.")
     void getPlayerResultWhenBothAreBusted() {
         List<Card> cardList = new ArrayList<>();
 
