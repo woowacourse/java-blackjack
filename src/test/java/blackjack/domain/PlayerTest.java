@@ -110,4 +110,12 @@ public class PlayerTest {
             Player testUser = new Player("testUser", "100.5");
         }).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("배팅 금액은 0원 이상이여야 합니다.")
+    void MinusBetting() {
+        assertThatThrownBy(() -> {
+            Player testUser = new Player("testUser", "-100");
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
 }

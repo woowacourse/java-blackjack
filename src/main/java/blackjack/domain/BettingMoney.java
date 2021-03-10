@@ -2,13 +2,21 @@ package blackjack.domain;
 
 public class BettingMoney {
 
-    public static final String ERROR_VALIDATE_MONEY = "올바른 금액을 입력하여 주세요";
+    private static final String ERROR_VALIDATE_MONEY = "올바른 금액을 입력하여 주세요";
+    private static final String ERROR_POSITIVE_MONEY = "금액은 0원 미만이 될 수 없습니다.";
 
     private int bettingMoney;
 
     public BettingMoney(String enterMoney) {
-        validateMoney(enterMoney);
-        this.bettingMoney = Integer.parseInt(enterMoney);
+        int money = changeMoneyToInt(enterMoney);
+        validatePositive(money);
+        this.bettingMoney = money;
+    }
+
+    private void validatePositive(int money) {
+        if (money < 0) {
+            throw new IllegalArgumentException(ERROR_POSITIVE_MONEY);
+        }
     }
 
     public BettingMoney(int bettingMoney) {
@@ -16,9 +24,9 @@ public class BettingMoney {
     }
 
 
-    private void validateMoney(String bettingMoney) {
+    private int changeMoneyToInt(String bettingMoney) {
         try {
-            Integer.parseInt(bettingMoney);
+            return Integer.parseInt(bettingMoney);
         } catch (IllegalArgumentException exception) {
             throw new IllegalArgumentException(ERROR_VALIDATE_MONEY);
         }
