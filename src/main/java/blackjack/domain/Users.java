@@ -7,8 +7,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Users {
-    private final int INITIAL_DRAW_CARD_NUMBER = 2;
-
     private final List<User> users = new ArrayList<>();
 
     public Users(Dealer dealer, List<String> players) {
@@ -19,10 +17,8 @@ public class Users {
     }
 
     public void initialHit(CardDeck cardDeck) {
-        for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
-            gerUsers()
-                    .forEach(user -> user.hit(cardDeck.drawCard()));
-        }
+        gerUsers()
+                .forEach(user -> user.hit(cardDeck.drawCard(), cardDeck.drawCard()));
     }
 
     public List<Player> getPlayers() {

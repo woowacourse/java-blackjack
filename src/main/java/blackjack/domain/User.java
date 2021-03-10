@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.state.State;
+import blackjack.state.StateFactory;
 import blackjack.util.BlackJackConstant;
 import blackjack.util.StringUtil;
 
@@ -12,6 +14,7 @@ public abstract class User {
     protected String name;
     protected List<Card> cards;
     protected BettingMoney bettingMoney;
+    protected State state;
 
     protected User(String name) {
         validate(name);
@@ -23,6 +26,10 @@ public abstract class User {
         if (StringUtil.isBlank(name)) {
             throw new IllegalArgumentException("빈 값을 입력하셨습니다. 플레이어의 이름을 입력해주세요.");
         }
+    }
+
+    public void hit(Card firstCard, Card secondCard) {
+        this.state = StateFactory.draw(firstCard, secondCard);
     }
 
     public void hit(Card card) {
