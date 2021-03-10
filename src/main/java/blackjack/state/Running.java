@@ -1,6 +1,6 @@
 package blackjack.state;
 
-public abstract class Running implements State{
+public abstract class Running implements State {
 
     protected Cards cards;
 

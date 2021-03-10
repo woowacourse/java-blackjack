@@ -2,7 +2,7 @@ package blackjack.state;
 
 import blackjack.domain.card.Card;
 
-public abstract class Finished implements State{
+public abstract class Finished implements State {
 
     protected Cards cards;
 
@@ -23,5 +23,10 @@ public abstract class Finished implements State{
     @Override
     public State stay() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Score score() {
+        return this.cards.score();
     }
 }

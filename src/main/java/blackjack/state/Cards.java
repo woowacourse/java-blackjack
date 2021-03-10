@@ -5,9 +5,9 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Cards {
-    private List<Card> cards;
+    private final List<Card> cards;
 
-    public Cards(final List<Card> cards){
+    public Cards(final List<Card> cards) {
         this.cards = cards;
     }
 
@@ -20,13 +20,10 @@ public class Cards {
     }
 
     public boolean isBust() {
-        if (this.cards.stream().mapToInt(Card::getScore).sum() > Score.BLACKJACK_SCORE){
-            return true;
-        }
-        return false;
+        return this.cards.stream().mapToInt(Card::getScore).sum() > Score.BLACKJACK_SCORE;
     }
 
-    public Score score(){
+    public Score score() {
         return checkAce(cardsScoreSum());
     }
 

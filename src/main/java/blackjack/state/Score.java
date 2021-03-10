@@ -4,9 +4,9 @@ public class Score {
     public static final int BLACKJACK_SCORE = 21;
     public static final int ACE_CHANGE_NUMBER = 10;
 
-    private int score;
+    private final int score;
 
-    public Score(int score){
+    public Score(int score) {
         this.score = score;
     }
 
