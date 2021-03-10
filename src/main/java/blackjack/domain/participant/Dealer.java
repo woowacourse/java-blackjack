@@ -18,7 +18,7 @@ public class Dealer implements Participant {
     private State state;
     private int money = 0;
 
-    public Dealer(ScoreRule scoreRule, State state) {
+    public Dealer(State state) {
         this.name = DEALER_NAME;
         this.state = state.changeState();
     }
