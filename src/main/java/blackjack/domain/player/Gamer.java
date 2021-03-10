@@ -38,4 +38,36 @@ public class Gamer extends Player {
     public boolean canDraw() {
         return calculateScore() < DRAW_MAXIMUM_SCORE;
     }
+
+    public int getProfit(Dealer dealer) {
+        int profit = (int)state.calculateProfit(bettingMoney);
+        System.out.println(state.getClass() + "/" + dealer.state.getClass());
+        if (isBlackJack() && dealer.isBlackJack()) {
+            return 0;
+        }
+        if (isBlackJack() && !dealer.isBlackJack()) {
+            return profit;
+        }
+        if (!isBlackJack() && dealer.isBlackJack()) {
+            return getBettingMoney() * (-1);
+        }
+        if (isbust() && !dealer.isBlackJack()) {
+            return getBettingMoney() * (-1);
+        }
+        if (!isbust() && dealer.isbust()) {
+            return profit;
+        }
+        return getProfitIfAllStay(dealer);
+    }
+
+    private int getProfitIfAllStay(Dealer dealer) {
+        int profit = (int)state.calculateProfit(bettingMoney);
+        if (calculateScore() > dealer.calculateScore()) {
+            return profit;
+        }
+        if (calculateScore() < dealer.calculateScore()) {
+            return profit * (-1);
+        }
+        return 0;
+    }
 }

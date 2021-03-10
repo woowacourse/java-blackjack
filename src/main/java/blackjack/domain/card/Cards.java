@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
-    private static final int BUST_SCORE = 21;
+    private static final int BLACKJACK = 21;
     private static final int ACE_SCORE_CRITERIA = 11;
     private static final int ACE_BONUS_SCORE = 10;
 
@@ -42,7 +42,7 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return calculateScore() > BUST_SCORE;
+        return calculateScore() > BLACKJACK;
     }
 
     public List<Card> getCards() {
@@ -59,5 +59,9 @@ public class Cards {
 
     public int size() {
         return cards.size();
+    }
+
+    public boolean isBlackjack() {
+        return calculateScore() == BLACKJACK && cards.size() == 2;
     }
 }

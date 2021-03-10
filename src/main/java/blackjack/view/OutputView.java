@@ -70,20 +70,10 @@ public class OutputView {
 
     public static void printGameResult(GameResult gameResult, Dealer dealer, List<Gamer> gamers) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        List<ResultType> dealerResult = gameResult.getDealerResult(dealer);
-        System.out.println("딜러: " + resultStatisticToString(dealerResult));
-        for (Entry<Player, ResultType> result : gameResult.getGamersResult(gamers).entrySet()) {
-            System.out.printf("%s: %s\n", result.getKey().getName(), result.getValue().getValue());
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + gameResult.findProfitByPlayer(dealer));
+        for (Gamer gamer : gamers) {
+            System.out.printf("%s: %s\n", gamer.getName(), gameResult.findProfitByPlayer(gamer));
         }
-    }
-
-    private static String resultStatisticToString(List<ResultType> resultTypes) {
-        Map<String, Long> result = resultTypes.stream()
-            .collect(Collectors.groupingBy(ResultType::getValue, Collectors.counting()));
-        return Arrays.stream(ResultType.values())
-            .filter(resultType -> result.containsKey(resultType.getValue()))
-            .map(key -> result.get(key.getValue()) + key.getValue())
-            .collect(Collectors.joining(" "));
     }
 }
