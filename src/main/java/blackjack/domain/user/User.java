@@ -2,8 +2,9 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.UserDeck;
+import java.util.List;
 
-public class User {
+public abstract class User {
 
     private final UserDeck userDeck;
     protected int DRAWABLE_NUMBER;
@@ -24,8 +25,8 @@ public class User {
         return !this.isBustCondition() && this.getScore() < DRAWABLE_NUMBER;
     }
 
-    public UserDeck getUserDeck() {
-        return userDeck;
+    public List<Card> getCards() {
+        return userDeck.getUserCards();
     }
 
     public int getScore() {
