@@ -29,8 +29,7 @@ public class BlackjackManager {
     private static Map<String, GameResult> getPlayersResult(Dealer dealer, Players players) {
         Map<String, GameResult> playersResult = new HashMap<>();
         players.toList()
-                .forEach(player -> playersResult.put(player.getName(), GameResult.judgeHand(
-                        dealer.getTotalScore(), player.getTotalScore())));
+                .forEach(player -> playersResult.put(player.getName(), dealer.judgeHand(player)));
         return playersResult;
     }
 
