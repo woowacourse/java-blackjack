@@ -8,8 +8,6 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.summingDouble;
-
 public class OutputView {
     private static final String COMMA = ", ";
     public static final int DEALER_OPEN_CARD_INDEX = 0;
