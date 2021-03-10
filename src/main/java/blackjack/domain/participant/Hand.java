@@ -37,7 +37,9 @@ public class Hand {
     }
 
     private int countAce() {
-        return (int) cards.stream().filter(Card::isAce).count();
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     private int adjustScoreWithAce(final int maximumSum) {
