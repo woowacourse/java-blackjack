@@ -2,7 +2,7 @@ package blackjack.domain;
 
 public class Money {
 
-    public static final String ERROR_VALIDATE_MONEY = "올바름 금액을 입력하여 주세요";
+    public static final String ERROR_VALIDATE_MONEY = "올바른 금액을 입력하여 주세요";
 
     private int money;
 
