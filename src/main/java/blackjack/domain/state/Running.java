@@ -1,11 +1,11 @@
 package blackjack.domain.state;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.Cards;
-import blackjack.domain.Money;
 
 public abstract class Running extends StartState {
 
-    private static final String ERROR_PROFIT = "진행 중인 상태에서는 수익을 확인할 수 업습니다.";
+    private static final String ERROR_PROFIT = "진행 중인 상태에서는 수익을 확인할 수 없습니다.";
 
     public Running(Cards cards) {
         super(cards);
@@ -17,7 +17,7 @@ public abstract class Running extends StartState {
     }
 
     @Override
-    public int profit(Money money) {
+    public int profit(BettingMoney bettingMoney) {
         throw new UnsupportedOperationException(ERROR_PROFIT);
     }
 }

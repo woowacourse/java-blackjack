@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import static blackjack.domain.Cards.HIGHEST_POINT;
-
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Map;
@@ -14,21 +12,20 @@ public class Player extends Gamer {
     private static final int START_BETTING_MONEY = 0;
 
     private String result;
-    private Money money;
 
     public Player(String name) {
         super(name);
-        this.money = new Money(START_BETTING_MONEY);
+        this.bettingMoney = new BettingMoney(START_BETTING_MONEY);
     }
 
     public Player(String name, String bettingMoney) {
         super(name);
-        this.money = new Money(bettingMoney);
+        this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
     @Override
     public boolean canReceiveCard() {
-        return this.getPoint() < HIGHEST_POINT;
+        return !state.isFinished();
     }
 
     public Boolean continueDraw(Deck deck) {
@@ -39,6 +36,7 @@ public class Player extends Gamer {
             OutputView.printPlayerInfo(this);
             return true;
         }
+        state = state.stay();
         return false;
     }
 
@@ -76,10 +74,10 @@ public class Player extends Gamer {
     }
 
     public int getMoney() {
-        return this.money.getMoney();
+        return this.bettingMoney.getBettingMoney();
     }
 
     public void giveMoney(String enterMoney) {
-        money.giveMoney(new Money(enterMoney));
+        bettingMoney.giveMoney(new BettingMoney(enterMoney));
     }
 }

@@ -18,7 +18,9 @@ public class BlackJackController {
         inputBettingMoney(players);
         dealInitCard(players, deck);
         dealCard(players, deck);
-        printMatchResult(players);
+
+        players.calculateProfit();
+        printMatchProfitResult(players);
     }
 
     private void inputBettingMoney(Players players) {
@@ -28,9 +30,15 @@ public class BlackJackController {
         }
     }
 
+    //match result logic
     private void printMatchResult(Players players) {
         OutputView.noticePlayersPoint(players);
         OutputView.noticeMatchResult(players);
+    }
+
+    private void printMatchProfitResult(Players players) {
+        OutputView.noticePlayersPoint(players);
+        OutputView.noticeMatchProfit(players);
     }
 
     private void dealCard(Players players, Deck deck) {

@@ -11,6 +11,10 @@ public class Dealer extends Gamer {
         super(DEFAULT_DEALER_NAME);
     }
 
+    public void giveMoney(int earnedMoney) {
+        this.earnedMoney += earnedMoney;
+    }
+
     @Override
     public boolean canReceiveCard() {
         return state.cards().getPoint(POINT_BOUNDARY_VALUE) <= POINT_BOUNDARY_VALUE;
@@ -19,6 +23,7 @@ public class Dealer extends Gamer {
     @Override
     public Boolean continueDraw(Deck deck) {
         this.receiveCard(deck.dealCard());
+        state = state.stay();
         OutputView.noticeDealerGetCard();
         return true;
     }

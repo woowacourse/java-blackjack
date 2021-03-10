@@ -1,7 +1,7 @@
 package blackjack.domain.state;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.Cards;
-import blackjack.domain.Money;
 import java.util.Objects;
 
 public abstract class StartState implements State {
@@ -12,7 +12,17 @@ public abstract class StartState implements State {
         this.cards = cards;
     }
 
-    public abstract int profit(Money money);
+    public abstract int profit(BettingMoney bettingMoney);
+
+    @Override
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
 
     @Override
     public Cards cards() {

@@ -16,11 +16,14 @@ public abstract class Gamer {
     private static final String COMMA = ", ";
     public static final String ERROR_NAME_LENGTH = "이름이 공백일 수는 없습니다.";
     private final String name;
-    protected final State state = new Hit(new Cards());
+    protected BettingMoney bettingMoney;
+    protected int earnedMoney;
+    protected State state = new Hit(new Cards());
 
     protected Gamer(String name) {
         validateSpace(name);
         validateZeroLength(name);
+        earnedMoney = 0;
         this.name = name;
     }
 
@@ -36,15 +39,23 @@ public abstract class Gamer {
         }
     }
 
+    public abstract boolean canReceiveCard();
+
     protected void receiveCard(Card card) {
-        state.draw(card);
+        state = state.draw(card);
+    }
+
+    public boolean isBust() {
+        return state.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return state.isBlackjack();
     }
 
     public int getPoint() {
         return state.cards().getPoint();
     }
-
-    public abstract boolean canReceiveCard();
 
     public abstract Boolean continueDraw(Deck deck);
 
@@ -69,6 +80,23 @@ public abstract class Gamer {
             .collect(Collectors.joining(COMMA));
     }
 
+    public void calculateProfit(Dealer dealer) {
+        if ((dealer.isBlackjack() && this.isBlackjack())) {
+            earnedMoney = 0;
+        } else if (dealer.getPoint() == this.getPoint()) {
+            earnedMoney = 0;
+        } else if (dealer.getPoint() < this.getPoint()) {
+            earnedMoney = state.profit(bettingMoney);
+        } else if (dealer.getPoint() > this.getPoint()) {
+            earnedMoney = -bettingMoney.getBettingMoney();
+        }
+        dealer.giveMoney(-this.earnedMoney);
+    }
+
+    public int getProfit() {
+        return this.earnedMoney;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -86,4 +114,5 @@ public abstract class Gamer {
     public int hashCode() {
         return Objects.hash(name, state);
     }
+
 }

@@ -1,15 +1,21 @@
 package blackjack.domain.state;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.Card;
 import blackjack.domain.Cards;
-import blackjack.domain.Money;
 
 public abstract class Finished extends StartState {
 
     private static final String ERROR_DRAW = "드로우를 할 기회가 없습니다.";
+    private static final String ERROR_STAY = "이미 종료된 선택입니다.";
 
     public Finished(Cards cards) {
         super(cards);
+    }
+
+    @Override
+    public State stay() {
+        throw new UnsupportedOperationException(ERROR_STAY);
     }
 
     @Override
@@ -23,10 +29,9 @@ public abstract class Finished extends StartState {
     }
 
     @Override
-    public int profit(Money money) {
-        return (int) (money.getMoney() * earningRate());
+    public int profit(BettingMoney bettingMoney) {
+        return (int) (bettingMoney.getBettingMoney() * earningRate());
     }
-
 
     public abstract double earningRate();
 

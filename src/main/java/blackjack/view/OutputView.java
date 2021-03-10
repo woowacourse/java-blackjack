@@ -16,6 +16,7 @@ public class OutputView {
     private static final String SKELETON_NOTICE_GET_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String SKELETON_DEALER_INFO = "%s: %s";
     private static final String COUPLER_COLON_SPACE = ": ";
+    public static final String NOTICE_PROFIT_RESULT = "## 최종 수익";
 
     public static void noticeDrawTwoCards(Players players) {
         System.out.println();
@@ -41,11 +42,19 @@ public class OutputView {
         System.out.println(NOTICE_RESULT);
         Map<String, Integer> result = players.judgeResult();
 
-        OutputView.printDealerResult(result);
-        OutputView.printPlayerResult(players);
+        printDealerResult(result);
+        printPlayerResult(players);
     }
 
-    public static void printExceptionMessage(IllegalArgumentException exception) {
+    public static void noticeMatchProfit(Players players) {
+        System.out.println();
+        System.out.println(NOTICE_PROFIT_RESULT);
+        for (Gamer gamer : players.getAllParticipant()) {
+            System.out.println(gamer.getName() + "  " + gamer.getProfit());
+        }
+    }
+
+    public static void printExceptionMessage(Exception exception) {
         System.out.println(exception.getMessage());
     }
 
@@ -60,7 +69,6 @@ public class OutputView {
     }
 
     private static void printDealerResult(Map<String, Integer> result) {
-
         System.out.println(
             String.format(SKELETON_DEALER_RESULT,
                 result.get(Result.WIN.name()), Result.WIN.getMessage(),

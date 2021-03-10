@@ -75,9 +75,9 @@ public class PlayerTest {
     @Test
     @DisplayName("에이스가 1이어야할 때")
     void aceCardBoundary() {
-        player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
         player.receiveCard(new Card(CardPattern.HEART, CardNumber.KING));
         player.receiveCard(new Card(CardPattern.SPADE, CardNumber.KING));
+        player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
         assertEquals(player.getPoint(), 21);
     }
 

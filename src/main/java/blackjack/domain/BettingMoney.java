@@ -1,18 +1,18 @@
 package blackjack.domain;
 
-public class Money {
+public class BettingMoney {
 
     public static final String ERROR_VALIDATE_MONEY = "올바른 금액을 입력하여 주세요";
 
-    private int money;
+    private int bettingMoney;
 
-    public Money(String enterMoney) {
+    public BettingMoney(String enterMoney) {
         validateMoney(enterMoney);
-        this.money = Integer.parseInt(enterMoney);
+        this.bettingMoney = Integer.parseInt(enterMoney);
     }
 
-    public Money(int money) {
-        this.money = money;
+    public BettingMoney(int bettingMoney) {
+        this.bettingMoney = bettingMoney;
     }
 
 
@@ -24,11 +24,11 @@ public class Money {
         }
     }
 
-    public int getMoney() {
-        return money;
+    public int getBettingMoney() {
+        return bettingMoney;
     }
 
-    public void giveMoney(Money plusMoney) {
-        money += plusMoney.getMoney();
+    public void giveMoney(BettingMoney plusBettingMoney) {
+        bettingMoney += plusBettingMoney.getBettingMoney();
     }
 }
