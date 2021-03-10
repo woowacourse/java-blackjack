@@ -7,7 +7,8 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private static final int BUST_LIMIT = 22;
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int INITIAL_CARDS_COUNT = 2;
     private final Name name;
     private final Money money;
     private final PlayerCards playerCards;
@@ -48,12 +49,23 @@ public abstract class Participant {
         return playerCards.toList();
     }
 
+    public boolean isBlackjack() {
+        if (isBust()) {
+            return false;
+        }
+        return calculate() == BLACKJACK_SCORE && getCardCount() == INITIAL_CARDS_COUNT;
+    }
+
     public boolean isBust() {
-        return calculate() >= BUST_LIMIT;
+        return calculate() > BLACKJACK_SCORE;
     }
 
     public int calculate() {
         return playerCards.calculate();
+    }
+
+    public boolean isSameScore(final Participant participant) {
+        return this.calculate() == participant.calculate();
     }
 
     public abstract Result decideWinner(final Participant participant);

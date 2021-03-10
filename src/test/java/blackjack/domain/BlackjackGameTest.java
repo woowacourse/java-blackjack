@@ -45,7 +45,7 @@ public class BlackjackGameTest {
     @DisplayName("딜러의 승무패 횟수가 잘 구해지는지 확인")
     void makeDealerMatchCounts() {
         final List<Integer> dealerCounts = blackjackGame.makeDealerMatchCounts(dealer, players);
-        assertThat(dealerCounts).hasSize(3)
+        assertThat(dealerCounts).hasSize(4)
             .contains(3, 0, 0);
     }
 

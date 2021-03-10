@@ -38,11 +38,14 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public Result decideWinner(Participant player) {
-        if (this.calculate() == player.calculate()) {
+    public Result decideWinner(final Participant player) {
+        if ((this.isBlackjack() && player.isBlackjack()) || this.isSameScore(player)) {
             return Result.DRAW;
         }
-        if (player.isBust() || (player.calculate() < this.calculate() && !this.isBust())) {
+        if (this.isBlackjack()) {
+            return Result.BLACKJACK;
+        }
+        if (player.isBust() || (!this.isBust() && (this.calculate() > player.calculate()))) {
             return Result.WIN;
         }
         return Result.LOSE;

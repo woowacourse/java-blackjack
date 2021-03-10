@@ -28,12 +28,15 @@ public class Player extends Participant {
     }
 
     @Override
-    public Result decideWinner(Participant participant) {
-        if (this.calculate() == participant.calculate() || (this.isBust() && participant.isBust())) {
+    public Result decideWinner(final Participant participant) {
+        if (this.isBust() || (!participant.isBust() && (this.calculate() < participant.calculate()))) {
+            return Result.LOSE;
+        }
+        if ((this.isBlackjack() && participant.isBlackjack()) || this.isSameScore(participant)) {
             return Result.DRAW;
         }
-        if (this.isBust() || (!participant.isBust() && participant.calculate() > this.calculate())) {
-            return Result.LOSE;
+        if (this.isBlackjack()) {
+            return Result.BLACKJACK;
         }
         return Result.WIN;
     }
