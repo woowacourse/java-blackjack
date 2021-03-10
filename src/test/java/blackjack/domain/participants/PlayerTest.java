@@ -28,6 +28,24 @@ public class PlayerTest {
     void create() {
         assertThatCode(() -> new Player("bada"))
             .doesNotThrowAnyException();
+
+        assertThatCode(() -> new Player("bada", 1000.0))
+            .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("참가자의 초기 돈을 확인")
+    void checkInitialMoney() {
+        final Participant player = new Player("j.on");
+        assertThat(player.getMoney()).isEqualTo(new Money(0));
+        assertThat(player.getMoney()).isEqualTo(new Money());
+    }
+
+    @Test
+    @DisplayName("참가자의 현재 돈을 확인")
+    void checkMoney() {
+        final Participant player = new Player("j.on", 1000.0);
+        assertThat(player.getMoney()).isEqualTo(new Money(1000.0));
     }
 
     @Test

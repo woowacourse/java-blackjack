@@ -9,8 +9,24 @@ public class Dealer extends Participant {
 
     private static final int MAX_SUM_FOR_MORE_CARD = 16;
 
+    public Dealer(final Name name, final Money money) {
+        super(name, money);
+    }
+
+    public Dealer(final Name name, final double money) {
+        super(name, new Money(money));
+    }
+
+    public Dealer(final String name, final double money) {
+        super(new Name(name), new Money(money));
+    }
+
     public Dealer() {
         super("딜러");
+    }
+
+    public Dealer(final double money) {
+        super(new Name("딜러"), new Money(money));
     }
 
     public Dealer(final String name) {

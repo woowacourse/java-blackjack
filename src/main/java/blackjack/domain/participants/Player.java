@@ -7,6 +7,18 @@ import java.util.List;
 
 public class Player extends Participant {
 
+    public Player(final Name name, final Money money) {
+        super(name, money);
+    }
+
+    public Player(final Name name, final double money) {
+        super(name, new Money(money));
+    }
+
+    public Player(final String name, final double money) {
+        super(new Name(name), new Money(money));
+    }
+
     public Player(final String name) {
         super(name);
     }

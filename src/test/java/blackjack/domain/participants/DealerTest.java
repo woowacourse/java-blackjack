@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,6 +31,24 @@ public class DealerTest {
     void create() {
         assertThatCode(Dealer::new)
             .doesNotThrowAnyException();
+
+        assertThatCode(() -> new Dealer("딜러", 1000.0))
+            .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("딜러의 초기 돈을 확인")
+    void checkInitialMoney() {
+        final Participant dealer = new Dealer();
+        assertThat(dealer.getMoney()).isEqualTo(new Money(0));
+        assertThat(dealer.getMoney()).isEqualTo(new Money());
+    }
+
+    @Test
+    @DisplayName("딜러의 현재 돈을 확인")
+    void checkMoney() {
+        final Participant dealer = new Dealer(1000.0);
+        assertThat(dealer.getMoney()).isEqualTo(new Money(1000.0));
     }
 
     @Test
@@ -99,7 +116,7 @@ public class DealerTest {
         dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
         dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.HEART));
-        AssertionsForClassTypes.assertThat(dealer.isBust()).isTrue();
+        assertThat(dealer.isBust()).isTrue();
     }
 
     @ParameterizedTest

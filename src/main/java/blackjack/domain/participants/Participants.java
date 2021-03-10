@@ -10,9 +10,24 @@ public class Participants {
 
     private final List<Participant> participantGroup;
 
+    public Participants(final Names names, final List<Money> moneys) {
+        participantGroup = participantsSetUp(names, moneys);
+    }
+
     public Participants(final Names names) {
         participantGroup = participantsSetUp(names);
     }
+
+    private List<Participant> participantsSetUp(final Names names, final List<Money> moneys) {
+        final List<Participant> participants = new ArrayList<>();
+        final List<Name> nameGroup = names.toList();
+        for (int i = 0; i < nameGroup.size(); i++) {
+            participants.add(new Player(nameGroup.get(i), moneys.get(i)));
+        }
+        participants.add(0, new Dealer());
+        return participants;
+    }
+
 
     private List<Participant> participantsSetUp(final Names names) {
         final List<Participant> participants = names.toList().stream()
@@ -21,6 +36,7 @@ public class Participants {
         participants.add(0, new Dealer());
         return new ArrayList<>(participants);
     }
+
 
     public void distributeCard() {
         participantGroup.forEach(participant -> {

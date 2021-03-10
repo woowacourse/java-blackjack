@@ -8,12 +8,19 @@ import java.util.List;
 public abstract class Participant {
 
     private static final int BUST_LIMIT = 22;
-
     private final Name name;
+    private final Money money;
     private final PlayerCards playerCards;
+
+    public Participant(final Name name, final Money money) {
+        this.name = name;
+        this.money = money;
+        this.playerCards = new PlayerCards();
+    }
 
     public Participant(final Name name) {
         this.name = name;
+        money = new Money();
         this.playerCards = new PlayerCards();
     }
 
@@ -27,6 +34,10 @@ public abstract class Participant {
 
     public Name getName() {
         return name;
+    }
+
+    public Money getMoney() {
+        return money;
     }
 
     public int getCardCount() {

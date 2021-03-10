@@ -3,19 +3,21 @@ package blackjack.controller;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.participants.Money;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Names;
 import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
 
     public void run() {
-        final Participants participants = new Participants(requestName());
+        final Participants participants = createParticipants();
 
         participants.distributeCard();
         OutputView.showNameAndCardInfo(participants);
@@ -26,6 +28,17 @@ public class BlackjackController {
         final GameResult gameResult = new BlackjackGame().createGameResult(participants);
         OutputView.showGameResult(gameResult.getDealerCounts(), participants.getDealer());
         OutputView.showPlayerGameResult(gameResult.getPlayerResults());
+    }
+
+    private Participants createParticipants() {
+        final Names names = requestName();
+        final List<Money> moneys = new ArrayList<>();
+        for (final Name name : names.toList()) {
+            final double value = InputView.requestMoney(name);
+            final Money money = new Money(value);
+            moneys.add(money);
+        }
+        return new Participants(names, new ArrayList<>(moneys));
     }
 
     private Names requestName() {
