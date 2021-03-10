@@ -30,7 +30,7 @@ public class BlackJackController {
 
     private void printMatchResult(Players players) {
         OutputView.noticePlayersPoint(players);
-        OutputView.noticeResult(players);
+        OutputView.noticeResultProfit(players);
     }
 
     private void dealCard(Players players, Deck deck) {

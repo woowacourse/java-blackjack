@@ -9,6 +9,7 @@ public class Cards {
 
     private static final int ACE_BONUS = 10;
     public static final int HIGHEST_POINT = 21;
+    public static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -25,14 +26,18 @@ public class Cards {
         return false;
     }
 
-    public int getPoint(int maxPoint) {
+    public int getPoint(int limitPoint) {
         Integer cardValue = cards.stream()
             .map(Card::givePoint)
             .reduce(0, Integer::sum);
-        if (findAce(cards) && cardValue + ACE_BONUS <= maxPoint) {
+        if (findAce(cards) && cardValue + ACE_BONUS <= limitPoint) {
             return cardValue + ACE_BONUS;
         }
         return cardValue;
+    }
+
+    public int getPoint() {
+        return getPoint(HIGHEST_POINT);
     }
 
     public int size() {
@@ -41,6 +46,14 @@ public class Cards {
 
     public Card get(int i) {
         return cards.get(i);
+    }
+
+    public boolean isBust() {
+        return getPoint() > HIGHEST_POINT;
+    }
+
+    public boolean isBlackjack() {
+        return (getPoint() == HIGHEST_POINT && size() == BLACKJACK_CARD_SIZE);
     }
 
     public List<Card> getCards() {

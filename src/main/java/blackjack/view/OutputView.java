@@ -36,7 +36,7 @@ public class OutputView {
         }
     }
 
-    public static void noticeResult(Players players) {
+    public static void noticeResultProfit(Players players) {
         System.out.println();
         System.out.println(NOTICE_RESULT);
         Map<String, Integer> result = players.calculateResult();
@@ -59,7 +59,7 @@ public class OutputView {
                 gamer.getPoint()));
     }
 
-    public static void printDealerResult(Map<String, Integer> result) {
+    private static void printDealerResult(Map<String, Integer> result) {
 
         System.out.println(
             String.format(SKELETON_DEALER_RESULT,
