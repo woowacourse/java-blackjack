@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardType;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Deck;
+import blackjack.domain.state.BlackJack;
 import blackjack.domain.state.Hit;
 import blackjack.domain.state.State;
 import blackjack.dto.DealerResultDto;
@@ -43,6 +44,18 @@ class DealerTest {
         State state = new Hit(initialCard);
         Participant dealer = new Dealer(cards -> 0, state);
         assertThat(dealer.getStatus()).isInstanceOf(Hit.class);
+    }
+
+    @Test
+    @DisplayName("딜러가 BLACK JACK 상태를 가지는 경우 테스트")
+    void test_state_blackjack_dealer() {
+        ArrayList<Card> initialCard = new ArrayList<>();
+        initialCard.add(new Card(CardType.DIAMOND, CardValue.TEN));
+        initialCard.add(new Card(CardType.DIAMOND, CardValue.ACE));
+
+        State state = new Hit(initialCard);
+        Participant dealer = new Dealer(cards -> 0, state);
+        assertThat(dealer.getStatus()).isInstanceOf(BlackJack.class);
     }
 
     @Test

@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
+import blackjack.domain.state.State;
 
 import java.util.List;
 
@@ -23,4 +24,7 @@ public interface Participant {
     GameResult calculateResult(int enemyScore);
 
     void betting(int money);
+
+    State getStatus();
 }
+
