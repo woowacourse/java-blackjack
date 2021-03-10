@@ -1,6 +1,5 @@
 package blackjack.domain.scoreboard;
 
-import blackjack.domain.betting.BettingMoney;
 import blackjack.domain.scoreboard.result.GameResult;
 import blackjack.domain.scoreboard.result.UserGameResult;
 import blackjack.domain.user.User;
@@ -16,30 +15,35 @@ public class ScoreBoard {
     private final Map<User, UserGameResult> userResults;
     private final GameResult dealerGameResult;
 
-    public ScoreBoard(Map<User, UserGameResult> userResults, GameResult dealerGameResult){
+    public ScoreBoard(Map<User, UserGameResult> userResults, GameResult dealerGameResult) {
         this.userResults = userResults;
         this.dealerGameResult = dealerGameResult;
     }
 
-    public Map<WinOrLose, Long> dealerWinOrLoseCounts(){
+    public Map<WinOrLose, Long> dealerWinOrLoseCounts() {
         return userResults.keySet().stream()
                 .map(userResults::get)
                 .map(UserGameResult::getWinOrLose)
                 .collect(groupingBy(WinOrLose::opposite, counting()));
     }
 
-    public long calculateDealerIncome(){
+    public long calculateDealerIncome() {
         return userResults.keySet().stream()
                 .map(userResults::get)
-                .mapToLong(UserGameResult::getBettingMoney)
-                .map(BettingMoney::toNegative)
+                .mapToLong(UserGameResult::getIncome)
+                .map(this::toNegative)
                 .sum();
     }
-    public Map<User, UserGameResult> getUserResults(){
+
+    private long toNegative(long income) {
+        return -1 * income;
+    }
+
+    public Map<User, UserGameResult> getUserResults() {
         return Collections.unmodifiableMap(userResults);
     }
 
-    public GameResult getDealerGameResult(){
+    public GameResult getDealerGameResult() {
         return dealerGameResult;
     }
 

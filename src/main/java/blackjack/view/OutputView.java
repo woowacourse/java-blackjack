@@ -76,7 +76,7 @@ public class OutputView {
 
         scoreBoard.getUserResults().forEach(
                 (user, userGameResult) ->
-                        System.out.println(user.getName().toString() + COLON + userGameResult.getBettingMoney())
+                        System.out.println(user.getName().toString() + COLON + userGameResult.getIncome())
         );
     }
 

@@ -28,10 +28,6 @@ public class BettingMoney {
         return this.money - that.money;
     }
 
-    public static long toNegative(long bettingMoney){
-        return -1 * bettingMoney;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

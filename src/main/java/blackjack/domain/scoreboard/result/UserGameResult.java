@@ -21,7 +21,7 @@ public class UserGameResult implements Resultable {
         return winOrLose;
     }
 
-    public long getBettingMoney(){
+    public long getIncome(){
         return income;
     }
 
