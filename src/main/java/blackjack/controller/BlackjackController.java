@@ -19,7 +19,7 @@ public class BlackjackController {
         final Dealer dealer = new Dealer();
         final Players players = createPlayersWithInfo();
 
-        initHandsOf(deck, dealer, players);
+        initStatesOf(deck, dealer, players);
         hitOrStand(deck, dealer, players);
         printResult(dealer, players);
     }
@@ -30,7 +30,7 @@ public class BlackjackController {
         return Players.of(names, playersMoney);
     }
 
-    private void initHandsOf(final Deck deck, final Dealer dealer, final Players players) {
+    private void initStatesOf(final Deck deck, final Dealer dealer, final Players players) {
         StateInitializer.init(deck, dealer, players);
         OutputView.printInitialCards(dealer, players);
     }
