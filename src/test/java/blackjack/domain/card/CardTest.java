@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.Score;
 import org.junit.jupiter.api.Test;
 
 public class CardTest {
@@ -21,7 +22,7 @@ public class CardTest {
     @Test
     public void getScore() {
         Card card = new Card(Denomination.THREE, Suit.SPADE);
-        assertThat(card.findScore()).isEqualTo(3);
+        assertThat(card.findScore()).isEqualTo(new Score(3));
     }
 
 }

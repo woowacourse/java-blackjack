@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.Money;
+import java.util.Objects;
 
 public class Player extends User {
 
@@ -21,5 +22,22 @@ public class Player extends User {
 
     public Money getMoney() {
         return money;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return Objects.equals(money, player.money);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(money);
     }
 }
