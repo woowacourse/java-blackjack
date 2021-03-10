@@ -2,10 +2,10 @@ package blackjack.domain.user;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import blackjack.domain.result.BlackjackResult;
-import blackjack.domain.result.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.UserDeck;
+import blackjack.domain.result.BlackjackResult;
+import blackjack.domain.result.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +19,7 @@ public class ResultTest {
         userDeck.add(one);
         userDeck.add(two);
     }
+
     private final Money money = new Money(100);
 
     @Test

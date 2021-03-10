@@ -9,7 +9,7 @@ public class Players {
     private final List<Player> players = new ArrayList<>();
 
     public Players(CardDeck cardDeck, Names names, List<Double> moneys) {
-        for (int i=0; i<moneys.size(); i++) {
+        for (int i = 0; i < moneys.size(); i++) {
             players.add(new Player(cardDeck.generateUserDeck(),
                 names.getNames().get(i),
                 new Money(moneys.get(i))));

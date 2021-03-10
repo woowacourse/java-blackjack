@@ -12,10 +12,12 @@ public class PlayerTest {
     private final Card one = new Card("J", "클로버");
     private final Card two = new Card("5", "하트");
     private final UserDeck userDeck = new UserDeck();
+
     {
         userDeck.add(one);
         userDeck.add(two);
     }
+
     private final Money money = new Money(100);
 
     @Test

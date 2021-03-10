@@ -8,6 +8,7 @@ public class Result {
 
     private Result() {
     }
+
     public static BlackjackResult getResult(Player player, Dealer dealer) {
         if (player.isBust()) {
             return BlackjackResult.BUST;

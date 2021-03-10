@@ -12,6 +12,7 @@ public class DealerTest {
     private final Card one = new Card("J", "클로버");
     private final Card two = new Card("5", "하트");
     private final UserDeck userDeck = new UserDeck();
+
     {
         userDeck.add(one);
         userDeck.add(two);
@@ -38,7 +39,6 @@ public class DealerTest {
         Card card3 = new Card("2", "다이아몬드");
         userDeck.add(card3);
         Dealer dealer = new Dealer(userDeck);
-        System.out.println(dealer.getScore());
         assertThat(dealer.isAvailableDraw()).isFalse();
     }
 }
