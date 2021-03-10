@@ -19,7 +19,7 @@ public class Hit extends Running {
     @Override
     public State draw(Card card) {
         getHand().addCard(card);
-        return hitStrategy.moveState(getHand());
+        return hitStrategy.moveToState(getHand());
     }
 
     @Override

@@ -5,5 +5,5 @@ import blackjack.domain.state.State;
 
 public interface HitStrategy {
 
-    State moveState(Hand hand);
+    State moveToState(Hand hand);
 }

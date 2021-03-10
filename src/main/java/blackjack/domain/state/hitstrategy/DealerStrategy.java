@@ -12,7 +12,7 @@ public class DealerStrategy implements HitStrategy {
     private static final int DEALER_LIMIT = 16;
 
     @Override
-    public State moveState(Hand hand) {
+    public State moveToState(Hand hand) {
         if (hand.isBust()) {
             return new Bust(hand);
         }

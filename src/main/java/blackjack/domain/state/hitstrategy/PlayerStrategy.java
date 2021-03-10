@@ -9,7 +9,7 @@ import blackjack.domain.state.State;
 public class PlayerStrategy implements HitStrategy {
 
     @Override
-    public State moveState(Hand hand) {
+    public State moveToState(Hand hand) {
         if (hand.isBust()) {
             return new Bust(hand);
         }
