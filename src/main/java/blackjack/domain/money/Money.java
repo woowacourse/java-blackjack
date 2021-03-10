@@ -39,7 +39,7 @@ public class Money {
         }
     }
 
-    public double getMoney() {
-        return money;
+    public double getProfit(double earningRate) {
+        return money * earningRate;
     }
 }

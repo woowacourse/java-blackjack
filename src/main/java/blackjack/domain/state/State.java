@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.money.Money;
 
 public interface State {
     State draw(final Card card);
@@ -12,5 +13,5 @@ public interface State {
 
     boolean isFinished();
 
-    double profit(final double money);
+    double profit(final Money money);
 }

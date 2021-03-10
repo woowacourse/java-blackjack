@@ -19,7 +19,7 @@ public class Player extends Gamer {
         if (state instanceof Hit) {
             state = state.stay();
         }
-        return state.profit(money.getMoney());
+        return state.profit(money);
     }
 
     @Override

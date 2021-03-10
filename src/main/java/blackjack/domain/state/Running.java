@@ -1,6 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.money.Money;
 
 public abstract class Running extends Started {
     public Running(final Cards cards) {
@@ -13,7 +14,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public double profit(final double money) {
+    public double profit(final Money money) {
         throw new UnsupportedOperationException();
     }
 }
