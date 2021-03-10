@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,12 +32,6 @@ public class Card {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("없는 카드임!"));
         return findCard;
-    }
-
-    public static List<Card> getShuffledCards() {
-        List<Card> cards = new ArrayList<>(CARDS);
-        Collections.shuffle(cards);
-        return cards;
     }
 
     public int numberScore() {
