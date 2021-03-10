@@ -42,14 +42,22 @@ public class Users<T extends AbstractUser> {
 
     public AbstractUser getDealer() {
         return users.stream()
-                .filter(Dealer.class::isInstance)
+                .filter(this::isDealer)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 유저입니다."));
     }
 
     public List<AbstractUser> getPlayers() {
         return users.stream()
-                .filter(Player.class::isInstance)
+                .filter(this::isPlayer)
                 .collect(Collectors.toList());
+    }
+
+    private boolean isDealer(AbstractUser abstractUser) {
+        return abstractUser instanceof Dealer;
+    }
+
+    private boolean isPlayer(AbstractUser abstractUser) {
+        return abstractUser instanceof Player;
     }
 }
