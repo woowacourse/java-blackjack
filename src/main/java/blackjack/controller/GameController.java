@@ -25,16 +25,20 @@ public class GameController {
         Dealer dealer = new Dealer(deck.drawCard(FIRST_TWO_CARD));
         List<String> playerNames = inputView.getPlayerNames();
         isDuplicatePlayers(playerNames, dealer.getName());
+        List<Player> players = joinPlayers(deck, playerNames);
+        OutputView.showInitialStatus(createRoundStatusDto(dealer, players));
+        addUsersCardOrPass(dealer, players, deck);
+        OutputView.showFinalStatus(createRoundStatusDto(dealer, players));
+        OutputView.showOutcomes(new Result(dealer, players));
+    }
 
+    private List<Player> joinPlayers(Deck deck, List<String> playerNames) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
             int battingAmount = inputView.getBattingAmount(playerName);
             players.add(new Player(playerName, battingAmount, deck.drawCard(FIRST_TWO_CARD)));
         }
-        OutputView.showInitialStatus(createRoundStatusDto(dealer, players));
-        addUsersCardOrPass(dealer, players, deck);
-        OutputView.showFinalStatus(createRoundStatusDto(dealer, players));
-        OutputView.showOutcomes(new Result(dealer, players));
+        return players;
     }
 
     private static void isDuplicatePlayers(List<String> players, String dealer) {

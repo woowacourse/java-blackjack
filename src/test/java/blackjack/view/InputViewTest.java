@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +10,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InputViewTest {
     private InputView getInputView(String inputText) {

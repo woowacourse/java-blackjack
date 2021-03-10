@@ -25,7 +25,7 @@ class ResultTest {
 
         Player player = new Player("pobi", 1000,
                 Arrays.asList(Card.of("스페이드", "10"),
-                Card.of("하트", "5")));
+                        Card.of("하트", "5")));
         players.add(player);
 
         Player player2 = new Player("jason", 2000,
