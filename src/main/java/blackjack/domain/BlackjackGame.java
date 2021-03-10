@@ -17,12 +17,28 @@ public class BlackjackGame {
     }
 
     public void distributeToUsers() {
-        this.users.getDealer().distribute(this.deck.popTwo());
+        getDealer().distribute(this.deck.popTwo());
         this.users.distributeToPlayer(this.deck);
     }
 
-    public Deck getDeck() {
-        return this.deck;
+    public void drawCardToPlayer(Player player) {
+        player.draw(this.deck);
+    }
+
+    public boolean isPlayerHit(Player player) {
+        return player.isHit();
+    }
+
+    public boolean drawCardToDealer() {
+        if (isDealerHit()) {
+            getDealer().draw(this.deck);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isDealerHit() {
+        return getDealer().isHit();
     }
 
     public Users getUsers() {

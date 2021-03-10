@@ -1,9 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.card.Deck;
 import blackjack.domain.result.ResultBoard;
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -35,20 +33,19 @@ public class BlackjackController {
     }
 
     private void askToPlayersForHit(BlackjackGame blackjackGame) {
-        for (Player player : blackjackGame.getPlayers()) {
-            askToPlayerForHit(player, blackjackGame.getDeck());
-        }
+        blackjackGame.getPlayers()
+                .forEach(player -> askToPlayerForHit(blackjackGame, player));
     }
 
-    private void askToPlayerForHit(Player player, Deck deck) {
-        while (isPlayerHit(player) && InputView.inputHitYes()) {
-            player.draw(deck);
+    private void askToPlayerForHit(BlackjackGame blackjackGame, Player player) {
+        while (isPlayerHit(blackjackGame, player) && InputView.inputHitYes()) {
+            blackjackGame.drawCardToPlayer(player);
             OutputView.printPlayerCards(player);
         }
     }
 
-    private boolean isPlayerHit(Player player) {
-        if (player.isHit()) {
+    private boolean isPlayerHit(BlackjackGame blackjackGame, Player player) {
+        if (blackjackGame.isPlayerHit(player)) {
             OutputView.printPlayerHit(player);
             return true;
         }
@@ -56,9 +53,7 @@ public class BlackjackController {
     }
 
     private void isDealerHit(BlackjackGame blackjackGame) {
-        Dealer dealer = blackjackGame.getDealer();
-        if (dealer.isHit()) {
-            dealer.draw(blackjackGame.getDeck());
+        if (blackjackGame.drawCardToDealer()) {
             OutputView.printDealerHit();
             return;
         }
