@@ -6,7 +6,7 @@ import blackjack.domain.utils.CardDeck;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameTable implements Playable {
+public class GameTable {
     private final Participant dealer;
     private final Players players;
     private final CardDeck cardDeck;
@@ -30,7 +30,6 @@ public class GameTable implements Playable {
 
     }
 
-    @Override
     public void giveCard(Participant participant) {
         validateRestCards();
         if (!participant.isNotAbleToTake()) {
