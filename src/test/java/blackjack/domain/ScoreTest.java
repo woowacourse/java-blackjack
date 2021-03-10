@@ -29,15 +29,6 @@ class ScoreTest {
         assertThat(score.isBlackJack()).isTrue();
     }
 
-    @DisplayName("점수 + 10이 21보다 작거나 같으면 true를 반환한다.")
-    @Test
-    void lessThanEleven() {
-        Score score = new Score(10);
-        Score scoreMoreThanEleven = new Score(12);
-        assertThat(score.isLessThanEleven()).isTrue();
-        assertThat(scoreMoreThanEleven.isLessThanEleven()).isFalse();
-    }
-
     @DisplayName("점수에 10점을 더한다.")
     @Test
     void plusTen() {

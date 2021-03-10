@@ -1,5 +1,7 @@
 package blackjack.domain.user;
 
+import blackjack.domain.Money;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -10,15 +12,17 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playersName) {
-        this.players = makePlayers(playersName);
+    public Players(List<Player> players) {
+        this.players = players;
         validatePlayersNumber(players);
     }
 
-    private List<Player> makePlayers(List<String> inputPlayers) {
-        return inputPlayers.stream()
-            .map(Player::new)
-            .collect(Collectors.toList());
+    public static List<Player> makePlayers(List<String> names, List<Money> monies) {
+        List<Player> players = new ArrayList<>();
+        for (int count = 0; count < names.size(); count++) {
+            players.add(new Player(names.get(count), monies.get(count)));
+        }
+        return players;
     }
 
     private void validatePlayersNumber(List<Player> players) {

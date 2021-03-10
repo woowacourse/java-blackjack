@@ -1,9 +1,18 @@
 package blackjack.domain.user;
 
+import blackjack.domain.Money;
+
 public class Player extends User {
 
-    public Player(String name) {
+    private final Money money;
+
+    public Player(String name, int money) {
+        this(name, new Money(money));
+    }
+
+    public Player(String name, Money money) {
         super(name);
+        this.money = money;
     }
 
     public boolean canHit() {

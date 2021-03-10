@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +15,11 @@ class GameTableTest {
     @Test
     void firstDraw() {
         Dealer dealer = new Dealer();
-        Players players = new Players(Arrays.asList("choonsik", "jason"));
+        Players players = new Players(
+            Arrays.asList(
+                new Player("choonsik", 5000),
+                new Player("papi", 10000))
+        );
         GameTable gameTable = new GameTable(dealer, players);
         gameTable.drawAtFirst();
 

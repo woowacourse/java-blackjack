@@ -10,8 +10,8 @@ public class PlayerTest {
     @DisplayName("플레이어를 생성한다.")
     @Test
     void create() {
-        Player player = new Player("papi");
-        assertThat(player).isEqualTo(new Player("papi"));
+        Player player = new Player("papi", 500);
+        assertThat(player).isEqualTo(new Player("papi", 500));
     }
 
 }

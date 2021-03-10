@@ -2,12 +2,14 @@ package blackjack.controller;
 
 import blackjack.domain.GameTable;
 import blackjack.domain.HitStay;
+import blackjack.domain.Money;
 import blackjack.domain.Result;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackController {
@@ -16,12 +18,22 @@ public class BlackJackController {
         try {
             OutputView.printPlayersGuideMessage();
             Dealer dealer = new Dealer();
-            Players players = new Players(InputView.inputPlayers());
+            Players players = new Players(createPlayers());
             playGame(dealer, players);
             revealResult(dealer, players);
         } catch (IllegalArgumentException exception) {
             OutputView.printErrorMessage(exception);
         }
+    }
+
+    private List<Player> createPlayers() {
+        List<String> playerNames = InputView.inputPlayers();
+        List<Money> playerBettingMonies = new ArrayList<>();
+        for (String name : playerNames) {
+            OutputView.printPlayerBettingMoneyGuide(name);
+            playerBettingMonies.add(new Money(InputView.inputMoney()));
+        }
+        return Players.makePlayers(playerNames, playerBettingMonies);
     }
 
     private void playGame(Dealer dealer, Players players) {
@@ -56,7 +68,7 @@ public class BlackJackController {
 
     private boolean wantCard(Player player) {
         OutputView.printHitGuideMessage(player);
-        HitStay hitValue = HitStay.of(InputView.getHitValue());
+        HitStay hitValue = HitStay.of(InputView.inputHitValue());
         return hitValue.isHit();
     }
 
