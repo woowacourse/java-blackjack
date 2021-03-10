@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.carddeck.Card;
+
 public class Player extends Participant {
 
     private final Name name;
@@ -12,14 +14,14 @@ public class Player extends Participant {
         return this.name.getValue();
     }
 
-    public void initPlayerHand(Dealer dealer, int receiveCount) {
-        for (int i = 0; i < receiveCount; i++) {
-            receiveCard(dealer.drawCard());
-        }
-    }
-
     @Override
     public boolean isOverLimitScore() {
         return getTotalScore().isBust();
+    }
+
+    public void receiveCard(final Card card) {
+        validateState();
+        this.hand.addCard(card);
+        this.state = state.check(this.hand);
     }
 }

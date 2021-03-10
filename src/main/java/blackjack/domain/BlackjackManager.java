@@ -11,14 +11,13 @@ import java.util.Map;
 public class BlackjackManager {
 
     private static final int DEFAULT_COUNT = 0;
-    private static final int DEFAULT_RECEIVE_COUNT = 2;
 
     private BlackjackManager() {
     }
 
     public static void initGame(Players players, Dealer dealer) {
-        dealer.initDealerHand(DEFAULT_RECEIVE_COUNT);
-        players.initHandByDealer(dealer, DEFAULT_RECEIVE_COUNT);
+        dealer.receiveFirstHand(dealer.drawCards());
+        players.initHandByDealer(dealer);
     }
 
     public static GameResultDto getGameResult(Dealer dealer, Players players) {

@@ -41,7 +41,7 @@ public class BlackjackController {
         for (Player player : players.toList()) {
             playHit(player, dealer);
         }
-        while (!dealer.isOverLimitScore()) {
+        while (!dealer.isFinished()) {
             dealer.receiveCard(dealer.drawCard());
             OutputView.printDealerHit();
         }
@@ -59,12 +59,13 @@ public class BlackjackController {
     private void hitOrStay(Player player, Dealer dealer) {
         UserAnswer userAnswer = UserAnswer.getUserAnswer(InputView.getHitOrStay(player.getName()));
         if (userAnswer.isStay()) {
+            player.stay();
             OutputView.printCards(player);
             return;
         }
         player.receiveCard(dealer.drawCard());
         OutputView.printCards(player);
-        if (player.isOverLimitScore()) {
+        if (player.isFinished()) {
             OutputView.printPlayerBurst(player.getName());
             return;
         }

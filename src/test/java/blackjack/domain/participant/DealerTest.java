@@ -1,9 +1,15 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.carddeck.Card;
+import blackjack.domain.carddeck.Number;
+import blackjack.domain.carddeck.Pattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,6 +22,8 @@ public class DealerTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
+        List<Card> cards = Collections.singletonList(new Card(Pattern.CLOVER, Number.TEN));
+        dealer.receiveFirstHand(cards);
     }
 
     @Test
@@ -32,6 +40,7 @@ public class DealerTest {
     @Test
     @DisplayName("딜러는 총점수 17이상일시 카드 뽑기를 멈춘다.")
     void testStopDrawDealerWhenTotalScoreOverSeventeen() {
+        dealer.receiveCard(new Card(Pattern.DIAMOND, Number.JACK));
         for (int i = 0; i < 999999; i++) {
             while (!dealer.isOverLimitScore()) {
                 dealer.receiveCard(dealer.drawCard());

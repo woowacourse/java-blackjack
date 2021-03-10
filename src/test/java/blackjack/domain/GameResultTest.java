@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameResultTest {
@@ -21,10 +23,14 @@ public class GameResultTest {
     void setUp() {
         dealer = new Dealer();
         player = new Player(new Name("pobi"));
-        dealer.receiveCard(new Card(Pattern.HEART, Number.TEN));
-        dealer.receiveCard(new Card(Pattern.HEART, Number.JACK));
-        player.receiveCard(new Card(Pattern.CLOVER, Number.TEN));
-        player.receiveCard(new Card(Pattern.CLOVER, Number.JACK));
+        dealer.receiveFirstHand(Arrays.asList(
+                new Card(Pattern.HEART, Number.TEN),
+                new Card(Pattern.HEART, Number.JACK)
+        ));
+        player.receiveFirstHand(Arrays.asList(
+                new Card(Pattern.CLOVER, Number.TEN),
+                new Card(Pattern.CLOVER, Number.JACK)
+        ));
     }
 
     @Test

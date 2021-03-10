@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
@@ -16,14 +19,16 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         player = new Player(new Name("pobi"));
+        List<Card> cards = Arrays.asList(
+                new Card(Pattern.CLOVER, Number.TEN),
+                new Card(Pattern.DIAMOND, Number.TEN)
+        );
+        player.receiveFirstHand(cards);
     }
 
     @Test
     @DisplayName("플레이어는 카드를 받는다.")
     void testReceiveCard() {
-        Card card = new Card(Pattern.DIAMOND, Number.EIGHT);
-        player.receiveCard(card);
-
-        assertThat(player.getTotalScore()).isEqualTo(new Score(8));
+        assertThat(player.getTotalScore()).isEqualTo(new Score(20));
     }
 }

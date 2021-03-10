@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Hand {
 
-    public static final int MAX_SCORE = 21;
+    private static final int INIT_HAND_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -40,8 +40,12 @@ public class Hand {
                 .count();
     }
 
-    private boolean isBust() {
-        return calculateScore() > MAX_SCORE;
+    public boolean isBlackjack() {
+        return cards.size() == INIT_HAND_COUNT && totalScore().isBlackjack();
+    }
+
+    public boolean isBust() {
+        return totalScore().isBust();
     }
 
     public List<Card> toList() {

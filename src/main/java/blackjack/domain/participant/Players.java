@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Players {
 
@@ -38,9 +37,9 @@ public class Players {
         }
     }
 
-    public void initHandByDealer(Dealer dealer, int receiveCount) {
+    public void initHandByDealer(Dealer dealer) {
         for (Player player : this.players) {
-            player.initPlayerHand(dealer, receiveCount);
+            player.receiveFirstHand(dealer.drawCards());
         }
     }
 

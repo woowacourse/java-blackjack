@@ -25,6 +25,10 @@ public class Score {
         return this.value > score.value;
     }
 
+    public boolean isBlackjack() {
+        return this.value == BLACKJACK;
+    }
+
     public boolean isBust() {
         return value > BLACKJACK;
     }

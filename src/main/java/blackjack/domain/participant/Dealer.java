@@ -4,11 +4,16 @@ import blackjack.domain.GameResult;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.CardDeck;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static blackjack.domain.GameResult.*;
 
 public class Dealer extends Participant {
+
+    private static final int INIT_HAND_COUNT = 2;
 
     private final CardDeck cardDeck;
 
@@ -41,9 +46,19 @@ public class Dealer extends Participant {
         return getTotalScore().isDealerStateStay();
     }
 
-    public void initDealerHand(int receiveCount) {
-        for (int i = 0; i < receiveCount; i++) {
-            receiveCard(drawCard());
+    public List<Card> drawCards() {
+        return Stream.generate(this::drawCard)
+                .limit(INIT_HAND_COUNT)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void receiveCard(final Card card) {
+        validateState();
+        this.hand.addCard(card);
+        this.state = state.check(this.hand);
+        if (isOverLimitScore() && !isFinished()) {
+            stay();
         }
     }
 }
