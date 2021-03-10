@@ -38,13 +38,13 @@ public class Results {
         return results;
     }
 
-    public Map<String, String> getPlayersFinalOutcome() {
-        final Map<String, String> results = new LinkedHashMap<>();
+    public Map<String, Outcome> getPlayersFinalOutcome() {
+        final Map<String, Outcome> results = new LinkedHashMap<>();
 
         for (Player player : players.getUnmodifiableList()) {
             final Outcome playerOutcome = Outcome
                 .getInstance(player.sumCardsForResult(), dealer.sumCardsForResult());
-            results.put(player.getName(), playerOutcome.toString());
+            results.put(player.getName(), playerOutcome);
         }
 
         return Collections.unmodifiableMap(results);
@@ -52,10 +52,12 @@ public class Results {
 
     public Map<Outcome, Integer> getDealerFinalOutcome() {
         final Map<Outcome, Integer> outcomes = new EnumMap<>(Outcome.class);
+        Arrays.stream(Outcome.values()).forEach(outcome -> outcomes.put(outcome, 0));
+
         for (Player player : players.getUnmodifiableList()) {
             Outcome dealerOutcome = Outcome
                 .getInstance(dealer.sumCardsForResult(), player.sumCardsForResult());
-            outcomes.put(dealerOutcome, outcomes.getOrDefault(dealerOutcome, 0) + 1);
+            outcomes.put(dealerOutcome, outcomes.get(dealerOutcome) + 1);
         }
         return Collections.unmodifiableMap(outcomes);
     }

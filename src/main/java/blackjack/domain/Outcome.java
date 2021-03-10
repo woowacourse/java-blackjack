@@ -16,6 +16,10 @@ public enum Outcome {
         this.word = word;
     }
 
+    public String getWord(){
+        return word;
+    }
+
     public static Outcome getInstance(final Score base, final Score counterpart) {
         if (win(base, counterpart)) {
             return Outcome.LOSE;

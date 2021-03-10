@@ -33,6 +33,7 @@ public class OutputView {
             System.out.println(value.getKey() + cardsToString(value.getValue()));
         }
 
+        System.out.println();
     }
 
     private static String cardsToString(Cards cards) {
@@ -64,9 +65,9 @@ public class OutputView {
         printPlayersOutcome(results.getPlayersFinalOutcome());
     }
 
-    private static void printPlayersOutcome(Map<String, String> playersFinalOutcome) {
-        for (Map.Entry<String, String> entry : playersFinalOutcome.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
+    private static void printPlayersOutcome(Map<String, Outcome> playersFinalOutcome) {
+        for (Map.Entry<String, Outcome> entry : playersFinalOutcome.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue().getWord());
         }
     }
 
