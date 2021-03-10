@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Score;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,11 +13,11 @@ public abstract class User {
 
     protected abstract List<Card> getCards();
 
-    public abstract void addFirstCards(Card card1, Card card2);
-
     public abstract void addCard(Card card);
 
-    public abstract int score();
+    public abstract int scoreToInt();
+
+    public abstract Score score();
 
     public List<String> getCardsStatus() {
         return getCards().stream()

@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Score;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
 
@@ -12,6 +13,10 @@ public class Dealer extends User {
 
     private static final Name name = new Name("딜러");
     private State state;
+
+    public Dealer(List<Card> cards) {
+        this.state = StateFactory.createState(cards.get(0), cards.get(1));
+    }
 
     public boolean canAddCard() {
         return !state.score().isOver(TURN_OVER_COUNT);
@@ -28,18 +33,18 @@ public class Dealer extends User {
     }
 
     @Override
-    public void addFirstCards(Card card1, Card card2) {
-        this.state = StateFactory.createState(card1, card2);
-    }
-
-    @Override
     public void addCard(Card card) {
         this.state = state.draw(card);
     }
 
     @Override
-    public int score() {
+    public int scoreToInt() {
         return state.score().toInt();
+    }
+
+    @Override
+    public Score score() {
+        return state.score();
     }
 
     @Override
