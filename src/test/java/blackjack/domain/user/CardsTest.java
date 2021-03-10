@@ -2,8 +2,8 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Suit;
 import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -97,5 +97,19 @@ public class CardsTest {
         boolean isBust = cards.isBust();
 
         assertThat(isBust).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드 한장을 더한다.")
+    void add() {
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.SPACE, Denomination.ACE)));
+        Card card = new Card(Suit.DIAMOND, Denomination.QUEEN);
+
+        cards.add(card);
+        int count = cards.getCards().size();
+
+        assertThat(count).isEqualTo(3);
     }
 }
