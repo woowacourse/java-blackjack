@@ -15,12 +15,12 @@ public class Hand {
     public Hand(List<Card> cards, int hitLimit) {
         this.cards = cards;
         this.hitLimit = hitLimit;
-        this.status = calculateStatus(calculateHandScore());
+        this.status = calculateStatus();
     }
 
     public void addCard(Card card) {
         cards.add(card);
-        status = calculateStatus(calculateHandScore());
+        status = calculateStatus();
     }
 
     private int calculateHandScore() {
@@ -42,7 +42,8 @@ public class Hand {
             .anyMatch(Card::isAce);
     }
 
-    private HandStatus calculateStatus(int score) {
+    private HandStatus calculateStatus() {
+        int score = calculateScore();
         return HandStatus.calculateStatus(score, hitLimit, cards.size());
     }
 
