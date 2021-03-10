@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class BettingMoneyTest {
@@ -14,13 +16,14 @@ class BettingMoneyTest {
     @DisplayName("숫자가 아닌 경우")
     void createBettingMoney(String value) {
         assertThatThrownBy(() -> {
-            int money;
+            BigDecimal bettingMoney;
             try {
-                money = Integer.parseInt(value);
+                int money = Integer.parseInt(value);
+                bettingMoney = new BigDecimal(money);
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException();
             }
-            new BettingMoney(money);
+            new BettingMoney(bettingMoney);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -28,7 +31,7 @@ class BettingMoneyTest {
     @DisplayName("음수인 경우")
     void negativeMoney() {
         assertThatThrownBy(() ->
-                new BettingMoney(-1000)
+                new BettingMoney(new BigDecimal(-1000))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }
