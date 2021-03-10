@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import blackjack.domain.user.Score;
 import blackjack.domain.user.User;
 
 import java.util.Arrays;
@@ -34,9 +35,9 @@ public enum Result {
                 .orElseGet(() -> decideByScore(player.score(), dealer.score()));
     }
 
-    private static Result decideByScore(int playerScore, int dealerScore) {
+    private static Result decideByScore(Score playerScore, Score dealerScore) {
         return Arrays.stream(values())
-                .filter(value -> value.scorePredicate.test(playerScore, dealerScore))
+                .filter(value -> value.scorePredicate.test(playerScore.getValue(), dealerScore.getValue()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("승패 결과 조건에 매치되지 않습니다."));
     }

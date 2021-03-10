@@ -26,4 +26,34 @@ public class ScoreTest {
 
         assertThat(value).isEqualTo(20);
     }
+
+    @Test
+    @DisplayName("버스트인지 확인한다.")
+    void isBust() {
+        Score score = new Score(22);
+
+        boolean isBust = score.isBust();
+
+        assertThat(isBust).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭인지 확인한다.")
+    void isBlackjack() {
+        Score score = new Score(21);
+
+        boolean isBlackjack = score.isBlackjack();
+
+        assertThat(isBlackjack).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러가 hit을 해야하는 값인지 확인한다.")
+    void isDealerMustToHitScore() {
+        Score score = new Score(16);
+
+        boolean isDealerMustToHitScore = score.isDealerMustToHitScore();
+
+        assertThat(isDealerMustToHitScore).isTrue();
+    }
 }

@@ -39,7 +39,7 @@ public abstract class User {
         return !cards.isBust();
     }
 
-    public final int score() {
+    public final Score score() {
         return cards.calculateTotalValue();
     }
 

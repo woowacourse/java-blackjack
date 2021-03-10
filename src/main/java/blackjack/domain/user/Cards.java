@@ -7,10 +7,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards implements Comparable<Cards> {
+public class Cards {
     private static final int FIRST_CARD = 0;
-    private static final int BLACKJACK_VALUE = 21;
-    private static final int TEN = 10;
 
     private final List<Card> cards;
 
@@ -23,7 +21,7 @@ public class Cards implements Comparable<Cards> {
     }
 
     public boolean isBlackjack() {
-        return calculateTotalValue() == BLACKJACK_VALUE;
+        return calculateTotalValue().isBlackjack();
     }
 
     public List<Card> getCards() {
@@ -34,32 +32,25 @@ public class Cards implements Comparable<Cards> {
         return cards.get(FIRST_CARD);
     }
 
-    public int calculateTotalValue() {
-        int totalValue = sum();
+    public Score calculateTotalValue() {
+        Score totalScore = sum();
         int aceCount = getAceCount();
         for (int i = 0; i < aceCount; i++) {
-            totalValue += decideAceValue(totalValue);
+            totalScore = totalScore.decideScoreByStatus();
         }
-        return totalValue;
+        return totalScore;
     }
 
-    private int sum() {
-        return cards.stream()
+    private Score sum() {
+        return new Score(cards.stream()
                 .mapToInt(Card::getScore)
-                .sum();
+                .sum());
     }
 
     private int getAceCount() {
         return (int) cards.stream()
                 .filter(Card::isAceCard)
                 .count();
-    }
-
-    private int decideAceValue(int totalValue) {
-        if (totalValue + TEN <= BLACKJACK_VALUE) {
-            return TEN;
-        }
-        return 0;
     }
 
     public boolean isSoftHand() {
@@ -76,11 +67,6 @@ public class Cards implements Comparable<Cards> {
     }
 
     public boolean isBust() {
-        return calculateTotalValue() > BLACKJACK_VALUE;
-    }
-
-    @Override
-    public int compareTo(Cards otherCards) {
-        return Integer.compare(this.calculateTotalValue(), otherCards.calculateTotalValue());
+        return calculateTotalValue().isBust();
     }
 }
