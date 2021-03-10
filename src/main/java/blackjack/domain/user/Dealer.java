@@ -12,6 +12,6 @@ public class Dealer extends User {
 
     @Override
     public boolean isAvailableDraw() {
-        return !this.isBlackjack() && !this.isBust() && this.getScore() < DEALER_DRAW_NUMBER;
+        return this.getScore() <= DEALER_DRAW_NUMBER;
     }
 }
