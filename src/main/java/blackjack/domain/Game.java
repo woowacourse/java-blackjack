@@ -22,8 +22,7 @@ public class Game {
         List<Player> playersValue = getPlayerList(namesValue);
         this.dealer = new Dealer(new Cards(Collections.emptyList()));
         this.players = new Players(playersValue);
-
-        gameTable = new GameTable(dealer, players, new RandomCardDeck());
+        this.gameTable = new GameTable(dealer, players, new RandomCardDeck());
     }
 
     private List<Player> getPlayerList(String namesValue) {

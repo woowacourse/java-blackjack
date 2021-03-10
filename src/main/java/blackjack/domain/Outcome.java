@@ -16,18 +16,6 @@ public enum Outcome {
     public String getWord() {
         return word;
     }
-/*
-- 승
-  - 공통조건: 이기려면 카드 합계는 21 이하여야 한다.
-  - 블랙잭: 카드 합계가 21
-  - 블랙잭 아닌 경우: 상대보다 점수가 높은 경우
-- 무
-  - 점수가 같은 경우
-  - 둘다 21이 초과되는 경우
-- 패
-  - `승`,`무` 이외의 경우
-
- */
     public static Outcome getInstance(final Score base, final Score counterpart) {
         if (draw(base, counterpart)) {
             return Outcome.DRAW;

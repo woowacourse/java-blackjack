@@ -5,7 +5,7 @@ src/main/java/blackjack/domain/card/Card.java
 - [ ] Card를 캐싱하는 객체를 분리 (Card는 카드 자체에 대한 관리만 진행. 객체의 무게 줄이기)
 
 src/main/java/blackjack/domain/GameTable.java
-- [ ]  Queue를 꺼내지 말고 그냥 GameTable이 CardDeck을 가지고 있는게 좋아보여요 :)
+- [x]  Queue를 꺼내지 말고 그냥 GameTable이 CardDeck을 가지고 있는게 좋아보여요 :)
 
 src/main/java/blackjack/domain/Game.java
 - [ ] Game 객체의 역할이 모호하다. 
@@ -13,7 +13,7 @@ src/main/java/blackjack/domain/Game.java
   Game이 명확한 역할로 정의될 수 있는 객체가 아니라면, Controller에서 GameTable, Dealer 등등의 다른 객체들을 생성해도 충분할 것 같아요.
 
 src/main/java/blackjack/domain/gamer/Players.java
-- [ ] Players 일급컬렉션은 Player List를 생성자로 받아서 단순하게 생성하는 것이 좋아보입니다.
+- [x] Players 일급컬렉션은 Player List를 생성자로 받아서 단순하게 생성하는 것이 좋아보입니다.
   `,`으로 String을 분리하고 Player를 생성하는 역할은 외부에서 진행
 
 src/main/java/blackjack/domain/gamer/Dealer.java
@@ -23,19 +23,19 @@ src/main/java/blackjack/domain/gamer/Dealer.java
 - [ ] 점수계산 로직을 더 깔끔하게 리팩토링 해보자! (중복조건 제거)
 
 src/test/java/blackjack/DealerTest.java
-- [ ] 테스트들도 프로덕션 코드와 동일한 패키지 경로를 가지고 있어야 합니다.
+- [x] 테스트들도 프로덕션 코드와 동일한 패키지 경로를 가지고 있어야 합니다.
   확인하시고 올바르게 배치
 
 src/test/java/blackjack/CardDeckTest.java 
-- [ ] 카트가 아니라 카드...죠? ㅋㅋ
+- [x] 카트가 아니라 카드...죠? ㅋㅋ
   테스트 클래스 이름도 GameTableTest로 바꿔야겠네요
 
 src/main/java/blackjack/dto/Participants.java
-- [ ] View와 관련한 로직이 여전히 섞여있다. names(), finalResult()
+- [x] View와 관련한 로직이 여전히 섞여있다. names(), finalResult()
 
 ## self 리팩토링 리스트
-- [ ] 의미있는 모든 원시값 포장
-- [ ] 메소드 호출에서 스트림을 제외하고는 `.`은 하나만 찍자
+- [x] 의미있는 모든 원시값 포장
+- [x] 메소드 호출에서 스트림을 제외하고는 `.`은 하나만 찍자
 
 # 재정리
 구조가 전체적으로 다시 생각해보면 좋을 것 같아 다시 정리 해봅니다.

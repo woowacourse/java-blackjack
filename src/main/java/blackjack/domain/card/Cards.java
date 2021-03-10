@@ -28,7 +28,9 @@ public class Cards {
     }
 
     public Score sumCardsForResult() {
-        int aceCount = (int) cards.stream().filter(Card::isAce).count();
+        int aceCount = (int) cards.stream()
+            .filter(Card::isAce)
+            .count();
         Score sum = sumCards().add(aceCount * ACE_EXTRA_VALUE);
         while (sum.isBurst() && aceCount > 0) {
             sum = sum.subtract(ACE_EXTRA_VALUE);
