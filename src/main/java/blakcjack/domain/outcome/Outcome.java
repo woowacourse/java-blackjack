@@ -25,7 +25,7 @@ public enum Outcome {
 	}
 
 	private static boolean isWinningByScoreOrDealerBust(final Dealer dealer, final Player player) {
-		return !player.isBust() && (player.getScore() > dealer.getScore() || dealer.isBust());
+		return !player.isBust() && (dealer.isBust() || player.getScore() > dealer.getScore());
 	}
 
 	private static boolean isDrawByScore(final Dealer dealer, final Player player) {
