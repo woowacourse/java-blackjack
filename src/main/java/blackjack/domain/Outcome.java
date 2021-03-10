@@ -1,13 +1,14 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Score;
+
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-import static blackjack.controller.GameController.GAME_OVER_SCORE;
 
 public enum Outcome {
     WIN("승",
-            (dealerScore, playerScore) -> (playerScore > GAME_OVER_SCORE),
+            (dealerScore, playerScore) -> (playerScore.isBust()),
             (dealerScore, playerScore) -> dealerScore > playerScore) {
         @Override
         public Outcome reverse() {
@@ -15,7 +16,7 @@ public enum Outcome {
         }
     },
     LOSE("패",
-            (dealerScore, playerScore) -> (dealerScore > GAME_OVER_SCORE),
+            (dealerScore, playerScore) -> (dealerScore.isBust()),
             (dealerScore, playerScore) -> dealerScore < playerScore) {
         @Override
         public Outcome reverse() {
@@ -32,10 +33,10 @@ public enum Outcome {
     };
 
     private final String name;
-    private final BiPredicate<Integer, Integer> compareFunctionWhenBuster;
+    private final BiPredicate<Score, Score> compareFunctionWhenBuster;
     private final BiPredicate<Integer, Integer> compareFunctionNotBuster;
 
-    Outcome(String name, BiPredicate<Integer, Integer> compareFunctionWhenBuster, BiPredicate<Integer, Integer> compareFunctionNotBuster) {
+    Outcome(String name, BiPredicate<Score, Score> compareFunctionWhenBuster, BiPredicate<Integer, Integer> compareFunctionNotBuster) {
         this.name = name;
         this.compareFunctionWhenBuster = compareFunctionWhenBuster;
         this.compareFunctionNotBuster = compareFunctionNotBuster;
@@ -45,11 +46,11 @@ public enum Outcome {
         return name;
     }
 
-    public static Outcome findOutcome(int dealerScore, int playerScore) {
+    public static Outcome findOutcome(Score dealerScore, Score playerScore) {
         return Arrays.stream(values())
                 .filter(value -> value.compareFunctionWhenBuster.test(dealerScore, playerScore))
                 .findAny()
-                .orElse(findOutcomeNotBuster(dealerScore, playerScore));
+                .orElse(findOutcomeNotBuster(dealerScore.toInt(), playerScore.toInt()));
     }
 
     private static Outcome findOutcomeNotBuster(int dealerScore, int playerScore) {
