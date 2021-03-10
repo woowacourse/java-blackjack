@@ -44,11 +44,11 @@ public class PlayersTest {
     @Test
     @DisplayName("승패 결과")
     void match() throws InvalidNameInputException {
-        Players players = new Players(Arrays.asList(TestSetUp.createWinner(), TestSetUp.createLoser(), TestSetUp.createTiePlayer()));
+        Players players = new Players(Arrays.asList(TestSetUp.createBlackJackPlayer(), TestSetUp.createLoser(), TestSetUp.createTiePlayer()));
         GameResult gameResult = players.match(TestSetUp.createDealer());
 
         Map<Player, ResultType> expected = new HashMap<>();
-        expected.put(TestSetUp.createWinner(), ResultType.WIN);
+        expected.put(TestSetUp.createBlackJackPlayer(), ResultType.WIN);
         expected.put(TestSetUp.createTiePlayer(), ResultType.TIE);
         expected.put(TestSetUp.createLoser(), ResultType.LOSE);
 

@@ -14,8 +14,16 @@ import java.util.List;
 
 public class TestSetUp {
 
-    public static Player createWinner() {
+    public static Player createBlackJackPlayer() {
         Player winner = new Player("winner", "0");
+        for (Card card : getWinningDeck()) {
+            winner.draw(card);
+        }
+        return winner;
+    }
+
+    public static Player createBlackJackPlayerWithMoney(String money) {
+        Player winner = new Player("winner", money);
         for (Card card : getWinningDeck()) {
             winner.draw(card);
         }
@@ -38,8 +46,25 @@ public class TestSetUp {
         return loser;
     }
 
+    public static Player createLoserWithMoney(String money) {
+        Player loser = new Player("loser", money);
+        for (Card card : getLosingDeck()) {
+            loser.draw(card);
+        }
+        loser.willContinue("n");
+        return loser;
+    }
+
     public static Player createBustPlayer() {
         Player bust = new Player("bust player", "0");
+        for (Card card : getBustDeck()) {
+            bust.draw(card);
+        }
+        return bust;
+    }
+
+    public static Player createBustPlayerWithMoney(String money) {
+        Player bust = new Player("bust player", money);
         for (Card card : getBustDeck()) {
             bust.draw(card);
         }
@@ -62,6 +87,14 @@ public class TestSetUp {
         return bustDealer;
     }
 
+    public static Dealer createBlackJackDealer() {
+        Dealer blackJackDealer = new Dealer();
+        for (Card card : getWinningDeck()) {
+            blackJackDealer.draw(card);
+        }
+        return blackJackDealer;
+    }
+
     private static List<Card> getWinningDeck() {
         return new ArrayList<>(Arrays.asList(Card.valueOf(Shape.SPADE, CardValue.KING),
                 Card.valueOf(Shape.SPADE, CardValue.ACE)));
@@ -73,7 +106,8 @@ public class TestSetUp {
     }
 
     private static List<Card> getLosingDeck() {
-        return new ArrayList<>(Collections.emptyList());
+        return new ArrayList<>(Arrays.asList(Card.valueOf(Shape.SPADE, CardValue.TWO),
+                Card.valueOf(Shape.SPADE, CardValue.THREE)));
     }
 
     private static List<Card> getBustDeck() {

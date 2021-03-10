@@ -41,4 +41,8 @@ public class Player extends BlackJackParticipant {
     public double getMoney() {
         return money.getValue();
     }
+
+    public double getProfit(Dealer dealer) {
+        return getState().profitRate(match(dealer)) * getMoney();
+    }
 }

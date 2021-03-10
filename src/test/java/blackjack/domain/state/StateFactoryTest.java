@@ -2,7 +2,6 @@ package blackjack.domain.state;
 
 import blackjack.domain.Hand;
 import blackjack.domain.TestSetUp;
-import blackjack.exception.InvalidNameInputException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +12,7 @@ public class StateFactoryTest {
     @DisplayName("블랙잭, HIT 상태 반환 테스트")
     @Test
     void getState() {
-        Hand blackjackHand = TestSetUp.createWinner().getHand();
+        Hand blackjackHand = TestSetUp.createBlackJackPlayer().getHand();
         assertThat(StateFactory.getInstance(blackjackHand))
                 .isInstanceOf(BlackJackState.class);
 

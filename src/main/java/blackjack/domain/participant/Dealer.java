@@ -21,6 +21,6 @@ public class Dealer extends BlackJackParticipant {
     }
 
     private boolean isStay() {
-        return getScore() > DEALER_LIMIT && !isBust();
+        return getScore() > DEALER_LIMIT && !isBust() && !getHand().isBlackJack();
     }
 }

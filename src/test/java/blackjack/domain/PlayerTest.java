@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.state.*;
 import blackjack.exception.InvalidNameInputException;
@@ -13,7 +14,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Collections;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
 
@@ -54,7 +56,7 @@ public class PlayerTest {
     @Test
     @DisplayName("버스트가 없는 경우 승패 결과")
     void match() throws InvalidNameInputException {
-        assertThat(TestSetUp.createWinner().match(TestSetUp.createDealer())).isEqualTo(ResultType.WIN);
+        assertThat(TestSetUp.createBlackJackPlayer().match(TestSetUp.createDealer())).isEqualTo(ResultType.WIN);
         assertThat(TestSetUp.createTiePlayer().match(TestSetUp.createDealer())).isEqualTo(ResultType.TIE);
         assertThat(TestSetUp.createLoser().match(TestSetUp.createDealer())).isEqualTo(ResultType.LOSE);
     }
@@ -69,7 +71,7 @@ public class PlayerTest {
     @Test
     @DisplayName("딜러가 버스트인 경우 승패 결과")
     void matchWithDealerBust() throws InvalidNameInputException {
-        assertThat(TestSetUp.createWinner().match(TestSetUp.createBustDealer())).isEqualTo(ResultType.WIN);
+        assertThat(TestSetUp.createBlackJackPlayer().match(TestSetUp.createBustDealer())).isEqualTo(ResultType.WIN);
         assertThat(TestSetUp.createLoser().match(TestSetUp.createBustDealer())).isEqualTo(ResultType.WIN);
         assertThat(TestSetUp.createBustPlayer().match(TestSetUp.createBustDealer())).isEqualTo(ResultType.LOSE);
     }
@@ -79,7 +81,7 @@ public class PlayerTest {
     @DisplayName("돈 생성 기능")
     void checkMoney(String input) {
         Money money = new Money(input);
-        assertThat(TestSetUp.createWinner().getMoney()).isEqualTo(0);
+        assertThat(TestSetUp.createBlackJackPlayer().getMoney()).isEqualTo(0);
         assertThat(money.getValue()).isEqualTo(Double.parseDouble(input));
     }
 
@@ -88,7 +90,7 @@ public class PlayerTest {
     void updateState() {
         Player aaron = new Player("aaron", "0");
         assertThat(aaron.getState()).isInstanceOf(NotStarted.class);
-        assertThat(TestSetUp.createWinner().getState()).isInstanceOf(BlackJackState.class);
+        assertThat(TestSetUp.createBlackJackPlayer().getState()).isInstanceOf(BlackJackState.class);
 
         aaron = TestSetUp.createTiePlayer();
         assertThat(aaron.getState()).isInstanceOf(Hit.class);
@@ -96,5 +98,20 @@ public class PlayerTest {
 
         aaron.willContinue("n");
         assertThat(aaron.getState()).isInstanceOf(Stay.class);
+    }
+
+    @Test
+    @DisplayName("수익 구하는 기능")
+    void getProfit() {
+        Dealer dealer = TestSetUp.createDealer();
+        assertThat(TestSetUp.createBlackJackPlayerWithMoney("1000").getProfit(dealer)).isEqualTo(1000 * 1.5);
+        assertThat(TestSetUp.createBustPlayerWithMoney("1000").getProfit(dealer)).isEqualTo(1000 * -1);
+
+        assertThat(TestSetUp.createLoserWithMoney("1000").getProfit(TestSetUp.createBustDealer()))
+                .isEqualTo(1000);
+        assertThat(TestSetUp.createBustPlayerWithMoney("1000").getProfit(TestSetUp.createBustDealer()))
+                .isEqualTo(1000*-1);
+        assertThat(TestSetUp.createBlackJackPlayerWithMoney("1000").getProfit(TestSetUp.createBlackJackDealer()))
+                .isEqualTo(0);
     }
 }

@@ -1,6 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.Hand;
+import blackjack.domain.ResultType;
 
 public abstract class Finished extends Started {
     @Override
@@ -16,5 +17,10 @@ public abstract class Finished extends Started {
     @Override
     public boolean isFinished() {
         return true;
+    }
+
+    @Override
+    public double profitRate(ResultType match) {
+        return match.getProfitRate();
     }
 }
