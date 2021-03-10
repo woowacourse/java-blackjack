@@ -1,16 +1,20 @@
 package blackjack.domain.participant.state;
 
-import blackjack.domain.carddeck.Card;
-import java.util.List;
+import blackjack.domain.Result;
 
-public abstract class Running extends AfterInitDraw {
+public abstract class Running extends AfterInit {
 
-    public Running(final List<Card> cards) {
-        super(cards);
+    public Running(final Hand hand) {
+        super(hand);
     }
 
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public Result calculatePlayerResult(final State state) {
+        throw new UnsupportedOperationException();
     }
 }

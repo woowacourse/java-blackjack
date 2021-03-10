@@ -19,7 +19,7 @@ public class HitTest {
     void setUp() {
         Card firstCard = Card.valueOf(Pattern.HEART, Number.FIVE);
         Card secondCard = Card.valueOf(Pattern.DIAMOND, Number.TEN);
-        this.hit = InitDraw.draw(firstCard, secondCard);
+        this.hit = Init.draw(firstCard, secondCard);
         this.toBustCard = Card.valueOf(Pattern.HEART, Number.KING);
         this.toHitCard = Card.valueOf(Pattern.HEART, Number.TWO);
     }

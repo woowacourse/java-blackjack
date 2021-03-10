@@ -1,12 +1,11 @@
 package blackjack.domain.participant.state;
 
 import blackjack.domain.carddeck.Card;
-import java.util.List;
 
-public abstract class Finished extends AfterInitDraw {
+public abstract class Finished extends AfterInit {
 
-    public Finished(final List<Card> cards) {
-        super(cards);
+    public Finished(final Hand hand) {
+        super(hand);
     }
 
     @Override

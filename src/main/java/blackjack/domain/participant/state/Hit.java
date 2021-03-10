@@ -1,32 +1,22 @@
 package blackjack.domain.participant.state;
 
 import blackjack.domain.carddeck.Card;
-import java.util.List;
 
 public class Hit extends Running {
 
-    private static final int BLACKJACK = 21;
-
-    public Hit(final List<Card> cards) {
-        super(cards);
+    public Hit(final Hand hand) {
+        super(hand);
     }
 
     public State draw(final Card card) {
-        this.cards.add(card);
-        if (isBust()) {
-            return new Bust(this.cards);
+        this.hand.addCard(card);
+        if (this.hand.isBust()) {
+            return new Bust(this.hand);
         }
-        return new Hit(this.cards);
-    }
-
-    private boolean isBust() {
-        return this.cards.stream()
-            .mapToInt(Card::getScore)
-            .sum()
-            > BLACKJACK;
+        return new Hit(this.hand);
     }
 
     public State stay() {
-        return new Stay(this.cards);
+        return new Stay(this.hand);
     }
 }
