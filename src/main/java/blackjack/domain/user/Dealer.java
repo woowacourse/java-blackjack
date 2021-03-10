@@ -8,7 +8,8 @@ public class Dealer extends User {
         super(DEALER_NAME);
     }
 
-    public boolean hasToDrawACard() {
+    @Override
+    public boolean canContinue() {
         return this.getScore() < DEALER_REDRAW_STANDARD;
     }
 }

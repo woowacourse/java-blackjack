@@ -37,7 +37,7 @@ public class BlackJackController {
     }
 
     private void drawCardsOfDealerUntilOver16Score() {
-        while (dealer.hasToDrawACard()) {
+        while (dealer.canContinue()) {
             dealer.addCard(cardDeck.drawCard());
             OutputView.printDealerGetNewCardsMessage();
         }
@@ -51,7 +51,7 @@ public class BlackJackController {
     }
 
     private void playGameForEachPlayer(Player player) {
-        while (!player.isBust() && !player.isBlackJack() &&
+        while (player.canContinue() &&
                 Repeater.supplierGetsArgumentOfFunction(InputView::isHit, player::getName)) {
             player.addCard(cardDeck.drawCard());
             OutputView.printCardsOfUser(player);

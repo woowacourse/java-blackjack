@@ -34,7 +34,7 @@ class DealerTest {
         dealer.addCard(card1);
         dealer.addCard(card2);
 
-        assertTrue(dealer.hasToDrawACard());
+        assertTrue(dealer.canContinue());
     }
 
     @DisplayName("isStay - 딜러는 점수가 16 초과일 때 카드를 뽑지 않는다.")
@@ -48,7 +48,7 @@ class DealerTest {
         dealer.addCard(card1);
         dealer.addCard(card2);
 
-        assertFalse(dealer.hasToDrawACard());
+        assertFalse(dealer.canContinue());
     }
 
 }
