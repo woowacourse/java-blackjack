@@ -19,4 +19,11 @@ public class CardTest {
 		assertThat(Card.of(CardSymbol.HEART, CardNumber.ACE))
 				.isSameAs(Card.of(CardSymbol.HEART, CardNumber.ACE));
 	}
+
+	@DisplayName("카드가 에이스 인지 확인 제대로 하는지")
+	@Test
+	void isAce() {
+		Card card = Card.of(CardSymbol.HEART, CardNumber.ACE);
+		assertThat(card.isAce()).isTrue();
+	}
 }
