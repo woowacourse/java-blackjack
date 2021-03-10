@@ -48,12 +48,12 @@ public class Card {
         return value.getValue();
     }
 
-    public boolean hasMultipleValue() {
-        return value.hasMultipleValue();
-    }
-
     public String getCardName() {
         return this.value.getName() + this.shape.getName();
+    }
+
+    public boolean hasMultipleValue() {
+        return value.hasMultipleValue();
     }
 
     @Override

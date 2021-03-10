@@ -22,6 +22,14 @@ public class Players {
         }
     }
 
+    public List<Player> unwrap() {
+        return new ArrayList<>(players);
+    }
+
+    public boolean isNotPrepared() {
+        return players.stream().anyMatch(Player::isContinue);
+    }
+
     public GameResult match(Dealer dealer) {
         Map<String, Integer> result = new LinkedHashMap<>();
         players.forEach(player -> result.put(player.getName(), player.matchForProfit(dealer)));
@@ -34,13 +42,5 @@ public class Players {
             .filter(Player::isContinue)
             .findFirst()
             .orElseThrow(() -> new IllegalStateException("이미 모든 플레이어가 준비가 되었습니다."));
-    }
-
-    public boolean isNotPrepared() {
-        return players.stream().anyMatch(Player::isContinue);
-    }
-
-    public List<Player> unwrap() {
-        return new ArrayList<>(players);
     }
 }

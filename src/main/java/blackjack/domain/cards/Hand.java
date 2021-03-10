@@ -8,19 +8,23 @@ public class Hand {
     private static final int BLACKJACK = 21;
     private static final int BLACKJACK_CARD_COUNT = 2;
 
-    private final List<Card> hand;
+    private final List<Card> cards;
 
     public Hand(List<Card> cards) {
-        hand = new ArrayList<>(cards);
+        this.cards = new ArrayList<>(cards);
     }
 
     public Hand() {
         this(new ArrayList<>());
     }
 
+    public List<Card> unwrap() {
+        return new ArrayList<>(cards);
+    }
+
     public int getScore() {
-        int score = hand.stream().mapToInt(Card::getScore).sum();
-        long multipleValueCardCount = hand.stream().filter(Card::hasMultipleValue).count();
+        int score = cards.stream().mapToInt(Card::getScore).sum();
+        long multipleValueCardCount = cards.stream().filter(Card::hasMultipleValue).count();
 
         for (int i = 0; i < multipleValueCardCount; i++) {
             score = changeAnotherValueIfNotBust(score);
@@ -36,19 +40,15 @@ public class Hand {
         return score;
     }
 
-    public void addCard(Card card) {
-        hand.add(card);
-    }
-
     public boolean isBust() {
         return getScore() > BLACKJACK;
     }
 
     public boolean isBlackJack() {
-        return (hand.size() == BLACKJACK_CARD_COUNT) && (getScore() == BLACKJACK);
+        return (cards.size() == BLACKJACK_CARD_COUNT) && (getScore() == BLACKJACK);
     }
 
-    public List<Card> unwrap() {
-        return new ArrayList<>(hand);
+    public void addCard(Card card) {
+        cards.add(card);
     }
 }

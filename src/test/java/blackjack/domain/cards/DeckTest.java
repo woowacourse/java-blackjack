@@ -21,22 +21,6 @@ public class DeckTest {
     }
 
     @Test
-    @DisplayName("덱 생성 검사")
-    void createDeck() {
-        assertThat(deck.getCards()).contains(
-            Card.valueOf(Shape.DIAMOND, CardValue.ACE),
-            Card.valueOf(Shape.SPADE, CardValue.ACE));
-    }
-
-    @Test
-    @DisplayName("드로우 테스트")
-    void draw() {
-        Card card = deck.draw();
-        assertThat(card).isSameAs(Card.valueOf(Shape.DIAMOND, CardValue.ACE));
-        assertThat(deck.getCards()).hasSize(1);
-    }
-
-    @Test
     @DisplayName("덱이 소진되었을 경우 검증")
     void notEnoughCards() {
         deck = new Deck(new ArrayList<>());

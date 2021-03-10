@@ -28,16 +28,6 @@ public enum ResultType {
             .orElseThrow(() -> new IllegalArgumentException("불가능한 결과입니다."));
     }
 
-    public ResultType opposite() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return TIE;
-    }
-
     public String getName() {
         return name;
     }

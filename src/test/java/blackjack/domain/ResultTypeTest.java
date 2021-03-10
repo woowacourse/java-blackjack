@@ -44,12 +44,4 @@ public class ResultTypeTest {
             .isEqualTo(ResultType.TIE);
         assertThat(ResultType.getResultTypeByScore(seventeen, eighteen)).isEqualTo(ResultType.LOSE);
     }
-
-    @Test
-    @DisplayName("승패 전환 기능")
-    void opposite() {
-        assertThat(ResultType.WIN.opposite()).isEqualTo(ResultType.LOSE);
-        assertThat(ResultType.LOSE.opposite()).isEqualTo(ResultType.WIN);
-        assertThat(ResultType.TIE.opposite()).isEqualTo(ResultType.TIE);
-    }
 }
