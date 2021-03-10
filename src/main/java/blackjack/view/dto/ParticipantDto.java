@@ -1,6 +1,5 @@
 package blackjack.view.dto;
 
-import blackjack.domain.participant.state.Score;
 import java.util.List;
 
 public class ParticipantDto {

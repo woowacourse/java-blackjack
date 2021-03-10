@@ -10,7 +10,7 @@ public class Blackjack extends Finished {
 
     @Override
     public Result calculatePlayerResult(final State dealerState) {
-        if(dealerState.score().isBlackjack()){
+        if (dealerState.score().isBlackjack()) {
             return Result.DRAW;
         }
         return Result.WIN;

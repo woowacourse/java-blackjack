@@ -32,7 +32,7 @@ public class Score {
         if (this.value > score.value) {
             return Result.WIN;
         }
-        if(this.value < score.value) {
+        if (this.value < score.value) {
             return Result.LOSE;
         }
         return Result.DRAW;

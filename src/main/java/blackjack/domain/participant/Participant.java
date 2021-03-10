@@ -35,7 +35,7 @@ public abstract class Participant {
         return this.state.score();
     }
 
-    public int getScoreToInt(){
+    public int getScoreToInt() {
         return score().getValue();
     }
 
@@ -47,7 +47,7 @@ public abstract class Participant {
         return score().isBlackjack();
     }
 
-    public boolean isBust(){
+    public boolean isBust() {
         return score().isBust();
     }
 }

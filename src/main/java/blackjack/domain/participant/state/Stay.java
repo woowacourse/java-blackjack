@@ -13,7 +13,7 @@ public class Stay extends Finished {
         if (dealerState.score().isBlackjack()) {
             return Result.LOSE;
         }
-        if(dealerState.score().isBust()){
+        if (dealerState.score().isBust()) {
             return Result.WIN;
         }
         return this.score().compare(dealerState.score());

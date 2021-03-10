@@ -74,10 +74,12 @@ public class DtoAssembler {
             .count() + result.getResult();
     }
 
-    public static List<ResultDto> createPlayerResultDtos(final Dealer dealer, final Players players) {
+    public static List<ResultDto> createPlayerResultDtos(final Dealer dealer,
+        final Players players) {
         return players.toList()
             .stream()
-            .map(player -> new ResultDto(player.getName(), player.judgeByDealerState(dealer).getResult()))
+            .map(player -> new ResultDto(player.getName(),
+                player.judgeByDealerState(dealer).getResult()))
             .collect(Collectors.toList());
     }
 }
