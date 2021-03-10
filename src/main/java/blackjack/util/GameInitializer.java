@@ -3,7 +3,9 @@ package blackjack.util;
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
+import blackjack.domain.participant.BlackJackParticipant;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.exception.InvalidNameInputException;
 
 import java.util.Collections;
@@ -27,6 +29,7 @@ public class GameInitializer {
         for (int i = 0; i < STARTING_CARD_COUNT; i++) {
             players.unwrap().forEach(player -> player.draw(deck.draw()));
         }
+        players.unwrap().forEach(Player::initializeState);
         return players;
     }
 
@@ -35,6 +38,7 @@ public class GameInitializer {
         for (int i = 0; i < STARTING_CARD_COUNT; i++) {
             dealer.draw(deck.draw());
         }
+        dealer.initializeState();
         return dealer;
     }
 }

@@ -39,4 +39,6 @@ public class GameInitializerTest {
         Dealer dealer = GameInitializer.initializeDealer(deck);
         assertThat(dealer.getHand().unwrap().size()).isEqualTo(2);
     }
+
+
 }

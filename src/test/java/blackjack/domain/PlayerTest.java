@@ -4,6 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Player;
+import blackjack.domain.state.BlackJackState;
+import blackjack.domain.state.Hit;
 import blackjack.exception.InvalidNameInputException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -89,5 +91,16 @@ public class PlayerTest {
         Player aaron = new Player("aaorn");
         aaron.updateMoney(input);
         assertThat(aaron.getMoney()).isEqualTo(input);
+    }
+
+    @Test
+    @DisplayName("상태 초기화 기능")
+    void initializeState() {
+        Player blackJackPlayer = TestSetUp.createWinner();
+        Player hitPlayer = TestSetUp.createTiePlayer();
+        blackJackPlayer.initializeState();
+        hitPlayer.initializeState();
+        assertThat(blackJackPlayer.getState()).isInstanceOf(BlackJackState.class);
+        assertThat(hitPlayer.getState()).isInstanceOf(Hit.class);
     }
 }
