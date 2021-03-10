@@ -49,6 +49,6 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return Collections.unmodifiableList(players);
     }
 }
