@@ -59,7 +59,7 @@ public abstract class User {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return this.state.cards().getCards();
     }
 
     public String getName() {
