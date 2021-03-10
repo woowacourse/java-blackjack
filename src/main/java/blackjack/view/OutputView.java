@@ -4,15 +4,13 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Player;
-import blackjack.dto.DealerResultDto;
+import blackjack.domain.result.ProfitResult;
 import blackjack.dto.ParticipantDto;
-import blackjack.dto.PlayersResultDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static blackjack.domain.card.Deck.TOP_CARD;
-import static blackjack.domain.participant.Dealer.DEALER_NAME;
 
 public class OutputView {
     private static final String ENTER_PLAYERS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -101,31 +99,13 @@ public class OutputView {
         return String.format(CURRENT_CARD_FORM, participant.getName(), allCards);
     }
 
-    public static void showFinalResult(DealerResultDto dealerResultDto, PlayersResultDto playersResultDto) {
-        showFinalResultTitle();
-        showDealerFinalResult(dealerResultDto);
-        showPlayersFinalResult(playersResultDto);
-    }
-
-    public static void showFinalResultTitle() {
-        printNewLine();
-        System.out.println(FINAL_RESULT_TITLE);
-    }
-
-    public static void showDealerFinalResult(DealerResultDto dealerResult) {
-        System.out.print(DEALER_NAME.getName() + ": ");
-        dealerResult.getResult().entrySet().stream()
-                .filter(entrySet -> entrySet.getValue() != 0)
-                .forEach(entrySet -> System.out.print(entrySet.getValue() + entrySet.getKey().getResult() + " "));
-        System.out.println();
-    }
-
-    public static void showPlayersFinalResult(PlayersResultDto blackJackResult) {
-        blackJackResult.getResult()
-                .forEach((key, value) -> System.out.printf(PLAYER_RESULT_FORM + "%n", key.getName().getName(), value.getResult()));
-    }
-
     public static void printNewLine() {
         System.out.println();
+    }
+
+    public static void showFinalProfitResult(ProfitResult result) {
+        System.out.println("## 최종 수익");
+        result.getProfitResult()
+                .forEach((key, value) -> System.out.println(key.getName().getName() + ": " + value.toString()));
     }
 }

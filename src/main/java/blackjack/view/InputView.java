@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -33,9 +34,10 @@ public class InputView {
         return answer.equals(OK);
     }
 
-    public static int inputBettingMoney() {
+    public static BigDecimal inputBettingMoney() {
         try {
-            return Integer.parseInt(scanner.nextLine());
+            int money = Integer.parseInt(scanner.nextLine());
+            return new BigDecimal(money);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(BETTING_MONEY_IS_NUMBER_ERROR_MESSAGE);
         }

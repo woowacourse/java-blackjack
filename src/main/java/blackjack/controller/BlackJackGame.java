@@ -5,10 +5,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.*;
-import blackjack.domain.result.BlackJackResult;
-import blackjack.dto.DealerResultDto;
+import blackjack.domain.result.ProfitResult;
 import blackjack.dto.ParticipantDto;
-import blackjack.dto.PlayersResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -24,7 +22,8 @@ public class BlackJackGame {
             distributeCards(players, dealer, deck);
             playersTurn(players, deck);
             dealerTurn(dealer, deck);
-            showResult(players, dealer);
+            showProfitResult(players, dealer);
+//            showResult(players, dealer);
         } catch (IllegalStateException e) {
             OutputView.printError(e.getMessage());
         }
@@ -124,17 +123,10 @@ public class BlackJackGame {
         }
     }
 
-    private void showResult(Players players, Dealer dealer) {
+    private void showProfitResult(Players players, Dealer dealer) {
         OutputView.showAllCards(toPlayersDto(players), toParticipantDto(dealer));
-        BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(dealer));
-        OutputView.showFinalResult(toDealerResultDto(blackJackResult), toPlayersResultDto(players, dealer));
-    }
-
-    private DealerResultDto toDealerResultDto(BlackJackResult blackJackResult) {
-        return new DealerResultDto(blackJackResult.getDealerResult());
-    }
-
-    private PlayersResultDto toPlayersResultDto(Players players, Dealer dealer) {
-        return new PlayersResultDto(players.verifyResultByCompareScore(dealer));
+        ProfitResult profitResult = new ProfitResult();
+        profitResult.calculateProfit(players.verifyResultByCompareScore(dealer), dealer);
+        OutputView.showFinalProfitResult(profitResult);
     }
 }

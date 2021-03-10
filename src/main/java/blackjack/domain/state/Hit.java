@@ -30,24 +30,4 @@ public class Hit extends Running {
     public State stay() {
         return new Stay(cards);
     }
-
-    @Override
-    public boolean isBlackJack() {
-        throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean isStay() {
-        throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean isBust() {
-        throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean isWin(State state) {
-        throw new IllegalStateException();
-    }
 }

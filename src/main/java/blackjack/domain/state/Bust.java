@@ -2,9 +2,16 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
 
+import java.math.BigDecimal;
+
 public class Bust extends Finished {
     public Bust(Cards cards) {
         super(cards);
+    }
+
+    @Override
+    public BigDecimal rate() {
+        return new BigDecimal("1");
     }
 
     @Override
