@@ -21,7 +21,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return calculateTotalValue().isBlackjack();
+        return totalScore().isBlackjack();
     }
 
     public List<Card> getCards() {
@@ -32,7 +32,7 @@ public class Cards {
         return cards.get(FIRST_CARD);
     }
 
-    public Score calculateTotalValue() {
+    public Score totalScore() {
         Score totalScore = sum();
         int aceCount = getAceCount();
         for (int i = 0; i < aceCount; i++) {
@@ -67,6 +67,6 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return calculateTotalValue().isBust();
+        return totalScore().isBust();
     }
 }

@@ -40,7 +40,7 @@ public abstract class User {
     }
 
     public final Score score() {
-        return cards.calculateTotalValue();
+        return cards.totalScore();
     }
 
     public final Cards getCards() {

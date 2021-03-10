@@ -31,7 +31,7 @@ public class CardsTest {
                 new Card(Suit.CLOVER, Denomination.KING)
         ));
 
-        Score totalScore = cards.calculateTotalValue();
+        Score totalScore = cards.totalScore();
         int totalValue = totalScore.getValue();
 
         assertThat(totalValue).isEqualTo(18);
@@ -45,7 +45,7 @@ public class CardsTest {
                 new Card(Suit.SPACE, Denomination.ACE),
                 new Card(Suit.CLOVER, Denomination.KING)));
 
-        Score totalScore = cards.calculateTotalValue();
+        Score totalScore = cards.totalScore();
         int totalValue = totalScore.getValue();
 
         assertThat(totalValue).isEqualTo(19);

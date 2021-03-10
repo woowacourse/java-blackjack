@@ -11,7 +11,7 @@ public class Dealer extends User {
     }
 
     public boolean isMustHit() {
-        return cards.calculateTotalValue()
+        return cards.totalScore()
                 .isDealerMustToHitScore();
     }
 
