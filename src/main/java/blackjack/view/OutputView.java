@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
@@ -21,8 +20,8 @@ public class OutputView {
     private static final String DISTRIBUTE_MESSAGE = "딜러와 %s에게 2장의 카드를 나누어주었습니다.";
     private static final String PLAYER_CARD_STATUS_FORMAT = "%s카드: %s";
     private static final String CARD_RESULT_FORMAT = "%s카드: %s - 결과: %d";
-    private static final String GAME_RESULT_MESSAGE = "## 최종 승패";
-    private static final String GAME_RESULT_FORMAT = "%s: %d승 %d무 %d패";
+    private static final String GAME_RESULT_MESSAGE = "## 최종 수익";
+    private static final String GAME_RESULT_FORMAT = "%s: %d";
 
     public static void showNameAndCardInfo(final Participants participants) {
         distributeMessage(participants.getPlayers());
@@ -70,16 +69,10 @@ public class OutputView {
         return cardStatuses;
     }
 
-    public static void showGameResult(final List<Integer> counts, final Participant dealer) {
-        final Name name = dealer.getName();
+    public static void showGameResult(final Map<Name, Integer> participantResult) {
         System.out.println(NEWLINE + GAME_RESULT_MESSAGE);
-        System.out.printf(GAME_RESULT_FORMAT + NEWLINE, name.getValue(), counts.get(0),
-            counts.get(1), counts.get(2));
-    }
-
-    public static void showPlayerGameResult(final Map<Name, Result> results) {
-        results.forEach((name, result) -> {
-            System.out.println(name.getValue() + ": " + result.getValue());
+        participantResult.forEach((name, money) -> {
+            System.out.printf(GAME_RESULT_FORMAT + NEWLINE, name.getValue(), money);
         });
     }
 
