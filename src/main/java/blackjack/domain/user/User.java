@@ -7,6 +7,18 @@ import java.util.List;
 public abstract class User {
 
     protected Hand hand;
+    protected final String name;
+
+    public User(String name) {
+        validateNotEmptyName(name);
+        this.name = name;
+    }
+
+    private void validateNotEmptyName(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("빈 이름이 입력되었습니다.");
+        }
+    }
 
     public void initialHands(List<Card> cards, int stayLimit) {
         this.hand = new Hand(cards, stayLimit);

@@ -18,7 +18,7 @@ class PlayerTest {
     @Test
     void new_emptyName_ExceptionThrown() {
         assertThatIllegalArgumentException().isThrownBy(
-            () -> Player.create("")
+            () -> new Player("")
         );
     }
 
@@ -28,7 +28,7 @@ class PlayerTest {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
         cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));
-        Player player = Player.create("pobi");
+        Player player = new Player("pobi");
         player.initialHands(cards, 21);
 
         player.draw(new Card(Denomination.TWO, Suit.SPADES));
@@ -41,7 +41,7 @@ class PlayerTest {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
         cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));
-        Player player = Player.create("pobi");
+        Player player = new Player("pobi");
         player.initialHands(cards, 21);
 
         player.convertToStay();
@@ -51,7 +51,7 @@ class PlayerTest {
     @DisplayName("플레이어 이름 가져오기")
     @Test
     void getName() {
-        User player = Player.create("pobi");
+        User player = new Player("pobi");
         assertThat(player.getName()).isEqualTo("pobi");
     }
 }

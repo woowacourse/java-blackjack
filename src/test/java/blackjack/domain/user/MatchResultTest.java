@@ -21,7 +21,7 @@ class MatchResultTest {
 
     @BeforeEach
     void setUp() {
-        this.player = Player.create("A");
+        this.player = new Player("A");
         this.dealer = new Dealer();
     }
 

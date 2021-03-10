@@ -24,7 +24,7 @@ public class Game {
 
     private List<User> createPlayer(List<String> names) {
         return names.stream()
-            .map(Player::create)
+            .map(Player::new)
             .collect(Collectors.toList());
     }
 
