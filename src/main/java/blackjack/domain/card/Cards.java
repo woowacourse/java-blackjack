@@ -71,4 +71,12 @@ public class Cards {
 
         return score;
     }
+
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculateScore() == 21;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > 21;
+    }
 }
