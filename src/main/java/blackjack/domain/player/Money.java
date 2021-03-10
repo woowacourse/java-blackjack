@@ -20,7 +20,7 @@ public class Money {
     }
 
     public Money abs() {
-        return multiply(-1);
+        return new Money(Math.abs(money));
     }
 
     public int getValue(){

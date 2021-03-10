@@ -56,8 +56,15 @@ public class BlackJackController {
 
     private void calculateResults(BlackJackGame blackJackGame) {
         blackJackGame.calculateMoney();
+        Dealer dealer = blackJackGame.getDealer();
+        Gamblers gamblers = blackJackGame.getGamblers();
 
-//        OutputView.printResult(blackJackGame.calculateWinningResult());
-//        OutputView.printFinalRevenue(blackJackGame.getDealer(), blackJackGame.getGamblers());
+        OutputView.printPlayerCardsInformation(dealer);
+        for(Gambler gambler : gamblers){
+            OutputView.printPlayerCardsInformation(gambler);
+        }
+
+        OutputView.printResult(blackJackGame.calculateResult());
+        OutputView.printFinalRevenue(dealer, gamblers);
     }
 }

@@ -33,11 +33,19 @@ public class Cards {
         Score thisScore = calculateScore();
         Score otherScore = other.calculateScore();
 
-        if (thisScore.isNotBustAndHigh(otherScore)) {
+        if (thisScore.isBust() && !otherScore.isBust()) {
+            return WinOrLose.LOSE;
+        }
+
+        if (!thisScore.isBust() && otherScore.isBust()) {
             return WinOrLose.WIN;
         }
 
-        if (otherScore.isNotBustAndHigh(thisScore)) {
+        if (thisScore.isHigherScore(otherScore)) {
+            return WinOrLose.WIN;
+        }
+
+        if (otherScore.isLowerScore(thisScore)) {
             return WinOrLose.LOSE;
         }
 

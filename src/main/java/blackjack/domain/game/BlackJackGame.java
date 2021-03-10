@@ -14,32 +14,30 @@ public class BlackJackGame {
     private final int NUMBER_OF_INITIAL_CARDS = 2;
 
     private final Deck deck = new Deck();
-    private final Dealer dealer;
+    private final Dealer dealer = new Dealer();
     private final Gamblers gamblers;
 
-    public BlackJackGame(String nameLine){
-        dealer = new Dealer();
+    public BlackJackGame(final String nameLine){
         gamblers = initGamblerWithNames(splitAndParseToNames(nameLine));
-
-        giveInitialCards();
+        distributeInitialCards();
     }
 
-    private List<Name> splitAndParseToNames(String nameLine) {
+    private List<Name> splitAndParseToNames(final String nameLine) {
         return Arrays.asList(nameLine.split(SEPARATOR_OF_NAME_INPUT))
                 .stream().map(Name::new)
                 .collect(Collectors.toList());
     }
 
-    private Gamblers initGamblerWithNames(List<Name> names) {
+    private Gamblers initGamblerWithNames(final List<Name> names) {
         List<Gambler> gamblers = names.stream()
                 .map(Gambler::new)
                 .collect(Collectors.toList());
         return new Gamblers(gamblers);
     }
 
-    private void giveInitialCards(){
+    private void distributeInitialCards(){
         giveCards(dealer, NUMBER_OF_INITIAL_CARDS);
-        for (Gambler gambler : gamblers) {
+        for (final Gambler gambler : gamblers) {
             giveCards(gambler, NUMBER_OF_INITIAL_CARDS);
         }
     }
@@ -53,49 +51,37 @@ public class BlackJackGame {
         player.receiveCard(deck.draw());
     }
 
-    public void bet(Gambler gambler, int money) {
+    public void bet(final Gambler gambler, int money) {
         dealer.takeMoney(gambler, new Money(money));
     }
 
     public void checkBlackJack() {
-        for (Gambler gambler : gamblers) {
+        for (final Gambler gambler : gamblers) {
             dealer.checkBlackJack(gambler);
         }
     }
 
     public void calculateMoney() {
-        for (Gambler gambler : gamblers) {
-            if (gambler.hasBlackJack()) {
-                continue;
-            }
-            giveWinningMoney(gambler);
+        final Result result = calculateResult();
+        for (final Gambler gambler : gamblers) {
+            giveWinningMoney(gambler, result.get(gambler));
         }
     }
 
-    private void giveWinningMoney(Gambler gambler){
-        if(dealer.calculateWinOrLose(gambler).equals(WinOrLose.LOSE)){
-            dealer.giveWinningMoney(gambler);
+    private void giveWinningMoney(final Gambler gambler, final WinOrLose winOrLose){
+        if (gambler.hasBlackJack()) {
+            return;
         }
-
-        if(dealer.calculateWinOrLose(gambler).equals(WinOrLose.DRAW)){
-            dealer.giveBackBettingMoney(gambler);
-        }
-
-        "1".hashCode();
+        dealer.calculateMoney(gambler, winOrLose);
     }
 
-//    public WinningResult calculateWinningResult() {
-//        WinningResult result = new WinningResult(dealer.getCards());
-//        for (Player player : gamblers) {
-//            addGamblerResult(result, player);
-//        }
-//        return result;
-//    }
-
-//    private void addGamblerResult(final WinningResult winningResult, final Player player) {
-//        WinOrLose winOrLose = dealer.calculateGamblerWinOrNot(player);
-//        winningResult.addGamblerResults(player, winOrLose);
-//    }
+    public Result calculateResult(){
+        final Result result = new Result();
+        for(final Gambler gambler : gamblers){
+            result.add(gambler, dealer.calculateWinOrLose(gambler));
+        }
+        return result;
+    }
 
     public Dealer getDealer() {
         return dealer;
@@ -104,5 +90,4 @@ public class BlackJackGame {
     public Gamblers getGamblers() {
         return gamblers;
     }
-
 }

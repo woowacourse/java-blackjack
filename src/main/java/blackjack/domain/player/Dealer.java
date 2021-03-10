@@ -33,16 +33,6 @@ public class Dealer implements Player {
     }
 
     public WinOrLose calculateWinOrLose(final Gambler gambler){
-
-
-        if (cards.isBust() && !gambler.isBust()) {
-            return WinOrLose.WIN;
-        }
-
-        if (!cards.isBust() && gambler.isBust()) {
-            return WinOrLose.LOSE;
-        }
-
         return gambler.getCards().compareCardsScore(cards);
     }
 
@@ -56,11 +46,21 @@ public class Dealer implements Player {
         }
     }
 
-    public void giveBackBettingMoney(Gambler gambler) {
+    public void calculateMoney(Gambler gambler, WinOrLose winOrLose) {
+        if(winOrLose.equals(WinOrLose.LOSE)){
+            giveWinningMoney(gambler);
+        }
+
+        if(winOrLose.equals(WinOrLose.DRAW)){
+            giveBackBettingMoney(gambler);
+        }
+    }
+
+    private void giveBackBettingMoney(Gambler gambler) {
         giveMoney(gambler, gambler.getBettingMoney());
     }
 
-    public void giveBlackJackMoney(Gambler gambler) {
+    private void giveBlackJackMoney(Gambler gambler) {
         Money bettingMoney = gambler.getBettingMoney();
         Money winningMoney = bettingMoney.add(bettingMoney.multiply(1.5));
         giveMoney(gambler, winningMoney);

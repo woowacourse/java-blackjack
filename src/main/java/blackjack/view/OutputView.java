@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.game.Result;
 import blackjack.domain.game.WinningResult;
 import blackjack.domain.game.WinOrLose;
 import blackjack.domain.player.Dealer;
@@ -52,6 +53,17 @@ public class OutputView {
         printFinalWinningResult(winningResult);
     }
 
+    public static void printResult(final Result result){
+        String printFormat = "딜러 : %s 승 %s 무 %s 패" + System.lineSeparator();
+        OutputView.printMessageByFormat(
+                printFormat, result.getNumberOfWin(), result.getNumberOfDraw(), result.getNumberOfLose()
+        );
+
+        for(Player player : result.getPlayerSet()){
+            OutputView.printMessage(player.getName().getValue() + " : " + result.getReverseResult(player).getSymbol());
+        }
+    }
+
     private static void printCardsAndScore(final WinningResult winningResult) {
         printDealerResult(winningResult);
         for (Player player : winningResult.getGamblerSet()) {
@@ -90,7 +102,7 @@ public class OutputView {
         System.out.println("## 최종 수익");
         System.out.println(dealer.getName().getValue() + ": "+ dealer.getMoney().getValue());
         for (Gambler gambler : gamblers) {
-            System.out.println(gambler.getName() + ": "+gambler.getBettingMoney().abs());
+            System.out.println(gambler.getName().getValue() + ": "+gambler.getBettingMoney().getValue());
         }
     }
 
