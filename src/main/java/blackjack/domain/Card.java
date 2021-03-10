@@ -16,8 +16,8 @@ public class Card {
         return symbol == Symbol.ACE;
     }
 
-    public int getScore() {
-        return symbol.getScore();
+    public int getScore(int sum) {
+        return symbol.calculateScore(sum);
     }
 
     public Symbol getSymbol() {
@@ -43,5 +43,13 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(symbol, shape);
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "symbol=" + symbol +
+                ", shape=" + shape +
+                '}';
     }
 }

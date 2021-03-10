@@ -2,7 +2,9 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
 
@@ -29,31 +31,15 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int aceCounts = getAceCounts();
-        int score = calculateScoreWhenAceIsMinimum();
-        for (int i = 0; i < aceCounts; i++) {
-            score += plusBonusAceScore(score);
+        List<Card> cardsWithLastSortedAces = cards.stream()
+                .sorted(Comparator.comparing(card -> card.isAce()))
+                .collect(Collectors.toList());
+        int sum = 0;
+        for (Card card : cardsWithLastSortedAces) {
+            int score = card.getScore(sum);
+            sum += score;
         }
-        return score;
-    }
-
-    private int calculateScoreWhenAceIsMinimum() {
-        return cards.stream()
-                    .mapToInt(Card::getScore)
-                    .sum();
-    }
-
-    private int getAceCounts() {
-        return (int) cards.stream()
-                          .filter(Card::isAce)
-                          .count();
-    }
-
-    private int plusBonusAceScore(int sum) {
-        if (sum <= BOUND_OF_CHANGE_ACE_VALUE) {
-            return ACE_BONUS_SCORE;
-        }
-        return NO_BONUS_SCORE;
+        return sum;
     }
 
     public List<Card> getCards() {

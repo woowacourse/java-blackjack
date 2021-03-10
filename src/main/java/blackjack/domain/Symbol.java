@@ -27,6 +27,16 @@ public enum Symbol {
         return score;
     }
 
+    public int calculateScore(int sum) {
+        if (this == ACE) {
+            int elevenAce = 11;
+            if (sum + elevenAce <= 21) {
+                return elevenAce;
+            }
+        }
+        return score;
+    }
+
     public String getName() {
         return name;
     }
