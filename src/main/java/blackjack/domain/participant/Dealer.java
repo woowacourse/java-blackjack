@@ -29,18 +29,6 @@ public class Dealer extends Participant {
         }
     }
 
-    public GameResult judgeHand(final Player player) {
-        Score playerScore = player.getTotalScore();
-        Score dealerScore = this.getTotalScore();
-        if (playerScore.isBust() || (!dealerScore.isBust() && dealerScore.compareTo(playerScore))) {
-            return LOSE;
-        }
-        if (playerScore.compareTo(dealerScore) || dealerScore.isBust()) {
-            return WIN;
-        }
-        return TIE;
-    }
-
     @Override
     public boolean isOverLimitScore() {
         return getTotalScore().isDealerStateStay();
@@ -60,5 +48,17 @@ public class Dealer extends Participant {
         if (isOverLimitScore() && !isFinished()) {
             stay();
         }
+    }
+
+    public GameResult judgeHand(final Player player) {
+        Score playerScore = player.getTotalScore();
+        Score dealerScore = this.getTotalScore();
+        if (playerScore.isBust() || (!dealerScore.isBust() && dealerScore.compareTo(playerScore))) {
+            return LOSE;
+        }
+        if (playerScore.compareTo(dealerScore) || dealerScore.isBust()) {
+            return WIN;
+        }
+        return TIE;
     }
 }
