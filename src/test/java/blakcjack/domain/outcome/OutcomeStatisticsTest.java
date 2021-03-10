@@ -24,39 +24,42 @@ class OutcomeStatisticsTest {
 	private Dealer dealer;
 	private List<Player> players;
 
-	//TODO
-	// win, blackjack win case 추가
 	@BeforeEach
 	void setUp() {
 		Deck customDeck = createCustomDeck(
+				Card.of(CardSymbol.CLUB, CardNumber.QUEEN), // connie - draw
+				Card.of(CardSymbol.CLUB, CardNumber.NINE),
+
 				Card.of(CardSymbol.SPADE, CardNumber.FIVE), // medium bear - lose
 				Card.of(CardSymbol.SPADE, CardNumber.FOUR),
 
-				Card.of(CardSymbol.SPADE, CardNumber.ACE), // sakjung - draw
+				Card.of(CardSymbol.SPADE, CardNumber.ACE), // sakjung - blackjack win
 				Card.of(CardSymbol.SPADE, CardNumber.KING),
 
-				Card.of(CardSymbol.SPADE, CardNumber.THREE), // pobi - lose
-				Card.of(CardSymbol.SPADE, CardNumber.TWO),
+				Card.of(CardSymbol.HEART, CardNumber.KING), // pobi - win
+				Card.of(CardSymbol.HEART, CardNumber.QUEEN),
 
-				Card.of(CardSymbol.HEART, CardNumber.JACK), // dealer
-				Card.of(CardSymbol.HEART, CardNumber.ACE)
+				Card.of(CardSymbol.HEART, CardNumber.JACK), // dealer - 19
+				Card.of(CardSymbol.HEART, CardNumber.NINE)
 		);
 		Player player1 = new Player(new Name("pobi"), new Money(100));
-		Player player2 = new Player(new Name("sakjung"), new Money(200));
-		Player player3 = new Player(new Name("mediumBear"), new Money(100));
+		Player player2 = new Player(new Name("sakjung"), new Money(100));
+		Player player3 = new Player(new Name("mediumBear"), new Money(200));
+		Player player4 = new Player(new Name("connie"), new Money(100));
 		dealer = new Dealer();
-		drawCards(customDeck, dealer, player1, player2, player3);
-		players = Arrays.asList(player1, player2, player3);
+		drawCards(customDeck, dealer, player1, player2, player3, player4);
+		players = Arrays.asList(player1, player2, player3, player4);
 	}
 
-	@DisplayName("객체 생성 제대로 하는지")
+	@DisplayName("객체 생성 할 때 딜러와 플레이어들의 카드를 토대로 수익 통계를 제대로 만드는지")
 	@Test
 	void create() {
 		final Map<Participant, Money> expectedParticipantsProfit = new LinkedHashMap<>();
-		expectedParticipantsProfit.put(dealer, new Money(200));
-		expectedParticipantsProfit.put(players.get(0), new Money(-100));
-		expectedParticipantsProfit.put(players.get(1), new Money(0));
-		expectedParticipantsProfit.put(players.get(2), new Money(-100));
+		expectedParticipantsProfit.put(dealer, new Money(-50));
+		expectedParticipantsProfit.put(players.get(0), new Money(100));
+		expectedParticipantsProfit.put(players.get(1), new Money(150));
+		expectedParticipantsProfit.put(players.get(2), new Money(-200));
+		expectedParticipantsProfit.put(players.get(3), new Money(0));
 
 		OutcomeStatistics outcomeStatistics = new OutcomeStatistics(dealer, players);
 		assertThat(outcomeStatistics.getParticipantsProfit()).isEqualTo(expectedParticipantsProfit);
