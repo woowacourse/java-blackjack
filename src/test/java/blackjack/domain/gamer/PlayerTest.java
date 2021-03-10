@@ -1,34 +1,26 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.card.Cards;
-import blackjack.domain.gametable.GameTable;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denominations;
 import blackjack.domain.card.Suits;
-import blackjack.domain.gamer.Name;
-import blackjack.domain.gamer.Participant;
-import blackjack.domain.gamer.Player;
-import blackjack.domain.utils.FixedCardDeck;
 import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class PlayerTest {
     @Test
+    @DisplayName("생성")
     void create() {
-        final Name john = new Name("john");
-        final Cards cards = new Cards(Collections.emptyList());
-
-        Participant player = new Player(john, cards);
+        Participant player = new Player(new Name("john"));
 
         assertThat(player.getName()).isEqualTo("john");
     }
 
     @Test
+    @DisplayName("생성")
     void create2() {
         final Name sarah = new Name("sarah");
         final Cards cards = new Cards(Collections.emptyList());
@@ -38,29 +30,26 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 초기에 카드 두장을 갖고 있는지 확인")
-    void create3() {
-        Player player = new Player(new Name("sarah"));
-        final GameTable gameTable = new GameTable(player, new FixedCardDeck());
+    @DisplayName("카드 22일 경우 받을 수 있는지 조건 확인")
+    void isNotAbleToTake_true() {
+        Participant player = new Player(new Name("sarah"));
+        player.takeCard(Card.from(Denominations.KING, Suits.CLOVER));
+        player.takeCard(Card.from(Denominations.KING, Suits.CLOVER));
+        player.takeCard(Card.from(Denominations.TWO, Suits.CLOVER));
 
-        List<Card> playerCards = player.getUnmodifiableCards();
-        assertThat(playerCards).hasSize(2);
+        assertThat(player.isNotAbleToTake()).isTrue();
     }
 
     @Test
-    @DisplayName("플레이어에게 카드 추가 지급")
-    void add_card() {
-        Player player = new Player(new Name("sarah"));
-        final FixedCardDeck fixedCardDeck = new FixedCardDeck();
-        player.takeCard(fixedCardDeck.pop());
-        player.takeCard(fixedCardDeck.pop());
-        player.takeCard(fixedCardDeck.pop());
+    @DisplayName("카드 21일 경우 받을 수 있는지 조건 확인")
+    void isNotAbleToTake_false() {
+        Participant player = new Player(new Name("sarah"));
+        player.takeCard(Card.from(Denominations.KING, Suits.CLOVER));
+        player.takeCard(Card.from(Denominations.KING, Suits.CLOVER));
+        player.takeCard(Card.from(Denominations.ACE, Suits.CLOVER));
 
-        assertThat(player.getUnmodifiableCards())
-            .contains(
-                Card.from(Suits.CLOVER, Denominations.ACE),
-                Card.from(Suits.CLOVER, Denominations.TWO),
-                Card.from(Suits.CLOVER, Denominations.THREE));
+        assertThat(player.isNotAbleToTake()).isFalse();
     }
+
 
 }

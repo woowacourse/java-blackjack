@@ -24,7 +24,6 @@ public class Player implements Participant {
         return sumCards().isBurst();
     }
 
-
     @Override
     public void takeCard(Card card) {
         cards.takeCard(card);
