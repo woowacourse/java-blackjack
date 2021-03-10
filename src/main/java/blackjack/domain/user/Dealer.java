@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Score;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
 

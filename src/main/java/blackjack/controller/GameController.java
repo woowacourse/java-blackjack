@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import blackjack.controller.dto.PlayerStatusDto;
+import blackjack.controller.dto.RoundStatusDto;
 import blackjack.domain.Answer;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
@@ -9,8 +11,6 @@ import blackjack.domain.user.Player;
 import blackjack.domain.user.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.controller.dto.PlayerStatusDto;
-import blackjack.controller.dto.RoundStatusDto;
 
 import java.util.List;
 import java.util.Scanner;

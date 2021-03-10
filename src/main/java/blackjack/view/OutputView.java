@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.Result;
 import blackjack.controller.dto.PlayerStatusDto;
 import blackjack.controller.dto.RoundStatusDto;
+import blackjack.domain.Result;
 
 import java.util.List;
 import java.util.stream.Collectors;

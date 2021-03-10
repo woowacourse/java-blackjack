@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Cards {
-//    public static final int GAME_OVER_SCORE = 21;
     private final List<Card> cards;
 
     public Cards(Card... cards) {

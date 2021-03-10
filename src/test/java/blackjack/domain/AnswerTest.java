@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class AnswerTest {
 
@@ -12,6 +11,6 @@ class AnswerTest {
     @Test
     void generate_test() {
         assertThat(Answer.YES.equals("y")).isTrue();
-        assertThat(Answer.NO .equals("n")).isTrue();
+        assertThat(Answer.NO.equals("n")).isTrue();
     }
 }

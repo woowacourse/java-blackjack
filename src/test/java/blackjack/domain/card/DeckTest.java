@@ -23,11 +23,6 @@ class DeckTest {
     @Test
     void draw_card_test() {
         assertThat(deck.drawCard()).isEqualTo(Card.of("스페이드", "9"));
-    }
-
-    @DisplayName("Deck에서 카드를 두장 뽑는다.")
-    @Test
-    void draw_card_test2() {
-        assertThat(deck.drawCards(2)).containsExactly(Card.of("스페이드", "9"), Card.of("하트", "10"));
+        assertThat(deck.drawCard()).isEqualTo(Card.of("하트", "10"));
     }
 }

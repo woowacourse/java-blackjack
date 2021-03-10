@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 public class Score {
     private static final int BLACKJACK = 21;
+    public static final int TEN = 10;
     private final int score;
 
     public Score(int score) {
@@ -9,7 +10,7 @@ public class Score {
     }
 
     public Score plusTenIfNotBust() {
-        Score score = new Score(this.score + 10);
+        Score score = new Score(this.score + TEN);
         if (score.isBust()) {
             return this;
         }
