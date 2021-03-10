@@ -4,13 +4,18 @@ import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardType;
 import blackjack.domain.card.CardValue;
+import blackjack.domain.card.Deck;
+import blackjack.domain.state.Hit;
+import blackjack.domain.state.State;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.ScoreResultDto;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,17 +27,29 @@ class DealerTest {
     @Test
     @DisplayName("카드를 받는다.")
     void test_receive_card() {
-        Participant dealer = new Dealer(cards -> 0);
+        Participant dealer = new Dealer(cards -> 0, null);
         Card card = new Card(CardType.DIAMOND, CardValue.TEN);
         dealer.receiveCard(card);
         assertThat(dealer.showCards().contains(card)).isTrue();
     }
 
     @Test
+    @DisplayName("딜러가 HIT 상태를 가지는 경우 테스트")
+    void test_state_hit_dealer() {
+        ArrayList<Card> initialCard = new ArrayList<>();
+        initialCard.add(new Card(CardType.DIAMOND, CardValue.TEN));
+        initialCard.add(new Card(CardType.DIAMOND, CardValue.TWO));
+
+        State state = new Hit(initialCard);
+        Participant dealer = new Dealer(cards -> 0, state);
+        assertThat(dealer.getStatus()).isInstanceOf(Hit.class);
+    }
+
+    @Test
     @DisplayName("딜러는 한장의 카드만 보여준다.")
     void test_dealer_show_card() {
         //given
-        Participant dealer = new Dealer(cards -> 0);
+        Participant dealer = new Dealer(cards -> 0, null);
         dealer.receiveCard(new Card(CardType.DIAMOND, CardValue.TEN));
         dealer.receiveCard(new Card(CardType.DIAMOND, CardValue.ACE));
 
@@ -50,7 +67,7 @@ class DealerTest {
     }, delimiter = ':')
     void test_dealer_is_receive_card(int totalScore, boolean actual) {
         //given
-        Participant dealer = new Dealer(cards -> totalScore);
+        Participant dealer = new Dealer(cards -> totalScore, null);
 
         //when
         boolean isReceived = dealer.isReceiveCard();

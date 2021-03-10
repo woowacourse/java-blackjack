@@ -3,6 +3,8 @@ package blackjack.domain.participant;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.rule.ScoreRule;
+import blackjack.domain.state.State;
+
 import java.util.*;
 
 public class Dealer implements Participant {
@@ -14,12 +16,14 @@ public class Dealer implements Participant {
     private final String name;
     private final List<Card> cards;
     private final ScoreRule scoreRule;
+    private State state;
     private int money = 0;
 
-    public Dealer(ScoreRule scoreRule) {
+    public Dealer(ScoreRule scoreRule, State state) {
         this.name = DEALER_NAME;
         this.cards = new ArrayList<>();
         this.scoreRule = scoreRule;
+        this.state = state;
     }
 
     @Override
@@ -67,5 +71,10 @@ public class Dealer implements Participant {
     @Override
     public void betting(int money) {
         this.money = money;
+    }
+
+    @Override
+    public State getStatus() {
+        return state;
     }
 }
