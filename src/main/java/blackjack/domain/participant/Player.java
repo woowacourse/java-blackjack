@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.WinnerFlag;
+import blackjack.domain.state.PlayerState;
 
 import static blackjack.domain.game.WinnerFlag.*;
 
@@ -12,6 +13,7 @@ public class Player extends Gamer {
     private static final String DISAGREE = "n";
 
     private WinnerFlag result;
+    private PlayerState playerState;
 
     public Player(String name) {
         super(name);

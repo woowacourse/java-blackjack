@@ -35,7 +35,7 @@ public class PlayersTest {
         List<String> input = Arrays.asList("pobi", "jason", "cu");
         Dealer dealer = new Dealer();
         Players players = new Players(input, dealer);
-        for(Player player : players.toList()) {
+        for (Player player : players.toList()) {
             player.calculateResult(dealer);
         }
         assertEquals(3, players.calculateTotalWinnings(dealer).get(WinnerFlag.DRAW));

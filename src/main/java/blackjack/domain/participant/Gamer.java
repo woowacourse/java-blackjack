@@ -33,7 +33,7 @@ public abstract class Gamer {
     }
 
     public int makeFinalPoint() {
-        return cards.addAcePoint();
+        return cards.calculateIncludeAce();
     }
 
     public abstract boolean canReceiveCard();

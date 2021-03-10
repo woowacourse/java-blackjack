@@ -24,7 +24,7 @@ public class Cards {
                 .reduce(0, Integer::sum);
     }
 
-    public int addAcePoint() {
+    public int calculateIncludeAce() {
         int point = calculateJudgingPoint();
         if (point <= MAXIMUM_TO_ACE_IS_ELEVEN && havingAce()) {
             point += MAKING_ACE_ELEVEN;
