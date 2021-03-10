@@ -7,14 +7,18 @@ import java.util.List;
 
 public class Player extends User {
 
-    public Player(String name, List<Card> cards, int stayLimit) {
-        super(name, cards, stayLimit);
+    public Player(String name, double bettingMoney, List<Card> cards, int stayLimit) {
+        super(name, bettingMoney, cards, stayLimit);
     }
 
     @Override
     public boolean draw(Deck deck) {
         hand.addCard(deck.pickSingleCard());
         return true;
+    }
+
+    public double getBettingMoney() {
+        return bettingMoney;
     }
 }
 

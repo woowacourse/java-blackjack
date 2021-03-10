@@ -9,11 +9,13 @@ public abstract class User {
 
     protected Hand hand;
     protected final String name;
+    protected final double bettingMoney;
 
-    public User(String name, List<Card> cards, int stayLimit) {
+    public User(String name, double bettingMoney, List<Card> cards, int stayLimit) {
         validateNotEmptyName(name);
         initialHands(cards, stayLimit);
         this.name = name;
+        this.bettingMoney = bettingMoney;
     }
 
     private void validateNotEmptyName(String name) {
@@ -54,5 +56,9 @@ public abstract class User {
 
     public String getName() {
         return this.name;
+    }
+
+    public double getBettingMoney() {
+        return this.bettingMoney;
     }
 }

@@ -4,9 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,12 +16,12 @@ class GameTest {
 
     @BeforeEach
     void setUp() {
-        List<String> names = Stream.<String>builder()
-            .add("A").add("B").add("C")
-            .build()
-            .collect(Collectors.toList());
+        Map<String, Double> playerMoney = new HashMap<>();
+        playerMoney.put("A", 10000.0);
+        playerMoney.put("B", 10000.0);
+        playerMoney.put("C", 10000.0);
 
-        this.game = new Game(names);
+        this.game = new Game(playerMoney);
     }
 
     @DisplayName("게임 생성 : 플레이어 및 딜러 생성")

@@ -6,6 +6,7 @@ import blackjack.domain.user.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Game {
@@ -17,15 +18,17 @@ public class Game {
     private final List<User> players;
     private final Deck deck;
 
-    public Game(List<String> names) {
+    public Game(Map<String, Double> playerMoneys) {
         deck = new Deck(CardGenerator.makeShuffledNewDeck());
         dealer = new Dealer(deck.pickInitialCards(), DEALER_STAY_LIMIT);
-        players = createPlayer(names);
+        players = createPlayer(playerMoneys);
     }
 
-    private List<User> createPlayer(List<String> names) {
-        return names.stream()
-            .map(name -> new Player(name, deck.pickInitialCards(), PLAYER_STAY_LIMIT))
+    private List<User> createPlayer(Map<String, Double> playerMoneys) {
+        return playerMoneys
+            .keySet()
+            .stream()
+            .map(name -> new Player(name, playerMoneys.get(name), deck.pickInitialCards(), PLAYER_STAY_LIMIT))
             .collect(Collectors.toList());
     }
 
@@ -56,9 +59,9 @@ public class Game {
         return users;
     }
 
-    public List<WinningResult> getWinningResults() {
+    public List<BettingResult> getWinningResults() {
         return players.stream()
-            .map(player -> new WinningResult(player, MatchResult.calculateResult(player, dealer)))
+            .map(player -> new BettingResult(player, MatchResult.calculateResult(player, dealer)))
             .collect(Collectors.toList());
     }
 

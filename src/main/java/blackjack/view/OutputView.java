@@ -1,18 +1,14 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.user.MatchResult;
+import blackjack.domain.user.BettingResult;
 import blackjack.domain.user.User;
-import blackjack.domain.user.WinningResult;
 
 import java.io.PrintStream;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingDouble;
 
 public class OutputView {
     private static final String COMMA = ", ";
@@ -73,25 +69,17 @@ public class OutputView {
             user.getScore());
     }
 
-    public static void printWinningResult(List<WinningResult> winningResults) {
-        System.out.println("\n## 최종 승패");
-        System.out.println("딜러 : " + calculateDealerResult(winningResults));
-        winningResults.forEach(winningResult ->
-            System.out.printf("%s: %s%n", winningResult.getName(), winningResult.getResult().getName()));
+    public static void printWinningResult(List<BettingResult> bettingResults) {
+        System.out.println("\n## 최종 수익");
+        System.out.printf("딜러 : %.2f%n", calculateDealerResult(bettingResults));
+        bettingResults.forEach(bettingResult ->
+            System.out.printf("%s: %.2f%n", bettingResult.getName(), bettingResult.getEarningMoney()));
     }
 
-    private static String calculateDealerResult(List<WinningResult> winningResults) {
-        Map<MatchResult, Long> calculate = countEachResults(winningResults);
-
-        return calculate.keySet().stream()
-            .filter(matchResult -> calculate.get(matchResult) > 0)
-            .map(matchResult -> String.format("%d%s", calculate.get(matchResult), matchResult.getReverseName()))
-            .collect(Collectors.joining(" "));
-    }
-
-    public static Map<MatchResult, Long> countEachResults(List<WinningResult> winningResults) {
-        return winningResults.stream()
-            .map(WinningResult::getResult)
-            .collect(groupingBy(Function.identity(), counting()));
+    private static Double calculateDealerResult(List<BettingResult> bettingResults) {
+        return -1.0 * bettingResults
+            .stream()
+            .mapToDouble(BettingResult::getEarningMoney)
+            .sum();
     }
 }

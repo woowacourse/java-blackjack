@@ -8,7 +8,7 @@ import blackjack.view.OutputView;
 public class BlackjackController {
 
     public void run() {
-        Game game = new Game(InputView.receivePlayerNames());
+        Game game = new Game(InputView.receiveInitialInfo());
 
         initCards(game);
         drawCards(game);

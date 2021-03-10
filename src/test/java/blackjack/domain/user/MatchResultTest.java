@@ -10,33 +10,32 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MatchResultTest {
 
-    @DisplayName("MatchResult 반대 이름 가져오기 테스트")
+    private static final double money = 10000;
+
+    @DisplayName("플레이어 결과 테스트 : 플레이어가 블랙잭 이외로 이긴 경우")
     @Test
-    void getReverseName() {
-        assertAll(
-            () -> assertEquals(MatchResult.WIN.getReverseName(), "패"),
-            () -> assertEquals(MatchResult.LOSE.getReverseName(), "승"),
-            () -> assertEquals(MatchResult.DRAW.getReverseName(), "무")
-        );
+    void calculateResult_WinNormal() {
+        Player player = new Player("A", money, getPlayerCards(), 21);
+        Dealer dealer = new Dealer(getDealerLosingCards(), 16);
+        assertEquals(MatchResult.WIN_NORMAL, MatchResult.calculateResult(player, dealer));
     }
 
-    @DisplayName("플레이어 결과 테스트 : 플레이어가 이긴 경우")
+    @DisplayName("플레이어 결과 테스트 : 플레이어가 블랙잭으로 이긴 경우")
     @Test
-    void calculateResult_Win() {
-        Player player = new Player("A", getPlayerCards(), 21);
+    void calculateResult_WinBlackjack() {
+        Player player = new Player("A", money, getPlayerBlackjackCards(), 21);
         Dealer dealer = new Dealer(getDealerLosingCards(), 16);
-        assertEquals(MatchResult.WIN, MatchResult.calculateResult(player, dealer));
+        assertEquals(MatchResult.WIN_BLACKJACK, MatchResult.calculateResult(player, dealer));
     }
 
     @DisplayName("플레이어 결과 테스트 : 플레이어가 진 경우")
     @Test
     void calculateResult_Lose() {
-        Player player = new Player("A", getPlayerCards(), 21);
+        Player player = new Player("A", money, getPlayerCards(), 21);
         Dealer dealer = new Dealer(getDealerBlackjackCards(), 16);
         assertEquals(MatchResult.LOSE, MatchResult.calculateResult(player, dealer));
     }
@@ -44,7 +43,7 @@ class MatchResultTest {
     @DisplayName("플레이어 결과 테스트 : 블랙잭으로 비긴 경우")
     @Test
     void calculateResult_DrawWithBlackjack() {
-        Player player = new Player("A", getPlayerBlackjackCards(), 21);
+        Player player = new Player("A", money, getPlayerBlackjackCards(), 21);
         Dealer dealer = new Dealer(getDealerBlackjackCards(), 16);
         assertEquals(MatchResult.DRAW, MatchResult.calculateResult(player, dealer));
     }
@@ -52,7 +51,7 @@ class MatchResultTest {
     @DisplayName("플레이어 결과 테스트 : 동점으로 비긴 경우")
     @Test
     void calculateResult_DrawWithScore() {
-        Player player = new Player("A", getPlayerCards(), 21);
+        Player player = new Player("A", money, getPlayerCards(), 21);
         Dealer dealer = new Dealer(getDealerDrawCards(), 16);
         assertEquals(MatchResult.DRAW, MatchResult.calculateResult(player, dealer));
     }

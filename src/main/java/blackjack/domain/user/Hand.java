@@ -43,7 +43,7 @@ public class Hand {
     }
 
     private HandStatus calculateStatus() {
-        int score = calculateScore();
+        int score = calculateHandScore();
         return HandStatus.calculateStatus(score, hitLimit, cards.size());
     }
 
