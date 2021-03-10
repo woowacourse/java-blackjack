@@ -5,10 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardType;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Deck;
-import blackjack.domain.state.BlackJack;
-import blackjack.domain.state.Bust;
-import blackjack.domain.state.Hit;
-import blackjack.domain.state.State;
+import blackjack.domain.state.*;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.ScoreResultDto;
 import org.junit.jupiter.api.BeforeAll;
@@ -70,6 +67,20 @@ class DealerTest {
         Participant dealer = new Dealer(cards -> 0, state);
         dealer.receiveCard(new Card(CardType.SPADE, CardValue.TEN));
         assertThat(dealer.getStatus()).isInstanceOf(Bust.class);
+    }
+
+
+    @Test
+    @DisplayName("딜러가 STAY 상태를 가지는 경우 테스트")
+    void test_state_stay_dealer() {
+        ArrayList<Card> initialCard = new ArrayList<>();
+        initialCard.add(new Card(CardType.DIAMOND, CardValue.TEN));
+        initialCard.add(new Card(CardType.DIAMOND, CardValue.TWO));
+
+        State state = new Hit(initialCard);
+        Participant dealer = new Dealer(cards -> 0, state);
+        dealer.stay();
+        assertThat(dealer.getStatus()).isInstanceOf(Stay.class);
     }
 
     @Test

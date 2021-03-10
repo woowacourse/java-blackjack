@@ -23,4 +23,9 @@ public class Bust implements State{
     public State changeState() {
         return null;
     }
+
+    @Override
+    public State stay() {
+        return this;
+    }
 }

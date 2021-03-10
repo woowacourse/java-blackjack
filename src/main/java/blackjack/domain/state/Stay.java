@@ -5,10 +5,10 @@ import blackjack.domain.card.Cards;
 
 import java.util.List;
 
-public class BlackJack implements State {
+public class Stay implements State {
     private Cards cards;
 
-    public BlackJack(List<Card> cards) {
+    public Stay(List<Card> cards) {
         this.cards = new Cards(cards);
     }
 
@@ -19,7 +19,7 @@ public class BlackJack implements State {
 
     @Override
     public double profit() {
-        return 1.5;
+        return 1;
     }
 
     @Override

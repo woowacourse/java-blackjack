@@ -78,4 +78,9 @@ public class Dealer implements Participant {
     public State getStatus() {
         return state;
     }
+
+    @Override
+    public void stay() {
+        state = state.stay();
+    }
 }

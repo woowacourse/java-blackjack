@@ -26,5 +26,7 @@ public interface Participant {
     void betting(int money);
 
     State getStatus();
+
+    void stay();
 }
 

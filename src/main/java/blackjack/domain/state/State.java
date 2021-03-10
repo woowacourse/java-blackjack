@@ -7,4 +7,5 @@ public interface State {
     double profit();
     void draw(Card card);
     State changeState();
+    State stay();
 }
