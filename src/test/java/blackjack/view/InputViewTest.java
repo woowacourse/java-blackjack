@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
 
+import static org.assertj.core.api.Assertions.*;
+
 class InputViewTest {
     private InputView getInputView(String inputText) {
         InputStream inputStream = new ByteArrayInputStream(inputText.getBytes());
@@ -31,7 +33,7 @@ class InputViewTest {
         List<String> playerNames = inputView.getPlayerNames();
 
         //then
-        Assertions.assertThat(playerNames).containsExactly("pobi", "brown", "jason");
+        assertThat(playerNames).containsExactly("pobi", "brown", "jason");
     }
 
     @DisplayName("보장된 이름 (특수문자를 제외한, 대소문자의 문자)이 아니면 에러가 발생한다.")
@@ -42,8 +44,18 @@ class InputViewTest {
         InputView inputView = getInputView(inputText);
 
         //when
-        Assertions.assertThatThrownBy(() -> inputView.getPlayerNames())
+        assertThatThrownBy(() -> inputView.getPlayerNames())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("이름을 잘못 입력하였습니다. (입력값 : %s)", inputText));
+    }
+
+    @DisplayName("배팅 금액 입력을 숫자 이외의 문자로 하였을 경우 예외처리한다.")
+    @Test
+    void batting_amount_test() {
+        String name = "pobi";
+        InputView inputView = getInputView("배팅금액");
+        assertThatThrownBy(() -> inputView.getBattingAmount(name))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(name + "의 배팅 금액을 잘못 입력하셨습니다.");
     }
 }
