@@ -29,6 +29,18 @@ public class InputView {
         }
     }
 
+    public static long inputBetMoney(String name) {
+        try {
+            System.out.println(name + "의 배팅 금액은?");
+
+            return Long.parseLong(SCANNER.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("[ERROR] 배팅 금액 형식 올바르지 않습니다.");
+
+            return inputBetMoney(name);
+        }
+    }
+
     public static boolean inputDraw(String name) {
         try {
             System.out.println(name + "은 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");

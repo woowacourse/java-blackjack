@@ -4,6 +4,7 @@ import blackjack.domain.result.Result;
 import blackjack.domain.result.Results;
 
 import java.util.List;
+import java.util.Map;
 
 public class Dealer extends Participant {
 
@@ -22,7 +23,7 @@ public class Dealer extends Participant {
 
     public Result compare(Player player) {
         Result result = Result.of(this, player);
-        results.addResult(result);
+        results.addResult(player, result);
 
         return result;
     }
@@ -31,15 +32,21 @@ public class Dealer extends Participant {
         return getScore() <= DEALER_DRAW_LIMIT;
     }
 
-    public int countOfResult(Result result) {
-        return results.findResultCountOfDealer(result);
+    public double profit(List<Player> players) {
+        double profit = 0;
+
+        for (Player player : players) {
+            profit -= player.profit(getPlayerResult(player));
+        }
+
+        return profit;
     }
 
-    public List<Result> getDealerResults() {
+    public Map<Result, Integer> getDealerResults() {
         return results.findDealerResult();
     }
 
-    public List<Result> getPlayerResults() {
-        return results.findPlayerResult();
+    public Result getPlayerResult(Player player) {
+        return results.getResults(player);
     }
 }

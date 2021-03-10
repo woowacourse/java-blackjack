@@ -1,31 +1,32 @@
 package blackjack.domain.result;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import blackjack.domain.player.Player;
+
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Results {
 
-    private final List<Result> results;
+    private final Map<Player, Result> results;
 
     public Results() {
-        results = new ArrayList<>();
+        results = new HashMap<>();
     }
 
-    public void addResult(Result playerResult) {
-        results.add(playerResult);
+    public void addResult(Player player, Result playerResult) {
+        results.put(player, playerResult);
     }
 
-    public int findResultCountOfDealer(Result targetResult) {
-        return (int) results.stream()
-                .filter(result -> result == targetResult)
-                .count();
-    }
+    public Map<Result, Integer> findDealerResult() {
+        Map<Result, Integer> dealerResults = new EnumMap<>(Result.class);
 
-    public List<Result> findDealerResult() {
-        return results.stream()
-                .map(this::convertResult)
-                .collect(Collectors.toList());
+        for (Player player : results.keySet()) {
+            Result result = convertResult(results.get(player));
+            dealerResults.put(result, dealerResults.getOrDefault(result, 0) + 1);
+        }
+
+        return dealerResults;
     }
 
     private Result convertResult(Result playerResult) {
@@ -40,7 +41,7 @@ public class Results {
         return Result.LOSE;
     }
 
-    public List<Result> findPlayerResult() {
-        return results;
+    public Result getResults(Player player) {
+        return results.get(player);
     }
 }

@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CardFactoryTest {
+public class DeckGeneratorTest {
 
     @DisplayName("덱 생성 테스트")
     @Test
     void create() {
-        assertThat(CardFactory.create()).hasSize(52);
+        assertThat(new DeckGenerator().create()).hasSize(52);
     }
 }
