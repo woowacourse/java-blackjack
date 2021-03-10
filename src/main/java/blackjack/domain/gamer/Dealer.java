@@ -1,7 +1,5 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.MatchResult;
-
 public class Dealer extends Participants {
 
     private static final int DEALER_MAX_SCORE = 16;
@@ -9,10 +7,6 @@ public class Dealer extends Participants {
 
     public Dealer() {
         super(DEALER_NAME);
-    }
-
-    public MatchResult matchGame(Player player) {
-        return MatchResult.matchPlayerAndDealer(player.getTakenCards().calculateScore(), this.getTakenCards().calculateScore());
     }
 
     @Override
