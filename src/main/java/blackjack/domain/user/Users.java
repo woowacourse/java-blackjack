@@ -27,7 +27,7 @@ public class Users<T extends AbstractUser> {
             throw new IllegalArgumentException(String.format(USER_SIZE_EXCEPTION_MESSAGE, MIN_USER_SIZE, MAX_USER_SIZE, userSize));
         }
         if (!isDuplicate(users)) {
-            throw new IllegalArgumentException(String.format(USER_DUPLICATE_EXCEPTION_MESSAGE));
+            throw new IllegalArgumentException(USER_DUPLICATE_EXCEPTION_MESSAGE);
         }
     }
 
