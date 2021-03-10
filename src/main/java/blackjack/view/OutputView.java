@@ -3,7 +3,6 @@ package blackjack.view;
 import blackjack.domain.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -44,19 +43,15 @@ public class OutputView {
 
     public static void printResult(Dealer dealer, Players players) {
         printParticipantsResults(dealer, players);
-        printWinOrLose(dealer, players);
+        printProfits(dealer, players);
     }
 
-    private static void printWinOrLose(Dealer dealer, Players players) {
-        System.out.println("\n## 최종 승패");
-        System.out.println(dealer.getName() + ": " + OutcomesOfDealer(dealer.calculateOutcomes(players)));
+    private static void printProfits(Dealer dealer, Players players) {
+        System.out.println("\n## 최종 수익");
+        System.out.println(dealer.getName() + ": " + dealer.calculateProfits(players));
         for (Player player : players.values()) {
-            System.out.println(player.getName() + ": " + player.calculateOutcome(dealer).getWord());
+            System.out.println(player.getName() + ": " + player.calculateProfit(dealer));
         }
-    }
-
-    private static String OutcomesOfDealer(Map<Outcome, Integer> dealerOutcomes) {
-        return dealerOutcomes.get(Outcome.WIN) + "승 " + dealerOutcomes.get(Outcome.LOSE) + "패 " + dealerOutcomes.get(Outcome.DRAW) + "무";
     }
 
     private static void printParticipantsResults(Dealer dealer, Players players) {

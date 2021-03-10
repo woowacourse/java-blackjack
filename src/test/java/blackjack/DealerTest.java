@@ -119,4 +119,52 @@ public class DealerTest {
         dealer.takeCard(Card.from("5스페이드"));
         assertThat(dealer.result(21)).isEqualTo(Outcome.DRAW);
     }
+
+    @Test
+    @DisplayName("딜러가 이긴 경우, 수익 계산")
+    void calulateProfit1() {
+        Players players = new Players("john", new FixedCardDeck());
+        int betMoney = 1000;
+        for (Player player : players.values()) {
+            player.takeCard(Card.from("7다이아몬드"));
+            player.setBetMoney(betMoney);
+        }
+
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("A다이아몬드"));
+        Dealer dealer = new Dealer(cards);
+
+        assertThat(dealer.calculateProfits(players)).isEqualTo(betMoney);
+    }
+
+    @Test
+    @DisplayName("딜러가 진 경우, 수익 계산")
+    void calulateProfit2() {
+        Players players = new Players("john", new FixedCardDeck());
+        int betMoney = 1000;
+        for (Player player : players.values()) {
+            player.takeCard(Card.from("7다이아몬드"));
+            player.setBetMoney(betMoney);
+        }
+
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("9다이아몬드"));
+        Dealer dealer = new Dealer(cards);
+
+        assertThat(dealer.calculateProfits(players)).isEqualTo(-betMoney);
+    }
+
+    @Test
+    @DisplayName("딜러가 비긴 경우, 수익 계산")
+    void calulateProfit3() {
+        Players players = new Players("john", new FixedCardDeck());
+        int betMoney = 1000;
+        for (Player player : players.values()) {
+            player.takeCard(Card.from("7다이아몬드"));
+            player.setBetMoney(betMoney);
+        }
+
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("Q다이아몬드"));
+        Dealer dealer = new Dealer(cards);
+
+        assertThat(dealer.calculateProfits(players)).isEqualTo(0);
+    }
 }

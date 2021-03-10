@@ -28,7 +28,6 @@ public class Application {
             int betMoney = Integer.parseInt(InputView.getBetMoney(player));
             player.setBetMoney(betMoney);
         }
-        dealer.setBetMoney(0);
     }
 
     private static void simulate(CardDeck cardDeck, Dealer dealer, Players players) {

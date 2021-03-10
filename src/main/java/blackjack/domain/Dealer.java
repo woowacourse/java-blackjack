@@ -1,9 +1,6 @@
 package blackjack.domain;
 
-import java.util.Arrays;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 public class Dealer extends Participant {
     public static final int DEALER_HIT = 16;
@@ -17,14 +14,22 @@ public class Dealer extends Participant {
         return sumCards() <= DEALER_HIT;
     }
 
-    public Map<Outcome, Integer> calculateOutcomes(Players players) {
-        Map<Outcome, Integer> outcomes = new EnumMap<>(Outcome.class);
-        Arrays.stream(Outcome.values())
-                .forEach(outcome -> outcomes.put(outcome, 0));
+    public int calculateProfits(Players players) {
+        int profits = 0;
         for (Player player : players.values()) {
             Outcome outcome = result(player.sumCardsForResult());
-            outcomes.put(outcome, outcomes.get(outcome) + 1);
+            profits += debtOrRevenueFromPlayer(outcome, player.getBetMoney());
         }
-        return outcomes;
+        return profits;
+    }
+
+    public int debtOrRevenueFromPlayer(Outcome outcome, int betMoney) {
+        if (Outcome.WIN.equals(outcome)) {
+            return betMoney;
+        }
+        if (Outcome.LOSE.equals(outcome)) {
+            return -betMoney;
+        }
+        return betMoney - betMoney;
     }
 }

@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.domain.Card;
+import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.utils.CardDeck;
@@ -118,5 +119,47 @@ public class PlayerTest {
     void setBetMoney() {
         Player player = new Player("john", new FixedCardDeck());
         assertThatCode(() -> player.setBetMoney(1000)).doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("플레이어가 이긴 경우, 수익 계산")
+    void calulateProfit1() {
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("Q다이아몬드"));
+        Player player = new Player("john", cards);
+        int betMoney = 1000;
+        player.setBetMoney(betMoney);
+
+        cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("9다이아몬드"));
+        Dealer dealer = new Dealer(cards);
+
+        assertThat(player.calculateProfit(dealer)).isEqualTo(betMoney);
+    }
+
+    @Test
+    @DisplayName("플레이어가 진 경우, 수익 계산")
+    void calulateProfit2() {
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("Q다이아몬드"));
+        Player player = new Player("john", cards);
+        int betMoney = 1000;
+        player.setBetMoney(betMoney);
+
+        cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("A다이아몬드"));
+        Dealer dealer = new Dealer(cards);
+
+        assertThat(player.calculateProfit(dealer)).isEqualTo(-betMoney);
+    }
+
+    @Test
+    @DisplayName("플레이어가 비긴 경우, 수익 계산")
+    void calulateProfit3() {
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("Q다이아몬드"));
+        Player player = new Player("john", cards);
+        int betMoney = 1000;
+        player.setBetMoney(betMoney);
+
+        cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("Q다이아몬드"));
+        Dealer dealer = new Dealer(cards);
+
+        assertThat(player.calculateProfit(dealer)).isEqualTo(0);
     }
 }

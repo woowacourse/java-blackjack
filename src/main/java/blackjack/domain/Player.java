@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 public class Player extends Participant {
     private static final Pattern NAME_PATTERN = Pattern.compile("^[a-z|A-Z]+");
+    private int betMoney;
 
     public Player(String name, CardDeck cardDeck) {
         this(name, cardDeck.initCards());
@@ -41,7 +42,26 @@ public class Player extends Participant {
         return sumCards() <= BLACKJACK;
     }
 
-    public Outcome calculateOutcome(Dealer dealer) {
-        return result(dealer.sumCardsForResult());
+    public int debtOrRevenueForPlayer(Outcome outcome) {
+        if (Outcome.WIN.equals(outcome)) {
+            return betMoney * 2;
+        }
+        if (Outcome.LOSE.equals(outcome)) {
+            return betMoney - betMoney;
+        }
+        return betMoney;
+    }
+
+    public int calculateProfit(Dealer dealer) {
+        Outcome outcome = result(dealer.sumCardsForResult());
+        return debtOrRevenueForPlayer(outcome) - betMoney;
+    }
+
+    public void setBetMoney(int betMoney) {
+        this.betMoney = betMoney;
+    }
+
+    public int getBetMoney() {
+        return betMoney;
     }
 }
