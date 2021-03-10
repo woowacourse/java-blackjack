@@ -62,18 +62,6 @@ public enum Outcome {
                 .orElseThrow(() -> new IllegalArgumentException("예측되는 승패를 찾을 수 없습니다."));
     }
 
-    public static Outcome reverseResult(Outcome outcome) {
-        if (outcome == WIN) {
-            return LOSE;
-        }
-
-        if (outcome == LOSE) {
-            return WIN;
-        }
-
-        return DRAW;
-    }
-
     public static boolean isWin(Outcome outcome) {
         return outcome == WIN;
     }

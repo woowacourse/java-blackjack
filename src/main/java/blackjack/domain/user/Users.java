@@ -21,7 +21,10 @@ public class Users {
     }
 
     public Dealer getDealer() {
-        return (Dealer) users.get(0);
+        return (Dealer) users.stream()
+                .filter(user -> user instanceof Dealer)
+                .findAny()
+                .get();
     }
 
     public List<Player> getPlayers() {

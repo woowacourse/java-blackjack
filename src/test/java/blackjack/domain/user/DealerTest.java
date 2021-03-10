@@ -19,10 +19,10 @@ class DealerTest {
         Dealer dealer = new Dealer();
 
         //when
-        dealer.addFirstCards(Arrays.asList(
+        dealer.addFirstCards(
                 Card.of("스페이드", "10"),
                 Card.of("하트", "J")
-        ));
+        );
         List<Card> cards = dealer.getCards();
 
         //then
@@ -36,14 +36,14 @@ class DealerTest {
         Dealer dealer = new Dealer();
 
         //when
-        dealer.addFirstCards(Arrays.asList(
+        dealer.addFirstCards(
                 Card.of("스페이드", "A"),
                 Card.of("하트", "A")
-        ));
+        );
 
         //then
-        assertThat(dealer.isGameOver(GAME_OVER_SCORE)).isEqualTo(false);
-        assertThat(dealer.calculateScore(GAME_OVER_SCORE)).isEqualTo(12);
+        assertThat(dealer.isGameOver()).isEqualTo(false);
+        assertThat(dealer.score()).isEqualTo(12);
     }
 
     @DisplayName("딜러의 첫 카드가 17점 이상인 경우 경우 딜러의 턴은 끝난다. ")
@@ -53,13 +53,13 @@ class DealerTest {
         Dealer dealer = new Dealer();
 
         //when
-        dealer.addFirstCards(Arrays.asList(
+        dealer.addFirstCards(
                 Card.of("스페이드", "7"),
                 Card.of("하트", "10")
-        ));
+        );
 
         //then
-        assertThat(dealer.isGameOver(GAME_OVER_SCORE)).isEqualTo(true);
-        assertThat(dealer.calculateScore(GAME_OVER_SCORE)).isEqualTo(17);
+        assertThat(dealer.canAddCard()).isEqualTo(false);
+        assertThat(dealer.score()).isEqualTo(17);
     }
 }
