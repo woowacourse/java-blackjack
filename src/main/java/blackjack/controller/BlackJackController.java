@@ -18,7 +18,7 @@ public class BlackJackController {
     public BlackJackController() {
         this.dealer = new Dealer();
         this.cardDeck = CardDeck.createDeck();
-        this.players = Repeater.repeatOnError(() -> Players.of(InputView.scanPlayerNames()));
+        this.players = Repeater.supplierGetsArgumentOfFunction(Players::of, InputView::scanPlayerNames);
         this.users = new Users(this.dealer, this.players);
     }
 
@@ -51,7 +51,8 @@ public class BlackJackController {
     }
 
     private void playGameForEachPlayer(Player player) {
-        while (!player.isBust() && !player.isBlackJack() && Repeater.repeatOnError(() -> InputView.isHit(player.getName()))) {
+        while (!player.isBust() && !player.isBlackJack() &&
+                Repeater.supplierGetsArgumentOfFunction(InputView::isHit, player::getName)) {
             player.addCard(cardDeck.drawCard());
             OutputView.printCardsOfUser(player);
         }
