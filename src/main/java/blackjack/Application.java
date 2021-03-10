@@ -11,14 +11,10 @@ public class Application {
 
     private static void runApplication(BlackjackController blackjackController) {
         try {
-            runBlackjack(blackjackController);
+            blackjackController.run();
         } catch (IllegalArgumentException e) {
             System.out.println("\n" + e.getMessage());
             runApplication(blackjackController);
         }
-    }
-
-    private static void runBlackjack(BlackjackController blackjackController) {
-        blackjackController.run();
     }
 }
