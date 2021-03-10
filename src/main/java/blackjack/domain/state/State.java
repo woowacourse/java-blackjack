@@ -1,5 +1,16 @@
 package blackjack.domain.state;
 
-public interface State {
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Score;
 
+import java.util.List;
+
+public interface State {
+    State draw(Card card);
+
+    List<Card> getCards();
+
+    boolean isGameOver();
+
+    Score score();
 }
