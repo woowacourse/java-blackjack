@@ -17,4 +17,18 @@ public class Player extends Participant {
         }
         return generateResultByScore(participant);
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || this.getClass() != obj.getClass()) return false;
+
+        Player otherPlayer = (Player) obj;
+        return this.name.equals(otherPlayer.name);
+    }
 }

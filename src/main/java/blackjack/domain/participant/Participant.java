@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public abstract class Participant {
     protected final Hand hand;
-    private final String name;
+    protected final String name;
 
     public Participant(final String name) {
         validateName(name);

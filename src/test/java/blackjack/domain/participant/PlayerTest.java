@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.HashSet;
+
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -70,5 +72,19 @@ public class PlayerTest {
             player.receiveAdditionalCard(new Card(cardLetter, CardSuit.DIAMOND));
         }
         assertThat(player.generateResult(dealer)).isEqualTo(Result.valueOf(expectedResult));
+    }
+
+    @Test
+    @DisplayName("HashCode, equals 오버라이딩")
+    void equalsTest() {
+        //Given
+        final Player player = new Player("조엘");
+        final Player playerWithSameName = new Player("조엘");
+        assertThat(player).isEqualTo(playerWithSameName);
+
+        final HashSet<Player> players = new HashSet<>();
+        players.add(player);
+        players.add(playerWithSameName);
+        assertThat(players.size()).isEqualTo(1);
     }
 }
