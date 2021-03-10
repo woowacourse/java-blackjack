@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 
 import java.util.List;
 
@@ -9,8 +10,9 @@ public abstract class User {
     protected Hand hand;
     protected final String name;
 
-    public User(String name) {
+    public User(String name, List<Card> cards, int stayLimit) {
         validateNotEmptyName(name);
+        initialHands(cards, stayLimit);
         this.name = name;
     }
 
@@ -20,13 +22,11 @@ public abstract class User {
         }
     }
 
-    public void initialHands(List<Card> cards, int stayLimit) {
+    private void initialHands(List<Card> cards, int stayLimit) {
         this.hand = new Hand(cards, stayLimit);
     }
 
-    public void draw(Card card) {
-        hand.addCard(card);
-    }
+    public abstract boolean draw(Deck deck);
 
     public boolean isHit() {
         return hand.isHit();
@@ -60,5 +60,7 @@ public abstract class User {
         return hand.getStatus();
     }
 
-    public abstract String getName();
+    public String getName() {
+        return this.name;
+    }
 }

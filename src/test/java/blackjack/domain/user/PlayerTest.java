@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
@@ -18,31 +19,24 @@ class PlayerTest {
     @Test
     void new_emptyName_ExceptionThrown() {
         assertThatIllegalArgumentException().isThrownBy(
-            () -> new Player("")
+            () -> new Player("", makeCards(), 21)
         );
     }
 
     @DisplayName("카드 추가 테스트")
     @Test
     void draw_additionalCard() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
-        cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));
-        Player player = new Player("pobi");
-        player.initialHands(cards, 21);
+        Player player = new Player("pobi", makeCards(), 21);
+        Deck deck = new Deck();
 
-        player.draw(new Card(Denomination.TWO, Suit.SPADES));
+        player.draw(deck);
         assertThat(player.getCards()).hasSize(3);
     }
 
     @DisplayName("player의 HandStatus.STAY 로 번경")
     @Test
     void convertToStay() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
-        cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));
-        Player player = new Player("pobi");
-        player.initialHands(cards, 21);
+        Player player = new Player("pobi", makeCards(), 21);
 
         player.convertToStay();
         assertThat(player.getStatus()).isEqualTo(HandStatus.STAY);
@@ -51,7 +45,16 @@ class PlayerTest {
     @DisplayName("플레이어 이름 가져오기")
     @Test
     void getName() {
-        User player = new Player("pobi");
+        User player = new Player("pobi", makeCards(), 21);
         assertThat(player.getName()).isEqualTo("pobi");
     }
+
+    private List<Card> makeCards() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
+        cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));
+
+        return cards;
+    }
+
 }

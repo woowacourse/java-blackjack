@@ -16,21 +16,15 @@ public class Game {
     private final Deck deck;
 
     public Game(List<String> names) {
-        dealer = new Dealer();
-        players = createPlayer(names);
         deck = new Deck();
-        drawInitialCards();
+        dealer = new Dealer(deck.pickInitialCards(), DEALER_STAY_LIMIT);
+        players = createPlayer(names);
     }
 
     private List<User> createPlayer(List<String> names) {
         return names.stream()
-            .map(Player::new)
+            .map(name -> new Player(name, deck.pickInitialCards(), PLAYER_STAY_LIMIT))
             .collect(Collectors.toList());
-    }
-
-    private void drawInitialCards() {
-        dealer.initialHands(deck.pickInitialCards(), DEALER_STAY_LIMIT);
-        players.forEach(player -> player.initialHands(deck.pickInitialCards(), PLAYER_STAY_LIMIT));
     }
 
     public boolean hasHitPlayer() {
@@ -45,16 +39,12 @@ public class Game {
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    public void giveCardToPlayer(User player) {
-        player.draw(deck.pickSingleCard());
+    public boolean giveCardToDealer() {
+        return dealer.draw(deck);
     }
 
-    public boolean giveCardToDealer() {
-        if (dealer.isHit()) {
-            dealer.draw(deck.pickSingleCard());
-            return true;
-        }
-        return false;
+    public void giveCardToPlayer(User player) {
+        player.draw(deck);
     }
 
     public List<ResultDto> getResultDTOs() {
