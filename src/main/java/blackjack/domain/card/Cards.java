@@ -9,6 +9,7 @@ public class Cards {
     private static final int BLACKJACK = 21;
     private static final int ACE_SCORE_CRITERIA = 11;
     private static final int ACE_BONUS_SCORE = 10;
+    private static final int TWO = 2;
 
     private final List<Card> cards;
 
@@ -57,11 +58,7 @@ public class Cards {
         cards.add(card);
     }
 
-    public int size() {
-        return cards.size();
-    }
-
     public boolean isBlackjack() {
-        return calculateScore() == BLACKJACK && cards.size() == 2;
+        return calculateScore() == BLACKJACK && cards.size() == TWO;
     }
 }

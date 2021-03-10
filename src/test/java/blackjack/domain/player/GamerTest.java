@@ -12,26 +12,9 @@ import org.junit.jupiter.api.Test;
 
 class GamerTest {
 
-    @DisplayName("게이머의 점수가 21점이 초과되면 카드를 추가할 수 없다.")
+    @DisplayName("게이머의 상태가 힛이 아닐 때 카드를 드로우할 수 없다")
     @Test
-    void 카드_추가_테스트() {
-        // given, when
-        Cards cards = Cards.of(
-            Card.of(Denomination.KING, Shape.CLUBS),
-            Card.of(Denomination.KING, Shape.CLUBS),
-            Card.of(Denomination.ACE, Shape.CLUBS)
-        );
-        Gamer gamer = new Gamer(new Name("테스트 게이머"), cards);
-
-        // then
-        assertThatIllegalArgumentException().isThrownBy(() -> {
-            gamer.addCard(Card.of(Denomination.FIVE, Shape.CLUBS));
-        });
-    }
-
-    @DisplayName("게이머의 점수가 21점이 초과되면 카드를 추가할 수 없다.")
-    @Test
-    void 카드_추가_테스트1() {
+    void 카드_드로우_테스트() {
         // given, when
         Cards cards = Cards.of(
                 Card.of(Denomination.KING, Shape.CLUBS),

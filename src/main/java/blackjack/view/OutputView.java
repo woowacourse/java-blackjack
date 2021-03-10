@@ -5,11 +5,8 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.result.ResultType;
-import java.util.Arrays;
+
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -34,7 +31,7 @@ public class OutputView {
     }
 
     private static void printDealerCardInfo(Dealer dealer) {
-        Card card = dealer.getCards().getFirstCard();
+        Card card = dealer.cards().getFirstCard();
         System.out.println(dealer.getName() + ": " + cardToString(card));
     }
 
@@ -50,7 +47,7 @@ public class OutputView {
 
     private static String playerInfoToString(Player player) {
         final String playerName = player.getName();
-        final String playerCardInfo = player.getCards().getCards()
+        final String playerCardInfo = player.cards().getCards()
             .stream()
             .map(OutputView::cardToString)
             .collect(Collectors.joining(", "));
