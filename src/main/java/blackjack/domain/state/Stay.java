@@ -35,4 +35,9 @@ public class Stay implements State {
     public State stay() {
         return this;
     }
+
+    @Override
+    public Cards getCards() {
+        return cards;
+    }
 }

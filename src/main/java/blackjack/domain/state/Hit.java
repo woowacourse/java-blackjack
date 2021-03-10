@@ -47,6 +47,10 @@ public class Hit implements State {
         return new Stay(cards.toCardList());
     }
 
+    @Override
+    public Cards getCards() {
+        return cards;
+    }
 
     private boolean isInitialState() {
         return cards.size() == 2;

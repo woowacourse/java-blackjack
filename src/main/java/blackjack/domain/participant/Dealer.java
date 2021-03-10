@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.rule.BlackJackScoreRule;
 import blackjack.domain.rule.ScoreRule;
 import blackjack.domain.state.State;
@@ -16,13 +15,11 @@ public class Dealer implements Participant {
     private static final String DEALER_NAME = "딜러";
 
     private final String name;
-    private final Cards cards;
     private State state;
     private int money = 0;
 
     public Dealer(ScoreRule scoreRule, State state) {
         this.name = DEALER_NAME;
-        this.cards = new Cards(new ArrayList<>());
         this.state = state.changeState();
     }
 
@@ -34,17 +31,17 @@ public class Dealer implements Participant {
 
     @Override
     public List<Card> showInitCards() {
-        return cards.splitCardsFromTo(FROM, TO);
+        return state.getCards().splitCardsFromTo(FROM, TO);
     }
 
     @Override
     public List<Card> showCards() {
-        return cards.toCardList();
+        return state.getCards().toCardList();
     }
 
     @Override
     public boolean isReceiveCard() {
-        int totalScore = cards.getTotalScore(new BlackJackScoreRule());
+        int totalScore = state.getCards().getTotalScore(new BlackJackScoreRule());
         return totalScore <= DRAW_BOUND_SCORE;
     }
 
