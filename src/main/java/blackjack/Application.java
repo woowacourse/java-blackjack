@@ -1,13 +1,12 @@
 package blackjack;
 
-import blackjack.domain.CardDeck;
-import blackjack.domain.Dealer;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
-import blackjack.domain.StatisticResult;
+import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Application {
@@ -29,8 +28,7 @@ public class Application {
         players.forEach(player -> drawMoreCard(player, cardDeck));
         receiveDealerCard(dealer, cardDeck);
         OutputView.printFinalCardsAndScore(participants);
-
-        StatisticResult statisticResult = new StatisticResult(participants);
+        StatisticResult statisticResult = createStatisticResult(dealer, players);
         OutputView.printFinalResult(statisticResult);
     }
 
@@ -52,5 +50,13 @@ public class Application {
             dealer.receiveCard(cardDeck.draw());
             OutputView.printDealerDrawingMessage(dealer);
         }
+    }
+
+    private static StatisticResult createStatisticResult(Dealer dealer, List<Player> players) {
+        Map<String, Result> playerNameAndResult = new HashMap<>();
+        players.forEach(player -> {
+            playerNameAndResult.put(player.getName(), player.judgeResult(dealer));
+        });
+        return new StatisticResult(playerNameAndResult);
     }
 }

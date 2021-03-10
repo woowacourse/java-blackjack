@@ -80,8 +80,8 @@ public class OutputView {
     public static void printFinalResult(StatisticResult statisticResult) {
         printEmptyLine();
         System.out.println("## 최종 승패");
-        Map<Result, Long> dealerStatisticResultMap = statisticResult.aggregateDealerStatisticResult();
-        Map<String, Result> playerNameResultMap = statisticResult.aggregateParticipantNameAndResult();
+        Map<Result, Long> dealerStatisticResultMap = statisticResult.aggregateDealerResultAndCount();
+        Map<String, Result> playerNameResultMap = statisticResult.getPlayerNameAneResult();
         long winCounts = dealerStatisticResultMap.getOrDefault(Result.WIN, NO_COUNTS_OF_RESULT);
         long lossCounts = dealerStatisticResultMap.getOrDefault(Result.LOSE, NO_COUNTS_OF_RESULT);
         long drawCounts = dealerStatisticResultMap.getOrDefault(Result.DRAW, NO_COUNTS_OF_RESULT);

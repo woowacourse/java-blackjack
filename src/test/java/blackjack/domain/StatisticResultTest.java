@@ -1,15 +1,17 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class StatisticResultTest {
 
@@ -32,9 +34,12 @@ public class StatisticResultTest {
         dealer.receiveCard(new Card(Symbol.FIVE, Shape.CLOVER));
         players.get(0)
                .receiveCard(new Card(symbol, Shape.CLOVER));
-        Participants participants = Participants.of(dealer, players);
-        StatisticResult statisticResult = new StatisticResult(participants);
-        Map<Result, Long> resultMap = statisticResult.aggregateDealerStatisticResult();
+        Map<String, Result> playerNameAndResult = new HashMap<>();
+        players.forEach(player -> {
+            playerNameAndResult.put(player.getName(), player.judgeResult(dealer));
+        });
+        StatisticResult statisticResult = new StatisticResult(playerNameAndResult);
+        Map<Result, Long> resultMap = statisticResult.aggregateDealerResultAndCount();
         assertThat(resultMap.get(result)).isEqualTo(1L);
     }
 }
