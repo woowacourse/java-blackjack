@@ -20,7 +20,7 @@ public class Hit implements State {
     @Override
     public State draw(Card card) {
         deck.addCard(card);
-        if(deck.isBust()) {
+        if (deck.isBust()) {
             return new Bust(deck);
         }
         return this;
@@ -29,5 +29,10 @@ public class Hit implements State {
     @Override
     public Score score() {
         return deck.score();
+    }
+
+    @Override
+    public int winningMoney(int batMoney) {
+        return batMoney;
     }
 }

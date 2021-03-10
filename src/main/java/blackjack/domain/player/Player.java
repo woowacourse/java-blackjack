@@ -10,10 +10,12 @@ import blackjack.domain.player.state.StateFactory;
 public abstract class Player {
 
     private final String name;
+    private final int batMoney;
     private State state;
 
-    protected Player(String name, Card first, Card second) {
+    protected Player(String name, int batMoney, Card first, Card second) {
         this.name = name;
+        this.batMoney = batMoney;
         this.state = StateFactory.start(Deck.of(first, second));
     }
 
@@ -28,6 +30,8 @@ public abstract class Player {
     public boolean isBlackJack() {
         return state instanceof BlackJack;
     }
+
+
 
     public String name() {
         return name;

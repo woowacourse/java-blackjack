@@ -2,14 +2,14 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 
-public class Participant extends Player{
+public class Participant extends Player {
 
-    private Participant(String name, Card first, Card second) {
-        super(name, first, second);
+    private Participant(String name, int batMoney, Card first, Card second) {
+        super(name, batMoney, first, second);
     }
 
-    public static Participant of(String name, Card first, Card second) {
-        return new Participant(name,first,second);
+    public static Participant of(String name, int batMoney, Card first, Card second) {
+        return new Participant(name, batMoney, first, second);
     }
 
     @Override

@@ -9,4 +9,6 @@ public interface State {
     State draw(Card card);
 
     Score score();
+
+    int winningMoney(int batMoney);
 }

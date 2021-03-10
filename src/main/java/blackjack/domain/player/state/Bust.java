@@ -26,4 +26,9 @@ public class Bust implements State {
     public Score score() {
         return deck.score();
     }
+
+    @Override
+    public int winningMoney(int batMoney) {
+        return -batMoney;
+    }
 }

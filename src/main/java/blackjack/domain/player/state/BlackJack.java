@@ -21,4 +21,9 @@ public class BlackJack implements State {
     public Score score() {
         return Score.ofBlackJack();
     }
+
+    @Override
+    public int winningMoney(int batMoney) {
+        return (int) (batMoney * 1.5);
+    }
 }
