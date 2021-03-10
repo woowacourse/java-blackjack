@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Cards implements Comparable<Cards> {
     private static final int FIRST_CARD = 0;
-    private static final int BUST_VALUE = 21;
+    private static final int BLACKJACK_VALUE = 21;
     private static final int TEN = 10;
 
     private final List<Card> cards;
@@ -20,6 +20,10 @@ public class Cards implements Comparable<Cards> {
 
     public Cards(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
+    }
+
+    public boolean isBlackjack() {
+        return calculateTotalValue() == BLACKJACK_VALUE;
     }
 
     public List<Card> getCards() {
@@ -52,7 +56,7 @@ public class Cards implements Comparable<Cards> {
     }
 
     private int decideAceValue(int totalValue) {
-        if (isSoftHand() && totalValue + TEN < BUST_VALUE) {
+        if (totalValue + TEN <= BLACKJACK_VALUE) {
             return TEN;
         }
         return 0;
@@ -72,7 +76,7 @@ public class Cards implements Comparable<Cards> {
     }
 
     public boolean isBust() {
-        return calculateTotalValue() > BUST_VALUE;
+        return calculateTotalValue() > BLACKJACK_VALUE;
     }
 
     @Override

@@ -112,4 +112,16 @@ public class CardsTest {
 
         assertThat(count).isEqualTo(3);
     }
+
+    @Test
+    @DisplayName("블랙잭인지 확인한다.")
+    void isBlackjack() {
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.SPACE, Denomination.TEN)));
+
+        boolean isBlackjack = cards.isBlackjack();
+
+        assertThat(isBlackjack).isTrue();
+    }
 }
