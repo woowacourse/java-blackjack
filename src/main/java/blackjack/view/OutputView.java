@@ -1,10 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.result.Result;
 import blackjack.domain.result.ResultBoard;
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
@@ -14,7 +12,6 @@ import java.util.List;
 import static java.util.stream.Collectors.joining;
 
 public class OutputView {
-    private static final String COLON = ": ";
     private static final String COMMA = ", ";
     private static final String COMMA_WITH_BLANK = ", ";
 
@@ -23,17 +20,18 @@ public class OutputView {
     }
 
     public static void printDistribute(Users users) {
-        System.out.println("\n" + users.getDealerName() + "와 " + String.join(COMMA, users.getPlayerNames()) + "에게 2장의 카드를 나누었습니다.");
+        System.out.println("\n딜러와 " + String.join(COMMA, users.getPlayerNames()) + "에게 2장의 카드를 나누었습니다.");
     }
 
     public static void printCards(Users users) {
-        System.out.println(users.getDealerName() + COLON + users.getDealer().showOneCard());
+        System.out.println("딜러: " + users.getDealer().showOneCard());
         users.getPlayers()
                 .forEach(OutputView::printPlayerCards);
+        System.out.println();
     }
 
     public static void printPlayerCards(Player player) {
-        System.out.print(player.getName() + "카드" + COLON);
+        System.out.print(player.getName() + "카드: ");
         printCards(player.getCards());
     }
 
@@ -48,12 +46,12 @@ public class OutputView {
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
-    public static void printDealerHit(Dealer dealer) {
-        System.out.println("\n" + dealer.getName() + "는 16이하라 한장의 카드를 더 받았습니다.\n");
+    public static void printDealerHit() {
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public static void printDealerNotHit(Dealer dealer) {
-        System.out.println("\n" + dealer.getName() + "는 17이상이라 한장의 카드를 추가로 받지 못하였습니다.\n");
+    public static void printDealerNotHit() {
+        System.out.println("\n딜러는 17이상이라 한장의 카드를 추가로 받지 못하였습니다.\n");
     }
 
     public static void printResults(Users users) {
@@ -71,9 +69,9 @@ public class OutputView {
                 user.getScore());
     }
 
-    public static void printResultBoard(Dealer dealer, ResultBoard resultBoard) {
+    public static void printResultBoard(ResultBoard resultBoard) {
         System.out.println("\n## 최종 승패");
-        System.out.print(dealer.getName() + ": ");
+        System.out.print("딜러: ");
         for (Result result : resultBoard.getDealerResultBoard().keySet()) {
             System.out.print(resultBoard.getDealerResultBoard().get(result) + result.getResult() + " ");
         }

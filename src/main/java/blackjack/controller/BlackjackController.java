@@ -59,15 +59,14 @@ public class BlackjackController {
         Dealer dealer = blackjackGame.getDealer();
         if (dealer.isHit()) {
             dealer.draw(blackjackGame.getDeck());
-            OutputView.printDealerHit(dealer);
+            OutputView.printDealerHit();
             return;
         }
-        OutputView.printDealerNotHit(dealer);
+        OutputView.printDealerNotHit();
     }
 
     private void showResults(BlackjackGame blackjackGame) {
         OutputView.printResults(blackjackGame.getUsers());
-        OutputView.printResultBoard(blackjackGame.getDealer(),
-                new ResultBoard(blackjackGame.getDealer(), blackjackGame.getPlayers()));
+        OutputView.printResultBoard(new ResultBoard(blackjackGame.getDealer(), blackjackGame.getPlayers()));
     }
 }
