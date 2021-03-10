@@ -4,10 +4,7 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.result.MatchResult;
 import blackjack.dto.ParticipantDto;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -31,10 +28,8 @@ public class Players {
     }
 
     private void validateDuplicate(List<Player> players) {
-        boolean isDuplicate = players.stream()
-                .distinct()
-                .count() != players.size();
-        if (isDuplicate) {
+        Set<Player> set = new HashSet<>(players);
+        if (players.size() != set.size()) {
             throw new IllegalArgumentException(PLAYER_DUPLICATE_ERROR_MESSAGE);
         }
     }
