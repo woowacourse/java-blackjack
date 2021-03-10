@@ -8,41 +8,46 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class GameController {
-    public static final int GAME_OVER_SCORE = 21;
-
+    public static final int FIRST_TWO_CARD = 2;
     private final InputView inputView = new InputView(new Scanner(System.in));
 
     public void start() {
-        Users users = Users.of(inputView.getPlayerNames());
         Deck deck = new Deck(Card.getShuffledCards());
-        startRound(users, deck);
-        OutputView.showInitialStatus(createRoundStatusDto(users));
-        addUsersCardOrPass(users, deck);
-        OutputView.showFinalStatus(createRoundStatusDto(users));
-        OutputView.showOutcomes(new Result(users));
+        Dealer dealer = new Dealer(deck.drawCard(FIRST_TWO_CARD));
+        List<String> playerNames = inputView.getPlayerNames();
+        isDuplicatePlayers(playerNames, dealer.getName());
+
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames) {
+            int battingAmount = inputView.getBattingAmount(playerName);
+            players.add(new Player(playerName, battingAmount, deck.drawCard(2)));
+        }
+        OutputView.showInitialStatus(createRoundStatusDto(dealer, players));
+        addUsersCardOrPass(dealer, players, deck);
+        OutputView.showFinalStatus(createRoundStatusDto(dealer, players));
+        OutputView.showOutcomes(new Result(dealer, players));
     }
 
-    public void startRound(Users users, Deck deck) {
-        users.getDealer().addFirstCards(deck.drawCard(), deck.drawCard());
-        for (Player player : users.getPlayers()) {
-            player.addFirstCards(deck.drawCard(), deck.drawCard());
+    private static void isDuplicatePlayers(List<String> players, String dealer) {
+        if (players.stream().distinct().count() != players.size() || players.contains(dealer)) {
+            throw new IllegalArgumentException("유저 이름이 중복됩니다!");
         }
     }
 
-    private RoundStatusDto createRoundStatusDto(Users users) {
-        RoundStatusDto roundStatusDto = new RoundStatusDto(users.getDealer().getName(),
-                users.getDealer().getCardsStatus(),
-                createPlayerStatusDto(users.getPlayers()),
-                users.getDealer().score());
+    private RoundStatusDto createRoundStatusDto(Dealer dealer, List<Player> players) {
+        RoundStatusDto roundStatusDto = new RoundStatusDto(dealer.getName(),
+                dealer.getCardsStatus(),
+                createPlayerStatusDto(players),
+                dealer.scoreToInt());
         return roundStatusDto;
     }
 
@@ -53,13 +58,13 @@ public class GameController {
     }
 
     private PlayerStatusDto getPlayerStatusDto(Player player) {
-        return new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.score());
+        return new PlayerStatusDto(player.getName(), player.getCardsStatus(), player.scoreToInt());
     }
 
-    private void addUsersCardOrPass(Users users, Deck deck) {
-        users.getPlayers().forEach(player -> askAddCardOrPass(player, deck));
-        while (!users.getDealer().canAddCard()) {
-            users.getDealer().addCard(deck.drawCard());
+    private void addUsersCardOrPass(Dealer dealer, List<Player> players, Deck deck) {
+        players.forEach(player -> askAddCardOrPass(player, deck));
+        while (!dealer.canAddCard()) {
+            dealer.addCard(deck.drawCard());
             OutputView.showDealerAddCard(Dealer.TURN_OVER_COUNT);
         }
     }

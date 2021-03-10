@@ -17,7 +17,7 @@ public class Score {
         return score;
     }
 
-    protected boolean isBust() {
+    public boolean isBust() {
         return this.score > BLACKJACK;
     }
 
