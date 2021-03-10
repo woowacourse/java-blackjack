@@ -33,7 +33,7 @@
 - [x] 패의 점수 결과를 구하는 로직 간소화
 - [x] player 이름 중복되지 않게 관리
 - [x] player 이름이 null이거나 빈 문자열이면 예외처리
-- [ ] 두 번의 getHand getter 수정하기
+- [x] 결과 객체를 함수형 인터페이스로 수정해보기
 
 ### 궁금한 사안
 - Players를 만들어서 getPlayers를 쓰기 VS controller에서 List<Player>로 쓰기
