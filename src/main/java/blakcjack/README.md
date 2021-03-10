@@ -41,7 +41,9 @@
     - [x] BlackjackGame 리팩터링
 - [x] Outcome이 가지고 있던 승무패 도출 로직을 Participant로 이동 
 
-## 2단계에서 리팩토링 할 목록
-
+## 1단계 머지 후 리팩토링 목록
+- [x] Symbol과 Number 정보를 조합하여 Map<String, Card> 형태로 관리하던 Card Cache를 EnumMap<Symbol, EnumMap<Number, Card>> 형태로 변경
 - [ ] OutcomeStatistics DTO로 변경
 - [ ] Cards 클래스 생성하여 현재 Participant가 가지고 있는 점수 계산 로직 이동
+
+## 2단계 추가 요구 사항

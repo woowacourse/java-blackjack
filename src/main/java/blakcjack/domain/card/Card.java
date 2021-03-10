@@ -1,23 +1,36 @@
 package blakcjack.domain.card;
 
-import blakcjack.exception.FailedCacheHitException;
+import blakcjack.exception.CacheMissException;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 public class Card {
-    private static final Map<String, Card> cache = new HashMap<>();
+    private static final Map<CardSymbol, Map<CardNumber, Card>> cache = new EnumMap<>(CardSymbol.class);
 
     static {
+        initializeCache();
+        fillCacheData();
+    }
+
+    private static void initializeCache() {
         for (final CardSymbol cardSymbol : CardSymbol.values()) {
-            Arrays.stream(CardNumber.values())
-                    .forEach(cardNumber -> cache.put(
-                            generateKey(cardSymbol, cardNumber), new Card(cardSymbol, cardNumber)
-                            )
-                    );
+            cache.put(cardSymbol, new EnumMap<>(CardNumber.class));
+        }
+    }
+
+    private static void fillCacheData() {
+        for (final CardSymbol cardSymbol : CardSymbol.values()) {
+            fillSameSymbolData(cardSymbol);
+        }
+    }
+
+    private static void fillSameSymbolData(final CardSymbol cardSymbol) {
+        for (final CardNumber cardNumber : CardNumber.values()) {
+            cache.get(cardSymbol)
+                    .put(cardNumber, new Card(cardSymbol, cardNumber));
         }
     }
 
@@ -30,13 +43,14 @@ public class Card {
     }
 
     public static Card of(final CardSymbol cardSymbol, final CardNumber cardNumber) {
-        final String key = generateKey(cardSymbol, cardNumber);
-        return Optional.ofNullable(cache.get(key))
-                .orElseThrow(() -> new FailedCacheHitException(cardSymbol, cardNumber));
+        return Optional.ofNullable(bringCacheData(cardSymbol, cardNumber))
+                .orElseThrow(() -> new CacheMissException(cardSymbol, cardNumber));
     }
 
-    private static String generateKey(CardSymbol cardSymbol, CardNumber cardNumber) {
-        return cardSymbol.name() + cardNumber.name();
+    private static Card bringCacheData(final CardSymbol cardSymbol, final CardNumber cardNumber){
+        return Optional.ofNullable(cache.get(cardSymbol))
+                .orElseThrow(() -> new CacheMissException(cardSymbol, cardNumber))
+                .get(cardNumber);
     }
 
     public boolean isAce() {
