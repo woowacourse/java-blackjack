@@ -27,9 +27,9 @@ public class BlackjackGame {
     }
 
     public void handOutInitialCards() {
-        dealer.receiveCards(deck.popTwo());
+        dealer.receiveCards(deck.popToInitialCards());
         players.getPlayers()
-                .forEach(player -> player.receiveCards(deck.popTwo()));
+                .forEach(player -> player.receiveCards(deck.popToInitialCards()));
     }
 
     public boolean isNotGameOver(User user) {
