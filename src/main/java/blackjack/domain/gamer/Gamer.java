@@ -47,7 +47,9 @@ public abstract class Gamer {
         return Objects.equals(state, Blackjack.class);
     }
 
-    public Cards cards() { return state.cards(); }
+    public Cards cards() {
+        return state.cards();
+    }
 
     public abstract List<Card> showOpenHands();
 
