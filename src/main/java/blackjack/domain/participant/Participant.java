@@ -17,6 +17,11 @@ public abstract class Participant {
         this.nickname = nickname;
     }
 
+    protected Participant(Nickname nickname, State state) {
+        this.nickname = nickname;
+        this.state = state;
+    }
+
     public abstract boolean canDraw();
 
     public void firstDraw(Card firstCard, Card secondCard) {

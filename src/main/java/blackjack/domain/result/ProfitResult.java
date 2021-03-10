@@ -23,10 +23,10 @@ public class ProfitResult {
             BigDecimal profit = player.profit();
             profit = whenDrawStatus(result, player, profit);
             profit = whenLoseStatus(result, player, profit);
-            profitResult.put(player, profit);
+            profitResult.put(player, profit.setScale(0, BigDecimal.ROUND_DOWN));
             dealerProfit = dealerProfit.add(profit.multiply(new BigDecimal("-1")));
         }
-        profitResult.put(dealer, dealerProfit);
+        profitResult.put(dealer, dealerProfit.setScale(0, BigDecimal.ROUND_DOWN));
     }
 
     private BigDecimal whenDrawStatus(Map<Player, MatchResult> result, Player player, BigDecimal profit) {
