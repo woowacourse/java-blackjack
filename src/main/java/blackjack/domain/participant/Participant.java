@@ -22,32 +22,32 @@ public abstract class Participant {
         }
     }
 
-    public void receiveInitialCard(final CardDeck cardDeck) {
+    public final void receiveInitialCard(final CardDeck cardDeck) {
         hand.add(cardDeck.distribute());
         hand.add(cardDeck.distribute());
     }
 
-    public void receiveAdditionalCard(final Card card) {
+    public final void receiveAdditionalCard(final Card card) {
         hand.add(card);
     }
 
-    public boolean isBust() {
+    public final boolean isBust() {
         return hand.isBust();
     }
 
     abstract public Result generateResult(final Participant participant);
 
-    protected Result generateResultByScore(final Participant participant) {
+    protected final Result generateResultByScore(final Participant participant) {
         final int score = this.hand.calculateScore();
         final int opponentScore = participant.hand.calculateScore();
         return Result.findResult(score, opponentScore);
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public Hand getHand() {
+    public final Hand getHand() {
         return hand;
     }
 }
