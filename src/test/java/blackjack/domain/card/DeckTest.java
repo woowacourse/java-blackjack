@@ -19,7 +19,7 @@ public class DeckTest {
     void popTwo() {
         Deck deck = new Deck();
 
-        int cardCount = deck.popTwo()
+        int cardCount = deck.popToInitialCards()
                 .getCards().size();
 
         assertThat(cardCount).isEqualTo(2);

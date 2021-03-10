@@ -32,7 +32,7 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
-    public Cards popTwo() {
+    public Cards popToInitialCards() {
         return new Cards(IntStream.range(START_COUNT, 2)
                 .mapToObj(c -> deck.poll())
                 .collect(Collectors.toList()));

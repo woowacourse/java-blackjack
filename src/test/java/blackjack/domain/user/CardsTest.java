@@ -16,7 +16,7 @@ public class CardsTest {
     @Test
     public void oneCard() {
         Deck deck = new Deck();
-        Cards cards = deck.popTwo();
+        Cards cards = deck.popToInitialCards();
 
         Card card = cards.getOneCard();
 
@@ -65,8 +65,8 @@ public class CardsTest {
     @Test
     void combineCards() {
         Deck deck = new Deck();
-        Cards cards = deck.popTwo();
-        Cards otherCards = deck.popTwo();
+        Cards cards = deck.popToInitialCards();
+        Cards otherCards = deck.popToInitialCards();
         cards.combine(otherCards);
 
         int cardCount = cards.getCards().size();
