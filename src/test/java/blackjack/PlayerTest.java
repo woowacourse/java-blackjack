@@ -70,7 +70,6 @@ public class PlayerTest {
                 .hasMessage("이름은 알파벳 대소문자로 이루어져야 합니다.");
     }
 
-
     @Test
     @DisplayName("플레이어에게 카드 추가 지급")
     void add_card() {
@@ -112,5 +111,12 @@ public class PlayerTest {
         int score = player.sumCardsForResult();
 
         assertThat(score).isEqualTo(14);
+    }
+
+    @Test
+    @DisplayName("플레이어의 베팅 금액을 설정")
+    void setBetMoney() {
+        Player player = new Player("john", new FixedCardDeck());
+        assertThatCode(() -> player.setBetMoney(1000)).doesNotThrowAnyException();
     }
 }

@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.Player;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -25,5 +27,10 @@ public class InputView {
             return false;
         }
         throw new IllegalArgumentException();
+    }
+
+    public static String getBetMoney(Player player) {
+        System.out.println("\n" + player.getName() + "의 베팅 금액?");
+        return sc.nextLine();
     }
 }

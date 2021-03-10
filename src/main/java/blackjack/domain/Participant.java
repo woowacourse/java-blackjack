@@ -7,6 +7,7 @@ public abstract class Participant {
     public static final int ACE_DIFFERENCE = 10;
     private final String name;
     private final Hand hand;
+    private int betMoney;
 
     public Participant(String name, List<Card> cards) {
         this.name = name;
@@ -75,5 +76,9 @@ public abstract class Participant {
             aceCount--;
         }
         return sum;
+    }
+
+    public void setBetMoney(int betMoney) {
+        this.betMoney = betMoney;
     }
 }

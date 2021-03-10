@@ -14,11 +14,21 @@ public class Application {
         final Dealer dealer = new Dealer(cardDeck.initCards());
         final Players players = new Players(InputView.getNames(), cardDeck);
 
+        setBetMoney(players, dealer);
+
         OutputView.printParticipantsCards(dealer, players);
 
         simulate(cardDeck, dealer, players);
 
         OutputView.printResult(dealer, players);
+    }
+
+    private static void setBetMoney(Players players, Dealer dealer) {
+        for (Player player : players.values()) {
+            int betMoney = Integer.parseInt(InputView.getBetMoney(player));
+            player.setBetMoney(betMoney);
+        }
+        dealer.setBetMoney(0);
     }
 
     private static void simulate(CardDeck cardDeck, Dealer dealer, Players players) {
