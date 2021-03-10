@@ -2,9 +2,7 @@ package blackjack.state;
 
 import blackjack.domain.card.Card;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class StateFactory {
 

@@ -1,15 +1,8 @@
 package blackjack.state;
 
-import blackjack.domain.card.Card;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class BlackJack implements State{
-
-    private Cards cards;
+public class BlackJack extends Finished{
 
     public BlackJack(Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 }

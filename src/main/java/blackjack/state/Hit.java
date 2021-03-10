@@ -2,13 +2,19 @@ package blackjack.state;
 
 import blackjack.domain.card.Card;
 
-import java.util.List;
-
-public class Hit implements State{
-
-    private Cards cards;
+public class Hit extends Running{
 
     public Hit(Cards cards){
-        this.cards = cards;
+        super(cards);
+    }
+
+    public State hit(Card card) {
+        cards.add(card);
+
+        if(cards.isBust()){
+            return new Bust(cards);
+        }
+
+        return new Hit(cards);
     }
 }
