@@ -8,6 +8,7 @@ import blackjack.domain.user.Users;
 import blackjack.dto.CardDto;
 import blackjack.dto.DtoMapper;
 import blackjack.dto.UserCardsDto;
+import blackjack.dto.UserRequestDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -47,7 +48,7 @@ public class BlackjackGameController {
     private Users inputUserBettingMoneys(List<ParticipantName> participantNames) {
         return InputView.askPlayersBettingMoney(participantNames)
                 .stream()
-                .map(userRequestDto -> new User(userRequestDto.getName(), userRequestDto.getMoney()))
+                .map(UserRequestDto::createUser)
                 .collect(collectingAndThen(toList(), Users::new));
     }
 
