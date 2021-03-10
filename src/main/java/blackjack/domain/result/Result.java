@@ -4,6 +4,7 @@ import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 public enum Result {
+    BLACKJACK_WIN("승", (score, opponentScore) -> false),
     WIN("승", (score, opponentScore) -> score > opponentScore),
     DRAW("무", (score, opponentScore) -> score == opponentScore),
     LOSE("패", (score, opponentScore) -> score < opponentScore),

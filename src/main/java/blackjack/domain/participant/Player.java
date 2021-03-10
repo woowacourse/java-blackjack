@@ -9,6 +9,9 @@ public class Player extends Participant {
 
     @Override
     public Result generateResult(Participant participant) {
+        if (this.isBlackjack() && !participant.isBlackjack()) {
+            return Result.BLACKJACK_WIN;
+        }
         if (this.isBust()) {
             return Result.LOSE;
         }

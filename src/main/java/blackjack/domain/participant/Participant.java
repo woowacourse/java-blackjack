@@ -35,6 +35,10 @@ public abstract class Participant {
         return hand.isBust();
     }
 
+    public final boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     abstract public Result generateResult(final Participant participant);
 
     protected final Result generateResultByScore(final Participant participant) {

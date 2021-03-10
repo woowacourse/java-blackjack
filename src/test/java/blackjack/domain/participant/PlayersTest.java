@@ -70,8 +70,9 @@ public class PlayersTest {
         Player player1 = new Player("joel");
         Player player2 = new Player("bada");
         Player player3 = new Player("j.on");
+        Player player4 = new Player("blackjack");
 
-        player1.receiveAdditionalCard(new Card(CardLetter.ACE, CardSuit.CLOVER));
+        player1.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
         player1.receiveAdditionalCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
 
         player2.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.HEART));
@@ -80,7 +81,10 @@ public class PlayersTest {
         player3.receiveAdditionalCard(new Card(CardLetter.TWO, CardSuit.DIAMOND));
         player3.receiveAdditionalCard(new Card(CardLetter.THREE, CardSuit.DIAMOND));
 
-        final Players players = new Players(Arrays.asList(player1, player2, player3));
+        player4.receiveAdditionalCard(new Card(CardLetter.ACE, CardSuit.CLOVER));
+        player4.receiveAdditionalCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
+
+        final Players players = new Players(Arrays.asList(player1, player2, player3, player4));
 
         Dealer dealer = new Dealer();
         dealer.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.SPADE));
@@ -90,5 +94,6 @@ public class PlayersTest {
         assertThat(allPlayerResult.get(player1)).isEqualTo(Result.WIN);
         assertThat(allPlayerResult.get(player2)).isEqualTo(Result.DRAW);
         assertThat(allPlayerResult.get(player3)).isEqualTo(Result.LOSE);
+        assertThat(allPlayerResult.get(player4)).isEqualTo(Result.BLACKJACK_WIN);
     }
 }

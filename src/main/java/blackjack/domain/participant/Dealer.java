@@ -20,6 +20,9 @@ public class Dealer extends Participant {
 
     @Override
     public Result generateResult(final Participant participant) {
+        if (this.isBlackjack() && !participant.isBlackjack()) {
+            return Result.BLACKJACK_WIN;
+        }
         if (participant.isBust()) {
             return Result.WIN;
         }
