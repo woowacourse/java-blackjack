@@ -1,7 +1,7 @@
 package blackjack.domain.cards;
 
 public enum CardValue {
-    ACE("A", 11),
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -15,7 +15,7 @@ public enum CardValue {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private static final int MULTIPLE_VALUE = 1;
+    public static final int MULTIPLE_VALUE_DIFFERENCE = 10;
 
     private final String name;
     private final int value;
@@ -23,10 +23,6 @@ public enum CardValue {
     CardValue(String name, int value) {
         this.name = name;
         this.value = value;
-    }
-
-    public static int getMultipleValue() {
-        return MULTIPLE_VALUE;
     }
 
     public String getName() {

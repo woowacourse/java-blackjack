@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Hand {
 
-    private static final int DEFAULT_SCORE = 0;
     private static final int BLACKJACK = 21;
     private static final int BLACKJACK_CARD_COUNT = 2;
 
@@ -20,26 +19,21 @@ public class Hand {
     }
 
     public int getScore() {
-        return calculateScore(new ArrayList<>(hand), DEFAULT_SCORE);
+        int score = hand.stream().mapToInt(Card::getScore).sum();
+        long multipleValueCardCount = hand.stream().filter(Card::hasMultipleValue).count();
+
+        for (int i = 0; i < multipleValueCardCount; i++) {
+            score = changeAnotherValueIfNotBust(score);
+        }
+        return score;
     }
 
-    private int calculateScore(List<Card> leftCards, int currentScore) {
-        if (leftCards.isEmpty()) {
-            return currentScore;
+    private int changeAnotherValueIfNotBust(int score) {
+        int newScore = score + CardValue.MULTIPLE_VALUE_DIFFERENCE;
+        if (newScore <= BLACKJACK) {
+            return newScore;
         }
-
-        Card cardHead = leftCards.get(0);
-        List<Card> cardsTail = leftCards.subList(1, leftCards.size());
-
-        return findOptimalScore(cardHead, cardsTail, currentScore);
-    }
-
-    private int findOptimalScore(Card cardHead, List<Card> cardsTail, int currentScore) {
-        int totalScore = currentScore + cardHead.getScore();
-        if (cardHead.hasMultipleValue() && calculateScore(cardsTail, totalScore) > BLACKJACK) {
-            return calculateScore(cardsTail, currentScore + CardValue.getMultipleValue());
-        }
-        return calculateScore(cardsTail, totalScore);
+        return score;
     }
 
     public void addCard(Card card) {
