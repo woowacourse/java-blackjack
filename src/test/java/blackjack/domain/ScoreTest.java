@@ -42,12 +42,12 @@ class ScoreTest {
     @Test
     void plusTen() {
         Score score = new Score(8);
-        assertThat(score.plus()).isEqualTo(new Score(18));
+        assertThat(score.plusTenIfNotBust()).isEqualTo(new Score(18));
     }
 
     @DisplayName("점수를 숫자로 반환해준다.")
     @Test
-    void scoreToInt(){
+    void scoreToInt() {
         assertThat(new Score(13).toInt()).isEqualTo(13);
     }
 

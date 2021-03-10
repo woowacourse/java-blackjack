@@ -18,19 +18,19 @@ public abstract class User {
 
     abstract public boolean canHit();
 
-    public void hit(Card card) {
+    public final void hit(Card card) {
         cards.addCard(card);
     }
 
-    public String showCards() {
+    public final String showCards() {
         return name.getName() + CARDS_GUIDE_MESSAGE + cards.loadCards();
     }
 
-    public String getName() {
+    public final String getName() {
         return name.getName();
     }
 
-    public Score getScore() {
+    public final Score getScore() {
         return cards.calculateTotalScore();
     }
 }

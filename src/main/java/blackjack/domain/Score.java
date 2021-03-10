@@ -25,12 +25,12 @@ public class Score implements Comparable<Score> {
         return score == BLACKJACK;
     }
 
-    public boolean isLessThanEleven() {
-        return score + GAP_BETWEEN_ACE_MAX_AND_MIN <= BLACKJACK;
-    }
-
-    public Score plus() {
-        return new Score(score + GAP_BETWEEN_ACE_MAX_AND_MIN);
+    public Score plusTenIfNotBust() {
+        Score plusScore = new Score(score + GAP_BETWEEN_ACE_MAX_AND_MIN);
+        if (plusScore.isBust()) {
+            return this;
+        }
+        return plusScore;
     }
 
     public boolean isLowerThan(int threshold) {

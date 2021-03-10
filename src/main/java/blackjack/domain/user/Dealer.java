@@ -9,9 +9,9 @@ import java.util.Map;
 
 public class Dealer extends User {
 
+    public static final int DEALER_HIT_THRESHOLD = 16;
     private static final String DEALER_NAME = "딜러";
     private static final int FIRST_CARD_INDEX = 0;
-    public static final int DEALER_HIT_THRESHOLD = 16;
 
     public Dealer() {
         super(DEALER_NAME);

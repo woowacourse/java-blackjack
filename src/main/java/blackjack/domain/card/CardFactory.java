@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 public class CardFactory {
 
-    static List<Card> generateCards() {
+    public static List<Card> generateCards() {
         return Stream.of(Denomination.values())
             .flatMap(CardFactory::generateCardsBySymbol)
             .collect(Collectors.toList());

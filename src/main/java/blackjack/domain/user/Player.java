@@ -7,6 +7,6 @@ public class Player extends User {
     }
 
     public boolean canHit() {
-        return getScore().isNotBust() || !getScore().isBlackJack();
+        return getScore().isNotBust() && !getScore().isBlackJack();
     }
 }

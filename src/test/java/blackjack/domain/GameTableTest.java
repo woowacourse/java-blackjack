@@ -14,12 +14,12 @@ class GameTableTest {
     @Test
     void firstDraw() {
         Dealer dealer = new Dealer();
-        Players players = new Players(Arrays.asList("choonsik","jason"));
-        GameTable gameTable = new GameTable(dealer,players);
+        Players players = new Players(Arrays.asList("choonsik", "jason"));
+        GameTable gameTable = new GameTable(dealer, players);
         gameTable.drawAtFirst();
 
-        assertThat(dealer.getScore().toInt()).isBetween(2,21);
+        assertThat(dealer.getScore().toInt()).isBetween(2, 21);
         players.getPlayers()
-            .forEach(player -> assertThat(player.getScore().toInt()).isBetween(2,21));
+            .forEach(player -> assertThat(player.getScore().toInt()).isBetween(2, 21));
     }
 }

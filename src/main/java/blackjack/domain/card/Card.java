@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.Score;
 import java.util.Objects;
 
 public class Card {
@@ -20,7 +21,7 @@ public class Card {
         return denomination.getDenomination() + suit;
     }
 
-    public int findScore() {
+    public Score findScore() {
         return denomination.getScore();
     }
 

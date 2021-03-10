@@ -33,17 +33,20 @@ public class Cards {
     }
 
     public Score calculateTotalScore() {
-        Score score = new Score(cards.stream()
-            .mapToInt(Card::findScore)
-            .sum());
-        return addIfAceExist(score);
+        Score score = sum();
+        return addIfAceExist(score, countAce());
     }
 
-    private Score addIfAceExist(Score total) {
-        int aceCount = countAce();
-        while (total.isLessThanEleven() && aceCount != 0) {
-            total = total.plus();
-            aceCount--;
+    private Score sum() {
+        return new Score(cards.stream()
+            .map(Card::findScore)
+            .mapToInt(Score::toInt)
+            .sum());
+    }
+
+    private Score addIfAceExist(Score total, int aceCount) {
+        for (int count = 0; count < aceCount; count++) {
+            total = total.plusTenIfNotBust();
         }
         return total;
     }

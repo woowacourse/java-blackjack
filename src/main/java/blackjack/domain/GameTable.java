@@ -1,10 +1,14 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
 import blackjack.view.OutputView;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class GameTable {
@@ -16,9 +20,15 @@ public class GameTable {
     private final Players players;
 
     public GameTable(Dealer dealer, Players players) {
-        deck = new Deck();
+        deck = new Deck(makeShuffledCards());
         this.dealer = dealer;
         this.players = players;
+    }
+
+    private List<Card> makeShuffledCards() {
+        List<Card> cards = CardFactory.generateCards();
+        Collections.shuffle(cards);
+        return cards;
     }
 
     public void drawAtFirst() {
