@@ -56,11 +56,11 @@ public abstract class Participant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Participant that = (Participant) o;
-        return Objects.equals(nickname, that.nickname) && Objects.equals(state, that.state);
+        return Objects.equals(nickname, that.nickname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nickname, state);
+        return Objects.hash(nickname);
     }
 }
