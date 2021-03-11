@@ -43,8 +43,7 @@ public class Game {
     }
 
     private void addTwoCard(Participant participant) {
-        participant.addCard(deck.draw());
-        participant.addCard(deck.draw());
+        participant.startRound(deck.draw(), deck.draw());
     }
 
     public Player getCurrentPlayer() {

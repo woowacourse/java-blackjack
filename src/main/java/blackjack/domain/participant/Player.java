@@ -1,9 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-
-import java.util.List;
-
 public class Player extends Participant {
     private final Name name;
     private final GameResult gameResult = new GameResult();
@@ -55,7 +51,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public List<Card> getOpenCard() {
-        return cards.subList(0,2);
+    public int numberOfOpenCard() {
+        return 2;
     }
 }

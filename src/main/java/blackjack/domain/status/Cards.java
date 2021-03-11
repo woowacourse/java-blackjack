@@ -65,7 +65,7 @@ public class Cards {
         return calculateResult() > Game.BLACKJACK_NUMBER;
     }
 
-    public List<Card> getCards() {
+    public List<Card> toList() {
         return Collections.unmodifiableList(cards);
     }
 

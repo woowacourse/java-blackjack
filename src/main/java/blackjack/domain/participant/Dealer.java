@@ -13,8 +13,8 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public List<Card> getOpenCard() {
-        return cards.subList(0,1);
+    public int numberOfOpenCard() {
+        return 1;
     }
 
     @Override

@@ -19,26 +19,9 @@ class PlayerTest {
     }
 
     @Test
-    void isBlackjack() {
-        player.addCard(ACE_CLUBS);
-        player.addCard(JACK_SPADES);
-        assertTrue(player.isBlackJack());
-    }
-
-    @Test
-    void noneBlackjack() {
-        player.addCard(TWO_DIAMONDS);
-        player.addCard(THREE_HEARTS);
-        assertFalse(player.isBlackJack());
-    }
-
-    @Test
     void compareWithDealerAndWin() {
-        player.addCard(JACK_SPADES);
-        player.addCard(JACK_SPADES);
-
-        dealer.addCard(TWO_DIAMONDS);
-        dealer.addCard(THREE_HEARTS);
+        player.startRound(JACK_SPADES, JACK_SPADES);
+        dealer.startRound(TWO_DIAMONDS,THREE_HEARTS);
         dealer.addCard(ACE_CLUBS);
 
         player.fight(dealer);
@@ -48,10 +31,9 @@ class PlayerTest {
 
     @Test
     void compareWithDealerAndLose() {
-        player.addCard(JACK_SPADES);
+        player.startRound(TWO_DIAMONDS, JACK_SPADES);
 
-        dealer.addCard(TWO_DIAMONDS);
-        dealer.addCard(THREE_HEARTS);
+        dealer.startRound(TWO_DIAMONDS,THREE_HEARTS);
         dealer.addCard(ACE_CLUBS);
 
         player.fight(dealer);

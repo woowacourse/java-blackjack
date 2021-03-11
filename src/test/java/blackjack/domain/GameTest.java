@@ -39,15 +39,8 @@ public class GameTest {
     }
 
     @Test
-    void giveCardToParticipant() {
-        Participant participant = game.getPlayers()
-                                      .get(0);
-        game.giveCard(participant);
-        assertThat(participant.getCards()).hasSize(1);
-    }
-
-    @Test
     void dealerHitUntilStay() {
+        game.setUpTwoCards();
         game.playDealerTurn();
         assertTrue(game.getDealer()
                        .isStay());

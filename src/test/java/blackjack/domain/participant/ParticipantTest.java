@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static blackjack.domain.FixtureCards.ACE_CLUBS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ParticipantTest {
@@ -22,7 +23,8 @@ public class ParticipantTest {
     @DisplayName("플레이어 카드 추가")
     void addCard() {
         Card card = deck.draw();
+        participant.startRound(ACE_CLUBS, ACE_CLUBS);
         participant.addCard(card);
-        assertThat(participant.getCards()).containsExactly(card);
+        assertThat(participant.getCards()).contains(card);
     }
 }
