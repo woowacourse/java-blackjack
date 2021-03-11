@@ -29,6 +29,6 @@ public class MatchResult {
         this.matchResult.forEach(
                 ((player, matchResultType) -> profitResult.put(player, matchResultType.calculateProfit(player.getBettingMoney())))
         );
-        return profitResult;
+        return Collections.unmodifiableMap(profitResult);
     }
 }
