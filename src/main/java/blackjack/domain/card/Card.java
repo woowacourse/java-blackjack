@@ -24,7 +24,7 @@ public class Card {
         return denomination.isAce();
     }
 
-    public String getName() {
+    public String getCardInformation() {
         return denomination.getDenomination() + suit;
     }
 
