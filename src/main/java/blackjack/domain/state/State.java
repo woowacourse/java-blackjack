@@ -15,4 +15,12 @@ public interface State {
     double profit(double money);
 
     int score();
+
+    boolean isBlackjack();
+
+    boolean isBust();
+
+    boolean isStay();
+
+    boolean isHit();
 }

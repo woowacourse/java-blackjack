@@ -1,43 +1,58 @@
 package blackjack.domain;
 
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
+
+import java.util.Arrays;
+
 public enum MatchResult {
 
-    WIN("승") {
+    WIN("승"){
         @Override
-        boolean match(int playerScore, int dealerScore) {
-            return (playerScore <= MAX_SCORE && dealerScore > MAX_SCORE) || ((playerScore > dealerScore) && playerScore <= MAX_SCORE);
+        boolean match(Player player, Dealer dealer) {
+            if(player.isBlackjack() && !dealer.isBlackjack()){
+                return true;
+            }
+            if(dealer.isBust()){
+                return true;
+            }
+            return player.isStay() && player.score() > dealer.score();
         }
     },
-    LOSE("패") {
+    LOSE("패"){
         @Override
-        boolean match(int playerScore, int dealerScore) {
-            return (playerScore > MAX_SCORE && dealerScore <= MAX_SCORE) || ((playerScore < dealerScore) && dealerScore <= MAX_SCORE);
+        boolean match(Player player, Dealer dealer) {
+            if(player.isBust()){
+                return true;
+            }
+            if(!player.isBlackjack() && dealer.isBlackjack()){
+                return true;
+            }
+            return dealer.isStay() && dealer.score() > player.score();
         }
     },
-    DRAW("무") {
+    DRAW("무"){
         @Override
-        boolean match(int playerScore, int dealerScore) {
-            return (playerScore > MAX_SCORE && dealerScore > MAX_SCORE) || (playerScore == dealerScore);
+        boolean match(Player player, Dealer dealer) {
+            if(player.isBlackjack() && dealer.isBlackjack()){
+                return true;
+            }
+            return player.score() == dealer.score();
         }
     };
 
-    public static final int MAX_SCORE = 21;
-
     private final String result;
+    abstract boolean match(Player player, Dealer dealer);
 
     MatchResult(String result) {
         this.result = result;
     }
 
-    abstract boolean match(int playerScore, int dealerScore);
-
-    public static MatchResult matchPlayerAndDealer(int playerScore, int dealerScore) {
-        for (MatchResult matchResult : values()) {
-            if (matchResult.match(playerScore, dealerScore)) {
-                return matchResult;
-            }
-        }
-        throw new IllegalArgumentException();
+    public static MatchResult matchPlayerAndDealer(Player player, Dealer dealer) {
+        return Arrays.stream(values())
+              .filter(matchResult -> matchResult.match(player, dealer))
+              .findAny()
+              .orElseThrow(IllegalArgumentException::new);
     }
 
     public static MatchResult reverseMatchResult(MatchResult matchResult) {

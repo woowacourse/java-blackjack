@@ -2,8 +2,6 @@ package blackjack.domain.gamer;
 
 public class Player extends Participants {
 
-    private double money;
-
     public Player(String name) {
         super(name);
     }

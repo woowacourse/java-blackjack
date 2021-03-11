@@ -60,13 +60,13 @@ public class BlackJackGame {
     private void firstDraw(List<Participants> participants, CardDeck cardDeck) {
         participants.forEach(participant ->
                 participant.firstDraw(new Cards(Arrays.asList(
-                                cardDeck.drawCard(),
-                                cardDeck.drawCard()))));
+                        cardDeck.drawCard(),
+                        cardDeck.drawCard()))));
         OutputView.distributeCardMessage(participants);
         OutputView.showDealerFirstCard(participants.get(0).getTakenCards().peekCard());
         participants.stream()
-                    .filter(participant -> !participant.getName().equals(Dealer.DEALER_NAME))
-                    .forEach(OutputView::showCards);
+                .filter(participant -> !participant.getName().equals(Dealer.DEALER_NAME))
+                .forEach(OutputView::showCards);
     }
 
     private void playerTurn(Players players, CardDeck cardDeck) {
@@ -99,6 +99,9 @@ public class BlackJackGame {
         while (dealer.canDraw()) {
             dealer.draw(cardDeck.drawCard());
             OutputView.dealerReceiveOneCard();
+        }
+        if (dealer.isHit()) {
+            dealer.stay();
         }
     }
 

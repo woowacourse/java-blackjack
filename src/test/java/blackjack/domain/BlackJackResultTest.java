@@ -36,11 +36,11 @@ public class BlackJackResultTest {
 
 
         for (Player player : players.getPlayers()) {
-            player.receiveCard(new Card(Shape.SPADE, Denomination.JACK));
-            player.receiveCard(new Card(Shape.SPADE, Denomination.ACE));
+            player.draw(new Card(Shape.SPADE, Denomination.JACK));
+            player.draw(new Card(Shape.SPADE, Denomination.ACE));
         }
-        dealer.receiveCard(new Card(Shape.SPADE, Denomination.FIVE));
-        dealer.receiveCard(new Card(Shape.SPADE, Denomination.ACE));
+        dealer.draw(new Card(Shape.SPADE, Denomination.FIVE));
+        dealer.draw(new Card(Shape.SPADE, Denomination.ACE));
         BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(dealer));
         Map<MatchResult, Integer> dealerResult = blackJackResult.getDealerResult();
         assertThat(dealerResult.get(MatchResult.WIN)).isEqualTo(0);

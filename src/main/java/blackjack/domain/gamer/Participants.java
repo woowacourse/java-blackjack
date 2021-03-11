@@ -12,6 +12,7 @@ public abstract class Participants {
 
     private final String name;
     protected State state;
+    protected double money;
 
     public Participants(String name) {
         validateNameLength(name);
@@ -46,6 +47,22 @@ public abstract class Participants {
 
     public void stay() {
         state = state.stay();
+    }
+
+    public boolean isBlackjack() {
+        return state.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return state.isBust();
+    }
+
+    public boolean isStay() {
+        return state.isStay();
+    }
+
+    public boolean isHit() {
+        return state.isHit();
     }
 
     public abstract boolean canDraw();

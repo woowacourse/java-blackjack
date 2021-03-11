@@ -30,7 +30,7 @@ public class DealerTest {
     @Test
     @DisplayName("딜러 카드 추가 성공")
     void receiveCard() {
-        dealer.receiveCard(new Card(Shape.CLOVER, Denomination.EIGHT));
+        dealer.draw(new Card(Shape.CLOVER, Denomination.EIGHT));
         Cards cards = dealer.getTakenCards();
         assertThat(cards.peekCard()).isEqualTo(new Card(Shape.CLOVER, Denomination.EIGHT));
     }
@@ -38,9 +38,9 @@ public class DealerTest {
     @Test
     @DisplayName("딜러 카드 반환 성공")
     void getDealerCards() {
-        dealer.receiveCard(new Card(Shape.SPADE, Denomination.FOUR));
-        dealer.receiveCard(new Card(Shape.CLOVER, Denomination.THREE));
-        dealer.receiveCard(new Card(Shape.HEART, Denomination.ACE));
+        dealer.draw(new Card(Shape.SPADE, Denomination.FOUR));
+        dealer.draw(new Card(Shape.CLOVER, Denomination.THREE));
+        dealer.draw(new Card(Shape.HEART, Denomination.ACE));
 
         Cards cards = dealer.getTakenCards();
         assertTrue(cards.getCards().containsAll(Arrays.asList(new Card(Shape.SPADE, Denomination.FOUR),
