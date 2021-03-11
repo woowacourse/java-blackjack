@@ -13,7 +13,7 @@ public enum MatchResultType {
         this.status = status;
     }
 
-    public static MatchResultType getStatus(int dealerScore, int playerScore) {
+    public static MatchResultType getMatchResultType(int dealerScore, int playerScore) {
         if (isDealerBusted(dealerScore) || (playerScore > dealerScore && isPlayerNotBusted(playerScore))) {
             return WIN;
         }
