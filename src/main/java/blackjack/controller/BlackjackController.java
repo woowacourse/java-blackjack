@@ -47,9 +47,8 @@ public class BlackjackController {
 
     private List<Gamer> initGamers(Deck deck) {
         String[] gamerNames = InputView.inputGamerNames();
-        State state = StateFactory.generateState(deck.draw(), deck.draw());
         return Arrays.stream(gamerNames)
-            .map(gamerName -> new Gamer(gamerName, state))
+            .map(gamerName -> new Gamer(gamerName, StateFactory.generateState(deck.draw(), deck.draw())))
             .collect(Collectors.toList());
     }
 

@@ -6,9 +6,18 @@ import blackjack.domain.card.Cards;
 public interface State {
 
     State draw(Card card);
+
     State stay();
+
     boolean isFinished();
+
+    boolean isBust();
+
+    boolean isBlackjack();
+
     double profit(double money);
+
     int calculateScore();
+
     Cards cards();
 }

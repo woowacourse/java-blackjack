@@ -21,6 +21,16 @@ public class Bust extends Finished {
     }
 
     @Override
+    public boolean isBust() {
+        return true;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
     public double profit(double money) {
         return 0;
     }

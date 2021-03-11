@@ -46,12 +46,9 @@ class DealerTest {
         GameResult gameResult = dealer.judgeGameResultWithGamers(Arrays.asList(gamer1, gamer2));
 
         // then
-        assertThat(gameResult.findByPlayer(dealer))
-            .contains(ResultType.WIN, ResultType.LOSE);
-        assertThat(gameResult.findByPlayer(gamer1))
-            .containsExactly(ResultType.WIN);
-        assertThat(gameResult.findByPlayer(gamer2))
-            .containsExactly(ResultType.LOSE);
+        assertThat(gameResult.findResultByGamer(gamer1)).isSameAs(ResultType.WIN);
+        assertThat(gameResult.findResultByGamer(gamer2)).isSameAs(ResultType.LOSE);
+        assertThat(gameResult.getDealerResult()).containsExactly(ResultType.LOSE, ResultType.WIN);
     }
 
     @DisplayName("딜러와 플레이어들의 게임 결과 테스트 - 딜러 2무")
@@ -68,11 +65,8 @@ class DealerTest {
         GameResult gameResult = dealer.judgeGameResultWithGamers(Arrays.asList(gamer1, gamer2));
 
         // then
-        assertThat(gameResult.findByPlayer(dealer))
-            .containsExactly(ResultType.DRAW, ResultType.DRAW);
-        assertThat(gameResult.findByPlayer(gamer1))
-            .containsExactly(ResultType.DRAW);
-        assertThat(gameResult.findByPlayer(gamer2))
-            .containsExactly(ResultType.DRAW);
+        assertThat(gameResult.findResultByGamer(gamer1)).isSameAs(ResultType.DRAW);
+        assertThat(gameResult.findResultByGamer(gamer2)).isSameAs(ResultType.DRAW);
+        assertThat(gameResult.getDealerResult()).containsExactly(ResultType.DRAW, ResultType.DRAW);
     }
 }

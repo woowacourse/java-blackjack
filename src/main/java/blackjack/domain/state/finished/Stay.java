@@ -21,6 +21,16 @@ public class Stay extends Finished {
     }
 
     @Override
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
     public double profit(double money) {
         return money;
     }

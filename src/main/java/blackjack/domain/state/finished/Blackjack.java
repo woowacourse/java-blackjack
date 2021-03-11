@@ -21,6 +21,16 @@ public class Blackjack extends Finished {
     }
 
     @Override
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return true;
+    }
+
+    @Override
     public double profit(double money) {
         return money * 1.5;
     }

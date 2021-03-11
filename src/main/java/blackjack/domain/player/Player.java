@@ -25,7 +25,11 @@ public abstract class Player {
     }
 
     public final boolean isBust() {
-        return state.cards().isBust();
+        return state.isBust();
+    }
+
+    public final boolean isBlackjack() {
+        return state.isBlackjack();
     }
 
     public String getName() {

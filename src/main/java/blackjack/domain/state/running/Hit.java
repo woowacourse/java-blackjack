@@ -25,4 +25,14 @@ public class Hit extends Running {
     public boolean isFinished() {
         return false;
     }
+
+    @Override
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
 }

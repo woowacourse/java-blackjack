@@ -6,6 +6,7 @@ import blackjack.domain.result.GameResult;
 import blackjack.domain.result.ResultType;
 import blackjack.domain.state.State;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,19 +24,15 @@ public class Dealer extends Player {
         if (calculateScore() > DRAW_STANDARD) {
             throw new IllegalArgumentException("[ERROR] 딜러의 점수가 16을 초과하여 카드를 추가할 수 없습니다.");
         }
-        state.draw(card);
+        state = state.draw(card);
     }
 
     public GameResult judgeGameResultWithGamers(List<Gamer> gamers) {
-        Map<Player, List<ResultType>> result = new LinkedHashMap<>();
-        result.put(this, new ArrayList<>());
+        Map<Player, ResultType> gamersResult = new HashMap<>();
         for (Gamer gamer : gamers) {
-            result.put(gamer, new ArrayList<>());
-            Map<Player, ResultType> resultPerGamer = ResultType.judgeGameResult(this, gamer);
-            result.get(gamer).add(resultPerGamer.get(gamer));
-            result.get(this).add(resultPerGamer.get(this));
+            gamersResult.put(gamer, ResultType.judgeGameResult(this, gamer));
         }
-        return GameResult.of(result);
+        return GameResult.of(gamersResult);
     }
 
     @Override
