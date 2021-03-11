@@ -31,7 +31,7 @@ public class Stay implements State {
     @Override
     public double profit(State enemyState) {
         int score = cards.getTotalScore(new BlackJackScoreRule());
-        int enemyScore = cards.getTotalScore(new BlackJackScoreRule());
+        int enemyScore = enemyState.getCards().getTotalScore(new BlackJackScoreRule());
         if (enemyState.isBust() || score > enemyScore) {
             return 1;
         }
