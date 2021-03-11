@@ -8,11 +8,11 @@ import java.util.Map;
 public class Betting {
     private final Map<Player, Integer> bettingTable = new HashMap<>();
 
-    public void add(Player player, Integer money) {
+    public void put(Player player, Integer money) {
         bettingTable.put(player, money);
     }
 
-    public int getResult(Player player) {
+    public Integer get(Player player) {
         return bettingTable.get(player);
     }
 }
