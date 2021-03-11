@@ -46,7 +46,12 @@ public class BlackJackController {
 
     private BettingMoney getBettingMoney(Name name) {
         OutputView.printBettingMoneyInputGuideMessage(name);
-        return new BettingMoney(InputView.getBettingMoney());
+        try {
+            return new BettingMoney(InputView.getBettingMoney());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return getBettingMoney(name);
+        }
     }
 
     private void playGame(Dealer dealer, Deck deck, Players players) {
