@@ -10,12 +10,10 @@ public abstract class Gamer {
 	public static final String COMMA_DELIMITER = ",";
 
 	protected final PlayerName name;
-	private final int money;
 	protected PlayerState playerState;
 
-	protected Gamer(String name, int money) {
+	protected Gamer(String name) {
 		this.name = new PlayerName(name);
-		this.money = money;
 	}
 
 	public void receiveCard(Card card) {

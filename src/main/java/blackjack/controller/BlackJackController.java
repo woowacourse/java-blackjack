@@ -44,7 +44,7 @@ public class BlackJackController {
 
 	private void askPlayerMoney(Players players) {
 		for (Player player : players.toList()) {
-			player.makeBetting(askMoney(player));
+			player.makeProfit(askMoney(player));
 		}
 	}
 

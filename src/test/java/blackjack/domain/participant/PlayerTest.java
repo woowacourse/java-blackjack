@@ -92,7 +92,7 @@ public class PlayerTest {
 		dealer.playerState = StateFactory.drawTwoCards(new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
 			new Card(CardPattern.DIAMOND, CardNumber.TEN));
 		player.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
-		player.makeBetting(1000);
+		player.makeProfit(1000);
 		player.calculateProfit(dealer);
 		assertEquals(player.getMoney(), -1000);
 	}

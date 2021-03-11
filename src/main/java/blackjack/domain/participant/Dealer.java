@@ -9,7 +9,7 @@ public class Dealer extends Gamer {
 	public static final int MAX_OF_RECEIVE_MORE_CARD = 16;
 
 	public Dealer() {
-		super(NAME_OF_DEALER, 0);
+		super(NAME_OF_DEALER);
 	}
 
 	@Override

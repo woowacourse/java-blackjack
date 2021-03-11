@@ -4,7 +4,7 @@ import static blackjack.controller.BlackJackController.*;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Money;
+import blackjack.domain.participant.Profit;
 
 public abstract class Running implements PlayerState {
 	protected Cards cards;
@@ -19,7 +19,7 @@ public abstract class Running implements PlayerState {
 	}
 
 	@Override
-	public double makeProfit(Dealer dealer, Money money) {
+	public double makeProfit(Dealer dealer, Profit profit) {
 		throw new IllegalArgumentException(ERROR_MESSAGE_CALL);
 	}
 }

@@ -5,16 +5,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MoneyTest {
-	private Money money;
+public class ProfitTest {
+	private Profit profit;
 
 	@BeforeEach
 	void setUp() {
-		money = new Money(1000);
+		profit = new Profit(1000);
 	}
 
 	@Test
 	void calculateMoney() {
-		assertEquals(money.calculateMoneyWithProfit(-1), -1000);
+		assertEquals(profit.calculateMoneyWithProfit(-1), -1000);
 	}
 }

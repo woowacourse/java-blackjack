@@ -7,14 +7,22 @@ public class Player extends Gamer {
 	private static final String AGREE = "y";
 	private static final String DISAGREE = "n";
 
-	private Money money;
+	private Profit profit;
 
 	public Player(String name) {
-		super(name, 0);
+		super(name);
 	}
 
-	public void makeBetting(double askMoney) {
-		this.money = new Money(askMoney);
+	public void makeProfit(double askMoney) {
+		this.profit = new Profit(askMoney);
+	}
+
+	public void calculateProfit(Dealer dealer) {
+		profit = Profit.of(playerState.makeProfit(dealer, profit));
+	}
+
+	public int getMoney() {
+		return (int)profit.getMoney();
 	}
 
 	@Override
@@ -34,13 +42,5 @@ public class Player extends Gamer {
 			playerState = playerState.keepContinue(false);
 		}
 		return canReceiveCard();
-	}
-
-	public void calculateProfit(Dealer dealer) {
-		money = Money.of(playerState.makeProfit(dealer, money));
-	}
-
-	public int getMoney() {
-		return (int)money.getMoney();
 	}
 }

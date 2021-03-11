@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Money;
+import blackjack.domain.participant.Profit;
 
 public interface PlayerState {
 	boolean isFinished();
@@ -16,7 +16,7 @@ public interface PlayerState {
 
 	Cards cards();
 
-	double makeProfit(Dealer dealer, Money money);
+	double makeProfit(Dealer dealer, Profit profit);
 
 	boolean isBust();
 

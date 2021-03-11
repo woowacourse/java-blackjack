@@ -1,14 +1,14 @@
 package blackjack.domain.participant;
 
-public class Money {
+public class Profit {
 	private double money;
 
-	public Money(double money) {
+	public Profit(double money) {
 		this.money = money;
 	}
 
-	public static Money of(double money) {
-		return new Money(money);
+	public static Profit of(double money) {
+		return new Profit(money);
 	}
 
 	public double calculateMoneyWithProfit(double profit) {
