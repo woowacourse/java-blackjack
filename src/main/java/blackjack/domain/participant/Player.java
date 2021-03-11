@@ -6,12 +6,18 @@ import blackjack.domain.result.MatchResult;
 
 public class Player extends Participant {
 
+    private BettingMoney bettingMoney;
+
     public Player(String name, Hand cardHand) {
         super(name, cardHand);
     }
 
     public static Player from(String name) {
         return new Player(name, Hand.createEmptyHand());
+    }
+
+    public void setBettingMoney(BettingMoney bettingMoney) {
+        this.bettingMoney = bettingMoney;
     }
 
     public void receiveCard(Card card) {
