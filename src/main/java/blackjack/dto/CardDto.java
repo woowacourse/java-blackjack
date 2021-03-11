@@ -1,4 +1,8 @@
-package blackjack.domain.card;
+package blackjack.dto;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Shape;
 
 public class CardDto {
 

@@ -1,6 +1,6 @@
-package blackjack.domain.player;
+package blackjack.dto;
 
-import blackjack.domain.card.CardsDto;
+import blackjack.domain.player.Player;
 
 public class PlayerDto {
 
