@@ -19,13 +19,13 @@ public class Casino {
         printGameResult(game);
     }
 
-    private void printInitialCardInformation(Game game) {
-        OutputView.printSetup(game.getDealer(), game.getPlayers());
-    }
-
     private Game initializeGame() {
         Players players = new Players(InputView.inputPlayerNames());
         return Game.of(players);
+    }
+
+    private void printInitialCardInformation(Game game) {
+        OutputView.printSetup(game.getDealer(), game.getPlayers());
     }
 
     private void doPlayersTurn(Game game) {
@@ -35,7 +35,7 @@ public class Casino {
     }
 
     private void doEachPlayerTurn(Game game, Player player) {
-        while (game.isPlayerDrawable(player) && InputView.inputYesOrNo(player)) {
+        while (game.isPlayerDrawable(player) && InputView.inputKeepDrawReply(player)) {
             game.giveCardToPlayer(player);
             OutputView.printCardInfo(player);
         }

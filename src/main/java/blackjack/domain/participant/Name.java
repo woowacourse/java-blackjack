@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-
 import utils.StringUtils;
 
 public class Name {

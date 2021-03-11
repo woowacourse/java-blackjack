@@ -14,8 +14,8 @@ public abstract class Participant {
     protected final Name name;
     protected final List<Card> cards = new ArrayList<>();
 
-    protected Participant(String inputName) {
-        this.name = new Name(inputName);
+    protected Participant(String name) {
+        this.name = new Name(name);
     }
 
     public void addCard(Card card) {
@@ -50,7 +50,7 @@ public abstract class Participant {
         return score > Game.BLACKJACK_NUMBER && remainLoop > ZERO;
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return calculateCardsScoreResult() > Game.BLACKJACK_NUMBER;
     }
 
@@ -62,5 +62,7 @@ public abstract class Participant {
         return Collections.unmodifiableList(cards);
     }
 
-    public abstract String getName();
+    public String getName() {
+        return name.toString();
+    }
 }

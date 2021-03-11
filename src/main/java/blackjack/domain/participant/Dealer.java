@@ -14,20 +14,15 @@ public class Dealer extends Participant {
     }
 
     public String getGameResult(Map<String, String> playersGameResult) {
-        int winCount = (int) playersGameResult.entrySet().stream()
+        int loseCount = (int) playersGameResult.entrySet().stream()
                 .filter(entry -> "승".equals(entry.getValue()))
                 .count();
-        int loseCount = playersGameResult.size() - winCount;
+        int winCount = playersGameResult.size() - loseCount;
 
         return String.format("%d승 %d패", winCount, loseCount);
     }
 
     public String getFirstCardInfo() {
         return cards.get(0).toString();
-    }
-
-    @Override
-    public String getName() {
-        return name.toString();
     }
 }

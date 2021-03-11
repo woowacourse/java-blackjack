@@ -14,7 +14,7 @@ public enum GameResult {
         int playerScore = player.calculateCardsScoreResult();
         int dealerScore = dealer.calculateCardsScoreResult();
 
-        if (player.isBurst() || (!dealer.isBurst() && dealerScore >= playerScore)) {
+        if (player.isBust() || (!dealer.isBust() && dealerScore >= playerScore)) {
             return GameResult.LOSE.resultMessage;
         }
 

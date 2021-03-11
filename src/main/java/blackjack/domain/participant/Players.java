@@ -14,7 +14,8 @@ public class Players {
 
     public Players(List<String> playerNames) {
         players = playerNames.stream()
-                .map(Player::new).collect(toList());
+                .map(Player::new)
+                .collect(toList());
     }
 
     public void addCardToPlayer() {

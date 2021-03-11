@@ -11,10 +11,4 @@ public class Player extends Participant {
     public boolean isBlackJack() {
         return calculateCardsScoreResult() == Game.BLACKJACK_NUMBER;
     }
-
-    @Override
-    public String getName() {
-        return name.toString();
-    }
-
 }

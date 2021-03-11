@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class InputView {
     private static final String INPUT_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
-    private static final String INPUT_YES_OR_NO_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    private static final String INPUT_KEEP_DRAW_REPLY_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String YES_REPLY = "y";
     private static final String NO_REPLY = "n";
     private static final String KEEP_DRAW_REPLY_ERROR_MESSAGE = "y/n 으로만 입력해야 합니다. 입력된 값 : %s";
@@ -27,8 +27,8 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static boolean inputYesOrNo(Player player) {
-        OutputView.printMessage(String.format(INPUT_YES_OR_NO_MESSAGE, player.getName()));
+    public static boolean inputKeepDrawReply(Player player) {
+        OutputView.printMessage(String.format(INPUT_KEEP_DRAW_REPLY_MESSAGE, player.getName()));
         return isKeepDraw(inputString());
     }
 

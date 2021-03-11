@@ -41,7 +41,7 @@ public class Game {
     }
 
     public boolean isPlayerDrawable(Player player) {
-        return !player.isBurst() && !player.isBlackJack();
+        return !player.isBust() && !player.isBlackJack();
     }
 
     public boolean isDealerDrawable() {
