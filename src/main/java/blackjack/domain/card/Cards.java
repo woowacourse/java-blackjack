@@ -30,10 +30,7 @@ public class Cards {
     }
 
     public boolean isBust() {
-        if (this.getScore() > BUST_CONDITION) {
-            return true;
-        }
-        return false;
+        return this.getScore() > BUST_CONDITION;
     }
 
     public int getScore() {
