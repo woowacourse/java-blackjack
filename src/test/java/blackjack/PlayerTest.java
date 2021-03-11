@@ -12,8 +12,9 @@ public class PlayerTest {
 
     @DisplayName("플레이어를 생성한다.")
     @Test
-    void create() {
+    void createPlayerTest() {
         Player player = new Player(new Name("파피"), new BettingMoney(2000));
         assertThat(player.getName()).isEqualTo("파피");
+        assertThat(player.getBettingMoney()).isEqualTo(2000);
     }
 }
