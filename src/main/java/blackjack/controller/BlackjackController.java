@@ -40,18 +40,17 @@ public class BlackjackController {
     private void askPlayersDrawCard(Game game) {
         while (game.isNotEnd()) {
             Player player = game.getCurrentPlayer();
-            boolean willDraw = askWillDrawCard(player);
-            game.reflectInput(willDraw);
+            askAndReflectReply(player, game);
             OutputView.printCardInfoWithLineSeparator(player);
         }
     }
 
-    private boolean askWillDrawCard(Player player) {
+    private void askAndReflectReply(Player player, Game game) {
         try {
-            return InputView.inputYesOrNo(player);
-        } catch (IllegalArgumentException e) {
+            game.reflectInput(InputView.inputYesOrNo(player));
+        } catch (IllegalArgumentException | UnsupportedOperationException e) {
             OutputView.printMessage(e.getMessage());
-            return askWillDrawCard(player);
+            askAndReflectReply(player, game);
         }
     }
 
