@@ -82,7 +82,7 @@ public class Players {
         for (Player player : players) {
             playerProfit.put(player, player.generateProfit(dealer));
         }
-        return playerProfit;
+        return Collections.unmodifiableMap(playerProfit);
     }
 
     public List<Player> getPlayers() {
