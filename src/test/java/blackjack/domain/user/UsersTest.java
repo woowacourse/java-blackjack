@@ -26,7 +26,7 @@ class UsersTest {
     @DisplayName("참가자들에게 카드를 두 장씩 나누어준다.")
     @Test
     void dealTwoCardsTest() {
-        users.dealTwoCards(cardDeck);
+        users.dealCards(cardDeck);
         for (User user : users.users()) {
             assertThat(user.cards.cards()).hasSize(2);
         }

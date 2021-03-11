@@ -16,7 +16,7 @@ public class Users {
         this.users.addAll(new ArrayList<>(players.players()));
     }
 
-    public void dealTwoCards(CardDeck cardDeck) {
+    public void dealCards(CardDeck cardDeck) {
         for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
             this.users.forEach(user -> user.draw(cardDeck.drawCard()));
         }

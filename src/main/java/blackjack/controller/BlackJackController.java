@@ -21,16 +21,21 @@ public class BlackJackController {
     private void startGame(Dealer dealer, Players players) {
         Users users = new Users(dealer, players);
         CardDeck cardDeck = CardDeck.createDeck();
-        users.dealTwoCards(cardDeck);
+
+        users.dealCards(cardDeck);
 
         OutputView.printInitialComment(dealer, players);
         OutputView.printCardsOfDealerWithOneCardOpened(dealer);
         OutputView.printCardsOfPlayersWithoutScore(players);
 
         if (!dealer.isBlackJack()) {
-            players.players().forEach(player -> playGameForEachPlayer(player, cardDeck));
-            drawCardsOfDealerUntilOver16Score(dealer, cardDeck);
+            playPlayersTurn(players, cardDeck);
+            playDealersTurn(dealer, cardDeck);
         }
+    }
+
+    private void playPlayersTurn(Players players, CardDeck cardDeck) {
+        players.players().forEach(player -> playGameForEachPlayer(player, cardDeck));
     }
 
     private void playGameForEachPlayer(Player player, CardDeck cardDeck) {
@@ -41,7 +46,7 @@ public class BlackJackController {
         }
     }
 
-    private void drawCardsOfDealerUntilOver16Score(Dealer dealer, CardDeck cardDeck) {
+    private void playDealersTurn(Dealer dealer, CardDeck cardDeck) {
         while (dealer.canContinue()) {
             dealer.draw(cardDeck.drawCard());
             OutputView.printDealerGetNewCardsMessage();
