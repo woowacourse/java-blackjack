@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String COMMA_WITH_BLANK = ", ";
-    private static final int INDEX_ZERO = 0;
 
     public static void printError(Exception e) {
         System.out.println(e.getMessage());
@@ -24,7 +23,7 @@ public class OutputView {
     }
 
     public static void printCardsOfDealerWithOneCardOpened(Dealer dealer) {
-        System.out.printf("%s 카드: %s\n", dealer.getName(), makeCardStringFormat(dealer.getCards().cards().get(INDEX_ZERO)));
+        System.out.printf("%s 카드: %s\n", dealer.getName(), makeCardStringFormat(dealer.getFirstCard()));
     }
 
     private static String makeCardStringFormat(Card card) {

@@ -10,6 +10,7 @@ public class Cards {
     private static final int ACE_BONUS_SCORE = 10;
     private static final int ACE_SCORE_CHANGEABLE_CONDITION = 11;
     private static final int BLACKJACK_CONDITION_CARD_SCORE_TEN = 10;
+    private static final int INDEX_FIRST = 0;
 
     private final List<Card> cards;
 
@@ -49,5 +50,9 @@ public class Cards {
 
     public List<Card> cards() {
         return Collections.unmodifiableList(this.cards);
+    }
+
+    public Card getFirstCard() {
+        return this.cards.get(INDEX_FIRST);
     }
 }
