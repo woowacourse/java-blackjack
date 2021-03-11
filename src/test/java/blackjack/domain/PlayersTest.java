@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayersTest {
@@ -39,19 +38,5 @@ public class PlayersTest {
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어 수는 2명 이상, 8명 이하여합니다.");
-    }
-
-    @Test
-    @DisplayName("승패 결과")
-    void match() throws InvalidNameInputException {
-        Players players = new Players(Arrays.asList(TestSetUp.createBlackJackPlayer(), TestSetUp.createLoser(), TestSetUp.createTiePlayer()));
-        GameResult gameResult = players.match(TestSetUp.createDealer());
-
-        Map<Player, ResultType> expected = new HashMap<>();
-        expected.put(TestSetUp.createBlackJackPlayer(), ResultType.WIN);
-        expected.put(TestSetUp.createTiePlayer(), ResultType.TIE);
-        expected.put(TestSetUp.createLoser(), ResultType.LOSE);
-
-        assertThat(gameResult).isEqualTo(new GameResult(expected));
     }
 }

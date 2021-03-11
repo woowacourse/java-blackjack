@@ -1,9 +1,10 @@
 package blackjack.domain;
 
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class Players {
 
@@ -27,13 +28,6 @@ public class Players {
         if (parsedPlayers.size() < MINIMUM_PLAYERS || parsedPlayers.size() > MAXIMUM_PLAYERS) {
             throw new IllegalArgumentException(String.format("플레이어 수는 %d명 이상, %d명 이하여합니다.", MINIMUM_PLAYERS, MAXIMUM_PLAYERS));
         }
-    }
-
-    public GameResult match(Dealer dealer) {
-        Map<Player, ResultType> result = new LinkedHashMap<>();
-        playersList.forEach(player -> result.put(player, player.match(dealer)));
-
-        return new GameResult(result);
     }
 
     public List<Player> unwrap() {
