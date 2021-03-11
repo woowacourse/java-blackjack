@@ -16,5 +16,8 @@ public abstract class State {
 
     public abstract State draw(Card card);
 
+    public abstract State stay();
+
     public abstract boolean isFinished();
+
 }

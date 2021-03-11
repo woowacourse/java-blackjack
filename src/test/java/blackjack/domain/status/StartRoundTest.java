@@ -12,12 +12,6 @@ class StartRoundTest {
         assertThat(state).isInstanceOf(Blackjack.class);
     }
 
-    @Test
-    void Bust() {
-        State state = StartRound.draw(JACK_SPADES, JACK_SPADES);
-        state = state.draw(JACK_SPADES);
-        assertThat(state).isInstanceOf(Bust.class);
-    }
 
     @Test
     void Hit() {

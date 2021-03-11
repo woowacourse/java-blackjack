@@ -14,6 +14,11 @@ public class Finished extends State{
     }
 
     @Override
+    public State stay() {
+        throw new UnsupportedOperationException("결과가 정해졌기에 stay 할 수 없습니다.");
+    }
+
+    @Override
     public boolean isFinished() {
         return true;
     }

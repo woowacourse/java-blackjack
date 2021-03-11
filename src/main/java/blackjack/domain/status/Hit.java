@@ -18,6 +18,11 @@ public class Hit extends State {
     }
 
     @Override
+    public State stay() {
+        return new Stay(cards);
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }
