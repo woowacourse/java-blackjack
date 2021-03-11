@@ -33,7 +33,7 @@ class PlayerTest {
         State state = new Hit(defaultInitialCard);
         Participant player = new Player("pobi",0, state);
         Card card = new Card(CardType.DIAMOND, CardValue.TEN);
-        player.receiveCard(card);
+        player.handOutCard(card);
         Assertions.assertThat(player.showCards().contains(card)).isTrue();
     }
 
@@ -79,7 +79,7 @@ class PlayerTest {
     void test_state_bust_dealer() {
         State state = new Hit(defaultInitialCard);
         Participant dealer = new Dealer(state);
-        dealer.receiveCard(new Card(CardType.SPADE, CardValue.TEN));
+        dealer.handOutCard(new Card(CardType.SPADE, CardValue.TEN));
         assertThat(dealer.getStatus()).isInstanceOf(Bust.class);
     }
 

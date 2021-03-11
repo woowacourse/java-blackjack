@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.rule.BlackJackScoreRule;
 import blackjack.domain.rule.ScoreRule;
@@ -23,19 +22,21 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public boolean receiveCard(Card card) {
-        if (state.isEndState()) {
-            return false;
-        }
-
+    public boolean handOutCard(Card card) {
         if (isReceiveCard()) {
-            state.draw(card);
-            this.state = state.changeState();
+            receiveCard(card);
             return true;
         }
 
-        stay();
+        if (!state.isEndState()) {
+            stay();
+        }
         return false;
+    }
+
+    private void receiveCard(Card card) {
+        state.draw(card);
+        this.state = state.changeState();
     }
 
     @Override
@@ -51,7 +52,7 @@ public class Dealer implements Participant {
     @Override
     public boolean isReceiveCard() {
         int totalScore = state.getCards().getTotalScore(new BlackJackScoreRule());
-        return totalScore <= DRAW_BOUND_SCORE;
+        return totalScore <= DRAW_BOUND_SCORE && !state.isEndState();
     }
 
     @Override

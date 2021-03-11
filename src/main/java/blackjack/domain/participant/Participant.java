@@ -8,7 +8,7 @@ import blackjack.domain.state.State;
 import java.util.List;
 
 public interface Participant {
-    boolean receiveCard(Card card);
+    boolean handOutCard(Card card);
 
     List<Card> showInitCards();
 

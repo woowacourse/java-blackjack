@@ -30,7 +30,7 @@ class DealerTest {
         State state = new Hit(defaultInitialCard);
         Participant dealer = new Dealer(state);
         Card card = new Card(CardType.DIAMOND, CardValue.THREE);
-        dealer.receiveCard(card);
+        dealer.handOutCard(card);
         assertThat(dealer.showCards().contains(card)).isTrue();
     }
 
@@ -73,7 +73,7 @@ class DealerTest {
     void test_state_bust_dealer() {
         State state = new Hit(defaultInitialCard);
         Participant dealer = new Dealer(state);
-        dealer.receiveCard(new Card(CardType.SPADE, CardValue.TEN));
+        dealer.handOutCard(new Card(CardType.SPADE, CardValue.TEN));
         assertThat(dealer.getStatus()).isInstanceOf(Bust.class);
     }
 

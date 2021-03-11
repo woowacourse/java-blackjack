@@ -23,7 +23,7 @@ public class Player implements Participant {
     }
 
     @Override
-    public boolean receiveCard(Card card) {
+    public boolean handOutCard(Card card) {
         state.draw(card);
         this.state = state.changeState();
         return true;
