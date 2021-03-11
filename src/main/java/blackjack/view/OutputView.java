@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    public static String MSG_DEALER_GET_MORE_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     public static void printMessage(String message) {
         System.out.println(message);

@@ -64,7 +64,7 @@ public class BlackJackController {
 
     private void playDealerTurn(Dealer dealer, Deck deck) {
         while (!dealer.getStatus().isEndState()) {
-            OutputView.printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            OutputView.printMessage(MSG_DEALER_GET_MORE_CARD);
             dealer.handOutCard(deck.draw());
         }
     }
