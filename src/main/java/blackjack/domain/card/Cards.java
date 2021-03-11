@@ -7,6 +7,8 @@ import java.util.List;
 public class Cards implements Comparable<Cards> {
     private static final int FIRST_CARD = 0;
     private static final int BUST = 21;
+    private static final int INITIAL_CARD_SIZE = 2;
+    private static final int BLACKJACK = 21;
 
     private final List<Card> cards;
 
@@ -23,7 +25,11 @@ public class Cards implements Comparable<Cards> {
     }
 
     public boolean isBust() {
-        return this.calculateScore() > BUST;
+        return calculateScore() > BUST;
+    }
+
+    public boolean isBlackjack() {
+        return this.cards.size() == INITIAL_CARD_SIZE && calculateScore() == BLACKJACK;
     }
 
     public int calculateScore() {

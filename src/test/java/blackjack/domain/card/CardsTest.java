@@ -93,4 +93,26 @@ public class CardsTest {
 
         assertThat(cards.isBust()).isFalse();
     }
+
+    @DisplayName("카드의 총합이 블랙잭인 경우를 확인한다.")
+    @Test
+    void isBlackjackTrue() {
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Shape.HEART, Value.ACE),
+                new Card(Shape.CLOVER, Value.JACK)
+        ));
+
+        assertThat(cards.isBlackjack()).isTrue();
+    }
+
+    @DisplayName("카드의 총합이 블랙잭이 아닌 경우를 확인한다.")
+    @Test
+    void isBlackjackFalse() {
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Shape.HEART, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.JACK)
+        ));
+
+        assertThat(cards.isBlackjack()).isFalse();
+    }
 }
