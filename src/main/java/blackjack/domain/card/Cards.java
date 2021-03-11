@@ -22,15 +22,20 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
-    public void add(Card card) {
-        cards.add(card);
+    public void draw(Card card) {
+         cards.add(card);
+    }
+
+    public void initialDraw(Deck deck) {
+        cards.add(deck.draw());
+        cards.add(deck.draw());
     }
 
     public boolean isBlackJack() {
         return getScore() == BLACKJACK_NUMBER && cards.size() == BLACKJACK_CARD_COUNT;
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return getScore() > BLACKJACK_NUMBER;
     }
 

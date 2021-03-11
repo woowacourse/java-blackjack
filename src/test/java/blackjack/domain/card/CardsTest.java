@@ -42,10 +42,10 @@ class CardsTest {
                 new Card(Type.SPADE, Denomination.TEN)
             )
         );
-        assertThat(cards.isBurst()).isEqualTo(true);
+        assertThat(cards.isBust()).isEqualTo(true);
     }
 
-    @DisplayName("카드 뭉치가 버스트가 아 것을 확인한다.")
+    @DisplayName("카드 뭉치가 버스트가 아닌 것을 확인한다.")
     @Test
     void testCardsIsNotBurst() {
         Cards cards = new Cards(
@@ -54,7 +54,58 @@ class CardsTest {
                 new Card(Type.HEART, Denomination.TEN)
             )
         );
-        assertThat(cards.isBurst()).isEqualTo(false);
+        assertThat(cards.isBust()).isEqualTo(false);
+    }
+
+    @DisplayName("초기 드로우는 카드 2장을 드로우한다.")
+    @Test
+    void cardsInitialDraw() {
+        Deck deck = new Deck(new Cards(Arrays.asList(
+            new Card(Type.CLUB, Denomination.TEN),
+            new Card(Type.HEART, Denomination.TEN)
+        )));
+
+        Cards cards = new Cards();
+        cards.initialDraw(deck);
+        assertThat(cards.cardsSize()).isEqualTo(2);
+    }
+
+    @DisplayName("카드 점수 총합을 계산한다.")
+    @Test
+    void testCalculateCardsScore() {
+        Cards cards = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.FOUR),
+                new Card(Type.HEART, Denomination.THREE),
+                new Card(Type.HEART, Denomination.FIVE)
+            )
+        );
+        assertThat(cards.getScore()).isEqualTo(12);
+    }
+
+    @DisplayName("카드 점수 총합이 21을 초과하지 않으면 ACE를 11점으로 계산한다.")
+    @Test
+    void testCalculateCardsScoreElvenAce() {
+        Cards cards = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.ACE),
+                new Card(Type.HEART, Denomination.TEN)
+            )
+        );
+        assertThat(cards.getScore()).isEqualTo(21);
+    }
+
+    @DisplayName("카드 점수 총합이 21을 초과하지 않으면 ACE를 1점으로 계산한다.")
+    @Test
+    void testCalculateCardsScoreOneAce() {
+        Cards cards = new Cards(
+            Arrays.asList(
+                new Card(Type.CLUB, Denomination.ACE),
+                new Card(Type.HEART, Denomination.TEN),
+                new Card(Type.HEART, Denomination.FIVE)
+            )
+        );
+        assertThat(cards.getScore()).isEqualTo(16);
     }
 
 }
