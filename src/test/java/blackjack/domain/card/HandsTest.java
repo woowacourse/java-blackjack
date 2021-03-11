@@ -95,21 +95,9 @@ class HandsTest {
         assertThat(hands.calculate()).isEqualTo(new Score(26));
     }
 
-//    @DisplayName("Ace를 가지고 있는지 확인")
-//    @Test
-//    void containsAce() {
-//        List<Card> cards = new ArrayList<>();
-//        cards.add(Card.of(Suit.HEART, Denomination.ACE));
-//        cards.add(Card.of(Suit.CLUB, Denomination.TWO));
-//        Hands hands = new Hands(cards);
-//        hands.addCard(Card.of(Suit.CLUB, Denomination.THREE));
-//
-//        assertTrue(hands.containsAce());
-//    }
-
     @DisplayName("number만큼 카드 가지고 오기")
     @Test
-    void getCardOf() {
+    void cardsOf() {
         List<Card> cards = new ArrayList<>();
         cards.add(Card.of(Suit.HEART, Denomination.TWO));
         cards.add(Card.of(Suit.CLUB, Denomination.TWO));
