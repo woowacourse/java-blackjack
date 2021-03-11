@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.participant.Player.*;
-
 import java.util.Objects;
 
 import blackjack.domain.card.Card;
@@ -11,19 +9,17 @@ import blackjack.domain.state.PlayerState;
 public abstract class Gamer {
 	public static final String COMMA_DELIMITER = ",";
 
-	private final PlayerName name;
+	protected final PlayerName name;
+	private final int money;
 	protected PlayerState playerState;
 
-	protected Gamer(String name) {
+	protected Gamer(String name, int money) {
 		this.name = new PlayerName(name);
+		this.money = money;
 	}
 
 	public void receiveCard(Card card) {
 		playerState = playerState.drawNewCard(card);
-	}
-
-	public boolean isBurst(int point) {
-		return point > THRESHOLD_OF_BURST;
 	}
 
 	public abstract boolean canReceiveCard();

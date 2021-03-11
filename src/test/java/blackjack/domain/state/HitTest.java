@@ -44,7 +44,7 @@ class HitTest {
 	}
 
 	@Test
-	void checkBurst() {
+	void checkBust() {
 		Hit hit = new Hit(cards);
 		hit.drawNewCard(new Card(CardPattern.CLOVER, CardNumber.NINE));
 	}

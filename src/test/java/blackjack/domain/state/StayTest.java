@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import static blackjack.controller.BlackJackController.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,6 +36,6 @@ class StayTest {
 		state = state.keepContinue(false);
 		assertThatThrownBy(() -> state.drawNewCard(new Card(CardPattern.DIAMOND, CardNumber.NINE)))
 			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("옳지 않은 곳에서 호출");
+			.hasMessage(ERROR_MESSAGE_CALL);
 	}
 }

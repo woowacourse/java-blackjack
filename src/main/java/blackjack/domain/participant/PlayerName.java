@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import static blackjack.controller.BlackJackController.*;
+
 import java.util.Objects;
 
 public class PlayerName {
@@ -21,7 +23,7 @@ public class PlayerName {
 
 	private void validateEmpty(String name) {
 		if (name.equals(EMPTY)) {
-			throw new IllegalArgumentException("올바르지 않은 이름입니다.");
+			throw new IllegalArgumentException(ERROR_MESSAGE_INPUT);
 		}
 	}
 

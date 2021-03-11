@@ -4,28 +4,23 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 
-public class BlackJack extends Finished {
-	public static final double BLACKJACK_PROFIT_RATE = 1.5;
-
-	public BlackJack(Cards cards) {
+public class Bust extends Finished {
+	public Bust(Cards cards) {
 		super(cards);
 	}
 
 	@Override
 	public boolean isBust() {
-		return false;
-	}
-
-	@Override
-	public boolean isBlackJack() {
 		return true;
 	}
 
 	@Override
+	public boolean isBlackJack() {
+		return false;
+	}
+
+	@Override
 	public double makeProfit(Dealer dealer, Money money) {
-		if (dealer.getPlayerState().isBlackJack()) {
-			return money.calculateMoneyWithProfit(WIN_PROFIT_RATE);
-		}
-		return money.calculateMoneyWithProfit(BLACKJACK_PROFIT_RATE);
+		return money.calculateMoneyWithProfit(LOSE_PROFIT_RATE);
 	}
 }

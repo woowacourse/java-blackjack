@@ -1,13 +1,10 @@
 package blackjack.domain.participant;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.game.WinnerFlag;
 import blackjack.domain.state.StateFactory;
 
 public class Players {
@@ -27,25 +24,13 @@ public class Players {
 		return splitPlayers;
 	}
 
-	public void giveCardToPlayers(Deck deck) {
-		dealer.receiveCard(deck.dealCard());
+	public int calculateTotalWinnings(Dealer dealer) {
+		int money = 0;
 		for (Player player : players) {
-			player.receiveCard(deck.dealCard());
+			player.calculateProfit(dealer);
+			money += player.getMoney();
 		}
-	}
-
-	// public void makeState() {
-	// 	for (Player player : players) {
-	// 		player.makeState();
-	// 	}
-	// }
-
-	public Map<WinnerFlag, Integer> calculateTotalWinnings(Dealer dealer) {
-		Map<WinnerFlag, Integer> winnerCount = new EnumMap<>(WinnerFlag.class);
-		for (Player player : players) {
-			winnerCount.put(player.calculateResult(dealer), winnerCount.getOrDefault(player.getResult(), 0) + 1);
-		}
-		return winnerCount;
+		return money * -1;
 	}
 
 	public List<Player> toList() {

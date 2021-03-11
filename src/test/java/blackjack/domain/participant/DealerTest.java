@@ -38,9 +38,9 @@ public class DealerTest {
 	@Test
 	@DisplayName("딜러가 카드를 받을 수 있는지 확인")
 	void dealerPossibleReceiveCard() {
-		dealer.playerState = StateFactory.drawTwoCards((new Card(CardPattern.CLOVER, CardNumber.KING)),
+		dealer.playerState = StateFactory.drawTwoCards((new Card(CardPattern.CLOVER, CardNumber.ACE)),
 			new Card(CardPattern.HEART, CardNumber.TWO));
-		assertTrue(dealer.canReceiveCard());    //TODO: ace 들어가면 뭔가 이상
+		assertTrue(dealer.canReceiveCard());
 	}
 
 	@Test

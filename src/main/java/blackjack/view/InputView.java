@@ -20,4 +20,9 @@ public class InputView {
 		System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
 		return Arrays.asList(scanner.nextLine().split(COMMA_DELIMITER));
 	}
+
+	public static String enterBetting(Player player) {
+		System.out.println(player.getName() + "의 배팅 금액은?");
+		return scanner.nextLine();
+	}
 }

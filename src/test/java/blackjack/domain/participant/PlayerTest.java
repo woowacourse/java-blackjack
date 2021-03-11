@@ -13,7 +13,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
-import blackjack.domain.state.Burst;
+import blackjack.domain.state.Bust;
 import blackjack.domain.state.StateFactory;
 
 public class PlayerTest {
@@ -59,9 +59,9 @@ public class PlayerTest {
 
 	@Test
 	@DisplayName("플레이어가 버스트지 확인")
-	void playerIsBurst() {
+	void playerIsBust() {
 		player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.KING));
-		assertThat(player.playerState).isInstanceOf(Burst.class);
+		assertThat(player.playerState).isInstanceOf(Bust.class);
 	}
 
 	@Test
@@ -84,15 +84,16 @@ public class PlayerTest {
 		assertThatThrownBy(() -> player.continueDraw("l", new Deck())).isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("y");
 	}
-	//TODO: 결과 처리
-	// @Test
-	// @DisplayName("결과 매칭 테스트")
-	// void matchResult() {
-	// 	Dealer dealer = new Dealer();
-	// 	Player player = new Player("pobi");
-	// 	dealer.receiveCard(new Card(CardPattern.HEART, CardNumber.NINE));
-	// 	player.receiveCard(new Card(CardPattern.HEART, CardNumber.EIGHT));
-	// 	player.calculateResult(dealer);
-	// 	assertEquals(WinnerFlag.LOSE, player.getResult());
-	// }
+
+	@Test
+	@DisplayName("버스트 나는 결과 매칭 테스트")
+	void matchResult() {
+		Dealer dealer = new Dealer();
+		dealer.playerState = StateFactory.drawTwoCards(new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
+			new Card(CardPattern.DIAMOND, CardNumber.TEN));
+		player.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
+		player.makeBetting(1000);
+		player.calculateProfit(dealer);
+		assertEquals(player.getMoney(), -1000);
+	}
 }

@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import static blackjack.controller.BlackJackController.*;
+
 import blackjack.domain.card.Deck;
 
 public class Dealer extends Gamer {
@@ -7,21 +9,20 @@ public class Dealer extends Gamer {
 	public static final int MAX_OF_RECEIVE_MORE_CARD = 16;
 
 	public Dealer() {
-		super(NAME_OF_DEALER);
+		super(NAME_OF_DEALER, 0);
 	}
 
 	@Override
 	public boolean canReceiveCard() {
-		if (this.playerState.calculatePoint() <= 16) {
-			playerState = playerState.keepContinue(true);//딜러 hit stay 관
-			System.out.println(playerState);
+		if (this.playerState.calculatePoint() <= MAX_OF_RECEIVE_MORE_CARD) {
+			playerState = playerState.keepContinue(true);
 			return true;
 		}
-		if (this.playerState.calculatePoint() > 16) {
+		if (this.playerState.calculatePoint() > MAX_OF_RECEIVE_MORE_CARD) {
 			playerState = playerState.keepContinue(false);
 			return false;
 		}
-		throw new IllegalArgumentException("옳지 않은 호출");
+		throw new IllegalArgumentException(ERROR_MESSAGE_CALL);
 	}
 
 	@Override

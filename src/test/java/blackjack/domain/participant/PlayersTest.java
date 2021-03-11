@@ -28,16 +28,4 @@ public class PlayersTest {
 			.filter(player -> player.playerState.cards().getCards().size() == 2)
 			.count());
 	}
-	//TODO: 결과처리
-	// @Test
-	// @DisplayName("우승자 계산 확인")
-	// void calculateResult() {
-	// 	List<String> input = Arrays.asList("pobi", "jason", "cu");
-	// 	Dealer dealer = new Dealer();
-	// 	Players players = new Players(input, dealer);
-	// 	for (Player player : players.toList()) {
-	// 		player.calculateResult(dealer);
-	// 	}
-	// 	assertEquals(3, players.calculateTotalWinnings(dealer).get(WinnerFlag.DRAW));
-	// }
 }

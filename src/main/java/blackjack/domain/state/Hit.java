@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public class Hit extends Running {
+	public static final int THRESHOLD_OF_BUST = 21;
 
 	public Hit(Cards cards) {
 		super(cards);
@@ -25,8 +26,8 @@ public class Hit extends Running {
 	@Override
 	public PlayerState drawNewCard(Card card) {
 		cards.addCard(card);
-		if (cards.calculateIncludeAce() > 21) {
-			return new Burst(cards);
+		if (cards.calculateIncludeAce() > THRESHOLD_OF_BUST) {
+			return new Bust(cards);
 		}
 		return this;
 	}
@@ -37,7 +38,12 @@ public class Hit extends Running {
 	}
 
 	@Override
-	public boolean isBurst() {
+	public boolean isBust() {
 		return true;
+	}
+
+	@Override
+	public boolean isBlackJack() {
+		return false;
 	}
 }

@@ -8,19 +8,20 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
-	public static final int INITIAL_DRAWING_COUNT = 2;
+	public static final String ERROR_MESSAGE_CALL = "옳지 않은 곳에서 호츨";
+	public static final String ERROR_MESSAGE_INPUT = "옳지 않은 입력입니다.";
 
 	public void run() {
 		Dealer dealer = new Dealer();
 		Players players = askPlayers(dealer);
+		createPlayersWithMoney(players);
 		Deck deck = new Deck();
 
-		deck.shuffleCards();
-		drawCards(dealer, players, deck);
-		drawUntilPossible(dealer, players, deck);
+		playTurn(dealer, players, deck);
 
 		OutputView.noticePlayersPoint(dealer, players);
 		OutputView.printDealerResult(players.calculateTotalWinnings(dealer));
+		OutputView.printPlayersResult(players);
 	}
 
 	private Players askPlayers(Dealer dealer) {
@@ -30,6 +31,35 @@ public class BlackJackController {
 			System.out.println(e.getMessage());
 			return askPlayers(dealer);
 		}
+	}
+
+	private void createPlayersWithMoney(Players players) {
+		try {
+			askPlayerMoney(players);
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			askPlayerMoney(players);
+		}
+	}
+
+	private void askPlayerMoney(Players players) {
+		for (Player player : players.toList()) {
+			player.makeBetting(askMoney(player));
+		}
+	}
+
+	private int askMoney(Player player) {
+		try {
+			return Integer.parseInt(InputView.enterBetting(player));
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException(ERROR_MESSAGE_INPUT);
+		}
+	}
+
+	private void playTurn(Dealer dealer, Players players, Deck deck) {
+		deck.shuffleCards();
+		drawCards(dealer, players, deck);
+		drawUntilPossible(dealer, players, deck);
 	}
 
 	private void drawCards(Dealer dealer, Players players, Deck deck) {

@@ -1,9 +1,15 @@
 package blackjack.domain.state;
 
+import static blackjack.controller.BlackJackController.*;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public abstract class Finished implements PlayerState {
+	public static final int WIN_PROFIT_RATE = 1;
+	public static final int DRAW_PROFIT_RATE = 0;
+	public static final int LOSE_PROFIT_RATE = -1;
+
 	protected Cards cards;
 
 	public Finished(Cards cards) {
@@ -22,7 +28,7 @@ public abstract class Finished implements PlayerState {
 
 	@Override
 	public PlayerState drawNewCard(Card card) {
-		throw new IllegalArgumentException("옳지 않은 곳에서 호출");
+		throw new IllegalArgumentException(ERROR_MESSAGE_CALL);
 	}
 
 	@Override
