@@ -15,13 +15,11 @@ public class BlackjackGame {
     private final Dealer dealer;
     private final Players players;
     private final Queue<Player> currentPlayers;
-    private boolean isNotEnd;
 
     public BlackjackGame(Players players) {
         this.deck = new Deck();
         this.dealer = new Dealer(DEALER_NAME);
         this.players = players;
-        this.isNotEnd = true;
         this.currentPlayers = new LinkedList<>(players.getPlayers());
     }
 
@@ -34,7 +32,7 @@ public class BlackjackGame {
     }
 
     public boolean isNotEnd() {
-        return isNotEnd;
+        return currentPlayers.size() == 0;
     }
 
     public Player getCurrentPlayer() {
@@ -62,7 +60,6 @@ public class BlackjackGame {
         currentPlayers.removeIf(Participant::isFinished);
         if (currentPlayers.size() == 0) {
             calculateGameResult();
-            isNotEnd = false;
         }
     }
 
