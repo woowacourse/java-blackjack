@@ -10,8 +10,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 class CardTest {
 
     @ParameterizedTest(name = "값 객체 비교 - 성공")
-    @MethodSource("equals_success_testcase")
-    void equals_success(Suit suit, Rank rank) {
+    @MethodSource("equalsSuccessTestcase")
+    void equalsSuccess(Suit suit, Rank rank) {
         Card card1 = new Card(suit, rank);
         Card card2 = new Card(suit, rank);
 
@@ -19,7 +19,7 @@ class CardTest {
         assertThat(card1).hasSameHashCodeAs(card2);
     }
 
-    private static Stream<Arguments> equals_success_testcase() {
+    private static Stream<Arguments> equalsSuccessTestcase() {
         return Stream.of(
                 Arguments.of(Suit.SPADE, Rank.ACE),
                 Arguments.of(Suit.SPADE, Rank.KING),
@@ -33,14 +33,16 @@ class CardTest {
     }
 
     @ParameterizedTest(name = "값 객체 비교 - 실패")
-    @MethodSource("equals_fail_testcase")
-    void equals_fail(Suit suit, Rank rank) {
-        Card card = new Card(suit, rank);
+    @MethodSource("equalsFailTestcase")
+    void equalsFail(Suit suit, Rank rank) {
+        Card card1 = new Card(suit, rank);
+        Card card2 = new Card(Suit.SPADE, Rank.ACE);
 
-        assertThat(card).isNotEqualTo(new Card(Suit.SPADE, Rank.ACE));
+        assertThat(card1).isNotEqualTo(card2);
+        assertThat(card1.hashCode()).isNotEqualTo(card2.hashCode());
     }
 
-    private static Stream<Arguments> equals_fail_testcase() {
+    private static Stream<Arguments> equalsFailTestcase() {
         return Stream.of(
                 Arguments.of(Suit.SPADE, Rank.TWO),
                 Arguments.of(Suit.CLOVER, Rank.ACE),
