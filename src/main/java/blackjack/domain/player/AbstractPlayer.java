@@ -2,31 +2,28 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.PlayerCards;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractPlayer implements Player {
-    protected static final int BLACKJACK = 21;
-
-    private final PlayerCards cards;
     private final Name name;
+    protected State state;
 
-    protected AbstractPlayer(String name) {
-        cards = new PlayerCards();
+    protected AbstractPlayer(String name, Card fistCard, Card secondCard) {
         this.name = new Name(name);
+        state = StateFactory.draw(fistCard, secondCard);
     }
 
     @Override
     public void drawCard(final Card card) {
-        cards.add(card);
+        state = state.draw(card);
     }
 
     @Override
-    abstract public boolean isCanDraw();
-
-    @Override
     public int getScore() {
-        return cards.score();
+        return state.score();
     }
 
     @Override
@@ -36,20 +33,13 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public void drawRandomTwoCards() {
-        Cards cards = Cards.getInstance();
-        drawCard(cards.draw());
-        drawCard(cards.draw());
-    }
-
-    @Override
     public boolean isBlackjack() {
-        return cards.isBlackjack();
+        return state.isBlackjack();
     }
 
     @Override
     public boolean isBust() {
-        return cards.isBust();
+        return state.isBust();
     }
 
     @Override
@@ -59,6 +49,16 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public List<Card> getCards() {
-        return cards.getCards();
+        return Collections.unmodifiableList(state.cards().getCards());
+    }
+
+    @Override
+    public void stay() {
+        state = state.stay();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return state.isFinished();
     }
 }

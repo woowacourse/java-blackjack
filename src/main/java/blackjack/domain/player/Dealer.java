@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.player.cardopen.CardOpenStrategy;
 import blackjack.domain.player.cardopen.OneCardOpenStrategy;
 import java.util.List;
@@ -12,17 +13,31 @@ public class Dealer extends AbstractPlayer {
     private CardOpenStrategy cardOpenStrategy;
 
     public Dealer() {
-        super(DEALER_NAME);
-        cardOpenStrategy = new OneCardOpenStrategy();
+        this(Cards.getInstance().draw(), Cards.getInstance().draw());
     }
 
-    @Override
-    public boolean isCanDraw() {
-        return getScore() <= DRAW_BOUND;
+    public Dealer(Card fistCard, Card SecondCard) {
+        super(DEALER_NAME, fistCard, SecondCard);
+        cardOpenStrategy = new OneCardOpenStrategy();
+        dealerStateCheck();
+    }
+
+    private void dealerStateCheck() {
+        if (getScore() > DRAW_BOUND && !isBlackjack()) {
+            stay();
+        }
     }
 
     public void setCardOpen(CardOpenStrategy cardOpenStrategy) {
         this.cardOpenStrategy = cardOpenStrategy;
+    }
+
+    @Override
+    public void drawRandomOneCard() {
+        super.drawRandomOneCard();
+        if (!isFinished()) {
+            stay();
+        }
     }
 
     @Override

@@ -1,44 +1,35 @@
 package blackjack.domain.player;
 
-import blackjack.domain.ResultType;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 public class User extends AbstractPlayer {
-    private static final String YES = "y";
-    private static final String NO = "n";
+    private static final String YES = "yY";
+    private static final String NO = "nN";
 
-    private boolean isDrawStop = false;
     private BetAmount betAmount;
 
     public User(String name) {
-        super(name);
+        this(name, Cards.getInstance().draw(), Cards.getInstance().draw());
     }
 
-    @Override
-    public boolean isCanDraw() {
-        return !(isDrawStop() || isBust());
-    }
-
-    public boolean isDrawStop() {
-        return isDrawStop;
+    public User(String name, Card firstCard, Card secondCard) {
+        super(name, firstCard, secondCard);
     }
 
     public boolean isDrawContinue(String input) {
         drawInputValidate(input);
-        if (YES.equals(input)) {
+        if (YES.contains(input)) {
             return true;
         }
-        stopDraw();
-        return false;
+        stay();
+        return !isFinished();
     }
 
     private void drawInputValidate(String value) {
-        if (!(YES.equals(value) || NO.equals(value))) {
-            throw new IllegalArgumentException("입력은 y 또는 n만 가능합니다.");
+        if (!(YES.contains(value) || NO.contains(value))) {
+            throw new IllegalArgumentException("입력은 y(Y) 또는 n(N)만 가능합니다.");
         }
-    }
-
-    private void stopDraw() {
-        isDrawStop = true;
     }
 
     public void setBetAmount(String betAmount) {
@@ -46,21 +37,6 @@ public class User extends AbstractPlayer {
     }
 
     public int profit(Dealer dealer) {
-        return getResult(dealer).profit(betAmount.getAmount());
-    }
-
-    public ResultType getResult(Dealer dealer) {
-        int userScore = getScore();
-        int dealerScore = dealer.getScore();
-        if (isBlackjack() && !dealer.isBlackjack()) {
-            return ResultType.BLACKJACK;
-        }
-        if (userScore > BLACKJACK || (userScore < dealerScore) && !dealer.isBust()) {
-            return ResultType.LOSS;
-        }
-        if (userScore == dealerScore) {
-            return ResultType.DRAW;
-        }
-        return ResultType.WIN;
+        return (int) state.profit(dealer.state, betAmount);
     }
 }
