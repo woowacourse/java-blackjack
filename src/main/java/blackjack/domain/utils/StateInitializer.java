@@ -8,9 +8,9 @@ import blackjack.domain.gamer.Players;
 public class StateInitializer {
 
     public static void init(final Deck deck, final Dealer dealer, final Players players) {
-        dealer.initState(deck.makeInitialHands());
+        dealer.initState(deck.pickTwoCards());
         for (Player player : players) {
-            player.initState(deck.makeInitialHands());
+            player.initState(deck.pickTwoCards());
         }
     }
 }

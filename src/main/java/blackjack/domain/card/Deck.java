@@ -14,7 +14,7 @@ public class Deck {
         return new Deck(CardStack.create());
     }
 
-    public List<Card> makeInitialHands() {
+    public List<Card> pickTwoCards() {
         return cards.pickTwoCards();
     }
 
