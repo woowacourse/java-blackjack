@@ -7,7 +7,6 @@ import blackjack.util.BlackJackConstant;
 import blackjack.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class User {
@@ -45,17 +44,7 @@ public abstract class User {
     }
 
     public int getScore() {
-        if (this.isBlackJack()) {
-            return BlackJackConstant.BLACKJACK_SCORE;
-        }
-
-        int score = this.cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-
-        score += checkAce(score);
-
-        return checkBust(score);
+        return this.state.score().getScore();
     }
 
     public List<Card> getCards() {
