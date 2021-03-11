@@ -11,15 +11,10 @@ public class Blackjack extends Finished {
     }
 
     @Override
-    protected double earningRate() {
-        return EARNING_RATE;
-    }
-
-    @Override
     public double profit(State state, BetAmount amount) {
         if (state.cards().isBlackjack()) {
             return DRAW_AMOUNT;
         }
-        return amount.getAmount() * earningRate();
+        return amount.getAmount() * EARNING_RATE;
     }
 }

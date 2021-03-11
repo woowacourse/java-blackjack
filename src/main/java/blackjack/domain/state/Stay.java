@@ -11,17 +11,12 @@ public class Stay extends Finished {
     }
 
     @Override
-    protected double earningRate() {
-        return EARNING_RATE;
-    }
-
-    @Override
     public double profit(State state, BetAmount amount) {
         if (state.isBust() || state.score() < score()) {
-            return amount.getAmount() * earningRate();
+            return amount.getAmount() * EARNING_RATE;
         }
         if (state.isBlackjack() || state.score() > score()) {
-            return -amount.getAmount() * earningRate();
+            return -amount.getAmount() * EARNING_RATE;
         }
         return DRAW_AMOUNT;
     }

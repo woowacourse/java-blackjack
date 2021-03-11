@@ -11,12 +11,7 @@ public class Bust extends Finished {
     }
 
     @Override
-    protected double earningRate() {
-        return EARNING_RATE;
-    }
-
-    @Override
     public double profit(State state, BetAmount amount) {
-        return amount.getAmount() * earningRate();
+        return amount.getAmount() * EARNING_RATE;
     }
 }
