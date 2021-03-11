@@ -5,7 +5,6 @@ import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Challengers;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import blackjack.domain.result.ResultStatistics;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,12 +52,14 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printSummary(final ResultStatistics resultStatistics, final Challengers challengers) {
+    public static void printDealerProfit(final int dealerProfit) {
         System.out.println("## 최종 수익");
         System.out.print(DEALER_PREFIX);
-        System.out.println(resultStatistics.getDealerProfit());
-        challengers.toList().forEach(challenger ->
-                System.out.println(challenger.getName() + ": " + resultStatistics.getChallengerProfit(challenger)));
+        System.out.println(dealerProfit);
+    }
+
+    public static void printChallengerProfit(final Challenger challenger, final int profit) {
+        System.out.println(challenger.getName() + ": " + profit);
     }
 
     private static void printChallengersInitCards(final Challengers challengers) {

@@ -74,6 +74,17 @@ public class BlackJackController {
 
     private void summary() {
         ResultStatistics resultStatistics = new ResultStatistics(blackJackService.getChallengers(), blackJackService.getDealer());
-        OutputView.printSummary(resultStatistics, blackJackService.getChallengers());
+        printDealerProfit(resultStatistics);
+        printChallengersProfit(resultStatistics, blackJackService.getChallengers());
+    }
+
+    private void printDealerProfit(final ResultStatistics resultStatistics) {
+        OutputView.printDealerProfit(resultStatistics.getDealerProfit());
+    }
+
+    private void printChallengersProfit(final ResultStatistics resultStatistics, final Challengers challengers) {
+        challengers.toList().forEach(
+                challenger -> OutputView.printChallengerProfit(challenger, resultStatistics.getChallengerProfit(challenger))
+        );
     }
 }
