@@ -39,8 +39,8 @@ public enum ResultType {
 
     private static Map<Player, ResultType> judgeNoneBustResult(Dealer dealer, Gamer gamer) {
         Map<Player, ResultType> result = new HashMap<>();
-        int dealerScore = Cards.BUST - dealer.calculateScore();
-        int gamerScore = Cards.BUST - gamer.calculateScore();
+        int dealerScore = Cards.BLACK_JACK - dealer.calculateScore();
+        int gamerScore = Cards.BLACK_JACK - gamer.calculateScore();
         if (dealerScore < gamerScore) {
             result.put(dealer, WIN);
             result.put(gamer, LOSE);
