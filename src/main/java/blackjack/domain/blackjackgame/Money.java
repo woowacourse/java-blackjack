@@ -1,7 +1,5 @@
 package blackjack.domain.blackjackgame;
 
-import blackjack.domain.player.GameResult;
-
 public class Money {
 
     private final double value;
@@ -22,17 +20,8 @@ public class Money {
         return value;
     }
 
-    public Money profit(GameResult gameResult, boolean isBlackjack) {
-        if (GameResult.WIN.equals(gameResult) && isBlackjack) {
-            return new Money(value * 1.5);
-        }
-        if (GameResult.WIN.equals(gameResult)) {
-            return this;
-        }
-        if (GameResult.LOSE.equals(gameResult)) {
-            return minus();
-        }
-        return new Money();
+    public Money profit(double earningRate) {
+        return new Money(value * earningRate);
     }
 
     public Money minus() {

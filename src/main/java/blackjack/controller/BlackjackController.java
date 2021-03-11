@@ -22,7 +22,7 @@ public class BlackjackController {
             blackjackGame.drawCurrentPlayer(InputView.getWhetherDrawCard(player));
             OutputView.printPlayerCards(player);
         }
-        printGameResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
+         printGameResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 
     private Players createPlayers() {

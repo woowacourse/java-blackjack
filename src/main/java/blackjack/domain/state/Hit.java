@@ -5,6 +5,10 @@ import blackjack.domain.card.Cards;
 
 public class Hit extends State {
 
+    public Hit(){
+        super();
+    }
+
     public Hit(Cards cards) {
         super(cards);
     }

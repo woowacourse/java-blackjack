@@ -7,6 +7,10 @@ public abstract class State {
 
     protected Cards cards;
 
+    public State(){
+        this.cards = new Cards();
+    }
+
     public State(final Cards cards) {
         this.cards = cards;
     }

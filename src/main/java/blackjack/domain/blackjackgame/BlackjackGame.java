@@ -2,6 +2,7 @@ package blackjack.domain.blackjackgame;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import java.util.LinkedList;
@@ -32,11 +33,6 @@ public class BlackjackGame {
         return players;
     }
 
-    public void start() {
-        dealer.initialDraw(deck);
-        players.initialDraw(deck);
-    }
-
     public boolean isNotEnd() {
         return isNotEnd;
     }
@@ -45,29 +41,34 @@ public class BlackjackGame {
         return currentPlayers.peek();
     }
 
-    public void drawCurrentPlayer(boolean isDraw) {
-        Player player = getCurrentPlayer();
-
-        if (isDraw && player.canDraw()) {
-            player.draw(deck);
-        }
-
-        if (!isDraw || !player.canDraw()) {
-            changeNextPlayer();
-        }
+    public void start() {
+        dealer.initialDraw(deck);
+        players.initialDraw(deck);
+        checkIsEnd();
     }
 
-    private void changeNextPlayer() {
-        currentPlayers.poll();
-        if (currentPlayers.isEmpty()) {
+    public void drawCurrentPlayer(boolean isDraw) {
+        Player player = getCurrentPlayer();
+        if (isDraw && player.canDraw()) {
+            player.draw(deck.draw());
+            checkIsEnd();
+            return;
+        }
+        player.stay();
+        checkIsEnd();
+    }
+
+    private void checkIsEnd() {
+        currentPlayers.removeIf(Participant::isFinished);
+        if (currentPlayers.size() == 0) {
             calculateGameResult();
+            isNotEnd = false;
         }
     }
 
     private void calculateGameResult() {
-        isNotEnd = false;
         if (dealer.canDraw()) {
-            dealer.draw(deck);
+            dealer.draw(deck.draw());
         }
         players.calculateGameResult(dealer);
     }

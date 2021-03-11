@@ -15,6 +15,10 @@ public class Deck {
         cards = creatDeck();
     }
 
+    public Deck(Cards cards){
+        this.cards = new ArrayDeque<>(cards.getCards());
+    }
+
     public Card draw() {
         return cards.pop();
     }

@@ -4,17 +4,19 @@ import blackjack.domain.blackjackgame.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.state.Hit;
+import blackjack.domain.state.State;
 
 public abstract class Participant {
 
     protected String name;
-    protected Cards cards;
     protected Money money;
+    protected State state;
 
     public Participant(String name) {
         this.name = name;
-        this.cards = new Cards();
         this.money = new Money();
+        this.state = new Hit();
     }
 
     public String getName() {
@@ -22,38 +24,43 @@ public abstract class Participant {
     }
 
     public Cards getCards() {
-        return cards;
-    }
-
-    public void draw(Deck deck) {
-        cards.add(deck.draw());
-    }
-
-    public void draw(Card card) {
-        cards.add(card);
-    }
-
-    public void initialDraw(Deck deck) {
-        cards.add(deck.draw());
-        cards.add(deck.draw());
+        return state.getCards();
     }
 
     public int getScore() {
-        return cards.getScore();
+        return state.getScore();
+    }
+
+    public void initialDraw(Deck deck) {
+        Cards cards = new Cards();
+        cards.initialDraw(deck);
+        state = State.makeState(cards);
     }
 
     public boolean isBlackjack() {
-        return cards.isBlackJack();
+        return state.isBlackjack();
     }
 
     public boolean isBust() {
-        return cards.isBurst();
+        return state.isBust();
+    }
+
+    public void addMoney(Money money) {
+        this.money = this.money.add(money);
     }
 
     public abstract boolean canDraw();
 
-    public void addMoney(Money money) {
-        this.money = this.money.add(money);
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    public void draw(Card card) {
+        this.state = state.draw(card);
+    }
+
+    public void stay() {
+        this.state = state.stay();
     }
 
 }
