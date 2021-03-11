@@ -14,6 +14,8 @@ import blackjack.view.OutputView;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static blackjack.view.OutputView.MSG_DEALER_GET_MORE_CARD;
+
 public class BlackJackController {
 
     public void play() {
@@ -22,13 +24,8 @@ public class BlackJackController {
         OutputView.printInitialCardStatus(participants);
 
         playBlackJackGame(participants, deck);
-        OutputView.printAllParticipantsCards(participants);
-
-        Dealer dealer = participants.extractDealer();
-        List<Player> players = participants.extractPlayers();
-        OutputView.printWinPrizeResult(getGameResultDto(players, dealer));
+        OutputView.printWinPrizeResult(getGameResultDto(participants));
     }
-
 
     private Participants getParticipants(List<String> names, Deck deck) {
         List<Participant> participants = names.stream()
@@ -42,6 +39,7 @@ public class BlackJackController {
     private void playBlackJackGame(Participants participants, Deck deck) {
         playAllPlayersTurn(participants.extractPlayers(), deck);
         playDealerTurn(participants.extractDealer(), deck);
+        OutputView.printAllParticipantsCards(participants);
     }
 
     private void playAllPlayersTurn(List<Player> players, Deck deck) {
@@ -76,15 +74,27 @@ public class BlackJackController {
         }
     }
 
-    public GameResultDto getGameResultDto(List<Player> players, Dealer dealer) {
-        List<WinPrizeDto> playersWinPrizeDto = players.stream().map(
-                player -> new WinPrizeDto(player.getName(), player.calculateWinPrize(dealer.getStatus()))
-        ).collect(Collectors.toList());
+    public GameResultDto getGameResultDto(Participants participants) {
+        List<Player> players = participants.extractPlayers();
+        Dealer dealer = participants.extractDealer();
 
+        List<WinPrizeDto> playersWinPrizeDto = getPlayerWinPrizeDtoList(players, dealer);
 
-        int totalPlayerWinPrize = players.stream().mapToInt(player -> player.calculateWinPrize(dealer.getStatus())).sum();
+        int totalPlayerWinPrize = getTotalPlayerWinPrize(players, dealer);
         WinPrizeDto dealerWinPrizeDto = new WinPrizeDto(dealer.getName(), dealer.payWinPrize(totalPlayerWinPrize));
 
         return new GameResultDto(dealerWinPrizeDto, playersWinPrizeDto);
+    }
+
+    private List<WinPrizeDto> getPlayerWinPrizeDtoList(List<Player> players, Dealer dealer) {
+        return players.stream()
+                .map(player -> new WinPrizeDto(player.getName(), player.calculateWinPrize(dealer.getStatus())))
+                .collect(Collectors.toList());
+    }
+
+    private int getTotalPlayerWinPrize(List<Player> players, Dealer dealer) {
+        return players.stream()
+                .mapToInt(player -> player.calculateWinPrize(dealer.getStatus()))
+                .sum();
     }
 }
