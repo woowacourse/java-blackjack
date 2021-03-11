@@ -23,6 +23,14 @@ public class Card {
         this.number = number;
     }
 
+    public static Card of(final Symbol symbol, final Number number) {
+        Card findCard = CARDS.stream()
+                .filter(card -> card.symbol == symbol && card.number == number)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("없는 카드임!"));
+        return findCard;
+    }
+
     public static Card of(final String symbolName, final String numberName) {
         Symbol symbol = Symbol.from(symbolName);
         Number number = Number.from(numberName);
