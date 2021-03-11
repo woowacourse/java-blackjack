@@ -16,6 +16,7 @@ public class Player extends Participant {
 
     public Player(String name, List<Card> cards) {
         super(process(name), cards);
+        betMoney = 0;
     }
 
     private static String process(String nameValue) {
