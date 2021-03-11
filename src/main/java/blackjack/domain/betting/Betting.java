@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.betting;
 
 import blackjack.domain.participant.Player;
 
@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Betting {
-    private final Map<Player, Integer> bettingTable = new HashMap<>();
+    private final Map<Player, Money> bettingTable = new HashMap<>();
 
-    public void put(Player player, Integer money) {
+    public void put(Player player, Money money) {
         bettingTable.put(player, money);
     }
 
-    public Integer get(Player player) {
+    public Money get(Player player) {
         return bettingTable.get(player);
     }
 }
