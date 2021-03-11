@@ -82,6 +82,7 @@ public class OutputView {
     }
 
     private static void printDealerResult(List<Player> players, Dealer dealer) {
+
         int dealerTotalMoney = dealer.getBettingMoney();
 
         for (Player player : players) {
