@@ -11,20 +11,28 @@ public class Deck {
     private static final int TOP_OF_DECK = 0;
     private static final int NUMBER_OF_INIT_CARD = 2;
 
+    private static Deck deck = null;
     private final List<Card> cards;
+
 
     private Deck(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
     public static Deck generate() {
-        List<Card> cards = Arrays.stream(CardType.values())
-                .flatMap(cardType -> Arrays.stream(CardValue.values())
-                        .map(cardValue -> new Card(cardType, cardValue)))
-                .collect(Collectors.toList());
-        Collections.shuffle(cards);
-        return new Deck(cards);
+        if (deck == null) {
+            List<Card> cards = Arrays.stream(CardType.values())
+                    .flatMap(cardType -> Arrays.stream(CardValue.values())
+                            .map(cardValue -> new Card(cardType, cardValue)))
+                    .collect(Collectors.toList());
+            Collections.shuffle(cards);
+            deck = new Deck(cards);
+        }
+
+        return deck;
     }
+
+
 
     public int size() {
         return cards.size();
