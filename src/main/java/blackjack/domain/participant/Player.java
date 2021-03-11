@@ -4,6 +4,7 @@ import blackjack.domain.Money;
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
+import blackjack.domain.state.BlackJackState;
 
 public class Player extends BlackJackParticipant {
 
@@ -34,6 +35,10 @@ public class Player extends BlackJackParticipant {
         if (dealer.isBust()) {
             return ResultType.WIN;
         }
+        if (getState() instanceof BlackJackState && !(dealer.getState() instanceof BlackJackState)) {
+            return ResultType.WIN;
+        }
+
         return ResultType.getResultType(getScore() - dealer.getScore());
     }
 

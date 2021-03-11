@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.util.GameInitializer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,6 +54,6 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
-        return getScore() == BLACKJACK_NUMBER;
+        return getScore() == BLACKJACK_NUMBER && hand.size() == GameInitializer.STARTING_CARD_COUNT;
     }
 }
