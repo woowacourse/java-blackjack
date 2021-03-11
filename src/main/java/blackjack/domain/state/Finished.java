@@ -29,5 +29,10 @@ public abstract class Finished extends Started {
         return this;
     }
 
+    @Override
+    public boolean satisfyRule() {
+        return false;
+    }
+
     public abstract double earningRate();
 }

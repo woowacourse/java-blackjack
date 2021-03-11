@@ -7,7 +7,6 @@ import java.util.List;
 public class Dealer extends Gamer {
 
     private static final String NAME = "딜러";
-    private static final int ADD_CARD_BOUNDARY = 16;
 
     private Dealer(final String name) {
         super(name);
@@ -24,6 +23,6 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canDraw() {
-        return (cards().calculate() <= ADD_CARD_BOUNDARY);
+        return !state.isFinished() && state.satisfyRule();
     }
 }
