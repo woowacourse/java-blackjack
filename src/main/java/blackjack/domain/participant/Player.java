@@ -6,10 +6,11 @@ public class Player extends Participant {
     private PlayerMoney playerMoney;
 
     public Player(final String name) {
-        super(name);
+        this(name, new PlayerMoney(0));
     }
 
-    public void setPlayerMoney(final PlayerMoney playerMoney) {
+    public Player(final String name, final PlayerMoney playerMoney) {
+        super(name);
         this.playerMoney = playerMoney;
     }
 
@@ -27,6 +28,13 @@ public class Player extends Participant {
         return generateResultByScore(participant);
     }
 
+    public Double generateProfit(Dealer dealer) {
+        final Result result = generateResult(dealer);
+        final double profit = playerMoney.calculateProfit(result.getProfitRate());
+        dealer.calculateProfit(profit);
+        return profit;
+    }
+
     @Override
     public int hashCode() {
         return name.hashCode();
@@ -39,12 +47,5 @@ public class Player extends Participant {
 
         Player otherPlayer = (Player) obj;
         return this.name.equals(otherPlayer.name);
-    }
-
-    public double generateProfit(Dealer dealer) {
-        final Result result = generateResult(dealer);
-        final double profit = playerMoney.calculateProfit(result.getProfitRate());
-        dealer.calculateProfit(profit);
-        return profit;
     }
 }
