@@ -36,6 +36,12 @@ public class OutputView {
     }
 
     private static String getCardNameFormat(BlackJackParticipant participant) {
+        if (participant instanceof Dealer) {
+            return participant.getHand().unwrap().stream()
+                    .map(Card::getCardName)
+                    .findFirst()
+                    .orElse(null);
+        }
         return participant.getHand().unwrap().stream()
                 .map(Card::getCardName)
                 .collect(Collectors.joining(NAME_DELIMITER));

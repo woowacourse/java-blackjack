@@ -114,4 +114,13 @@ public class PlayerTest {
         assertThat(TestSetUp.createBlackJackPlayerWithMoney("1000").getProfit(TestSetUp.createBlackJackDealer()))
                 .isEqualTo(0);
     }
+
+//    @Test
+//    void name() {
+//        Dealer dealer = new Dealer();
+//        dealer.draw(Card.valueOf(Shape.CLOVER, CardValue.JACK));
+//        dealer.draw(Card.valueOf(Shape.CLOVER, CardValue.SIX));
+//        dealer.draw(Card.valueOf(Shape.CLOVER, CardValue.FIVE));
+//        assertThat(TestSetUp.createBlackJackPlayerWithMoney("10000").getProfit(dealer)).isEqualTo(10000);
+//    }
 }
