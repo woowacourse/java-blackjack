@@ -4,9 +4,9 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.ScoreResult;
 import blackjack.domain.rule.ScoreRule;
-import blackjack.dto.DealerResultDto;
-import blackjack.dto.ScoreResultDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,11 +61,11 @@ public class BlackJackGame {
         return participants.extractDealer();
     }
 
-    public DealerResultDto getDealerResult() {
+    public DealerResult getDealerResult() {// dto 의존중...
         return getDealer().getDealerResult(participants.extractPlayers());
     }
 
-    public List<ScoreResultDto> getPlayersResults() {
+    public List<ScoreResult> getPlayersResults() { //dto 의존중...
         return getDealer().decideWinOrLoseResults(participants.extractPlayers());
     }
 

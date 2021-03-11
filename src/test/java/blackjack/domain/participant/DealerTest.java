@@ -1,11 +1,11 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.result.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardType;
 import blackjack.domain.card.CardValue;
-import blackjack.dto.DealerResultDto;
-import blackjack.dto.ScoreResultDto;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.ScoreResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -70,7 +70,7 @@ class DealerTest {
         List<Player> players = Arrays.asList(firstPlayer, secondPlayer, thirdPlayer);
 
         //when
-        List<ScoreResultDto> playerResults = dealer.decideWinOrLoseResults(players);
+        List<ScoreResult> playerResults = dealer.decideWinOrLoseResults(players);
 
         //then
         assertAll(
@@ -94,7 +94,7 @@ class DealerTest {
         List<Player> players = Arrays.asList(firstPlayer, secondPlayer, thirdPlayer);
 
         //when
-        List<ScoreResultDto> playerResults = dealer.decideWinOrLoseResults(players);
+        List<ScoreResult> playerResults = dealer.decideWinOrLoseResults(players);
 
         //then
         assertAll(
@@ -118,7 +118,7 @@ class DealerTest {
         List<Player> players = Arrays.asList(firstPlayer, secondPlayer, thirdPlayer);
 
         //when
-        List<ScoreResultDto> playerResults = dealer.decideWinOrLoseResults(players);
+        List<ScoreResult> playerResults = dealer.decideWinOrLoseResults(players);
 
         //then
         assertAll(
@@ -143,14 +143,14 @@ class DealerTest {
         Dealer dealer = new Dealer(cards -> 20);
 
         //when
-        DealerResultDto dealerResult = dealer.getDealerResult(players);
+        DealerResult dealerResult = dealer.getDealerResult(players);
 
         //then
         assertAll(
                 () -> assertThat(dealerResult.getName()).isEqualTo(dealer.getName()),
-                () -> assertThat(dealerResult.getResult().get(GameResult.WIN)).isEqualTo(1L),
-                () -> assertThat(dealerResult.getResult().get(GameResult.LOSE)).isEqualTo(1L),
-                () -> assertThat(dealerResult.getResult().get(GameResult.DRAW)).isEqualTo(1L)
+                () -> assertThat(dealerResult.getResult()).containsEntry(GameResult.WIN, 1L),
+                () -> assertThat(dealerResult.getResult()).containsEntry(GameResult.LOSE, 1L),
+                () -> assertThat(dealerResult.getResult()).containsEntry(GameResult.DRAW, 1L)
         );
     }
 }

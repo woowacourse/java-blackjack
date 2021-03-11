@@ -1,17 +1,20 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
-import blackjack.dto.DealerResultDto;
-import blackjack.dto.ScoreResultDto;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.result.ScoreResult;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
+    private OutputView() {
+    }
 
     public static void printInitialCardStatus(Participants participants) {
         System.out.println();
@@ -46,14 +49,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printScoreResults(DealerResultDto dealerResultDto, List<ScoreResultDto> scoreResultDtos) {
+    public static void printScoreResults(DealerResult dealerResult, List<ScoreResult> scoreResults) {
         System.out.println("## 최종 승패");
-        Map<GameResult, Long> results = dealerResultDto.getResult();
-        System.out.println(dealerResultDto.getName() + ": " + results.get(GameResult.WIN) + "승 "
+        Map<GameResult, Long> results = dealerResult.getResult();
+        System.out.println(dealerResult.getName() + ": " + results.get(GameResult.WIN) + "승 "
                 + results.get(GameResult.LOSE) + "패 " + results.get(GameResult.DRAW) + "무");
 
-        for (ScoreResultDto scoreResultDto : scoreResultDtos) {
-            System.out.println(scoreResultDto.getName() + ": " + scoreResultDto.getGameResult().getValue());
+        for (ScoreResult scoreResult : scoreResults) {
+            System.out.println(scoreResult.getName() + ": " + scoreResult.getGameResult().getValue());
         }
     }
 }
