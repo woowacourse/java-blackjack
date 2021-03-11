@@ -51,6 +51,35 @@ public class PlayersTest {
     }
 
     @Test
+    @DisplayName("플레이어의 이름, 플레이어의 베팅 금액을 동시에 입력받는 정적 팩토리 메서드 테스트")
+    void initFactoryMethodWithTwoParameter() {
+        List<String> playerName = Arrays.asList("joel", "bada", "jon");
+        List<Double> playerMoney = Arrays.asList(1000.0, 2000.0, 3000.0);
+        assertThatCode(() -> Players.of(playerName, playerMoney))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("플레이어의 베팅 금액에 0 미만인 값이 포함되어 있으면 에러가 발생한다")
+    void belowZeroMoneyInit() {
+        List<String> playerName = Arrays.asList("joel", "bada", "jon");
+        List<Double> playerMoney = Arrays.asList(1000.0, 2000.0, -3000.0);
+        assertThatThrownBy(() -> Players.of(playerName, playerMoney))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("베팅 금액은 0 이상이여야 합니다.");
+    }
+
+    @Test
+    @DisplayName("플레이어의 이름, 플레이어의 베팅 금액을 담은 리스트의 크기가 다르면 에러가 발생한다")
+    void listSizeDifferenceInit() {
+        List<String> playerName = Arrays.asList("joel", "bada", "jon");
+        List<Double> playerMoney = Arrays.asList(1000.0, 2000.0);
+        assertThatThrownBy(() -> Players.of(playerName, playerMoney))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("입력 받은 플레이어의 수와 베팅 금액의 수가 같지 않습니다");
+    }
+
+    @Test
     @DisplayName("Players receiveInitialCard 테스트")
     void receiveInitialCard() {
         final CardDeck cardDeck = new CardDeck();
