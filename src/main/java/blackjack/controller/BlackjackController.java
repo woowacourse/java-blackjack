@@ -1,11 +1,9 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.result.Answer;
 import blackjack.domain.result.ResultBoard;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -36,26 +34,12 @@ public class BlackjackController {
     }
 
     private void proceedPlayersRound(BlackjackGame blackjackGame) {
-        Players players = blackjackGame.getPlayers();
-        for (Player player : players.getPlayers()) {
-            askWantToHit(player, blackjackGame);
+        while (blackjackGame.isNotGameOver()) {
+            Player currentPlayer = blackjackGame.getCurrentPlayer();
+            OutputView.printAskOneMoreCard(currentPlayer);
+            blackjackGame.proceedPlayersRound(InputView.inputDrawAnswer());
+            OutputView.printPlayerCards(currentPlayer);
         }
-    }
-
-    private void askWantToHit(Player player, BlackjackGame blackjackGame) {
-        while (isAbleToAskHit(player, blackjackGame) &&
-                Answer.of(InputView.inputDrawAnswer()).isYes()) {
-            blackjackGame.hit(player);
-            OutputView.printPlayerCards(player);
-        }
-    }
-
-    private boolean isAbleToAskHit(Player player, BlackjackGame blackjackGame) {
-        if (blackjackGame.isNotGameOver(player)) {
-            OutputView.printAskOneMoreCard(player);
-            return true;
-        }
-        return false;
     }
 
     private void proceedDealerRound(BlackjackGame blackjackGame) {

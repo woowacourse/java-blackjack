@@ -54,12 +54,9 @@ public class BlackjackGameTest {
     void proceedPlayersRound() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
-        Player player = new Player("amazzzi");
-        player.initializeCards(new Cards(Arrays.asList(
-                new Card(Suit.SPACE, Denomination.QUEEN),
-                new Card(Suit.HEART, Denomination.QUEEN))));
+        blackjackGame.handOutInitialCards();
 
-        boolean isNotGameOver = blackjackGame.isNotGameOver(player);
+        boolean isNotGameOver = blackjackGame.isNotGameOver();
 
         assertThat(isNotGameOver).isTrue();
     }
@@ -127,14 +124,13 @@ public class BlackjackGameTest {
     void proceedPlayersRound1() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
-        Player player = new Player("amazzi");
-        player.initializeCards(new Cards(Arrays.asList(
-                new Card(Suit.SPACE, Denomination.QUEEN),
-                new Card(Suit.HEART, Denomination.QUEEN))));
+        blackjackGame.handOutInitialCards();
+        Player player = blackjackGame.getCurrentPlayer();
         String answer = "n";
-        blackjackGame.proceedPlayersRound(player, answer);
+        blackjackGame.proceedPlayersRound(answer);
 
         State state = player.getState();
+
         assertThat(state).isInstanceOf(Stay.class);
     }
 }

@@ -17,6 +17,7 @@ public class BlackjackGame {
     private final Dealer dealer;
     private final Players players;
     private final Deck deck;
+    private Player currentPlayer;
 
     public BlackjackGame(Dealer dealer, Players players) {
         this.dealer = dealer;
@@ -34,10 +35,6 @@ public class BlackjackGame {
         dealer.initializeCards(deck.popToInitialCards());
         players.getPlayers()
                 .forEach(player -> player.initializeCards(deck.popToInitialCards()));
-    }
-
-    public boolean isNotGameOver(User user) {
-        return user.isAbleToHit();
     }
 
     public void hit(User user) {
@@ -63,14 +60,19 @@ public class BlackjackGame {
         return users;
     }
 
-    public void proceedPlayersRound(Player player, String answer) {
+    public void proceedPlayersRound(String answer) {
+        currentPlayer = players.getCurrentPlayer();
         validateAnswer(answer);
         if (YES.equals(answer)) {
-            player.hit(deck.popOne());
+            currentPlayer.hit(deck.popOne());
         }
         if (NO.equals(answer)) {
-            player.stay();
+            currentPlayer.stay();
         }
+    }
+
+    public Player getCurrentPlayer() {
+        return players.getCurrentPlayer();
     }
 
     private void validateAnswer(String answer) {
@@ -78,5 +80,9 @@ public class BlackjackGame {
             return;
         }
         throw new IllegalArgumentException("y, n로만 대답할 수 있습니다.");
+    }
+
+    public boolean isNotGameOver() {
+        return players.isRemainToProceedPlayers();
     }
 }

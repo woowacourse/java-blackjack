@@ -26,4 +26,16 @@ public class Players {
                 .map(Player::cards)
                 .collect(Collectors.toList());
     }
+
+    public boolean isRemainToProceedPlayers() {
+        return players.stream()
+                .anyMatch(User::isAbleToHit);
+    }
+
+    public Player getCurrentPlayer() {
+        return players.stream()
+                .filter(User::isAbleToHit)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("남아있는 플레이어가 없습니다."));
+    }
 }
