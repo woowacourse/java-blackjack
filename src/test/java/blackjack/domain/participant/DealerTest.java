@@ -76,7 +76,7 @@ public class DealerTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"TEN,NINE:WIN", "TEN,SEVEN:DRAW", "SIX,SEVEN:LOSE"}, delimiter = ':')
+    @CsvSource(value = {"ACE,JACK:BLACKJACK_WIN", "TEN,NINE:WIN", "TEN,SEVEN:DRAW", "SIX,SEVEN:LOSE"}, delimiter = ':')
     @DisplayName("상대와 딜러 모두 버스트가 아니라면, 점수 합계로 승무패를 가린다")
     void generateResultByScore(final String dealerCardInput, final String expectedResult) {
         player.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
