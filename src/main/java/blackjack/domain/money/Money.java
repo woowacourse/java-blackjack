@@ -3,6 +3,7 @@ package blackjack.domain.money;
 import java.util.Objects;
 
 public class Money {
+    public static final int LOWER_LIMIT_OF_MONEY = 0;
     private final int money;
 
     public Money(final String money) {
@@ -15,10 +16,14 @@ public class Money {
     }
 
     private int validateMoreThanZero(final int money) {
-        if (money <= 0) {
+        if (lessThanZero(money)) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 최소 1원 이상이어야합니다.");
         }
         return money;
+    }
+
+    private boolean lessThanZero(int money) {
+        return money <= LOWER_LIMIT_OF_MONEY;
     }
 
     private void validate(final String money) {
