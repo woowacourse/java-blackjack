@@ -45,8 +45,8 @@ public class Player implements Participant {
     }
 
     @Override
-    public int sumTotalScore() {
-        return 0;
+    public int sumTotalScore(ScoreRule scoreRule) {
+        return state.getCards().getTotalScore(scoreRule);
     }
 
     @Override
@@ -59,17 +59,8 @@ public class Player implements Participant {
         return false;
     }
 
-    @Override
-    public GameResult calculateResult(int enemyScore) {
-        return GameResult.valueOf(sumTotalScore(), enemyScore);
-    }
-
     public void betting(int money) {
         this.money = money;
-    }
-
-    public int getWinPrize(State enemyState) {
-        return (int) (money * state.profit(enemyState));
     }
 
     @Override

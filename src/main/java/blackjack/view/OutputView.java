@@ -44,7 +44,7 @@ public class OutputView {
         List<Participant> participantsGroup = participants.getParticipants();
         for (Participant participant : participantsGroup) {
             System.out.println(participant.getName() + ": "
-                    + printCards(participant.showCards()) + " - 결과:" + participant.getStatus().getCards().getTotalScore(new BlackJackScoreRule()));
+                    + printCards(participant.showCards()) + " - 결과:" + participant.sumTotalScore(new BlackJackScoreRule()));
         }
         System.out.println();
     }

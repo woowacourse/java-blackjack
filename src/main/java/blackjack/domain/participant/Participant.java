@@ -15,13 +15,11 @@ public interface Participant {
 
     boolean isReceiveCard();
 
-    int sumTotalScore();
+    int sumTotalScore(ScoreRule scoreRule);
 
     String getName();
 
     boolean isDealer();
-
-    GameResult calculateResult(int enemyScore);
 
     State getStatus();
 

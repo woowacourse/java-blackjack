@@ -55,8 +55,8 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public int sumTotalScore() {
-        return 0;
+    public int sumTotalScore(ScoreRule scoreRule) {
+        return state.getCards().getTotalScore(scoreRule);
     }
 
     @Override
@@ -67,12 +67,6 @@ public class Dealer implements Participant {
     @Override
     public boolean isDealer() {
         return true;
-    }
-
-    @Override
-    public GameResult calculateResult(int enemyScore) {
-        return GameResult.valueOf(enemyScore, sumTotalScore());
-
     }
 
     @Override
