@@ -17,7 +17,11 @@ public class Cards {
     }
 
     private void duplicateValidate(List<Card> cards) {
-        if (cards.size() != cards.stream().distinct().count()) {
+        long distinctCardsCount = cards.stream()
+                .distinct()
+                .count();
+
+        if (cards.size() != distinctCardsCount) {
             throw new CardDuplicateException();
         }
     }

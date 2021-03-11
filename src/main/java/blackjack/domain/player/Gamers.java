@@ -20,7 +20,12 @@ public class Gamers {
     }
 
     private void validateDuplicate(List<Gamer> gamers) {
-        if (gamers.size() != gamers.stream().map(Gamer::getName).distinct().count()) {
+        long distinctGamerNamesCount = gamers.stream()
+                .map(Gamer::getName)
+                .distinct()
+                .count();
+
+        if (gamers.size() != distinctGamerNamesCount) {
             throw new GamerDuplicateException();
         }
     }
