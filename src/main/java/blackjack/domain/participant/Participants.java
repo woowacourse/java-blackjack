@@ -29,28 +29,7 @@ public class Participants {
                 .collect(Collectors.toList());
     }
 
-    public void dealCardsAllParticipants(Deck deck) {
-        for (Participant participant : participants) {
-            List<Card> cards = deck.handOutInitCards();
-            giveInitialCards(participant, cards);
-        }
-    }
-
-    private void giveInitialCards(Participant participant, List<Card> cards) {
-        for (Card card : cards) {
-            participant.receiveCard(card);
-        }
-    }
-
     public List<Participant> getParticipants() {
         return new ArrayList<>(participants);
-    }
-
-    public Participant getParticipant(int idx) {
-        return participants.get(idx);
-    }
-
-    public int size() {
-        return participants.size();
     }
 }
