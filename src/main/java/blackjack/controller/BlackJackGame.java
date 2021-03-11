@@ -67,7 +67,7 @@ public class BlackJackGame {
 
     private void eachDrawTwoCards(List<Participants> participants, CardDeck cardDeck) {
         for (int i = 0; i < INIT_DRAW_COUNT; i++) {
-            participants.forEach(participant -> participant.receiveCard(cardDeck.drawCard()));
+            participants.forEach(participant -> participant.draw(cardDeck.drawCard()));
         }
     }
 
@@ -79,7 +79,7 @@ public class BlackJackGame {
 
     private void askDraw(Player player, CardDeck cardDeck) {
         while (playerCanDraw(player)) {
-            player.receiveCard(cardDeck.drawCard());
+            player.draw(cardDeck.drawCard());
             OutputView.showCards(player);
         }
     }
@@ -98,7 +98,7 @@ public class BlackJackGame {
 
     private void dealerTurn(Dealer dealer, CardDeck cardDeck) {
         while (dealer.canDraw()) {
-            dealer.receiveCard(cardDeck.drawCard());
+            dealer.draw(cardDeck.drawCard());
             OutputView.dealerReceiveOneCard();
         }
     }

@@ -11,7 +11,7 @@ public class Dealer extends Participants {
 
     @Override
     public boolean canDraw() {
-        return this.getTakenCards().calculateScore() <= DEALER_MAX_SCORE;
+        return state.score() <= DEALER_MAX_SCORE;
     }
 }
 

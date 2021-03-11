@@ -32,8 +32,7 @@ public class Players {
         Map<Player, MatchResult> result = new LinkedHashMap<>();
         for (Player player : players) {
             MatchResult matchResult = MatchResult
-                    .matchPlayerAndDealer(player.getTakenCards().calculateScore(),
-                                          dealer.getTakenCards().calculateScore());
+                    .matchPlayerAndDealer(player.score(), dealer.score());
             result.put(player, matchResult);
         }
         return result;

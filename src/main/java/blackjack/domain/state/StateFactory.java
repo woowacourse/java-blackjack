@@ -6,7 +6,7 @@ public class StateFactory {
 
     public static State draw(Cards cards) {
         if (cards.isBlackjack()) {
-            return new Blackjack();
+            return new Blackjack(cards);
         }
         return new Hit(cards);
     }

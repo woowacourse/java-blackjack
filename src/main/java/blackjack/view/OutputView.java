@@ -66,9 +66,9 @@ public class OutputView {
     }
 
     public static void showAllCards(Players players, Dealer dealer) {
-        System.out.printf("%n" + (CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(dealer), dealer.getTakenCards().calculateScore());
+        System.out.printf("%n" + (CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(dealer), dealer.score());
         for (Player player : players.getPlayers()) {
-            System.out.printf((CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(player), player.getTakenCards().calculateScore());
+            System.out.printf((CARD_AND_SCORE_RESULT) + "%n", getCardsMessageForm(player), player.score());
         }
     }
 
