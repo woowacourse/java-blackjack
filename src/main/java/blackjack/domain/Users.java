@@ -40,4 +40,7 @@ public class Users {
                 .orElseThrow(() -> new RuntimeException("딜러가 존재하지 않습니다."));
     }
 
+    public void stay() {
+        users.stream().forEach(user -> user.state.stay());
+    }
 }

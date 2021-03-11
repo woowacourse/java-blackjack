@@ -25,6 +25,7 @@ public class BlackJackController {
 
     public void run() {
         if (dealer.isBlackJack()) {
+            users.stay();
             OutputView.printResult(users);
             return;
         }
