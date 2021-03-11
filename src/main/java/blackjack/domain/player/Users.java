@@ -25,13 +25,9 @@ public class Users {
     public Map<Name, Integer> getResult(Dealer dealer) {
         Map<Name, Integer> result = new LinkedHashMap<>();
         for (User user : users) {
-            result.put(user.getName(), Integer.valueOf(user.profit(dealer)));
+            result.put(user.getName(), user.profit(dealer));
         }
         return result;
-    }
-
-    public void drawRandomTwoCard() {
-        users.forEach(AbstractPlayer::drawRandomTwoCards);
     }
 
     public List<User> getUsers() {
