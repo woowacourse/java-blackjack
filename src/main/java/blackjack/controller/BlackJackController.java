@@ -18,19 +18,9 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
         Deck deck = new Deck(Card.values());
         List<Name> playerNames = getPlayerNames();
-        Players players = getBettingMoney(playerNames);
+        Players players = makePlayers(playerNames);
         playGame(dealer, deck, players);
         showResult(dealer, players);
-    }
-
-    private Players getBettingMoney(List<Name> playerNames) {
-        List<Player> players = new ArrayList<>();
-        for (Name name : playerNames) {
-            OutputView.printBettingMoneyInputGuideMessage(name);
-            BettingMoney bettingMoney = new BettingMoney(InputView.getBettingMoney());
-            players.add(new Player(name, bettingMoney));
-        }
-        return new Players(players);
     }
 
     private List<Name> getPlayerNames() {
@@ -43,6 +33,20 @@ public class BlackJackController {
             OutputView.printErrorMessage(e);
             return getPlayerNames();
         }
+    }
+
+    private Players makePlayers(List<Name> playerNames) {
+        List<Player> players = new ArrayList<>();
+        for (Name name : playerNames) {
+            BettingMoney bettingMoney = getBettingMoney(name);
+            players.add(new Player(name, bettingMoney));
+        }
+        return new Players(players);
+    }
+
+    private BettingMoney getBettingMoney(Name name) {
+        OutputView.printBettingMoneyInputGuideMessage(name);
+        return new BettingMoney(InputView.getBettingMoney());
     }
 
     private void playGame(Dealer dealer, Deck deck, Players players) {
