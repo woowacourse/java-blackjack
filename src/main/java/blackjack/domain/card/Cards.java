@@ -53,7 +53,7 @@ public class Cards {
     }
 
     public Card getFirstCard() {
-        return Card.of(cards.get(0));
+        return cards.get(0);
     }
 
     public void addCard(Card card) {
