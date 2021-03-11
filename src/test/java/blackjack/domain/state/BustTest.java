@@ -22,7 +22,7 @@ public class BustTest {
 
         State state = new Hit(cards);
 
-        State state2 = ((Hit) state).hit(Fixture.CLUBS_TWO);
+        State state2 = ((Hit) state).draw(Fixture.CLUBS_TWO);
 
         assertThat(state2).isInstanceOf(Bust.class);
     }

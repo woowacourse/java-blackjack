@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.state.State;
 import blackjack.state.StateFactory;
-import blackjack.util.BlackJackConstant;
 import blackjack.util.StringUtil;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public abstract class User {
     }
 
     public void hit(Card card) {
-        cards.add(card);
+        this.state = state.draw(card);
     }
 
     public boolean isPlayer() {
@@ -44,11 +43,11 @@ public abstract class User {
     }
 
     public int getScore() {
-        return this.state.score().getScore();
+        return this.state.cards().score().getScore();
     }
 
     public List<Card> getCards() {
-        return this.state.cards().getCards();
+        return this.state.cards().list();
     }
 
     public String getName() {
@@ -56,31 +55,11 @@ public abstract class User {
     }
 
     public boolean isBlackJack() {
-        if (this.cards.stream().anyMatch(Card::isAce) &&
-                this.cards.size() == BlackJackConstant.BLACKJACK_SIZE_CONDITION) {
-            return cards.stream()
-                    .anyMatch(card -> card.getScore() == BlackJackConstant.TEN_SCORE);
-        }
-        return false;
+        return state.cards().score().isBlackJack();
     }
 
     public boolean isBust() {
-        return this.getScore() == BlackJackConstant.BUST;
-    }
-
-    private int checkBust(int score) {
-        if (score > BlackJackConstant.BLACKJACK) {
-            return BlackJackConstant.BUST;
-        }
-        return score;
-    }
-
-    private int checkAce(int score) {
-        if (this.cards.stream()
-                .anyMatch(Card::isAce) && score <= BlackJackConstant.ACE_CHECK_SCORE) {
-            return BlackJackConstant.TEN_SCORE;
-        }
-        return 0;
+        return state.cards().score().isBust();
     }
 
     public void bettingMoney(int bettingMoney){

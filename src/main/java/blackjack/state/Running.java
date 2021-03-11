@@ -1,15 +1,18 @@
 package blackjack.state;
 
-public abstract class Running implements State {
+public abstract class Running extends Started {
 
-    protected Cards cards;
-
-    protected Running(Cards cards) {
-        this.cards = cards;
+    public Running(Cards cards) {
+        super(cards);
     }
 
     @Override
-    public Cards cards() {
-        return cards;
+    public double profit(double money) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 }

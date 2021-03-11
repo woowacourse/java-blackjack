@@ -28,4 +28,20 @@ public class CardsTest {
 
         assertThat(cards.score()).isEqualTo(new Score(21));
     }
+
+    @DisplayName("블랙잭인지 확인")
+    @Test
+    void blackJack() {
+        Cards cards = new Cards(Arrays.asList(Fixture.CLUBS_TEN,Fixture.CLUBS_ACE));
+
+        assertTrue(cards.score().isBlackJack());
+    }
+
+    @DisplayName("Bust인지 확인")
+    @Test
+    void isBlackJack() {
+        Cards cards = new Cards(Arrays.asList(Fixture.CLUBS_TEN,Fixture.CLUBS_ACE,Fixture.CLUBS_KING));
+
+        assertTrue(cards.score().isBust());
+    }
 }

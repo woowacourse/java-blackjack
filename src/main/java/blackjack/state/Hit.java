@@ -1,5 +1,6 @@
 package blackjack.state;
 
+
 import blackjack.domain.card.Card;
 
 public class Hit extends Running {
@@ -9,10 +10,10 @@ public class Hit extends Running {
     }
 
     @Override
-    public State hit(Card card) {
+    public State draw(final Card card) {
         cards.add(card);
 
-        if (cards.isBust()) {
+        if (this.cards.isBust()) {
             return new Bust(cards);
         }
 
@@ -24,8 +25,6 @@ public class Hit extends Running {
         return new Stay(cards);
     }
 
-    @Override
-    public Score score() {
-        return this.cards.score();
-    }
+
+
 }

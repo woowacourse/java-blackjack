@@ -1,22 +1,16 @@
 package blackjack.state;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.card.Card;
 
-public abstract class Finished implements State {
+public abstract class Finished extends Started {
 
-    protected Cards cards;
-
-    protected Finished(Cards cards) {
-        this.cards = cards;
+    public Finished(Cards cards) {
+        super(cards);
     }
 
     @Override
-    public Cards cards() {
-        return cards;
-    }
-
-    @Override
-    public State hit(Card card) {
+    public State draw(Card card) {
         throw new UnsupportedOperationException();
     }
 
@@ -26,7 +20,14 @@ public abstract class Finished implements State {
     }
 
     @Override
-    public Score score() {
-        return this.cards.score();
+    public boolean isFinished() {
+        return true;
     }
+
+    @Override
+    public double profit(double money) {
+        return money * earningRate();
+    }
+
+    public abstract double earningRate();
 }

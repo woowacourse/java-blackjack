@@ -4,22 +4,30 @@ public class Score {
     public static final int BLACKJACK_SCORE = 21;
     public static final int ACE_CHANGE_NUMBER = 10;
 
-    private final int score;
+    private final int value;
 
-    public Score(int score) {
-        this.score = score;
+    public Score(int value) {
+        this.value = value;
     }
 
     public boolean isChangeAceNumber() {
-        return this.score + ACE_CHANGE_NUMBER <= BLACKJACK_SCORE;
+        return this.value + ACE_CHANGE_NUMBER <= BLACKJACK_SCORE;
     }
 
     public int aceNumberChange() {
-        return score + ACE_CHANGE_NUMBER;
+        return value + ACE_CHANGE_NUMBER;
     }
 
     public int getScore() {
-        return score;
+        return value;
+    }
+
+    public boolean isBust() {
+        return value > BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return value == BLACKJACK_SCORE;
     }
 
     @Override
@@ -29,11 +37,11 @@ public class Score {
 
         Score score1 = (Score) o;
 
-        return score == score1.score;
+        return value == score1.value;
     }
 
     @Override
     public int hashCode() {
-        return score;
+        return value;
     }
 }

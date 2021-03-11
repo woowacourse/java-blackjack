@@ -3,11 +3,13 @@ package blackjack.state;
 import blackjack.domain.card.Card;
 
 public interface State {
-    State hit(Card card);
+    State draw(Card card);
 
     Cards cards();
 
     State stay();
 
-    Score score();
+    double profit(double money);
+
+    boolean isFinished();
 }
