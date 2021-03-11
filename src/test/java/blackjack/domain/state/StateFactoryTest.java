@@ -24,7 +24,7 @@ public class StateFactoryTest {
 		Card secondCard = new Card(CardPattern.DIAMOND, CardNumber.ACE);
 		cards.addCard(firstCard);
 		cards.addCard(secondCard);
-		PlayerState state = StateFactory.drawTwoCards(cards);
+		PlayerState state = StateFactory.drawTwoCards(firstCard, secondCard);
 		assertThat(state).isInstanceOf(BlackJack.class);
 	}
 
@@ -35,7 +35,7 @@ public class StateFactoryTest {
 		Card secondCard = new Card(CardPattern.DIAMOND, CardNumber.THREE);
 		cards.addCard(firstCard);
 		cards.addCard(secondCard);
-		PlayerState state = StateFactory.drawTwoCards(cards);
+		PlayerState state = StateFactory.drawTwoCards(firstCard, secondCard);
 		assertThat(state).isInstanceOf(Hit.class);
 	}
 }

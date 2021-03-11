@@ -42,21 +42,21 @@ public class OutputView {
 	public static void noticePlayersPoint(Dealer dealer, Players players) {
 		System.out.println();
 		System.out.println(dealer.getName() + COLON_DELIMITER + makePlayerCardNames(dealer) + RESULT_DELIMITER
-			+ dealer.makeFinalPoint());
+			+ dealer.calculatePoint());
 		for (Player player : players.toList()) {
 			System.out.println(player.getName() + CARD_DELIMITER + makePlayerCardNames(player)
-				+ RESULT_DELIMITER + player.makeFinalPoint());
+				+ RESULT_DELIMITER + player.calculatePoint());
 		}
 	}
 
 	private static String makePlayerCardNames(Gamer player) {
-		return player.getCards().stream()
+		return player.getPlayerState().cards().getCards().stream()
 			.map(OutputView::makeCardInfo)
 			.collect(Collectors.joining(COMMA_DELIMITER_TO_PRINT));
 	}
 
 	private static String makeDealerCardNames(Gamer dealer) {
-		return dealer.getCards().stream()
+		return dealer.getPlayerState().cards().getCards().stream()
 			.limit(COUNT_OF_DEALER_OPENING_CARDS)
 			.map(OutputView::makeCardInfo)
 			.collect(Collectors.joining(COMMA_DELIMITER));

@@ -21,7 +21,6 @@ public class BlackJackController {
 
 		OutputView.noticePlayersPoint(dealer, players);
 		OutputView.printDealerResult(players.calculateTotalWinnings(dealer));
-		printEachPlayerResult(players);
 	}
 
 	private Players askPlayers(Dealer dealer) {
@@ -33,23 +32,10 @@ public class BlackJackController {
 		}
 	}
 
-	private void printEachPlayerResult(Players players) {
-		for (Player player : players.toList()) {
-			OutputView.printPlayerResult(player);
-		}
-	}
-
 	private void drawCards(Dealer dealer, Players players, Deck deck) {
 		OutputView.noticeDrawTwoCards(players);
-		giveTwoCardsToPlayers(players, deck);
+		players.initialCards(deck);
 		OutputView.noticePlayersCards(dealer, players);
-	}
-
-	public void giveTwoCardsToPlayers(Players players, Deck deck) {
-		for (int i = 0; i < INITIAL_DRAWING_COUNT; i++) {
-			players.giveCardToPlayers(deck);
-		}
-		players.makeState();
 	}
 
 	private void drawUntilPossible(Dealer dealer, Players players, Deck deck) {
@@ -74,7 +60,6 @@ public class BlackJackController {
 	private void playEachPlayer(Player player, Deck deck) {
 		while (player.canReceiveCard() && player.continueDraw(InputView.isContinueDraw(player), deck)) {
 			player.receiveCard(deck.dealCard());
-			player.checkState();
 			OutputView.noticePlayerCards(player);
 		}
 	}

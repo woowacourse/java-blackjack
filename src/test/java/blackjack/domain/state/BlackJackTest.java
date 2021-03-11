@@ -17,9 +17,14 @@ class BlackJackTest {
 	@BeforeEach
 	void setUp() {
 		Cards cards = new Cards();
-		cards.addCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-		cards.addCard(new Card(CardPattern.HEART, CardNumber.ACE));
-		state = StateFactory.drawTwoCards(cards);
+		Card firstCard = new Card(CardPattern.CLOVER, CardNumber.TEN);
+		Card secondCard = new Card(CardPattern.HEART, CardNumber.ACE);
+		state = StateFactory.drawTwoCards(firstCard, secondCard);
+	}
+
+	@Test
+	void checkBlackJack() {
+		assertThat(state).isInstanceOf(BlackJack.class);
 	}
 
 	@Test
@@ -29,7 +34,8 @@ class BlackJackTest {
 
 	@Test
 	void exception() {
-		assertThatThrownBy(() -> state.keepContinue(true)).isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> state.drawNewCard(new Card(CardPattern.DIAMOND, CardNumber.NINE)))
+			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("옳지 않은 곳에서 호출");
 	}
 }

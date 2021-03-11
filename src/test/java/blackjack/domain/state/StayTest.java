@@ -21,7 +21,7 @@ class StayTest {
 		Card secondCard = new Card(CardPattern.DIAMOND, CardNumber.THREE);
 		cards.addCard(firstCard);
 		cards.addCard(secondCard);
-		state = StateFactory.drawTwoCards(cards);
+		state = StateFactory.drawTwoCards(firstCard, secondCard);
 	}
 
 	@Test
@@ -33,7 +33,8 @@ class StayTest {
 	@Test
 	void exception() {
 		state = state.keepContinue(false);
-		assertThatThrownBy(() -> state.keepContinue(true)).isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> state.drawNewCard(new Card(CardPattern.DIAMOND, CardNumber.NINE)))
+			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage("옳지 않은 곳에서 호출");
 	}
 }

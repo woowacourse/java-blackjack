@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.WinnerFlag;
+import blackjack.domain.state.StateFactory;
 
 public class Players {
 	private final List<Player> players;
@@ -33,11 +34,11 @@ public class Players {
 		}
 	}
 
-	public void makeState() {
-		for (Player player : players) {
-			player.makeState();
-		}
-	}
+	// public void makeState() {
+	// 	for (Player player : players) {
+	// 		player.makeState();
+	// 	}
+	// }
 
 	public Map<WinnerFlag, Integer> calculateTotalWinnings(Dealer dealer) {
 		Map<WinnerFlag, Integer> winnerCount = new EnumMap<>(WinnerFlag.class);
@@ -68,5 +69,12 @@ public class Players {
 	@Override
 	public int hashCode() {
 		return Objects.hash(players, dealer);
+	}
+
+	public void initialCards(Deck deck) {
+		dealer.playerState = StateFactory.drawTwoCards(deck.dealCard(), deck.dealCard());
+		for (Player player : players) {
+			player.playerState = StateFactory.drawTwoCards(deck.dealCard(), deck.dealCard());
+		}
 	}
 }

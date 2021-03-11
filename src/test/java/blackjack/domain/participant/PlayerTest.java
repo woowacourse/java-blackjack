@@ -13,7 +13,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
-import blackjack.domain.game.WinnerFlag;
+import blackjack.domain.state.Burst;
+import blackjack.domain.state.StateFactory;
 
 public class PlayerTest {
 	private Player player;
@@ -21,7 +22,9 @@ public class PlayerTest {
 	@BeforeEach
 	void setUp() {
 		player = new Player("pobi");
-		player.makeState();
+		Card first = new Card(CardPattern.CLOVER, CardNumber.KING);
+		Card second = new Card(CardPattern.HEART, CardNumber.THREE);
+		player.playerState = StateFactory.drawTwoCards(first, second);
 	}
 
 	@Test
@@ -38,16 +41,12 @@ public class PlayerTest {
 	@Test
 	@DisplayName("플레이어 점수 계산")
 	void checkReceiveCard() {
-		Card card = new Card(CardPattern.CLOVER, CardNumber.TEN);
-		player.receiveCard(card);
-		assertEquals(10, player.makeJudgingPoint());
+		assertEquals(13, player.playerState.calculatePoint());
 	}
 
 	@Test
 	@DisplayName("플레이어가 카드를 받을 수 있는지 확인")
 	void playerPossibleReceiveCard() {
-		player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.KING));
-		player.receiveCard(new Card(CardPattern.HEART, CardNumber.KING));
 		assertTrue(player.canReceiveCard());
 	}
 
@@ -55,9 +54,6 @@ public class PlayerTest {
 	@DisplayName("플레이어가 카드를 받을 수 없는지 확인")
 	void playerImpossibleReceiveCard() {
 		player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.KING));
-		player.receiveCard(new Card(CardPattern.HEART, CardNumber.KING));
-		player.receiveCard(new Card(CardPattern.HEART, CardNumber.TWO));
-		player.checkState();
 		assertFalse(player.canReceiveCard());
 	}
 
@@ -65,26 +61,14 @@ public class PlayerTest {
 	@DisplayName("플레이어가 버스트지 확인")
 	void playerIsBurst() {
 		player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.KING));
-		player.receiveCard(new Card(CardPattern.HEART, CardNumber.KING));
-		player.receiveCard(new Card(CardPattern.HEART, CardNumber.TWO));
-		assertTrue(player.isBurst(player.makeFinalPoint()));
-	}
-
-	@Test
-	@DisplayName("에이스가 11이어야할 때")
-	void aceCardScoring() {
-		player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
-		player.receiveCard(new Card(CardPattern.SPADE, CardNumber.TEN));
-		assertEquals(21, player.makeFinalPoint());
+		assertThat(player.playerState).isInstanceOf(Burst.class);
 	}
 
 	@Test
 	@DisplayName("에이스가 1이어야할 때")
 	void aceCardBoundary() {
 		player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
-		player.receiveCard(new Card(CardPattern.HEART, CardNumber.KING));
-		player.receiveCard(new Card(CardPattern.SPADE, CardNumber.KING));
-		assertEquals(21, player.makeFinalPoint());
+		assertEquals(14, player.calculatePoint());
 	}
 
 	@ParameterizedTest
@@ -100,15 +84,15 @@ public class PlayerTest {
 		assertThatThrownBy(() -> player.continueDraw("l", new Deck())).isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("y");
 	}
-
-	@Test
-	@DisplayName("결과 매칭 테스트")
-	void matchResult() {
-		Dealer dealer = new Dealer();
-		Player player = new Player("pobi");
-		dealer.receiveCard(new Card(CardPattern.HEART, CardNumber.NINE));
-		player.receiveCard(new Card(CardPattern.HEART, CardNumber.EIGHT));
-		player.calculateResult(dealer);
-		assertEquals(WinnerFlag.LOSE, player.getResult());
-	}
+	//TODO: 결과 처리
+	// @Test
+	// @DisplayName("결과 매칭 테스트")
+	// void matchResult() {
+	// 	Dealer dealer = new Dealer();
+	// 	Player player = new Player("pobi");
+	// 	dealer.receiveCard(new Card(CardPattern.HEART, CardNumber.NINE));
+	// 	player.receiveCard(new Card(CardPattern.HEART, CardNumber.EIGHT));
+	// 	player.calculateResult(dealer);
+	// 	assertEquals(WinnerFlag.LOSE, player.getResult());
+	// }
 }

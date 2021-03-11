@@ -12,24 +12,20 @@ public class Dealer extends Gamer {
 
 	@Override
 	public boolean canReceiveCard() {
-		return this.makeJudgingPoint() <= MAX_OF_RECEIVE_MORE_CARD;
+		if (this.playerState.calculatePoint() <= 16) {
+			playerState = playerState.keepContinue(true);//딜러 hit stay 관
+			System.out.println(playerState);
+			return true;
+		}
+		if (this.playerState.calculatePoint() > 16) {
+			playerState = playerState.keepContinue(false);
+			return false;
+		}
+		throw new IllegalArgumentException("옳지 않은 호출");
 	}
 
 	@Override
 	public boolean continueDraw(String draw, Deck deck) {
-		this.receiveCard(deck.dealCard());
 		return true;
-	}
-
-	public boolean isSmallerThan(int playerMaximum) {
-		return this.makeFinalPoint() < playerMaximum;
-	}
-
-	public boolean isBiggerThan(int playerMaximum) {
-		return this.makeFinalPoint() > playerMaximum;
-	}
-
-	public boolean isSameThan(int playerMaximum) {
-		return this.makeFinalPoint() == playerMaximum;
 	}
 }

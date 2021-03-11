@@ -4,8 +4,6 @@ import static blackjack.domain.game.WinnerFlag.*;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.WinnerFlag;
-import blackjack.domain.state.PlayerState;
-import blackjack.domain.state.StateFactory;
 
 public class Player extends Gamer {
 	public static final int THRESHOLD_OF_BURST = 21;
@@ -14,7 +12,6 @@ public class Player extends Gamer {
 	private static final String DISAGREE = "n";
 
 	private WinnerFlag result;
-	private PlayerState playerState;
 
 	public Player(String name) {
 		super(name);
@@ -22,7 +19,6 @@ public class Player extends Gamer {
 
 	@Override
 	public boolean canReceiveCard() {
-		System.out.println(playerState);
 		return !playerState.isFinished();
 	}
 
@@ -40,18 +36,8 @@ public class Player extends Gamer {
 		return canReceiveCard();
 	}
 
-	public void makeState() {
-		this.playerState = StateFactory.drawTwoCards(cards);
-	}
-
-	public void checkState() {
-		this.playerState = playerState.checkStateWithNewCard(cards);
-	}
-
 	public WinnerFlag calculateResult(Dealer dealer) {
-		int playerPoints = makeFinalPoint();
-		int dealerPoints = dealer.makeFinalPoint();
-		if (dealer.isBurst(dealerPoints) && isBurst(playerPoints) || dealer.isSameThan(playerPoints)) {
+		/*if (dealer.playerState.isBurst() && playerState.isBurst() || dealer.isSameThan(playerPoints)) {
 			matchResult(DRAW);
 		}
 		if (isBurst(playerPoints) || (!dealer.isBurst(dealerPoints) && dealer.isBiggerThan(playerPoints))) {
@@ -61,6 +47,8 @@ public class Player extends Gamer {
 			matchResult(WIN);
 		}
 		return result;
+		*/
+		return WIN;
 	}
 
 	public void matchResult(WinnerFlag result) {

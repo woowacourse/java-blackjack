@@ -20,10 +20,7 @@ class HitTest {
 		cards = new Cards();
 		Card firstCard = new Card(CardPattern.DIAMOND, CardNumber.TEN);
 		Card secondCard = new Card(CardPattern.DIAMOND, CardNumber.THREE);
-		cards.addCard(firstCard);
-		cards.addCard(secondCard);
-		state = StateFactory.drawTwoCards(cards);
-
+		state = StateFactory.drawTwoCards(firstCard, secondCard);
 	}
 
 	@Test
@@ -48,8 +45,7 @@ class HitTest {
 
 	@Test
 	void checkBurst() {
-		Hit hit = new Hit();
-		cards.addCard(new Card(CardPattern.CLOVER, CardNumber.NINE));
-		hit.checkStateWithNewCard(cards);
+		Hit hit = new Hit(cards);
+		hit.drawNewCard(new Card(CardPattern.CLOVER, CardNumber.NINE));
 	}
 }
