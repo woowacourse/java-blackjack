@@ -146,7 +146,7 @@ class BlackJackGameTest {
     @CsvSource(value = {
             "true:1", "false:0"
     }, delimiter = ':')
-    void testAskMorkCard(boolean isNeedCard, int expectedCardsNumber) {
+    void testAskMoreCard(boolean isNeedCard, int expectedCardsNumber) {
         //given
         List<Player> players = Arrays.asList(new Player("로키", cards -> 15));
         Participants participants = new Participants(players, dealer);
