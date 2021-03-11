@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameResult;
 import blackjack.domain.participant.Participant;
@@ -33,22 +34,20 @@ public class OutputView {
     }
 
     public static void printOpenCardInfo(Participant participant) {
-        String cardInfo = participant.getOpenCard()
-                                     .stream()
-                                     .map(card -> card.getNumber() + card.getShape())
-                                     .collect(Collectors.joining(", "));
-
+        String cardInfo = cardsToString(participant.getOpenCard());
         System.out.printf(CARD_INFO_MESSAGE, participant.getName(), cardInfo);
         System.out.print(LINE_SEPARATOR);
     }
 
     public static void printCardInfo(Participant participant) {
-        String cardInfo = participant.getCards()
-                                     .stream()
-                                     .map(card -> card.getNumber() + card.getShape())
-                                     .collect(Collectors.joining(", "));
-
+        String cardInfo = cardsToString(participant.getCards());
         System.out.printf(CARD_INFO_MESSAGE, participant.getName(), cardInfo);
+    }
+
+    private static String cardsToString(List<Card> cards) {
+        return cards.stream()
+                    .map(card -> card.getNumber() + card.getShape())
+                    .collect(Collectors.joining(", "));
     }
 
     public static void printCardInfoWithLineSeparator(Participant participant) {
