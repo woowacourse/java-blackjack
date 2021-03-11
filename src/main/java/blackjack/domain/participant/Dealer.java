@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.rule.BlackJackScoreRule;
-import blackjack.domain.rule.ScoreRule;
 import blackjack.domain.state.State;
 
 import java.util.*;
@@ -53,11 +52,6 @@ public class Dealer implements Participant {
     public boolean isReceiveCard() {
         int totalScore = state.getCards().getTotalScore(new BlackJackScoreRule());
         return totalScore <= DRAW_BOUND_SCORE && !state.isEndState();
-    }
-
-    @Override
-    public int sumTotalScore(ScoreRule scoreRule) {
-        return state.getCards().getTotalScore(scoreRule);
     }
 
     @Override

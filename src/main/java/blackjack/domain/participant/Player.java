@@ -45,11 +45,6 @@ public class Player implements Participant {
     }
 
     @Override
-    public int sumTotalScore(ScoreRule scoreRule) {
-        return state.getCards().getTotalScore(scoreRule);
-    }
-
-    @Override
     public String getName() {
         return name;
     }

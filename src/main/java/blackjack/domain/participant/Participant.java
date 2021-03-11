@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.rule.ScoreRule;
 import blackjack.domain.state.State;
@@ -8,6 +7,11 @@ import blackjack.domain.state.State;
 import java.util.List;
 
 public interface Participant {
+
+    default int sumTotalScore(ScoreRule scoreRule) {
+        return getStatus().getCards().getTotalScore(scoreRule);
+    }
+
     boolean handOutCard(Card card);
 
     List<Card> showInitCards();
@@ -15,8 +19,6 @@ public interface Participant {
     List<Card> showCards();
 
     boolean isReceiveCard();
-
-    int sumTotalScore(ScoreRule scoreRule);
 
     String getName();
 
