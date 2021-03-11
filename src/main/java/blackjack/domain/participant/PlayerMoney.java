@@ -9,7 +9,11 @@ public class PlayerMoney {
 
     public double calculateProfit(final double profitRate) {
         final double profit = money * profitRate;
-        money = money + (money * profitRate);
+        calculateMoneyByProfit(profit);
         return profit;
+    }
+
+    private void calculateMoneyByProfit(final double profit) {
+        money = money + profit;
     }
 }
