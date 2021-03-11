@@ -33,21 +33,11 @@ public class Users {
         return Collections.unmodifiableList(this.users);
     }
 
-    public User getDealer() {
-        return this.users.stream()
+    public Dealer getDealer() {
+        return (Dealer) this.users.stream()
                 .filter(User::isDealer)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("딜러가 존재하지 않습니다."));
     }
 
-    public Map<User, Result> checkResult(Dealer dealer) {
-        return users.stream()
-                .filter(User::isPlayer)
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        player -> ((Player) player).getResult(dealer),
-                        (key1, key2) -> key1,
-                        LinkedHashMap::new
-                ));
-    }
 }

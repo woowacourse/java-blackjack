@@ -25,7 +25,7 @@ public class BlackJackController {
 
     public void run() {
         if (dealer.isBlackJack()) {
-            OutputView.printResult(users.checkResult(dealer), dealer);
+            OutputView.printResult(users);
             return;
         }
         users.getPlayers().forEach(this::playGameForEachPlayer);
@@ -35,7 +35,7 @@ public class BlackJackController {
             OutputView.printDealerGetNewCardsMessage();
         }
         OutputView.printCardsOfPlayersWithScore(users);
-        OutputView.printResult(users.checkResult(dealer), dealer);
+        OutputView.printResult(users);
     }
 
     private void playersBetting(List<Player> players) {

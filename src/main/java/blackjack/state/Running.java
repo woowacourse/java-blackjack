@@ -1,5 +1,7 @@
 package blackjack.state;
 
+import blackjack.domain.Dealer;
+
 public abstract class Running extends Started {
 
     public Running(Cards cards) {
@@ -7,7 +9,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public double profit(double money) {
+    public double profit(double money, Dealer dealer) {
         throw new UnsupportedOperationException();
     }
 

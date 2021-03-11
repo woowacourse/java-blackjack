@@ -77,4 +77,8 @@ public abstract class User {
     public boolean isFinished() {
         return this.state.isFinished();
     }
+
+    public double profit(int bettingMoney, Dealer dealer) {
+        return this.state.profit(bettingMoney, dealer);
+    }
 }

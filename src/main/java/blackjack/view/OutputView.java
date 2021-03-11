@@ -15,7 +15,10 @@ public class OutputView {
     }
 
     public static void printInitialComment(Users users) {
-        System.out.printf("%s와 %s에게 2장의 카드를 나누어주었습니다.\n", users.getDealer().getName(), createPlayersCardStringFormat(users.getPlayers()));
+        System.out.printf("%s와 %s에게 2장의 카드를 나누어주었습니다.\n",
+                users.getDealer().getName(),
+                createPlayersCardStringFormat(users.getPlayers())
+        );
         for (User user : users.gerUsers()) {
             System.out.println(makeCardsStringFormat(user));
         }
@@ -61,37 +64,21 @@ public class OutputView {
                 .collect(Collectors.joining(COMMA_WITH_BLANK));
     }
 
-    public static void printResult(Map<User, Result> playerResult, Dealer dealer) {
+    public static void printResult(Users users) {
         System.out.println("## 최종 수익");
 
-        printDealerResult(playerResult, dealer);
+        printDealerResult(users.getPlayers(), users.getDealer());
 
-        for(User user : playerResult.keySet()){
-            if(playerResult.get(user) == Result.BLACKJACK) {
-                System.out.printf("%s : %d\n", user.getName(), (user.getBettingMoney()*1.5));
-            }
-
-            if(playerResult.get(user) == Result.WIN || playerResult.get(user) == Result.DRAW) {
-                System.out.printf("%s : %d\n", user.getName(), user.getBettingMoney());
-            }
-
-            if(playerResult.get(user) == Result.LOSE) {
-                System.out.printf("%s : %d\n", user.getName(), -user.getBettingMoney());
-            }
+        for(User user : users.getPlayers()){
+            System.out.printf("%s : %.0f\n", user.getName(), user.profit(user.getBettingMoney(), users.getDealer()));
         }
     }
 
-    private static void printDealerResult(Map<User, Result> playerResult, Dealer dealer) {
+    private static void printDealerResult(List<Player> players, Dealer dealer) {
         int dealerTotalMoney = dealer.getBettingMoney();
 
-        for(User user : playerResult.keySet()){
-            if(playerResult.get(user) == Result.BLACKJACK) {
-                dealerTotalMoney -= user.getBettingMoney() * 1.5;
-            }
-
-            if(playerResult.get(user) == Result.WIN || playerResult.get(user) == Result.DRAW) {
-                dealerTotalMoney -= user.getBettingMoney();
-            }
+        for(Player player : players){
+            dealerTotalMoney -= player.profit(player.getBettingMoney(), dealer);
         }
 
         System.out.printf("딜러: %d \n", dealerTotalMoney);

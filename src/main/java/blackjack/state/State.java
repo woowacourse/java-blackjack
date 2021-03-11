@@ -1,5 +1,6 @@
 package blackjack.state;
 
+import blackjack.domain.Dealer;
 import blackjack.domain.card.Card;
 
 public interface State {
@@ -9,7 +10,7 @@ public interface State {
 
     State stay();
 
-    double profit(double money);
+    double profit(double money, Dealer dealer);
 
     boolean isFinished();
 }
