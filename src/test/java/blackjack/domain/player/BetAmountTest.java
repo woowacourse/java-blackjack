@@ -10,7 +10,8 @@ public class BetAmountTest {
     @DisplayName("서로다른 방식의 생성자 테스트")
     @Test
     void create() {
-        assertThat(new BetAmount("10000")).isEqualTo(new BetAmount(10000));
+        assertThat(new BetAmount("10000").getAmount())
+            .isEqualTo(new BetAmount(10000).getAmount());
     }
 
     @DisplayName("금액이 0 이하일시 에러 테스트")

@@ -19,18 +19,16 @@ public class AbstractPlayerTest {
 
         user.drawCard(twoCard);
 
-        assertThat(user.getCards()).containsExactly(twoCard);
+        assertThat(user.getCards()).contains(twoCard);
     }
 
     @DisplayName("A lowValue 테스트")
     @Test
     void aceLowValue() {
-        AbstractPlayer user = new User(TEST_NAME);
         Card tenCard = Card.valueOf(CardShape.DIAMOND, CardNumber.TEN);
         Card aceCard = Card.valueOf(CardShape.DIAMOND, CardNumber.ACE);
+        AbstractPlayer user = new User(TEST_NAME, tenCard, tenCard);
 
-        user.drawCard(tenCard);
-        user.drawCard(tenCard);
         user.drawCard(aceCard);
 
         assertThat(user.getScore()).isEqualTo(21);
@@ -39,12 +37,9 @@ public class AbstractPlayerTest {
     @DisplayName("A highValue 테스트")
     @Test
     void aceHighValue() {
-        AbstractPlayer user = new User(TEST_NAME);
         Card tenCard = Card.valueOf(CardShape.DIAMOND, CardNumber.TEN);
         Card aceCard = Card.valueOf(CardShape.DIAMOND, CardNumber.ACE);
-
-        user.drawCard(tenCard);
-        user.drawCard(aceCard);
+        AbstractPlayer user = new User(TEST_NAME, tenCard, aceCard);
 
         assertThat(user.getScore()).isEqualTo(21);
     }
@@ -52,32 +47,20 @@ public class AbstractPlayerTest {
     @DisplayName("카드 반환 테스트")
     @Test
     void getCards() {
-        AbstractPlayer user = new User(TEST_NAME);
-        assertThat(user.getCards().isEmpty()).isTrue();
-
         Card tenCard = Card.valueOf(CardShape.DIAMOND, CardNumber.TEN);
-        user.drawCard(tenCard);
-        assertThat(user.getCards()).containsExactly(tenCard);
+        AbstractPlayer user = new User(TEST_NAME, tenCard, tenCard);
+        assertThat(user.getCards()).containsExactly(tenCard, tenCard);
     }
 
     @DisplayName("랜덤 카드 한 개 뽑기 테스트")
     @Test
     void drawRandomOneCard() {
-        AbstractPlayer user = new User(TEST_NAME);
-        assertThat(user.getCards()).hasSize(0);
+        Card aceCard = Card.valueOf(CardShape.CLUB, CardNumber.ACE);
+        AbstractPlayer user = new User(TEST_NAME, aceCard, aceCard);
+        assertThat(user.getCards()).hasSize(2);
 
         user.drawRandomOneCard();
-        assertThat(user.getCards()).hasSize(1);
-    }
-
-    @DisplayName("랜덤 카드 두 개 뽑기 테스트")
-    @Test
-    void drawRandomTwoCard() {
-        AbstractPlayer user = new User(TEST_NAME);
-        assertThat(user.getCards()).hasSize(0);
-
-        user.drawRandomTwoCards();
-        assertThat(user.getCards()).hasSize(2);
+        assertThat(user.getCards()).hasSize(3);
     }
 
     @DisplayName("이름 반환 테스트")
@@ -85,5 +68,30 @@ public class AbstractPlayerTest {
     void getName() {
         AbstractPlayer user = new User(TEST_NAME);
         assertThat(user.getName()).isEqualTo(new Name(TEST_NAME));
+    }
+
+    @DisplayName("bust 인지 테스트")
+    @Test
+    void isBust() {
+        Card tenCard = Card.valueOf(CardShape.CLUB, CardNumber.TEN);
+        AbstractPlayer user = new User(TEST_NAME, tenCard, tenCard);
+
+        assertThat(user.isBust()).isFalse();
+
+        user.drawCard(tenCard);
+        assertThat(user.isBust()).isTrue();
+    }
+
+    @DisplayName("blackjack 인지 테스트")
+    @Test
+    void isBlackjack() {
+        Card tenCard = Card.valueOf(CardShape.CLUB, CardNumber.TEN);
+        Card aceCard = Card.valueOf(CardShape.CLUB, CardNumber.ACE);
+
+        AbstractPlayer user = new User(TEST_NAME, tenCard, tenCard);
+        assertThat(user.isBlackjack()).isFalse();
+
+        user = new User(TEST_NAME, tenCard, aceCard);
+        assertThat(user.isBlackjack()).isTrue();
     }
 }

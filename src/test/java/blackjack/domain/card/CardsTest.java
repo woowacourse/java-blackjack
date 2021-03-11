@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardsTest {
+
     @DisplayName("동일 객체 테스트")
     @Test
     void create() {

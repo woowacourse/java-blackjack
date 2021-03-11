@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerCardsTest {
+
     @DisplayName("카드 포함 테스트")
     @Test
     void crate() {

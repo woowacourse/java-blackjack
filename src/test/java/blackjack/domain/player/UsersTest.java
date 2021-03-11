@@ -19,22 +19,20 @@ public class UsersTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer();
-        dealer.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.SEVEN));
+        Card fourCard = Card.valueOf(CardShape.CLUB, CardNumber.FOUR);
+        Card threeCard = Card.valueOf(CardShape.CLUB, CardNumber.THREE);
+        dealer = new Dealer(fourCard, threeCard);
+        dealer.stay();
+        User user1 = new User("pobi", fourCard, fourCard);
+        user1.stay();
+        User user2 = new User("jason", threeCard, threeCard);
+        user2.stay();
+        User user3 = new User("inbi", fourCard, threeCard);
+        user3.stay();
 
-        User user1 = new User("pobi");
-        user1.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.EIGHT));
-
-        User user2 = new User("jason");
-        user2.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.SIX));
-
-        User user3 = new User("inbi");
-        user3.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.SEVEN));
-
-        User user4 = new User("mungto");
-        user4.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.TEN));
-        user4.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.TEN));
-        user4.drawCard(Card.valueOf(CardShape.CLUB, CardNumber.TWO));
+        Card tenCard = Card.valueOf(CardShape.CLUB, CardNumber.TEN);
+        User user4 = new User("mungto", tenCard, tenCard);
+        user4.drawCard(tenCard);
 
         List<User> convertUsers = new ArrayList<>(Arrays.asList(user1, user2, user3, user4));
         users = new Users(convertUsers);
@@ -60,17 +58,5 @@ public class UsersTest {
         assertThat(result.get(new Name("jason"))).isEqualTo(-10000);
         assertThat(result.get(new Name("inbi"))).isEqualTo(0);
         assertThat(result.get(new Name("mungto"))).isEqualTo(-10000);
-    }
-
-    @DisplayName("카드 2장이 정상적으로 추가되는지 테스트")
-    @Test
-    void drawTwoRandomCard() {
-        Users users = new Users("pobi");
-        User user = users.getUsers().get(0);
-        assertThat(user.getCards()).hasSize(0);
-
-        users.drawRandomTwoCard();
-        user = users.getUsers().get(0);
-        assertThat(user.getCards()).hasSize(2);
     }
 }
