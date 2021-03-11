@@ -14,4 +14,3 @@ public class Dealer extends Participants {
         return state.score() <= DEALER_MAX_SCORE;
     }
 }
-

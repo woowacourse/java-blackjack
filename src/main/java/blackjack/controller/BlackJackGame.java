@@ -93,6 +93,7 @@ public class BlackJackGame {
             return true;
         }
         OutputView.showCards(player);
+        player.stay();
         return false;
     }
 

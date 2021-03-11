@@ -8,9 +8,9 @@ public class Player extends Participants {
         super(name);
     }
 
-//    public double profit() {
-//        return super.profit(money);
-//    }
+    public double profit() {
+        return state.profit(money);
+    }
 
     @Override
     public boolean canDraw() {

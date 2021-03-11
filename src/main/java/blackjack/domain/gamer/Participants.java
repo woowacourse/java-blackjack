@@ -40,5 +40,9 @@ public abstract class Participants {
         return name;
     }
 
+    public void stay() {
+        state = state.stay();
+    }
+
     public abstract boolean canDraw();
 }
