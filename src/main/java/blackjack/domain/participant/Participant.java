@@ -10,7 +10,8 @@ import java.util.List;
 
 public abstract class Participant {
     public static final String EMPTY_NAME_ERROR = "이름에 빈 값을 사용할 수 없습니다.";
-    private static final int BUST_LIMIT = 22;
+    private static final int BUST_LIMIT = 21;
+
     protected final List<Card> cards;
     private final String name;
 
@@ -48,12 +49,12 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return calculateScore() >= BUST_LIMIT;
+        return calculateScore() > BUST_LIMIT;
     }
 
     public int calculateScore() {
         final int sumOfCards = cards.stream().mapToInt(card -> card.getCardValue().getValue()).sum();
-        if (sumOfCards >= BUST_LIMIT && howManyAce() > 0) {
+        if (sumOfCards > BUST_LIMIT && howManyAce() > 0) {
             return calculateScoreWithAce(sumOfCards);
         }
         return sumOfCards;
@@ -62,7 +63,7 @@ public abstract class Participant {
     private int calculateScoreWithAce(final int sum) {
         int aceCount = howManyAce();
         int changedSum = sum;
-        while (aceCount-- > 0 && changedSum >= BUST_LIMIT) {
+        while (aceCount-- > 0 && changedSum > BUST_LIMIT) {
             changedSum = changedSum - CardNumber.ACE.getValue() + CardNumber.ACE.getExtraValue();
         }
         return changedSum;
