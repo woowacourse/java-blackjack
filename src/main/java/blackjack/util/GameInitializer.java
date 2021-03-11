@@ -3,7 +3,6 @@ package blackjack.util;
 import blackjack.domain.Deck;
 import blackjack.domain.Players;
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.BlackJackParticipant;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.exception.InvalidNameInputException;

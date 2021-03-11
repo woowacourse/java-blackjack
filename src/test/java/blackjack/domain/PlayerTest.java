@@ -110,7 +110,7 @@ public class PlayerTest {
         assertThat(TestSetUp.createLoserWithMoney("1000").getProfit(TestSetUp.createBustDealer()))
                 .isEqualTo(1000);
         assertThat(TestSetUp.createBustPlayerWithMoney("1000").getProfit(TestSetUp.createBustDealer()))
-                .isEqualTo(1000*-1);
+                .isEqualTo(1000 * -1);
         assertThat(TestSetUp.createBlackJackPlayerWithMoney("1000").getProfit(TestSetUp.createBlackJackDealer()))
                 .isEqualTo(0);
     }

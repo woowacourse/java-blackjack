@@ -5,11 +5,9 @@ import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.exception.InvalidNameInputException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class TestSetUp {

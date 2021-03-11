@@ -21,15 +21,15 @@ public class Dealer extends BlackJackParticipant {
         }
     }
 
+    private boolean isStay() {
+        return getScore() > DEALER_LIMIT && !isBust() && !getHand().isBlackJack();
+    }
+
     public double getProfit(Players players) {
         double profitSum = 0;
         for (Player player : players.unwrap()) {
             profitSum -= player.getProfit(this);
         }
         return profitSum;
-    }
-
-    private boolean isStay() {
-        return getScore() > DEALER_LIMIT && !isBust() && !getHand().isBlackJack();
     }
 }

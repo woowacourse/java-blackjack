@@ -4,7 +4,7 @@ import blackjack.domain.Hand;
 import blackjack.domain.ResultType;
 import blackjack.util.GameInitializer;
 
-public class NotStarted implements State{
+public class NotStarted implements State {
     @Override
     public State update(Hand hand) {
         if (hand.unwrap().size() == GameInitializer.STARTING_CARD_COUNT) {

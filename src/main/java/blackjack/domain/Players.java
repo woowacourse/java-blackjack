@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.exception.InvalidNameInputException;
 
 import java.util.*;
 
