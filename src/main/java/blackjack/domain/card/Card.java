@@ -17,8 +17,18 @@ public class Card {
         return this.denomination.equals(Denomination.ACE);
     }
 
+    public String getSuitName() {
+        return this.suit.getName();
+    }
+
+    public String getDenominationName() {
+        return this.denomination.getName();
+    }
+
     @Override
     public String toString() {
-        return this.denomination.getName() + this.suit.getName();
+        return "Card@" +
+                "suit: " + this.suit.getName() +
+                ", denomination: " + this.denomination.getName();
     }
 }

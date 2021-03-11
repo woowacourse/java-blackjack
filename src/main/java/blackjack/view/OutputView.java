@@ -23,11 +23,29 @@ public class OutputView {
         System.out.printf("%s와 %s에게 2장의 카드를 나누어주었습니다.\n", dealer.getName(), createUsersCardStringFormat(players.players()));
     }
 
+    public static void printCardsOfDealerWithOneCardOpened(Dealer dealer) {
+        System.out.printf("%s 카드: %s\n", dealer.getName(), makeCardStringFormat(dealer.getCards().cards().get(INDEX_ZERO)));
+    }
+
+    private static String makeCardStringFormat(Card card) {
+        return String.format("%s%s", card.getDenominationName(), card.getSuitName());
+    }
+
     public static void printCardsOfPlayersWithoutScore(Players players) {
         for (User user : players.players()) {
             System.out.print(makeCardsStringFormat(user) + "\n");
         }
         System.out.println();
+    }
+
+    public static String makeCardsStringFormat(User user) {
+        return String.format("%s 카드 : %s", user.getName(), makeCardsStringFormat(user.getCards()));
+    }
+
+    private static String makeCardsStringFormat(Cards cards) {
+        return cards.cards().stream()
+                .map(OutputView::makeCardStringFormat)
+                .collect(Collectors.joining(COMMA_WITH_BLANK));
     }
 
     public static void printCardsOfUsersWithScore(Users users) {
@@ -51,16 +69,6 @@ public class OutputView {
         System.out.println(makeCardsStringFormat(user));
     }
 
-
-    public static String makeCardsStringFormat(User user) {
-        return String.format("%s 카드 : %s", user.getName(), createCardsStringFormat(user.getCards()));
-    }
-
-    private static String createCardsStringFormat(Cards cards) {
-        return cards.cards().stream()
-                .map(Card::toString)
-                .collect(Collectors.joining(COMMA_WITH_BLANK));
-    }
 
     private static String createUsersCardStringFormat(List<? extends User> users) {
         return users.stream()
@@ -96,9 +104,5 @@ public class OutputView {
 
     public static void printDealerGetNewCardsMessage() {
         System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
-    }
-
-    public static void printCardsOfDealerWithOneCardOpened(Dealer dealer) {
-        System.out.printf("%s 카드: %s\n", dealer.getName(), dealer.getCards().cards().get(INDEX_ZERO).toString());
     }
 }

@@ -25,7 +25,7 @@ class UserTest {
         User user = new Player("youngE");
         user.draw(new Card(Suit.SPADE, Denomination.ACE));
         user.draw(new Card(Suit.SPADE, Denomination.NINE));
-        
+
         assertFalse(user.isBlackJack());
     }
 }
