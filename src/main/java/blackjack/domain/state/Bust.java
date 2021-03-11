@@ -2,10 +2,10 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
 
-public class BlackJack implements State {
+public class Bust implements State {
     private final Cards cards;
 
-    public BlackJack(final Cards cards) {
+    public Bust(final Cards cards) {
         this.cards = cards;
     }
 }

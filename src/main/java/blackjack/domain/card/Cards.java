@@ -6,13 +6,15 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
+    private final static int BLACK_JACK = 21;
+    private final static int TEN = 10;
     private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    public Cards(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
-    public Cards(Card... cards) {
+    public Cards(final Card... cards) {
         this(Arrays.asList(cards));
     }
 
@@ -21,9 +23,35 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        int sum = cards.stream()
-                .mapToInt(card -> card.numberScore())
+        return calculateScore() == BLACK_JACK;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BLACK_JACK;
+    }
+
+    public void add(final Card card) {
+        this.cards.add(card);
+    }
+
+    private int sum() {
+        return cards.stream()
+                .mapToInt(Card::numberScore)
                 .sum();
-        return sum == 21;
+    }
+
+    public int calculateScore() {
+        int sum = sum();
+        int aceCount = getAceCount();
+        while (aceCount-- > 0 && sum > BLACK_JACK) {
+         sum -= TEN;
+        }
+        return sum;
+    }
+
+    private int getAceCount() {
+        return (int) cards.stream()
+                .filter(Card::containAce)
+                .count();
     }
 }
