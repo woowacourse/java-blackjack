@@ -1,20 +1,14 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
-import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static blackjack.domain.FixtureCards.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PlayerTest {
-    private static final Card TWO_DIAMONDS = new Card(Number.TWO, Suit.DIAMONDS);
-    private static final Card JACK_SPADES = new Card(Number.JACK, Suit.SPADES);
-    private static final Card THREE_HEARTS = new Card(Number.THREE, Suit.HEARTS);
-    private static final Card ACE_CLUBS = new Card(Number.ACE, Suit.CLUBS);
     private Player player;
     private Dealer dealer;
 
