@@ -1,7 +1,7 @@
-import blackjack.Controller.Casino;
+import blackjack.Controller.GameController;
 
 public class Application {
     public static void main(String[] args) {
-        new Casino().run();
+        new GameController().run();
     }
 }
