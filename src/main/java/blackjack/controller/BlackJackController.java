@@ -42,9 +42,12 @@ public class BlackJackController {
     }
 
     private static List<Player> createPlayersByNameAndMoney(List<String> nameInputs) {
-        return nameInputs.stream()
-                .map(name -> new Player(name, InputView.inputString()))
-                .collect(Collectors.toList());
+        List<Player> players = new ArrayList<>();
+        for (String name : nameInputs) {
+            OutputView.printInputMoney(name.trim());
+            players.add(new Player(name, InputView.inputString()));
+        }
+        return players;
     }
 
     private static List<BlackJackParticipant> getBlackJackParticipants(Players players, Dealer dealer) {

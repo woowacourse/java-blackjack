@@ -20,6 +20,10 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
+    public static void printInputMoney(String name) {
+        System.out.println(LINE_SEPARATOR + name + "의 베팅 금액은?");
+    }
+
     public static void printGameInitializeMessage(List<BlackJackParticipant> participants, int startingCardCount) {
         String participantNames = participants.stream()
                 .map(BlackJackParticipant::getName)

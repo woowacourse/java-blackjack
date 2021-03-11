@@ -15,7 +15,8 @@ public class InputView {
     }
 
     public static List<String> inputStringAndSplitByComma() {
-        return Arrays.stream(SCANNER.nextLine().trim().split(DELIMITER))
+        return Arrays.stream(SCANNER.nextLine().split(DELIMITER))
+                .map(String::trim)
                 .collect(Collectors.toList());
     }
 }
