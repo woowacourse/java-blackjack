@@ -5,4 +5,9 @@ public class Bust extends Finished {
         super(cards);
     }
 
+    @Override
+    public double profitRatio() {
+        return -1;
+    }
+
 }

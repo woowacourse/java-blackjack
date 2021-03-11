@@ -26,6 +26,10 @@ public abstract class Participant {
         state = state.draw(card);
     }
 
+    public void stay() {
+        state = state.stay();
+    }
+
     public int cardResult() {
         return state.getCards()
                     .calculateResult();
@@ -52,6 +56,12 @@ public abstract class Participant {
     public String getName() {
         return name.toString();
     }
+
+    public double profitRatio() {
+        return state.profitRatio();
+    }
+
+
 }
 
 

@@ -17,7 +17,6 @@ public class Betting {
     }
 
     public Money revenue(Player player) {
-//        return get(player).multiply(player.profitRatio());
-        return new Money(1500);
+        return get(player).multiply(player.profitRatio());
     }
 }

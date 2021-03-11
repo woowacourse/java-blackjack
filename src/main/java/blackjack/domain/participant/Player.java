@@ -42,4 +42,5 @@ public class Player extends Participant {
     public GameResult getGameResult() {
         return gameResult;
     }
+
 }

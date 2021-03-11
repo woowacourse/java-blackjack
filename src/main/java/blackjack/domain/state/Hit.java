@@ -25,4 +25,9 @@ public class Hit extends State {
     public boolean isFinished() {
         return false;
     }
+
+    @Override
+    public double profitRatio() {
+        throw new UnsupportedOperationException();
+    }
 }

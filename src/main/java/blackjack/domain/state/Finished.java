@@ -2,7 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 
-public class Finished extends State{
+public abstract class Finished extends State{
     public Finished(Cards cards) {
         super(cards);
     }
@@ -21,4 +21,6 @@ public class Finished extends State{
     public boolean isFinished() {
         return true;
     }
+
+    public abstract double profitRatio();
 }

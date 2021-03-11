@@ -56,6 +56,7 @@ public class Game {
             drawCard(player);
             return;
         }
+        player.stay();
         playerIndex += 1;
     }
 
