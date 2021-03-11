@@ -10,7 +10,7 @@ public abstract class Gamer {
     protected final Hands hands;
     private final String name;
 
-    protected Gamer(String name, Hands hands) {
+    protected Gamer(final String name, final Hands hands) {
         this.name = name;
         this.hands = hands;
     }
@@ -45,7 +45,7 @@ public abstract class Gamer {
         return hands.isBlackjack();
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         hands.addCard(card);
     }
 

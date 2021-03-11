@@ -8,16 +8,16 @@ public class Profit {
 
     private final int money;
 
-    public Profit(int money) {
+    public Profit(final int money) {
         validate(money);
         this.money = money;
     }
 
-    private void validate(int value) {
+    private void validate(final int value) {
         validatePositive(value);
     }
 
-    private void validatePositive(int value) {
+    private void validatePositive(final int value) {
         if (value <= 0) {
             throw new IllegalArgumentException("[에러]: 베팅 금액은 음수 또는 0이 될 수 없습니다.");
         }

@@ -8,7 +8,7 @@ public class ResultCalculator {
     private ResultCalculator() {
     }
 
-    public static ResultType decideWinner(Player player, Dealer dealer) {
+    public static ResultType decideWinner(final Player player, final Dealer dealer) {
         if (player.isBusted()) {
             return ResultType.LOSE;
         }
@@ -18,7 +18,7 @@ public class ResultCalculator {
         return findWinner(player, dealer);
     }
 
-    private static ResultType findWinner(Player player, Dealer dealer) {
+    private static ResultType findWinner(final Player player, final Dealer dealer) {
         if (bothUnderMaxScore(player, dealer)) {
             return compare(player, dealer);
         }
@@ -28,22 +28,22 @@ public class ResultCalculator {
         return confirmPlayerMaxScore(player);
     }
 
-    private static ResultType confirmPlayerMaxScore(Player player) {
+    private static ResultType confirmPlayerMaxScore(final Player player) {
         if (player.isMaxScore()) {
             return ResultType.WIN;
         }
         return ResultType.LOSE;
     }
 
-    private static boolean bothMaxScore(Player player, Dealer dealer) {
+    private static boolean bothMaxScore(final Player player, final Dealer dealer) {
         return player.isMaxScore() && dealer.isMaxScore();
     }
 
-    private static boolean bothUnderMaxScore(Player player, Dealer dealer) {
+    private static boolean bothUnderMaxScore(final Player player, final Dealer dealer) {
         return player.isUnderMaxScore() && dealer.isUnderMaxScore();
     }
 
-    private static ResultType checkBlackjack(Player player, Dealer dealer) {
+    private static ResultType checkBlackjack(final Player player, final Dealer dealer) {
         if (player.hasBlackjack() && dealer.hasBlackjack()) {
             return ResultType.DRAW;
         }
@@ -57,7 +57,7 @@ public class ResultCalculator {
     }
 
 
-    private static ResultType compare(Player player, Dealer dealer) {
+    private static ResultType compare(final Player player, final Dealer dealer) {
         int compare = player.calculateScore().compareTo(dealer.calculateScore());
         if (compare < 0) {
             return ResultType.LOSE;

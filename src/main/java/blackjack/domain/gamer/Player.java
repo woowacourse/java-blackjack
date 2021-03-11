@@ -11,7 +11,7 @@ public class Player extends Gamer {
     private static final int OPEN_HAND_COUNT = 2;
     private final Profit profit;
 
-    public Player(String name, int money,  Hands hands) {
+    public Player(final String name, final int money, final Hands hands) {
         super(name, hands);
         this.profit = new Profit(money);
     }
@@ -21,7 +21,7 @@ public class Player extends Gamer {
         return hands.cardsOf(OPEN_HAND_COUNT);
     }
 
-    public int calculateProfit(ResultType resultType) {
+    public int calculateProfit(final ResultType resultType) {
         if (ResultType.WIN.equals(resultType)) {
             if (hands.isBlackjack()) {
                 return profit.blackjackWin();

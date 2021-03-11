@@ -10,7 +10,7 @@ public class CardManager {
 
     private final Deck deck;
 
-    private CardManager(Deck deck) {
+    private CardManager(final Deck deck) {
         this.deck = deck;
     }
 
@@ -26,11 +26,13 @@ public class CardManager {
         return deck.popSingleCard();
     }
 
-    public Players initiateGamers(List<String> playersNames, List<Integer> playersMoney) {
-       List<Player> players = IntStream.range(0, playersNames.size())
-                .mapToObj(i -> new Player(playersNames.get(i), playersMoney.get(i), giveFirstHand()))
+    public Players initiateGamers(final List<String> playersNames,
+            final List<Integer> playersMoney) {
+        List<Player> players = IntStream.range(0, playersNames.size())
+                .mapToObj(
+                        i -> new Player(playersNames.get(i), playersMoney.get(i), giveFirstHand()))
                 .collect(Collectors.toList());
-       return new Players(players);
+        return new Players(players);
     }
 
     public boolean isEmpty() {

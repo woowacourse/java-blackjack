@@ -8,11 +8,11 @@ public class Dealer extends Gamer {
 
     private static final int OPEN_HAND_COUNT = 1;
 
-    public Dealer(Hands hands) {
+    public Dealer(final Hands hands) {
         this("딜러", hands);
     }
 
-    private Dealer(String name, Hands hands) {
+    private Dealer(final String name, final Hands hands) {
         super(name, hands);
     }
 

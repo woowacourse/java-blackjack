@@ -13,11 +13,11 @@ public class Players implements Iterable<Player> {
     private final List<Player> players;
 
 
-    public Players(List<Player> players) {
+    public Players(final List<Player> players) {
         this.players = players;
     }
 
-    public int dealerResult(Dealer dealer) {
+    public int dealerResult(final Dealer dealer) {
         int sum = 0;
         for (Player player : players) {
             ResultType result = ResultCalculator.decideWinner(player, dealer);
@@ -26,7 +26,7 @@ public class Players implements Iterable<Player> {
         return -sum;
     }
 
-    public Map<String, Integer> resultWithName(Dealer dealer) {
+    public Map<String, Integer> resultWithName(final Dealer dealer) {
         Map<String, Integer> result = new HashMap<>();
         for (Player player : players) {
             ResultType resultType = ResultCalculator.decideWinner(player, dealer);

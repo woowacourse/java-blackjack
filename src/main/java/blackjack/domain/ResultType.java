@@ -7,7 +7,7 @@ public enum ResultType {
 
     private final String name;
 
-    ResultType(String name) {
+    ResultType(final String name) {
         this.name = name;
     }
 

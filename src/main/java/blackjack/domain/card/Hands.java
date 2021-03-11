@@ -19,7 +19,7 @@ public class Hands {
         this.cards = cards;
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 
@@ -27,7 +27,7 @@ public class Hands {
         return Collections.unmodifiableList(cards);
     }
 
-    public List<Card> cardsOf(int number) {
+    public List<Card> cardsOf(final int number) {
         return IntStream.range(0, number)
                 .mapToObj(cards::get)
                 .collect(Collectors.toList());
