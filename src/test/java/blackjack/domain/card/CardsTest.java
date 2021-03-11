@@ -29,6 +29,7 @@ public class CardsTest {
     void getScoreTest() {
         cards.draw(king);
         cards.draw(two);
+
         assertThat(cards.getScore()).isEqualTo(12);
     }
 
@@ -37,9 +38,11 @@ public class CardsTest {
     void getMaximunScoreTest() {
         cards.draw(ace);
         cards.draw(two);
+
         assertThat(cards.getScore()).isEqualTo(13);
 
         cards.draw(king);
+
         assertThat(cards.getScore()).isEqualTo(13);
     }
 
@@ -48,6 +51,7 @@ public class CardsTest {
     void isBlackJackTest() {
         cards.draw(king);
         cards.draw(ace);
+
         assertTrue(cards.isBlackJack());
     }
 
@@ -57,6 +61,7 @@ public class CardsTest {
         cards.draw(king);
         cards.draw(queen);
         cards.draw(two);
+
         assertTrue(cards.isBust());
     }
 }

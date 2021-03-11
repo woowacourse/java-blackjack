@@ -44,6 +44,7 @@ public class PlayersTest {
         dealer.draw(ace);
         dealer.draw(jack);
         Map<User, ResultType> resultMap = players.generateResultsMapAgainstDealer(dealer);
+
         assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
             {
                 put(player1, ResultType.DRAW);
@@ -58,6 +59,7 @@ public class PlayersTest {
         dealer.draw(ace);
         dealer.draw(seven);
         Map<User, ResultType> resultMap = players.generateResultsMapAgainstDealer(dealer);
+
         assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
             {
                 put(player1, ResultType.WIN);
@@ -74,6 +76,7 @@ public class PlayersTest {
         dealer.draw(jack);
         player2.draw(seven); // player2 에게 7을 추가로 주어 23을 만들어 버스트 상태로 만든다.
         Map<User, ResultType> resultMap = players.generateResultsMapAgainstDealer(dealer);
+
         assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
             {
                 put(player1, ResultType.WIN);

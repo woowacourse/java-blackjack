@@ -33,6 +33,7 @@ class PlayerTest {
         Player player = new Player("Player");
         CardDeck cardDeck = CardDeck.createDeck();
         player.draw(cardDeck.drawCard());
+
         assertThat(player.getCards().cards()).hasSize(1);
     }
 
