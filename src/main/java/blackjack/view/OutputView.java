@@ -24,19 +24,19 @@ public class OutputView {
 
     public static void printCardsOfPlayersWithScore(Users users) {
         for (User user : users.gerUsers()) {
-            System.out.print(makeCardsStringFormat(user) + " - 결과: " + makeResultComment(user.getScore()) + "\n");
+            System.out.print(makeCardsStringFormat(user) + " - 결과: " + makeResultComment(user) + "\n");
         }
         System.out.println();
     }
 
-    private static String makeResultComment(int score) {
-        if (score == BlackJackConstant.BLACKJACK_SCORE) {
+    private static String makeResultComment(User user) {
+        if (user.isBlackJack()) {
             return "블랙잭";
         }
-        if (score == BlackJackConstant.BUST) {
+        if (user.isBust()) {
             return "버스트";
         }
-        return Integer.toString(score);
+        return Integer.toString(user.getScore());
     }
 
     public static void printCardsOfPlayer(Player player) {

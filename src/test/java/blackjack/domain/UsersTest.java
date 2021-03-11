@@ -1,9 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Suit;
-import blackjack.util.BlackJackConstant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,25 +14,25 @@ class UsersTest {
     Users users;
     Player player;
     Player player2;
-    Card jack = new Card(Suit.CLUB, CardNumber.JACK);
-    Card ace = new Card(Suit.CLUB, CardNumber.ACE);
-    Card seven = new Card(Suit.CLUB, CardNumber.SEVEN);
+
 
     @BeforeEach
     void setUp() {
         users = new Users(new Dealer(), Arrays.asList("youngE", "kimkim"));
         player = users.getPlayers().get(0);
         player2 = users.getPlayers().get(1);
-        player.hit(ace);
-        player.hit(jack);
-        player2.hit(ace);
-        player2.hit(seven);
+        player.hit(Fixture.CLUBS_ACE, Fixture.CLUBS_KING);
+        player2.hit(Fixture.CLUBS_ACE, Fixture.CLUBS_TWO);
     }
 
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러가 블랙잭일 때")
     @Test
     void checkWinOrLoseWhenDealerHasBlackJackTest() {
-        Map<User, Result> resultMap = users.checkResult(BlackJackConstant.BLACKJACK_SCORE);
+        Dealer dealer = new Dealer();
+
+        dealer.hit(Fixture.CLUBS_KING, Fixture.CLUBS_ACE);
+
+        Map<User, Result> resultMap = users.checkResult(dealer);
         assertThat(resultMap).isEqualTo(new HashMap<User, Result>() {
             {
                 put(player, Result.DRAW);
@@ -48,10 +44,14 @@ class UsersTest {
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러가 블랙잭이 아니었을 때")
     @Test
     void checkWinOrLoseTest() {
-        Map<User, Result> resultMap = users.checkResult(21);
+        Dealer dealer = new Dealer();
+
+        dealer.hit(Fixture.CLUBS_KING, Fixture.CLUBS_TEN);
+        dealer.hit(Fixture.CLUBS_ACE);
+        Map<User, Result> resultMap = users.checkResult(dealer);
         assertThat(resultMap).isEqualTo(new HashMap<User, Result>() {
             {
-                put(player, Result.WIN);
+                put(player, Result.BLACKJACK);
                 put(player2, Result.LOSE);
             }
         });

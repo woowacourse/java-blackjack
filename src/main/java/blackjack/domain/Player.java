@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.state.State;
 import blackjack.util.BlackJackConstant;
 
 public class Player extends User {
@@ -8,18 +9,18 @@ public class Player extends User {
         super(name);
     }
 
-    public Result getResult(int dealerScore) {
-        if (dealerScore != BlackJackConstant.BLACKJACK_SCORE &&
-                this.getScore() == BlackJackConstant.BLACKJACK_SCORE){
+    public Result getResult(Dealer dealer) {
+        if (!dealer.isBlackJack() && this.isBlackJack()){
             return Result.BLACKJACK;
         }
 
-        if (this.getScore() > dealerScore) {
-            return Result.WIN;
+        if (this.getScore() < dealer.getScore() ||
+                this.state.cards().isBust()) {
+            return Result.LOSE;
         }
 
-        if (this.getScore() < dealerScore || this.isBust()) {
-            return Result.LOSE;
+        if (this.getScore() > dealer.getScore()) {
+            return Result.WIN;
         }
 
         return Result.DRAW;

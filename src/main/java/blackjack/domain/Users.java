@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.state.State;
 
 import java.util.*;
 import java.util.function.Function;
@@ -39,12 +40,12 @@ public class Users {
                 .orElseThrow(() -> new RuntimeException("딜러가 존재하지 않습니다."));
     }
 
-    public Map<User, Result> checkResult(int dealerScore) {
+    public Map<User, Result> checkResult(Dealer dealer) {
         return users.stream()
                 .filter(User::isPlayer)
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        player -> ((Player) player).getResult(dealerScore),
+                        player -> ((Player) player).getResult(dealer),
                         (key1, key2) -> key1,
                         LinkedHashMap::new
                 ));

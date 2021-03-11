@@ -24,6 +24,13 @@ public class Cards {
         return score().isBust();
     }
 
+    public boolean isBlackJack() {
+        if(score().isBlackJack() && values.size() == 2){
+            return true;
+        }
+        return false;
+    }
+
     public Score score() {
         return checkAce(cardsScoreSum());
     }

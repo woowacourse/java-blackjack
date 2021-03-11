@@ -26,9 +26,11 @@ class PlayerTest {
     @DisplayName("히트 - 플레이어는 카드를 받는다.")
     @Test
     void hitCard() {
-        Player player = new Player("Player");
         CardDeck cardDeck = CardDeck.createDeck();
-        player.hit(cardDeck.getDeck().pop());
-        assertThat(player.getCards()).hasSize(1);
+        Player player = new Player("Player");
+        player.hit(cardDeck.drawCard(), cardDeck.drawCard());
+        player.hit(cardDeck.drawCard());
+
+        assertThat(player.getCards()).hasSize(3);
     }
 }

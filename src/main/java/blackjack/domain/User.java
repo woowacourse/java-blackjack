@@ -34,6 +34,10 @@ public abstract class User {
         this.state = state.draw(card);
     }
 
+    public State getState() {
+        return state;
+    }
+
     public boolean isPlayer() {
         return this instanceof Player;
     }
@@ -68,5 +72,9 @@ public abstract class User {
 
     public int getBettingMoney() {
         return bettingMoney.getBettingMoney();
+    }
+
+    public boolean isFinished() {
+        return this.state.isFinished();
     }
 }
