@@ -1,8 +1,6 @@
 package blackjack.domain.blackjack;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,23 +18,19 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class BlackJackGameTest {
 
     private Deck deck;
-    private Participants participants;
-    private Dealer dealer;
-    private List<Player> players;
+    private List<String> players;
 
     @BeforeEach
     void setUp() {
         deck = Deck.generate();
-        players = Arrays.asList(new Player("로키", cards -> 15), new Player("수리", cards -> 19));
-        dealer = new Dealer(cards -> 15);
-        participants = new Participants(players, dealer);
+        players = Arrays.asList("로키", "수리");
     }
 
     @DisplayName("BlackJackGame 객체를 생성한다")
     @Test
     void testInitBlackJackGame() {
         //when
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 0);
 
         //then
         assertThat(blackJackGame).isNotNull();
@@ -46,7 +40,7 @@ class BlackJackGameTest {
     @Test
     void testHandInitCards() {
         //given
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 0);
 
         //when
         blackJackGame.handInitCards();
@@ -68,10 +62,7 @@ class BlackJackGameTest {
     }, delimiter = ':')
     void testPlayDealerTurn(int totalDealerScore, int expected) {
         //given
-        List<Player> players = Arrays.asList(new Player("로키", cards -> 15), new Player("수리", cards -> 19));
-        Dealer dealer = new Dealer(cards -> totalDealerScore);
-        Participants participants = new Participants(players, dealer);
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> totalDealerScore);
 
         //when
         blackJackGame.playDealerTurn();
@@ -84,7 +75,7 @@ class BlackJackGameTest {
     @Test
     void testExistWaitingPlayerIfExistWaitingPlayer() {
         //given
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 17);
 
         //when
         boolean actual = blackJackGame.isExistWaitingPlayer();
@@ -97,11 +88,7 @@ class BlackJackGameTest {
     @Test
     void testExistWaitingPlayerIfNotExistWaitingPlayer() {
         //given
-        Player waitingPlayer = new Player("로키", cards -> 15);
-        waitingPlayer.endOwnTurn();
-        List<Player> players = Arrays.asList(waitingPlayer);
-        Participants participants = new Participants(players, dealer);
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 22);
 
         //when
         boolean actual = blackJackGame.isExistWaitingPlayer();
@@ -114,7 +101,7 @@ class BlackJackGameTest {
     @Test
     void testFindCurrentTurnPlayerIfExistWaitingPlayer() {
         //given
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 17);
 
         //when
         Player currentPlayer = blackJackGame.findCurrentTurnPlayer();
@@ -126,15 +113,13 @@ class BlackJackGameTest {
         );
     }
 
-    @DisplayName("차례가 남은 Player가 없을 때, 가장 순서가 빠른 Player를 반환하는 기능")
+    @DisplayName("차례가 남은 Player가 없을 때, 예외를 발생시킨다")
     @Test
     void testFindCurrentTurnPlayerIfNotExistWaitingPlayer() {
         //given
         Player waitingPlayer = new Player("로키", cards -> 15);
         waitingPlayer.endOwnTurn();
-        List<Player> players = Arrays.asList(waitingPlayer);
-        Participants participants = new Participants(players, dealer);
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 22);
 
         //when //then
         assertThatThrownBy(() -> blackJackGame.findCurrentTurnPlayer())
@@ -148,9 +133,7 @@ class BlackJackGameTest {
     }, delimiter = ':')
     void testAskMoreCard(boolean isNeedCard, int expectedCardsNumber) {
         //given
-        List<Player> players = Arrays.asList(new Player("로키", cards -> 15));
-        Participants participants = new Participants(players, dealer);
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 15);
 
         //when
         blackJackGame.askMoreCard(isNeedCard);

@@ -4,19 +4,28 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.rule.ScoreRule;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.ScoreResultDto;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
     private final Deck deck;
     private final Participants participants;
 
-    public BlackJackGame(final Deck deck, final Participants participants) {
+    public BlackJackGame(final Deck deck, final List<String> players, ScoreRule scoreRule) {
         this.deck = deck;
-        this.participants = participants;
+        this.participants = createParticipants(players, scoreRule);
+    }
+
+    private Participants createParticipants(final List<String> names, final ScoreRule scoreRule) {
+        List<Player> players = names.stream()
+                .map(name -> new Player(name, scoreRule))
+                .collect(Collectors.toList());
+        return new Participants(players, new Dealer(scoreRule));
     }
 
     public void handInitCards() {
