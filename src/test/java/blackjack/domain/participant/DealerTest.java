@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -116,5 +117,18 @@ public class DealerTest {
         assertThat(dealerResult.getOrDefault(Result.WIN, 0)).isEqualTo(1);
         assertThat(dealerResult.getOrDefault(Result.DRAW, 0)).isEqualTo(1);
         assertThat(dealerResult.getOrDefault(Result.LOSE, 0)).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("딜러는 플레이어들의 수익을 넘겨받아 자신의 수익을 계산한다")
+    void calculateProfit() {
+        final Map<Player, Double> playerProfit = new HashMap<>();
+        playerProfit.put(new Player("joel"), 1000.0);
+        playerProfit.put(new Player("bada"), 2000.0);
+        playerProfit.put(new Player("jon"), 3000.0);
+
+        dealer.calculateProfit(playerProfit);
+
+        assertThat(dealer.getDealerMoney().getMoney()).isEqualTo(-6000.0);
     }
 }
