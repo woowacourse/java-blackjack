@@ -16,7 +16,7 @@ public class Betting {
         return bettingTable.get(player);
     }
 
-    public Money revenue(Player player) {
-        return get(player).multiply(player.profitRatio());
+    public double revenue(Player player) {
+        return get(player).value() * player.profitRatio();
     }
 }

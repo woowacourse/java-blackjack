@@ -49,7 +49,7 @@
 
 ### Betting
 - [x] 플레이어 별로 배팅 금액 입력 받고 저장하기
-- [ ] 게임 결과에 따라, 최종 수익 계산하기
+- [x] 게임 결과에 따라, 최종 수익 계산하기
 
 ## 우아한테크코스 코드리뷰
 * [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
