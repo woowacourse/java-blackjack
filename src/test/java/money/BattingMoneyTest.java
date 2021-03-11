@@ -33,4 +33,17 @@ class BattingMoneyTest {
         assertThatThrownBy(() -> new BattingMoney(value))
                 .isExactlyInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("베팅금액을 더하는 기능을 테스트한다")
+    @Test
+    void testAdd() {
+        //given
+        BattingMoney battingMoney = BattingMoney.ZERO;
+
+        //when
+        BattingMoney actual = battingMoney.add(1_000);
+
+        //then
+        assertThat(actual).extracting("value").isEqualTo(1_000);
+    }
 }

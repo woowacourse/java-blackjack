@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.rule.ScoreRule;
+import money.BattingMoney;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +15,14 @@ public class Player implements Participant {
     private String name;
     private List<Card> cards;
     private ScoreRule scoreRule;
+    private BattingMoney battingMoney;
     private boolean isContinue;
 
     public Player(String name, ScoreRule scoreRule) {
         this.name = name;
         this.cards = new ArrayList<>();
         this.scoreRule = scoreRule;
+        this.battingMoney = BattingMoney.ZERO;
         this.isContinue = true;
     }
 
@@ -60,5 +63,9 @@ public class Player implements Participant {
 
     public void endOwnTurn() {
         isContinue = false;
+    }
+
+    public void bet(final int bettingMoney) {
+        this.battingMoney = battingMoney.add(bettingMoney);
     }
 }

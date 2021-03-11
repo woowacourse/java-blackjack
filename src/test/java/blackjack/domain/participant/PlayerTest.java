@@ -37,4 +37,17 @@ class PlayerTest {
         //then
         assertThat(isReceived).isEqualTo(actual);
     }
+
+    @DisplayName("배팅하는 기능을 테스트한다")
+    @Test
+    void testBet() {
+        //given
+        Player player = new Player("pobi", cards -> 0);
+
+        //when
+        player.bet(1_000);
+
+        //then
+        assertThat(player).extracting("battingMoney").extracting("value").isEqualTo(1_000);
+    }
 }
