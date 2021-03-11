@@ -11,9 +11,9 @@ public enum MatchRule {
     BLACKJACK_PLAYER_WIN((playerCards, dealerCards) -> playerCards.isBlackJack() && !dealerCards.isBlackJack(), ResultType.WIN),
     BLACKJACK_DEALER_WIN((playerCards, dealerCards) -> !playerCards.isBlackJack() && dealerCards.isBlackJack(), ResultType.LOSE),
     BLACKJACK_DRAW((playerCards, dealerCards) -> playerCards.isBlackJack() && dealerCards.isBlackJack(), ResultType.DRAW),
-    SCORE_COMPARISION_PLAYER_WIN((playerCards, dealerCards) -> playerCards.getScore() > dealerCards.getScore(), ResultType.WIN),
-    SCORE_COMPARISION_DEALER_WIN((playerCards, dealerCards) -> playerCards.getScore() < dealerCards.getScore(), ResultType.LOSE),
-    SCORE_COMPARISION_DRAW((playerCards, dealerCards) -> playerCards.getScore() == dealerCards.getScore(), ResultType.DRAW);
+    SCORE_COMPARISON_PLAYER_WIN((playerCards, dealerCards) -> playerCards.getScore() > dealerCards.getScore(), ResultType.WIN),
+    SCORE_COMPARISON_DEALER_WIN((playerCards, dealerCards) -> playerCards.getScore() < dealerCards.getScore(), ResultType.LOSE),
+    SCORE_COMPARISON_DRAW((playerCards, dealerCards) -> playerCards.getScore() == dealerCards.getScore(), ResultType.DRAW);
 
     private final BiPredicate<Cards, Cards> condition;
     private final ResultType matchResult;
