@@ -8,10 +8,10 @@ import java.util.stream.IntStream;
 
 public class CardManager {
 
-    private final Deck cards;
+    private final Deck deck;
 
-    private CardManager(Deck cards) {
-        this.cards = cards;
+    private CardManager(Deck deck) {
+        this.deck = deck;
     }
 
     public static CardManager create() {
@@ -19,11 +19,11 @@ public class CardManager {
     }
 
     public Hands giveFirstHand() {
-        return new Hands(cards.popTwoCards());
+        return new Hands(deck.popTwoCards());
     }
 
     public Card giveCard() {
-        return cards.popSingleCard();
+        return deck.popSingleCard();
     }
 
     public Players initiateGamers(List<String> playersNames, List<Integer> playersMoney) {
@@ -34,6 +34,6 @@ public class CardManager {
     }
 
     public boolean isEmpty() {
-        return cards.isEmpty();
+        return deck.isEmpty();
     }
 }
