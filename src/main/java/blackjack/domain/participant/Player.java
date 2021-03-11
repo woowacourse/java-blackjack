@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 public class Player extends Participant {
-    private final Name name;
     private final GameResult gameResult = new GameResult();
 
     public Player(String inputName) {
@@ -9,7 +8,7 @@ public class Player extends Participant {
     }
 
     private Player(Name name) {
-        this.name = name;
+        super(name,2);
     }
 
     public void fight(Dealer dealer) {
@@ -42,16 +41,5 @@ public class Player extends Participant {
 
     public GameResult getGameResult() {
         return gameResult;
-    }
-
-
-    @Override
-    public String getName() {
-        return name.toString();
-    }
-
-    @Override
-    public int numberOfOpenCard() {
-        return 2;
     }
 }

@@ -10,6 +10,13 @@ import java.util.List;
 
 public abstract class Participant {
     private State state;
+    private final Name name;
+    private final int numberOfOpenCard;
+
+    public Participant(final Name name, final int numberOfOpenCard) {
+        this.name = name;
+        this.numberOfOpenCard = numberOfOpenCard;
+    }
 
     public void startRound(final Card first, final Card second) {
         state = StartRound.draw(first, second);
@@ -39,12 +46,12 @@ public abstract class Participant {
 
     public List<Card> getOpenCard() {
         return state.getCards()
-                    .subList(0, numberOfOpenCard());
+                    .subList(0, numberOfOpenCard);
     }
 
-    public abstract int numberOfOpenCard();
-
-    public abstract String getName();
+    public String getName() {
+        return name.toString();
+    }
 }
 
 
