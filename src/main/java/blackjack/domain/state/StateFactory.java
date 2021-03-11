@@ -1,17 +1,15 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 public class StateFactory {
 
     public static State draw(Card firstCard, Card secondCard) {
-        if (isHit(firstCard, secondCard)) {
-            return new Hit();
+        Cards cards = new Cards(firstCard, secondCard);
+        if (cards.isBlackJack()) {
+            return new BlackJack(cards);
         }
-        return null;
-    }
-
-    private static boolean isHit(Card firstCard, Card secondCard) {
-        return firstCard.numberScore() + secondCard.numberScore() < 21;
+        return new Hit(cards);
     }
 }
