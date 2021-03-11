@@ -6,4 +6,8 @@ public class Dealer extends Participant{
     public Dealer() {
         super(DEALER_NAME);
     }
+
+    public String getFirstCardsInfoToString() {
+        return state.cards().getFirstCardInfoToString();
+    }
 }

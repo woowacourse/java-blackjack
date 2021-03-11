@@ -8,4 +8,9 @@ public class Bust implements State{
     public Bust(Cards cards) {
         this.cards = cards;
     }
+
+    @Override
+    public Cards cards() {
+        return cards;
+    }
 }

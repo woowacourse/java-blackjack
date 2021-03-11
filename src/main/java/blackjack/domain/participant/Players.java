@@ -1,6 +1,9 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -10,4 +13,7 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
 }

@@ -8,4 +8,9 @@ public class Hit implements State{
     public Hit(Cards cards) {
         this.cards = cards;
     }
+
+    @Override
+    public Cards cards() {
+        return cards;
+    }
 }

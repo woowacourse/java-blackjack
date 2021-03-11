@@ -8,4 +8,9 @@ public class Blackjack implements State{
     public Blackjack(Cards cards) {
         this.cards = cards;
     }
+
+    @Override
+    public Cards cards() {
+        return cards;
+    }
 }

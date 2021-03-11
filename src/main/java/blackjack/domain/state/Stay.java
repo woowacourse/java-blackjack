@@ -8,4 +8,9 @@ public class Stay implements State{
     public Stay(Cards cards) {
         this.cards = cards;
     }
+
+    @Override
+    public Cards cards() {
+        return cards;
+    }
 }
