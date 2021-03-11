@@ -26,7 +26,7 @@ public class ProfitCalculator {
         return profitResult;
     }
 
-    public Money calculateDealerProfit(Map<Player, Status> result) {
+    private Money calculateDealerProfit(Map<Player, Status> result) {
         return result.entrySet()
             .stream()
             .map(entry -> calculatePlayerProfit(entry.getKey().getMoney(),
