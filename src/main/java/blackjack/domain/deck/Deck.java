@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 public class Deck {
     private static final String NOT_EXIST_CARD_IN_DECK = "[ERROR] 덱에 더이상 카드가 없습니다.";
     private static final int FIRST_DRAW_CARD_COUNT = 2;
+
     private final List<Card> cards;
 
     public Deck(List<Card> cards) {

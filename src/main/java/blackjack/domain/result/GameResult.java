@@ -29,10 +29,10 @@ public class GameResult {
 
     private static int calculateGamerProfit(Gamer gamer, Dealer dealer) {
         int profit = gamer.profit();
-        if (gamer.isBlackJack() && dealer.isBlackJack()) {
+        if (gamer.isBlackjack() && dealer.isBlackjack()) {
             return 0;
         }
-        if (gamer.isBlackJack() && !dealer.isBlackJack()) {
+        if (gamer.isBlackjack() && !dealer.isBlackjack()) {
             return profit;
         }
         return calculateGamerProfitIfNotBlackjack(gamer, dealer, profit);
@@ -42,7 +42,7 @@ public class GameResult {
         if (gamer.isBust()) {
             return profit - gamer.getBettingMoney();
         }
-        if (!gamer.isBust() && dealer.isBlackJack()) {
+        if (!gamer.isBust() && dealer.isBlackjack()) {
             return profit * (-1);
         }
         if (!gamer.isBust() && dealer.isBust()) {

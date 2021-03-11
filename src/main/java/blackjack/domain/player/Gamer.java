@@ -5,7 +5,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public class Gamer extends Player {
-
     private final BettingMoney bettingMoney;
 
     public Gamer(Name name, Cards cards) {

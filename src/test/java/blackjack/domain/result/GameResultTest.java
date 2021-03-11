@@ -20,7 +20,7 @@ class GameResultTest {
     @DisplayName("플레이어가 블랙잭이며 딜러가 블랙잭이 아닐 때")
     @Test
     void 게임_결과_수익_확인1() {
-        Gamer gamer1 = new Gamer(new Name("pobi"), Cards.of(
+        Gamer gamer = new Gamer(new Name("pobi"), Cards.of(
                 Card.of(Denomination.ACE, Shape.CLUBS),
                 Card.of(Denomination.JACK, Shape.CLUBS)
         ), new BettingMoney(10000));
@@ -31,17 +31,17 @@ class GameResultTest {
         ));
 
         // when
-        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer1));
+        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer));
 
         // then
-        assertThat(gameResult.findProfitByPlayer(gamer1)).isEqualTo(15000);
+        assertThat(gameResult.findProfitByPlayer(gamer)).isEqualTo(15000);
         assertThat(gameResult.findProfitByPlayer(dealer)).isEqualTo(-15000);
     }
 
     @DisplayName("플레이어가 블랙잭이며 딜러도 블랙잭일 때")
     @Test
     void 게임_결과_수익_확인2() {
-        Gamer gamer1 = new Gamer(new Name("pobi"), Cards.of(
+        Gamer gamer = new Gamer(new Name("pobi"), Cards.of(
                 Card.of(Denomination.ACE, Shape.CLUBS),
                 Card.of(Denomination.JACK, Shape.CLUBS)
         ), new BettingMoney(10000));
@@ -52,17 +52,17 @@ class GameResultTest {
         ));
 
         // when
-        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer1));
+        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer));
 
         // then
-        assertThat(gameResult.findProfitByPlayer(gamer1)).isEqualTo(0);
+        assertThat(gameResult.findProfitByPlayer(gamer)).isEqualTo(0);
         assertThat(gameResult.findProfitByPlayer(dealer)).isEqualTo(0);
     }
 
     @DisplayName("플레이어는 블랙잭이 아니지만 딜러가 블랙잭일 때")
     @Test
     void 게임_결과_수익_확인3() {
-        Gamer gamer1 = new Gamer(new Name("pobi"), Cards.of(
+        Gamer gamer = new Gamer(new Name("pobi"), Cards.of(
                 Card.of(Denomination.NINE, Shape.CLUBS),
                 Card.of(Denomination.JACK, Shape.CLUBS)
         ), new BettingMoney(10000));
@@ -73,18 +73,18 @@ class GameResultTest {
         ));
 
         // when
-        gamer1.stay();
-        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer1));
+        gamer.stay();
+        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer));
 
         // then
-        assertThat(gameResult.findProfitByPlayer(gamer1)).isEqualTo(-10000);
+        assertThat(gameResult.findProfitByPlayer(gamer)).isEqualTo(-10000);
         assertThat(gameResult.findProfitByPlayer(dealer)).isEqualTo(10000);
     }
 
     @DisplayName("둘 다 블랙잭이 아닌 상태에서 게이머가 버스트일 때")
     @Test
     void 게임_결과_수익_확인4() {
-        Gamer gamer1 = new Gamer(new Name("pobi"), Cards.of(
+        Gamer gamer = new Gamer(new Name("pobi"), Cards.of(
                 Card.of(Denomination.NINE, Shape.DIAMONDS),
                 Card.of(Denomination.KING, Shape.CLUBS)
         ), new BettingMoney(10000));
@@ -95,18 +95,18 @@ class GameResultTest {
         ));
 
         // when
-        gamer1.draw(Card.of(Denomination.FIVE, Shape.CLUBS));
-        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer1));
+        gamer.draw(Card.of(Denomination.FIVE, Shape.CLUBS));
+        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer));
 
         // then
-        assertThat(gameResult.findProfitByPlayer(gamer1)).isEqualTo(-10000);
+        assertThat(gameResult.findProfitByPlayer(gamer)).isEqualTo(-10000);
         assertThat(gameResult.findProfitByPlayer(dealer)).isEqualTo(10000);
     }
 
     @DisplayName("둘 다 블랙잭이 아닌 상태에서 딜러가 버스트일 때")
     @Test
     void 게임_결과_수익_확인5() {
-        Gamer gamer1 = new Gamer(new Name("pobi"), Cards.of(
+        Gamer gamer = new Gamer(new Name("pobi"), Cards.of(
                 Card.of(Denomination.NINE, Shape.CLUBS),
                 Card.of(Denomination.JACK, Shape.CLUBS)
         ), new BettingMoney(10000));
@@ -117,19 +117,19 @@ class GameResultTest {
         ));
 
         // when
-        gamer1.stay();
+        gamer.stay();
         dealer.draw(Card.of(Denomination.JACK, Shape.CLUBS));
-        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer1));
+        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer));
 
         // then
-        assertThat(gameResult.findProfitByPlayer(gamer1)).isEqualTo(10000);
+        assertThat(gameResult.findProfitByPlayer(gamer)).isEqualTo(10000);
         assertThat(gameResult.findProfitByPlayer(dealer)).isEqualTo(-10000);
     }
 
     @DisplayName("둘 다 블랙잭이 아닌 상태에서 딜러 점수가 더 높을 때")
     @Test
     void 게임_결과_수익_확인6() {
-        Gamer gamer1 = new Gamer(new Name("pobi"), Cards.of(
+        Gamer gamer = new Gamer(new Name("pobi"), Cards.of(
                 Card.of(Denomination.TWO, Shape.CLUBS),
                 Card.of(Denomination.JACK, Shape.CLUBS)
         ), new BettingMoney(10000));
@@ -140,18 +140,18 @@ class GameResultTest {
         ));
 
         // when
-        gamer1.stay();
-        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer1));
+        gamer.stay();
+        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer));
 
         // then
-        assertThat(gameResult.findProfitByPlayer(gamer1)).isEqualTo(-10000);
+        assertThat(gameResult.findProfitByPlayer(gamer)).isEqualTo(-10000);
         assertThat(gameResult.findProfitByPlayer(dealer)).isEqualTo(10000);
     }
 
     @DisplayName("둘 다 블랙잭이 아닌 상태에서 점수가 같을 때")
     @Test
     void 게임_결과_수익_확인7() {
-        Gamer gamer1 = new Gamer(new Name("pobi"), Cards.of(
+        Gamer gamer = new Gamer(new Name("pobi"), Cards.of(
                 Card.of(Denomination.NINE, Shape.CLUBS),
                 Card.of(Denomination.JACK, Shape.CLUBS)
         ), new BettingMoney(10000));
@@ -162,18 +162,18 @@ class GameResultTest {
         ));
 
         // when
-        gamer1.stay();
-        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer1));
+        gamer.stay();
+        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer));
 
         // then
-        assertThat(gameResult.findProfitByPlayer(gamer1)).isEqualTo(0);
+        assertThat(gameResult.findProfitByPlayer(gamer)).isEqualTo(0);
         assertThat(gameResult.findProfitByPlayer(dealer)).isEqualTo(0);
     }
 
     @DisplayName("둘 다 블랙잭이 아닌 상태에서 게이머의 점수가 더 높을 때")
     @Test
     void 게임_결과_수익_확인8() {
-        Gamer gamer1 = new Gamer(new Name("pobi"), Cards.of(
+        Gamer gamer = new Gamer(new Name("pobi"), Cards.of(
                 Card.of(Denomination.NINE, Shape.CLUBS),
                 Card.of(Denomination.JACK, Shape.CLUBS)
         ), new BettingMoney(10000));
@@ -184,11 +184,11 @@ class GameResultTest {
         ));
 
         // when
-        gamer1.stay();
-        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer1));
+        gamer.stay();
+        GameResult gameResult = GameResult.of(dealer, Arrays.asList(gamer));
 
         // then
-        assertThat(gameResult.findProfitByPlayer(gamer1)).isEqualTo(10000);
+        assertThat(gameResult.findProfitByPlayer(gamer)).isEqualTo(10000);
         assertThat(gameResult.findProfitByPlayer(dealer)).isEqualTo(-10000);
     }
 }

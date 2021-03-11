@@ -12,7 +12,6 @@ public class Dealer extends Player {
         super(new Name(DEALER_NAME), cards);
     }
 
-
     @Override
     public boolean canDraw() {
         return (!state.isFinished()) && (calculateScore() <= DRAW_MAXIMUM_SCORE);

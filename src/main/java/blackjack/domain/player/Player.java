@@ -5,7 +5,6 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.state.*;
 
 public abstract class Player {
-
     private final Name name;
     protected State state;
 
@@ -20,7 +19,7 @@ public abstract class Player {
         return name.getName();
     }
 
-    public boolean isBlackJack() {
+    public boolean isBlackjack() {
         return Blackjack.class.isInstance(state);
     }
 
