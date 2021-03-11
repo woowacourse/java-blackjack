@@ -53,12 +53,12 @@ public class OutputView {
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
-    public static void printDealerDrawable(Dealer dealer) {
-        System.out.println("\n" + dealer.getName() + "는 16이하라 한장의 카드를 더 받았습니다.\n");
+    public static void printDealerDrawable() {
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printDealerNotDrawable(Dealer dealer) {
-        System.out.println("\n" + dealer.getName() + "는 17이상이라 한장의 카드를 추가로 받지 못하였습니다.\n");
+    public static void printDealerNotDrawable() {
+        System.out.println("\n딜러는 17이상이라 한장의 카드를 추가로 받지 못하였습니다.\n");
     }
 
     public static void printCardsWithTotalValue(List<User> users) {

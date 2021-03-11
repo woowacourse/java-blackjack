@@ -82,7 +82,16 @@ public class BlackjackGame {
         throw new IllegalArgumentException("y, n로만 대답할 수 있습니다.");
     }
 
-    public boolean isNotGameOver() {
+    public boolean isNotFinishPlayersRound() {
         return players.isRemainToProceedPlayers();
+    }
+
+    public int proceedDealerRound() {
+        int roundCount = 0;
+        while (dealer.isMustHit()) {
+            dealer.hit(deck.popOne());
+            roundCount++;
+        }
+        return roundCount;
     }
 }

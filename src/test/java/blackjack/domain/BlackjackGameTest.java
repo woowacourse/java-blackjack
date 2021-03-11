@@ -56,7 +56,7 @@ public class BlackjackGameTest {
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
         blackjackGame.handOutInitialCards();
 
-        boolean isNotGameOver = blackjackGame.isNotGameOver();
+        boolean isNotGameOver = blackjackGame.isNotFinishPlayersRound();
 
         assertThat(isNotGameOver).isTrue();
     }

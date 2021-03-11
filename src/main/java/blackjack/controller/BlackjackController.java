@@ -2,12 +2,12 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.result.ResultBoard;
-import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class BlackjackController {
     public void run() {
@@ -34,7 +34,7 @@ public class BlackjackController {
     }
 
     private void proceedPlayersRound(BlackjackGame blackjackGame) {
-        while (blackjackGame.isNotGameOver()) {
+        while (blackjackGame.isNotFinishPlayersRound()) {
             Player currentPlayer = blackjackGame.getCurrentPlayer();
             OutputView.printAskOneMoreCard(currentPlayer);
             blackjackGame.proceedPlayersRound(InputView.inputDrawAnswer());
@@ -43,11 +43,9 @@ public class BlackjackController {
     }
 
     private void proceedDealerRound(BlackjackGame blackjackGame) {
-        Dealer dealer = blackjackGame.getDealer();
-        while (dealer.isMustHit()) {
-            blackjackGame.hit(dealer);
-            OutputView.printDealerDrawable(dealer);
-        }
-        OutputView.printDealerNotDrawable(dealer);
+        int roundCount = blackjackGame.proceedDealerRound();
+        IntStream.range(0, roundCount)
+                .forEach(i -> OutputView.printDealerDrawable());
+        OutputView.printDealerNotDrawable();
     }
 }
