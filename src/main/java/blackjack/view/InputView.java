@@ -17,12 +17,12 @@ public class InputView {
     }
 
     public static YesOrNo askDrawOrNot(Player player) {
-        OutputView.printMessage(player.getName().getValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        OutputView.printMessage(player.getNameValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return YesOrNo.of(SCANNER.nextLine());
     }
 
     public static int askBettingMoney(Player player) {
-        OutputView.printMessage(player.getName().getValue() + "의 배팅 금액은?");
+        OutputView.printMessage(player.getNameValue()+ "의 배팅 금액은?");
         return Integer.parseInt(SCANNER.nextLine());
     }
 }

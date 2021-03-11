@@ -33,7 +33,7 @@ public class Dealer implements Player {
     }
 
     public WinOrLose calculateWinOrLose(final Gambler gambler){
-        return gambler.getCards().compareCardsScore(cards);
+        return cards.compareCardsScore(gambler.getCards());
     }
 
     public void checkBlackJack(Gambler gambler){
@@ -66,10 +66,6 @@ public class Dealer implements Player {
         giveMoney(gambler, winningMoney);
     }
 
-    public Money getMoney(){
-        return money;
-    }
-
     @Override
     public boolean isBust() {
         return cards.isBust();
@@ -86,8 +82,13 @@ public class Dealer implements Player {
     }
 
     @Override
-    public Name getName() {
-        return name;
+    public String getNameValue() {
+        return name.getValue();
+    }
+
+    @Override
+    public int getMoneyValue(){
+        return money.getValue();
     }
 
     @Override

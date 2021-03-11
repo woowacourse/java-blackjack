@@ -33,6 +33,10 @@ public class Cards {
         Score thisScore = calculateScore();
         Score otherScore = other.calculateScore();
 
+        if(thisScore.isBust() && other.isBust()){
+            return WinOrLose.DRAW;
+        }
+
         if (thisScore.isBust() && !otherScore.isBust()) {
             return WinOrLose.LOSE;
         }
@@ -45,7 +49,7 @@ public class Cards {
             return WinOrLose.WIN;
         }
 
-        if (otherScore.isLowerScore(thisScore)) {
+        if (thisScore.isLowerScore(otherScore)) {
             return WinOrLose.LOSE;
         }
 

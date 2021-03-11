@@ -48,6 +48,7 @@ public class Score {
         return false;
     }
 
+    // TODO :: 매직 넘버 빼기
     public Score useAceAsEleven() {
         return new Score(value + 10);
     }

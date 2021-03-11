@@ -20,9 +20,9 @@ public class OutputView {
 
     public static void printInitialCards(final Dealer dealer, final Gamblers gamblers) {
         StringBuilder sb = new StringBuilder();
-        sb.append(dealer.getName() + "와");
+        sb.append(dealer.getNameValue() + "와");
         for (Gambler gambler : gamblers) {
-            sb.append(gambler.getName() + ",");
+            sb.append(gambler.getNameValue() + ",");
         }
         sb.append("에게 2장의 카드를 나누었습니다");
 
@@ -34,7 +34,7 @@ public class OutputView {
 
     public static void printPlayerCardsInformation(final Player player) {
         printMessageByFormat("%s카드: %s",
-                player.getName().getValue(), makeCardInfo(player.getCards()));
+                player.getNameValue(), makeCardInfo(player.getCards()));
         printLineSeparator();
     }
 
@@ -60,14 +60,14 @@ public class OutputView {
         );
 
         for(Player player : result.getPlayerSet()){
-            OutputView.printMessage(player.getName().getValue() + " : " + result.getReverseResult(player).getSymbol());
+            OutputView.printMessage(player.getNameValue() + " : " + result.getReverseResult(player).getSymbol());
         }
     }
 
     private static void printCardsAndScore(final WinningResult winningResult) {
         printDealerResult(winningResult);
         for (Player player : winningResult.getGamblerSet()) {
-            printMessageByFormat(RESULT_INFORMATION, player.getName().getValue(), makeCardInfo(player.getCards()), player.getScore().getValue());
+            printMessageByFormat(RESULT_INFORMATION, player.getNameValue(), makeCardInfo(player.getCards()), player.getScore().getValue());
         }
     }
 
@@ -94,15 +94,15 @@ public class OutputView {
     private static void printGamblerWinningResult(WinningResult winningResult) {
         Map<Player, WinOrLose> winningTable = winningResult.getGamblerResults();
         for (Player player : winningTable.keySet()) {
-            OutputView.printMessage(player.getName().getValue() + " : " + winningTable.get(player).getSymbol());
+            OutputView.printMessage(player.getNameValue() + " : " + winningTable.get(player).getSymbol());
         }
     }
 
     public static void printFinalRevenue(Dealer dealer, Gamblers gamblers){
         System.out.println("## 최종 수익");
-        System.out.println(dealer.getName().getValue() + ": "+ dealer.getMoney().getValue());
+        System.out.println(dealer.getNameValue()+ ": "+ dealer.getMoneyValue());
         for (Gambler gambler : gamblers) {
-            System.out.println(gambler.getName().getValue() + ": "+gambler.getBettingMoney().getValue());
+            System.out.println(gambler.getNameValue()+ ": "+gambler.getMoneyValue());
         }
     }
 

@@ -22,7 +22,12 @@ public class Gambler implements Player {
     }
 
     public Money getBettingMoney() {
-        return this.money.abs();
+        return money.abs();
+    }
+
+    @Override
+    public int getMoneyValue(){
+        return money.getValue();
     }
 
     @Override
@@ -36,8 +41,8 @@ public class Gambler implements Player {
     }
 
     @Override
-    public Name getName() {
-        return name;
+    public String getNameValue() {
+        return name.getValue();
     }
 
     @Override
