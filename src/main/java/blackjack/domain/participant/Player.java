@@ -41,7 +41,7 @@ public class Player implements Participant {
 
     @Override
     public boolean isReceiveCard() {
-        return true;
+        return !state.isEndState();
     }
 
     @Override
