@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class StatusTest {
 
@@ -43,5 +45,12 @@ class StatusTest {
         Score playerScore = new Score(20);
 
         assertThat(Status.compare(dealerScore, playerScore)).isEqualTo(Status.WIN);
+    }
+
+    @DisplayName("승패 여부에 따른 수익률을 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"BLACKJACK:1.5", "WIN:1", "DRAW:0", "LOSE:-1"}, delimiter = ':')
+    void getEarningRate(Status status, double expected) {
+        assertThat(status.getEarningRate()).isEqualTo(expected);
     }
 }

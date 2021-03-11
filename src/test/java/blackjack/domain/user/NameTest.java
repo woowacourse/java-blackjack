@@ -23,7 +23,7 @@ public class NameTest {
     @DisplayName("이름은 비어있으면 안 된다.")
     void invalidCreation(String value) {
         assertThatThrownBy(() -> {
-            Name name = new Name(value);
+            new Name(value);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }
