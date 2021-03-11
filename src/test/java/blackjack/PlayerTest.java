@@ -17,12 +17,14 @@ import static org.assertj.core.api.Assertions.*;
 
 public class PlayerTest {
     @Test
-    void create() {
+    @DisplayName("Player 생성후 이름 확인")
+    void create1() {
         Participant player = new Player("john", new FixedCardDeck());
         assertThat(player.getName()).isEqualTo("john");
     }
 
     @Test
+    @DisplayName("Player 생성후 이름 확인")
     void create2() {
         Participant player = new Player("sarah", new FixedCardDeck());
         assertThat(player.getName()).isEqualTo("sarah");
