@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.blackjackgame.Money;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class Dealer extends Participant {
     }
 
     public boolean canDraw() {
-        return cards.getScore() <= GET_ONE_MORE_CARD_NORM;
+        return state.getScore() <= GET_ONE_MORE_CARD_NORM;
     }
 
     public int getResultCount(GameResult gameResult) {
@@ -28,7 +28,12 @@ public class Dealer extends Participant {
         gameResults.add(gameResult);
     }
 
-    public Card getFirstCard() {
-        return cards.getFirstCard();
+    public Money calculateDealerProfit(Players players) {
+        Money dealerProfit = new Money();
+        for (Player player : players.getPlayers()) {
+            Money playerProfitMoney = player.profit(this);
+            dealerProfit = dealerProfit.add(playerProfitMoney.minus());
+        }
+        return dealerProfit;
     }
 }
