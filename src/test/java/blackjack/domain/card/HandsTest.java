@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import blackjack.domain.Score;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +41,7 @@ class HandsTest {
         Hands hands = new Hands(cards);
         hands.addCard(Card.of(Suit.CLUB, Denomination.KING));
 
-        assertThat(hands.calculate()).isEqualTo(13);
+        assertThat(hands.calculate()).isEqualTo(new Score(13));
     }
 
     @DisplayName("포인트 계산 성공 : Ace 존재하고 최대값 21 넘지 않을 때")
@@ -52,7 +53,7 @@ class HandsTest {
         Hands hands = new Hands(cards);
         hands.addCard(Card.of(Suit.CLUB, Denomination.THREE));
 
-        assertThat(hands.calculate()).isEqualTo(16);
+        assertThat(hands.calculate()).isEqualTo(new Score(16));
     }
 
     @DisplayName("포인트 계산 성공 : Ace 존재하지 않을 때")
@@ -64,7 +65,7 @@ class HandsTest {
         Hands hands = new Hands(cards);
         hands.addCard(Card.of(Suit.CLUB, Denomination.THREE));
 
-        assertThat(hands.calculate()).isEqualTo(7);
+        assertThat(hands.calculate()).isEqualTo(new Score(7));
     }
 
     @DisplayName("포인트 계산 성공 : 특수 케이스 A,2,8")
@@ -76,7 +77,7 @@ class HandsTest {
         Hands hands = new Hands(cards);
         hands.addCard(Card.of(Suit.CLUB, Denomination.EIGHT));
 
-        assertThat(hands.calculate()).isEqualTo(21);
+        assertThat(hands.calculate()).isEqualTo(new Score(21));
     }
 
     @DisplayName("포인트 계산 성공 : 특수 케이스 10,3,A,A,A,Q")
@@ -91,7 +92,7 @@ class HandsTest {
         hands.addCard(Card.of(Suit.HEART, Denomination.ACE));
         hands.addCard(Card.of(Suit.CLUB, Denomination.QUEEN));
 
-        assertThat(hands.calculate()).isEqualTo(26);
+        assertThat(hands.calculate()).isEqualTo(new Score(26));
     }
 
 //    @DisplayName("Ace를 가지고 있는지 확인")

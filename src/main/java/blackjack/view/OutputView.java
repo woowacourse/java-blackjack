@@ -12,7 +12,7 @@ public class OutputView {
 
     private static final String NEWLINE = System.getProperty("line.separator");
     private static final String START_MSG = "딜러와 %s에게 2장의 카드를 나누었습니다." + NEWLINE;
-    private static final String RESULT = "%s - 결과 : %d" + NEWLINE;
+    private static final String RESULT = "%s - 결과 : %d";
 
     public static void gameStart(Players players, Dealer dealer) {
         final List<String> names = players.stream()
@@ -35,12 +35,12 @@ public class OutputView {
 
     public static void allCardsWithPoint(Player player) {
         System.out.printf(RESULT, player.getName() + " : " + cardToString(player.showHands()),
-                player.calculateScore());
+                player.getScore());
     }
 
     public static void allCardsWithPoint(Dealer dealer) {
         System.out.printf(RESULT, dealer.getName() + " : " + cardToString(dealer.showHands()),
-                dealer.getPoint());
+                dealer.getScore());
     }
 
     private static void gamersOpenCards(Players players, Dealer dealer) {

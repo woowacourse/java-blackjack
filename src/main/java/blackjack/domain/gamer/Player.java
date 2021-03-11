@@ -1,6 +1,7 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.ResultType;
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import java.util.List;
@@ -32,8 +33,12 @@ public class Player {
         return name;
     }
 
-    public int calculateScore() {
+    public Score calculateScore() {
         return hands.calculate();
+    }
+
+    public boolean isBusted() {
+        return calculateScore().isBusted();
     }
 
     public boolean hasBlackjack() {
@@ -59,5 +64,17 @@ public class Player {
             return -money;
         }
         return 0;
+    }
+
+    public boolean isMaxScore() {
+        return hands.isMaxScore();
+    }
+
+    public boolean isUnderMaxScore() {
+        return hands.isUnderMaxScore();
+    }
+
+    public int getScore() {
+        return calculateScore().getValue();
     }
 }

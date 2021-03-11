@@ -6,8 +6,6 @@ import java.util.List;
 
 public class Dealer extends Gamer {
 
-    private static final int ADD_CARD_BOUNDARY = 17;
-
     public Dealer(Hands hands) {
         this("딜러", hands);
     }
@@ -17,7 +15,23 @@ public class Dealer extends Gamer {
     }
 
     public boolean checkBoundary() {
-        return (hands.calculate() < ADD_CARD_BOUNDARY);
+        return hands.calculate().dealerAbleToAdd();
+    }
+
+    public boolean isBusted() {
+        return calculateScore().isBusted();
+    }
+
+    public boolean isMaxScore() {
+        return calculateScore().isMaxScore();
+    }
+
+    public boolean isUnderMaxScore() {
+        return calculateScore().isUnderMaxScore();
+    }
+
+    public int getScore() {
+        return calculateScore().getValue();
     }
 
     @Override
