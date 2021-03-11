@@ -16,7 +16,7 @@ public abstract class Participant {
 
     public void drawCard(Card card) {
         hand.add(card);
-        changeStatus();
+        changeStatus(hand);
     }
 
     public List<Card> getCards() {
@@ -31,8 +31,8 @@ public abstract class Participant {
         return this.status == status;
     }
 
-    public void changeStatus() {
-        status = Status.of(hand.calculateScore());
+    public void changeStatus(Hand hand) {
+        status = Status.of(hand);
     }
 
     public int calculateScore() {

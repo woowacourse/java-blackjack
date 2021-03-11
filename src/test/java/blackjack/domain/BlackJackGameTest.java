@@ -19,9 +19,9 @@ public class BlackJackGameTest {
         User user = new User(Name.from("욘"));
         Users users = new Users(Arrays.asList(user));
         //when
-        BlackjackGame blackJackGame = BlackjackGame.createAndFirstDraw(users);
+        BlackjackGame blackjackGame = BlackjackGame.createAndFirstDraw(users);
         //then
-        assertThat(blackJackGame.getDealer().handSize()).isEqualTo(2);
+        assertThat(blackjackGame.createDealerGameResult().getDealer().handSize()).isEqualTo(2);
         assertThat(user.handSize()).isEqualTo(2);
     }
 
@@ -54,7 +54,7 @@ public class BlackJackGameTest {
         BlackjackGame blackjackGame = BlackjackGame.createAndFirstDraw(users);
         blackjackGame.drawCardToDealer();
 
-        assertThat(blackjackGame.getDealer().handSize()).isEqualTo(3);
+        assertThat(blackjackGame.createDealerGameResult().getDealer().handSize()).isEqualTo(3);
     }
 
 
