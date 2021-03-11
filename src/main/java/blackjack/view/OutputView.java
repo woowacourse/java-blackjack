@@ -21,6 +21,7 @@ public class OutputView {
     private static final String DEALER_MORE_CARD_MESSAGE = "%s는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String GAME_RESULT_MESSAGE = "## 최종 승패";
     private static final String DEALER_GAME_RESULT_FORMAT = "%s: %d승 %d무 %d패";
+    private static final String GAME_PROFIT_MESSAGE = "## 최종 수익";
 
     private OutputView() {
     }
@@ -110,5 +111,17 @@ public class OutputView {
         showNewLine();
         System.out.printf(DEALER_MORE_CARD_MESSAGE, dealer.getName());
         showNewLine();
+    }
+
+    public static void showDealerProfit(final Dealer dealer) {
+        showNewLine();
+        System.out.println(GAME_PROFIT_MESSAGE);
+        System.out.println(dealer.getName() + ": " + dealer.getDealerMoney().getMoney());
+    }
+
+    public static void showPlayerProfit(final Map<Player, Double> playerProfit) {
+        for (Player player : playerProfit.keySet()) {
+            System.out.println(player.getName() + ": " + playerProfit.get(player));
+        }
     }
 }

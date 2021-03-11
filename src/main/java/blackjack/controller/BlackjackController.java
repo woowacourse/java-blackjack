@@ -8,6 +8,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
     public void run() {
@@ -24,7 +25,8 @@ public class BlackjackController {
     private Players playerSetUp() {
         try {
             final List<String> playerName = InputView.requestName();
-            return Players.of(playerName);
+            final List<Double> playerMoney = InputView.requestBettingMoney(playerName);
+            return Players.of(playerName, playerMoney);
         } catch (IllegalArgumentException e) {
             OutputView.showErrorMessage(e.getMessage());
             return playerSetUp();
@@ -68,7 +70,9 @@ public class BlackjackController {
         OutputView.showNewLine();
         OutputView.showCardResult(dealer);
         OutputView.showEveryPlayerCardResult(players);
-        OutputView.showDealerGameResult(dealer, dealer.generateEveryResult(players));
-        OutputView.showPlayerGameResult(players.generateEveryPlayerResult(dealer));
+
+        final Map<Player, Double> playerProfit = players.generateEveryPlayerProfit(dealer);
+        OutputView.showDealerProfit(dealer);
+        OutputView.showPlayerProfit(playerProfit);
     }
 }

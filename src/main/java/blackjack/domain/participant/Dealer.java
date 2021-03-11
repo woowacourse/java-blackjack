@@ -10,7 +10,7 @@ public class Dealer extends Participant {
     private static final int MAX_SUM_FOR_MORE_CARD = 16;
     private static final String FIXED_DEALER_NAME = "딜러";
 
-    private DealerMoney dealerMoney = new DealerMoney();
+    private final DealerMoney dealerMoney = new DealerMoney();
 
     public Dealer() {
         super(FIXED_DEALER_NAME);
@@ -45,5 +45,9 @@ public class Dealer extends Participant {
 
     public void calculateProfit(final double opponentProfit) {
         dealerMoney.resetMoneyByOpponentProfit(opponentProfit);
+    }
+
+    public DealerMoney getDealerMoney() {
+        return dealerMoney;
     }
 }
