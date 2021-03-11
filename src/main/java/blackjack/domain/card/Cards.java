@@ -47,7 +47,7 @@ public class Cards {
     public int calculateScore() {
         int score = 0;
         score += noneAceCardScore();
-        score += aceCardScore();
+        score = aceCardScore(score);
 
         return score;
     }
@@ -59,8 +59,7 @@ public class Cards {
                 .sum();
     }
 
-    private int aceCardScore() {
-        int score = 0;
+    private int aceCardScore(int score) {
         int aceCount = (int) cards
                 .stream()
                 .filter(Card::isAce)
@@ -78,5 +77,9 @@ public class Cards {
 
     public boolean isBust() {
         return calculateScore() > 21;
+    }
+
+    public boolean isStay() {
+        return cards.size() > 2 && calculateScore() == 21;
     }
 }

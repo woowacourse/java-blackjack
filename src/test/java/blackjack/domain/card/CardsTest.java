@@ -78,8 +78,16 @@ public class CardsTest {
                 new Card(Shape.HEART, Denomination.ACE)
         ));
 
+        Cards cards4 = new Cards(Arrays.asList(
+                new Card(Shape.SPADE, Denomination.THREE),
+                new Card(Shape.SPADE, Denomination.QUEEN),
+                new Card(Shape.HEART, Denomination.ACE)
+        ));
+
         assertThat(cards1.calculateScore()).isEqualTo(14);
         assertThat(cards2.calculateScore()).isEqualTo(21);
         assertThat(cards3.calculateScore()).isEqualTo(20);
+        assertThat(cards4.calculateScore()).isEqualTo(14);
+
     }
 }
