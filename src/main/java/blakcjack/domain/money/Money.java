@@ -4,14 +4,14 @@ import java.util.Collection;
 import java.util.Objects;
 
 public class Money {
-	private final float money;
+	private final double money;
 
-	public Money(final float money) {
+	public Money(final double money) {
 		this.money = money;
 	}
 
 	public static Money calculateDealerProfitFrom(final Collection<Money> moneys) {
-		final float dealerProfit = (float) moneys.stream()
+		final double dealerProfit = moneys.stream()
 				.mapToDouble(amount -> -amount.money)
 				.sum();
 		return new Money(dealerProfit);
@@ -21,7 +21,7 @@ public class Money {
 		return new Money(money * rate);
 	}
 
-	public float getMoney() {
+	public double getMoney() {
 		return money;
 	}
 
@@ -30,7 +30,7 @@ public class Money {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		final Money money1 = (Money) o;
-		return Float.compare(money1.money, money) == 0;
+		return Double.compare(money1.money, money) == 0;
 	}
 
 	@Override

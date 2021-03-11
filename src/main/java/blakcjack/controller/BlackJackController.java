@@ -30,7 +30,7 @@ public class BlackJackController {
 
 	private Participants createParticipants() {
 		final List<Player> players = createPlayers();
-		Dealer dealer = new Dealer();
+		final Dealer dealer = new Dealer();
 		return new Participants(dealer, players);
 	}
 
@@ -66,6 +66,13 @@ public class BlackJackController {
 		drawPlayerCards((Player) participant, deck);
 	}
 
+	private void drawDealerCards(final Dealer dealer, final Deck deck) {
+		while (dealer.isScoreLowerThanMaximumDrawCriterion()) {
+			dealer.drawOneCardFrom(deck);
+			printDealerAdditionalCardMessage();
+		}
+	}
+
 	private void drawPlayerCards(final Player player, final Deck deck) {
 		while (isHit(player)) {
 			player.drawOneCardFrom(deck);
@@ -75,12 +82,5 @@ public class BlackJackController {
 
 	private boolean isHit(final Player player) {
 		return player.hasAffordableScoreForHit() && isYes(player);
-	}
-
-	private void drawDealerCards(final Dealer dealer, final Deck deck) {
-		while (dealer.isScoreLowerThanMaximumDrawCriterion()) {
-			dealer.drawOneCardFrom(deck);
-			printDealerAdditionalCardMessage();
-		}
 	}
 }
