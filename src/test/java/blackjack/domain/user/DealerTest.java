@@ -3,10 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
-import blackjack.domain.state.Blackjack;
-import blackjack.domain.state.Bust;
-import blackjack.domain.state.Hit;
-import blackjack.domain.state.State;
+import blackjack.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +25,7 @@ public class DealerTest {
     void distributeTwoCards() {
         Dealer dealer = new Dealer();
 
-        dealer.receiveCards(new Cards(Arrays.asList(
+        dealer.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.EIGHT),
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
@@ -41,7 +38,7 @@ public class DealerTest {
     @Test
     void isDrawableTrue() {
         Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(Arrays.asList(
+        dealer.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.TWO),
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
@@ -55,7 +52,7 @@ public class DealerTest {
     @Test
     void isDrawableFalse() {
         Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(Arrays.asList(
+        dealer.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.ACE),
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
@@ -69,7 +66,7 @@ public class DealerTest {
     @Test
     void show() {
         Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(Arrays.asList(
+        dealer.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.EIGHT),
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
@@ -81,7 +78,7 @@ public class DealerTest {
     @Test
     void receiveCardsState() {
         Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(Arrays.asList(
+        dealer.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.TWO),
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
@@ -95,7 +92,7 @@ public class DealerTest {
     @Test
     void receiveCardsState2() {
         Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(Arrays.asList(
+        dealer.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.ACE),
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
@@ -109,7 +106,7 @@ public class DealerTest {
     @Test
     void draw1() {
         Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(Arrays.asList(
+        dealer.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.ACE),
                 new Card(Suit.CLOVER, Denomination.TWO)
         )));
@@ -124,7 +121,7 @@ public class DealerTest {
     @DisplayName("상태에 따라 카드를 받는다. - bust")
     void draw2() {
         Dealer dealer = new Dealer();
-        dealer.receiveCards(new Cards(Arrays.asList(
+        dealer.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.JACK),
                 new Card(Suit.CLOVER, Denomination.TWO)
         )));
@@ -133,5 +130,20 @@ public class DealerTest {
         State state = dealer.getState();
 
         assertThat(state).isInstanceOf(Bust.class);
+    }
+
+    @Test
+    @DisplayName("카드를 더이상 받지 않는다.")
+    void stay() {
+        Dealer dealer = new Dealer();
+        dealer.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.TWO)
+        )));
+
+        dealer.stay();
+        State state = dealer.getState();
+
+        assertThat(state).isInstanceOf(Stay.class);
     }
 }

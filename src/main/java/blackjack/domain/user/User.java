@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
+import blackjack.domain.state.Stay;
 
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ public abstract class User {
         this.name = name;
     }
 
-    public final void receiveCards(Cards cards) {
+    public final void initializeCards(Cards cards) {
         state = StateFactory.generateStateByCards(cards);
     }
 
@@ -42,7 +43,7 @@ public abstract class User {
         return state;
     }
 
-    private void changeState(State state) {
+    public void changeState(State state) {
         this.state = state;
     }
 
@@ -67,5 +68,9 @@ public abstract class User {
 
     public final void hit(Card card) {
         changeState(state.draw(card));
+    }
+
+    public final void stay() {
+        changeState(new Stay(cards()));
     }
 }

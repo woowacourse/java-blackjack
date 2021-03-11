@@ -4,10 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.result.Result;
-import blackjack.domain.state.Blackjack;
-import blackjack.domain.state.Bust;
-import blackjack.domain.state.Hit;
-import blackjack.domain.state.State;
+import blackjack.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +26,7 @@ public class PlayerTest {
     public void distributeTwoCards() {
         Player player = new Player("amazzi");
 
-        player.receiveCards(new Cards(Arrays.asList(
+        player.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.HEART, Denomination.NINE),
                 new Card(Suit.DIAMOND, Denomination.JACK)
         )));
@@ -42,7 +39,7 @@ public class PlayerTest {
     @Test
     public void isDrawableTrue() {
         Player player = new Player("amazzi");
-        player.receiveCards(new Cards(Arrays.asList(
+        player.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.HEART, Denomination.TWO),
                 new Card(Suit.DIAMOND, Denomination.JACK)
         )));
@@ -56,7 +53,7 @@ public class PlayerTest {
     @Test
     public void isDrawableFalse() {
         Player player = new Player("amazzi");
-        player.receiveCards(new Cards(Arrays.asList(
+        player.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.HEART, Denomination.TWO),
                 new Card(Suit.DIAMOND, Denomination.JACK)
         )));
@@ -70,7 +67,7 @@ public class PlayerTest {
     @Test
     void show() {
         Player player = new Player("amazzi");
-        player.receiveCards(new Cards(Arrays.asList(
+        player.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.EIGHT),
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
@@ -86,11 +83,11 @@ public class PlayerTest {
     public void decideBustUserLose1() {
         Dealer dealer = new Dealer();
         Player player = new Player("amazzi");
-        dealer.receiveCards(new Cards(Arrays.asList(
+        dealer.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.EIGHT),
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
-        player.receiveCards(new Cards(Arrays.asList(
+        player.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.EIGHT),
                 new Card(Suit.CLOVER, Denomination.TWO)
         )));
@@ -105,11 +102,11 @@ public class PlayerTest {
     public void decideBustUserLose2() {
         Dealer dealer = new Dealer();
         Player player = new Player("amazzi");
-        dealer.receiveCards(new Cards(Arrays.asList(
+        dealer.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.EIGHT),
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
-        player.receiveCards(new Cards(Arrays.asList(
+        player.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.EIGHT),
                 new Card(Suit.CLOVER, Denomination.TWO)
         )));
@@ -124,11 +121,11 @@ public class PlayerTest {
     public void decideBustUserStandOff() {
         Dealer dealer = new Dealer();
         Player player = new Player("amazzi");
-        dealer.receiveCards(new Cards(Arrays.asList(
+        dealer.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.EIGHT),
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
-        player.receiveCards(new Cards(Arrays.asList(
+        player.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.EIGHT),
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
@@ -142,7 +139,7 @@ public class PlayerTest {
     @Test
     public void receiveCardsState() {
         Player player = new Player("amazzi");
-        player.receiveCards(new Cards(Arrays.asList(
+        player.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.TWO),
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
@@ -156,7 +153,7 @@ public class PlayerTest {
     @Test
     public void receiveCardsState2() {
         Player player = new Player("amazzi");
-        player.receiveCards(new Cards(Arrays.asList(
+        player.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.ACE),
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
@@ -170,7 +167,7 @@ public class PlayerTest {
     @DisplayName("상태에 따라 카드를 받는다. - hit")
     void draw1() {
         Player player = new Player("amazzi");
-        player.receiveCards(new Cards(Arrays.asList(
+        player.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.ACE),
                 new Card(Suit.CLOVER, Denomination.TWO)
         )));
@@ -185,7 +182,7 @@ public class PlayerTest {
     @DisplayName("상태에 따라 카드를 받는다. - bust")
     void draw2() {
         Player player = new Player("amazzi");
-        player.receiveCards(new Cards(Arrays.asList(
+        player.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.JACK),
                 new Card(Suit.CLOVER, Denomination.TWO)
         )));
@@ -194,5 +191,20 @@ public class PlayerTest {
         State state = player.getState();
 
         assertThat(state).isInstanceOf(Bust.class);
+    }
+
+    @Test
+    @DisplayName("카드를 더이상 받지 않는다.")
+    void stay() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.TWO)
+        )));
+
+        player.stay();
+        State state = player.getState();
+
+        assertThat(state).isInstanceOf(Stay.class);
     }
 }

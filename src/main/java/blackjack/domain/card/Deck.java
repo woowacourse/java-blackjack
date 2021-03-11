@@ -38,9 +38,7 @@ public class Deck {
                 .collect(Collectors.toList()));
     }
 
-    public Cards popOne() {
-        return new Cards(IntStream.range(START_COUNT, 1)
-                .mapToObj(c -> deck.poll())
-                .collect(Collectors.toList()));
+    public Card popOne() {
+        return deck.poll();
     }
 }

@@ -30,9 +30,8 @@ public class DeckTest {
     void popOne() {
         Deck deck = new Deck();
 
-        int cardCount = deck.popOne()
-                .getCards().size();
+        Card card = deck.popOne();
 
-        assertThat(cardCount).isEqualTo(1);
+        assertThat(card).isInstanceOf(Card.class);
     }
 }

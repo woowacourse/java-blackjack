@@ -42,7 +42,7 @@ public class PlayersTest {
                 new Card(Suit.CLOVER, Denomination.KING)
         ));
         players.getPlayers()
-                .forEach(player -> player.receiveCards(cards));
+                .forEach(player -> player.initializeCards(cards));
 
         List<Cards> cardsGroup = players.showCardsByUsers();
         boolean isAllRightShow = cardsGroup.stream()

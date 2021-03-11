@@ -4,6 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.result.ResultBoard;
+import blackjack.domain.state.State;
+import blackjack.domain.state.Stay;
 import blackjack.domain.user.Cards;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -53,7 +55,7 @@ public class BlackjackGameTest {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
         Player player = new Player("amazzzi");
-        player.receiveCards(new Cards(Arrays.asList(
+        player.initializeCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.QUEEN),
                 new Card(Suit.HEART, Denomination.QUEEN))));
 
@@ -68,13 +70,17 @@ public class BlackjackGameTest {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
         Player player = new Player("amazzzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.TWO)
+        )));
 
         blackjackGame.hit(player);
         int cardCount = player.cards()
                 .getCards()
                 .size();
 
-        assertThat(cardCount).isEqualTo(1);
+        assertThat(cardCount).isEqualTo(3);
     }
 
     @Test
@@ -83,11 +89,15 @@ public class BlackjackGameTest {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
         Dealer dealer = new Dealer();
+        dealer.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.TWO)
+        )));
 
         blackjackGame.hit(dealer);
         int cardCount = dealer.cards().getCards().size();
 
-        assertThat(cardCount).isEqualTo(1);
+        assertThat(cardCount).isEqualTo(3);
     }
 
     @Test
@@ -110,5 +120,21 @@ public class BlackjackGameTest {
         blackjackGame.handOutInitialCards();
 
         assertThat(blackjackGame.generateResultBoard()).isInstanceOf(ResultBoard.class);
+    }
+
+    @Test
+    @DisplayName("n을 입력할 경우 상태를 stay로 변경한다.")
+    void proceedPlayersRound1() {
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
+        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.HEART, Denomination.QUEEN))));
+        String answer = "n";
+        blackjackGame.proceedPlayersRound(player, answer);
+
+        State state = player.getState();
+        assertThat(state).isInstanceOf(Stay.class);
     }
 }
