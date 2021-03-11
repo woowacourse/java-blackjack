@@ -3,8 +3,7 @@ package blackjack.domain.user;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 public class NameTest {
     @DisplayName("Name 객체를 생성한다.")
@@ -18,18 +17,16 @@ public class NameTest {
     @DisplayName("이름이 유효하지 않은 문자일 경우 예외를 발생한다.")
     @Test
     void validateCharacterException() {
-        assertThatThrownBy(() -> {
+        assertThatIllegalArgumentException().isThrownBy(() -> {
             new Name("ㄴㄴㄴ");
-        }).isInstanceOf(IllegalArgumentException.class);
-
+        }).withMessage("유효하지 읺은 이름입니다.");
     }
 
     @DisplayName("이름이 공백인 경우 예외를 발생한다.")
     @Test
     void validateEmptyException() {
-        assertThatThrownBy(() -> {
+        assertThatIllegalArgumentException().isThrownBy(() -> {
             new Name("");
-        }).isInstanceOf(IllegalArgumentException.class);
-
+        }).withMessage("유효하지 읺은 이름입니다.");
     }
 }
