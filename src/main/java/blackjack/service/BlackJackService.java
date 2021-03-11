@@ -14,7 +14,7 @@ import java.util.List;
 
 public class BlackJackService {
 
-    private Deck deck = new Deck();
+    private Deck deck = Deck.of();
     private Players players;
     private Dealer dealer;
 
