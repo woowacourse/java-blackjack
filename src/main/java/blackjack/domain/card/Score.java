@@ -3,17 +3,32 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Score {
-    private final static int BLACK_JACK = 21;
-    public final static Score ZERO_SCORE = new Score(0);
+    private static final int EXTRA_SCORE_USING_ACE = 10;
+    private static final int BLACK_JACK = 21;
+    private static final Score[] scores = new Score[30];
+
+    static{
+        for(int i =0; i<scores.length; i++){
+            scores[i] = new Score(i);
+        }
+    }
 
     private final int value;
 
-    public Score(int value) {
+    private Score(int value) {
         if (value < 0) {
             throw new IllegalArgumentException("유효하지 않은 점수입니다.");
         }
 
         this.value = value;
+    }
+
+    public static Score of(int score){
+        if(score < scores.length && scores[score] != null){
+            return scores[score];
+        }
+
+        return new Score(score);
     }
 
     public boolean isBust() {
@@ -24,41 +39,27 @@ public class Score {
         return value == BLACK_JACK;
     }
 
-    public boolean isHigherScore(Score score){
+    public boolean isHigher(Score score){
         return this.value > score.value;
     }
 
-    public boolean isLowerScore(Score score){
+    public boolean isLower(Score score){
         return this.value < score.value;
-    }
-
-    public boolean isSameScore(Score score){
-        return this.value == score.value;
     }
 
     public boolean isBelow(int score) {
         return value <= score;
     }
 
-    public boolean isNotBustAndHigh(final Score target) {
-        if (!this.isBust() && value > target.value) {
-            return true;
-        }
-
-        return false;
-    }
-
-    // TODO :: 매직 넘버 빼기
     public Score useAceAsEleven() {
-        return new Score(value + 10);
+        if(value + EXTRA_SCORE_USING_ACE > BLACK_JACK){
+            return Score.of(value);
+        }
+        return Score.of(value + EXTRA_SCORE_USING_ACE);
     }
 
     public Score addScore(final Score score) {
-        return new Score(score.value + this.value);
-    }
-
-    public int getValue() {
-        return value;
+        return Score.of(score.value + this.value);
     }
 
     @Override

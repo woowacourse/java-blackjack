@@ -2,12 +2,11 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Score;
 
 public class Gambler implements Player {
     private final Name name;
     private final Cards cards = new Cards();
-    private Money money = new Money(0);
+    private Money money = Money.emptyMoney;
 
     public Gambler(final Name name) {
         this.name = name;
@@ -31,11 +30,6 @@ public class Gambler implements Player {
     }
 
     @Override
-    public boolean isBust() {
-        return cards.isBust();
-    }
-
-    @Override
     public void receiveCard(final Card card) {
         cards.add(card);
     }
@@ -43,11 +37,6 @@ public class Gambler implements Player {
     @Override
     public String getNameValue() {
         return name.getValue();
-    }
-
-    @Override
-    public Score getScore() {
-        return cards.calculateScore();
     }
 
     @Override

@@ -17,7 +17,7 @@ public class BlackJackGame {
     private final Dealer dealer = new Dealer();
     private final Gamblers gamblers;
 
-    public BlackJackGame(final String nameLine){
+    public BlackJackGame(final String nameLine) {
         gamblers = initGamblerWithNames(splitAndParseToNames(nameLine));
         distributeInitialCards();
     }
@@ -35,7 +35,7 @@ public class BlackJackGame {
         return new Gamblers(gamblers);
     }
 
-    private void distributeInitialCards(){
+    private void distributeInitialCards() {
         giveCards(dealer, NUMBER_OF_INITIAL_CARDS);
         for (final Gambler gambler : gamblers) {
             giveCards(gambler, NUMBER_OF_INITIAL_CARDS);
@@ -62,25 +62,25 @@ public class BlackJackGame {
     }
 
     public void calculateMoney() {
-        final Result result = calculateResult();
+        final WinningResult winningResult = calculateResult();
         for (final Gambler gambler : gamblers) {
-            giveWinningMoney(gambler, result.get(gambler));
+            giveWinningMoney(gambler, winningResult.get(gambler));
         }
     }
 
-    private void giveWinningMoney(final Gambler gambler, final WinOrLose winOrLose){
+    private void giveWinningMoney(final Gambler gambler, final WinOrLose winOrLose) {
         if (gambler.hasBlackJack()) {
             return;
         }
         dealer.calculateMoney(gambler, winOrLose);
     }
 
-    public Result calculateResult(){
-        final Result result = new Result();
-        for(final Gambler gambler : gamblers){
-            result.add(gambler, dealer.calculateWinOrLose(gambler));
+    public WinningResult calculateResult() {
+        final WinningResult winningResult = new WinningResult();
+        for (final Gambler gambler : gamblers) {
+            winningResult.add(gambler, dealer.calculateWinOrLose(gambler));
         }
-        return result;
+        return winningResult;
     }
 
     public Dealer getDealer() {

@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Score;
 import blackjack.domain.game.WinOrLose;
 
 public class Dealer implements Player {
@@ -67,11 +66,6 @@ public class Dealer implements Player {
     }
 
     @Override
-    public boolean isBust() {
-        return cards.isBust();
-    }
-
-    @Override
     public boolean hasBlackJack() {
         return cards.isBlackJack();
     }
@@ -89,11 +83,6 @@ public class Dealer implements Player {
     @Override
     public int getMoneyValue(){
         return money.getValue();
-    }
-
-    @Override
-    public Score getScore() {
-        return cards.calculateScore();
     }
 
     @Override

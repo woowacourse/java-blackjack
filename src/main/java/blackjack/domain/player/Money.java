@@ -1,6 +1,8 @@
 package blackjack.domain.player;
 
 public class Money {
+    public static final Money emptyMoney = new Money(0);
+
     private final int money;
 
     public Money(int money) {

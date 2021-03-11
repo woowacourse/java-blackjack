@@ -1,9 +1,9 @@
 package blackjack.domain.card;
 
 import blackjack.domain.game.WinOrLose;
+import blackjack.domain.game.WinningRule;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Cards {
@@ -15,45 +15,22 @@ public class Cards {
     }
 
     public Score calculateScore() {
-        Score score = Score.ZERO_SCORE;
-        for (Card card : cards) {
+        Score score = Score.of(0);
+        for (final Card card : cards) {
             score = score.addScore(card.getScore());
         }
         return decideAceScore(score);
     }
 
-    private Score decideAceScore(Score score) {
-        if (hasAce() && !isBust(score.useAceAsEleven())) {
+    private Score decideAceScore(final Score score) {
+        if (hasAce()) {
             return score.useAceAsEleven();
         }
         return score;
     }
 
-    public WinOrLose compareCardsScore(Cards other) {
-        Score thisScore = calculateScore();
-        Score otherScore = other.calculateScore();
-
-        if(thisScore.isBust() && other.isBust()){
-            return WinOrLose.DRAW;
-        }
-
-        if (thisScore.isBust() && !otherScore.isBust()) {
-            return WinOrLose.LOSE;
-        }
-
-        if (!thisScore.isBust() && otherScore.isBust()) {
-            return WinOrLose.WIN;
-        }
-
-        if (thisScore.isHigherScore(otherScore)) {
-            return WinOrLose.WIN;
-        }
-
-        if (thisScore.isLowerScore(otherScore)) {
-            return WinOrLose.LOSE;
-        }
-
-        return WinOrLose.DRAW;
+    public WinOrLose compareCardsScore(final Cards other) {
+        return WinningRule.calculateScores(calculateScore(), other.calculateScore());
     }
 
     private boolean hasAce() {
@@ -63,19 +40,11 @@ public class Cards {
                 .isPresent();
     }
 
-    public boolean isBust(Score score) {
-        return score.isBust();
-    }
-
-    public boolean isBust() {
-        return isBust(calculateScore());
-    }
-
     public boolean isBlackJack() {
         return calculateScore().isBlackJack();
     }
 
-    public List<Card> cards() {
-        return Collections.unmodifiableList(cards);
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
     }
 }
