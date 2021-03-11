@@ -51,7 +51,7 @@ public class Game {
         return players.get(playerIndex);
     }
 
-    public void next(boolean willDraw) {
+    public void reflectInput(boolean willDraw) {
         Player player = getCurrentPlayer();
         if (willDraw) {
             giveCard(player);

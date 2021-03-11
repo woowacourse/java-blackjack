@@ -41,7 +41,7 @@ public class BlackjackController {
         while (game.isNotEnd()) {
             Player player = game.getCurrentPlayer();
             boolean willDraw = askWillDrawCard(player);
-            game.next(willDraw);
+            game.reflectInput(willDraw);
             OutputView.printCardInfoWithLineSeparator(player);
         }
     }
