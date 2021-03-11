@@ -1,10 +1,10 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.status.Blackjack;
-import blackjack.domain.status.Bust;
-import blackjack.domain.status.StartRound;
-import blackjack.domain.status.State;
+import blackjack.domain.state.Blackjack;
+import blackjack.domain.state.Bust;
+import blackjack.domain.state.StartRound;
+import blackjack.domain.state.State;
 
 import java.util.List;
 

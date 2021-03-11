@@ -1,4 +1,4 @@
-package blackjack.domain.status;
+package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 
