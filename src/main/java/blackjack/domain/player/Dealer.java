@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Score;
 
 public class Dealer extends Player {
 
@@ -17,6 +18,7 @@ public class Dealer extends Player {
 
     @Override
     public boolean drawable() {
-        return score().isLessThan(DRAWABLE_THRESHOLD);
+        return score().isLessThan(Score.of(DRAWABLE_THRESHOLD));
     }
+
 }

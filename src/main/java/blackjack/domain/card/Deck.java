@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -45,5 +46,9 @@ public class Deck {
 
     public boolean isBust() {
         return score().isBust();
+    }
+
+    public List<Card> cards() {
+        return Collections.unmodifiableList(cards);
     }
 }

@@ -3,6 +3,7 @@ package blackjack.domain.player.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
+import java.util.List;
 
 public class Hit implements State {
 
@@ -34,5 +35,10 @@ public class Hit implements State {
     @Override
     public int winningMoney(int batMoney) {
         return batMoney;
+    }
+
+    @Override
+    public List<Card> cards() {
+        return deck.cards();
     }
 }

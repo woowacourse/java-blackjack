@@ -1,11 +1,14 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 import blackjack.domain.player.state.BlackJack;
+import blackjack.domain.player.state.Bust;
 import blackjack.domain.player.state.State;
 import blackjack.domain.player.state.StateFactory;
+import java.util.List;
 
 public abstract class Player {
 
@@ -23,7 +26,7 @@ public abstract class Player {
         state = state.draw(card);
     }
 
-    protected Score score() {
+    public Score score() {
         return state.score();
     }
 
@@ -31,7 +34,7 @@ public abstract class Player {
         return state instanceof BlackJack;
     }
 
-
+    public boolean isBust() {return state instanceof Bust; }
 
     public String name() {
         return name;
@@ -39,6 +42,18 @@ public abstract class Player {
 
     public State state() {
         return state;
+    }
+
+    public int winningMoney() {
+        return state.winningMoney(batMoney);
+    }
+
+    public int batMoney() {
+        return batMoney;
+    }
+
+    public List<Card> cards() {
+        return state.cards();
     }
 
     public abstract boolean drawable();

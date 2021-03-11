@@ -37,8 +37,16 @@ public class Score {
         return value > BLACKJACK_SCORE;
     }
 
-    public boolean isLessThan(int score) {
-        return value <= score;
+    public boolean isLessThan(Score score) {
+        return value <= score.value;
+    }
+
+    public boolean isMoreCloseToBlackjack(Score score) {
+        return Math.abs(BLACKJACK_SCORE - value) < Math.abs(BLACKJACK_SCORE - score.value);
+    }
+
+    public int get() {
+        return value;
     }
 
     @Override
