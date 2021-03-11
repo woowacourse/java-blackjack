@@ -8,12 +8,15 @@ import static blackjack.domain.BlackjackConstant.BLACKJACK_SCORE;
 
 public class Player extends Participant {
     
-    private Player(String name, CardHand cardHand) {
+    private final double bettingMoney;
+    
+    public Player(String name, CardHand cardHand, double bettingMoney) {
         super(name, cardHand);
+        this.bettingMoney = bettingMoney;
     }
     
-    public static Player from(String name) {
-        return new Player(name.trim(), new CardHand(new ArrayList<>()));
+    public static Player of(String name, double bettingMoney) {
+        return new Player(name.trim(), new CardHand(new ArrayList<>()), bettingMoney);
     }
     
     @Override

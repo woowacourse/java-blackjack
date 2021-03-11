@@ -13,6 +13,8 @@ public class BlackJackController {
     
     private static final int BASE_CARD_COUNT = 2;
     
+    private static final String NAME_DELIMITER = ",";
+    
     private final Dealer dealer;
     private final List<Player> players;
     
@@ -29,17 +31,22 @@ public class BlackJackController {
     
     private static List<Player> enterPlayers() {
         String[] playerNames = InputView.getPlayerName()
-                                        .split(",");
+                                        .split(NAME_DELIMITER);
         
         return Arrays.stream(playerNames)
-                     .map(Player::from)
+                     .map(name -> Player.of(name, InputView.getBettingMoney(name)))
                      .collect(Collectors.toList());
     }
     
     public void run() {
+        betMoney();
         dealBaseCards();
         dealAdditionalCards();
         printResult();
+    }
+    
+    private void betMoney() {
+    
     }
     
     private void dealBaseCards() {

@@ -54,7 +54,9 @@ public class DealerTest {
         
         // given
         Dealer dealer = Dealer.create();
-        Player player = Player.from("pobi");
+    
+        double bettingMoney = 0;
+        Player player = Player.of("pobi", bettingMoney);
         
         // when
         dealer.deal(player);

@@ -27,12 +27,13 @@ class CompeteResultTest {
         Dealer dealer = Dealer.create();
         dealer.receive(new Card(Suit.HEART, Rank.TEN));
         dealer.receive(new Card(Suit.HEART, Rank.JACK));
-        
-        Player jason = Player.from("jason");
+    
+        double bettingMoney = 0;
+        Player jason = Player.of("jason", bettingMoney);
         jason.receive(new Card(Suit.CLOVER, Rank.TEN));
         jason.receive(new Card(Suit.CLOVER, Rank.NINE));
         
-        Player cu = Player.from("cu");
+        Player cu = Player.of("cu", bettingMoney);
         cu.receive(new Card(Suit.SPADE, Rank.TEN));
         cu.receive(new Card(Suit.SPADE, Rank.JACK));
         
@@ -55,9 +56,10 @@ class CompeteResultTest {
         Dealer dealer = Dealer.create();
         dealer.receive(new Card(Suit.HEART, Rank.TEN));
         dealer.receive(new Card(Suit.HEART, Rank.JACK));
-        
-        
-        Player pobi = Player.from("pobi");
+    
+    
+        double bettingMoney = 0;
+        Player pobi = Player.of("pobi", bettingMoney);
         pobi.receive(new Card(Suit.DIAMOND, Rank.TEN));
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
         pobi.receive(new Card(Suit.DIAMOND, Rank.ACE));
@@ -80,8 +82,9 @@ class CompeteResultTest {
         Dealer dealer = Dealer.create();
         dealer.receive(new Card(Suit.HEART, Rank.TEN));
         dealer.receive(new Card(Suit.HEART, Rank.JACK));
-        
-        Player pobi = Player.from("pobi");
+    
+        double bettingMoney = 0;
+        Player pobi = Player.of("pobi", bettingMoney);
         pobi.receive(new Card(Suit.CLOVER, Rank.TEN));
         pobi.receive(new Card(Suit.CLOVER, Rank.FIVE));
         
@@ -103,9 +106,9 @@ class CompeteResultTest {
         Dealer dealer = Dealer.create();
         dealer.receive(new Card(Suit.HEART, Rank.TEN));
         dealer.receive(new Card(Suit.HEART, Rank.JACK));
-        
-        
-        Player pobi = Player.from("pobi");
+    
+        double bettingMoney = 0;
+        Player pobi = Player.of("pobi", bettingMoney);
         pobi.receive(new Card(Suit.DIAMOND, Rank.TEN));
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
         
@@ -128,9 +131,9 @@ class CompeteResultTest {
         dealer.receive(new Card(Suit.HEART, Rank.TEN));
         dealer.receive(new Card(Suit.HEART, Rank.JACK));
         dealer.receive(new Card(Suit.HEART, Rank.JACK));
-        
-        
-        Player pobi = Player.from("pobi");
+    
+        double bettingMoney = 0;
+        Player pobi = Player.of("pobi", bettingMoney);
         pobi.receive(new Card(Suit.DIAMOND, Rank.TEN));
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
