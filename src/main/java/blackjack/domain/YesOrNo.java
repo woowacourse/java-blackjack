@@ -16,6 +16,6 @@ public enum YesOrNo {
     }
 
     public boolean isYes() {
-        return this == YesOrNo.YES;
+        return this.equals(YesOrNo.YES);
     }
 }

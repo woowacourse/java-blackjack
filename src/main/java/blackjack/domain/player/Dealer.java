@@ -9,7 +9,7 @@ public class Dealer implements Player {
 
     private final Name name = new Name("딜러");
     private final Cards cards = new Cards();
-    private Money money = new Money(0);
+    private Money money = Money.emptyMoney;
 
     public boolean ableToDraw() {
         return cards.calculateScore().isBelow(LIMIT_SCORE_TO_HIT);
@@ -55,13 +55,13 @@ public class Dealer implements Player {
         }
     }
 
-    private void giveBackBettingMoney(Gambler gambler) {
+    private void giveBackBettingMoney(final Gambler gambler) {
         giveMoney(gambler, gambler.getBettingMoney());
     }
 
-    private void giveBlackJackMoney(Gambler gambler) {
-        Money bettingMoney = gambler.getBettingMoney();
-        Money winningMoney = bettingMoney.add(bettingMoney.multiply(1.5));
+    private void giveBlackJackMoney(final Gambler gambler) {
+        final Money bettingMoney = gambler.getBettingMoney();
+        final Money winningMoney = bettingMoney.add(bettingMoney.multiply(1.5));
         giveMoney(gambler, winningMoney);
     }
 

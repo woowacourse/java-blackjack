@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Score {
     private static final int EXTRA_SCORE_USING_ACE = 10;
     private static final int BLACK_JACK = 21;
+
     private static final Score[] scores = new Score[30];
 
     static{

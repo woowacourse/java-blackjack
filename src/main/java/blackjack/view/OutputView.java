@@ -20,26 +20,26 @@ public class OutputView {
     }
 
     public static void printPlayerCardsInformation(final String name, final Cards cards) {
-        printMessageByFormat("%s카드: %s", name, makeCardInfo(cards));
-        printLineSeparator();
-    }
-
-    private static String makeCardInfo(final Cards cards) {
-        return cards.getCards().stream()
+        final String cardsInformation = cards.getCards().stream()
                 .map(card -> card.getDenominationValue() + card.getSuitValue())
                 .collect(Collectors.joining(", "));
+
+        printMessageByFormat("%s카드: %s", name, cardsInformation);
+        printLineSeparator();
     }
 
     public static void informDealerReceived() {
         System.out.println(("딜러는 16이하라 한장의 카드를 더 받았습니다."));
+        printLineSeparator();
     }
 
     public static void printFinalRevenue(final Dealer dealer, final Gamblers gamblers) {
         System.out.println("## 최종 수익");
-        System.out.println(dealer.getNameValue() + ": " + dealer.getMoneyValue());
+        System.out.println("딜러 : " + dealer.getMoneyValue());
         for (Gambler gambler : gamblers) {
             System.out.println(gambler.getNameValue() + ": " + gambler.getMoneyValue());
         }
+        printLineSeparator();
     }
 
     public static void printLineSeparator() {
