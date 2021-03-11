@@ -4,7 +4,9 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class MatchResult {
     private final Map<Player, MatchResultType> matchResult;
@@ -22,16 +24,11 @@ public class MatchResult {
         return Collections.unmodifiableMap(matchResult);
     }
 
-    public List<Integer> getMatchResultTypeCount() {
-        List<Integer> matchResultCount = new ArrayList<>();
-
-        for (MatchResultType type : MatchResultType.values()) {
-            matchResultCount.add(Collections.frequency(matchResult.values(), type));
-        }
-        return matchResultCount;
-    }
-
-    public Map<Player, MatchResultType> getMatchResult() {
-        return new LinkedHashMap<>(matchResult);
+    public Map<Player, Double> getMatchProfitResult() {
+        Map<Player, Double> profitResult = new LinkedHashMap<>();
+        this.matchResult.forEach(
+                ((player, matchResultType) -> profitResult.put(player, matchResultType.calculateProfit(player.getBettingMoney())))
+        );
+        return profitResult;
     }
 }

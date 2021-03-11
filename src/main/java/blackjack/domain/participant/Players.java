@@ -5,7 +5,6 @@ import blackjack.domain.card.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Players {
     private static final int MIN_PLAYERS_NUMBER = 1;

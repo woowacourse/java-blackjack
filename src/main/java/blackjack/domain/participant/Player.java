@@ -15,6 +15,10 @@ public class Player extends Participant {
         return cards.calculateScore() <= BLACKJACK_SCORE;
     }
 
+    public int getBettingMoney() {
+        return this.bettingMoney.getBettingMoney();
+    }
+
     @Override
     public String getName() {
         return this.name.getName();
@@ -22,6 +26,6 @@ public class Player extends Participant {
 
     @Override
     public String showCardsAtFirst() {
-        return getCards();
+        return getCardsInformation();
     }
 }

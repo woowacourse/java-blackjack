@@ -33,7 +33,7 @@ public class Cards {
         return this.cards.get(FIRST_CARD_INDEX);
     }
 
-    public String getCards() {
+    public String getCardsInformation() {
         return cards.stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(", "));
@@ -66,6 +66,10 @@ public class Cards {
         return totalScore;
     }
 
+    public int size() {
+        return this.cards.size();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -82,4 +86,5 @@ public class Cards {
     public int hashCode() {
         return Objects.hash(cards);
     }
+
 }
