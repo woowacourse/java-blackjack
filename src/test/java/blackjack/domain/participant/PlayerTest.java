@@ -94,6 +94,6 @@ public class PlayerTest {
 		player.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
 		player.makeProfit(1000);
 		player.calculateProfit(dealer);
-		assertEquals(player.getMoney(), -1000);
+		assertEquals(-1000, player.getMoney());
 	}
 }

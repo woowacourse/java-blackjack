@@ -22,7 +22,7 @@ public class PlayerName {
 	}
 
 	private void validateEmpty(String name) {
-		if (name.equals(EMPTY)) {
+		if (EMPTY.equals(name)) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_INPUT);
 		}
 	}

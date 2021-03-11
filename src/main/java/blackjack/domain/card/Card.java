@@ -12,7 +12,7 @@ public class Card {
 	}
 
 	public boolean isAce() {
-		return number.equals(CardNumber.ACE);
+		return CardNumber.ACE.equals(number);
 	}
 
 	public String getPatternName() {
