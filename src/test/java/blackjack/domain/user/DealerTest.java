@@ -28,7 +28,7 @@ class DealerTest {
         Dealer dealer = new Dealer(Arrays.asList(
                 Card.of("스페이드", "A"),
                 Card.of("하트", "A")));
-        assertThat(dealer.isGameOver()).isEqualTo(false);
+        assertThat(dealer.isFinished()).isEqualTo(false);
         assertThat(dealer.scoreToInt()).isEqualTo(12);
     }
 

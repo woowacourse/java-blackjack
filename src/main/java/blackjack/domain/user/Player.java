@@ -49,8 +49,16 @@ public class Player extends User {
     }
 
     @Override
-    public boolean isGameOver() {
-        return state.isGameOver();
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    public void addCardByAnswer(boolean isYes, Card card) {
+        if (isYes) {
+            addCard(card);
+            return;
+        }
+        this.state = state.stay();
     }
 
     @Override

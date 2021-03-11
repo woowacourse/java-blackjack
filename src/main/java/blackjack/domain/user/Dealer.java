@@ -48,8 +48,8 @@ public class Dealer extends User {
     }
 
     @Override
-    public boolean isGameOver() {
-        return state.isGameOver();
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
     @Override

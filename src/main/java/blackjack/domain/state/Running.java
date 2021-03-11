@@ -18,7 +18,7 @@ public abstract class Running implements State {
     }
 
     @Override
-    public boolean isGameOver() {
+    public boolean isFinished() {
         return false;
     }
 }

@@ -57,7 +57,7 @@ class PlayerTest {
     @DisplayName("플레이어의 카드가 21점 초과하는 경우 카드를 받을 수 없는 상태가 된다.")
     @Test
     void game_over_score() {
-        assertThat(player.isGameOver()).isEqualTo(false);
+        assertThat(player.isFinished()).isEqualTo(false);
     }
 
     @DisplayName("플레이어의 첫 카드가 21점 초과하는 경우(A가 2장) A를 21 이하일때까지 1로 계산한다.")
@@ -65,7 +65,7 @@ class PlayerTest {
     void first_cards_game_over_score() {
         Player player = new Player("pobi", 2000,
                 Arrays.asList(Card.of("스페이드", "A"), Card.of("하트", "A")));
-        assertThat(player.isGameOver()).isEqualTo(false);
+        assertThat(player.isFinished()).isEqualTo(false);
         assertThat(player.scoreToInt()).isEqualTo(12);
     }
 
@@ -75,7 +75,7 @@ class PlayerTest {
         Player player = new Player("pobi", 2000,
                 Arrays.asList(Card.of("스페이드", "A"), Card.of("하트", "A")));
         player.addCard(Card.of("클로버", "A"));
-        assertThat(player.isGameOver()).isEqualTo(false);
+        assertThat(player.isFinished()).isEqualTo(false);
         assertThat(player.scoreToInt()).isEqualTo(13);
     }
 
@@ -83,6 +83,11 @@ class PlayerTest {
     @Test
     void add_card_game_over_test() {
         player.addCard(Card.of("다이아몬드", "4"));
-        assertThat(player.isGameOver()).isEqualTo(true);
+        assertThat(player.isFinished()).isEqualTo(true);
+    }
+
+    @Test
+    void name() {
+
     }
 }

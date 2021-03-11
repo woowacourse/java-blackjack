@@ -22,4 +22,9 @@ public class Hit extends Running {
     public Score score() {
         return cards.scores();
     }
+
+    @Override
+    public State stay() {
+        return new Stay(cards);
+    }
 }

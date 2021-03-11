@@ -9,8 +9,6 @@ import java.util.stream.Collectors;
 public abstract class User {
     public abstract String getName();
 
-    public abstract boolean isGameOver();
-
     protected abstract List<Card> getCards();
 
     public abstract void addCard(Card card);
@@ -18,6 +16,8 @@ public abstract class User {
     public abstract int scoreToInt();
 
     public abstract Score score();
+
+    public abstract boolean isFinished();
 
     public List<String> getCardsStatus() {
         return getCards().stream()

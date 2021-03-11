@@ -24,12 +24,17 @@ public abstract class Finished implements State {
     }
 
     @Override
-    public boolean isGameOver() {
-        return true;
+    public Score score() {
+        return cards.scores();
     }
 
     @Override
-    public Score score() {
-        return cards.scores();
+    public State stay() {
+        throw new UnsupportedOperationException("stay 할 수 없습니다.");
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 }

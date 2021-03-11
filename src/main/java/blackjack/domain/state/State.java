@@ -10,7 +10,9 @@ public interface State {
 
     List<Card> getCards();
 
-    boolean isGameOver();
-
     Score score();
+
+    State stay();
+
+    boolean isFinished();
 }
