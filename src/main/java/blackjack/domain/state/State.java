@@ -9,5 +9,6 @@ public interface State {
     State stay();
     boolean isFinished();
     double profit(double money);
+    int calculateScore();
     Cards cards();
 }

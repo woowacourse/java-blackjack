@@ -6,6 +6,8 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
 import blackjack.dto.DealerDto;
 import blackjack.domain.player.Gamer;
 import blackjack.dto.PlayerDto;
@@ -45,13 +47,15 @@ public class BlackjackController {
 
     private List<Gamer> initGamers(Deck deck) {
         String[] gamerNames = InputView.inputGamerNames();
+        State state = StateFactory.generateState(deck.draw(), deck.draw());
         return Arrays.stream(gamerNames)
-            .map(gamerName -> new Gamer(gamerName, Cards.of(deck.drawTwoStartCards())))
+            .map(gamerName -> new Gamer(gamerName, state))
             .collect(Collectors.toList());
     }
 
     private Dealer initDealer(Deck deck) {
-        return new Dealer(Cards.of(deck.drawTwoStartCards()));
+        State state = StateFactory.generateState(deck.draw(), deck.draw());
+        return new Dealer(state);
     }
 
     private void progressGamersHitOrStand(List<Gamer> gamers, Deck deck) {

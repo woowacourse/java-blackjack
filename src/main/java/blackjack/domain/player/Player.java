@@ -2,15 +2,16 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.State;
 
 public abstract class Player {
 
     protected final String name;
-    protected final Cards cards;
+    protected State state;
 
-    public Player(String name, Cards cards) {
+    public Player(String name, State state) {
         this.name = name;
-        this.cards = cards;
+        this.state = state;
     }
 
     abstract void addCard(Card card);
@@ -20,11 +21,11 @@ public abstract class Player {
     public abstract boolean isDealer();
 
     public final int calculateScore() {
-        return cards.calculateScore();
+        return state.calculateScore();
     }
 
     public final boolean isBust() {
-        return cards.isBust();
+        return state.cards().isBust();
     }
 
     public String getName() {
@@ -32,6 +33,6 @@ public abstract class Player {
     }
 
     public Cards getCards() {
-        return cards;
+        return state.cards();
     }
 }

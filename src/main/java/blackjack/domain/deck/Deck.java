@@ -22,13 +22,6 @@ public class Deck {
         return cards.remove(0);
     }
 
-    public List<Card> drawTwoStartCards() {
-        return Stream.iterate(0, i -> i + 1)
-            .map(i -> draw())
-            .limit(2)
-            .collect(Collectors.toList());
-    }
-
     public void shuffle() {
         Collections.shuffle(cards);
     }
