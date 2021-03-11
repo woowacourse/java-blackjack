@@ -15,10 +15,10 @@ import org.junit.jupiter.api.Test;
 
 public class DealerResultTest {
 
-    private Card one = new Card(CardNumber.from("J"), CardSymbol.from("클로버"));
-    private Card winCard = new Card(CardNumber.from("A"), CardSymbol.from("클로버"));
-    private Card tieCard = new Card(CardNumber.from("J"), CardSymbol.from("하트"));
-    private Card loseCard = new Card(CardNumber.from("9"), CardSymbol.from("다이아몬드"));
+    private Card one = Card.from("J", "클로버");
+    private Card winCard = Card.from("A", "클로버");
+    private Card tieCard = Card.from("J", "하트");
+    private Card loseCard = Card.from("9", "다이아몬드");
     private UserDeck dealerDeck = new UserDeck();
     {
         dealerDeck.add(one);

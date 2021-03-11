@@ -12,15 +12,15 @@ import org.junit.jupiter.api.Test;
 
 public class DealerHitTest {
 
-    private final Card basicOne = new Card(CardNumber.from("8"), CardSymbol.from("클로버"));
-    private final Card basicTwo = new Card(CardNumber.from("5"), CardSymbol.from("하트"));
+    private final Card basicOne = Card.from("8", "클로버");
+    private final Card basicTwo = Card.from("5", "하트");
 
     @Test
     @DisplayName("카드 뽑기 시에 다음 Hit 반환")
     void returnHit() {
         UserDeck userDeck = UserDeckTest.generateActiveUserDeck(basicOne, basicTwo);
         DealerHit dealerHitState = new DealerHit(userDeck);
-        Card smallValueCard = new Card(CardNumber.from("2"), CardSymbol.from("다이아몬드"));
+        Card smallValueCard = Card.from("2", "다이아몬드");
 
         State nextState = dealerHitState.draw(smallValueCard);
         boolean isHit = nextState instanceof DealerHit;
@@ -33,7 +33,7 @@ public class DealerHitTest {
     void returnBust() {
         UserDeck userDeck = UserDeckTest.generateActiveUserDeck(basicOne, basicTwo);
         DealerHit dealerHitState = new DealerHit(userDeck);
-        Card bigValueCard = new Card(CardNumber.from("J"), CardSymbol.from("다이아몬드"));
+        Card bigValueCard = Card.from("J", "다이아몬드");
 
         State nextState = dealerHitState.draw(bigValueCard);
         boolean isBust = nextState instanceof Bust;
@@ -46,7 +46,7 @@ public class DealerHitTest {
     void returnStay() {
         UserDeck userDeck = UserDeckTest.generateActiveUserDeck(basicOne, basicTwo);
         DealerHit dealerHitState = new DealerHit(userDeck);
-        Card stayCard = new Card(CardNumber.from("4"), CardSymbol.from("하트"));
+        Card stayCard = Card.from("4", "하트");
 
         State nextState = dealerHitState.draw(stayCard);
         boolean isStay = nextState instanceof Stay;

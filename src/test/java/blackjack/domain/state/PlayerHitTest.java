@@ -12,15 +12,15 @@ import org.junit.jupiter.api.Test;
 
 public class PlayerHitTest {
 
-    private final Card basicOne = new Card(CardNumber.from("8"), CardSymbol.from("클로버"));
-    private final Card basicTwo = new Card(CardNumber.from("5"), CardSymbol.from("하트"));
+    private final Card basicOne = Card.from("8", "클로버");
+    private final Card basicTwo = Card.from("5", "하트");
 
     @Test
     @DisplayName("카드 뽑기 시에 다음 Hit 반환")
     void returnHit() {
         UserDeck userDeck = UserDeckTest.generateActiveUserDeck(basicOne, basicTwo);
         PlayerHit playerHitState = new PlayerHit(userDeck);
-        Card smallValueCard = new Card(CardNumber.from("2"), CardSymbol.from("다이아몬드"));
+        Card smallValueCard = Card.from("2", "다이아몬드");
 
         State nextState = playerHitState.draw(smallValueCard);
         boolean isHit = nextState instanceof PlayerHit;
@@ -33,7 +33,7 @@ public class PlayerHitTest {
     void returnBust() {
         UserDeck userDeck = UserDeckTest.generateActiveUserDeck(basicOne, basicTwo);
         PlayerHit playerHitState = new PlayerHit(userDeck);
-        Card bigValueCard = new Card(CardNumber.from("J"), CardSymbol.from("다이아몬드"));
+        Card bigValueCard = Card.from("J", "다이아몬드");
 
         State nextState = playerHitState.draw(bigValueCard);
         boolean isBust = nextState instanceof Bust;
