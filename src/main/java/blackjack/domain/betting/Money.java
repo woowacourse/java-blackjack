@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Money {
     private final int value;
 
-    public Money(String string) throws NumberFormatException{
+    public Money(String string) throws NumberFormatException {
         this(Integer.parseInt(string));
     }
 
@@ -18,6 +18,10 @@ public class Money {
 
     public int value() {
         return value;
+    }
+
+    public Money multiply(double ratio) {
+        return new Money((int) (value * ratio));
     }
 
     @Override
