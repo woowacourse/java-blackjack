@@ -5,7 +5,7 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public abstract class Participant {
-    private final Cards cards = new Cards();
+    protected final Cards cards = new Cards();
 
     public void addCard(Card card) {
         cards.add(card);
@@ -26,6 +26,8 @@ public abstract class Participant {
     public List<Card> getCards() {
         return cards.getCards();
     }
+
+    public abstract List<Card> getOpenCard();
 
     public abstract String getName();
 }

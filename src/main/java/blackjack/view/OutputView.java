@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameResult;
 import blackjack.domain.participant.Participant;
@@ -27,18 +26,19 @@ public class OutputView {
                                     .collect(Collectors.joining(", "));
         System.out.printf(SET_UP_MESSAGE, dealer.getName(), playerNames);
 
-        printSetUpDealerCardInfo(dealer);
+        printOpenCardInfo(dealer);
         for (Player player : players) {
-            printCardInfoWithLineSeparator(player);
+            printOpenCardInfo(player);
         }
     }
 
-    //TODO: 한장만 보여주는 것은 View 보다는 Game 에서 정의 해야할 듯.
-    public static void printSetUpDealerCardInfo(Dealer dealer) {
-        Card showingCard = dealer.getCards()
-                                 .get(0);
-        String cardInfo = showingCard.getNumber() + showingCard.getShape();
-        System.out.printf(CARD_INFO_MESSAGE, dealer.getName(), cardInfo);
+    public static void printOpenCardInfo(Participant participant) {
+        String cardInfo = participant.getOpenCard()
+                                     .stream()
+                                     .map(card -> card.getNumber() + card.getShape())
+                                     .collect(Collectors.joining(", "));
+
+        System.out.printf(CARD_INFO_MESSAGE, participant.getName(), cardInfo);
         System.out.print(LINE_SEPARATOR);
     }
 

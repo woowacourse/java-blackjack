@@ -10,8 +10,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -83,5 +85,14 @@ class CardsTest {
         cards.add(JACK_SPADES);
         cards.add(JACK_SPADES);
         assertTrue(cards.isBust());
+    }
+
+
+    @Test
+    void subList() {
+        cards.add(JACK_SPADES);
+        cards.add(THREE_HEARTS);
+        cards.add(ACE_CLUBS);
+        assertThat(cards.subList(1, 2)).isEqualTo(new ArrayList<>(Arrays.asList(THREE_HEARTS)));
     }
 }

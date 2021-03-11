@@ -60,4 +60,8 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
+    public List<Card> subList(int fromIndex, int toIndex) {
+        return new ArrayList<>(cards.subList(fromIndex, toIndex));
+    }
+
 }
