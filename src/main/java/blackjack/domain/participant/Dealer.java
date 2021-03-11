@@ -43,8 +43,10 @@ public class Dealer extends Participant {
         return Collections.unmodifiableMap(dealerResult);
     }
 
-    public void calculateProfit(final double opponentProfit) {
-        dealerMoney.resetMoneyByOpponentProfit(opponentProfit);
+    public void calculateProfit(final Map<Player, Double> playerProfit) {
+        for (Player player : playerProfit.keySet()) {
+            dealerMoney.calculateByOpponentProfit(playerProfit.get(player));
+        }
     }
 
     public DealerMoney getDealerMoney() {

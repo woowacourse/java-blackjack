@@ -34,9 +34,7 @@ public class Player extends Participant {
 
     public Double generateProfit(Dealer dealer) {
         final Result result = generateResult(dealer);
-        final double profit = playerMoney.calculateProfit(result.getProfitRate());
-        dealer.calculateProfit(profit);
-        return profit;
+        return playerMoney.calculateProfit(result.getProfitRate());
     }
 
     @Override
