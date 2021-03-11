@@ -6,6 +6,7 @@ import blackjack.domain.User;
 import blackjack.domain.Users;
 import blackjack.domain.card.Card;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,14 +21,16 @@ public class OutputView {
                 users.getDealer().getName(),
                 createPlayersCardStringFormat(users.getPlayers())
         );
-        for (User user : users.gerUsers()) {
+
+        System.out.println(makeCardStringFormat(users.getDealer()));
+        for (User user : users.getPlayers()) {
             System.out.println(makeCardsStringFormat(user));
         }
         System.out.println();
     }
 
     public static void printCardsOfPlayersWithScore(Users users) {
-        for (User user : users.gerUsers()) {
+        for (User user : users.getUsers()) {
             System.out.print(makeCardsStringFormat(user) + " - 결과: " + makeResultComment(user) + "\n");
         }
         System.out.println();
@@ -48,6 +51,9 @@ public class OutputView {
         System.out.println();
     }
 
+    private static String makeCardStringFormat(Dealer dealer) {
+        return String.format("%s 카드 : %s", dealer.getName(), createCardsStringFormat(Arrays.asList(dealer.getCards().get(0))));
+    }
 
     public static String makeCardsStringFormat(User user) {
         return String.format("%s 카드 : %s", user.getName(), createCardsStringFormat(user.getCards()));

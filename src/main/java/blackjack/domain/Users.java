@@ -18,7 +18,7 @@ public class Users {
     }
 
     public void initialHit(CardDeck cardDeck) {
-        gerUsers()
+        getUsers()
                 .forEach(user -> user.hit(cardDeck.drawCard(), cardDeck.drawCard()));
     }
 
@@ -29,7 +29,7 @@ public class Users {
                 .collect(Collectors.toList());
     }
 
-    public List<User> gerUsers() {
+    public List<User> getUsers() {
         return Collections.unmodifiableList(this.users);
     }
 

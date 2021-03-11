@@ -18,7 +18,7 @@ class UsersTest {
 
         Users users = new Users(dealer, Arrays.asList("test1", "test2"));
 
-        assertThat(users.gerUsers()).hasSize(3);
+        assertThat(users.getUsers()).hasSize(3);
     }
 
     @DisplayName("users 초기화 확인")
