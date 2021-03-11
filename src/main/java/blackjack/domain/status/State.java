@@ -10,5 +10,11 @@ public abstract class State {
         this.cards = cards;
     }
 
+    public Cards getCards() {
+        return cards;
+    }
+
     public abstract State draw(Card card);
+
+    public abstract boolean isFinished();
 }

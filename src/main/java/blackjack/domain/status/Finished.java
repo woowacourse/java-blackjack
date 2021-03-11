@@ -3,22 +3,18 @@ package blackjack.domain.status;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Cards;
 
-public class Hit extends State {
-    public Hit(Cards cards) {
+public class Finished extends State{
+    public Finished(Cards cards) {
         super(cards);
     }
 
     @Override
     public State draw(Card card) {
-        cards.add(card);
-        if (cards.isBust()) {
-            return new Bust(cards);
-        }
-        return new Hit(cards);
+        throw new UnsupportedOperationException("결과가 정해졌기에 더 이상 카드를 뽑을 수 없습니다.");
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }
