@@ -17,7 +17,7 @@ public enum WinOrLose {
             , (dealer, user) -> dealer.isSameStatus(BURST) && user.isSameStatus(BURST)
             , Participant::isSameScore),
     LOSE("패"
-            , (dealer, user) -> dealer.isNotStatus(BURST) && user.isSameStatus(BURST)
+            , (dealer, user) -> user.isSameStatus(BURST)
             , Participant::scoreBiggerThan);
 
     private static final String NONE_MATCH_CONDITION_ERROR_MSG = "승무패 조건에 없는 경우입니다.";

@@ -8,17 +8,20 @@ import blackjack.domain.user.Users;
 import blackjack.dto.CardDto;
 import blackjack.dto.DtoMapper;
 import blackjack.dto.UserCardsDto;
+import blackjack.dto.UserRequestDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 public class BlackjackGameController {
     private BlackjackGame blackjackGame;
 
     public void start() {
-        blackjackGame = BlackjackGame.create(inputUsers());
+        blackjackGame = BlackjackGame.create(createUsers());
         blackjackGame.firstDraw();
 
         printFirstDrawInformation(blackjackGame.getUserNames());
@@ -31,6 +34,24 @@ public class BlackjackGameController {
         createResultAndPrint();
     }
 
+    private Users createUsers() {
+        return inputUserBettingMoneys(inputUserNames());
+    }
+
+    private List<ParticipantName> inputUserNames() {
+        return InputView.askPlayersName()
+                .stream()
+                .map(ParticipantName::new)
+                .collect(toList());
+    }
+
+    private Users inputUserBettingMoneys(List<ParticipantName> participantNames) {
+        return InputView.askPlayersBettingMoney(participantNames)
+                .stream()
+                .map(UserRequestDto::createUser)
+                .collect(collectingAndThen(toList(), Users::new));
+    }
+
     private void printFirstDrawInformation(List<ParticipantName> userNames) {
         OutputView.printDrawMessage(userNames);
         OutputView.println();
@@ -40,13 +61,6 @@ public class BlackjackGameController {
         OutputView.printDealerFirstCard(openedDealerCard);
         OutputView.printCardList(userCardsDto);
         OutputView.println();
-    }
-
-    private Users inputUsers() {
-        return InputView.askPlayersName()
-                .stream()
-                .map(User::new)
-                .collect(Collectors.collectingAndThen(Collectors.toList(), Users::new));
     }
 
     private CardDto getDealerOpenedCard() {

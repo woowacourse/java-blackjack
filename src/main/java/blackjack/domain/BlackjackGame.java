@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.betting.BettingMoney;
+import blackjack.domain.betting.EarningRate;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.scoreboard.ScoreBoard;
@@ -68,7 +70,13 @@ public class BlackjackGame {
     }
 
     private UserGameResult createGameResult(User user) {
-        return new UserGameResult(user.getCards(), user.getName().toString(), WinOrLose.decideWinOrLose(user, dealer));
+        WinOrLose winOrLose = WinOrLose.decideWinOrLose(user, dealer);
+        BettingMoney prizeMoney = EarningRate.calculate(user, winOrLose);
+        return new UserGameResult(user, winOrLose, calculateIncome(user, prizeMoney));
+    }
+
+    private long calculateIncome(User user, BettingMoney prizeMoney) {
+        return prizeMoney.subtract(user.getBettingMoney());
     }
 
     public boolean canDealerMoreDraw() {
@@ -81,10 +89,6 @@ public class BlackjackGame {
 
     public Card getDealerFirstCard() {
         return dealer.getFirstCard();
-    }
-
-    public int getDealerHandSize() {
-        return dealer.handSize();
     }
 
     public Users getUsers() {

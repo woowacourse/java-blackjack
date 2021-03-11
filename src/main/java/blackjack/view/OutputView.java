@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.scoreboard.ScoreBoard;
-import blackjack.domain.scoreboard.WinOrLose;
 import blackjack.domain.scoreboard.result.Resultable;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.ParticipantName;
@@ -9,22 +8,19 @@ import blackjack.dto.CardDto;
 import blackjack.dto.UserCardsDto;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static java.util.stream.Collectors.joining;
 
 public class OutputView {
     private static final String COMMA_AND_BLANK = ", ";
-    private static final String BLANK = " ";
     private static final String COLON = ": ";
     private static final String FIRST_DRAW_MESSAGE_PREFIX = "딜러와 ";
     private static final String FIRST_DRAW_MESSAGE_SUFFIX = "에게 2장의 카드를 나누었습니다.";
     private static final String PRINT_CARD_LIST_MSG_FORMAT = "%s 카드: %s%n";
     private static final String PRINT_CARD_LIST_AND_SCORE_MSG_FORMAT = "%s 카드: %s - 점수 : %d%n";
-    private static final String FINAL_WIN_OR_LOSE_MSG = "##최종 승패";
+    private static final String FINAL_WIN_OR_LOSE_MSG = "##최종 수익";
     private static final String DEALER_MORE_DRAW_CARD_MSG = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final long DEFAULT_COUNT = 0L;
 
     public static void printDrawMessage(List<ParticipantName> userNames) {
         String names = userNames.stream()
@@ -71,24 +67,21 @@ public class OutputView {
         printCardListAndScore(scoreBoard.getDealerGameResult());
         printCardListAndScore(new ArrayList<>(scoreBoard.getUserResults().values()));
         println();
-        printFinalWinOrLose(scoreBoard);
+        printParticipantsIncomes(scoreBoard);
     }
 
-    private static void printFinalWinOrLose(ScoreBoard scoreBoard) {
+    private static void printParticipantsIncomes(ScoreBoard scoreBoard) {
         System.out.println(FINAL_WIN_OR_LOSE_MSG);
-        System.out.println(createDealerResultMessage(scoreBoard));
+        System.out.println(createDealerIncomeMessage(scoreBoard));
 
         scoreBoard.getUserResults().forEach(
                 (user, userGameResult) ->
-                        System.out.println(user.getName().toString() + COLON + userGameResult.getWinOrLose().getCharacter())
+                        System.out.println(user.getName().toString() + COLON + userGameResult.getIncome())
         );
     }
 
-    private static String createDealerResultMessage(ScoreBoard scoreBoard) {
-        return Dealer.DEALER_NAME + COLON + Arrays.stream(WinOrLose.values())
-                .map(winOrLose -> scoreBoard.dealerWinOrLoseCounts()
-                        .getOrDefault(winOrLose, DEFAULT_COUNT) + winOrLose.getCharacter())
-                .collect(joining(BLANK));
+    private static String createDealerIncomeMessage(ScoreBoard scoreBoard) {
+        return Dealer.DEALER_NAME + COLON + scoreBoard.calculateDealerIncome();
     }
 
     public static void println() {

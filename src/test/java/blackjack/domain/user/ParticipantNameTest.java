@@ -13,7 +13,7 @@ class ParticipantNameTest {
         String empty = "";
         //when
         //then
-        assertThatThrownBy(() -> new User(empty))
+        assertThatThrownBy(() -> new User(empty, 0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름이 공백일 수 없습니다.");
     }

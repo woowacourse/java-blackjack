@@ -34,13 +34,13 @@ class WinOrLoseTest {
     static Stream<Arguments> winOrLoseByStatusTest() {
         return Stream.of(
                 Arguments.of(
-                        changeStatus(new User("웨지"), PLAYING), changeStatus(new Dealer(), BURST), WIN
+                        changeStatus(new User("웨지", 0), PLAYING), changeStatus(new Dealer(), BURST), WIN
                 ),
                 Arguments.of(
-                        changeStatus(new User("웨지"), BURST), changeStatus(new Dealer(), PLAYING), LOSE
+                        changeStatus(new User("웨지", 0), BURST), changeStatus(new Dealer(), PLAYING), LOSE
                 ),
                 Arguments.of(
-                        changeStatus(new User("웨지"), BURST), changeStatus(new Dealer(), BURST), DRAW
+                        changeStatus(new User("웨지", 0), BURST), changeStatus(new Dealer(), BURST), DRAW
                 )
         );
     }
@@ -75,13 +75,13 @@ class WinOrLoseTest {
     static Stream<Arguments> winOrLoseByScoreTest() {
         return Stream.of(
                 Arguments.of(
-                        setScoreTwenty(new User("웨지")), setScoreEleven(new Dealer()), WIN
+                        setScoreTwenty(new User("웨지", 0)), setScoreEleven(new Dealer()), WIN
                 ),
                 Arguments.of(
-                        setScoreEleven(new User("웨지")), setScoreEleven(new Dealer()), DRAW
+                        setScoreEleven(new User("웨지", 0)), setScoreEleven(new Dealer()), DRAW
                 ),
                 Arguments.of(
-                        setScoreEleven(new User("웨지")), setScoreTwenty(new Dealer()), LOSE
+                        setScoreEleven(new User("웨지", 0)), setScoreTwenty(new Dealer()), LOSE
                 )
         );
     }

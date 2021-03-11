@@ -1,13 +1,17 @@
 package blackjack.domain.user;
 
+import blackjack.domain.betting.BettingMoney;
 import blackjack.domain.user.status.Status;
 
 import static blackjack.domain.user.Dealer.DEALER_NAME;
 
 public class User extends Participant {
-    public User(String name) {
+    private final BettingMoney bettingMoney;
+
+    public User(String name, long bettingMoney){
         super(name);
         whenUserNameEqualsDealerName(name);
+        this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
     private void whenUserNameEqualsDealerName(String name) {
@@ -22,5 +26,9 @@ public class User extends Participant {
 
     public boolean canContinueGame() {
         return status.canContinueGame();
+    }
+
+    public BettingMoney getBettingMoney(){
+        return this.bettingMoney;
     }
 }

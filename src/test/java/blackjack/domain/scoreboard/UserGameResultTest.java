@@ -1,10 +1,10 @@
 package blackjack.domain.scoreboard;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.painting.Suit;
 import blackjack.domain.card.painting.Symbol;
 import blackjack.domain.scoreboard.result.UserGameResult;
+import blackjack.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,13 +17,14 @@ class UserGameResultTest {
     @Test
     void testCalculateScore() {
         //given
-        Cards resultCards = new Cards(Arrays.asList(
+        User user = new User("웨지", 1000L);
+        user.drawCards(Arrays.asList(
                 new Card(Suit.SPADE, Symbol.EIGHT), new Card(Suit.HEART, Symbol.FIVE),
                 new Card(Suit.CLOVER, Symbol.SEVEN)
         ));
 
         //when
-        UserGameResult userGameResult = new UserGameResult(resultCards, "유저", WinOrLose.WIN);
+        UserGameResult userGameResult = new UserGameResult(user, WinOrLose.WIN, 1000);
 
         //then
         assertThat(userGameResult.getScore()).isEqualTo(20);
