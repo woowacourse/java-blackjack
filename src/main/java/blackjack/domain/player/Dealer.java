@@ -42,4 +42,8 @@ public class Dealer extends Player {
         return calculateScore() <= DRAW_STANDARD;
     }
 
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
 }

@@ -17,19 +17,14 @@ public abstract class Player {
 
     abstract boolean canDraw();
 
+    public abstract boolean isDealer();
+
     public final int calculateScore() {
         return cards.calculateScore();
     }
 
     public final boolean isBust() {
         return cards.isBust();
-    }
-
-    public final boolean isDealer() {
-        if (this instanceof Dealer) {
-            return true;
-        }
-        return false;
     }
 
     public String getName() {

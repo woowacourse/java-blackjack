@@ -23,4 +23,9 @@ public class Gamer extends Player {
     public boolean canDraw() {
         return calculateScore() < DRAW_STANDARD;
     }
+
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
 }
