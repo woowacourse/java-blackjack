@@ -43,6 +43,6 @@ public class Dealer extends Participant {
 
     @Override
     public String showCardsAtFirst() {
-        return getFirstCard().getName();
+        return getFirstCard().getCardInformation();
     }
 }

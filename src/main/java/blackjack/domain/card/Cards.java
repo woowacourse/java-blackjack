@@ -35,7 +35,7 @@ public class Cards {
 
     public String getCardsInformation() {
         return cards.stream()
-                .map(Card::getName)
+                .map(Card::getCardInformation)
                 .collect(Collectors.joining(", "));
     }
 
