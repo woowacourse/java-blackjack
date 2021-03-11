@@ -71,7 +71,8 @@ public abstract class Participant {
 
     private int howManyAce() {
         return (int) cards.stream()
-                .filter(card -> card.getCardValue().isAce()).count();
+                .filter(Card::isAce)
+                .count();
     }
 
     public abstract List<Card> showInitialCards();
