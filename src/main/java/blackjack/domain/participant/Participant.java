@@ -22,7 +22,7 @@ public abstract class Participant {
 
     public abstract void receiveCard(final Card card);
 
-    public void validateState() {
+    protected void validateState() {
         if (this.state.isFinished()) {
             throw new IllegalStateException("현재 상태에서는 카드를 더 받을 수 없습니다.");
         }
