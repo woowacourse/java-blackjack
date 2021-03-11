@@ -1,6 +1,5 @@
 package blackjack.domain.status;
 
-import blackjack.domain.participant.Cards;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

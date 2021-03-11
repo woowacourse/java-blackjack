@@ -1,8 +1,9 @@
-package blackjack.domain.participant;
+package blackjack.domain.status;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Suit;
+import blackjack.domain.status.Cards;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -93,6 +93,6 @@ class CardsTest {
         cards.add(JACK_SPADES);
         cards.add(THREE_HEARTS);
         cards.add(ACE_CLUBS);
-        assertThat(cards.subList(1, 2)).isEqualTo(new ArrayList<>(Arrays.asList(THREE_HEARTS)));
+        assertThat(cards.subList(1, 3)).isEqualTo(new ArrayList<>(Arrays.asList(THREE_HEARTS, ACE_CLUBS)));
     }
 }

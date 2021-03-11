@@ -1,7 +1,6 @@
 package blackjack.domain.status;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Cards;
 
 public abstract class State {
     protected Cards cards;
