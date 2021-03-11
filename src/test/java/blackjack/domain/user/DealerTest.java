@@ -3,6 +3,9 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.state.Blackjack;
+import blackjack.domain.state.Hit;
+import blackjack.domain.state.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -72,5 +75,33 @@ public class DealerTest {
         )));
 
         assertThat(dealer.showOneCard()).isInstanceOf(Card.class);
+    }
+
+    @DisplayName("받은 카드에 따라 상태를 확인한다. - Hit")
+    @Test
+    public void receiveCardsState() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.TWO),
+                new Card(Suit.CLOVER, Denomination.KING)
+        )));
+
+        State state = dealer.getState();
+
+        assertThat(state).isInstanceOf(Hit.class);
+    }
+
+    @DisplayName("받은 카드에 따라 상태를 확인한다. - blackjack")
+    @Test
+    public void receiveCardsState2() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.KING)
+        )));
+
+        State state = dealer.getState();
+
+        assertThat(state).isInstanceOf(Blackjack.class);
     }
 }

@@ -62,10 +62,6 @@ public class Cards {
         cards.add(card);
     }
 
-    public void combine(Cards otherCards) {
-        this.cards.addAll(otherCards.getCards());
-    }
-
     public boolean isBust() {
         return totalScore().isBust();
     }

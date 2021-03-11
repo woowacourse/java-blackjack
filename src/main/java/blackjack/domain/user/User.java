@@ -1,6 +1,8 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.Objects;
 public abstract class User {
     protected final Cards cards;
     protected final Name name;
+    protected State state;
 
     public User(String name) {
         this(new Name(name));
@@ -31,8 +34,10 @@ public abstract class User {
         this.name = name;
     }
 
-    public final void receiveCards(Cards cards) {
-        this.cards.combine(cards);
+    public final void receiveCards(Cards anotherCards) {
+        anotherCards.getCards()
+                .forEach(cards::add);
+        state = StateFactory.generateStateByCards(cards);
     }
 
     public final boolean isAbleToHit() {
@@ -49,6 +54,14 @@ public abstract class User {
 
     public final String getName() {
         return name.getName();
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     @Override

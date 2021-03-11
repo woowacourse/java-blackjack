@@ -63,19 +63,6 @@ public class CardsTest {
         assertThat(isSoftHand).isTrue();
     }
 
-    @DisplayName("카드들을 하나의 객체로 합친다.")
-    @Test
-    void combineCards() {
-        Deck deck = new Deck();
-        Cards cards = deck.popToInitialCards();
-        Cards otherCards = deck.popToInitialCards();
-        cards.combine(otherCards);
-
-        int cardCount = cards.getCards().size();
-
-        assertThat(cardCount).isEqualTo(4);
-    }
-
     @DisplayName("카드의 총합이 버스트인 경우를 확인한다.")
     @Test
     void isBustTrue() {
