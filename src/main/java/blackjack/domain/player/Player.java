@@ -17,7 +17,7 @@ public class Player extends Participant {
     }
 
     public boolean canDraw() {
-        return cards.getScore() < BLACKJACK_NUMBER;
+        return state.getScore() < BLACKJACK_NUMBER;
     }
 
     public void calculateGameResult(Dealer dealer) {
@@ -37,10 +37,12 @@ public class Player extends Participant {
         if (this.isBust()) {
             dealer.addGameResult(GameResult.WIN);
             gameResult = GameResult.LOSE;
+            return;
         }
-        if (!this.isBust() && dealer.isBust()) {
+        if (dealer.isBust()) {
             dealer.addGameResult(GameResult.LOSE);
             gameResult = GameResult.WIN;
+            return;
         }
     }
 
@@ -48,15 +50,25 @@ public class Player extends Participant {
         if (this.getScore() > dealer.getScore()) {
             dealer.addGameResult(GameResult.LOSE);
             gameResult = GameResult.WIN;
+            return;
         }
         if (this.getScore() < dealer.getScore()) {
             dealer.addGameResult(GameResult.WIN);
             gameResult = GameResult.LOSE;
+            return;
         }
     }
 
-    public Money profit() {
-        return money.profit(gameResult, isBlackjack());
+    public Money profit(Dealer dealer) {
+        if (this.isBlackjack() && dealer.isBlackjack()) {
+            return money.profit(gameResult.earningRate());
+        }
+        if (this.isBust() || this.isBlackjack()) {
+            return money.profit(state.earningRate());
+        }
+        return money.profit(gameResult.earningRate());
     }
 
 }
+
+
