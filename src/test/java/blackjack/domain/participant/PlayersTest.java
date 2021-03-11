@@ -96,4 +96,41 @@ public class PlayersTest {
         assertThat(allPlayerResult.get(player3)).isEqualTo(Result.LOSE);
         assertThat(allPlayerResult.get(player4)).isEqualTo(Result.BLACKJACK_WIN);
     }
+
+    @Test
+    @DisplayName("모든 플레이어에 수익률을 조회한다.")
+    void generateEveryPlayerProfit() {
+        Player player1 = new Player("joel");
+        player1.setPlayerMoney(new PlayerMoney(1000));
+        Player player2 = new Player("bada");
+        player2.setPlayerMoney(new PlayerMoney(1000));
+        Player player3 = new Player("j.on");
+        player3.setPlayerMoney(new PlayerMoney(1000));
+        Player player4 = new Player("blackjack");
+        player4.setPlayerMoney(new PlayerMoney(1000));
+
+        player1.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+        player1.receiveAdditionalCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
+
+        player2.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.HEART));
+        player2.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.HEART));
+
+        player3.receiveAdditionalCard(new Card(CardLetter.TWO, CardSuit.DIAMOND));
+        player3.receiveAdditionalCard(new Card(CardLetter.THREE, CardSuit.DIAMOND));
+
+        player4.receiveAdditionalCard(new Card(CardLetter.ACE, CardSuit.CLOVER));
+        player4.receiveAdditionalCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
+
+        final Players players = new Players(Arrays.asList(player1, player2, player3, player4));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.SPADE));
+        dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.SPADE));
+
+        final Map<Player, Double> allPlayerProfit = players.generateEveryPlayerProfit(dealer);
+        assertThat(allPlayerProfit.get(player1)).isEqualTo(1000);
+        assertThat(allPlayerProfit.get(player2)).isEqualTo(0);
+        assertThat(allPlayerProfit.get(player3)).isEqualTo(-1000);
+        assertThat(allPlayerProfit.get(player4)).isEqualTo(1500);
+    }
 }

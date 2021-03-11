@@ -51,4 +51,12 @@ public class Players {
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
+
+    public Map<Player, Double> generateEveryPlayerProfit(final Dealer dealer) {
+        final Map<Player, Double> playerProfit = new LinkedHashMap<>();
+        for (Player player : players) {
+            playerProfit.put(player, player.generateProfit(dealer));
+        }
+        return playerProfit;
+    }
 }
