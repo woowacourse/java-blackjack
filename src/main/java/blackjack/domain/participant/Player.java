@@ -11,7 +11,6 @@ import java.util.List;
 public class Player implements Participant {
     private static final int FROM = 0;
     private static final int TO = 2;
-    private static final int DRAW_BOUND_SCORE = 21;
 
     private final String name;
     private State state;

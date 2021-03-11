@@ -7,6 +7,8 @@ import blackjack.domain.rule.BlackJackScoreRule;
 import java.util.List;
 
 public class Hit implements State {
+    private static final int INITIAL_STATE_NUMBER_OF_CARDS = 2;
+    private static final int BLACK_JACK = 21;
     private Cards cards;
 
     public Hit(List<Card> initialCard) {
@@ -41,12 +43,11 @@ public class Hit implements State {
     @Override
     public State changeState() {
         int sum = cards.getTotalScore(new BlackJackScoreRule());
-        System.out.println(sum);
-        if (sum == 21 && isInitialState()) {
+        if (sum == BLACK_JACK && isInitialState()) {
             return new BlackJack(cards.toCardList());
         }
 
-        if (sum > 21) {
+        if (sum > BLACK_JACK) {
             return new Bust(cards.toCardList());
         }
 
@@ -64,6 +65,6 @@ public class Hit implements State {
     }
 
     private boolean isInitialState() {
-        return cards.size() == 2;
+        return cards.size() == INITIAL_STATE_NUMBER_OF_CARDS;
     }
 }
