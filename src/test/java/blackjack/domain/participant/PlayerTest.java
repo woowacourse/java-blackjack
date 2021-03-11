@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static blackjack.domain.FixtureCards.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PlayerTest {
     private Player player;

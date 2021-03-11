@@ -33,7 +33,7 @@ public class BlackjackController {
     }
 
     private void setUpTwoCards(Game game) {
-        game.setUpTwoCards();
+        game.startRound();
         OutputView.printSetup(game.getDealer(), game.getPlayers());
     }
 

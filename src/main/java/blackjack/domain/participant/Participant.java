@@ -1,6 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.status.Blackjack;
+import blackjack.domain.status.Bust;
 import blackjack.domain.status.StartRound;
 import blackjack.domain.status.State;
 
@@ -23,13 +25,11 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return state.getCards()
-                    .isBlackJack();
+        return state instanceof Blackjack;
     }
 
     public boolean isBust() {
-        return state.getCards()
-                    .isBust();
+        return state instanceof Bust;
     }
 
     public List<Card> getCards() {

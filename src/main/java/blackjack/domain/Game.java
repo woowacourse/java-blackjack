@@ -35,14 +35,14 @@ public class Game {
                                    .collect(Collectors.toList()));
     }
 
-    public void setUpTwoCards() {
-        addTwoCard(dealer);
+    public void startRound() {
+        drawTwoCard(dealer);
         for (Player player : players) {
-            addTwoCard(player);
+            drawTwoCard(player);
         }
     }
 
-    private void addTwoCard(Participant participant) {
+    private void drawTwoCard(Participant participant) {
         participant.startRound(deck.draw(), deck.draw());
     }
 
@@ -53,7 +53,7 @@ public class Game {
     public void reflectInput(boolean willDraw) {
         Player player = getCurrentPlayer();
         if (willDraw) {
-            giveCard(player);
+            drawCard(player);
             return;
         }
         playerIndex += 1;
@@ -63,14 +63,14 @@ public class Game {
         return playerIndex < players.size();
     }
 
-    public void giveCard(Participant participant) {
+    public void drawCard(Participant participant) {
         participant.addCard(deck.draw());
     }
 
     public int playDealerTurn() {
         int cnt = 0;
         while (!dealer.isStay()) {
-            giveCard(dealer);
+            drawCard(dealer);
             cnt++;
         }
         return cnt;

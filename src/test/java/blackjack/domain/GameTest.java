@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +29,7 @@ public class GameTest {
     @Test
     @DisplayName("카드 두장 셋업")
     void setUpTwoCards() {
-        game.setUpTwoCards();
+        game.startRound();
         for (Player player : game.getPlayers()) {
             assertThat(player.getCards()).hasSize(2);
         }
@@ -40,7 +39,7 @@ public class GameTest {
 
     @Test
     void dealerHitUntilStay() {
-        game.setUpTwoCards();
+        game.startRound();
         game.playDealerTurn();
         assertTrue(game.getDealer()
                        .isStay());
