@@ -85,7 +85,7 @@ public class BlackJackController {
 
     private static void showGameResult(Players players, Dealer dealer, List<BlackJackParticipant> participants) {
         OutputView.printParticipantsStatusWithScore(participants);
-        OutputView.printResult(players.match(dealer));
+        OutputView.printResult(players, dealer);
     }
 }
 

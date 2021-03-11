@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Players;
 import blackjack.domain.card.Card;
 
 public class Dealer extends BlackJackParticipant {
@@ -18,6 +19,14 @@ public class Dealer extends BlackJackParticipant {
         if (isStay()) {
             stay();
         }
+    }
+
+    public double getProfit(Players players) {
+        double profitSum = 0;
+        for (Player player : players.unwrap()) {
+            profitSum -= player.getProfit(this);
+        }
+        return profitSum;
     }
 
     private boolean isStay() {

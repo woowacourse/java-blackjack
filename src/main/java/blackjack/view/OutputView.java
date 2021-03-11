@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.Players;
 import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.BlackJackParticipant;
@@ -68,23 +69,12 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + dealer.getName() + "는 " + Dealer.DEALER_LIMIT + "이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printResult(GameResult gameResult) {
-        System.out.print(LINE_SEPARATOR + "## 최종 승패" + LINE_SEPARATOR + "딜러: ");
-        printDealerResult(gameResult);
-        printPlayersResult(gameResult);
-    }
+    public static void printResult(Players players, Dealer dealer) {
+        System.out.println(LINE_SEPARATOR + "## 최종 승패");
 
-    private static void printDealerResult(GameResult gameResult) {
-        Map<ResultType, Integer> dealerStatistics = gameResult.getDealerStatistics();
-        for (ResultType resultType : dealerStatistics.keySet()) {
-            System.out.print(dealerStatistics.get(resultType) + resultType.getName() + " ");
-        }
-        System.out.println();
-    }
+        System.out.println(dealer.getName() + " : " + dealer.getProfit(players));
 
-    private static void printPlayersResult(GameResult gameResult) {
-        Map<Player, ResultType> unwrappedResult = gameResult.unwrap();
-        unwrappedResult.keySet().forEach(player ->
-                System.out.println(player.getName() + ": " + unwrappedResult.get(player).getName()));
+        players.unwrap()
+                .forEach(player -> System.out.println(player.getName() + " : " + player.getProfit(dealer)));
     }
 }
