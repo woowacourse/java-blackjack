@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BlackJackController {
+public class BlackjackController {
     public void play() {
         Users users = new Users(InputView.getUsersName());
         usersBetAmount(users);
@@ -23,7 +23,6 @@ public class BlackJackController {
     }
 
     private void drawCards(Users users, Dealer dealer) {
-        drawTwoCards(users, dealer);
         OutputView.printGiveTwoCardsMessage(getUserDTOs(users), new PlayerDTO(dealer));
         dealer.setCardOpen(new AllCardsOpenStrategy());
         users.getUsers().forEach(this::drawCard);
@@ -33,18 +32,14 @@ public class BlackJackController {
     private void printResultMessage(Users users, Dealer dealer) {
         OutputView.printFinalCardsMessage(getUserDTOs(users), new PlayerDTO(dealer));
         Map<Name, Integer> usersResult = users.getResult(dealer);
-        OutputView.printResultMessage(new GameResultDTO(usersResult, dealer.getResult(usersResult)));
+        OutputView
+            .printResultMessage(new GameResultDTO(usersResult, dealer.getResult(usersResult)));
     }
 
     private void usersBetAmount(Users users) {
         for (User user : users.getUsers()) {
             user.setBetAmount(InputView.getUserBetAmount(new PlayerDTO(user)));
         }
-    }
-
-    private void drawTwoCards(Users users, Dealer dealer) {
-        dealer.drawRandomTwoCards();
-        users.drawRandomTwoCard();
     }
 
     private List<PlayerDTO> getUserDTOs(Users users) {
@@ -54,7 +49,7 @@ public class BlackJackController {
     }
 
     private void drawCard(User user) {
-        while (user.isCanDraw()) {
+        while (!user.isFinished()) {
             askDrawContinue(user);
         }
     }
@@ -68,13 +63,13 @@ public class BlackJackController {
     }
 
     private void printCardsWhenDraw(User user) {
-        if (!user.isDrawStop()) {
+        if (!user.isFinished()) {
             OutputView.printUserInitialCards(new PlayerDTO(user));
         }
     }
 
     private void dealerDraw(Dealer dealer) {
-        if (dealer.isCanDraw()) {
+        if (!dealer.isFinished()) {
             OutputView.printDealerDrawCardMessage();
             dealer.drawRandomOneCard();
         }
