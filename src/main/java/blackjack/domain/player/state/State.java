@@ -8,7 +8,7 @@ public interface State {
     void blackJackCheck(Dealer dealer, Challenger challenger);
 
     void compareCards(Dealer dealer, Challenger challenger);
-    
+
     Result getResult();
 }
 

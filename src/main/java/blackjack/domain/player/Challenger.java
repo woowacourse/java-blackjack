@@ -17,7 +17,7 @@ public class Challenger extends Player {
         state = new NonBlackJackState();
     }
 
-    public Result getChallengerResult(final Dealer dealer) {
+    public Result getResult(final Dealer dealer) {
         if (isBust()) {
             return Result.LOSE;
         }

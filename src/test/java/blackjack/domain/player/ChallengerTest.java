@@ -35,7 +35,7 @@ class ChallengerTest {
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
-        assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.WIN);
+        assertThat(challenger.getResult(dealer)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -47,7 +47,7 @@ class ChallengerTest {
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
 
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
-        assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.BLACKJACK);
+        assertThat(challenger.getResult(dealer)).isEqualTo(Result.BLACKJACK);
     }
 
     @Test
@@ -64,7 +64,7 @@ class ChallengerTest {
         Challenger challenger = new Challenger(new Cards(playerCards), new Name("pobi"));
         Dealer dealer = new Dealer(new Cards(dealerCards));
 
-        assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.DRAW);
+        assertThat(challenger.getResult(dealer)).isEqualTo(Result.DRAW);
     }
 
     @Test
@@ -76,7 +76,7 @@ class ChallengerTest {
         cardList.add(new Card(Suit.DIAMOND, Face.NINE));
 
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
-        assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.DRAW);
+        assertThat(challenger.getResult(dealer)).isEqualTo(Result.DRAW);
     }
 
     @Test
@@ -88,7 +88,7 @@ class ChallengerTest {
         cardList.add(new Card(Suit.DIAMOND, Face.ACE));
 
         Challenger challenger = new Challenger(new Cards(cardList), new Name("pobi"));
-        assertThat(challenger.getChallengerResult(dealer)).isEqualTo(Result.LOSE);
+        assertThat(challenger.getResult(dealer)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -106,6 +106,6 @@ class ChallengerTest {
 
         Dealer dealer1 = new Dealer(cards);
 
-        assertThat(challenger.getChallengerResult(dealer1)).isEqualTo(Result.LOSE);
+        assertThat(challenger.getResult(dealer1)).isEqualTo(Result.LOSE);
     }
 }
