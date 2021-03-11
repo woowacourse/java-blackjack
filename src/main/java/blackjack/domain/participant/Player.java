@@ -9,6 +9,10 @@ public class Player extends Participant {
         this(name, new PlayerMoney(0));
     }
 
+    public Player(final String name, final double playerMoney) {
+        this(name, new PlayerMoney(playerMoney));
+    }
+
     public Player(final String name, final PlayerMoney playerMoney) {
         super(name);
         this.playerMoney = playerMoney;

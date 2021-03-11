@@ -3,10 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.result.Result;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -27,12 +24,15 @@ public class Players {
         return new Players(players);
     }
 
-    public static Players of(final List<String> playerName, List<Double> playerMoney) {
+    public static Players of(final List<String> playerName, final List<Double> playerMoney) {
         validateDuplicate(playerName);
         validateMoney(playerMoney);
-        final List<Player> players = playerName.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+        final int playerCount = validateSize(playerName.size(), playerMoney.size());
+
+        final List<Player> players = new ArrayList<>();
+        for (int i = 0; i < playerCount; i++) {
+            players.add(new Player(playerName.get(i), playerMoney.get(i)));
+        }
         return new Players(players);
     }
 
@@ -54,6 +54,13 @@ public class Players {
         if (belowZero != 0) {
             throw new IllegalArgumentException("베팅 금액은 0 이상이여야 합니다.");
         }
+    }
+
+    private static int validateSize(final int nameCount, final int moneyCount) {
+        if (nameCount != moneyCount) {
+            throw new IllegalArgumentException("입력 받은 플레이어의 수와 베팅 금액의 수가 같지 않습니다");
+        }
+        return nameCount;
     }
 
     public void receiveInitialCard(final CardDeck cardDeck) {
