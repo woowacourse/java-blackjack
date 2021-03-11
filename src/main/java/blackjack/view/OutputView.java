@@ -64,7 +64,9 @@ public class OutputView {
     public static void printCardsWithTotalValue(List<User> users) {
         for (User user : users) {
             System.out.printf("%s카드: %s - 결과: %s \n",
-                    user.getName(), cardsByUser(user), user.cards().totalScore());
+                    user.getName(), cardsByUser(user), user.cards()
+                            .totalScore()
+                            .getValue());
         }
     }
 

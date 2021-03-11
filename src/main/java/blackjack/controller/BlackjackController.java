@@ -60,10 +60,9 @@ public class BlackjackController {
 
     private void proceedDealerRound(BlackjackGame blackjackGame) {
         Dealer dealer = blackjackGame.getDealer();
-        if (dealer.isMustHit()) {
+        while (dealer.isMustHit()) {
             blackjackGame.hit(dealer);
             OutputView.printDealerDrawable(dealer);
-            return;
         }
         OutputView.printDealerNotDrawable(dealer);
     }
