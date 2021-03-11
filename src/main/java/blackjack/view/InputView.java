@@ -32,7 +32,7 @@ public class InputView {
     public static int inputBettingMoney(Player player) {
         System.out.println(player.getName() + "의 배팅 금액은?");
         String stringMoney = scanner.nextLine();
-        if(!stringMoney.chars().allMatch(Character::isDigit)){
+        if (!stringMoney.chars().allMatch(Character::isDigit)) {
             throw new IllegalArgumentException("배팅 금액은 숫자여야만 합니다. ");
         }
 

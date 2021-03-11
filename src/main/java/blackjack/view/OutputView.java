@@ -1,11 +1,12 @@
 package blackjack.view;
 
-import blackjack.domain.*;
+import blackjack.domain.Dealer;
+import blackjack.domain.Player;
+import blackjack.domain.User;
+import blackjack.domain.Users;
 import blackjack.domain.card.Card;
-import blackjack.util.BlackJackConstant;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -69,7 +70,7 @@ public class OutputView {
 
         printDealerResult(users.getPlayers(), users.getDealer());
 
-        for(User user : users.getPlayers()){
+        for (User user : users.getPlayers()) {
             System.out.printf("%s : %.0f\n", user.getName(), user.profit(user.getBettingMoney(), users.getDealer()));
         }
     }
@@ -77,7 +78,7 @@ public class OutputView {
     private static void printDealerResult(List<Player> players, Dealer dealer) {
         int dealerTotalMoney = dealer.getBettingMoney();
 
-        for(Player player : players){
+        for (Player player : players) {
             dealerTotalMoney -= player.profit(player.getBettingMoney(), dealer);
         }
 

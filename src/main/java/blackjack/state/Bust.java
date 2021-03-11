@@ -10,6 +10,9 @@ public class Bust extends Finished {
 
     @Override
     public double earningRate(Dealer dealer) {
+        if (dealer.isBust()) {
+            return 0;
+        }
         return -1;
     }
 }

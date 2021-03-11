@@ -1,7 +1,6 @@
 package blackjack.domain.state;
 
 import blackjack.domain.Fixture;
-import blackjack.state.Hit;
 import blackjack.state.State;
 import blackjack.state.StateFactory;
 import blackjack.state.Stay;

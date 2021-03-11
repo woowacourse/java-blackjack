@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    private List<Card> values;
+    private final List<Card> values;
 
     public Cards(final List<Card> values) {
         this.values = new ArrayList<>(values);
@@ -25,10 +25,7 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        if(score().isBlackJack() && values.size() == 2){
-            return true;
-        }
-        return false;
+        return score().isBlackJack() && values.size() == 2;
     }
 
     public Score score() {

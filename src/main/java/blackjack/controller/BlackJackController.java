@@ -39,26 +39,17 @@ public class BlackJackController {
     }
 
     private void playersBetting(List<Player> players) {
-        int totalBettingMoney = 0;
         for (Player player : players) {
-            int bettingMoney = InputView.inputBettingMoney(player);
-            player.bettingMoney(bettingMoney);
-            totalBettingMoney += bettingMoney;
+            player.betting(InputView.inputBettingMoney(player));
         }
-        dealer.bettingMoney(totalBettingMoney);
+        dealer.betting(0);
     }
 
     private void playGameForEachPlayer(Player player) {
-        while (requestHitOrNot(player)) {
+        while (!player.isFinished() && InputView.isHit(player.getName())) {
             player.hit(cardDeck.drawCard());
             OutputView.printCardsOfPlayer(player);
         }
-    }
-
-    private boolean requestHitOrNot(Player player) {
-        if (player.isFinished()) {
-            return false;
-        }
-        return InputView.isHit(player.getName());
+        player.stay();
     }
 }

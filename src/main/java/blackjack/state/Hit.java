@@ -26,5 +26,4 @@ public class Hit extends Running {
     }
 
 
-
 }

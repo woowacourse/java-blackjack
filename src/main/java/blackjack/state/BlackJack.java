@@ -10,7 +10,7 @@ public class BlackJack extends Finished {
 
     @Override
     public double earningRate(Dealer dealer) {
-        if(dealer.isBlackJack()){
+        if (dealer.isBlackJack()) {
             return 1;
         }
         return 1.5;

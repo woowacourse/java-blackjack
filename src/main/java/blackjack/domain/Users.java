@@ -1,10 +1,10 @@
 package blackjack.domain;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.state.State;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Users {

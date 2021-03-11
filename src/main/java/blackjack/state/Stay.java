@@ -10,7 +10,8 @@ public class Stay extends Finished {
 
     @Override
     public double earningRate(Dealer dealer) {
-        if(dealer.isBlackJack() || dealer.getScore() > this.cards().score().getScore()) {
+        if (dealer.isBlackJack() ||
+                (!dealer.isBust() && dealer.getScore() > this.cards().score().getScore())) {
             return -1;
         }
         return 1;

@@ -66,7 +66,7 @@ public abstract class User {
         return state.cards().score().isBust();
     }
 
-    public void bettingMoney(int bettingMoney){
+    public void betting(int bettingMoney) {
         this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
