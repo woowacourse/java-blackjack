@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Dealer extends Gamer {
 
+    private static final int OPEN_HAND_COUNT = 1;
+
     public Dealer(Hands hands) {
         this("딜러", hands);
     }
@@ -18,24 +20,8 @@ public class Dealer extends Gamer {
         return hands.calculate().dealerAbleToAdd();
     }
 
-    public boolean isBusted() {
-        return calculateScore().isBusted();
-    }
-
-    public boolean isMaxScore() {
-        return calculateScore().isMaxScore();
-    }
-
-    public boolean isUnderMaxScore() {
-        return calculateScore().isUnderMaxScore();
-    }
-
-    public int getScore() {
-        return calculateScore().getValue();
-    }
-
     @Override
     public List<Card> showOpenHands() {
-        return hands.cardsOf(1);
+        return hands.cardsOf(OPEN_HAND_COUNT);
     }
 }

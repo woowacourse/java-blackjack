@@ -20,31 +20,31 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static boolean receiveAnswer(String name) {
+    public static boolean receiveAnswer(final String name) {
         String answer = receiveInput(String.format(INPUT_ANSWER_MSG, name));
         validateAnswer(answer);
         return "y".equalsIgnoreCase(answer);
     }
 
-    private static String receiveInput(String message) {
+    private static String receiveInput(final String message) {
         System.out.println(NEWLINE + message);
         return SCANNER.nextLine().trim();
     }
 
-    private static String validateName(String name) {
+    private static String validateName(final String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 이름은 한 글자 이상이어야 합니다.");
         }
         return name;
     }
 
-    private static void validateAnswer(String answer) {
+    private static void validateAnswer(final String answer) {
         if (!"y".equalsIgnoreCase(answer) && !"n".equalsIgnoreCase(answer)) {
             throw new IllegalArgumentException("[ERROR] y/n만 입력 가능합니다.");
         }
     }
 
-    public static List<Integer> receiveMoney(List<String> playerNames) {
+    public static List<Integer> receiveMoney(final List<String> playerNames) {
         List<Integer> playersMoney = new ArrayList<>();
         for (String name : playerNames) {
             String money =  receiveInput(name + "의 배팅 금액은?");

@@ -26,11 +26,11 @@ public class Players implements Iterable<Player> {
         return -sum;
     }
 
-    public Map<String, Double> resultWithName(Dealer dealer) {
-        Map<String, Double> result = new HashMap<>();
+    public Map<String, Integer> resultWithName(Dealer dealer) {
+        Map<String, Integer> result = new HashMap<>();
         for (Player player : players) {
             ResultType resultType = ResultCalculator.decideWinner(player, dealer);
-            double profit = player.calculateProfit(resultType);
+            int profit = player.calculateProfit(resultType);
             result.put(player.getName(), profit);
         }
         return result;

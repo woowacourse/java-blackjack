@@ -27,21 +27,21 @@ public class BlackjackController {
         printResult(players, dealer);
     }
 
-    private void playerHitOrStand(CardManager cardManager, Player player) {
+    private void playerHitOrStand(final CardManager cardManager, final Player player) {
         while (InputView.receiveAnswer(player.getName())) {
             player.receiveCard(cardManager.giveCard());
             OutputView.allCards(player);
         }
     }
 
-    private void dealerHitOrStand(CardManager cardManager, Dealer dealer) {
+    private void dealerHitOrStand(final CardManager cardManager, final Dealer dealer) {
         if (dealer.checkBoundary()) {
             dealer.receiveCard(cardManager.giveCard());
             OutputView.dealerHit();
         }
     }
 
-    private void printResult(Players players, Dealer dealer) {
+    private void printResult(final Players players, final Dealer dealer) {
         OutputView.gamersAllCards(players, dealer);
         OutputView.printResultTitle();
         OutputView.dealerResult(players.dealerResult(dealer));
