@@ -54,7 +54,7 @@ public class HandTest {
         Hand bustHand = TestSetUp.createBustPlayer().getHand();
         assertThat(bustHand.isBust()).isTrue();
 
-        Hand validHand = TestSetUp.createWinner().getHand();
+        Hand validHand = TestSetUp.createBlackJackPlayer().getHand();
         assertThat(validHand.isBust()).isFalse();
     }
 }

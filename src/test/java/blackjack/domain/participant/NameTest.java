@@ -15,7 +15,7 @@ class NameTest {
     @NullSource
     @ValueSource(strings = {"", "$", "abc!"})
     void validate(String input) {
-        assertThatThrownBy(() -> new Player(input))
+        assertThatThrownBy(() -> new Player(input, "0"))
                 .isInstanceOf(InvalidNameInputException.class)
                 .hasMessage("이름은 한글, 영문 혹은 숫자로 1자 이상 입력해야합니다.");
     }

@@ -1,8 +1,6 @@
 package blackjack.exception;
 
-import java.io.IOException;
-
-public class InvalidNameInputException extends IOException {
+public class InvalidNameInputException extends IllegalArgumentException {
     public InvalidNameInputException(String message) {
         super(message);
     }
