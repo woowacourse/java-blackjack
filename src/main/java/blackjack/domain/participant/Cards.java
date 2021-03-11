@@ -4,13 +4,22 @@ import blackjack.domain.Game;
 import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class Cards {
     public static final int ZERO = 0;
     public static final int DIFFERENCE_OF_ACE_VALUE = 10;
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
+
+    public Cards(Card... cards) {
+        this(Arrays.asList(cards));
+    }
+
+    public Cards(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
 
     public void add(Card card) {
         cards.add(card);
@@ -63,5 +72,4 @@ public class Cards {
     public List<Card> subList(int fromIndex, int toIndex) {
         return new ArrayList<>(cards.subList(fromIndex, toIndex));
     }
-
 }

@@ -1,18 +1,14 @@
 package blackjack.domain.status;
 
 import blackjack.domain.card.Card;
-
-import java.util.Arrays;
-import java.util.List;
+import blackjack.domain.participant.Cards;
 
 public abstract class State {
-    protected List<Card> cards;
+    protected Cards cards;
 
-    public State(Card... cards) {
-        this(Arrays.asList(cards));
-    }
-
-    public State(List<Card> cards) {
+    public State(Cards cards) {
         this.cards = cards;
     }
+
+    public abstract State draw(Card card);
 }
