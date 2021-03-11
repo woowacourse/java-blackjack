@@ -82,4 +82,8 @@ public class Dealer implements Participant {
     public void stay() {
         state = state.stay();
     }
+
+    public int payWinPrize(int winPrize) {
+        return winPrize * -1;
+    }
 }

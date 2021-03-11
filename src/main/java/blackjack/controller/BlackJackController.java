@@ -78,12 +78,12 @@ public class BlackJackController {
 
     public GameResultDto getGameResultDto(List<Player> players, Dealer dealer) {
         List<WinPrizeDto> playersWinPrizeDto = players.stream().map(
-                player -> new WinPrizeDto(player.getName(), player.getWinPrize(dealer.getStatus()))
+                player -> new WinPrizeDto(player.getName(), player.calculateWinPrize(dealer.getStatus()))
         ).collect(Collectors.toList());
 
 
-        int totalPlayerWinPrize = players.stream().mapToInt(player -> player.getWinPrize(dealer.getStatus())).sum();
-        WinPrizeDto dealerWinPrizeDto = new WinPrizeDto(dealer.getName(), totalPlayerWinPrize * -1);
+        int totalPlayerWinPrize = players.stream().mapToInt(player -> player.calculateWinPrize(dealer.getStatus())).sum();
+        WinPrizeDto dealerWinPrizeDto = new WinPrizeDto(dealer.getName(), dealer.payWinPrize(totalPlayerWinPrize));
 
         return new GameResultDto(dealerWinPrizeDto, playersWinPrizeDto);
     }

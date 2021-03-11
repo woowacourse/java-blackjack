@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.rule.BlackJackScoreRule;
+import blackjack.domain.rule.ScoreRule;
 import blackjack.domain.state.State;
 
 import java.util.List;
@@ -71,5 +72,9 @@ public class Player implements Participant {
     @Override
     public void stay() {
         state = state.stay();
+    }
+
+    public int calculateWinPrize(State enemyState) {
+        return (int) (money * state.profit(enemyState));
     }
 }
