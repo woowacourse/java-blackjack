@@ -1,11 +1,11 @@
 package blackjack;
 
 import blackjack.domain.participant.BettingMoney;
-import blackjack.domain.participant.Name;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BettingMoneyTest {
@@ -19,5 +19,11 @@ public class BettingMoneyTest {
         assertThatThrownBy(
                 () -> new BettingMoney(-1)
         ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("getBettingMoney 테스트")
+    @Test
+    void getBettingMoneyTest() {
+        assertThat(new BettingMoney(2300).getBettingMoney()).isEqualTo(2300);
     }
 }
