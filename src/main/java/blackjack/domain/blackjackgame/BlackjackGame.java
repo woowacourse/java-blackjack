@@ -32,7 +32,7 @@ public class BlackjackGame {
     }
 
     public boolean isNotEnd() {
-        return currentPlayers.size() == 0;
+        return currentPlayers.size() != 0;
     }
 
     public Player getCurrentPlayer() {
