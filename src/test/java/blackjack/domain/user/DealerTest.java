@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DealerTest {
-    @DisplayName("히트 - 딜러는 카드를 받는다.")
+    @DisplayName("딜러는 카드를 받을 수 있다")
     @Test
     void hitCard() {
         Dealer dealer = new Dealer();
         CardDeck cardDeck = CardDeck.createDeck();
 
-        dealer.addCard(cardDeck.drawCard());
+        dealer.draw(cardDeck.drawCard());
 
         assertThat(dealer.getCards().cards()).hasSize(1);
     }
@@ -31,8 +31,8 @@ class DealerTest {
         Card card1 = new Card(Suit.CLUB, Denomination.JACK);
         Card card2 = new Card(Suit.CLUB, Denomination.SIX);
 
-        dealer.addCard(card1);
-        dealer.addCard(card2);
+        dealer.draw(card1);
+        dealer.draw(card2);
 
         assertTrue(dealer.canContinue());
     }
@@ -45,8 +45,8 @@ class DealerTest {
         Card card1 = new Card(Suit.CLUB, Denomination.JACK);
         Card card2 = new Card(Suit.CLUB, Denomination.SEVEN);
 
-        dealer.addCard(card1);
-        dealer.addCard(card2);
+        dealer.draw(card1);
+        dealer.draw(card2);
 
         assertFalse(dealer.canContinue());
     }

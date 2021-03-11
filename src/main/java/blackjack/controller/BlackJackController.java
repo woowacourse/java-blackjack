@@ -36,14 +36,14 @@ public class BlackJackController {
     private void playGameForEachPlayer(Player player, CardDeck cardDeck) {
         while (player.canContinue() &&
                 Repeater.supplierGetsArgumentOfFunction(InputView::isHit, player::getName)) {
-            player.addCard(cardDeck.drawCard());
+            player.draw(cardDeck.drawCard());
             OutputView.printCardsOfUser(player);
         }
     }
 
     private void drawCardsOfDealerUntilOver16Score(Dealer dealer, CardDeck cardDeck) {
         while (dealer.canContinue()) {
-            dealer.addCard(cardDeck.drawCard());
+            dealer.draw(cardDeck.drawCard());
             OutputView.printDealerGetNewCardsMessage();
         }
     }

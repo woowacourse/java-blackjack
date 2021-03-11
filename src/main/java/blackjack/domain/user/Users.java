@@ -18,7 +18,7 @@ public class Users {
 
     public void dealTwoCards(CardDeck cardDeck) {
         for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
-            this.users.forEach(user -> user.addCard(cardDeck.drawCard()));
+            this.users.forEach(user -> user.draw(cardDeck.drawCard()));
         }
     }
 

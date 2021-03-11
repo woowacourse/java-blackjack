@@ -27,12 +27,12 @@ class PlayerTest {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("히트 - 플레이어는 카드를 받는다.")
+    @DisplayName("플레이어는 카드를 받을 수 있다.")
     @Test
-    void hitCard() {
+    void drawCard() {
         Player player = new Player("Player");
         CardDeck cardDeck = CardDeck.createDeck();
-        player.addCard(cardDeck.drawCard());
+        player.draw(cardDeck.drawCard());
         assertThat(player.getCards().cards()).hasSize(1);
     }
 
@@ -45,9 +45,9 @@ class PlayerTest {
         Card card2 = new Card(Suit.CLUB, Denomination.SEVEN);
         Card card3 = new Card(Suit.CLUB, Denomination.SIX);
 
-        player.addCard(card1);
-        player.addCard(card2);
-        player.addCard(card3);
+        player.draw(card1);
+        player.draw(card2);
+        player.draw(card3);
 
         assertTrue(player.isBust());
     }

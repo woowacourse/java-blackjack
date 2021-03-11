@@ -22,8 +22,8 @@ public abstract class User {
 
     abstract boolean canContinue();
 
-    public void addCard(Card card) {
-        cards.hit(card);
+    public void draw(Card card) {
+        this.cards.draw(card);
     }
 
     public boolean isBlackJack() {

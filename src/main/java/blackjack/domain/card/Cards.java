@@ -17,7 +17,7 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
-    public void hit(Card card) {
+    public void draw(Card card) {
         this.cards.add(card);
     }
 

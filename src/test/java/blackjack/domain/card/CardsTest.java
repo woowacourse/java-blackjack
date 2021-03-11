@@ -27,36 +27,36 @@ public class CardsTest {
     @DisplayName("가진 패의 점수를 계산할 수 있다.")
     @Test
     void getScoreTest() {
-        cards.hit(king);
-        cards.hit(two);
+        cards.draw(king);
+        cards.draw(two);
         assertThat(cards.getScore()).isEqualTo(12);
     }
 
     @DisplayName("Ace가 섞여 있을 때 최선의 점수를 계산할 수 있다.")
     @Test
     void getMaximunScoreTest() {
-        cards.hit(ace);
-        cards.hit(two);
+        cards.draw(ace);
+        cards.draw(two);
         assertThat(cards.getScore()).isEqualTo(13);
 
-        cards.hit(king);
+        cards.draw(king);
         assertThat(cards.getScore()).isEqualTo(13);
     }
 
     @DisplayName("블랙잭 여부를 판별할 수 있다.")
     @Test
     void isBlackJackTest() {
-        cards.hit(king);
-        cards.hit(ace);
+        cards.draw(king);
+        cards.draw(ace);
         assertTrue(cards.isBlackJack());
     }
 
     @DisplayName("버스트 여부를 판별할 수 있다.")
     @Test
     void isBustTest() {
-        cards.hit(king);
-        cards.hit(queen);
-        cards.hit(two);
+        cards.draw(king);
+        cards.draw(queen);
+        cards.draw(two);
         assertTrue(cards.isBust());
     }
 }
