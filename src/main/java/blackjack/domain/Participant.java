@@ -76,4 +76,16 @@ public abstract class Participant {
         }
         return sum;
     }
+
+    public boolean isBlackjack() {
+        return sumCardsForResult() == BLACKJACK && hand.size() == 2;
+    }
+
+    public boolean isBust() {
+        return sumCards() > BLACKJACK;
+    }
+
+    public boolean isHit() {
+        return !isBlackjack() && !isBust();
+    }
 }

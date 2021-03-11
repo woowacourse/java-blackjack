@@ -22,4 +22,8 @@ public class Hand {
     public void add(Card card) {
         cards.add(card);
     }
+
+    public int size() {
+        return cards.size();
+    }
 }
