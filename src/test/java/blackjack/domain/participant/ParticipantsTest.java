@@ -1,10 +1,15 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardType;
+import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Deck;
+import blackjack.domain.state.Hit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,13 +19,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class ParticipantsTest {
 
     private List<Participant> participantGroup;
+    private List<Card> defaultInitialCard;
 
     @BeforeEach
     void setUp() {
+        defaultInitialCard = new ArrayList<>();
+        defaultInitialCard.add(new Card(CardType.DIAMOND, CardValue.TEN));
+        defaultInitialCard.add(new Card(CardType.DIAMOND, CardValue.TWO));
+
         participantGroup = Arrays.asList(
-                new Dealer(null),
-                new Player("suri", 0, null),
-                new Player("roki", 0, null)
+                new Dealer(new Hit(defaultInitialCard)),
+                new Player("suri", 10000, new Hit(defaultInitialCard)),
+                new Player("roki", 10000, new Hit(defaultInitialCard
+                ))
         );
     }
 
@@ -52,8 +63,8 @@ class ParticipantsTest {
     void test_extract_dealer_if_dealer_is_not_exist() {
         //given
         List<Participant> participantGroup = Arrays.asList(
-                new Player("suri", 0, null),
-                new Player("roki", 0, null)
+                new Player("suri", 10000, new Hit(defaultInitialCard)),
+                new Player("roki", 10000, new Hit(defaultInitialCard))
         );
         Participants participants = new Participants(participantGroup);
 
@@ -75,19 +86,15 @@ class ParticipantsTest {
         assertThat(players).hasSize(2);
     }
 
-    @DisplayName("모든 참가자들에게 패를 돌린다")
+    @DisplayName("모든 참가자들은 초기 패 2장을 가진다")
     @Test
     void test_deal_cards_all_participants() {
         //given
-        List<Participant> participantGroup = Arrays.asList(new Dealer(null),
-                new Player("pobi", 0, null),
-                new Player("jason", 0, null));
+        List<Participant> participantGroup = Arrays.asList(new Dealer(new Hit(defaultInitialCard)),
+                new Player("pobi", 10000, new Hit(defaultInitialCard)),
+                new Player("jason", 10000, new Hit(defaultInitialCard)));
 
         Participants participants = new Participants(participantGroup);
-        Deck deck = Deck.generate();
-
-        //when
-        participants.dealCardsAllParticipants(deck);
 
         //then
         List<Participant> actualParticipants = participants.getParticipants();
