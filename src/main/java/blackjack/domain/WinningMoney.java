@@ -1,8 +1,8 @@
 package blackjack.domain;
 
 public class WinningMoney {
-    private String name;
-    private int money;
+    private final String name;
+    private final int money;
 
     private WinningMoney(String name, int money) {
         this.name = name;

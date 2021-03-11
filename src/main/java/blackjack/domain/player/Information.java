@@ -2,8 +2,8 @@ package blackjack.domain.player;
 
 public class Information {
 
-    private String name;
-    private int batMoney;
+    private final String name;
+    private final int batMoney;
 
     public Information(String name, int batMoney) {
         this.name = name;
