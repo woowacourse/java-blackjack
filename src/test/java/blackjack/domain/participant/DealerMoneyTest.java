@@ -18,7 +18,7 @@ public class DealerMoneyTest {
     @DisplayName("DealerMoney에 player수익 추가")
     public void DealerMoneyTest() {
         final DealerMoney dealerMoney = new DealerMoney();
-        dealerMoney.resetMoneyByOpponentProfit(1000);
+        dealerMoney.calculateByOpponentProfit(1000);
         assertThat(dealerMoney.getMoney()).isEqualTo(-1000);
     }
 }

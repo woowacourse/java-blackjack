@@ -7,7 +7,7 @@ public class DealerMoney {
         money = 0;
     }
 
-    public void resetMoneyByOpponentProfit(final double opponentProfit) {
+    public void calculateByOpponentProfit(final double opponentProfit) {
         money = money - opponentProfit;
     }
 
