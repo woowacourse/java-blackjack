@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class Card {
     private static final int cardSize = 52;
@@ -41,22 +40,5 @@ public class Card {
     @Override
     public String toString() {
         return number.getNumber() + shape.getShape();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Card card = (Card) o;
-        return shape == card.shape && number == card.number;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(shape, number);
     }
 }
