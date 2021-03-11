@@ -21,15 +21,15 @@ public class Players {
                 .collect(Collectors.toList()));
     }
 
-    public List<Player> players() {
-        return Collections.unmodifiableList(this.players);
-    }
-
     public Map<User, ResultType> generateResultsMapAgainstDealer(Dealer dealer) {
         return players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
                         player -> MatchRule.getMatchResult(player.getCards(), dealer.getCards())
                 ));
+    }
+
+    public List<Player> players() {
+        return Collections.unmodifiableList(this.players);
     }
 }

@@ -20,10 +20,12 @@ public abstract class User {
         }
     }
 
-    abstract boolean canContinue();
-
     public void draw(Card card) {
         this.cards.draw(card);
+    }
+
+    public int getScore() {
+        return this.cards.getScore();
     }
 
     public boolean isBlackJack() {
@@ -34,9 +36,7 @@ public abstract class User {
         return this.cards.isBust();
     }
 
-    public int getScore() {
-        return this.cards.getScore();
-    }
+    abstract boolean canContinue();
 
     public Cards getCards() {
         return this.cards;

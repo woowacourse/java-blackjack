@@ -21,18 +21,6 @@ public class Cards {
         this.cards.add(card);
     }
 
-    public boolean isBlackJack() {
-        if (this.cards.size() == BLACKJACK_SIZE_CONDITION && this.hasAce()) {
-            return cards.stream()
-                    .anyMatch(card -> card.getScore() == BLACKJACK_CONDITION_CARD_SCORE_TEN);
-        }
-        return false;
-    }
-
-    public boolean isBust() {
-        return this.getScore() > BUST_CONDITION;
-    }
-
     public int getScore() {
         int score = this.cards.stream()
                 .mapToInt(Card::getScore)
@@ -45,6 +33,18 @@ public class Cards {
 
     private boolean hasAce() {
         return this.cards.stream().anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackJack() {
+        if (this.cards.size() == BLACKJACK_SIZE_CONDITION && this.hasAce()) {
+            return cards.stream()
+                    .anyMatch(card -> card.getScore() == BLACKJACK_CONDITION_CARD_SCORE_TEN);
+        }
+        return false;
+    }
+
+    public boolean isBust() {
+        return this.getScore() > BUST_CONDITION;
     }
 
     public List<Card> cards() {
