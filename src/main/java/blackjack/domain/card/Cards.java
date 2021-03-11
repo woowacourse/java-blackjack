@@ -7,7 +7,6 @@ import java.util.List;
 public class Cards {
     private static final int BLACKJACK_SIZE_CONDITION = 2;
     private static final int BUST_CONDITION = 21;
-    private static final int ACE_SCORE = 1;
     private static final int TEN_SCORE = 10;
     private static final int ELEVEN_SCORE = 11;
 
@@ -44,7 +43,7 @@ public class Cards {
     }
 
     private boolean hasAce() {
-        return this.cards.stream().anyMatch(card -> card.getScore() == ACE_SCORE);
+        return this.cards.stream().anyMatch(Card::isAce);
     }
 
     public List<Card> cards() {

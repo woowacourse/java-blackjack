@@ -13,6 +13,10 @@ public class Card {
         return denomination.getScore();
     }
 
+    public boolean isAce() {
+        return this.denomination.equals(Denomination.ACE);
+    }
+
     @Override
     public String toString() {
         return this.denomination.getName() + this.suit.getName();
