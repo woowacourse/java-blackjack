@@ -1,10 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.user.DealerResult;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -23,16 +21,15 @@ public class BlackJackController {
     }
 
     private void processPlayers(BlackJackGame blackJackGame) {
-        Players players = blackJackGame.getPlayers();
-        CardDeck cardDeck = blackJackGame.getCardDeck();
-        for (Player player : players.getRawPlayers()) {
-            playerDraw(cardDeck, player);
+        for (int i = 0; i < blackJackGame.playersSize(); i++) {
+            processPlayer(blackJackGame, i);
         }
     }
 
-    private void playerDraw(CardDeck cardDeck, Player player) {
-        while (player.isAvailableDraw() && isYes(player)) {
-            player.draw(cardDeck.draw());
+    private void processPlayer(BlackJackGame blackJackGame, int playerIndex) {
+        Player player = blackJackGame.getPlayer(playerIndex);
+        while(player.isAvailableDraw() && isYes(player)) {
+            blackJackGame.drawOnePlayer(playerIndex);
             OutputView.showPlayerCard(player);
         }
     }

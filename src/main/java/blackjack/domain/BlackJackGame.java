@@ -26,6 +26,11 @@ public class BlackJackGame {
         return this.participants.isAvailableDealerTurn();
     }
 
+    public void drawOnePlayer(int playerIndex) {
+        Player player = getPlayers().getPlayer(playerIndex);
+        player.draw(entireCardDeck.draw());
+    }
+
     public DealerResult getDealerResult() {
         Dealer dealer = participants.getDealer();
         List<Player> rawPlayers = participants.getPlayers()
@@ -33,8 +38,8 @@ public class BlackJackGame {
         return new DealerResult(dealer, rawPlayers);
     }
 
-    public CardDeck getCardDeck() {
-        return this.entireCardDeck;
+    public int playersSize() {
+        return this.getPlayers().size();
     }
 
     public Dealer getDealer() {
@@ -45,4 +50,7 @@ public class BlackJackGame {
         return this.participants.getPlayers();
     }
 
+    public Player getPlayer(int playerIndex) {
+        return getPlayers().getPlayer(playerIndex);
+    }
 }

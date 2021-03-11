@@ -36,6 +36,14 @@ public class Players {
         }
     }
 
+    public int size() {
+        return players.size();
+    }
+
+    public Player getPlayer(int playerIndex) {
+        return players.get(playerIndex);
+    }
+
     public List<Player> getRawPlayers() {
         return players;
     }
