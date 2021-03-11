@@ -25,7 +25,7 @@ public class Players {
         return players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> MatchRule.getMatchResult(player.getCards(), dealer.getCards())
+                        player -> MatchRule.getMatchResult(player, dealer)
                 ));
     }
 
