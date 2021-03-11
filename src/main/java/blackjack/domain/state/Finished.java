@@ -26,7 +26,7 @@ public abstract class Finished extends Started {
 
     @Override
     public State stay() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("[ERROR] 종료되었으므로 상태를 유지할 수 없습니다.");
     }
 
     public abstract double earningRate();
