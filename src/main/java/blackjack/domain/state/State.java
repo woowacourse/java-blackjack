@@ -15,4 +15,6 @@ public interface State {
     State stay();
 
     boolean isFinished();
+
+    double earningRate();
 }

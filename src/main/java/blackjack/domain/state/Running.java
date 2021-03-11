@@ -21,4 +21,9 @@ public abstract class Running implements State {
     public boolean isFinished() {
         return false;
     }
+
+    @Override
+    public double earningRate() {
+        throw new UnsupportedOperationException("배팅률을 계산할 수 없습니다.");
+    }
 }
