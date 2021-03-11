@@ -10,47 +10,30 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
-    private final Players players;
-    private final Dealer dealer;
-    private final CardDeck cardDeck;
-    private final Users users;
-
-    public BlackJackController() {
-        this.dealer = new Dealer();
-        this.cardDeck = CardDeck.createDeck();
-        this.players = Repeater.supplierGetsArgumentOfFunction(Players::of, InputView::scanPlayerNames);
-        this.users = new Users(this.dealer, this.players);
-    }
 
     public void run() {
-        dealingTwoCards(users);
-
-        if (dealer.isBlackJack()) {
-            OutputView.printResult(players.generateResultsMapAgainstDealer(dealer));
-            return;
-        }
-
-        players.players().forEach(this::playGameForEachPlayer);
-        drawCardsOfDealerUntilOver16Score();
-
-        printOverallResults();
+        Players players = Repeater.supplierGetsArgumentOfFunction(Players::of, InputView::scanPlayerNames);
+        Dealer dealer = new Dealer();
+        startGame(dealer, players);
+        printOverallResults(dealer, players);
     }
 
-    private void drawCardsOfDealerUntilOver16Score() {
-        while (dealer.canContinue()) {
-            dealer.addCard(cardDeck.drawCard());
-            OutputView.printDealerGetNewCardsMessage();
-        }
-    }
-
-    private void dealingTwoCards(Users users) {
+    private void startGame(Dealer dealer, Players players) {
+        Users users = new Users(dealer, players);
+        CardDeck cardDeck = CardDeck.createDeck();
         users.dealTwoCards(cardDeck);
+
         OutputView.printInitialComment(dealer, players);
         OutputView.printCardsOfDealerWithOneCardOpened(dealer);
         OutputView.printCardsOfPlayersWithoutScore(players);
+
+        if (!dealer.isBlackJack()) {
+            players.players().forEach(player -> playGameForEachPlayer(player, cardDeck));
+            drawCardsOfDealerUntilOver16Score(dealer, cardDeck);
+        }
     }
 
-    private void playGameForEachPlayer(Player player) {
+    private void playGameForEachPlayer(Player player, CardDeck cardDeck) {
         while (player.canContinue() &&
                 Repeater.supplierGetsArgumentOfFunction(InputView::isHit, player::getName)) {
             player.addCard(cardDeck.drawCard());
@@ -58,8 +41,15 @@ public class BlackJackController {
         }
     }
 
-    private void printOverallResults() {
-        OutputView.printCardsOfUsersWithScore(users);
+    private void drawCardsOfDealerUntilOver16Score(Dealer dealer, CardDeck cardDeck) {
+        while (dealer.canContinue()) {
+            dealer.addCard(cardDeck.drawCard());
+            OutputView.printDealerGetNewCardsMessage();
+        }
+    }
+
+    private void printOverallResults(Dealer dealer, Players players) {
+        OutputView.printCardsOfUsersWithScore(new Users(dealer, players));
         OutputView.printResult(players.generateResultsMapAgainstDealer(dealer));
     }
 }
