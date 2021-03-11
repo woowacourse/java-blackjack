@@ -5,6 +5,7 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.result.Result;
 import blackjack.domain.state.Blackjack;
+import blackjack.domain.state.Bust;
 import blackjack.domain.state.Hit;
 import blackjack.domain.state.State;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +33,7 @@ public class PlayerTest {
                 new Card(Suit.HEART, Denomination.NINE),
                 new Card(Suit.DIAMOND, Denomination.JACK)
         )));
-        int cardCount = player.cards.getCards().size();
+        int cardCount = player.cards().getCards().size();
 
         assertThat(cardCount).isEqualTo(2);
     }
@@ -57,13 +58,12 @@ public class PlayerTest {
         Player player = new Player("amazzi");
         player.receiveCards(new Cards(Arrays.asList(
                 new Card(Suit.HEART, Denomination.TWO),
-                new Card(Suit.DIAMOND, Denomination.JACK),
-                new Card(Suit.CLOVER, Denomination.QUEEN)
+                new Card(Suit.DIAMOND, Denomination.JACK)
         )));
 
         boolean isAbleToHit = player.isAbleToHit();
 
-        assertThat(isAbleToHit).isFalse();
+        assertThat(isAbleToHit).isTrue();
     }
 
     @DisplayName("카드를 공개한다.")
@@ -75,7 +75,7 @@ public class PlayerTest {
                 new Card(Suit.CLOVER, Denomination.KING)
         )));
 
-        int cardCount = player.cards
+        int cardCount = player.cards()
                 .getCards().size();
 
         assertThat(cardCount).isEqualTo(2);
@@ -92,8 +92,7 @@ public class PlayerTest {
         )));
         player.receiveCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.EIGHT),
-                new Card(Suit.CLOVER, Denomination.KING),
-                new Card(Suit.HEART, Denomination.QUEEN)
+                new Card(Suit.CLOVER, Denomination.TWO)
         )));
 
         Result result = player.produceResult(dealer);
@@ -165,5 +164,35 @@ public class PlayerTest {
         State state = player.getState();
 
         assertThat(state).isInstanceOf(Blackjack.class);
+    }
+
+    @Test
+    @DisplayName("상태에 따라 카드를 받는다. - hit")
+    void draw1() {
+        Player player = new Player("amazzi");
+        player.receiveCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.TWO)
+        )));
+
+        player.hit(new Card(Suit.SPACE, Denomination.TWO));
+        State state = player.getState();
+
+        assertThat(state).isInstanceOf(Hit.class);
+    }
+
+    @Test
+    @DisplayName("상태에 따라 카드를 받는다. - bust")
+    void draw2() {
+        Player player = new Player("amazzi");
+        player.receiveCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.TWO)
+        )));
+
+        player.hit(new Card(Suit.HEART, Denomination.JACK));
+        State state = player.getState();
+
+        assertThat(state).isInstanceOf(Bust.class);
     }
 }

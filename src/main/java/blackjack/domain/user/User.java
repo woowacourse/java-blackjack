@@ -4,12 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public abstract class User {
-    protected final Cards cards;
     protected final Name name;
     protected State state;
 
@@ -18,38 +15,23 @@ public abstract class User {
     }
 
     public User(Name name) {
-        this(new ArrayList<>(), name);
-    }
-
-    public User(List<Card> cards, String name) {
-        this(new Cards(cards), new Name(name));
-    }
-
-    public User(List<Card> cards, Name name) {
-        this(new Cards(cards), name);
-    }
-
-    public User(Cards cards, Name name) {
-        this.cards = cards;
         this.name = name;
     }
 
-    public final void receiveCards(Cards anotherCards) {
-        anotherCards.getCards()
-                .forEach(cards::add);
+    public final void receiveCards(Cards cards) {
         state = StateFactory.generateStateByCards(cards);
     }
 
     public final boolean isAbleToHit() {
-        return !cards.isBust();
+        return !state.isFinish();
     }
 
     public final Score score() {
-        return cards.totalScore();
+        return state.cards().totalScore();
     }
 
-    public final Cards getCards() {
-        return cards;
+    public final Cards cards() {
+        return state.cards();
     }
 
     public final String getName() {
@@ -60,7 +42,7 @@ public abstract class User {
         return state;
     }
 
-    public void setState(State state) {
+    private void changeState(State state) {
         this.state = state;
     }
 
@@ -74,12 +56,16 @@ public abstract class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(cards, user.cards) &&
+        return Objects.equals(state.cards(), user.state.cards()) &&
                 Objects.equals(name, user.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cards, name);
+        return Objects.hash(state.cards(), name);
+    }
+
+    public final void hit(Card card) {
+        changeState(state.draw(card));
     }
 }

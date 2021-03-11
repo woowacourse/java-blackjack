@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Players;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +16,9 @@ public class ResultBoardTest {
     public void createResultBoard() {
         Dealer dealer = new Dealer();
         Players players = Players.of(Arrays.asList("amazzi", "dani", "brown"));
+        BlackjackGame blackjackGame = new BlackjackGame(dealer, players);
+        blackjackGame.handOutInitialCards();
+
         ResultBoard resultBoard = ResultBoard.of(players, dealer);
 
         assertThat(resultBoard).isInstanceOf(ResultBoard.class);

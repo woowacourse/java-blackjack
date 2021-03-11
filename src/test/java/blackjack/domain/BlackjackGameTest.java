@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.result.ResultBoard;
+import blackjack.domain.user.Cards;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
@@ -32,13 +33,13 @@ public class BlackjackGameTest {
         blackjackGame.handOutInitialCards();
 
         int dealerCardCount = blackjackGame.getDealer()
-                .getCards()
+                .cards()
                 .getCards()
                 .size();
         boolean isPlayersCountTwo = blackjackGame.getPlayers()
                 .getPlayers()
                 .stream()
-                .allMatch(player -> player.getCards()
+                .allMatch(player -> player.cards()
                         .getCards()
                         .size() == 2);
 
@@ -51,14 +52,14 @@ public class BlackjackGameTest {
     void proceedPlayersRound() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
-        Player player = new Player(Arrays.asList(
+        Player player = new Player("amazzzi");
+        player.receiveCards(new Cards(Arrays.asList(
                 new Card(Suit.SPACE, Denomination.QUEEN),
-                new Card(Suit.HEART, Denomination.QUEEN),
-                new Card(Suit.SPACE, Denomination.EIGHT)), "amazzzi");
+                new Card(Suit.HEART, Denomination.QUEEN))));
 
         boolean isNotGameOver = blackjackGame.isNotGameOver(player);
 
-        assertThat(isNotGameOver).isFalse();
+        assertThat(isNotGameOver).isTrue();
     }
 
     @Test
@@ -69,7 +70,7 @@ public class BlackjackGameTest {
         Player player = new Player("amazzzi");
 
         blackjackGame.hit(player);
-        int cardCount = player.getCards()
+        int cardCount = player.cards()
                 .getCards()
                 .size();
 
@@ -84,7 +85,7 @@ public class BlackjackGameTest {
         Dealer dealer = new Dealer();
 
         blackjackGame.hit(dealer);
-        int cardCount = dealer.getCards().getCards().size();
+        int cardCount = dealer.cards().getCards().size();
 
         assertThat(cardCount).isEqualTo(1);
     }
@@ -106,6 +107,7 @@ public class BlackjackGameTest {
     void generateResultBoard() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+        blackjackGame.handOutInitialCards();
 
         assertThat(blackjackGame.generateResultBoard()).isInstanceOf(ResultBoard.class);
     }

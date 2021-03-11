@@ -5,17 +5,18 @@ import blackjack.domain.card.Card;
 public class Dealer extends User {
     private static final String DEALER_NAME = "딜러";
 
-
     public Dealer() {
         super(DEALER_NAME);
     }
 
     public boolean isMustHit() {
-        return cards.totalScore()
+        return state.cards()
+                .totalScore()
                 .isDealerMustToHitScore();
     }
 
     public Card showOneCard() {
-        return cards.getOneCard();
+        return state.cards()
+                .getOneCard();
     }
 }
