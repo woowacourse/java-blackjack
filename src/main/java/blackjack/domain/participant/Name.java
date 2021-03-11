@@ -1,7 +1,8 @@
 package blackjack.domain.participant;
 
 public class Name {
-    private static final String NAME_INPUT_ERROR_MESSAGE = "이름은 1자 이상이어야 합니다.";
+    public static final int MINIMUM_NAME_LENGTH = 1;
+    private static final String NAME_INPUT_ERROR_MESSAGE = "이름은 " + MINIMUM_NAME_LENGTH + "자 이상이어야 합니다.";
 
     private final String name;
 
@@ -12,7 +13,7 @@ public class Name {
     }
 
     private void validateName(String name) {
-        if (name.length() < 1) {
+        if (name.length() < MINIMUM_NAME_LENGTH) {
             throw new IllegalArgumentException(NAME_INPUT_ERROR_MESSAGE);
         }
     }
