@@ -5,7 +5,9 @@ import blackjack.domain.card.Cards;
 
 public interface State {
     boolean isEndState();
-    double profit();
+    boolean isBust();
+    boolean isBlackJack();
+    double profit(State enemyState);
     void draw(Card card);
     State changeState();
     State stay();

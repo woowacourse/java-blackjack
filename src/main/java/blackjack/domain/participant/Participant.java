@@ -7,7 +7,7 @@ import blackjack.domain.state.State;
 import java.util.List;
 
 public interface Participant {
-    void receiveCard(Card card);
+    boolean receiveCard(Card card);
 
     List<Card> showInitCards();
 
@@ -23,9 +23,9 @@ public interface Participant {
 
     GameResult calculateResult(int enemyScore);
 
-    void betting(int money);
-
     State getStatus();
+
+    void betting(int money);
 
     void stay();
 }

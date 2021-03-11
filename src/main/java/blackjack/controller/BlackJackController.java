@@ -1,90 +1,90 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackJackGame;
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.rule.BlackJackScoreRule;
-import blackjack.dto.DealerResultDto;
-import blackjack.dto.ScoreResultDto;
+import blackjack.domain.state.Hit;
+import blackjack.dto.GameResultDto;
+import blackjack.dto.WinPrizeDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.Arrays;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
 
     public void play() {
         Deck deck = Deck.generate();
-        BlackJackGame blackJackGame = new BlackJackGame(deck, getParticipants(InputView.inputNames()));
-        OutputView.printInitialCardStatus(blackJackGame.setupInitialCards());
+        Participants participants = getParticipants(InputView.inputNames(), deck);
+        OutputView.printInitialCardStatus(participants);
 
-        Participants participants = playBlackJackGame(blackJackGame, deck);
+        playBlackJackGame(participants, deck);
         OutputView.printAllParticipantsCards(participants);
+
         Dealer dealer = participants.extractDealer();
         List<Player> players = participants.extractPlayers();
-        OutputView.printScoreResults(getDealerResultDto(dealer, players), getScoreResultDto(dealer, players));
+        OutputView.printWinPrizeResult(getGameResultDto(players, dealer));
     }
 
-    private Participants playBlackJackGame(BlackJackGame blackJackGame, Deck deck) {
-        while (!blackJackGame.isEnd()) {
-            Participant participant = blackJackGame.getCurrentParticipant();
-            playCurrentTurn(participant, deck);
-            blackJackGame.turn();
-        }
 
-        return blackJackGame.getParticipants();
-    }
-
-    private void playCurrentTurn(Participant participant, Deck deck) {
-        while (InputView.inputAskMoreCard(participant) && participant.isReceiveCard()) {
-            participant.receiveCard(deck.draw());
-            OutputView.printParticipantCards(participant);
-        }
-    }
-
-    private Participants getParticipants(List<String> names) {
+    private Participants getParticipants(List<String> names, Deck deck) {
         List<Participant> participants = names.stream()
-                .map(name -> new Player(name, new BlackJackScoreRule()))
+                .map(name -> new Player(name, 0, new Hit(deck.handOutInitCards())))
                 .collect(Collectors.toList());
         bettingPlayer(participants);
-        participants.add(0, new Dealer(new BlackJackScoreRule()));
+        participants.add(0, new Dealer(new Hit(deck.handOutInitCards())));
         return new Participants(participants);
     }
 
+    private void playBlackJackGame(Participants participants, Deck deck) {
+        playAllPlayersTurn(participants.extractPlayers(), deck);
+        playDealerTurn(participants.extractDealer(), deck);
+    }
+
+    private void playAllPlayersTurn(List<Player> players, Deck deck) {
+        for (Player player : players) {
+            playPlayerTurn(player, deck);
+        }
+    }
+
+    private void playPlayerTurn(Player player, Deck deck) {
+        while (!player.getStatus().isEndState()) {
+            if (!InputView.inputAskMoreCard(player)) {
+                player.stay();
+                break;
+            }
+
+            player.receiveCard(deck.draw());
+            OutputView.printParticipantCards(player);
+        }
+    }
+
+    private void playDealerTurn(Dealer dealer, Deck deck) {
+        while (!dealer.getStatus().isEndState()) {
+            OutputView.printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            dealer.receiveCard(deck.draw());
+        }
+    }
+
     private void bettingPlayer(List<Participant> participantList) {
-        for (Participant participant: participantList) {
+        for (Participant participant : participantList) {
             int bettingMoney = InputView.inputBettingMoney(participant);
             participant.betting(bettingMoney);
         }
     }
 
-    public DealerResultDto getDealerResultDto(Dealer dealer, List<Player> players) {
-        Map<GameResult, Long> dealerResult = statisticsDealerResult(dealer, players);
+    public GameResultDto getGameResultDto(List<Player> players, Dealer dealer) {
+        List<WinPrizeDto> playersWinPrizeDto = players.stream().map(
+                player -> new WinPrizeDto(player.getName(), player.getWinPrize(dealer.getStatus()))
+        ).collect(Collectors.toList());
 
-        Arrays.stream(GameResult.values())
-                .forEach(gameResult -> dealerResult.putIfAbsent(gameResult, 0L));
-        return new DealerResultDto(dealer.getName(), dealerResult);
+
+        int totalPlayerWinPrize = players.stream().mapToInt(player -> player.getWinPrize(dealer.getStatus())).sum();
+        WinPrizeDto dealerWinPrizeDto = new WinPrizeDto(dealer.getName(), totalPlayerWinPrize * -1);
+
+        return new GameResultDto(dealerWinPrizeDto, playersWinPrizeDto);
     }
-
-    private Map<GameResult, Long> statisticsDealerResult(Dealer dealer, List<Player> players) {
-        return players.stream()
-                .collect(Collectors.groupingBy(player -> dealer.calculateResult(player.sumTotalScore()),
-                        () -> new EnumMap<>(GameResult.class),
-                        Collectors.counting()));
-    }
-
-    public List<ScoreResultDto> getScoreResultDto(Dealer dealer, List<Player> players) {
-        return players.stream()
-                .map(player -> new ScoreResultDto(player.getName(), player.calculateResult(dealer.sumTotalScore())))
-                .collect(Collectors.toList());
-    }
-
 }

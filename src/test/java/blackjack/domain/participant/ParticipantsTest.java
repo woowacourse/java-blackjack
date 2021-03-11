@@ -15,13 +15,12 @@ class ParticipantsTest {
 
     private List<Participant> participantGroup;
 
-
     @BeforeEach
     void setUp() {
         participantGroup = Arrays.asList(
-                new Dealer(cards -> 0),
-                new Player("suri", cards -> 0),
-                new Player("roki", cards -> 0)
+                new Dealer(null),
+                new Player("suri", 0, null),
+                new Player("roki", 0, null)
         );
     }
 
@@ -53,8 +52,8 @@ class ParticipantsTest {
     void test_extract_dealer_if_dealer_is_not_exist() {
         //given
         List<Participant> participantGroup = Arrays.asList(
-                new Player("suri", cards -> 0),
-                new Player("roki", cards -> 0)
+                new Player("suri", 0, null),
+                new Player("roki", 0, null)
         );
         Participants participants = new Participants(participantGroup);
 
@@ -80,9 +79,9 @@ class ParticipantsTest {
     @Test
     void test_deal_cards_all_participants() {
         //given
-        List<Participant> participantGroup = Arrays.asList(new Dealer(cards -> 16),
-                new Player("pobi", cards -> 18),
-                new Player("jason", cards -> 15));
+        List<Participant> participantGroup = Arrays.asList(new Dealer(null),
+                new Player("pobi", 0, null),
+                new Player("jason", 0, null));
 
         Participants participants = new Participants(participantGroup);
         Deck deck = Deck.generate();

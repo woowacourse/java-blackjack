@@ -16,7 +16,6 @@ public class Dealer implements Participant {
 
     private final String name;
     private State state;
-    private int money = 0;
 
     public Dealer(State state) {
         this.name = DEALER_NAME;
@@ -24,9 +23,19 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public void receiveCard(Card card) {
-        state.draw(card);
-        state = state.changeState();
+    public boolean receiveCard(Card card) {
+        if (state.isEndState()) {
+            return false;
+        }
+
+        if (isReceiveCard()) {
+            state.draw(card);
+            this.state = state.changeState();
+            return true;
+        }
+
+        stay();
+        return false;
     }
 
     @Override
@@ -67,13 +76,12 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public void betting(int money) {
-        this.money = money;
+    public State getStatus() {
+        return state;
     }
 
     @Override
-    public State getStatus() {
-        return state;
+    public void betting(int money) {
     }
 
     @Override

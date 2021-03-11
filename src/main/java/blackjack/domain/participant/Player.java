@@ -2,10 +2,9 @@ package blackjack.domain.participant;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
-import blackjack.domain.rule.ScoreRule;
+import blackjack.domain.rule.BlackJackScoreRule;
 import blackjack.domain.state.State;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player implements Participant {
@@ -20,14 +19,14 @@ public class Player implements Participant {
     public Player(String name, int money, State state) {
         this.name = name;
         this.money = money;
-        this.state = state;
-        state.changeState();
+        this.state = state.changeState();
     }
 
     @Override
-    public void receiveCard(Card card) {
+    public boolean receiveCard(Card card) {
         state.draw(card);
-        state.changeState();
+        this.state = state.changeState();
+        return true;
     }
 
     @Override
@@ -65,14 +64,17 @@ public class Player implements Participant {
         return GameResult.valueOf(sumTotalScore(), enemyScore);
     }
 
-    @Override
     public void betting(int money) {
         this.money = money;
     }
 
+    public int getWinPrize(State enemyState) {
+        return (int) (money * state.profit(enemyState));
+    }
+
     @Override
     public State getStatus() {
-        return null;
+        return state;
     }
 
     @Override

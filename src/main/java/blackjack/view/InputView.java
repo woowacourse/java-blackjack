@@ -25,10 +25,6 @@ public class InputView {
     }
 
     public static boolean inputAskMoreCard(Participant participant) {
-        if (participant.isDealer()) {
-            return true;
-        }
-
         System.out.println(participant.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = scanner.nextLine();
         if ("y".equals(input)) {

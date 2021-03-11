@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.rule.BlackJackScoreRule;
 
 import java.util.List;
 
@@ -18,8 +19,28 @@ public class Stay implements State {
     }
 
     @Override
-    public double profit() {
-        return 1;
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackJack() {
+        return false;
+    }
+
+    @Override
+    public double profit(State enemyState) {
+        int score = cards.getTotalScore(new BlackJackScoreRule());
+        int enemyScore = cards.getTotalScore(new BlackJackScoreRule());
+        if (enemyState.isBust() || score > enemyScore) {
+            return 1;
+        }
+
+        if (score < enemyScore) {
+            return -1;
+        }
+
+        return 0;
     }
 
     @Override

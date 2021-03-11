@@ -1,8 +1,6 @@
 package blackjack.domain.card;
 
 import blackjack.domain.rule.ScoreRule;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {

@@ -86,7 +86,7 @@ class DealerTest {
         dealer.stay();
         assertThat(dealer.getStatus()).isInstanceOf(Stay.class);
     }
-    
+
 //    @ParameterizedTest
 //    @DisplayName("딜러가 카드를 한장을 더 뽑을 수 있는지 확인한다")
 //    @CsvSource(value = {

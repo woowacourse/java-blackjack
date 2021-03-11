@@ -19,7 +19,17 @@ public class Hit implements State {
     }
 
     @Override
-    public double profit() {
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackJack() {
+        return false;
+    }
+
+    @Override
+    public double profit(State enemyState) {
         return 0;
     }
 
@@ -31,6 +41,7 @@ public class Hit implements State {
     @Override
     public State changeState() {
         int sum = cards.getTotalScore(new BlackJackScoreRule());
+        System.out.println(sum);
         if (sum == 21 && isInitialState()) {
             return new BlackJack(cards.toCardList());
         }

@@ -18,18 +18,27 @@ public class Bust implements State{
     }
 
     @Override
-    public double profit() {
-        return 0;
+    public boolean isBust() {
+        return true;
+    }
+
+    @Override
+    public boolean isBlackJack() {
+        return false;
+    }
+
+    @Override
+    public double profit(State enemyState) {
+        return -1;
     }
 
     @Override
     public void draw(Card card) {
-
     }
 
     @Override
     public State changeState() {
-        return null;
+        return this;
     }
 
     @Override

@@ -18,7 +18,21 @@ public class BlackJack implements State {
     }
 
     @Override
-    public double profit() {
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackJack() {
+        return true;
+    }
+
+    @Override
+    public double profit(State enemyState) {
+        if (enemyState.isBlackJack()) {
+            return 0;
+        }
+
         return 1.5;
     }
 
