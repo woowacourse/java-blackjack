@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Cards;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Participants;
 import blackjack.domain.gamer.Player;
@@ -10,12 +11,12 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
-    private static final int INIT_DRAW_COUNT = 2;
     private static final String YES = "y";
 
     public void start() {
@@ -57,18 +58,15 @@ public class BlackJackGame {
     }
 
     private void firstDraw(List<Participants> participants, CardDeck cardDeck) {
-        eachDrawTwoCards(participants, cardDeck);
+        participants.forEach(participant ->
+                participant.firstDraw(new Cards(Arrays.asList(
+                                cardDeck.drawCard(),
+                                cardDeck.drawCard()))));
         OutputView.distributeCardMessage(participants);
         OutputView.showDealerFirstCard(participants.get(0).getTakenCards().peekCard());
         participants.stream()
                     .filter(participant -> !participant.getName().equals(Dealer.DEALER_NAME))
                     .forEach(OutputView::showCards);
-    }
-
-    private void eachDrawTwoCards(List<Participants> participants, CardDeck cardDeck) {
-        for (int i = 0; i < INIT_DRAW_COUNT; i++) {
-            participants.forEach(participant -> participant.draw(cardDeck.drawCard()));
-        }
     }
 
     private void playerTurn(Players players, CardDeck cardDeck) {

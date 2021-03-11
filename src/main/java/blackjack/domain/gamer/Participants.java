@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.state.Hit;
 import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
 
 public abstract class Participants {
 
@@ -15,7 +16,10 @@ public abstract class Participants {
     public Participants(String name) {
         validateNameLength(name);
         this.name = name;
-        this.state = new Hit(new Cards());
+    }
+
+    public void firstDraw(Cards cards) {
+        this.state = StateFactory.draw(cards);
     }
 
     public void draw(final Card card) {
