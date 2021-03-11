@@ -32,7 +32,7 @@ public class CardDeck {
         return userDeck;
     }
 
-    public synchronized Card draw() {
+    public Card draw() {
         if (deck.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 카드를 모두 소진했습니다.");
         }
