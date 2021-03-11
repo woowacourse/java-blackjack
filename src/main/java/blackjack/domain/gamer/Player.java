@@ -23,14 +23,18 @@ public class Player extends Gamer {
 
     public int calculateProfit(final ResultType resultType) {
         if (ResultType.WIN.equals(resultType)) {
-            if (hands.isBlackjack()) {
-                return profit.blackjackWin();
-            }
-            return profit.win();
+            return calculateBlackjack();
         }
         if (ResultType.LOSE.equals(resultType)) {
             return profit.lose();
         }
         return 0;
+    }
+
+    private int calculateBlackjack() {
+        if (hands.isBlackjack()) {
+            return profit.blackjackWin();
+        }
+        return profit.win();
     }
 }
