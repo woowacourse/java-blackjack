@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.controller.BlackJackGame;
+import blackjack.controller.BlackJackController;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.MatchResult;
 
@@ -47,11 +47,11 @@ public class Players {
         }
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+    public void bettingEachPlayer() {
+        players.forEach(BlackJackController::bettingEachPlayer);
     }
 
-    public void bettingEachPlayer() {
-        players.forEach(BlackJackGame::bettingEachPlayer);
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

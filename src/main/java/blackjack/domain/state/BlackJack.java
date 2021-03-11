@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 
 public class BlackJack extends Finished {
     public static final int BLACKJACK_NUMBER = 21;
+    public static final BigDecimal BLACKJACK_RATE = new BigDecimal("1.5");
 
     public BlackJack(Cards cards) {
         super(cards);
@@ -13,7 +14,7 @@ public class BlackJack extends Finished {
 
     @Override
     public BigDecimal rate() {
-        return new BigDecimal("1.5");
+        return BLACKJACK_RATE;
     }
 
     @Override

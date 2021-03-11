@@ -19,8 +19,7 @@ public class OutputView {
     private static final String CURRENT_CARD_FORM = "%s카드 : %s";
     private static final String ASK_DRAW_CARD_FORM = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String CARD_AND_SCORE_RESULT = "%s - 결과 : %d";
-    private static final String PLAYER_RESULT_FORM = "%s: %s";
-    private static final String FINAL_RESULT_TITLE = "## 최종 승패";
+    private static final String FINAL_RESULT_TITLE = "## 최종 수익";
     private static final String DEALER_DRAW_ONE_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DELIMITER = ", ";
 
@@ -85,6 +84,7 @@ public class OutputView {
 
     public static void showAllCards(List<ParticipantDto> players, ParticipantDto dealer) {
         int dealerScore = dealer.getFinalScore();
+        printNewLine();
         System.out.printf(CARD_AND_SCORE_RESULT + "%n", getCardsMessageForm(dealer), dealerScore);
         for (ParticipantDto player : players) {
             int playerScore = player.getFinalScore();
@@ -104,7 +104,8 @@ public class OutputView {
     }
 
     public static void showFinalProfitResult(ProfitResult result) {
-        System.out.println("## 최종 수익");
+        printNewLine();
+        System.out.println(FINAL_RESULT_TITLE);
         result.getProfitResult()
                 .forEach((key, value) -> System.out.println(key.getName().getName() + ": " + value.toString()));
     }

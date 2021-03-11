@@ -10,6 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ProfitResult {
+    private static final BigDecimal LOSE_RATE = new BigDecimal("-1");
+
     private final Map<Participant, BigDecimal> profitResult;
 
     public ProfitResult() {
@@ -24,21 +26,21 @@ public class ProfitResult {
             profit = whenDrawStatus(result, player, profit);
             profit = whenLoseStatus(result, player, profit);
             profitResult.put(player, profit.setScale(0, BigDecimal.ROUND_DOWN));
-            dealerProfit = dealerProfit.add(profit.multiply(new BigDecimal("-1")));
+            dealerProfit = dealerProfit.add(profit.multiply(LOSE_RATE));
         }
         profitResult.put(dealer, dealerProfit.setScale(0, BigDecimal.ROUND_DOWN));
     }
 
     private BigDecimal whenDrawStatus(Map<Player, MatchResult> result, Player player, BigDecimal profit) {
         if (result.get(player) == MatchResult.DRAW) {
-            profit = new BigDecimal("0");
+            profit = BigDecimal.ZERO;
         }
         return profit;
     }
 
     private BigDecimal whenLoseStatus(Map<Player, MatchResult> result, Player player, BigDecimal profit) {
         if (result.get(player) == MatchResult.LOSE) {
-            profit = profit.multiply(new BigDecimal("-1"));
+            profit = profit.multiply(LOSE_RATE);
         }
         return profit;
     }

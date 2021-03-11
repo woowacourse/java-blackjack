@@ -21,7 +21,4 @@ public class BettingMoney {
     public BigDecimal multiply(BigDecimal rate) {
         return money.multiply(rate);
     }
-
-    public void add(double money) {
-    }
 }

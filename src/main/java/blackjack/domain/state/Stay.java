@@ -12,7 +12,7 @@ public class Stay extends Finished {
 
     @Override
     public BigDecimal rate() {
-        return new BigDecimal("1");
+        return BigDecimal.ONE;
     }
 
     @Override
