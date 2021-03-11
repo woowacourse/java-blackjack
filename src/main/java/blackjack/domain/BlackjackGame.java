@@ -11,9 +11,9 @@ public class BlackjackGame {
     private final Deck deck;
     private final Users users;
 
-    public BlackjackGame(List<String> names) {
+    public BlackjackGame(List<String> names, List<Integer> moneyGroup) {
         this.deck = new Deck();
-        this.users = new Users(new Dealer(), names);
+        this.users = new Users(new Dealer(), names, moneyGroup);
     }
 
     public void distributeToUsers() {

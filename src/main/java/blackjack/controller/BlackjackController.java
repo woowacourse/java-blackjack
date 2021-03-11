@@ -10,7 +10,9 @@ import java.util.List;
 
 public class BlackjackController {
     public void run() {
-        BlackjackGame blackjackGame = new BlackjackGame(setUpPlayers());
+        List<String> names = setUpNames();
+        List<Integer> moneyGroup = setUpMoneyGroup(names);
+        BlackjackGame blackjackGame = new BlackjackGame(names, moneyGroup);
         distributeCards(blackjackGame);
         showUsersCards(blackjackGame);
         askToPlayersForHit(blackjackGame);
@@ -18,9 +20,13 @@ public class BlackjackController {
         showResults(blackjackGame);
     }
 
-    private List<String> setUpPlayers() {
+    private List<String> setUpNames() {
         OutputView.printInputNames();
         return InputView.inputNames();
+    }
+
+    private List<Integer> setUpMoneyGroup(List<String> names) {
+        return InputView.inputMoneyGroup(names);
     }
 
     private void distributeCards(BlackjackGame blackjackGame) {

@@ -11,13 +11,13 @@ import static java.util.stream.Collectors.toList;
 
 public class Users {
     private final Dealer dealer;
-    private final List<Player> players;
+    private final List<Player> players = new ArrayList<>();
 
-    public Users(Dealer dealer, List<String> names) {
+    public Users(Dealer dealer, List<String> names, List<Integer> moneyGroup) {
         this.dealer = dealer;
-        this.players = names.stream()
-                .map(Player::new)
-                .collect(toList());
+        for (int i = 0; i < names.size(); i++) {
+            this.players.add(new Player(names.get(i), moneyGroup.get(i)));
+        }
     }
 
     public void distributeToPlayer(Deck deck) {

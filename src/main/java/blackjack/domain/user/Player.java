@@ -7,8 +7,11 @@ import java.util.Arrays;
 public class Player extends User {
     private static final int BUST = 21;
 
-    public Player(String name) {
+    private final int money;
+
+    public Player(String name, int bettingMoney) {
         super(new Name(name));
+        this.money = bettingMoney;
     }
 
     public Result decide(Dealer dealer) {

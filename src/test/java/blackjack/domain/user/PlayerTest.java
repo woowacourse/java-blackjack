@@ -15,7 +15,7 @@ public class PlayerTest {
 
     @BeforeEach
     public void setUp() {
-        player = new Player("amazzi");
+        player = new Player("amazzi", 10000);
     }
 
     @DisplayName("Player 객체를 생성한다.")
