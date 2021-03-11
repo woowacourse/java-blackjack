@@ -11,8 +11,7 @@ import blackjack.view.OutputView;
 public class BlackJackController {
 
     public void play() {
-        String requestPlayers = InputView.requestPlayers();
-        BlackJackGame blackJackGame = new BlackJackGame(requestPlayers);
+        BlackJackGame blackJackGame = new BlackJackGame(InputView.requestPlayers());
         OutputView.showInitiate(blackJackGame);
         process(blackJackGame);
         terminateGame(blackJackGame);
