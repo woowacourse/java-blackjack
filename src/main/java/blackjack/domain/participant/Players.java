@@ -13,21 +13,15 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
-        validateNumberOfPlayer(new ArrayList<>(playerNames));
-        players = makePlayers(playerNames);
+    public Players(List<Player> players) {
+        validateNumberOfPlayer(new ArrayList<>(players));
+        this.players = players;
     }
 
-    private void validateNumberOfPlayer(List<String> playerNames) {
-        if (playerNames.size() < MIN_PLAYERS_NUMBER) {
+    private void validateNumberOfPlayer(List<Player> players) {
+        if (players.size() < MIN_PLAYERS_NUMBER) {
             throw new IllegalArgumentException(PLAYER_COUNT_ERROR_MESSAGE);
         }
-    }
-
-    private List<Player> makePlayers(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void drawAtFirst(Deck deck) {

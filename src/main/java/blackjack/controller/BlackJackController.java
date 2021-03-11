@@ -2,14 +2,14 @@ package blackjack.controller;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import blackjack.domain.participant.*;
 import blackjack.domain.result.MatchResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
     private static final String YES = "Y";
@@ -17,15 +17,28 @@ public class BlackJackController {
     public void run() {
         Dealer dealer = new Dealer();
         Deck deck = new Deck(Card.values());
-        Players players = getPlayerNames();
+        List<Name> playerNames = getPlayerNames();
+        Players players = getBettingMoney(playerNames);
         playGame(dealer, deck, players);
         showResult(dealer, players);
     }
 
-    private Players getPlayerNames() {
-        OutputView.printPlayerNameInputGuideMessage();
+    private Players getBettingMoney(List<Name> playerNames) {
+        List<Player> players = new ArrayList<>();
+        for (Name name : playerNames) {
+            OutputView.printBettingMoneyInputGuideMessage(name);
+            BettingMoney bettingMoney = new BettingMoney(InputView.getBettingMoney());
+            players.add(new Player(name, bettingMoney));
+        }
+        return new Players(players);
+    }
+
+    private List<Name> getPlayerNames() {
+        OutputView.printNameInputGuideMessage();
         try {
-            return new Players(InputView.getPlayerNameInput());
+            return InputView.getPlayerNameInput().stream()
+                    .map(Name::new)
+                    .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return getPlayerNames();

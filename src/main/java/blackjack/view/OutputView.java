@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.MatchResult;
@@ -19,7 +20,7 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printPlayerNameInputGuideMessage() {
+    public static void printNameInputGuideMessage() {
         System.out.println(PLAYER_NAMES_INPUT_GUIDE_MESSAGE);
     }
 
@@ -69,5 +70,9 @@ public class OutputView {
 
     public static void printErrorMessage(IllegalArgumentException exception) {
         System.out.println("[ERROR] " + exception.getMessage());
+    }
+
+    public static void printBettingMoneyInputGuideMessage(Name name) {
+        System.out.println(name.getName() + "의 배팅 금액은?");
     }
 }
