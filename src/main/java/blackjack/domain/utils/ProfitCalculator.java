@@ -41,7 +41,7 @@ public class ProfitCalculator {
     }
 
     private static boolean bothStay(final Dealer dealer, final Player player) {
-        return !dealer.isBust() && !player.isBust();
+        return dealer.isStay() && player.isStay();
     }
 
     private static boolean bothBlackjack(final Dealer dealer, final Player player) {

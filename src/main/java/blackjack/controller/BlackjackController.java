@@ -47,6 +47,11 @@ public class BlackjackController {
             player.receiveCard(deck.pick());
             OutputView.printAllCards(player);
         }
+        changeStateToFinished(player);
+    }
+
+    private void changeStateToFinished(Player player) {
+        player.finish();
     }
 
     private void hitOrStandForDealer(final Deck deck, final Dealer dealer) {

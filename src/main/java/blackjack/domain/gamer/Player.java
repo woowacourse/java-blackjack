@@ -16,9 +16,6 @@ public class Player extends Gamer {
     }
 
     public double getProfit() {
-        if (state instanceof Hit) {
-            state = state.stay();
-        }
         return state.profit(money);
     }
 

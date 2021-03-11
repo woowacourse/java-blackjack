@@ -15,6 +15,6 @@ public abstract class Running extends Started {
 
     @Override
     public double profit(final Money money) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("[ERROR] 종료된 상태가 아니므로 이익을 계산할 수 없습니다.");
     }
 }

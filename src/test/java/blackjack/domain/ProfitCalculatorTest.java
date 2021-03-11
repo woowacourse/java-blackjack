@@ -22,10 +22,12 @@ class ProfitCalculatorTest {
     void calculateProfit1() {
         Dealer dealer = new Dealer();
         dealer.initState(HIT);
+        dealer.finish();
 
         Players players = Players.of(Arrays.asList("joanne"), Arrays.asList(new Money(10000)));
         for (Player player : players) {
             player.initState(HIT);
+            player.finish();
         }
 
         Map<String, Double> answer = new LinkedHashMap<>();
@@ -62,6 +64,7 @@ class ProfitCalculatorTest {
         Players players = Players.of(Arrays.asList("joanne"), Arrays.asList(new Money(10000)));
         for (Player player : players) {
             player.initState(HIT);
+            player.finish();
         }
 
         Map<String, Double> answer = new LinkedHashMap<>();
