@@ -31,23 +31,23 @@ public class BlackJackGame {
     private Players registerPlayers() {
         try {
             OutputView.enterPlayersName();
-            List<Player> players = generatePlayers(InputView.inputName());
-            players.forEach(this::bettingEachPlayer);
-            return new Players(players);
+            Players players = generatePlayers(InputView.inputName());
+            players.bettingEachPlayer();
+            return players;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
             return registerPlayers();
         }
     }
 
-    private List<Player> generatePlayers(List<String> allPlayersName) {
-        return allPlayersName.stream()
+    private Players generatePlayers(List<String> allPlayersName) {
+        return new Players(allPlayersName.stream()
                 .map(Nickname::new)
                 .map(Player::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
-    private void bettingEachPlayer(Player player) {
+    public static void bettingEachPlayer(Player player) {
         try {
             OutputView.askBettingMoney(player);
             player.betting(new BettingMoney(InputView.inputBettingMoney()));
