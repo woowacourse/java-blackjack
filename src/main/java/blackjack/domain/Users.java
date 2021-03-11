@@ -41,6 +41,6 @@ public class Users {
     }
 
     public void stay() {
-        users.stream().forEach(user -> user.state.stay());
+        users.forEach(user -> user.state.stay());
     }
 }
