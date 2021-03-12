@@ -6,4 +6,6 @@ public interface State {
     State draw(Card card);
 
     boolean isFinish();
+
+    State stay();
 }

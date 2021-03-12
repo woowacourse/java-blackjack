@@ -9,12 +9,17 @@ public abstract class Finish extends Started {
     }
 
     @Override
-    public State draw(Card card) {
+    public final State draw(Card card) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean isFinish() {
+    public final boolean isFinish() {
         return true;
+    }
+
+    @Override
+    public final State stay() {
+        throw new UnsupportedOperationException();
     }
 }

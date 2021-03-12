@@ -7,7 +7,6 @@ import static blackjack.domain.state.CardFactory.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FinishTest {
-
     @DisplayName("첫카드가 블랙젝이면 finish상태를 반환한다.")
     @Test
     void blackJackFinishTest() {

@@ -8,7 +8,6 @@ import static blackjack.domain.state.CardFactory.SPADE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RunningTest {
-
     @DisplayName("가지고 있는 카드가 블랙젝이나 버스터가 아니면 Running상태를 반환한다.")
     @Test
     void runningTest() {

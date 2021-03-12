@@ -8,7 +8,12 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public boolean isFinish() {
+    public final boolean isFinish() {
         return false;
+    }
+
+    @Override
+    public final State stay() {
+        return new Stay(cards());
     }
 }
