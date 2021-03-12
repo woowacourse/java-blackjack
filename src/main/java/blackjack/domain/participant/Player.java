@@ -24,6 +24,8 @@ public class Player implements Participant {
 
     @Override
     public boolean handOutCard(Card card) {
+        if (!isReceiveCard()) return false;
+
         state.draw(card);
         this.state = state.changeState();
         return true;
@@ -69,6 +71,6 @@ public class Player implements Participant {
     }
 
     public int calculateWinPrize(State enemyState) {
-        return (int) (money * state.profit(enemyState));
+        return (int) (money * state.calculateEarningRate(enemyState));
     }
 }
