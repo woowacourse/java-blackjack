@@ -7,6 +7,7 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,11 +28,12 @@ public class BlackjackController {
 
     private Players createPlayers() {
         List<String> names = InputView.getPlayerNames();
-        List<Player> players = names.stream()
-            .map(Player::new)
-            .collect(Collectors.toList());
-        for (Player player : players) {
-            player.addMoney(new Money(InputView.getBetMoney(player)));
+        List<Player> players = new LinkedList<>();
+        for (String name : names) {
+            Player player = new Player(name);
+            Money money = new Money(InputView.getBetMoney(player));
+            player.addMoney(money);
+            players.add(player);
         }
         return new Players(players);
     }
