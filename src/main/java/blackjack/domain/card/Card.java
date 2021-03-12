@@ -1,43 +1,44 @@
 package blackjack.domain.card;
 
-import java.util.Objects;
+import java.util.Arrays;
 
 public class Card {
-    private final CardShape cardShape;
-    private final CardNumber cardNumber;
+    private static final int cardSize = 52;
+    private static final int shapeSize = 12;
+    private static final Card[] cards = new Card[cardSize];
 
-    public Card(final CardShape cardShape, final CardNumber cardNumber) {
-        this.cardShape = cardShape;
-        this.cardNumber = cardNumber;
+    private final CardShape shape;
+    private final CardNumber number;
+
+    static {
+        Arrays.stream(CardShape.values())
+            .forEach(shape -> Arrays.stream(CardNumber.values())
+                .forEach(number -> cards[getIndex(shape, number)] = new Card(shape, number)));
     }
 
-    public CardNumber getCardNumber() {
-        return cardNumber;
+    private Card(final CardShape shape, final CardNumber number) {
+        this.shape = shape;
+        this.number = number;
+    }
+
+    public static Card valueOf(final CardShape shape, final CardNumber number) {
+        return cards[getIndex(shape, number)];
+    }
+
+    private static int getIndex(final CardShape shape, final CardNumber number) {
+        return shape.getValue() * shapeSize + number.getValue() - 1;
+    }
+
+    public CardNumber getNumber() {
+        return number;
     }
 
     public int getCardValue() {
-        return cardNumber.getValue();
+        return number.getValue();
     }
 
     @Override
     public String toString() {
-        return cardNumber.getNumber() + cardShape.getShape();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Card card = (Card) o;
-        return cardShape == card.cardShape && cardNumber == card.cardNumber;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cardShape, cardNumber);
+        return number.getNumber() + shape.getShape();
     }
 }

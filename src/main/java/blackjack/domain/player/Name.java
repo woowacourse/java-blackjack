@@ -12,7 +12,7 @@ public class Name {
     }
 
     private void validate(String name) {
-        if (name == null || name.trim().isEmpty()) {
+        if (Objects.isNull(name)|| name.trim().isEmpty()) {
             throw new validateException("공백인 이름은 사용할 수 없습니다.");
         }
     }

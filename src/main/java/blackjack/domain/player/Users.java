@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.ResultType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,16 +22,12 @@ public class Users {
             .collect(Collectors.toList());
     }
 
-    public Map<Name, ResultType> getResult(Dealer dealer) {
-        Map<Name, ResultType> result = new LinkedHashMap<>();
+    public Map<Name, Integer> profits(Dealer dealer) {
+        Map<Name, Integer> result = new LinkedHashMap<>();
         for (User user : users) {
-            result.put(user.getName(), user.getResult(dealer));
+            result.put(user.getName(), user.profit(dealer));
         }
         return result;
-    }
-
-    public void drawRandomTwoCard() {
-        users.forEach(AbstractPlayer::drawRandomTwoCards);
     }
 
     public List<User> getUsers() {

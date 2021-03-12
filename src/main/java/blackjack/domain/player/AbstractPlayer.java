@@ -1,54 +1,29 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Cards;
-import java.util.ArrayList;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractPlayer implements Player {
-    protected static final int ACE_DIFF = 10;
-    protected static final int BLACKJACK = 21;
-
-    private final List<Card> cards;
     private final Name name;
+    protected State state;
 
-    protected AbstractPlayer(String name) {
-        cards = new ArrayList<>();
+    protected AbstractPlayer(String name, Card fistCard, Card secondCard) {
         this.name = new Name(name);
+        state = StateFactory.draw(fistCard, secondCard);
     }
 
     @Override
     public void drawCard(final Card card) {
-        cards.add(card);
+        state = state.draw(card);
     }
-
-    @Override
-    abstract public boolean isCanDraw();
 
     @Override
     public int getScore() {
-        int lowValue = getLowValue();
-        int highValue = getHighValue(lowValue);
-        if (highValue > BLACKJACK) {
-            return lowValue;
-        }
-        return highValue;
-    }
-
-    private int getLowValue() {
-        return cards.stream()
-            .mapToInt(card -> card.getCardValue())
-            .sum();
-    }
-
-    private int getHighValue(int lowValue) {
-        int highValue = lowValue;
-        if (cards.stream().anyMatch(card -> card.getCardNumber() == CardNumber.ACE)) {
-            highValue += ACE_DIFF;
-        }
-        return highValue;
+        return state.score();
     }
 
     @Override
@@ -58,10 +33,13 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public void drawRandomTwoCards() {
-        Cards cards = Cards.getInstance();
-        drawCard(cards.draw());
-        drawCard(cards.draw());
+    public boolean isBlackjack() {
+        return state.isBlackjack();
+    }
+
+    @Override
+    public boolean isBust() {
+        return state.isBust();
     }
 
     @Override
@@ -71,6 +49,16 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return Collections.unmodifiableList(state.cards().getCards());
+    }
+
+    @Override
+    public void stay() {
+        state = state.stay();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return state.isFinished();
     }
 }

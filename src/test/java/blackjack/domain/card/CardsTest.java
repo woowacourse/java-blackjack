@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardsTest {
+
     @DisplayName("동일 객체 테스트")
     @Test
     void create() {
@@ -22,7 +23,7 @@ public class CardsTest {
         List<Card> cards = new ArrayList<>();
         Arrays.stream(CardShape.values())
             .forEach(shape -> Arrays.stream(CardNumber.values())
-                .forEach(number -> cards.add(new Card(shape, number))));
+                .forEach(number -> cards.add(Card.valueOf(shape, number))));
 
         Card card = Cards.getInstance().draw();
         assertThat(cards).contains(card);

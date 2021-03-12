@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
@@ -20,33 +19,37 @@ public class UserTest {
     @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
     @Test
     void canDrawCardWhen1() {
-        User user = new User(TEST_NAME);
-        Card twoCard = new Card(CardShape.DIAMOND, CardNumber.TWO);
-        user.drawCard(twoCard);
-        assertThat(user.isCanDraw()).isTrue();
+        Card twoCard = Card.valueOf(CardShape.DIAMOND, CardNumber.TWO);
+        User user = new User(TEST_NAME, twoCard, twoCard);
+        assertThat(!user.isFinished()).isTrue();
     }
 
-    @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
+    @DisplayName("유저는 블랙잭일때 추가적인 뽑기 불가")
+    @Test
+    void canDrawCardWhenBlackjack() {
+        Card aceCard = Card.valueOf(CardShape.DIAMOND, CardNumber.ACE);
+        Card tenCard = Card.valueOf(CardShape.DIAMOND, CardNumber.TEN);
+        User user = new User(TEST_NAME, aceCard, tenCard);
+        assertThat(!user.isFinished()).isFalse();
+    }
+
+    @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 블랙잭이 아니고 21 이하일 때 선택 가능")
     @Test
     void canDrawCardWhen21() {
-        User user = new User(TEST_NAME);
-        Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
+        Card sevenCard = Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN);
+        User user = new User(TEST_NAME, sevenCard, sevenCard);
         user.drawCard(sevenCard);
-        user.drawCard(sevenCard);
-        user.drawCard(sevenCard);
-        assertThat(user.isCanDraw()).isTrue();
+        assertThat(!user.isFinished()).isTrue();
     }
 
     @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 초과일 때 선택 불가능")
     @Test
     void cannotDrawCardWhen22() {
-        User user = new User(TEST_NAME);
-        Card sevenCard = new Card(CardShape.DIAMOND, CardNumber.SEVEN);
-        user.drawCard(sevenCard);
-        user.drawCard(sevenCard);
-        Card eightCard = new Card(CardShape.DIAMOND, CardNumber.EIGHT);
+        Card sevenCard = Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN);
+        User user = new User(TEST_NAME, sevenCard, sevenCard);
+        Card eightCard = Card.valueOf(CardShape.DIAMOND, CardNumber.EIGHT);
         user.drawCard(eightCard);
-        assertThat(user.isCanDraw()).isFalse();
+        assertThat(!user.isFinished()).isFalse();
     }
 
     @DisplayName("이름 유효성 검사 - 유효한 이름")
@@ -68,72 +71,19 @@ public class UserTest {
     @DisplayName("카드 계속해서 뽑기 여부 입력 테스트")
     @Test
     void isDrawContinue() {
-        User user = new User(TEST_NAME);
+        Card aceCard = Card.valueOf(CardShape.DIAMOND, CardNumber.ACE);
+        User user = new User(TEST_NAME, aceCard, aceCard);
 
         assertThat(user.isDrawContinue("y")).isTrue();
-        assertThat(user.isDrawStop()).isFalse();
+        assertThat(user.isFinished()).isFalse();
 
         assertThat(user.isDrawContinue("n")).isFalse();
-        assertThat(user.isDrawStop()).isTrue();
+        assertThat(user.isFinished()).isTrue();
 
         assertThat(user.isDrawContinue("y")).isTrue();
-        assertThat(user.isDrawStop()).isTrue();
+        assertThat(user.isFinished()).isTrue();
 
         assertThatThrownBy(() -> user.isDrawContinue("a"))
             .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("승패 판단 - 승")
-    @Test
-    void win() {
-        Dealer dealer = new Dealer();
-        dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
-
-        User user = new User(TEST_NAME);
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.EIGHT));
-
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.WIN);
-    }
-
-    @DisplayName("승패 판단 - 패")
-    @Test
-    void loss() {
-        Dealer dealer = new Dealer();
-        dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
-
-        User user = new User(TEST_NAME);
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.SIX));
-
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.LOSS);
-    }
-
-    @DisplayName("승패 판단 - 무승부")
-    @Test
-    void draw() {
-        Dealer dealer = new Dealer();
-        dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
-
-        User user = new User(TEST_NAME);
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
-
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.DRAW);
-    }
-
-    @DisplayName("승패 판단 - 패(21 초과)")
-    @Test
-    void lossOver21() {
-        Dealer dealer = new Dealer();
-        dealer.drawCard(new Card(CardShape.DIAMOND, CardNumber.SEVEN));
-
-        User user = new User(TEST_NAME);
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.TEN));
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.TEN));
-        user.drawCard(new Card(CardShape.CLUB, CardNumber.TWO));
-
-        ResultType resultType = user.getResult(dealer);
-        assertThat(resultType).isEqualTo(ResultType.LOSS);
     }
 }

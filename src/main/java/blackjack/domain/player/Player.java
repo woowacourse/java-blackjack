@@ -6,10 +6,6 @@ import java.util.List;
 public interface Player {
     void drawCard(final Card card);
 
-    boolean isCanDraw();
-
-    void drawRandomTwoCards();
-
     Name getName();
 
     List<Card> getCards();
@@ -17,4 +13,12 @@ public interface Player {
     int getScore();
 
     void drawRandomOneCard();
+
+    boolean isBlackjack();
+
+    boolean isBust();
+
+    void stay();
+
+    boolean isFinished();
 }
