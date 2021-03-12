@@ -6,22 +6,20 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
     public CardDeck() {
-        initialize();
+        cards = initialize();
     }
 
-    private void initialize() {
+    public List<Card> initialize() {
+        List<Card> cards = new ArrayList<>();
         for (final CardType type : CardType.values()) {
             Arrays.stream(CardNumber.values())
                     .forEach(number -> cards.add(new Card(number, type)));
         }
         Collections.shuffle(cards);
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return cards;
     }
 
     public Card distribute() {
