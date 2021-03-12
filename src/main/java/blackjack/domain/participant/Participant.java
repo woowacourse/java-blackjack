@@ -58,10 +58,6 @@ public abstract class Participant {
         return this.getTotalScore().compareTo(participant.getTotalScore());
     }
 
-    public boolean isSameScore(Participant participant) {
-        return this.getTotalScore().equals(participant.getTotalScore());
-    }
-
     public double profit() {
         return this.state.profit(money.value());
     }

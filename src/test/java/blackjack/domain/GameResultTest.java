@@ -130,23 +130,4 @@ public class GameResultTest {
     void tieTest() {
         assertThat(dealer.judgePlayer(player)).isEqualTo(GameResult.TIE);
     }
-
-    @Test
-    @DisplayName("플레이어의 승패에 따라 딜러 승패가 잘 결정되는지 테스트")
-    void testDealerWinOrLoseByPlayer() {
-        player.receiveCard(new Card(Pattern.DIAMOND, Number.ACE));
-        player.stay();
-        dealer.stay();
-        GameResult playerWin = dealer.judgePlayer(player);
-
-        assertThat(GameResult.reverseResult(playerWin)).isEqualTo(GameResult.LOSE);
-    }
-
-    @Test
-    @DisplayName("플레이어가 무승부 상태면 딜러도 무승부 여야한다.")
-    void testPlayDrawAsSameDealerDraw() {
-        GameResult playerDraw = dealer.judgePlayer(player);
-
-        assertThat(GameResult.reverseResult(playerDraw)).isEqualTo(GameResult.TIE);
-    }
 }
