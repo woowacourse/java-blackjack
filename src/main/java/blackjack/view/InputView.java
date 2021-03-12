@@ -19,6 +19,21 @@ public class InputView {
         return Arrays.asList(inputString.split(","));
     }
 
+    public static double getBetAmount(final String name) {
+        System.out.print(NEW_LINE);
+        System.out.printf("%s의 배팅 금액은?", name);
+        System.out.print(NEW_LINE);
+        String input = SCANNER.nextLine();
+        validateInteger(input);
+        return Integer.parseInt(input);
+    }
+
+    private static void validateInteger(final String string) {
+        if (!string.chars().allMatch(Character::isDigit)) {
+            throw new IllegalArgumentException("정수만 입력 가능합니다.");
+        }
+    }
+
     public static boolean getHitOrStay(final String name) {
         System.out.printf("%s(은)는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
         System.out.print(NEW_LINE);
