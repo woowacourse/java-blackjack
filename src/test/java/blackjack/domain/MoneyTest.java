@@ -39,7 +39,7 @@ class MoneyTest {
     @DisplayName("Money 입력값으로 문자열을 입력하면 예외가 발생합니다.")
     void moneyInputString() {
         assertThatThrownBy(() -> {
-           new Money("이건 문자열이다.");
+            new Money("이건 문자열이다.");
         }).isInstanceOf(NumberFormatException.class).hasMessage("베팅 입력값은 숫자여야 합니다.");
     }
 

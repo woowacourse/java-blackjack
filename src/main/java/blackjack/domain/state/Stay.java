@@ -2,7 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.participant.Hand;
 
-public class Stay extends Finished{
+public class Stay extends Finished {
 
     public Stay(final Hand hand) {
         super(hand);

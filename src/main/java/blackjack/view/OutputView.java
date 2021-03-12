@@ -117,7 +117,7 @@ public class OutputView {
     }
 
     public static void printPlayerBurst(final String playerName) {
-        System.out.printf("%s의 점수 총합이 "+ BUST_SCORE + "점을 넘어 버스트 되었습니다.", playerName);
+        System.out.printf("%s의 점수 총합이 " + BUST_SCORE + "점을 넘어 버스트 되었습니다.", playerName);
         System.out.print(NEW_LINE);
     }
 
