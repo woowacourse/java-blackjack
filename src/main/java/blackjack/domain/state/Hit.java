@@ -1,11 +1,11 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.PlayerCards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.player.BetAmount;
 
 public class Hit extends Running {
-    public Hit(PlayerCards cards) {
+    public Hit(Hand cards) {
         super(cards);
     }
 

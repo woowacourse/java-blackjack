@@ -1,9 +1,9 @@
 package blackjack.domain.state;
 
-import blackjack.domain.card.PlayerCards;
+import blackjack.domain.card.Hand;
 
 public abstract class Running extends Started {
-    protected Running(PlayerCards cards) {
+    protected Running(Hand cards) {
         super(cards);
     }
 

@@ -1,12 +1,12 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.PlayerCards;
+import blackjack.domain.card.Hand;
 
 public abstract class Finished extends Started {
     protected static final int DRAW_AMOUNT = 0;
 
-    protected Finished(PlayerCards cards) {
+    protected Finished(Hand cards) {
         super(cards);
     }
 

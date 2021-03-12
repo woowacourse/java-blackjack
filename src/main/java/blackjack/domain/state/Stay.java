@@ -1,12 +1,12 @@
 package blackjack.domain.state;
 
-import blackjack.domain.card.PlayerCards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.player.BetAmount;
 
 public class Stay extends Finished {
     private static final int EARNING_RATE = 1;
 
-    public Stay(PlayerCards cards) {
+    public Stay(Hand cards) {
         super(cards);
     }
 

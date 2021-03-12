@@ -1,16 +1,16 @@
 package blackjack.domain.state;
 
-import blackjack.domain.card.PlayerCards;
+import blackjack.domain.card.Hand;
 
 public abstract class Started implements State {
-    protected final PlayerCards cards;
+    protected final Hand cards;
 
-    protected Started(final PlayerCards cards) {
+    protected Started(final Hand cards) {
         this.cards = cards;
     }
 
     @Override
-    public PlayerCards cards() {
+    public Hand cards() {
         return cards;
     }
 

@@ -1,11 +1,11 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.PlayerCards;
+import blackjack.domain.card.Hand;
 
 public class StateFactory {
     public static State draw(Card firstCard, Card secondCard) {
-        PlayerCards cards = new PlayerCards(firstCard, secondCard);
+        Hand cards = new Hand(firstCard, secondCard);
         if (cards.isBlackjack()) {
             return new Blackjack(cards);
         }

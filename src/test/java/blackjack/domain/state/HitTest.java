@@ -6,19 +6,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.card.PlayerCards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.player.BetAmount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HitTest {
-    private static PlayerCards cards;
+    private static Hand cards;
 
     @BeforeEach
     void setUp() {
         Card card = Card.valueOf(CardShape.CLUB, CardNumber.JACK);
-        cards = new PlayerCards(card, card);
+        cards = new Hand(card, card);
     }
 
     @DisplayName("hit 가 반환되는지 테스트")
@@ -49,7 +49,7 @@ class HitTest {
     @Test
     void profit() {
         Hit hit = new Hit(cards);
-        State state = new Stay(new PlayerCards());
+        State state = new Stay(new Hand());
         assertThatThrownBy(() -> hit.profit(state, new BetAmount("10000")))
             .isInstanceOf(UnsupportedOperationException.class);
     }
