@@ -24,18 +24,21 @@ public class Dealer implements Participant {
     public boolean handOutCard(Card card) {
         if (isReceiveCard()) {
             receiveCard(card);
-            return true;
+            this.state = state.changeState();
         }
 
-        if (!state.isEndState()) {
-            stay();
-        }
+        if (checkStay()) stay();
+
         return false;
     }
 
     private void receiveCard(Card card) {
         state.draw(card);
         this.state = state.changeState();
+    }
+
+    private boolean checkStay() {
+        return !state.isEndState() && sumTotalScore(new BlackJackScoreRule()) > DRAW_BOUND_SCORE;
     }
 
     @Override

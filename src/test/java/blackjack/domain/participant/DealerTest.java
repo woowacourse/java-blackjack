@@ -86,4 +86,13 @@ class DealerTest {
         dealer.stay();
         assertThat(dealer.getStatus()).isInstanceOf(Stay.class);
     }
+
+    @Test
+    @DisplayName("딜러는 블랙잭이 아닐때, 카드를 뽑아 17이상 21이하이면 STAY상태가 된다")
+    void test_state_stay_dealer_when_score_17_over() {
+        State state = new Hit(defaultInitialCard);
+        Participant dealer = new Dealer(state);
+        dealer.handOutCard(new Card(CardType.DIAMOND, CardValue.SIX));
+        assertThat(dealer.getStatus()).isInstanceOf(Stay.class);
+    }
 }
