@@ -14,6 +14,8 @@ public abstract class Participant {
 		this.name = name;
 	}
 
+	public abstract Cards getInitialHand();
+
 	public Cards getCards() {
 		return cards;
 	}
@@ -37,8 +39,6 @@ public abstract class Participant {
 	public Cards getHand() {
 		return cards;
 	}
-
-	public abstract Cards getInitialHand();
 
 	public boolean isDealer() {
 		return this instanceof Dealer;
