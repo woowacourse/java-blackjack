@@ -1,18 +1,22 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class BlackjackManager {
 
-    private static final int DEFAULT_COUNT = 0;
+    private static final double LOSE_EARNING_RATE = -2.0d;
+    private static final double TIE_EARNING_RATE = 0d;
 
     private BlackjackManager() {
+    }
+
+    public static void playerInitBettingMoney(Player player, Money money) {
+        player.initMoney(money);
     }
 
     public static void initGame(Players players, Dealer dealer) {
@@ -20,24 +24,38 @@ public class BlackjackManager {
         players.initHandByDealer(dealer);
     }
 
-    public static GameResultDto getGameResult(Dealer dealer, Players players) {
-        Map<String, GameResult> playerResult = getPlayersResult(dealer, players);
-        return new GameResultDto(playerResult, getDealerResult(playerResult));
+    public static List<GameResultDto> getGameResult(Dealer dealer, Players players) {
+        List<GameResultDto> playersResultDtos = getPlayersResult(dealer, players);
+        GameResultDto dealerResultDto = getDealerResult(playersResultDtos);
+
+        List<GameResultDto> gameResultDtos = new ArrayList<>();
+        gameResultDtos.add(dealerResultDto);
+        gameResultDtos.addAll(playersResultDtos);
+        return gameResultDtos;
     }
 
-    private static Map<String, GameResult> getPlayersResult(Dealer dealer, Players players) {
-        Map<String, GameResult> playersResult = new HashMap<>();
-        players.toList()
-                .forEach(player -> playersResult.put(player.getName(), dealer.judgePlayer(player)));
-        return playersResult;
+    private static List<GameResultDto> getPlayersResult(Dealer dealer, Players players) {
+        return players.toList().stream()
+                .map(player -> new GameResultDto(player.getName(), calculateEarning(dealer, player)))
+                .collect(Collectors.toList());
     }
 
-    private static Map<GameResult, Integer> getDealerResult(Map<String, GameResult> playerResult) {
-        Map<GameResult, Integer> dealerResult = new EnumMap<>(GameResult.class);
-        Arrays.asList(GameResult.values()).forEach(value -> dealerResult.put(value, DEFAULT_COUNT));
-        playerResult.values()
-                .forEach(result -> dealerResult.computeIfPresent(GameResult.reverseResult(result),
-                        ((gameResult, count) -> ++count)));
-        return dealerResult;
+    private static GameResultDto getDealerResult(List<GameResultDto> playerResults) {
+        double dealerEarning = playerResults.stream()
+                .filter(playerResult -> playerResult.getEarning() < 0)
+                .mapToDouble(GameResultDto::getEarning)
+                .reduce(0.0, (a, b) -> a + (Math.abs(b) / 2));
+        return new GameResultDto("딜러", dealerEarning);
+    }
+
+    private static double calculateEarning(Dealer dealer, Player player) {
+        GameResult gameResult = dealer.judgePlayer(player);
+        if (gameResult == GameResult.WIN) {
+            return player.profit();
+        }
+        if (gameResult == GameResult.LOSE) {
+            return player.profit(LOSE_EARNING_RATE);
+        }
+        return player.profit(TIE_EARNING_RATE);
     }
 }

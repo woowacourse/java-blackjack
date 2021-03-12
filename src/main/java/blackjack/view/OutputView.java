@@ -18,7 +18,6 @@ public class OutputView {
     private static final int DEALER_HIT_LIMIT = 16;
     private static final int BUST_SCORE = 21;
     private static final String SCORE_FORMAT = " - 결과: ";
-    private static final String BLANK = " ";
 
     public static void printInitGame(final List<Player> players, Dealer dealer) {
         System.out.print(NEW_LINE);
@@ -109,14 +108,12 @@ public class OutputView {
         System.out.print(NEW_LINE);
     }
 
-    public static void printGameResult(GameResultDto gameResultDto) {
-        System.out.println("## 최종 승패");
-        System.out.print("딜러: ");
-        gameResultDto.getDealerResult()
-                .forEach((key, value) -> System.out.print(value + key.getName() + BLANK));
-        System.out.print(NEW_LINE);
-        gameResultDto.getPlayerResult()
-                .forEach((key, value) -> System.out.println(key + ": " + value.getName()));
+    public static void printGameResult(List<GameResultDto> gameResultDtos) {
+        System.out.println("## 최종 수익");
+        gameResultDtos.forEach(gameResultDto -> {
+            System.out.printf("%s: %.1f", gameResultDto.getName(), gameResultDto.getEarning());
+            System.out.print(NEW_LINE);
+        });
     }
 
     public static void printPlayerBurst(final String playerName) {

@@ -32,13 +32,4 @@ public class BlackjackManagerTest {
                 .count())
                 .isEqualTo(2);
     }
-
-    @Test
-    @DisplayName("게임 플레이 결과 DTO 생성")
-    void testCreateResultDto() {
-        BlackjackManager.initGame(players, dealer);
-        GameResultDto gameResultDto = BlackjackManager.getGameResult(dealer, players);
-
-        assertThat(gameResultDto).isInstanceOf(GameResultDto.class);
-    }
 }

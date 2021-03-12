@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Money;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.state.*;
 
@@ -8,6 +9,7 @@ import java.util.List;
 public abstract class Participant {
 
     protected State state;
+    protected Money money;
 
     protected Participant() {
     }
@@ -58,5 +60,17 @@ public abstract class Participant {
 
     public boolean isSameScore(Participant participant) {
         return this.getTotalScore().equals(participant.getTotalScore());
+    }
+
+    public double profit() {
+        return this.state.profit(money.value());
+    }
+
+    public double profit(double earningRate) {
+        return money.value() * earningRate;
+    }
+
+    public void initMoney(Money money) {
+        this.money = money;
     }
 }

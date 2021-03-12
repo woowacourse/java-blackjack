@@ -4,20 +4,19 @@ import java.util.Map;
 
 public class GameResultDto {
 
-    Map<String, GameResult> playerResult;
-    Map<GameResult, Integer> dealerResult;
+    private final String name;
+    private final double earning;
 
-    public GameResultDto(Map<String, GameResult> playerResult,
-                         Map<GameResult, Integer> dealerResult) {
-        this.playerResult = playerResult;
-        this.dealerResult = dealerResult;
+    public GameResultDto(String name, double earning) {
+        this.name = name;
+        this.earning = earning;
     }
 
-    public Map<String, GameResult> getPlayerResult() {
-        return playerResult;
+    public String getName() {
+        return name;
     }
 
-    public Map<GameResult, Integer> getDealerResult() {
-        return dealerResult;
+    public double getEarning() {
+        return earning;
     }
 }

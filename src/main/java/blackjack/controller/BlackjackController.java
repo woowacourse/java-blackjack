@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackManager;
 import blackjack.domain.GameResultDto;
+import blackjack.domain.Money;
 import blackjack.domain.UserAnswer;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -9,11 +10,15 @@ import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+
 public class BlackjackController {
 
     public void play() {
         Dealer dealer = new Dealer();
         Players players = initPlayers();
+
+        initBettingMoney(players);
 
         initGame(dealer, players);
         if (!dealer.isBlackjack()) {
@@ -21,8 +26,8 @@ public class BlackjackController {
         }
 
         OutputView.printHandResult(players.toList(), dealer);
-        GameResultDto gameResultDto = BlackjackManager.getGameResult(dealer, players);
-        OutputView.printGameResult(gameResultDto);
+        List<GameResultDto> gameResultDtos = BlackjackManager.getGameResult(dealer, players);
+        OutputView.printGameResult(gameResultDtos);
     }
 
     private Players initPlayers() {
@@ -32,6 +37,22 @@ public class BlackjackController {
             OutputView.printException(e);
             return initPlayers();
         }
+    }
+
+    private void initBettingMoney(Players players) {
+        for (Player player : players.toList()) {
+            Money money = inputBettingMoney(player);
+            BlackjackManager.playerInitBettingMoney(player, money);
+        }
+    }
+
+    private Money inputBettingMoney(Player player) {
+        try {
+            return new Money(InputView.getBettingMoney(player.getName()));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            OutputView.printException(e);
+        }
+        return inputBettingMoney(player);
     }
 
     private void initGame(Dealer dealer, Players players) {

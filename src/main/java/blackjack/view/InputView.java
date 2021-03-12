@@ -15,6 +15,12 @@ public class InputView {
         return splitNames(SCANNER.nextLine());
     }
 
+    public static String getBettingMoney(String playerName) {
+        System.out.printf("%s의 베팅 금액은?", playerName);
+        System.out.print(NEW_LINE);
+        return SCANNER.nextLine();
+    }
+
     private static List<String> splitNames(final String inputString) {
         return Arrays.asList(inputString.split(","));
     }
