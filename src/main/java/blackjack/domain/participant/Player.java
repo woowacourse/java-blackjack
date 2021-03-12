@@ -33,6 +33,10 @@ public class Player extends Participant {
         return Result.WIN;
     }
 
+    public int getBettingMoney() {
+        return bettingMoney;
+    }
+
     @Override
     public List<Card> showInitialCards() {
         return cards.subList(0, 2);

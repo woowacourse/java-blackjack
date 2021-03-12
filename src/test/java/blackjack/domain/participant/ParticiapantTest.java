@@ -94,4 +94,12 @@ public class ParticiapantTest {
         dealer.receiveOneCard(new Card(CardNumber.EIGHT, CardType.HEART));
         assertThat(dealer.isBust()).isTrue();
     }
+
+    @Test
+    @DisplayName("블랙잭 확인이 잘 되는지 확인")
+    void isBlackjack() {
+        dealer.receiveOneCard(new Card(CardNumber.ACE, CardType.CLOVER));
+        dealer.receiveOneCard(new Card(CardNumber.JACK, CardType.CLOVER));
+        assertThat(dealer.isBlackjack()).isTrue();
+    }
 }

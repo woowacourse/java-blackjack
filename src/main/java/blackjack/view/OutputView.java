@@ -18,7 +18,7 @@ public class OutputView {
     private static final String DISTRIBUTE_MESSAGE = "딜러와 %s에게 2장의 카드를 나누어주었습니다.";
     private static final String CARD_STATUS_FORMAT = "%s카드: %s";
     private static final String CARD_RESULT_FORMAT = "%s카드: %s - 결과: %d";
-    private static final String GAME_RESULT_MESSAGE = "## 최종 승패";
+    private static final String GAME_RESULT_MESSAGE = "## 최종 수익";
 
     public static void showDistributedCard(final List<Player> players, final Dealer dealer) {
         distributeMessage(players);
@@ -74,9 +74,14 @@ public class OutputView {
         }
     }
 
-    public static void showGameResult(final Dealer dealer, final List<Integer> resultCounts) {
+    public static void showGameResult(final Dealer dealer, final int dealerProfit) {
         System.out.println(NEWLINE + GAME_RESULT_MESSAGE);
-        showDealerGameResult(dealer, resultCounts);
+        //showDealerGameResult(dealer, resultCounts);
+        showDealerProfit(dealer, dealerProfit);
+    }
+
+    private static void showDealerProfit(final Dealer dealer, final int dealerProfit) {
+        System.out.printf("%s: %d" + NEWLINE, dealer.getName(), dealerProfit);
     }
 
     private static void showDealerGameResult(final Dealer dealer, final List<Integer> resultCounts) {
@@ -104,5 +109,13 @@ public class OutputView {
 
     public static void showErrorMessage(final String message) {
         System.out.println(ERROR_MARK + message);
+    }
+
+    public static void showPlayersProfit(final Map<Player, Integer> playersProfit) {
+        playersProfit.forEach(OutputView::showPlayerProfit);
+    }
+
+    private static void showPlayerProfit(final Player player, final Integer profit) {
+        System.out.printf("%s: %d" + NEWLINE, player.getName(), profit);
     }
 }

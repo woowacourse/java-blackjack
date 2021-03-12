@@ -9,6 +9,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
     public void run() {
@@ -69,7 +70,9 @@ public class BlackjackController {
     private void showGameResult(final Players players, final Dealer dealer) {
         OutputView.showFinalCardResult(players.getPlayers(), dealer);
         final GameResult gameResult = new GameResult(dealer, players.getPlayers());
-        OutputView.showGameResult(dealer, gameResult.getResultCounts());
-        OutputView.showPlayersGameResult(gameResult.getPlayersResult());
+        final Map<Player, Integer> playersProfit = gameResult.calculatePlayersProfit(dealer);
+        OutputView.showGameResult(dealer, gameResult.calculateDealerProfit(playersProfit));
+        OutputView.showPlayersProfit(gameResult.calculatePlayersProfit(dealer));
+        //OutputView.showPlayersGameResult(gameResult.getPlayersResult());
     }
 }
