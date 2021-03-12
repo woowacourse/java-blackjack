@@ -15,6 +15,9 @@ import static blakcjack.domain.participant.Dealer.DEALER_NAME;
 public class OutputView {
 	public static final String DELIMITER = ", ";
 
+	private OutputView() {
+	}
+
 	public static void printInitialHandsOf(final Participants participants) {
 		System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.%n", DEALER_NAME, getConcatenatedPlayerNamesFrom(participants));
 		printHandSummaryOf(participants);
