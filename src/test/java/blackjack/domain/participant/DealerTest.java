@@ -7,10 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -23,7 +20,7 @@ public class DealerTest {
     void setUp() {
         dealer = new Dealer();
         List<Card> cards = Collections.singletonList(new Card(Pattern.CLOVER, Number.TEN));
-        dealer.receiveFirstHand(cards);
+        dealer.receiveFirstHand(new ArrayList<>(cards));
     }
 
     @Test

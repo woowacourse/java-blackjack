@@ -1,6 +1,12 @@
 package blackjack.domain.state;
 
+import blackjack.domain.participant.Hand;
+
 public class Stay extends Finished{
+
+    public Stay(Hand hand) {
+        super(hand);
+    }
 
     @Override
     public double earningRate() {

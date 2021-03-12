@@ -20,8 +20,6 @@ public class Player extends Participant {
     }
 
     public void receiveCard(final Card card) {
-        validateState();
-        this.hand.addCard(card);
-        this.state = state.check(this.hand);
+        this.state = this.state.receiveCard(card);
     }
 }

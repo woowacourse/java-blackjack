@@ -1,16 +1,21 @@
 package blackjack.domain.state;
 
+import blackjack.domain.carddeck.Card;
 import blackjack.domain.participant.Hand;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StateFactory {
 
     private StateFactory() {
     }
 
-    public static State initState(Hand hand) {
+    public static State initHand(List<Card> cards) {
+        Hand hand = new Hand(new ArrayList<>(cards));
         if (hand.isBlackjack()) {
-            return new Blackjack();
+            return new Blackjack(hand);
         }
-        return new Hit();
+        return new Hit(hand);
     }
 }

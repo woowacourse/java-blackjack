@@ -1,8 +1,13 @@
 package blackjack.domain.state;
 
+import blackjack.domain.carddeck.Card;
 import blackjack.domain.participant.Hand;
 
-public abstract class Finished implements State{
+public abstract class Finished extends Started{
+
+    public Finished(Hand hand) {
+        super(hand);
+    }
 
     @Override
     public boolean isFinished() {
@@ -20,7 +25,7 @@ public abstract class Finished implements State{
     }
 
     @Override
-    public State check(Hand hand) {
+    public State receiveCard(Card card) {
         throw new UnsupportedOperationException();
     }
 

@@ -16,7 +16,9 @@ public class BlackjackController {
         Players players = initPlayers();
 
         initGame(dealer, players);
-        playBlackjack(dealer, players);
+        if (!dealer.isBlackjack()) {
+            playBlackjack(dealer, players);
+        }
 
         OutputView.printHandResult(players.toList(), dealer);
         GameResultDto gameResultDto = BlackjackManager.getGameResult(dealer, players);
@@ -57,6 +59,10 @@ public class BlackjackController {
     }
 
     private void hitOrStay(Player player, Dealer dealer) {
+        if (player.isBlackjack()) {
+            OutputView.printPlayerBlackjack(player.getName());
+            return;
+        }
         UserAnswer userAnswer = UserAnswer.getUserAnswer(InputView.getHitOrStay(player.getName()));
         if (userAnswer.isStay()) {
             player.stay();

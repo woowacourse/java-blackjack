@@ -34,10 +34,63 @@ public class GameResultTest {
     }
 
     @Test
+    @DisplayName("플레이어가 블랙잭이고 딜러가 스테이라면 플레이어 승리")
+    void playerBlackjackAndDealerStay() {
+        Player blackjackPlayer = new Player(new Name("brown"));
+        blackjackPlayer.receiveFirstHand(Arrays.asList(
+                new Card(Pattern.HEART, Number.TEN),
+                new Card(Pattern.HEART, Number.ACE)
+        ));
+        dealer.stay();
+        assertThat(dealer.judgePlayer(blackjackPlayer)).isEqualTo(GameResult.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭이고 딜러가 버스트라면 플레이어 승리")
+    void playerBlackjackAndDealerBust() {
+        Player blackjackPlayer = new Player(new Name("brown"));
+        blackjackPlayer.receiveFirstHand(Arrays.asList(
+                new Card(Pattern.HEART, Number.TEN),
+                new Card(Pattern.HEART, Number.ACE)
+        ));
+        dealer.receiveCard(new Card(Pattern.CLOVER, Number.TEN));
+        assertThat(dealer.judgePlayer(blackjackPlayer)).isEqualTo(GameResult.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러가 둘다 블랙잭 이라면 무승부")
+    void playerBlackjackAndDealerBlackjack() {
+        Player blackjackPlayer = new Player(new Name("brown"));
+        blackjackPlayer.receiveFirstHand(Arrays.asList(
+                new Card(Pattern.HEART, Number.TEN),
+                new Card(Pattern.HEART, Number.ACE)
+        ));
+        Dealer blackjackDealer = new Dealer();
+        blackjackDealer.receiveFirstHand(Arrays.asList(
+                new Card(Pattern.HEART, Number.ACE),
+                new Card(Pattern.HEART, Number.JACK)
+        ));
+        assertThat(blackjackDealer.judgePlayer(blackjackPlayer)).isEqualTo(GameResult.TIE);
+    }
+
+    @Test
+    @DisplayName("플레이어가 스테이고 딜러가 블랙잭 이라면 플레이어 패배")
+    void playerStayAndDealerBlackjack() {
+        Dealer blackjackDealer = new Dealer();
+        blackjackDealer.receiveFirstHand(Arrays.asList(
+                new Card(Pattern.HEART, Number.ACE),
+                new Card(Pattern.HEART, Number.JACK)
+        ));
+        assertThat(blackjackDealer.judgePlayer(player)).isEqualTo(GameResult.LOSE);
+    }
+
+    @Test
     @DisplayName("딜러와 플레이어 둘다 버스트가 아닐 때 플레이어의 점수가 더 높으면 플레이어의 승리")
     void playerScoreBiggerThanDealerScoreTest() {
         player.receiveCard(new Card(Pattern.CLOVER, Number.ACE));
-        assertThat(dealer.judgeHand(player)).isEqualTo(GameResult.WIN);
+        player.stay();
+        dealer.stay();
+        assertThat(dealer.judgePlayer(player)).isEqualTo(GameResult.WIN);
     }
 
     @Test
@@ -45,21 +98,23 @@ public class GameResultTest {
     void ifDealerBustedAndPlayerStayTest() {
         dealer.receiveCard(new Card(Pattern.CLOVER, Number.TWO));
         player.receiveCard(new Card(Pattern.CLOVER, Number.ACE));
-        assertThat(dealer.judgeHand(player)).isEqualTo(GameResult.WIN);
+        player.stay();
+        assertThat(dealer.judgePlayer(player)).isEqualTo(GameResult.WIN);
     }
 
     @Test
     @DisplayName("딜러와 플레이어 둘다 버스트가 아닐 때 딜러의 점수가 더 높으면 플레이어의 패배")
     void dealerScoreBiggerThanPlayerScoreTest() {
         dealer.receiveCard(new Card(Pattern.CLOVER, Number.ACE));
-        assertThat(dealer.judgeHand(player)).isEqualTo(GameResult.LOSE);
+        player.stay();
+        assertThat(dealer.judgePlayer(player)).isEqualTo(GameResult.LOSE);
     }
 
     @Test
     @DisplayName("플레이어가 버스트고 딜러는 스테이라면 플레이어의 패배")
     void ifPlayerBustedAndDealerStayTest() {
         player.receiveCard(new Card(Pattern.HEART, Number.TWO));
-        assertThat(dealer.judgeHand(player)).isEqualTo(GameResult.LOSE);
+        assertThat(dealer.judgePlayer(player)).isEqualTo(GameResult.LOSE);
     }
 
     @Test
@@ -67,31 +122,30 @@ public class GameResultTest {
     void ifPlayerAndDealerBothBustedTest() {
         dealer.receiveCard(new Card(Pattern.CLOVER, Number.TWO));
         player.receiveCard(new Card(Pattern.HEART, Number.TWO));
-        assertThat(dealer.judgeHand(player)).isEqualTo(GameResult.LOSE);
+        assertThat(dealer.judgePlayer(player)).isEqualTo(GameResult.LOSE);
     }
 
     @Test
     @DisplayName("플레이어와 딜러가 버스트가 아니고 점수가 같으면 무승부")
     void tieTest() {
-        assertThat(dealer.judgeHand(player)).isEqualTo(GameResult.TIE);
+        assertThat(dealer.judgePlayer(player)).isEqualTo(GameResult.TIE);
     }
 
     @Test
     @DisplayName("플레이어의 승패에 따라 딜러 승패가 잘 결정되는지 테스트")
     void testDealerWinOrLoseByPlayer() {
         player.receiveCard(new Card(Pattern.DIAMOND, Number.ACE));
-        GameResult playerWin = dealer.judgeHand(player);
-        player.receiveCard(new Card(Pattern.DIAMOND, Number.ACE));
-        GameResult playerLose = dealer.judgeHand(player);
+        player.stay();
+        dealer.stay();
+        GameResult playerWin = dealer.judgePlayer(player);
 
         assertThat(GameResult.reverseResult(playerWin)).isEqualTo(GameResult.LOSE);
-        assertThat(GameResult.reverseResult(playerLose)).isEqualTo(GameResult.WIN);
     }
 
     @Test
     @DisplayName("플레이어가 무승부 상태면 딜러도 무승부 여야한다.")
     void testPlayDrawAsSameDealerDraw() {
-        GameResult playerDraw = dealer.judgeHand(player);
+        GameResult playerDraw = dealer.judgePlayer(player);
 
         assertThat(GameResult.reverseResult(playerDraw)).isEqualTo(GameResult.TIE);
     }

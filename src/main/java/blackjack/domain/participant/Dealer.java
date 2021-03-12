@@ -42,23 +42,29 @@ public class Dealer extends Participant {
 
     @Override
     public void receiveCard(final Card card) {
-        validateState();
-        this.hand.addCard(card);
-        this.state = state.check(this.hand);
+        this.state = this.state.receiveCard(card);
         if (isOverLimitScore() && !isFinished()) {
             stay();
         }
     }
 
-    public GameResult judgeHand(final Player player) {
-        Score playerScore = player.getTotalScore();
-        Score dealerScore = this.getTotalScore();
-        if (playerScore.isBust() || (!dealerScore.isBust() && dealerScore.compareTo(playerScore))) {
+    public GameResult judgePlayer(final Player player) {
+        if (didLose(player)) {
             return LOSE;
         }
-        if (playerScore.compareTo(dealerScore) || dealerScore.isBust()) {
+        if (didWin(player)) {
             return WIN;
         }
         return TIE;
+    }
+
+    private boolean didWin(Player player) {
+        return (player.isBlackjack() && !this.isBlackjack()) || (this.isBust() && player.isStay()) ||
+                (player.isStay() && this.isStay() && player.isHigherThan(this));
+    }
+
+    private boolean didLose(Player player) {
+        return player.isBust() || (this.isBlackjack() && !player.isBlackjack()) ||
+                (player.isStay() && this.isStay() && this.isHigherThan(player));
     }
 }

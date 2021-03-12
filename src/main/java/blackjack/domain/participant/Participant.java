@@ -1,44 +1,35 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.carddeck.Card;
-import blackjack.domain.state.Hit;
-import blackjack.domain.state.State;
-import blackjack.domain.state.StateFactory;
+import blackjack.domain.state.*;
 
-import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
 
-    protected final Hand hand;
     protected State state;
 
     protected Participant() {
-        this.hand = new Hand();
-        this.state = new Hit();
+    }
+
+    public void receiveFirstHand(List<Card> cards) {
+        this.state = StateFactory.initHand(cards);
     }
 
     public abstract boolean isOverLimitScore();
 
     public abstract void receiveCard(final Card card);
 
-    protected void validateState() {
-        if (this.state.isFinished()) {
-            throw new IllegalStateException("현재 상태에서는 카드를 더 받을 수 없습니다.");
-        }
+    public Score getTotalScore() {
+        return state.totalScore();
     }
 
-    public Score getTotalScore() {
-        return hand.totalScore();
+    public Hand hand() {
+        return state.hand();
     }
 
     public List<Card> toHandList() {
-        return Collections.unmodifiableList(hand.toList());
-    }
-
-    public void receiveFirstHand(List<Card> cards) {
-        cards.forEach(hand::addCard);
-        this.state = StateFactory.initState(this.hand);
+        return state.toHandList();
     }
 
     public boolean isFinished() {
@@ -47,5 +38,25 @@ public abstract class Participant {
 
     public void stay() {
         this.state = state.stay();
+    }
+
+    public boolean isBlackjack() {
+        return this.state instanceof Blackjack;
+    }
+
+    public boolean isStay() {
+        return this.state instanceof Stay;
+    }
+
+    public boolean isBust() {
+        return this.state instanceof Bust;
+    }
+
+    public boolean isHigherThan(Participant participant) {
+        return this.getTotalScore().compareTo(participant.getTotalScore());
+    }
+
+    public boolean isSameScore(Participant participant) {
+        return this.getTotalScore().equals(participant.getTotalScore());
     }
 }
