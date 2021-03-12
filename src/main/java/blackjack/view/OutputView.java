@@ -71,6 +71,7 @@ public class OutputView {
     }
 
     public static void printFinalBetProfits(Map<String, BetAmount> finalBetProfits) {
+        printEmptyLine();
         System.out.println("## 최종 수익");
         finalBetProfits.forEach((name, betProfit) -> {
             System.out.println(name + ": " + betProfit.getBetAmount());

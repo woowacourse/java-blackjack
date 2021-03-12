@@ -13,7 +13,7 @@ public class BetAmount {
     }
 
     public BetAmount toNegative() {
-        return new BetAmount(-betAmount);
+        return new BetAmount(betAmount * -1);
     }
 
     public BetAmount toHalf() {
