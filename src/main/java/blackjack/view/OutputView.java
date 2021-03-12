@@ -16,7 +16,7 @@ public class OutputView {
     private static final String SCORE_FORMAT = " - 결과: %d";
     private static final String DEALER_HIT_IF_UNDER_LIMIT_SCORE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String TOTAL_PROFIT_RESULT_MESSAGE = "## 최종 수익";
-    private static final String TOTAL_GAME_RESULT_FORMAT = "%s: %s";
+    private static final String TOTAL_GAME_RESULT_FORMAT = "%s: %d";
 
     public static void printInitStatuses(final ParticipantDto dealer,
         final List<ParticipantDto> players) {

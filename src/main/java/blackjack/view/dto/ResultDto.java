@@ -5,7 +5,7 @@ public class ResultDto {
     public static final String DEALER_NAME = "딜러";
 
     private final String name;
-    private final double amount;
+    private final int amount;
 
     public ResultDto(final double amount) {
         this(DEALER_NAME, amount);
@@ -13,14 +13,14 @@ public class ResultDto {
 
     public ResultDto(final String name, final double amount) {
         this.name = name;
-        this.amount = amount;
+        this.amount = (int) amount;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public double getAmount() {
+    public int getAmount() {
         return this.amount;
     }
 }
