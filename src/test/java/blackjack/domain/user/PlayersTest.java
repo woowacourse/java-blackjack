@@ -4,6 +4,7 @@ import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.dto.Results;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,14 +44,14 @@ public class PlayersTest {
     void checkWinOrLoseWhenDealerHasBlackJackTest() {
         dealer.draw(ace);
         dealer.draw(jack);
-        Map<User, ResultType> resultMap = players.generateResultsMapAgainstDealer(dealer);
+        Results results = players.generateResultsMapAgainstDealer(dealer);
 
-        assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
+        assertThat(results).isEqualTo(new Results(new HashMap<User, ResultType>() {
             {
                 put(player1, ResultType.DRAW);
                 put(player2, ResultType.LOSE);
             }
-        });
+        }));
     }
 
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러가 블랙잭이 아니었을 때")
@@ -58,14 +59,14 @@ public class PlayersTest {
     void checkWinOrLoseWhenDealerHasNotBlackJackTest() {
         dealer.draw(ace);
         dealer.draw(seven);
-        Map<User, ResultType> resultMap = players.generateResultsMapAgainstDealer(dealer);
+        Results results = players.generateResultsMapAgainstDealer(dealer);
 
-        assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
+        assertThat(results).isEqualTo(new Results(new HashMap<User, ResultType>() {
             {
                 put(player1, ResultType.WIN);
                 put(player2, ResultType.LOSE);
             }
-        });
+        }));
     }
 
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러와 플레이어가 버스트일 때")
@@ -75,14 +76,14 @@ public class PlayersTest {
         dealer.draw(seven);
         dealer.draw(jack);
         player2.draw(seven); // player2 에게 7을 추가로 주어 23을 만들어 버스트 상태로 만든다.
-        Map<User, ResultType> resultMap = players.generateResultsMapAgainstDealer(dealer);
+        Results results = players.generateResultsMapAgainstDealer(dealer);
 
-        assertThat(resultMap).isEqualTo(new HashMap<User, ResultType>() {
+        assertThat(results).isEqualTo(new Results(new HashMap<User, ResultType>() {
             {
                 put(player1, ResultType.WIN);
                 put(player2, ResultType.LOSE);
             }
-        });
+        }));
     }
 
 }
