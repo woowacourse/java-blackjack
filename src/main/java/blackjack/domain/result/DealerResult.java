@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DealerResult {
-    public static final double NEGATIVE_VALUE = -1.0;
+    private static final double NEGATIVE_VALUE = -1.0;
     private final String name;
     private final Map<GameResult, List<ScoreResult>> result;
 
