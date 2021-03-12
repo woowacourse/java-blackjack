@@ -16,7 +16,7 @@ public class Dealer extends Participant {
     }
 
     public boolean canDraw() {
-        return state.getScore() <= GET_ONE_MORE_CARD_NORM;
+        return getScore() <= GET_ONE_MORE_CARD_NORM;
     }
 
     public int getResultCount(GameResult gameResult) {

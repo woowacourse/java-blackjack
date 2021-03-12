@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.blackjackgame.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
@@ -9,13 +8,11 @@ import blackjack.domain.state.State;
 
 public abstract class Participant {
 
-    protected final String name;
-    protected Money money;
-    protected State state;
+    private final String name;
+    private State state;
 
     public Participant(String name) {
         this.name = name;
-        this.money = new Money();
         this.state = new Hit();
     }
 
@@ -43,10 +40,6 @@ public abstract class Participant {
         return state.isBust();
     }
 
-    public void addMoney(Money money) {
-        this.money = this.money.add(money);
-    }
-
     public abstract boolean canDraw();
 
     public boolean isFinished() {
@@ -59,6 +52,10 @@ public abstract class Participant {
 
     public void stay() {
         this.state = state.stay();
+    }
+
+    public double earningRate(){
+        return state.earningRate();
     }
 
 }

@@ -7,9 +7,11 @@ import blackjack.domain.blackjackgame.Money;
 public class Player extends Participant {
 
     private GameResult gameResult;
+    private Money money;
 
     public Player(String name) {
         super(name);
+        this.money = new Money();
     }
 
     public GameResult getResult() {
@@ -17,7 +19,11 @@ public class Player extends Participant {
     }
 
     public boolean canDraw() {
-        return state.getScore() < BLACKJACK_NUMBER;
+        return getScore() < BLACKJACK_NUMBER;
+    }
+
+    public void addMoney(Money money) {
+        this.money = this.money.add(money);
     }
 
     public void matchGameResult(Dealer dealer) {
@@ -58,7 +64,7 @@ public class Player extends Participant {
             return money.profit(gameResult.earningRate());
         }
         if (this.isBust() || this.isBlackjack()) {
-            return money.profit(state.earningRate());
+            return money.profit(earningRate());
         }
         return money.profit(gameResult.earningRate());
     }
