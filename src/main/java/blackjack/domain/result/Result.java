@@ -30,11 +30,6 @@ public enum Result {
         return result;
     }
 
-//    public static Map<Result, Integer> countByResults(List<Result> results) {
-//        return Arrays.stream(values())
-//                .collect(toMap(result -> result, result -> result.count(results)));
-//    }
-
     public int count(List<Result> results) {
         return (int) results.stream()
                 .filter(this::equals)

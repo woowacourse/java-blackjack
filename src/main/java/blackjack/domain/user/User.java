@@ -32,10 +32,6 @@ public abstract class User {
         this.cards.combine(deck.popOne());
     }
 
-//    public void draw(Deck deck) {
-//        state = state.draw(deck.popOne().oneCard());
-//    }
-
     public boolean isBust() {
         return this.cards.isBust();
     }
