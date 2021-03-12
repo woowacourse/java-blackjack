@@ -28,22 +28,18 @@ public class BlackjackManager {
 
     public void hitOrStayCurrentPlayer(boolean isPlayerHit) {
         if (isPlayerHit) {
-            this.players.drawFirstOrderPlayer(this.cardDeck.draw());
+            this.players.drawCurrentTurnPlayer(this.cardDeck.draw());
             return;
         }
-        this.players.stayFirstOrderPlayer();
-    }
-
-    public void passTurnToNextPlayer() {
-        this.players.passTurnToNextPlayer();
+        this.players.stayCurrentTurnPlayer();
     }
 
     public boolean isFinishedCurrentPlayer() {
-        return this.players.isFinishedCurrentPlayer();
+        return this.players.isPlayerDone();
     }
 
     public boolean isFinishedAllPlayers() {
-        return this.players.isAllPlayerFinished();
+        return this.players.isAllPlayerDone();
     }
 
     public void hitDealer() {
@@ -67,14 +63,34 @@ public class BlackjackManager {
     }
 
     public Player getCurrentPlayer() {
-        return this.players.getFirstOrderPlayer();
+        return this.players.getCurrentTurnPlayer();
     }
 
     public String getCurrentPlayerName() {
-        return this.players.getFirstOrderPlayerName();
+        return this.players.getCurrentPlayerName();
     }
 
     public Dealer getDealer() {
         return this.dealer;
+    }
+
+    public boolean isBetAllPlayers() {
+        return this.players.isAllPlayerDone();
+    }
+
+    public String getCurrentBetPlayerName() {
+        return this.players.getCurrentPlayerName();
+    }
+
+    public void betCurrentPlayer(final double betAmount) {
+        this.players.betCurrentPlayer(betAmount);
+    }
+
+    public void passTurnToNextPlayer() {
+        this.players.passTurnToNextPlayer();
+    }
+
+    public void readyToPlay() {
+        this.players.resetIndex();
     }
 }

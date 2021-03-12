@@ -70,9 +70,11 @@ class PlayersTest {
         players.initDraw(getCustomCardDeck());
 
         players.drawCurrentTurnPlayer(Card.valueOf(Pattern.SPADE, Number.JACK));
+        players.passTurnToNextPlayer();
         players.drawCurrentTurnPlayer(Card.valueOf(Pattern.DIAMOND, Number.JACK));
+        players.passTurnToNextPlayer();
 
-        assertThat(players.isAllPlayerFinished()).isTrue();
+        assertThat(players.isAllPlayerDone()).isTrue();
     }
 
     private CardDeck getCustomCardDeck() {
@@ -91,7 +93,7 @@ class PlayersTest {
         players.initDraw(getCustomCardDeck());
 
         assertThat(players.getCurrentPlayerName()).isEqualTo("미립");
-        players.stayCurrentTurnPlayer();
+        players.passTurnToNextPlayer();
         assertThat(players.getCurrentPlayerName()).isEqualTo("현구막");
     }
 
@@ -107,24 +109,23 @@ class PlayersTest {
         assertThat(players.getCurrentTurnPlayer().getScoreToInt()).isEqualTo(15);
     }
 
-    @Test
-    @DisplayName("현재 차례 플레이어가 Stay 상태로 변화에 성공했는지 확인한다.")
-    void testPlayerStateToStay() {
-        List<String> name = Collections.singletonList("미립");
-        Players players = new Players(name);
-        players.initDraw(getDrawTestCardDeck());
-
-        assertThat(players.isAllPlayerFinished()).isFalse();
-
-        players.stayCurrentTurnPlayer();
-
-        assertThat(players.isAllPlayerFinished()).isTrue();
-    }
-
     private CardDeck getDrawTestCardDeck() {
         Card firstCard = Card.valueOf(Pattern.HEART, Number.TWO);
         Card secondCard = Card.valueOf(Pattern.HEART, Number.KING);
         return CardDeck.customDeck(Arrays.asList(firstCard, secondCard));
+    }
+
+    @Test
+    @DisplayName("Players의 커서(인덱스) 초기화 테스트")
+    void testPlayerStateToStay() {
+        List<String> names = Arrays.asList("미립", "현구막");
+        Players players = new Players(names);
+
+        assertThat(players.getCurrentPlayerName()).isEqualTo("미립");
+        players.passTurnToNextPlayer();
+        assertThat(players.getCurrentPlayerName()).isEqualTo("현구막");
+        players.resetIndex();
+        assertThat(players.getCurrentPlayerName()).isEqualTo("미립");
     }
 
     @Test
@@ -133,15 +134,17 @@ class PlayersTest {
         List<String> names = Arrays.asList("미립", "현구막");
         Players players = new Players(names);
 
-        assertThat(players.isAllPlayerBet()).isFalse();
+        assertThat(players.isAllPlayerDone()).isFalse();
 
         players.betCurrentPlayer(3_000);
+        players.passTurnToNextPlayer();
 
-        assertThat(players.isAllPlayerBet()).isFalse();
+        assertThat(players.isAllPlayerDone()).isFalse();
 
         players.betCurrentPlayer(3_000);
+        players.passTurnToNextPlayer();
 
-        assertThat(players.isAllPlayerBet()).isTrue();
+        assertThat(players.isAllPlayerDone()).isTrue();
     }
 
     @Test
@@ -150,8 +153,9 @@ class PlayersTest {
         List<String> names = Arrays.asList("미립", "현구막");
         Players players = new Players(names);
 
-        assertThat(players.getCurrentBetPlayerName()).isEqualTo("미립");
+        assertThat(players.getCurrentPlayerName()).isEqualTo("미립");
         players.betCurrentPlayer(3_000);
-        assertThat(players.getCurrentBetPlayerName()).isEqualTo("현구막");
+        players.passTurnToNextPlayer();
+        assertThat(players.getCurrentPlayerName()).isEqualTo("현구막");
     }
 }

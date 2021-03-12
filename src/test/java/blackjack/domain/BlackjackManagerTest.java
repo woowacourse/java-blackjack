@@ -56,35 +56,12 @@ public class BlackjackManagerTest {
     }
 
     @Test
-    @DisplayName("한 명의 플레이어 카드뽑기 완료 테스트")
-    void testOnePlayerCompleteHit() {
-        this.blackjackManager.initDrawCards();
-        this.blackjackManager.hitOrStayCurrentPlayer(true);
-        assertThat(this.blackjackManager.isFinishedCurrentPlayer()).isTrue();
-    }
-
-    @Test
-    @DisplayName("한 명의 플레이어가 stay 상태 변화 완료")
-    void testOnePlayerCompleteToStay() {
-        this.blackjackManager.initDrawCards();
-        this.blackjackManager.hitOrStayCurrentPlayer(false);
-        assertThat(this.blackjackManager.isFinishedCurrentPlayer()).isTrue();
-    }
-
-    @Test
     @DisplayName("플레이어 턴 넘기기 완료")
     void testPassTurnToNextPlayer() {
+        this.blackjackManager.initDrawCards();
         assertThat(this.blackjackManager.getCurrentPlayerName()).isEqualTo("pobi");
         this.blackjackManager.passTurnToNextPlayer();
         assertThat(this.blackjackManager.getCurrentPlayerName()).isEqualTo("jason");
-    }
-
-    @Test
-    @DisplayName("한 플레이어의 차례가 끝났는지 확인 테스트")
-    void testOnePlayerFinished() {
-        this.blackjackManager.initDrawCards();
-        this.blackjackManager.hitOrStayCurrentPlayer(true);
-        assertThat(this.blackjackManager.isFinishedCurrentPlayer()).isTrue();
     }
 
     @Test
@@ -94,6 +71,7 @@ public class BlackjackManagerTest {
         this.blackjackManager.hitOrStayCurrentPlayer(false);
         this.blackjackManager.passTurnToNextPlayer();
         this.blackjackManager.hitOrStayCurrentPlayer(false);
+        this.blackjackManager.passTurnToNextPlayer();
         assertThat(this.blackjackManager.isFinishedAllPlayers()).isTrue();
     }
 
@@ -124,5 +102,17 @@ public class BlackjackManagerTest {
         this.blackjackManager.hitDealer();
         assertThat(this.blackjackManager.isFinishedDealer()).isTrue();
         assertThat(this.blackjackManager.isDealerScoreOverThenLimit()).isTrue();
+    }
+
+    @Test
+    @DisplayName("모든 플레이어가 베팅을 완료했는지 확인")
+    void testBetAllPlayers() {
+        assertThat(this.blackjackManager.isBetAllPlayers()).isFalse();
+        this.blackjackManager.betCurrentPlayer(1_000);
+        this.blackjackManager.passTurnToNextPlayer();
+        assertThat(this.blackjackManager.isBetAllPlayers()).isFalse();
+        this.blackjackManager.betCurrentPlayer(1_000);
+        this.blackjackManager.passTurnToNextPlayer();
+        assertThat(this.blackjackManager.isBetAllPlayers()).isTrue();
     }
 }
