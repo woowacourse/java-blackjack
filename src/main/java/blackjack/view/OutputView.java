@@ -89,9 +89,7 @@ public class OutputView {
     }
 
     public static void showPlayersGameResult(final Map<Player, Result> playersResult) {
-        for (final Map.Entry<Player, Result> eachPlayerResult : playersResult.entrySet()) {
-            showPlayerGameResult(eachPlayerResult.getKey(), eachPlayerResult.getValue());
-        }
+        playersResult.forEach(OutputView::showPlayerGameResult);
     }
 
     private static void showPlayerGameResult(final Player player, final Result result) {
