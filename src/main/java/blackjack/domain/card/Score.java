@@ -55,7 +55,7 @@ public class Score implements Comparable<Score> {
 
     @Override
     public int compareTo(Score o) {
-        return score - o.score;
+        return Integer.compare(score, o.score);
     }
 
     @Override
