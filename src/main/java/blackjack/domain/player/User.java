@@ -24,6 +24,11 @@ public class User extends AbstractPlayer {
         this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
+    public User(Name name, BettingMoney bettingMoney) {
+        super(name);
+        this.bettingMoney = bettingMoney;
+    }
+
     public boolean isDrawStop() {
         return isDrawStop;
     }

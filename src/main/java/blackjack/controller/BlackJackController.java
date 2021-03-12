@@ -4,14 +4,17 @@ import blackjack.controller.dto.PlayerCardsDTO;
 import blackjack.controller.dto.PlayerResultDTO;
 import blackjack.controller.dto.UserNameDTO;
 import blackjack.controller.dto.UsersProfitDTO;
+import blackjack.domain.BettingMoney;
 import blackjack.domain.UserDrawContinue;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Name;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
 import blackjack.domain.player.strategy.AllCardsOpenStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +23,7 @@ public class BlackJackController {
 
     public void play() {
         cards = Cards.createAllShuffledCards();
-        Users users = new Users(InputView.getUsers());
+        Users users = getUsers();
         Dealer dealer = new Dealer();
         drawTwoCards(users, dealer);
         OutputView.printGiveTwoCardsMessage(getUserCardsDTOs(users), new PlayerCardsDTO(dealer));
@@ -29,6 +32,19 @@ public class BlackJackController {
         dealer.setCardOpenStrategy(new AllCardsOpenStrategy());
         OutputView.printFinalCardsMessage(getUserResultDTOs(users), new PlayerResultDTO(dealer));
         OutputView.printFinalProfits(new UsersProfitDTO(users.getProfits(dealer)));
+    }
+
+    private Users getUsers() {
+        List<User> users = new ArrayList<>();
+        List<Name> usersNames = new ArrayList<>();
+        List<String> usersNamesInput = InputView.getUsersNamesInput();
+        usersNamesInput.forEach(nameInput -> usersNames.add(new Name(nameInput)));
+        usersNames.forEach(name -> {
+            BettingMoney bettingMoney
+                = new BettingMoney(InputView.getBettingMoneyInput(new UserNameDTO(name)));
+            users.add(new User(name, bettingMoney));
+        });
+        return new Users(users);
     }
 
     private void drawTwoCards(Users users, Dealer dealer) {

@@ -16,6 +16,11 @@ public abstract class AbstractPlayer implements Player {
         this.name = new Name(name);
     }
 
+    public AbstractPlayer(Name name) {
+        cards = Cards.createEmptyCards();
+        this.name = name;
+    }
+
     @Override
     public void drawOneCard(final Card card) {
         cards.add(card);

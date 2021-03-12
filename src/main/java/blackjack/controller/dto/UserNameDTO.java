@@ -10,6 +10,10 @@ public class UserNameDTO {
         name = user.getName();
     }
 
+    public UserNameDTO(Name name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name.getName();
     }
