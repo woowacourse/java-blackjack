@@ -57,7 +57,7 @@ public class OutputView {
 
     public static void printGameResult(GameResult result) {
         System.out.println("\n## 최종 수익");
-        printWinningMoney(DEALER_NAME, result.getDealerWinningMoney());
+        printWinningMoney(DEALER_NAME.getName(), result.getDealerWinningMoney());
         for (PlayerResult playersResult : result.getPlayersResults()) {
             printWinningMoney(playersResult.getName(), playersResult.getWinningMoney());
         }

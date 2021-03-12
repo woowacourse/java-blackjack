@@ -7,17 +7,21 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    public static final String DEALER_NAME = "딜러";
+    public static final Name DEALER_NAME = new Name("딜러");
     public static final int BLACKJACK_VALUE = 21;
     private static final int DEALER_UNDER = 16;
 
     private final Deck deck;
 
     public Dealer(Hand hand) {
-        this(DEALER_NAME, hand, Deck.createShuffledDeck());
+        this(hand, Deck.createShuffledDeck());
     }
 
-    public Dealer(String name, Hand hand, Deck deck) {
+    public Dealer(Hand hand, Deck deck) {
+        this(DEALER_NAME, hand, deck);
+    }
+
+    private Dealer(Name name, Hand hand, Deck deck) {
         super(name, hand);
         this.deck = deck;
     }

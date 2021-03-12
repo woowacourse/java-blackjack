@@ -8,17 +8,17 @@ public class Player extends Participant {
 
     private Money bettingMoney = Money.ZERO;
 
-    public Player(String name, Hand cardHand) {
+    public Player(Name name, Hand cardHand) {
         super(name, cardHand);
     }
 
-    public Player(String name, Hand cardHand, int bettingMoney) {
+    public Player(Name name, Hand cardHand, int bettingMoney) {
         super(name, cardHand);
         this.bettingMoney = new Money(bettingMoney);
     }
 
     public static Player from(String name) {
-        return new Player(name, Hand.createEmptyHand());
+        return new Player(new Name(name), Hand.createEmptyHand());
     }
 
     public void setBettingMoney(Money bettingMoney) {

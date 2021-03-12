@@ -8,6 +8,7 @@ import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import java.util.Arrays;
 import java.util.Collections;
@@ -69,6 +70,6 @@ class GameResultTest {
     }
 
     private static List<Player> createPlayers(Hand hand) {
-        return Collections.singletonList(new Player("플레이어", hand, 10000));
+        return Collections.singletonList(new Player(new Name("joy"), hand, 10000));
     }
 }

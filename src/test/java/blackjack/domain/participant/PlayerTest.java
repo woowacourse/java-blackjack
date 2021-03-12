@@ -32,7 +32,7 @@ public class PlayerTest {
     @ParameterizedTest(name = "플레이어 카드 합계 산출")
     @MethodSource("getHandTotalTestcase")
     void getHandTotal(List<Card> cards, int expectedSum) {
-        Player player = new Player("joy", new Hand(cards));
+        Player player = new Player(new Name("joy"), new Hand(cards));
 
         assertThat(player.getScore()).isEqualTo(expectedSum);
     }
@@ -50,7 +50,7 @@ public class PlayerTest {
     @ParameterizedTest(name = "플레이어 패가 버스트했는지 검사")
     @MethodSource("isBustTestcase")
     void isBust(List<Card> cards, boolean expected) {
-        Player player = new Player("joy", new Hand(cards));
+        Player player = new Player(new Name("joy"), new Hand(cards));
 
         assertThat(player.isBust()).isEqualTo(expected);
     }

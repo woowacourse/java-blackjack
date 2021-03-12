@@ -4,7 +4,6 @@ import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Player;
 
 public class PlayerResult {
-    // todo Dto로 안만드려면 얘한테도 책임을 줘야할텐데...
 
     private final String name;
     private final Money winningMoney;

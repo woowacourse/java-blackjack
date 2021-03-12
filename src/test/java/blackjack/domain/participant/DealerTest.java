@@ -19,7 +19,7 @@ class DealerTest {
         Card card1 = new Card(Suit.CLOVER, Rank.ACE);
         Card card2 = new Card(Suit.DIAMOND, Rank.KING);
         Deck deck = new Deck(Arrays.asList(card1, card2));
-        Dealer dealer = new Dealer("딜러", Hand.createEmptyHand(), deck);
+        Dealer dealer = new Dealer(Hand.createEmptyHand(), deck);
         Player player = Player.from("플레이어");
 
         dealer.deal(player);
