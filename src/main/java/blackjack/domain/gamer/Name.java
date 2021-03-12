@@ -1,10 +1,9 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.utils.RegexUtil;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 public class Name {
-    private static final Pattern NAME_PATTERN = Pattern.compile("^[가-힣ㄱ-ㅎㅏ-ㅣ|a-z|A-Z]+");
     private final String name;
 
     public Name(String name) {
@@ -12,10 +11,10 @@ public class Name {
     }
 
     private String validateWord(String nameValue) {
-        if (!NAME_PATTERN.matcher(nameValue).matches()) {
-            throw new IllegalArgumentException();
+        if (RegexUtil.isAlphaOrKorean(nameValue)) {
+            return nameValue;
         }
-        return nameValue;
+        throw new IllegalArgumentException();
     }
 
     @Override

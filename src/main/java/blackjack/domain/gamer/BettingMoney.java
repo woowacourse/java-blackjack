@@ -1,12 +1,11 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.utils.RegexUtil;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 public class BettingMoney {
-    private static final Pattern NUMBER_PATTERN = Pattern.compile("-*\\d+");
 
     private final BigDecimal money;
 
@@ -23,10 +22,10 @@ public class BettingMoney {
     }
 
     private static long validateIsLong(String value) {
-        if (!NUMBER_PATTERN.matcher(value).matches()) {
-            throw new IllegalArgumentException();
+        if (RegexUtil.isLong(value)) {
+            return Long.parseLong(value);
         }
-        return Long.parseLong(value);
+        throw new IllegalArgumentException();
     }
 
 
