@@ -94,13 +94,13 @@ public class DealerTest {
     @Test
     @DisplayName("딜러는 플레이어들의 수익을 넘겨받아 자신의 수익을 계산한다")
     void calculateProfit() {
-        final Map<Player, Double> playerProfit = new HashMap<>();
-        playerProfit.put(new Player("joel"), 1000.0);
-        playerProfit.put(new Player("bada"), 2000.0);
-        playerProfit.put(new Player("jon"), 3000.0);
+        final Map<Player, Integer> playerProfit = new HashMap<>();
+        playerProfit.put(new Player("joel"), 1000);
+        playerProfit.put(new Player("bada"), 2000);
+        playerProfit.put(new Player("jon"), 3000);
 
         dealer.calculateProfit(playerProfit);
 
-        assertThat(dealer.getDealerMoney().getMoney()).isEqualTo(-6000.0);
+        assertThat(dealer.getDealerMoney().getMoney()).isEqualTo(-6000);
     }
 }

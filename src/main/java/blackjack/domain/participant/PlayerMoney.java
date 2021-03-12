@@ -14,7 +14,7 @@ public class PlayerMoney {
         }
     }
 
-    public double calculateProfit(final double profitRate) {
+    public int calculateProfit(final double profitRate) {
         final int profit = (int) (money * profitRate);
         calculateMoneyByProfit(profit);
         return profit;

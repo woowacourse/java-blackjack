@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import blackjack.domain.card.shuffle.RandomShuffleStrategy;
+import blackjack.domain.card.shuffle.ShuffleStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,14 +14,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardDeckFactoryTest {
     @Test
-    @DisplayName("CardDeckFactory 생성 테스트")
+    @DisplayName("CardDeckFactory의 make메서드를 호출하면, 카드덱 인스턴스가 생성된다.")
     void init() {
         final CardDeck cardDeck = CardDeckFactory.make(new NoShuffleStrategy());
         assertThat(cardDeck).isInstanceOf(CardDeck.class);
     }
 
     @Test
-    @DisplayName("섞기 전략에 대한 테스트")
+    @DisplayName("랜덤으로 섞은 카드덱을 반환하면, 그 안의 카드들이 모두 고유한지 검사한다.")
+    void randomShuffleStrategyTest() {
+        final CardDeck cardDeck = CardDeckFactory.make(new RandomShuffleStrategy());
+        assertThat(cardDeck.getCards()).doesNotHaveDuplicates();
+    }
+
+    @Test
+    @DisplayName("섞기 전략에 따라서 카드덱을 만들어내면, 그 안에 요소들을 검사한다")
     void shuffleStrategyTest() {
         final CardDeck cardDeck = CardDeckFactory.make(new NoShuffleStrategy());
         final List<Card> cards = new LinkedList<>();
@@ -28,7 +37,6 @@ public class CardDeckFactoryTest {
                     .map(suit -> new Card(letter, suit))
                     .forEach(cards::add);
         }
-
         assertEquals(cardDeck.getCards(), cards);
     }
 

@@ -119,7 +119,7 @@ public class OutputView {
         System.out.println(dealer.getName() + ": " + dealer.getDealerMoney().getMoney());
     }
 
-    public static void showPlayerProfit(final Map<Player, Double> playerProfit) {
+    public static void showPlayerProfit(final Map<Player, Integer> playerProfit) {
         for (Player player : playerProfit.keySet()) {
             System.out.println(player.getName() + ": " + playerProfit.get(player));
         }

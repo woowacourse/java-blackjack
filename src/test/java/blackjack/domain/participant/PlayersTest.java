@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.*;
-import blackjack.domain.result.Result;
+import blackjack.domain.card.shuffle.RandomShuffleStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -125,7 +125,7 @@ public class PlayersTest {
         dealer.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.SPADE));
         dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.SPADE));
 
-        final Map<Player, Double> allPlayerProfit = players.generateEveryPlayerProfit(dealer);
+        final Map<Player, Integer> allPlayerProfit = players.generateEveryPlayerProfit(dealer);
         assertThat(allPlayerProfit.get(player1)).isEqualTo(1000);
         assertThat(allPlayerProfit.get(player2)).isEqualTo(0);
         assertThat(allPlayerProfit.get(player3)).isEqualTo(-1000);

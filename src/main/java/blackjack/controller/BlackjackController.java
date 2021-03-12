@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardDeckFactory;
-import blackjack.domain.card.RandomShuffleStrategy;
+import blackjack.domain.card.shuffle.RandomShuffleStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -73,7 +73,7 @@ public class BlackjackController {
         OutputView.showCardResult(dealer);
         OutputView.showEveryPlayerCardResult(players);
 
-        final Map<Player, Double> playerProfit = players.generateEveryPlayerProfit(dealer);
+        final Map<Player, Integer> playerProfit = players.generateEveryPlayerProfit(dealer);
         dealer.calculateProfit(playerProfit);
         OutputView.showDealerProfit(dealer);
         OutputView.showPlayerProfit(playerProfit);

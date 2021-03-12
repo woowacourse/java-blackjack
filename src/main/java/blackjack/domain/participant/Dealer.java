@@ -32,7 +32,7 @@ public class Dealer extends Participant {
         return generateResultByScore(participant);
     }
 
-    public void calculateProfit(final Map<Player, Double> playerProfit) {
+    public void calculateProfit(final Map<Player, Integer> playerProfit) {
         for (Player player : playerProfit.keySet()) {
             dealerMoney.calculateByOpponentProfit(playerProfit.get(player));
         }

@@ -1,17 +1,17 @@
 package blackjack.domain.participant;
 
 public class DealerMoney {
-    private double money;
+    private int money;
 
     public DealerMoney() {
         money = 0;
     }
 
-    public void calculateByOpponentProfit(final double opponentProfit) {
+    public void calculateByOpponentProfit(final int opponentProfit) {
         money = money - opponentProfit;
     }
 
-    public double getMoney() {
+    public int getMoney() {
         return money;
     }
 }

@@ -32,7 +32,7 @@ public class Player extends Participant {
         return generateResultByScore(participant);
     }
 
-    public Double generateProfit(Dealer dealer) {
+    public Integer generateProfit(Dealer dealer) {
         final Result result = generateResult(dealer);
         return playerMoney.calculateProfit(result.getProfitRate());
     }

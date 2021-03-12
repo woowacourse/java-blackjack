@@ -67,8 +67,8 @@ public class Players {
         }
     }
 
-    public Map<Player, Double> generateEveryPlayerProfit(final Dealer dealer) {
-        final Map<Player, Double> playerProfit = new LinkedHashMap<>();
+    public Map<Player, Integer> generateEveryPlayerProfit(final Dealer dealer) {
+        final Map<Player, Integer> playerProfit = new LinkedHashMap<>();
         for (Player player : players) {
             playerProfit.put(player, player.generateProfit(dealer));
         }
