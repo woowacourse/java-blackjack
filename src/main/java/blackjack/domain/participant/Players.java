@@ -68,7 +68,7 @@ public class Players {
         return this.players.get(this.index);
     }
 
-    public boolean isPlayerDone() {
+    public boolean isCurrentPlayerDone() {
         return this.players.get(this.index).isFinished();
     }
 

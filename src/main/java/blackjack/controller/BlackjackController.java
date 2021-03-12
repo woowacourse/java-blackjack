@@ -51,7 +51,7 @@ public class BlackjackController {
     }
 
     private void hitOrStayCurrentPlayer(final BlackjackManager blackjackManager) {
-        if (!blackjackManager.isFinishedCurrentPlayer()) {
+        while (!blackjackManager.isFinishedCurrentPlayer()) {
             blackjackManager.hitOrStayCurrentPlayer(
                 InputView.getHitOrStay(blackjackManager.getCurrentPlayerName()));
             OutputView.printPlayerStatus(

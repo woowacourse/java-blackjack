@@ -35,7 +35,7 @@ public class BlackjackManager {
     }
 
     public boolean isFinishedCurrentPlayer() {
-        return this.players.isPlayerDone();
+        return this.players.isCurrentPlayerDone();
     }
 
     public boolean isFinishedAllPlayers() {
