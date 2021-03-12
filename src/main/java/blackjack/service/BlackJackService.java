@@ -8,12 +8,10 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.GameResult;
-import blackjack.view.InputView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackJackService {
 
@@ -35,11 +33,7 @@ public class BlackJackService {
     }
 
     public void initBettings() {
-        players = new Players(
-                players.getPlayersAsList()
-                        .stream()
-                        .map(player -> player.changeBetting(InputView.getBettings(player.getNameAsString())))
-                        .collect(Collectors.toList()));
+        players.initBettings();
     }
 
     public List<Participant> getParticipantsAsList() {
@@ -79,10 +73,6 @@ public class BlackJackService {
     }
 
     public void calculateProfits() {
-        players = new Players(gameResult.getGameResult()
-                .entrySet()
-                .stream()
-                .map(entry -> entry.getKey().changeProfit(entry.getValue()))
-                .collect(Collectors.toList()));
+        players.calculateProfits(gameResult);
     }
 }
