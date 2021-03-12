@@ -50,7 +50,7 @@ public class Dealer implements Participant {
 
     @Override
     public boolean isReceiveCard() {
-        int totalScore = state.getCards().getTotalScore(new BlackJackScoreRule());
+        int totalScore = state.getCards().sumTotalScore(new BlackJackScoreRule());
         return totalScore <= DRAW_BOUND_SCORE && !state.isEndState();
     }
 

@@ -3,6 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.rule.BlackJackScoreRule;
+import blackjack.domain.rule.ScoreRule;
 
 import java.util.List;
 
@@ -31,8 +32,13 @@ public class Hit implements State {
     }
 
     @Override
-    public double profit(State enemyState) {
+    public double calculateEarningRate(State enemyState) {
         return 0;
+    }
+
+    @Override
+    public int sumTotalScore(ScoreRule scoreRule) {
+        return cards.sumTotalScore(scoreRule);
     }
 
     @Override
@@ -42,7 +48,7 @@ public class Hit implements State {
 
     @Override
     public State changeState() {
-        int sum = cards.getTotalScore(new BlackJackScoreRule());
+        int sum = cards.sumTotalScore(new BlackJackScoreRule());
         if (sum == BLACK_JACK && isInitialState()) {
             return new BlackJack(cards.toCardList());
         }

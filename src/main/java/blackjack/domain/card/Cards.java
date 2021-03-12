@@ -10,7 +10,7 @@ public class Cards {
         this.cards = initialCard;
     }
 
-    public int getTotalScore(ScoreRule scoreRule) {
+    public int sumTotalScore(ScoreRule scoreRule) {
         return scoreRule.sumTotalScore(cards);
     }
 

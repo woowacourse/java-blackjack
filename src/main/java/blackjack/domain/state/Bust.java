@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.rule.ScoreRule;
 
 import java.util.List;
 
@@ -28,8 +29,13 @@ public class Bust implements State{
     }
 
     @Override
-    public double profit(State enemyState) {
+    public double calculateEarningRate(State enemyState) {
         return -1;
+    }
+
+    @Override
+    public int sumTotalScore(ScoreRule scoreRule) {
+        return cards.sumTotalScore(scoreRule);
     }
 
     @Override
