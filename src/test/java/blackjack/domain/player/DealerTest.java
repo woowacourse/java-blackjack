@@ -36,21 +36,14 @@ public class DealerTest {
         assertThat(!dealer.isFinished()).isFalse();
     }
 
-    @DisplayName("카드 반환 개수 전략패턴 적용 테스트 - 1개")
+    @DisplayName("카드 반환 개수 상태패턴 적용 테스트")
     @Test
     void oneCardOpenStrategy() {
         Card card = Card.valueOf(CardShape.DIAMOND, CardNumber.ACE);
         Dealer dealer = new Dealer(card, card);
-        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN));
         assertThat(dealer.getCards()).hasSize(1);
-    }
-
-    @DisplayName("카드 반환 개수 전략패턴 적용 테스트 - 3개")
-    @Test
-    void twoCardOpenStrategy() {
-        Card aceCard = Card.valueOf(CardShape.CLUB, CardNumber.ACE);
-        Dealer dealer = new Dealer(aceCard, aceCard);
-        dealer.drawRandomOneCard();
+        assertThat(dealer.getCards()).hasSize(2);
+        dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN));
         assertThat(dealer.getCards()).hasSize(3);
     }
 
