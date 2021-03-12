@@ -15,6 +15,7 @@ public abstract class Participant {
     protected final List<Card> cards;
     private final String name;
 
+
     public Participant(final String name) {
         validateEmptyName(name);
         this.name = name;

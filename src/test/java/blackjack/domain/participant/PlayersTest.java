@@ -15,7 +15,8 @@ public class PlayersTest {
     @DisplayName("Players가 잘 생성되는지 확인")
     void create() {
         final List<String> names = new ArrayList<>(Arrays.asList("bada", "pobi"));
-        assertThatCode(() -> new Players(names))
+        final List<Integer> bettingMoneys = new ArrayList<>(Arrays.asList(10000, 20000));
+        assertThatCode(() -> new Players(names, bettingMoneys))
                 .doesNotThrowAnyException();
     }
 
@@ -23,7 +24,8 @@ public class PlayersTest {
     @DisplayName("중복 이름이 들어올 때 익셉션을 날리는지 확인")
     void validateSameName() {
         final List<String> names = new ArrayList<>(Arrays.asList("bada", "bada"));
-        assertThatThrownBy(() -> new Players(names)).isInstanceOf(IllegalArgumentException.class)
+        final List<Integer> bettingMoneys = new ArrayList<>(Arrays.asList(10000, 20000));
+        assertThatThrownBy(() -> new Players(names, bettingMoneys)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(Players.SAME_NAME_ERROR);
     }
 }

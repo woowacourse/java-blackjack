@@ -37,13 +37,11 @@ public class OutputView {
         final String cardStatus = participant.showInitialCards().stream()
                 .map(OutputView::cardFormat)
                 .collect(Collectors.joining(", "));
-        System.out.printf(CARD_STATUS_FORMAT, participant.getName(), cardStatus + NEWLINE);
+        System.out.printf(CARD_STATUS_FORMAT + NEWLINE, participant.getName(), cardStatus);
     }
 
     private static void showPlayersCard(final List<Player> players) {
-        for (final Player player : players) {
-            showInitialCard(player);
-        }
+        players.forEach(OutputView::showInitialCard);
     }
 
     public static void showPlayerCard(final Player player) {

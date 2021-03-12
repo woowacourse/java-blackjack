@@ -24,8 +24,9 @@ public class BlackjackController {
 
     private Players playerSetUp() {
         final List<String> names = InputView.requestName();
+        final List<Integer> bettingMoneys = InputView.requestBettingMoney(names);
         try {
-            return new Players(names);
+            return new Players(names, bettingMoneys);
         } catch (IllegalArgumentException e) {
             OutputView.showErrorMessage(e.getMessage());
             return playerSetUp();

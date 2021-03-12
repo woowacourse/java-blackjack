@@ -20,13 +20,13 @@ public class ParticiapantTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        player = new Player("bada");
+        player = new Player("bada", 10000);
     }
 
     @Test
     @DisplayName("player 이름의 빈값을 잘 검증하는지 확인")
     void validateEmptyName() {
-        assertThatThrownBy(() -> new Player("")).isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> new Player("", 10000)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(Participant.EMPTY_NAME_ERROR);
     }
 

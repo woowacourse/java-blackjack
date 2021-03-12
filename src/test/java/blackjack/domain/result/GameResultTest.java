@@ -23,7 +23,7 @@ public class GameResultTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        player = new Player("bada");
+        player = new Player("bada", 10000);
         players.add(player);
         player.receiveOneCard(new Card(CardNumber.ACE, CardType.CLOVER));
         player.receiveOneCard(new Card(CardNumber.JACK, CardType.CLOVER));
