@@ -27,10 +27,4 @@ class StateFactoryTest {
         State state = StateFactory.draw(SPADE_ACE, SPADE_ACE);
         assertThat(state).isInstanceOf(Hit.class);
     }
-
-    @DisplayName("")
-    @Test
-    void earningRateTest() {
-
-    }
 }
