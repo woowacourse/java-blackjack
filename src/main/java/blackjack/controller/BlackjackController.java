@@ -80,22 +80,10 @@ public class BlackjackController {
 
     private void showFinalResult(Game game) {
         OutputView.printFinalCardInfo(game.getDealer(), game.getPlayers());
-        game.comparePlayersCardsWithDealer();
-        printWinOrLoseResult(game);
-    }
-
-    private void printWinOrLoseResult(Game game) {
-        Dealer dealer = game.getDealer();
-        List<Player> players = game.getPlayers();
-        OutputView.printWinOrLoseResult(dealer, game.getDealerResult());
-        for (Player player : players) {
-            OutputView.printWinOrLoseResult(player, player.getGameResult());
-        }
     }
 
     public void printFinalRevenue(Game game) {
         game.calculateGameResult();
-
         Dealer dealer = game.getDealer();
         List<Player> players = game.getPlayers();
         OutputView.printFinalRevenue(dealer, game.dealerRevenue());

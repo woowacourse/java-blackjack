@@ -79,12 +79,6 @@ public class Game {
         return cnt;
     }
 
-    public void comparePlayersCardsWithDealer() {
-        for (Player player : players) {
-            player.fight(dealer);
-        }
-    }
-
     public void calculateGameResult() {
         for (Player player : players) {
             player.updateProfitRatio(dealer);
@@ -99,14 +93,6 @@ public class Game {
         return players.stream()
                       .mapToDouble(Player::revenue)
                       .sum();
-    }
-
-    public GameResult getDealerResult() {
-        GameResult totalPlayerResult = new GameResult();
-        for (Player player : players) {
-            totalPlayerResult.plus(player.getGameResult());
-        }
-        return totalPlayerResult.reverse();
     }
 
     public List<Player> getPlayers() {

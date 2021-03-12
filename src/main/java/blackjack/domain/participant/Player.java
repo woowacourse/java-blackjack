@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 public class Player extends Participant {
-    private final GameResult gameResult = new GameResult();
     private Money money;
     private double profitRatio;
 
@@ -17,41 +16,6 @@ public class Player extends Participant {
         this.money = money;
     }
 
-    public void fight(Dealer dealer) {
-        if (isBust()) {
-            gameResult.lose();
-            return;
-        }
-        if (isBlackJack()) {
-            if (dealer.isBlackJack()) {
-                gameResult.draw();
-                return;
-            }
-            gameResult.win();
-            return;
-        }
-        compareValue(dealer);
-    }
-
-    private void compareValue(Dealer dealer) {
-        if (dealer.isBust()) {
-            gameResult.win();
-            return;
-        }
-        if (this.cardResult() > dealer.cardResult()) {
-            gameResult.win();
-            return;
-        }
-        if (this.cardResult() < dealer.cardResult()) {
-            gameResult.lose();
-            return;
-        }
-        gameResult.draw();
-    }
-
-    public GameResult getGameResult() {
-        return gameResult;
-    }
 
     public void updateProfitRatio(Dealer dealer) {
         if (isDrawWith(dealer)) {

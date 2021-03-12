@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.GameResult;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
@@ -15,7 +14,6 @@ public class OutputView {
     public static final String CARD_INFO_MESSAGE = "%s카드: %s";
     public static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     public static final String RESULT_PREFIX = " - 결과 : %d" + LINE_SEPARATOR;
-    public static final String NAME_PREFIX = "%s: ";
     public static final String GAME_RESULT_MESSAGE = "%d승 %d무 %d패" + LINE_SEPARATOR;
     public static final String REVENUE_FORMAT = "%s: %d" + LINE_SEPARATOR;
 
@@ -72,19 +70,6 @@ public class OutputView {
     private static void printFinalCardInfo(Participant participant) {
         printCardInfo(participant);
         System.out.printf(RESULT_PREFIX, participant.cardResult());
-    }
-
-    public static void printWinOrLoseResult(Participant participant, GameResult gameResult) {
-        String result = gameResultToString(gameResult);
-        System.out.printf(NAME_PREFIX + result, participant.getName());
-    }
-
-    private static String gameResultToString(GameResult gameResult) {
-        int win = gameResult.getWinCount();
-        int draw = gameResult.getDrawCount();
-        int lose = gameResult.getLoseCount();
-
-        return String.format(GAME_RESULT_MESSAGE, win, draw, lose);
     }
 
     public static void printFinalRevenue(Participant participant, double revenue) {
