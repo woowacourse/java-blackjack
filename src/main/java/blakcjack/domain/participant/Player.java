@@ -13,11 +13,6 @@ public class Player extends Participant {
 		this.bettingAmount = bettingAmount;
 	}
 
-	@Override
-	public Cards getInitialHand() {
-		return cards;
-	}
-
 	public boolean hasAffordableScoreForHit() {
 		return cards.isScoreLowerThanBlackjackScore();
 	}
@@ -25,5 +20,10 @@ public class Player extends Participant {
 	public Money calculateProfit(final Outcome outcome) {
 		final float earningRate = outcome.getEarningRate();
 		return bettingAmount.calculateProfit(earningRate);
+	}
+
+	@Override
+	public Cards getInitialHand() {
+		return cards.getFirstTwoCards();
 	}
 }

@@ -1,8 +1,15 @@
 package blakcjack.domain.card;
 
+import blakcjack.domain.money.Money;
+import blakcjack.domain.name.Name;
+import blakcjack.domain.participant.Dealer;
+import blakcjack.domain.participant.Participant;
+import blakcjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,44 +31,21 @@ class CardsTest {
 		assertThat(cards.calculateScore()).isEqualTo(19);
 	}
 
-	@DisplayName("카드들 중에서 첫번째 인덱스의 카드를 제대로 뽑아 내는지")
+	@DisplayName("카드들 중에서 처음 1장을 반환해주는지")
 	@Test
 	void getFirstCard_multipleCards_returnCardAtFirstPosition() {
-		assertThat(cards.getFirstCard()).isEqualTo(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+		Cards expectedCards = new Cards();
+		expectedCards.add(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+		assertThat(cards.getFirstCard()).isEqualTo(expectedCards);
 	}
 
-	@DisplayName("카드가 2장만 있을 때는 true 그 외에는 false 반환 하는지")
+	@DisplayName("카드들 중에서 처음 2장을 반환해주는지")
 	@Test
-	void haveOnlyTwoCards_twoCards_returnTrue() {
-		Cards twoCards = createCustomCards(
-				Card.of(CardSymbol.CLUB, CardNumber.ACE),
-				Card.of(CardSymbol.CLUB, CardNumber.FIVE));
-
-		Cards oneCards = createCustomCards(
-				Card.of(CardSymbol.CLUB, CardNumber.ACE));
-
-		Cards threeCards = createCustomCards(
-				Card.of(CardSymbol.CLUB, CardNumber.ACE),
-				Card.of(CardSymbol.CLUB, CardNumber.FIVE),
-				Card.of(CardSymbol.CLUB, CardNumber.SIX));
-
-		assertThat(twoCards.haveOnlyTwoCards()).isTrue();
-		assertThat(oneCards.haveOnlyTwoCards()).isFalse();
-		assertThat(threeCards.haveOnlyTwoCards()).isFalse();
-	}
-
-	@DisplayName("카드의 총 점수가 21 일 때 true를 반환 해주는지")
-	@Test
-	void haveBlackjackScore() {
-		Cards blackjackCards = createCustomCards(
-				Card.of(CardSymbol.CLUB, CardNumber.KING),
-				Card.of(CardSymbol.CLUB, CardNumber.ACE));
-		Cards nonBlackJackButScoring21Cards = createCustomCards(
-				Card.of(CardSymbol.CLUB, CardNumber.KING),
-				Card.of(CardSymbol.CLUB, CardNumber.JACK),
-				Card.of(CardSymbol.CLUB, CardNumber.ACE));
-		assertThat(blackjackCards.haveBlackjackScore()).isTrue();
-		assertThat(nonBlackJackButScoring21Cards.haveBlackjackScore()).isTrue();
+	void getFirstTwoCards_multipleCards_returnCardsAtFirstAndSecondPosition() {
+		Cards expectedCards = new Cards();
+		expectedCards.add(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+		expectedCards.add(Card.of(CardSymbol.HEART, CardNumber.ACE));
+		assertThat(cards.getFirstTwoCards()).isEqualTo(expectedCards);
 	}
 
 	private Cards createCustomCards(final Card... cards) {
@@ -70,5 +54,16 @@ class CardsTest {
 			customCards.add(card);
 		}
 		return customCards;
+	}
+
+	private Deck createCustomDeck(final Card... cards) {
+		return new Deck(Arrays.asList(cards));
+	}
+
+	private void drawCards(final Deck deck, final Participant... participants) {
+		for (Participant participant : participants) {
+			participant.drawOneCardFrom(deck);
+			participant.drawOneCardFrom(deck);
+		}
 	}
 }

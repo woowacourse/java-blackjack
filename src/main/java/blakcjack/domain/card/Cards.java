@@ -8,7 +8,8 @@ import java.util.Objects;
 public class Cards {
 	public static final int BLACKJACK_VALUE = 21;
 	private static final int ACE_ADDITIONAL_VALUE = 10;
-	private static final int FIRST_CARD_POSITION = 0;
+	private static final int FIRST_CARD_INDEX = 0;
+	private static final int SECOND_CARD_INDEX = 1;
 	private static final int BLACKJACK_CARD_COUNT = 2;
 
 	private final List<Card> cards = new ArrayList<>();
@@ -21,19 +22,27 @@ public class Cards {
 		cards.add(card);
 	}
 
-	public Card getFirstCard() {
-		return cards.get(FIRST_CARD_POSITION);
+	public Cards getFirstTwoCards() {
+		Cards hand = getFirstCard();
+		hand.add(cards.get(SECOND_CARD_INDEX));
+		return hand;
+	}
+
+	public Cards getFirstCard() {
+		Cards hand = new Cards();
+		hand.add(cards.get(FIRST_CARD_INDEX));
+		return hand;
 	}
 
 	public boolean isBlackjack() {
 		return haveOnlyTwoCards() && haveBlackjackScore();
 	}
 
-	public boolean haveOnlyTwoCards() {
+	private boolean haveOnlyTwoCards() {
 		return cards.size() == BLACKJACK_CARD_COUNT;
 	}
 
-	public boolean haveBlackjackScore() {
+	private boolean haveBlackjackScore() {
 		return calculateScore() == BLACKJACK_VALUE;
 	}
 

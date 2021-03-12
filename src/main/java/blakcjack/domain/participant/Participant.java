@@ -14,8 +14,6 @@ public abstract class Participant {
 		this.name = name;
 	}
 
-	public abstract Cards getInitialHand();
-
 	public Cards getCards() {
 		return cards;
 	}
@@ -47,6 +45,8 @@ public abstract class Participant {
 	public boolean isBlackJack() {
 		return cards.isBlackjack();
 	}
+
+	public abstract Cards getInitialHand();
 
 	@Override
 	public boolean equals(Object o) {
