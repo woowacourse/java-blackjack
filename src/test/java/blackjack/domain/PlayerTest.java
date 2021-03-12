@@ -34,6 +34,10 @@ public class PlayerTest {
         new Card(Symbol.TEN, Shape.HEART),
         new Card(Symbol.TWO, Shape.HEART)
     );
+    private static final List<Card> CARDS_SCORE_BLACKJACK = Arrays.asList(
+            new Card(Symbol.ACE, Shape.HEART),
+            new Card(Symbol.KING, Shape.HEART)
+    );
 
     static Stream<Arguments> generateData() {
         return Stream.of(
@@ -73,12 +77,41 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("딜러가 21을 초과하면, 무조건 플레이어 승리")
+    @DisplayName("딜러가 21을 초과할 때 플레이어가 21을 초과하면 플레이어 패배")
     public void judgeResult_PlayerAndDealerScoreOver21() {
         Player player = new Player("json");
         Dealer dealer = new Dealer();
         player.receiveCards(new Cards(CARDS_SCORE_22));
         dealer.receiveCards(new Cards(CARDS_SCORE_22));
-        assertThat(player.judgeResult(dealer)).isEqualTo(Result.WIN);
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.LOSE);
+    }
+
+    @Test
+    @DisplayName("딜러가 21을 초과할 때 플레이어가 21을 초과하지 않으면 플레이어 승")
+    public void judgeResult_DealerScoreOver21() {
+        Player player = new Player("json");
+        Dealer dealer = new Dealer();
+        player.receiveCards(new Cards(CARDS_SCORE_19));
+        dealer.receiveCards(new Cards(CARDS_SCORE_22));
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭이고, 딜러가 블랙잭이 아닐 경우에 게임 결과는 '블랙잭'")
+    public void judgeResult_Blackjack() {
+        Player player = new Player("json");
+        Dealer dealer = new Dealer();
+        player.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
+        dealer.receiveCards(new Cards(CARDS_SCORE_22));
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.BLACKJACK);
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러 둘 다 블랙잭인 경우, 게임 결과는 '무승부'")
+    public void judgeResult_BothOfThemBlackjack() {
+        Player player = new Player("json");
+        Dealer dealer = new Dealer();
+        player.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
+        dealer.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.DRAW);
     }
 }

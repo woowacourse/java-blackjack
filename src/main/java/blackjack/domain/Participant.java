@@ -7,6 +7,8 @@ public abstract class Participant {
 
     private static final String INVALID_PARTICIPANT_NAME = "플레이어 이름은 양쪽 공백을 제외한 1글자 이상이어야 합니다.";
     private static final int INVALID_NAME_LENGTH = 0;
+    private static final int BLACKJACK = 21;
+    private static final int TWO_CARDS = 2;
 
     private final String name;
     private final Cards cards;
@@ -54,6 +56,10 @@ public abstract class Participant {
 
     public void receiveCards(Cards receivedCards) {
         cards.addAll(receivedCards);
+    }
+
+    public boolean isBlackjack() {
+        return calculateScore() == BLACKJACK && cards.size() == TWO_CARDS;
     }
 
     public abstract boolean isAbleToReceiveCard();

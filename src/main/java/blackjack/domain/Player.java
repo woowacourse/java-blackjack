@@ -31,13 +31,22 @@ public class Player extends Participant {
         if (isDealerWin(dealerScore, playerScore)) {
             return Result.LOSE;
         }
-        if (dealerScore <= MAXIMUM_SCORE_LIMIT && playerScore == dealerScore) {
+        if (isDraw(dealerScore, playerScore, dealer)) {
             return Result.DRAW;
+        }
+        if (isBlackjack()) {
+            return Result.BLACKJACK;
         }
         return Result.WIN;
     }
 
     private boolean isDealerWin(int dealerScore, int playerScore) {
-        return dealerScore <= MAXIMUM_SCORE_LIMIT && playerScore > dealerScore;
+        return playerScore > MAXIMUM_SCORE_LIMIT
+                || (playerScore < dealerScore && dealerScore <= MAXIMUM_SCORE_LIMIT);
+    }
+
+    private boolean isDraw(int dealerScore, int playerScore, Dealer dealer) {
+        return (dealerScore <= MAXIMUM_SCORE_LIMIT && playerScore == dealerScore)
+                || (this.isBlackjack() && dealer.isBlackjack());
     }
 }
