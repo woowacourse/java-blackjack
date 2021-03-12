@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackResult;
+import blackjack.domain.ProfitResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import blackjack.domain.gamer.Dealer;
@@ -10,9 +11,7 @@ import blackjack.domain.gamer.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
@@ -21,6 +20,7 @@ public class BlackJackGame {
 
     public void start() {
         Players players = registerPlayers();
+        ProfitResult profitResult = new ProfitResult(inputBettingMoney(players));
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
         cardDeck.shuffleCard();
@@ -29,7 +29,7 @@ public class BlackJackGame {
         firstDraw(participants, cardDeck);
         playerTurn(players, cardDeck);
         dealerTurn(dealer, cardDeck);
-        showResult(players, dealer);
+        showResult(players, dealer, profitResult);
     }
 
     private Players registerPlayers() {
@@ -48,6 +48,16 @@ public class BlackJackGame {
                 .stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
+    }
+
+    private Map<String, Double> inputBettingMoney(Players players) {
+        Map<String, Double> result = new HashMap<>();
+        for (Player player : players.getPlayers()) {
+            OutputView.printAskBettingMoney(player.getName());
+            result.put(player.getName(), InputView.inputMoney());
+        }
+
+        return result;
     }
 
     private List<Participants> generateAllParticipants(Players players, Dealer dealer) {
@@ -105,9 +115,10 @@ public class BlackJackGame {
         }
     }
 
-    private void showResult(Players players, Dealer dealer) {
+    private void showResult(Players players, Dealer dealer, ProfitResult profitResult) {
         OutputView.showAllCards(players, dealer);
         BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(dealer));
-        OutputView.showFinalResult(blackJackResult);
+        profitResult.calculateProfit(blackJackResult.getResult(), players);
+        OutputView.showFinalResult(profitResult, profitResult.calculateDealerProfit());
     }
 }

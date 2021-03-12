@@ -37,7 +37,6 @@ public class ProfitResultTest {
     void calculateProfitTest() {
         assertThat(profitResult.getResult().get("pika")).isEqualTo(15000.0);
         assertThat(profitResult.getResult().get("air")).isEqualTo(-20000.0);
-
     }
 
     @Test

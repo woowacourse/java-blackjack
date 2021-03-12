@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.MatchResult;
+import blackjack.domain.ProfitResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
@@ -20,7 +21,8 @@ public class OutputView {
     private static final String CURRENT_CARD_FORM = "%s카드 : %s";
     private static final String ASK_DRAW_CARD_FORM = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String CARD_AND_SCORE_RESULT = "%s - 결과 : %d";
-    private static final String PLAYER_RESULT_FORM = "%s: %s";
+    private static final String ASK_BETTING_MONEY = "%s의 배팅 금액은?";
+    private static final String PROFIT_RESULT_FORM = "%s: %.0f";
 
     private OutputView() {
 
@@ -72,23 +74,21 @@ public class OutputView {
         }
     }
 
-    public static void showFinalResult(BlackJackResult blackJackResult) {
-        System.out.println("\n## 최종 승패");
+    public static void showFinalResult(ProfitResult profitResult, double dealerProfit) {
+        System.out.println("\n## 최종 수익");
 
-        Map<MatchResult, Integer> dealerResult = blackJackResult.getDealerResult();
-        System.out.printf("딜러: ");
-        dealerResult.entrySet().stream()
-                .filter(entrySet -> entrySet.getValue() != 0)
-                .forEach(entrySet -> System.out.printf(entrySet.getValue() + entrySet.getKey().getResult()));
-
-        System.out.println();
-        blackJackResult.getResult()
-                .forEach((key, value) -> System.out.printf((PLAYER_RESULT_FORM) + "%n", key.getName(), value.getResult()));
+        System.out.printf("딜러: %.0f" + "%n", dealerProfit);
+        profitResult.getResult()
+                    .forEach((playerName, profit) -> System.out.printf((PROFIT_RESULT_FORM) + "%n", playerName, profit));
     }
 
     private static String getCardsMessageForm(Participants participants) {
         String cardsName = participants.getTakenCards().getCards().stream().map(OutputView::cardForm).collect(Collectors.joining(","));
 
         return String.format(CURRENT_CARD_FORM, participants.getName(), cardsName);
+    }
+
+    public static void printAskBettingMoney(String name) {
+        System.out.printf((ASK_BETTING_MONEY) + "%n", name);
     }
 }
