@@ -22,19 +22,19 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static List<Double> requestBettingMoney(final List<String> playerNames) {
-        final List<Double> bettingMoney = new ArrayList<>();
+    public static List<Integer> requestBettingMoney(final List<String> playerNames) {
+        final List<Integer> bettingMoney = new ArrayList<>();
         for (String playerName : playerNames) {
             bettingMoney.add(requestSinglePlayerBettingMoney(playerName));
         }
         return bettingMoney;
     }
 
-    private static double requestSinglePlayerBettingMoney(final String playerName) {
+    private static int requestSinglePlayerBettingMoney(final String playerName) {
         System.out.printf(NEWLINE + REQUEST_BETTING_MONEY_MESSAGE + NEWLINE, playerName);
         final String playerInputMoney = scanner.nextLine();
         try {
-            return Double.parseDouble(playerInputMoney);
+            return Integer.parseInt(playerInputMoney);
         } catch (NumberFormatException e) {
             OutputView.showErrorMessage("베팅 금액을 숫자로 입력하세요.");
             return requestSinglePlayerBettingMoney(playerName);

@@ -9,7 +9,7 @@ public class Player extends Participant {
         this(name, new PlayerMoney(0));
     }
 
-    public Player(final String name, final double playerMoney) {
+    public Player(final String name, final int playerMoney) {
         this(name, new PlayerMoney(playerMoney));
     }
 

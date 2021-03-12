@@ -24,7 +24,7 @@ public class Players {
         return new Players(players);
     }
 
-    public static Players of(final List<String> playerName, final List<Double> playerMoney) {
+    public static Players of(final List<String> playerName, final List<Integer> playerMoney) {
         validateDuplicate(playerName);
         final int playerCount = validateSize(playerName.size(), playerMoney.size());
 

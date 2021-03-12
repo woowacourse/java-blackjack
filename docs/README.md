@@ -57,7 +57,7 @@
 - [x] 매직넘버 상수화
 - [x] Dealer와 Player의 중복코드 해결
 - [x] Money에 대한 유효성 검사 해당 클래스로 옮기기
-- [ ] Money에 관련된 자료형 double에서 int로 바꾸기
+- [x] Money에 관련된 자료형 double에서 int로 바꾸기
 - [ ] 게임의 최대 인원 수 8명으로 제한하기
 - [ ] DeckFactory 적용해보기
 

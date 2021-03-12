@@ -25,7 +25,7 @@ public class BlackjackController {
     private Players playerSetUp() {
         try {
             final List<String> playerName = InputView.requestName();
-            final List<Double> playerMoney = InputView.requestBettingMoney(playerName);
+            final List<Integer> playerMoney = InputView.requestBettingMoney(playerName);
             return Players.of(playerName, playerMoney);
         } catch (IllegalArgumentException e) {
             OutputView.showErrorMessage(e.getMessage());
