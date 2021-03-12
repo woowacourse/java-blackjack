@@ -9,21 +9,19 @@ public class Application {
     public static final String DEALER_NAME = "딜러";
 
     public static void main(String[] args) {
-
         final Game game = new Game(InputView.requestNameAndMoney());
         OutputView.printParticipantsCards(game.getProcessDto());
 
         simulate(game);
-        //todo: 메소드로 분리
-        OutputView.printCardsResult(game.getProcessDto());
-        OutputView.printOutcome(game.getResultDto());
-        OutputView.printProfit(game.getResultDto());
+
+        printFinalView(game);
     }
 
     private static void simulate(Game game) {
         for (Player player : game.getPlayers()) {
             turnForPlayer(game, player);
         }
+
         game.turnForDealer();
         OutputView.printDealerGetCard();
     }
@@ -33,6 +31,12 @@ public class Application {
             .requestOneMoreCard(player.getName().toString())) {
             OutputView.printCards(game.turnForPlayer(player));
         }
+    }
+
+    private static void printFinalView(Game game) {
+        OutputView.printCardsResult(game.getProcessDto());
+        OutputView.printOutcome(game.getResultDto());
+        OutputView.printProfit(game.getResultDto());
     }
 
 }
