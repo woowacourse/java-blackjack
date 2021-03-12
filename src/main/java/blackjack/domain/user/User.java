@@ -16,8 +16,8 @@ public class User extends Participant {
         }
     }
 
-    public void stopUser() {
-        status = Status.STOP;
+    public void stayUser() {
+        status = Status.STAY;
     }
 
     public boolean canContinueGame() {

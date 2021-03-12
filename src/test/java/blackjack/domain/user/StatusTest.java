@@ -27,7 +27,7 @@ public class StatusTest {
         hand3.add(new Card(Suit.DIAMOND, Value.SEVEN));
 
         assertThat(Status.of(hand1)).isEqualTo(Status.BLACKJACK);
-        assertThat(Status.of(hand2)).isEqualTo(Status.PLAYING);
+        assertThat(Status.of(hand2)).isEqualTo(Status.Hit);
         assertThat(Status.of(hand3)).isEqualTo(Status.BURST);
     }
 }

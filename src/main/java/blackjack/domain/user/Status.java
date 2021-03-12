@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.function.IntPredicate;
 
 public enum Status {
-    PLAYING(true, i -> i < Status.BLACKJACK_SCORE),
-    BLACKJACK(false, i -> i == Status.BLACKJACK_SCORE),
+    Hit(true, i -> i < Status.BLACKJACK_SCORE),
+    STAY(false, i -> i == Status.BLACKJACK_SCORE),
     BURST(false, i -> i > Status.BLACKJACK_SCORE),
-    STOP(false, i -> false);
+    BLACKJACK(false, i -> false);
 
     public static final int BLACKJACK_SCORE = 21;
     private static final String NO_MATCH_CONDITION_ERROR_MSG = "점수 조건에 맞는 Status가 없습니다.";
@@ -30,6 +30,7 @@ public enum Status {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_CONDITION_ERROR_MSG));
     }
+
     public boolean canContinueGame() {
         return canContinueGame;
     }

@@ -88,7 +88,7 @@ public class BlackjackGameController {
             blackjackGame.drawCardToUser(user);
             return;
         }
-        user.stopUser();
+        user.stayUser();
     }
 
     private static void printUserCurrentCards(User currentUser) {
