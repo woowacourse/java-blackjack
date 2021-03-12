@@ -11,7 +11,7 @@ public class Stay extends Finish {
 
     @Override
     public BigDecimal getEarningRates(State dealerState) {
-        if (dealerState.calculateScore() > cards().calculateScore()) {
+        if (dealerState.calculateScore() > cards().calculateScore() && !dealerState.cards().isBust()) {
             return new BigDecimal("-1");
         }
 

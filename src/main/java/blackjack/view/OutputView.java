@@ -5,8 +5,6 @@ import blackjack.view.dto.PlayerStatusDto;
 import blackjack.view.dto.RoundStatusDto;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class OutputView {

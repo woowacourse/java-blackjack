@@ -1,17 +1,20 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.state.*;
+import blackjack.domain.state.Finish;
+import blackjack.domain.state.Running;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Arrays;
+import java.math.BigDecimal;
 
 import static blackjack.domain.state.CardFactory.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
     public static final int GAME_OVER_SCORE = 21;
@@ -80,5 +83,15 @@ class PlayerTest {
         Player player = new Player(draw, "pobi");
 
         assertThat(player.getState()).isInstanceOf(Finish.class);
+    }
+
+    @DisplayName("배팅금액이 양수가 아니면 에러가 발생한다.")
+    @Test
+    void bettingMoneyTest() {
+        State state = StateFactory.draw(SPADE_TEN, HEART_TEN);
+
+        assertThatThrownBy(() -> new Player(state, "pobi", new BigDecimal("-1")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("양수의 금액만 가능합니다.");
     }
 }

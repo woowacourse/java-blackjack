@@ -9,7 +9,10 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Users;
 
-import java.util.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Round {
@@ -26,7 +29,7 @@ public class Round {
         users.add(new Dealer(drawTwoCard(deck)));
 
         List<AbstractUser> players = playerNames.stream()
-                .map(playerName -> new Player(drawTwoCard(deck), playerName))
+                .map(playerName -> new Player(drawTwoCard(deck), playerName, new BigDecimal("10000")))
                 .collect(Collectors.toList());
         users.addAll(players);
 

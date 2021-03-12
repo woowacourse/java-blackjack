@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.state.State;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -11,8 +12,14 @@ public class Player extends AbstractUser {
 
     private final String name;
 
+    public Player(State state, String name, BigDecimal bettingMoney) {
+        super(state, bettingMoney);
+        validate(name);
+        this.name = name;
+    }
+
     public Player(State state, String name) {
-        super(state);
+        super(state, new BigDecimal("0"));
         validate(name);
         this.name = name;
     }
