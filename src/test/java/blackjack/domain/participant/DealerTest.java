@@ -20,7 +20,7 @@ class DealerTest {
         Card card2 = new Card(Suit.DIAMOND, Rank.KING);
         Deck deck = new Deck(Arrays.asList(card1, card2));
         Dealer dealer = new Dealer(Hand.createEmptyHand(), deck);
-        Player player = Player.from("플레이어");
+        Player player = Player.from(new Name("joy"), Money.ZERO);
 
         dealer.deal(player);
         assertThat(player.getCards()).containsExactly(card1);

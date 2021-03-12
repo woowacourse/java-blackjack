@@ -70,6 +70,6 @@ class GameResultTest {
     }
 
     private static List<Player> createPlayers(Hand hand) {
-        return Collections.singletonList(new Player(new Name("joy"), hand, 10000));
+        return Collections.singletonList(new Player(new Name("joy"), hand, new Money(10000)));
     }
 }

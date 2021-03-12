@@ -12,17 +12,13 @@ public class Player extends Participant {
         super(name, cardHand);
     }
 
-    public Player(Name name, Hand cardHand, int bettingMoney) {
+    public Player(Name name, Hand cardHand, Money bettingMoney) {
         super(name, cardHand);
-        this.bettingMoney = new Money(bettingMoney);
-    }
-
-    public static Player from(String name) {
-        return new Player(new Name(name), Hand.createEmptyHand());
-    }
-
-    public void setBettingMoney(Money bettingMoney) {
         this.bettingMoney = bettingMoney;
+    }
+
+    public static Player from(Name name, Money bettingMoney) {
+        return new Player(name, Hand.createEmptyHand(), bettingMoney);
     }
 
     public void receiveCard(Card card) {

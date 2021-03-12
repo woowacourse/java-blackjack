@@ -21,7 +21,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어 카드 뽑기")
     void receiveCard() {
-        Player player = Player.from("pobi");
+        Player player = Player.from(new Name("joy"), Money.ZERO);
         Card card = new Card(Suit.CLOVER, Rank.ACE);
 
         player.receiveCard(card);

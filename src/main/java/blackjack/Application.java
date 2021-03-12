@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
@@ -13,10 +14,8 @@ import java.util.stream.Collectors;
 public class Application {
 
     public static void main(String[] args) {
-        Dealer dealer = Dealer.getInstance();
-        List<Player> players = getPlayers();
-
-        getPlayersBettingMoney(players);
+        final Dealer dealer = Dealer.getInstance();
+        final List<Player> players = getPlayersByNamesAndBettingMoney(getPlayerNames());
 
         initializeParticipants(dealer, players);
         OutputView.printParticipantHands(dealer, players);
@@ -28,30 +27,35 @@ public class Application {
         OutputView.printGameResult(GameResult.calculate(dealer, players));
     }
 
-    private static List<Player> getPlayers() {
+    private static List<Name> getPlayerNames() {
         try {
             String playerNames = InputView.getPlayerName();
-            return namesToPlayers(playerNames);
+            return toNameList(playerNames);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-            return getPlayers();
+            return getPlayerNames();
         }
     }
 
-    private static void getPlayersBettingMoney(List<Player> players) {
-        for (Player player : players) {
-            Money money = getMoney(player);
-            player.setBettingMoney(money);
-        }
+    private static List<Player> getPlayersByNamesAndBettingMoney(List<Name> names) {
+        return names.stream()
+                .map(name -> Player.from(name, getBettingMoney(name)))
+                .collect(Collectors.toList());
     }
 
-    private static Money getMoney(Player player) {
+    private static List<Name> toNameList(String playerNames) {
+        return Arrays.stream(playerNames.split(","))
+                .map(Name::new)
+                .collect(Collectors.toList());
+    }
+
+    private static Money getBettingMoney(Name name) {
         try {
-            String bettingMoneyInput = InputView.getBettingMoney(player.getName());
+            String bettingMoneyInput = InputView.getBettingMoney(name.getName());
             return Money.getBettingMoney(bettingMoneyInput);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-            return getMoney(player);
+            return getBettingMoney(name);
         }
 
     }
@@ -59,12 +63,6 @@ public class Application {
     private static void initializeParticipants(Dealer dealer, List<Player> players) {
         dealer.drawBaseCard();
         dealer.drawBaseCardToPlayers(players);
-    }
-
-    private static List<Player> namesToPlayers(String playerNames) {
-        return Arrays.stream(playerNames.split(","))
-                .map(Player::from)
-                .collect(Collectors.toList());
     }
 
     private static void progressPlayersTurn(Dealer dealer, List<Player> players) {
