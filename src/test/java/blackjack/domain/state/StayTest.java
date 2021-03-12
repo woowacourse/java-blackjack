@@ -31,7 +31,7 @@ class StayTest {
 	@Test
 	@DisplayName("stay인지 확인")
 	void checkStay() {
-		assertThat(state).isInstanceOf(Stay.class);
+		assertThat(state.keepContinue(false)).isInstanceOf(Stay.class);
 	}
 
 	@Test
