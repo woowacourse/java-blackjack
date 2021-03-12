@@ -4,36 +4,53 @@ import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Challengers;
 import blackjack.domain.player.Dealer;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ResultStatistics {
 
+    private static final double BLACKJACK_BONUS = 1.5;
     private final Map<Challenger, Result> resultStatistics = new LinkedHashMap<>();
 
     public ResultStatistics(final Challengers challengers, final Dealer dealer) {
-        challengers.getList()
-                .forEach(challenger -> resultStatistics.put(challenger, challenger.getChallengerResult(dealer)));
+        challengers.toList()
+                .forEach(challenger -> resultStatistics.put(challenger, challenger.getResult(dealer)));
     }
 
-    public Map<Challenger, Result> getResultStatistics() {
-        return resultStatistics;
+    public int getChallengerProfit(final Challenger challenger) {
+        if (resultStatistics.get(challenger) == Result.BLACKJACK) {
+            return (int) (challenger.getBetMoney() * BLACKJACK_BONUS);
+        }
+        if (resultStatistics.get(challenger) == Result.WIN) {
+            return challenger.getBetMoney();
+        }
+        if (resultStatistics.get(challenger) == Result.LOSE) {
+            return -challenger.getBetMoney();
+        }
+        return 0;
     }
 
-    public int getDealerWins() {
+    public int getDealerProfit() {
+        return (int) (getDealerWinProfit() + getDealerLoss() + getDealerBlackJackLoss());
+    }
+
+    private int getDealerWinProfit() {
         return calculateDealerResult(Result.LOSE);
     }
 
-    public int getDealerDraws() {
-        return calculateDealerResult(Result.DRAW);
+    private int getDealerLoss() {
+        return -calculateDealerResult(Result.WIN);
     }
 
-    public int getDealerLoses() {
-        return calculateDealerResult(Result.WIN);
+    private double getDealerBlackJackLoss() {
+        return -(calculateDealerResult(Result.BLACKJACK) * BLACKJACK_BONUS);
     }
 
     private int calculateDealerResult(final Result result) {
-        return Collections.frequency(resultStatistics.values(), result);
+        return resultStatistics.entrySet()
+                .stream()
+                .filter(challengerResult -> challengerResult.getValue() == result)
+                .mapToInt(challenger -> challenger.getKey().getBetMoney())
+                .sum();
     }
 }

@@ -36,4 +36,9 @@ public class InputView {
             throw new IllegalArgumentException("y 혹은 n 으로만 입력해주세요.");
         }
     }
+
+    public static int getBetMoney(final Challenger challenger) {
+        System.out.printf("%s의 배팅 금액은?%n", challenger.getName());
+        return scanner.nextInt();
+    }
 }

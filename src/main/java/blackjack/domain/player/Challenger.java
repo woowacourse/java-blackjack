@@ -2,36 +2,36 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.player.state.HandState;
+import blackjack.domain.player.state.NonBlackJackHandState;
 import blackjack.domain.result.Result;
 
 import java.util.List;
 
 public class Challenger extends Player {
 
+    private HandState handState;
+
     public Challenger(final Cards cards, final Name name) {
         super(cards, name);
+        handState = new NonBlackJackHandState();
     }
 
-    public Result getChallengerResult(final Dealer dealer) {
-        if (isChallengerLose(dealer)) {
+    public Result getResult(final Dealer dealer) {
+        if (isBust()) {
             return Result.LOSE;
         }
-        if (isChallengerWin(dealer)) {
-            return Result.WIN;
-        }
-        return Result.DRAW;
+        handState.blackJackCheck(dealer, this);
+        handState.compareCards(dealer, this);
+        return handState.getResult();
     }
 
-    private boolean isChallengerLose(final Dealer dealer) {
-        return isBust() || (!dealer.isBust() && this.getScore() < dealer.getScore());
-    }
-
-    private boolean isChallengerWin(final Dealer dealer) {
-        return dealer.isBust() || this.getScore() > dealer.getScore();
+    public void changeState(final HandState newHandSate) {
+        this.handState = newHandSate;
     }
 
     @Override
     public List<Card> getInitCards() {
-        return cards.getList();
+        return hand.getList();
     }
 }

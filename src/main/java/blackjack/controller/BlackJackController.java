@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.player.BetMoney;
 import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Challengers;
 import blackjack.domain.player.Dealer;
@@ -27,6 +28,7 @@ public class BlackJackController {
     private void initSetting() {
         blackJackService.initChallengers(requestNames());
         blackJackService.initDealer();
+        challengerBetting();
         OutputView.printInitSetting(blackJackService.getChallengers());
         OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getChallengers());
     }
@@ -35,9 +37,17 @@ public class BlackJackController {
         return InputView.getNames();
     }
 
+    private void challengerBetting() {
+        Challengers challengers = blackJackService.getChallengers();
+        for (Challenger challenger : challengers.toList()) {
+            challenger.betting(new BetMoney(InputView.getBetMoney(challenger)));
+        }
+    }
+
+
     private void play() {
         Challengers challengers = blackJackService.getChallengers();
-        for (Challenger challenger : challengers.getList()) {
+        for (Challenger challenger : challengers.toList()) {
             receiveChallengerMoreCard(challenger);
         }
         receiveDealerMoreCard(blackJackService.getDealer());
@@ -51,7 +61,7 @@ public class BlackJackController {
     }
 
     private void receiveDealerMoreCard(final Dealer dealer) {
-        while (!dealer.isBust() && dealer.canDrawMoreCard()) {
+        while (!dealer.isBust() && dealer.canDraw()) {
             blackJackService.receiveMoreCard(dealer);
             OutputView.printDealerReceiveMessage();
             OutputView.printNewLine();
@@ -64,6 +74,17 @@ public class BlackJackController {
 
     private void summary() {
         ResultStatistics resultStatistics = new ResultStatistics(blackJackService.getChallengers(), blackJackService.getDealer());
-        OutputView.printSummary(resultStatistics);
+        printDealerProfit(resultStatistics);
+        printChallengersProfit(resultStatistics, blackJackService.getChallengers());
+    }
+
+    private void printDealerProfit(final ResultStatistics resultStatistics) {
+        OutputView.printDealerProfit(resultStatistics.getDealerProfit());
+    }
+
+    private void printChallengersProfit(final ResultStatistics resultStatistics, final Challengers challengers) {
+        challengers.toList().forEach(
+                challenger -> OutputView.printChallengerProfit(challenger, resultStatistics.getChallengerProfit(challenger))
+        );
     }
 }

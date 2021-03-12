@@ -5,7 +5,6 @@ import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Challengers;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import blackjack.domain.result.ResultStatistics;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +14,7 @@ public class OutputView {
     public static String DEALER_PREFIX = "딜러: ";
 
     public static void printInitSetting(final Challengers challengers) {
-        List<String> challengerNames = challengers.getList()
+        List<String> challengerNames = challengers.toList()
                 .stream()
                 .map(Challenger::getName)
                 .collect(Collectors.toList());
@@ -35,7 +34,7 @@ public class OutputView {
     public static void printPlayerCards(final Player player) {
         System.out.print(player.getName() + "카드: ");
         List<String> challengersCards = player
-                .getCards()
+                .getHand()
                 .stream()
                 .map(card -> card.getFaceValue() + card.getSuit()).collect(Collectors.toList());
         System.out.print(String.join(", ", challengersCards));
@@ -53,18 +52,18 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printSummary(final ResultStatistics resultStatistics) {
-        System.out.println("## 최종 승패");
+    public static void printDealerProfit(final int dealerProfit) {
+        System.out.println("## 최종 수익");
         System.out.print(DEALER_PREFIX);
-        System.out.printf("%d승 %d무 %d패%n",
-                resultStatistics.getDealerWins(), resultStatistics.getDealerDraws(), resultStatistics.getDealerLoses());
+        System.out.println(dealerProfit);
+    }
 
-        resultStatistics.getResultStatistics()
-                .forEach((key, value) -> System.out.println(key.getName() + ": " + value.toString()));
+    public static void printChallengerProfit(final Challenger challenger, final int profit) {
+        System.out.println(challenger.getName() + ": " + profit);
     }
 
     private static void printChallengersInitCards(final Challengers challengers) {
-        for (Challenger challenger : challengers.getList()) {
+        for (Challenger challenger : challengers.toList()) {
             printPlayerCards(challenger);
             printNewLine();
         }

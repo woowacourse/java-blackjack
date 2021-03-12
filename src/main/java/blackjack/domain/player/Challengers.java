@@ -11,7 +11,7 @@ public class Challengers {
         this.challengers = new ArrayList<>(challengers);
     }
 
-    public List<Challenger> getList() {
+    public List<Challenger> toList() {
         return new ArrayList<>(challengers);
     }
 

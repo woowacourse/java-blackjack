@@ -3,7 +3,6 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,12 +14,12 @@ public class Dealer extends Player {
         super(cards, new Name("딜러"));
     }
 
-    public boolean canDrawMoreCard() {
+    public boolean canDraw() {
         return getScore() <= DEALER_SCORE_PIVOT;
     }
 
     @Override
     public List<Card> getInitCards() {
-        return new ArrayList<>(Collections.singletonList(cards.getFirstCard()));
+        return Collections.singletonList(hand.getFirstCard());
     }
 }

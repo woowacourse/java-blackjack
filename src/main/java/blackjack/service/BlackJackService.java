@@ -30,7 +30,7 @@ public class BlackJackService {
     public List<Player> getPlayers() {
         List<Player> players = new ArrayList<>();
         players.add(dealer);
-        players.addAll(challengers.getList());
+        players.addAll(challengers.toList());
         return players;
     }
 
@@ -43,11 +43,11 @@ public class BlackJackService {
     }
 
     public void receiveMoreCard(final Player player) {
-        player.receiveMoreCard(deck.drawCard());
+        player.receiveMoreCard(deck.draw());
     }
 
     private Cards getInitCards() {
-        List<Card> cards = Arrays.asList(deck.drawCard(), deck.drawCard());
+        List<Card> cards = Arrays.asList(deck.draw(), deck.draw());
         return new Cards(cards);
     }
 }

@@ -20,6 +20,7 @@ public class RentCompany {
         }
         return report.toString();
     }
+
     public void addCar(final Car car) {
         cars.add(car);
     }
