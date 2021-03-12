@@ -20,6 +20,7 @@ public class GameController {
         printInitialCardsInfo(game);
         doPlayersTurn(game);
         doDealerTurn(game);
+        printGameResult(game);
     }
 
     private Game initializeGame() {
@@ -78,5 +79,9 @@ public class GameController {
             game.giveCardToDealer(dealer);
             OutputView.printDealerDrawMessage();
         }
+    }
+
+    private void printGameResult(Game game) {
+        OutputView.printDealerAndPlayersCardsInfoWithScore(game.getDealer(), game.getPlayers());
     }
 }

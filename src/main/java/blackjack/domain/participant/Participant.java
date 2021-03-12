@@ -29,6 +29,10 @@ public abstract class Participant {
         state = state.addCard(card);
     }
 
+    public int getCardsScore() {
+        return state.cards().calculateCardsScore();
+    }
+
     public String getName() {
         return name.getName();
     }

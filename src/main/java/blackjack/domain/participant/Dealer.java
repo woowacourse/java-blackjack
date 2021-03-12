@@ -14,7 +14,7 @@ public class Dealer extends Participant{
     }
 
     public void doStayIfPossible() {
-        if (state.cards().sumCardsScore() > 17 && state instanceof Hit) {
+        if (getCardsScore() > 17 && state instanceof Hit) {
             state = state.stay();
         }
     }

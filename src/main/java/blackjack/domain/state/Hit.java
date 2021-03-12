@@ -23,7 +23,7 @@ public class Hit implements State{
     @Override
     public State addCard(Card card) {
         cards.addCard(card);
-        if (cards.sumCardsScore() > 21) {
+        if (cards.calculateCardsScore() > 21) {
             return new Bust(cards);
         }
         return this;

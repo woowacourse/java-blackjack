@@ -18,7 +18,7 @@ public class Stay implements State{
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
