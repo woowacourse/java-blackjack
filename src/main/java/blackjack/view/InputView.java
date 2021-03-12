@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.dto.PlayerDto;
 import java.util.Scanner;
 
 public class InputView {
@@ -27,6 +28,17 @@ public class InputView {
     private static void validateGamerName(String input) {
         if (input.length() < 1) {
             throw new IllegalArgumentException("[ERROR] 게임에 참여하는 사람의 이름은 1글자 이상입니다.");
+        }
+    }
+
+    public static double inputBettingAmount(PlayerDto playerDto) {
+        try {
+            System.out.printf("\n%s의 배팅 금액은?\n", playerDto.getName());
+            String input = scanner.nextLine();
+            return Double.parseDouble(input);
+        } catch (Exception e) {
+            OutputView.printExceptionMessage(e);
+            return inputBettingAmount(playerDto);
         }
     }
 
