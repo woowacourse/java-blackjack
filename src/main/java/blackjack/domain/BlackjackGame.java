@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.Profit;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Money;
 import blackjack.domain.user.Player;
@@ -11,10 +12,12 @@ import java.util.List;
 public class BlackjackGame {
     private final Deck deck;
     private final Users users;
+    private final Profit profit;
 
     public BlackjackGame(List<String> names, List<Double> moneyGroup) {
         this.deck = new Deck();
         this.users = new Users(new Dealer(), names, moneyGroup);
+        this.profit = new Profit();
     }
 
     public void distributeToUsers() {
@@ -38,6 +41,11 @@ public class BlackjackGame {
         return false;
     }
 
+    public void calculateProfit() {
+        this.profit.addEachPlayerProfit(getDealer(), getPlayers());
+        this.profit.addDealerProfit();
+    }
+
     private boolean isDealerHit() {
         return getDealer().isHit();
     }
@@ -55,6 +63,6 @@ public class BlackjackGame {
     }
 
     public List<Money> getProfit() {
-        return this.users.getProfit();
+        return this.profit.getProfit();
     }
 }

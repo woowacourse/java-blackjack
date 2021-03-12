@@ -70,9 +70,9 @@ public class OutputView {
                 user.getScore());
     }
 
-    public static void printProfit(Users users) {
+    public static void printProfit(Users users, List<Money> profit) {
         System.out.println("\n## 최종 수익");
-        printEachProfit(users, users.getProfit());
+        printEachProfit(users, profit);
     }
 
     private static void printEachProfit(Users users, List<Money> profit) {
@@ -81,16 +81,4 @@ public class OutputView {
             System.out.println(users.getPlayers().get(i).getName() + ": " + profit.get(i+1).toInteger());
         }
     }
-
-//    public static void printResultBoard(ResultBoard resultBoard) {
-//        System.out.println("\n## 최종 승패");
-//        System.out.print("딜러: ");
-//        for (Result result : resultBoard.getDealerResultBoard().keySet()) {
-//            System.out.print(resultBoard.getDealerResultBoard().get(result) + result.getResult() + " ");
-//        }
-//        System.out.println();
-//        for (Player player : resultBoard.getPlayerResultBoard().keySet()) {
-//            System.out.println(player.getName() + ": " + resultBoard.getPlayerResultBoard().get(player).getResult());
-//        }
-//    }
 }

@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-//import blackjack.domain.result.ResultBoard;
 import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -68,7 +67,7 @@ public class BlackjackController {
 
     private void showResults(BlackjackGame blackjackGame) {
         OutputView.printResults(blackjackGame.getUsers());
-        OutputView.printProfit(blackjackGame.getUsers());
-//        OutputView.printResultBoard(new ResultBoard(blackjackGame.getDealer(), blackjackGame.getPlayers()));
+        blackjackGame.calculateProfit();
+        OutputView.printProfit(blackjackGame.getUsers(), blackjackGame.getProfit());
     }
 }

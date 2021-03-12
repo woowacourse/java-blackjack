@@ -11,33 +11,64 @@ public class Player extends User {
     }
 
     public Money decide(Dealer dealer) {
-        if (this.isBust()) {
-            return new Money(getMoney() * -1);
+        Money money = this.money;
+        if (this.isBlackjack() || dealer.isBlackjack()) {
+            money = decideByBlackjack(dealer, money);
+            return money;
         }
-        if (dealer.isBust()) {
-            return decideByPlayerState();
+        if (this.isBust() || dealer.isBust()) {
+            money = decideByBust(dealer, money);
+            return money;
         }
-        return decideByBlackjack(dealer);
+        money = decideByScore(dealer, money);
+        return money;
     }
 
-    private Money decideByPlayerState() {
-        if (this.isBlackjack()) {
-            return new Money(getMoney() * 1.5);
-        }
-        return this.money;
-    }
-
-    private Money decideByBlackjack(Dealer dealer) {
+    private Money decideByBlackjack(Dealer dealer, Money money) {
         if (this.isBlackjack() && dealer.isBlackjack()) {
-            return this.money;
+            return money;
         }
         if (this.isBlackjack()) {
-            return new Money(getMoney() * 1.5);
+            money = new Money(getMoney() * 1.5);
+            return money;
         }
         if (dealer.isBlackjack()) {
-            return new Money(getMoney() * -1);
+            money = new Money(getMoney() * -1.0);
+            return money;
         }
-        return this.money;
+        return money;
+    }
+
+    private Money decideByBust(Dealer dealer, Money money) {
+        if (this.isBust() && !dealer.isBust()) {
+            money = new Money(getMoney() * -1.0);
+            return money;
+        }
+        if (!this.isBust() && dealer.isBust()) {
+            money = decideByPlayerState(money);
+            return money;
+        }
+        return money;
+    }
+
+    private Money decideByPlayerState(Money money) {
+        if (this.isBlackjack()) {
+            money = new Money(getMoney() * 1.5);
+            return money;
+        }
+        return money;
+    }
+
+    private Money decideByScore(Dealer dealer, Money money) {
+        if (isHigherDealerScore(dealer)) {
+            money = new Money(getMoney() * -1.0);
+            return money;
+        }
+        return money;
+    }
+
+    private boolean isHigherDealerScore(Dealer dealer) {
+        return this.cards.getScore() < dealer.cards.getScore();
     }
 
     public double getMoney() {

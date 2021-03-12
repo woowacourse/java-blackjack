@@ -57,6 +57,10 @@ public class Cards implements Comparable<Cards> {
         return Collections.unmodifiableList(this.cards);
     }
 
+    public int getScore() {
+        return this.calculateScore().getScore();
+    }
+
     @Override
     public int compareTo(Cards otherCards) {
         return Integer.compare(this.calculateScore().getScore(), otherCards.calculateScore().getScore());

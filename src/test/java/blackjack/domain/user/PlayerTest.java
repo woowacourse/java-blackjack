@@ -170,4 +170,36 @@ public class PlayerTest {
 
         assertThat(player.decide(dealer)).isEqualTo(new Money(15000));
     }
+
+    @DisplayName("딜러와 플레이어 모두 버스트가 아닌 경우를 확인한다. - 플레이어 패")
+    @Test
+    public void decideHigherDealerScore() {
+        Dealer dealer = new Dealer();
+        dealer.distribute(new Cards(Arrays.asList(
+                new Card(Shape.DIAMOND, Value.JACK),
+                new Card(Shape.CLOVER, Value.EIGHT)
+        )));
+        player.distribute(new Cards(Arrays.asList(
+                new Card(Shape.DIAMOND, Value.JACK),
+                new Card(Shape.CLOVER, Value.SIX)
+        )));
+
+        assertThat(player.decide(dealer)).isEqualTo(new Money(-10000));
+    }
+
+    @DisplayName("딜러와 플레이어 모두 버스트가 아닌 경우를 확인한다. - 플레이어 승")
+    @Test
+    public void decideHigherPlayerScore() {
+        Dealer dealer = new Dealer();
+        dealer.distribute(new Cards(Arrays.asList(
+                new Card(Shape.DIAMOND, Value.JACK),
+                new Card(Shape.CLOVER, Value.SIX)
+        )));
+        player.distribute(new Cards(Arrays.asList(
+                new Card(Shape.DIAMOND, Value.JACK),
+                new Card(Shape.CLOVER, Value.EIGHT)
+        )));
+
+        assertThat(player.decide(dealer)).isEqualTo(new Money(10000));
+    }
 }
