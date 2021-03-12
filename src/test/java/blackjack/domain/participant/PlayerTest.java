@@ -46,8 +46,9 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어의 초기 카드 출력이 두 장 다 되는지 확인")
     void showInitialCards() {
-        final CardDeck cardDeck = new CardDeck();
-        player.receiveInitialCards(cardDeck);
+        final Card firstCard = new Card(CardNumber.JACK, CardType.DIAMOND);
+        final Card secondCard = new Card(CardNumber.EIGHT, CardType.CLOVER);
+        player.receiveInitialCards(firstCard, secondCard);
         assertThat(player.showInitialCards().size()).isEqualTo(2);
     }
 }

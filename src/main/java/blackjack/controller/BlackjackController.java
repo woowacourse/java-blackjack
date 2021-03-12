@@ -35,9 +35,9 @@ public class BlackjackController {
 
     private void distributeInitialCards(final Players players, final Dealer dealer, final CardDeck cardDeck) {
         for (final Player player : players.getPlayers()) {
-            player.receiveInitialCards(cardDeck);
+            player.receiveInitialCards(cardDeck.distribute(), cardDeck.distribute());
         }
-        dealer.receiveInitialCards(cardDeck);
+        dealer.receiveInitialCards(cardDeck.distribute(), cardDeck.distribute());
         OutputView.showDistributedCard(players.getPlayers(), dealer);
     }
 

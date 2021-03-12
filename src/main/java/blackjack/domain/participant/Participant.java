@@ -28,9 +28,9 @@ public abstract class Participant {
         }
     }
 
-    public void receiveInitialCards(final CardDeck cardDeck) {
-        cards.add(cardDeck.distribute());
-        cards.add(cardDeck.distribute());
+    public void receiveInitialCards(final Card firstCard, final Card secondCard) {
+        cards.add(firstCard);
+        cards.add(secondCard);
     }
 
     public void receiveOneCard(final Card card) {
