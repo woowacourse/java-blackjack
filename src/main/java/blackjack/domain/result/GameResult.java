@@ -3,65 +3,38 @@ package blackjack.domain.result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class GameResult {
     private final List<Integer> resultCounts;
-    private final List<Result> playersResult;
+    private final Map<Player, Result> playersResult;
 
     public GameResult(final Dealer dealer, final List<Player> players) {
-        resultCounts = findResultCounts(dealer, players);
         playersResult = findPlayersResult(dealer, players);
+        resultCounts = findResultCounts();
     }
 
-    private List<Integer> findResultCounts(final Dealer dealer, final List<Player> players) {
-        final List<Integer> resultCounts = new ArrayList<>();
-        resultCounts.add(findResult(dealer, players, Result.WIN));
-        resultCounts.add(findResult(dealer, players, Result.LOSE));
-        resultCounts.add(findResult(dealer, players, Result.DRAW));
-        return resultCounts;
-    }
-
-    private int findResult(final Dealer dealer, final List<Player> players, final Result result) {
-        return (int) players.stream()
-                .filter(player -> findDealerResult(dealer, player)
-                        .isSame(result)).count();
-    }
-
-    private Result findDealerResult(final Dealer dealer, final Player player) {
-        final int dealerScore = dealer.calculateScore();
-        final int playerScore = player.calculateScore();
-        if (dealerScore == playerScore) {
-            return Result.DRAW;
-        }
-        if (player.isBust() || playerScore < dealerScore && !dealer.isBust()) {
-            return Result.WIN;
-        }
-        return Result.LOSE;
-    }
-
-    private List<Result> findPlayersResult(final Dealer dealer, final List<Player> players) {
-        final List<Result> playersResult = new ArrayList<>();
+    private Map<Player, Result> findPlayersResult(final Dealer dealer, final List<Player> players) {
+        final Map<Player, Result> playersResult = new HashMap<>();
         for (final Player player : players) {
-            playersResult.add(findPlayerResult(dealer, player));
+            playersResult.put(player, player.findResult(dealer));
         }
         return playersResult;
     }
 
-    private Result findPlayerResult(final Dealer dealer, final Player player) {
-        final int dealerScore = dealer.calculateScore();
-        final int playerScore = player.calculateScore();
-        if (dealerScore == playerScore) {
-            return Result.DRAW;
+    private List<Integer> findResultCounts() {
+        final List<Integer> resultCounts = new ArrayList<>();
+        for (Result result : Result.values()) {
+            resultCounts.add(countResults(result));
         }
-        if (player.isBust() || playerScore < dealerScore && !dealer.isBust()) {
-            return Result.LOSE;
-        }
-        return Result.WIN;
+        return resultCounts;
     }
 
-    public List<Result> getPlayersResult() {
+    private int countResults(final Result result) {
+        return (int) playersResult.entrySet().stream().filter(map -> map.getValue() == result).count();
+    }
+
+    public Map<Player, Result> getPlayersResult() {
         return playersResult;
     }
 

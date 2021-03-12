@@ -33,6 +33,6 @@
 - [x] 컨트롤러 구조 리팩토링
 - [x] 매직넘버 상수화
 - [x] Dealer와 Player의 중복코드 해결
-- [ ] Players 일급 컬렉션 분리
-- [ ] GameResult 클래스 중복코드 해결
+- [x] Players 일급 컬렉션 분리
+- [x] GameResult 클래스 중복코드 해결
 - [ ] 베팅로직 추가

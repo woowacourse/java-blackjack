@@ -32,19 +32,6 @@ public class BlackjackController {
         }
     }
 
-//    private void validateSameName(final List<String> names) {
-//        final Set<String> changedNames = new HashSet<>(names);
-//        if (names.size() != changedNames.size()) {
-//            throw new IllegalArgumentException(SAME_NAME_ERROR);
-//        }
-//    }
-
-//    private List<Player> generatePlayers(final List<String> names) {
-//        return names.stream()
-//                .map(Player::new)
-//                .collect(Collectors.toList());
-//    }
-
     private void distributeInitialCards(final Players players, final Dealer dealer, final CardDeck cardDeck) {
         for (final Player player : players.getPlayers()) {
             player.receiveInitialCards(cardDeck);
@@ -82,6 +69,6 @@ public class BlackjackController {
         OutputView.showFinalCardResult(players.getPlayers(), dealer);
         final GameResult gameResult = new GameResult(dealer, players.getPlayers());
         OutputView.showGameResult(dealer, gameResult.getResultCounts());
-        OutputView.showPlayersGameResult(players.getPlayers(), gameResult.getPlayersResult());
+        OutputView.showPlayersGameResult(gameResult.getPlayersResult());
     }
 }

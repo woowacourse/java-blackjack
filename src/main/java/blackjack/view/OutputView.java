@@ -7,6 +7,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.result.Result;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -87,9 +88,9 @@ public class OutputView {
                 resultCounts.get(2), Result.DRAW.getValue());
     }
 
-    public static void showPlayersGameResult(final List<Player> players, final List<Result> playersResult) {
-        for (int i = 0; i < players.size(); i++) {
-            showPlayerGameResult(players.get(i), playersResult.get(i));
+    public static void showPlayersGameResult(final Map<Player, Result> playersResult) {
+        for (final Map.Entry<Player, Result> eachPlayerResult : playersResult.entrySet()) {
+            showPlayerGameResult(eachPlayerResult.getKey(), eachPlayerResult.getValue());
         }
     }
 

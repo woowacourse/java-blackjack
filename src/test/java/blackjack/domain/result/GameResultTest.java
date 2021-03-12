@@ -9,9 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -44,14 +42,15 @@ public class GameResultTest {
     @Test
     @DisplayName("플레이어의 승패를 잘 결정하는지 확인")
     void playersResult() {
-        final List<Result> expected = new ArrayList<>(Arrays.asList(Result.WIN));
+        final Map<Player, Result> expected = new HashMap<>();
+        expected.put(player, Result.WIN);
         assertThat(gameResult.getPlayersResult()).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("승, 패, 무를 잘 카운트하는지 확인")
     void resultCounts() {
-        final List<Integer> expected = new ArrayList<>(Arrays.asList(0, 1, 0));
+        final List<Integer> expected = new ArrayList<>(Arrays.asList(1, 0, 0));
         assertThat(gameResult.getResultCounts()).isEqualTo(expected);
     }
 }
