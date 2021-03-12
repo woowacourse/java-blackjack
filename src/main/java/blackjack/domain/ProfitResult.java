@@ -8,6 +8,9 @@ import java.util.Map;
 
 public class ProfitResult {
 
+    private static final int MINUS = -1;
+    private static final double INIT_PROFIT = 0;
+
     private Map<String, Double> result;
 
     public ProfitResult(Map<String, Double> result) {
@@ -19,9 +22,9 @@ public class ProfitResult {
     }
 
     public double calculateDealerProfit() {
-        return -1 * result.values()
+        return MINUS * result.values()
                 .stream()
-                .reduce(0.0, Double::sum);
+                .reduce(INIT_PROFIT, Double::sum);
     }
 
     public Map<String, Double> getResult() {

@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
+    public static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
+
     private final List<Card> cards;
 
     public Cards() {
@@ -72,14 +75,14 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && calculateScore() == 21;
+        return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_SCORE;
     }
 
     public boolean isBust() {
-        return calculateScore() > 21;
+        return calculateScore() > BLACKJACK_SCORE;
     }
 
     public boolean isStay() {
-        return cards.size() > 2 && calculateScore() == 21;
+        return cards.size() > BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_SCORE;
     }
 }

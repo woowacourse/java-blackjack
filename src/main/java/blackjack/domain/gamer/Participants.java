@@ -12,7 +12,6 @@ public abstract class Participants {
 
     private final String name;
     protected State state;
-    protected double money;
 
     public Participants(String name) {
         validateNameLength(name);

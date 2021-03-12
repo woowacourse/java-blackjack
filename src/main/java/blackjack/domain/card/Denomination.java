@@ -17,7 +17,6 @@ public enum Denomination {
 
     private static final int ACE_MAX_SCORE = 11;
     private static final int ACE_MIN_SCORE = 1;
-    private static final int MAX_SCORE = 21;
 
     private final int score;
     private final String name;
@@ -29,7 +28,7 @@ public enum Denomination {
     }
 
     public static int selectAceScore(int score) {
-        if (score > MAX_SCORE - ACE_MAX_SCORE) {
+        if (score > Cards.BLACKJACK_SCORE - ACE_MAX_SCORE) {
             return ACE_MIN_SCORE;
         }
         return ACE_MAX_SCORE;

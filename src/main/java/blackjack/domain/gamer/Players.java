@@ -10,6 +10,10 @@ public class Players {
 
     private static final int MIN_COUNT = 1;
     private static final int MAX_COUNT = 8;
+    private static final double BLACKJACK_PROFIT = 1.5;
+    private static final int WIN_PROFIT = 1;
+    private static final int LOSE_PROFIT = -1;
+    private static final int DRAW_PROFIT = 0;
 
     private final List<Player> players;
 
@@ -46,15 +50,19 @@ public class Players {
     }
 
     private double calculateBettingMoney(MatchResult matchResult, double money, Player player) {
-        if(matchResult.equals(MatchResult.WIN)){
-            if(player.isBlackjack()){
-                return money * 1.5;
-            }
-            return money;
+        if (matchResult.equals(MatchResult.WIN)) {
+            return verifyBlackjackOrNot(money, player);
         }
-        if(matchResult.equals(MatchResult.LOSE)){
-            return money * -1;
+        if (matchResult.equals(MatchResult.LOSE)) {
+            return money * LOSE_PROFIT;
         }
-        return money * 0;
+        return money * DRAW_PROFIT;
+    }
+
+    private double verifyBlackjackOrNot(double money, Player player) {
+        if (player.isBlackjack()) {
+            return money * BLACKJACK_PROFIT;
+        }
+        return money * WIN_PROFIT;
     }
 }
