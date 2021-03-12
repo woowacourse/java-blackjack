@@ -12,11 +12,14 @@ public class Card {
 
     static {
         for (Symbol symbol : Symbol.values()) {
-            for (Number number : Number.values()) {
-                CARDS.add(new Card(symbol, number));
-            }
+            makeCard(symbol);
         }
-        // stream
+    }
+
+    private static void makeCard(Symbol symbol) {
+        for (Number number : Number.values()) {
+            CARDS.add(new Card(symbol, number));
+        }
     }
 
     private Card(Symbol symbol, Number number) {
