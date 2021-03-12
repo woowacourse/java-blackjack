@@ -3,6 +3,8 @@ package blackjack.domain.participant;
 import java.util.Objects;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.state.Hit;
 import blackjack.domain.state.PlayerState;
 
 public abstract class Gamer {
@@ -13,6 +15,7 @@ public abstract class Gamer {
 
 	protected Gamer(String name) {
 		this.name = new PlayerName(name);
+		this.playerState = new Hit(new Cards());
 	}
 
 	public void receiveCard(Card card) {

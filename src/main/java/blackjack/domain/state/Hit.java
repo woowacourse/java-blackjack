@@ -39,7 +39,7 @@ public class Hit extends Running {
 
 	@Override
 	public boolean isBust() {
-		return true;
+		return false;
 	}
 
 	@Override

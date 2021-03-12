@@ -24,8 +24,8 @@ public class BlackJack extends Finished {
 	@Override
 	public double makeProfit(Dealer dealer, Money money) {
 		if (dealer.getPlayerState().isBlackJack()) {
-			return money.calculateMoneyWithProfit(WIN_PROFIT_RATE);
+			return money.multiplyMoneyWithOperation(WIN_PROFIT_RATE);
 		}
-		return money.calculateMoneyWithProfit(BLACKJACK_PROFIT_RATE);
+		return money.multiplyMoneyWithOperation(BLACKJACK_PROFIT_RATE);
 	}
 }

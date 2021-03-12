@@ -16,9 +16,10 @@ public class CardsTest {
 	}
 
 	@Test
-	@DisplayName("새로운 카드 생성 확인")
+	@DisplayName("새로운 카드 추가 확인")
 	void addNewCard() {
-		assertEquals(1, cards.getCards().size());
+		cards.addCard(new Card(CardPattern.DIAMOND, CardNumber.SEVEN));
+		assertEquals(2, cards.getCards().size());
 	}
 
 	@Test
@@ -36,10 +37,17 @@ public class CardsTest {
 	}
 
 	@Test
-	@DisplayName("에이스기 11이어야 할 때 전체 포인트 계산 테스트")
+	@DisplayName("에이스기 1이어야 할 때 전체 포인트 계산 테스트")
 	void addAllPointWithAceEleven() {
 		cards.addCard(new Card(CardPattern.HEART, CardNumber.QUEEN));
 		cards.addCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
-		assertEquals(21, cards.calculateJudgingPoint());
+		assertEquals(21, cards.calculateIncludeAce());
+	}
+
+	@Test
+	@DisplayName("에이스기 11이어야 할 때 전체 포인트 계산 테스트")
+	void addAllPointWithAceOne() {
+		cards.addCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
+		assertEquals(21, cards.calculateIncludeAce());
 	}
 }

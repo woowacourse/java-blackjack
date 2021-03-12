@@ -21,6 +21,6 @@ public class Bust extends Finished {
 
 	@Override
 	public double makeProfit(Dealer dealer, Money money) {
-		return money.calculateMoneyWithProfit(LOSE_PROFIT_RATE);
+		return money.multiplyMoneyWithOperation(LOSE_PROFIT_RATE);
 	}
 }

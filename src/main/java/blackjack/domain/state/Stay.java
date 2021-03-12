@@ -22,11 +22,11 @@ public class Stay extends Finished {
 	@Override
 	public double makeProfit(Dealer dealer, Money money) {
 		if (dealer.calculatePoint() == calculatePoint()) {
-			return money.calculateMoneyWithProfit(DRAW_PROFIT_RATE);
+			return money.multiplyMoneyWithOperation(DRAW_PROFIT_RATE);
 		}
 		if (!dealer.getPlayerState().isBust() && dealer.calculatePoint() > calculatePoint()) {
-			return money.calculateMoneyWithProfit(LOSE_PROFIT_RATE);
+			return money.multiplyMoneyWithOperation(LOSE_PROFIT_RATE);
 		}
-		return money.calculateMoneyWithProfit(WIN_PROFIT_RATE);
+		return money.multiplyMoneyWithOperation(WIN_PROFIT_RATE);
 	}
 }

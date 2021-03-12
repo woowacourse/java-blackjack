@@ -24,6 +24,14 @@ public class DeckTest {
 	}
 
 	@Test
+	@DisplayName("덱 카드 섞이는지 확인")
+	void deckShuffle() {
+		Card first = new Card(CardPattern.HEART, CardNumber.ACE);
+		deck.shuffleCards();
+		assertNotEquals(first, deck.dealCard());
+	}
+
+	@Test
 	@DisplayName("덱이 소진되었을 때 예외처리")
 	void checkEmptyDeck() {
 		assertThatThrownBy(() -> {
