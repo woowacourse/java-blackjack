@@ -15,6 +15,14 @@ public class Card {
         fillCacheData();
     }
 
+    private final CardSymbol cardSymbol;
+    private final CardNumber cardNumber;
+
+    private Card(final CardSymbol cardSymbol, final CardNumber cardNumber) {
+        this.cardSymbol = cardSymbol;
+        this.cardNumber = cardNumber;
+    }
+
     private static void initializeCache() {
         for (final CardSymbol cardSymbol : CardSymbol.values()) {
             cache.put(cardSymbol, new EnumMap<>(CardNumber.class));
@@ -34,20 +42,12 @@ public class Card {
         }
     }
 
-    private final CardSymbol cardSymbol;
-    private final CardNumber cardNumber;
-
-    private Card(final CardSymbol cardSymbol, final CardNumber cardNumber) {
-        this.cardSymbol = cardSymbol;
-        this.cardNumber = cardNumber;
-    }
-
     public static Card of(final CardSymbol cardSymbol, final CardNumber cardNumber) {
         return Optional.ofNullable(bringCacheData(cardSymbol, cardNumber))
                 .orElseThrow(() -> new CacheMissException(cardSymbol, cardNumber));
     }
 
-    private static Card bringCacheData(final CardSymbol cardSymbol, final CardNumber cardNumber){
+    private static Card bringCacheData(final CardSymbol cardSymbol, final CardNumber cardNumber) {
         return Optional.ofNullable(cache.get(cardSymbol))
                 .orElseThrow(() -> new CacheMissException(cardSymbol, cardNumber))
                 .get(cardNumber);
