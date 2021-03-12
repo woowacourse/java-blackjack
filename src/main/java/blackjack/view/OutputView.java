@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String INITIAL_CARDS_INFO_PREFIX_FORMAT = "%s와 %s에게 2장씩 나눴습니다." + System.lineSeparator();
     private static final String CARDS_INFO_FORMAT = "%s카드: %s" + System.lineSeparator();
-    private static final String DELIMITER = ", ";
+    public static final String DELIMITER = ", ";
 
     public static void printMessage(String message) {
         System.out.println(message);
@@ -22,6 +22,7 @@ public class OutputView {
         for (Player player : players) {
             printParticipantCardsInfo(player);
         }
+        System.out.println();
     }
 
     private static void printInitialCardsInfoPrefix(Dealer dealer, List<Player> players) {
@@ -35,7 +36,7 @@ public class OutputView {
         System.out.printf(CARDS_INFO_FORMAT, dealer.getName(), dealer.getFirstCardsInfoToString());
     }
 
-    private static void printParticipantCardsInfo(Participant participant) {
+    public static void printParticipantCardsInfo(Participant participant) {
         System.out.printf(CARDS_INFO_FORMAT, participant.getName(), participant.getCurrentCardsInfo());
     }
 }

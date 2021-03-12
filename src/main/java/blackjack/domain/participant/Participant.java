@@ -17,11 +17,23 @@ public abstract class Participant {
         state = StateFactory.createInitialState(Deck.draw(), Deck.draw());
     }
 
+    public String getCurrentCardsInfo() {
+        return state.cards().getCardsInfoToString();
+    }
+
+    public boolean isDrawable() {
+        return !state.isFinished();
+    }
+
+    public void addCard(Card card) {
+        state = state.addCard(card);
+    }
+
     public String getName() {
         return name.getName();
     }
 
-    public String getCurrentCardsInfo() {
-        return state.cards().getCardsInfoToString();
+    public void stay() {
+        state = state.stay();
     }
 }

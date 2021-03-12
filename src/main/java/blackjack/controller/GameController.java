@@ -17,6 +17,7 @@ public class GameController {
     public void run() {
         Game game = initializeGame();
         printInitialCardsInfo(game);
+        doPlayersTurn(game);
     }
 
     private Game initializeGame() {
@@ -34,10 +35,9 @@ public class GameController {
     }
 
     private Map<String, Integer> getPlayerNameAndBattingMoney() {
-        String inputNames = InputView.inputNames();
-        String[] names = inputNames.split(",");
+        List<String> inputNames = InputView.inputNames();
 
-        return Arrays.stream(names)
+        return inputNames.stream()
                 .map(String::trim)
                 .collect(toMap(name -> name, this::inputBattingMoney));
     }
@@ -48,5 +48,25 @@ public class GameController {
 
     private void printInitialCardsInfo(Game game) {
         OutputView.printInitialCardsInfo(game.getDealer(), game.getPlayers());
+    }
+
+
+    private void doPlayersTurn(Game game) {
+        for (Player player : game.getPlayers()) {
+            doEachPlayerTurn(game, player);
+        }
+    }
+
+    private void doEachPlayerTurn(Game game, Player player) {
+        if (!player.isDrawable()) {
+            return;
+        }
+        if (InputView.inputKeepDrawReply(player)) {
+            game.giveCardToPlayer(player);
+            OutputView.printParticipantCardsInfo(player);
+            doEachPlayerTurn(game, player);
+            return;
+        }
+        player.stay();
     }
 }

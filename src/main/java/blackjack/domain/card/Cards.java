@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import blackjack.view.OutputView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +18,7 @@ public class Cards {
         return cards.size() == 2 && sumCardsScore() == 21;
     }
 
-    private int sumCardsScore() {
+    public int sumCardsScore() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
@@ -25,10 +27,14 @@ public class Cards {
     public String getCardsInfoToString() {
         return cards.stream()
                 .map(Card::toString)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(OutputView.DELIMITER));
     }
 
     public String getFirstCardInfoToString() {
         return cards.get(0).toString();
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
     }
 }
