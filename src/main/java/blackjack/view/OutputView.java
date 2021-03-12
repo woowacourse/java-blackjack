@@ -11,7 +11,6 @@ public class OutputView {
     private static final int FIRST_CARD_INDEX = 0;
     private static final String DELIMITER = ", ";
     private static final String NEWLINE = System.getProperty("line.separator");
-    private static final long NO_COUNTS_OF_RESULT = 0L;
 
     private OutputView() {
     }
@@ -70,21 +69,6 @@ public class OutputView {
         System.out.println(
             participant.getName() + " 카드: " + cards + " - 결과: "
                 + participant.calculateScore());
-    }
-
-    public static void printFinalResult(StatisticResult statisticResult) {
-        printEmptyLine();
-        System.out.println("## 최종 승패");
-        Map<Result, Long> dealerStatisticResultMap = statisticResult.aggregateDealerResultAndCount();
-        Map<String, Result> playerNameResultMap = statisticResult.getPlayerNameAneResult();
-        long winCounts = dealerStatisticResultMap.getOrDefault(Result.WIN, NO_COUNTS_OF_RESULT);
-        long lossCounts = dealerStatisticResultMap.getOrDefault(Result.LOSE, NO_COUNTS_OF_RESULT);
-        long drawCounts = dealerStatisticResultMap.getOrDefault(Result.DRAW, NO_COUNTS_OF_RESULT);
-
-        System.out.println("딜러: " + winCounts + "승 " + drawCounts + "무 " + lossCounts + "패");
-        playerNameResultMap.forEach((playerName, result) -> {
-            System.out.println(playerName + ": " + result.getName());
-        });
     }
 
     public static void printFinalBetProfits(Map<String, BetAmount> finalBetProfits) {

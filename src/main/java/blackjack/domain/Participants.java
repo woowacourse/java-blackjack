@@ -47,14 +47,6 @@ public class Participants {
         return participants;
     }
 
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
     public Map<String, BetAmount> calculateFinalBetProfits() {
         Map<String, BetAmount> finalBetProfits = new LinkedHashMap<>();
         finalBetProfits.put(dealer.getName(), dealer.calculateFinalBetProfit(players));

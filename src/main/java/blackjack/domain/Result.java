@@ -12,10 +12,6 @@ public enum Result {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Result replaceWinWithLose() {
         if (this == LOSE) {
             return WIN;
