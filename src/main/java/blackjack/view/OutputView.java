@@ -4,8 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
-import blackjack.domain.result.ResultStatistics;
+import blackjack.domain.result.GameResult;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,11 +17,10 @@ public class OutputView {
         List<String> playerNames = players.stream()
                 .map(Player::getNameAsString)
                 .collect(Collectors.toList());
-        System.out.println(String.format
-                (NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.", String.join(", ", playerNames)));
+        System.out.printf(NEW_LINE + "딜러와 %s 에게 2장의 카드 나누어주었습니다.%n", String.join(", ", playerNames));
     }
 
-    public static void printInitCards(final Dealer dealer, final Players players) {
+    public static void printInitCards(final Dealer dealer, final List<Player> players) {
         printDealerInitCard(dealer);
         printPlayersInitCards(players);
     }
@@ -41,13 +39,13 @@ public class OutputView {
         OutputView.printNewLine();
     }
 
-    public static void printSummary(final ResultStatistics resultStatistics) {
+    public static void printSummary(final GameResult gameResult) {
         System.out.println("## 최종 승패");
         System.out.print("딜러: ");
-        System.out.println(String.format("%d승 %d무 %d패",
-                resultStatistics.getDealerWinCounts(), resultStatistics.getDealerDrawCounts(), resultStatistics.getDealerLoseCounts()));
+        System.out.printf("%d승 %d무 %d패%n",
+                gameResult.getDealerWinCounts(), gameResult.getDealerDrawCounts(), gameResult.getDealerLoseCounts());
 
-        resultStatistics.getResultStatistics()
+        gameResult.getGameResult()
                 .forEach((player, result) -> System.out.println(player.getNameAsString() + ": " + result.getResultAsString()));
     }
 
@@ -69,10 +67,27 @@ public class OutputView {
         dealerCards.forEach(dealerCard -> System.out.println(dealerCard.getFaceValueAsInt() + dealerCard.getSuitAsString()));
     }
 
-    private static void printPlayersInitCards(final Players players) {
-        for (Player player : players.getPlayersAsList()) {
+    private static void printPlayersInitCards(final List<Player> players) {
+        for (Player player : players) {
             printParticipantCards(player);
             printNewLine();
         }
+    }
+
+    public static void printProfits(final List<Player> players) {
+        printNewLine();
+        System.out.println("## 최종 수익");
+        for (Player player : players) {
+            System.out.printf("%s: %d", player.getNameAsString(), (int) player.getProfitAsDouble());
+            printNewLine();
+        }
+    }
+
+    public static void printIllegalArgumentError(IllegalArgumentException e) {
+        System.out.println(e.getMessage());
+    }
+
+    public static void printNumberFormatExceptionError(NumberFormatException e) {
+        System.out.println(e.getMessage().replaceFirst(".*For input string: ", "해당 입력은 숫자가 아닙니다: "));
     }
 }

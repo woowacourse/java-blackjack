@@ -12,6 +12,7 @@ public abstract class Participant {
 
     protected final Cards hand;
     private final Name name;
+    private Profit profit;
 
     public Participant(final Cards cards, final String name) {
         this.hand = new Cards(cards.getCardsAsList());

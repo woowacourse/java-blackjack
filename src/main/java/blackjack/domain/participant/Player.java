@@ -2,13 +2,58 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.Result;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Player extends Participant {
 
+    private Betting betting;
+    private Profit profit;
+
+    public Player(final Cards cards, final String name, final Double betting, final Double profit) {
+        super(cards, name);
+        this.betting = new Betting(betting);
+        this.profit = new Profit(profit);
+    }
+
+    public Player(final Cards cards, final String name, final Double betting) {
+        super(cards, name);
+        this.betting = new Betting(betting);
+    }
+
     public Player(final Cards cards, final String name) {
         super(cards, name);
+    }
+
+    public Player changeBetting(Double betting) {
+        return new Player(this.hand, this.getNameAsString(), betting);
+    }
+
+    public Player changeProfit(Result result) {
+        if (result.equals(Result.BLACKJACK_WIN)) {
+            return new Player(this.hand, this.getNameAsString(), betting.getBetting(),
+                    betting.getBetting() * Result.BLACKJACK_WIN.getRate());
+        }
+        if (result.equals(Result.WIN)) {
+            return new Player(this.hand, this.getNameAsString(), betting.getBetting(),
+                    betting.getBetting() * Result.WIN.getRate());
+        }
+        if (result.equals(Result.LOSE)) {
+            return new Player(this.hand, this.getNameAsString(), betting.getBetting(),
+                    betting.getBetting() * Result.LOSE.getRate());
+        }
+        return new Player(this.hand, this.getNameAsString(), betting.getBetting(),
+                betting.getBetting() * Result.DRAW.getRate());
+    }
+
+    public double getProfitAsDouble() {
+        return profit.getProfit();
+    }
+
+    public boolean emptyCondition(final Dealer dealer) {
+        return false;
     }
 
     public boolean playerBlackJack(final Dealer dealer) {
@@ -37,16 +82,29 @@ public class Player extends Participant {
         return this.getScore() == dealer.getScore();
     }
 
-    public boolean scoreBiggerThan(final Dealer dealer) {
+    private boolean scoreBiggerThan(final Dealer dealer) {
         return this.getScore() > dealer.getScore();
     }
 
-    public boolean scoreSmallerThan(final Dealer dealer) {
+    private boolean scoreSmallerThan(final Dealer dealer) {
         return this.getScore() < dealer.getScore();
     }
 
     @Override
     public List<Card> getInitCardsAsList() {
         return hand.getCardsAsList();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(betting, player.betting) && Objects.equals(profit, player.profit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(betting, profit);
     }
 }

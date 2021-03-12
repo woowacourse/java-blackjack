@@ -7,16 +7,20 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.result.GameResult;
+import blackjack.view.InputView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackService {
 
     private Deck deck = Deck.of();
     private Players players;
     private Dealer dealer;
+    private GameResult gameResult;
 
     public void initDealer() {
         this.dealer = new Dealer(getInitCards());
@@ -28,6 +32,14 @@ public class BlackJackService {
             players.add(new Player(getInitCards(), name));
         }
         this.players = new Players(players);
+    }
+
+    public void initBettings() {
+        players = new Players(
+                players.getPlayersAsList()
+                        .stream()
+                        .map(player -> player.changeBetting(InputView.getBettings(player.getNameAsString())))
+                        .collect(Collectors.toList()));
     }
 
     public List<Participant> getParticipantsAsList() {
@@ -45,10 +57,6 @@ public class BlackJackService {
         return this.dealer;
     }
 
-    public Players getPlayers() {
-        return this.players;
-    }
-
     public void receiveMoreCard(final Participant participant) {
         participant.receiveMoreCard(deck.draw());
     }
@@ -57,8 +65,24 @@ public class BlackJackService {
         return this.dealer.isBlackJack();
     }
 
+    public void initGameResult() {
+        gameResult = new GameResult(getPlayersAsList(), getDealer());
+    }
+
+    public GameResult getGameResult() {
+        return gameResult;
+    }
+
     private Cards getInitCards() {
         List<Card> cards = Arrays.asList(deck.draw(), deck.draw());
         return new Cards(cards);
+    }
+
+    public void calculateProfits() {
+        players = new Players(gameResult.getGameResult()
+                .entrySet()
+                .stream()
+                .map(entry -> entry.getKey().changeProfit(entry.getValue()))
+                .collect(Collectors.toList()));
     }
 }
