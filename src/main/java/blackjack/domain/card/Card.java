@@ -16,6 +16,7 @@ public class Card {
                 CARDS.add(new Card(symbol, number));
             }
         }
+        // stream
     }
 
     private Card(Symbol symbol, Number number) {

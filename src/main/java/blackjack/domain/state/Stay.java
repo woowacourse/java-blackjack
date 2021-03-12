@@ -10,11 +10,11 @@ public class Stay extends Finished {
 
     @Override
     public double earningRate(Dealer dealer) {
-        if (dealer.isBust() || score().toInt() > dealer.scoreToInt()) {
+        if (dealer.isBust() || this.score().toInt() > dealer.scoreToInt()) {
             return 1;
         }
 
-        if (score().toInt() == dealer.scoreToInt()) {
+        if (this.score().toInt() == dealer.scoreToInt()) {
             return 0;
         }
 
