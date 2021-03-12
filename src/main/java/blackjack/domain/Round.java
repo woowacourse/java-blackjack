@@ -24,13 +24,14 @@ public class Round {
         this.users = users;
     }
 
-    public static Round valueOf(Deck deck, List<String> playerNames) {
+    public static Round valueOf(Deck deck, List<String> playerNames, List<BigDecimal> bettingMoneys) {
         List<AbstractUser> users = new ArrayList<>();
         users.add(new Dealer(drawTwoCard(deck)));
 
         List<AbstractUser> players = playerNames.stream()
-                .map(playerName -> new Player(drawTwoCard(deck), playerName, new BigDecimal("10000")))
+                .map(playerName -> new Player(drawTwoCard(deck), playerName, bettingMoneys.remove(0)))
                 .collect(Collectors.toList());
+
         users.addAll(players);
 
         return new Round(deck, new Users<>(users));

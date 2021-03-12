@@ -9,8 +9,10 @@ import blackjack.view.OutputView;
 import blackjack.view.dto.PlayerStatusDto;
 import blackjack.view.dto.RoundStatusDto;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class GameController {
     private static final String NO = "n";
@@ -29,9 +31,12 @@ public class GameController {
 
     private Round initializeRound() {
         List<String> playerNames = inputView.getPlayerNames();
+        List<BigDecimal> bettingMoneys = playerNames.stream()
+                .map(inputView::getBettingMoney)
+                .collect(Collectors.toList());
 
         Deck deck = Deck.generateByRandomCard();
-        return Round.valueOf(deck, playerNames);
+        return Round.valueOf(deck, playerNames, bettingMoneys);
     }
 
     private void addPlayersCardOrPass(final Round round) {
