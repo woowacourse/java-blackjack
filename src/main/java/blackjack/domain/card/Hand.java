@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,39 +25,35 @@ public class Hand {
         cards.add(card);
     }
 
-    public int size() {
-        return cards.size();
-    }
-
-    public int sumCards() {
+    public int hardSum() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
     }
 
-    public int sumCardsForResult() {
-        int aceCount = (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+    public int softSum() {
+        int numberOfAces = numberOfAces();
         int sum = cards.stream()
                 .mapToInt(Card::getScore)
-                .sum() + aceCount * ACE_DIFFERENCE;
-        while (sum > BLACKJACK && aceCount > 0) {
+                .sum() + numberOfAces * ACE_DIFFERENCE;
+        while (sum > BLACKJACK && numberOfAces > 0) {
             sum -= ACE_DIFFERENCE;
-            aceCount--;
+            numberOfAces--;
         }
         return sum;
     }
 
+    private int numberOfAces() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+    }
+
     public boolean isBlackjack() {
-        return sumCardsForResult() == BLACKJACK && cards.size() == 2;
+        return softSum() == BLACKJACK && cards.size() == 2;
     }
 
     public boolean isBust() {
-        return sumCards() > BLACKJACK;
-    }
-
-    public boolean isHit() {
-        return !isBlackjack() && !isBust();
+        return hardSum() > BLACKJACK;
     }
 }

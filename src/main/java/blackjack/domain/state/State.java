@@ -6,5 +6,7 @@ import blackjack.domain.card.Hand;
 public interface State {
     Hand hand();
 
+    int softHandSum();
+
     State draw(Card card);
 }

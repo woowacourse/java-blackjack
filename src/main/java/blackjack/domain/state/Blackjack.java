@@ -16,6 +16,11 @@ public class Blackjack implements State {
     }
 
     @Override
+    public int softHandSum() {
+        return hand.softSum();
+    }
+
+    @Override
     public State draw(Card card) {
         hand.add(card);
         return new Bust(hand);

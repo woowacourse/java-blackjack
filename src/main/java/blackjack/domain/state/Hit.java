@@ -16,6 +16,11 @@ public class Hit implements State {
     }
 
     @Override
+    public int softHandSum() {
+        return hand.softSum();
+    }
+
+    @Override
     public State draw(Card card) {
         hand.add(card);
         if (hand.isBust()) {

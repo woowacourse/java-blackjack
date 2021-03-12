@@ -26,7 +26,7 @@ public class OutputView {
     }
 
     private static String cardsOf(Participant participant) {
-        return participant.getName() + cardsToString(participant.getUnmodifiableCards());
+        return participant.getName() + cardsToString(participant.getState().hand().getUnmodifiableList());
     }
 
     private static String cardsToString(List<Card> cards) {
@@ -70,6 +70,6 @@ public class OutputView {
     }
 
     private static String resultOf(Participant participant) {
-        return cardsOf(participant) + " - 결과: " + participant.sumCardsForResult();
+        return cardsOf(participant) + " - 결과: " + participant.getState().hand().softSum();
     }
 }

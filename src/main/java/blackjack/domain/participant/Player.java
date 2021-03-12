@@ -41,7 +41,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isAvailableToTake() {
-        return sumCards() <= BLACKJACK;
+        return isBlackjack() || isHit();
     }
 
     public void setBetMoney(int betMoney) {
@@ -49,18 +49,32 @@ public class Player extends Participant {
     }
 
     public double calculateProfitFromState(Dealer dealer) {
-        if (isBust() || (isHit() && dealer.isBlackjack()) || (isHit() && dealer.isHit() && sumCardsForResult() < dealer.sumCardsForResult())) {
+        if (playerLoses(dealer)) {
             return -betMoney;
         }
-        if (isBlackjack() && (dealer.isHit() || dealer.isBust())) {
+        if (playerWinsByBlackjack(dealer)) {
             return 1.5 * betMoney;
         }
-        if ((isHit() && dealer.isBust()) || (isHit() && dealer.isHit() && sumCardsForResult() > dealer.sumCardsForResult())) {
+        if (playerWinsNormally(dealer)) {
             return betMoney;
         }
-        if ((isBlackjack() && dealer.isBlackjack()) || (isHit() && dealer.isHit() && sumCardsForResult() == dealer.sumCardsForResult())) {
-            return 0;
-        }
+
         return 0;
+    }
+
+    private boolean playerWinsNormally(Dealer dealer) {
+        return (isHit() && dealer.isBust()) ||
+                (isHit() && dealer.isHit() && getState().softHandSum() > dealer.getState().softHandSum());
+    }
+
+    private boolean playerWinsByBlackjack(Dealer dealer) {
+        return isBlackjack() &&
+                (dealer.isHit() || dealer.isBust());
+    }
+
+    private boolean playerLoses(Dealer dealer) {
+        return isBust() ||
+                (isHit() && dealer.isBlackjack()) ||
+                (isHit() && dealer.isHit() && getState().softHandSum() < dealer.getState().softHandSum());
     }
 }

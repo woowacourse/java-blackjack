@@ -14,7 +14,7 @@ public class Application {
         final Dealer dealer = new Dealer(cardDeck.initCards());
         final Players players = new Players(InputView.getNames(), cardDeck);
 
-        setBetMoney(players, dealer);
+        setBetMoney(players);
 
         OutputView.printParticipantsCards(dealer, players);
 
@@ -23,7 +23,7 @@ public class Application {
         OutputView.printResult(dealer, players);
     }
 
-    private static void setBetMoney(Players players, Dealer dealer) {
+    private static void setBetMoney(Players players) {
         for (Player player : players.values()) {
             int betMoney = Integer.parseInt(InputView.getBetMoney(player));
             player.setBetMoney(betMoney);
