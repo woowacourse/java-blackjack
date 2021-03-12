@@ -5,8 +5,6 @@ import blakcjack.domain.money.Money;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
 
-import static blakcjack.domain.card.Cards.BLACKJACK_VALUE;
-
 public class Player extends Participant {
 	private final Money bettingAmount;
 
@@ -21,7 +19,7 @@ public class Player extends Participant {
 	}
 
 	public boolean hasAffordableScoreForHit() {
-		return cards.calculateScore() < BLACKJACK_VALUE;
+		return cards.isScoreLowerThanBlackjackScore();
 	}
 
 	public Money calculateProfit(final Outcome outcome) {

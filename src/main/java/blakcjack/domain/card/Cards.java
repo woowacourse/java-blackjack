@@ -13,6 +13,38 @@ public class Cards {
 
 	private final List<Card> cards = new ArrayList<>();
 
+	public List<Card> toList() {
+		return Collections.unmodifiableList(cards);
+	}
+
+	public void add(final Card card) {
+		cards.add(card);
+	}
+
+	public Card getFirstCard() {
+		return cards.get(FIRST_CARD_POSITION);
+	}
+
+	public boolean isBlackjack() {
+		return haveOnlyTwoCards() && haveBlackjackScore();
+	}
+
+	public boolean haveOnlyTwoCards() {
+		return cards.size() == BLACKJACK_CARD_COUNT;
+	}
+
+	public boolean haveBlackjackScore() {
+		return calculateScore() == BLACKJACK_VALUE;
+	}
+
+	public boolean isBust() {
+		return BLACKJACK_VALUE < calculateScore();
+	}
+
+	public boolean isScoreLowerThanBlackjackScore() {
+		return calculateScore() < BLACKJACK_VALUE;
+	}
+
 	public int calculateScore() {
 		int score = calculateMinimumPossibleScore();
 		int aceCount = calculateAceCount();
@@ -38,26 +70,6 @@ public class Cards {
 
 	private boolean hasNextPossibleScore(final int aceCount, final int score) {
 		return 0 < aceCount && (score + ACE_ADDITIONAL_VALUE) <= BLACKJACK_VALUE;
-	}
-
-	public List<Card> toList() {
-		return Collections.unmodifiableList(cards);
-	}
-
-	public void add(final Card card) {
-		cards.add(card);
-	}
-
-	public Card getFirstCard() {
-		return cards.get(FIRST_CARD_POSITION);
-	}
-
-	public boolean haveOnlyTwoCards() {
-		return cards.size() == BLACKJACK_CARD_COUNT;
-	}
-
-	public boolean haveBlackjackScore() {
-		return calculateScore() == BLACKJACK_VALUE;
 	}
 
 	@Override
