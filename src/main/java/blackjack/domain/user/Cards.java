@@ -20,10 +20,6 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
-    public boolean isBlackjack() {
-        return totalScore().isBlackjack();
-    }
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
@@ -64,5 +60,9 @@ public class Cards {
 
     public boolean isBust() {
         return totalScore().isBust();
+    }
+
+    public boolean isBlackjack() {
+        return totalScore().isBlackjack();
     }
 }
