@@ -28,7 +28,7 @@ public class DealerTest {
         assertThat(dealer.showCardList()).isEqualTo(Collections.singletonList(Card.of(CardSymbol.CLUB, CardNumber.ACE)));
     }
 
-    @DisplayName("17점 미만이면 통과")
+    @DisplayName("17점 미만이면 추가 카드를 받아야 한다.")
     @Test
     void isScoreLowerThanSevenTeen() {
         final Dealer dealer = new Dealer();
