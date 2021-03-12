@@ -1,6 +1,5 @@
 package blackjack.domain.cards;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,9 +25,5 @@ public class Deck {
             throw new IllegalStateException("덱이 모두 소진되었습니다.");
         }
         return card;
-    }
-
-    public List<Card> getCards() {
-        return new ArrayList<>(cards);
     }
 }

@@ -22,7 +22,7 @@ public class Cars {
         StringBuffer result = new StringBuffer();
         cars.stream()
             .map(car -> car.getName() + " : " + car.getRequiredFuel() + "리터" + NEWLINE)
-            .forEach(car -> result.append(car));
+            .forEach(result::append);
         return result.toString();
     }
 }

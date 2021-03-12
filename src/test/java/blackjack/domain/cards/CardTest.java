@@ -20,4 +20,27 @@ public class CardTest {
     void getAllCards() {
         assertThat(Card.getAllCards().size()).isEqualTo(52);
     }
+
+    @Test
+    @DisplayName("점수 확인 테스트")
+    void getCardValue() {
+        assertThat(Card.valueOf(Shape.SPADE, CardValue.ACE).getScore()).isEqualTo(1);
+        assertThat(Card.valueOf(Shape.SPADE, CardValue.JACK).getScore()).isEqualTo(10);
+        assertThat(Card.valueOf(Shape.SPADE, CardValue.QUEEN).getScore()).isEqualTo(10);
+        assertThat(Card.valueOf(Shape.SPADE, CardValue.KING).getScore()).isEqualTo(10);
+        assertThat(Card.valueOf(Shape.SPADE, CardValue.NINE).getScore()).isEqualTo(9);
+    }
+
+    @Test
+    @DisplayName("카드 이름 테스트")
+    void getCardName() {
+        assertThat(Card.valueOf(Shape.SPADE, CardValue.ACE).getCardName()).isEqualTo("A스페이드");
+    }
+
+    @Test
+    @DisplayName("여러 개의 점수를 가질 수 있는 카드 테스트")
+    void hasMultipleValue() {
+        assertThat(Card.valueOf(Shape.SPADE, CardValue.ACE).hasMultipleValue()).isTrue();
+        assertThat(Card.valueOf(Shape.SPADE, CardValue.KING).hasMultipleValue()).isFalse();
+    }
 }

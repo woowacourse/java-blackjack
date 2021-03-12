@@ -24,7 +24,15 @@
     
 - [x] 출력 기능
     - [x] 결과 출력 기능
-    - [x] 승패 출력 기능 
+    - [x] 승패 출력 기능
+
+- [x] 배팅 기능
+    - [x] 배팅 금액이 문자열이거나 int 범위 밖인 경우 검증
+    - [x] 배팅 금액이 0이하인 경우 검증
+  
+- [x] 블랙잭 상태 추가
+
+- [x] 최종 수익 계산 기능
 
 ## 우아한테크코스 코드리뷰
 * [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)

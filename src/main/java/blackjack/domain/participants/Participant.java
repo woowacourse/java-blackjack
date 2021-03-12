@@ -1,49 +1,64 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.Response;
 import blackjack.domain.cards.Card;
-import blackjack.domain.cards.Deck;
 import blackjack.domain.cards.Hand;
-import java.util.ArrayList;
+import blackjack.domain.names.Name;
+import blackjack.domain.state.State;
+import blackjack.domain.state.finished.Blackjack;
+import blackjack.domain.state.finished.Bust;
+import blackjack.domain.state.hitstrategy.HitStrategy;
+import blackjack.domain.state.running.Hit;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public abstract class Participant {
 
     public static final int STARTING_CARD_COUNT = 2;
 
-    private final Hand hand;
     private final Name name;
-    private ParticipantStatus status;
+    private State state;
 
-    public Participant(String name, Deck deck) {
-        this.hand = new Hand(new ArrayList<>());
-        this.name = new Name(name);
-        this.status = ParticipantStatus.HIT;
-
-        IntStream.range(0, STARTING_CARD_COUNT).forEach(i -> draw(deck));
+    public Participant(Name name, HitStrategy hitStrategy) {
+        this.name = name;
+        this.state = new Hit(new Hand(), hitStrategy);
     }
 
-    protected abstract ParticipantStatus updateStatus(ParticipantStatus currentStatus);
+    public void draw(Card... cards) {
+        for (Card card : cards) {
+            validateToDraw();
+            state = state.draw(card);
+        }
+    }
 
-    public void draw(Deck deck) {
-        if (!isContinue()) {
+    private void validateToDraw() {
+        if (isNotContinue()) {
             throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
         }
-        hand.addCard(deck.draw());
-        status = updateStatus(status);
     }
 
-    protected void setStatus(ParticipantStatus status) {
-        this.status = status;
+    public void updateStateByResponse(Response response) {
+        state = getState().moveStateByResponse(response);
+    }
+
+    protected State getState() {
+        return state;
     }
 
     public boolean isContinue() {
-        return status == ParticipantStatus.HIT;
+        return !state.isFinished();
+    }
+
+    public boolean isNotContinue() {
+        return !isContinue();
     }
 
     public boolean isBust() {
-        return hand.isBust();
+        return state instanceof Bust;
+    }
+
+    public boolean isBlackJack() {
+        return state instanceof Blackjack;
     }
 
     public String getName() {
@@ -51,11 +66,11 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        return hand.getScore();
+        return state.getScore();
     }
 
     public List<Card> getHand() {
-        return hand.unwrap();
+        return state.getHand().unwrap();
     }
 
     @Override

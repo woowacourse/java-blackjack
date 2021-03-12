@@ -1,14 +1,14 @@
-package blackjack.domain.participants;
+package blackjack.domain.names;
 
 import java.util.Objects;
 
 public class Name {
 
-    private final String name;
+    private final String value;
 
-    public Name(String name) {
-        validateName(name);
-        this.name = name.trim();
+    public Name(String value) {
+        validateName(value);
+        this.value = value.trim();
     }
 
     private static void validateName(String name) {
@@ -18,7 +18,7 @@ public class Name {
     }
 
     public String unwrap() {
-        return name;
+        return value;
     }
 
     @Override
@@ -30,11 +30,11 @@ public class Name {
             return false;
         }
         Name name1 = (Name) o;
-        return Objects.equals(name, name1.name);
+        return Objects.equals(value, name1.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(value);
     }
 }
