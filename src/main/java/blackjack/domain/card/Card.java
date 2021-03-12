@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Card {
-    private static Map<String, Card> cards;
-
     public static final int CARDS_CAPACITY = 52;
+    private static Map<String, Card> cards;
 
     private final Suits suit;
     private final Denominations denomination;
