@@ -193,4 +193,18 @@ public class DealerTest {
 
         assertThat(state).isInstanceOf(Stay.class);
     }
+
+    @Test
+    @DisplayName("블랙잭인지 확인한다.")
+    void isBlackjack() {
+        Dealer dealer = new Dealer();
+        dealer.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+
+        boolean isBlackjack = dealer.isBlackjack();
+
+        assertThat(isBlackjack).isTrue();
+    }
 }

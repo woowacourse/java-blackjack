@@ -78,4 +78,8 @@ public abstract class User {
     public final void betMoney(Money money) {
         bettingMoney = money;
     }
+
+    public final boolean isBlackjack() {
+        return cards().totalScore().isBlackjack();
+    }
 }

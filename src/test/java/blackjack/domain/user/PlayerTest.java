@@ -207,4 +207,18 @@ public class PlayerTest {
 
         assertThat(state).isInstanceOf(Stay.class);
     }
+
+    @Test
+    @DisplayName("블랙잭인지 확인한다.")
+    void isBlackjack() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+
+        boolean isBlackjack = player.isBlackjack();
+
+        assertThat(isBlackjack).isTrue();
+    }
 }
