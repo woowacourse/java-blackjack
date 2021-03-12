@@ -31,42 +31,4 @@ class DealerTest {
             dealer.addCard(FIXTURE_FIVE);
         });
     }
-
-    @DisplayName("딜러와 플레이어들의 게임 결과 테스트 - 딜러 1승 1패")
-    @Test
-    void judgeGameResultWithGamers_1() {
-        // given
-        Gamer gamer1 = new Gamer("pobi", StateFactory.generateState(FIXTURE_KING, FIXTURE_SEVEN));
-
-        Gamer gamer2 = new Gamer("jason", StateFactory.generateState(FIXTURE_KING, FIXTURE_TWO));
-
-        Dealer dealer = new Dealer(StateFactory.generateState(FIXTURE_KING, FIXTURE_SIX));
-
-        // when
-        GameResult gameResult = dealer.judgeGameResultWithGamers(Arrays.asList(gamer1, gamer2));
-
-        // then
-        assertThat(gameResult.findResultByGamer(gamer1)).isSameAs(ResultType.WIN);
-        assertThat(gameResult.findResultByGamer(gamer2)).isSameAs(ResultType.LOSE);
-        assertThat(gameResult.getDealerResult()).containsExactly(ResultType.LOSE, ResultType.WIN);
-    }
-
-    @DisplayName("딜러와 플레이어들의 게임 결과 테스트 - 딜러 2무")
-    @Test
-    void judgeGameResultWithGamers_2() {
-        // given
-        Gamer gamer1 = new Gamer("pobi", StateFactory.generateState(FIXTURE_KING, FIXTURE_SIX));
-
-        Gamer gamer2 = new Gamer("jason", StateFactory.generateState(FIXTURE_KING, FIXTURE_SIX));
-
-        Dealer dealer = new Dealer(StateFactory.generateState(FIXTURE_KING, FIXTURE_SIX));
-
-        // when
-        GameResult gameResult = dealer.judgeGameResultWithGamers(Arrays.asList(gamer1, gamer2));
-
-        // then
-        assertThat(gameResult.findResultByGamer(gamer1)).isSameAs(ResultType.DRAW);
-        assertThat(gameResult.findResultByGamer(gamer2)).isSameAs(ResultType.DRAW);
-        assertThat(gameResult.getDealerResult()).containsExactly(ResultType.DRAW, ResultType.DRAW);
-    }
 }

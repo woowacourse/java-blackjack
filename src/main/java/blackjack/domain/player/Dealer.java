@@ -27,14 +27,6 @@ public class Dealer extends Player {
         state = state.draw(card);
     }
 
-    public GameResult judgeGameResultWithGamers(List<Gamer> gamers) {
-        Map<Player, ResultType> gamersResult = new HashMap<>();
-        for (Gamer gamer : gamers) {
-            gamersResult.put(gamer, ResultType.judgeGameResult(this, gamer));
-        }
-        return GameResult.of(gamersResult);
-    }
-
     @Override
     public boolean canDraw() {
         return calculateScore() <= DRAW_STANDARD;

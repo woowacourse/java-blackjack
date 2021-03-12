@@ -31,7 +31,7 @@ public class BlackjackController {
         progressDealerHitOrStand(dealer, deck);
 
         OutputView.printPlayersScoreInfo(PlayerDto.from(dealer), PlayersDto.from(gamers));
-        GameResult gameResult = dealer.judgeGameResultWithGamers(gamers);
+        GameResult gameResult = GameResult.of(dealer, gamers);
         OutputView.printGameResult(gameResult);
     }
 
