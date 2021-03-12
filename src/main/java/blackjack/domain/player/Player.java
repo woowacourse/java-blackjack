@@ -8,6 +8,7 @@ public abstract class Player {
 
     protected final String name;
     protected State state;
+    protected double money;
 
     public Player(String name, State state) {
         this.name = name;
@@ -24,6 +25,13 @@ public abstract class Player {
         return state.calculateScore();
     }
 
+    public void betMoney(double money) {
+        if (money <= 0) {
+            throw new IllegalArgumentException("[ERROR] 플레이어의 베팅 금액은 0원 이상이어야합니다.");
+        }
+        this.money = money;
+    }
+
     public final boolean isBust() {
         return state.isBust();
     }
@@ -38,5 +46,9 @@ public abstract class Player {
 
     public Cards getCards() {
         return state.cards();
+    }
+
+    public State getState() {
+        return state;
     }
 }
