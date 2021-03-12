@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,8 +15,7 @@ public class CardDeckFactory {
         }
     }
 
-    public static CardDeck make() {
-        Collections.shuffle(cards);
-        return new CardDeck(cards);
+    public static CardDeck make(ShuffleStrategy shuffleStrategy) {
+        return new CardDeck(shuffleStrategy.shuffle(cards));
     }
 }

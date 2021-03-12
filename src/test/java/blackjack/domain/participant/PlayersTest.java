@@ -88,7 +88,7 @@ public class PlayersTest {
     @Test
     @DisplayName("Players receiveInitialCard 테스트")
     void receiveInitialCard() {
-        final CardDeck cardDeck = CardDeckFactory.make();
+        final CardDeck cardDeck = CardDeckFactory.make(new RandomShuffleStrategy());
         List<String> playerName = Arrays.asList("joel", "bada", "jon");
         final Players players = Players.of(playerName);
 

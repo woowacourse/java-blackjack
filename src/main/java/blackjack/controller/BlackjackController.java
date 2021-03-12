@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardDeckFactory;
+import blackjack.domain.card.RandomShuffleStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public class BlackjackController {
     public void run() {
-        final CardDeck cardDeck = CardDeckFactory.make();
+        final CardDeck cardDeck = CardDeckFactory.make(new RandomShuffleStrategy());
         final Dealer dealer = new Dealer();
         final Players players = playerSetUp();
 

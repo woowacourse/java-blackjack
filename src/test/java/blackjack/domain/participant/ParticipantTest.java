@@ -38,7 +38,7 @@ public class ParticipantTest {
     @Test
     @DisplayName("블랙잭 게임을 위해 최초 2장을 받는지 테스트")
     void receiveInitialCard() {
-        final CardDeck cardDeck = CardDeckFactory.make();
+        final CardDeck cardDeck = CardDeckFactory.make(new RandomShuffleStrategy());
         player.receiveInitialCard(cardDeck);
         dealer.receiveInitialCard(cardDeck);
 
