@@ -26,7 +26,7 @@ class StateTest {
 
     @DisplayName("처음 두 장의 카드 합이 21일 경우 블랙잭이 되는데, 딜러 또한 블랙잭이면 베팅 금액을 딜러에게 받는다. 즉, 수익은 0원")
     @Test
-    void playerRateWhenDealerBlackJackTest() {
+    void playerRaeWhenDealerBlackJackTest() {
         State state = StateFactory.draw(SPADE_ACE, SPADE_TEN);
         Player player = new Player(state, "pobi");
 
@@ -50,5 +50,45 @@ class StateTest {
 
         BigDecimal profit = player.getState().profit(dealer.getState(), new BigDecimal("10000"));
         assertThat(profit).isEqualTo(new BigDecimal("-10000"));
+    }
+
+    @DisplayName("딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리해 베팅 금액을 받는다.")
+    @Test
+    void dealerLooseWhenBuster() {
+        State state = StateFactory.draw(HEART_TEN, SPADE_TEN);
+        Player player = new Player(state, "pobi");
+        State stay = player.getState().stay();
+        player.changeState(stay);
+
+        State dealerState = StateFactory.draw(HEART_TWO, HEART_TEN);
+        Dealer dealer = new Dealer(dealerState);
+        State draw = dealer.getState().draw(SPADE_TEN);
+        dealer.changeState(draw);
+        BigDecimal profit = player.getState().profit(dealer.getState(), new BigDecimal("10000"));
+
+        assertThat(profit).isEqualTo(new BigDecimal("10000"));
+    }
+
+    @DisplayName("딜러와 플레이어가 21이하이고, 둘다 블랙잭이 아닐 때 점수가 높은 쪽이 배팅한 금액만큼을 가지게 된다.")
+    @Test
+    void resultTest() {
+        State state = StateFactory.draw(HEART_TWO, SPADE_TEN);
+        Player player = new Player(state, "pobi");
+        State stay = player.getState().stay();
+        player.changeState(stay);
+
+        State drawState = StateFactory.draw(HEART_TEN, SPADE_TEN);
+        Player drawPlayer = new Player(drawState, "tobi");
+        State drawStay = drawPlayer.getState().stay();
+        drawPlayer.changeState(drawStay);
+
+        State dealerState = StateFactory.draw(HEART_JACK, HEART_TEN);
+        Dealer dealer = new Dealer(dealerState);
+        BigDecimal profit = player.getState().profit(dealer.getState(), new BigDecimal("10000"));
+        BigDecimal profit2 = drawPlayer.getState().profit(dealer.getState(), new BigDecimal("10000"));
+
+        assertThat(profit).isEqualTo(new BigDecimal("-10000"));
+        assertThat(profit2).isEqualTo(new BigDecimal("0"));
+
     }
 }

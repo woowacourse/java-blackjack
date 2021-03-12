@@ -10,7 +10,15 @@ public class Stay extends Finish {
     }
 
     @Override
-    public BigDecimal getEarningRates(State state) {
+    public BigDecimal getEarningRates(State dealerState) {
+        if (dealerState.calculateScore() > cards().calculateScore()) {
+            return new BigDecimal("-1");
+        }
+
+        if (dealerState.calculateScore() == cards().calculateScore()) {
+            return new BigDecimal("0");
+        }
+
         return new BigDecimal("1");
     }
 }
