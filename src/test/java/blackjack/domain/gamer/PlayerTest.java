@@ -16,7 +16,7 @@ public class PlayerTest {
     void create() {
         Participant player = new Player(new Name("john"));
 
-        assertThat(player.getName()).isEqualTo("john");
+        assertThat(player.getName()).isEqualTo(new Name("john"));
     }
 
     @Test
@@ -26,7 +26,7 @@ public class PlayerTest {
         final Cards cards = new Cards(Collections.emptyList());
 
         Participant player = new Player(sarah, cards);
-        assertThat(player.getName()).isEqualTo("sarah");
+        assertThat(player.getName()).isEqualTo(sarah);
     }
 
     @Test
