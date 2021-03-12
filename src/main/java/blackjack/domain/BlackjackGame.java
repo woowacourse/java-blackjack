@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Money;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Users;
 
@@ -11,7 +12,7 @@ public class BlackjackGame {
     private final Deck deck;
     private final Users users;
 
-    public BlackjackGame(List<String> names, List<Integer> moneyGroup) {
+    public BlackjackGame(List<String> names, List<Double> moneyGroup) {
         this.deck = new Deck();
         this.users = new Users(new Dealer(), names, moneyGroup);
     }
@@ -51,5 +52,9 @@ public class BlackjackGame {
 
     public List<Player> getPlayers() {
         return this.users.getPlayers();
+    }
+
+    public List<Money> getProfit() {
+        return this.users.getProfit();
     }
 }

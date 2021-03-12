@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.result.ResultBoard;
+//import blackjack.domain.result.ResultBoard;
 import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -11,7 +11,7 @@ import java.util.List;
 public class BlackjackController {
     public void run() {
         List<String> names = setUpNames();
-        List<Integer> moneyGroup = setUpMoneyGroup(names);
+        List<Double> moneyGroup = setUpMoneyGroup(names);
         BlackjackGame blackjackGame = new BlackjackGame(names, moneyGroup);
         distributeCards(blackjackGame);
         showUsersCards(blackjackGame);
@@ -25,7 +25,7 @@ public class BlackjackController {
         return InputView.inputNames();
     }
 
-    private List<Integer> setUpMoneyGroup(List<String> names) {
+    private List<Double> setUpMoneyGroup(List<String> names) {
         return InputView.inputMoneyGroup(names);
     }
 
@@ -68,6 +68,7 @@ public class BlackjackController {
 
     private void showResults(BlackjackGame blackjackGame) {
         OutputView.printResults(blackjackGame.getUsers());
-        OutputView.printResultBoard(new ResultBoard(blackjackGame.getDealer(), blackjackGame.getPlayers()));
+        OutputView.printProfit(blackjackGame.getUsers());
+//        OutputView.printResultBoard(new ResultBoard(blackjackGame.getDealer(), blackjackGame.getPlayers()));
     }
 }

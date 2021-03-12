@@ -1,7 +1,9 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.*;
-import blackjack.domain.result.Result;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Shape;
+import blackjack.domain.card.Value;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -70,26 +72,9 @@ public class PlayerTest {
         assertThat(player.getCards()).hasSize(2);
     }
 
-    @DisplayName("딜러에 버스트가 있고 플레이어에 버스트가 없는 경우를 확인한다. - 플레이어 승")
+    @DisplayName("플레이어가 버스트인 경우를 확인한다. - 플레이어 패")
     @Test
-    public void decideBustPlayerWin() {
-        Dealer dealer = new Dealer();
-        dealer.distribute(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING),
-                new Card(Shape.HEART, Value.QUEEN)
-        )));
-        player.distribute(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
-        )));
-
-        assertThat(player.decide(dealer)).isEqualTo(Result.WIN);
-    }
-
-    @DisplayName("플레이어에 버스트가 있는 경우를 확인한다. - 플레이어 패")
-    @Test
-    public void decideBustPlayerLose() {
+    public void decidePlayerBust() {
         Dealer dealer = new Dealer();
         dealer.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
@@ -101,56 +86,88 @@ public class PlayerTest {
                 new Card(Shape.HEART, Value.QUEEN)
         )));
 
-        assertThat(player.decide(dealer)).isEqualTo(Result.LOSE);
+        assertThat(player.decide(dealer)).isEqualTo(new Money(-10000));
     }
 
-    @DisplayName("딜러와 플레이어 버스트가 없는 경우를 확인한다. - 플레이어 승")
+    @DisplayName("딜러가 버스트이고 플레이어가 버스트가 아닌 경우를 확인한다. - 플레이어 승")
     @Test
-    public void decideWin() {
+    public void decideDealerBustPlayerNotBust() {
         Dealer dealer = new Dealer();
         dealer.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.TWO)
+                new Card(Shape.CLOVER, Value.KING),
+                new Card(Shape.HEART, Value.QUEEN)
         )));
         player.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.TWO),
-                new Card(Shape.HEART, Value.NINE)
+                new Card(Shape.CLOVER, Value.KING)
         )));
 
-        assertThat(player.decide(dealer)).isEqualTo(Result.WIN);
+        assertThat(player.decide(dealer)).isEqualTo(new Money(10000));
     }
 
-    @DisplayName("딜러와 플레이어 버스트가 없는 경우를 확인한다. - 무승부")
+    @DisplayName("딜러가 버스트이고 플레이어가 블랙잭인 경우를 확인한다. - 플레이어 승")
     @Test
-    public void decideLose() {
+    public void decideDealerBustPlayerBlackjack() {
         Dealer dealer = new Dealer();
         dealer.distribute(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.TWO)
+                new Card(Shape.CLOVER, Value.KING),
+                new Card(Shape.HEART, Value.QUEEN)
         )));
         player.distribute(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.TWO)
+                new Card(Shape.SPACE, Value.ACE),
+                new Card(Shape.CLOVER, Value.KING)
         )));
 
-        assertThat(player.decide(dealer)).isEqualTo(Result.STANDOFF);
+        assertThat(player.decide(dealer)).isEqualTo(new Money(15000));
     }
 
-    @DisplayName("딜러와 플레이어 버스트가 없는 경우를 확인한다. - 플레이어 패")
+    @DisplayName("딜러와 플레이어 모두 블랙잭인 경우를 확인한다. - 무승부")
     @Test
-    public void decideStandoff() {
+    public void decideDealerAndPlayerBlackjack() {
         Dealer dealer = new Dealer();
         dealer.distribute(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.TWO),
-                new Card(Shape.HEART, Value.NINE)
+                new Card(Shape.DIAMOND, Value.ACE),
+                new Card(Shape.CLOVER, Value.KING)
         )));
         player.distribute(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.TWO)
+                new Card(Shape.DIAMOND, Value.ACE),
+                new Card(Shape.CLOVER, Value.KING)
         )));
 
-        assertThat(player.decide(dealer)).isEqualTo(Result.LOSE);
+        assertThat(player.decide(dealer)).isEqualTo(new Money(10000));
+    }
+
+    @DisplayName("딜러가 블랙잭인 경우를 확인한다. - 플레이어 패")
+    @Test
+    public void decideDealerBlackjack() {
+        Dealer dealer = new Dealer();
+        dealer.distribute(new Cards(Arrays.asList(
+                new Card(Shape.DIAMOND, Value.ACE),
+                new Card(Shape.CLOVER, Value.KING)
+        )));
+        player.distribute(new Cards(Arrays.asList(
+                new Card(Shape.DIAMOND, Value.ACE),
+                new Card(Shape.CLOVER, Value.FIVE)
+        )));
+
+        assertThat(player.decide(dealer)).isEqualTo(new Money(-10000));
+    }
+
+    @DisplayName("플레이어가 블랙잭인 경우를 확인한다. - 플레이어 승")
+    @Test
+    public void decidePlayerBlackjack() {
+        Dealer dealer = new Dealer();
+        dealer.distribute(new Cards(Arrays.asList(
+                new Card(Shape.DIAMOND, Value.ACE),
+                new Card(Shape.CLOVER, Value.FIVE)
+        )));
+        player.distribute(new Cards(Arrays.asList(
+                new Card(Shape.DIAMOND, Value.ACE),
+                new Card(Shape.CLOVER, Value.KING)
+        )));
+
+        assertThat(player.decide(dealer)).isEqualTo(new Money(15000));
     }
 }

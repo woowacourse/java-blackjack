@@ -1,11 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.Result;
-import blackjack.domain.result.ResultBoard;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.User;
-import blackjack.domain.user.Users;
+//import blackjack.domain.result.ResultBoard;
+import blackjack.domain.user.*;
 
 import java.util.List;
 
@@ -73,15 +70,27 @@ public class OutputView {
                 user.getScore());
     }
 
-    public static void printResultBoard(ResultBoard resultBoard) {
-        System.out.println("\n## 최종 승패");
-        System.out.print("딜러: ");
-        for (Result result : resultBoard.getDealerResultBoard().keySet()) {
-            System.out.print(resultBoard.getDealerResultBoard().get(result) + result.getResult() + " ");
-        }
-        System.out.println();
-        for (Player player : resultBoard.getPlayerResultBoard().keySet()) {
-            System.out.println(player.getName() + ": " + resultBoard.getPlayerResultBoard().get(player).getResult());
+    public static void printProfit(Users users) {
+        System.out.println("\n## 최종 수익");
+        printEachProfit(users, users.getProfit());
+    }
+
+    private static void printEachProfit(Users users, List<Money> profit) {
+        System.out.println(users.getDealer().getName() + ": " + profit.get(0).toInteger());
+        for (int i = 0; i < users.getPlayers().size(); i++) {
+            System.out.println(users.getPlayers().get(i).getName() + ": " + profit.get(i+1).toInteger());
         }
     }
+
+//    public static void printResultBoard(ResultBoard resultBoard) {
+//        System.out.println("\n## 최종 승패");
+//        System.out.print("딜러: ");
+//        for (Result result : resultBoard.getDealerResultBoard().keySet()) {
+//            System.out.print(resultBoard.getDealerResultBoard().get(result) + result.getResult() + " ");
+//        }
+//        System.out.println();
+//        for (Player player : resultBoard.getPlayerResultBoard().keySet()) {
+//            System.out.println(player.getName() + ": " + resultBoard.getPlayerResultBoard().get(player).getResult());
+//        }
+//    }
 }

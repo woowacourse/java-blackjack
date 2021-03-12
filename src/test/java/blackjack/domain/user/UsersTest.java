@@ -18,7 +18,7 @@ public class UsersTest {
     public void setUp() {
         users = new Users(new Dealer(),
                 Arrays.asList("amazzi", "dani", "pobi"),
-                Arrays.asList(10000, 10000, 20000));
+                Arrays.asList(10000.0, 10000.0, 20000.0));
     }
 
     @DisplayName("이름별로 참여자들을 생성한다.")

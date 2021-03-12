@@ -13,7 +13,8 @@ public class InputView {
     private static final String NO = "n";
     private static final String WITH_BLANK = "\\s+";
     private static final String NO_BLANK = "";
-    private static final String ONLY_NUMBER = "^[0-9]+$";
+    private static final String ONLY_NUMBER = "^[+-]?[0-9]+$";
+    private static final double MINIMUM_BOUND = 0.0;
 
     private InputView() {
     }
@@ -26,19 +27,27 @@ public class InputView {
         throw new IllegalArgumentException("구분자는 콤마로 입력해주세요.");
     }
 
-    public static List<Integer> inputMoneyGroup(List<String> names) {
+    public static List<Double> inputMoneyGroup(List<String> names) {
         return names.stream()
                 .map(InputView::inputMoney)
                 .collect(toList());
     }
 
-    private static int inputMoney(String name) {
+    private static double inputMoney(String name) {
         OutputView.printInputMoney(name);
         String input = deleteWhiteSpaces(SCANNER.nextLine());
-        if(input.matches(ONLY_NUMBER)) {
-            return Integer.parseInt(input);
+        if (input.matches(ONLY_NUMBER)) {
+            validateMoney(input);
+            return Double.parseDouble(input);
         }
         throw new IllegalArgumentException("베팅 금액은 숫자만 입력해주세요.");
+    }
+
+    private static void validateMoney(String input) {
+        if (Double.parseDouble(input) > MINIMUM_BOUND) {
+            return;
+        }
+        throw new IllegalArgumentException("베팅 금액은 양의 정수로 입력해주세요.");
     }
 
     public static boolean inputHitYes() {

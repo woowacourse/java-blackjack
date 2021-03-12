@@ -12,7 +12,8 @@ import java.util.List;
 public abstract class User {
     protected final Cards cards;
     protected final Name name;
-//    protected final State state;
+
+    protected State state;
 
     public User(String name){
         this(new Name(name));
@@ -32,7 +33,7 @@ public abstract class User {
     }
 
 //    public void draw(Deck deck) {
-//        state = state.draw(deck.popOne());
+//        state = state.draw(deck.popOne().oneCard());
 //    }
 
     public boolean isBust() {
@@ -41,6 +42,10 @@ public abstract class User {
 
     public boolean isBlackjack() {
         return this.cards.isBlackjack();
+    }
+
+    public double getProfit(Money money) {
+        return this.state.calculateProfit(money);
     }
 
     public int getScore() {
