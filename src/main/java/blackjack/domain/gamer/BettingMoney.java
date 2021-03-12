@@ -6,6 +6,7 @@ import java.math.RoundingMode;
 import java.util.Objects;
 
 public class BettingMoney {
+    public static final BettingMoney ZERO = new BettingMoney(0);
 
     private final BigDecimal money;
 

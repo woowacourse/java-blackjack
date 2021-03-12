@@ -65,4 +65,4 @@
 - [ ] 승패로직에서 Player를 인자로 넘겨주기
 - [ ] 딜러의 수익 결과 출력
 - [x] 딜러 이름 상수화
-- [ ] emptyCards 상수화, BettingMoney(0) -> Player
+- [x] emptyCards 상수화, BettingMoney(0) -> Player
