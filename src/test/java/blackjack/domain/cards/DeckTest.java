@@ -1,5 +1,6 @@
 package blackjack.domain.cards;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
@@ -10,21 +11,22 @@ import org.junit.jupiter.api.Test;
 
 public class DeckTest {
 
-    private Deck deck;
-
-    @BeforeEach
-    void setUp() {
-        deck = new Deck(Arrays.asList(
-            Card.valueOf(Shape.DIAMOND, CardValue.ACE),
-            Card.valueOf(Shape.SPADE, CardValue.ACE)));
-    }
-
     @Test
     @DisplayName("덱이 소진되었을 경우 검증")
     void notEnoughCards() {
-        deck = new Deck(new ArrayList<>());
-        assertThatThrownBy(() -> deck.draw())
+        Deck deck = new Deck(new ArrayList<>());
+        assertThatThrownBy(deck::draw)
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("덱이 모두 소진되었습니다.");
+    }
+
+    @Test
+    @DisplayName("카드가 순서대로 뽑아지는지 확인")
+    void draw() {
+        Deck deck = new Deck(Arrays.asList(
+            Card.valueOf(Shape.DIAMOND, CardValue.ACE),
+            Card.valueOf(Shape.SPADE, CardValue.ACE)));
+        assertThat(deck.draw()).isEqualTo(Card.valueOf(Shape.DIAMOND, CardValue.ACE));
+        assertThat(deck.draw()).isEqualTo(Card.valueOf(Shape.SPADE, CardValue.ACE));
     }
 }

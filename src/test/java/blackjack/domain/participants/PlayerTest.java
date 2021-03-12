@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.CardDistributor;
-import blackjack.domain.CardDistributorForTest;
 import blackjack.domain.Response;
 import blackjack.domain.ResultType;
 import blackjack.domain.cards.Card;
@@ -20,22 +19,6 @@ import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
-    private CardDistributor cardDistributor;
-
-    @BeforeEach
-    void setUp() {
-        Deck deck = new Deck(Arrays.asList(
-            Card.valueOf(Shape.DIAMOND, CardValue.TEN),
-            Card.valueOf(Shape.SPADE, CardValue.EIGHT),
-            Card.valueOf(Shape.DIAMOND, CardValue.ACE),
-            Card.valueOf(Shape.HEART, CardValue.EIGHT),
-            Card.valueOf(Shape.SPADE, CardValue.TEN),
-            Card.valueOf(Shape.CLOVER, CardValue.EIGHT),
-            Card.valueOf(Shape.CLOVER, CardValue.TEN),
-            Card.valueOf(Shape.SPADE, CardValue.SEVEN)));
-        cardDistributor = new CardDistributor(deck);
-    }
-
     @Test
     @DisplayName("플레이어 생성")
     void create() {
@@ -47,30 +30,23 @@ public class PlayerTest {
     @DisplayName("카드 한 장 뽑는 기능")
     void drawCard() {
         Player root = new Player(new Name("root"), Betting.valueOf("1"));
-
-        cardDistributor.distributeCardTo(root);
+        root.draw(Card.valueOf(Shape.DIAMOND, CardValue.TEN));
         assertThat(root.getHand()).containsExactly(
             Card.valueOf(Shape.DIAMOND, CardValue.TEN));
     }
 
     @Test
     @DisplayName("버스트 경우 계속 드로우 하려고 하는 경우 예외처리")
-    void drawCardOverSix() {
-        Deck deck = new Deck(Arrays.asList(
-            Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
-            Card.valueOf(Shape.SPADE, CardValue.SEVEN),
-            Card.valueOf(Shape.SPADE, CardValue.FIVE),
-            Card.valueOf(Shape.SPADE, CardValue.TWO)));
-        cardDistributor = new CardDistributor(deck);
-
+    void drawCardOverBust() {
         Player root = new Player(new Name("root"), Betting.valueOf("1"));
-        for (int i = 0; i < 3; i++) {
-            cardDistributor.distributeCardTo(root);
-        }
 
         assertThatIllegalStateException().isThrownBy(() ->
-            cardDistributor.distributeCardTo(root))
-            .withMessage("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
+            root.draw(
+                Card.valueOf(Shape.DIAMOND, CardValue.QUEEN),
+                Card.valueOf(Shape.SPADE, CardValue.SEVEN),
+                Card.valueOf(Shape.SPADE, CardValue.FIVE),
+                Card.valueOf(Shape.SPADE, CardValue.TWO)
+            )).withMessage("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
     }
 
     @Test
@@ -78,52 +54,38 @@ public class PlayerTest {
     void willContinue() {
         Player root = new Player(new Name("root"), Betting.valueOf("1"));
 
-        root.updateStateByResponse(Response.getResponse("y"));
+        root.updateStateByResponse(Response.POSITIVE);
         assertThat(root.isContinue()).isTrue();
 
-        root.updateStateByResponse(Response.getResponse("n"));
+        root.updateStateByResponse(Response.NEGATIVE);
         assertThat(root.isContinue()).isFalse();
-
-        assertThatThrownBy(() ->
-            root.updateStateByResponse(Response.getResponse("x")))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("불가능한 입력 입니다.");
-    }
-
-    @Test
-    @DisplayName("승패 결과")
-    void match() {
-        CardDistributorForTest cardDistributorForTest = CardDistributorForTest
-            .valueOf(cardDistributor);
-        Dealer dealer = new Dealer();
-        cardDistributorForTest.distributeCardsTo(dealer, 2);
-        Player pobi = new Player(new Name("pobi"), Betting.valueOf("1"));
-        cardDistributorForTest.distributeCardsTo(pobi, 2);
-        Player jason = new Player(new Name("jason"), Betting.valueOf("1"));
-        cardDistributorForTest.distributeCardsTo(jason, 2);
-        Player root = new Player(new Name("root"), Betting.valueOf("1"));
-        cardDistributorForTest.distributeCardsTo(root, 2);
-
-        assertThat(pobi.match(dealer)).isEqualTo(ResultType.WIN);
-        assertThat(jason.match(dealer)).isEqualTo(ResultType.TIE);
-        assertThat(root.match(dealer)).isEqualTo(ResultType.LOSE);
     }
 
     @Test
     @DisplayName("승패 결과에 따른 수익 계산")
     void matchForProfit() {
-        CardDistributorForTest cardDistributorForTest =
-            CardDistributorForTest.valueOf(cardDistributor);
         Dealer dealer = new Dealer();
-        cardDistributorForTest.distributeCardsTo(dealer, 2);
+        dealer.draw(
+            Card.valueOf(Shape.DIAMOND, CardValue.TEN),
+            Card.valueOf(Shape.SPADE, CardValue.EIGHT)
+        );
         Player pobi = new Player(new Name("pobi"), Betting.valueOf("1000"));
-        cardDistributorForTest.distributeCardsTo(pobi, 2);
+        pobi.draw(
+            Card.valueOf(Shape.DIAMOND, CardValue.ACE),
+            Card.valueOf(Shape.HEART, CardValue.EIGHT)
+        );
         pobi.updateStateByResponse(Response.NEGATIVE);
         Player jason = new Player(new Name("jason"), Betting.valueOf("1000"));
-        cardDistributorForTest.distributeCardsTo(jason, 2);
+        jason.draw(
+            Card.valueOf(Shape.SPADE, CardValue.TEN),
+            Card.valueOf(Shape.CLOVER, CardValue.EIGHT)
+        );
         jason.updateStateByResponse(Response.NEGATIVE);
         Player root = new Player(new Name("root"), Betting.valueOf("1000"));
-        cardDistributorForTest.distributeCardsTo(root, 2);
+        root.draw(
+            Card.valueOf(Shape.CLOVER, CardValue.TEN),
+            Card.valueOf(Shape.SPADE, CardValue.SEVEN)
+        );
         root.updateStateByResponse(Response.NEGATIVE);
 
         assertThat(pobi.matchForProfit(dealer)).isEqualTo(1000);

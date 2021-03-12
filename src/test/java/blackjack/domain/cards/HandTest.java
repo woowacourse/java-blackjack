@@ -58,4 +58,19 @@ public class HandTest {
             Card.valueOf(Shape.SPADE, CardValue.ACE)));
         assertThat(validHand.isBust()).isFalse();
     }
+
+    @Test
+    @DisplayName("블랙잭 확인 기능")
+    void isBlackJack() {
+        Hand bustHand = new Hand(Arrays.asList(
+            Card.valueOf(Shape.DIAMOND, CardValue.ACE),
+            Card.valueOf(Shape.SPADE, CardValue.KING)));
+        assertThat(bustHand.isBlackJack()).isTrue();
+
+        Hand validHand = new Hand(Arrays.asList(
+            Card.valueOf(Shape.DIAMOND, CardValue.FIVE),
+            Card.valueOf(Shape.SPADE, CardValue.NINE),
+            Card.valueOf(Shape.SPADE, CardValue.TWO)));
+        assertThat(validHand.isBlackJack()).isFalse();
+    }
 }

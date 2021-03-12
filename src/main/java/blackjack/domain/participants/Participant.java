@@ -24,11 +24,17 @@ public abstract class Participant {
         this.state = new Hit(new Hand(), hitStrategy);
     }
 
-    public void draw(Card card) {
+    public void draw(Card... cards) {
+        for (Card card : cards) {
+            validateToDraw();
+            state = state.draw(card);
+        }
+    }
+
+    private void validateToDraw() {
         if (isNotContinue()) {
             throw new IllegalStateException("더 이상 카드를 뽑을 수 없는 플레이어입니다.");
         }
-        state = state.draw(card);
     }
 
     public void updateStateByResponse(Response response) {

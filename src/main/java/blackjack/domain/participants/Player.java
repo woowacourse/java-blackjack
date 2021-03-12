@@ -15,7 +15,7 @@ public class Player extends Participant {
         this.betting = betting;
     }
 
-    public ResultType match(Dealer dealer) {
+    private ResultType match(Dealer dealer) {
         if (isBust()) {
             return ResultType.LOSE;
         }

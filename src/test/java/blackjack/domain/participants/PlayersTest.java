@@ -83,6 +83,7 @@ public class PlayersTest {
             players.nextPlayerToPrepare().updateStateByResponse(Response.NEGATIVE);
         }
 
+        assertThat(players.isNotPrepared()).isFalse();
         assertThatIllegalStateException().isThrownBy(players::nextPlayerToPrepare)
             .withMessage("이미 모든 플레이어가 준비가 되었습니다.");
     }

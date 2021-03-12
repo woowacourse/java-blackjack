@@ -19,7 +19,7 @@ public class NamesTest {
     @DisplayName("중복된 이름이 있는 경우 예외 처리")
     void duplicateNames() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-            Names.valueOf("pobi,jason,pobi"))
+            Names.valueOf("pobi,jason, pobi"))
             .withMessage("중복된 이름은 사용할 수 없습니다.");
     }
 }
