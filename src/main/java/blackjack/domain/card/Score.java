@@ -24,7 +24,7 @@ public class Score {
         this.value = value;
     }
 
-    public static Score of(final int score){
+    public static Score from(final int score){
         if(score < scores.length && scores[score] != null){
             return scores[score];
         }
@@ -54,13 +54,13 @@ public class Score {
 
     public Score useAceAsEleven() {
         if(value + EXTRA_SCORE_USING_ACE > BLACK_JACK){
-            return Score.of(value);
+            return Score.from(value);
         }
-        return Score.of(value + EXTRA_SCORE_USING_ACE);
+        return Score.from(value + EXTRA_SCORE_USING_ACE);
     }
 
     public Score addScore(final Score score) {
-        return Score.of(score.value + this.value);
+        return Score.from(score.value + this.value);
     }
 
     @Override

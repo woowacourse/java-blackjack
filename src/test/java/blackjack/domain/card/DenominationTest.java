@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.Denomination;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +11,7 @@ class DenominationTest {
     @Test
     @DisplayName("of를 통한 enum 객체 테스트")
     void testDenomination() {
-        Denomination denomination = Denomination.of("2");
+        Denomination denomination = Denomination.from("2");
         assertThat(denomination).isEqualTo(Denomination.TWO);
     }
 }

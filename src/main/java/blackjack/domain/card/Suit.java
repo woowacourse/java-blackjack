@@ -14,7 +14,7 @@ public enum Suit {
         this.suit = suit;
     }
 
-    static Suit of(final String value) {
+    static Suit from(final String value) {
         return Arrays.stream(Suit.values())
                 .filter(suit -> suit.isMatch(value))
                 .findFirst()

@@ -3,19 +3,19 @@ package blackjack.domain.card;
 import java.util.Arrays;
 
 public enum Denomination {
-    ACE("A", Score.of(1)),
-    TWO("2", Score.of(2)),
-    THREE("3", Score.of(3)),
-    FOUR("4", Score.of(4)),
-    FIVE("5", Score.of(5)),
-    SIX("6", Score.of(6)),
-    SEVEN("7", Score.of(7)),
-    EIGHT("8", Score.of(8)),
-    NINE("9", Score.of(9)),
-    TEN("10", Score.of(10)),
-    JACK("J", Score.of(10)),
-    QUEEN("Q", Score.of(10)),
-    KING("K", Score.of(10));
+    ACE("A", Score.from(1)),
+    TWO("2", Score.from(2)),
+    THREE("3", Score.from(3)),
+    FOUR("4", Score.from(4)),
+    FIVE("5", Score.from(5)),
+    SIX("6", Score.from(6)),
+    SEVEN("7", Score.from(7)),
+    EIGHT("8", Score.from(8)),
+    NINE("9", Score.from(9)),
+    TEN("10", Score.from(10)),
+    JACK("J", Score.from(10)),
+    QUEEN("Q", Score.from(10)),
+    KING("K", Score.from(10));
 
     private final String denomination;
     private final Score score;
@@ -25,7 +25,7 @@ public enum Denomination {
         this.score = score;
     }
 
-    public static Denomination of(final String denomination) {
+    public static Denomination from(final String denomination) {
         return Arrays.stream(Denomination.values())
                 .filter(value -> value.denomination.equals(denomination))
                 .findAny()

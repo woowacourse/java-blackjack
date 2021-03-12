@@ -11,35 +11,35 @@ public class ScoreTest {
     @Test
     @DisplayName("Score 생성 테스트")
     void testInit(){
-        Score score = Score.of(13);
-        assertThat(score).isEqualTo(Score.of(13));
+        Score score = Score.from(13);
+        assertThat(score).isEqualTo(Score.from(13));
     }
 
     @Test
     @DisplayName("유효하지 않은 Score 생성 테스트")
     void testInvalidScoreValue(){
         assertThatThrownBy(()->{
-            Score.of(-1);
+            Score.from(-1);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("21이 넘었는지 확인한다.")
     void testIsBust(){
-        Score score = Score.of(21);
+        Score score = Score.from(21);
         assertThat(score.isBust()).isFalse();
 
-        score = Score.of(22);
+        score = Score.from(22);
         assertThat(score.isBust()).isTrue();
     }
 
     @Test
     @DisplayName("점수가 21로, 블랙잭인지 확인한다.")
     void testIsBlackJack(){
-        Score score = Score.of(13);
+        Score score = Score.from(13);
         assertThat(score.isBlackJack()).isFalse();
 
-        score = Score.of(21);
+        score = Score.from(21);
         assertThat(score.isBlackJack()).isTrue();
     }
 }

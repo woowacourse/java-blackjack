@@ -48,7 +48,7 @@ public class BlackJackController {
     }
 
     private void askGamblerDraw(final BlackJackGame game, final Player gambler) {
-        while (YesOrNo.of(InputView.askDrawOrNot(gambler)).isYes()) {
+        while (YesOrNo.from(InputView.askDrawOrNot(gambler)).isYes()) {
             game.giveCard(gambler);
             OutputView.printPlayerCardsInformation(gambler.getNameValue(), gambler.getCards());
         }
