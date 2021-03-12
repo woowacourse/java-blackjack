@@ -35,7 +35,7 @@ public class BlackjackController {
         while (blackjackGame.isNotFinishPlayersRound()) {
             Player currentPlayer = blackjackGame.getCurrentPlayer();
             OutputView.printAskOneMoreCard(currentPlayer);
-            blackjackGame.proceedPlayersRound(InputView.inputDrawAnswer());
+            blackjackGame.proceedPlayersRound(InputView.inputString());
             OutputView.printPlayerCards(currentPlayer);
         }
     }
