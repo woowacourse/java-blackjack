@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum ResultType {
-    WIN("승", (dealer, gamer) -> {
+    WIN("승", 1,(dealer, gamer) -> {
         if (!dealer.isBlackjack() && gamer.isBlackjack()) {
             return true;
         }
@@ -15,13 +15,13 @@ public enum ResultType {
         }
         return !gamer.isBust() && dealer.calculateScore() < gamer.calculateScore();
     }),
-    DRAW("무", (dealer, gamer) -> {
+    DRAW("무", 0, (dealer, gamer) -> {
         if (dealer.isBlackjack() && gamer.isBlackjack()) {
             return true;
         }
         return dealer.calculateScore() == gamer.calculateScore();
     }),
-    LOSE("패", (dealer, gamer) -> {
+    LOSE("패", -1, (dealer, gamer) -> {
         if (dealer.isBlackjack() && !gamer.isBlackjack()) {
             return true;
         }
@@ -32,11 +32,12 @@ public enum ResultType {
     });
 
     private final String value;
+    private final int profit;
     private final BiFunction<Dealer, Gamer, Boolean> matcher;
 
-    ResultType(String value,
-        BiFunction<Dealer, Gamer, Boolean> matcher) {
+    ResultType(String value, int profit, BiFunction<Dealer, Gamer, Boolean> matcher) {
         this.value = value;
+        this.profit = profit;
         this.matcher = matcher;
     }
 
@@ -49,6 +50,10 @@ public enum ResultType {
 
     public String getValue() {
         return value;
+    }
+
+    public int getProfit() {
+        return profit;
     }
 
     public ResultType reverse() {

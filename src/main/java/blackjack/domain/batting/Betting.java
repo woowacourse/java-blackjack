@@ -3,7 +3,6 @@ package blackjack.domain.batting;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.result.ResultType;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -26,13 +25,8 @@ public class Betting {
         Map<Player, Double> profitResult = new LinkedHashMap<>();
         gameResult.getGamersResult().forEach((gamer, result) -> {
             double bettingAmount = gamersBattingAmount.getOrDefault(gamer, 0.0);
-            if (result == ResultType.WIN) {
-                profitResult.computeIfAbsent(gamer, (key) -> gamer.profit(bettingAmount * 1.0));
-            } else if (result == ResultType.DRAW) {
-                profitResult.computeIfAbsent(gamer, (key) -> gamer.profit(0));
-            } else if (result == ResultType.LOSE) {
-                profitResult.computeIfAbsent(gamer, (key) -> gamer.profit(bettingAmount * -1.0));
-            }
+            int profitWeight = result.getProfit();
+            profitResult.computeIfAbsent(gamer, (key) -> gamer.profit(bettingAmount * profitWeight));
         });
         return BettingResult.of(profitResult, calculateDealerProfit(profitResult));
     }
