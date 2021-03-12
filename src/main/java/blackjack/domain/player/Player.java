@@ -13,7 +13,7 @@ public abstract class Player {
     public Player(final Cards cards, final Name name) {
         this.hand = new Cards(cards.getList());
         this.name = new Name(name.value());
-        betMoney = new BetMoney(0);
+        betMoney = BetMoney.getInitMoney();
     }
 
     public abstract List<Card> getInitCards();

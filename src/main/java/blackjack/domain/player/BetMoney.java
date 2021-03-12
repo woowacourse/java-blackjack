@@ -2,6 +2,16 @@ package blackjack.domain.player;
 
 public class BetMoney {
     private final int money;
+    private static final int initAmount = 0;
+    private static final BetMoney initMoney;
+
+    static {
+        initMoney = new BetMoney(initAmount);
+    }
+
+    public static BetMoney getInitMoney() {
+        return initMoney;
+    }
 
     public BetMoney(final int money) {
         validateMoney(money);
