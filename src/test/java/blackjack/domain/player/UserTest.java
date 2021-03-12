@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.ResultType;
 import blackjack.domain.UserDrawContinue;
 import blackjack.domain.card.Card;
@@ -38,6 +39,11 @@ public class UserTest {
             .doesNotThrowAnyException();
         assertThatCode(() -> new User(POBI, MIN_BETTING_MONEY_BOUND))
             .doesNotThrowAnyException();
+
+        assertThatCode(() -> new User(new Name(POBI), new BettingMoney(MAX_BETTING_MONEY_BOUND)))
+            .doesNotThrowAnyException();
+        assertThatCode(() -> new User(new Name(POBI), new BettingMoney(MIN_BETTING_MONEY_BOUND)))
+            .doesNotThrowAnyException();
     }
 
     @DisplayName("배팅 금액이 1000원 미만이면, 예외 발생")
@@ -45,12 +51,22 @@ public class UserTest {
     void underBettingBoundException() {
         assertThatThrownBy(() -> new User(POBI, MIN_BETTING_MONEY_BOUND - 1))
             .isInstanceOf(IllegalArgumentException.class);
+
+        assertThatThrownBy(
+            () -> new User(new Name(POBI), new BettingMoney(MIN_BETTING_MONEY_BOUND - 1))
+        )
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("배팅 금액이 1억원 초과이면, 예외 발생")
     @Test
     void overBettingBoundException() {
         assertThatThrownBy(() -> new User(POBI, MAX_BETTING_MONEY_BOUND + 1))
+            .isInstanceOf(IllegalArgumentException.class);
+
+        assertThatThrownBy(
+            () -> new User(new Name(POBI), new BettingMoney(MAX_BETTING_MONEY_BOUND + 1))
+        )
             .isInstanceOf(IllegalArgumentException.class);
     }
 
