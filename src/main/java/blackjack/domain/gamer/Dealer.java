@@ -1,5 +1,6 @@
 package blackjack.domain.gamer;
 
+import blackjack.Application;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
@@ -12,11 +13,11 @@ public class Dealer implements Participant {
     private final Cards cards;
 
     public Dealer() {
-        this(new Name("딜러"), new Cards(Collections.emptyList()));
+        this(new Name(Application.DEALER_NAME), new Cards(Collections.emptyList()));
     }
 
     public Dealer(Cards cards) {
-        this(new Name("딜러"), cards);
+        this(new Name(Application.DEALER_NAME), cards);
     }
 
     public Dealer(Name name, Cards cards) {
