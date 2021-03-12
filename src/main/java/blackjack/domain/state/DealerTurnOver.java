@@ -11,6 +11,6 @@ public class DealerTurnOver extends Finish {
 
     @Override
     public BigDecimal getEarningRates(State dealerState) {
-        return new BigDecimal("-1");
+        return new BigDecimal("1");
     }
 }

@@ -11,6 +11,6 @@ public class Stay extends Finish {
 
     @Override
     public BigDecimal getEarningRates(State state) {
-        return new BigDecimal("-1");
+        return new BigDecimal("1");
     }
 }
