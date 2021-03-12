@@ -37,4 +37,24 @@ public class Players {
         }
         return result;
     }
+
+    public Map<String, Double> calculateProfitByMatchResult(Map<Player, MatchResult> matchResult, Map<String, Double> bettingMoneys) {
+        Map<String, Double> result = new LinkedHashMap<>();
+        matchResult.forEach((player, matchGame) -> result.put(player.getName(), calculateBettingMoney(matchGame, bettingMoneys.get(player.getName()), player)));
+
+        return result;
+    }
+
+    private double calculateBettingMoney(MatchResult matchResult, double money, Player player) {
+        if(matchResult.equals(MatchResult.WIN)){
+            if(player.isBlackjack()){
+                return money * 1.5;
+            }
+            return money;
+        }
+        if(matchResult.equals(MatchResult.LOSE)){
+            return money * -1;
+        }
+        return money * 0;
+    }
 }
