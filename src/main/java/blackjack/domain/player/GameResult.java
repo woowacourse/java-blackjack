@@ -14,20 +14,22 @@ public enum GameResult {
         this.earningRate = earningRate;
     }
 
+    public static GameResult opposite(GameResult gameResult) {
+        if (gameResult == GameResult.WIN) {
+            return GameResult.LOSE;
+        }
+        if (gameResult == GameResult.LOSE) {
+            return GameResult.WIN;
+        }
+        return GameResult.DRAW;
+    }
+
     public String getName() {
         return name;
     }
 
-    public double earningRate(){
+    public double earningRate() {
         return earningRate;
-    }
-
-    public static GameResult opposite(GameResult gameResult){
-        if(gameResult == GameResult.WIN)
-            return GameResult.LOSE;
-        if(gameResult == GameResult.LOSE)
-            return GameResult.WIN;
-        return GameResult.DRAW;
     }
 
 }

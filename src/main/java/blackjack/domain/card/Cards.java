@@ -23,7 +23,7 @@ public class Cards {
     }
 
     public void draw(Card card) {
-         cards.add(card);
+        cards.add(card);
     }
 
     public void initialDraw(Deck deck) {

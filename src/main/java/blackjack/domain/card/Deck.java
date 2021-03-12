@@ -15,7 +15,7 @@ public class Deck {
         cards = creatDeck();
     }
 
-    public Deck(Cards cards){
+    public Deck(Cards cards) {
         this.cards = new ArrayDeque<>(cards.getCards());
     }
 
