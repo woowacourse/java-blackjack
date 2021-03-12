@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 
 public class DtoAssembler {
 
-    private static final String DELIMITER = ", ";
-
     public static ParticipantDto createDealerInitStatusDto(final Dealer dealer) {
         return new ParticipantDto(
             createCardDtos(dealer.getInitCard()),
@@ -52,34 +50,25 @@ public class DtoAssembler {
     }
 
     public static ResultDto createDealerResultDto(final Dealer dealer, Players players) {
-        List<Result> results = getResults(dealer, players);
-        return new ResultDto(
-            getResultString(results, Result.WIN) + DELIMITER
-                + getResultString(results, Result.LOSE) + DELIMITER
-                + getResultString(results, Result.DRAW)
-        );
+        return new ResultDto(getSumOfAllPlayerProfits(dealer, players) * -1);
     }
 
-    private static List<Result> getResults(final Dealer dealer, final Players players) {
+    private static double getSumOfAllPlayerProfits(final Dealer dealer, final Players players) {
         return players.toList()
             .stream()
-            .map(player -> player.judgeByDealerState(dealer))
-            .map(Result::reverse)
-            .collect(Collectors.toList());
+            .mapToDouble(player -> player.profit(player.judgeByDealerState(dealer)))
+            .sum()
+            ;
     }
 
-    private static String getResultString(final List<Result> results, final Result result) {
-        return results.stream()
-            .filter(compareResult -> compareResult.equals(result))
-            .count() + result.getResult();
-    }
-
-    public static List<ResultDto> createPlayerResultDtos(final Dealer dealer,
-        final Players players) {
+    public static List<ResultDto> createPlayerResultDtos(final Dealer dealer, final Players players) {
         return players.toList()
             .stream()
-            .map(player -> new ResultDto(player.getName(),
-                player.judgeByDealerState(dealer).getResult()))
-            .collect(Collectors.toList());
+            .map(player -> new ResultDto(
+                player.getName(),
+                player.profit(player.judgeByDealerState(dealer)))
+            )
+            .collect(Collectors.toList())
+            ;
     }
 }
