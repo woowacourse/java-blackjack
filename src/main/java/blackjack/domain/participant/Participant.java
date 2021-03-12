@@ -1,10 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.state.Blackjack;
-import blackjack.domain.state.Bust;
-import blackjack.domain.state.StartRound;
-import blackjack.domain.state.State;
+import blackjack.domain.state.*;
 
 import java.util.List;
 
@@ -41,6 +38,10 @@ public abstract class Participant {
 
     public boolean isBust() {
         return state instanceof Bust;
+    }
+
+    public boolean isStay() {
+        return state instanceof Stay;
     }
 
     public List<Card> getCards() {

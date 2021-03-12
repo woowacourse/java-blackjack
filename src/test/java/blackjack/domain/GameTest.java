@@ -11,7 +11,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameTest {
     final List<String> names = Arrays.asList("wannte", "bepoz");
