@@ -12,9 +12,10 @@ public class InputView {
     public static final String INPUT_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     public static final String NAME_DELIMITER = ",";
     public static final String INPUT_YES_OR_NO_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    public static final String REPLY_ERROR_MESSAGE = "y나 n으로 입력을 해야합니다";
     public static final String YES_REPLY = "y";
     public static final String NO_REPLY = "n";
-    public static final String REPLY_ERROR_MESSAGE = "y나 n으로 입력을 해야합니다";
+    public static final String INPUT_BET_MONEY = "%s의 배팅 금액은?";
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -45,7 +46,7 @@ public class InputView {
     }
 
     public static String inputBettingMoney(Player player) {
-        OutputView.printMessage(player.getName() + "의 배팅 금액은?");
+        OutputView.printMessage(String.format(INPUT_BET_MONEY, player.getName()));
         return inputString();
     }
 

@@ -17,6 +17,7 @@ public class OutputView {
     public static final String RESULT_PREFIX = " - 결과 : %d" + LINE_SEPARATOR;
     public static final String NAME_PREFIX = "%s: ";
     public static final String GAME_RESULT_MESSAGE = "%d승 %d무 %d패" + LINE_SEPARATOR;
+    public static final String REVENUE_FORMAT = "%s: %d" + LINE_SEPARATOR;
 
     private OutputView() {
     }
@@ -87,7 +88,7 @@ public class OutputView {
     }
 
     public static void printFinalRevenue(Participant participant, double revenue) {
-        System.out.println(participant.getName() + ": " + (long) revenue);
+        System.out.printf(REVENUE_FORMAT, participant.getName(), (long) revenue);
     }
 
     public static void printMessage(String s) {
