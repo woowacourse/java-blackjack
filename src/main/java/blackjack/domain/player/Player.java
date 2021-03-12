@@ -10,6 +10,7 @@ public abstract class Player {
     private final Name name;
     private BetMoney betMoney;
 
+
     public Player(final Cards cards, final Name name) {
         this.hand = new Cards(cards.getList());
         this.name = new Name(name.value());
@@ -21,6 +22,7 @@ public abstract class Player {
     public void receiveMoreCard(final Card card) {
         hand.add(card);
     }
+
 
     public List<Card> getHand() {
         return hand.getList();

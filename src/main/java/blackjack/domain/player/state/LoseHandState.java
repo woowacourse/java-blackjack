@@ -2,9 +2,9 @@ package blackjack.domain.player.state;
 
 import blackjack.domain.result.Result;
 
-public class BlackJackWinState extends BlackJackState {
+public class LoseHandState extends NonBlackJackHandState {
     @Override
     public Result getResult() {
-        return Result.BLACKJACK;
+        return Result.LOSE;
     }
 }

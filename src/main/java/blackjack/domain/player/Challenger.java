@@ -2,32 +2,32 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.player.state.NonBlackJackState;
-import blackjack.domain.player.state.State;
+import blackjack.domain.player.state.HandState;
+import blackjack.domain.player.state.NonBlackJackHandState;
 import blackjack.domain.result.Result;
 
 import java.util.List;
 
 public class Challenger extends Player {
 
-    private State state;
+    private HandState handState;
 
     public Challenger(final Cards cards, final Name name) {
         super(cards, name);
-        state = new NonBlackJackState();
+        handState = new NonBlackJackHandState();
     }
 
     public Result getResult(final Dealer dealer) {
         if (isBust()) {
             return Result.LOSE;
         }
-        state.blackJackCheck(dealer, this);
-        state.compareCards(dealer, this);
-        return state.getResult();
+        handState.blackJackCheck(dealer, this);
+        handState.compareCards(dealer, this);
+        return handState.getResult();
     }
 
-    public void changeState(final State newSate) {
-        this.state = newSate;
+    public void changeState(final HandState newHandSate) {
+        this.handState = newHandSate;
     }
 
     @Override

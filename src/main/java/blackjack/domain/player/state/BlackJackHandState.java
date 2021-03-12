@@ -4,7 +4,7 @@ import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.result.Result;
 
-public class BlackJackState implements State {
+public class BlackJackHandState implements HandState {
     @Override
     public void blackJackCheck(final Dealer dealer, final Challenger challenger) {
         throw new UnsupportedOperationException();
@@ -13,10 +13,10 @@ public class BlackJackState implements State {
     @Override
     public void compareCards(final Dealer dealer, final Challenger challenger) {
         if (dealer.isBlackJack()) {
-            challenger.changeState(new DrawsState());
+            challenger.changeState(new DrawsHandState());
             return;
         }
-        challenger.changeState(new BlackJackWinState());
+        challenger.changeState(new BlackJackWinHandState());
     }
 
     @Override

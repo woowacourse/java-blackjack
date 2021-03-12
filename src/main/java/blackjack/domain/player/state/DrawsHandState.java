@@ -4,7 +4,7 @@ import blackjack.domain.player.Challenger;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.result.Result;
 
-public class DrawsState implements State {
+public class DrawsHandState implements HandState {
     @Override
     public void blackJackCheck(Dealer dealer, Challenger challenger) {
         throw new UnsupportedOperationException();
