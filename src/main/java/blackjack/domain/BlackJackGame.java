@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.money.Money;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.DealerResult;
 import blackjack.domain.user.Participants;
@@ -13,9 +14,9 @@ public class BlackJackGame {
     private final CardDeck entireCardDeck;
     private final Participants participants;
 
-    public BlackJackGame(String requestPlayers) {
+    public BlackJackGame(List<String> requestPlayers, List<Money> betCapital) {
         entireCardDeck = new CardDeck();
-        participants = new Participants(entireCardDeck, requestPlayers);
+        participants = new Participants(entireCardDeck, requestPlayers, betCapital);
     }
 
     public void dealerTurn() {

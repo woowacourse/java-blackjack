@@ -6,6 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.UserDeck;
+import blackjack.domain.money.Money;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,10 +37,10 @@ public class DealerResultTest {
         loseDeck.add(loseCard);
         List<Player> players = new ArrayList<>(
             Arrays.asList(
-                new Player("win", winDeck),
-                new Player("win", winDeck),
-                new Player("tie", tieDeck),
-                new Player("lose", loseDeck)
+                new Player("win", winDeck, new Money(0)),
+                new Player("win", winDeck, new Money(0)),
+                new Player("tie", tieDeck, new Money(0)),
+                new Player("lose", loseDeck, new Money(0))
             )
         );
         DealerResult dealerResult = new DealerResult(dealer, players);
@@ -66,9 +67,9 @@ public class DealerResultTest {
         loseDeck.add(loseCard);
         List<Player> players = new ArrayList<>(
             Arrays.asList(
-                new Player("win", winDeck),
-                new Player("tie", tieDeck),
-                new Player("lose", loseDeck)
+                new Player("win", winDeck, new Money(0)),
+                new Player("tie", tieDeck, new Money(0)),
+                new Player("lose", loseDeck, new Money(0))
             )
         );
         DealerResult dealerResult = new DealerResult(dealer, players);

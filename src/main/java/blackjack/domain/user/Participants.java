@@ -1,15 +1,17 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.money.Money;
+import java.util.List;
 
 public class Participants {
 
     private Dealer dealer;
     private Players players;
 
-    public Participants(CardDeck entireCardDeck, String requestPlayers) {
+    public Participants(CardDeck entireCardDeck, List<String> requestPlayers, List<Money> betCapital) {
         this.dealer = new Dealer(entireCardDeck.generateInitialUserDeck());
-        this.players = new Players(entireCardDeck, requestPlayers);
+        this.players = new Players(entireCardDeck, requestPlayers, betCapital);
     }
 
     public boolean isAvailableDealerTurn() {

@@ -6,6 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.UserDeck;
+import blackjack.domain.money.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +25,7 @@ public class PlayerTest {
     @DisplayName("플레이어 점수 테스트")
     void getPlayerPoint() {
         String name = "Sorong";
-        Player player = new Player(name, userDeck);
+        Player player = new Player(name, userDeck, new Money(0));
         int predictScore = 15;
 
         int playerScore = player.getPoint();
@@ -36,7 +37,7 @@ public class PlayerTest {
     @DisplayName("플레이어 드로우 성공 테스트")
     void getAvailableDraw() {
         String name = "Sorong";
-        Player player = new Player(name, userDeck);
+        Player player = new Player(name, userDeck, new Money(0));
 
         boolean actualDraw = player.isAvailableDraw();
 
@@ -48,7 +49,7 @@ public class PlayerTest {
     void getUnavailableDraw() {
         String name = "Sorong";
         Card card3 = Card.from("J", "다이아몬드");
-        Player player = new Player(name, userDeck);
+        Player player = new Player(name, userDeck, new Money(0));
         player.draw(card3);
 
         boolean actualDraw = player.isAvailableDraw();
@@ -59,7 +60,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어 승리 체크")
     void playerWin() {
-        Player player = new Player("sorong", userDeck);
+        Player player = new Player("sorong", userDeck, new Money(0));
         Card dealerCard = Card.from("J", "클로버");
         UserDeck dealerDeck = new UserDeck();
         dealerDeck.add(dealerCard);
@@ -74,7 +75,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어 무승부 체크")
     void playerTie() {
-        Player player = new Player("sorong", userDeck);
+        Player player = new Player("sorong", userDeck, new Money(0));
         Card dealerCard = Card.from("J", "클로버");
         Card dealerCard2 = Card.from("5", "하트");
         UserDeck dealerDeck = new UserDeck();
@@ -93,7 +94,7 @@ public class PlayerTest {
     void playerBurst() {
         Card card3 = Card.from("J", "다이아몬드");
         userDeck.add(card3);
-        Player player = new Player("sorong", userDeck);
+        Player player = new Player("sorong", userDeck, new Money(0));
         Card dealerCard = Card.from("J", "클로버");
         UserDeck dealerDeck = new UserDeck();
         dealerDeck.add(dealerCard);
@@ -108,7 +109,7 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어 패배 체크")
     void playerLose() {
-        Player player = new Player("sorong", userDeck);
+        Player player = new Player("sorong", userDeck, new Money(0));
         Card dealerCard = Card.from("J", "클로버");
         Card dealerCard2 = Card.from("K", "하트");
         UserDeck dealerDeck = new UserDeck();

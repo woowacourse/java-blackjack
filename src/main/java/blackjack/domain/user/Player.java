@@ -1,14 +1,15 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.UserDeck;
+import blackjack.domain.money.Money;
 import blackjack.domain.state.StateFactory;
 
 public class Player extends User {
 
     private final String name;
 
-    public Player(String name, UserDeck userDeck) {
-        super(StateFactory.draw(userDeck, UserDeck.BLACK_JACK_NUMBER));
+    public Player(String name, UserDeck userDeck, Money money) {
+        super(StateFactory.draw(userDeck, UserDeck.BLACK_JACK_NUMBER), money);
         this.name = name;
     }
 

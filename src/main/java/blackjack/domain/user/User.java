@@ -2,15 +2,18 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.UserDeck;
+import blackjack.domain.money.Money;
 import blackjack.domain.state.Bust;
 import blackjack.domain.state.State;
 
 public abstract class User {
 
     private State state;
+    private Money money;
 
-    public User(State state) {
+    public User(State state, Money money) {
         this.state = state;
+        this.money = money;
     }
 
     public void draw(Card card) {

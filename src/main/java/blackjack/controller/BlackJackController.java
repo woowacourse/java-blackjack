@@ -1,15 +1,19 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.money.Money;
 import blackjack.domain.user.DealerResult;
 import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
 
 public class BlackJackController {
 
     public void play() {
-        BlackJackGame blackJackGame = new BlackJackGame(InputView.requestPlayers());
+        List<String> requestPlayers = InputView.requestPlayers();
+        List<Money> requestCapital = InputView.requestCapital(requestPlayers);
+        BlackJackGame blackJackGame = new BlackJackGame(requestPlayers, requestCapital);
         OutputView.showInitiate(blackJackGame);
         process(blackJackGame);
         terminateGame(blackJackGame);

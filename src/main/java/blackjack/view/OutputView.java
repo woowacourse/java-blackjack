@@ -32,6 +32,7 @@ public class OutputView {
     }
 
     public static void showInitiate(BlackJackGame blackJackGame) {
+        System.out.println();
         Dealer dealer = blackJackGame.getDealer();
         Players players = blackJackGame.getPlayers();
         showName(players);
