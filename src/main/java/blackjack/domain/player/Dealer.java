@@ -3,7 +3,8 @@ package blackjack.domain.player;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
-import blackjack.domain.game.WinOrLose;
+
+import java.util.Objects;
 
 public class Dealer implements Player {
 
@@ -11,10 +12,12 @@ public class Dealer implements Player {
 
     private final Name name;
     private final Cards cards;
+    private Money money;
 
     public Dealer() {
         name = new Name("딜러");
         cards = new Cards();
+        this.money = new Money(0);
     }
 
     @Override
@@ -24,20 +27,9 @@ public class Dealer implements Player {
         }
     }
 
-    public WinOrLose calculateGamblerWinOrNot(final Player player) {
-        if (player.isBust()) {
-            return WinOrLose.LOSE;
-        }
-        if (isBust()) {
-            return WinOrLose.WIN;
-        }
-        if (isBiggerThan(player)) {
-            return WinOrLose.LOSE;
-        }
-        if (isLessThan(player)) {
-            return WinOrLose.WIN;
-        }
-        return WinOrLose.DRAW;
+    public void calculateProfit(Gambler gambler) {
+        Money dealerProfit = gambler.inverseMoney();
+        money = money.addMoney(dealerProfit);
     }
 
     @Override
@@ -61,6 +53,11 @@ public class Dealer implements Player {
     }
 
     @Override
+    public boolean isSameName(Player player) {
+        return Objects.equals(this.name(), player.name());
+    }
+
+    @Override
     public Cards cards() {
         return cards;
     }
@@ -73,6 +70,11 @@ public class Dealer implements Player {
     @Override
     public Score score() {
         return cards.totalScore();
+    }
+
+    @Override
+    public Money money() {
+        return money;
     }
 
     public boolean ableToDraw() {
