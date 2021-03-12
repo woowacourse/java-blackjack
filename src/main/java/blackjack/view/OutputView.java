@@ -3,15 +3,8 @@ package blackjack.view;
 import blackjack.domain.batting.BettingResult;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerDto;
-import blackjack.domain.player.Player;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayersDto;
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.ResultType;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {

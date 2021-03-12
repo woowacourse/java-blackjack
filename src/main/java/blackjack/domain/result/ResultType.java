@@ -1,12 +1,8 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
-import blackjack.domain.player.Player;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.BiFunction;
 
 public enum ResultType {

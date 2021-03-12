@@ -1,6 +1,8 @@
 package blackjack.domain.state.running;
 
-import static blackjack.domain.Fixture.*;
+import static blackjack.domain.Fixture.FIXTURE_ACE;
+import static blackjack.domain.Fixture.FIXTURE_KING;
+import static blackjack.domain.Fixture.FIXTURE_THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -8,7 +10,6 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.state.State;
 import blackjack.domain.state.finished.Bust;
 import blackjack.domain.state.finished.Stay;
-import blackjack.domain.state.running.Hit;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

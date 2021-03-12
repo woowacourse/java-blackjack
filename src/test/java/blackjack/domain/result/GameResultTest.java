@@ -5,7 +5,6 @@ import static blackjack.domain.Fixture.FIXTURE_SEVEN;
 import static blackjack.domain.Fixture.FIXTURE_SIX;
 import static blackjack.domain.Fixture.FIXTURE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;

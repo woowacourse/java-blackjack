@@ -1,9 +1,14 @@
 package blackjack.domain.batting;
 
+import static blackjack.domain.Fixture.FIXTURE_ACE;
+import static blackjack.domain.Fixture.FIXTURE_KING;
+import static blackjack.domain.Fixture.FIXTURE_NINE;
+import static blackjack.domain.Fixture.FIXTURE_SEVEN;
+import static blackjack.domain.Fixture.FIXTURE_SIX;
+import static blackjack.domain.Fixture.FIXTURE_THREE;
+import static blackjack.domain.Fixture.FIXTURE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.*;
-import static blackjack.domain.Fixture.*;
 
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;

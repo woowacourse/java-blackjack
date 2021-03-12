@@ -2,9 +2,7 @@ package blackjack.domain.state.finished;
 
 import static blackjack.domain.Fixture.FIXTURE_ACE;
 import static blackjack.domain.Fixture.FIXTURE_KING;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.*;
 
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;

@@ -1,18 +1,11 @@
 package blackjack.domain.state.finished;
 
 import static blackjack.domain.Fixture.FIXTURE_KING;
-import static blackjack.domain.Fixture.FIXTURE_NINE;
 import static blackjack.domain.Fixture.FIXTURE_THREE;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.*;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
-import blackjack.domain.state.running.Hit;
-import java.util.Arrays;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

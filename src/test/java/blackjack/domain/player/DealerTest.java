@@ -1,18 +1,12 @@
 package blackjack.domain.player;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static blackjack.domain.Fixture.FIXTURE_FIVE;
+import static blackjack.domain.Fixture.FIXTURE_KING;
+import static blackjack.domain.Fixture.FIXTURE_SEVEN;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static blackjack.domain.Fixture.*;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Shape;
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.ResultType;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
-import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
