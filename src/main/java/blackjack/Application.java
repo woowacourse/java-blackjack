@@ -22,7 +22,10 @@ public class Application {
                                         .map(Player::new)
                                         .collect(Collectors.toList());
         Participants participants = Participants.of(dealer, players);
-
+        for (Player player : players) {
+            int betAmount = InputView.inputBetAmount(player);
+            player.setBetAmount(betAmount);
+        }
         participants.receiveDefaultCards(cardDeck);
         OutputView.printDefaultCardMessage(dealer, players);
         players.forEach(player -> drawMoreCard(player, cardDeck));

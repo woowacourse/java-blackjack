@@ -10,11 +10,13 @@ public abstract class Participant {
 
     private final String name;
     private final Cards cards;
+    private int betAmount;
 
     protected Participant(String name) {
         validateName(name);
         this.name = name.trim();
         this.cards = new Cards();
+        this.betAmount = 0;
     }
 
     private void validateName(String name) {
@@ -32,6 +34,14 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    public int getBetAmount() {
+        return betAmount;
+    }
+
+    public void setBetAmount(int betAmount) {
+        this.betAmount = betAmount;
     }
 
     public int calculateScore() {
