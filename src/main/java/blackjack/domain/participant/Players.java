@@ -11,7 +11,7 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(final List<String> names, List<Integer> bettingMoneys) {
+    public Players(final List<String> names, final List<Integer> bettingMoneys) {
         validateSameName(names);
         players = generatePlayers(names, bettingMoneys);
     }

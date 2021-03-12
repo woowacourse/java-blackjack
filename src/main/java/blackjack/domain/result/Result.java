@@ -4,16 +4,14 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public enum Result {
-    BLACKJACK("승", 1.5),
-    WIN("승", 1.0),
-    LOSE("패", -1.0),
-    DRAW("무", 0);
+    BLACKJACK(1.5),
+    WIN(1.0),
+    LOSE(-1.0),
+    DRAW(0);
 
-    private final String value;
     private final double profit;
 
-    Result(final String value, final double profit) {
-        this.value = value;
+    Result(final double profit) {
         this.profit = profit;
     }
 
@@ -38,30 +36,26 @@ public enum Result {
     }
 
     private double calculateWhenDealerBlackjack(final Player player) {
-        if(player.isBlackjack()) {
+        if (player.isBlackjack()) {
             return DRAW.getProfit();
         }
         return LOSE.getProfit();
     }
 
     private double calculateOtherCase(final Dealer dealer, final Player player) {
-        if(player.isBust()) {
+        if (player.isBust()) {
             return LOSE.getProfit();
         }
-        if(player.isBlackjack()) {
+        if (player.isBlackjack()) {
             return BLACKJACK.getProfit();
         }
-        if(player.calculateScore() > dealer.calculateScore()) {
+        if (player.calculateScore() > dealer.calculateScore()) {
             return WIN.getProfit();
         }
-        if(player.calculateScore() == dealer.calculateScore()) {
+        if (player.calculateScore() == dealer.calculateScore()) {
             return DRAW.getProfit();
         }
         return LOSE.getProfit();
-    }
-
-    public String getValue() {
-        return value;
     }
 
     private double getProfit() {

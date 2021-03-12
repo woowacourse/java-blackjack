@@ -9,7 +9,7 @@ import java.util.List;
 
 public abstract class Participant {
     public static final String EMPTY_NAME_ERROR = "이름에 빈 값을 사용할 수 없습니다.";
-    private static final int BLACKJAACK_CARD_SCORE = 21;
+    private static final int BLACKJACK_CARD_SCORE = 21;
     private static final int BLACKJACK_CARD_COUNT = 2;
 
     protected final List<Card> cards;
@@ -50,14 +50,16 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return calculateScore() > BLACKJAACK_CARD_SCORE;
+        return calculateScore() > BLACKJACK_CARD_SCORE;
     }
 
-    public boolean isBlackjack() { return cards.size() == BLACKJACK_CARD_COUNT && calculateScore() == BLACKJAACK_CARD_SCORE; }
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARD_COUNT && calculateScore() == BLACKJACK_CARD_SCORE;
+    }
 
     public int calculateScore() {
         final int sumOfCards = cards.stream().mapToInt(card -> card.getCardValue().getValue()).sum();
-        if (sumOfCards > BLACKJAACK_CARD_SCORE && howManyAce() > 0) {
+        if (sumOfCards > BLACKJACK_CARD_SCORE && howManyAce() > 0) {
             return calculateScoreWithAce(sumOfCards);
         }
         return sumOfCards;
@@ -66,7 +68,7 @@ public abstract class Participant {
     private int calculateScoreWithAce(final int sum) {
         int aceCount = howManyAce();
         int changedSum = sum;
-        while (aceCount-- > 0 && changedSum > BLACKJAACK_CARD_SCORE) {
+        while (aceCount-- > 0 && changedSum > BLACKJACK_CARD_SCORE) {
             changedSum = changedSum - CardNumber.ACE.getValue() + CardNumber.ACE.getExtraValue();
         }
         return changedSum;

@@ -9,7 +9,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -33,14 +36,6 @@ public class GameResultTest {
     }
 
     @Test
-    @DisplayName("플레이어들의 수익계산을 잘 하는지 확인")
-    void calculatePlayersProfit() {
-        Map<Player, Integer> expected = new HashMap<>();
-        expected.put(player, 15000);
-        assertThat(gameResult.calculatePlayersProfit(dealer)).isEqualTo(expected);
-    }
-
-    @Test
     @DisplayName("GameResult가 잘 생성되는지 확인")
     void create() {
         assertThatCode(() -> new GameResult(dealer, players))
@@ -56,10 +51,11 @@ public class GameResultTest {
     }
 
     @Test
-    @DisplayName("승, 패, 무를 잘 카운트하는지 확인")
-    void resultCounts() {
-        final List<Integer> expected = new ArrayList<>(Arrays.asList(0, 1, 0, 0));
-        assertThat(gameResult.getResultCounts()).isEqualTo(expected);
+    @DisplayName("플레이어들의 수익계산을 잘 하는지 확인")
+    void calculatePlayersProfit() {
+        Map<Player, Integer> expected = new HashMap<>();
+        expected.put(player, 15000);
+        assertThat(gameResult.calculatePlayersProfit(dealer)).isEqualTo(expected);
     }
 
     @Test

@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.Result;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +18,7 @@ public class OutputView {
     private static final String CARD_STATUS_FORMAT = "%s카드: %s";
     private static final String CARD_RESULT_FORMAT = "%s카드: %s - 결과: %d";
     private static final String GAME_RESULT_MESSAGE = "## 최종 수익";
+    private static final String SHOW_PROFIT_FORMAT = "%s: %d";
 
     public static void showDistributedCard(final List<Player> players, final Dealer dealer) {
         distributeMessage(players);
@@ -76,27 +76,11 @@ public class OutputView {
 
     public static void showGameResult(final Dealer dealer, final int dealerProfit) {
         System.out.println(NEWLINE + GAME_RESULT_MESSAGE);
-        //showDealerGameResult(dealer, resultCounts);
         showDealerProfit(dealer, dealerProfit);
     }
 
     private static void showDealerProfit(final Dealer dealer, final int dealerProfit) {
-        System.out.printf("%s: %d" + NEWLINE, dealer.getName(), dealerProfit);
-    }
-
-    private static void showDealerGameResult(final Dealer dealer, final List<Integer> resultCounts) {
-        System.out.printf("%s: %d%s %d%s %d%s" + NEWLINE, dealer.getName(),
-                resultCounts.get(0), Result.WIN.getValue(),
-                resultCounts.get(1), Result.LOSE.getValue(),
-                resultCounts.get(2), Result.DRAW.getValue());
-    }
-
-    public static void showPlayersGameResult(final Map<Player, Result> playersResult) {
-        playersResult.forEach(OutputView::showPlayerGameResult);
-    }
-
-    private static void showPlayerGameResult(final Player player, final Result result) {
-        System.out.printf("%s: %S" + NEWLINE, player.getName(), result.getValue());
+        System.out.printf(SHOW_PROFIT_FORMAT + NEWLINE, dealer.getName(), dealerProfit);
     }
 
     public static void showBustMessage() {
@@ -116,6 +100,6 @@ public class OutputView {
     }
 
     private static void showPlayerProfit(final Player player, final Integer profit) {
-        System.out.printf("%s: %d" + NEWLINE, player.getName(), profit);
+        System.out.printf(SHOW_PROFIT_FORMAT + NEWLINE, player.getName(), profit);
     }
 }

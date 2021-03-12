@@ -38,7 +38,7 @@ public class InputView {
 
     private static boolean validateMoreCardOption(final String userInput) {
         if (AGREE_MARK.equals(userInput) || DISAGREE_MARK.equals(userInput)) {
-            return "y".equals(userInput);
+            return AGREE_MARK.equals(userInput);
         }
         throw new IllegalArgumentException(INPUT_CHOICE_ERROR);
     }
