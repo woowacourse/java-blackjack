@@ -19,14 +19,4 @@ public class MoneyTest {
 
         assertThat(rawMoney).isEqualTo(initialMoney);
     }
-
-    @Test
-    @DisplayName("판돈 생성 실패 테스트 ")
-    void moneyFailTest() {
-        int initialMoney = -1000;
-
-        assertThatThrownBy(() -> new Money(initialMoney))
-            .isInstanceOf(BlackJackException.class)
-            .hasMessageContaining(Money.NEGATIVE_MONEY_MESSAGE);
-    }
 }

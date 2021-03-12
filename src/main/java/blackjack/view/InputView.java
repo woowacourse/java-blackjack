@@ -14,14 +14,18 @@ public class InputView {
     public static final String REQUEST_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)";
     public static final String MORE_DRAW_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     public static final String YES_OR_NO_ERROR = "[ERROR] y 혹은 n만 입력할 수 있습니다.";
-    public static final List<String> YES_OR_NO_VALIDATION = new ArrayList<>(Arrays.asList("y", "n", "Y", "N"));
+    public static final List<String> YES_OR_NO_VALIDATION = new ArrayList<>(
+        Arrays.asList("y", "n", "Y", "N"));
     public static final String DELIMITER = ",";
     public static final String OVERLAPPED_PLAYER_NAME_MESSAGE = "[ERROR] 중복되는 이름을 입력할 수 없습니다.";
     public static final String ASK_BET_MONEY = "의 배팅 금액은?";
     public static final String NOT_INTEGER_MESSAGE = "정수가 아닙니다.";
-    public static final String PLAYER_ZERO_MONEY_MESSAGE = "플레이어의 돈은 0원이 되선 안됩니다.";
+    public static final String PLAYER_MONEY_EXCEPTION_MESSAGE = "판 돈이 0이거나 음수가 되선 안됩니다.";
 
-    private InputView() {};
+    private InputView() {
+    }
+
+    ;
 
     public static List<String> requestPlayers() {
         System.out.println(REQUEST_NAME_MESSAGE);
@@ -88,7 +92,7 @@ public class InputView {
         System.out.println(name + ASK_BET_MONEY);
         try {
             int money = receiveRawMoney();
-            checkPlayerZeroMoney(money);
+            checkPlayerLowMoney(money);
             return new Money(money);
         } catch (BlackJackException blackJackException) {
             System.out.println(blackJackException.getMessage());
@@ -109,9 +113,9 @@ public class InputView {
         }
     }
 
-    private static void checkPlayerZeroMoney(int receiveMoney) {
-        if (receiveMoney == 0) {
-            throw new BlackJackException(PLAYER_ZERO_MONEY_MESSAGE);
+    private static void checkPlayerLowMoney(int receiveMoney) {
+        if (receiveMoney <= 0) {
+            throw new BlackJackException(PLAYER_MONEY_EXCEPTION_MESSAGE);
         }
     }
 }

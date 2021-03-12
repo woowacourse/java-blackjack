@@ -5,9 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DealerResult {
+public class GameResult {
 
     private final Map<OneGameResult, Integer> dealerResult = new LinkedHashMap<>();
+    private final Map<Player, OneGameResult> playerResult = new LinkedHashMap<>();
 
     {
         for (OneGameResult potentialResult : OneGameResult.values()) {
@@ -15,11 +16,13 @@ public class DealerResult {
         }
     }
 
-    public DealerResult(Dealer dealer, List<Player> players) {
+    public GameResult(Dealer dealer, List<Player> players) {
         for (Player player : players) {
-            OneGameResult result = translateToDealer(player.betResult(dealer));
-            int resultCount = dealerResult.get(result);
-            dealerResult.put(result, resultCount + 1);
+            OneGameResult playerGameResult = player.betResult(dealer);
+            OneGameResult dealerOneGameResult = translateToDealer(playerGameResult);
+            int resultCount = dealerResult.get(dealerOneGameResult);
+            dealerResult.put(dealerOneGameResult, resultCount + 1);
+            playerResult.put(player, playerGameResult);
         }
     }
 
@@ -33,7 +36,11 @@ public class DealerResult {
         return OneGameResult.TIE;
     }
 
-    public Map<OneGameResult, Integer> getResult() {
+    public Map<OneGameResult, Integer> getDealerResult() {
         return Collections.unmodifiableMap(this.dealerResult);
+    }
+
+    public Map<Player, OneGameResult> getPlayersResult() {
+        return Collections.unmodifiableMap(this.playerResult);
     }
 }

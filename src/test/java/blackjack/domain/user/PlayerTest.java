@@ -7,6 +7,8 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.UserDeck;
 import blackjack.domain.money.Money;
+import blackjack.domain.state.BasicState;
+import blackjack.domain.state.BlackJack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -58,9 +60,13 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어 승리 체크")
-    void playerWin() {
-        Player player = new Player("sorong", userDeck, new Money(0));
+    @DisplayName("플레이어 블랙잭 체크")
+    void playerBlackJack() {
+        int betMoney = 1000;
+        UserDeck blackJackUserDeck = new UserDeck();
+        blackJackUserDeck.add(Card.from("J", "하트"));
+        blackJackUserDeck.add(Card.from("A", "하트"));
+        Player player = new Player("sorong", userDeck, new Money(betMoney));
         Card dealerCard = Card.from("J", "클로버");
         UserDeck dealerDeck = new UserDeck();
         dealerDeck.add(dealerCard);
@@ -68,14 +74,56 @@ public class PlayerTest {
 
         String playerResult = player.betResult(dealer)
             .getResult();
+        Money money = player.getMoney();
 
         assertThat(playerResult).isEqualTo("승");
+        assertThat(money.getValue()).isEqualTo(betMoney + (int )BlackJack.BLACK_JACK_RATE * betMoney);
     }
 
     @Test
-    @DisplayName("플레이어 무승부 체크")
+    @DisplayName("플레이어 승리 체크")
+    void playerWin() {
+        int betMoney = 1000;
+        Player player = new Player("sorong", userDeck, new Money(betMoney));
+        Card dealerCard = Card.from("J", "클로버");
+        UserDeck dealerDeck = new UserDeck();
+        dealerDeck.add(dealerCard);
+        Dealer dealer = new Dealer(dealerDeck);
+
+        String playerResult = player.betResult(dealer)
+            .getResult();
+        Money money = player.getMoney();
+
+        assertThat(playerResult).isEqualTo("승");
+        assertThat(money.getValue()).isEqualTo(betMoney + (int) BasicState.NORMAL_RATE * betMoney);
+    }
+
+    @Test
+    @DisplayName("플레이어 딜러 블랙잭 체크")
+    void playerDealerBlackJack() {
+        int betMoney = 1000;
+        UserDeck blackJackUserDeck = new UserDeck();
+        blackJackUserDeck.add(Card.from("J", "하트"));
+        blackJackUserDeck.add(Card.from("A", "하트"));
+        Player player = new Player("sorong", blackJackUserDeck, new Money(betMoney));
+        UserDeck dealerDeck = new UserDeck();
+        dealerDeck.add(Card.from("Q", "다이아몬드"));
+        dealerDeck.add(Card.from("A", "하트"));
+        Dealer dealer = new Dealer(dealerDeck);
+
+        String playerResult = player.betResult(dealer)
+            .getResult();
+        Money money = player.getMoney();
+
+        assertThat(playerResult).isEqualTo("무");
+        assertThat(money.getValue()).isEqualTo(betMoney);
+    }
+
+    @Test
+    @DisplayName("플레이어 무승부시 승패와 체크")
     void playerTie() {
-        Player player = new Player("sorong", userDeck, new Money(0));
+        int betMoney = 1000;
+        Player player = new Player("sorong", userDeck, new Money(betMoney));
         Card dealerCard = Card.from("J", "클로버");
         Card dealerCard2 = Card.from("5", "하트");
         UserDeck dealerDeck = new UserDeck();
@@ -85,16 +133,19 @@ public class PlayerTest {
 
         String playerResult = player.betResult(dealer)
             .getResult();
+        Money money = player.getMoney();
 
         assertThat(playerResult).isEqualTo("무");
+        assertThat(money.getValue()).isEqualTo(betMoney);
     }
 
     @Test
     @DisplayName("플레이어 버스트 패배 체크")
     void playerBurst() {
+        int betMoney = 1000;
         Card card3 = Card.from("J", "다이아몬드");
         userDeck.add(card3);
-        Player player = new Player("sorong", userDeck, new Money(0));
+        Player player = new Player("sorong", userDeck, new Money(betMoney));
         Card dealerCard = Card.from("J", "클로버");
         UserDeck dealerDeck = new UserDeck();
         dealerDeck.add(dealerCard);
@@ -102,14 +153,17 @@ public class PlayerTest {
 
         String playerResult = player.betResult(dealer)
             .getResult();
+        Money money = player.getMoney();
 
         assertThat(playerResult).isEqualTo("패");
+        assertThat(money.getValue()).isEqualTo(0);
     }
 
     @Test
     @DisplayName("플레이어 패배 체크")
     void playerLose() {
-        Player player = new Player("sorong", userDeck, new Money(0));
+        int betMoney = 1000;
+        Player player = new Player("sorong", userDeck, new Money(betMoney));
         Card dealerCard = Card.from("J", "클로버");
         Card dealerCard2 = Card.from("K", "하트");
         UserDeck dealerDeck = new UserDeck();
@@ -119,7 +173,9 @@ public class PlayerTest {
 
         String playerResult = player.betResult(dealer)
             .getResult();
+        Money money = player.getMoney();
 
         assertThat(playerResult).isEqualTo("패");
+        assertThat(money.getValue()).isEqualTo(0);
     }
 }

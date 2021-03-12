@@ -8,4 +8,6 @@ public interface State {
     public State stay();
     public boolean isFinished();
     public UserDeck getUserDeck();
+    public double getProfitRate(State dealerState);
+    public int getPoint();
 }

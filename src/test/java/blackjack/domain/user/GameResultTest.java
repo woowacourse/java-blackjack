@@ -3,8 +3,6 @@ package blackjack.domain.user;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.UserDeck;
 import blackjack.domain.money.Money;
 import java.util.ArrayList;
@@ -14,7 +12,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class DealerResultTest {
+public class GameResultTest {
 
     private Card one = Card.from("J", "클로버");
     private Card winCard = Card.from("A", "클로버");
@@ -43,9 +41,9 @@ public class DealerResultTest {
                 new Player("lose", loseDeck, new Money(0))
             )
         );
-        DealerResult dealerResult = new DealerResult(dealer, players);
+        GameResult gameResult = new GameResult(dealer, players);
 
-        Map<OneGameResult, Integer> statisticResult = dealerResult.getResult();
+        Map<OneGameResult, Integer> statisticResult = gameResult.getDealerResult();
         int win_case = statisticResult.get(OneGameResult.WIN);
         int tie_case = statisticResult.get(OneGameResult.TIE);
         int lose_case = statisticResult.get(OneGameResult.LOSE);
@@ -72,9 +70,9 @@ public class DealerResultTest {
                 new Player("lose", loseDeck, new Money(0))
             )
         );
-        DealerResult dealerResult = new DealerResult(dealer, players);
+        GameResult gameResult = new GameResult(dealer, players);
 
-        Map<OneGameResult, Integer> statisticResult = dealerResult.getResult();
+        Map<OneGameResult, Integer> statisticResult = gameResult.getDealerResult();
         int win_case = statisticResult.get(OneGameResult.WIN);
         int tie_case = statisticResult.get(OneGameResult.TIE);
         int lose_case = statisticResult.get(OneGameResult.LOSE);

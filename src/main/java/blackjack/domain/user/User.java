@@ -24,11 +24,14 @@ public abstract class User {
         return !state.isFinished();
     }
 
-    public boolean isBurstCondition() {
-        if (state instanceof Bust) {
-            return true;
-        }
-        return false;
+    public double getProfitRate(Dealer dealer) {
+        State dealerState = dealer.getState();
+        return this.state.getProfitRate(dealerState);
+    }
+
+    protected void calculateMoneyResult(int resultRawMoney) {
+        int initialMoneyValue = money.getValue();
+        this.money = new Money(initialMoneyValue + resultRawMoney);
     }
 
     public UserDeck getUserDeck() {
@@ -39,4 +42,11 @@ public abstract class User {
         return state.getUserDeck().score();
     }
 
+    public Money getMoney() {
+        return money;
+    }
+
+    public State getState() {
+        return state;
+    }
 }

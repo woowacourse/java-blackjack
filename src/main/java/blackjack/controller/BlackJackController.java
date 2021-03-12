@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.money.Money;
-import blackjack.domain.user.DealerResult;
+import blackjack.domain.user.GameResult;
 import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -50,9 +50,8 @@ public class BlackJackController {
     }
 
     private void terminateGame(BlackJackGame blackJackGame) {
-        DealerResult dealerResult = blackJackGame.getDealerResult();
+        GameResult gameResult = blackJackGame.getDealerResult();
         OutputView.showScoreResult(blackJackGame);
-        OutputView.showDealerTable(dealerResult);
-        OutputView.showIndividualTable(blackJackGame);
+        OutputView.showMoneyStatue(blackJackGame);
     }
 }

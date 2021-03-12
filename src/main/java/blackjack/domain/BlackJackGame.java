@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.money.Money;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.DealerResult;
+import blackjack.domain.user.GameResult;
 import blackjack.domain.user.Participants;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -32,11 +32,11 @@ public class BlackJackGame {
         player.draw(entireCardDeck.draw());
     }
 
-    public DealerResult getDealerResult() {
+    public GameResult getDealerResult() {
         Dealer dealer = participants.getDealer();
         List<Player> rawPlayers = participants.getPlayers()
             .getRawPlayers();
-        return new DealerResult(dealer, rawPlayers);
+        return new GameResult(dealer, rawPlayers);
     }
 
     public int playersSize() {
