@@ -1,7 +1,7 @@
 package blackjack.controller;
 
-import blackjack.domain.blackjackgame.Money;
 import blackjack.domain.blackjackgame.BlackjackGame;
+import blackjack.domain.blackjackgame.Money;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -9,7 +9,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackjackController {
 
@@ -23,7 +22,7 @@ public class BlackjackController {
             blackjackGame.drawCurrentPlayer(InputView.getWhetherDrawCard(player));
             OutputView.printPlayerCards(player);
         }
-         printGameResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
+        printGameResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 
     private Players createPlayers() {
