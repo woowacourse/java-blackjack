@@ -1,9 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardLetter;
-import blackjack.domain.card.CardSuit;
+import blackjack.domain.card.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,7 +38,7 @@ public class ParticipantTest {
     @Test
     @DisplayName("블랙잭 게임을 위해 최초 2장을 받는지 테스트")
     void receiveInitialCard() {
-        final CardDeck cardDeck = new CardDeck();
+        final CardDeck cardDeck = CardDeckFactory.make();
         player.receiveInitialCard(cardDeck);
         dealer.receiveInitialCard(cardDeck);
 

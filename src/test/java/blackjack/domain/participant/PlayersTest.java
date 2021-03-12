@@ -1,9 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardLetter;
-import blackjack.domain.card.CardSuit;
+import blackjack.domain.card.*;
 import blackjack.domain.result.Result;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -91,7 +88,7 @@ public class PlayersTest {
     @Test
     @DisplayName("Players receiveInitialCard 테스트")
     void receiveInitialCard() {
-        final CardDeck cardDeck = new CardDeck();
+        final CardDeck cardDeck = CardDeckFactory.make();
         List<String> playerName = Arrays.asList("joel", "bada", "jon");
         final Players players = Players.of(playerName);
 
