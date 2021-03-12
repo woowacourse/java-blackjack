@@ -10,12 +10,12 @@ public class Dealer extends AbstractUser {
 
     public Dealer(State state) {
         super(state);
-        checkTurnOver(state);
+        checkTurnOver();
     }
 
-    private void checkTurnOver(State state) {
-        if (state.calculateScore() > TURN_OVER_COUNT) {
-            changeState(new DealerTurnOver(state.cards()));
+    private void checkTurnOver() {
+        if (getState().calculateScore() > TURN_OVER_COUNT) {
+            changeState(new DealerTurnOver(getState().cards()));
         }
     }
 

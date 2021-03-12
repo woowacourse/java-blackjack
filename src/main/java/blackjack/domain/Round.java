@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.state.DealerTurnOver;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
 import blackjack.domain.user.AbstractUser;
@@ -51,7 +52,9 @@ public class Round {
     public void addDealerCard() {
         AbstractUser findDealer = getDealer();
         State state = findDealer.getState().draw(deck.makeOneCard());
-        findDealer.changeState(state);
+        if (!state.isFinish() && !findDealer.canDraw()) {
+            findDealer.changeState(new DealerTurnOver(state.cards()));
+        }
     }
 
     public void addPlayerCard(AbstractUser player) {
