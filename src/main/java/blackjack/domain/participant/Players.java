@@ -26,7 +26,6 @@ public class Players {
 
     public static Players of(final List<String> playerName, final List<Double> playerMoney) {
         validateDuplicate(playerName);
-        validateMoney(playerMoney);
         final int playerCount = validateSize(playerName.size(), playerMoney.size());
 
         final List<Player> players = new ArrayList<>();
@@ -43,16 +42,6 @@ public class Players {
 
         if (distinctName != playerName.size()) {
             throw new IllegalArgumentException("입력된 플레이어의 이름이 중복됩니다.");
-        }
-    }
-
-    private static void validateMoney(final List<Double> playerMoney) {
-        final int belowZero = (int) playerMoney.stream()
-                .filter(money -> money < 0)
-                .count();
-
-        if (belowZero != 0) {
-            throw new IllegalArgumentException("베팅 금액은 0 이상이여야 합니다.");
         }
     }
 

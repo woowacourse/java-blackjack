@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class PlayerMoneyTest {
@@ -12,6 +13,14 @@ public class PlayerMoneyTest {
     public void PlayerMoneyConstructor() {
         assertThatCode(() -> new PlayerMoney(1000))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("PlayerMoney가 0보다 작다면 에러를 출력한다")
+    public void PlayerMoneyValidation() {
+        assertThatThrownBy(() -> new PlayerMoney(-10))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("베팅 금액은 0 이상이여야 합니다.");
     }
 
     @Test
