@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 
 public abstract class State {
 
@@ -15,7 +16,10 @@ public abstract class State {
         this.cards = cards;
     }
 
-    public static State makeState(Cards cards) {
+    public State initialDraw(Deck deck) {
+        Cards cards = new Cards();
+        cards.initialDraw(deck);
+
         if (cards.isBlackJack()) {
             return new Blackjack(cards);
         }

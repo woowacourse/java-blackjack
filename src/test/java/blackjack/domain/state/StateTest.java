@@ -11,6 +11,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Type;
 import java.util.ArrayList;
@@ -21,28 +22,32 @@ import org.junit.jupiter.api.Test;
 
 class StateTest {
 
-    @DisplayName("첫 카드 2장이 블랙잭이라, 블랙잭을 반환한다.")
+    @DisplayName("첫 카드 2장이 블랙잭이라면, 블랙잭을 반환한다.")
     @Test
     void makeBlackjackState() {
+        State state = new Hit();
         Cards cards = new Cards(
             Arrays.asList(
                 new Card(Type.CLUB, Denomination.ACE_ELEVEN),
                 new Card(Type.CLUB, Denomination.TEN)
             )
         );
-        assertThat(State.makeState(cards)).isInstanceOf(Blackjack.class);
+        Deck deck = new Deck(cards);
+        assertThat(state.initialDraw(deck)).isInstanceOf(Blackjack.class);
     }
 
     @DisplayName("첫 카드 2장이 블랙잭이 아니라면, 힛을 반환한다.")
     @Test
     void makeHitState() {
+        State state = new Hit();
         Cards cards = new Cards(
             Arrays.asList(
-                new Card(Type.CLUB, Denomination.FIVE),
+                new Card(Type.CLUB, Denomination.FOUR),
                 new Card(Type.CLUB, Denomination.TEN)
             )
         );
-        assertThat(State.makeState(cards)).isInstanceOf(Hit.class);
+        Deck deck = new Deck(cards);
+        assertThat(state.initialDraw(deck)).isInstanceOf(Hit.class);
     }
 
     @DisplayName("힛 상태에서 카드를 드로우 했는데 21을 초과하면, 버스트를 반환한다.")

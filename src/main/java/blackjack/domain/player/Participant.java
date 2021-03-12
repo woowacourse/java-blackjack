@@ -9,7 +9,7 @@ import blackjack.domain.state.State;
 
 public abstract class Participant {
 
-    protected String name;
+    protected final String name;
     protected Money money;
     protected State state;
 
@@ -32,9 +32,7 @@ public abstract class Participant {
     }
 
     public void initialDraw(Deck deck) {
-        Cards cards = new Cards();
-        cards.initialDraw(deck);
-        state = State.makeState(cards);
+        state = state.initialDraw(deck);
     }
 
     public boolean isBlackjack() {
