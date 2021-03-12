@@ -7,8 +7,6 @@ import blakcjack.domain.participant.Player;
 
 import java.util.*;
 
-import static blakcjack.domain.money.Money.calculateDealerProfitFrom;
-
 public class OutcomeStatistics {
 	private final Map<Participant, Money> participantsProfit = new LinkedHashMap<>();
 
@@ -30,7 +28,7 @@ public class OutcomeStatistics {
 
 	private Money aggregateDealerProfitFrom(final Map<Player, Money> playersProfit) {
 		Collection<Money> playersProfitValues = playersProfit.values();
-		return calculateDealerProfitFrom(playersProfitValues);
+		return Money.calculateDealerProfitFrom(playersProfitValues);
 	}
 
 	public Map<Participant, Money> getParticipantsProfit() {
