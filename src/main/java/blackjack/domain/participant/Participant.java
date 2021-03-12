@@ -44,6 +44,14 @@ public abstract class Participant {
         return state instanceof Stay;
     }
 
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    public boolean isNotFinished() {
+        return !isFinished();
+    }
+
     public List<Card> getCards() {
         return state.getCards()
                     .toList();

@@ -56,7 +56,9 @@ public class Game {
             drawCard(player);
             return;
         }
-        player.stay();
+        if (player.isNotFinished()) {
+            player.stay();
+        }
         playerIndex += 1;
     }
 
@@ -74,7 +76,9 @@ public class Game {
             drawCard(dealer);
             cnt++;
         }
-        dealer.stay();
+        if (dealer.isNotFinished()) {
+            dealer.stay();
+        }
         return cnt;
     }
 
@@ -82,6 +86,22 @@ public class Game {
         for (Player player : players) {
             player.fight(dealer);
         }
+    }
+
+    public void calculateGameResult() {
+        for (Player player : players) {
+            player.updateProfitRatio(dealer);
+        }
+    }
+
+    public double dealerRevenue(){
+        return (-1) * totalPlayersRevenue();
+    }
+
+    private double totalPlayersRevenue() {
+        return players.stream()
+                      .mapToDouble(Player::revenue)
+                      .sum();
     }
 
     public GameResult getDealerResult() {

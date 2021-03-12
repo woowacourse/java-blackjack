@@ -86,6 +86,10 @@ public class OutputView {
         return String.format(GAME_RESULT_MESSAGE, win, draw, lose);
     }
 
+    public static void printFinalRevenue(Participant participant, double revenue) {
+        System.out.println(participant.getName() + ": " + revenue);
+    }
+
     public static void printMessage(String s) {
         System.out.println(s);
     }
