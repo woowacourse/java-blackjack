@@ -9,7 +9,7 @@ import java.util.List;
 public interface Participant {
 
     default int sumTotalScore(ScoreRule scoreRule) {
-        return getStatus().getCards().getTotalScore(scoreRule);
+        return getStatus().getCards().sumTotalScore(scoreRule);
     }
 
     boolean handOutCard(Card card);
