@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Dealer implements Participant {
-    private static final Score MINIMUM_SCORE_OF_NOT_TAKING_CARD = Score.of(17);
+    private static final Score MINIMUM_SCORE_OF_TAKING_CARD = Score.of(16);
     private final Name name;
     private final Cards cards;
 
@@ -27,7 +27,8 @@ public class Dealer implements Participant {
 
     @Override
     public boolean isNotAbleToTake() {
-        return sumCards().isHigherThan(MINIMUM_SCORE_OF_NOT_TAKING_CARD);
+        final Score score = sumCards();
+        return score.isHigherThan(MINIMUM_SCORE_OF_TAKING_CARD);
     }
 
     @Override

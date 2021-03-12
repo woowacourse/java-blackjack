@@ -35,7 +35,8 @@ public class Player implements Participant {
 
     @Override
     public boolean isNotAbleToTake() {
-        return sumCards().isBurst();
+        final Score score = sumCards();
+        return score.isBurst();
     }
 
     @Override
