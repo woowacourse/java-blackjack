@@ -2,6 +2,8 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Cards;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Money;
 
 public abstract class Finished extends Started {
     protected Finished(Cards cards) {
@@ -21,5 +23,10 @@ public abstract class Finished extends Started {
     @Override
     public final boolean isFinish() {
         return true;
+    }
+
+    @Override
+    public final double getProfit(Dealer dealer, Money money) {
+        return money.getValue() * earningRate(dealer);
     }
 }
