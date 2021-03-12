@@ -2,18 +2,12 @@ package blackjack.domain.participants;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.CardDistributor;
 import blackjack.domain.Response;
-import blackjack.domain.ResultType;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.CardValue;
-import blackjack.domain.cards.Deck;
 import blackjack.domain.cards.Shape;
 import blackjack.domain.names.Name;
-import java.util.Arrays;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
