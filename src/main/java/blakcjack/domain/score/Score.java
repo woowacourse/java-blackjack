@@ -23,7 +23,7 @@ public class Score {
 
     private final int value;
 
-    public Score(final int value) {
+    private Score(final int value) {
         validate(value);
         this.value = value;
     }
