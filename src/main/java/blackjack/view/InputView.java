@@ -22,7 +22,7 @@ public class InputView {
     public static double inputMoney() {
         try {
             return Double.parseDouble(scanner.nextLine());
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             OutputView.printError("유효하지 않은 배팅 금액입니다.");
             return inputMoney();
         }

@@ -2,7 +2,6 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.state.Hit;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
 

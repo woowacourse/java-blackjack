@@ -20,9 +20,9 @@ public class BlackJackResult {
         for (MatchResult matchResult : MatchResult.values()) {
             dealerResult.put(matchResult,
                     (int) result.values()
-                                .stream()
-                                .filter(result -> result.equals(MatchResult.reverseMatchResult(matchResult)))
-                                .count());
+                            .stream()
+                            .filter(result -> result.equals(MatchResult.reverseMatchResult(matchResult)))
+                            .count());
         }
 
         return dealerResult;

@@ -34,7 +34,7 @@ public enum Denomination {
         return ACE_MAX_SCORE;
     }
 
-    public int score(){
+    public int score() {
         return this.score;
     }
 

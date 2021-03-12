@@ -1,7 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.BlackJackResult;
-import blackjack.domain.MatchResult;
 import blackjack.domain.ProfitResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
@@ -12,7 +10,6 @@ import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -79,7 +76,7 @@ public class OutputView {
 
         System.out.printf("딜러: %.0f" + "%n", dealerProfit);
         profitResult.getResult()
-                    .forEach((playerName, profit) -> System.out.printf((PROFIT_RESULT_FORM) + "%n", playerName, profit));
+                .forEach((playerName, profit) -> System.out.printf((PROFIT_RESULT_FORM) + "%n", playerName, profit));
     }
 
     private static String getCardsMessageForm(Participants participants) {

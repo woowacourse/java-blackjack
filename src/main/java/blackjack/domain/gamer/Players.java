@@ -4,8 +4,6 @@ import blackjack.domain.MatchResult;
 
 import java.util.*;
 
-import static java.util.stream.Collectors.toList;
-
 public class Players {
 
     private static final int MIN_COUNT = 1;
