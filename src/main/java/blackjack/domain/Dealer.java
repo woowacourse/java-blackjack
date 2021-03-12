@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public class Dealer extends Participant {
 
     private static final int MAXIMUM_SCORE_FOR_ADDITIONAL_CARD = 16;
@@ -13,5 +15,13 @@ public class Dealer extends Participant {
     public boolean isAbleToReceiveCard() {
         int score = calculateScore();
         return score <= MAXIMUM_SCORE_FOR_ADDITIONAL_CARD;
+    }
+
+    public BetAmount calculateFinalBetProfit(List<Player> players) {
+        BetAmount finalBetProfit = BetAmount.ZERO;
+        for (Player player : players) {
+            finalBetProfit = finalBetProfit.add(player.getBetAmount());
+        }
+        return finalBetProfit.toNegative();
     }
 }

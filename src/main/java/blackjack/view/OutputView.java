@@ -1,12 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
-import blackjack.domain.Result;
-import blackjack.domain.StatisticResult;
+import blackjack.domain.*;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -89,6 +84,12 @@ public class OutputView {
         System.out.println("딜러: " + winCounts + "승 " + drawCounts + "무 " + lossCounts + "패");
         playerNameResultMap.forEach((playerName, result) -> {
             System.out.println(playerName + ": " + result.getName());
+        });
+    }
+
+    public static void printFinalBetProfits(Map<String, BetAmount> finalBetProfits) {
+        finalBetProfits.forEach((name, betProfit) -> {
+            System.out.println(name + ": " + betProfit.getBetAmount());
         });
     }
 

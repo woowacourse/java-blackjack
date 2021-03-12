@@ -5,6 +5,7 @@ import java.util.Objects;
 public class BetAmount {
 
     public static final BetAmount ZERO = new BetAmount(0);
+
     private final int betAmount;
 
     public BetAmount(int betAmount) {
@@ -17,6 +18,14 @@ public class BetAmount {
 
     public BetAmount toHalf() {
         return new BetAmount(betAmount / 2);
+    }
+
+    public BetAmount add(BetAmount other) {
+        return new BetAmount(betAmount + other.betAmount);
+    }
+
+    public int getBetAmount() {
+        return betAmount;
     }
 
     @Override

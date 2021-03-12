@@ -31,8 +31,7 @@ public class Application {
         players.forEach(player -> drawMoreCard(player, cardDeck));
         receiveDealerCard(dealer, cardDeck);
         OutputView.printFinalCardsAndScore(participants);
-        StatisticResult statisticResult = createStatisticResult(dealer, players);
-        OutputView.printFinalResult(statisticResult);
+        OutputView.printFinalBetProfits(participants.calculateFinalBetProfits());
     }
 
     private static void drawMoreCard(Player player, CardDeck cardDeck) {
