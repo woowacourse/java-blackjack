@@ -17,7 +17,7 @@ public class Round {
     private final Deck deck;
     private final Users users;
 
-    private Round(Deck deck, Users<?> users) {
+    private Round(Deck deck, Users users) {
         this.deck = deck;
         this.users = users;
     }
@@ -32,7 +32,7 @@ public class Round {
 
         users.addAll(players);
 
-        return new Round(deck, new Users<>(users));
+        return new Round(deck, new Users(users));
     }
 
     private static State drawTwoCard(Deck deck) {
