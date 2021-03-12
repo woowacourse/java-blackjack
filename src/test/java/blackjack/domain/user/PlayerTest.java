@@ -236,4 +236,25 @@ public class PlayerTest {
 
         assertThat(isBust).isTrue();
     }
+
+    @Test
+    @DisplayName("수익을 구한다. - 플레이어 버스트")
+    void calculateProfit() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+        player.betMoney(new Money(1000));
+        player.hit(new Card(Suit.HEART, Denomination.JACK));
+        Dealer dealer = new Dealer();
+        dealer.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.QUEEN)
+        )));
+
+        long profit = player.getProfit();
+
+        assertThat(profit).isEqualTo(-1000);
+    }
 }

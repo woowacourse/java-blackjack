@@ -10,4 +10,8 @@ public class Player extends User {
     public Result produceResult(User dealer) {
         return Result.decide(this, dealer);
     }
+
+    public long getProfit() {
+        return -1000;
+    }
 }
