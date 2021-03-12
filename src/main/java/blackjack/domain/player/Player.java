@@ -20,7 +20,7 @@ public class Player extends Participant {
         return state.getScore() < BLACKJACK_NUMBER;
     }
 
-    public void calculateGameResult(Dealer dealer) {
+    public void matchGameResult(Dealer dealer) {
         if (this.isBust() || dealer.isBust()) {
             calculateBustGameResult(dealer);
             return;
@@ -30,25 +30,25 @@ public class Player extends Participant {
 
     private void calculateBustGameResult(Dealer dealer) {
         if (this.isBust()) {
-            makePlayerGameResult(GameResult.LOSE, dealer);
+            decideGameResult(GameResult.LOSE, dealer);
             return;
         }
-        makePlayerGameResult(GameResult.WIN, dealer);
+        decideGameResult(GameResult.WIN, dealer);
     }
 
     private void calculateScoreGameResult(Dealer dealer) {
         if (this.getScore() > dealer.getScore()) {
-            makePlayerGameResult(GameResult.WIN, dealer);
+            decideGameResult(GameResult.WIN, dealer);
             return;
         }
         if (this.getScore() < dealer.getScore()) {
-            makePlayerGameResult(GameResult.LOSE, dealer);
+            decideGameResult(GameResult.LOSE, dealer);
             return;
         }
-        makePlayerGameResult(GameResult.DRAW, dealer);
+        decideGameResult(GameResult.DRAW, dealer);
     }
 
-    private void makePlayerGameResult(GameResult gameResult, Dealer dealer) {
+    private void decideGameResult(GameResult gameResult, Dealer dealer) {
         this.gameResult = gameResult;
         dealer.addGameResult(GameResult.findOppositeGameResult(gameResult));
     }

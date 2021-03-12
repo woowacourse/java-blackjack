@@ -24,7 +24,7 @@ public class Players {
     }
 
     public void calculateGameResult(Dealer dealer) {
-        players.forEach(player -> player.calculateGameResult(dealer));
+        players.forEach(player -> player.matchGameResult(dealer));
     }
 
     public boolean isNotEnd() {
