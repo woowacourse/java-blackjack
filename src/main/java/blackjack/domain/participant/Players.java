@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Cards;
 import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 
@@ -12,9 +13,19 @@ public class Players {
 
     private List<Player> players;
 
-    public Players(final List<Player> players) {
+    public Players(final List<Cards> cards, final List<String> playerNames) {
+        players = new ArrayList<>();
+        for (int i = 0; i < playerNames.size(); i++) {
+            players.add(new Player(cards.get(i), playerNames.get(i)));
+        }
         validatePlayersCount(players);
-        this.players = new ArrayList<>(players);
+        validatePlayersCountMatchesCardsCounts(playerNames, cards);
+    }
+
+    private void validatePlayersCountMatchesCardsCounts(List<String> playerNames, List<Cards> cards) {
+        if(playerNames.size() != cards.size()){
+            throw new IllegalArgumentException("플레이어에게 나눠줄 카드 뭉치 숫자와 플레이어 수는 동일해야 합니다.");
+        }
     }
 
     public List<Player> getPlayersAsList() {

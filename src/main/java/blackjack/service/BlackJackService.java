@@ -25,11 +25,11 @@ public class BlackJackService {
     }
 
     public void initPlayers(final List<String> requestNames) {
-        List<Player> players = new ArrayList<>();
-        for (String name : requestNames) {
-            players.add(new Player(getInitCards(), name));
+        List<Cards> playerCards = new ArrayList<>();
+        for (int i = 0; i < requestNames.size(); i++) {
+            playerCards.add(getInitCards());
         }
-        this.players = new Players(players);
+        this.players = new Players(playerCards, requestNames);
     }
 
     public void initBettings() {
