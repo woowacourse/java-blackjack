@@ -13,7 +13,7 @@ public class Deck {
     private int cardUsed = 0;
 
     public Deck(List<Card> deck) {
-        this.deck = deck;
+        Deck.deck = deck;
     }
 
     public static Deck of() {

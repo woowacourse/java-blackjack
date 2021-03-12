@@ -11,7 +11,7 @@ public class Betting {
     public Betting(Double betting) {
         validateNull(betting);
         validateMinBet(betting);
-        this.betting = new Double(betting);
+        this.betting = betting;
     }
 
     private void validateNull(Double betting) {

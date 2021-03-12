@@ -7,7 +7,7 @@ public class Profit {
 
     public Profit(Double profit) {
         validateNull(profit);
-        this.profit = new Double(profit);
+        this.profit = profit;
     }
 
     private void validateNull(Double profit) {

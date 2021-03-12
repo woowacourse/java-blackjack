@@ -23,7 +23,7 @@ public class Players {
     }
 
     private void validatePlayersCountMatchesCardsCounts(List<String> playerNames, List<Cards> cards) {
-        if(playerNames.size() != cards.size()){
+        if (playerNames.size() != cards.size()) {
             throw new IllegalArgumentException("플레이어에게 나눠줄 카드 뭉치 숫자와 플레이어 수는 동일해야 합니다.");
         }
     }

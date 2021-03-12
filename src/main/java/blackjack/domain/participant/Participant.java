@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Participant {
@@ -21,7 +22,7 @@ public abstract class Participant {
     public abstract List<Card> getInitCardsAsList();
 
     public List<Card> getCardsAsList() {
-        return hand.getCardsAsList();
+        return new ArrayList<>(hand.getCardsAsList());
     }
 
     public int getScore() {

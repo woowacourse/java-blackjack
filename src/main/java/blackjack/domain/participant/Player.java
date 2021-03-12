@@ -29,7 +29,8 @@ public class Player extends Participant {
     public Player changeBetting(Double betting) {
         return new Player(this.hand, this.getNameAsString(), betting);
     }
-    public double getBetting(){
+
+    public double getBetting() {
         return betting.getBetting();
     }
 

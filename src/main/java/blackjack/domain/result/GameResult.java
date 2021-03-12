@@ -3,10 +3,7 @@ package blackjack.domain.result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameResult {
 
@@ -17,7 +14,7 @@ public class GameResult {
     }
 
     public Map<Player, Result> getGameResult() {
-        return gameResult;
+        return new HashMap<>(gameResult);
     }
 
     public int getDealerWinCounts() {

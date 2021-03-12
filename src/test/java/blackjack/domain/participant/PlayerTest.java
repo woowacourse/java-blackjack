@@ -17,7 +17,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("배팅 금액이 입력 되었을 때, 베팅금을 가진 새로운 객체를 확인한다.")
-    void bettingTest(){
+    void bettingTest() {
         List<Card> cardList = new ArrayList<>();
         cardList.add(new Card(Suit.DIAMOND, Face.JACK));
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
@@ -29,7 +29,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("플레이어가 블랙잭으로 승리했을 때, 2.5배의 배당을 가졌는지 확인한다.")
-    void blackJackWinProfitTest(){
+    void blackJackWinProfitTest() {
         List<Card> cardList = new ArrayList<>();
         cardList.add(new Card(Suit.DIAMOND, Face.JACK));
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
@@ -37,12 +37,12 @@ public class PlayerTest {
         player = player.changeBetting((double) 30000);
         player = player.changeProfit(Result.BLACKJACK_WIN);
 
-        assertThat(player.getProfit()).isEqualTo(30000*2.5);
+        assertThat(player.getProfit()).isEqualTo(30000 * 2.5);
     }
 
     @Test
     @DisplayName("플레이어가 승리했을 때, 2배의 배당을 가졌는지 확인한다.")
-    void winProfitTest(){
+    void winProfitTest() {
         List<Card> cardList = new ArrayList<>();
         cardList.add(new Card(Suit.DIAMOND, Face.JACK));
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
@@ -50,12 +50,12 @@ public class PlayerTest {
         player = player.changeBetting((double) 30000);
         player = player.changeProfit(Result.WIN);
 
-        assertThat(player.getProfit()).isEqualTo(30000*2);
+        assertThat(player.getProfit()).isEqualTo(30000 * 2);
     }
 
     @Test
     @DisplayName("플레이어가 패배했을 때, -1배의 배당을 가졌는지 확인한다.")
-    void loseProfitTest(){
+    void loseProfitTest() {
         List<Card> cardList = new ArrayList<>();
         cardList.add(new Card(Suit.DIAMOND, Face.JACK));
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
@@ -63,6 +63,6 @@ public class PlayerTest {
         player = player.changeBetting((double) 30000);
         player = player.changeProfit(Result.LOSE);
 
-        assertThat(player.getProfit()).isEqualTo(30000*-1);
+        assertThat(player.getProfit()).isEqualTo(30000 * -1);
     }
 }
