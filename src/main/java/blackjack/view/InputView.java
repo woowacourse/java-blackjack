@@ -13,6 +13,11 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
+    public static String askPlayerBattingMoney(String playerName) {
+        OutputView.printMessage(playerName + "의 배팅 금액은?");
+        return SCANNER.nextLine();
+    }
+
     public static String askDrawOrNot(String playerName) {
         OutputView.printMessage(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return SCANNER.nextLine();
