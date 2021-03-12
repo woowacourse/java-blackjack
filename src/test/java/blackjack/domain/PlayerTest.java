@@ -114,4 +114,28 @@ public class PlayerTest {
         dealer.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
         assertThat(player.judgeResult(dealer)).isEqualTo(Result.DRAW);
     }
+
+    @Test
+    @DisplayName("플레이어의 처음 두 장의 카드 합이 21일 경우, 수익이 베팅 금액의 1.5배이다.")
+    public void calculateFinalBetProfit_WhenPlayerIsBlackjack() {
+        Player player = new Player("json");
+        Dealer dealer = new Dealer();
+        player.setBetAmount(10000);
+        player.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
+        dealer.receiveCards(new Cards(CARDS_SCORE_21));
+        System.out.println(player.judgeResult(dealer));
+        assertThat(player.calculateFinalBetProfit(dealer)).isEqualTo(new BetAmount(5000));
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러가 동시에 블랙잭인 경우, 수익은 0이다.")
+    public void calculateFinalBetProfit_WhenPlayerAndDealerAreBlackJack() {
+        Player player = new Player("json");
+        Dealer dealer = new Dealer();
+        player.setBetAmount(10000);
+        player.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
+        dealer.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
+        System.out.println(player.judgeResult(dealer));
+        assertThat(player.calculateFinalBetProfit(dealer)).isEqualTo(new BetAmount(0));
+    }
 }

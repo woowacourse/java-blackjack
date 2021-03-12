@@ -22,6 +22,9 @@ public class Player extends Participant {
         if (result == Result.WIN) {
             return getBetAmount();
         }
+        if (result == Result.BLACKJACK) {
+            return getBetAmount().toHalf();
+        }
         return BetAmount.ZERO;
     }
 
@@ -46,7 +49,7 @@ public class Player extends Participant {
     }
 
     private boolean isDraw(int dealerScore, int playerScore, Dealer dealer) {
-        return (dealerScore <= MAXIMUM_SCORE_LIMIT && playerScore == dealerScore)
+        return (dealerScore < MAXIMUM_SCORE_LIMIT && playerScore == dealerScore)
                 || (this.isBlackjack() && dealer.isBlackjack());
     }
 }

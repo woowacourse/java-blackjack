@@ -15,6 +15,10 @@ public class BetAmount {
         return new BetAmount(-betAmount);
     }
 
+    public BetAmount toHalf() {
+        return new BetAmount(betAmount / 2);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
