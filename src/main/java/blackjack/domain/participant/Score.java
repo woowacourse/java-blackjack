@@ -8,7 +8,7 @@ public class Score {
     private static final int TO_HARD_ACE = 10;
     private static final int DEALER_HIT_SCORE = 17;
 
-    private int value;
+    private final int value;
 
     public Score(final int value) {
         this.value = value;
@@ -16,7 +16,7 @@ public class Score {
 
     public Score changeHardAce() {
         if (this.isBust()) {
-            return new Score(this.value -= TO_HARD_ACE);
+            return new Score(this.value - TO_HARD_ACE);
         }
         return this;
     }
