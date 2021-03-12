@@ -31,8 +31,8 @@ public class BlackjackGame {
         checkIsEnd();
     }
 
-    public Player getCurrentPlayer() {
-        return players.getCurrentPlayer();
+    public Player currentPlayer() {
+        return players.currentPlayer();
     }
 
     public boolean isNotEnd() {
@@ -40,7 +40,7 @@ public class BlackjackGame {
     }
 
     public void drawCurrentPlayer(boolean isDraw) {
-        Player player = getCurrentPlayer();
+        Player player = currentPlayer();
         if (isDraw && player.canDraw()) {
             player.draw(deck.draw());
             checkIsEnd();

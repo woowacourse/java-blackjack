@@ -20,11 +20,11 @@ public abstract class Participant {
         return name;
     }
 
-    public Cards getCards() {
+    public Cards cards() {
         return state.getCards();
     }
 
-    public int getScore() {
+    public int score() {
         return state.getScore();
     }
 

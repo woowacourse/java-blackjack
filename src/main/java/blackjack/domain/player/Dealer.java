@@ -16,10 +16,10 @@ public class Dealer extends Participant {
     }
 
     public boolean canDraw() {
-        return getScore() <= GET_ONE_MORE_CARD_NORM;
+        return score() <= GET_ONE_MORE_CARD_NORM;
     }
 
-    public int getResultCount(GameResult gameResult) {
+    public int resultCount(GameResult gameResult) {
         return (int) gameResults.stream()
             .filter(it -> it == gameResult)
             .count();
@@ -29,11 +29,11 @@ public class Dealer extends Participant {
         gameResults.add(gameResult);
     }
 
-    public Money calculateDealerProfit(Players players) {
+    public Money profit(Players players) {
         Money dealerProfit = new Money();
         for (Player player : players.getPlayers()) {
             Money playerProfitMoney = player.profit(this);
-            dealerProfit = dealerProfit.add(playerProfitMoney.minus());
+            dealerProfit = dealerProfit.sum(playerProfitMoney.negative());
         }
         return dealerProfit;
     }

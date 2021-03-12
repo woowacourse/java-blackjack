@@ -22,7 +22,7 @@ public enum GameResult {
         return earningRate;
     }
 
-    public static GameResult findOppositeGameResult(GameResult gameResult){
+    public static GameResult opposite(GameResult gameResult){
         if(gameResult == GameResult.WIN)
             return GameResult.LOSE;
         if(gameResult == GameResult.LOSE)

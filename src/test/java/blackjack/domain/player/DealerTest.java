@@ -57,7 +57,7 @@ class DealerTest {
         player2.addMoney(new Money(1000));
         player2.initialDraw(playerDeck);
 
-        Money dealerProfit = dealer.calculateDealerProfit(new Players(Arrays.asList(player1, player2)));
+        Money dealerProfit = dealer.profit(new Players(Arrays.asList(player1, player2)));
         assertThat(dealerProfit.getValue()).isEqualTo(-3000);
     }
 }

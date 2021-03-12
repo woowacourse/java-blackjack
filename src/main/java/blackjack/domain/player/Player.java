@@ -14,16 +14,16 @@ public class Player extends Participant {
         this.money = new Money();
     }
 
-    public GameResult getResult() {
+    public GameResult getGameResult() {
         return gameResult;
     }
 
     public boolean canDraw() {
-        return getScore() < BLACKJACK_NUMBER;
+        return score() < BLACKJACK_NUMBER;
     }
 
     public void addMoney(Money money) {
-        this.money = this.money.add(money);
+        this.money = this.money.sum(money);
     }
 
     public void matchGameResult(Dealer dealer) {
@@ -43,11 +43,11 @@ public class Player extends Participant {
     }
 
     private void calculateScoreGameResult(Dealer dealer) {
-        if (this.getScore() > dealer.getScore()) {
+        if (this.score() > dealer.score()) {
             decideGameResult(GameResult.WIN, dealer);
             return;
         }
-        if (this.getScore() < dealer.getScore()) {
+        if (this.score() < dealer.score()) {
             decideGameResult(GameResult.LOSE, dealer);
             return;
         }
@@ -56,7 +56,7 @@ public class Player extends Participant {
 
     private void decideGameResult(GameResult gameResult, Dealer dealer) {
         this.gameResult = gameResult;
-        dealer.addGameResult(GameResult.findOppositeGameResult(gameResult));
+        dealer.addGameResult(GameResult.opposite(gameResult));
     }
 
     public Money profit(Dealer dealer) {

@@ -49,7 +49,7 @@ class PlayerTest {
         dealer.draw(new Card(Type.DIAMOND, Denomination.NINE));
 
         player.matchGameResult(dealer);
-        assertThat(player.getResult()).isEqualTo(GameResult.LOSE);
+        assertThat(player.getGameResult()).isEqualTo(GameResult.LOSE);
         assertThat(dealer.getResultCount(GameResult.WIN)).isEqualTo(1);
         assertThat(player.profit(dealer).getValue()).isEqualTo(-1000);
     }
@@ -68,7 +68,7 @@ class PlayerTest {
         dealer.draw(new Card(Type.DIAMOND, Denomination.NINE));
 
         player.matchGameResult(dealer);
-        assertThat(player.getResult()).isEqualTo(GameResult.WIN);
+        assertThat(player.getGameResult()).isEqualTo(GameResult.WIN);
         assertThat(dealer.getResultCount(GameResult.LOSE)).isEqualTo(1);
         assertThat(player.profit(dealer).getValue()).isEqualTo(1000);
     }
@@ -100,7 +100,7 @@ class PlayerTest {
         dealer.initialDraw(dealerDeck);
 
         player.matchGameResult(dealer);
-        assertThat(player.getResult()).isEqualTo(GameResult.WIN);
+        assertThat(player.getGameResult()).isEqualTo(GameResult.WIN);
         assertThat(dealer.getResultCount(GameResult.LOSE)).isEqualTo(1);
         assertThat(player.profit(dealer).getValue()).isEqualTo(1500);
     }
@@ -118,7 +118,7 @@ class PlayerTest {
         dealer.draw(new Card(Type.HEART, Denomination.FOUR));
 
         player.matchGameResult(dealer);
-        assertThat(player.getResult()).isEqualTo(GameResult.WIN);
+        assertThat(player.getGameResult()).isEqualTo(GameResult.WIN);
         assertThat(dealer.getResultCount(GameResult.LOSE)).isEqualTo(1);
         assertThat(player.profit(dealer).getValue()).isEqualTo(1000);
     }
@@ -136,7 +136,7 @@ class PlayerTest {
         dealer.draw(new Card(Type.DIAMOND, Denomination.FOUR));
 
         player.matchGameResult(dealer);
-        assertThat(player.getResult()).isEqualTo(GameResult.LOSE);
+        assertThat(player.getGameResult()).isEqualTo(GameResult.LOSE);
         assertThat(dealer.getResultCount(GameResult.WIN)).isEqualTo(1);
         assertThat(player.profit(dealer).getValue()).isEqualTo(-1000);
     }
@@ -154,7 +154,7 @@ class PlayerTest {
         dealer.draw(new Card(Type.CLUB, Denomination.FOUR));
 
         player.matchGameResult(dealer);
-        assertThat(player.getResult()).isEqualTo(GameResult.DRAW);
+        assertThat(player.getGameResult()).isEqualTo(GameResult.DRAW);
         assertThat(dealer.getResultCount(GameResult.DRAW)).isEqualTo(1);
         assertThat(player.profit(dealer).getValue()).isEqualTo(0);
     }

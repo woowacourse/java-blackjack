@@ -31,7 +31,7 @@ public class Players {
         return currentPlayers.size() != 0;
     }
 
-    public Player getCurrentPlayer() {
+    public Player currentPlayer() {
         return currentPlayers.peek();
     }
 

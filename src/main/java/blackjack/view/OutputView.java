@@ -32,7 +32,7 @@ public class OutputView {
     }
 
     public static void printDealerCards(Dealer dealer) {
-        Cards cards = dealer.getCards();
+        Cards cards = dealer.cards();
         Card card = cards.getFirstCard();
         List<String> results = new ArrayList<>();
         results.add(card.findTypeName() + card.findDenominationName());
@@ -46,7 +46,7 @@ public class OutputView {
     }
 
     public static void printPlayerCards(Player player) {
-        Cards cards = player.getCards();
+        Cards cards = player.cards();
         List<String> results = new ArrayList<>();
 
         for (Card card : cards.getCards()) {
@@ -57,7 +57,7 @@ public class OutputView {
 
     public static void printDealerCardsScore(Dealer dealer) {
         System.out.println();
-        Cards cards = dealer.getCards();
+        Cards cards = dealer.cards();
         if (cards.cardsSize() > INITIAL_HAND_OUT_CARD_COUNT) {
             System.out.print(DEALER_ONE_MORE_DRAW_MESSAGE);
         }
@@ -76,7 +76,7 @@ public class OutputView {
     }
 
     public static void printPlayerCardsScore(Player player) {
-        Cards cards = player.getCards();
+        Cards cards = player.cards();
         List<String> results = cards.getCards().stream()
             .map(card -> card.findTypeName() + card.findDenominationName())
             .collect(Collectors.toList());
@@ -88,7 +88,7 @@ public class OutputView {
     public static void printGameProfitResult(Players players, Dealer dealer) {
         System.out.println(FINAL_RESULT_MESSAGE);
         System.out.println(
-            dealer.getName() + NAME_SEPARATOR + (int) dealer.calculateDealerProfit(players)
+            dealer.getName() + NAME_SEPARATOR + (int) dealer.profit(players)
                 .getValue());
         for (Player player : players.getPlayers()) {
             System.out.println(player.getName() + NAME_SEPARATOR

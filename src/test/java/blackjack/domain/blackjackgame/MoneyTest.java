@@ -12,7 +12,7 @@ class MoneyTest {
     void testMoneyAdd() {
         Money money = new Money(1000);
 
-        assertThat(money.add(new Money(500)).getValue()).isEqualTo(1500);
+        assertThat(money.sum(new Money(500)).getValue()).isEqualTo(1500);
     }
 
     @DisplayName("수익 비율만큼의 Money가 리턴된다.")

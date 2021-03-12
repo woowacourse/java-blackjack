@@ -12,7 +12,7 @@ public class Money {
         this.value = value;
     }
 
-    public Money add(Money money) {
+    public Money sum(Money money) {
         return new Money(value + money.getValue());
     }
 
@@ -24,7 +24,7 @@ public class Money {
         return new Money(value * earningRate);
     }
 
-    public Money minus() {
+    public Money negative() {
         return new Money(value * -1);
     }
 

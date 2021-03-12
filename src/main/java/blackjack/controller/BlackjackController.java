@@ -18,7 +18,7 @@ public class BlackjackController {
         blackjackGame.start();
         printHandOutResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
         while (blackjackGame.isNotEnd()) {
-            Player player = blackjackGame.getCurrentPlayer();
+            Player player = blackjackGame.currentPlayer();
             blackjackGame.drawCurrentPlayer(InputView.getWhetherDrawCard(player));
             OutputView.printPlayerCards(player);
         }
