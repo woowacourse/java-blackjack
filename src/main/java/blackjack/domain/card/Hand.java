@@ -55,7 +55,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return softSum() == BLACKJACK && cards.size() == 2;
+        return softSum() == BLACKJACK && cards.size() == INITIAL_CARDS_SIZE;
     }
 
     public boolean isBust() {

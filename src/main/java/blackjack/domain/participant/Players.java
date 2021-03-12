@@ -6,12 +6,13 @@ import blackjack.utils.IllegalNameException;
 import java.util.*;
 
 public class Players {
+    public static final String DELIMITER = ",";
     private final List<Player> players;
 
     public Players(String namesInput, CardDeck cardDeck) {
         players = new ArrayList<>();
         validate(namesInput);
-        String[] names = namesInput.split(",");
+        String[] names = namesInput.split(DELIMITER);
         validateDuplicate(names);
         for (String name : names) {
             players.add(new Player(name, cardDeck));
