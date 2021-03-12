@@ -82,4 +82,12 @@ public abstract class User {
     public final boolean isBlackjack() {
         return cards().totalScore().isBlackjack();
     }
+
+    public final boolean isBust() {
+        return cards().isBust();
+    }
+
+    public final boolean isBlackJack() {
+        return cards().isBlackjack();
+    }
 }

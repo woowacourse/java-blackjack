@@ -207,4 +207,19 @@ public class DealerTest {
 
         assertThat(isBlackjack).isTrue();
     }
+
+    @Test
+    @DisplayName("버스트인지 확인한다.")
+    void isBust() {
+        Dealer dealer = new Dealer();
+        dealer.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+        dealer.hit(new Card(Suit.HEART, Denomination.JACK));
+
+        boolean isBust = dealer.isBust();
+
+        assertThat(isBust).isTrue();
+    }
 }

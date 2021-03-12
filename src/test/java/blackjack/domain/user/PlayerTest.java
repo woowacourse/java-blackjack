@@ -221,4 +221,19 @@ public class PlayerTest {
 
         assertThat(isBlackjack).isTrue();
     }
+
+    @Test
+    @DisplayName("버스트인지 확인한다.")
+    void isBust() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+        player.hit(new Card(Suit.HEART, Denomination.JACK));
+
+        boolean isBust = player.isBust();
+
+        assertThat(isBust).isTrue();
+    }
 }
