@@ -17,13 +17,16 @@ public class BlackjackController {
         Players players = new Players(InputView.getPlayerNames());
         BlackjackManager blackjackManager = new BlackjackManager(dealer, players);
 
+        initGame(blackjackManager);
+        hitOrStayAllPlayers(blackjackManager);
+        hitDealerUntilOverLimitScore(blackjackManager);
+        printResult(blackjackManager);
+    }
+
+    private void initGame(final BlackjackManager blackjackManager) {
         initBettingAllPlayers(blackjackManager);
         blackjackManager.readyToPlay();
         initDrawCardsDealerAndAllPlayers(blackjackManager);
-        hitOrStayAllPlayers(blackjackManager);
-        hitDealerUntilOverLimitScore(blackjackManager);
-        printCardsWithScoreOfDealerAndAllPlayers(blackjackManager);
-        printBlackjackResult(blackjackManager);
     }
 
     private void initBettingAllPlayers(final BlackjackManager blackjackManager) {
@@ -74,6 +77,11 @@ public class BlackjackController {
         }
         blackjackManager.hitDealer();
         OutputView.printDealerHit();
+    }
+
+    private void printResult(final BlackjackManager blackjackManager) {
+        printCardsWithScoreOfDealerAndAllPlayers(blackjackManager);
+        printBlackjackResult(blackjackManager);
     }
 
     private void printCardsWithScoreOfDealerAndAllPlayers(final BlackjackManager blackjackManager) {
