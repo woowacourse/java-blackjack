@@ -17,7 +17,7 @@ class DealerTest {
     @DisplayName("딜러는 카드 점수 합이 16이하면 추가로 카드를 드로우 할 수 있다.")
     @Test
     void testCanDraw() {
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         dealer.draw(new Card(Type.CLUB, Denomination.TEN));
         dealer.draw(new Card(Type.CLUB, Denomination.THREE));
 
@@ -27,7 +27,7 @@ class DealerTest {
     @DisplayName("딜러는 카드 점수 합이 16초과시 카드를 드로우 할 수 없다.")
     @Test
     void testCanNotDraw() {
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         dealer.draw(new Card(Type.CLUB, Denomination.TEN));
         dealer.draw(new Card(Type.CLUB, Denomination.SEVEN));
 
@@ -37,7 +37,7 @@ class DealerTest {
     @DisplayName("플레이어 두 명이 1000원씩 배팅을 해서 둘 다 블랙잭으로 승리한다면, 딜러의 수익은 -3000이다.")
     @Test
     void dealerProfitCalculateTest() {
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
 
         Cards playerCards = new Cards(
             Arrays.asList(

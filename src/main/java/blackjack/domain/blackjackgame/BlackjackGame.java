@@ -2,25 +2,19 @@ package blackjack.domain.blackjackgame;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class BlackjackGame {
 
-    private static final String DEALER_NAME = "딜러";
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
-    private final Queue<Player> currentPlayers;
 
     public BlackjackGame(Players players) {
         this.deck = new Deck();
-        this.dealer = new Dealer(DEALER_NAME);
+        this.dealer = new Dealer();
         this.players = players;
-        this.currentPlayers = new LinkedList<>(players.getPlayers());
     }
 
     public Dealer getDealer() {
@@ -31,18 +25,18 @@ public class BlackjackGame {
         return players;
     }
 
-    public boolean isNotEnd() {
-        return currentPlayers.size() != 0;
-    }
-
-    public Player getCurrentPlayer() {
-        return currentPlayers.peek();
-    }
-
     public void start() {
         dealer.initialDraw(deck);
         players.initialDraw(deck);
         checkIsEnd();
+    }
+
+    public Player getCurrentPlayer() {
+        return players.getCurrentPlayer();
+    }
+
+    public boolean isNotEnd() {
+        return players.isNotEnd();
     }
 
     public void drawCurrentPlayer(boolean isDraw) {
@@ -57,8 +51,7 @@ public class BlackjackGame {
     }
 
     private void checkIsEnd() {
-        currentPlayers.removeIf(Participant::isFinished);
-        if (currentPlayers.size() == 0) {
+        if (players.isAllFinished()) {
             calculateGameResult();
         }
     }

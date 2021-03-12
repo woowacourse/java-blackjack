@@ -6,11 +6,12 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
+    private static final String DEALER_NAME = "딜러";
     private static final int GET_ONE_MORE_CARD_NORM = 16;
     private final List<GameResult> gameResults;
 
-    public Dealer(String name) {
-        super(name);
+    public Dealer() {
+        super(DEALER_NAME);
         gameResults = new ArrayList<>();
     }
 

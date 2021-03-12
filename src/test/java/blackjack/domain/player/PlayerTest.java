@@ -43,7 +43,7 @@ class PlayerTest {
         player.draw(new Card(Type.DIAMOND, Denomination.TEN));
         player.addMoney(new Money(1000));
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         dealer.draw(new Card(Type.HEART, Denomination.NINE));
         dealer.draw(new Card(Type.SPADE, Denomination.NINE));
         dealer.draw(new Card(Type.DIAMOND, Denomination.NINE));
@@ -62,7 +62,7 @@ class PlayerTest {
         player.draw(new Card(Type.HEART, Denomination.FOUR));
         player.addMoney(new Money(1000));
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         dealer.draw(new Card(Type.HEART, Denomination.NINE));
         dealer.draw(new Card(Type.SPADE, Denomination.NINE));
         dealer.draw(new Card(Type.DIAMOND, Denomination.NINE));
@@ -96,7 +96,7 @@ class PlayerTest {
         );
         Deck dealerDeck = new Deck(dealerCards);
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         dealer.initialDraw(dealerDeck);
 
         player.calculateGameResult(dealer);
@@ -113,7 +113,7 @@ class PlayerTest {
         player.draw(new Card(Type.HEART, Denomination.FOUR));
         player.addMoney(new Money(1000));
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         dealer.draw(new Card(Type.HEART, Denomination.NINE));
         dealer.draw(new Card(Type.HEART, Denomination.FOUR));
 
@@ -131,7 +131,7 @@ class PlayerTest {
         player.draw(new Card(Type.HEART, Denomination.FOUR));
         player.addMoney(new Money(1000));
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         dealer.draw(new Card(Type.HEART, Denomination.TEN));
         dealer.draw(new Card(Type.DIAMOND, Denomination.FOUR));
 
@@ -149,7 +149,7 @@ class PlayerTest {
         player.draw(new Card(Type.HEART, Denomination.FOUR));
         player.addMoney(new Money(1000));
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         dealer.draw(new Card(Type.SPADE, Denomination.TEN));
         dealer.draw(new Card(Type.CLUB, Denomination.FOUR));
 
