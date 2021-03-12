@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Deck {
     private static final int FIRST_INDEX = 0;
@@ -29,12 +28,6 @@ public class Deck {
     private static List<Card> getCards() {
         return Arrays.stream(Symbol.values())
                 .flatMap(symbol -> Arrays.stream(Number.values()).map(number -> Card.of(symbol.getName(), number.getName())))
-                .collect(Collectors.toList());
-    }
-
-    public List<Card> makeTwoCards() {
-        return IntStream.range(0, 2)
-                .mapToObj(count -> shuffledCards.remove(FIRST_INDEX))
                 .collect(Collectors.toList());
     }
 

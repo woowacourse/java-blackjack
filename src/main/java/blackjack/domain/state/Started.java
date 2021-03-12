@@ -9,7 +9,12 @@ public abstract class Started implements State {
         this.cards = cards;
     }
 
-    protected final Cards cards() {
+    @Override
+    public Cards cards() {
         return cards;
+    }
+
+    public final int calculateScore() {
+        return cards.calculateScore();
     }
 }

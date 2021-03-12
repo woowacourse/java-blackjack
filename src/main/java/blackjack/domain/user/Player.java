@@ -1,5 +1,7 @@
 package blackjack.domain.user;
 
+import blackjack.domain.state.State;
+
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -9,7 +11,8 @@ public class Player extends AbstractUser {
 
     private final String name;
 
-    public Player(final String name) {
+    public Player(State state, String name) {
+        super(state);
         validate(name);
         this.name = name;
     }
@@ -25,12 +28,11 @@ public class Player extends AbstractUser {
         return name;
     }
 
-
     @Override
-    public boolean isGameOver(final int gameOverScore) {
-        int score = getScore();
-        return (score > gameOverScore);
+    public boolean canDraw() {
+        return !getState().isFinish();
     }
+
 
     @Override
     public boolean equals(Object o) {

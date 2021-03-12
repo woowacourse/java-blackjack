@@ -1,7 +1,5 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Deck;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,18 +24,14 @@ public class Users<T extends AbstractUser> {
         if (userSize < MIN_USER_SIZE || userSize > MAX_USER_SIZE) {
             throw new IllegalArgumentException(String.format(USER_SIZE_EXCEPTION_MESSAGE, MIN_USER_SIZE, MAX_USER_SIZE, userSize));
         }
-        if (!isDuplicate(users)) {
+        if (isDuplicate(users)) {
             throw new IllegalArgumentException(USER_DUPLICATE_EXCEPTION_MESSAGE);
         }
     }
 
     private boolean isDuplicate(List<T> users) {
-        return users.stream()
+        return !users.stream()
                 .allMatch(new HashSet<>()::add);
-    }
-
-    public void addFirstCards(Deck deck) {
-        this.users.forEach(user -> user.addFirstCards(deck.makeTwoCards()));
     }
 
     public AbstractUser getDealer() {
