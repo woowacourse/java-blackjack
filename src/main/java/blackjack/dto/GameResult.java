@@ -16,7 +16,12 @@ public class GameResult {
     }
 
     private static int getDealerProfit(Map<String, Integer> playersResults) {
-        return (-1) * playersResults.values().stream().reduce(0, Integer::sum);
+        return (-1) * totalProfit(playersResults);
+    }
+
+    private static int totalProfit(Map<String, Integer> playersResults) {
+        return playersResults.values().stream()
+            .reduce(0, Integer::sum);
     }
 
     public Map<String, Integer> unwrap() {

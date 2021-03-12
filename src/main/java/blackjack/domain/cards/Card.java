@@ -25,12 +25,15 @@ public class Card {
 
     private static Set<Card> createCardPool() {
         Set<Card> cardPool = new HashSet<>();
-        for (Shape shape : Shape.values()) {
-            Arrays.stream(CardValue.values())
-                .forEach(value -> cardPool
-                    .add(new Card(shape, value)));
-        }
+        Arrays.stream(Shape.values())
+            .forEach(shape -> createCardPoolByShape(cardPool, shape));
         return cardPool;
+    }
+
+    private static void createCardPoolByShape(Set<Card> cardPool, Shape shape) {
+        Arrays.stream(CardValue.values())
+            .forEach(value -> cardPool
+                .add(new Card(shape, value)));
     }
 
     public static Card valueOf(Shape shape, CardValue value) {

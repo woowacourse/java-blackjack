@@ -34,11 +34,14 @@ public class OutputView {
 
     public static void printGameInitializeMessage(Participants participants,
         int startingCardCount) {
-        String participantNames = participants.unwrap().stream()
+        System.out
+            .printf(CARD_DISTRIBUTION_FORMAT, getParticipantNames(participants), startingCardCount);
+    }
+
+    private static String getParticipantNames(Participants participants) {
+        return participants.unwrap().stream()
             .map(Participant::getName)
             .collect(Collectors.joining(NAME_DELIMITER));
-        System.out
-            .printf(CARD_DISTRIBUTION_FORMAT, participantNames, startingCardCount);
     }
 
     public static void printParticipantsStatus(Participants participants, boolean withScore) {
@@ -96,8 +99,7 @@ public class OutputView {
     private static void printParticipantsResult(GameResult gameResult) {
         Map<String, Integer> unwrappedResult = gameResult.unwrap();
         unwrappedResult.keySet()
-            .forEach(playerName
-                -> System.out
+            .forEach(playerName -> System.out
                 .printf(PARTICIPANT_PROFIT_FORMAT, playerName, unwrappedResult.get(playerName)));
     }
 

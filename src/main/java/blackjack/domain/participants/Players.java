@@ -16,9 +16,16 @@ public class Players {
     }
 
     private static void validateDuplication(List<Player> players) {
-        if (players.size() != players.stream().distinct().count()) {
+        long removedDuplicationCount = countDistinctPlayers(players);
+        if (players.size() != removedDuplicationCount) {
             throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
         }
+    }
+
+    private static long countDistinctPlayers(List<Player> players) {
+        return players.stream()
+            .distinct()
+            .count();
     }
 
     public List<Player> unwrap() {
@@ -26,7 +33,8 @@ public class Players {
     }
 
     public boolean isNotPrepared() {
-        return players.stream().anyMatch(Player::isContinue);
+        return players.stream()
+            .anyMatch(Player::isContinue);
     }
 
     public GameResult match(Dealer dealer) {
