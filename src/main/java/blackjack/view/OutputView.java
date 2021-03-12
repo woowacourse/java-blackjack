@@ -1,9 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.card.Cards;
-import blackjack.domain.player.Dealer;
+import blackjack.domain.CardInfoDto;
+import blackjack.domain.RevenueInfoDto;
+import blackjack.domain.card.Card;
 import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Gamblers;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,15 +17,18 @@ public class OutputView {
                 .collect(Collectors.joining(","));
 
         System.out.println(("딜러와 "+ gamblerNames + "에게 2장의 카드를 나누었습니다"));
+        printLineSeparator();
     }
 
-    public static void printPlayerCardsInformation(final String name, final Cards cards) {
-        final String cardsInformation = cards.getCards().stream()
+    public static void printPlayerCardsInformation(final CardInfoDto info){
+        printMessageByFormat("%s카드: %s", info.getName(), makeCardInformation(info.getCards()));
+        printLineSeparator();
+    }
+
+    private static String makeCardInformation(final List<Card> cards){
+        return cards.stream()
                 .map(card -> card.getDenominationValue() + card.getSuitValue())
                 .collect(Collectors.joining(", "));
-
-        printMessageByFormat("%s카드: %s", name, cardsInformation);
-        printLineSeparator();
     }
 
     public static void informDealerReceived() {
@@ -33,13 +36,13 @@ public class OutputView {
         printLineSeparator();
     }
 
-    public static void printFinalRevenue(final Dealer dealer, final Gamblers gamblers) {
-        System.out.println("## 최종 수익");
-        System.out.println("딜러 : " + dealer.getMoneyValue());
-        for (Gambler gambler : gamblers) {
-            System.out.println(gambler.getNameValue() + ": " + gambler.getMoneyValue());
-        }
+    public static void printFinalRevenue(final RevenueInfoDto info) {
+        System.out.println(makeRevenueInfo(info));
         printLineSeparator();
+    }
+
+    private static String makeRevenueInfo(final RevenueInfoDto info){
+        return info.getName() + ": " + info.getRevenue();
     }
 
     public static void printLineSeparator() {

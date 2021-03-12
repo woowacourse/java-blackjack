@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import blackjack.domain.CardInfoDto;
+import blackjack.domain.RevenueInfoDto;
 import blackjack.domain.YesOrNo;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.player.Dealer;
@@ -27,16 +29,15 @@ public class BlackJackController {
         for (final Gambler gambler : game.getGamblers()) {
             game.bet(gambler, InputView.askBettingMoney(gambler));
         }
-
         game.checkBlackJack();
     }
 
     private void printInitialCards(final Dealer dealer, final Gamblers gamblers) {
         OutputView.printDistributeResult(gamblers.getNames());
-        OutputView.printPlayerCardsInformation(dealer.getNameValue(), dealer.getCards());
+        OutputView.printPlayerCardsInformation(new CardInfoDto(dealer));
 
         for (final Player gambler : gamblers) {
-            OutputView.printPlayerCardsInformation(gambler.getNameValue(), gambler.getCards());
+            OutputView.printPlayerCardsInformation(new CardInfoDto(gambler));
         }
     }
 
@@ -50,7 +51,7 @@ public class BlackJackController {
     private void askGamblerDraw(final BlackJackGame game, final Player gambler) {
         while (YesOrNo.from(InputView.askDrawOrNot(gambler)).isYes()) {
             game.giveCard(gambler);
-            OutputView.printPlayerCardsInformation(gambler.getNameValue(), gambler.getCards());
+            OutputView.printPlayerCardsInformation(new CardInfoDto(gambler));
         }
     }
 
@@ -63,10 +64,14 @@ public class BlackJackController {
     }
 
     private void calculateResults(final Dealer dealer, final Gamblers gamblers) {
-        OutputView.printPlayerCardsInformation(dealer.getNameValue(), dealer.getCards());
+        OutputView.printPlayerCardsInformation(new CardInfoDto(dealer));
         for(final Gambler gambler : gamblers){
-            OutputView.printPlayerCardsInformation(gambler.getNameValue(), gambler.getCards());
+            OutputView.printPlayerCardsInformation(new CardInfoDto(gambler));
         }
-        OutputView.printFinalRevenue(dealer, gamblers);
+
+        OutputView.printFinalRevenue(new RevenueInfoDto(dealer));
+        for(final Gambler gambler : gamblers){
+            OutputView.printFinalRevenue(new RevenueInfoDto(gambler));
+        }
     }
 }

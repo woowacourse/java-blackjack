@@ -18,6 +18,10 @@ public class Gamblers implements Iterable<Gambler> {
                 .collect(Collectors.toList());
     }
 
+    public List<Gambler> getGamblers(){
+        return new ArrayList<>(gamblers);
+    }
+
     @Override
     public Iterator<Gambler> iterator() {
         return gamblers.iterator();

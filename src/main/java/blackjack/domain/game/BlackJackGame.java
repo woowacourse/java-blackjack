@@ -24,12 +24,13 @@ public class BlackJackGame {
 
     private List<Name> splitAndParseToNames(final String nameLine) {
         return Arrays.asList(nameLine.split(SEPARATOR_OF_NAME_INPUT))
-                .stream().map(Name::new)
+                .stream()
+                .map(Name::new)
                 .collect(Collectors.toList());
     }
 
     private Gamblers initGamblerWithNames(final List<Name> names) {
-        List<Gambler> gamblers = names.stream()
+        final List<Gambler> gamblers = names.stream()
                 .map(Gambler::new)
                 .collect(Collectors.toList());
         return new Gamblers(gamblers);
