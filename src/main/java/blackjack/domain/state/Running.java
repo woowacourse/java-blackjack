@@ -21,6 +21,6 @@ public abstract class Running extends Started {
 
     @Override
     public final double earningRate(Dealer dealer) {
-        return 0;
+        throw new IllegalArgumentException("게임 진행 중에는 수익률을 구할 수 없습니다.");
     }
 }

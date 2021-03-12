@@ -66,7 +66,9 @@ public class HitTest {
                 new Card(Suit.CLOVER, Denomination.ACE),
                 new Card(Suit.HEART, Denomination.ACE)));
 
-        assertThatThrownBy(() -> hit.getProfit(new Dealer(), new Money(1000))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() ->
+                hit.getProfit(new Dealer(), new Money(1000)))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -79,5 +81,19 @@ public class HitTest {
         boolean isFinish = hit.isFinish();
 
         assertThat(isFinish).isFalse();
+    }
+
+    @Test
+    @DisplayName("게임 진행 중 수익률을 구할 때 예외가 발생한다.")
+    void earningRate() {
+        Hit hit = new Hit(new Cards(
+                new Card(Suit.CLOVER, Denomination.ACE),
+                new Card(Suit.HEART, Denomination.ACE)));
+        Dealer dealer = new Dealer();
+
+
+        assertThatThrownBy(() -> {
+            double earningRate = hit.earningRate(dealer);
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 }
