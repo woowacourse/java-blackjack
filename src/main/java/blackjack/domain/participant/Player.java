@@ -30,19 +30,19 @@ public class Player extends Participant {
     }
 
     public boolean isDrawWith(Dealer dealer) {
-        return isBothBlackjack(dealer) || hasSameCardResultWith(dealer);
+        return isBothBlackjack(dealer) || stayAndHasSameCardResult(dealer);
     }
 
     private boolean isBothBlackjack(Dealer dealer) {
         return isBlackJack() && dealer.isBlackJack();
     }
 
-    private boolean hasSameCardResultWith(Dealer dealer) {
+    private boolean stayAndHasSameCardResult(Dealer dealer) {
         return isBothStay(dealer) && cardResult() == dealer.cardResult();
     }
 
     private boolean isDefeatedBy(Dealer dealer) {
-        return isBothStay(dealer) && cardResult() < dealer.cardResult();
+        return isBust() || isBothStay(dealer) && cardResult() < dealer.cardResult() || isStay() && dealer.isBlackJack();
     }
 
     private boolean isBothStay(Dealer dealer) {

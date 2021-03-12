@@ -97,4 +97,13 @@ class BettingTest {
         player.updateProfitRatio(dealer);
         assertThat(player.revenue()).isEqualTo(-1000);
     }
+
+    @Test
+    void playerHitDealerBlackjack() {
+        player.startRound(JACK_SPADES, JACK_SPADES);
+        player.stay();
+        dealer.startRound(JACK_SPADES, ACE_CLUBS);
+        player.updateProfitRatio(dealer);
+        assertThat(player.revenue()).isEqualTo(-1000);
+    }
 }
