@@ -14,8 +14,8 @@ public class OutputView {
     public static final String CARD_INFO_MESSAGE = "%s카드: %s";
     public static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     public static final String RESULT_PREFIX = " - 결과 : %d" + LINE_SEPARATOR;
-    public static final String GAME_RESULT_MESSAGE = "%d승 %d무 %d패" + LINE_SEPARATOR;
     public static final String REVENUE_FORMAT = "%s: %d" + LINE_SEPARATOR;
+    public static final String FINAL_REVENUE_HEADER = LINE_SEPARATOR + "## 최종 수익";
 
     private OutputView() {
     }
@@ -70,6 +70,10 @@ public class OutputView {
     private static void printFinalCardInfo(Participant participant) {
         printCardInfo(participant);
         System.out.printf(RESULT_PREFIX, participant.cardResult());
+    }
+
+    public static void printFinalRevenueHeader() {
+        System.out.println(FINAL_REVENUE_HEADER);
     }
 
     public static void printFinalRevenue(Participant participant, double revenue) {
