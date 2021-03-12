@@ -14,6 +14,7 @@ public class Dealer implements Participant {
     private static final int TO = 1;
     private static final int DRAW_BOUND_SCORE = 16;
     private static final String DEALER_NAME = "딜러";
+    private static final int BLACKJACK_NUMBER = 21;
 
     private final String name;
     private final List<Card> cards;
@@ -56,6 +57,11 @@ public class Dealer implements Participant {
         return name;
     }
 
+    @Override
+    public boolean isBlackJack() {
+        return cards.size() == 2 && sumTotalScore() == BLACKJACK_NUMBER;
+    }
+
     public DealerResult getDealerResult(List<Player> players) {
         List<ScoreResult> scoreResults = decideWinOrLoseResults(players);
         Map<GameResult, Long> dealerResult = statisticsDealerResult(scoreResults);
@@ -67,7 +73,7 @@ public class Dealer implements Participant {
 
     public List<ScoreResult> decideWinOrLoseResults(List<Player> players) {
         return players.stream()
-                .map(player -> new ScoreResult(player.getName(), this.judgeResult(player)))
+                .map(player -> new ScoreResult(player, this.judgeResult(player)))
                 .collect(Collectors.toList());
     }
 

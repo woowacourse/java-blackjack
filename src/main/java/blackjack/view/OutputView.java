@@ -49,14 +49,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printScoreResults(DealerResult dealerResult, List<ScoreResult> scoreResults) {
-        System.out.println("## 최종 승패");
+    public static void printAllEarnings(DealerResult dealerResult, List<ScoreResult> scoreResults) {
+        System.out.println("## 최종 수익");
         Map<GameResult, Long> results = dealerResult.getResult();
         System.out.println(dealerResult.getName() + ": " + results.get(GameResult.WIN) + "승 "
                 + results.get(GameResult.LOSE) + "패 " + results.get(GameResult.DRAW) + "무");
 
         for (ScoreResult scoreResult : scoreResults) {
-            System.out.println(scoreResult.getName() + ": " + scoreResult.getGameResult().getValue());
+            System.out.println(scoreResult.getPlayerName() + ": " + scoreResult.calculateEarnings());
         }
     }
 }

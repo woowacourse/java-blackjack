@@ -46,4 +46,17 @@ class BattingMoneyTest {
         //then
         assertThat(actual).extracting("value").isEqualTo(1_000);
     }
+
+    @DisplayName("배팅금액을 곱하는 기능을 테스트한다")
+    @Test
+    void testMultiply() {
+        //given
+        BattingMoney battingMoney = new BattingMoney(1_000);
+
+        //when
+        double actual = battingMoney.multiply(1.5);
+
+        //then
+        assertThat(actual).isEqualTo(1_500.0);
+    }
 }

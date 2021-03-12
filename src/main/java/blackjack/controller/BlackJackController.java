@@ -21,7 +21,7 @@ public class BlackJackController {
         blackJackGame.playDealerTurn();
 
         OutputView.printAllParticipantsCards(blackJackGame.getParticipants());
-        OutputView.printScoreResults(blackJackGame.getDealerResult(), blackJackGame.getPlayersResults());
+        OutputView.printAllEarnings(blackJackGame.getDealerResult(), blackJackGame.getPlayersResults());
     }
 
     private void batAllPlayers(final BlackJackGame blackJackGame) {

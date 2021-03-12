@@ -74,11 +74,11 @@ class DealerTest {
 
         //then
         assertAll(
-                () -> assertThat(playerResults.get(0).getName()).isEqualTo("roki"),
+                () -> assertThat(playerResults.get(0).getPlayerName()).isEqualTo("roki"),
                 () -> assertThat(playerResults.get(0).getGameResult()).isEqualTo(GameResult.LOSE),
-                () -> assertThat(playerResults.get(1).getName()).isEqualTo("suri"),
+                () -> assertThat(playerResults.get(1).getPlayerName()).isEqualTo("suri"),
                 () -> assertThat(playerResults.get(1).getGameResult()).isEqualTo(GameResult.WIN),
-                () -> assertThat(playerResults.get(2).getName()).isEqualTo("brown"),
+                () -> assertThat(playerResults.get(2).getPlayerName()).isEqualTo("brown"),
                 () -> assertThat(playerResults.get(2).getGameResult()).isEqualTo(GameResult.DRAW)
         );
     }
@@ -98,11 +98,11 @@ class DealerTest {
 
         //then
         assertAll(
-                () -> assertThat(playerResults.get(0).getName()).isEqualTo("roki"),
+                () -> assertThat(playerResults.get(0).getPlayerName()).isEqualTo("roki"),
                 () -> assertThat(playerResults.get(0).getGameResult()).isEqualTo(GameResult.WIN),
-                () -> assertThat(playerResults.get(1).getName()).isEqualTo("suri"),
+                () -> assertThat(playerResults.get(1).getPlayerName()).isEqualTo("suri"),
                 () -> assertThat(playerResults.get(1).getGameResult()).isEqualTo(GameResult.WIN),
-                () -> assertThat(playerResults.get(2).getName()).isEqualTo("brown"),
+                () -> assertThat(playerResults.get(2).getPlayerName()).isEqualTo("brown"),
                 () -> assertThat(playerResults.get(2).getGameResult()).isEqualTo(GameResult.WIN)
         );
     }
@@ -122,11 +122,11 @@ class DealerTest {
 
         //then
         assertAll(
-                () -> assertThat(playerResults.get(0).getName()).isEqualTo("roki"),
+                () -> assertThat(playerResults.get(0).getPlayerName()).isEqualTo("roki"),
                 () -> assertThat(playerResults.get(0).getGameResult()).isEqualTo(GameResult.LOSE),
-                () -> assertThat(playerResults.get(1).getName()).isEqualTo("suri"),
+                () -> assertThat(playerResults.get(1).getPlayerName()).isEqualTo("suri"),
                 () -> assertThat(playerResults.get(1).getGameResult()).isEqualTo(GameResult.LOSE),
-                () -> assertThat(playerResults.get(2).getName()).isEqualTo("brown"),
+                () -> assertThat(playerResults.get(2).getPlayerName()).isEqualTo("brown"),
                 () -> assertThat(playerResults.get(2).getGameResult()).isEqualTo(GameResult.WIN)
         );
     }

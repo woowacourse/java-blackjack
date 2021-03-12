@@ -25,4 +25,8 @@ public class BattingMoney {
     public boolean isZero() {
         return value == ZERO_VALUE;
     }
+
+    public double multiply(final double multiplier) {
+        return value * multiplier;
+    }
 }
