@@ -55,22 +55,6 @@ class BlackJackGameTest {
         );
     }
 
-    @DisplayName("딜러의 턴을 플레이하는 기능을 테스트한다")
-    @ParameterizedTest
-    @CsvSource(value = {
-            "16:1", "17:0"
-    }, delimiter = ':')
-    void testPlayDealerTurn(int totalDealerScore, int expected) {
-        //given
-        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> totalDealerScore);
-
-        //when
-        blackJackGame.playDealerTurn();
-
-        //then
-        assertThat(blackJackGame.getDealer().showCards()).hasSize(expected);
-    }
-
     @DisplayName("차례를 기다리는 플레이어가 있을 때, 차례를 기다리는 플레이어가 존재하는지 확인하는 기능")
     @Test
     void testExistWaitingPlayerIfExistWaitingPlayer() {

@@ -34,7 +34,7 @@ public class BlackJackGame {
 
     public void playDealerTurn() {
         Dealer dealer = getDealer();
-        if (dealer.isReceiveCard()) {
+        while (dealer.isReceiveCard()) {
             dealer.receiveCard(deck.draw());
         }
     }
