@@ -1,6 +1,6 @@
-package blackjack;
+package blackjack.domain.participant;
 
-import blackjack.domain.Players;
+import blackjack.domain.participant.Players;
 import blackjack.utils.FixedCardDeck;
 import blackjack.utils.IllegalNameException;
 import org.junit.jupiter.api.DisplayName;
