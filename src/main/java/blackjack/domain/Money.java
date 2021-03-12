@@ -6,7 +6,7 @@ public class Money {
 
     private final long value;
 
-    public Money(String input) {
+    public Money(final String input) {
         validateNull(input);
         validateEmpty(input);
         validateParseNumber(input);
