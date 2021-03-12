@@ -76,7 +76,7 @@ public class BlackjackTest {
 
         double result = blackjack.getProfit(dealer, money);
 
-        assertThat(result).isEqualTo(1000);
+        assertThat(result).isEqualTo(0);
     }
 
     @Test

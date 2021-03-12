@@ -253,8 +253,49 @@ public class PlayerTest {
                 new Card(Suit.CLOVER, Denomination.QUEEN)
         )));
 
-        long profit = player.getProfit();
+        long profit = player.getProfit(dealer);
 
         assertThat(profit).isEqualTo(-1000);
+    }
+
+    @Test
+    @DisplayName("수익을 구한다. - 딜러, 플레이어 블랙잭인 경우")
+    void calculateProfit2() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+        player.betMoney(new Money(1000));
+        Dealer dealer = new Dealer();
+        dealer.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.QUEEN)
+        )));
+
+        long profit = player.getProfit(dealer);
+
+        assertThat(profit).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("수익을 구한다. - 플레이어 수가 더 큰 경우")
+    void calculateProfit3() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+        player.betMoney(new Money(1000));
+        player.stay();
+        Dealer dealer = new Dealer();
+        dealer.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.SIX),
+                new Card(Suit.CLOVER, Denomination.SIX)
+        )));
+
+        long profit = player.getProfit(dealer);
+
+        assertThat(profit).isEqualTo(1000);
     }
 }

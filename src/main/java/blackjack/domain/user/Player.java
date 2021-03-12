@@ -11,7 +11,7 @@ public class Player extends User {
         return Result.decide(this, dealer);
     }
 
-    public long getProfit() {
-        return -1000;
+    public long getProfit(Dealer dealer) {
+        return state.getProfit(dealer, bettingMoney);
     }
 }
