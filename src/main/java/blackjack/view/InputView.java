@@ -44,6 +44,11 @@ public class InputView {
         throw new IllegalArgumentException(REPLY_ERROR_MESSAGE);
     }
 
+    public static String inputBettingMoney(Player player) {
+        OutputView.printMessage(player.getName() + "의 배팅 금액은?");
+        return inputString();
+    }
+
     private static String inputString() {
         return scanner.nextLine();
     }

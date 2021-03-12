@@ -1,10 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.GameResult;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -118,5 +115,9 @@ public class Game {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public void bet(Player player, String inputBettingMoney) {
+        player.bet(new Money(inputBettingMoney));
     }
 }

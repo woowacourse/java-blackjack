@@ -87,11 +87,10 @@ public class OutputView {
     }
 
     public static void printFinalRevenue(Participant participant, double revenue) {
-        System.out.println(participant.getName() + ": " + revenue);
+        System.out.println(participant.getName() + ": " + (long) revenue);
     }
 
     public static void printMessage(String s) {
         System.out.println(s);
     }
-
 }

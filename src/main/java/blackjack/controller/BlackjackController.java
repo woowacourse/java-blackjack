@@ -17,10 +17,12 @@ public class BlackjackController {
 
     public void start() {
         Game game = initGame();
+        askBetting(game);
         setUpTwoCards(game);
         askPlayersDrawCard(game);
         makeDealerDrawCard(game);
         showFinalResult(game);
+        printFinalRevenue(game);
     }
 
     private Game initGame() {
@@ -29,6 +31,22 @@ public class BlackjackController {
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
             return initGame();
+        }
+    }
+
+    private void askBetting(Game game) {
+        List<Player> players = game.getPlayers();
+        for (Player player : players) {
+            askBetting(game, player);
+        }
+    }
+
+    private void askBetting(Game game, Player player) {
+        try {
+            game.bet(player, InputView.inputBettingMoney(player));
+        } catch (IllegalArgumentException e ) {
+            System.out.println(e.getMessage());
+            askBetting(game);
         }
     }
 
@@ -72,6 +90,17 @@ public class BlackjackController {
         OutputView.printWinOrLoseResult(dealer, game.getDealerResult());
         for (Player player : players) {
             OutputView.printWinOrLoseResult(player, player.getGameResult());
+        }
+    }
+
+    public void printFinalRevenue(Game game) {
+        game.calculateGameResult();
+
+        Dealer dealer = game.getDealer();
+        List<Player> players = game.getPlayers();
+        OutputView.printFinalRevenue(dealer, game.dealerRevenue());
+        for (Player player : players) {
+            OutputView.printFinalRevenue(player, player.revenue());
         }
     }
 }
