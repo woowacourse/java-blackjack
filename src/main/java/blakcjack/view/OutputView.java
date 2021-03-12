@@ -35,7 +35,7 @@ public class OutputView {
 	}
 
 	private static String getInitialHandOf(final Participant participant) {
-		Cards initialHand = participant.getInitialHand();
+		final Cards initialHand = participant.getInitialHand();
 		return getConcatenatedCardsFrom(initialHand);
 	}
 
@@ -55,7 +55,7 @@ public class OutputView {
 	}
 
 	private static String makeHandSummaryOf(final Participant participant) {
-		Cards hand = participant.getHand();
+		final Cards hand = participant.getHand();
 		return String.format("%s카드: %s", participant.getName(), getConcatenatedCardsFrom(hand));
 	}
 
@@ -68,7 +68,7 @@ public class OutputView {
 
 	public static void printFinalOutcomeSummary(final OutcomeStatistics outcomeStatistics) {
 		System.out.println("## 최종 승패");
-		Map<Participant, Money> participantsProfit = outcomeStatistics.getParticipantsProfit();
+		final Map<Participant, Money> participantsProfit = outcomeStatistics.getParticipantsProfit();
 		for (final Participant participant : participantsProfit.keySet()) {
 			final Money participantProfit = participantsProfit.get(participant);
 			System.out.printf("%s: %.2f%n", participant.getName(), participantProfit.getMoney());

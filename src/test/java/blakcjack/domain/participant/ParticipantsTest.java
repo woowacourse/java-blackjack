@@ -43,10 +43,10 @@ class ParticipantsTest {
 		));
 	}
 
-	@DisplayName("처음에 각 참가자들 에게 두장씩 나눠주는 것을 제대로 나눠 주는지")
+	@DisplayName("처음에 각 참가자들에게 두장씩 나눠주는 것을 제대로 나눠 주는지")
 	@Test
 	void initializeHandsFrom() {
-		Deck customDeck = createCustomDeck(
+		final Deck customDeck = createCustomDeck(
 				Card.of(CardSymbol.HEART, CardNumber.JACK), // mediumBear
 				Card.of(CardSymbol.HEART, CardNumber.ACE),
 
@@ -65,12 +65,12 @@ class ParticipantsTest {
 		assertThatThrownBy(customDeck::pop).isInstanceOf(EmptyDeckException.class)
 				.hasMessage(EMPTY_DECK_ERROR);
 
-		Cards dealerExpectedCards = new Cards();
+		final Cards dealerExpectedCards = new Cards();
 		dealerExpectedCards.add(Card.of(CardSymbol.SPADE, CardNumber.KING));
 		dealerExpectedCards.add(Card.of(CardSymbol.SPADE, CardNumber.ACE));
 		assertThat(participants.getParticipants().get(0).getCards()).isEqualTo(dealerExpectedCards);
 
-		Cards pobiExpectedCards = new Cards();
+		final Cards pobiExpectedCards = new Cards();
 		pobiExpectedCards.add(Card.of(CardSymbol.DIAMOND, CardNumber.KING));
 		pobiExpectedCards.add(Card.of(CardSymbol.DIAMOND, CardNumber.ACE));
 		assertThat(participants.getParticipants().get(1).getCards()).isEqualTo(pobiExpectedCards);
@@ -79,7 +79,7 @@ class ParticipantsTest {
 	@DisplayName("플레이어들의 결과를 토대로 결과 통계를 올바르게 생성해 내는지")
 	@Test
 	void getOutcomeStatistics_giveCardsToPlayersAndDealer_createCorrespondingOutcomeStatistics() {
-		Deck customDeck = createCustomDeck(
+		final Deck customDeck = createCustomDeck(
 				Card.of(CardSymbol.SPADE, CardNumber.FIVE), // medium bear - lose
 				Card.of(CardSymbol.SPADE, CardNumber.FOUR),
 

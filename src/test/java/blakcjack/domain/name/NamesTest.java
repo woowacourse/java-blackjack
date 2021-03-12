@@ -13,7 +13,7 @@ class NamesTest {
 	@DisplayName("생성자 테스트")
 	@Test
 	void create() {
-		Names names = new Names(Arrays.asList("sakjung", "mediumBear"));
+		final Names names = new Names(Arrays.asList("sakjung", "mediumBear"));
 		assertThat(names).isEqualTo(new Names(Arrays.asList("sakjung", "mediumBear")));
 	}
 

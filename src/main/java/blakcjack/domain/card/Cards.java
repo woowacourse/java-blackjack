@@ -23,13 +23,13 @@ public class Cards {
 	}
 
 	public Cards getFirstTwoCards() {
-		Cards hand = getFirstCard();
+		final Cards hand = getFirstCard();
 		hand.add(cards.get(SECOND_CARD_INDEX));
 		return hand;
 	}
 
 	public Cards getFirstCard() {
-		Cards hand = new Cards();
+		final Cards hand = new Cards();
 		hand.add(cards.get(FIRST_CARD_INDEX));
 		return hand;
 	}

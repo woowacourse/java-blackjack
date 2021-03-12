@@ -32,7 +32,7 @@ public class PlayerTest {
 		final Deck customDeck = createCustomDeck(Card.of(CardSymbol.CLUB, CardNumber.ACE));
 		player.drawOneCardFrom(customDeck);
 
-		Cards cards = new Cards();
+		final Cards cards = new Cards();
 		cards.add(Card.of(CardSymbol.CLUB, CardNumber.ACE));
 		assertThat(player.getCards()).isEqualTo(cards);
 	}
@@ -75,13 +75,13 @@ public class PlayerTest {
 	@DisplayName("초기 패를 보여줄 때 플레이어들은 2장 다 공개하는지")
 	@Test
 	void getInitialHand() {
-		Deck customDeck = createCustomDeck(
+		final Deck customDeck = createCustomDeck(
 				Card.of(CardSymbol.CLUB, CardNumber.ACE),
 				Card.of(CardSymbol.CLUB, CardNumber.TWO),
 				Card.of(CardSymbol.CLUB, CardNumber.THREE),
 				Card.of(CardSymbol.CLUB, CardNumber.FOUR)
 		);
-		Player player = new Player(new Name("pobi"), new Money(10));
+		final Player player = new Player(new Name("pobi"), new Money(10));
 		player.drawOneCardFrom(customDeck);
 		player.drawOneCardFrom(customDeck);
 
@@ -95,7 +95,7 @@ public class PlayerTest {
 	}
 
 	private Cards createCustomCards(final Card... cards) {
-		Cards customCards = new Cards();
+		final Cards customCards = new Cards();
 		for (Card card : cards) {
 			customCards.add(card);
 		}

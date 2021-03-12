@@ -30,7 +30,7 @@ public class DealerTest {
 		final Deck customDeck = createCustomDeck(Card.of(CardSymbol.CLUB, CardNumber.ACE));
 		dealer.drawOneCardFrom(customDeck);
 
-		Cards cards = new Cards();
+		final Cards cards = new Cards();
 		cards.add(Card.of(CardSymbol.CLUB, CardNumber.ACE));
 		assertThat(dealer.getCards()).isEqualTo(cards);
 	}
@@ -53,7 +53,7 @@ public class DealerTest {
 	@DisplayName("초기 패를 보여줄 때 딜러는 첫 번째 카드만 공개하는지")
 	@Test
 	void getInitialHand() {
-		Deck customDeck = createCustomDeck(
+		final Deck customDeck = createCustomDeck(
 				Card.of(CardSymbol.CLUB, CardNumber.ACE),
 				Card.of(CardSymbol.CLUB, CardNumber.TWO)
 		);
@@ -69,7 +69,7 @@ public class DealerTest {
 	}
 
 	private Cards createCustomCards(final Card... cards) {
-		Cards customCards = new Cards();
+		final Cards customCards = new Cards();
 		for (Card card : cards) {
 			customCards.add(card);
 		}

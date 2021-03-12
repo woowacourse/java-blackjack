@@ -12,7 +12,7 @@ class MoneyTest {
 	@DisplayName("플레이어의 수익들로부터 딜러의 수익을 제대로 계산해 내는지")
 	@Test
 	void calculateDealerProfitFrom_collectionOfMoney_returnDealerProfit() {
-		Money dealerProfit = calculateDealerProfitFrom(Arrays.asList(
+		final Money dealerProfit = calculateDealerProfitFrom(Arrays.asList(
 				new Money(100),
 				new Money(300),
 				new Money(-200),
@@ -24,7 +24,7 @@ class MoneyTest {
 	@DisplayName("수익률이 주어졌을 때 수익을 제대로 계산 하는지")
 	@Test
 	void calculateProfit_earningRate_returnProfit() {
-		Money money = new Money(100);
+		final Money money = new Money(100);
 		assertThat(money.calculateProfit(1.5f)).isEqualTo(new Money(150));
 	}
 }

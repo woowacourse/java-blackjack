@@ -11,7 +11,7 @@ public class OutcomeStatistics {
 	private final Map<Participant, Money> participantsProfit = new LinkedHashMap<>();
 
 	public OutcomeStatistics(final Dealer dealer, final List<Player> players) {
-		Map<Player, Money> playersProfit = getPlayersProfit(dealer, players);
+		final Map<Player, Money> playersProfit = getPlayersProfit(dealer, players);
 		participantsProfit.put(dealer, aggregateDealerProfitFrom(playersProfit));
 		participantsProfit.putAll(playersProfit);
 	}
@@ -27,7 +27,7 @@ public class OutcomeStatistics {
 	}
 
 	private Money aggregateDealerProfitFrom(final Map<Player, Money> playersProfit) {
-		Collection<Money> playersProfitValues = playersProfit.values();
+		final Collection<Money> playersProfitValues = playersProfit.values();
 		return Money.calculateDealerProfitFrom(playersProfitValues);
 	}
 

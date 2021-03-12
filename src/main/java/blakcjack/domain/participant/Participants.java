@@ -28,7 +28,7 @@ public class Participants {
 	}
 
 	public List<Participant> getParticipantsInDrawOrder() {
-		List<Participant> participantsInDrawOrder = new ArrayList<>(participants);
+		final List<Participant> participantsInDrawOrder = new ArrayList<>(participants);
 		Collections.rotate(participantsInDrawOrder, participantsInDrawOrder.size() - 1);
 		return Collections.unmodifiableList(participantsInDrawOrder);
 	}
