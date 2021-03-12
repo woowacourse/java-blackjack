@@ -5,7 +5,6 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.result.Result;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Player extends Participant {
 
@@ -30,6 +29,9 @@ public class Player extends Participant {
     public Player changeBetting(Double betting) {
         return new Player(this.hand, this.getNameAsString(), betting);
     }
+    public double getBetting(){
+        return betting.getBetting();
+    }
 
     public Player changeProfit(Result result) {
         if (result.equals(Result.BLACKJACK_WIN)) {
@@ -48,7 +50,7 @@ public class Player extends Participant {
                 betting.getBetting() * Result.DRAW.getRate());
     }
 
-    public double getProfitAsDouble() {
+    public double getProfit() {
         return profit.getProfit();
     }
 
@@ -93,18 +95,5 @@ public class Player extends Participant {
     @Override
     public List<Card> getInitCardsAsList() {
         return hand.getCardsAsList();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
-        return Objects.equals(betting, player.betting) && Objects.equals(profit, player.profit);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(betting, profit);
     }
 }

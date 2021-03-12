@@ -78,7 +78,7 @@ public class OutputView {
         printNewLine();
         System.out.println("## 최종 수익");
         for (Player player : players) {
-            System.out.printf("%s: %d", player.getNameAsString(), (int) player.getProfitAsDouble());
+            System.out.printf("%s: %d", player.getNameAsString(), (int) player.getProfit());
             printNewLine();
         }
     }

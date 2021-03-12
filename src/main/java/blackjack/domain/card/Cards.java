@@ -23,6 +23,10 @@ public class Cards {
         return cards.get(0);
     }
 
+    public boolean isEmpty(){
+        return cards.isEmpty();
+    }
+
     public int getScore() {
         boolean hasAce = hasAce();
         int sum = cards.stream().mapToInt(Card::getFaceValueAsInt).sum();
