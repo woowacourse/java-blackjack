@@ -24,6 +24,8 @@ public class Player implements Participant {
 
     @Override
     public boolean handOutCard(Card card) {
+        if (!isReceiveCard()) return false;
+
         state.draw(card);
         this.state = state.changeState();
         return true;
