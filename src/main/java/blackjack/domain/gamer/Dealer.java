@@ -1,5 +1,7 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.state.State;
+
 public class Dealer extends Participants {
 
     private static final int DEALER_MAX_SCORE = 16;
@@ -7,6 +9,10 @@ public class Dealer extends Participants {
 
     public Dealer() {
         super(DEALER_NAME);
+    }
+
+    public Dealer(State state) {
+        super(DEALER_NAME, state);
     }
 
     @Override

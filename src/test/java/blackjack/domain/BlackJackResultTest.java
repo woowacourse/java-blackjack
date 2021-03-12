@@ -2,13 +2,11 @@ package blackjack.domain;
 
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.MatchResult;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Shape;
+import blackjack.domain.card.*;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
+import blackjack.domain.state.Hit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,8 +21,8 @@ public class BlackJackResultTest {
     @Test
     @DisplayName("게임 결과 생성")
     void createBlackJackResult() {
-        Players players = new Players(Arrays.asList(new Player("pika"), new Player("air")));
-        BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(new Dealer()));
+        Players players = new Players(Arrays.asList(new Player("pika", new Hit(new Cards())), new Player("air", new Hit(new Cards()))));
+        BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(new Dealer(new Hit(new Cards()))));
         assertThat(blackJackResult).isNotNull();
     }
 
@@ -36,11 +34,9 @@ public class BlackJackResultTest {
 
 
         for (Player player : players.getPlayers()) {
-            player.draw(new Card(Shape.SPADE, Denomination.JACK));
-            player.draw(new Card(Shape.SPADE, Denomination.ACE));
+            player.firstDraw(new Cards(Arrays.asList(new Card(Shape.SPADE, Denomination.JACK), new Card(Shape.SPADE, Denomination.ACE))));
         }
-        dealer.draw(new Card(Shape.SPADE, Denomination.FIVE));
-        dealer.draw(new Card(Shape.SPADE, Denomination.ACE));
+        dealer.firstDraw(new Cards(Arrays.asList(new Card(Shape.SPADE, Denomination.FIVE), new Card(Shape.SPADE, Denomination.ACE))));
         BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(dealer));
         Map<MatchResult, Integer> dealerResult = blackJackResult.getDealerResult();
         assertThat(dealerResult.get(MatchResult.WIN)).isEqualTo(0);

@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
+import blackjack.domain.state.Hit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("pika");
+        player = new Player("pika", new Hit(new Cards()));
     }
 
     @Test

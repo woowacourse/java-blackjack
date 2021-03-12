@@ -19,6 +19,12 @@ public abstract class Participants {
         this.name = name;
     }
 
+    public Participants(String name, State state) {
+        validateNameLength(name);
+        this.name = name;
+        this.state = state;
+    }
+
     public void firstDraw(Cards cards) {
         this.state = StateFactory.draw(cards);
     }
