@@ -11,12 +11,16 @@ public class Player extends Participant {
         this.name = name;
     }
 
+    public void betting(final int betAmount) {
+        this.betAmount = new BetAmount(betAmount);
+    }
+
     public Result judgeByDealerState(final Dealer dealer) {
         return this.state.calculatePlayerResult(dealer.state);
     }
 
-    public void betting(final int betAmount) {
-        this.betAmount = BetAmount.initBetting(betAmount);
+    public double profit(final Result result) {
+        return this.betAmount.multiply(result.getAmplification());
     }
 
     public String getName() {
