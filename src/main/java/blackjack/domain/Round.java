@@ -12,8 +12,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Round {
-    public static final int GAME_OVER_SCORE = 21;
-
     private final Deck deck;
     private final Users users;
 
@@ -34,10 +32,6 @@ public class Round {
         return new Round(deck, new Users<>(users));
     }
 
-    private static State drawTwoCard(Deck deck) {
-        return StateFactory.draw(deck.makeOneCard(), deck.makeOneCard());
-    }
-
     public AbstractUser getDealer() {
         return users.getDealer();
     }
@@ -50,15 +44,8 @@ public class Round {
         return Collections.unmodifiableList(users.getPlayers());
     }
 
-    public Map<String, Queue<Outcome>> findResults() {
-        Map<String, Queue<Outcome>> results = new LinkedHashMap<>();
-        Queue<Outcome> gameOutComes = makeRoundOutComes();
-        results.put(getDealer().getName(), new ArrayDeque<>(gameOutComes));
-
-        getPlayers().forEach(player -> results.put(player.getName(),
-                new ArrayDeque<>(Collections.singletonList(Outcome.getPlayerOutcome(gameOutComes.poll())))));
-
-        return results;
+    public boolean isDealerCanDraw() {
+        return getDealer().canDraw();
     }
 
     public void addDealerCard() {
@@ -73,6 +60,12 @@ public class Round {
         findPlayer.changeState(state);
     }
 
+    public void makePlayerStay(AbstractUser player) {
+        AbstractUser findPlayer = findPlayer(player);
+        State state = findPlayer.getState().stay();
+        findPlayer.changeState(state);
+    }
+
     private AbstractUser findPlayer(AbstractUser player) {
         return getPlayers().stream()
                 .filter(p -> p.equals(player))
@@ -80,19 +73,7 @@ public class Round {
                 .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 유저입니다"));
     }
 
-    private Queue<Outcome> makeRoundOutComes() {
-        return getPlayers().stream()
-                .map(player -> Outcome.findOutcome(getDealer().getState().calculateScore(), player.getState().calculateScore()))
-                .collect(Collectors.toCollection(ArrayDeque::new));
-    }
-
-    public boolean isDealerCanDraw() {
-        return getDealer().canDraw();
-    }
-
-    public void makePlayerStay(AbstractUser player) {
-        AbstractUser findPlayer = findPlayer(player);
-        State state = findPlayer.getState().stay();
-        findPlayer.changeState(state);
+    private static State drawTwoCard(Deck deck) {
+        return StateFactory.draw(deck.makeOneCard(), deck.makeOneCard());
     }
 }

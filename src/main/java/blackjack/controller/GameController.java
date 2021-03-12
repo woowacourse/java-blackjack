@@ -25,7 +25,6 @@ public class GameController {
         addPlayersCardOrPass(round);
         addDealerCard(round);
         OutputView.showFinalStatus(RoundStatusDto.toDto(round));
-        OutputView.showOutComes(round.findResults());
     }
 
     private Round initializeRound() {
@@ -53,7 +52,9 @@ public class GameController {
             round.addPlayerCard(player);
             OutputView.showPlayCardStatus(new PlayerStatusDto(player.getName(), player.getState().cards().getCards(), player.getState().calculateScore()));
         }
-        round.makePlayerStay(player);
+        if (answer.equals(NO)) {
+            round.makePlayerStay(player);
+        }
     }
 
     private void addDealerCard(final Round round) {
