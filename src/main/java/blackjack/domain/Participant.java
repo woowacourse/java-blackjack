@@ -23,34 +23,6 @@ public abstract class Participant {
         return hand.getUnmodifiableList();
     }
 
-    public Outcome result(int counterpart) {
-        int playerSum = sumCardsForResult();
-
-        if (win(counterpart, playerSum)) {
-            return Outcome.WIN;
-        }
-
-        if (lose(counterpart, playerSum)) {
-            return Outcome.LOSE;
-        }
-
-        return Outcome.DRAW;
-    }
-
-    private boolean lose(int counterpart, int playerSum) {
-        if (counterpart <= BLACKJACK && playerSum > BLACKJACK) {
-            return true;
-        }
-        return counterpart <= BLACKJACK && counterpart > playerSum;
-    }
-
-    private boolean win(int counterpart, int playerSum) {
-        if (counterpart > BLACKJACK && playerSum <= BLACKJACK) {
-            return true;
-        }
-        return playerSum <= BLACKJACK && counterpart < playerSum;
-    }
-
     public void takeCard(Card card) {
         hand.add(card);
     }

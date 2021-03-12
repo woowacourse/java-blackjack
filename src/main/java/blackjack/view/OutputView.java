@@ -48,9 +48,13 @@ public class OutputView {
 
     private static void printProfits(Dealer dealer, Players players) {
         System.out.println("\n## 최종 수익");
-        System.out.println(dealer.getName() + ": " + dealer.calculateProfits(players));
+        double dealerProfit = 0;
         for (Player player : players.values()) {
-            System.out.println(player.getName() + ": " + player.calculateProfit(dealer));
+            dealerProfit -= player.calculateProfitFromState(dealer);
+        }
+        System.out.println(dealer.getName() + ": " + dealerProfit);
+        for (Player player : players.values()) {
+            System.out.println(player.getName() + ": " + player.calculateProfitFromState(dealer));
         }
     }
 

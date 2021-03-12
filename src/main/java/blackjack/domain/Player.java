@@ -43,26 +43,23 @@ public class Player extends Participant {
         return sumCards() <= BLACKJACK;
     }
 
-    public int debtOrRevenueForPlayer(Outcome outcome) {
-        if (Outcome.WIN.equals(outcome)) {
-            return betMoney * 2;
-        }
-        if (Outcome.LOSE.equals(outcome)) {
-            return betMoney - betMoney;
-        }
-        return betMoney;
-    }
-
-    public int calculateProfit(Dealer dealer) {
-        Outcome outcome = result(dealer.sumCardsForResult());
-        return debtOrRevenueForPlayer(outcome) - betMoney;
-    }
-
     public void setBetMoney(int betMoney) {
         this.betMoney = betMoney;
     }
 
-    public int getBetMoney() {
-        return betMoney;
+    public double calculateProfitFromState(Dealer dealer) {
+        if (isBust() || (isHit() && dealer.isBlackjack()) || (isHit() && dealer.isHit() && sumCardsForResult() < dealer.sumCardsForResult())) {
+            return -betMoney;
+        }
+        if (isBlackjack() && (dealer.isHit() || dealer.isBust())) {
+            return 1.5 * betMoney;
+        }
+        if ((isHit() && dealer.isBust()) || (isHit() && dealer.isHit() && sumCardsForResult() > dealer.sumCardsForResult())) {
+            return betMoney;
+        }
+        if ((isBlackjack() && dealer.isBlackjack()) || (isHit() && dealer.isHit() && sumCardsForResult() == dealer.sumCardsForResult())) {
+            return 0;
+        }
+        return 0;
     }
 }

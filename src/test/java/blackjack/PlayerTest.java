@@ -124,44 +124,163 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 이긴 경우, 수익 계산")
-    void calulateProfit1() {
+    @DisplayName("수익 계산 - Player: Bust, Dealer: Hit")
+    void calculateProfit1() {
         List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("Q다이아몬드"));
         Player player = new Player("john", cards);
+        player.takeCard(Card.from("2다이아몬드"));
         int betMoney = 1000;
         player.setBetMoney(betMoney);
 
-        cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("9다이아몬드"));
+        cards = Arrays.asList(Card.from("K하트"), Card.from("Q하트"));
         Dealer dealer = new Dealer(cards);
 
-        assertThat(player.calculateProfit(dealer)).isEqualTo(betMoney);
+        assertThat(player.calculateProfitFromState(dealer)).isEqualTo(-betMoney);
     }
 
     @Test
-    @DisplayName("플레이어가 진 경우, 수익 계산")
-    void calulateProfit2() {
+    @DisplayName("수익 계산 - Player: Bust, Dealer: Blackjack")
+    void calculateProfit2() {
         List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("Q다이아몬드"));
         Player player = new Player("john", cards);
+        player.takeCard(Card.from("2다이아몬드"));
         int betMoney = 1000;
         player.setBetMoney(betMoney);
 
-        cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("A다이아몬드"));
+        cards = Arrays.asList(Card.from("K하트"), Card.from("A하트"));
         Dealer dealer = new Dealer(cards);
 
-        assertThat(player.calculateProfit(dealer)).isEqualTo(-betMoney);
+        assertThat(player.calculateProfitFromState(dealer)).isEqualTo(-betMoney);
     }
 
     @Test
-    @DisplayName("플레이어가 비긴 경우, 수익 계산")
-    void calulateProfit3() {
+    @DisplayName("수익 계산 - Player: Bust, Dealer: Bust")
+    void calculateProfit3() {
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("Q다이아몬드"));
+        Player player = new Player("john", cards);
+        player.takeCard(Card.from("2다이아몬드"));
+        int betMoney = 1000;
+        player.setBetMoney(betMoney);
+
+        cards = Arrays.asList(Card.from("K하트"), Card.from("Q하트"));
+        Dealer dealer = new Dealer(cards);
+        dealer.takeCard(Card.from("2하트"));
+
+        assertThat(player.calculateProfitFromState(dealer)).isEqualTo(-betMoney);
+    }
+
+    @Test
+    @DisplayName("수익 계산 - Player: Blackjack, Dealer: Hit")
+    void calculateProfit4() {
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("A다이아몬드"));
+        Player player = new Player("john", cards);
+        int betMoney = 1000;
+        player.setBetMoney(betMoney);
+
+        cards = Arrays.asList(Card.from("K하트"), Card.from("Q하트"));
+        Dealer dealer = new Dealer(cards);
+        dealer.takeCard(Card.from("A하트"));
+
+        assertThat(player.calculateProfitFromState(dealer)).isEqualTo(1.5 * betMoney);
+    }
+
+    @Test
+    @DisplayName("수익 계산 - Player: Blackjack, Dealer: Bust")
+    void calculateProfit5() {
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("A다이아몬드"));
+        Player player = new Player("john", cards);
+        int betMoney = 1000;
+        player.setBetMoney(betMoney);
+
+        cards = Arrays.asList(Card.from("K하트"), Card.from("Q하트"));
+        Dealer dealer = new Dealer(cards);
+        dealer.takeCard(Card.from("2하트"));
+
+        assertThat(player.calculateProfitFromState(dealer)).isEqualTo(1.5 * betMoney);
+    }
+
+    @Test
+    @DisplayName("수익 계산 - Player: Blackjack, Dealer: Blackjack")
+    void calculateProfit6() {
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("A다이아몬드"));
+        Player player = new Player("john", cards);
+        int betMoney = 1000;
+        player.setBetMoney(betMoney);
+
+        cards = Arrays.asList(Card.from("K하트"), Card.from("A하트"));
+        Dealer dealer = new Dealer(cards);
+
+        assertThat(player.calculateProfitFromState(dealer)).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("수익 계산 - Player: Hit, Dealer: Blackjack")
+    void calculateProfit7() {
         List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("Q다이아몬드"));
         Player player = new Player("john", cards);
         int betMoney = 1000;
         player.setBetMoney(betMoney);
 
-        cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("Q다이아몬드"));
+        cards = Arrays.asList(Card.from("K하트"), Card.from("A하트"));
         Dealer dealer = new Dealer(cards);
 
-        assertThat(player.calculateProfit(dealer)).isEqualTo(0);
+        assertThat(player.calculateProfitFromState(dealer)).isEqualTo(-betMoney);
+    }
+
+    @Test
+    @DisplayName("수익 계산 - Player: Hit, Dealer: Bust")
+    void calculateProfit8() {
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("Q다이아몬드"));
+        Player player = new Player("john", cards);
+        int betMoney = 1000;
+        player.setBetMoney(betMoney);
+
+        cards = Arrays.asList(Card.from("K하트"), Card.from("Q하트"));
+        Dealer dealer = new Dealer(cards);
+        dealer.takeCard(Card.from("2하트"));
+
+        assertThat(player.calculateProfitFromState(dealer)).isEqualTo(betMoney);
+    }
+
+    @Test
+    @DisplayName("수익 계산 - Player: Hit > Dealer: Hit")
+    void calculateProfit9() {
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("Q다이아몬드"));
+        Player player = new Player("john", cards);
+        int betMoney = 1000;
+        player.setBetMoney(betMoney);
+
+        cards = Arrays.asList(Card.from("K하트"), Card.from("9하트"));
+        Dealer dealer = new Dealer(cards);
+
+        assertThat(player.calculateProfitFromState(dealer)).isEqualTo(betMoney);
+    }
+
+    @Test
+    @DisplayName("수익 계산 - Player: Hit == Dealer: Hit")
+    void calculateProfit10() {
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("Q다이아몬드"));
+        Player player = new Player("john", cards);
+        int betMoney = 1000;
+        player.setBetMoney(betMoney);
+
+        cards = Arrays.asList(Card.from("K하트"), Card.from("Q하트"));
+        Dealer dealer = new Dealer(cards);
+
+        assertThat(player.calculateProfitFromState(dealer)).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("수익 계산 - Player: Hit < Dealer: Hit")
+    void calculateProfit11() {
+        List<Card> cards = Arrays.asList(Card.from("K다이아몬드"), Card.from("9다이아몬드"));
+        Player player = new Player("john", cards);
+        int betMoney = 1000;
+        player.setBetMoney(betMoney);
+
+        cards = Arrays.asList(Card.from("K하트"), Card.from("Q하트"));
+        Dealer dealer = new Dealer(cards);
+
+        assertThat(player.calculateProfitFromState(dealer)).isEqualTo(-betMoney);
     }
 }
