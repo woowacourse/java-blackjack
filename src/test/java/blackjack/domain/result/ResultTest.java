@@ -37,7 +37,7 @@ public class ResultTest {
 
         Player player = new Player(new Cards(cardList), "pobi");
 
-        assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.WIN);
+        assertThat(Result.evaluate(player, dealer)).isEqualTo(Result.BLACKJACK_WIN);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class ResultTest {
 
         Player player = new Player(new Cards(cardList), "pobi");
 
-        assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.DRAW);
+        assertThat(Result.evaluate(player, dealer)).isEqualTo(Result.DRAW);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ResultTest {
 
         Player player = new Player(new Cards(cardList), "pobi");
 
-        assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.LOSE);
+        assertThat(Result.evaluate(player, dealer)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class ResultTest {
 
         Player player = new Player(new Cards(cardList), "pobi");
 
-        assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.LOSE);
+        assertThat(Result.evaluate(player, dealer)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -92,7 +92,7 @@ public class ResultTest {
 
         Player player = new Player(new Cards(cardList), "pobi");
 
-        assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.WIN);
+        assertThat(Result.evaluate(player, dealer)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -107,6 +107,6 @@ public class ResultTest {
 
         Player player = new Player(new Cards(cardList), "pobi");
 
-        assertThat(Result.getPlayerResult(player, dealer)).isEqualTo(Result.LOSE);
+        assertThat(Result.evaluate(player, dealer)).isEqualTo(Result.LOSE);
     }
 }
