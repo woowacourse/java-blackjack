@@ -6,7 +6,9 @@ import blackjack.domain.result.GameResult;
 import blackjack.domain.result.ScoreResult;
 import blackjack.domain.rule.ScoreRule;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Dealer implements Participant {
@@ -64,10 +66,8 @@ public class Dealer implements Participant {
 
     public DealerResult getDealerResult(List<Player> players) {
         List<ScoreResult> scoreResults = decideWinOrLoseResults(players);
-        Map<GameResult, Long> dealerResult = statisticsDealerResult(scoreResults);
+        Map<GameResult, List<ScoreResult>> dealerResult = statisticsDealerResult(scoreResults);
 
-        Arrays.stream(GameResult.values())
-                .forEach(gameResult -> dealerResult.putIfAbsent(gameResult, 0L));
         return new DealerResult(name, dealerResult);
     }
 
@@ -77,12 +77,9 @@ public class Dealer implements Participant {
                 .collect(Collectors.toList());
     }
 
-    private Map<GameResult, Long> statisticsDealerResult(List<ScoreResult> scoreResults) {
+    private Map<GameResult, List<ScoreResult>> statisticsDealerResult(List<ScoreResult> scoreResults) {
         return scoreResults.stream()
-                .map(ScoreResult::getGameResult)
-                .collect(Collectors.groupingBy(GameResult::reverse,
-                        () -> new EnumMap<>(GameResult.class),
-                        Collectors.counting()));
+                .collect(Collectors.groupingBy(ScoreResult::getGameResult));
     }
 
     private GameResult judgeResult(Player player) {

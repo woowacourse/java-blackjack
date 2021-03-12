@@ -4,11 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.GameResult;
 import blackjack.domain.result.ScoreResult;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -51,10 +49,7 @@ public class OutputView {
 
     public static void printAllEarnings(DealerResult dealerResult, List<ScoreResult> scoreResults) {
         System.out.println("## 최종 수익");
-        Map<GameResult, Long> results = dealerResult.getResult();
-        System.out.println(dealerResult.getName() + ": " + results.get(GameResult.WIN) + "승 "
-                + results.get(GameResult.LOSE) + "패 " + results.get(GameResult.DRAW) + "무");
-
+        System.out.println(dealerResult.getName() + ": " + dealerResult.calculateEarnings());
         for (ScoreResult scoreResult : scoreResults) {
             System.out.println(scoreResult.getPlayerName() + ": " + scoreResult.calculateEarnings());
         }

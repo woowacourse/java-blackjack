@@ -1,10 +1,10 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardType;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.GameResult;
 import blackjack.domain.result.ScoreResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -148,9 +148,9 @@ class DealerTest {
         //then
         assertAll(
                 () -> assertThat(dealerResult.getName()).isEqualTo(dealer.getName()),
-                () -> assertThat(dealerResult.getResult()).containsEntry(GameResult.WIN, 1L),
-                () -> assertThat(dealerResult.getResult()).containsEntry(GameResult.LOSE, 1L),
-                () -> assertThat(dealerResult.getResult()).containsEntry(GameResult.DRAW, 1L)
+                () -> assertThat(dealerResult.getResult().get(GameResult.WIN)).hasSize(1),
+                () -> assertThat(dealerResult.getResult().get(GameResult.DRAW)).hasSize(1),
+                () -> assertThat(dealerResult.getResult().get(GameResult.LOSE)).hasSize(1)
         );
     }
 }
