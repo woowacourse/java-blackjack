@@ -1,16 +1,14 @@
 package blackjack.domain.user;
 
 public enum MatchResult {
-    WIN_BLACKJACK("승", 1.5),
-    WIN_NORMAL("승", 1.0),
-    DRAW("무", 0),
-    LOSE("패", -1.0);
+    WIN_BLACKJACK(1.5),
+    WIN_NORMAL(1.0),
+    DRAW(0),
+    LOSE(-1.0);
 
-    private final String name;
-    private final double earningRate;
+   private final double earningRate;
 
-    MatchResult(String name, double earningRate) {
-        this.name = name;
+    MatchResult(double earningRate) {
         this.earningRate = earningRate;
     }
 

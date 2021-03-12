@@ -48,9 +48,9 @@
 - [x] DTO 만들 때 Getter 지양 고민 
 
 ## 2단계 피드백 적용
-- [ ] User 객체에 NPE 고려하기 
+- [x] User 객체에 NPE 고려하기 
 - [ ] STAY_LIMIT 을 Game 객체에서 지니고 있나?
-- [ ] MatchResult 에서 Name 사용
+- [x] MatchResult 에서 Name 사용
 - [ ] 스코어 비교 getter 사용하지 않고 comparable로 구현하기 
 - [ ] Player getBettingMoney 메소드 제거
 - [ ] 딜러에 필요없는 BettingMoney 구현 고민
