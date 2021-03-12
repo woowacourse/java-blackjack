@@ -43,6 +43,7 @@ public class GameResultTest {
                 Card.valueOf(Shape.HEART, CardValue.TWO))),
                 new HashMap<String, Integer>() {
                     {
+                        put("딜러", 0);
                         put("pobi", 1000);
                         put("jason", 0);
                         put("root", -1000);
@@ -64,6 +65,7 @@ public class GameResultTest {
                 Card.valueOf(Shape.HEART, CardValue.TWO))),
                 new HashMap<String, Integer>() {
                     {
+                        put("딜러", -1000);
                         put("pobi", -1000);
                         put("jason", 1000);
                         put("root", 1000);
@@ -85,6 +87,7 @@ public class GameResultTest {
                 Card.valueOf(Shape.DIAMOND, CardValue.NINE))),
                 new HashMap<String, Integer>() {
                     {
+                        put("딜러", 3000);
                         put("pobi", -1000);
                         put("jason", -1000);
                         put("root", -1000);

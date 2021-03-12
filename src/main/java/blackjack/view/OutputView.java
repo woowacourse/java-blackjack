@@ -13,12 +13,23 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String NAME_DELIMITER = ", ";
+    private static final String NAMES_REQUEST_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String CARD_DISTRIBUTION_FORMAT = "\n %s에게 %d장의 카드를 나누었습니다.\n";
+    private static final String PARTICIPANT_STATE_FORMAT = "%s카드: %s %s\n";
+    private static final String SCORE_MESSAGE_FORMAT = "- 결과: %s";
+    private static final String BUST = "BUST";
+    private static final String BLACKJACK = "BLACKJACK";
+    private static final String ASKING_DRAW_CARD_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
+    private static final String DEALER_TO_DRAW_CARD_FORMAT = "\n%s는 %d이하라 한장의 카드를 더 받았습니다.\n";
+    private static final String RESULT_TITLE_MESSAGE = "##최종 승패";
+    private static final String PARTICIPANT_PROFIT_FORMAT = "%s: %d\n";
+    private static final String BETTING_REQUEST_FORMAT = "\n%s의 배팅 금액은?\n";
 
     private OutputView() {
     }
 
     public static void printInputNames() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+        System.out.println(NAMES_REQUEST_MESSAGE);
     }
 
     public static void printGameInitializeMessage(Participants participants,
@@ -26,7 +37,8 @@ public class OutputView {
         String participantNames = participants.unwrap().stream()
             .map(Participant::getName)
             .collect(Collectors.joining(NAME_DELIMITER));
-        System.out.println("\n" + participantNames + "에게 " + startingCardCount + "장의 카드를 나누었습니다.");
+        System.out
+            .printf(CARD_DISTRIBUTION_FORMAT, participantNames, startingCardCount);
     }
 
     public static void printParticipantsStatus(Participants participants, boolean withScore) {
@@ -41,30 +53,31 @@ public class OutputView {
             .collect(Collectors.joining(NAME_DELIMITER));
 
         String scoreMessage = makeMessageByScore(participant, withScore);
-        System.out.println(participant.getName() + "카드: " + cardNames + scoreMessage);
+        System.out.printf(PARTICIPANT_STATE_FORMAT, participant.getName(), cardNames, scoreMessage);
     }
 
     private static String makeMessageByScore(Participant participant, boolean withScore) {
         String scoreMessage = "";
         if (withScore) {
-            scoreMessage = makeMessageByBust(participant);
+            scoreMessage = makeMessageByState(participant);
         }
         return scoreMessage;
     }
 
-    private static String makeMessageByBust(Participant participant) {
-        String scoreMessage = " - 결과: " + participant.getScore();
+    private static String makeMessageByState(Participant participant) {
+        String score = String.valueOf(participant.getScore());
         if (participant.isBust()) {
-            scoreMessage = " - 결과: BUST";
+            score = BUST;
         }
         if (participant.isBlackJack()) {
-            scoreMessage = " - 결과: BLACKJACK";
+            score = BLACKJACK;
         }
-        return scoreMessage;
+
+        return String.format(SCORE_MESSAGE_FORMAT, score);
     }
 
     public static void willDrawCard(Player player) {
-        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.printf(ASKING_DRAW_CARD_FORMAT, player.getName());
     }
 
     public static void printNewLine() {
@@ -72,23 +85,23 @@ public class OutputView {
     }
 
     public static void printDealerDrawCard(Dealer dealer) {
-        System.out
-            .println("\n" + dealer.getName() + "는 " + Dealer.DEALER_LIMIT + "이하라 한장의 카드를 더 받았습니다.");
+        System.out.printf(DEALER_TO_DRAW_CARD_FORMAT, dealer.getName(), Dealer.DEALER_LIMIT);
     }
 
     public static void printResult(GameResult gameResult) {
-        System.out.println("## 최종 승패\n딜러: " + gameResult.getDealerProfit());
-        printPlayerResult(gameResult);
+        System.out.println(RESULT_TITLE_MESSAGE);
+        printParticipantsResult(gameResult);
     }
 
-    private static void printPlayerResult(GameResult gameResult) {
+    private static void printParticipantsResult(GameResult gameResult) {
         Map<String, Integer> unwrappedResult = gameResult.unwrap();
         unwrappedResult.keySet()
             .forEach(playerName
-                -> System.out.println(playerName + ": " + unwrappedResult.get(playerName)));
+                -> System.out
+                .printf(PARTICIPANT_PROFIT_FORMAT, playerName, unwrappedResult.get(playerName)));
     }
 
     public static void printBetting(Name name) {
-        System.out.println("\n" + name.unwrap() + "의 배팅 금액은?");
+        System.out.printf(BETTING_REQUEST_FORMAT, name.unwrap());
     }
 }
