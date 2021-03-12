@@ -17,7 +17,6 @@ public class BlackjackGame {
     private final Dealer dealer;
     private final Players players;
     private final Deck deck;
-    private Player currentPlayer;
 
     public BlackjackGame(Dealer dealer, Players players) {
         this.dealer = dealer;
@@ -61,7 +60,7 @@ public class BlackjackGame {
     }
 
     public void proceedPlayersRound(String answer) {
-        currentPlayer = players.getCurrentPlayer();
+        Player currentPlayer = players.getCurrentPlayer();
         validateAnswer(answer);
         if (YES.equals(answer)) {
             currentPlayer.hit(deck.popOne());
