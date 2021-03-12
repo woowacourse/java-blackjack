@@ -8,17 +8,17 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 public class UserGameResult {
-    private final Map<User, WinOrLose> userResults;
+    private final Map<User, Double> userResults;
 
-    public UserGameResult(Map<User, WinOrLose> userResults) {
+    public UserGameResult(Map<User, Double> userResults) {
         this.userResults = userResults;
     }
 
-    public Stream<WinOrLose> getUserWinOrLose() {
+    public Stream<Double> getUserProfit() {
         return userResults.values().stream();
     }
 
-    public Set<Map.Entry<User, WinOrLose>> getResultEntrySet() {
+    public Set<Map.Entry<User, Double>> getResultEntrySet() {
         return userResults.entrySet();
     }
 

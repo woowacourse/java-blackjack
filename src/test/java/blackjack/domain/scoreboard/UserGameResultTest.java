@@ -7,11 +7,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserGameResultTest {
-    private Map<User, WinOrLose> temp;
+    private Map<User, Double> temp;
     private User first;
     private User second;
     private User third;
@@ -24,10 +25,10 @@ public class UserGameResultTest {
         third = new User(Name.from("포비"));
         fourth = new User(Name.from("제이슨"));
 
-        WinOrLose firstUserGameResult = WinOrLose.DRAW;
-        WinOrLose secondUserGameResult = WinOrLose.WIN;
-        WinOrLose thirdUserGameResult = WinOrLose.LOSE;
-        WinOrLose fourthUserGameResult = WinOrLose.LOSE;
+        double firstUserGameResult = Profit.DRAW.getProfit();
+        double secondUserGameResult = Profit.WIN.getProfit();
+        double thirdUserGameResult = Profit.LOSE.getProfit();
+        double fourthUserGameResult = Profit.LOSE.getProfit();
 
         temp = new HashMap<>();
         temp.put(first, firstUserGameResult);
@@ -43,5 +44,13 @@ public class UserGameResultTest {
         Set<User> userSet = new HashSet<>(Arrays.asList(first, second, third, fourth));
 
         assertThat(userGameResult.getUserSet()).isEqualTo(userSet);
+    }
+
+    @Test
+    void testGetUserProfit() {
+        UserGameResult userGameResult = new UserGameResult(temp);
+        List<Double> userProfits = Arrays.asList(-1D, -1D, 1D, 0D);
+
+        assertThat(userGameResult.getUserProfit().collect(Collectors.toList())).isEqualTo(userProfits);
     }
 }

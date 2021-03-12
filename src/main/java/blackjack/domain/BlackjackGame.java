@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.scoreboard.DealerGameResult;
 import blackjack.domain.scoreboard.UserGameResult;
-import blackjack.domain.scoreboard.WinOrLose;
+import blackjack.domain.scoreboard.Profit;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
@@ -60,18 +60,18 @@ public class BlackjackGame {
     }
 
     public UserGameResult createUserGameResult() {
-        Map<User, WinOrLose> userResult = users.toList().stream()
+        Map<User, Double> userResult = users.toList().stream()
                 .collect(toMap(
                         Function.identity(),
-                        this::makeUserWinOrLose,
+                        this::makeUserProfit,
                         (existed, newer) -> newer,
                         LinkedHashMap::new));
 
         return new UserGameResult(userResult);
     }
 
-    private WinOrLose makeUserWinOrLose(User user) {
-        return WinOrLose.decideWinOrLose(user, dealer);
+    private double makeUserProfit(User user) {
+        return user.getMoney() * Profit.decideProfit(user, dealer).getProfit();
     }
 
     public void drawCardToDealer() {
