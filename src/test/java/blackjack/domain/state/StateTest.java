@@ -24,7 +24,7 @@ class StateTest {
 
     @DisplayName("첫 카드 2장이 블랙잭이라면, 블랙잭을 반환한다.")
     @Test
-    void makeBlackjackState() {
+    void testMakeBlackjackState() {
         State state = new Hit();
         Cards cards = new Cards(
             Arrays.asList(
@@ -38,7 +38,7 @@ class StateTest {
 
     @DisplayName("첫 카드 2장이 블랙잭이 아니라면, 힛을 반환한다.")
     @Test
-    void makeHitState() {
+    void testMakeHitState() {
         State state = new Hit();
         Cards cards = new Cards(
             Arrays.asList(
@@ -52,7 +52,7 @@ class StateTest {
 
     @DisplayName("힛 상태에서 카드를 드로우 했는데 21을 초과하면, 버스트를 반환한다.")
     @Test
-    void hitDrawBust() {
+    void testHitDrawBust() {
         Cards cards = new Cards(
             new ArrayList<>(Arrays.asList(
                 new Card(Type.CLUB, Denomination.ACE_ELEVEN),
@@ -65,7 +65,7 @@ class StateTest {
 
     @DisplayName("힛 강태에서 카드를 드로우 했는데 21이하라면 힛을 반환한다.")
     @Test
-    void hitDrawHit() {
+    void testHitDrawHit() {
         Cards cards = new Cards(
             new ArrayList<>(Arrays.asList(
                 new Card(Type.CLUB, Denomination.TEN)
@@ -77,7 +77,7 @@ class StateTest {
 
     @DisplayName("블랙잭 상태에서 드로우를 하면 예외가 발생한다.")
     @Test
-    void blackjackDrawException() {
+    void testBlackjackDrawException() {
         Cards cards = new Cards(
             new ArrayList<>(Arrays.asList(
                 new Card(Type.CLUB, Denomination.TEN)
@@ -92,7 +92,7 @@ class StateTest {
 
     @DisplayName("블랙잭 상태에서 스테이를 하면 예외가 발생한다.")
     @Test
-    void blackjackStayException() {
+    void testBlackjackStayException() {
         Cards cards = new Cards(
             new ArrayList<>(Collections.singletonList(
                 new Card(Type.CLUB, Denomination.TEN)
@@ -107,7 +107,7 @@ class StateTest {
 
     @DisplayName("버스트 상태에서 드로우를 하면 예외가 발생한다.")
     @Test
-    void bustDrawException() {
+    void testBustDrawException() {
         Cards cards = new Cards(
             new ArrayList<>(Arrays.asList(
                 new Card(Type.CLUB, Denomination.TEN),
@@ -123,7 +123,7 @@ class StateTest {
 
     @DisplayName("버스트 상태에서 스테이를 하면 예외가 발생한다.")
     @Test
-    void bustStayException() {
+    void testBustStayException() {
         Cards cards = new Cards(
             new ArrayList<>(Collections.singletonList(
                 new Card(Type.CLUB, Denomination.TEN)
@@ -138,7 +138,7 @@ class StateTest {
 
     @DisplayName("스테이 상태에서 드로우 하면 예외가 발생한다.")
     @Test
-    void stayDrawException() {
+    void testStayDrawException() {
         Cards cards = new Cards(
             new ArrayList<>(Collections.singletonList(
                 new Card(Type.CLUB, Denomination.TEN)
@@ -153,7 +153,7 @@ class StateTest {
 
     @DisplayName("스테이 상태에서 스테이를 하면 예외가 발생한다.")
     @Test
-    void stayStayException() {
+    void testStayStayException() {
         Cards cards = new Cards(
             new ArrayList<>(Collections.singletonList(
                 new Card(Type.CLUB, Denomination.TEN)
