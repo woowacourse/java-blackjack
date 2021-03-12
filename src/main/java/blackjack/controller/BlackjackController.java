@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import blackjack.domain.batting.Betting;
+import blackjack.domain.batting.BettingResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
@@ -25,6 +27,7 @@ public class BlackjackController {
         Deck deck = initDeck();
         List<Gamer> gamers = initGamers(deck);
         Dealer dealer = initDealer(deck);
+        Betting bettingController = betGamersAmount(gamers);
         OutputView.printGameStartMessage(DealerDto.from(dealer), PlayersDto.from(gamers));
 
         progressGamersHitOrStand(gamers, deck);
@@ -32,7 +35,8 @@ public class BlackjackController {
 
         OutputView.printPlayersScoreInfo(PlayerDto.from(dealer), PlayersDto.from(gamers));
         GameResult gameResult = GameResult.of(dealer, gamers);
-        OutputView.printGameResult(gameResult);
+        BettingResult bettingResult = bettingController.calculateGamersProfit(gameResult);
+        OutputView.printBettingResult(bettingResult);
     }
 
     private Deck initDeck() {
@@ -57,6 +61,15 @@ public class BlackjackController {
         return new Dealer(state);
     }
 
+    private Betting betGamersAmount(List<Gamer> gamers) {
+        Betting betting = new Betting();
+        for (Gamer gamer : gamers) {
+            double bettingAmount = InputView.inputBettingAmount(PlayerDto.from(gamer));
+            betting.betMoney(gamer, bettingAmount);
+        }
+        return betting;
+    }
+
     private void progressGamersHitOrStand(List<Gamer> gamers, Deck deck) {
         for (Gamer gamer : gamers) {
             progressGamersHitOrStandInput(gamer, deck);
@@ -68,6 +81,7 @@ public class BlackjackController {
             gamer.addCard(deck.draw());
             OutputView.printPlayerCardInfo(PlayerDto.from(gamer));
         }
+        gamer.stay();
     }
 
     private void progressDealerHitOrStand(Dealer dealer, Deck deck) {
@@ -75,5 +89,6 @@ public class BlackjackController {
             dealer.addCard(deck.draw());
             OutputView.printDealerOnemoreDrawedMessage();
         }
+        dealer.stay();
     }
 }

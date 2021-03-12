@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.batting.BettingResult;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerDto;
 import blackjack.domain.player.Player;
@@ -69,23 +70,12 @@ public class OutputView {
             .forEach(gamer -> System.out.printf("%s - 결과: %d\n", playerInfoToString(gamer), gamer.getScore()));
     }
 
-    public static void printGameResult(GameResult gameResult) {
+    public static void printBettingResult(BettingResult bettingResult) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        List<ResultType> dealerResult = gameResult.getDealerResult();
-        System.out.println("딜러: " + resultsStatisticToString(dealerResult));
-        for (Entry<Player, ResultType> result : gameResult.getGamersResult().entrySet()) {
-            System.out.printf("%s: %s\n", result.getKey().getName(), result.getValue().getValue());
-        }
-    }
-
-    private static String resultsStatisticToString(List<ResultType> resultTypes) {
-        Map<String, Long> result = resultTypes.stream()
-            .collect(Collectors.groupingBy(ResultType::getValue, Collectors.counting()));
-        return Arrays.stream(ResultType.values())
-            .filter(resultType -> result.containsKey(resultType.getValue()))
-            .map(key -> result.get(key.getValue()) + key.getValue())
-            .collect(Collectors.joining(" "));
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + (int) bettingResult.getDealerProfit());
+        bettingResult.getGamersProfit()
+            .forEach((gamer, profit) -> System.out.println(gamer.getName() + ": " + profit.intValue()));
     }
 
     public static void printExceptionMessage(Exception e) {
