@@ -14,4 +14,14 @@ public enum ResultType {
     public String getName() {
         return this.name;
     }
+
+    public ResultType reverse() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
 }

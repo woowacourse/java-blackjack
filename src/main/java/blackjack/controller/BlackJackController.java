@@ -1,6 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.dto.DealerResult;
+import blackjack.domain.dto.Results;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -55,6 +57,8 @@ public class BlackJackController {
 
     private void printOverallResults(Dealer dealer, Players players) {
         OutputView.printCardsOfUsersWithScore(new Users(dealer, players));
-        OutputView.printResult(players.generateResultsMapAgainstDealer(dealer));
+        Results results = players.generateResultsMapAgainstDealer(dealer);
+        OutputView.printDealerResult(DealerResult.of(results));
+        OutputView.printResult(results);
     }
 }

@@ -1,17 +1,14 @@
 package blackjack.view;
 
 import blackjack.domain.ResultType;
+import blackjack.domain.dto.DealerResult;
 import blackjack.domain.dto.Results;
 import blackjack.domain.card.Cards;
 import blackjack.domain.user.*;
 import blackjack.domain.card.Card;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class OutputView {
     private static final String COMMA_WITH_BLANK = ", ";
@@ -80,26 +77,17 @@ public class OutputView {
     public static void printResult(Results results) {
         System.out.println("## 최종 승패");
 
-        printDealerResult(results);
-
-        for (User user : results.keySet()) {
+        for (User user : results.userSet()) {
             String result = results.getResultOf(user).getName();
             System.out.printf("%s: %s\n", user.getName(), result);
         }
     }
 
-    private static void printDealerResult(Results results) {
-        Map<ResultType, Integer> countMap = new HashMap<>();
-        Arrays.stream(ResultType.values())
-                .forEach(value -> countMap.put(value, 0));
-
-        results.values()
-                .forEach(value -> countMap.put(value, countMap.get(value) + 1));
-
+    public static void printDealerResult(DealerResult dealerResult) {
         System.out.printf("딜러: %d승 %d무 %d패 \n",
-                countMap.get(ResultType.LOSE),
-                countMap.get(ResultType.DRAW),
-                countMap.get(ResultType.WIN)
+                dealerResult.get(ResultType.WIN),
+                dealerResult.get(ResultType.DRAW),
+                dealerResult.get(ResultType.LOSE)
         );
     }
 

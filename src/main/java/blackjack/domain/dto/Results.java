@@ -3,7 +3,10 @@ package blackjack.domain.dto;
 import blackjack.domain.ResultType;
 import blackjack.domain.user.User;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 public class Results {
     private final Map<User, ResultType> results;
@@ -16,12 +19,14 @@ public class Results {
         return results.get(user);
     }
 
-    public Set<User> keySet() {
+    public Set<User> userSet() {
         return results.keySet();
     }
 
-    public Collection<ResultType> values() {
-        return this.results.values();
+    public int count(ResultType resultType) {
+        return (int) this.results.values().stream().parallel()
+                .filter(resultType::equals)
+                .count();
     }
 
     @Override
