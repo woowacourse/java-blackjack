@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
@@ -18,8 +17,8 @@ public class OutputView {
     private static final String CARD_INFO_FORMAT = "%s 카드: %s";
     private static final String DEALER_ADD_CARD_MSG = "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEWLINE;
     private static final String RESULT_WITH_POINTS = "%s - 결과: %d" + NEWLINE;
-    private static final String RESULT = "%s: %s" + NEWLINE;
-    private static final String RESULT_TITLE = "## 최종 승패";
+    private static final String RESULT = "%s: %.0f" + NEWLINE;
+    private static final String RESULT_TITLE = "## 최종 수익";
 
     public static void printInitialCards(Dealer dealer, Players players) {
         printNewLine();
@@ -45,7 +44,7 @@ public class OutputView {
     }
 
     public static void printAllCards(Gamer gamer) {
-        System.out.println(gamer.getName() + " : " + cardToString(gamer.showHands()));
+        System.out.printf(CARD_INFO_FORMAT + NEWLINE, gamer.getName(), cardToString(gamer.showHands()));
     }
 
     public static void showAllCards(Dealer dealer, Players players) {
@@ -55,7 +54,7 @@ public class OutputView {
 
     public static void allCardsWithPoint(Gamer gamer) {
         System.out.printf(RESULT_WITH_POINTS,
-                String.format(CARD_INFO_FORMAT, gamer.getName(), cardToString(gamer.showHands())), gamer.getPoint());
+                String.format(CARD_INFO_FORMAT, gamer.getName(), cardToString(gamer.showHands())), gamer.getScore());
     }
 
     private static String cardToString(List<Card> cards) {
@@ -73,17 +72,9 @@ public class OutputView {
         System.out.println(RESULT_TITLE);
     }
 
-    public static void printDealerResult(Map<ResultType, Integer> resultWithCount) {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<ResultType, Integer> entry : resultWithCount.entrySet()) {
-            sb.append(entry.getValue()).append(entry.getKey().getName()).append(" ");
-        }
-        System.out.printf(RESULT, "딜러", sb.toString());
-    }
-
-    public static void printPlayersResult(Map<String, ResultType> resultWithName) {
-        for (Map.Entry<String, ResultType> entry : resultWithName.entrySet()) {
-            System.out.printf(RESULT, entry.getKey(), entry.getValue().getName());
+    public static void printProfit(Map<String, Double> result) {
+        for (Map.Entry<String, Double> entry : result.entrySet()) {
+            System.out.printf(RESULT, entry.getKey(), entry.getValue());
         }
     }
 }

@@ -17,18 +17,18 @@ class DealerTest {
     @Test
     void checkBoundary() {
         List<Card> lowerCards = new ArrayList<>();
-        lowerCards.add(Card.create(Suit.HEART, Denomination.EIGHT));
-        lowerCards.add(Card.create(Suit.CLUB, Denomination.EIGHT));
+        lowerCards.add(Card.of(Suit.HEART, Denomination.EIGHT));
+        lowerCards.add(Card.of(Suit.CLUB, Denomination.EIGHT));
 
         List<Card> higherCards = new ArrayList<>();
-        higherCards.add(Card.create(Suit.HEART, Denomination.EIGHT));
-        higherCards.add(Card.create(Suit.CLUB, Denomination.NINE));
+        higherCards.add(Card.of(Suit.HEART, Denomination.EIGHT));
+        higherCards.add(Card.of(Suit.CLUB, Denomination.NINE));
 
         final Dealer higherDealer = new Dealer();
         final Dealer lowerDealer = new Dealer();
 
-        higherDealer.initHands(higherCards);
-        lowerDealer.initHands(lowerCards);
+        higherDealer.initState(higherCards);
+        lowerDealer.initState(lowerCards);
 
         assertAll(
                 () -> assertTrue(lowerDealer.canDraw()),

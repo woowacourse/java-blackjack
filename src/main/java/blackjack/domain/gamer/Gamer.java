@@ -1,46 +1,60 @@
 package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hands;
+import blackjack.domain.card.Cards;
+import blackjack.domain.state.Blackjack;
+import blackjack.domain.state.FirstTurn;
+import blackjack.domain.state.State;
+import blackjack.domain.state.Stay;
 
 import java.util.List;
 
 public abstract class Gamer {
 
-    protected final Hands hands = new Hands();
     private final String name;
+    protected State state;
 
-    protected Gamer(String name) {
+    protected Gamer(final String name) {
         this.name = name;
     }
 
-    public abstract List<Card> showOpenHands();
-
     public List<Card> showHands() {
-        return hands.toList();
+        return cards().toList();
     }
 
     public String getName() {
         return name;
     }
 
-    public int getPoint() {
-        return hands.calculate();
+    public int getScore() {
+        return cards().calculate();
     }
 
-    public boolean canDraw() {
-        return !hands.isBust();
+    public void receiveCard(final Card card) {
+        state = state.draw(card);
+    }
+
+    public void initState(final List<Card> initCards) {
+        state = FirstTurn.draw(initCards);
+    }
+
+    public boolean isStay() {
+        return state instanceof Stay;
     }
 
     public boolean isBlackjack() {
-        return hands.isBlackjack();
+        return state instanceof Blackjack;
     }
 
-    public void receiveCard(Card card) {
-        hands.addCard(card);
+    public Cards cards() {
+        return state.cards();
     }
 
-    public void initHands(List<Card> makeInitialHands) {
-        hands.initialize(makeInitialHands);
+    public abstract List<Card> showOpenHands();
+
+    public abstract boolean canDraw();
+
+    public void finish() {
+        state = state.stay();
     }
 }

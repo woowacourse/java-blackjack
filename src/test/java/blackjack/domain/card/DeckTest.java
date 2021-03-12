@@ -26,7 +26,7 @@ public class DeckTest {
     @DisplayName("초기 나눠주는 Hands는 두 장의 카드로 이루어진다.")
     @Test
     void giveFirstHands() {
-        assertThat(deck.makeInitialHands()).hasSize(2);
+        assertThat(deck.pickTwoCards()).hasSize(2);
     }
 
     @DisplayName("덱에 카드가 존재할 때 isEmpty false 반환")

@@ -1,28 +1,55 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Card {
 
-    private final String name;
-    private final Denomination value;
+    private static final Map<String, Card> CARDS = new HashMap<>();
 
-    private Card(final Suit symbol, final Denomination value) {
-        this.value = value;
-        this.name = value.getName() + symbol.getSymbol();
+    static {
+        for (final Suit suit : Suit.values()) {
+            putDenomination(suit);
+        }
     }
 
-    public static Card create(final Suit symbol, final Denomination value) {
-        return new Card(symbol, value);
+    private final Suit suit;
+    private final Denomination denomination;
+
+    private Card(final Suit suit, final Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
+    }
+
+    private static void putDenomination(final Suit suit) {
+        for (final Denomination denomination : Denomination.values()) {
+            CARDS.put(toKey(suit, denomination), new Card(suit, denomination));
+        }
+    }
+
+    public static Card of(final Suit suit, final Denomination denomination) {
+        return CARDS.get(toKey(suit, denomination));
+    }
+
+    private static String toKey(final Suit suit, final Denomination denomination) {
+        return denomination.name() + suit.name();
+    }
+
+    public static List<Card> makeAllCards() {
+        return new ArrayList<>(CARDS.values());
     }
 
     public String getName() {
-        return name;
+        return denomination.getDenomination() + suit.getSuit();
     }
 
-    public int getPoint() {
-        return value.getPoint();
+    public boolean isAce() {
+        return denomination.isAce();
     }
 
-    public Denomination getCardValue() {
-        return value;
+    public int getScore() {
+        return denomination.getScore();
     }
 }

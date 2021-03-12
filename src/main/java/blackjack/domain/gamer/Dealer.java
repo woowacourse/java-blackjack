@@ -7,9 +7,8 @@ import java.util.List;
 public class Dealer extends Gamer {
 
     private static final String NAME = "딜러";
-    private static final int ADD_CARD_BOUNDARY = 16;
 
-    private Dealer(String name) {
+    private Dealer(final String name) {
         super(name);
     }
 
@@ -18,12 +17,12 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public boolean canDraw() {
-        return (hands.calculate() <= ADD_CARD_BOUNDARY);
+    public List<Card> showOpenHands() {
+        return cards().getCardsWithSize(1);
     }
 
     @Override
-    public List<Card> showOpenHands() {
-        return hands.getCardsWithSize(1);
+    public boolean canDraw() {
+        return !state.isFinished() && state.satisfyRule();
     }
 }

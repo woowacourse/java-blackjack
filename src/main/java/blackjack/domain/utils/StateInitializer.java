@@ -5,12 +5,12 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 
-public class HandInitializer {
+public class StateInitializer {
 
-    public static void init(Deck deck, Dealer dealer, Players players) {
-        dealer.initHands(deck.makeInitialHands());
+    public static void init(final Deck deck, final Dealer dealer, final Players players) {
+        dealer.initState(deck.pickTwoCards());
         for (Player player : players) {
-            player.initHands(deck.makeInitialHands());
+            player.initState(deck.pickTwoCards());
         }
     }
 }

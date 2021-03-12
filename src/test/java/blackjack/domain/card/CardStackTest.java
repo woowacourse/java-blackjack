@@ -17,14 +17,14 @@ class CardStackTest {
     @Test
     void getTwoCards() {
         final CardStack cardStack = CardStack.create();
-        assertThat(cardStack.getTwoCards().size()).isEqualTo(2);
+        assertThat(cardStack.pickTwoCards().size()).isEqualTo(2);
     }
 
     @DisplayName("CardStack에서 1장의 카드를 반환")
     @Test
     void getSingleCard() {
         final CardStack cardStack = CardStack.create();
-        assertThat(cardStack.getSingleCard()).isInstanceOf(Card.class);
+        assertThat(cardStack.pick()).isInstanceOf(Card.class);
     }
 
     @DisplayName("CardStack이 비어있지 않은 경우에는 False를 반환")

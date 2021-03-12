@@ -15,23 +15,23 @@ public enum Denomination {
     QUEEN(10, "Q"),
     KING(10, "K");
 
-    private final int point;
-    private final String name;
+    private final int score;
+    private final String denomination;
 
-    Denomination(final int point, final String name) {
-        this.point = point;
-        this.name = name;
+    Denomination(final int score, final String name) {
+        this.score = score;
+        this.denomination = name;
     }
 
-    public static boolean isAce(Denomination denomination) {
-        return ACE.equals(denomination);
+    public String getDenomination() {
+        return denomination;
     }
 
-    public String getName() {
-        return name;
+    public int getScore() {
+        return score;
     }
 
-    public int getPoint() {
-        return point;
+    public boolean isAce() {
+        return ACE.equals(this);
     }
 }

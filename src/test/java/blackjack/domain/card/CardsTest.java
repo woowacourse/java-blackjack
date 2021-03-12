@@ -15,12 +15,11 @@ class CardsTest {
     @Test
     void create() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(Card.create(Suit.CLUB, Denomination.KING));
-        cardList.add(Card.create(Suit.CLUB, Denomination.QUEEN));
+        cardList.add(Card.of(Suit.CLUB, Denomination.KING));
+        cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
 
         assertThatCode(() -> {
-            Cards cards = new Cards();
-            cards.of(cardList);
+            Cards cards = Cards.of(cardList);
         }).doesNotThrowAnyException();
     }
 
@@ -28,10 +27,9 @@ class CardsTest {
     @Test
     void containsAce() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(Card.create(Suit.CLUB, Denomination.ACE));
-        cardList.add(Card.create(Suit.CLUB, Denomination.QUEEN));
-        Cards cards = new Cards();
-        cards.of(cardList);
+        cardList.add(Card.of(Suit.CLUB, Denomination.ACE));
+        cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
+        Cards cards = Cards.of(cardList);
 
         assertTrue(cards.containsAce());
     }
@@ -40,11 +38,9 @@ class CardsTest {
     @Test
     void sumWithoutAce() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(Card.create(Suit.CLUB, Denomination.ACE));
-        cardList.add(Card.create(Suit.CLUB, Denomination.QUEEN));
-        Cards cards = new Cards();
-        cards.of(cardList);
-
+        cardList.add(Card.of(Suit.CLUB, Denomination.ACE));
+        cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
+        Cards cards = Cards.of(cardList);
         assertThat(cards.sumWithoutAce()).isEqualTo(10);
     }
 
@@ -52,11 +48,10 @@ class CardsTest {
     @Test
     void getCardsWithSize() {
         List<Card> cardList = new ArrayList<>();
-        final Card card = Card.create(Suit.CLUB, Denomination.ACE);
+        final Card card = Card.of(Suit.CLUB, Denomination.ACE);
         cardList.add(card);
-        cardList.add(Card.create(Suit.CLUB, Denomination.QUEEN));
-        Cards cards = new Cards();
-        cards.of(cardList);
+        cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
+        Cards cards = Cards.of(cardList);
 
         assertThat(cards.getCardsWithSize(1))
                 .contains(card);
@@ -66,10 +61,9 @@ class CardsTest {
     @Test
     void isBlackjack() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(Card.create(Suit.CLUB, Denomination.ACE));
-        cardList.add(Card.create(Suit.CLUB, Denomination.QUEEN));
-        Cards cards = new Cards();
-        cards.of(cardList);
+        cardList.add(Card.of(Suit.CLUB, Denomination.ACE));
+        cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
+        Cards cards = Cards.of(cardList);
 
         assertTrue(cards.isBlackjack());
     }
@@ -78,10 +72,9 @@ class CardsTest {
     @Test
     void calculate() {
         List<Card> cardList = new ArrayList<>();
-        cardList.add(Card.create(Suit.CLUB, Denomination.ACE));
-        cardList.add(Card.create(Suit.CLUB, Denomination.QUEEN));
-        Cards cards = new Cards();
-        cards.of(cardList);
+        cardList.add(Card.of(Suit.CLUB, Denomination.ACE));
+        cardList.add(Card.of(Suit.CLUB, Denomination.QUEEN));
+        Cards cards = Cards.of(cardList);
 
         assertThat(cards.calculate()).isEqualTo(21);
     }
