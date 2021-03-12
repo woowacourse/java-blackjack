@@ -26,6 +26,7 @@
 
 ## 링크
 [스스로 추가 공부하며 정리한 내용](https://nauni.tistory.com/167?category=913481)
+
 # 학습로그 1-2
 
 # [Java] Stream - 2
@@ -62,3 +63,10 @@ return score.isHigherThan(MINIMUM_SCORE_OF_NOT_TAKING_CARD);
 - API를 설계할 때 다음 두 가지를 고려해보면 좋다.
     1. 이 메서드가 선언되었을 때의 모양이 자연스러운가?
     2. 클라이언트가 이 메서드를 사용할 때 사용법을 고민하지 않을 수 있는가?
+    
+# [OOP] abstract class - 3
+
+## 내용
+- abstract class () implements (interface) 는 interface의 모든 메소드를 구체화할 필요가 없다. 일부만 구체화하고 abstract class를 상속받을 자식 클래스에게 구체화 의무를 넘길 수 있다.
+## 링크
+[stackoverflow 관련 답글](https://stackoverflow.com/questions/197893/why-an-abstract-class-implementing-an-interface-can-miss-the-declaration-impleme)
