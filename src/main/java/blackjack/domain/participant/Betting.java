@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import java.util.Objects;
+
 public class Betting {
 
     private static final double WIN_RATE = 2;
@@ -7,8 +9,13 @@ public class Betting {
     private final Double betting;
 
     public Betting(Double betting) {
+        validateNull(betting);
         validateMinBet(betting);
         this.betting = new Double(betting);
+    }
+
+    private void validateNull(Double betting) {
+        Objects.requireNonNull(betting, "Null은 허용하지 않습니다.");
     }
 
     private void validateMinBet(Double betting) {
