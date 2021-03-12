@@ -22,4 +22,38 @@ public class MoneyTest {
             Money money = new Money(-3);
         }).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("금액을 더한다.")
+    void sum() {
+        Money money1 = new Money(1000);
+        Money money2 = new Money(2000);
+
+        Money sumMoney = money1.sum(money2);
+        long value = sumMoney.getValue();
+
+        assertThat(value).isEqualTo(3000);
+    }
+
+    @Test
+    @DisplayName("금액에 실수를 곱한다.")
+    void multiple() {
+        Money money = new Money(1000);
+
+        Money resultMoney = money.multiple(1.5);
+        long resultValue = resultMoney.getValue();
+
+        assertThat(resultValue).isEqualTo(1500);
+    }
+
+    @Test
+    @DisplayName("금액 간 차이로 수익을 구한다.")
+    void getProfit() {
+        Money money1 = new Money(1000);
+        Money money2 = new Money(2000);
+
+        long result = money1.getProfit(money2);
+
+        assertThat(result).isEqualTo(-1000);
+    }
 }

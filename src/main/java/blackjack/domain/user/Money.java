@@ -14,4 +14,20 @@ public class Money {
             throw new IllegalArgumentException("배팅 금액은 양수여야 합니다.");
         }
     }
+
+    public Money sum(Money anotherMoney) {
+        return new Money(value + anotherMoney.value);
+    }
+
+    public Money multiple(double rate) {
+        return new Money((long) (value * rate));
+    }
+
+    public long getValue() {
+        return value;
+    }
+
+    public long getProfit(Money anotherMoney) {
+        return value - anotherMoney.value;
+    }
 }
