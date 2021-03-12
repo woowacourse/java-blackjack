@@ -2,15 +2,15 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.player.cardopen.CardOpenStrategy;
-import blackjack.domain.player.cardopen.OneCardOpenStrategy;
+import blackjack.domain.player.dealercardstate.DealerCardOpenState;
+import blackjack.domain.player.dealercardstate.OneDealerCardOpenState;
 import java.util.List;
 import java.util.Map;
 
 public class Dealer extends AbstractPlayer {
     private static final String DEALER_NAME = "딜러";
     private static final int DRAW_BOUND = 16;
-    private CardOpenStrategy cardOpenStrategy;
+    private DealerCardOpenState dealerCardOpenState;
 
     public Dealer() {
         this(Cards.getInstance().draw(), Cards.getInstance().draw());
@@ -18,7 +18,7 @@ public class Dealer extends AbstractPlayer {
 
     public Dealer(Card fistCard, Card SecondCard) {
         super(DEALER_NAME, fistCard, SecondCard);
-        cardOpenStrategy = new OneCardOpenStrategy();
+        dealerCardOpenState = new OneDealerCardOpenState();
         dealerStateCheck();
     }
 
@@ -26,10 +26,6 @@ public class Dealer extends AbstractPlayer {
         if (getScore() > DRAW_BOUND && !isBlackjack()) {
             stay();
         }
-    }
-
-    public void setCardOpen(CardOpenStrategy cardOpenStrategy) {
-        this.cardOpenStrategy = cardOpenStrategy;
     }
 
     @Override
@@ -42,7 +38,9 @@ public class Dealer extends AbstractPlayer {
 
     @Override
     public List<Card> getCards() {
-        return cardOpenStrategy.getCards(super.getCards());
+        List<Card> cards = dealerCardOpenState.cards(super.getCards());
+        dealerCardOpenState = dealerCardOpenState.stateChange();
+        return cards;
     }
 
     public int profit(Map<Name, Integer> usersResult) {

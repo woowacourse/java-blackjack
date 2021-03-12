@@ -4,7 +4,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Name;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
-import blackjack.domain.player.cardopen.AllCardsOpenStrategy;
+import blackjack.domain.player.dealercardstate.AllCardsOpenStateDealer;
 import blackjack.domain.player.dto.resultProfitDTO;
 import blackjack.domain.player.dto.PlayerDTO;
 import blackjack.view.InputView;
@@ -24,7 +24,6 @@ public class BlackjackController {
 
     private void drawCards(Users users, Dealer dealer) {
         OutputView.printGiveTwoCardsMessage(getUserDTOs(users), new PlayerDTO(dealer));
-        dealer.setCardOpen(new AllCardsOpenStrategy());
         users.getUsers().forEach(this::drawCard);
         dealerDraw(dealer);
     }

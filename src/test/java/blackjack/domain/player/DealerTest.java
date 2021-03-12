@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.domain.player.cardopen.AllCardsOpenStrategy;
-import blackjack.domain.player.cardopen.OneCardOpenStrategy;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -43,7 +41,6 @@ public class DealerTest {
     void oneCardOpenStrategy() {
         Card card = Card.valueOf(CardShape.DIAMOND, CardNumber.ACE);
         Dealer dealer = new Dealer(card, card);
-        dealer.setCardOpen(new OneCardOpenStrategy());
         dealer.drawCard(Card.valueOf(CardShape.DIAMOND, CardNumber.SEVEN));
         assertThat(dealer.getCards()).hasSize(1);
     }
@@ -54,7 +51,6 @@ public class DealerTest {
         Card aceCard = Card.valueOf(CardShape.CLUB, CardNumber.ACE);
         Dealer dealer = new Dealer(aceCard, aceCard);
         dealer.drawRandomOneCard();
-        dealer.setCardOpen(new AllCardsOpenStrategy());
         assertThat(dealer.getCards()).hasSize(3);
     }
 
