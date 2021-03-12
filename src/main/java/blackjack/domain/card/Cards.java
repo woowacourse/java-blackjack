@@ -33,7 +33,8 @@ public class Cards {
 	}
 
 	private boolean havingAce() {
-		return cards.stream().anyMatch(Card::isAce);
+		return cards.stream()
+			.anyMatch(Card::isAce);
 	}
 
 	public List<Card> getCards() {

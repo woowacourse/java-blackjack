@@ -31,13 +31,12 @@ public class Players {
 		}
 	}
 
-	public int calculateTotalWinnings(Dealer dealer) {
-		int money = 0;
-		for (Player player : players) {
-			player.calculateProfit(dealer);
-			money += player.getMoney();
-		}
-		return money * -1;
+	public int calculateProfits(Dealer dealer) {
+		int total = players.stream()
+			.map(player -> player.calculateProfit(dealer))
+			.map(Money::getMoney)
+			.reduce(0, Integer::sum);
+		return total * -1;
 	}
 
 	public List<Player> toList() {

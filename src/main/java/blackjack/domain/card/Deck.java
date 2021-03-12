@@ -12,7 +12,11 @@ public class Deck {
 	private final List<Card> deck;
 
 	public Deck() {
-		this.deck = Arrays.stream(CardPattern.values())
+		this.deck = makeCards();
+	}
+
+	private List<Card> makeCards() {
+		return Arrays.stream(CardPattern.values())
 			.flatMap(cardPattern -> Arrays.stream(CardNumber.values())
 				.map(cardNumber -> new Card(cardPattern, cardNumber)))
 			.collect(Collectors.toList());

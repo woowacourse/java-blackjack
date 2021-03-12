@@ -20,7 +20,7 @@ public class BlackJackController {
 		playTurn(dealer, players, deck);
 
 		OutputView.noticePlayersPoint(dealer, players);
-		OutputView.printDealerResult(players.calculateTotalWinnings(dealer));
+		OutputView.printDealerResult(players.calculateProfits(dealer));
 		OutputView.printPlayersResult(players);
 	}
 

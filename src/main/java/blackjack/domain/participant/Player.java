@@ -1,18 +1,19 @@
 package blackjack.domain.participant;
 
 public class Player extends Gamer {
-	private Profit profit;
+	private Money money;
 
 	public Player(String name) {
 		super(name);
 	}
 
 	public void makeProfit(double askMoney) {
-		this.profit = new Profit(askMoney);
+		this.money = new Money(askMoney);
 	}
 
-	public void calculateProfit(Dealer dealer) {
-		profit = Profit.of(playerState.makeProfit(dealer, profit));
+	public Money calculateProfit(Dealer dealer) {
+		money = Money.of(playerState.makeProfit(dealer, money));
+		return money;
 	}
 
 	@Override
@@ -22,6 +23,6 @@ public class Player extends Gamer {
 	}
 
 	public int getMoney() {
-		return (int)profit.getMoney();
+		return money.getMoney();
 	}
 }

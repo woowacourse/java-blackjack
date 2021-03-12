@@ -12,8 +12,8 @@ public class PlayerName {
 	private final String name;
 
 	public PlayerName(String name) {
-		this.name = name;
 		validate(name);
+		this.name = name;
 	}
 
 	private void validate(String name) {
