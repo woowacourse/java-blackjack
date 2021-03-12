@@ -14,6 +14,17 @@ public class Player extends Participant {
         return minimumScore < MAXIMUM_SCORE_LIMIT;
     }
 
+    public BetAmount calculateFinalBetProfit(Dealer dealer) {
+        Result result = judgeResult(dealer);
+        if (result == Result.LOSE) {
+            return getBetAmount().toNegative();
+        }
+        if (result == Result.WIN) {
+            return getBetAmount();
+        }
+        return BetAmount.ZERO;
+    }
+
     public Result judgeResult(Dealer dealer) {
         int dealerScore = dealer.calculateScore();
         int playerScore = calculateScore();
@@ -27,7 +38,6 @@ public class Player extends Participant {
     }
 
     private boolean isDealerWin(int dealerScore, int playerScore) {
-        return playerScore > MAXIMUM_SCORE_LIMIT
-            || (playerScore < dealerScore && dealerScore <= MAXIMUM_SCORE_LIMIT);
+        return dealerScore <= MAXIMUM_SCORE_LIMIT && playerScore > dealerScore;
     }
 }

@@ -5,11 +5,14 @@ import java.util.Objects;
 public class BetAmount {
 
     public static final BetAmount ZERO = new BetAmount(0);
-    private static final int MIN_BET_AMOUNT = 1;
     private final int betAmount;
 
     public BetAmount(int betAmount) {
         this.betAmount = betAmount;
+    }
+
+    public BetAmount toNegative() {
+        return new BetAmount(-betAmount);
     }
 
     @Override
@@ -27,5 +30,12 @@ public class BetAmount {
     @Override
     public int hashCode() {
         return Objects.hash(betAmount);
+    }
+
+    @Override
+    public String toString() {
+        return "BetAmount{" +
+                "betAmount=" + betAmount +
+                '}';
     }
 }

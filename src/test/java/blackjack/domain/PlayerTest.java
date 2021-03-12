@@ -1,15 +1,16 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
 
@@ -72,21 +73,11 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("딜러가 21을 초과할 때 플레이어가 21을 초과하면 플레이어 패배")
+    @DisplayName("딜러가 21을 초과하면, 무조건 플레이어 승리")
     public void judgeResult_PlayerAndDealerScoreOver21() {
         Player player = new Player("json");
         Dealer dealer = new Dealer();
         player.receiveCards(new Cards(CARDS_SCORE_22));
-        dealer.receiveCards(new Cards(CARDS_SCORE_22));
-        assertThat(player.judgeResult(dealer)).isEqualTo(Result.LOSE);
-    }
-
-    @Test
-    @DisplayName("딜러가 21을 초과할 때 플레이어가 21을 초과하지 않으면 플레이어 승")
-    public void judgeResult_DealerScoreOver21() {
-        Player player = new Player("json");
-        Dealer dealer = new Dealer();
-        player.receiveCards(new Cards(CARDS_SCORE_19));
         dealer.receiveCards(new Cards(CARDS_SCORE_22));
         assertThat(player.judgeResult(dealer)).isEqualTo(Result.WIN);
     }
