@@ -66,6 +66,10 @@ public class OutputView {
         printMessage("카드의 합이 21이 넘어 bust 되었습니다.");
     }
 
+    public static void printTwentyOne() {
+        printMessage("21이 되었습니다.");
+    }
+
     public static void printGiveDealer() {
         printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }

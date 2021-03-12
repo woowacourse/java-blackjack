@@ -89,7 +89,7 @@ public class BlackJackController {
             drawCard(blackJackGame, gambler);
         }
         if (gambler.isTwentyOne()) {
-            OutputView.printMessage("21이 되었습니다.");
+            OutputView.printTwentyOne();
         }
     }
 
