@@ -5,19 +5,19 @@ public class Money {
 
     private final int money;
 
-    public Money(int money) {
+    public Money(final int money) {
         this.money = money;
     }
 
-    public Money add(Money money) {
+    public Money add(final Money money) {
         return new Money(this.money + money.money);
     }
 
-    public Money sub(Money money) {
+    public Money sub(final Money money) {
         return new Money(this.money - money.money);
     }
 
-    public Money multiply(double times) {
+    public Money multiply(final double times) {
         return new Money((int) (this.money * times));
     }
 

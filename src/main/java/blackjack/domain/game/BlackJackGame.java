@@ -42,7 +42,7 @@ public class BlackJackGame {
         }
     }
 
-    private void giveCards(final Player player, int numberOfCards) {
+    private void giveCards(final Player player, final int numberOfCards) {
         IntStream.range(0, numberOfCards)
                 .forEach(i -> giveCard(player));
     }
@@ -51,7 +51,7 @@ public class BlackJackGame {
         player.receiveCard(deck.draw());
     }
 
-    public void bet(final Gambler gambler, int money) {
+    public void bet(final Gambler gambler, final int money) {
         dealer.takeMoney(gambler, new Money(money));
     }
 

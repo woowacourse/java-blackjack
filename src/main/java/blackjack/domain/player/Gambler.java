@@ -12,11 +12,11 @@ public class Gambler implements Player {
         this.name = name;
     }
 
-    public void earn(Money money) {
+    public void earn(final Money money) {
         this.money = this.money.add(money);
     }
 
-    public void lose(Money money) {
+    public void lose(final Money money) {
         this.money = this.money.sub(money);
     }
 

@@ -15,18 +15,18 @@ public class Dealer implements Player {
         return cards.calculateScore().isBelow(LIMIT_SCORE_TO_HIT);
     }
 
-    public void giveWinningMoney(Gambler gambler) {
+    public void giveWinningMoney(final Gambler gambler) {
         Money bettingMoney = gambler.getBettingMoney();
         Money winningMoney = bettingMoney.add(bettingMoney);
         giveMoney(gambler, winningMoney);
     }
 
-    public void takeMoney(Gambler gambler, Money money) {
+    public void takeMoney(final Gambler gambler, final Money money) {
         this.money = this.money.add(money);
         gambler.lose(money);
     }
 
-    private void giveMoney(Gambler gambler, Money money) {
+    private void giveMoney(Gambler gambler, final Money money) {
         this.money = this.money.sub(money);
         gambler.earn(money);
     }
@@ -35,7 +35,7 @@ public class Dealer implements Player {
         return cards.compareCardsScore(gambler.getCards());
     }
 
-    public void checkBlackJack(Gambler gambler){
+    public void checkBlackJack(final Gambler gambler){
         if(hasBlackJack() && gambler.hasBlackJack()){
             giveBackBettingMoney(gambler);
         }
@@ -45,7 +45,7 @@ public class Dealer implements Player {
         }
     }
 
-    public void calculateMoney(Gambler gambler, WinOrLose winOrLose) {
+    public void calculateMoney(final Gambler gambler, final WinOrLose winOrLose) {
         if(winOrLose.equals(WinOrLose.LOSE)){
             giveWinningMoney(gambler);
         }

@@ -4,12 +4,12 @@ import java.util.*;
 
 public class Card {
 
-    private static final List<Card> ORIGINAL_CARDS = new ArrayList<>();
+    private static final List<Card> CACHED_CARDS = new LinkedList<>();
 
     static {
         for (Suit suit : Suit.values()) {
             Arrays.stream(Denomination.values())
-                    .forEach(denomination -> ORIGINAL_CARDS.add(new Card(suit, denomination)));
+                    .forEach(denomination -> CACHED_CARDS.add(new Card(suit, denomination)));
         }
     }
 
@@ -21,8 +21,8 @@ public class Card {
         this.denomination = denomination;
     }
 
-    public static LinkedList<Card> getCachingCards() {
-        return new LinkedList<>(ORIGINAL_CARDS);
+    public static List<Card> getCachingCards() {
+        return new LinkedList<>(CACHED_CARDS);
     }
 
     public Score getScore() {

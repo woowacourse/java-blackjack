@@ -16,7 +16,7 @@ public class Score {
 
     private final int value;
 
-    private Score(int value) {
+    private Score(final int value) {
         if (value < 0) {
             throw new IllegalArgumentException("유효하지 않은 점수입니다.");
         }
@@ -24,7 +24,7 @@ public class Score {
         this.value = value;
     }
 
-    public static Score of(int score){
+    public static Score of(final int score){
         if(score < scores.length && scores[score] != null){
             return scores[score];
         }
@@ -40,15 +40,15 @@ public class Score {
         return value == BLACK_JACK;
     }
 
-    public boolean isHigher(Score score){
+    public boolean isHigher(final Score score){
         return this.value > score.value;
     }
 
-    public boolean isLower(Score score){
+    public boolean isLower(final Score score){
         return this.value < score.value;
     }
 
-    public boolean isBelow(int score) {
+    public boolean isBelow(final int score) {
         return value <= score;
     }
 
@@ -64,7 +64,7 @@ public class Score {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Score score = (Score) o;

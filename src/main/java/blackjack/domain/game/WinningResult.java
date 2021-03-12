@@ -8,11 +8,11 @@ import java.util.Map;
 public class WinningResult {
     Map<Player, WinOrLose> winningTable = new HashMap<>();
 
-    public void add(Player player, WinOrLose winOrLose){
+    public void add(final Player player, final WinOrLose winOrLose){
         winningTable.put(player, winOrLose);
     }
 
-    public WinOrLose get(Player player){
+    public WinOrLose get(final Player player){
         return winningTable.get(player);
     }
 }
