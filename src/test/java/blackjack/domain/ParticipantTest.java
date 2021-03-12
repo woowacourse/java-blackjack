@@ -1,12 +1,15 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 public class ParticipantTest {
 
@@ -27,5 +30,30 @@ public class ParticipantTest {
         Card card = new Card(Symbol.EIGHT, Shape.CLOVER);
         participant.receiveCard(card);
         assertThat(participant.getCards()).containsExactly(card);
+    }
+
+    @Test
+    @DisplayName("카드가 2장이고 합이 21일 때에 블랙잭이다.")
+    public void isBlackjack_True() {
+        Participant participant = new Player("jason");
+        List<Card> cards = Arrays.asList(
+                new Card(Symbol.ACE, Shape.HEART),
+                new Card(Symbol.KING, Shape.HEART)
+        );
+        participant.receiveCards(new Cards(cards));
+        assertThat(participant.isBlackjack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드의 합이 21인데, 카드가 2장이 아니면 블랙잭이 아니다.")
+    public void isBlackjack_False() {
+        Participant participant = new Player("jason");
+        List<Card> cards = Arrays.asList(
+                new Card(Symbol.JACK, Shape.HEART),
+                new Card(Symbol.TEN, Shape.HEART),
+                new Card(Symbol.TWO, Shape.HEART)
+        );
+        participant.receiveCards(new Cards(cards));
+        assertThat(participant.isBlackjack()).isFalse();
     }
 }
