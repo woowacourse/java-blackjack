@@ -43,14 +43,18 @@ public class BlackjackGame {
         }
     }
 
-    public void processDealerRound() {
-        while (dealerScoreUnderSixTeen()) {
-            drawCardToDealer();
+    public void userDrawOrStop(User user, boolean hitOrStay) {
+        if (hitOrStay) {
+            drawCardToUser(user);
+            return;
         }
+        user.stayUser();
     }
 
-    public boolean dealerScoreUnderSixTeen() {
-        return dealer.calculateScore() < DEALER_MINIMUM_SCORE;
+    public void processDealerRound() {
+        while (dealer.calculateScore() < DEALER_MINIMUM_SCORE) {
+            drawCardToDealer();
+        }
     }
 
     public List<String> getUserNames() {
@@ -74,11 +78,11 @@ public class BlackjackGame {
         return user.getMoney() * Profit.decideProfit(user, dealer).getProfit();
     }
 
-    public void drawCardToDealer() {
+    private void drawCardToDealer() {
         dealer.drawCard(deck.draw());
     }
 
-    public void drawCardToUser(User user) {
+    private void drawCardToUser(User user) {
         user.drawCard(deck.draw());
     }
 

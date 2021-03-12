@@ -49,8 +49,11 @@ public class UserGameResultTest {
     @Test
     void testGetUserProfit() {
         UserGameResult userGameResult = new UserGameResult(temp);
-        List<Double> userProfits = Arrays.asList(-1D, -1D, 1D, 0D);
+        Set<Double> userProfits = new HashSet<>();
+        userProfits.add(-1D);
+        userProfits.add(0D);
+        userProfits.add(1D);
 
-        assertThat(userGameResult.getUserProfit().collect(Collectors.toList())).isEqualTo(userProfits);
+        assertThat(userGameResult.getUserProfit().collect(Collectors.toSet())).isEqualTo(userProfits);
     }
 }

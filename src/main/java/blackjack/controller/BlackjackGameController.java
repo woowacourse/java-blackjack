@@ -85,20 +85,12 @@ public class BlackjackGameController {
     private static void askHitOrStay(User user, BlackjackGame blackjackGame) {
         try {
             boolean hitOrStay = InputView.askMoreDraw(user.getName());
-            userDrawOrStop(user, hitOrStay, blackjackGame);
+            blackjackGame.userDrawOrStop(user, hitOrStay);
             printUserCurrentCards(user);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
             askHitOrStay(user, blackjackGame);
         }
-    }
-
-    private static void userDrawOrStop(User user, boolean hitOrStay, BlackjackGame blackjackGame) {
-        if (hitOrStay) {
-            blackjackGame.drawCardToUser(user);
-            return;
-        }
-        user.stayUser();
     }
 
     private static void printUserCurrentCards(User currentUser) {
