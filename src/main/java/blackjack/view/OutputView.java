@@ -4,7 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.view.dto.PlayerStatusDto;
 import blackjack.view.dto.RoundStatusDto;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -13,6 +15,7 @@ public class OutputView {
     private static final String DELIMITER = ", ";
     private static final String DEALER_CARD_ADD_MESSAGE = "딜러는 %d이하라 한장의 카드를 더 받았습니다.";
     private static final String GAME_RESULT_MESSAGE = "%s카드 : %s - 결과: %d";
+    private static final String FINAL_PROFIT_MESSAGE = "## 최종수익";
 
     private OutputView() {
     }
@@ -64,5 +67,10 @@ public class OutputView {
         return cards.stream()
                 .map(playerCard -> playerCard.symbolName() + playerCard.numberName())
                 .collect(Collectors.toList());
+    }
+
+    public static void showFinalProfit(Map<String, BigDecimal> result) {
+        System.out.println(FINAL_PROFIT_MESSAGE);
+        result.entrySet().forEach(map -> System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE, map.getKey(), map.getValue())));
     }
 }

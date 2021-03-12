@@ -10,9 +10,7 @@ import blackjack.domain.user.Player;
 import blackjack.domain.user.Users;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Round {
@@ -35,6 +33,10 @@ public class Round {
         users.addAll(players);
 
         return new Round(deck, new Users<>(users));
+    }
+
+    private static State drawTwoCard(Deck deck) {
+        return StateFactory.draw(deck.makeOneCard(), deck.makeOneCard());
     }
 
     public AbstractUser getDealer() {
@@ -80,7 +82,22 @@ public class Round {
                 .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 유저입니다"));
     }
 
-    private static State drawTwoCard(Deck deck) {
-        return StateFactory.draw(deck.makeOneCard(), deck.makeOneCard());
+    public Map<String, BigDecimal> findUsersProfit() {
+        LinkedHashMap<String, BigDecimal> result = new LinkedHashMap<>();
+        AbstractUser dealer = getDealer();
+        List<AbstractUser> players = getPlayers();
+        List<BigDecimal> profits = getProfits(dealer, players);
+        result.put(dealer.getName(), BigDecimal.valueOf(profits.stream().mapToInt(profit -> -profit.intValue()).sum()));
+
+        players.forEach(player ->
+                result.put(player.getName(), profits.remove(0))
+        );
+        return result;
+    }
+
+    private List<BigDecimal> getProfits(AbstractUser dealer, List<AbstractUser> players) {
+        return players.stream()
+                .map(player -> player.getState().profit(dealer.getState(), player.getBettingMoney()))
+                .collect(Collectors.toList());
     }
 }

@@ -27,6 +27,7 @@ public class GameController {
         addPlayersCardOrPass(round);
         addDealerCard(round);
         OutputView.showFinalStatus(RoundStatusDto.toDto(round));
+        OutputView.showFinalProfit(round.findUsersProfit());
     }
 
     private Round initializeRound() {
