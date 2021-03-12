@@ -90,7 +90,7 @@ public class BlackJackController {
     }
 
     private static void drawCardByResponse(Player playerToPrepare, Response response) {
-        if (response == Response.POSITIVE) {
+        if (response.isPositive()) {
             CARD_DISTRIBUTOR.distributeCardTo(playerToPrepare);
             OutputView.printParticipantStatus(playerToPrepare, false);
         }

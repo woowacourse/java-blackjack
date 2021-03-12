@@ -24,7 +24,7 @@ public class Hit extends Running {
 
     @Override
     public State moveStateByResponse(Response response) {
-        if (response == Response.NEGATIVE) {
+        if (response.isNegative()) {
             return new Stay(getHand());
         }
         return this;

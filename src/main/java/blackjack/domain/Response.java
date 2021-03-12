@@ -18,4 +18,12 @@ public enum Response {
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("불가능한 입력 입니다."));
     }
+
+    public boolean isPositive() {
+        return this == POSITIVE;
+    }
+
+    public boolean isNegative() {
+        return this == NEGATIVE;
+    }
 }
