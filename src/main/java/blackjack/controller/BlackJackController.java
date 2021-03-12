@@ -18,7 +18,7 @@ public class BlackJackController {
     }
 
     private void startGame(Dealer dealer, Players players) {
-        Users users = new Users(dealer, players);
+        Users users = Users.of(dealer, players);
         CardDeck cardDeck = CardDeck.createDeck();
 
         users.dealCards(cardDeck);
@@ -53,7 +53,9 @@ public class BlackJackController {
     }
 
     private void printOverallResults(Dealer dealer, Players players) {
-        OutputView.printCardsOfUsersWithScore(new Users(dealer, players));
+        // TODO 생성하지 않고 처리할 수 있도록 리팩토링
+        OutputView.printCardsOfUsersWithScore(Users.of(dealer, players));
+        
         Results results = players.generateResultsMapAgainstDealer(dealer);
         OutputView.printDealerResult(DealerResult.of(results));
         OutputView.printResult(results);

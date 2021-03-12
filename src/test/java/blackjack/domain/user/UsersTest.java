@@ -20,7 +20,7 @@ class UsersTest {
         cardDeck = CardDeck.createDeck();
         dealer = new Dealer();
         players = Players.of(Names.of(Arrays.asList("youngE", "kimkim")));
-        users = new Users(dealer, players);
+        users = Users.of(dealer, players);
     }
 
     @DisplayName("참가자들에게 카드를 두 장씩 나누어준다.")

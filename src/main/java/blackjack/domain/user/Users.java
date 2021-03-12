@@ -11,9 +11,13 @@ public class Users {
 
     private final List<User> users = new ArrayList<>();
 
-    public Users(Dealer dealer, Players players) {
+    private Users(Dealer dealer, Players players) {
         this.users.add(dealer);
         this.users.addAll(new ArrayList<>(players.players()));
+    }
+
+    public static Users of(Dealer dealer, Players players) {
+        return new Users(dealer, players);
     }
 
     public void dealCards(CardDeck cardDeck) {
