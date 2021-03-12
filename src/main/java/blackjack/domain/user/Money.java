@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Money {
 
     private static final String MIN_MONEY_ERROR = "[ERROR] 배팅 금액은 0원이 될 수 없습니다.";
+
     private final double money;
 
     public Money(double money) {

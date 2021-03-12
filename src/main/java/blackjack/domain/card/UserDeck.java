@@ -7,6 +7,7 @@ public class UserDeck {
 
     private static final int ACE_CALIBRATION = 10;
     public static final int BLACK_JACK_NUMBER = 21;
+
     private final List<Card> userCards = new ArrayList<>();
 
     public void add(Card card) {
