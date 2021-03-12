@@ -6,4 +6,8 @@ public class BattingMoney {
     public BattingMoney(int money) {
         this.money = money;
     }
+
+    public int getMoney() {
+        return money;
+    }
 }

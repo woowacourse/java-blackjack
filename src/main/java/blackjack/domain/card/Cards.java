@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.Game;
 import blackjack.view.OutputView;
 
 import java.util.ArrayList;
@@ -9,8 +10,6 @@ import java.util.stream.Collectors;
 public class Cards {
     private static final int ZERO = 0;
     private static final int DIFFERENCE_OF_ACE_VALUE = 10;
-    private static final int BLACKJACK_NUMBER = 21;
-    private static final int BLACKJACK_CONDITION_CARDS_SIZE = 2;
     private final List<Card> cards = new ArrayList<>();
 
     public Cards(Card firstCard, Card secondCard) {
@@ -19,7 +18,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_CONDITION_CARDS_SIZE && calculateCardsScore() == BLACKJACK_NUMBER;
+        return cards.size() == Game.BLACKJACK_CONDITION_CARDS_SIZE && calculateCardsScore() == Game.BLACKJACK_NUMBER;
     }
 
     public int calculateCardsScore() {
@@ -47,7 +46,7 @@ public class Cards {
     }
 
     private boolean canLowerCardsValue(int score, int remainLoop) {
-        return score > BLACKJACK_NUMBER && remainLoop > ZERO;
+        return score > Game.BLACKJACK_NUMBER && remainLoop > ZERO;
     }
 
     private int lowerValueOfAce(int value) {

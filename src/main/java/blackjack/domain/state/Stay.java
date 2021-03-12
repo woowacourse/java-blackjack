@@ -30,4 +30,9 @@ public class Stay implements State{
     public State stay() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public double earningsRate() {
+        return 1;
+    }
 }

@@ -5,9 +5,14 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Game {
+    public static final int BLACKJACK_NUMBER = 21;
+    public static final int BLACKJACK_CONDITION_CARDS_SIZE = 2;
+
     private final Players players;
     private final Dealer dealer;
 
@@ -43,5 +48,19 @@ public class Game {
     public void giveCardToDealer(Dealer dealer) {
         dealer.addCard(Deck.draw());
         dealer.doStayIfPossible();
+    }
+
+    public Map<String, Integer> getPlayersProfitResult() {
+        return players.getPlayersProfitResult(dealer.getCardsScore());
+    }
+
+    public Map<String, Integer> getDealerProfitResult(Map<String, Integer> playersProfitResult) {
+        int playersTotalProfit = playersProfitResult.values().stream()
+                .mapToInt(value -> value)
+                .sum();
+
+        Map<String, Integer> dealerProfitResult = new HashMap<>();
+        dealerProfitResult.put(dealer.getName(), playersTotalProfit * (-1));
+        return dealerProfitResult;
     }
 }

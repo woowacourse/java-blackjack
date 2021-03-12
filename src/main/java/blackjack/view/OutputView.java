@@ -5,12 +5,15 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String INITIAL_CARDS_INFO_PREFIX_FORMAT = "%s와 %s에게 2장씩 나눴습니다." + System.lineSeparator();
+    private static final String INITIAL_CARDS_INFO_PREFIX_FORMAT =
+            System.lineSeparator() + "%s와 %s에게 2장씩 나눴습니다." + System.lineSeparator();
     private static final String CARDS_INFO_FORMAT = "%s카드: %s" + System.lineSeparator();
     private static final String CARDS_INFO_WITH_SCORE_FORMAT = "%s카드: %s - 결과: %d" + System.lineSeparator();
+    private static final String PROFIT_INFO_FORMAT = "%s: %d" + System.lineSeparator();
     public static final String DELIMITER = ", ";
     private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한 장의 카드를 더 받았습니다.";
 
@@ -52,10 +55,21 @@ public class OutputView {
     }
 
     public static void printDealerAndPlayersCardsInfoWithScore(Dealer dealer, List<Player> players) {
+        System.out.println();
         printParticipantCardsInfoWithScore(dealer);
         for (Player player : players) {
             printParticipantCardsInfoWithScore(player);
         }
         System.out.println();
+    }
+
+    public static void printDealerAndPlayersProfitResult(Map<String, Integer> dealerProfitResult,
+                                                         Map<String, Integer> playersProfitResult) {
+        dealerProfitResult.forEach(OutputView::printParticipantProfitResult);
+        playersProfitResult.forEach(OutputView::printParticipantProfitResult);
+    }
+
+    private static void printParticipantProfitResult(String name, int profit) {
+        System.out.printf(PROFIT_INFO_FORMAT, name, profit);
     }
 }

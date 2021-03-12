@@ -11,4 +11,6 @@ public interface State {
     State addCard(Card card);
 
     State stay();
+
+    double earningsRate();
 }

@@ -82,6 +82,10 @@ public class GameController {
     }
 
     private void printGameResult(Game game) {
+        Map<String, Integer> playersProfitResult = game.getPlayersProfitResult();
+        Map<String, Integer> dealerProfitResult = game.getDealerProfitResult(playersProfitResult);
+
         OutputView.printDealerAndPlayersCardsInfoWithScore(game.getDealer(), game.getPlayers());
+        OutputView.printDealerAndPlayersProfitResult(dealerProfitResult, playersProfitResult);
     }
 }

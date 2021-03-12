@@ -33,4 +33,9 @@ public class Hit implements State{
     public State stay() {
         return new Stay(cards);
     }
+
+    @Override
+    public double earningsRate() {
+        throw new UnsupportedOperationException();
+    }
 }
