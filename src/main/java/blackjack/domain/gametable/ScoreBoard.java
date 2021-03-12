@@ -52,35 +52,7 @@ public class ScoreBoard {
     }
 
     private Outcome compareWith(Score playerScore) {
-        return calculateOutcome(playerScore, dealerScore);
+        return Outcome.getInstance(playerScore, dealerScore);
     }
 
-    private Outcome calculateOutcome(final Score base, final Score counterpart) {
-        if (draw(base, counterpart)) {
-            return Outcome.DRAW;
-        }
-
-        if (win(base, counterpart)) {
-            return Outcome.WIN;
-        }
-
-        return Outcome.LOSE;
-    }
-
-    private boolean draw(final Score base, final Score counterpart) {
-        if (base.isBurst() && counterpart.isBurst()) {
-            return true;
-        }
-        return base.isNotBurst() && counterpart.isNotBurst() && base.isSameAs(counterpart);
-    }
-
-    private boolean win(final Score base, final Score counterpart) {
-        if (base.isBlackjack() && counterpart.isNotBlackjack()) {
-            return true;
-        }
-        if (base.isNotBurst() && counterpart.isBurst()) {
-            return true;
-        }
-        return base.isNotBurst() && counterpart.isNotBurst() && base.isHigherThan(counterpart);
-    }
 }
