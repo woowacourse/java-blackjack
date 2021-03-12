@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import java.util.Objects;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import blackjack.domain.state.PlayerState;
 
 public abstract class Gamer {
@@ -20,9 +19,7 @@ public abstract class Gamer {
 		playerState = playerState.drawNewCard(card);
 	}
 
-	public abstract boolean canReceiveCard();
-
-	public abstract boolean continueDraw(String draw, Deck deck);
+	public abstract boolean canReceiveCard(boolean drawFlag);
 
 	public int calculatePoint() {
 		return playerState.calculatePoint();

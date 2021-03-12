@@ -9,11 +9,22 @@ import java.util.Scanner;
 import blackjack.domain.participant.Player;
 
 public class InputView {
+	private static final String ERROR_MESSAGE_OF_Y_OR_N = "y 혹은 n 만 입력하여 주십시오.";
+	private static final String AGREE = "y";
+	private static final String DISAGREE = "n";
+
 	static Scanner scanner = new Scanner(System.in);
 
-	public static String isContinueDraw(Player player) {
+	public static boolean isContinueDraw(Player player) {
 		System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-		return scanner.nextLine();
+		String input = scanner.nextLine();
+		if (AGREE.equals(input)) {
+			return true;
+		}
+		if (DISAGREE.equals(input)) {
+			return false;
+		}
+		throw new IllegalArgumentException(ERROR_MESSAGE_OF_Y_OR_N);
 	}
 
 	public static List<String> enterNames() {

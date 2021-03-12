@@ -24,6 +24,13 @@ public class Players {
 		return splitPlayers;
 	}
 
+	public void initialCards(Deck deck) {
+		dealer.playerState = StateFactory.drawTwoCards(deck.dealCard(), deck.dealCard());
+		for (Player player : players) {
+			player.playerState = StateFactory.drawTwoCards(deck.dealCard(), deck.dealCard());
+		}
+	}
+
 	public int calculateTotalWinnings(Dealer dealer) {
 		int money = 0;
 		for (Player player : players) {
@@ -54,12 +61,5 @@ public class Players {
 	@Override
 	public int hashCode() {
 		return Objects.hash(players, dealer);
-	}
-
-	public void initialCards(Deck deck) {
-		dealer.playerState = StateFactory.drawTwoCards(deck.dealCard(), deck.dealCard());
-		for (Player player : players) {
-			player.playerState = StateFactory.drawTwoCards(deck.dealCard(), deck.dealCard());
-		}
 	}
 }

@@ -72,7 +72,7 @@ public class BlackJackController {
 		for (Player player : players.toList()) {
 			askKeepDrawing(player, deck);
 		}
-		while (dealer.canReceiveCard()) {
+		while (dealer.canReceiveCard(true)) { //TODO: true 넘기는게 맞는가?
 			dealer.receiveCard(deck.dealCard());
 			OutputView.noticeDealerReceiveCard();
 		}
@@ -88,7 +88,7 @@ public class BlackJackController {
 	}
 
 	private void playEachPlayer(Player player, Deck deck) {
-		while (player.canReceiveCard() && player.continueDraw(InputView.isContinueDraw(player), deck)) {
+		while (player.canReceiveCard(InputView.isContinueDraw(player))) {
 			player.receiveCard(deck.dealCard());
 			OutputView.noticePlayerCards(player);
 		}

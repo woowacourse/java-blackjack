@@ -40,7 +40,7 @@ public class DealerTest {
 	void dealerPossibleReceiveCard() {
 		dealer.playerState = StateFactory.drawTwoCards((new Card(CardPattern.CLOVER, CardNumber.ACE)),
 			new Card(CardPattern.HEART, CardNumber.TWO));
-		assertTrue(dealer.canReceiveCard());
+		assertTrue(dealer.canReceiveCard(true));
 	}
 
 	@Test
@@ -50,6 +50,6 @@ public class DealerTest {
 			new Card(CardPattern.HEART, CardNumber.SEVEN));
 		dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.SEVEN));
 		System.out.println(dealer.playerState.calculatePoint());
-		assertFalse(dealer.canReceiveCard());
+		assertFalse(dealer.canReceiveCard(true));
 	}
 }

@@ -6,13 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
-import blackjack.domain.card.Deck;
 import blackjack.domain.state.Bust;
 import blackjack.domain.state.StateFactory;
 
@@ -47,14 +44,14 @@ public class PlayerTest {
 	@Test
 	@DisplayName("플레이어가 카드를 받을 수 있는지 확인")
 	void playerPossibleReceiveCard() {
-		assertTrue(player.canReceiveCard());
+		assertTrue(player.canReceiveCard(true));
 	}
 
 	@Test
 	@DisplayName("플레이어가 카드를 받을 수 없는지 확인")
 	void playerImpossibleReceiveCard() {
 		player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.KING));
-		assertFalse(player.canReceiveCard());
+		assertFalse(player.canReceiveCard(false));
 	}
 
 	@Test
@@ -69,20 +66,6 @@ public class PlayerTest {
 	void aceCardBoundary() {
 		player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
 		assertEquals(14, player.calculatePoint());
-	}
-
-	@ParameterizedTest
-	@DisplayName("다시 받을 때 올바른 입력 확인")
-	@CsvSource(value = {"y:true", "n:false"}, delimiter = ':')
-	void playerContinueDraw(String value, boolean expected) {
-		assertEquals(expected, player.continueDraw(value, new Deck()));
-	}
-
-	@Test
-	@DisplayName("다시 받을 때 예외 처리")
-	void playerStopDraw() {
-		assertThatThrownBy(() -> player.continueDraw("l", new Deck())).isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("y");
 	}
 
 	@Test
