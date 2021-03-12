@@ -18,9 +18,13 @@ public interface Player {
 
     boolean isTwentyOne();
 
+    boolean isSameName(Player player);
+
     Cards cards();
 
     String name();
 
     Score score();
+
+    Money money();
 }
