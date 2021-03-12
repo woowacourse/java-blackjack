@@ -41,6 +41,14 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
+    public boolean isBust() {
+        return calculateScore().isBust();
+    }
+
+    public boolean isLowerThanBlackJack() {
+        return calculateScore().isLowerThanBlackJackValue();
+    }
+
     public List<Card> toList() {
         return Collections.unmodifiableList(cards);
     }
@@ -50,14 +58,6 @@ public class Cards {
             throw new EmptyCardsException();
         }
         return Collections.singletonList(cards.get(FIRST_CARD_INDEX));
-    }
-
-    public boolean isBust() {
-        return calculateScore().isBust();
-    }
-
-    public boolean isLowerThanBlackJack() {
-        return calculateScore().isLowerThanBlackJackValue();
     }
 
     @Override
