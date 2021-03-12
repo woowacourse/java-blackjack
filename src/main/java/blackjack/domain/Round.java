@@ -68,12 +68,16 @@ public class Round {
     }
 
     public void addPlayerCard(AbstractUser player) {
-        AbstractUser findPlayer = getPlayers().stream()
+        AbstractUser findPlayer = findPlayer(player);
+        State state = findPlayer.getState().draw(deck.makeOneCard());
+        findPlayer.changeState(state);
+    }
+
+    private AbstractUser findPlayer(AbstractUser player) {
+        return getPlayers().stream()
                 .filter(p -> p.equals(player))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 유저입니다"));
-        State state = findPlayer.getState().draw(deck.makeOneCard());
-        findPlayer.changeState(state);
     }
 
     private Queue<Outcome> makeRoundOutComes() {
@@ -84,5 +88,11 @@ public class Round {
 
     public boolean isDealerCanDraw() {
         return getDealer().canDraw();
+    }
+
+    public void makePlayerStay(AbstractUser player) {
+        AbstractUser findPlayer = findPlayer(player);
+        State state = findPlayer.getState().stay();
+        findPlayer.changeState(state);
     }
 }

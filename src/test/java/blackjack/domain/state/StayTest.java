@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import blackjack.domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,5 +27,19 @@ class StayTest {
 
         assertThatThrownBy(() -> draw.stay())
                 .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @DisplayName("stay상태 일때 카드를 추가하려 하면, 에러가 발생한다.")
+    @Test
+    void alreadyStayExceptionTest() {
+        State state = StateFactory.draw(SPADE_TWO, SPADE_TEN);
+        Player player = new Player(state, "pobi");
+
+        State stay = player.getState().stay();
+        player.changeState(stay);
+
+        assertThatThrownBy(() -> player.getState().stay())
+                .isInstanceOf(UnsupportedOperationException.class);
+
     }
 }

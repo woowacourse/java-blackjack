@@ -53,6 +53,7 @@ public class GameController {
             round.addPlayerCard(player);
             OutputView.showPlayCardStatus(new PlayerStatusDto(player.getName(), player.getState().cards().getCards(), player.getState().calculateScore()));
         }
+        round.makePlayerStay(player);
     }
 
     private void addDealerCard(final Round round) {
