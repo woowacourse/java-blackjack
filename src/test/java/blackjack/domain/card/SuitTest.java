@@ -9,7 +9,10 @@ class SuitTest {
     @Test
     @DisplayName("of를 통한 enum 객체 테스트")
     void testSuit() {
+        //when
         Suit suit = Suit.of("클로버");
+
+        //then
         assertThat(suit).isEqualTo(Suit.CLUB);
     }
 }
