@@ -3,12 +3,14 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.state.finished.Blackjack;
+import blackjack.domain.state.running.Hit;
 
 public abstract class State {
 
     protected Cards cards;
 
-    public State(){
+    public State() {
         this.cards = new Cards();
     }
 

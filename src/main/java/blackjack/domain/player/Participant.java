@@ -3,8 +3,8 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.state.Hit;
 import blackjack.domain.state.State;
+import blackjack.domain.state.running.Hit;
 
 public abstract class Participant {
 
@@ -54,7 +54,7 @@ public abstract class Participant {
         this.state = state.stay();
     }
 
-    public double earningRate(){
+    public double earningRate() {
         return state.earningRate();
     }
 

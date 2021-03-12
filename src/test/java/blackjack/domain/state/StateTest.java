@@ -1,11 +1,7 @@
 package blackjack.domain.state;
 
-import static blackjack.domain.state.Blackjack.BLACKJACK_DRAW_ERROR;
-import static blackjack.domain.state.Blackjack.BLACKJACK_STAY_ERROR;
-import static blackjack.domain.state.Bust.BUST_DRAW_ERROR;
-import static blackjack.domain.state.Bust.BUST_STAY_ERROR;
-import static blackjack.domain.state.Stay.STAY_DRAW_ERROR;
-import static blackjack.domain.state.Stay.STAY_STAY_ERROR;
+import static blackjack.domain.state.finished.Finished.FINISHED_DRAW_ERROR;
+import static blackjack.domain.state.finished.Finished.FINISHED_STAY_ERROR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -14,6 +10,10 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Type;
+import blackjack.domain.state.finished.Blackjack;
+import blackjack.domain.state.finished.Bust;
+import blackjack.domain.state.finished.Stay;
+import blackjack.domain.state.running.Hit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -86,8 +86,8 @@ class StateTest {
         State state = new Blackjack(cards);
 
         assertThatThrownBy(() -> state.draw(new Card(Type.DIAMOND, Denomination.THREE)))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining(BLACKJACK_DRAW_ERROR);
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessageContaining(FINISHED_DRAW_ERROR);
     }
 
     @DisplayName("블랙잭 상태에서 스테이를 하면 예외가 발생한다.")
@@ -101,8 +101,8 @@ class StateTest {
         State state = new Blackjack(cards);
 
         assertThatThrownBy(state::stay)
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining(BLACKJACK_STAY_ERROR);
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessageContaining(FINISHED_STAY_ERROR);
     }
 
     @DisplayName("버스트 상태에서 드로우를 하면 예외가 발생한다.")
@@ -117,8 +117,8 @@ class StateTest {
         State state = new Bust(cards);
 
         assertThatThrownBy(() -> state.draw(new Card(Type.DIAMOND, Denomination.THREE)))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining(BUST_DRAW_ERROR);
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessageContaining(FINISHED_DRAW_ERROR);
     }
 
     @DisplayName("버스트 상태에서 스테이를 하면 예외가 발생한다.")
@@ -132,8 +132,8 @@ class StateTest {
         State state = new Bust(cards);
 
         assertThatThrownBy(state::stay)
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining(BUST_STAY_ERROR);
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessageContaining(FINISHED_STAY_ERROR);
     }
 
     @DisplayName("스테이 상태에서 드로우 하면 예외가 발생한다.")
@@ -147,8 +147,8 @@ class StateTest {
         State state = new Stay(cards);
 
         assertThatThrownBy(() -> state.draw(new Card(Type.DIAMOND, Denomination.THREE)))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining(STAY_DRAW_ERROR);
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessageContaining(FINISHED_DRAW_ERROR);
     }
 
     @DisplayName("스테이 상태에서 스테이를 하면 예외가 발생한다.")
@@ -162,8 +162,8 @@ class StateTest {
         State state = new Stay(cards);
 
         assertThatThrownBy(state::stay)
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining(STAY_STAY_ERROR);
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessageContaining(FINISHED_STAY_ERROR);
     }
 
 }

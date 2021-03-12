@@ -1,11 +1,14 @@
-package blackjack.domain.state;
+package blackjack.domain.state.running;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.State;
+import blackjack.domain.state.finished.Bust;
+import blackjack.domain.state.finished.Stay;
 
-public class Hit extends State {
+public class Hit extends Running {
 
-    public Hit(){
+    public Hit() {
         super();
     }
 
@@ -25,16 +28,6 @@ public class Hit extends State {
     @Override
     public State stay() {
         return new Stay(cards);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public double earningRate() {
-        return 1;
     }
 
 }
