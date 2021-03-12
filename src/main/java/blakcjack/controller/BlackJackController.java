@@ -70,7 +70,7 @@ public class BlackJackController {
     }
 
     private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {
-        while (player.isScoreLowerThanBlackJackValue() && isHitSelected(player)) {
+        while (player.canDrawMoreCard() && isHitSelected(player)) {
             blackjackGame.distributeOneCard(player);
             printPlayerHand(player);
         }

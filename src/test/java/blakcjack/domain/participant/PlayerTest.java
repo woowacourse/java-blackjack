@@ -36,33 +36,19 @@ public class PlayerTest {
         final Card card = Card.of(CardSymbol.CLUB, CardNumber.ACE);
         player.receiveCard(card);
 
-        assertThat(player.getCards()).isEqualTo(Collections.singletonList(Card.of(CardSymbol.CLUB, CardNumber.ACE)));
+        assertThat(player.showCardList()).isEqualTo(Collections.singletonList(Card.of(CardSymbol.CLUB, CardNumber.ACE)));
     }
 
-    @DisplayName("점수 계산 성공")
-    @Test
-    void score() {
-        Player player = new Player("pobi");
-
-        player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.ACE));
-        player.receiveCard(Card.of(CardSymbol.HEART, CardNumber.ACE));
-        player.receiveCard(Card.of(CardSymbol.DIAMOND, CardNumber.ACE));
-        player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.ACE));
-        player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.FIVE));
-
-        assertThat(player.calculateScore()).isEqualTo(19);
-    }
-
-    @DisplayName("21점 미만이면 통과")
+    @DisplayName("21점 미만이면 추가 카드를 더 뽑을 수 있다.")
     @Test
     void isNotBust() {
         final Player player = new Player("pobi");
         player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.KING));
         player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.QUEEN));
-        assertThat(player.isScoreLowerThanBlackJackValue()).isTrue();
+        assertThat(player.canDrawMoreCard()).isTrue();
 
         player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.ACE));
-        assertThat(player.isScoreLowerThanBlackJackValue()).isFalse();
+        assertThat(player.canDrawMoreCard()).isFalse();
     }
 
     @DisplayName("플레이어 버스트시 플레이어 패")

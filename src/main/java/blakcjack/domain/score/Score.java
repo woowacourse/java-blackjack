@@ -60,8 +60,25 @@ public class Score {
         return addedScore;
     }
 
-    private boolean isBust() {
+    public boolean isBust() {
         return value > BLACKJACK_VALUE;
+    }
+
+    public boolean isHigherThan(final Score other) {
+        return this.value > other.value;
+    }
+
+    // TODO : 둘 중 하나 지우기
+    public boolean isLowerThan(final Score other) {
+        return this.value < other.value;
+    }
+
+    public boolean isLowerThan(final int otherScore) {
+        return this.value < otherScore;
+    }
+
+    public boolean isLowerThanBlackJackValue() {
+        return isLowerThan(Score.from(BLACKJACK_VALUE));
     }
 
     @Override

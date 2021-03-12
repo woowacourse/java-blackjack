@@ -52,7 +52,7 @@ public class OutputView {
 
     private static List<Card> getInitialCards(final Participant participant) {
         return participant.supports(ParticipantType.DEALER) ?
-                ((Dealer) participant).getFirstCard() : participant.getCards();
+                ((Dealer) participant).showFirstCard() : participant.showCardList();
     }
 
     private static String getCardInformation(final Card card) {
@@ -74,11 +74,11 @@ public class OutputView {
     }
 
     private static String makeFinalSummary(final Participant participant) {
-        return String.format("%s - 결과: %d%n", makeFinalCardSummary(participant), participant.calculateScore());
+        return String.format("%s - 결과: %d%n", makeFinalCardSummary(participant), participant.showCardList());
     }
 
     private static String makeFinalCardSummary(final Participant participant) {
-        return participant.getNameValue() + "카드: " + concatenateCardsInformation(participant.getCards());
+        return participant.getNameValue() + "카드: " + concatenateCardsInformation(participant.showCardList());
     }
 
     public static void printFinalOutcomeSummary(final OutcomeStatistics outcomeStatistics, final String dealerName) {

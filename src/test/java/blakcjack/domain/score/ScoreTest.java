@@ -42,4 +42,32 @@ class ScoreTest {
         assertThat(Score.from(12).applyAsHigherAce())
                 .isEqualTo(Score.from(12));
     }
+
+    @DisplayName("현재 점수가 더 큰 경우")
+    @Test
+    void isHigherThan() {
+        final Score score = Score.from(10);
+        assertThat(score.isHigherThan(Score.from(9)))
+                .isTrue();
+    }
+
+    @DisplayName("현재 점수가 더 작은 경우")
+    @Test
+    void isLowerThan() {
+        final Score score = Score.from(9);
+        assertThat(score.isLowerThan(Score.from(10)))
+                .isTrue();
+    }
+
+    @DisplayName("21보다 작은지 큰지")
+    @Test
+    void isLowerThanBlackJackValue() {
+        assertThat(Score.from(20)
+                .isLowerThanBlackJackValue())
+                .isTrue();
+
+        assertThat(Score.from(22)
+                .isLowerThanBlackJackValue())
+                .isFalse();
+    }
 }

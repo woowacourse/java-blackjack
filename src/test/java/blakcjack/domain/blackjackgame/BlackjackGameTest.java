@@ -69,7 +69,8 @@ class BlackjackGameTest {
         blackjackGame.initializeHands();
 
         final List<Participant> players = blackjackGame.getPlayers();
-        List<Participant> expectedPlayers = createExpectedPlayers();
+
+        final List<Participant> expectedPlayers = createExpectedPlayers();
         assertThat(players).isEqualTo(expectedPlayers);
     }
 
