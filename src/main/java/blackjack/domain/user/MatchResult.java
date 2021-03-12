@@ -26,10 +26,10 @@ public enum MatchResult {
     }
 
     private static MatchResult compareScore(User player, User dealer) {
-        if (player.getScore() < dealer.getScore()) {
+        if (player.compareTo(dealer) < 0) {
             return MatchResult.LOSE;
         }
-        if (player.getScore() == dealer.getScore()) {
+        if (player.compareTo(dealer) == 0) {
             return MatchResult.DRAW;
         }
         return checkPlayerBlackjack(player);

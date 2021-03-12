@@ -16,9 +16,5 @@ public class Player extends User {
         hand.addCard(deck.pickSingleCard());
         return true;
     }
-
-    public double getBettingMoney() {
-        return bettingMoney;
-    }
 }
 

@@ -23,7 +23,7 @@ public class Hand {
         status = calculateStatus();
     }
 
-    private int calculateHandScore() {
+    public int calculateHandScore() {
         int score = calculateScore();
         if(score <= ACE_CONVERSION_LIMIT && hasAce()) {
             score += ACE_DIFFERENCE;
@@ -61,10 +61,6 @@ public class Hand {
 
     public boolean isBlackjack() {
         return status.isBlackjack();
-    }
-
-    public int getScore() {
-        return calculateHandScore();
     }
 
     public List<Card> getCards() {

@@ -5,7 +5,7 @@ import blackjack.domain.card.Deck;
 
 import java.util.List;
 
-public abstract class User {
+public abstract class User implements Comparable<User> {
 
     protected Hand hand;
     protected final String name;
@@ -28,12 +28,9 @@ public abstract class User {
         this.hand = new Hand(cards, stayLimit);
     }
 
-    public abstract boolean draw(Deck deck);
-
     public boolean isHit() {
         return hand.isHit();
     }
-
     public boolean isBust() {
         return hand.isBust();
     }
@@ -51,7 +48,7 @@ public abstract class User {
     }
 
     public int getScore() {
-        return hand.getScore();
+        return hand.calculateHandScore();
     }
 
     public String getName() {
@@ -61,4 +58,11 @@ public abstract class User {
     public double getBettingMoney() {
         return this.bettingMoney;
     }
+
+    @Override
+    public int compareTo(User user) {
+        return Integer.compare(hand.calculateHandScore(), user.getScore());
+    }
+
+    public abstract boolean draw(Deck deck);
 }
