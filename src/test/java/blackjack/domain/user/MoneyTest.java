@@ -36,14 +36,13 @@ public class MoneyTest {
     }
 
     @Test
-    @DisplayName("금액에 실수를 곱한다.")
-    void multiple() {
+    @DisplayName("금액에 실수를 곱해 수익을 구한다.")
+    void calculateProfit() {
         Money money = new Money(1000);
 
-        Money resultMoney = money.multiple(1.5);
-        long resultValue = resultMoney.getValue();
+        long resultMoney = money.calculateProfit(1.5);
 
-        assertThat(resultValue).isEqualTo(1500);
+        assertThat(resultMoney).isEqualTo(1500);
     }
 
     @Test

@@ -19,8 +19,8 @@ public class Money {
         return new Money(value + anotherMoney.value);
     }
 
-    public Money multiple(double rate) {
-        return new Money((long) (value * rate));
+    public long calculateProfit(double rate) {
+        return (long) (value * rate);
     }
 
     public long getValue() {
