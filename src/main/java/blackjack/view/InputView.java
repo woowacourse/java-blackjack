@@ -11,6 +11,7 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String DELIMITER = ",";
+    private static final int MIN_INPUT_BET_AMOUNT = 1;
 
     private InputView() {
     }
@@ -27,7 +28,15 @@ public class InputView {
         System.out.println(player.getName() + "의 베팅 금액은?");
         String input = SCANNER.nextLine();
         printEmptyLine();
-        return Integer.parseInt(input);
+        int betAmount = Integer.parseInt(input);
+        validateInputBetAmount(betAmount);
+        return betAmount;
+    }
+
+    private static void validateInputBetAmount(int betAmount) {
+        if (betAmount < MIN_INPUT_BET_AMOUNT) {
+            throw new IllegalArgumentException("입력할 베팅 금액은 0이 넘어야 합니다.");
+        }
     }
 
     public static String inputAnswerToAdditionalCardQuestion(Participant participant) {
