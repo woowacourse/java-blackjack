@@ -6,6 +6,7 @@ import blakcjack.domain.card.Deck;
 import blakcjack.domain.card.EmptyDeckException;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
+import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
 import blakcjack.exception.GameTerminationException;
 import blakcjack.view.InputView;
 
@@ -35,7 +36,7 @@ public class BlackJackController {
 
     private BlackjackGame initializeGame() {
         try {
-            return new BlackjackGame(new Deck(), takePlayerNamesInput());
+            return new BlackjackGame(new Deck(new RandomShuffleStrategy()), takePlayerNamesInput());
         } catch (GameInitializationFailureException e) {
             printGameClosing(e.getMessage());
             throw new GameTerminationException();

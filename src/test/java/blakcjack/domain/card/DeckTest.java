@@ -1,5 +1,6 @@
 package blakcjack.domain.card;
 
+import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
 import blakcjack.domain.shufflestrategy.ShuffleStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ class DeckTest {
     @DisplayName("덱 사이즈 체크 성공")
     @Test
     void create_size_check() {
-        final Deck deck = new Deck();
+        final Deck deck = new Deck(new RandomShuffleStrategy());
 
         assertThatCode(() -> consumeAllCards(deck))
                 .doesNotThrowAnyException();
@@ -32,7 +33,7 @@ class DeckTest {
     @Test
     void create_duplication_check() {
         final int cardSize = 52;
-        final Deck deck = new Deck();
+        final Deck deck = new Deck(new RandomShuffleStrategy());
         final Set<Card> cards = new HashSet<>();
 
         for (int i = 0; i < cardSize; i++) {

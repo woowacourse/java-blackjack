@@ -1,16 +1,11 @@
 package blakcjack.domain.card;
 
-import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
 import blakcjack.domain.shufflestrategy.ShuffleStrategy;
 
 import java.util.Stack;
 
 public class Deck {
     private final Stack<Card> cards = new Stack<>();
-
-    public Deck() {
-        this(new RandomShuffleStrategy());
-    }
 
     public Deck(final ShuffleStrategy shuffleStrategy) {
         addCards();
