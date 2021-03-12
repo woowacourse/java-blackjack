@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import java.util.Objects;
+
 public class Score {
     private static final int BLACKJACK = 21;
     public static final int TEN = 10;
@@ -31,5 +33,18 @@ public class Score {
 
     public boolean isBelow(int turnOverCount) {
         return this.score <= turnOverCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }
