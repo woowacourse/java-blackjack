@@ -141,4 +141,60 @@ class BlackJackGameTest {
         //then
         assertThat(blackJackGame.getPlayers().get(0).showCards()).hasSize(expectedCardsNumber);
     }
+
+    @DisplayName("배팅을 안한 플레이어가 있는지 확인하는 기능")
+    @Test
+    void testIsExistWaitedBattingPlayer() {
+        //given
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 15);
+
+        //when
+        boolean actual = blackJackGame.isExistWaitingBattingPlayer();
+
+        //then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("배팅을 안한 플레이어가 존재하지 않을 때 배팅을 안한 플레이어가 있는지 확인하는 기능")
+    @Test
+    void testIsExistWaitingBattingPlayerIfNotExistWaitedBattingPlayer() {
+        //given
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 15);
+        blackJackGame.findCurrentBattingPlayer().bet(10000);
+        blackJackGame.findCurrentBattingPlayer().bet(5000);
+
+        //when
+        boolean actual = blackJackGame.isExistWaitingBattingPlayer();
+
+        //then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("배팅을 안한 Player 중 가장 순서가 빠른 Player를 반환하는 기능")
+    @Test
+    void testFindCurrentBattingPlayer() {
+        //given
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 15);
+
+        //when
+        Player currentBattingPlayer = blackJackGame.findCurrentBattingPlayer();
+
+        //then
+        assertThat(currentBattingPlayer).extracting("name").isEqualTo("로키");
+        assertThat(currentBattingPlayer.isNotBatting()).isTrue();
+    }
+
+    @DisplayName("모든 Player가 배팅을 했을 때, 배팅을 해야할 Player를 호출하면 예외를 발생시킨다.")
+    @Test
+    void testFindCurrentBattingPlayerIfNotExistWaitedBattingPlayer() {
+        //given
+        players = Arrays.asList("로키", "수리");
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 15);
+        blackJackGame.findCurrentBattingPlayer().bet(1_000);
+        blackJackGame.findCurrentBattingPlayer().bet(2_000);
+
+        //when //then
+        assertThatThrownBy(() -> blackJackGame.findCurrentBattingPlayer())
+                .isExactlyInstanceOf(IllegalStateException.class);
+    }
 }

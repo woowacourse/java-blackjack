@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.rule.ScoreRule;
-import money.BattingMoney;
+import blackjack.domain.money.BattingMoney;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,5 +67,9 @@ public class Player implements Participant {
 
     public void bet(final int bettingMoney) {
         this.battingMoney = battingMoney.add(bettingMoney);
+    }
+
+    public boolean isNotBatting() {
+        return battingMoney.isZero();
     }
 }

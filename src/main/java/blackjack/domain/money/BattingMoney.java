@@ -1,6 +1,8 @@
-package money;
+package blackjack.domain.money;
 
 public class BattingMoney {
+    private static final int ZERO_VALUE = 0;
+
     public static final BattingMoney ZERO = new BattingMoney(0);
 
     private final int value;
@@ -18,5 +20,9 @@ public class BattingMoney {
 
     public BattingMoney add(final int battingMoney) {
         return new BattingMoney(value + battingMoney);
+    }
+
+    public boolean isZero() {
+        return value == ZERO_VALUE;
     }
 }

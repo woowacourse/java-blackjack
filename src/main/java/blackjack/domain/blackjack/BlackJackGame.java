@@ -53,19 +53,15 @@ public class BlackJackGame {
                 .orElseThrow(() -> new IllegalArgumentException("턴이 남은 플레이어가 존재하지 않습니다."));
     }
 
-    public Participants getParticipants() {
-        return participants;
-    }
-
     public Dealer getDealer() {
         return participants.extractDealer();
     }
 
-    public DealerResult getDealerResult() {// dto 의존중...
+    public DealerResult getDealerResult() {
         return getDealer().getDealerResult(participants.extractPlayers());
     }
 
-    public List<ScoreResult> getPlayersResults() { //dto 의존중...
+    public List<ScoreResult> getPlayersResults() {
         return getDealer().decideWinOrLoseResults(participants.extractPlayers());
     }
 
@@ -79,7 +75,23 @@ public class BlackJackGame {
         currentPlayer.endOwnTurn();
     }
 
+    public Participants getParticipants() {
+        return participants;
+    }
+
     public List<Player> getPlayers() {
         return participants.extractPlayers();
+    }
+
+    public boolean isExistWaitingBattingPlayer() {
+        return getPlayers().stream()
+                .anyMatch(Player::isNotBatting);
+    }
+
+    public Player findCurrentBattingPlayer() {
+        return getPlayers().stream()
+                .filter(Player::isNotBatting)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("배팅을 하지 않은 플레이어가 존재하지 않습니다."));
     }
 }

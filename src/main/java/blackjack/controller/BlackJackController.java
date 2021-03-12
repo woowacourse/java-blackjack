@@ -12,6 +12,7 @@ public class BlackJackController {
     public void play() {
         BlackJackGame blackJackGame = new BlackJackGame(Deck.generate(),
                 InputView.inputNames(), new BlackJackScoreRule());
+        batAllPlayers(blackJackGame);
         blackJackGame.handInitCards();
 
         OutputView.printInitialCardStatus(blackJackGame.getParticipants());
@@ -21,6 +22,13 @@ public class BlackJackController {
 
         OutputView.printAllParticipantsCards(blackJackGame.getParticipants());
         OutputView.printScoreResults(blackJackGame.getDealerResult(), blackJackGame.getPlayersResults());
+    }
+
+    private void batAllPlayers(final BlackJackGame blackJackGame) {
+        while (blackJackGame.isExistWaitingBattingPlayer()) {
+            Player currentPlayer = blackJackGame.findCurrentBattingPlayer();
+            currentPlayer.bet(InputView.inputBattingMoney(currentPlayer));
+        }
     }
 
     private void playPlayersTurn(final BlackJackGame blackJackGame) {
