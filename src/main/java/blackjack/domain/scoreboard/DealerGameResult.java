@@ -4,34 +4,25 @@ import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Participant;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
+import java.util.List;
+import java.util.Objects;
 
 public class DealerGameResult {
+    private static final int DEALER_PROFIT_OPERATOR = -1;
+
     private final Participant dealer;
     private final List<Card> resultCards;
-    private final long DEFAULT_COUNT = 0L;
 
     public DealerGameResult(Dealer dealer, List<Card> resultCards) {
         this.dealer = dealer;
         this.resultCards = resultCards;
     }
 
-    public List<String> countDealerWinOrLose(UserGameResult userGameResult) {
-        Map<WinOrLose, Long> dealerWinOrLose = makeDealerWinOrLoseMap(userGameResult);
+    public double calculateDealerProfit(UserGameResult userGameResult) {
 
-        return Arrays.stream(WinOrLose.values())
-                .map(winOrLose -> dealerWinOrLose.getOrDefault(winOrLose, DEFAULT_COUNT) + winOrLose.getCharacter())
-                .collect(Collectors.toList());
-    }
-
-    private Map<WinOrLose, Long> makeDealerWinOrLoseMap(UserGameResult userGameResult) {
-
-        return userGameResult.getUserWinOrLose()
-                .collect(groupingBy(WinOrLose::opposite, counting()));
+        return userGameResult.getUserProfit()
+                .mapToDouble(i -> i)
+                .sum() * DEALER_PROFIT_OPERATOR;
     }
 
     public Participant getDealer() {

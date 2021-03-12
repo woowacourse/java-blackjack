@@ -56,12 +56,12 @@ public class DealerGameResultTest {
         User third = new User(Name.from("포비"));
         User fourth = new User(Name.from("제이슨"));
 
-        WinOrLose firstUserGameResult = WinOrLose.DRAW;
-        WinOrLose secondUserGameResult = WinOrLose.WIN;
-        WinOrLose thirdUserGameResult = WinOrLose.LOSE;
-        WinOrLose fourthUserGameResult = WinOrLose.LOSE;
+        double firstUserGameResult = Profit.DRAW.getProfit(); // 0
+        double secondUserGameResult = Profit.WIN.getProfit(); // 1
+        double thirdUserGameResult = Profit.LOSE.getProfit(); // -1
+        double fourthUserGameResult = Profit.LOSE.getProfit(); // -1
 
-        Map<User, WinOrLose> temp = new HashMap<>();
+        Map<User, Double> temp = new HashMap<>();
         temp.put(first, firstUserGameResult);
         temp.put(second, secondUserGameResult);
         temp.put(third, thirdUserGameResult);
@@ -76,9 +76,8 @@ public class DealerGameResultTest {
 
         //when
         UserGameResult userGameResult = new UserGameResult(temp);
-        List<String> expectedResult = Arrays.asList("2승", "1무", "1패");
 
         //then
-        assertThat(dealerGameResult.countDealerWinOrLose(userGameResult)).isEqualTo(expectedResult);
+        assertThat(dealerGameResult.calculateDealerProfit(userGameResult)).isEqualTo(1);
     }
 }
