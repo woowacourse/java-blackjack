@@ -19,7 +19,7 @@ public abstract class User {
     }
 
     private void validateNotEmptyName(String name) {
-        if (name.isEmpty()) {
+        if ("".equals(name)) {
             throw new IllegalArgumentException("빈 이름이 입력되었습니다.");
         }
     }
