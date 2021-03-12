@@ -1,8 +1,10 @@
 package blackjack.domain.player;
 
 import blackjack.domain.Status;
+import blackjack.domain.WinOrLose;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.ResultOfGamer;
 import blackjack.exception.CardDuplicateException;
 
 import java.util.List;
@@ -25,6 +27,26 @@ public abstract class Player {
         }
 
         deck.add(card);
+    }
+
+    public ResultOfGamer getResult(Player dealer) {
+        return new ResultOfGamer(
+                name,
+                calculateWinning(dealer),
+                getRevenue(dealer)
+        );
+    }
+
+    private int getRevenue(Player dealer) {
+        if (calculateWinning(dealer) == WinOrLose.WIN) {
+            return bettingMoney;
+        }
+
+        return -bettingMoney;
+    }
+
+    private WinOrLose calculateWinning(Player dealer) {
+        return WinOrLose.calculate(dealer, this);
     }
 
     public List<Card> getDeckAsList() {

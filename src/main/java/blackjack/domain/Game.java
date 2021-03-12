@@ -57,28 +57,7 @@ public class Game {
     }
 
     public ResultOfPlayers getResultOfPlayers() {
-        return new ResultOfPlayers(calculateResultOfGamers());
-    }
-
-    private List<ResultOfGamer> calculateResultOfGamers() {
-        return gamers.getGamers().stream()
-                .map(player -> new ResultOfGamer(
-                        player.getName(),
-                        calculateWinning(player),
-                        calculateGamerRevenue(player))
-                ).collect(toList());
-    }
-
-    private WinOrLose calculateWinning(Player player) {
-        return WinOrLose.calculate(dealer, player);
-    }
-
-    private int calculateGamerRevenue(Player gamer) {
-        if (calculateWinning(gamer) == WinOrLose.WIN) {
-            return gamer.getBettingMoney();
-        }
-
-        return -gamer.getBettingMoney();
+        return new ResultOfPlayers(gamers.calculateResultOfGamers(dealer));
     }
 
     public Player findGamerByName(String name) {

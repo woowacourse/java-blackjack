@@ -1,6 +1,8 @@
 package blackjack.domain.player;
 
+import blackjack.domain.WinOrLose;
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.ResultOfGamer;
 import blackjack.exception.GamerDuplicateException;
 import blackjack.exception.PlayerNotFoundException;
 
@@ -28,6 +30,12 @@ public class Gamers {
         if (gamers.size() != distinctGamerNamesCount) {
             throw new GamerDuplicateException();
         }
+    }
+
+    public List<ResultOfGamer> calculateResultOfGamers(Player dealer) {
+        return gamers.stream()
+                .map(player -> player.getResult(dealer)
+                ).collect(toList());
     }
 
     public void drawToGamers(Cards cards) {
