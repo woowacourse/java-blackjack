@@ -49,11 +49,6 @@ public abstract class User {
     }
 
     @Override
-    public final String toString() {
-        return name.toString();
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -80,7 +75,8 @@ public abstract class User {
     }
 
     public final boolean isBlackjack() {
-        return cards().totalScore().isBlackjack();
+        return cards().totalScore()
+                .isBlackjack();
     }
 
     public final boolean isBust() {

@@ -1,6 +1,6 @@
 package blackjack.domain.user;
 
-public class Score implements Comparable<Score> {
+public class Score{
     private static final int BLACKJACK_VALUE = 21;
     private static final int DEALER_MUST_HIT_MAX_VALUE = 16;
     private static final int TEN = 10;
@@ -41,10 +41,5 @@ public class Score implements Comparable<Score> {
 
     public boolean isSame(Score anotherScore) {
         return this.value == anotherScore.value;
-    }
-
-    @Override
-    public int compareTo(Score anotherScore) {
-        return Integer.compare(value, anotherScore.value);
     }
 }
