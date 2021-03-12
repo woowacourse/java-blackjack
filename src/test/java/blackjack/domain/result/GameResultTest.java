@@ -7,10 +7,11 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Player;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -27,48 +28,47 @@ class GameResultTest {
     private static final Hand twenty = new Hand(Arrays.asList(kingCard, kingCard));
     private static final Hand bust = new Hand(Arrays.asList(kingCard, kingCard, kingCard));
 
-    @ParameterizedTest(name = "딜러 승무패 계산이 올바른지")
+    @ParameterizedTest(name = "상금 계산이 올바른지")
     @MethodSource("calculateTestcase")
-    void calculate(Hand dealerHand, Hand playerHand, int win, int lose, int tie) {
+    void calculate(Hand dealerHand, Hand playerHand, int dealerMoney, int playerMoney) {
         Dealer dealer = new Dealer(dealerHand);
         List<Player> players = createPlayers(playerHand);
 
         GameResult result = GameResult.calculate(dealer, players);
 
-        DealerResult dealerResult = result.getDealerResult();
-        assertThat(dealerResult.getWinCount()).isEqualTo(win);
-        assertThat(dealerResult.getLoseCount()).isEqualTo(lose);
-        assertThat(dealerResult.getTieCount()).isEqualTo(tie);
+        Money dealerWinningMoney = result.getDealerWinningMoney();
+        assertThat(dealerWinningMoney).isEqualTo(new Money(dealerMoney));
+
+        PlayerResult playersResult = result.getPlayersResults().get(0);
+        assertThat(playersResult.getWinningMoney()).isEqualTo(new Money(playerMoney));
     }
 
     private static Stream<Arguments> calculateTestcase() {
         return Stream.of(
                 // 딜러 승리
-                Arguments.of(twentyOne, twenty, 1, 0, 0),
+                Arguments.of(twentyOne, twenty, 10000, -10000),
                 // 플레이어 승리
-                Arguments.of(twenty, twentyOne, 0, 1, 0),
+                Arguments.of(twenty, twentyOne, -10000, 10000),
                 // 무승부
-                Arguments.of(twentyOne, twentyOne, 0, 0, 1),
+                Arguments.of(twentyOne, twentyOne, 0, 0),
 
                 // 딜러 블랙잭 승리
-                Arguments.of(blackjack, twentyOne, 1, 0, 0),
+                Arguments.of(blackjack, twentyOne, 10000, -10000),
                 // 플레이어 블랙잭 승리
-                Arguments.of(twentyOne, blackjack, 0, 1, 0),
+                Arguments.of(twentyOne, blackjack, -15000, 15000),
                 // 블랙잭 무승부
-                Arguments.of(blackjack, blackjack, 0, 0, 1),
+                Arguments.of(blackjack, blackjack, 0, 0),
 
                 // 딜러 버스트, 플레이어 승리
-                Arguments.of(bust, twentyOne, 0, 1, 0),
+                Arguments.of(bust, twentyOne, -10000, 10000),
                 // 딜러 버스트, 플레이어 버스트
-                Arguments.of(bust, bust, 1, 0, 0),
+                Arguments.of(bust, bust, 10000, -10000),
                 // 딜러 승리, 플레이어 버스트
-                Arguments.of(twentyOne, bust, 1, 0, 0)
+                Arguments.of(twentyOne, bust, 10000, -10000)
         );
     }
 
-    private static List<Player> createPlayers(Hand... hands) {
-        return Arrays.stream(hands)
-                .map(hand -> new Player("플레이어", hand))
-                .collect(Collectors.toList());
+    private static List<Player> createPlayers(Hand hand) {
+        return Collections.singletonList(new Player("플레이어", hand, 10000));
     }
 }

@@ -31,6 +31,10 @@ public class Dealer extends Participant {
         selfDraw();
     }
 
+    public void selfDraw() {
+        cardHand.add(draw());
+    }
+
     public void drawBaseCardToPlayers(List<Player> players) {
         for (Player player : players) {
             deal(player);
@@ -42,10 +46,6 @@ public class Dealer extends Participant {
         player.receiveCard(draw());
     }
 
-    public void selfDraw() {
-        cardHand.add(draw());
-    }
-
     private Card draw() {
         return deck.drawCard();
     }
@@ -55,11 +55,6 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldReceive() {
-        return cardHand.getDealerTotal() <= DEALER_UNDER;
-    }
-
-    @Override
-    public int getHandTotal() {
-        return cardHand.getDealerTotal();
+        return cardHand.getScore() <= DEALER_UNDER;
     }
 }

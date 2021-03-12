@@ -36,10 +36,6 @@ public class Hand {
         return getTotalByMapper(Card::getRankValue);
     }
 
-    public int getDealerTotal() {
-        return getTotalByMapper(this::getAceValue);
-    }
-
     public boolean isBlackjack() {
         return cards.size() == 2 && getTotalByMapper(this::getAceValue) == 21;
     }
@@ -57,7 +53,7 @@ public class Hand {
         return card.getRankValue();
     }
 
-    public int getPlayerTotal() {
+    public int getScore() {
         int aceCount = getCountOfAce();
         int result = (aceCount * ACE_UPPER_VALUE) + getTotalExceptAce();
 

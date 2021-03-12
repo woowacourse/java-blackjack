@@ -2,14 +2,14 @@ package blackjack.domain.participant;
 
 import java.util.Objects;
 
-public class BettingMoney {
+public class Money {
 
-    public static final int MINIMUM_AMOUNT = 10000;
+    public static final int MINIMUM_AMOUNT = 0;
+    public static final Money ZERO = new Money(0);
 
     private final int value;
 
-    public BettingMoney(int value) {
-        validateMinimumAmount(value);
+    public Money(int value) {
         this.value = value;
     }
 
@@ -20,9 +20,20 @@ public class BettingMoney {
         }
     }
 
+    public static Money getBettingMoney(String bettingMoneyInput) {
+        return new Money(Integer.parseInt(bettingMoneyInput));
+    }
 
-    public static BettingMoney from(String bettingMoneyInput) {
-        return new BettingMoney(Integer.parseInt(bettingMoneyInput));
+    public Money multiplyByRate(double rate) {
+        return new Money((int) (value * rate));
+    }
+
+    public Money add(Money winningMoney) {
+        return new Money(value + winningMoney.value);
+    }
+
+    public Money toNegative() {
+        return new Money(-1 * value);
     }
 
     public int toInt() {
@@ -37,12 +48,19 @@ public class BettingMoney {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        BettingMoney that = (BettingMoney) o;
+        Money that = (Money) o;
         return value == that.value;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return "Money{" +
+                "value=" + value +
+                '}';
     }
 }

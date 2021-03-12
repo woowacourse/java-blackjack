@@ -6,17 +6,22 @@ import blackjack.domain.result.MatchResult;
 
 public class Player extends Participant {
 
-    private BettingMoney bettingMoney;
+    private Money bettingMoney = Money.ZERO;
 
     public Player(String name, Hand cardHand) {
         super(name, cardHand);
+    }
+
+    public Player(String name, Hand cardHand, int bettingMoney) {
+        super(name, cardHand);
+        this.bettingMoney = new Money(bettingMoney);
     }
 
     public static Player from(String name) {
         return new Player(name, Hand.createEmptyHand());
     }
 
-    public void setBettingMoney(BettingMoney bettingMoney) {
+    public void setBettingMoney(Money bettingMoney) {
         this.bettingMoney = bettingMoney;
     }
 
@@ -24,22 +29,31 @@ public class Player extends Participant {
         cardHand.add(card);
     }
 
-    public MatchResult getMatchResult(int dealerCardSum) {
-        if (isBust() || getHandTotal() < dealerCardSum) {
-            return MatchResult.LOSE;
+    public Money getWinningMoney(Dealer dealer) {
+        if (blackjackWin(dealer)) {
+            return bettingMoney.multiplyByRate(MatchResult.BLACKJACK.getProfitRate());
         }
-        if (dealerCardSum == getHandTotal()) {
-            return MatchResult.TIE;
+        if (lose(dealer)) {
+            return bettingMoney.toNegative();
         }
-        if (dealerCardSum < getHandTotal()) {
-            return MatchResult.WIN;
+        if (tie(dealer)) {
+            return Money.ZERO;
         }
-
-        throw new IllegalArgumentException("입력값이 잘못되었습니다. 승무패를 계산할 수 없습니다.");
+        return bettingMoney.multiplyByRate(MatchResult.STAY.getProfitRate());
     }
 
-    @Override
-    public int getHandTotal() {
-        return cardHand.getPlayerTotal();
+    private boolean blackjackWin(Dealer dealer) {
+        return isBlackjack() && !dealer.isBlackjack();
+    }
+
+    private boolean lose(Dealer dealer) {
+        return isBust()
+                || (dealer.isBlackjack() && !isBlackjack())
+                || (getScore() < dealer.getScore());
+    }
+
+    private boolean tie(Dealer dealer) {
+        return (isBlackjack() && dealer.isBlackjack())
+                || (dealer.getScore() == getScore());
     }
 }

@@ -1,7 +1,7 @@
 package blackjack;
 
-import blackjack.domain.participant.BettingMoney;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
@@ -24,6 +24,7 @@ public class Application {
         progressPlayersTurn(dealer, players);
         progressDealerTurn(dealer);
 
+        OutputView.printCardResult(dealer, players);
         OutputView.printGameResult(GameResult.calculate(dealer, players));
     }
 
@@ -39,10 +40,20 @@ public class Application {
 
     private static void getPlayersBettingMoney(List<Player> players) {
         for (Player player : players) {
-            String bettingMoneyInput = InputView.getBettingMoney(player.getName());
-            BettingMoney bettingMoney = BettingMoney.from(bettingMoneyInput);
-            player.setBettingMoney(bettingMoney);
+            Money money = getMoney(player);
+            player.setBettingMoney(money);
         }
+    }
+
+    private static Money getMoney(Player player) {
+        try {
+            String bettingMoneyInput = InputView.getBettingMoney(player.getName());
+            return Money.getBettingMoney(bettingMoneyInput);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return getMoney(player);
+        }
+
     }
 
     private static void initializeParticipants(Dealer dealer, List<Player> players) {

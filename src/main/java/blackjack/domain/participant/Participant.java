@@ -39,5 +39,7 @@ public abstract class Participant {
         return cardHand.isBlackjack();
     }
 
-    public abstract int getHandTotal();
+    public int getScore() {
+        return cardHand.getScore();
+    }
 }

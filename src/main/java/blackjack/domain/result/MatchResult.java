@@ -1,25 +1,15 @@
 package blackjack.domain.result;
 
 public enum MatchResult {
-    WIN("승"), LOSE("패"), TIE("무");
+    STAY(1), BLACKJACK(1.5), BUST(-1);
 
-    private final String name;
+    private final double profitRate;
 
-    MatchResult(String name) {
-        this.name = name;
+    MatchResult(double profitRate) {
+        this.profitRate = profitRate;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public MatchResult reverse() {
-        if (WIN == this) {
-            return LOSE;
-        }
-        if (LOSE == this) {
-            return WIN;
-        }
-        return this;
+    public double getProfitRate() {
+        return profitRate;
     }
 }

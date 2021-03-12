@@ -34,7 +34,7 @@ public class PlayerTest {
     void getHandTotal(List<Card> cards, int expectedSum) {
         Player player = new Player("joy", new Hand(cards));
 
-        assertThat(player.getHandTotal()).isEqualTo(expectedSum);
+        assertThat(player.getScore()).isEqualTo(expectedSum);
     }
 
     private static Stream<Arguments> getHandTotalTestcase() {
