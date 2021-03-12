@@ -4,6 +4,7 @@ import blackjack.domain.state.Hit;
 
 public class Dealer extends Participant{
     private static final String DEALER_NAME = "딜러";
+    private static final int DEALER_STAY_LIMIT = 17;
 
     public Dealer() {
         super(DEALER_NAME);
@@ -14,7 +15,7 @@ public class Dealer extends Participant{
     }
 
     public void doStayIfPossible() {
-        if (getCardsScore() > 17 && state instanceof Hit) {
+        if (getCardsScore() >= DEALER_STAY_LIMIT && state instanceof Hit) {
             state = state.stay();
         }
     }
