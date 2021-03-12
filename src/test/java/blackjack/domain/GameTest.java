@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameTest {
@@ -41,7 +42,6 @@ public class GameTest {
     void dealerHitUntilStay() {
         game.startRound();
         game.playDealerTurn();
-        assertTrue(game.getDealer()
-                       .isStay());
+        assertFalse(game.getDealer().shouldDraw());
     }
 }

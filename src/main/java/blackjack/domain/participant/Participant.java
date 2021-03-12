@@ -60,8 +60,6 @@ public abstract class Participant {
     public double profitRatio() {
         return state.profitRatio();
     }
-
-
 }
 
 

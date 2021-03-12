@@ -38,4 +38,5 @@ class PlayerTest {
         assertThat(player.getGameResult()
                          .getLoseCount()).isEqualTo(1);
     }
+
 }

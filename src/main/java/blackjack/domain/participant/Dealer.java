@@ -8,7 +8,7 @@ public class Dealer extends Participant {
         super(new Name(DEALER), 1);
     }
 
-    public boolean isStay() {
-        return cardResult() >= STAY_THRESHOLD;
+    public boolean shouldDraw() {
+        return cardResult() < STAY_THRESHOLD;
     }
 }

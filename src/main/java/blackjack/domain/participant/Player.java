@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 public class Player extends Participant {
     private final GameResult gameResult = new GameResult();
+    private Money money;
 
     public Player(String inputName) {
         this(new Name(inputName));
@@ -9,6 +10,10 @@ public class Player extends Participant {
 
     private Player(Name name) {
         super(name,2);
+    }
+
+    public void bet(Money money) {
+        this.money = money;
     }
 
     public void fight(Dealer dealer) {
@@ -43,4 +48,7 @@ public class Player extends Participant {
         return gameResult;
     }
 
+    public double revenue() {
+        return money.value() * profitRatio();
+    }
 }

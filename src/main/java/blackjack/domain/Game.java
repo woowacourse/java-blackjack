@@ -70,10 +70,11 @@ public class Game {
 
     public int playDealerTurn() {
         int cnt = 0;
-        while (!dealer.isStay()) {
+        while (dealer.shouldDraw()) {
             drawCard(dealer);
             cnt++;
         }
+        dealer.stay();
         return cnt;
     }
 
