@@ -28,7 +28,7 @@ public class PlayersTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        players = Players.of(Arrays.asList("youngE", "kimkim"));
+        players = Players.of(Names.of(Arrays.asList("youngE", "kimkim")));
         player1 = players.players().get(0);
         player2 = players.players().get(1);
         player1.draw(ace);

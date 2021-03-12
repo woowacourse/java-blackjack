@@ -3,10 +3,7 @@ package blackjack.controller;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.dto.DealerResult;
 import blackjack.domain.dto.Results;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
-import blackjack.domain.user.Users;
+import blackjack.domain.user.*;
 import blackjack.util.Repeater;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -14,7 +11,7 @@ import blackjack.view.OutputView;
 public class BlackJackController {
 
     public void run() {
-        Players players = Repeater.supplierGetsArgumentOfFunction(Players::of, InputView::scanPlayerNames);
+        Players players = Players.of(Repeater.supplierGetsArgumentOfFunction(Names::of, InputView::scanPlayerNames));
         Dealer dealer = new Dealer();
         startGame(dealer, players);
         printOverallResults(dealer, players);

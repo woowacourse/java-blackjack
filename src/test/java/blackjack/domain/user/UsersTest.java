@@ -19,7 +19,7 @@ class UsersTest {
     void setUp() {
         cardDeck = CardDeck.createDeck();
         dealer = new Dealer();
-        players = Players.of(Arrays.asList("youngE", "kimkim"));
+        players = Players.of(Names.of(Arrays.asList("youngE", "kimkim")));
         users = new Users(dealer, players);
     }
 

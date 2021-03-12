@@ -15,7 +15,7 @@ class PlayerTest {
     @DisplayName("플레이어는 이름을 받아 생성된다.")
     @Test
     void playerCreationTest() {
-        Player player = new Player("youngE");
+        Player player = new Player(Name.of("youngE"));
         assertThat(player).isInstanceOf(Player.class);
     }
 
@@ -23,14 +23,14 @@ class PlayerTest {
     @Test
     void playerCreationErrorTest() {
         assertThatThrownBy(() -> {
-            new Player(" ");
+            new Player(Name.of(" "));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("플레이어는 카드를 받을 수 있다.")
     @Test
     void drawCard() {
-        Player player = new Player("Player");
+        Player player = new Player(Name.of("Player"));
         CardDeck cardDeck = CardDeck.createDeck();
         player.draw(cardDeck.drawCard());
 
@@ -40,7 +40,7 @@ class PlayerTest {
     @DisplayName("isBust:true - 플레이어 카드의 총합이 21을 초과하는 경우 자동 중단")
     @Test
     void isBustTrueWhenOver21Score() {
-        Player player = new Player("Player");
+        Player player = new Player(Name.of("Player"));
 
         Card card1 = new Card(Suit.CLUB, Denomination.JACK);
         Card card2 = new Card(Suit.CLUB, Denomination.SEVEN);

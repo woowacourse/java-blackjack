@@ -12,7 +12,7 @@ class UserTest {
     @DisplayName("블랙잭인 경우를 판별한다. - 참")
     @Test
     void isBlackJackTrueTest() {
-        User user = new Player("youngE");
+        User user = new Player(Name.of("youngE"));
         user.draw(new Card(Suit.SPADE, Denomination.ACE));
         user.draw(new Card(Suit.SPADE, Denomination.JACK));
 
@@ -22,7 +22,7 @@ class UserTest {
     @DisplayName("블랙잭인 경우를 판별한다. - 거짓")
     @Test
     void isBlackJackFalseTest() {
-        User user = new Player("youngE");
+        User user = new Player(Name.of("youngE"));
         user.draw(new Card(Suit.SPADE, Denomination.ACE));
         user.draw(new Card(Suit.SPADE, Denomination.NINE));
 
