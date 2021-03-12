@@ -49,9 +49,9 @@ public class OutputView {
 
     public static void printAllEarnings(DealerResult dealerResult, List<ScoreResult> scoreResults) {
         System.out.println("## 최종 수익");
-        System.out.println(dealerResult.getName() + ": " + dealerResult.calculateEarnings());
+        System.out.println(dealerResult.getName() + ": " + (int) dealerResult.calculateEarnings());
         for (ScoreResult scoreResult : scoreResults) {
-            System.out.println(scoreResult.getPlayerName() + ": " + scoreResult.calculateEarnings());
+            System.out.println(scoreResult.getPlayerName() + ": " + (int) scoreResult.calculateEarnings());
         }
     }
 }
