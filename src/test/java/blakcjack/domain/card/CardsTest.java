@@ -40,4 +40,20 @@ class CardsTest {
 		expectedCards.add(Card.of(CardSymbol.HEART, CardNumber.ACE));
 		assertThat(cards.getFirstTwoCards()).isEqualTo(expectedCards);
 	}
+
+	@DisplayName("블랙잭을 제대로 판단 해주는지")
+	@Test
+	void isBlackJack() {
+		final Cards blackjackCards = new Cards();
+		blackjackCards.add(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+		blackjackCards.add(Card.of(CardSymbol.HEART, CardNumber.JACK));
+
+		final Cards nonBlackjackCards = new Cards();
+		nonBlackjackCards.add(Card.of(CardSymbol.HEART, CardNumber.KING));
+		nonBlackjackCards.add(Card.of(CardSymbol.HEART, CardNumber.FIVE));
+		nonBlackjackCards.add(Card.of(CardSymbol.SPADE, CardNumber.SIX));
+
+		assertThat(blackjackCards.isBlackjack()).isTrue();
+		assertThat(nonBlackjackCards.isBlackjack()).isFalse();
+	}
 }
