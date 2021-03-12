@@ -14,14 +14,24 @@ public class CardTest {
         assertThat(card).isInstanceOf(Card.class);
     }
 
-    @DisplayName("Card 객체의 값을 확인한다.")
+    @DisplayName("Card의 Denomination을 확인한다.")
     @Test
-    public void checkValue() {
+    public void checkDenomination() {
         Card card = new Card(Suit.SPACE, Denomination.ACE);
 
-        int score = card.getScore();
+        int denomination = card.getDenomination();
 
-        assertThat(score).isEqualTo(1);
+        assertThat(denomination).isEqualTo(1);
+    }
+
+    @DisplayName("Card의 shape을 확인한다.")
+    @Test
+    public void checkSuit() {
+        Card card = new Card(Suit.SPACE, Denomination.ACE);
+
+        String suit = card.getSuit();
+
+        assertThat(suit).isEqualTo("스페이스");
     }
 
     @Test

@@ -9,16 +9,15 @@ public class Card {
         this.denomination = denomination;
     }
 
-    public int getScore() {
+    public String getSuit() {
+        return suit.getShape();
+    }
+
+    public int getDenomination() {
         return denomination.getValue();
     }
 
     public boolean isAceCard() {
         return denomination.isAce();
-    }
-
-    @Override
-    public String toString() {
-        return denomination.getValue() + suit.getShape();
     }
 }

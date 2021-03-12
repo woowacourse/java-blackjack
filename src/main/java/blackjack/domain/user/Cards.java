@@ -39,7 +39,7 @@ public class Cards {
 
     private Score sum() {
         return new Score(cards.stream()
-                .mapToInt(Card::getScore)
+                .mapToInt(Card::getDenomination)
                 .sum());
     }
 

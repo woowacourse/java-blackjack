@@ -26,13 +26,6 @@ public class OutputView {
                 dealer.getName(), String.join(COMMA, playersNames));
     }
 
-    private static String playersName(Players players) {
-        return String.join(COMMA, players.getPlayers()
-                .stream()
-                .map(User::toString)
-                .collect(Collectors.joining(",")));
-    }
-
     public static void printDealerCard(Dealer dealer) {
         System.out.println(dealer.getName() + COLON + dealer.showOneCard());
     }
@@ -50,7 +43,7 @@ public class OutputView {
     private static void printCards(Cards cards) {
         System.out.println(cards.getCards()
                 .stream()
-                .map(Card::toString)
+                .map(card -> card.getDenomination() + card.getSuit())
                 .collect(Collectors.joining(COMMA)));
     }
 
