@@ -39,4 +39,9 @@ public class Game {
     public void giveCardToPlayer(Player player) {
         player.addCard(Deck.draw());
     }
+
+    public void giveCardToDealer(Dealer dealer) {
+        dealer.addCard(Deck.draw());
+        dealer.doStayIfPossible();
+    }
 }

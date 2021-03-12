@@ -11,6 +11,7 @@ public class OutputView {
     private static final String INITIAL_CARDS_INFO_PREFIX_FORMAT = "%s와 %s에게 2장씩 나눴습니다." + System.lineSeparator();
     private static final String CARDS_INFO_FORMAT = "%s카드: %s" + System.lineSeparator();
     public static final String DELIMITER = ", ";
+    private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한 장의 카드를 더 받았습니다.";
 
     public static void printMessage(String message) {
         System.out.println(message);
@@ -38,5 +39,9 @@ public class OutputView {
 
     public static void printParticipantCardsInfo(Participant participant) {
         System.out.printf(CARDS_INFO_FORMAT, participant.getName(), participant.getCurrentCardsInfo());
+    }
+
+    public static void printDealerDrawMessage() {
+        System.out.println(DEALER_DRAW_MESSAGE);
     }
 }

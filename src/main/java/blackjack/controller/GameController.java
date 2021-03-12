@@ -1,6 +1,7 @@
 package blackjack.Controller;
 
 import blackjack.domain.Game;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
@@ -18,6 +19,7 @@ public class GameController {
         Game game = initializeGame();
         printInitialCardsInfo(game);
         doPlayersTurn(game);
+        doDealerTurn(game);
     }
 
     private Game initializeGame() {
@@ -68,5 +70,13 @@ public class GameController {
             return;
         }
         player.stay();
+    }
+
+    private void doDealerTurn(Game game) {
+        Dealer dealer = game.getDealer();
+        while (dealer.isDrawable()) {
+            game.giveCardToDealer(dealer);
+            OutputView.printDealerDrawMessage();
+        }
     }
 }
