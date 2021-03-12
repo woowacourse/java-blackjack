@@ -19,8 +19,8 @@ public class ResultTest {
     void dealerWinTest() {
         Player player = new Player("pobi");
         Dealer dealer = new Dealer();
-        player.receiveCard(new Card(CardPattern.HEART, CardNumber.FIVE));
-        dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.TEN));
+        player.receiveCard(Card.valueOf(CardPattern.HEART, CardNumber.FIVE));
+        dealer.receiveCard(Card.valueOf(CardPattern.SPADE, CardNumber.TEN));
         Players players = new Players(Collections.singletonList(player), dealer);
         OutputView.noticeMatchResult(players);
     }
@@ -30,8 +30,8 @@ public class ResultTest {
     void playerWinTest() {
         Player player = new Player("pobi");
         Dealer dealer = new Dealer();
-        player.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
-        dealer.receiveCard(new Card(CardPattern.SPADE, CardNumber.FIVE));
+        player.receiveCard(Card.valueOf(CardPattern.HEART, CardNumber.TEN));
+        dealer.receiveCard(Card.valueOf(CardPattern.SPADE, CardNumber.FIVE));
         Players players = new Players(Collections.singletonList(player), dealer);
         OutputView.noticeMatchResult(players);
     }

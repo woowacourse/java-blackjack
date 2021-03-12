@@ -35,10 +35,10 @@ public class ProfitTest {
     @Test
     @DisplayName("수익률이 0인 경우")
     void playersProfitTest() {
-        test1.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        test2.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        test3.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
+        test1.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        test2.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        test3.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
 
         playersSetToStay(players);
         players.calculateProfit();
@@ -51,10 +51,10 @@ public class ProfitTest {
     @Test
     @DisplayName("수익률이 -인 경우")
     void negativeProfitTest() {
-        test1.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
-        test2.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        test3.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TWO));
+        test1.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.ACE));
+        test2.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        test3.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TWO));
 
         playersSetToStay(players);
         players.calculateProfit();
@@ -68,10 +68,10 @@ public class ProfitTest {
     @Test
     @DisplayName("수익률이 +인 경우")
     void positiveProfitTest() {
-        test1.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        test2.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        test3.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
+        test1.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        test2.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        test3.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.ACE));
 
         playersSetToStay(players);
         players.calculateProfit();
@@ -86,9 +86,9 @@ public class ProfitTest {
     @DisplayName("사용자가 블랙잭일 경우")
     void playerBlackjackTest() {
 
-        test1.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        test1.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
+        test1.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        test1.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.ACE));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
         Players players2 = new Players(Arrays.asList(test1), dealer);
 
         players2.calculateProfit();
@@ -100,12 +100,12 @@ public class ProfitTest {
     @Test
     @DisplayName("블랙잭으로 패배하였을 때 0원만 잃어야 한다")
     void dealerBlackjackTest() {
-        test1.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        test2.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        test3.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
+        test1.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        test2.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        test3.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
 
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.ACE));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
 
         players.calculateProfit();
         OutputView.noticePlayersPoint(players);
@@ -116,13 +116,13 @@ public class ProfitTest {
     @Test
     @DisplayName("두 사람은 지고 한 사람은 이기는 경우")
     void profitSumTest() {
-        test1.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        test2.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        test3.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        test3.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
+        test1.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        test2.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        test3.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        test3.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
 
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.FIVE));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.FIVE));
 
         playersSetToStay(players);
         players.calculateProfit();

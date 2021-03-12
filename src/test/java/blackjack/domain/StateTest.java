@@ -40,11 +40,11 @@ public class StateTest {
     @Test
     @DisplayName("블랙잭이 되는 경우 확인")
     void makeBlackjack() {
-        player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
+        player.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        player.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.ACE));
 
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.ACE));
 
         assertThat(player.state).isInstanceOf(Blackjack.class);
         assertThat(dealer.state).isInstanceOf(Blackjack.class);
@@ -52,12 +52,12 @@ public class StateTest {
 
     @DisplayName("3장은 블랙잭이 아님")
     void makeFakeBlackjack() {
-        player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.FIVE));
-        player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.FIVE));
-        player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
+        player.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.FIVE));
+        player.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.FIVE));
+        player.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.ACE));
 
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.ACE));
 
         assertThat(player.state).isInstanceOf(Hit.class);
         assertThat(dealer.state).isInstanceOf(Blackjack.class);
@@ -65,13 +65,13 @@ public class StateTest {
 
     @DisplayName("21이 넘어가면 Bust 상태가 됨")
     void makeBust() {
-        player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        player.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
+        player.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        player.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        player.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
 
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.TEN));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.TEN));
 
         assertThat(player.state).isInstanceOf(Bust.class);
         assertThat(dealer.state).isInstanceOf(Bust.class);

@@ -14,7 +14,7 @@ public class Deck {
     public Deck() {
         for (CardPattern cardPattern : CardPattern.values()) {
             for (CardNumber cardNumber : CardNumber.values()) {
-                deck.add(new Card(cardPattern, cardNumber));
+                deck.add(Card.valueOf(cardPattern, cardNumber));
             }
         }
         Collections.shuffle(deck);
