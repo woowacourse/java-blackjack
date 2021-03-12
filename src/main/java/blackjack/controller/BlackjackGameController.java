@@ -26,16 +26,26 @@ public class BlackjackGameController {
         UserGameResult userGameResult = blackjackGame.createUserGameResult();
 
         printParticipantsCardsAndScore(dealerGameResult, userGameResult);
-        printFinalWinOrLose(dealerGameResult, userGameResult);
+        printFinalProfit(dealerGameResult, userGameResult);
     }
 
     private static BlackjackGame startGameAndFirstDraw() {
         try {
             Users users = Users.from(askUserNames());
+            askUserMoney(users);
             return BlackjackGame.createAndFirstDraw(users);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
             return startGameAndFirstDraw();
+        }
+    }
+
+    private static void askUserMoney(Users users) {
+        try {
+            users.toList().forEach(user -> user.batMoney(InputView.askPlayersMoney(user)));
+        } catch (Exception e) {
+            OutputView.printMessage(e.getMessage());
+            askUserMoney(users);
         }
     }
 
@@ -103,8 +113,8 @@ public class BlackjackGameController {
         OutputView.println();
     }
 
-    private void printFinalWinOrLose(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
-        OutputView.printFinalDealerWinOrLose(dealerGameResult, userGameResult);
-        OutputView.printFinalUserWinOrLose(userGameResult);
+    private void printFinalProfit(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
+        OutputView.printFinalDealerProfit(dealerGameResult, userGameResult);
+        OutputView.printFinalUserProfit(userGameResult);
     }
 }

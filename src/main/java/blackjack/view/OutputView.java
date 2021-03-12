@@ -17,8 +17,9 @@ public class OutputView {
     private static final String FIRST_DRAW_MESSAGE_SUFFIX = "에게 2장의 카드를 나누었습니다.";
     private static final String PRINT_CARD_LIST_MSG_FORMAT = "%s 카드: %s%n";
     private static final String PRINT_CARD_LIST_AND_SCORE_MSG_FORMAT = "%s 카드: %s - 결과 : %d%n";
-    private static final String FINAL_WIN_OR_LOSE_MSG = "##최종 승패";
+    private static final String FINAL_PROFIT_MSG = "##최종 수익";
     private static final String DEALER_MORE_DRAW_CARD_MSG = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    public static final String PROFIT_FORMAT = "%.0f";
 
     public static void printDrawMessage(List<String> userNames) {
         String names = String.join(DELIMITER, userNames);
@@ -29,7 +30,7 @@ public class OutputView {
     public static void printDealerFirstCard(Card card) {
         String dealerFirstCard = card.getLetterOfValueAndSuit();
 
-        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, Dealer.DEALER_NAME, dealerFirstCard);
+        System.out.printf(PRINT_CARD_LIST_MSG_FORMAT, Dealer.DEALER_NAME.getName(), dealerFirstCard);
     }
 
     public static void printCardList(Participant participant) {
@@ -55,24 +56,24 @@ public class OutputView {
         println();
     }
 
-    public static void printFinalDealerWinOrLose(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
-        System.out.println(FINAL_WIN_OR_LOSE_MSG);
+    public static void printFinalDealerProfit(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
+        System.out.println(FINAL_PROFIT_MSG);
         System.out.println(createDealerResultMessage(dealerGameResult, userGameResult));
     }
 
     private static String createDealerResultMessage(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
 
-        return dealerGameResult.getDealerName() + COLON + makeDealersFinalWinOrLose(dealerGameResult, userGameResult);
+        return dealerGameResult.getDealerName() + COLON + makeDealersFinalProfit(dealerGameResult, userGameResult);
     }
 
-    private static String makeDealersFinalWinOrLose(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
-
-        return String.join(BLANK, dealerGameResult.countDealerWinOrLose(userGameResult));
+    private static String makeDealersFinalProfit(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
+        double dealerProfit = dealerGameResult.calculateDealerProfit(userGameResult);
+        return BLANK + String.format(PROFIT_FORMAT, dealerProfit);
     }
 
-    public static void printFinalUserWinOrLose(UserGameResult userGameResult) {
+    public static void printFinalUserProfit(UserGameResult userGameResult) {
         userGameResult.getResultEntrySet().stream()
-                .map(result -> result.getKey().getName() + COLON + result.getValue().getCharacter())
+                .map(result -> result.getKey().getName() + COLON + String.format(PROFIT_FORMAT, result.getValue()))
                 .forEach(System.out::println);
     }
 
