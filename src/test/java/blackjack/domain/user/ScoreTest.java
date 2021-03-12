@@ -56,4 +56,25 @@ public class ScoreTest {
 
         assertThat(isDealerMustToHitScore).isTrue();
     }
+
+    @Test
+    @DisplayName("현 score가 더 큰지 확인한다.")
+    void isGreater() {
+        Score score1 = new Score(18);
+        Score score2 = new Score(16);
+
+        boolean isGreater = score1.isGreater(score2);
+
+        assertThat(isGreater).isTrue();
+    }
+
+    @Test
+    void isSame() {
+        Score score1 = new Score(16);
+        Score score2 = new Score(16);
+
+        boolean isSame = score1.isSame(score2);
+
+        assertThat(isSame).isTrue();
+    }
 }

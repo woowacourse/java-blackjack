@@ -35,6 +35,14 @@ public class Score implements Comparable<Score> {
         return value <= DEALER_MUST_HIT_MAX_VALUE;
     }
 
+    public boolean isGreater(Score anotherScore) {
+        return this.value > anotherScore.value;
+    }
+
+    public boolean isSame(Score anotherScore) {
+        return this.value == anotherScore.value;
+    }
+
     @Override
     public int compareTo(Score anotherScore) {
         return Integer.compare(value, anotherScore.value);
