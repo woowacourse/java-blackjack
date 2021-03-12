@@ -28,6 +28,11 @@ public abstract class User implements Comparable<User> {
         this.hand = new Hand(cards, stayLimit);
     }
 
+    public BettingResult computeBettingResult(MatchResult matchResult) {
+        double earningMoney = matchResult.calculateEarningMoney(bettingMoney);
+        return new BettingResult(this.name, earningMoney);
+    }
+
     public boolean isHit() {
         return hand.isHit();
     }
@@ -53,10 +58,6 @@ public abstract class User implements Comparable<User> {
 
     public String getName() {
         return this.name;
-    }
-
-    public double getBettingMoney() {
-        return this.bettingMoney;
     }
 
     @Override

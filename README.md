@@ -51,13 +51,14 @@
 - [x] User 객체에 NPE 고려하기 
 - [ ] STAY_LIMIT 을 Game 객체에서 지니고 있나?
 - [x] MatchResult 에서 Name 사용
-- [ ] 스코어 비교 getter 사용하지 않고 comparable로 구현하기 
-- [ ] Player getBettingMoney 메소드 제거
+- [x] 스코어 비교 getter 사용하지 않고 comparable 로 구현하기 
+- [x] Player getBettingMoney 메소드 제거
 - [ ] 딜러에 필요없는 BettingMoney 구현 고민
-- [ ] BettingResult 에 getter 줄이기 
-- [ ] Game 에 getPlayers unmodifiable list 로 반환 
+- [x] BettingResult 에 getter 줄이기 
+- [x] Game 에 getPlayers unmodifiable list 로 반환 
 - [ ] 테스트 코드의 중복 줄이기 
 - [ ] MatchResultTest getPlayersCard 메소드 간단하게 구현 
+- [ ] HandStatusTest 코드 추가
 
 ## 패키지 구조 
 1. domain 

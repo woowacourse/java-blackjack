@@ -45,7 +45,7 @@ public enum MatchResult {
         return MatchResult.WIN_NORMAL;
     }
 
-    public double getEarningRate() {
-        return earningRate;
+    public double calculateEarningMoney(double bettingMoney) {
+        return bettingMoney * earningRate;
     }
 }

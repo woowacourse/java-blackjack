@@ -5,6 +5,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.user.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -61,7 +62,7 @@ public class Game {
 
     public List<BettingResult> getWinningResults() {
         return players.stream()
-            .map(player -> new BettingResult(player, MatchResult.calculateResult(player, dealer)))
+            .map(player -> player.computeBettingResult(MatchResult.calculateResult(player, dealer)))
             .collect(Collectors.toList());
     }
 
@@ -70,6 +71,6 @@ public class Game {
     }
 
     public List<User> getPlayers() {
-        return players;
+        return Collections.unmodifiableList(players);
     }
 }

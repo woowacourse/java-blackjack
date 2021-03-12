@@ -23,7 +23,7 @@ class BettingResultTest {
             .collect(Collectors.toList());
 
         Player player = new Player("A", 20000, cards, 21);
-        BettingResult bettingResult = new BettingResult(player, MatchResult.WIN_BLACKJACK);
+        BettingResult bettingResult = new BettingResult(player.name, MatchResult.WIN_BLACKJACK.calculateEarningMoney(player.bettingMoney));
 
         assertThat(bettingResult.getEarningMoney()).isEqualTo(30000);
         assertThat(bettingResult.getName()).isEqualTo(player.getName());
@@ -38,7 +38,7 @@ class BettingResultTest {
             .collect(Collectors.toList());
 
         Player player = new Player("A", 20000, cards, 21);
-        BettingResult bettingResult = new BettingResult(player, MatchResult.WIN_NORMAL);
+        BettingResult bettingResult = new BettingResult(player.name, MatchResult.WIN_NORMAL.calculateEarningMoney(player.bettingMoney));
 
         assertThat(bettingResult.getEarningMoney()).isEqualTo(20000);
     }
@@ -52,7 +52,7 @@ class BettingResultTest {
             .collect(Collectors.toList());
 
         Player player = new Player("A", 20000, cards, 21);
-        BettingResult bettingResult = new BettingResult(player, MatchResult.DRAW);
+        BettingResult bettingResult = new BettingResult(player.name, MatchResult.DRAW.calculateEarningMoney(player.bettingMoney));
 
         assertThat(bettingResult.getEarningMoney()).isEqualTo(0);
     }
@@ -66,7 +66,7 @@ class BettingResultTest {
             .collect(Collectors.toList());
 
         Player player = new Player("A", 20000, cards, 21);
-        BettingResult bettingResult = new BettingResult(player, MatchResult.LOSE);
+        BettingResult bettingResult = new BettingResult(player.name, MatchResult.LOSE.calculateEarningMoney(player.bettingMoney));
 
         assertThat(bettingResult.getEarningMoney()).isEqualTo(-20000);
     }
