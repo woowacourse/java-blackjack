@@ -15,7 +15,8 @@ public enum YesOrNo {
         throw new IllegalArgumentException("올바르지 않은 입력입니다.");
     }
 
-    public boolean isYes() {
-        return this.equals(YesOrNo.YES);
+    public static boolean isYes(final String input) {
+        YesOrNo yesOrNo =YesOrNo.from(input);
+        return yesOrNo.equals(YesOrNo.YES);
     }
 }
