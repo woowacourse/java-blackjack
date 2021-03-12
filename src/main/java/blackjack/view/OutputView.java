@@ -19,7 +19,6 @@ public class OutputView {
         String playerNames = players.stream()
                                     .map(Player::getName)
                                     .collect(Collectors.joining(DELIMITER));
-        printEmptyLine();
         System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다." + NEWLINE, dealer.getName(), playerNames);
         printDefaultDealerCard(dealer);
         printDefaultPlayerCards(players);
@@ -72,6 +71,7 @@ public class OutputView {
     }
 
     public static void printFinalBetProfits(Map<String, BetAmount> finalBetProfits) {
+        System.out.println("## 최종 수익");
         finalBetProfits.forEach((name, betProfit) -> {
             System.out.println(name + ": " + betProfit.getBetAmount());
         });
