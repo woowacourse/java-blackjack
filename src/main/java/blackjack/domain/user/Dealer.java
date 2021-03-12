@@ -16,6 +16,6 @@ public class Dealer extends User {
 
     @Override
     public boolean isHit() {
-        return cards.calculateScore() <= HIT;
+        return cards.calculateScore().getScore() <= HIT;
     }
 }

@@ -7,14 +7,15 @@ import java.util.Map;
 import static java.util.stream.Collectors.*;
 
 public enum Result {
+    BLACKJACK("블랙잭", 1.5),
     WIN("승", 1),
     STANDOFF("무", 0),
     LOSE("패", -1);
 
     private final String result;
-    private final int compareResult;
+    private final double compareResult;
 
-    Result(String result, int compareResult) {
+    Result(String result, double compareResult) {
         this.result = result;
         this.compareResult = compareResult;
     }
@@ -44,7 +45,7 @@ public enum Result {
         return this.result;
     }
 
-    public int getCompareResult() {
+    public double getCompareResult() {
         return this.compareResult;
     }
 }

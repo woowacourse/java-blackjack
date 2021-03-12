@@ -1,16 +1,16 @@
 package blackjack.domain.user;
 
 public class Money {
-    private static final int MINIMUM_BOUND = 0;
+    private static final double MINIMUM_BOUND = 0.0;
 
-    private final int money;
+    private final double money;
 
-    public Money(int money) {
+    public Money(double money) {
         validate(money);
         this.money = money;
     }
 
-    private void validate(int money) {
+    private void validate(double money) {
         if (money <= MINIMUM_BOUND) {
             throw new IllegalArgumentException("베팅 금액은 0원 이하일 수 없습니다.");
         }

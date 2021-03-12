@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.state.State;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +12,7 @@ import java.util.List;
 public abstract class User {
     protected final Cards cards;
     protected final Name name;
+//    protected final State state;
 
     public User(String name){
         this(new Name(name));
@@ -29,6 +31,10 @@ public abstract class User {
         this.cards.combine(deck.popOne());
     }
 
+//    public void draw(Deck deck) {
+//        state = state.draw(deck.popOne());
+//    }
+
     public boolean isBust() {
         return this.cards.isBust();
     }
@@ -38,7 +44,7 @@ public abstract class User {
     }
 
     public int getScore() {
-        return this.cards.calculateScore();
+        return this.cards.calculateScore().getScore();
     }
 
     public List<Card> getCards(){
