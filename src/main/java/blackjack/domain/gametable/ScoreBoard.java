@@ -52,10 +52,10 @@ public class ScoreBoard {
     }
 
     private Outcome compareWith(Score playerScore) {
-        return getInstance(playerScore, dealerScore);
+        return calculateOutcome(playerScore, dealerScore);
     }
 
-    private Outcome getInstance(final Score base, final Score counterpart) {
+    private Outcome calculateOutcome(final Score base, final Score counterpart) {
         if (draw(base, counterpart)) {
             return Outcome.DRAW;
         }
