@@ -12,10 +12,6 @@ public class Player extends Participants {
         super(name, state);
     }
 
-    public double profit() {
-        return state.profit(money);
-    }
-
     @Override
     public boolean canDraw() {
         return !state.isFinished();
