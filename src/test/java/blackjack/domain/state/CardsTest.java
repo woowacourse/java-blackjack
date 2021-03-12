@@ -40,7 +40,7 @@ public class CardsTest {
     @DisplayName("Bust인지 확인")
     @Test
     void isBlackJack() {
-        Cards cards = new Cards(Arrays.asList(Fixture.CLUBS_TEN, Fixture.CLUBS_ACE, Fixture.CLUBS_KING));
+        Cards cards = new Cards(Arrays.asList(Fixture.CLUBS_TEN, Fixture.CLUBS_TWO, Fixture.CLUBS_KING));
 
         assertTrue(cards.score().isBust());
     }

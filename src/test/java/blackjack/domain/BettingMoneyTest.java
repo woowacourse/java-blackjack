@@ -15,14 +15,4 @@ class BettingMoneyTest {
 
         assertThat(bettingMoney).isEqualTo(new BettingMoney(1000));
     }
-
-    @DisplayName("배팅 금액 유효성 검사")
-    @Test
-    void validateBettingMoney() {
-        assertThatThrownBy(() -> {
-            new BettingMoney(0);
-        }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("최소 0원보다 큰 배팅 금액을 입력해주세요. ");
-    }
-
 }
