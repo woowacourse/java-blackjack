@@ -90,16 +90,21 @@ public class UsersTest {
             int actualProfit = profits.get(new Name(userNames.get(i)));
             if (result.get(i) == WIN_WITH_BLACKJACK) {
                 assertThat(actualProfit).isEqualTo((int) (1.5 * (double) bettingMoney));
+                continue;
             }
             if (result.get(i) == WIN_NOT_WITH_BLACKJACK) {
                 assertThat(actualProfit).isEqualTo(bettingMoney);
+                continue;
             }
             if (result.get(i) == DRAW) {
                 assertThat(actualProfit).isEqualTo(0);
+                continue;
             }
             if (result.get(i) == LOSS) {
                 assertThat(actualProfit).isEqualTo(-bettingMoney);
+                continue;
             }
+            throw new IllegalArgumentException("예측한 결과가 맞지 않습니다.");
         }
     }
 
