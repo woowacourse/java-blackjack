@@ -1,5 +1,6 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.Response;
 import blackjack.domain.cards.Card;
 import blackjack.domain.cards.Hand;
 import blackjack.domain.names.Name;
@@ -30,12 +31,12 @@ public abstract class Participant {
         state = state.draw(card);
     }
 
-    protected State getState() {
-        return state;
+    public void updateStateByResponse(Response response) {
+        state = getState().moveStateByResponse(response);
     }
 
-    protected void setState(State state) {
-        this.state = state;
+    protected State getState() {
+        return state;
     }
 
     public boolean isContinue() {

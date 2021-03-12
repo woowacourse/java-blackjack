@@ -1,6 +1,5 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.Response;
 import blackjack.domain.ResultType;
 import blackjack.domain.names.Name;
 import blackjack.domain.state.hitstrategy.HitStrategy;
@@ -14,10 +13,6 @@ public class Player extends Participant {
     public Player(Name name, Betting betting) {
         super(name, HIT_STRATEGY);
         this.betting = betting;
-    }
-
-    public void updateStateByResponse(Response response) {
-        setState(getState().moveStateByResponse(response));
     }
 
     public ResultType match(Dealer dealer) {
