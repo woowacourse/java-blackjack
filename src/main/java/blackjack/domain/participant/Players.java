@@ -7,15 +7,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
+    private static final int MAX_PLAYER_LIMIT = 8;
+
     private final List<Player> players;
 
     public Players(final List<Player> players) {
         validateDuplicate(players);
+        validateMaxPlayerNumber(players);
         this.players = players;
     }
 
     public static Players of(final List<String> playerName) {
         validateDuplicate(playerName);
+        validateMaxPlayerNumber(playerName);
         final List<Player> players = playerName.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
@@ -24,6 +28,7 @@ public class Players {
 
     public static Players of(final List<String> playerName, final List<Integer> playerMoney) {
         validateDuplicate(playerName);
+        validateMaxPlayerNumber(playerName);
         final int playerCount = validateSize(playerName.size(), playerMoney.size());
 
         final List<Player> players = new ArrayList<>();
@@ -40,6 +45,12 @@ public class Players {
 
         if (distinctPlayers != players.size()) {
             throw new IllegalArgumentException("입력된 플레이어의 이름이 중복됩니다.");
+        }
+    }
+
+    private static void validateMaxPlayerNumber(final List<?> players) {
+        if (players.size() > MAX_PLAYER_LIMIT) {
+            throw new IllegalArgumentException("플레이어는 최대 8명까지 허용합니다.");
         }
     }
 

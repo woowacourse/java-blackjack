@@ -51,6 +51,15 @@ public class PlayersTest {
     }
 
     @Test
+    @DisplayName("플레이어는 최대 8명까지 허용한다")
+    void maxPlayerInit() {
+        List<String> playerName = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9");
+        assertThatThrownBy(() -> Players.of(playerName))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어는 최대 8명까지 허용합니다.");
+    }
+
+    @Test
     @DisplayName("플레이어의 이름, 플레이어의 베팅 금액을 동시에 입력받는 정적 팩토리 메서드 테스트")
     void initFactoryMethodWithTwoParameter() {
         List<String> playerName = Arrays.asList("joel", "bada", "jon");
