@@ -26,7 +26,7 @@ public class UsersTest {
     private static final String INBI = "inbi";
     private static final String MUNGTO = "mungto";
 
-    final List<Integer> bettingMonies = new ArrayList<>(
+    static List<Integer> bettingMonies = new ArrayList<>(
         Arrays.asList(
             MIN_BETTING_MONEY_BOUND,
             50_000,
@@ -84,27 +84,22 @@ public class UsersTest {
     }
 
     private void assertProfits(Map<Name, Integer> profits, List<String> userNames,
-        List<ResultType> result, int bettingMoney) {
+        List<ResultType> expectedResult, int bettingMoney) {
 
         for (int i = 0; i < userNames.size(); i++) {
             int actualProfit = profits.get(new Name(userNames.get(i)));
-            if (result.get(i) == WIN_WITH_BLACKJACK) {
+            if (expectedResult.get(i) == WIN_WITH_BLACKJACK) {
                 assertThat(actualProfit).isEqualTo((int) (1.5 * (double) bettingMoney));
-                continue;
             }
-            if (result.get(i) == WIN_NOT_WITH_BLACKJACK) {
+            if (expectedResult.get(i) == WIN_NOT_WITH_BLACKJACK) {
                 assertThat(actualProfit).isEqualTo(bettingMoney);
-                continue;
             }
-            if (result.get(i) == DRAW) {
+            if (expectedResult.get(i) == DRAW) {
                 assertThat(actualProfit).isEqualTo(0);
-                continue;
             }
-            if (result.get(i) == LOSS) {
+            if (expectedResult.get(i) == LOSS) {
                 assertThat(actualProfit).isEqualTo(-bettingMoney);
-                continue;
             }
-            throw new IllegalArgumentException("예측한 결과가 맞지 않습니다.");
         }
     }
 
@@ -141,36 +136,36 @@ public class UsersTest {
     @DisplayName("게임 결과 수익 반환 테스트 - 딜러가 블랙잭이 아닌 21 일 때")
     @Test
     void profitsDealer21NotBlackJack() {
-       for (int bettingMoney : bettingMonies) {
-           Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
-           dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
-           dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
-           dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
 
-           User pobi = new User(POBI, bettingMoney); // 블랙잭 승
-           pobi.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.TEN));
-           pobi.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
+            User pobi = new User(POBI, bettingMoney); // 블랙잭 승
+            pobi.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.TEN));
+            pobi.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
 
-           User jason = new User(JASON, bettingMoney); // 무승부
-           jason.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
-           jason.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
-           jason.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
+            User jason = new User(JASON, bettingMoney); // 무승부
+            jason.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
+            jason.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
+            jason.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
 
-           User inbi = new User(INBI, bettingMoney); // 패
-           inbi.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.FIVE));
-           inbi.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
+            User inbi = new User(INBI, bettingMoney); // 패
+            inbi.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.FIVE));
+            inbi.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
 
-           User mungto = new User(MUNGTO, bettingMoney); // 패
-           mungto.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
-           mungto.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
-           mungto.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
+            User mungto = new User(MUNGTO, bettingMoney); // 패
+            mungto.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
+            mungto.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SEVEN));
+            mungto.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
 
-           Users users = new Users(Arrays.asList(pobi, jason, inbi, mungto));
-           Map<Name, Integer> profits = users.getProfits(dealer);
+            Users users = new Users(Arrays.asList(pobi, jason, inbi, mungto));
+            Map<Name, Integer> profits = users.getProfits(dealer);
 
-           assertProfits(profits, Arrays.asList(POBI, JASON, INBI, MUNGTO),
-               Arrays.asList(WIN_WITH_BLACKJACK, DRAW, LOSS, LOSS), bettingMoney);
-       }
+            assertProfits(profits, Arrays.asList(POBI, JASON, INBI, MUNGTO),
+                Arrays.asList(WIN_WITH_BLACKJACK, DRAW, LOSS, LOSS), bettingMoney);
+        }
     }
 
     @DisplayName("게임 결과 수익 반환 테스트 - 딜러가 21 미만일 때")
