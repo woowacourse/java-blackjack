@@ -10,9 +10,7 @@ public class Players {
     private final List<Player> players;
 
     public Players(final List<Player> players) {
-        validateDuplicate(players.stream()
-                .map(Participant::getName)
-                .collect(Collectors.toList()));
+        validateDuplicate(players);
         this.players = players;
     }
 
@@ -35,12 +33,12 @@ public class Players {
         return new Players(players);
     }
 
-    private static void validateDuplicate(final List<String> playerName) {
-        final int distinctName = (int) playerName.stream()
+    private static void validateDuplicate(final List<?> players) {
+        final int distinctPlayers = (int) players.stream()
                 .distinct()
                 .count();
 
-        if (distinctName != playerName.size()) {
+        if (distinctPlayers != players.size()) {
             throw new IllegalArgumentException("입력된 플레이어의 이름이 중복됩니다.");
         }
     }
