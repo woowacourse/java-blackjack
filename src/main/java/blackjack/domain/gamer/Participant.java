@@ -8,7 +8,7 @@ import java.util.List;
 public interface Participant {
     boolean isNotAbleToTake();
 
-    String getName();
+    Name getName();
 
     Score sumCards();
 

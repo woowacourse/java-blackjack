@@ -9,14 +9,27 @@ import java.util.List;
 public class Player implements Participant {
     private final Name name;
     private final Cards cards;
+    private final BettingMoney bettingMoney;
 
     public Player(Name name) {
-        this(name, new Cards(Collections.emptyList()));
+        this(name, new Cards(Collections.emptyList()), new BettingMoney(0));
+    }
+    public Player(Name name, BettingMoney bettingMoney) {
+        this(name, new Cards(Collections.emptyList()), bettingMoney);
     }
 
-    public Player(Name name, Cards cards) {
+    public Player(Name name, Cards cards){
+        this(name, cards, new BettingMoney(0));
+    }
+
+    public Player(Name name, Cards cards, BettingMoney bettingMoney) {
         this.name = name;
         this.cards = cards;
+        this.bettingMoney = bettingMoney;
+    }
+
+    public BettingMoney getBettingMoney(){
+        return bettingMoney;
     }
 
     @Override
@@ -30,8 +43,8 @@ public class Player implements Participant {
     }
 
     @Override
-    public String getName() {
-        return this.name.toString();
+    public Name getName() {
+        return this.name;
     }
 
     @Override
@@ -41,7 +54,7 @@ public class Player implements Participant {
 
     @Override
     public Score sumCardsForResult() {
-        return cards.sumCardsForResult();
+        return  cards.sumCardsForResult();
     }
 
     @Override

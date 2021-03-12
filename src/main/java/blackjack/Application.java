@@ -7,11 +7,14 @@ import blackjack.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        final Game game = new Game(InputView.getNames());
-        OutputView.printParticipantsCards(game.getParticipants());
+
+        final Game game = new Game(InputView.requestNameAndMoney());
+        OutputView.printParticipantsCards(game.getProcessDto());
 
         simulate(game);
-        OutputView.printResult(game.getParticipants());
+        OutputView.printCardsResult(game.getProcessDto());
+        OutputView.printOutcome(game.getResultDto());
+        OutputView.printProfit(game.getResultDto());
     }
 
     private static void simulate(Game game) {
@@ -23,7 +26,7 @@ public class Application {
     }
 
     private static void turnForPlayer(Game game, Player player) {
-        while (!player.isNotAbleToTake() && InputView.requestOneMoreCard(player.getName())) {
+        while (!player.isNotAbleToTake() && InputView.requestOneMoreCard(player.getName().toString())) {
             OutputView.printCards(game.turnForPlayer(player));
         }
     }

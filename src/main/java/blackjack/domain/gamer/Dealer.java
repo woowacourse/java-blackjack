@@ -35,8 +35,8 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public String getName() {
-        return this.name.toString();
+    public Name getName() {
+        return this.name;
     }
 
     @Override

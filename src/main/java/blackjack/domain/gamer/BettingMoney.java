@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class BettingMoney {
-    private static final Pattern NAME_PATTERN = Pattern.compile("-*\\d+");
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("-*\\d+");
 
     private final BigDecimal money;
 
@@ -23,7 +23,7 @@ public class BettingMoney {
     }
 
     private static long validateIsLong(String value) {
-        if (!NAME_PATTERN.matcher(value).matches()) {
+        if (!NUMBER_PATTERN.matcher(value).matches()) {
             throw new IllegalArgumentException();
         }
         return Long.parseLong(value);
@@ -35,6 +35,10 @@ public class BettingMoney {
             .multiply(new BigDecimal(value))
             .setScale(0, RoundingMode.FLOOR);
         return new BettingMoney(result);
+    }
+
+    public BigDecimal toBigDecimal(){
+        return money;
     }
 
     @Override

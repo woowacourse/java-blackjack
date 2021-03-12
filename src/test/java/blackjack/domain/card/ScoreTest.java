@@ -35,7 +35,7 @@ public class ScoreTest {
     @Test
     @DisplayName("블랙잭 확인")
     void isBlackJack() {
-        assertThat(Score.of(21).isBlackJack()).isTrue();
+        assertThat(Score.of(21).isBlackjack()).isTrue();
     }
 
     @Test
