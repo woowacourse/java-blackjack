@@ -23,18 +23,6 @@ public enum GameResult {
         return GameResult.DRAW;
     }
 
-    private static boolean isPlayerWin(int playerScore, int dealerScore) {
-        if (playerScore > SCORE_LIMIT) {
-            return false;
-        }
-
-        if (dealerScore > SCORE_LIMIT || dealerScore < playerScore) {
-            return true;
-        }
-
-        return false;
-    }
-
     private static boolean isDealerWin(int playerScore, int dealerScore) {
         if (playerScore > SCORE_LIMIT) {
             return true;
@@ -47,8 +35,16 @@ public enum GameResult {
         return true;
     }
 
-    public String getValue() {
-        return value;
+    private static boolean isPlayerWin(int playerScore, int dealerScore) {
+        if (playerScore > SCORE_LIMIT) {
+            return false;
+        }
+
+        if (dealerScore > SCORE_LIMIT || dealerScore < playerScore) {
+            return true;
+        }
+
+        return false;
     }
 
     public GameResult reverse() {
