@@ -37,4 +37,14 @@ public abstract class Finished implements State {
     public boolean isFinished() {
         return true;
     }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    public boolean isBust() {
+        return false;
+    }
 }

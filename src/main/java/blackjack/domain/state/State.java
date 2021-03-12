@@ -2,6 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
+import blackjack.domain.user.Dealer;
 
 import java.util.List;
 
@@ -16,5 +17,9 @@ public interface State {
 
     boolean isFinished();
 
-    double earningRate();
+    double earningRate(Dealer dealer);
+
+    boolean isBlackjack();
+
+    boolean isBust();
 }

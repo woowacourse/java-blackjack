@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Score;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
 
@@ -10,8 +9,8 @@ import java.util.Objects;
 
 public class Player extends User {
     private final Name name;
-    private State state;
     private final Money money;
+    private State state;
 
     public Player(String name, int money, List<Card> cards) {
         this.name = new Name(name);
@@ -21,6 +20,10 @@ public class Player extends User {
 
     public String getState() {
         return state.toString();
+    }
+
+    public Money getProfit(Dealer dealer) {
+        return money.multiplyByRate(state.earningRate(dealer));
     }
 
     @Override
@@ -44,21 +47,14 @@ public class Player extends User {
     }
 
     @Override
-    public Score score() {
-        return state.score();
-    }
-
-    @Override
     public boolean isFinished() {
         return state.isFinished();
     }
 
-    public void addCardByAnswer(boolean isYes, Card card) {
-        if (isYes) {
-            addCard(card);
-            return;
+    public void stayIfNotFinished() {
+        if (!state.isFinished()) {
+            state = state.stay();
         }
-        this.state = state.stay();
     }
 
     @Override

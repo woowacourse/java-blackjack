@@ -1,6 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.user.Dealer;
 
 public class Stay extends Finished {
     public Stay(Cards cards) {
@@ -8,7 +9,15 @@ public class Stay extends Finished {
     }
 
     @Override
-    public double earningRate() {
-        return 0;
+    public double earningRate(Dealer dealer) {
+        if (dealer.isBust() || score().toInt() > dealer.scoreToInt()) {
+            return 1;
+        }
+
+        if (score().toInt() == dealer.scoreToInt()) {
+            return 0;
+        }
+
+        return -1;
     }
 }
