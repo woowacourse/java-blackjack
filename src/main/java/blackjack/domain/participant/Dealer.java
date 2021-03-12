@@ -13,6 +13,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isAvailableToTake() {
-        return getState().hand().hardSum() <= DEALER_HIT;
+        return isHit() && getState().hand().hardSum() <= DEALER_HIT;
     }
 }

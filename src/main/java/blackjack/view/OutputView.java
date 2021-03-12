@@ -42,7 +42,7 @@ public class OutputView {
     }
 
     public static void printDealerGetCard() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printResult(Dealer dealer, Players players) {
@@ -63,7 +63,7 @@ public class OutputView {
     }
 
     private static void printParticipantsResults(Dealer dealer, Players players) {
-        System.out.println(resultOf(dealer));
+        System.out.println("\n" + resultOf(dealer));
         for (Player player : players.values()) {
             System.out.println(resultOf(player));
         }

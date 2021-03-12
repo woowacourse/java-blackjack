@@ -35,7 +35,7 @@ public class Application {
             turnForPlayer(cardDeck, player);
         }
 
-        if (dealer.isAvailableToTake()) {
+        while (dealer.isAvailableToTake()) {
             dealer.takeCard(cardDeck.pop());
             OutputView.printDealerGetCard();
         }
