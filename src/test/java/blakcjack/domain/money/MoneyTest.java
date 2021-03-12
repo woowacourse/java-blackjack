@@ -9,7 +9,7 @@ import static blakcjack.domain.money.Money.calculateDealerProfitFrom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MoneyTest {
-	@DisplayName("수익들로부터 딜러의 수익을 제대로 계산해 내는지")
+	@DisplayName("플레이어의 수익들로부터 딜러의 수익을 제대로 계산해 내는지")
 	@Test
 	void calculateDealerProfitFrom_collectionOfMoney_returnDealerProfit() {
 		Money dealerProfit = calculateDealerProfitFrom(Arrays.asList(
@@ -21,7 +21,7 @@ class MoneyTest {
 		assertThat(dealerProfit).isEqualTo(new Money(-150));
 	}
 
-	@DisplayName("수익률이 주어졌을 때 수익률을 제대로 계산 하는지")
+	@DisplayName("수익률이 주어졌을 때 수익을 제대로 계산 하는지")
 	@Test
 	void calculateProfit_earningRate_returnProfit() {
 		Money money = new Money(100);
