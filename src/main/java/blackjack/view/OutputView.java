@@ -5,6 +5,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.results.ResultsDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,26 +51,19 @@ public class OutputView {
     }
 
     public static void printResult(Dealer dealer, Players players) {
-        printParticipantsResults(dealer, players);
-        printProfits(dealer, players);
-    }
-
-    private static void printProfits(Dealer dealer, Players players) {
-        System.out.println("\n## 최종 수익");
-        double dealerProfit = 0;
-        for (Player player : players.values()) {
-            dealerProfit -= player.calculateProfitFromState(dealer);
-        }
-        System.out.println(dealer.getName() + ": " + dealerProfit);
-        for (Player player : players.values()) {
-            System.out.println(player.getName() + ": " + player.calculateProfitFromState(dealer));
-        }
-    }
-
-    private static void printParticipantsResults(Dealer dealer, Players players) {
         System.out.println("\n" + resultOf(dealer));
         for (Player player : players.values()) {
             System.out.println(resultOf(player));
+        }
+    }
+
+    public static void printProfits(ResultsDto resultsDto) {
+        System.out.println("\n## 최종 수익");
+        System.out.println(resultsDto.getDealerName() + ": " + resultsDto.getDealerProfit());
+        List<String> playersNames = resultsDto.getPlayersNames();
+        List<Double> playersProfits = resultsDto.getPlayersProfits();
+        for (int i = 0; i < resultsDto.getPlayersSize(); i++) {
+            System.out.println(playersNames.get(i) + ": " + playersProfits.get(i));
         }
     }
 

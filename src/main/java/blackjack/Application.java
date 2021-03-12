@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.results.Results;
 import blackjack.utils.CardDeck;
 import blackjack.utils.RandomCardDeck;
 import blackjack.view.InputView;
@@ -20,7 +21,13 @@ public class Application {
 
         simulate(cardDeck, dealer, players);
 
+        Summerize(dealer, players);
+    }
+
+    private static void Summerize(Dealer dealer, Players players) {
         OutputView.printResult(dealer, players);
+        Results results = new Results(dealer, players);
+        OutputView.printProfits(results.dto());
     }
 
     private static void setBetMoney(Players players) {
