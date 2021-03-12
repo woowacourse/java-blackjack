@@ -29,7 +29,7 @@ public class BlackJackController {
 
     private Participants getParticipants(List<String> names, Deck deck) {
         List<Participant> participants = names.stream()
-                .map(name -> new Player(name, 0, new Hit(deck.handOutInitCards())))
+                .map(name -> new Player(name, new Hit(deck.handOutInitCards())))
                 .collect(Collectors.toList());
         bettingPlayer(participants);
         participants.add(0, new Dealer(new Hit(deck.handOutInitCards())));

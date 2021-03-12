@@ -35,7 +35,7 @@ class PlayerTest {
     @DisplayName("카드를 받는다.")
     void test_receive_card() {
         State state = new Hit(defaultInitialCards);
-        Participant player = new Player("pobi",0, state);
+        Participant player = new Player("pobi", state);
         Card card = new Card(CardType.DIAMOND, CardValue.TEN);
         player.handOutCard(card);
         Assertions.assertThat(player.showCards().contains(card)).isTrue();
@@ -62,7 +62,7 @@ class PlayerTest {
     @DisplayName("플레이어가 HIT 상태를 가지는 경우 테스트")
     void test_state_hit_player() {
         State state = new Hit(defaultInitialCards);
-        Participant player = new Player("suri", 10000,state);
+        Participant player = new Player("suri", state);
         assertThat(player.getStatus()).isInstanceOf(Hit.class);
     }
 
@@ -70,7 +70,7 @@ class PlayerTest {
     @DisplayName("플레이어가 BLACK JACK 상태를 가지는 경우 테스트")
     void test_state_blackjack_dealer() {
         State state = new Hit(blackJackCards);
-        Player player = new Player("suri", 10000, state);
+        Player player = new Player("suri", state);
         assertThat(player.getStatus()).isInstanceOf(BlackJack.class);
     }
 
@@ -78,7 +78,7 @@ class PlayerTest {
     @DisplayName("플레이어가 BUST 상태를 가지는 경우 테스트")
     void test_state_bust_dealer() {
         State state = new Hit(defaultInitialCards);
-        Player player = new Player("suri", 10000, state);
+        Player player = new Player("suri", state);
         player.handOutCard(new Card(CardType.SPADE, CardValue.TEN));
         assertThat(player.getStatus()).isInstanceOf(Bust.class);
     }
@@ -100,8 +100,8 @@ class PlayerTest {
         State hitState = new Hit(defaultInitialCards);
         int money = 10000;
         Dealer dealer = new Dealer(hitState);
-        Player player = new Player("suri", money, blackJackState);
-
+        Player player = new Player("suri", blackJackState);
+        player.betting(money);
         assertThat(player.calculateWinPrize(dealer.getStatus())).isEqualTo((int) (money * 1.5));
     }
 
@@ -111,7 +111,8 @@ class PlayerTest {
         State blackJackState = new Hit(blackJackCards);
         int money = 10000;
         Dealer dealer = new Dealer(blackJackState);
-        Player player = new Player("suri", money, blackJackState);
+        Player player = new Player("suri", blackJackState);
+        player.betting(money);
 
         assertThat(player.calculateWinPrize(dealer.getStatus())).isEqualTo(0);
     }
@@ -123,7 +124,8 @@ class PlayerTest {
         State hitState = new Hit(defaultInitialCards);
         int money = 10000;
         Dealer dealer = new Dealer(blackJackState);
-        Player player = new Player("suri", money, hitState);
+        Player player = new Player("suri", hitState);
+        player.betting(money);
         player.stay();
 
         assertThat(player.calculateWinPrize(dealer.getStatus())).isEqualTo(money * -1);
@@ -137,7 +139,8 @@ class PlayerTest {
         int money = 10000;
         Dealer dealer = new Dealer(dealerState);
         dealer.stay();
-        Player player = new Player("suri", money, playerState);
+        Player player = new Player("suri", playerState);
+        player.betting(money);
         player.handOutCard(new Card(CardType.DIAMOND, CardValue.TWO));
         player.stay();
         assertThat(player.calculateWinPrize(dealer.getStatus())).isEqualTo(money);

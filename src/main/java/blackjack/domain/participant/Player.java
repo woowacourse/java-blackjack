@@ -16,9 +16,8 @@ public class Player implements Participant {
     private State state;
     private int money;
 
-    public Player(String name, int money, State state) {
+    public Player(String name, State state) {
         this.name = name;
-        this.money = money;
         this.state = state.changeState();
     }
 

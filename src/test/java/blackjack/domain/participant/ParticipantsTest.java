@@ -29,8 +29,8 @@ class ParticipantsTest {
 
         participantGroup = Arrays.asList(
                 new Dealer(new Hit(defaultInitialCard)),
-                new Player("suri", 10000, new Hit(defaultInitialCard)),
-                new Player("roki", 10000, new Hit(defaultInitialCard
+                new Player("suri", new Hit(defaultInitialCard)),
+                new Player("roki",new Hit(defaultInitialCard
                 ))
         );
     }
@@ -63,8 +63,8 @@ class ParticipantsTest {
     void test_extract_dealer_if_dealer_is_not_exist() {
         //given
         List<Participant> participantGroup = Arrays.asList(
-                new Player("suri", 10000, new Hit(defaultInitialCard)),
-                new Player("roki", 10000, new Hit(defaultInitialCard))
+                new Player("suri", new Hit(defaultInitialCard)),
+                new Player("roki", new Hit(defaultInitialCard))
         );
         Participants participants = new Participants(participantGroup);
 
@@ -91,8 +91,8 @@ class ParticipantsTest {
     void test_deal_cards_all_participants() {
         //given
         List<Participant> participantGroup = Arrays.asList(new Dealer(new Hit(defaultInitialCard)),
-                new Player("pobi", 10000, new Hit(defaultInitialCard)),
-                new Player("jason", 10000, new Hit(defaultInitialCard)));
+                new Player("pobi", new Hit(defaultInitialCard)),
+                new Player("jason", new Hit(defaultInitialCard)));
 
         Participants participants = new Participants(participantGroup);
 
