@@ -13,4 +13,8 @@ public enum Answer {
     public boolean equals(String value) {
         return answer.equals(value);
     }
+
+    public static boolean isYes(String value) {
+        return YES.equals(value);
+    }
 }

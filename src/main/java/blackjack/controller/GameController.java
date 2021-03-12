@@ -71,20 +71,22 @@ public class GameController {
             dealer.addCard(deck.drawCard());
             OutputView.showDealerAddCard(Dealer.TURN_OVER_COUNT);
         }
+        dealer.stayIfNotFinished();
     }
 
     private void askAddCardOrPass(Player player, Deck deck) {
-        String answer = "";
-        while (!player.isGameOver() && !Answer.NO.equals(answer)) {
-            answer = inputView.getCardOrPass(player.getName());
-            addPlayerCard(answer, player, deck);
+        while (!player.isFinished()) {
+            String answer = inputView.getCardOrPass(player.getName());
+            addCardByAnswer(player, deck, answer);
+            OutputView.showPlayCardStatus(player.getName(), player.getCardsStatus());
         }
     }
 
-    private void addPlayerCard(String answer, Player player, Deck deck) {
-        if (Answer.YES.equals(answer)) {
+    private void addCardByAnswer(Player player, Deck deck, String answer) {
+        if (Answer.isYes(answer)) {
             player.addCard(deck.drawCard());
-            OutputView.showPlayCardStatus(player.getName(), player.getCardsStatus());
+            return;
         }
+        player.stayIfNotFinished();
     }
 }

@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Score;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
 
@@ -22,6 +21,20 @@ public class Dealer extends User {
         return state.score().isBelow(TURN_OVER_COUNT);
     }
 
+    public boolean isBlackjack() {
+        return state.isBlackjack();
+    }
+
+    public void stayIfNotFinished() {
+        if (!state.isFinished()) {
+            state = state.stay();
+        }
+    }
+
+    public boolean isBust() {
+        return state.isBust();
+    }
+
     @Override
     public String getName() {
         return name.getName();
@@ -40,11 +53,6 @@ public class Dealer extends User {
     @Override
     public int scoreToInt() {
         return state.score().toInt();
-    }
-
-    @Override
-    public Score score() {
-        return state.score();
     }
 
     @Override
