@@ -16,7 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class ResultStatisticsTest {
+public class GameResultTest {
 
     private Dealer dealer;
 
@@ -40,9 +40,9 @@ public class ResultStatisticsTest {
         Player player = new Player(new Cards(cardList), "pobi");
         players.add(player);
 
-        ResultStatistics resultStatistics = new ResultStatistics(players, dealer);
+        GameResult gameResult = new GameResult(players, dealer);
 
-        assertThat(resultStatistics.getDealerLoseCounts()).isEqualTo(1);
+        assertThat(gameResult.getDealerLoseCounts()).isEqualTo(1);
     }
 
     @Test
@@ -56,9 +56,9 @@ public class ResultStatisticsTest {
         Player player = new Player(new Cards(cardList), "pobi");
         players.add(player);
 
-        ResultStatistics resultStatistics = new ResultStatistics(players, dealer);
+        GameResult gameResult = new GameResult(players, dealer);
 
-        assertThat(resultStatistics.getDealerDrawCounts()).isEqualTo(1);
+        assertThat(gameResult.getDealerDrawCounts()).isEqualTo(1);
 
     }
 
@@ -73,9 +73,9 @@ public class ResultStatisticsTest {
         Player player = new Player(new Cards(cardList), "pobi");
         players.add(player);
 
-        ResultStatistics resultStatistics = new ResultStatistics(players, dealer);
+        GameResult gameResult = new GameResult(players, dealer);
 
-        assertThat(resultStatistics.getDealerWinCounts()).isEqualTo(1);
+        assertThat(gameResult.getDealerWinCounts()).isEqualTo(1);
     }
 
     @Test
@@ -90,9 +90,9 @@ public class ResultStatisticsTest {
         Player player = new Player(new Cards(cardList), "pobi");
         players.add(player);
 
-        ResultStatistics resultStatistics = new ResultStatistics(players, dealer);
+        GameResult gameResult = new GameResult(players, dealer);
 
-        assertThat(resultStatistics.getDealerWinCounts()).isEqualTo(1);
+        assertThat(gameResult.getDealerWinCounts()).isEqualTo(1);
     }
 
     @Test
@@ -111,8 +111,8 @@ public class ResultStatisticsTest {
         cards.add(new Card(Suit.HEART, Face.JACK));
 
         Dealer dealer1 = new Dealer(cards);
-        ResultStatistics resultStatistics = new ResultStatistics(players, dealer1);
+        GameResult gameResult = new GameResult(players, dealer1);
 
-        assertThat(resultStatistics.getDealerWinCounts()).isEqualTo(1);
+        assertThat(gameResult.getDealerWinCounts()).isEqualTo(1);
     }
 }
