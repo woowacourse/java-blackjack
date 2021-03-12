@@ -44,7 +44,7 @@ public class Cards {
         int sum = sum();
         int aceCount = getAceCount();
         while (aceCount-- > 0 && sum > BLACK_JACK) {
-         sum -= TEN;
+            sum -= TEN;
         }
         return sum;
     }

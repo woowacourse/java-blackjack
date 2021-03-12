@@ -1,5 +1,9 @@
 package blackjack.domain.state;
 
-public interface State {
+import blackjack.domain.card.Card;
 
+public interface State {
+    State draw(Card card);
+
+    boolean isFinish();
 }

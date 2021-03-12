@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 public class Deck {
     private static final int FIRST_INDEX = 0;
 
-    private List<Card> shuffledCards;
+    private final List<Card> shuffledCards;
 
     private Deck(List<Card> shuffledCards) {
         this.shuffledCards = new ArrayList<>(shuffledCards);
