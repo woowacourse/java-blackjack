@@ -8,7 +8,9 @@ import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
@@ -104,5 +106,22 @@ public class BlackjackGame {
 
     public void betByPlayer(String name, long moneyValue) {
         players.setUpBettingMoney(name, moneyValue);
+    }
+
+    public Map<Player, Long> getProfitsByPlayer() {
+        return players.getPlayers()
+                .stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> player.getProfit(dealer),
+                        (p1, p2) -> p1,
+                        LinkedHashMap::new));
+    }
+
+    public long getDealerProfit() {
+        return players.getPlayers()
+                .stream()
+                .mapToLong(player -> player.getProfit(dealer) * -1)
+                .sum();
     }
 }

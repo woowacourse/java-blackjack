@@ -6,6 +6,7 @@ import blackjack.domain.result.ResultBoard;
 import blackjack.domain.user.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -20,9 +21,9 @@ public class OutputView {
         System.out.println(playerName + "의 배팅 금액은?");
     }
 
-    public static void printDistribute(Dealer dealer, Players players) {
+    public static void printDistribute(Dealer dealer, List<String> playersNames) {
         System.out.printf("\n%s와 %s에게 2장의 카드를 나누었습니다.\n",
-                dealer.getName(), playersName(players));
+                dealer.getName(), String.join(COMMA, playersNames));
     }
 
     private static String playersName(Players players) {
@@ -90,8 +91,16 @@ public class OutputView {
         }
         System.out.println();
         for (Player player : resultBoard.showUserResultBoard().keySet()) {
-            System.out.println(player.getName() + ": " +
+            System.out.println(player.getName() + COLON +
                     resultBoard.showUserResultBoard().get(player).getResult());
+        }
+    }
+
+    public static void printProfitResult(long dealerProfit, Map<Player, Long> profitResult) {
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + dealerProfit);
+        for (Player player : profitResult.keySet()) {
+            System.out.println(player.getName() + COLON + profitResult.get(player));
         }
     }
 }
