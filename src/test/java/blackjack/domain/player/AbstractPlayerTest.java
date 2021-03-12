@@ -7,6 +7,10 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.type.CardNumberType;
 import blackjack.domain.card.type.CardShapeType;
 import blackjack.domain.player.strategy.AllCardsOpenStrategy;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -154,60 +158,37 @@ public class AbstractPlayerTest {
         assertThat(user.getName()).isEqualTo(new Name(TEST_NAME));
     }
 
-    @DisplayName("카드 순서 안섞이는지 테스트")
+    @DisplayName("isCanDraw() 호출 후 카드 순서 안섞이는지 테스트")
     @Test
     void getCardsInOrder() {
-        Card card1 = new Card(CardShapeType.HEART, CardNumberType.ACE);
-        Card card2 = new Card(CardShapeType.CLUB, CardNumberType.TWO);
-        Card card3 = new Card(CardShapeType.SPADE, CardNumberType.THREE);
-        Card card4 = new Card(CardShapeType.DIAMOND, CardNumberType.FOUR);
-        Card card5 = new Card(CardShapeType.HEART, CardNumberType.FIVE);
-
         Dealer dealer = new Dealer();
-        dealer.drawOneCard(card1);
-        dealer.drawOneCard(card2);
-        dealer.drawOneCard(card3);
-        dealer.drawOneCard(card4);
-        dealer.drawOneCard(card5);
-
-        User user1 = new User("유저1");
-        user1.drawOneCard(card1);
-        user1.drawOneCard(card2);
-        user1.drawOneCard(card3);
-        user1.drawOneCard(card4);
-        user1.drawOneCard(card5);
-
-        User user2 = new User("유저2");
-        user2.drawOneCard(card1);
-        user2.drawOneCard(card2);
-        user2.drawOneCard(card3);
-        user2.drawOneCard(card4);
-        user2.drawOneCard(card5);
-
-        User user3 = new User("유저3");
-        user3.drawOneCard(card1);
-        user3.drawOneCard(card2);
-        user3.drawOneCard(card3);
-        user3.drawOneCard(card4);
-        user3.drawOneCard(card5);
-
-        assertThat(dealer.getCards()).containsExactly(card1);
-
         dealer.setCardOpenStrategy(new AllCardsOpenStrategy());
+        drawCardsInOrder(dealer);
 
-        assertThat(dealer.getCards()).containsExactly(card1, card2, card3, card4, card5);
-        assertThat(user1.getCards()).containsExactly(card1, card2, card3, card4, card5);
-        assertThat(user2.getCards()).containsExactly(card1, card2, card3, card4, card5);
-        assertThat(user3.getCards()).containsExactly(card1, card2, card3, card4, card5);
+        User user = new User("유저");
+        drawCardsInOrder(user);
+
+        assertThat(dealer.getCards()).isSortedAccordingTo(Comparator.comparing(Card::getValue));
+        assertThat(user.getCards()).isSortedAccordingTo(Comparator.comparing(Card::getValue));
 
         dealer.isCanDraw();
-        user1.isCanDraw();
-        user2.isCanDraw();
-        user3.isCanDraw();
+        user.isCanDraw();
 
-        assertThat(dealer.getCards()).containsExactly(card1, card2, card3, card4, card5);
-        assertThat(user1.getCards()).containsExactly(card1, card2, card3, card4, card5);
-        assertThat(user2.getCards()).containsExactly(card1, card2, card3, card4, card5);
-        assertThat(user3.getCards()).containsExactly(card1, card2, card3, card4, card5);
+        assertThat(dealer.getCards()).isSortedAccordingTo(Comparator.comparing(Card::getValue));
+        assertThat(user.getCards()).isSortedAccordingTo(Comparator.comparing(Card::getValue));
+    }
+
+    private void drawCardsInOrder(Player player) {
+        List<Card> cards = new ArrayList<>(Arrays.asList(
+            new Card(CardShapeType.HEART, CardNumberType.ACE),
+            new Card(CardShapeType.CLUB, CardNumberType.TWO),
+            new Card(CardShapeType.SPADE, CardNumberType.THREE),
+            new Card(CardShapeType.DIAMOND, CardNumberType.FOUR),
+            new Card(CardShapeType.HEART, CardNumberType.FIVE)
+        ));
+
+        for (Card card : cards) {
+            player.drawOneCard(card);
+        }
     }
 }
