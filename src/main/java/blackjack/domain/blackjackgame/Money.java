@@ -2,6 +2,7 @@ package blackjack.domain.blackjackgame;
 
 public class Money {
 
+    private static final int DEFAULT_EARNING_RATE = 1;
     private final double value;
 
     public Money() {
@@ -13,6 +14,9 @@ public class Money {
     }
 
     public Money sum(Money money) {
+        if (money.isEmpty()) {
+            return this;
+        }
         return new Money(value + money.getValue());
     }
 
@@ -21,6 +25,9 @@ public class Money {
     }
 
     public Money profit(double earningRate) {
+        if (earningRate == DEFAULT_EARNING_RATE) {
+            return this;
+        }
         return new Money(value * earningRate);
     }
 
@@ -28,4 +35,7 @@ public class Money {
         return new Money(value * -1);
     }
 
+    public boolean isEmpty() {
+        return value == 0;
+    }
 }

@@ -19,12 +19,12 @@ public class Stay extends State {
 
     @Override
     public State draw(Card card) {
-        throw new IllegalArgumentException(STAY_DRAW_ERROR);
+        throw new UnsupportedOperationException(STAY_DRAW_ERROR);
     }
 
     @Override
     public State stay() {
-        throw new IllegalArgumentException(STAY_STAY_ERROR);
+        throw new UnsupportedOperationException(STAY_STAY_ERROR);
     }
 
     @Override

@@ -14,12 +14,12 @@ public class Bust extends State {
 
     @Override
     public State draw(Card card) {
-        throw new IllegalArgumentException(BUST_DRAW_ERROR);
+        throw new UnsupportedOperationException(BUST_DRAW_ERROR);
     }
 
     @Override
     public State stay() {
-        throw new IllegalArgumentException(BUST_STAY_ERROR);
+        throw new UnsupportedOperationException(BUST_STAY_ERROR);
     }
 
     @Override

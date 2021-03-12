@@ -14,12 +14,12 @@ public class Blackjack extends State {
 
     @Override
     public State draw(Card card) {
-        throw new IllegalArgumentException(BLACKJACK_DRAW_ERROR);
+        throw new UnsupportedOperationException(BLACKJACK_DRAW_ERROR);
     }
 
     @Override
     public State stay() {
-        throw new IllegalArgumentException(BLACKJACK_STAY_ERROR);
+        throw new UnsupportedOperationException(BLACKJACK_STAY_ERROR);
     }
 
     @Override
