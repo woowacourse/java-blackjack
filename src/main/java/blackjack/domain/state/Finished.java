@@ -22,9 +22,4 @@ public abstract class Finished extends Started {
     public boolean isFinished() {
         return true;
     }
-
-    @Override
-    public double profit(double money) {
-        return money;
-    }
 }

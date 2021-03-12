@@ -8,11 +8,6 @@ public class Bust extends Finished {
     }
 
     @Override
-    public double profit(double money) {
-        return 0;
-    }
-
-    @Override
     public boolean isBlackjack() {
         return false;
     }

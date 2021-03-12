@@ -8,11 +8,6 @@ public class Blackjack extends Finished {
     }
 
     @Override
-    public double profit(double money) {
-        return money * 1.5;
-    }
-
-    @Override
     public boolean isBlackjack() {
         return true;
     }

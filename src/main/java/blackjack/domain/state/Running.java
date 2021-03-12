@@ -12,9 +12,4 @@ public abstract class Running extends Started {
     public boolean isFinished() {
         return false;
     }
-
-    @Override
-    public double profit(double money) {
-        throw new IllegalStateException();
-    }
 }
