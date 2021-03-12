@@ -1,9 +1,9 @@
 package blakcjack.domain.participant;
 
-import blakcjack.domain.Outcome;
 import blakcjack.domain.card.Card;
 import blakcjack.domain.card.CardNumber;
 import blakcjack.domain.card.CardSymbol;
+import blakcjack.domain.outcome.Outcome;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

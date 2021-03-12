@@ -45,7 +45,7 @@
 
 - [x] Symbol과 Number 정보를 조합하여 Map<String, Card> 형태로 관리하던 Card Cache를 EnumMap<Symbol, EnumMap<Number, Card>> 형태로 변경
 - [x] Score 클래스 생성
-- [ ] OutcomeStatistics DTO로 변경
+- [x] OutcomeStatistics DTO로 변경를 (OutcomeSummaryDto)
 - [x] Cards 클래스 생성 현재 Participant가 가지고 있는 점수 계산 로직 이동
 
 ## 2단계 추가 요구 사항

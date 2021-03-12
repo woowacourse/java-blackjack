@@ -1,11 +1,10 @@
 package blakcjack.domain.blackjackgame;
 
-import blakcjack.domain.Outcome;
-import blakcjack.domain.OutcomeStatistics;
 import blakcjack.domain.card.Card;
 import blakcjack.domain.card.CardNumber;
 import blakcjack.domain.card.CardSymbol;
 import blakcjack.domain.card.Deck;
+import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;
 import blakcjack.domain.shufflestrategy.ShuffleStrategy;
@@ -87,7 +86,7 @@ class BlackjackGameTest {
         return expectedPlayers;
     }
 
-    @DisplayName("최종 승패 판단 성공")
+    @DisplayName("승패 판단 성공")
     @Test
     void judgeOutcome() {
         final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
@@ -95,24 +94,26 @@ class BlackjackGameTest {
         blackjackGame.getPlayers().get(0).receiveCard(Card.of(CardSymbol.HEART, CardNumber.TWO));
         blackjackGame.getDealer().receiveCard(Card.of(CardSymbol.HEART, CardNumber.SEVEN));
 
-        final OutcomeStatistics expectedOutcomeStatistics = getExpectedOutcomeStatistics();
-        final OutcomeStatistics outcomeStatistics = blackjackGame.judgeOutcome();
+        final Map<String, Outcome> playersOutcome = blackjackGame.judgePlayersOutcome();
+        assertThat(playersOutcome).isEqualTo(getExpectedPlayersOutcome());
 
-        assertThat(outcomeStatistics).isEqualTo(expectedOutcomeStatistics);
+        final Map<Outcome, Integer> dealerOutcome = blackjackGame.judgeDealerOutcome(playersOutcome);
+        assertThat(dealerOutcome).isEqualTo(getExpectedDealerOutcome());
     }
 
-    private OutcomeStatistics getExpectedOutcomeStatistics() {
-        Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
-        Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
-
-        dealerOutcome.put(Outcome.WIN, 2);
-        dealerOutcome.put(Outcome.DRAW, 1);
-        dealerOutcome.put(Outcome.LOSE, 0);
-
+    private Map<String, Outcome> getExpectedPlayersOutcome() {
+        final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
         playersOutcome.put("pobi", Outcome.LOSE);
         playersOutcome.put("sakjung", Outcome.DRAW);
         playersOutcome.put("mediumBear", Outcome.LOSE);
+        return playersOutcome;
+    }
 
-        return new OutcomeStatistics(dealerOutcome, playersOutcome);
+    private Map<Outcome, Integer> getExpectedDealerOutcome() {
+        final Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
+        dealerOutcome.put(Outcome.WIN, 2);
+        dealerOutcome.put(Outcome.DRAW, 1);
+        dealerOutcome.put(Outcome.LOSE, 0);
+        return dealerOutcome;
     }
 }

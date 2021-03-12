@@ -1,12 +1,12 @@
 package blakcjack.view;
 
 
-import blakcjack.domain.Outcome;
-import blakcjack.domain.OutcomeStatistics;
 import blakcjack.domain.card.Card;
+import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.ParticipantType;
+import blakcjack.dto.OutcomeSummaryDto;
 
 import java.util.List;
 import java.util.Map;
@@ -81,10 +81,10 @@ public class OutputView {
         return participant.getNameValue() + "카드: " + concatenateCardsInformation(participant.showCardList());
     }
 
-    public static void printFinalOutcomeSummary(final OutcomeStatistics outcomeStatistics, final String dealerName) {
+    public static void printFinalOutcomeSummary(final OutcomeSummaryDto outcomeSummaryDto, final String dealerName) {
         System.out.println("## 최종 승패");
-        printDealerOutcome(outcomeStatistics.getDealerOutcome(), dealerName);
-        printPlayersOutcome(outcomeStatistics.getPlayersOutcome());
+        printDealerOutcome(outcomeSummaryDto.getDealerOutcome(), dealerName);
+        printPlayersOutcome(outcomeSummaryDto.getPlayersOutcome());
     }
 
     private static void printDealerOutcome(final Map<Outcome, Integer> dealerOutcome, final String dealerName) {

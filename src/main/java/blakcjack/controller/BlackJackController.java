@@ -4,13 +4,16 @@ import blakcjack.domain.blackjackgame.BlackjackGame;
 import blakcjack.domain.blackjackgame.GameInitializationFailureException;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.card.EmptyDeckException;
+import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
+import blakcjack.dto.OutcomeSummaryDto;
 import blakcjack.exception.GameTerminationException;
 import blakcjack.view.InputView;
 
 import java.util.List;
+import java.util.Map;
 
 import static blakcjack.view.InputView.takePlayerNamesInput;
 import static blakcjack.view.OutputView.printDealerAdditionalCardMessage;
@@ -89,6 +92,9 @@ public class BlackJackController {
 
     private void notifyFinalSummary(final BlackjackGame blackjackGame, final List<Participant> players, final Dealer dealer) {
         printFinalHandsSummary(dealer, players);
-        printFinalOutcomeSummary(blackjackGame.judgeOutcome(), dealer.getNameValue());
+
+        final Map<String, Outcome> playersOutcome = blackjackGame.judgePlayersOutcome();
+        final Map<Outcome, Integer> dealerOutcome = blackjackGame.judgeDealerOutcome(playersOutcome);
+        printFinalOutcomeSummary(OutcomeSummaryDto.of(dealerOutcome, playersOutcome), dealer.getNameValue());
     }
 }

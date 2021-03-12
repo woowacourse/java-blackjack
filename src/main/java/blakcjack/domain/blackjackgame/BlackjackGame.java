@@ -1,8 +1,7 @@
 package blakcjack.domain.blackjackgame;
 
-import blakcjack.domain.Outcome;
-import blakcjack.domain.OutcomeStatistics;
 import blakcjack.domain.card.Deck;
+import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;
@@ -57,13 +56,7 @@ public class BlackjackGame {
         participant.receiveCard(deck.drawCard());
     }
 
-    public OutcomeStatistics judgeOutcome() {
-        final Map<String, Outcome> playersOutcome = judgePlayersOutcome();
-        final Map<Outcome, Integer> dealerOutcome = judgeDealerOutcome(playersOutcome);
-        return new OutcomeStatistics(dealerOutcome, playersOutcome);
-    }
-
-    private Map<String, Outcome> judgePlayersOutcome() {
+    public Map<String, Outcome> judgePlayersOutcome() {
         final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
 
         for (final Participant player : players) {
@@ -73,7 +66,7 @@ public class BlackjackGame {
         return playersOutcome;
     }
 
-    private Map<Outcome, Integer> judgeDealerOutcome(final Map<String, Outcome> playersOutcome) {
+    public Map<Outcome, Integer> judgeDealerOutcome(final Map<String, Outcome> playersOutcome) {
         final Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
 
         dealerOutcome.put(Outcome.WIN, Collections.frequency(playersOutcome.values(), Outcome.LOSE));

@@ -1,4 +1,4 @@
-package blakcjack.domain;
+package blakcjack.domain.outcome;
 
 public enum Outcome {
     WIN("승"),

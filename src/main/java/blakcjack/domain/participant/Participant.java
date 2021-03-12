@@ -1,9 +1,9 @@
 package blakcjack.domain.participant;
 
-import blakcjack.domain.Outcome;
 import blakcjack.domain.card.Card;
 import blakcjack.domain.card.Cards;
 import blakcjack.domain.name.Name;
+import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.score.Score;
 
 import java.util.Collections;
