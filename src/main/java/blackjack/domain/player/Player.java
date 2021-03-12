@@ -1,7 +1,6 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 import blackjack.domain.player.state.BlackJack;
@@ -14,20 +13,23 @@ public abstract class Player {
 
     private final String name;
     private final int batMoney;
+    private final Deck deck;
     private State state;
 
     protected Player(String name, int batMoney, Card first, Card second) {
         this.name = name;
         this.batMoney = batMoney;
+        this.deck = Deck.of(first,second);
         this.state = StateFactory.start(Deck.of(first, second));
     }
 
     public void drawCard(Card card) {
-        state = state.draw(card);
+        deck.addCard(card);
+        state = state.currentState(deck);
     }
 
     public Score score() {
-        return state.score();
+        return deck.score();
     }
 
     public boolean isBlackJack() {
@@ -53,7 +55,7 @@ public abstract class Player {
     }
 
     public List<Card> cards() {
-        return state.cards();
+        return deck.cards();
     }
 
     public abstract boolean drawable();

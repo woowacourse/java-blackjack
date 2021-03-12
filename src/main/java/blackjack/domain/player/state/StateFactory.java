@@ -6,8 +6,8 @@ public class StateFactory {
 
     public static State start(Deck deck) {
         if (deck.isBlackJack()) {
-            return new BlackJack(deck);
+            return new BlackJack();
         }
-        return new Hit(deck);
+        return new Hit();
     }
 }
