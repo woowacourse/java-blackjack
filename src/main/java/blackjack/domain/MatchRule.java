@@ -7,11 +7,11 @@ import java.util.function.BiPredicate;
 import java.util.stream.Stream;
 
 public enum MatchRule {
-    BUST_PLAYER(MatchRule::isPlayerBust, ResultType.LOSE),
-    BUST_DEALER(MatchRule::isOnlyDealerBust, ResultType.WIN),
     BLACKJACK_PLAYER_WIN(MatchRule::isOnlyPlayerBlackJack, ResultType.WIN),
     BLACKJACK_DEALER_WIN(MatchRule::isOnlyDealerBlackJack, ResultType.LOSE),
     BLACKJACK_DRAW(MatchRule::isBothBlackJack, ResultType.DRAW),
+    BUST_PLAYER(MatchRule::isPlayerBust, ResultType.LOSE),
+    BUST_DEALER(MatchRule::isOnlyDealerBust, ResultType.WIN),
     SCORE_COMPARISON_PLAYER_WIN(MatchRule::isPlayerScoreHigher, ResultType.WIN),
     SCORE_COMPARISON_DEALER_WIN(MatchRule::isDealerScoreHigher, ResultType.LOSE),
     SCORE_COMPARISON_DRAW(MatchRule::isBothScoreEquals, ResultType.DRAW);

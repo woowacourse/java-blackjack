@@ -20,6 +20,14 @@ public class Money {
         }
     }
 
+    public Money multiply(double multiplicand) {
+        return new Money((long) (this.money * multiplicand));
+    }
+
+    public long toLong() {
+        return this.money;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

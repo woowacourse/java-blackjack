@@ -1,5 +1,6 @@
 package blackjack.domain.user;
 
+import blackjack.domain.Money;
 import blackjack.domain.card.CardDeck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +11,7 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UsersTest {
+    private final Money defaultMoney = Money.of(0);
     private Dealer dealer;
     private Players players;
     private Users users;
@@ -19,7 +21,7 @@ class UsersTest {
     void setUp() {
         cardDeck = CardDeck.createDeck();
         dealer = new Dealer();
-        players = Players.of(Names.of(Arrays.asList("youngE", "kimkim")));
+        players = Players.of(Arrays.asList(new Player(Name.of("youngE"), defaultMoney), new Player(Name.of("kimkim"), defaultMoney)));
         users = Users.of(dealer, players);
     }
 

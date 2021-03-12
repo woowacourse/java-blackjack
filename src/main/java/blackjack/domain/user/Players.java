@@ -1,7 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.MatchRule;
-import blackjack.domain.dto.Results;
+import blackjack.domain.result.Results;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,17 +15,15 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(Names names) {
-        return new Players(names.stream()
-                .map(Player::new)
-                .collect(toList()));
+    public static Players of(List<Player> players) {
+        return new Players(players);
     }
 
     public Results generateResultsMapAgainstDealer(Dealer dealer) {
         return this.players.stream()
                 .collect(collectingAndThen(toMap(player -> player,
                         player -> MatchRule.getMatchResult(player, dealer)),
-                        Results::new));
+                        Results::of));
     }
 
     public List<Player> players() {

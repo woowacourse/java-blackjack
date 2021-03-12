@@ -1,8 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.ResultType;
-import blackjack.domain.dto.DealerResult;
-import blackjack.domain.dto.Results;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.Results;
 import blackjack.domain.card.Cards;
 import blackjack.domain.user.*;
 import blackjack.domain.card.Card;
@@ -74,24 +74,27 @@ public class OutputView {
                 .collect(Collectors.joining(COMMA_WITH_BLANK));
     }
 
-    public static void printResult(Results results) {
-        System.out.println("## 최종 승패");
+    public static void printDealerGetNewCardsMessage() {
+        System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+    }
 
-        for (User user : results.userSet()) {
-            String result = results.getResultOf(user).getName();
-            System.out.printf("%s: %s\n", user.getName(), result);
+    public static void printResult(Results results, DealerResult dealerResult) {
+        System.out.println("## 최종 결과");
+
+        printDealerResult(dealerResult);
+
+        for (Player player : results.playerSet()) {
+            String result = results.getResultOf(player).getName();
+            System.out.printf("%s: %s, 수익: %d\n", player.getName(), result, results.getEarningMoneyOf(player).toLong());
         }
     }
 
     public static void printDealerResult(DealerResult dealerResult) {
-        System.out.printf("딜러: %d승 %d무 %d패 \n",
+        System.out.printf("딜러: %d승 %d무 %d패, 수익: %d\n",
                 dealerResult.get(ResultType.WIN),
                 dealerResult.get(ResultType.DRAW),
-                dealerResult.get(ResultType.LOSE)
+                dealerResult.get(ResultType.LOSE),
+                dealerResult.getProfit()
         );
-    }
-
-    public static void printDealerGetNewCardsMessage() {
-        System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
     }
 }

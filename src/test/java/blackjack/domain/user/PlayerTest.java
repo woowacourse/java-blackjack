@@ -1,5 +1,6 @@
 package blackjack.domain.user;
 
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Denomination;
@@ -12,10 +13,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PlayerTest {
+    private final Money defaultMoney = Money.of(0);
+
     @DisplayName("플레이어는 이름을 받아 생성된다.")
     @Test
     void playerCreationTest() {
-        Player player = new Player(Name.of("youngE"));
+        Player player = new Player(Name.of("youngE"), defaultMoney);
         assertThat(player).isInstanceOf(Player.class);
     }
 
@@ -23,14 +26,14 @@ class PlayerTest {
     @Test
     void playerCreationErrorTest() {
         assertThatThrownBy(() -> {
-            new Player(Name.of(" "));
+            new Player(Name.of(" "), defaultMoney);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("플레이어는 카드를 받을 수 있다.")
     @Test
     void drawCard() {
-        Player player = new Player(Name.of("Player"));
+        Player player = new Player(Name.of("Player"), defaultMoney);
         CardDeck cardDeck = CardDeck.createDeck();
         player.draw(cardDeck.drawCard());
 
@@ -40,7 +43,7 @@ class PlayerTest {
     @DisplayName("isBust:true - 플레이어 카드의 총합이 21을 초과하는 경우 자동 중단")
     @Test
     void isBustTrueWhenOver21Score() {
-        Player player = new Player(Name.of("Player"));
+        Player player = new Player(Name.of("Player"), defaultMoney);
 
         Card card1 = new Card(Suit.CLUB, Denomination.JACK);
         Card card2 = new Card(Suit.CLUB, Denomination.SEVEN);

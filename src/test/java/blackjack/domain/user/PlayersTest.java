@@ -1,34 +1,28 @@
 package blackjack.domain.user;
 
+import blackjack.domain.Money;
 import blackjack.domain.ResultType;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
-import blackjack.domain.dto.Results;
+import blackjack.domain.result.Results;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
+import static blackjack.domain.user.Fixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayersTest {
+    private final Money defaultMoney = Money.of(0);
     private Players players;
     private Player player1;
     private Player player2;
     private Dealer dealer;
-    private Card jack = new Card(Suit.CLUB, Denomination.JACK);
-    private Card ace = new Card(Suit.CLUB, Denomination.ACE);
-    private Card seven = new Card(Suit.CLUB, Denomination.SEVEN);
-    private Card six = new Card(Suit.CLUB, Denomination.SIX);
 
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        players = Players.of(Names.of(Arrays.asList("youngE", "kimkim")));
+        players = Players.of(Arrays.asList(new Player(Name.of("youngE"), defaultMoney), new Player(Name.of("kimkim"), defaultMoney)));
         player1 = players.players().get(0);
         player2 = players.players().get(1);
         player1.draw(ace);
@@ -46,12 +40,9 @@ public class PlayersTest {
         dealer.draw(jack);
         Results results = players.generateResultsMapAgainstDealer(dealer);
 
-        assertThat(results).isEqualTo(new Results(new HashMap<User, ResultType>() {
-            {
-                put(player1, ResultType.DRAW);
-                put(player2, ResultType.LOSE);
-            }
-        }));
+        assertThat(results.getResultOf(player1)).isEqualTo(ResultType.DRAW);
+
+        assertThat(results.getResultOf(player2)).isEqualTo(ResultType.LOSE);
     }
 
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러가 블랙잭이 아니었을 때")
@@ -61,12 +52,9 @@ public class PlayersTest {
         dealer.draw(seven);
         Results results = players.generateResultsMapAgainstDealer(dealer);
 
-        assertThat(results).isEqualTo(new Results(new HashMap<User, ResultType>() {
-            {
-                put(player1, ResultType.WIN);
-                put(player2, ResultType.LOSE);
-            }
-        }));
+        assertThat(results.getResultOf(player1)).isEqualTo(ResultType.WIN);
+
+        assertThat(results.getResultOf(player2)).isEqualTo(ResultType.LOSE);
     }
 
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러와 플레이어가 버스트일 때")
@@ -78,12 +66,9 @@ public class PlayersTest {
         player2.draw(seven); // player2 에게 7을 추가로 주어 23을 만들어 버스트 상태로 만든다.
         Results results = players.generateResultsMapAgainstDealer(dealer);
 
-        assertThat(results).isEqualTo(new Results(new HashMap<User, ResultType>() {
-            {
-                put(player1, ResultType.WIN);
-                put(player2, ResultType.LOSE);
-            }
-        }));
+        assertThat(results.getResultOf(player1)).isEqualTo(ResultType.WIN);
+
+        assertThat(results.getResultOf(player2)).isEqualTo(ResultType.LOSE);
     }
 
 }
