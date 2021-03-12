@@ -19,9 +19,8 @@ public class UserTest {
     @DisplayName("유저는 갖고있는 카드들의 숫자 총 합이 21 이하일 때 선택 가능")
     @Test
     void canDrawCardWhen1() {
-        User user = new User(TEST_NAME);
         Card twoCard = Card.valueOf(CardShape.DIAMOND, CardNumber.TWO);
-        user.drawCard(twoCard);
+        User user = new User(TEST_NAME, twoCard, twoCard);
         assertThat(!user.isFinished()).isTrue();
     }
 
