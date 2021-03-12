@@ -22,7 +22,7 @@ public class Users {
             .collect(Collectors.toList());
     }
 
-    public Map<Name, Integer> getResult(Dealer dealer) {
+    public Map<Name, Integer> profits(Dealer dealer) {
         Map<Name, Integer> result = new LinkedHashMap<>();
         for (User user : users) {
             result.put(user.getName(), user.profit(dealer));

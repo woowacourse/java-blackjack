@@ -45,7 +45,7 @@ public class Dealer extends AbstractPlayer {
         return cardOpenStrategy.getCards(super.getCards());
     }
 
-    public int getResult(Map<Name, Integer> usersResult) {
+    public int profit(Map<Name, Integer> usersResult) {
         int dealerAmount = 0;
         for (Name name : usersResult.keySet()) {
             dealerAmount -= usersResult.get(name);

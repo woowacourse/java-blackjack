@@ -67,6 +67,6 @@ public class DealerTest {
         result.put(new Name("mungto"), -5000);
 
         Dealer dealer = new Dealer();
-        assertThat(dealer.getResult(result)).isEqualTo(-20000);
+        assertThat(dealer.profit(result)).isEqualTo(-20000);
     }
 }

@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.player.Name;
-import blackjack.domain.player.dto.GameResultDTO;
+import blackjack.domain.player.dto.resultProfitDTO;
 import blackjack.domain.player.dto.PlayerDTO;
 import java.util.List;
 import java.util.Map;
@@ -51,10 +51,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printResultMessage(GameResultDTO gameResultDTO) {
+    public static void printResultMessage(resultProfitDTO gameResultDTO) {
         System.out.println("## 최종 수익");
-        System.out.println("딜러: " + gameResultDTO.getDealerResult());
-        System.out.print(getPlayersResultMessage(gameResultDTO.getGameResult()));
+        System.out.println("딜러: " + gameResultDTO.getDealerProfit());
+        System.out.print(getPlayersResultMessage(gameResultDTO.getUserProfits()));
     }
 
     private static String getPlayersResultMessage(Map<Name, Integer> result) {

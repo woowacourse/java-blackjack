@@ -53,7 +53,7 @@ public class UsersTest {
     @DisplayName("게임 결과 반환 테스트")
     @Test
     void result() {
-        Map<Name, Integer> result = users.getResult(dealer);
+        Map<Name, Integer> result = users.profits(dealer);
         assertThat(result.get(new Name("pobi"))).isEqualTo(10000);
         assertThat(result.get(new Name("jason"))).isEqualTo(-10000);
         assertThat(result.get(new Name("inbi"))).isEqualTo(0);

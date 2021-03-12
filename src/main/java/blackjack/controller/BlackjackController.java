@@ -5,7 +5,7 @@ import blackjack.domain.player.Name;
 import blackjack.domain.player.User;
 import blackjack.domain.player.Users;
 import blackjack.domain.player.cardopen.AllCardsOpenStrategy;
-import blackjack.domain.player.dto.GameResultDTO;
+import blackjack.domain.player.dto.resultProfitDTO;
 import blackjack.domain.player.dto.PlayerDTO;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -31,9 +31,9 @@ public class BlackjackController {
 
     private void printResultMessage(Users users, Dealer dealer) {
         OutputView.printFinalCardsMessage(getUserDTOs(users), new PlayerDTO(dealer));
-        Map<Name, Integer> usersResult = users.getResult(dealer);
+        Map<Name, Integer> usersResult = users.profits(dealer);
         OutputView
-            .printResultMessage(new GameResultDTO(usersResult, dealer.getResult(usersResult)));
+            .printResultMessage(new resultProfitDTO(usersResult, dealer.profit(usersResult)));
     }
 
     private void usersBetAmount(Users users) {
