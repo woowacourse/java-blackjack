@@ -28,7 +28,8 @@ public class Betting {
             int profitWeight = result.getProfit();
             profitResult.computeIfAbsent(gamer, (key) -> gamer.profit(bettingAmount * profitWeight));
         });
-        return BettingResult.of(profitResult, calculateDealerProfit(profitResult));
+        double dealerProfit = calculateDealerProfit(profitResult);
+        return BettingResult.of(profitResult, dealerProfit);
     }
 
     private double calculateDealerProfit(Map<Player, Double> gamersProfit) {
