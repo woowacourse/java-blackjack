@@ -12,6 +12,8 @@ import java.util.stream.IntStream;
 public class Score {
     public static final int MIN_CACHE_VALUE = 0;
     public static final int MAX_CACHE_VALUE = 31;
+    public static final int ADDITIONAL_ACE_VALUE = 10;
+    public static final int BLACKJACK_VALUE = 21;
 
     private static final List<Score> cache;
 
@@ -44,6 +46,22 @@ public class Score {
         if (value < 0) {
             throw new NegativeNumericException(value);
         }
+    }
+
+    public Score applyAsHigherAce() {
+        return addIfNotBust(ADDITIONAL_ACE_VALUE);
+    }
+
+    private Score addIfNotBust(final int plus) {
+        final Score addedScore = Score.from(value + plus);
+        if (addedScore.isBust()) {
+            return this;
+        }
+        return addedScore;
+    }
+
+    private boolean isBust() {
+        return value > BLACKJACK_VALUE;
     }
 
     @Override

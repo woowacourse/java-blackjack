@@ -32,4 +32,14 @@ class ScoreTest {
         assertThatThrownBy(() -> Score.from(-1))
                 .isInstanceOf(NegativeNumericException.class);
     }
+
+    @DisplayName("Bust 되지 않을시 에이스를 11로 선택한다.")
+    @Test
+    void applyAsHigherAce() {
+        assertThat(Score.from(11).applyAsHigherAce())
+                .isEqualTo(Score.from(21));
+
+        assertThat(Score.from(12).applyAsHigherAce())
+                .isEqualTo(Score.from(12));
+    }
 }
