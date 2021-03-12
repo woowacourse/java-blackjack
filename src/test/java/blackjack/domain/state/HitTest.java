@@ -4,10 +4,13 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.user.Cards;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class HitTest {
     @Test
@@ -54,5 +57,27 @@ public class HitTest {
         State state = hit.stay();
 
         assertThat(state).isInstanceOf(Stay.class);
+    }
+
+    @Test
+    @DisplayName("수익을 구할 때 예외가 발생한다.")
+    void getProfit() {
+        Hit hit = new Hit(new Cards(
+                new Card(Suit.CLOVER, Denomination.ACE),
+                new Card(Suit.HEART, Denomination.ACE)));
+
+        assertThatThrownBy(() -> hit.getProfit(new Dealer(), new Money(1000))).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("게임이 끝나지 않음을 확인한다.")
+    void isFinish() {
+        Hit hit = new Hit(new Cards(
+                new Card(Suit.CLOVER, Denomination.ACE),
+                new Card(Suit.HEART, Denomination.ACE)));
+
+        boolean isFinish = hit.isFinish();
+
+        assertThat(isFinish).isFalse();
     }
 }
