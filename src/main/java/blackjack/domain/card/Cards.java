@@ -4,6 +4,7 @@ import blackjack.domain.card.type.CardNumberType;
 import blackjack.domain.card.type.CardShapeType;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Cards {
@@ -26,10 +27,11 @@ public class Cards {
     }
 
     public int getScore() {
-        cards.sort((o1, o2) -> -Integer.compare(o1.getValue(), o2.getValue()));
+        List<Card> cards = new ArrayList<>(this.cards);
+        cards.sort(Comparator.comparing(Card::getValue).reversed());
         int scoreSum = 0;
         for (Card card : cards) {
-            scoreSum += card.getValue(scoreSum);
+            scoreSum += card.getBestValue(scoreSum);
         }
         return scoreSum;
     }

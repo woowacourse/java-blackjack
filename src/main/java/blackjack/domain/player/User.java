@@ -1,15 +1,32 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.card.type.CardNumberType.BLACKJACK;
+import static blackjack.domain.ResultType.DRAW;
+import static blackjack.domain.ResultType.LOSS;
+import static blackjack.domain.ResultType.NONE;
+import static blackjack.domain.ResultType.WIN_NOT_WITH_BLACKJACK;
+import static blackjack.domain.ResultType.WIN_WITH_BLACKJACK;
 
+import blackjack.domain.BettingMoney;
 import blackjack.domain.ResultType;
 import blackjack.domain.UserDrawContinue;
 
 public class User extends AbstractPlayer {
     private boolean isDrawStop = false;
+    private final BettingMoney bettingMoney;
 
     public User(String name) {
         super(name);
+        bettingMoney = new BettingMoney();
+    }
+
+    public User(String name, int bettingMoney) {
+        super(name);
+        this.bettingMoney = new BettingMoney(bettingMoney);
+    }
+
+    public User(Name name, BettingMoney bettingMoney) {
+        super(name);
+        this.bettingMoney = bettingMoney;
     }
 
     public boolean isDrawStop() {
@@ -18,11 +35,7 @@ public class User extends AbstractPlayer {
 
     @Override
     public boolean isCanDraw() {
-        return !(isDrawStop() || isOverBlackJack());
-    }
-
-    private boolean isOverBlackJack() {
-        return this.getScore() > BLACKJACK;
+        return !(isDrawStop() || isBust());
     }
 
     public boolean isDrawContinue(UserDrawContinue userDrawContinue) {
@@ -33,48 +46,68 @@ public class User extends AbstractPlayer {
         return false;
     }
 
-    public ResultType getResult(Dealer dealer) {
-        ResultType bustResult = getBustResult(dealer);
-        if (bustResult != null) {
-            return bustResult;
-        }
-        ResultType blackJackResult = getBlackJackResult(dealer);
-        if (blackJackResult != null) {
-            return blackJackResult;
-        }
-        return getRestResult(dealer);
+    public int getProfit(Dealer dealer) {
+        return bettingMoney.getProfit(getResultNew(dealer));
     }
 
-    private ResultType getBustResult(Dealer dealer) {
+    private ResultType getResultNew(Dealer dealer) {
+        ResultType lossResult = getLossResult(dealer);
+        if (lossResult != NONE) {
+            return lossResult;
+        }
+        ResultType drawResult = getDrawResult(dealer);
+        if (drawResult != NONE) {
+            return drawResult;
+        }
+        return getWinResult(dealer);
+    }
+
+    private ResultType getLossResult(Dealer dealer) {
         if (isBust()) {
-            return ResultType.LOSS;
+            return LOSS;
         }
-        if (dealer.isBust()) {
-            return ResultType.WIN;
+        if (isNobodyBust(dealer)) {
+            return getNobodyBustResult(dealer);
         }
-        return null;
+        return NONE;
     }
 
-    private ResultType getBlackJackResult(Dealer dealer) {
-        if (isBlackJack() && dealer.isBlackJack()) {
-            return ResultType.DRAW;
-        }
-        if (isBlackJack() && !dealer.isBlackJack()) {
-            return ResultType.WIN;
-        }
+    private ResultType getNobodyBustResult(Dealer dealer) {
         if (!isBlackJack() && dealer.isBlackJack()) {
-            return ResultType.LOSS;
+            return LOSS;
         }
-        return null;
+        if (getScore() < dealer.getScore()) {
+            return LOSS;
+        }
+        return NONE;
     }
 
-    private ResultType getRestResult(Dealer dealer) {
-        if (getScore() > dealer.getScore()) {
-            return ResultType.WIN;
+    private boolean isNobodyBust(Dealer dealer) {
+        return !isBust() && !dealer.isBust();
+    }
+
+    private ResultType getDrawResult(Dealer dealer) {
+        if (isBlackJack() && dealer.isBlackJack()) {
+            return DRAW;
         }
-        if (getScore() == dealer.getScore()) {
-            return ResultType.DRAW;
+        if (isNobodyBlackJack(dealer) && isSameScore(dealer)) {
+            return DRAW;
         }
-        return ResultType.LOSS;
+        return NONE;
+    }
+
+    private boolean isNobodyBlackJack(Dealer dealer) {
+        return !isBlackJack() && !dealer.isBlackJack();
+    }
+
+    private boolean isSameScore(Dealer dealer) {
+        return getScore() == dealer.getScore();
+    }
+
+    private ResultType getWinResult(Dealer dealer) {
+        if (isBlackJack() && !dealer.isBlackJack()) {
+            return WIN_WITH_BLACKJACK;
+        }
+        return WIN_NOT_WITH_BLACKJACK;
     }
 }

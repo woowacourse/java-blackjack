@@ -28,14 +28,14 @@ public class CardTest {
     @Test
     void aceValue11WhenScoreSumTenOrLess() {
         Card card = new Card(CardShapeType.CLUB, CardNumberType.ACE);
-        assertThat(card.getValue(10)).isEqualTo(11);
+        assertThat(card.getBestValue(10)).isEqualTo(11);
     }
 
     @DisplayName("현재 점수 총 합에 따라 A 값 결정 : 총 합이 11이상일 때, A값은 1")
     @Test
     void aceValue1WhenScoreSum11OrMore() {
         Card card = new Card(CardShapeType.CLUB, CardNumberType.ACE);
-        assertThat(card.getValue(11)).isEqualTo(1);
+        assertThat(card.getBestValue(11)).isEqualTo(1);
     }
 
     @DisplayName("A 이외의 카드는 모두 변화없이 자기자신의 값을 그대로 반환한다.")
@@ -44,8 +44,8 @@ public class CardTest {
         for (CardNumberType cardNumberType : CardNumberType.values()) {
             if (cardNumberType != CardNumberType.ACE) {
                 Card card = new Card(CardShapeType.CLUB, cardNumberType);
-                assertThat(card.getValue(10)).isEqualTo(card.getValue());
-                assertThat(card.getValue(11)).isEqualTo(card.getValue());
+                assertThat(card.getBestValue(10)).isEqualTo(card.getValue());
+                assertThat(card.getBestValue(11)).isEqualTo(card.getValue());
             }
         }
     }

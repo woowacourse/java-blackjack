@@ -6,6 +6,11 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.type.CardNumberType;
 import blackjack.domain.card.type.CardShapeType;
+import blackjack.domain.player.strategy.AllCardsOpenStrategy;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -151,5 +156,39 @@ public class AbstractPlayerTest {
     void getName() {
         AbstractPlayer user = new User(TEST_NAME);
         assertThat(user.getName()).isEqualTo(new Name(TEST_NAME));
+    }
+
+    @DisplayName("isCanDraw() 호출 후 카드 순서 안섞이는지 테스트")
+    @Test
+    void getCardsInOrder() {
+        Dealer dealer = new Dealer();
+        dealer.setCardOpenStrategy(new AllCardsOpenStrategy());
+        drawCardsInOrder(dealer);
+
+        User user = new User("유저");
+        drawCardsInOrder(user);
+
+        assertThat(dealer.getCards()).isSortedAccordingTo(Comparator.comparing(Card::getValue));
+        assertThat(user.getCards()).isSortedAccordingTo(Comparator.comparing(Card::getValue));
+
+        dealer.isCanDraw();
+        user.isCanDraw();
+
+        assertThat(dealer.getCards()).isSortedAccordingTo(Comparator.comparing(Card::getValue));
+        assertThat(user.getCards()).isSortedAccordingTo(Comparator.comparing(Card::getValue));
+    }
+
+    private void drawCardsInOrder(Player player) {
+        List<Card> cards = new ArrayList<>(Arrays.asList(
+            new Card(CardShapeType.HEART, CardNumberType.ACE),
+            new Card(CardShapeType.CLUB, CardNumberType.TWO),
+            new Card(CardShapeType.SPADE, CardNumberType.THREE),
+            new Card(CardShapeType.DIAMOND, CardNumberType.FOUR),
+            new Card(CardShapeType.HEART, CardNumberType.FIVE)
+        ));
+
+        for (Card card : cards) {
+            player.drawOneCard(card);
+        }
     }
 }
