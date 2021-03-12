@@ -1,18 +1,15 @@
 package blackjack.domain.gametable;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerResultTest {
-   private static final Player player = new Player(new Name("better"), new BettingMoney("10000"));
+    private static final Player player = new Player(new Name("better"), new BettingMoney("10000"));
 
     @Test
     void getName() {

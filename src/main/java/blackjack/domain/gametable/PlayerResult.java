@@ -16,7 +16,7 @@ public class PlayerResult {
             .multiply(outcome.getEarningRate());
     }
 
-    public Name getName(){
+    public Name getName() {
         return name;
     }
 

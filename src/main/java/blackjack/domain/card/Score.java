@@ -33,15 +33,15 @@ public class Score implements Comparable<Score> {
         return score > BLACK_JACK;
     }
 
-    public boolean isNotBurst(){
+    public boolean isNotBurst() {
         return score <= BLACK_JACK;
     }
 
-    public boolean isUnderBlackjack(){
+    public boolean isUnderBlackjack() {
         return score < BLACK_JACK;
     }
 
-    public boolean isNotBlackjack(){
+    public boolean isNotBlackjack() {
         return score != BLACK_JACK;
     }
 

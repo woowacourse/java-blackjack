@@ -1,15 +1,9 @@
 package blackjack.dto;
 
-import blackjack.domain.gametable.Outcome;
 import blackjack.domain.card.Cards;
 import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.gametable.PlayerResult;
-import blackjack.domain.gametable.ScoreBoard;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

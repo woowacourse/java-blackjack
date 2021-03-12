@@ -26,7 +26,8 @@ public class Application {
     }
 
     private static void turnForPlayer(Game game, Player player) {
-        while (!player.isNotAbleToTake() && InputView.requestOneMoreCard(player.getName().toString())) {
+        while (!player.isNotAbleToTake() && InputView
+            .requestOneMoreCard(player.getName().toString())) {
             OutputView.printCards(game.turnForPlayer(player));
         }
     }

@@ -14,11 +14,12 @@ public class Player implements Participant {
     public Player(Name name) {
         this(name, new Cards(Collections.emptyList()), new BettingMoney(0));
     }
+
     public Player(Name name, BettingMoney bettingMoney) {
         this(name, new Cards(Collections.emptyList()), bettingMoney);
     }
 
-    public Player(Name name, Cards cards){
+    public Player(Name name, Cards cards) {
         this(name, cards, new BettingMoney(0));
     }
 
@@ -28,7 +29,7 @@ public class Player implements Participant {
         this.bettingMoney = bettingMoney;
     }
 
-    public BettingMoney getBettingMoney(){
+    public BettingMoney getBettingMoney() {
         return bettingMoney;
     }
 
@@ -54,7 +55,7 @@ public class Player implements Participant {
 
     @Override
     public Score sumCardsForResult() {
-        return  cards.sumCardsForResult();
+        return cards.sumCardsForResult();
     }
 
     @Override

@@ -3,7 +3,6 @@ package blackjack.domain.gametable;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Score;
-import blackjack.domain.gametable.Outcome;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -56,4 +55,5 @@ public class OutcomeTest {
     void result6() {
         assertThat(Outcome.getInstance(Score.of(23), Score.of(22))).isEqualTo(Outcome.DRAW);
     }
+
 }

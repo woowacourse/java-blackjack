@@ -19,7 +19,7 @@ public enum Outcome {
         return word;
     }
 
-    public double getEarningRate(){
+    public double getEarningRate() {
         return earningRate;
     }
 

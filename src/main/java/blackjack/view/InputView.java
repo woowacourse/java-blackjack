@@ -10,15 +10,16 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<String> requestNameAndMoney(){
+    public static List<String> requestNameAndMoney() {
         List<String> playersInfo = new ArrayList<>();
         final String[] names = requestNames();
-        for (String name : names){
+        for (String name : names) {
             final String money = requestBettingMoney(name.trim());
-            playersInfo.add(name+","+money);
+            playersInfo.add(name + "," + money);
         }
         return playersInfo;
     }
+
     private static String[] requestNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         final String namesValue = sc.nextLine();
@@ -27,7 +28,7 @@ public class InputView {
 
     private static String requestBettingMoney(String name) {
         System.out.println();
-        System.out.println(name+"의 배팅 금액은?");
+        System.out.println(name + "의 배팅 금액은?");
         return sc.nextLine().trim();
     }
 

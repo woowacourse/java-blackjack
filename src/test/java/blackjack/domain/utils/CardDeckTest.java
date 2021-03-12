@@ -1,13 +1,13 @@
 package blackjack.domain.utils;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denominations;
 import blackjack.domain.card.Suits;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CardDeckTest {
     @Test
@@ -45,7 +45,6 @@ public class CardDeckTest {
     @DisplayName("51번 pop notEmpty 확인")
     void size2() {
         final FixedCardDeck fixedCardDeck = new FixedCardDeck();
-
 
         for (int i = 0; i < 51; i++) {
             fixedCardDeck.pop();

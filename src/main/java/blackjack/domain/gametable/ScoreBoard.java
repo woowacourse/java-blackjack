@@ -10,20 +10,20 @@ import java.util.List;
 
 public class ScoreBoard {
     private final Score dealerScore;
-    private List<PlayerResult> results;
+    private final List<PlayerResult> results;
 
-    public ScoreBoard(final Participant dealer, final Players players){
+    public ScoreBoard(final Participant dealer, final Players players) {
         this.dealerScore = dealer.sumCardsForResult();
         this.results = playerResults(players);
     }
 
-    public List<PlayerResult> getUnmodifiableResults(){
+    public List<PlayerResult> getUnmodifiableResults() {
         return Collections.unmodifiableList(results);
     }
 
     private List<PlayerResult> playerResults(final Players players) {
         List<PlayerResult> results = new ArrayList<>();
-        for (Player player: players.getUnmodifiableList()){
+        for (Player player : players.getUnmodifiableList()) {
             results.add(new PlayerResult(player, outcomeOfPlayer(player)));
         }
         return results;
@@ -37,11 +37,11 @@ public class ScoreBoard {
         if (dealerScore.isBurst()) {
             return burstCase();
         }
-       return compareWith(playerScore);
+        return compareWith(playerScore);
     }
 
     private Outcome blackjackCase(Score playerScore) {
-        if(playerScore.isBlackjack()){
+        if (playerScore.isBlackjack()) {
             return Outcome.DRAW;
         }
         return Outcome.LOSE;

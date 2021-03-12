@@ -19,7 +19,7 @@ public class BettingMoney {
     }
 
     public BettingMoney(BigDecimal value) {
-        this.money =  value;
+        this.money = value;
     }
 
     private static long validateIsLong(String value) {
@@ -37,7 +37,7 @@ public class BettingMoney {
         return new BettingMoney(result);
     }
 
-    public BigDecimal toBigDecimal(){
+    public BigDecimal toBigDecimal() {
         return money;
     }
 

@@ -23,7 +23,8 @@ public class BettingMoneyTest {
     @Test
     @DisplayName("생성 실패 - 소수점 불가능")
     void create_fail() {
-        assertThatThrownBy(()->new BettingMoney("-1.2")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new BettingMoney("-1.2"))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
