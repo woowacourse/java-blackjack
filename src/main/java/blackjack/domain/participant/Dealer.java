@@ -2,8 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.result.Result;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Dealer extends Participant {
@@ -32,15 +30,6 @@ public class Dealer extends Participant {
             return Result.LOSE;
         }
         return generateResultByScore(participant);
-    }
-
-    public Map<Result, Integer> generateEveryResult(final Players players) {
-        final Map<Result, Integer> dealerResult = new HashMap<>();
-        for (Player player : players.getPlayers()) {
-            Result result = this.generateResult(player);
-            dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
-        }
-        return Collections.unmodifiableMap(dealerResult);
     }
 
     public void calculateProfit(final Map<Player, Double> playerProfit) {

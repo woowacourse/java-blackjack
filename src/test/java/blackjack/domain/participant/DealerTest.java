@@ -92,34 +92,6 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러와 플레이어 사이의 모든 게임 결과를 계산한다")
-    void generateEveryResult() {
-        //Given
-        Player player1 = new Player("joel");
-        Player player2 = new Player("bada");
-        Player player3 = new Player("j.on");
-
-        player1.receiveAdditionalCard(new Card(CardLetter.ACE, CardSuit.CLOVER));
-        player1.receiveAdditionalCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
-
-        player2.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.HEART));
-        player2.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.HEART));
-
-        player3.receiveAdditionalCard(new Card(CardLetter.TWO, CardSuit.DIAMOND));
-        player3.receiveAdditionalCard(new Card(CardLetter.THREE, CardSuit.DIAMOND));
-
-        dealer.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.SPADE));
-        dealer.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.SPADE));
-        //When
-        final Map<Result, Integer> dealerResult =
-                dealer.generateEveryResult(new Players(Arrays.asList(player1, player2, player3)));
-        //Then
-        assertThat(dealerResult.getOrDefault(Result.WIN, 0)).isEqualTo(1);
-        assertThat(dealerResult.getOrDefault(Result.DRAW, 0)).isEqualTo(1);
-        assertThat(dealerResult.getOrDefault(Result.LOSE, 0)).isEqualTo(1);
-    }
-
-    @Test
     @DisplayName("딜러는 플레이어들의 수익을 넘겨받아 자신의 수익을 계산한다")
     void calculateProfit() {
         final Map<Player, Double> playerProfit = new HashMap<>();

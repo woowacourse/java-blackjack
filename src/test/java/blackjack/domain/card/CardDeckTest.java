@@ -43,8 +43,8 @@ public class CardDeckTest {
     @DisplayName("카드의 리스트가 52장이 아니면 에러를 발생시킴")
     void sizeValidation() {
         assertThatThrownBy(() -> new CardDeck(Arrays.asList(new Card(CardLetter.FIVE, CardSuit.HEART))))
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessage("블랙잭을 진행하기 위해서는 52장의 카드가 필요합니다.");
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("블랙잭을 진행하기 위해서는 52장의 카드가 필요합니다.");
     }
 
     @Test

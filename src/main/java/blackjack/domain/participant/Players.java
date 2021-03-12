@@ -67,14 +67,6 @@ public class Players {
         }
     }
 
-    public Map<Player, Result> generateEveryPlayerResult(final Dealer dealer) {
-        final Map<Player, Result> playerResult = new LinkedHashMap<>();
-        for (Player player : players) {
-            playerResult.put(player, player.generateResult(dealer));
-        }
-        return Collections.unmodifiableMap(playerResult);
-    }
-
     public Map<Player, Double> generateEveryPlayerProfit(final Dealer dealer) {
         final Map<Player, Double> playerProfit = new LinkedHashMap<>();
         for (Player player : players) {
