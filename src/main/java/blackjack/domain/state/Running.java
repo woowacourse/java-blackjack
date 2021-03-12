@@ -15,7 +15,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public final double getProfit(Dealer dealer, Money money) {
+    public final long getProfit(Dealer dealer, Money money) {
         throw new IllegalArgumentException("게임 진행 중에는 수익을 구할 수 없습니다.");
     }
 

@@ -26,7 +26,7 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public final double getProfit(Dealer dealer, Money money) {
-        return money.getValue() * earningRate(dealer);
+    public final long getProfit(Dealer dealer, Money money) {
+        return (long) (money.getValue() * earningRate(dealer));
     }
 }

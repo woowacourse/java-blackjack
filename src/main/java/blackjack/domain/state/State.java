@@ -14,7 +14,7 @@ public interface State {
 
     Cards cards();
 
-    double getProfit(Dealer dealer, Money money);
+    long getProfit(Dealer dealer, Money money);
 
     double earningRate(Dealer dealer);
 }
