@@ -6,7 +6,7 @@ public class Player extends Participant {
 
     private final Name name;
 
-    public Player(Name name) {
+    public Player(final Name name) {
         this.name = name;
     }
 

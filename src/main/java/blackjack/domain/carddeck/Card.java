@@ -7,7 +7,7 @@ public class Card {
     private final Pattern pattern;
     private final Number number;
 
-    public Card(Pattern pattern, Number number) {
+    public Card(final Pattern pattern, final Number number) {
         this.pattern = pattern;
         this.number = number;
     }

@@ -58,12 +58,12 @@ public class Dealer extends Participant {
         return TIE;
     }
 
-    private boolean didWin(Player player) {
+    private boolean didWin(final Player player) {
         return (player.isBlackjack() && !this.isBlackjack()) || (this.isBust() && player.isStay()) ||
                 (player.isStay() && this.isStay() && player.isHigherThan(this));
     }
 
-    private boolean didLose(Player player) {
+    private boolean didLose(final Player player) {
         return player.isBust() || (this.isBlackjack() && !player.isBlackjack()) ||
                 (player.isStay() && this.isStay() && this.isHigherThan(player));
     }

@@ -4,7 +4,7 @@ import blackjack.domain.participant.Hand;
 
 public class Stay extends Finished{
 
-    public Stay(Hand hand) {
+    public Stay(final Hand hand) {
         super(hand);
     }
 

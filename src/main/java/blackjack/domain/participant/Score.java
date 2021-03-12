@@ -21,7 +21,7 @@ public class Score {
         return this;
     }
 
-    public boolean compareTo(Score score) {
+    public boolean compareTo(final Score score) {
         return this.value > score.value;
     }
 
@@ -30,15 +30,15 @@ public class Score {
     }
 
     public boolean isBust() {
-        return value > BLACKJACK;
+        return this.value > BLACKJACK;
     }
 
     public boolean isDealerStateStay() {
-        return value >= DEALER_HIT_SCORE;
+        return this.value >= DEALER_HIT_SCORE;
     }
 
     public int getValue() {
-        return value;
+        return this.value;
     }
 
     @Override

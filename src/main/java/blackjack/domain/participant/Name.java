@@ -14,17 +14,17 @@ public class Name {
         validateName(this.value);
     }
 
-    private void validateNull(String name) {
+    private void validateNull(final String name) {
         Objects.requireNonNull(name, "이름은 null 일 수 없습니다.");
     }
 
-    private void validateEmpty(String name) {
+    private void validateEmpty(final String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("이름은 빈값 일 수 없습니다.");
         }
     }
 
-    private void validateName(String name) {
+    private void validateName(final String name) {
         if (DEALER_NAME.equals(name)) {
             throw new IllegalArgumentException("이름으로 \"딜러\" 는 사용할 수 없습니다.");
         }

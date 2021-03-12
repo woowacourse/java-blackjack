@@ -39,14 +39,14 @@ public class BlackjackController {
         }
     }
 
-    private void initBettingMoney(Players players) {
+    private void initBettingMoney(final Players players) {
         for (Player player : players.toList()) {
             Money money = inputBettingMoney(player);
             BlackjackManager.playerInitBettingMoney(player, money);
         }
     }
 
-    private Money inputBettingMoney(Player player) {
+    private Money inputBettingMoney(final Player player) {
         try {
             return new Money(InputView.getBettingMoney(player.getName()));
         } catch (NullPointerException | IllegalArgumentException e) {
@@ -55,12 +55,12 @@ public class BlackjackController {
         return inputBettingMoney(player);
     }
 
-    private void initGame(Dealer dealer, Players players) {
+    private void initGame(final Dealer dealer, final Players players) {
         BlackjackManager.initGame(players, dealer);
         OutputView.printInitGame(players.toList(), dealer);
     }
 
-    private void playBlackjack(Dealer dealer, Players players) {
+    private void playBlackjack(final Dealer dealer, final Players players) {
         for (Player player : players.toList()) {
             playHit(player, dealer);
         }
@@ -70,7 +70,7 @@ public class BlackjackController {
         }
     }
 
-    private void playHit(Player player, Dealer dealer) {
+    private void playHit(final Player player, final Dealer dealer) {
         try {
             hitOrStay(player, dealer);
         } catch (NullPointerException | IllegalArgumentException e) {
@@ -79,7 +79,7 @@ public class BlackjackController {
         }
     }
 
-    private void hitOrStay(Player player, Dealer dealer) {
+    private void hitOrStay(final Player player, final Dealer dealer) {
         if (player.isBlackjack()) {
             OutputView.printPlayerBlackjack(player.getName());
             return;

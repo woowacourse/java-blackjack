@@ -10,7 +10,7 @@ public abstract class Started implements State{
 
     protected final Hand hand;
 
-    protected Started(Hand hand) {
+    protected Started(final Hand hand) {
         this.hand = hand;
     }
 

@@ -1,13 +1,11 @@
 package blackjack.domain;
 
-import java.util.Map;
-
 public class GameResultDto {
 
     private final String name;
     private final double earning;
 
-    public GameResultDto(String name, double earning) {
+    public GameResultDto(final String name, final double earning) {
         this.name = name;
         this.earning = earning;
     }

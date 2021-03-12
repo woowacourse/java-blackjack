@@ -5,12 +5,12 @@ import blackjack.domain.participant.Hand;
 
 public class Hit extends Running{
 
-    public Hit(Hand hand) {
+    public Hit(final Hand hand) {
         super(hand);
     }
 
     @Override
-    public State receiveCard(Card card) {
+    public State receiveCard(final Card card) {
         hand.addCard(card);
         if (hand.isBust()) {
             return new Bust(hand);

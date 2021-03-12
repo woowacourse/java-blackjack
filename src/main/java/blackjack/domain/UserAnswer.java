@@ -11,7 +11,7 @@ public enum UserAnswer {
 
     private final String answer;
 
-    UserAnswer(String answer) {
+    UserAnswer(final String answer) {
         this.answer = answer;
     }
 

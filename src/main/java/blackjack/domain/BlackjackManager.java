@@ -15,16 +15,16 @@ public class BlackjackManager {
     private BlackjackManager() {
     }
 
-    public static void playerInitBettingMoney(Player player, Money money) {
+    public static void playerInitBettingMoney(final Player player, final Money money) {
         player.initMoney(money);
     }
 
-    public static void initGame(Players players, Dealer dealer) {
+    public static void initGame(final Players players, final Dealer dealer) {
         dealer.receiveFirstHand(dealer.drawCards());
         players.initHandByDealer(dealer);
     }
 
-    public static List<GameResultDto> getGameResult(Dealer dealer, Players players) {
+    public static List<GameResultDto> getGameResult(final Dealer dealer, final Players players) {
         List<GameResultDto> playersResultDtos = getPlayersResult(dealer, players);
         GameResultDto dealerResultDto = getDealerResult(playersResultDtos);
 
@@ -34,13 +34,13 @@ public class BlackjackManager {
         return gameResultDtos;
     }
 
-    private static List<GameResultDto> getPlayersResult(Dealer dealer, Players players) {
+    private static List<GameResultDto> getPlayersResult(final Dealer dealer, final Players players) {
         return players.toList().stream()
                 .map(player -> new GameResultDto(player.getName(), calculateEarning(dealer, player)))
                 .collect(Collectors.toList());
     }
 
-    private static GameResultDto getDealerResult(List<GameResultDto> playerResults) {
+    private static GameResultDto getDealerResult(final List<GameResultDto> playerResults) {
         double dealerEarning = playerResults.stream()
                 .filter(playerResult -> playerResult.getEarning() < 0)
                 .mapToDouble(GameResultDto::getEarning)
@@ -48,7 +48,7 @@ public class BlackjackManager {
         return new GameResultDto("딜러", dealerEarning);
     }
 
-    private static double calculateEarning(Dealer dealer, Player player) {
+    private static double calculateEarning(final Dealer dealer, final Player player) {
         GameResult gameResult = dealer.judgePlayer(player);
         if (gameResult == GameResult.WIN) {
             return player.profit();

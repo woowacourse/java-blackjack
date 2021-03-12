@@ -11,8 +11,8 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> names) {
-        this.players = convertToPlayers(names);
+    public Players(final List<String> names) {
+        this.players = convertToPlayers(new ArrayList<>(names));
         validatePlayerCount(names);
         validateDuplicate(names);
     }
@@ -25,19 +25,19 @@ public class Players {
         return players;
     }
 
-    private void validatePlayerCount(List<String> names) {
+    private void validatePlayerCount(final List<String> names) {
         if (names.size() > MAX_PLAYER) {
             throw new IllegalArgumentException("최대 참여 플레이어는 " + MAX_PLAYER + "명입니다.");
         }
     }
 
-    private void validateDuplicate(List<String> names) {
+    private void validateDuplicate(final List<String> names) {
         if (new HashSet<>(names).size() != names.size()) {
             throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
         }
     }
 
-    public void initHandByDealer(Dealer dealer) {
+    public void initHandByDealer(final Dealer dealer) {
         for (Player player : this.players) {
             player.receiveFirstHand(dealer.drawCards());
         }

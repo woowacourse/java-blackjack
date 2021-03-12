@@ -4,6 +4,7 @@ import blackjack.domain.Money;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.state.*;
 
+import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
@@ -14,7 +15,7 @@ public abstract class Participant {
     protected Participant() {
     }
 
-    public void receiveFirstHand(List<Card> cards) {
+    public void receiveFirstHand(final List<Card> cards) {
         this.state = StateFactory.initHand(cards);
     }
 
@@ -31,7 +32,7 @@ public abstract class Participant {
     }
 
     public List<Card> toHandList() {
-        return state.toHandList();
+        return Collections.unmodifiableList(state.toHandList());
     }
 
     public boolean isFinished() {

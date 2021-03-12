@@ -4,7 +4,7 @@ import blackjack.domain.participant.Hand;
 
 public abstract class Running extends Started {
 
-    protected Running(Hand hand) {
+    protected Running(final Hand hand) {
         super(hand);
     }
 
@@ -14,7 +14,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public double profit(double money) {
+    public double profit(final double money) {
         throw new UnsupportedOperationException();
     }
 

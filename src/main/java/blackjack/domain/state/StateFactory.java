@@ -11,7 +11,7 @@ public class StateFactory {
     private StateFactory() {
     }
 
-    public static State initHand(List<Card> cards) {
+    public static State initHand(final List<Card> cards) {
         Hand hand = new Hand(new ArrayList<>(cards));
         if (hand.isBlackjack()) {
             return new Blackjack(hand);
