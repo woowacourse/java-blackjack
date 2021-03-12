@@ -13,4 +13,8 @@ public class CacheMissException extends RuntimeException {
     public CacheMissException(final CardSymbol cardSymbol, final CardNumber cardNumber) {
         super(String.format("%s (%s, %s)", DEFAULT_MESSAGE, cardSymbol.getName(), cardNumber.getName()));
     }
+
+    public CacheMissException(final int value) {
+        super(String.format("%s: (%d)", DEFAULT_MESSAGE, value));
+    }
 }
