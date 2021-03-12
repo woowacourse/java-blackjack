@@ -1,10 +1,16 @@
 package blackjack.domain.player;
 
+import static blackjack.domain.ResultType.DRAW;
+import static blackjack.domain.ResultType.LOSS;
+import static blackjack.domain.ResultType.WIN_NOT_WITH_BLACKJACK;
+import static blackjack.domain.ResultType.WIN_WITH_BLACKJACK;
 import static blackjack.domain.player.UsersTest.POBI;
+import static blackjack.domain.player.UsersTest.bettingMonies;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.ResultType;
 import blackjack.domain.UserDrawContinue;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.type.CardNumberType;
@@ -120,381 +126,417 @@ public class UserTest {
     }
 
     @DisplayName("수익 계산 - 딜러가 bust, 유저가 bust 일 때 = 패")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealerBustUserBust(int bettingMoney) {
-        Dealer dealer = new Dealer(); // bust
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
-        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.THREE));
-        dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.NINE));
-        assertThat(dealer.isBlackJack()).isFalse();
-        assertThat(dealer.isBust()).isTrue();
-        assertThat(dealer.getScore()).isEqualTo(22);
+    @Test
+    void dealerBustUserBust() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // bust
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
+            dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.THREE));
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.NINE));
+            assertThat(dealer.isBlackJack()).isFalse();
+            assertThat(dealer.isBust()).isTrue();
+            assertThat(dealer.getScore()).isEqualTo(22);
 
-        User user = new User(POBI, bettingMoney); // bust
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.KING));
-        user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.FOUR));
-        user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
-        assertThat(user.isBlackJack()).isFalse();
-        assertThat(user.isBust()).isTrue();
-        assertThat(user.getScore()).isEqualTo(22);
+            User user = new User(POBI, bettingMoney); // bust
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.KING));
+            user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.FOUR));
+            user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
+            assertThat(user.isBlackJack()).isFalse();
+            assertThat(user.isBust()).isTrue();
+            assertThat(user.getScore()).isEqualTo(22);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
+            assertProfit(user.getProfit(dealer), LOSS, bettingMoney);
+        }
+    }
+
+    private void assertProfit(int actualProfit, ResultType expectedResult, int bettingMoney) {
+
+        if (expectedResult == WIN_WITH_BLACKJACK) {
+            assertThat(actualProfit).isEqualTo((int) (1.5 * (double) bettingMoney));
+        }
+        if (expectedResult == WIN_NOT_WITH_BLACKJACK) {
+            assertThat(actualProfit).isEqualTo(bettingMoney);
+        }
+        if (expectedResult == DRAW) {
+            assertThat(actualProfit).isEqualTo(0);
+        }
+        if (expectedResult == LOSS) {
+            assertThat(actualProfit).isEqualTo(-bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 bust, 유저가 블랙잭 일 때 = 승")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealerBustUserBlackJack(int bettingMoney) {
-        Dealer dealer = new Dealer(); // bust
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
-        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.THREE));
-        dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.NINE));
-        assertThat(dealer.isBlackJack()).isFalse();
-        assertThat(dealer.isBust()).isTrue();
-        assertThat(dealer.getScore()).isEqualTo(22);
+    @Test
+    void dealerBustUserBlackJack() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // bust
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
+            dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.THREE));
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.NINE));
+            assertThat(dealer.isBlackJack()).isFalse();
+            assertThat(dealer.isBust()).isTrue();
+            assertThat(dealer.getScore()).isEqualTo(22);
 
-        User user = new User(POBI, bettingMoney); // 블랙잭
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.KING));
-        user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.ACE));
-        assertThat(user.isBlackJack()).isTrue();
-        assertThat(user.isBust()).isFalse();
-        assertThat(user.getScore()).isEqualTo(21);
+            User user = new User(POBI, bettingMoney); // 블랙잭
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.KING));
+            user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.ACE));
+            assertThat(user.isBlackJack()).isTrue();
+            assertThat(user.isBust()).isFalse();
+            assertThat(user.getScore()).isEqualTo(21);
 
-        assertThat(user.getProfit(dealer)).isEqualTo((int) (1.5 * (double) bettingMoney));
+            assertProfit(user.getProfit(dealer), WIN_WITH_BLACKJACK, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 bust, 유저가 블랙잭이 아닌 21 일 때 = 승")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealerBustUserNotBlackJack21(int bettingMoney) {
-        Dealer dealer = new Dealer(); // bust
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
-        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.THREE));
-        dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.NINE));
-        assertThat(dealer.isBlackJack()).isFalse();
-        assertThat(dealer.isBust()).isTrue();
-        assertThat(dealer.getScore()).isEqualTo(22);
+    @Test
+    void dealerBustUserNotBlackJack21() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // bust
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
+            dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.THREE));
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.NINE));
+            assertThat(dealer.isBlackJack()).isFalse();
+            assertThat(dealer.isBust()).isTrue();
+            assertThat(dealer.getScore()).isEqualTo(22);
 
-        User user = new User(POBI, bettingMoney); // 블랙잭이 아닌 21
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
-        user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.FIVE));
-        user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
-        assertThat(user.isBlackJack()).isFalse();
-        assertThat(user.isBust()).isFalse();
-        assertThat(user.getScore()).isEqualTo(21);
+            User user = new User(POBI, bettingMoney); // 블랙잭이 아닌 21
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
+            user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.FIVE));
+            user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
+            assertThat(user.isBlackJack()).isFalse();
+            assertThat(user.isBust()).isFalse();
+            assertThat(user.getScore()).isEqualTo(21);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(bettingMoney);
+            assertProfit(user.getProfit(dealer), WIN_NOT_WITH_BLACKJACK, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 bust, 유저가 21 미만일 때 = 승")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealerBustUserUnder21(int bettingMoney) {
-        Dealer dealer = new Dealer(); // bust
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
-        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.THREE));
-        dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.NINE));
-        assertThat(dealer.isBlackJack()).isFalse();
-        assertThat(dealer.isBust()).isTrue();
-        assertThat(dealer.getScore()).isEqualTo(22);
+    @Test
+    void dealerBustUserUnder21() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // bust
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
+            dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.THREE));
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.NINE));
+            assertThat(dealer.isBlackJack()).isFalse();
+            assertThat(dealer.isBust()).isTrue();
+            assertThat(dealer.getScore()).isEqualTo(22);
 
-        User user = new User(POBI, bettingMoney); // 20
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
-        user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.FOUR));
-        user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
-        assertThat(user.isBlackJack()).isFalse();
-        assertThat(user.isBust()).isFalse();
-        assertThat(user.getScore()).isEqualTo(20);
+            User user = new User(POBI, bettingMoney); // 20
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
+            user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.FOUR));
+            user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
+            assertThat(user.isBlackJack()).isFalse();
+            assertThat(user.isBust()).isFalse();
+            assertThat(user.getScore()).isEqualTo(20);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(bettingMoney);
+            assertProfit(user.getProfit(dealer), WIN_NOT_WITH_BLACKJACK, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭, 유저가 bust 일 때 = 패")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealerBlackJackUserBust(int bettingMoney) {
-        Dealer dealer = new Dealer(); // 블랙잭
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
-        dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
-        assertThat(dealer.isBlackJack()).isTrue();
-        assertThat(dealer.isBust()).isFalse();
-        assertThat(dealer.getScore()).isEqualTo(21);
+    @Test
+    void dealerBlackJackUserBust() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 블랙잭
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
+            assertThat(dealer.isBlackJack()).isTrue();
+            assertThat(dealer.isBust()).isFalse();
+            assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI, bettingMoney); // bust
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.KING));
-        user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.FOUR));
-        user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
-        assertThat(user.isBlackJack()).isFalse();
-        assertThat(user.isBust()).isTrue();
-        assertThat(user.getScore()).isEqualTo(22);
+            User user = new User(POBI, bettingMoney); // bust
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.KING));
+            user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.FOUR));
+            user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
+            assertThat(user.isBlackJack()).isFalse();
+            assertThat(user.isBust()).isTrue();
+            assertThat(user.getScore()).isEqualTo(22);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
+            assertProfit(user.getProfit(dealer), LOSS, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭, 유저가 블랙잭 일 때 = 무승부")
     @Test
     void dealerBlackJackUserBlackJack() {
-        Dealer dealer = new Dealer(); // 블랙잭
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
-        dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
-        assertThat(dealer.isBlackJack()).isTrue();
-        assertThat(dealer.isBust()).isFalse();
-        assertThat(dealer.getScore()).isEqualTo(21);
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 블랙잭
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
+            assertThat(dealer.isBlackJack()).isTrue();
+            assertThat(dealer.isBust()).isFalse();
+            assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI); // 블랙잭
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.KING));
-        user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.ACE));
-        assertThat(user.isBlackJack()).isTrue();
-        assertThat(user.isBust()).isFalse();
-        assertThat(user.getScore()).isEqualTo(21);
+            User user = new User(POBI); // 블랙잭
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.KING));
+            user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.ACE));
+            assertThat(user.isBlackJack()).isTrue();
+            assertThat(user.isBust()).isFalse();
+            assertThat(user.getScore()).isEqualTo(21);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(0);
+            assertProfit(user.getProfit(dealer), DRAW, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭, 유저가 블랙잭이 아닌 21 일 때 = 패")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealerBlackJackUserNotBlackJack21(int bettingMoney) {
-        Dealer dealer = new Dealer(); // 블랙잭
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
-        dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
-        assertThat(dealer.isBlackJack()).isTrue();
-        assertThat(dealer.isBust()).isFalse();
-        assertThat(dealer.getScore()).isEqualTo(21);
+    @Test
+    void dealerBlackJackUserNotBlackJack21() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 블랙잭
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
+            assertThat(dealer.isBlackJack()).isTrue();
+            assertThat(dealer.isBust()).isFalse();
+            assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI, bettingMoney); // 블랙잭이 아닌 21
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
-        user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.FIVE));
-        user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
-        assertThat(user.isBlackJack()).isFalse();
-        assertThat(user.isBust()).isFalse();
-        assertThat(user.getScore()).isEqualTo(21);
+            User user = new User(POBI, bettingMoney); // 블랙잭이 아닌 21
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
+            user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.FIVE));
+            user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
+            assertThat(user.isBlackJack()).isFalse();
+            assertThat(user.isBust()).isFalse();
+            assertThat(user.getScore()).isEqualTo(21);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
+            assertProfit(user.getProfit(dealer), LOSS, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭, 유저가 21 미만일 때 = 패")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealerBlackJackUserUnder21(int bettingMoney) {
-        Dealer dealer = new Dealer(); // 블랙잭
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
-        dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
-        assertThat(dealer.isBlackJack()).isTrue();
-        assertThat(dealer.isBust()).isFalse();
-        assertThat(dealer.getScore()).isEqualTo(21);
+    @Test
+    void dealerBlackJackUserUnder21() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 블랙잭
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.ACE));
+            assertThat(dealer.isBlackJack()).isTrue();
+            assertThat(dealer.isBust()).isFalse();
+            assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI, bettingMoney); // 20
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
-        user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.FOUR));
-        user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
-        assertThat(user.isBlackJack()).isFalse();
-        assertThat(user.isBust()).isFalse();
-        assertThat(user.getScore()).isEqualTo(20);
+            User user = new User(POBI, bettingMoney); // 20
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
+            user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.FOUR));
+            user.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.SIX));
+            assertThat(user.isBlackJack()).isFalse();
+            assertThat(user.isBust()).isFalse();
+            assertThat(user.getScore()).isEqualTo(20);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
+            assertProfit(user.getProfit(dealer), LOSS, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭이 아닌 21, 유저가 bust일 때 = 패")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealerNotBlackJack21UserBust(int bettingMoney) {
-        Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
-        dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
-        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.SIX));
-        assertThat(dealer.isBlackJack()).isFalse();
-        assertThat(dealer.isBust()).isFalse();
-        assertThat(dealer.getScore()).isEqualTo(21);
+    @Test
+    void dealerNotBlackJack21UserBust() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
+            dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.SIX));
+            assertThat(dealer.isBlackJack()).isFalse();
+            assertThat(dealer.isBust()).isFalse();
+            assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI, bettingMoney); // bust
-        user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.QUEEN));
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TWO));
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
-        assertThat(user.isBlackJack()).isFalse();
-        assertThat(user.isBust()).isTrue();
-        assertThat(user.getScore()).isEqualTo(22);
+            User user = new User(POBI, bettingMoney); // bust
+            user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.QUEEN));
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TWO));
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TEN));
+            assertThat(user.isBlackJack()).isFalse();
+            assertThat(user.isBust()).isTrue();
+            assertThat(user.getScore()).isEqualTo(22);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
+            assertProfit(user.getProfit(dealer), LOSS, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭이 아닌 21, 유저가 블랙잭일 때 = 승")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealerNotBlackJack21UserBlackJack(int bettingMoney) {
-        Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
-        dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
-        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.SIX));
-        assertThat(dealer.isBlackJack()).isFalse();
-        assertThat(dealer.isBust()).isFalse();
-        assertThat(dealer.getScore()).isEqualTo(21);
+    @Test
+    void dealerNotBlackJack21UserBlackJack() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
+            dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.SIX));
+            assertThat(dealer.isBlackJack()).isFalse();
+            assertThat(dealer.isBust()).isFalse();
+            assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI, bettingMoney); // 블랙잭
-        user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.QUEEN));
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
-        assertThat(user.isBlackJack()).isTrue();
-        assertThat(user.isBust()).isFalse();
-        assertThat(user.getScore()).isEqualTo(21);
+            User user = new User(POBI, bettingMoney); // 블랙잭
+            user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.QUEEN));
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
+            assertThat(user.isBlackJack()).isTrue();
+            assertThat(user.isBust()).isFalse();
+            assertThat(user.getScore()).isEqualTo(21);
 
-        assertThat(user.getProfit(dealer)).isEqualTo((int) (1.5 * (double) bettingMoney));
+            assertProfit(user.getProfit(dealer), WIN_WITH_BLACKJACK, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭이 아닌 21, 유저가 블랙잭이 아닌 21일 때 = 무승부")
     @Test
     void dealerNotBlackJack21UserNotBlackJack21() {
-        Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
-        dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
-        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.SIX));
-        assertThat(dealer.isBlackJack()).isFalse();
-        assertThat(dealer.isBust()).isFalse();
-        assertThat(dealer.getScore()).isEqualTo(21);
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
+            dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.SIX));
+            assertThat(dealer.isBlackJack()).isFalse();
+            assertThat(dealer.isBust()).isFalse();
+            assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI); // 블랙잭이 아닌 21
-        user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TEN));
-        user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.FIVE));
-        user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SIX));
-        assertThat(user.isBlackJack()).isFalse();
-        assertThat(user.isBust()).isFalse();
-        assertThat(user.getScore()).isEqualTo(21);
+            User user = new User(POBI); // 블랙잭이 아닌 21
+            user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TEN));
+            user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.FIVE));
+            user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SIX));
+            assertThat(user.isBlackJack()).isFalse();
+            assertThat(user.isBust()).isFalse();
+            assertThat(user.getScore()).isEqualTo(21);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(0);
+            assertProfit(user.getProfit(dealer), DRAW, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 블랙잭이 아닌 21, 유저가 21미만일 때 = 패")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealerNotBlackJack21UserUnder21(int bettingMoney) {
-        Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
-        dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
-        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.SIX));
-        assertThat(dealer.isBlackJack()).isFalse();
-        assertThat(dealer.isBust()).isFalse();
-        assertThat(dealer.getScore()).isEqualTo(21);
+    @Test
+    void dealerNotBlackJack21UserUnder21() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 블랙잭이 아닌 21
+            dealer.drawOneCard(new Card(CardShapeType.SPADE, CardNumberType.EIGHT));
+            dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.SIX));
+            assertThat(dealer.isBlackJack()).isFalse();
+            assertThat(dealer.isBust()).isFalse();
+            assertThat(dealer.getScore()).isEqualTo(21);
 
-        User user = new User(POBI, bettingMoney); // 20
-        user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TEN));
-        user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.TEN));
-        assertThat(user.isBlackJack()).isFalse();
-        assertThat(user.isBust()).isFalse();
-        assertThat(user.getScore()).isEqualTo(20);
+            User user = new User(POBI, bettingMoney); // 20
+            user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TEN));
+            user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.TEN));
+            assertThat(user.isBlackJack()).isFalse();
+            assertThat(user.isBust()).isFalse();
+            assertThat(user.getScore()).isEqualTo(20);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
+            assertProfit(user.getProfit(dealer), LOSS, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 20, 유저가 bust일 때 = 패")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealer20UserBust(int bettingMoney) {
-        Dealer dealer = new Dealer(); // 20
-        dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.FOUR));
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.EIGHT));
-        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.EIGHT));
-        assertThat(dealer.isBlackJack()).isFalse();
-        assertThat(dealer.isBust()).isFalse();
-        assertThat(dealer.getScore()).isEqualTo(20);
+    @Test
+    void dealer20UserBust() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 20
+            dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.FOUR));
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.EIGHT));
+            dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.EIGHT));
+            assertThat(dealer.isBlackJack()).isFalse();
+            assertThat(dealer.isBust()).isFalse();
+            assertThat(dealer.getScore()).isEqualTo(20);
 
-        User user = new User(POBI, bettingMoney); // bust
-        user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.KING));
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TWO));
-        user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TEN));
-        assertThat(user.isBlackJack()).isFalse();
-        assertThat(user.isBust()).isTrue();
-        assertThat(user.getScore()).isEqualTo(22);
+            User user = new User(POBI, bettingMoney); // bust
+            user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.KING));
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.TWO));
+            user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TEN));
+            assertThat(user.isBlackJack()).isFalse();
+            assertThat(user.isBust()).isTrue();
+            assertThat(user.getScore()).isEqualTo(22);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
+            assertProfit(user.getProfit(dealer), LOSS, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 20, 유저가 블랙잭일 때 = 승")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealer20UserBlackJack(int bettingMoney) {
-        Dealer dealer = new Dealer(); // 20
-        dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.THREE));
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.SEVEN));
-        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.TEN));
-        assertThat(dealer.isBlackJack()).isFalse();
-        assertThat(dealer.isBust()).isFalse();
-        assertThat(dealer.getScore()).isEqualTo(20);
+    @Test
+    void dealer20UserBlackJack() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 20
+            dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.THREE));
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.SEVEN));
+            dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.TEN));
+            assertThat(dealer.isBlackJack()).isFalse();
+            assertThat(dealer.isBust()).isFalse();
+            assertThat(dealer.getScore()).isEqualTo(20);
 
-        User user = new User(POBI, bettingMoney); // 블랙잭
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.JACK));
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
-        assertThat(user.isBlackJack()).isTrue();
-        assertThat(user.isBust()).isFalse();
-        assertThat(user.getScore()).isEqualTo(21);
+            User user = new User(POBI, bettingMoney); // 블랙잭
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.JACK));
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
+            assertThat(user.isBlackJack()).isTrue();
+            assertThat(user.isBust()).isFalse();
+            assertThat(user.getScore()).isEqualTo(21);
 
-        assertThat(user.getProfit(dealer)).isEqualTo((int) (1.5 * (double) bettingMoney));
+            assertProfit(user.getProfit(dealer), WIN_WITH_BLACKJACK, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 20, 유저가 블랙잭이 아닌 21일 때 = 승")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealer20UserNotBlackJack21(int bettingMoney) {
-        Dealer dealer = new Dealer(); // 20
-        dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TWO));
-        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
-        assertThat(dealer.isBlackJack()).isFalse();
-        assertThat(dealer.isBust()).isFalse();
-        assertThat(dealer.getScore()).isEqualTo(20);
+    @Test
+    void dealer20UserNotBlackJack21() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 20
+            dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TWO));
+            dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
+            assertThat(dealer.isBlackJack()).isFalse();
+            assertThat(dealer.isBust()).isFalse();
+            assertThat(dealer.getScore()).isEqualTo(20);
 
-        User user = new User(POBI, bettingMoney); // 블랙잭이 아닌 21
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
-        user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.ACE));
-        user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.EIGHT));
-        user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.JACK));
-        user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.ACE));
-        assertThat(user.isBlackJack()).isFalse();
-        assertThat(user.isBust()).isFalse();
-        assertThat(user.getScore()).isEqualTo(21);
+            User user = new User(POBI, bettingMoney); // 블랙잭이 아닌 21
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
+            user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.ACE));
+            user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.EIGHT));
+            user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.JACK));
+            user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.ACE));
+            assertThat(user.isBlackJack()).isFalse();
+            assertThat(user.isBust()).isFalse();
+            assertThat(user.getScore()).isEqualTo(21);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(bettingMoney);
+            assertProfit(user.getProfit(dealer), WIN_NOT_WITH_BLACKJACK, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 20, 유저가 20일 때 = 무승부")
     @Test
     void dealer20User20() {
-        Dealer dealer = new Dealer(); // 20
-        dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TWO));
-        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
-        assertThat(dealer.isBlackJack()).isFalse();
-        assertThat(dealer.isBust()).isFalse();
-        assertThat(dealer.getScore()).isEqualTo(20);
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 20
+            dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TWO));
+            dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
+            assertThat(dealer.isBlackJack()).isFalse();
+            assertThat(dealer.isBust()).isFalse();
+            assertThat(dealer.getScore()).isEqualTo(20);
 
-        User user = new User(POBI); // 20
-        user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.JACK));
-        user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.QUEEN));
-        assertThat(user.isBlackJack()).isFalse();
-        assertThat(user.isBust()).isFalse();
-        assertThat(user.getScore()).isEqualTo(20);
+            User user = new User(POBI); // 20
+            user.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.JACK));
+            user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.QUEEN));
+            assertThat(user.isBlackJack()).isFalse();
+            assertThat(user.isBust()).isFalse();
+            assertThat(user.getScore()).isEqualTo(20);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(0);
+            assertProfit(user.getProfit(dealer), DRAW, bettingMoney);
+        }
     }
 
     @DisplayName("수익 계산 - 딜러가 20, 유저가 19일 때 = 패")
-    @ParameterizedTest
-    @ValueSource(ints = {MIN_BETTING_MONEY_BOUND, 50_000, 12_345_678, MAX_BETTING_MONEY_BOUND})
-    void dealer20User19(int bettingMoney) {
-        Dealer dealer = new Dealer(); // 20
-        dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
-        dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TWO));
-        dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
-        assertThat(dealer.isBlackJack()).isFalse();
-        assertThat(dealer.isBust()).isFalse();
-        assertThat(dealer.getScore()).isEqualTo(20);
+    @Test
+    void dealer20User19() {
+        for (int bettingMoney : bettingMonies) {
+            Dealer dealer = new Dealer(); // 20
+            dealer.drawOneCard(new Card(CardShapeType.HEART, CardNumberType.ACE));
+            dealer.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.TWO));
+            dealer.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.SEVEN));
+            assertThat(dealer.isBlackJack()).isFalse();
+            assertThat(dealer.isBust()).isFalse();
+            assertThat(dealer.getScore()).isEqualTo(20);
 
-        User user = new User(POBI, bettingMoney); // 19
-        user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
-        user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.NINE));
-        assertThat(user.isBlackJack()).isFalse();
-        assertThat(user.isBust()).isFalse();
-        assertThat(user.getScore()).isEqualTo(19);
+            User user = new User(POBI, bettingMoney); // 19
+            user.drawOneCard(new Card(CardShapeType.DIAMOND, CardNumberType.JACK));
+            user.drawOneCard(new Card(CardShapeType.CLUB, CardNumberType.NINE));
+            assertThat(user.isBlackJack()).isFalse();
+            assertThat(user.isBust()).isFalse();
+            assertThat(user.getScore()).isEqualTo(19);
 
-        assertThat(user.getProfit(dealer)).isEqualTo(-bettingMoney);
+            assertProfit(user.getProfit(dealer), LOSS, bettingMoney);
+        }
     }
 }
