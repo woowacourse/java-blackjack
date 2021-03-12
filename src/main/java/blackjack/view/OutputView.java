@@ -66,9 +66,9 @@ public class OutputView {
     public static void printBettingResult(BettingResult bettingResult) {
         System.out.println();
         System.out.println("## 최종 수익");
-        System.out.println("딜러: " + (int) bettingResult.getDealerProfit());
+        System.out.println("딜러: " + bettingResult.getDealerProfit().toInt());
         bettingResult.getGamersProfit()
-            .forEach((gamer, profit) -> System.out.println(gamer.getName() + ": " + profit.intValue()));
+            .forEach((gamer, profit) -> System.out.println(gamer.getName() + ": " + profit.toInt()));
     }
 
     public static void printExceptionMessage(Exception e) {

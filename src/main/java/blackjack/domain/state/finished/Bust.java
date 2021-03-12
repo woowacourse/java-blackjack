@@ -1,5 +1,6 @@
 package blackjack.domain.state.finished;
 
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.state.State;
@@ -31,7 +32,7 @@ public class Bust extends Finished {
     }
 
     @Override
-    public double profit(double money) {
+    public Money profit(Money money) {
         return money;
     }
 }

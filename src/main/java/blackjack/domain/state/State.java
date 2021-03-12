@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
@@ -15,7 +16,7 @@ public interface State {
 
     boolean isBlackjack();
 
-    double profit(double money);
+    Money profit(Money money);
 
     int calculateScore();
 

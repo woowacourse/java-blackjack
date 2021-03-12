@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.Money;
 import blackjack.domain.batting.Betting;
 import blackjack.domain.batting.BettingResult;
 import blackjack.domain.card.Card;
@@ -64,7 +65,7 @@ public class BlackjackController {
         Betting betting = new Betting();
         for (Gamer gamer : gamers) {
             double bettingAmount = InputView.inputBettingAmount(PlayerDto.from(gamer));
-            betting.betMoney(gamer, bettingAmount);
+            betting.betMoney(gamer, Money.of(bettingAmount));
         }
         return betting;
     }
