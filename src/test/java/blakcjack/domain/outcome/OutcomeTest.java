@@ -81,6 +81,7 @@ class OutcomeTest {
 				Card.of(CardSymbol.HEART, CardNumber.QUEEN),
 				Card.of(CardSymbol.HEART, CardNumber.JACK),
 				Card.of(CardSymbol.HEART, CardNumber.ACE),
+
 				Card.of(CardSymbol.SPADE, CardNumber.QUEEN),
 				Card.of(CardSymbol.SPADE, CardNumber.JACK)
 		);
@@ -115,6 +116,26 @@ class OutcomeTest {
 
 		Outcome outcome = Outcome.of(dealer, player);
 		assertThat(outcome).isEqualTo(Outcome.BLACKJACK_WIN);
+	}
+
+	@DisplayName("플레이어와 딜러의 결과가 같을 경우 무승부")
+	@Test
+	void of_PlayerAndDealerHaveSameScoreAndNoOneBust_returnDraw() {
+		final Deck customDeck = createCustomDeck(
+				Card.of(CardSymbol.HEART, CardNumber.JACK),
+				Card.of(CardSymbol.HEART, CardNumber.ACE),
+
+				Card.of(CardSymbol.SPADE, CardNumber.ACE),
+				Card.of(CardSymbol.SPADE, CardNumber.JACK)
+		);
+		player.drawOneCardFrom(customDeck);
+		player.drawOneCardFrom(customDeck);
+
+		dealer.drawOneCardFrom(customDeck);
+		dealer.drawOneCardFrom(customDeck);
+
+		Outcome outcome = Outcome.of(dealer, player);
+		assertThat(outcome).isEqualTo(Outcome.DRAW);
 	}
 
 	private Deck createCustomDeck(final Card... cards) {
