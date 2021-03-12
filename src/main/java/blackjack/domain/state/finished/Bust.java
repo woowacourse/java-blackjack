@@ -32,6 +32,6 @@ public class Bust extends Finished {
 
     @Override
     public double profit(double money) {
-        return 0;
+        return money;
     }
 }
