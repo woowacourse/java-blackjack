@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Result;
+import java.util.Objects;
 
 public class Player extends Participant {
 
@@ -9,9 +10,14 @@ public class Player extends Participant {
 
     public Player(final Name name) {
         this.name = name;
+        this.betAmount = null;
     }
 
-    public void betting(final int betAmount) {
+    public boolean isYetBet() {
+        return Objects.isNull(this.betAmount);
+    }
+
+    public void betting(final double betAmount) {
         this.betAmount = new BetAmount(betAmount);
     }
 
