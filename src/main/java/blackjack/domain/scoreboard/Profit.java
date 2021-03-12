@@ -48,7 +48,8 @@ public enum Profit {
 
         return Arrays.stream(values())
                 .filter(profit -> profit.findByScore.test(userScore, dealerScore))
-                .findAny().orElseThrow(() -> new IllegalArgumentException(CANT_FIND_PROFIT_ERROR_MSG));
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(CANT_FIND_PROFIT_ERROR_MSG));
     }
 
     public double getProfit() {
