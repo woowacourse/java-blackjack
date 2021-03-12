@@ -6,11 +6,13 @@ import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class BlackjackController {
     public void run() {
         BlackjackGame blackjackGame = setUpBlackjackGame();
+        betAllPlayers(blackjackGame);
         blackjackGame.handOutInitialCards();
         showInitialStatus(blackjackGame);
         proceedPlayersRound(blackjackGame);
@@ -23,6 +25,14 @@ public class BlackjackController {
     private BlackjackGame setUpBlackjackGame() {
         OutputView.printInputNames();
         return BlackjackGame.generateByUser(InputView.inputNames());
+    }
+
+    private void betAllPlayers(BlackjackGame blackjackGame) {
+        List<String> playersName = blackjackGame.getPlayersName();
+        for (String name : playersName) {
+            OutputView.printInputMoneyByPlayer(name);
+            blackjackGame.betByPlayer(name, InputView.inputLong());
+        }
     }
 
     private void showInitialStatus(BlackjackGame blackjackGame) {

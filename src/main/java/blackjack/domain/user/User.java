@@ -10,6 +10,7 @@ import java.util.Objects;
 public abstract class User {
     protected final Name name;
     protected State state;
+    protected Money bettingMoney;
 
     public User(String name) {
         this(new Name(name));
@@ -72,5 +73,9 @@ public abstract class User {
 
     public final void stay() {
         changeState(new Stay(cards()));
+    }
+
+    public final void betMoney(Money money) {
+        bettingMoney = money;
     }
 }

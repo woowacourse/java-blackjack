@@ -38,4 +38,17 @@ public class Players {
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("남아있는 플레이어가 없습니다."));
     }
+
+    public void setUpBettingMoney(String name, long value) {
+        Player player = findPlayerByName(name);
+        player.betMoney(new Money(value));
+    }
+
+    private Player findPlayerByName(String name) {
+        return players.stream()
+                .filter(player -> player.getName()
+                        .equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("찾는 플레이어가 없습니다."));
+    }
 }

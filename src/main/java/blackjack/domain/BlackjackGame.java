@@ -9,6 +9,7 @@ import blackjack.domain.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
     private static final String YES = "y";
@@ -52,6 +53,13 @@ public class BlackjackGame {
         return players;
     }
 
+    public List<String> getPlayersName() {
+        return players.getPlayers()
+                .stream()
+                .map(User::getName)
+                .collect(Collectors.toList());
+    }
+
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
         users.add(dealer);
@@ -92,5 +100,9 @@ public class BlackjackGame {
             roundCount++;
         }
         return roundCount;
+    }
+
+    public void betByPlayer(String name, long moneyValue) {
+        players.setUpBettingMoney(name, moneyValue);
     }
 }

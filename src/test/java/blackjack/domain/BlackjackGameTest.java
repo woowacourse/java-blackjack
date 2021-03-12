@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BlackjackGameTest {
     @Test
@@ -132,5 +133,14 @@ public class BlackjackGameTest {
         State state = player.getState();
 
         assertThat(state).isInstanceOf(Stay.class);
+    }
+
+    @Test
+    @DisplayName("사용자 별로 베팅 금액을 설정한다. - 존재하지 않는 사용자 입력 시 예외")
+    void bet() {
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
+        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+        assertThatThrownBy(() -> blackjackGame.betByPlayer("amazi", 1000))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
