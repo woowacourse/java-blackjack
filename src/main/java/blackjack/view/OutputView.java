@@ -19,10 +19,14 @@ public class OutputView {
 
     public static void printParticipantsCards(Dealer dealer, Players players) {
         System.out.printf("\n%s와 %s에게 2장의 나누었습니다.\n", dealer.getName(), playerNames(players));
-        System.out.println(cardsOf(dealer));
+        System.out.println(halfCardsOf(dealer));
         for (Player player : players.values()) {
             System.out.println(cardsOf(player));
         }
+    }
+
+    private static String halfCardsOf(Participant participant) {
+        return participant.getName() + cardsToString(participant.getState().hand().getHalfUnmodifiableList());
     }
 
     private static String cardsOf(Participant participant) {

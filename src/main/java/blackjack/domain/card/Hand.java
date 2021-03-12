@@ -21,6 +21,11 @@ public class Hand {
         return Collections.unmodifiableList(cards);
     }
 
+    public List<Card> getHalfUnmodifiableList() {
+        List<Card> halfCards = new ArrayList<>(cards.subList(0, cards.size() / 2));
+        return Collections.unmodifiableList(halfCards);
+    }
+
     public void add(Card card) {
         cards.add(card);
     }
