@@ -10,9 +10,16 @@ public class Dealer extends User {
     }
 
     public boolean isMustHit() {
-        return state.cards()
+        boolean isMustHit = state.cards()
                 .totalScore()
                 .isDealerMustToHitScore();
+        if (isMustHit) {
+            return true;
+        }
+        if (isAbleToHit()) {
+            stay();
+        }
+        return false;
     }
 
     public Card showOneCard() {

@@ -44,7 +44,7 @@ public abstract class User {
         return state;
     }
 
-    public void changeState(State state) {
+    private void changeState(State state) {
         this.state = state;
     }
 
