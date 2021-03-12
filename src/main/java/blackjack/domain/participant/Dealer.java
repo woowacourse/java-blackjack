@@ -19,4 +19,12 @@ public class Dealer extends Participant{
             state = state.stay();
         }
     }
+
+    @Override
+    public void setUpParticipantTwoCardsAndState() {
+        super.setUpParticipantTwoCardsAndState();
+        if (getCardsScore() >= DEALER_STAY_LIMIT) {
+            state.stay();
+        }
+    }
 }

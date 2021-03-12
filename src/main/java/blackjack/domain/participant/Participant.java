@@ -13,7 +13,7 @@ public abstract class Participant {
         this.name = new Name(name);
     }
 
-    public void setUpTwoCardsAndState() {
+    public void setUpParticipantTwoCardsAndState() {
         state = StateFactory.createInitialState(Deck.draw(), Deck.draw());
     }
 

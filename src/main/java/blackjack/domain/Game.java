@@ -24,9 +24,9 @@ public class Game {
 
     private void setUpTwoCardsAndState() {
         for (Player player : players.getPlayers()) {
-            player.setUpTwoCardsAndState();
+            player.setUpParticipantTwoCardsAndState();
         }
-        dealer.setUpTwoCardsAndState();
+        dealer.setUpParticipantTwoCardsAndState();
     }
 
     public static Game of(Players players) {
