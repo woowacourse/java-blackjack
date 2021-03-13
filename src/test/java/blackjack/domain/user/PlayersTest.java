@@ -59,7 +59,7 @@ public class PlayersTest {
 
     @DisplayName("딜러와 각 플레이어 간의 승패를 가린다. - 딜러와 플레이어가 버스트일 때")
     @Test
-    void checkWinOrLoseTest() {
+    void checkWinOrLoseTestWhenBothBust() {
         dealer.draw(six);
         dealer.draw(seven);
         dealer.draw(jack);
