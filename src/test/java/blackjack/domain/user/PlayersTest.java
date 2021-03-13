@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static blackjack.domain.user.Fixture.*;
+import static blackjack.domain.Fixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayersTest {
