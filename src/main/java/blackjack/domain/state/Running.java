@@ -6,7 +6,7 @@ import blackjack.domain.player.BettingMoney;
 public abstract class Running extends Started{
     private static final String NOT_CALCULATE_PROFIT_ERROR = "[ERROR] 게임이 끝나지 않아 수익을 계산할 수 없습니다.";
 
-    public Running(Cards cards) {
+    protected Running(Cards cards) {
         super(cards);
     }
 
