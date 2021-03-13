@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public abstract class StartState implements State {
 
-    Cards cards;
+    protected Cards cards;
 
     public StartState(Cards cards) {
         this.cards = cards;
