@@ -9,4 +9,6 @@ public interface State {
     int softHandSum();
 
     State draw(Card card);
+
+    double profit(int betMoney);
 }

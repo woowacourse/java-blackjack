@@ -1,8 +1,6 @@
 package blackjack.utils;
 
 import blackjack.domain.card.Card;
-import blackjack.utils.CardDeck;
-import blackjack.utils.FixedCardDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

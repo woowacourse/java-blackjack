@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 
 public class Player extends Participant {
     private static final Pattern NAME_PATTERN = Pattern.compile("^[a-z|A-Z]+");
-    public static final double BLACKJACK_RATE = 1.5;
     public static final int ZERO_PROFIT = 0;
     private int betMoney;
 
@@ -51,31 +50,38 @@ public class Player extends Participant {
     }
 
     public double calculateProfitFromState(Dealer dealer) {
-        if (playerLoses(dealer)) {
-            return -betMoney;
+        if (isBust()) {
+            return getState().profit(betMoney);
         }
-        if (playerWinsByBlackjack(dealer)) {
-            return BLACKJACK_RATE * betMoney;
+        if (playerLosesByHit(dealer)) {
+            return -getState().profit(betMoney);
         }
-        if (playerWinsNormally(dealer)) {
-            return betMoney;
+        if (playerDraws(dealer)) {
+            return ZERO_PROFIT;
         }
-        return ZERO_PROFIT;
+        return getState().profit(betMoney);
     }
 
-    private boolean playerWinsNormally(Dealer dealer) {
-        return (isHit() && dealer.isBust()) ||
-                (isHit() && dealer.isHit() && getState().softHandSum() > dealer.getState().softHandSum());
+    private boolean playerDraws(Dealer dealer) {
+        if (isBlackjack() && dealer.isBlackjack()) {
+            return true;
+        }
+        if (!isHit() || !dealer.isHit()) {
+            return false;
+        }
+        return getState().softHandSum() == dealer.getState().softHandSum();
     }
 
-    private boolean playerWinsByBlackjack(Dealer dealer) {
-        return isBlackjack() &&
-                (dealer.isHit() || dealer.isBust());
-    }
-
-    private boolean playerLoses(Dealer dealer) {
-        return isBust() ||
-                (isHit() && dealer.isBlackjack()) ||
-                (isHit() && dealer.isHit() && getState().softHandSum() < dealer.getState().softHandSum());
+    private boolean playerLosesByHit(Dealer dealer) {
+        if (isBlackjack()) {
+            return false;
+        }
+        if (dealer.isBust()) {
+            return false;
+        }
+        if (dealer.isBlackjack()) {
+            return true;
+        }
+        return getState().softHandSum() < dealer.getState().softHandSum();
     }
 }
