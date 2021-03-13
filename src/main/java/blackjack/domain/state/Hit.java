@@ -2,6 +2,8 @@ package blackjack.domain.state;
 
 import blackjack.domain.Hand;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.state.finished.Bust;
+import blackjack.domain.state.finished.Stay;
 
 public class Hit implements State {
 

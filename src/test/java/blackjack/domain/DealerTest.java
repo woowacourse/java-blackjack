@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.state.Stay;
+import blackjack.domain.state.finished.Stay;
 import blackjack.exception.InvalidNameInputException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

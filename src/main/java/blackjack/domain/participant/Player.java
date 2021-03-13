@@ -2,10 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Money;
 import blackjack.domain.Response;
-import blackjack.domain.state.ResultType;
 import blackjack.domain.card.Card;
-import blackjack.domain.state.BlackJackState;
-import com.sun.xml.internal.bind.v2.TODO;
 
 public class Player extends BlackJackParticipant {
 

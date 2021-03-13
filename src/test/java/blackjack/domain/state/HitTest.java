@@ -2,6 +2,8 @@ package blackjack.domain.state;
 
 import blackjack.domain.Hand;
 import blackjack.domain.TestSetUp;
+import blackjack.domain.state.finished.Bust;
+import blackjack.domain.state.finished.Stay;
 import blackjack.exception.InvalidNameInputException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

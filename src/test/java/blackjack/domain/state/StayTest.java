@@ -1,11 +1,11 @@
 package blackjack.domain.state;
 
 import blackjack.domain.TestSetUp;
+import blackjack.domain.state.finished.Stay;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class StayTest {
     @Test
