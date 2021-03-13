@@ -19,10 +19,6 @@ public class Player extends Participant {
         super(name);
     }
 
-    public Player(final Name name) {
-        super(name);
-    }
-
     @Override
     public Result decideWinner(final Participant participant) {
         if (this.isBlackjack() && !participant.isBlackjack()) {

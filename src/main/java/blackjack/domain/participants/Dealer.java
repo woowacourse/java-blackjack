@@ -21,14 +21,6 @@ public class Dealer extends Participant {
         super(new Name("딜러"), money);
     }
 
-    public Dealer(final String name) {
-        super(name);
-    }
-
-    public Dealer(final Name name) {
-        super(name);
-    }
-
     @Override
     public Result decideWinner(final Participant player) {
         if (this.isBlackjack() && !player.isBlackjack()) {

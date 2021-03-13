@@ -4,7 +4,6 @@ import blackjack.domain.card.CardDeck;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Participants {
 
@@ -29,16 +28,6 @@ public class Participants {
         participants.add(0, new Dealer());
         return participants;
     }
-
-
-    private List<Participant> participantsSetUp(final Names names) {
-        final List<Participant> participants = names.toList().stream()
-            .map(Player::new)
-            .collect(Collectors.toList());
-        participants.add(0, new Dealer());
-        return new ArrayList<>(participants);
-    }
-
 
     public void distributeCard() {
         participantGroup.forEach(participant -> {
