@@ -14,7 +14,7 @@ public class Players {
     public Players(final List<Player> players) {
         validateDuplicate(players);
         validateMaxPlayerNumber(players);
-        this.players = players;
+        this.players = new ArrayList<>(players);
     }
 
     public static Players of(final List<String> playerName) {
