@@ -36,12 +36,10 @@ class GameResultTest {
         List<Player> players = createPlayers(playerHand);
 
         GameResult result = GameResult.calculate(dealer, players);
-
-        Money dealerWinningMoney = result.getDealerWinningMoney();
-        assertThat(dealerWinningMoney).isEqualTo(new Money(dealerMoney));
+        assertThat(result.getDealerWinningMoney()).isEqualTo(dealerMoney);
 
         PlayerResult playersResult = result.getPlayersResults().get(0);
-        assertThat(playersResult.getWinningMoney()).isEqualTo(new Money(playerMoney));
+        assertThat(playersResult.getWinningMoney()).isEqualTo(playerMoney);
     }
 
     private static Stream<Arguments> calculateTestcase() {

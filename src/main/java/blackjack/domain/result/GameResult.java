@@ -9,9 +9,9 @@ import java.util.List;
 public class GameResult {
 
     private final List<PlayerResult> playersResults;
-    private final Money dealerWinningMoney;
+    private final int dealerWinningMoney;
 
-    public GameResult(List<PlayerResult> playersResults, Money dealerWinningMoney) {
+    public GameResult(List<PlayerResult> playersResults, int dealerWinningMoney) {
         this.playersResults = playersResults;
         this.dealerWinningMoney = dealerWinningMoney;
     }
@@ -27,14 +27,14 @@ public class GameResult {
             dealerWinningMoney = dealerWinningMoney.add(winningMoney.toNegative());
         }
 
-        return new GameResult(playersResults, dealerWinningMoney);
+        return new GameResult(playersResults, dealerWinningMoney.toInt());
     }
 
     public List<PlayerResult> getPlayersResults() {
         return playersResults;
     }
 
-    public Money getDealerWinningMoney() {
+    public int getDealerWinningMoney() {
         return dealerWinningMoney;
     }
 }

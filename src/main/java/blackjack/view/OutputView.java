@@ -63,8 +63,8 @@ public class OutputView {
         }
     }
 
-    private static void printWinningMoney(String name, Money winningMoney) {
-        System.out.printf("%s: %d\n", name, winningMoney.toInt());
+    private static void printWinningMoney(String name, int winningMoney) {
+        System.out.printf("%s: %d\n", name, winningMoney);
     }
 
     private static void printCardResult(String name, String cards, int result) {
