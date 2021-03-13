@@ -11,13 +11,14 @@ import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
 import blakcjack.dto.OutcomeSummaryDto;
 import blakcjack.dto.ParticipantDto;
 import blakcjack.dto.ParticipantsDto;
+import blakcjack.dto.PlayerCreationDto;
 import blakcjack.exception.GameTerminationException;
 import blakcjack.view.InputView;
 
 import java.util.List;
 import java.util.Map;
 
-import static blakcjack.view.InputView.takePlayerNamesInput;
+import static blakcjack.view.InputView.takePlayerCreationInformation;
 import static blakcjack.view.OutputView.printDealerAdditionalCardMessage;
 import static blakcjack.view.OutputView.printFinalHandsSummary;
 import static blakcjack.view.OutputView.printFinalOutcomeSummary;
@@ -41,7 +42,8 @@ public class BlackJackController {
 
     private BlackjackGame initializeGame() {
         try {
-            return new BlackjackGame(new Deck(new RandomShuffleStrategy()), takePlayerNamesInput());
+            final PlayerCreationDto creationInfo = takePlayerCreationInformation();
+            return new BlackjackGame(new Deck(new RandomShuffleStrategy()), creationInfo.getNames());
         } catch (GameInitializationFailureException e) {
             printGameClosing(e.getMessage());
             throw new GameTerminationException();
