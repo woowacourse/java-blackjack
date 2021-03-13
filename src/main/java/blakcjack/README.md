@@ -47,7 +47,7 @@
 - [x] Score 클래스 생성
 - [x] OutcomeStatistics DTO로 변경를 (OutcomeSummaryDto)
 - [x] Cards 클래스 생성 현재 Participant가 가지고 있는 점수 계산 로직 이동
-- [ ] ParticipantDto 생성
+- [x] ParticipantDto 생성
 - [ ] ParticipantsDto 생성
 - [ ] DTO를 이용하도록 OutputView, Controller 변경
 - [ ] state 패턴을 이용하여 게임 진행 관리
