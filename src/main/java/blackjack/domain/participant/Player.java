@@ -1,8 +1,11 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.result.HandResult.BLACKJACK;
+import static blackjack.domain.result.HandResult.BUST;
+import static blackjack.domain.result.HandResult.STAY;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import static blackjack.domain.result.HandResult.*;
 
 public class Player extends Participant {
 
@@ -43,13 +46,19 @@ public class Player extends Participant {
     }
 
     private boolean lose(Dealer dealer) {
-        return isBust()
-                || (dealer.isBlackjack() && !isBlackjack())
-                || (getScore() < dealer.getScore());
+        if (isBust()) {
+            return true;
+        }
+        if (dealer.isBlackjack() && !isBlackjack()) {
+            return true;
+        }
+        return getScore() < dealer.getScore();
     }
 
     private boolean tie(Dealer dealer) {
-        return (isBlackjack() && dealer.isBlackjack())
-                || (dealer.getScore() == getScore());
+        if (isBlackjack() && dealer.isBlackjack()) {
+            return true;
+        }
+        return dealer.getScore() == getScore();
     }
 }
