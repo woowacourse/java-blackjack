@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,35 +24,51 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BlackjackGameTest {
-    private List<String> names;
     private Deck deck;
+    private List<String> names;
+    private List<Integer> moneys;
 
     @BeforeEach
     void setUp() {
         final ShuffleStrategy nonShuffleStrategy = (cards) -> {
         };
-        names = Arrays.asList("pobi", "sakjung", "mediumBear");
         deck = new Deck(nonShuffleStrategy);
+        names = Arrays.asList("pobi", "sakjung", "mediumBear");
+        moneys = Arrays.asList(10000, 15000, 20000);
     }
 
     @DisplayName("객체 생성 성공")
     @Test
     void create() {
-        assertThatCode(() -> new BlackjackGame(deck, names))
+        assertThatCode(() -> new BlackjackGame(deck, names, moneys))
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("중복 이름 검증")
+    @DisplayName("중복 이름이 있으면 예외 발생")
     @Test
     void validateDuplicateNames() {
-        assertThatThrownBy(() -> new BlackjackGame(deck, Arrays.asList("pobi", "pobi")))
+        assertThatThrownBy(() -> new BlackjackGame(deck, Arrays.asList("pobi", "pobi"), moneys))
+                .isInstanceOf(GameInitializationFailureException.class);
+    }
+
+    @DisplayName("이름과 베팅 금액의 수가 다르면 예외 발생")
+    @Test
+    void validateSameSize() {
+        assertThatThrownBy(() -> new BlackjackGame(deck, Arrays.asList("pobi", "mediumBear"), Arrays.asList(10000)))
+                .isInstanceOf(GameInitializationFailureException.class);
+    }
+
+    @DisplayName("이름과 베팅 금액이 없으면 예외 발생")
+    @Test
+    void validateNotEmpty() {
+        assertThatThrownBy(() -> new BlackjackGame(deck, Collections.emptyList(), Collections.emptyList()))
                 .isInstanceOf(GameInitializationFailureException.class);
     }
 
     @DisplayName("카드 한 장 나눠주기 성공")
     @Test
     void distributeOneCard() {
-        final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
+        final BlackjackGame blackjackGame = new BlackjackGame(deck, names, moneys);
         final List<Participant> players = blackjackGame.getPlayers();
         final Participant pobi = players.get(0);
         final Participant expected = new Player("pobi");
@@ -64,7 +81,7 @@ class BlackjackGameTest {
     @DisplayName("딜러와 모든 플레이어에게 2장씩 카드 나눠주기 성공")
     @Test
     void initializeHands() {
-        final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
+        final BlackjackGame blackjackGame = new BlackjackGame(deck, names, moneys);
         blackjackGame.initializeHands();
 
         final List<Participant> players = blackjackGame.getPlayers();
@@ -89,7 +106,7 @@ class BlackjackGameTest {
     @DisplayName("승패 판단 성공")
     @Test
     void judgeOutcome() {
-        final BlackjackGame blackjackGame = new BlackjackGame(deck, names);
+        final BlackjackGame blackjackGame = new BlackjackGame(deck, names, moneys);
         blackjackGame.initializeHands();
         blackjackGame.getPlayers().get(0).receiveCard(Card.of(CardSymbol.HEART, CardNumber.TWO));
         blackjackGame.getDealer().receiveCard(Card.of(CardSymbol.HEART, CardNumber.SEVEN));

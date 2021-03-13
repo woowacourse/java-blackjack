@@ -43,7 +43,8 @@ public class BlackJackController {
     private BlackjackGame initializeGame() {
         try {
             final PlayerCreationDto creationInfo = takePlayerCreationInformation();
-            return new BlackjackGame(new Deck(new RandomShuffleStrategy()), creationInfo.getNames());
+            return new BlackjackGame(new Deck(new RandomShuffleStrategy()),
+                    creationInfo.getNames(), creationInfo.getBettingMoneys());
         } catch (GameInitializationFailureException e) {
             printGameClosing(e.getMessage());
             throw new GameTerminationException();
