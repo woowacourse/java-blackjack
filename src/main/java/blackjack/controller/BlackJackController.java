@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.card.GameTable;
+import blackjack.domain.GameTable;
 import blackjack.domain.participant.*;
 import blackjack.domain.result.MatchResult;
 import blackjack.view.InputView;
