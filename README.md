@@ -56,9 +56,9 @@
 - [x] 딜러에 필요없는 BettingMoney 구현 고민
 - [x] BettingResult 에 getter 줄이기 
 - [x] Game 에 getPlayers unmodifiable list 로 반환 
-- [ ] 테스트 코드의 중복 줄이기 
-- [ ] MatchResultTest getPlayersCard 메소드 간단하게 구현 
-- [ ] HandStatusTest 코드 추가
+- [x] 테스트 코드의 중복 줄이기 
+- [x] MatchResultTest getPlayersCard 메소드 간단하게 구현 
+- [x] HandStatusTest 코드 추가
 
 ## 패키지 구조 
 1. domain 
