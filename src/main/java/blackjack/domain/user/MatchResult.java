@@ -6,7 +6,7 @@ public enum MatchResult {
     DRAW(0),
     LOSE(-1.0);
 
-   private final double earningRate;
+    private final double earningRate;
 
     MatchResult(double earningRate) {
         this.earningRate = earningRate;

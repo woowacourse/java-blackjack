@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.Game;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -33,7 +32,7 @@ public class BlackjackController {
             OutputView.printPlayerCard(player);
             return;
         }
-         player.convertToStay();
+        player.convertToStay();
     }
 
     private void printResults(Game game) {
