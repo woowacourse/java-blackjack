@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.Objects;
+
 public class BettingMoney {
 
     private static final String ERROR_VALIDATE_MONEY = "올바른 금액을 입력하여 주세요";
@@ -38,5 +40,22 @@ public class BettingMoney {
 
     public void giveMoney(BettingMoney plusBettingMoney) {
         bettingMoney += plusBettingMoney.getBettingMoney();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof BettingMoney)) {
+            return false;
+        }
+        BettingMoney that = (BettingMoney) o;
+        return bettingMoney == that.bettingMoney;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bettingMoney);
     }
 }

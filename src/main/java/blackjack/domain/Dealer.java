@@ -17,14 +17,13 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean canReceiveCard() {
-        return state.cards().getPoint(POINT_BOUNDARY_VALUE) <= POINT_BOUNDARY_VALUE;
+        return cards.getPoint(POINT_BOUNDARY_VALUE) <= POINT_BOUNDARY_VALUE;
     }
 
     @Override
-    public Boolean continueDraw(Deck deck) {
+    public void continueDraw(Deck deck) {
         this.receiveCard(deck.dealCard());
         state = state.stay();
         OutputView.noticeDealerGetCard();
-        return true;
     }
 }

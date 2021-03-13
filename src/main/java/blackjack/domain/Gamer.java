@@ -18,13 +18,16 @@ public abstract class Gamer {
     private final String name;
     protected BettingMoney bettingMoney;
     protected int earnedMoney;
-    protected State state = new Hit(new Cards());
+    protected State state;
+    protected Cards cards;
 
     protected Gamer(String name) {
         validateSpace(name);
         validateZeroLength(name);
         earnedMoney = 0;
         this.name = name;
+        this.state = new Hit();
+        this.cards = new Cards();
     }
 
     private static void validateZeroLength(String name) {
@@ -42,29 +45,30 @@ public abstract class Gamer {
     public abstract boolean canReceiveCard();
 
     protected void receiveCard(Card card) {
-        state = state.draw(card);
+        cards.add(card);
+        state = state.draw(cards);
     }
 
     public boolean isBust() {
-        return state.isBust();
+        return state.isBust(state);
     }
 
     public boolean isBlackjack() {
-        return state.isBlackjack();
+        return state.isBlackjack(state);
     }
 
     public int getPoint() {
-        return state.cards().getPoint();
+        return cards.getPoint();
     }
 
-    public abstract Boolean continueDraw(Deck deck);
+    public abstract void continueDraw(Deck deck);
 
     public String getName() {
         return name;
     }
 
     public String getAllCards() {
-        return state.cards().getCards().
+        return cards.getCards().
             stream()
             .map(Card::getPatternAndNumber)
             .collect(Collectors.joining(COMMA));
@@ -72,8 +76,8 @@ public abstract class Gamer {
 
     public String getOpenCards() {
         List<Card> dealerCards = new ArrayList<>();
-        for (int i = 0; i < state.cards().size() - 1; i++) {
-            dealerCards.add(state.cards().get(i));
+        for (int i = 0; i < cards.size() - 1; i++) {
+            dealerCards.add(cards.get(i));
         }
         return dealerCards.stream()
             .map(Card::getPatternAndNumber)
@@ -106,13 +110,15 @@ public abstract class Gamer {
             return false;
         }
         Gamer gamer = (Gamer) o;
-        return Objects.equals(name, gamer.name) &&
-            Objects.equals(state, gamer.state);
+        return earnedMoney == gamer.earnedMoney &&
+            Objects.equals(name, gamer.name) &&
+            Objects.equals(bettingMoney, gamer.bettingMoney) &&
+            Objects.equals(state, gamer.state) &&
+            Objects.equals(cards, gamer.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, state);
+        return Objects.hash(name, bettingMoney, earnedMoney, state, cards);
     }
-
 }

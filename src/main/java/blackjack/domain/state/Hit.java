@@ -1,27 +1,23 @@
 package blackjack.domain.state;
 
-import blackjack.domain.Card;
 import blackjack.domain.Cards;
 
 public class Hit extends Running {
 
-    public Hit(Cards cards) {
-        super(cards);
-    }
-
     @Override
-    public State draw(Card card) {
-        cards.add(card);
+    public State draw(Cards cards) {
         if (cards.size() == Cards.BLACKJACK_CARD_SIZE && cards.getPoint() == Cards.HIGHEST_POINT) {
-            return new Blackjack(cards);
+            return new Blackjack();
         } else if (cards.isBust()) {
-            return new Bust(cards);
+            return new Bust();
         }
-        return new Hit(cards);
+        return new Hit();
     }
 
     @Override
     public State stay() {
-        return new Stay(cards);
+        return new Stay();
     }
+
+
 }

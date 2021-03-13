@@ -1,22 +1,21 @@
 package blackjack.domain.state;
 
 import blackjack.domain.BettingMoney;
-import blackjack.domain.Card;
 import blackjack.domain.Cards;
 
 public interface State {
 
-    public State draw(Card card);
+    public State draw(Cards cards);
 
-    boolean isFinished();
+    public boolean isFinished();
 
-    boolean isBust();
+    boolean isBust(State state);
 
-    boolean isBlackjack();
+    boolean isBlackjack(State state);
 
     public int profit(BettingMoney bettingMoney);
 
-    Cards cards();
-
     public State stay();
+
+
 }

@@ -26,10 +26,10 @@ public class StateTest {
     @DisplayName("4가지 기본 상태 확인")
     void name() {
         Cards cards = new Cards();
-        Hit hit = new Hit(cards);
-        Stay stay = new Stay(cards);
-        Blackjack blackjack = new Blackjack(cards);
-        Bust bust = new Bust(cards);
+        Hit hit = new Hit();
+        Stay stay = new Stay();
+        Blackjack blackjack = new Blackjack();
+        Bust bust = new Bust();
 
         assertThat(stay.isFinished());
         assertThat(blackjack.isFinished());

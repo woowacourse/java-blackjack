@@ -9,9 +9,10 @@ public class PlayersTest {
     @Test
     @DisplayName("이름 입력 분리")
     void playerNameSplit() {
-        String input = "pobi,jason";
-        Players players = new Players(input, new Dealer());
-        Players comparePlayers = new Players("pobi,jason", new Dealer());
+        Dealer dealer = new Dealer();
+        Players players = new Players("pobi,jason", dealer);
+
+        Players comparePlayers = new Players("pobi,jason", dealer);
 
         assertThat(players).isEqualTo(comparePlayers);
     }

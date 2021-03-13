@@ -28,16 +28,15 @@ public class Player extends Gamer {
         return !state.isFinished();
     }
 
-    public Boolean continueDraw(Deck deck) {
+    public void continueDraw(Deck deck) {
         OutputView.noticeGetMoreCard(getName());
         String draw = InputView.isContinueDraw();
         if (isDrawCard(draw)) {
             receiveCard(deck.dealCard());
             OutputView.printPlayerInfo(this);
-            return true;
+            return;
         }
         state = state.stay();
-        return false;
     }
 
     private Boolean isDrawCard(String draw) {
