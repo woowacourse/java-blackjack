@@ -42,6 +42,10 @@ public abstract class Participant {
         return name.getName();
     }
 
+    public int getMoneyValue() {
+        return money.toInt();
+    }
+
     protected boolean isBust() {
         return cards.isBust();
     }

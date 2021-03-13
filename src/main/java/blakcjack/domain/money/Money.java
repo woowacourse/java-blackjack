@@ -10,8 +10,4 @@ public class Money {
     public int toInt() {
         return (int) value;
     }
-
-    public double toDouble() {
-        return value;
-    }
 }
