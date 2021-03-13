@@ -13,7 +13,7 @@ public class PlayerResult {
         this.winningMoney = winningMoney;
     }
 
-    public static PlayerResult from(Player player, Money earningMoney) {
+    public static PlayerResult of(Player player, Money earningMoney) {
         return new PlayerResult(
                 player.getName(),
                 earningMoney);

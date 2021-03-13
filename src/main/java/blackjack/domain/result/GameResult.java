@@ -22,7 +22,7 @@ public class GameResult {
 
         for (Player player : players) {
             Money winningMoney = player.getWinningMoney(dealer);
-            playersResults.add(PlayerResult.from(player, winningMoney));
+            playersResults.add(PlayerResult.of(player, winningMoney));
 
             dealerWinningMoney = dealerWinningMoney.add(winningMoney.toNegative());
         }
