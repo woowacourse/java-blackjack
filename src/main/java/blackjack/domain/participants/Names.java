@@ -28,13 +28,13 @@ public class Names {
     private void validateSameName(final List<Name> values) {
         final Set<Name> names = new HashSet<>(values);
         if (names.size() != values.size()) {
-            throw new IllegalArgumentException("[ERROR] 동일한 이름을 입력하면 안 됩니다.");
+            throw new IllegalArgumentException("동일한 이름을 입력하면 안 됩니다.");
         }
     }
 
     private void validatePeopleNumber(final List<Name> values) {
         if (values.size() < MIN_PEOPLE || values.size() > MAX_PEOPLE) {
-            throw new IllegalArgumentException("[ERROR] 딜러를 제외한 플레이어는 1명 이상 7명이하이어야 합니다.");
+            throw new IllegalArgumentException("딜러를 제외한 플레이어는 1명 이상 7명이하이어야 합니다.");
         }
     }
 

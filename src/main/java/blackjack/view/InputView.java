@@ -42,7 +42,7 @@ public class InputView {
         if (END_GAME_MARK.equals(option)) {
             return false;
         }
-        throw new IllegalArgumentException("[ERROR] y 또는 n을 입력해야 합니다.");
+        throw new IllegalArgumentException("y 또는 n을 입력해야 합니다.");
     }
 
     public static double requestMoney(final Name name) {
@@ -50,7 +50,7 @@ public class InputView {
             System.out.printf(REQUEST_MONEY_MESSAGE + NEWLINE, name.getValue());
             return validateNonZeroPositive(scanner.nextLine());
         } catch (NumberFormatException e) {
-            OutputView.getErrorMessage("[ERROR] 숫자를 입력해야 합니다.");
+            OutputView.getErrorMessage("숫자를 입력해야 합니다.");
             return requestMoney(name);
         } catch (IllegalArgumentException e) {
             OutputView.getErrorMessage(e.getMessage());
