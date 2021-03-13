@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.result.MatchResult;
+import static blackjack.domain.result.HandResult.*;
 
 public class Player extends Participant {
 
@@ -27,15 +27,15 @@ public class Player extends Participant {
 
     public Money getWinningMoney(Dealer dealer) {
         if (blackjackWin(dealer)) {
-            return bettingMoney.multiplyByRate(MatchResult.BLACKJACK.getProfitRate());
+            return bettingMoney.getWinningMoney(BLACKJACK);
         }
         if (lose(dealer)) {
-            return bettingMoney.toNegative();
+            return bettingMoney.getWinningMoney(BUST);
         }
         if (tie(dealer)) {
             return Money.ZERO;
         }
-        return bettingMoney.multiplyByRate(MatchResult.STAY.getProfitRate());
+        return bettingMoney.getWinningMoney(STAY);
     }
 
     private boolean blackjackWin(Dealer dealer) {

@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.result.HandResult;
 import java.util.Objects;
 
 public class Money {
@@ -13,19 +14,12 @@ public class Money {
         this.value = value;
     }
 
-    private void validateMinimumAmount(int value) {
-        if (value < MINIMUM_AMOUNT) {
-            throw new IllegalArgumentException(
-                    String.format("배팅 금액은 %d원 이상이어야 합니다", MINIMUM_AMOUNT));
-        }
-    }
-
     public static Money getBettingMoney(String bettingMoneyInput) {
         return new Money(Integer.parseInt(bettingMoneyInput));
     }
 
-    public Money multiplyByRate(double rate) {
-        return new Money((int) (value * rate));
+    public Money getWinningMoney(HandResult result) {
+        return new Money((int) (value * result.getProfitRate()));
     }
 
     public Money add(Money winningMoney) {

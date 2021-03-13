@@ -1,11 +1,11 @@
 package blackjack.domain.result;
 
-public enum MatchResult {
+public enum HandResult {
     STAY(1), BLACKJACK(1.5), BUST(-1);
 
     private final double profitRate;
 
-    MatchResult(double profitRate) {
+    HandResult(double profitRate) {
         this.profitRate = profitRate;
     }
 
