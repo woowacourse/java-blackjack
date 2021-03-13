@@ -15,7 +15,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardsTest {
-
     @Test
     @DisplayName("비어 있는 카드 리스트 생성한다.")
     void createEmptyCards() {
