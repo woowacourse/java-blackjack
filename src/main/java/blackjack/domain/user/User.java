@@ -5,8 +5,6 @@ import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
 import blackjack.domain.state.Stay;
 
-import java.util.Objects;
-
 public abstract class User {
     protected final Name name;
     protected State state;
@@ -71,19 +69,5 @@ public abstract class User {
 
     public final boolean isBlackJack() {
         return cards().isBlackjack();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(state.cards(), user.state.cards()) &&
-                Objects.equals(name, user.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(state.cards(), name);
     }
 }

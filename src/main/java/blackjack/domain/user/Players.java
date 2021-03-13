@@ -37,7 +37,7 @@ public class Players {
                 .filter(User::isAbleToHit)
                 .findFirst()
                 .orElseThrow(() ->
-                        new IllegalStateException("[ERROR] 남아있는 플레이어가 없습니다."));
+                        new NullPointerException("[ERROR] 남아있는 플레이어가 없습니다."));
     }
 
     public void setUpBettingMoney(String name, long value) {

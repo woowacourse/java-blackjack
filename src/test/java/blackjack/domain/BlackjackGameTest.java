@@ -132,4 +132,25 @@ public class BlackjackGameTest {
         assertThatThrownBy(() -> blackjackGame.betByPlayer("amazi", 1000))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("게임 진행 가능한 플레이어가 없을 때 현재 플레이어를 가져오려하면 예외가 발생한다.")
+    void getCurrentPlayer() {
+        List<String> names = Arrays.asList("amazzi","dani");
+        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+
+        assertThatThrownBy(blackjackGame::getCurrentPlayer)
+                .isInstanceOf(NullPointerException.class);
+    }
+
+    @Test
+    @DisplayName("y, n가 아닌 대답이 들어올 경우 예외가 발생한다.")
+    void answer() {
+        List<String> names = Arrays.asList("amazzi","dani");
+        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+
+        assertThatThrownBy(() -> blackjackGame.proceedPlayersRound("ㄴ"))
+                .isInstanceOf(IllegalArgumentException.class);
+
+    }
 }

@@ -65,8 +65,8 @@ public class BlackjackGame {
     }
 
     public void proceedPlayersRound(String answer) {
-        Player currentPlayer = players.getCurrentPlayer();
         validateAnswer(answer);
+        Player currentPlayer = players.getCurrentPlayer();
         if (YES.equals(answer)) {
             currentPlayer.hit(deck.popOne());
         }

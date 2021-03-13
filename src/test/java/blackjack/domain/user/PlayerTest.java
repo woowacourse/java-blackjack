@@ -240,4 +240,19 @@ public class PlayerTest {
 
         assertThat(profit).isEqualTo(1000);
     }
+
+    @Test
+    @DisplayName("블랙잭인지 확인한다.")
+    void isBlackJack() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+        player.betMoney(new Money(1000));
+
+        boolean isBlackjack = player.isBlackJack();
+
+        assertThat(isBlackjack).isFalse();
+    }
 }

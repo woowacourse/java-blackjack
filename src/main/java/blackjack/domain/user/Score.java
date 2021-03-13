@@ -1,6 +1,6 @@
 package blackjack.domain.user;
 
-public class Score{
+public class Score {
     private static final int BLACKJACK_VALUE = 21;
     private static final int DEALER_MUST_HIT_MAX_VALUE = 16;
     private static final int TEN = 10;
