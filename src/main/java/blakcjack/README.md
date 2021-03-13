@@ -47,5 +47,15 @@
 - [x] Score 클래스 생성
 - [x] OutcomeStatistics DTO로 변경를 (OutcomeSummaryDto)
 - [x] Cards 클래스 생성 현재 Participant가 가지고 있는 점수 계산 로직 이동
+- [ ] ParticipantDto 생성
+- [ ] ParticipantsDto 생성
+- [ ] DTO를 이용하도록 OutputView, Controller 변경
+- [ ] state 패턴을 이용하여 게임 진행 관리
 
 ## 2단계 추가 요구 사항
+
+- [ ] 플레이어에게 배팅 금액을 입력 받는 기능
+- [ ] 베팅 금액 관련 도메인 생성
+    - [ ] 예외: 자연수가 아닌 값 입력
+- [ ] 최종 수익을 계산 하는 기능
+- [ ] 최종 수익을 출력하는 기능
