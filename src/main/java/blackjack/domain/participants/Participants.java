@@ -14,8 +14,10 @@ public class Participants {
         participantGroup = participantsSetUp(names, moneys);
     }
 
-    public Participants(final Names names) {
-        participantGroup = participantsSetUp(names);
+    public Participants(final Participant dealer, final List<Participant> players) {
+        participantGroup = new ArrayList<>();
+        participantGroup.add(dealer);
+        participantGroup.addAll(players);
     }
 
     private List<Participant> participantsSetUp(final Names names, final List<Double> moneys) {

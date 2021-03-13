@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.ParticipantResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Names;
@@ -16,26 +15,14 @@ import java.util.stream.Collectors;
 public class BlackjackController {
 
     public void run() {
-        final Participants participants = createParticipants();
-        participants.distributeCard();
-        OutputView.showNameAndCardInfo(participants);
-
-        gameProgress(participants.getPlayers(), participants.getDealer());
-        OutputView.showCardsResult(participants.getParticipantGroup());
-
-        final ParticipantResult participantResults = new BlackjackGame(participants)
-            .makeParticipantResults();
-        OutputView.showGameResult(participantResults.getResults());
-    }
-
-    private Participants createParticipants() {
         final Names names = requestName();
-        final List<Double> moneys = new ArrayList<>();
-        for (final Name name : names.toList()) {
-            final double value = InputView.requestMoney(name);
-            moneys.add(value);
-        }
-        return new Participants(names, new ArrayList<>(moneys));
+        final BlackjackGame blackjackGame = new BlackjackGame(names, requestMoneys(names));
+        blackjackGame.distributeCard();
+        OutputView.showNameAndCardInfo(blackjackGame.getParticipants());
+
+        gameProgress(blackjackGame.getParticipants());
+        OutputView.showCardsResult(blackjackGame.getParticipants().getParticipantGroup());
+        OutputView.showGameResult(blackjackGame.makeParticipantResults().getResults());
     }
 
     private Names requestName() {
@@ -54,23 +41,34 @@ public class BlackjackController {
         return new Names(names);
     }
 
-    private void gameProgress(final List<Participant> participants, final Participant dealer) {
-        for (final Participant participant : participants) {
-            singlePlayerGameProgress(participant);
+    private List<Double> requestMoneys(final Names names) {
+        final List<Double> moneys = new ArrayList<>();
+        for (final Name name : names.toList()) {
+            final double value = InputView.requestMoney(name);
+            moneys.add(value);
+        }
+        return moneys;
+    }
+
+    private void gameProgress(final Participants participants) {
+        final Participant dealer = participants.getDealer();
+        final List<Participant> players = participants.getPlayers();
+        for (final Participant player : players) {
+            singlePlayerGameProgress(player);
         }
         dealerGameProgress(dealer);
     }
 
-    private void singlePlayerGameProgress(final Participant participant) {
-        while (!participant.isBust() && InputView.askMoreCard(participant.getName())) {
-            participant.receiveCard(CardDeck.distribute());
-            OutputView.showParticipantCard(participant, participant.getPlayerCards());
+    private void singlePlayerGameProgress(final Participant player) {
+        while (!player.isBust() && InputView.askMoreCard(player.getName())) {
+            player.receiveCard(CardDeck.distribute());
+            OutputView.showParticipantCard(player, player.getPlayerCards());
         }
-        if (participant.isBust()) {
+        if (player.isBust()) {
             OutputView.bustMessage();
             return;
         }
-        OutputView.showParticipantCard(participant, participant.getPlayerCards());
+        OutputView.showParticipantCard(player, player.getPlayerCards());
     }
 
     private void dealerGameProgress(final Participant dealer) {
@@ -79,5 +77,4 @@ public class BlackjackController {
             dealer.receiveCard(CardDeck.distribute());
         }
     }
-
 }
