@@ -26,12 +26,12 @@ public abstract class Finished implements State {
 
     @Override
     public double profitRate(Dealer dealer, int score) {
-        return getState(dealer, score).getProfitRate();
+        return getResultType(dealer, score).getProfitRate();
     }
 
-    abstract ResultType getState(Dealer dealer, int score);
+    abstract ResultType getResultType(Dealer dealer, int score);
 
-    public ResultType getResultType(int difference) {
+    public ResultType getResultTypeByDifference(int difference) {
         return Arrays.stream(ResultType.values())
                 .filter(resultType -> resultType.matcher.apply(difference))
                 .findFirst()

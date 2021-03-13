@@ -5,7 +5,7 @@ import blackjack.domain.participant.Dealer;
 public class Bust extends Finished {
 
     @Override
-    ResultType getState(Dealer dealer, int score) {
+    ResultType getResultType(Dealer dealer, int score) {
         return ResultType.LOSE;
     }
 }
