@@ -7,7 +7,11 @@ public class BettingMoney {
 
     private final BigDecimal money;
 
-    public BettingMoney(BigDecimal money) {
+    public BettingMoney(String money) {
+        this(new BigDecimal(money));
+    }
+
+    private BettingMoney(BigDecimal money) {
         validateNegative(money);
         this.money = money;
     }

@@ -25,11 +25,11 @@ public class ProfitResultTest {
     void calculateProfit() {
         Dealer dealer = new Dealer();
         Player player1 = new Player(new Nickname("air"), new BlackJack(new Cards()));
-        player1.betting(new BettingMoney(new BigDecimal(10000)));
+        player1.betting(new BettingMoney("10000"));
         Player player2 = new Player(new Nickname("curry"), new Bust(new Cards()));
-        player2.betting(new BettingMoney(new BigDecimal(20000)));
+        player2.betting(new BettingMoney("20000"));
         Player player3 = new Player(new Nickname("jordan"), new Stay(new Cards()));
-        player3.betting(new BettingMoney(new BigDecimal(30000)));
+        player3.betting(new BettingMoney("30000"));
 
         Map<Player, MatchResult> result = new HashMap<>();
         result.put(player1, MatchResult.WIN);
