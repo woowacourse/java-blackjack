@@ -11,8 +11,7 @@ public class ParticipantDto {
     private final int score;
     private final List<Card> cards;
 
-
-    public ParticipantDto(final String name, final String type, final int score, final List<Card> cards) {
+    private ParticipantDto(final String name, final String type, final int score, final List<Card> cards) {
         this.name = name;
         this.type = type;
         this.score = score;

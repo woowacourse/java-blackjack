@@ -22,6 +22,11 @@ public class Dealer extends Participant {
     }
 
     @Override
+    public ParticipantType getType() {
+        return ParticipantType.DEALER;
+    }
+
+    @Override
     public boolean supports(final ParticipantType participantType) {
         return ParticipantType.DEALER.equals(participantType);
     }

@@ -6,6 +6,11 @@ public class Player extends Participant {
     }
 
     @Override
+    public ParticipantType getType() {
+        return ParticipantType.PLAYER;
+    }
+
+    @Override
     public boolean supports(final ParticipantType participantType) {
         return ParticipantType.PLAYER.equals(participantType);
     }

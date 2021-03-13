@@ -9,6 +9,7 @@ import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
 import blakcjack.dto.OutcomeSummaryDto;
+import blakcjack.dto.ParticipantDto;
 import blakcjack.exception.GameTerminationException;
 import blakcjack.view.InputView;
 
@@ -75,7 +76,7 @@ public class BlackJackController {
     private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {
         while (player.canDrawMoreCard() && isHitSelected(player)) {
             blackjackGame.distributeOneCard(player);
-            printPlayerHand(player);
+            printPlayerHand(ParticipantDto.from(player));
         }
     }
 

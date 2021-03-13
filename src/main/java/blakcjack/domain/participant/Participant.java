@@ -19,6 +19,8 @@ public abstract class Participant {
         this.cards = new Cards(Collections.emptyList());
     }
 
+    public abstract ParticipantType getType();
+
     public abstract boolean supports(ParticipantType participantType);
 
     public void receiveCard(final Card card) {
@@ -67,6 +69,10 @@ public abstract class Participant {
 
     public List<Card> showCardList() {
         return cards.toList();
+    }
+
+    public int showScore() {
+        return cards.calculateScore().toInt();
     }
 
     public String getNameValue() {

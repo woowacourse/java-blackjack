@@ -7,12 +7,16 @@ import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.ParticipantType;
 import blakcjack.dto.OutcomeSummaryDto;
+import blakcjack.dto.ParticipantDto;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final String DEALER_TYPE = "딜러";
+
     public static void printInitialHands(final Dealer dealer, final List<Participant> players) {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(makeCardDistributionMessage(dealer, players));
@@ -34,25 +38,40 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    public static void printPlayerHand(final Participant participant) {
-        System.out.print(makeCardSummary(participant));
+    public static void printPlayerHand(final ParticipantDto participantDto) {
+        System.out.print(makeCardSummary(participantDto));
     }
 
+    private static String makeCardSummary(final ParticipantDto participantDto) {
+        final List<Card> initialCards = getInitialCards(participantDto.getType(), participantDto.getCards());
 
+        return String.format("%s: %s%n", participantDto.getName(),
+                concatenateCardsInformation(initialCards));
+    }
+
+    private static List<Card> getInitialCards(final String type, final List<Card> cards) {
+        if (DEALER_TYPE.equals(type)) {
+            return Collections.singletonList(cards.get(0));
+        }
+        return cards;
+    }
+
+    // TODO : 나중에 지우기
     private static String makeCardSummary(final Participant participant) {
         return String.format("%s: %s%n", participant.getNameValue(),
                 concatenateCardsInformation(getInitialCards(participant)));
+    }
+
+    // TODO : 나중에 지우기
+    private static List<Card> getInitialCards(final Participant participant) {
+        return participant.supports(ParticipantType.DEALER) ?
+                ((Dealer) participant).showFirstCard() : participant.showCardList();
     }
 
     private static String concatenateCardsInformation(final List<Card> cards) {
         return cards.stream()
                 .map(OutputView::getCardInformation)
                 .collect(Collectors.joining(", "));
-    }
-
-    private static List<Card> getInitialCards(final Participant participant) {
-        return participant.supports(ParticipantType.DEALER) ?
-                ((Dealer) participant).showFirstCard() : participant.showCardList();
     }
 
     private static String getCardInformation(final Card card) {
@@ -74,7 +93,7 @@ public class OutputView {
     }
 
     private static String makeFinalSummary(final Participant participant) {
-        return String.format("%s - 결과: %d%n", makeFinalCardSummary(participant), participant.showCardList());
+        return String.format("%s - 결과: %d%n", makeFinalCardSummary(participant), participant.showScore());
     }
 
     private static String makeFinalCardSummary(final Participant participant) {
