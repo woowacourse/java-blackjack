@@ -7,12 +7,12 @@ import java.util.List;
 
 public abstract class User implements Comparable<User> {
 
-    protected Hand hand;
+    protected final Hand hand;
     protected final String name;
 
     protected User(String name, List<Card> cards) {
         validateNotEmptyName(name);
-        initialHands(cards);
+        this.hand = new Hand(cards);
         this.name = name;
     }
 
@@ -22,13 +22,10 @@ public abstract class User implements Comparable<User> {
         }
     }
 
-    private void initialHands(List<Card> cards) {
-        this.hand = new Hand(cards);
-    }
-
     public boolean isHit() {
         return hand.isHit();
     }
+
     public boolean isBust() {
         return hand.isBust();
     }

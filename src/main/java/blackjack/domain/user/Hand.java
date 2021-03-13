@@ -8,7 +8,7 @@ public class Hand {
     public static final int ACE_CONVERSION_LIMIT = 11;
     public static final int ACE_DIFFERENCE = 10;
 
-    private List<Card> cards;
+    private final List<Card> cards;
     private HandStatus status;
 
     public Hand(List<Card> cards) {
@@ -23,7 +23,7 @@ public class Hand {
 
     public int calculateHandScore() {
         int score = calculateScore();
-        if(score <= ACE_CONVERSION_LIMIT && hasAce()) {
+        if (score <= ACE_CONVERSION_LIMIT && hasAce()) {
             score += ACE_DIFFERENCE;
         }
         return score;

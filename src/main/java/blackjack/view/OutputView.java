@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final int DEALER_OPEN_CARD_INDEX = 0;
     private static final String COMMA = ", ";
-    public static final int DEALER_OPEN_CARD_INDEX = 0;
 
     public static void printInitialCards(User dealer, List<Player> players) {
         printIntroMessage(dealer, players);
@@ -31,7 +31,7 @@ public class OutputView {
         players.forEach(OutputView::printPlayerCard);
     }
 
-    private static void printDealerCard (User dealer) {
+    private static void printDealerCard(User dealer) {
         Card dealerOpenCard = dealer.getCards().get(DEALER_OPEN_CARD_INDEX);
         String dealerCards = dealerOpenCard.getDenomination().getName() + dealerOpenCard.getSuit().getName();
         System.out.printf("%s: %s%n", dealer.getName(), dealerCards);
