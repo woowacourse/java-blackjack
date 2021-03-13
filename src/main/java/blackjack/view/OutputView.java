@@ -58,7 +58,7 @@ public class OutputView {
         System.out.println("\n## 최종 승패");
 
         printDealerOutcome(resultDto.summarizeFinalOutcomeOfPlayers());
-        printPlayersOutcome(resultDto.getPlayersFinalOutcome());
+        printPlayersOutcome(resultDto.summarizePlayersFinalOutcome());
     }
 
     private static void printPlayersOutcome(Map<String, Outcome> playersFinalOutcome) {
@@ -79,10 +79,18 @@ public class OutputView {
     public static void printProfit(ResultDto resultDto) {
         System.out.println();
         System.out.println("## 최종 수익");
-        for (Map.Entry<String, BigDecimal> entry : resultDto.summarizePlayerProfit().entrySet()) {
+        printDealerProfit(resultDto);
+        printPlayersProfit(resultDto);
+    }
+
+    private static void printDealerProfit(ResultDto resultDto) {
+        System.out.println(Application.DEALER_NAME + ": " + resultDto.summarizeDealerProfit());
+    }
+
+    private static void printPlayersProfit(ResultDto resultDto) {
+        for (Map.Entry<String, BigDecimal> entry : resultDto.summarizePlayersProfit().entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
-
     }
 
 }

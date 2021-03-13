@@ -29,6 +29,9 @@ public class BettingMoney {
         throw new IllegalArgumentException();
     }
 
+    public BettingMoney subtract(BettingMoney value) {
+        return new BettingMoney(money.subtract(value.money));
+    }
 
     public BettingMoney multiply(double value) {
         final BigDecimal result = money

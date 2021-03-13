@@ -1,5 +1,6 @@
 package blackjack.dto;
 
+import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gametable.Outcome;
 import blackjack.domain.gametable.PlayerResult;
 import blackjack.domain.gametable.ScoreBoard;
@@ -17,7 +18,7 @@ public class ResultDto {
         this.scoreBoard = scoreBoard;
     }
 
-    public Map<String, Outcome> getPlayersFinalOutcome() {
+    public Map<String, Outcome> summarizePlayersFinalOutcome() {
         final Map<String, Outcome> results = new LinkedHashMap<>();
 
         for (PlayerResult player : scoreBoard.getUnmodifiableResults()) {
@@ -37,7 +38,7 @@ public class ResultDto {
         return Collections.unmodifiableMap(outcomes);
     }
 
-    public Map<String, BigDecimal> summarizePlayerProfit() {
+    public Map<String, BigDecimal> summarizePlayersProfit() {
         final Map<String, BigDecimal> results = new LinkedHashMap<>();
 
         for (PlayerResult player : scoreBoard.getUnmodifiableResults()) {
@@ -46,5 +47,18 @@ public class ResultDto {
 
         return results;
     }
+
+    public BigDecimal summarizeDealerProfit() {
+        BettingMoney dealerResult = BettingMoney.ZERO;
+        for (PlayerResult player : scoreBoard.getUnmodifiableResults()) {
+            final BettingMoney playerProfit = player.getReturnMoney()
+                .subtract(player.getInputMoney());
+
+            dealerResult = dealerResult.subtract(playerProfit);
+        }
+
+        return dealerResult.toBigDecimal();
+    }
+
 
 }
