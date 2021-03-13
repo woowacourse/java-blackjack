@@ -3,7 +3,6 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.state.State;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,8 +11,6 @@ import java.util.List;
 public abstract class User {
     protected final Cards cards;
     protected final Name name;
-
-    protected State state;
 
     public User(String name){
         this(new Name(name));
@@ -38,10 +35,6 @@ public abstract class User {
 
     public boolean isBlackjack() {
         return this.cards.isBlackjack();
-    }
-
-    public double getProfit(Money money) {
-        return this.state.calculateProfit(money);
     }
 
     public int getScore() {

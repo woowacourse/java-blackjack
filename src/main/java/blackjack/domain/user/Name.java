@@ -16,7 +16,7 @@ public class Name {
 
     private void validate(String name) {
         if (isInvalidCharacter(name) || isEmpty(name)) {
-            throw new IllegalArgumentException("유효하지 읺은 이름입니다.");
+            throw new IllegalArgumentException("유효하지 않은 이름입니다.");
         }
     }
 
