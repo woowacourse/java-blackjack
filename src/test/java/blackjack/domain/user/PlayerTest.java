@@ -4,8 +4,9 @@ import blackjack.domain.card.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -55,9 +56,10 @@ class PlayerTest {
     }
 
     private List<Card> makeCards() {
-        return Arrays.asList(
-            new Card(Denomination.FIVE, Suit.CLUBS),
-            new Card(Denomination.EIGHT, Suit.DIAMONDS)
-        );
+        return Stream.<Card>builder()
+            .add(new Card(Denomination.FIVE, Suit.CLUBS))
+            .add(new Card(Denomination.EIGHT, Suit.DIAMONDS))
+            .build()
+            .collect(Collectors.toList());
     }
 }
