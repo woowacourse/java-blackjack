@@ -51,7 +51,7 @@ public abstract class User {
     }
 
     public final void stay() {
-        changeState(new Stay(cards()));
+        changeState(state.stay());
     }
 
     public final void betMoney(Money money) {
