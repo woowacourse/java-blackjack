@@ -1,9 +1,15 @@
 package blackjack.domain.user;
 
 import blackjack.domain.Money;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static blackjack.domain.Fixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,5 +54,25 @@ class PlayerTest {
         player.draw(six);
 
         assertTrue(player.isBust());
+    }
+
+    private static Stream<Arguments> cardsProvider() {
+        return Stream.of(
+                Arguments.of(false, new Card[]{king, queen, two}),  // Bust
+                Arguments.of(true, new Card[]{king, two}),          // Alive
+                Arguments.of(false, new Card[]{ace, king})          // BlackJack
+        );
+    }
+
+    @DisplayName("canContinue - 블랙잭이거나 버스트가 난 경우 False, 그 외는 True를 리턴")
+    @ParameterizedTest
+    @MethodSource("cardsProvider")
+    void isCanContinueTest(boolean result, Card... cardArray) {
+        Player player = new Player(Name.of("PlayerBust"), defaultMoney);
+        for (Card card : cardArray) {
+            player.draw(card);
+        }
+
+        assertThat(player.canContinue()).isEqualTo(result);
     }
 }
