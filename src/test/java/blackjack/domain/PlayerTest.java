@@ -53,29 +53,6 @@ public class PlayerTest {
                 .hasMessage("불가능한 입력 입니다.");
     }
 
-    @Test
-    @DisplayName("버스트가 없는 경우 승패 결과")
-    void match() throws InvalidNameInputException {
-        assertThat(TestSetUp.createBlackJackPlayer().match(TestSetUp.createDealer())).isEqualTo(ResultType.WIN);
-        assertThat(TestSetUp.createTiePlayer().match(TestSetUp.createDealer())).isEqualTo(ResultType.TIE);
-        assertThat(TestSetUp.createLoser().match(TestSetUp.createDealer())).isEqualTo(ResultType.LOSE);
-    }
-
-    @Test
-    @DisplayName("버스트인 경우 승패 결과")
-    void matchWithBust() throws InvalidNameInputException {
-        assertThat(TestSetUp.createBustPlayer().match(TestSetUp.createDealer())).isEqualTo(ResultType.LOSE);
-        assertThat(TestSetUp.createBustPlayer().match(TestSetUp.createDealer())).isEqualTo(ResultType.LOSE);
-    }
-
-    @Test
-    @DisplayName("딜러가 버스트인 경우 승패 결과")
-    void matchWithDealerBust() throws InvalidNameInputException {
-        assertThat(TestSetUp.createBlackJackPlayer().match(TestSetUp.createBustDealer())).isEqualTo(ResultType.WIN);
-        assertThat(TestSetUp.createLoser().match(TestSetUp.createBustDealer())).isEqualTo(ResultType.WIN);
-        assertThat(TestSetUp.createBustPlayer().match(TestSetUp.createBustDealer())).isEqualTo(ResultType.LOSE);
-    }
-
     @ParameterizedTest
     @ValueSource(strings = {"1", "10000", "1234567"})
     @DisplayName("돈 생성 기능")

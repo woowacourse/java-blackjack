@@ -1,7 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.Hand;
-import blackjack.domain.ResultType;
+import blackjack.domain.participant.Dealer;
 
 public interface State {
 
@@ -11,5 +11,5 @@ public interface State {
 
     boolean isFinished();
 
-    double profitRate(ResultType match);
+    double profitRate(Dealer dealer, int score);
 }

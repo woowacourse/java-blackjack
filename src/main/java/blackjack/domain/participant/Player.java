@@ -2,9 +2,10 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Money;
 import blackjack.domain.Response;
-import blackjack.domain.ResultType;
+import blackjack.domain.state.ResultType;
 import blackjack.domain.card.Card;
 import blackjack.domain.state.BlackJackState;
+import com.sun.xml.internal.bind.v2.TODO;
 
 public class Player extends BlackJackParticipant {
 
@@ -28,25 +29,11 @@ public class Player extends BlackJackParticipant {
         return isContinue();
     }
 
-    public ResultType match(Dealer dealer) {
-        if (isBust()) {
-            return ResultType.LOSE;
-        }
-        if (dealer.isBust()) {
-            return ResultType.WIN;
-        }
-        if (getState() instanceof BlackJackState && !(dealer.getState() instanceof BlackJackState)) {
-            return ResultType.WIN;
-        }
-
-        return ResultType.getResultType(getScore() - dealer.getScore());
+    public double getProfit(Dealer dealer) {
+        return getState().profitRate(dealer, getScore()) * getMoney();
     }
 
     public double getMoney() {
         return money.getValue();
-    }
-
-    public double getProfit(Dealer dealer) {
-        return getState().profitRate(match(dealer)) * getMoney();
     }
 }

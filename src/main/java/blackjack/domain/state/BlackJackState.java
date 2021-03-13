@@ -1,16 +1,15 @@
 package blackjack.domain.state;
 
-import blackjack.domain.ResultType;
+import blackjack.domain.participant.Dealer;
 
 public class BlackJackState extends Finished {
 
-    private static final double BLACK_JACK_PROFIT_RATE = 1.5;
-
     @Override
-    public double profitRate(ResultType match) {
-        if (match == ResultType.TIE) {
-            return super.profitRate(match);
+    void setState(Dealer dealer, int score) {
+        if (dealer.getHand().isBlackJack()) {
+            super.resultType = ResultType.TIE;
+            return;
         }
-        return BLACK_JACK_PROFIT_RATE;
+        super.resultType = ResultType.BLACKJACK;
     }
 }

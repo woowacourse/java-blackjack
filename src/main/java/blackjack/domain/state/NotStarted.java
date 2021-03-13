@@ -1,7 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.Hand;
-import blackjack.domain.ResultType;
+import blackjack.domain.participant.Dealer;
 import blackjack.util.GameInitializer;
 
 public class NotStarted implements State {
@@ -24,7 +24,7 @@ public class NotStarted implements State {
     }
 
     @Override
-    public double profitRate(ResultType match) {
-        throw new IllegalStateException();
+    public double profitRate(Dealer dealer, int score) {
+        return 0;
     }
 }

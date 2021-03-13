@@ -1,8 +1,9 @@
 package blackjack.domain.state;
 
 import blackjack.domain.Hand;
+import blackjack.domain.participant.Dealer;
 
-public class Hit extends Running {
+public class Hit implements State {
 
     @Override
     public State update(Hand hand) {
@@ -15,5 +16,15 @@ public class Hit extends Running {
     @Override
     public State stay() {
         return new Stay();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public double profitRate(Dealer dealer, int score) {
+        return 0;
     }
 }

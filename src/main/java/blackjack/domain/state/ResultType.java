@@ -1,9 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.state;
 
 import java.util.Arrays;
 import java.util.function.Function;
 
 public enum ResultType {
+    BLACKJACK((difference) -> difference > 0, 1.5),
     WIN((difference) -> difference > 0, 1),
     LOSE((difference) -> difference < 0, -1),
     TIE((difference) -> difference == 0, 0);

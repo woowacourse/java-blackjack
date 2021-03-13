@@ -1,9 +1,11 @@
 package blackjack.domain.state;
 
 import blackjack.domain.Hand;
-import blackjack.domain.ResultType;
+import blackjack.domain.participant.Dealer;
 
-public abstract class Finished extends Started {
+public abstract class Finished implements State {
+    ResultType resultType;
+
     @Override
     public State update(Hand hand) {
         throw new IllegalStateException();
@@ -20,7 +22,10 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public double profitRate(ResultType match) {
-        return match.getProfitRate();
+    public double profitRate(Dealer dealer, int score) {
+        setState(dealer, score);
+        return this.resultType.getProfitRate();
     }
+
+    abstract void setState(Dealer dealer, int score);
 }
