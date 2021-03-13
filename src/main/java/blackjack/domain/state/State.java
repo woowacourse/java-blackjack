@@ -28,7 +28,7 @@ public abstract class State {
         return new Hit(cards);
     }
 
-    public Cards getCards() {
+    public Cards cards() {
         return cards;
     }
 
@@ -40,8 +40,8 @@ public abstract class State {
         return cards.isBust();
     }
 
-    public int getScore() {
-        return cards.getScore();
+    public int score() {
+        return cards.score();
     }
 
     public abstract boolean isFinished();

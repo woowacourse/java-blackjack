@@ -33,9 +33,9 @@ public class OutputView {
 
     public static void printDealerCards(Dealer dealer) {
         Cards cards = dealer.cards();
-        Card card = cards.getFirstCard();
+        Card card = cards.firstCard();
         List<String> results = new ArrayList<>();
-        results.add(card.findTypeName() + card.findDenominationName());
+        results.add(card.typeName() + card.denominationName());
         System.out.printf(PRINT_CARDS_FORMAT, dealer.getName(), String.join(DELIMITER, results));
     }
 
@@ -50,7 +50,7 @@ public class OutputView {
         List<String> results = new ArrayList<>();
 
         for (Card card : cards.getCards()) {
-            results.add(card.findTypeName() + card.findDenominationName());
+            results.add(card.typeName() + card.denominationName());
         }
         System.out.printf(PRINT_CARDS_FORMAT, player.getName(), String.join(DELIMITER, results));
     }
@@ -58,15 +58,15 @@ public class OutputView {
     public static void printDealerCardsScore(Dealer dealer) {
         System.out.println();
         Cards cards = dealer.cards();
-        if (cards.cardsSize() > INITIAL_HAND_OUT_CARD_COUNT) {
+        if (cards.size() > INITIAL_HAND_OUT_CARD_COUNT) {
             System.out.print(DEALER_ONE_MORE_DRAW_MESSAGE);
         }
         List<String> results = cards.getCards().stream()
-            .map(card -> card.findTypeName() + card.findDenominationName())
+            .map(card -> card.typeName() + card.denominationName())
             .collect(Collectors.toList());
 
         System.out.printf(PRINT_CARDS_SCORE_FORMAT, dealer.getName(),
-            String.join(DELIMITER, results), cards.getScore());
+            String.join(DELIMITER, results), cards.score());
     }
 
     public static void printPlayersCardsScore(Players players) {
@@ -78,11 +78,11 @@ public class OutputView {
     public static void printPlayerCardsScore(Player player) {
         Cards cards = player.cards();
         List<String> results = cards.getCards().stream()
-            .map(card -> card.findTypeName() + card.findDenominationName())
+            .map(card -> card.typeName() + card.denominationName())
             .collect(Collectors.toList());
 
         System.out.printf(PRINT_CARDS_SCORE_FORMAT, player.getName(),
-            String.join(DELIMITER, results), cards.getScore());
+            String.join(DELIMITER, results), cards.score());
     }
 
     public static void printGameProfitResult(Players players, Dealer dealer) {

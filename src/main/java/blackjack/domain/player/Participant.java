@@ -21,11 +21,11 @@ public abstract class Participant {
     }
 
     public Cards cards() {
-        return state.getCards();
+        return state.cards();
     }
 
     public int score() {
-        return state.getScore();
+        return state.score();
     }
 
     public void initialDraw(Deck deck) {

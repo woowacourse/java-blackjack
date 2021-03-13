@@ -32,17 +32,17 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return getScore() == BLACKJACK_NUMBER && cards.size() == BLACKJACK_CARD_COUNT;
+        return score() == BLACKJACK_NUMBER && cards.size() == BLACKJACK_CARD_COUNT;
     }
 
     public boolean isBust() {
-        return getScore() > BLACKJACK_NUMBER;
+        return score() > BLACKJACK_NUMBER;
     }
 
-    public int getScore() {
+    public int score() {
         int score = cards.stream()
             .filter(Card::isNotAce)
-            .mapToInt(Card::findDenominationValue)
+            .mapToInt(Card::denominationValue)
             .sum();
 
         if (containAceCard()) {
@@ -66,11 +66,11 @@ public class Cards {
             .anyMatch(Card::isAce);
     }
 
-    public Card getFirstCard() {
+    public Card firstCard() {
         return cards.get(0);
     }
 
-    public int cardsSize() {
+    public int size() {
         return cards.size();
     }
 

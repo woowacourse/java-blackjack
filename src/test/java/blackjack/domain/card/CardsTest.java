@@ -67,7 +67,7 @@ class CardsTest {
 
         Cards cards = new Cards();
         cards.initialDraw(deck);
-        assertThat(cards.cardsSize()).isEqualTo(2);
+        assertThat(cards.size()).isEqualTo(2);
     }
 
     @DisplayName("카드 점수 총합을 계산한다.")
@@ -80,7 +80,7 @@ class CardsTest {
                 new Card(Type.HEART, Denomination.FIVE)
             )
         );
-        assertThat(cards.getScore()).isEqualTo(12);
+        assertThat(cards.score()).isEqualTo(12);
     }
 
     @DisplayName("카드 점수 총합이 21을 초과하지 않으면 ACE를 11점으로 계산한다.")
@@ -92,7 +92,7 @@ class CardsTest {
                 new Card(Type.HEART, Denomination.TEN)
             )
         );
-        assertThat(cards.getScore()).isEqualTo(21);
+        assertThat(cards.score()).isEqualTo(21);
     }
 
     @DisplayName("카드 점수 총합이 21을 초과하지 않으면 ACE를 1점으로 계산한다.")
@@ -105,7 +105,7 @@ class CardsTest {
                 new Card(Type.HEART, Denomination.FIVE)
             )
         );
-        assertThat(cards.getScore()).isEqualTo(16);
+        assertThat(cards.score()).isEqualTo(16);
     }
 
 }

@@ -18,7 +18,7 @@ class CardTest {
     @Test
     void testCardInformation() {
         Card card = new Card(Type.DIAMOND, Denomination.FOUR);
-        assertThat(card.findDenominationValue()).isEqualTo(4);
-        assertThat(card.findTypeName()).isEqualTo("다이아몬드");
+        assertThat(card.denominationValue()).isEqualTo(4);
+        assertThat(card.typeName()).isEqualTo("다이아몬드");
     }
 }
