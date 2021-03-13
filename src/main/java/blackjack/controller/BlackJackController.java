@@ -15,8 +15,9 @@ public class BlackJackController {
     public void run() {
         Players players = createPlayers();
         Dealer dealer = new Dealer();
-        startGame(dealer, players);
-        printOverallResults(dealer, players);
+        Users users = Users.of(dealer, players);
+        startGame(dealer, players, users);
+        printOverallResults(dealer, players, users);
     }
 
     private Players createPlayers() {
@@ -29,8 +30,7 @@ public class BlackJackController {
                 .collect(collectingAndThen(toList(), Players::of));
     }
 
-    private void startGame(Dealer dealer, Players players) {
-        Users users = Users.of(dealer, players);
+    private void startGame(Dealer dealer, Players players, Users users) {
         CardDeck cardDeck = CardDeck.createDeck();
 
         users.dealCards(cardDeck);
@@ -64,10 +64,8 @@ public class BlackJackController {
         }
     }
 
-    private void printOverallResults(Dealer dealer, Players players) {
-        // TODO 생성하지 않고 처리할 수 있도록 리팩토링
-        OutputView.printCardsOfUsersWithScore(Users.of(dealer, players));
-
+    private void printOverallResults(Dealer dealer, Players players, Users users) {
+        OutputView.printCardsOfUsersWithScore(users);
         Results results = players.generateResultsMapAgainstDealer(dealer);
         OutputView.printResult(results, results.generateDealerResult());
     }
