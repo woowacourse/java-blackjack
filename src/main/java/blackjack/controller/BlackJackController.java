@@ -1,7 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.GameTable;
 import blackjack.domain.participant.*;
 import blackjack.domain.result.MatchResult;
 import blackjack.view.InputView;
@@ -12,15 +11,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
-    private static final String YES = "Y";
+    public static final String YES = "Y";
 
     public void run() {
-        Dealer dealer = new Dealer();
-        Deck deck = new Deck(Card.values());
+        GameTable gameTable = new GameTable(makePlayers());
+        gameTable.drawAtFirst();
+        OutputView.printParticipantsCardAtFirst(gameTable.getDealer(), gameTable.getPlayers());
+        askPlayersToHit(gameTable);
+        drawMoreCardToDealer(gameTable);
+        showResult(gameTable.getDealer(), gameTable.getPlayers());
+    }
+
+    private Players makePlayers() {
         List<Name> playerNames = getPlayerNames();
-        Players players = makePlayers(playerNames);
-        playGame(dealer, deck, players);
-        showResult(dealer, players);
+        List<Player> players = new ArrayList<>();
+        for (Name name : playerNames) {
+            BettingMoney bettingMoney = getBettingMoney(name);
+            players.add(new Player(name, bettingMoney));
+        }
+        return new Players(players);
     }
 
     private List<Name> getPlayerNames() {
@@ -35,15 +44,6 @@ public class BlackJackController {
         }
     }
 
-    private Players makePlayers(List<Name> playerNames) {
-        List<Player> players = new ArrayList<>();
-        for (Name name : playerNames) {
-            BettingMoney bettingMoney = getBettingMoney(name);
-            players.add(new Player(name, bettingMoney));
-        }
-        return new Players(players);
-    }
-
     private BettingMoney getBettingMoney(Name name) {
         OutputView.printBettingMoneyInputGuideMessage(name);
         try {
@@ -54,46 +54,28 @@ public class BlackJackController {
         }
     }
 
-    private void playGame(Dealer dealer, Deck deck, Players players) {
-        drawAtFirst(dealer, players, deck);
-        OutputView.printAfterDrawAtFirstGuideMessage(players);
-        OutputView.printParticipantsCardAtFirst(dealer, players);
-        askPlayersToHit(players, deck);
-        drawMoreCardToDealer(dealer, deck);
-    }
-
-    private void drawAtFirst(Dealer dealer, Players players, Deck deck) {
-        dealer.drawAtFirst(deck);
-        players.drawAtFirst(deck);
-    }
-
-    private void askPlayersToHit(Players players, Deck deck) {
-        players.getPlayers()
-                .forEach(player -> askHit(player, deck));
-    }
-
-    private void drawMoreCardToDealer(Dealer dealer, Deck deck) {
+    private void drawMoreCardToDealer(GameTable gameTable) {
+        Dealer dealer = gameTable.getDealer();
         while (dealer.canHit()) {
-            dealer.hit(deck.pop());
+            gameTable.drawMoreCardToDealer();
             OutputView.printDealerHitMessage();
         }
     }
 
-    private void askHit(Player player, Deck deck) {
+    private void askPlayersToHit(GameTable gameTable) {
+        gameTable.getPlayers().getPlayers()
+                .forEach(player -> askHit(gameTable, player));
+    }
+
+    private void askHit(GameTable gameTable, Player player) {
         String doesPlayerWantMoreCard;
 
         do {
             OutputView.printHitGuideMessage(player);
             doesPlayerWantMoreCard = InputView.getHitValue();
-            draw(player, doesPlayerWantMoreCard, deck);
-        } while (player.isNotBust() && doesPlayerWantMoreCard.equals(YES));
-    }
-
-    private void draw(Player player, String doesPlayerWantMoreCard, Deck deck) {
-        if (doesPlayerWantMoreCard.equals(YES)) {
-            player.hit(deck.pop());
+            gameTable.draw(player, doesPlayerWantMoreCard);
             OutputView.printPlayerCards(player);
-        }
+        } while (player.isNotBust() && doesPlayerWantMoreCard.equals(YES));
     }
 
     private void showResult(Dealer dealer, Players players) {
