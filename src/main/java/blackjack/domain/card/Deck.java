@@ -12,7 +12,7 @@ public class Deck {
     private final Deque<Card> cards;
 
     public Deck() {
-        cards = creatDeck();
+        cards = CardCache.cache;
     }
 
     public Deck(Cards cards) {
@@ -23,20 +23,30 @@ public class Deck {
         return cards.pop();
     }
 
-    private Deque<Card> creatDeck() {
-        List<Card> cards = new ArrayList<>();
-        for (Type type : Type.values()) {
-            makeCard(type, cards);
-        }
-        Collections.shuffle(cards);
-        return new ArrayDeque<>(cards);
-    }
+    private static class CardCache {
 
-    private void makeCard(Type type, List<Card> cards) {
-        Arrays.stream(Denomination.values())
-            .filter(denomination -> denomination != Denomination.ACE_ELEVEN)
-            .map(denomination -> new Card(type, denomination))
-            .forEach(cards::add);
+        static final Deque<Card> cache;
+
+        static {
+            cache = create();
+        }
+
+        private static Deque<Card> create() {
+            List<Card> cards = new ArrayList<>();
+            for (Type type : Type.values()) {
+                makeCard(type, cards);
+            }
+            Collections.shuffle(cards);
+            return new ArrayDeque<>(cards);
+        }
+
+        private static void makeCard(Type type, List<Card> cards) {
+            Arrays.stream(Denomination.values())
+                .filter(denomination -> denomination != Denomination.ACE_ELEVEN)
+                .map(denomination -> new Card(type, denomination))
+                .forEach(cards::add);
+        }
+
     }
 
 }
