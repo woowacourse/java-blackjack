@@ -5,12 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MoneyTest {
+class BettingMoneyTest {
     @DisplayName("객체 생성 성공")
     @Test
     void create() {
-        final Money money = new Money(10000);
-        assertThat(money).isEqualTo(new Money(10000));
+        final BettingMoney bettingMoney = new BettingMoney(10000);
+        assertThat(bettingMoney).isEqualTo(new BettingMoney(10000));
     }
-
 }

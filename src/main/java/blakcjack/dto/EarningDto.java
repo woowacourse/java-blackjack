@@ -1,25 +1,24 @@
 package blakcjack.dto;
 
-import blakcjack.domain.participant.Participant;
-
 public class EarningDto {
     private final String name;
-    private final int money;
+    private final int earning;
 
-    private EarningDto(final String name, final int money) {
+    private EarningDto(final String name, final int earning) {
         this.name = name;
-        this.money = money;
+        this.earning = earning;
     }
 
-    public static EarningDto of(final Participant participant) {
-        return new EarningDto(participant.getNameValue(), participant.getMoneyValue());
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getMoney() {
-        return money;
-    }
+    // TODO : 구조가 확정되면 나중에 수정
+//    public static EarningDto of(final Participant participant) {
+//        return new EarningDto(participant.getNameValue(), participant.getMoneyValue());
+//    }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public int getMoney() {
+//        return money;
+//    }
 }

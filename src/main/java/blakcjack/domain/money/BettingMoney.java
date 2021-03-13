@@ -2,10 +2,10 @@ package blakcjack.domain.money;
 
 import java.util.Objects;
 
-public class Money {
+public class BettingMoney {
     private final double value;
 
-    public Money(final double value) {
+    public BettingMoney(final double value) {
         this.value = value;
     }
 
@@ -17,8 +17,8 @@ public class Money {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final Money money = (Money) o;
-        return Double.compare(money.value, value) == 0;
+        final BettingMoney bettingMoney = (BettingMoney) o;
+        return Double.compare(bettingMoney.value, value) == 0;
     }
 
     @Override

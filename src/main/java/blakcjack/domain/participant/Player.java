@@ -1,15 +1,19 @@
 package blakcjack.domain.participant;
 
+import blakcjack.domain.money.BettingMoney;
 import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.score.Score;
 
 public class Player extends Participant {
+    private final BettingMoney bettingMoney;
+
     public Player(final String name) {
         this(name, 0);
     }
 
-    public Player(final String name, final double money) {
-        super(name, money);
+    public Player(final String name, final double bettingMoney) {
+        super(name);
+        this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
     public Outcome decideOutcome(final Dealer dealer) {

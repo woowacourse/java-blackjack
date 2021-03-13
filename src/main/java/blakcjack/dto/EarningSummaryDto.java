@@ -1,9 +1,6 @@
 package blakcjack.dto;
 
-import blakcjack.domain.participant.Participant;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class EarningSummaryDto {
     private final EarningDto dealerEarning;
@@ -14,13 +11,14 @@ public class EarningSummaryDto {
         this.playerEarnings = playerEarnings;
     }
 
-    public static EarningSummaryDto of(final Participant dealer, final List<Participant> players) {
-        final List<EarningDto> playerEarnings = players.stream()
-                .map(EarningDto::of)
-                .collect(Collectors.toList());
-
-        return new EarningSummaryDto(EarningDto.of(dealer), playerEarnings);
-    }
+    // TODO : 구조가 확정되면 나중에 수정
+//    public static EarningSummaryDto of(final Participant dealer, final List<Participant> players) {
+//        final List<EarningDto> playerEarnings = players.stream()
+//                .map(EarningDto::of)
+//                .collect(Collectors.toList());
+//
+//        return new EarningSummaryDto(EarningDto.of(dealer), playerEarnings);
+//    }
 
     public EarningDto getDealerEarning() {
         return dealerEarning;
