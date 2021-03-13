@@ -16,5 +16,11 @@ public class Player extends User {
         hand.addCard(deck.pickSingleCard());
         return true;
     }
+
+
+    public BettingResult computeBettingResult(MatchResult matchResult) {
+        double earningMoney = matchResult.calculateEarningMoney(bettingMoney);
+        return new BettingResult(this.name, earningMoney);
+    }
 }
 

@@ -16,7 +16,8 @@ public class Game {
     private static final int DEALER_STAY_LIMIT = 16;
 
     private final User dealer;
-    private final List<User> players;
+    //    private final List<User> players;
+    private final List<Player> players;
     private final Deck deck;
 
     public Game(Map<String, Double> playerMoneys) {
@@ -25,7 +26,7 @@ public class Game {
         players = createPlayer(playerMoneys);
     }
 
-    private List<User> createPlayer(Map<String, Double> playerMoneys) {
+    private List<Player> createPlayer(Map<String, Double> playerMoneys) {
         return playerMoneys
             .keySet()
             .stream()
@@ -38,7 +39,7 @@ public class Game {
             .anyMatch(User::isHit);
     }
 
-    public User bringHitPlayer() {
+    public Player bringHitPlayer() {
         return players.stream()
             .filter(User::isHit)
             .findFirst()
@@ -49,7 +50,7 @@ public class Game {
         return dealer.draw(deck);
     }
 
-    public void giveCardToPlayer(User player) {
+    public void giveCardToPlayer(Player player) {
         player.draw(deck);
     }
 
@@ -70,7 +71,7 @@ public class Game {
         return dealer;
     }
 
-    public List<User> getPlayers() {
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 }

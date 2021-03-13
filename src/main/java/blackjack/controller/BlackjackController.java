@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Game;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -26,7 +27,7 @@ public class BlackjackController {
         OutputView.printDealerDraw(game.giveCardToDealer());
     }
 
-    private void addNewCard(Game game, User player) {
+    private void addNewCard(Game game, Player player) {
         if (InputView.askIfMoreCard(player)) {
             game.giveCardToPlayer(player);
             OutputView.printPlayerCard(player);

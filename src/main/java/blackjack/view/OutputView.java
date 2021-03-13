@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.user.BettingResult;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 
 import java.io.PrintStream;
@@ -12,20 +13,20 @@ public class OutputView {
     private static final String COMMA = ", ";
     public static final int DEALER_OPEN_CARD_INDEX = 0;
 
-    public static void printInitialCards(User dealer, List<User> players) {
+    public static void printInitialCards(User dealer, List<Player> players) {
         printIntroMessage(dealer, players);
         printUserCard(dealer, players);
         System.out.println();
     }
 
-    private static void printIntroMessage(User dealer, List<User> players) {
+    private static void printIntroMessage(User dealer, List<Player> players) {
         String playerNames = players.stream()
             .map(User::getName)
             .collect(Collectors.joining(COMMA));
         System.out.printf("%n%s와 %s에게 2장의 나누었습니다.%n", dealer.getName(), playerNames);
     }
 
-    public static void printUserCard(User dealer, List<User> players) {
+    public static void printUserCard(User dealer, List<Player> players) {
         printDealerCard(dealer);
         players.forEach(OutputView::printPlayerCard);
     }
@@ -36,7 +37,7 @@ public class OutputView {
         System.out.printf("%s: %s%n", dealer.getName(), dealerCards);
     }
 
-    public static void printPlayerCard(User player) {
+    public static void printPlayerCard(Player player) {
         String cardString = makeCardString(player.getCards());
         System.out.printf("%s의 카드: %s%n", player.getName(), cardString);
     }

@@ -12,7 +12,7 @@ public enum MatchResult {
         this.earningRate = earningRate;
     }
 
-    public static MatchResult calculateResult(User player, User dealer) {
+    public static MatchResult calculateResult(Player player, User dealer) {
         if (player.isBust()) {
             return MatchResult.LOSE;
         }
@@ -25,7 +25,7 @@ public enum MatchResult {
         return compareScore(player, dealer);
     }
 
-    private static MatchResult compareScore(User player, User dealer) {
+    private static MatchResult compareScore(Player player, User dealer) {
         if (player.compareTo(dealer) < 0) {
             return MatchResult.LOSE;
         }
@@ -35,7 +35,7 @@ public enum MatchResult {
         return checkPlayerBlackjack(player);
     }
 
-    private static MatchResult checkPlayerBlackjack(User player) {
+    private static MatchResult checkPlayerBlackjack(Player player) {
         if (player.isBlackjack()) {
             return MatchResult.WIN_BLACKJACK;
         }

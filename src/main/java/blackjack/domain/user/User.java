@@ -11,7 +11,7 @@ public abstract class User implements Comparable<User> {
     protected final String name;
     protected final double bettingMoney;
 
-    public User(String name, double bettingMoney, List<Card> cards, int stayLimit) {
+    protected User(String name, double bettingMoney, List<Card> cards, int stayLimit) {
         validateNotEmptyName(name);
         initialHands(cards, stayLimit);
         this.name = name;
@@ -26,11 +26,6 @@ public abstract class User implements Comparable<User> {
 
     private void initialHands(List<Card> cards, int stayLimit) {
         this.hand = new Hand(cards, stayLimit);
-    }
-
-    public BettingResult computeBettingResult(MatchResult matchResult) {
-        double earningMoney = matchResult.calculateEarningMoney(bettingMoney);
-        return new BettingResult(this.name, earningMoney);
     }
 
     public boolean isHit() {
