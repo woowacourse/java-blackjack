@@ -31,7 +31,7 @@ public class BlackjackGame {
         participants.distributeCard();
     }
 
-    public ParticipantResult makeParticipantResults() {
+    public ParticipantResults makeParticipantResults() {
         final Map<Name, Integer> participantResults = new LinkedHashMap<>();
         participantResults.put(dealer.getName(), -calculateTotalPlayersRate());
 
@@ -39,7 +39,7 @@ public class BlackjackGame {
             final Result result = player.decideWinner(dealer);
             participantResults.put(player.getName(), (int) result.calculateRate(player.getMoney()));
         }
-        return new ParticipantResult(participantResults);
+        return new ParticipantResults(participantResults);
     }
 
     public int calculateTotalPlayersRate() {
