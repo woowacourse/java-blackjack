@@ -17,12 +17,13 @@ import org.junit.jupiter.api.BeforeEach;
 
 public class BlackjackGameTest {
 
-    private final BlackjackGame blackjackGame = new BlackjackGame();
+    private BlackjackGame blackjackGame;
     private final Participant dealer = new Dealer();
     private List<Participant> players = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
+        blackjackGame = new BlackjackGame(dealer, players);
         dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
         for (int i = 0; i < 3; i++) {
             Participant player = new Player(i + "");

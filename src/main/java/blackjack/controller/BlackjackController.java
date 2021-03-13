@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.ParticipantResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Names;
@@ -10,7 +11,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
@@ -23,9 +23,9 @@ public class BlackjackController {
         gameProgress(participants.getPlayers(), participants.getDealer());
         OutputView.showCardsResult(participants.getParticipantGroup());
 
-        final Map<Name, Integer> participantResults = new BlackjackGame()
-            .makeParticipantResults(participants.getDealer(), participants.getPlayers());
-        OutputView.showGameResult(participantResults);
+        final ParticipantResult participantResults = new BlackjackGame(participants)
+            .makeParticipantResults();
+        OutputView.showGameResult(participantResults.getResults());
     }
 
     private Participants createParticipants() {
