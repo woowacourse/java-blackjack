@@ -6,32 +6,32 @@ import blackjack.domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameResult {
+public class GameResultDto {
 
-    private final List<PlayerResult> playersResults;
+    private final List<PlayerResultDto> playerResults;
     private final int dealerWinningMoney;
 
-    public GameResult(List<PlayerResult> playersResults, int dealerWinningMoney) {
-        this.playersResults = playersResults;
+    public GameResultDto(List<PlayerResultDto> playerResults, int dealerWinningMoney) {
+        this.playerResults = playerResults;
         this.dealerWinningMoney = dealerWinningMoney;
     }
 
-    public static GameResult calculate(Dealer dealer, List<Player> players) {
-        List<PlayerResult> playersResults = new ArrayList<>();
+    public static GameResultDto calculate(Dealer dealer, List<Player> players) {
+        List<PlayerResultDto> playerResults = new ArrayList<>();
         Money dealerWinningMoney = Money.ZERO;
 
         for (Player player : players) {
             Money winningMoney = player.getWinningMoney(dealer);
-            playersResults.add(PlayerResult.of(player, winningMoney));
+            playerResults.add(PlayerResultDto.of(player, winningMoney));
 
             dealerWinningMoney = dealerWinningMoney.add(winningMoney.toNegative());
         }
 
-        return new GameResult(playersResults, dealerWinningMoney.toInt());
+        return new GameResultDto(playerResults, dealerWinningMoney.toInt());
     }
 
-    public List<PlayerResult> getPlayersResults() {
-        return playersResults;
+    public List<PlayerResultDto> getPlayerResults() {
+        return playerResults;
     }
 
     public int getDealerWinningMoney() {

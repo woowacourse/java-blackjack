@@ -3,18 +3,18 @@ package blackjack.domain.result;
 import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Player;
 
-public class PlayerResult {
+public class PlayerResultDto {
 
     private final String name;
     private final int winningMoney;
 
-    public PlayerResult(String name, int winningMoney) {
+    public PlayerResultDto(String name, int winningMoney) {
         this.name = name;
         this.winningMoney = winningMoney;
     }
 
-    public static PlayerResult of(Player player, Money earningMoney) {
-        return new PlayerResult(player.getName(), earningMoney.toInt());
+    public static PlayerResultDto of(Player player, Money earningMoney) {
+        return new PlayerResultDto(player.getName(), earningMoney.toInt());
     }
 
     public String getName() {

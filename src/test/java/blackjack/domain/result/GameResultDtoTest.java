@@ -18,7 +18,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class GameResultTest {
+class GameResultDtoTest {
 
     private static final Card aceCard = new Card(Suit.CLOVER, Rank.ACE);
     private static final Card kingCard = new Card(Suit.CLOVER, Rank.KING);
@@ -35,10 +35,10 @@ class GameResultTest {
         Dealer dealer = new Dealer(dealerHand);
         List<Player> players = createPlayers(playerHand);
 
-        GameResult result = GameResult.calculate(dealer, players);
+        GameResultDto result = GameResultDto.calculate(dealer, players);
         assertThat(result.getDealerWinningMoney()).isEqualTo(dealerMoney);
 
-        PlayerResult playersResult = result.getPlayersResults().get(0);
+        PlayerResultDto playersResult = result.getPlayerResults().get(0);
         assertThat(playersResult.getWinningMoney()).isEqualTo(playerMoney);
     }
 

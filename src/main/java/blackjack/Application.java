@@ -4,7 +4,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.result.GameResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public class Application {
         progressDealerTurn(dealer);
 
         OutputView.printCardResult(dealer, players);
-        OutputView.printGameResult(GameResult.calculate(dealer, players));
+        OutputView.printGameResult(GameResultDto.calculate(dealer, players));
     }
 
     private static List<Name> getPlayerNames() {

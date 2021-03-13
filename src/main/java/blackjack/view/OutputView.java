@@ -4,11 +4,10 @@ import static blackjack.domain.participant.Dealer.DEALER_NAME;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.GameResultDto;
+import blackjack.domain.result.PlayerResultDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,11 +54,11 @@ public class OutputView {
         }
     }
 
-    public static void printGameResult(GameResult result) {
+    public static void printGameResult(GameResultDto result) {
         System.out.println("\n## 최종 수익");
         printWinningMoney(DEALER_NAME.getName(), result.getDealerWinningMoney());
-        for (PlayerResult playersResult : result.getPlayersResults()) {
-            printWinningMoney(playersResult.getName(), playersResult.getWinningMoney());
+        for (PlayerResultDto playerResult : result.getPlayerResults()) {
+            printWinningMoney(playerResult.getName(), playerResult.getWinningMoney());
         }
     }
 
