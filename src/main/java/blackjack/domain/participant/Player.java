@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.result.Result;
 
 public class Player extends Participant {
-    private PlayerMoney playerMoney;
+    private final PlayerMoney playerMoney;
 
     public Player(final String name) {
         this(name, new PlayerMoney(0));
