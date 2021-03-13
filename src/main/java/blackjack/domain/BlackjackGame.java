@@ -2,10 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.Profit;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Money;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.Users;
+import blackjack.domain.user.*;
 
 import java.util.List;
 
@@ -16,13 +13,13 @@ public class BlackjackGame {
 
     public BlackjackGame(List<String> names, List<Double> moneyGroup) {
         this.deck = new Deck();
-        this.users = new Users(new Dealer(), names, moneyGroup);
+        this.users = new Users(new Dealer(), new Players(names, moneyGroup));
         this.profit = new Profit();
     }
 
     public void distributeToUsers() {
         getDealer().distribute(this.deck.popTwo());
-        this.users.distributeToPlayer(this.deck);
+        this.users.distributeToPlayers(this.deck);
     }
 
     public void drawCardToPlayer(Player player) {

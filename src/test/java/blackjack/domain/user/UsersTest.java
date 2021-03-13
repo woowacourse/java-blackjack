@@ -16,9 +16,9 @@ public class UsersTest {
 
     @BeforeEach
     public void setUp() {
-        users = new Users(new Dealer(),
+        users = new Users(new Dealer(), new Players(
                 Arrays.asList("amazzi", "dani", "pobi"),
-                Arrays.asList(10000.0, 10000.0, 20000.0));
+                Arrays.asList(10000.0, 10000.0, 20000.0)));
     }
 
     @DisplayName("이름별로 참여자들을 생성한다.")
@@ -31,7 +31,7 @@ public class UsersTest {
     @Test
     void DistributeToEachPlayer() {
         Deck deck = new Deck();
-        users.distributeToPlayer(deck);
+        users.distributeToPlayers(deck);
 
         assertThat(users.getPlayers()
                 .stream()
@@ -42,7 +42,7 @@ public class UsersTest {
     @Test
     void showCardsByPlayers() {
         Deck deck = new Deck();
-        users.distributeToPlayer(deck);
+        users.distributeToPlayers(deck);
         List<Cards> cardsGroup = users.showCardsByPlayers();
 
         assertThat(cardsGroup.stream()
