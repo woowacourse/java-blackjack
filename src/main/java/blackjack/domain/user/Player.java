@@ -3,7 +3,7 @@ package blackjack.domain.user;
 public class Player extends User {
     private static final int HIT = 21;
 
-    private final Money money;
+    private Money money;
 
     public Player(String name, double bettingMoney) {
         super(new Name(name));
@@ -11,30 +11,24 @@ public class Player extends User {
     }
 
     public Money decide(Dealer dealer) {
-        Money money = this.money;
         if (this.isBlackjack() || dealer.isBlackjack()) {
-            money = decideByBlackjack(dealer, money);
-            return money;
+            this.money = decideByBlackjack(dealer, this.money);
+            return this.money;
         }
         if (this.isBust() || dealer.isBust()) {
-            money = decideByBust(dealer, money);
-            return money;
+            this.money = decideByBust(dealer, this.money);
+            return this.money;
         }
-        money = decideByScore(dealer, money);
-        return money;
+        this.money = decideByScore(dealer, this.money);
+        return this.money;
     }
 
     private Money decideByBlackjack(Dealer dealer, Money money) {
-        if (this.isBlackjack() && dealer.isBlackjack()) {
-            return money;
-        }
-        if (this.isBlackjack()) {
+        if (this.isBlackjack() && !dealer.isBlackjack()) {
             money = new Money(getMoney() * 1.5);
-            return money;
         }
-        if (dealer.isBlackjack()) {
+        if (!this.isBlackjack() && dealer.isBlackjack()) {
             money = new Money(getMoney() * -1.0);
-            return money;
         }
         return money;
     }
@@ -42,11 +36,9 @@ public class Player extends User {
     private Money decideByBust(Dealer dealer, Money money) {
         if (this.isBust() && !dealer.isBust()) {
             money = new Money(getMoney() * -1.0);
-            return money;
         }
         if (!this.isBust() && dealer.isBust()) {
             money = decideByPlayerState(money);
-            return money;
         }
         return money;
     }
