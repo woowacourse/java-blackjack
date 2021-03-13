@@ -7,11 +7,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Cards {
+
     private final List<Card> cards;
     private int index = 0;
 
     private Cards(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public static Cards of(Card... cards) {
+        return new Cards(Arrays.asList(cards));
     }
 
     public static Cards createNormalCards() {

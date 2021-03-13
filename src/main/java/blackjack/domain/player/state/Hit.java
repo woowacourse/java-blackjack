@@ -4,7 +4,6 @@ import blackjack.domain.card.Deck;
 
 public class Hit implements State {
 
-
     @Override
     public boolean drawable() {
         return true;

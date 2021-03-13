@@ -6,7 +6,6 @@ public class Score {
 
     private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_PLUS = 10;
-    private static final Score BLACKJACK = new Score(BLACKJACK_SCORE);
     private final int value;
 
     private Score(int value) {
@@ -17,13 +16,9 @@ public class Score {
         return new Score(value);
     }
 
-    public static Score ofBlackJack() {
-        return BLACKJACK;
-    }
-
     public Score addAceNumber() {
         int sumOfAce = value + ACE_PLUS;
-        if(sumOfAce <= BLACKJACK_SCORE) {
+        if (sumOfAce <= BLACKJACK_SCORE) {
             return new Score(sumOfAce);
         }
         return new Score(value);
@@ -42,7 +37,7 @@ public class Score {
     }
 
     public boolean isMoreCloseToBlackjack(Score score) {
-        return Math.abs(BLACKJACK_SCORE - value) < Math.abs(BLACKJACK_SCORE - score.value);
+        return Math.abs(BLACKJACK_SCORE - value) <= Math.abs(BLACKJACK_SCORE - score.value);
     }
 
     public int get() {

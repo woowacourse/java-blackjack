@@ -19,7 +19,7 @@ public abstract class Player {
     protected Player(String name, int batMoney, Card first, Card second) {
         this.name = name;
         this.batMoney = batMoney;
-        this.deck = Deck.of(first,second);
+        this.deck = Deck.of(first, second);
         this.state = StateFactory.start(Deck.of(first, second));
     }
 
@@ -36,7 +36,9 @@ public abstract class Player {
         return state instanceof BlackJack;
     }
 
-    public boolean isBust() {return state instanceof Bust; }
+    public boolean isBust() {
+        return state instanceof Bust;
+    }
 
     public String name() {
         return name;
@@ -48,10 +50,6 @@ public abstract class Player {
 
     public int winningMoney() {
         return state.winningMoney(batMoney);
-    }
-
-    public int batMoney() {
-        return batMoney;
     }
 
     public List<Card> cards() {

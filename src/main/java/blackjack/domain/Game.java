@@ -24,6 +24,7 @@ public class Game {
 
     public static Game of(List<Information> information) {
         Cards cards = Cards.createNormalCards();
+        cards.shuffle();
         Dealer dealer = Dealer.of(cards.next(), cards.next());
         Participants participants = Participants.of(cards, information);
         return new Game(dealer, participants, cards);
@@ -33,12 +34,12 @@ public class Game {
         return of(Arrays.asList(information));
     }
 
-    public void drawCardTo(Player player) {
-        player.drawCard(cards.next());
+    public static Game of(Dealer dealer, Participants participants, Cards cards) {
+        return new Game(dealer, participants, cards);
     }
 
-    public void drawCardToDealer() {
-        drawCardTo(dealer);
+    public void drawCardTo(Player player) {
+        player.drawCard(cards.next());
     }
 
     public List<Participant> participantsAsList() {

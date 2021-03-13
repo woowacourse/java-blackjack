@@ -26,6 +26,10 @@ public class Participants {
         return of(cards, Arrays.asList(information));
     }
 
+    public static Participants of(Participant... participants) {
+        return new Participants(Arrays.asList(participants));
+    }
+
     public List<Participant> participants() {
         return Collections.unmodifiableList(participants);
     }
@@ -33,11 +37,5 @@ public class Participants {
     public boolean anyoneBlackjack() {
         return participants.stream()
             .anyMatch(Player::isBlackJack);
-    }
-
-    public int totalBatMoney() {
-        return participants.stream()
-            .mapToInt(Participant::batMoney)
-            .sum();
     }
 }

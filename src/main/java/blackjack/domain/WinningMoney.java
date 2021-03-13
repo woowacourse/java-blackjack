@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 public class WinningMoney {
+
     private final String name;
     private final int money;
 

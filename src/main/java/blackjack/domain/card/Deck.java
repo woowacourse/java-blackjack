@@ -9,11 +9,11 @@ public class Deck {
 
     private final List<Card> cards;
 
-    private Deck(Card ... cards) {
+    private Deck(Card... cards) {
         this.cards = new ArrayList<>(Arrays.asList(cards));
     }
 
-    public static Deck of(Card ... cards) {
+    public static Deck of(Card... cards) {
         return new Deck(cards);
     }
 

@@ -4,6 +4,7 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
+
     private final CardNumber cardNumber;
     private final Symbol symbol;
 
@@ -43,5 +44,13 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(cardNumber, symbol);
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+            "cardNumber=" + cardNumber +
+            ", symbol=" + symbol +
+            '}';
     }
 }

@@ -56,7 +56,7 @@ public class BlackjackController {
     private static void drawCardToDealer(Game game) {
         if (game.drawableDealer()) {
             OutputView.printDealerDrawCard();
-            game.drawCardToDealer();
+            game.drawCardTo(game.dealer());
         }
     }
 

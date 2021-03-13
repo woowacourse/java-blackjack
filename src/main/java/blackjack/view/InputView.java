@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 public class InputView {
 
     private static final Scanner SCAN = new Scanner(System.in);
-    private static final String ASK_DRAWABLE_FORM = "%s는 한장의 카드를 더 받겠습니까? (예는 y, 아니요는 n)" + System.lineSeparator();
+    private static final String ASK_DRAWABLE_FORM =
+        "%s는 한장의 카드를 더 받겠습니까? (예는 y, 아니요는 n)" + System.lineSeparator();
     private static final String BAT_MONEY_FORM = "%s의 배팅 금액은?" + System.lineSeparator();
     private static final String INPUT_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)";
     private static final String YES_OR_NO_ERROR_MESSAGE = "y 또는 n 중에 입력해주세요.";
@@ -21,10 +22,10 @@ public class InputView {
     public static boolean drawable(String name) {
         System.out.printf(ASK_DRAWABLE_FORM, name);
         String yesOrNo = SCAN.nextLine();
-        if(yesOrNo.equals(YES)) {
+        if (yesOrNo.equals(YES)) {
             return true;
         }
-        if(yesOrNo.equals(NO)) {
+        if (yesOrNo.equals(NO)) {
             return false;
         }
         System.out.println(YES_OR_NO_ERROR_MESSAGE);
@@ -41,7 +42,7 @@ public class InputView {
         return SCAN.nextLine().split(NAME_REGEX);
     }
 
-    private static List<Information> information(String ... names) {
+    private static List<Information> information(String... names) {
         try {
             return Arrays.stream(names)
                 .map(name -> {
