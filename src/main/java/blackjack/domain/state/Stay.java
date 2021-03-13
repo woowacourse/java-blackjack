@@ -1,6 +1,6 @@
 package blackjack.domain.state;
 
-public class Stay extends Finished{
+public class Stay extends Finished {
 
     public Stay(final Hand hand) {
         super(hand);

@@ -2,7 +2,7 @@ package blackjack.domain.state;
 
 import blackjack.domain.carddeck.Card;
 
-public class Hit extends Running{
+public class Hit extends Running {
 
     public Hit(final Hand hand) {
         super(hand);

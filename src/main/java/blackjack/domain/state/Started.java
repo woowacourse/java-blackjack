@@ -4,7 +4,7 @@ import blackjack.domain.carddeck.Card;
 
 import java.util.List;
 
-public abstract class Started implements State{
+public abstract class Started implements State {
 
     protected final Hand hand;
 
