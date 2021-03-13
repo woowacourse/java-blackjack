@@ -19,7 +19,7 @@ public class Cards {
 
     public static Cards of(Card... values) {
         List<Card> cards = Arrays.stream(values)
-            .collect(Collectors.toList());
+                .collect(Collectors.toList());
         return new Cards(cards);
     }
 

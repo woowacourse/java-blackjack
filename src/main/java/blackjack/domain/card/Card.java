@@ -18,10 +18,10 @@ public class Card {
 
     public static Card of(Denomination denomination, Shape shape) {
         return CardCache.cache
-            .stream()
-            .filter(card -> card.denomination == denomination && card.shape == shape)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_CARD_ERROR));
+                .stream()
+                .filter(card -> card.denomination == denomination && card.shape == shape)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_CARD_ERROR));
     }
 
     private static class CardCache {
@@ -30,9 +30,9 @@ public class Card {
 
         static {
             cache = Arrays.stream(Denomination.values())
-                .flatMap(denomination -> Arrays.stream(Shape.values())
-                    .map(shape -> new Card(denomination, shape)))
-                .collect(Collectors.toList());
+                    .flatMap(denomination -> Arrays.stream(Shape.values())
+                            .map(shape -> new Card(denomination, shape)))
+                    .collect(Collectors.toList());
         }
     }
 

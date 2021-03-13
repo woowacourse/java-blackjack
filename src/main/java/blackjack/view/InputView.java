@@ -38,7 +38,7 @@ public class InputView {
             System.out.println();
             System.out.printf(INPUT_BETTING_MONEY, gamerName);
             return Integer.parseInt(scanner.nextLine());
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(INVALID_NUMBER_ERROR);
         }
     }

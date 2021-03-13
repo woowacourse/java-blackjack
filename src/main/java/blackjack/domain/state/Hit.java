@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public class Hit extends Running{
+public class Hit extends Running {
 
     public Hit(Cards cards) {
         super(cards);
@@ -21,7 +21,6 @@ public class Hit extends Running{
     public State stay() {
         return new Stay(cards);
     }
-
 
 
 }

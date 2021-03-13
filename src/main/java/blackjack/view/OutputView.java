@@ -20,8 +20,8 @@ public class OutputView {
     public static void printGameStartMessage(Dealer dealer, List<Gamer> gamers) {
         String dealerName = dealer.getName();
         String gamerNames = gamers.stream()
-            .map(Player::getName)
-            .collect(Collectors.joining(", "));
+                .map(Player::getName)
+                .collect(Collectors.joining(", "));
         System.out.printf("\n%s와 %s에게 2장을 나누었습니다.\n", dealerName, gamerNames);
         printDealerCardInfo(dealer);
         for (Gamer gamer : gamers) {
@@ -48,9 +48,9 @@ public class OutputView {
     private static String playerInfoToString(Player player) {
         final String playerName = player.getName();
         final String playerCardInfo = player.cards().getCards()
-            .stream()
-            .map(OutputView::cardToString)
-            .collect(Collectors.joining(", "));
+                .stream()
+                .map(OutputView::cardToString)
+                .collect(Collectors.joining(", "));
         return playerName + " 카드: " + playerCardInfo;
     }
 

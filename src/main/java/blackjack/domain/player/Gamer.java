@@ -31,6 +31,6 @@ public class Gamer extends Player {
     }
 
     public int profit() {
-        return (int)state.calculateProfit(bettingMoney);
+        return (int) state.calculateProfit(bettingMoney);
     }
 }

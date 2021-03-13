@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.BettingMoney;
 
-public abstract class Finished extends Started{
+public abstract class Finished extends Started {
     private static final String NOT_STAY_ERROR = "[ERROR] 이미 끝이나서 스테이할 수 없습니다.";
     private static final String NOT_DRAW_ERROR = "[ERROR] 이미 끝이나서 카드를 뽑을 수 없습니다.";
 

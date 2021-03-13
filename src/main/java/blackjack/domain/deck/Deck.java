@@ -30,9 +30,9 @@ public class Deck {
 
     public List<Card> drawFirstCards() {
         return Stream.iterate(0, count -> count + 1)
-            .map(count -> draw())
-            .limit(FIRST_DRAW_CARD_COUNT)
-            .collect(Collectors.toList());
+                .map(count -> draw())
+                .limit(FIRST_DRAW_CARD_COUNT)
+                .collect(Collectors.toList());
     }
 
     public void shuffle() {
