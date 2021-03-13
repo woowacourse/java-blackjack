@@ -1,8 +1,8 @@
 package blackjack.domain.user;
 
 public class PlayerInitialDto {
-    private String name;
-    private int money;
+    private final String name;
+    private final int money;
 
     public PlayerInitialDto(String name, int money) {
         this.name = name;

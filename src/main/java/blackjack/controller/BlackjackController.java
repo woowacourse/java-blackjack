@@ -12,7 +12,6 @@ public class BlackjackController {
 
     public void run() {
         Game game = new Game(initPlayer());
-
         initCards(game);
         drawCardsV2(game);
         printResults(game);
