@@ -58,6 +58,7 @@ public class OutputView {
     }
 
     public static void printParticipantsCardAtFirst(Dealer dealer, Players players) {
+        printAfterDrawAtFirstGuideMessage(players);
         System.out.println(dealer.getName() + "카드: " + dealer.showCardsAtFirst());
 
         for (Player player : players.getPlayers()) {
