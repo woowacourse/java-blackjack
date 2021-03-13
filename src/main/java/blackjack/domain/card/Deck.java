@@ -13,17 +13,12 @@ public class Deck {
     }
 
     private List<Card> setUpDeck() {
-        List<Card> cards = new ArrayList<>();
-        Arrays.stream(Shape.values())
-                .forEach(shape -> cards.addAll(setUpCards(shape)));
+        List<Card> cards = Arrays.stream(Shape.values())
+                .flatMap(shape -> Arrays.stream(Value.values())
+                        .map(value -> new Card(shape, value)))
+                .collect(toList());
         shuffle(cards);
         return cards;
-    }
-
-    private List<Card> setUpCards(Shape shape) {
-        return Arrays.stream(Value.values())
-                .map(value -> new Card(shape, value))
-                .collect(toList());
     }
 
     private void shuffle(List<Card> cards) {
