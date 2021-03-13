@@ -10,7 +10,6 @@ public class Bust extends Started {
 
     @Override
     public State draw(Card card) {
-        hand.add(card);
-        return new Bust(hand);
+        throw new IllegalStateException("더 이상 카드를 뽑을 수 없습니다.");
     }
 }
