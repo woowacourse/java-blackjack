@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.user.PlayerDto;
+import blackjack.domain.user.PlayerInitialDto;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -18,11 +19,24 @@ public class InputView {
             .collect(Collectors.toList());
     }
 
+    public static PlayerInitialDto askMoney(String playerName) {
+        System.out.printf("%s의 배팅 금액은?%n", playerName);
+        try {
+            return new PlayerInitialDto(playerName, inputDecimal());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("배팅 금액은 숫자여야 합니다.");
+        }
+    }
+
     public static String askIfMoreCardV2(PlayerDto player) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getName());
         String input = SCANNER.nextLine();
         validateYOrN(input.toLowerCase());
         return input;
+    }
+
+    private static int inputDecimal() {
+        return Integer.parseInt(SCANNER.nextLine());
     }
 
     private static void validateYOrN(String input) {

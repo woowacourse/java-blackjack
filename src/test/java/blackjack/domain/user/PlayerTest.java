@@ -1,16 +1,15 @@
 package blackjack.domain.user;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
@@ -21,7 +20,10 @@ class PlayerTest {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
         cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));
-        Player player = Player.create("pobi");
+
+        String name = "pobi";
+        int money = 10000;
+        Player player = Player.create(new PlayerInitialDto(name, money));
 
         player.initialHands(cards);
         player.draw(deck.pickSingleCard());

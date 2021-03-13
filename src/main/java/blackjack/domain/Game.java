@@ -5,6 +5,7 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.MatchResult;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.PlayerDto;
+import blackjack.domain.user.PlayerInitialDto;
 import blackjack.domain.user.ResultDTO;
 import blackjack.domain.user.User;
 import blackjack.domain.user.WinningResultDTO;
@@ -20,14 +21,14 @@ public class Game {
     private final List<User> players;
     private final Deck deck;
 
-    public Game(List<String> names) {
+    public Game(List<PlayerInitialDto> playerInitialDtos) {
         dealer = new Dealer();
-        players = createPlayer(names);
+        players = createPlayer(playerInitialDtos);
         deck = new Deck();
     }
 
-    private List<User> createPlayer(List<String> names) {
-        return names.stream()
+    private List<User> createPlayer(List<PlayerInitialDto> playerInitialDtos) {
+        return playerInitialDtos.stream()
             .map(Player::create)
             .collect(Collectors.toList());
     }

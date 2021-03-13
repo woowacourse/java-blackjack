@@ -2,14 +2,16 @@ package blackjack.domain.user;
 
 public class Player extends User {
     private final String name;
+    private final int money;
 
-    private Player(String name) {
+    private Player(String name, int money) {
         validateNotEmptyName(name);
         this.name = name;
+        this.money = money;
     }
 
-    public static Player create(String name) {
-        return new Player(name);
+    public static Player create(PlayerInitialDto playerInitialDto) {
+        return new Player(playerInitialDto.getName(), playerInitialDto.getMoney());
     }
 
     private void validateNotEmptyName(String name) {

@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-
 import java.util.List;
 
 public class ResultDTO {
