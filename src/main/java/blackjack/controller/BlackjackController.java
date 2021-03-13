@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.blackjackgame.BlackjackGame;
-import blackjack.domain.blackjackgame.Money;
+import blackjack.domain.player.Money;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;

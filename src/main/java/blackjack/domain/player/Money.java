@@ -1,4 +1,4 @@
-package blackjack.domain.blackjackgame;
+package blackjack.domain.player;
 
 public class Money {
 

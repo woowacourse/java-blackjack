@@ -2,8 +2,6 @@ package blackjack.domain.player;
 
 import static blackjack.domain.card.Cards.BLACKJACK_NUMBER;
 
-import blackjack.domain.blackjackgame.Money;
-
 public class Player extends Participant {
 
     private GameResult gameResult;
