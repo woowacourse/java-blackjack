@@ -36,8 +36,7 @@ public class BlackjackManager {
     }
 
     private static List<GameResultDto> getPlayersResult(final Dealer dealer, final Players players) {
-        return players.toList().stream()
-                .map(player -> new GameResultDto(player.getName(), calculateEarning(dealer, player)))
+        return players.map(player -> new GameResultDto(player.getName(), calculateEarning(dealer, player)))
                 .collect(Collectors.toList());
     }
 

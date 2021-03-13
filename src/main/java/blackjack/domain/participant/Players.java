@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class Players {
 
@@ -41,6 +43,14 @@ public class Players {
         for (Player player : this.players) {
             player.receiveFirstHand(dealer.drawCards());
         }
+    }
+
+    public Stream<Player> stream() {
+        return players.stream();
+    }
+
+    public <R> Stream<R> map(Function<? super Player, ? extends R> function) {
+        return this.players.stream().map(function);
     }
 
     public List<Player> toList() {
