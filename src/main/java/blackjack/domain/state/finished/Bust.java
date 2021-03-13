@@ -1,4 +1,6 @@
-package blackjack.domain.state;
+package blackjack.domain.state.finished;
+
+import blackjack.domain.state.hand.Hand;
 
 public class Bust extends Finished {
 

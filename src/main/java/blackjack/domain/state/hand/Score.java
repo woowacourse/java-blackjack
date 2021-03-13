@@ -1,4 +1,4 @@
-package blackjack.domain.state;
+package blackjack.domain.state.hand;
 
 import java.util.Objects;
 

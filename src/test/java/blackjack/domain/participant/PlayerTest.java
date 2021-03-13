@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.Number;
 import blackjack.domain.carddeck.Pattern;
-import blackjack.domain.state.Score;
+import blackjack.domain.state.hand.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,10 @@
-package blackjack.domain.state;
+package blackjack.domain.state.running;
 
 import blackjack.domain.carddeck.Card;
+import blackjack.domain.state.hand.Hand;
+import blackjack.domain.state.State;
+import blackjack.domain.state.finished.Bust;
+import blackjack.domain.state.finished.Stay;
 
 public class Hit extends Running {
 

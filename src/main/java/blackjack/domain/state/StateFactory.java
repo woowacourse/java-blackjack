@@ -1,6 +1,9 @@
 package blackjack.domain.state;
 
 import blackjack.domain.carddeck.Card;
+import blackjack.domain.state.finished.Blackjack;
+import blackjack.domain.state.hand.Hand;
+import blackjack.domain.state.running.Hit;
 
 import java.util.ArrayList;
 import java.util.List;
