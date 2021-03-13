@@ -71,7 +71,7 @@ class BlackjackGameTest {
         final BlackjackGame blackjackGame = new BlackjackGame(deck, names, moneys);
         final List<Participant> players = blackjackGame.getPlayers();
         final Participant pobi = players.get(0);
-        final Participant expected = new Player("pobi");
+        final Participant expected = new Player("pobi", 10000);
         expected.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.KING));
 
         blackjackGame.distributeOneCard(pobi);
@@ -94,8 +94,8 @@ class BlackjackGameTest {
         final Deck deck = new Deck((cards) -> {
         });
         final List<Participant> expectedPlayers = new ArrayList<>();
-        for (String name : names) {
-            Player player = new Player(name);
+        for (int i = 0; i < names.size(); i++) {
+            Player player = new Player(names.get(i), moneys.get(i));
             player.receiveCard(deck.drawCard());
             player.receiveCard(deck.drawCard());
             expectedPlayers.add(player);
