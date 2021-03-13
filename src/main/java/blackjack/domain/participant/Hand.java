@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Hand {
     private static final int MAXIMUM_SCORE = 21;
+    private static final int INITIAL_CARD_GIVEN = 2;
     private static final int NO_ACE = 0;
 
     private final List<Card> cards;
@@ -26,7 +27,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return (cards.size() == 2 && calculateScore() == MAXIMUM_SCORE);
+        return (cards.size() == INITIAL_CARD_GIVEN && calculateScore() == MAXIMUM_SCORE);
     }
 
     public int calculateScore() {
