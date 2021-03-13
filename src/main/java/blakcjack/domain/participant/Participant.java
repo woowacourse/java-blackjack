@@ -2,6 +2,7 @@ package blakcjack.domain.participant;
 
 import blakcjack.domain.card.Card;
 import blakcjack.domain.card.Cards;
+import blakcjack.domain.money.Money;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.score.Score;
@@ -12,10 +13,12 @@ import java.util.Objects;
 
 public abstract class Participant {
     protected final Name name;
+    protected final Money money;
     protected final Cards cards;
 
-    protected Participant(final String name) {
+    protected Participant(final String name, final double money) {
         this.name = new Name(name);
+        this.money = new Money(money);
         this.cards = new Cards(Collections.emptyList());
     }
 
