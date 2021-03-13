@@ -19,7 +19,7 @@ public class BlackJackGame {
         players = generatePlayers(playersName);
         players.bettingEachPlayer();
         dealer = new Dealer();
-        deck = cardDeckSetting();
+        deck = new Deck(Card.values());
     }
 
     private Players generatePlayers(List<String> allPlayersName) {
@@ -27,12 +27,6 @@ public class BlackJackGame {
                 .map(Nickname::new)
                 .map(Player::new)
                 .collect(Collectors.toList()));
-    }
-
-    private Deck cardDeckSetting() {
-        Deck deck = new Deck(Card.values());
-        deck.shuffleDeck();
-        return deck;
     }
 
     public void distributeCards() {

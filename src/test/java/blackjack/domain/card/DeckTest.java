@@ -19,7 +19,7 @@ public class DeckTest {
     @Test
     @DisplayName("카드 드로우 성공")
     void drawCardDeck() {
-        assertThat(deck.drawCard()).isEqualTo(new Card(Shape.SPADE, Denomination.ACE));
+        assertThat(deck.drawCard()).isInstanceOf(Card.class);
     }
 
     @Test

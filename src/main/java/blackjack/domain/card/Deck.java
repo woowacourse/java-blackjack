@@ -12,6 +12,7 @@ public class Deck {
 
     public Deck(List<Card> cards) {
         this.deck = new ArrayList<>(cards);
+        Collections.shuffle(deck);
     }
 
     public Card drawCard() {
@@ -19,9 +20,5 @@ public class Deck {
             throw new IndexOutOfBoundsException(NO_REMAIN_CARD_ERROR_MESSAGE);
         }
         return deck.remove(TOP_CARD);
-    }
-
-    public void shuffleDeck() {
-        Collections.shuffle(deck);
     }
 }
