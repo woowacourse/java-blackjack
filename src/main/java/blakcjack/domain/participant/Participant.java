@@ -4,8 +4,6 @@ import blakcjack.domain.card.Card;
 import blakcjack.domain.card.Cards;
 import blakcjack.domain.money.Money;
 import blakcjack.domain.name.Name;
-import blakcjack.domain.outcome.Outcome;
-import blakcjack.domain.score.Score;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,42 +26,6 @@ public abstract class Participant {
         cards.add(card);
     }
 
-    public Outcome decideOutcome(final Participant other) {
-        if (hasAnyBust(other)) {
-            return judgeOutcomeByBust();
-        }
-        return judgeOutcomeByScore(other);
-    }
-
-    private boolean hasAnyBust(final Participant other) {
-        return isBust() || other.isBust();
-    }
-
-    // TODO : 위치 이동 고려중
-    private Outcome judgeOutcomeByBust() {
-        if (isBust()) {
-            return Outcome.LOSE;
-        }
-        return Outcome.WIN;
-    }
-
-    private Outcome judgeOutcomeByScore(final Participant other) {
-        final Score myScore = cards.calculateScore();
-        final Score otherScore = other.cards.calculateScore();
-        if (myScore.isHigherThan(otherScore)) {
-            return Outcome.WIN;
-        }
-
-        if (myScore.isLowerThan(otherScore)) {
-            return Outcome.LOSE;
-        }
-        return Outcome.DRAW;
-    }
-
-    private boolean isBust() {
-        return cards.isBust();
-    }
-
     public boolean canDrawMoreCard() {
         return cards.isLowerThanBlackJack();
     }
@@ -78,6 +40,10 @@ public abstract class Participant {
 
     public String getNameValue() {
         return name.getName();
+    }
+
+    protected boolean isBust() {
+        return cards.isBust();
     }
 
     @Override
