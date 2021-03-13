@@ -44,11 +44,12 @@ public class Results {
     public DealerResult generateDealerResult() {
         HashMap<ResultType, Integer> dealerWinOrLoseMap = new HashMap<>();
         Arrays.stream(ResultType.values())
+                .forEach(resultType -> dealerWinOrLoseMap.put(resultType, INITIALIZE_VALUE));
+        Arrays.stream(ResultType.values())
                 .forEach(resultType -> {
-                    dealerWinOrLoseMap.put(resultType, INITIALIZE_VALUE);
                     dealerWinOrLoseMap.put(
                             resultType.reverse(),
-                            dealerWinOrLoseMap.get(resultType) + this.count(resultType));
+                            dealerWinOrLoseMap.get(resultType.reverse()) + this.count(resultType));
                 });
         return new DealerResult(dealerWinOrLoseMap, this.getTotalProfit() * TO_NEGATIVE_VALUE);
     }
