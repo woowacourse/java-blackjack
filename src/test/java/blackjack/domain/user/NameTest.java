@@ -19,7 +19,7 @@ public class NameTest {
     void validateCharacterException() {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             new Name("ㄴㄴㄴ");
-        }).withMessage("유효하지 읺은 이름입니다.");
+        }).withMessage("유효하지 않은 이름입니다.");
     }
 
     @DisplayName("이름이 공백인 경우 예외를 발생한다.")
@@ -27,6 +27,6 @@ public class NameTest {
     void validateEmptyException() {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             new Name("");
-        }).withMessage("유효하지 읺은 이름입니다.");
+        }).withMessage("유효하지 않은 이름입니다.");
     }
 }
