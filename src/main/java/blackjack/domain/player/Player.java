@@ -20,11 +20,11 @@ public abstract class Player {
     }
 
     public boolean isBlackjack() {
-        return Blackjack.class.isInstance(state);
+        return state instanceof Blackjack;
     }
 
     public boolean isBust() {
-        return Bust.class.isInstance(state);
+        return state instanceof Bust;
     }
 
     public void stay() {
@@ -34,7 +34,7 @@ public abstract class Player {
     }
 
     private boolean isHit() {
-        return Hit.class.isInstance(state);
+        return state instanceof Hit;
     }
 
     public abstract void draw(Card card);
