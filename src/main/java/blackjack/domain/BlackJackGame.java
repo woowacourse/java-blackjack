@@ -7,6 +7,8 @@ import blackjack.domain.participant.*;
 import blackjack.domain.result.ProfitResult;
 import blackjack.dto.ParticipantDto;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +21,9 @@ public class BlackJackGame {
         players = generatePlayers(playersName);
         players.bettingEachPlayer();
         dealer = new Dealer();
-        deck = new Deck(Card.values());
+        List<Card> cards = new ArrayList<>(Card.values());
+        Collections.shuffle(cards);
+        deck = new Deck(cards);
     }
 
     private Players generatePlayers(List<String> allPlayersName) {
