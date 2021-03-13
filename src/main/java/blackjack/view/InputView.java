@@ -21,11 +21,9 @@ public class InputView {
 
     public static PlayerInitialDto askMoney(String playerName) {
         System.out.printf("%s의 배팅 금액은?%n", playerName);
-        try {
-            return new PlayerInitialDto(playerName, inputDecimal());
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("배팅 금액은 숫자여야 합니다.");
-        }
+        int money = inputDecimal();
+        validateUnderZeroMoney(money);
+        return new PlayerInitialDto(playerName, money);
     }
 
     public static String askIfMoreCardV2(PlayerDto player) {
@@ -36,7 +34,17 @@ public class InputView {
     }
 
     private static int inputDecimal() {
-        return Integer.parseInt(SCANNER.nextLine());
+        try {
+            return Integer.parseInt(SCANNER.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("배팅 금액은 숫자여야 합니다.");
+        }
+    }
+
+    private static void validateUnderZeroMoney(int money) {
+        if (money <= 0) {
+            throw new IllegalArgumentException("배팅 금액은 0원 보다 커야 합니다.");
+        }
     }
 
     private static void validateYOrN(String input) {
