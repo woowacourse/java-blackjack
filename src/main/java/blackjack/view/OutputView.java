@@ -91,9 +91,9 @@ public class OutputView {
 
     public static void printDealerResult(DealerResult dealerResult) {
         System.out.printf("딜러: %d승 %d무 %d패, 수익: %d\n",
-                dealerResult.get(ResultType.WIN),
-                dealerResult.get(ResultType.DRAW),
-                dealerResult.get(ResultType.LOSE),
+                dealerResult.getCountOfResultOf(ResultType.WIN),
+                dealerResult.getCountOfResultOf(ResultType.DRAW),
+                dealerResult.getCountOfResultOf(ResultType.LOSE),
                 dealerResult.getProfit()
         );
     }

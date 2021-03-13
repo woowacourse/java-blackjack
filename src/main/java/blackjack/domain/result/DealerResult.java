@@ -14,7 +14,7 @@ public class DealerResult {
         this.profit = profit;
     }
 
-    public int get(ResultType resultType) {
+    public int getCountOfResultOf(ResultType resultType) {
         return dealerResult.get(resultType);
     }
 

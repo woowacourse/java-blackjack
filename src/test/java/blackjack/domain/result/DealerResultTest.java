@@ -41,9 +41,9 @@ public class DealerResultTest {
     @DisplayName("딜러의 결과는 사용자들의 결과 반대값들의 총합이다.")
     @Test
     void computeDealerResultTest() {
-        assertThat(dealerResult.get(ResultType.WIN)).isEqualTo(1);
-        assertThat(dealerResult.get(ResultType.DRAW)).isEqualTo(1);
-        assertThat(dealerResult.get(ResultType.LOSE)).isEqualTo(2);
+        assertThat(dealerResult.getCountOfResultOf(ResultType.WIN)).isEqualTo(1);
+        assertThat(dealerResult.getCountOfResultOf(ResultType.DRAW)).isEqualTo(1);
+        assertThat(dealerResult.getCountOfResultOf(ResultType.LOSE)).isEqualTo(2);
     }
 
     @DisplayName("딜러의 수익은 사용자들 수익의 총합과 반대의 부호를 가진 수가 된다.")
