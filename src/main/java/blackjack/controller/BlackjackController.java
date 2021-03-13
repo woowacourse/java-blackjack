@@ -17,10 +17,12 @@ public class BlackjackController {
 
     public void start() {
         Game game = initGame();
+        askBetting(game);
         setUpTwoCards(game);
         askPlayersDrawCard(game);
         makeDealerDrawCard(game);
         showFinalResult(game);
+        printFinalRevenue(game);
     }
 
     private Game initGame() {
@@ -32,26 +34,41 @@ public class BlackjackController {
         }
     }
 
+    private void askBetting(Game game) {
+        List<Player> players = game.getPlayers();
+        for (Player player : players) {
+            askBetting(game, player);
+        }
+    }
+
+    private void askBetting(Game game, Player player) {
+        try {
+            game.bet(player, InputView.inputBettingMoney(player));
+        } catch (IllegalArgumentException e ) {
+            System.out.println(e.getMessage());
+            askBetting(game);
+        }
+    }
+
     private void setUpTwoCards(Game game) {
-        game.setUpTwoCards();
+        game.startRound();
         OutputView.printSetup(game.getDealer(), game.getPlayers());
     }
 
     private void askPlayersDrawCard(Game game) {
         while (game.isNotEnd()) {
             Player player = game.getCurrentPlayer();
-            boolean willDraw = askWillDrawCard(player);
-            game.next(willDraw);
+            askAndReflectReply(player, game);
             OutputView.printCardInfoWithLineSeparator(player);
         }
     }
 
-    private boolean askWillDrawCard(Player player) {
+    private void askAndReflectReply(Player player, Game game) {
         try {
-            return InputView.inputYesOrNo(player);
-        } catch (IllegalArgumentException e) {
+            game.reflectInput(InputView.inputYesOrNo(player));
+        } catch (IllegalArgumentException | UnsupportedOperationException e) {
             OutputView.printMessage(e.getMessage());
-            return askWillDrawCard(player);
+            askAndReflectReply(player, game);
         }
     }
 
@@ -63,16 +80,16 @@ public class BlackjackController {
 
     private void showFinalResult(Game game) {
         OutputView.printFinalCardInfo(game.getDealer(), game.getPlayers());
-        game.comparePlayersCardsWithDealer();
-        printWinOrLoseResult(game);
     }
 
-    private void printWinOrLoseResult(Game game) {
+    public void printFinalRevenue(Game game) {
+        game.calculateGameResult();
         Dealer dealer = game.getDealer();
         List<Player> players = game.getPlayers();
-        OutputView.printWinOrLoseResult(dealer, game.getDealerResult());
+        OutputView.printFinalRevenueHeader();
+        OutputView.printFinalRevenue(dealer, game.dealerRevenue());
         for (Player player : players) {
-            OutputView.printWinOrLoseResult(player, player.getGameResult());
+            OutputView.printFinalRevenue(player, player.revenue());
         }
     }
 }

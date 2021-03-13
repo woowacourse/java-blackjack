@@ -1,4 +1,4 @@
-# java-rentcar
+# java-rentCar
 연료 주입 미션 저장소  
   
 ## 요구사항
@@ -24,11 +24,6 @@
 - [x] 카드를 한 장 받는다.
 - [x] 딜러가 16이 넘을 때까지 카드를 뽑는다.
   
-
-### GameResult
-- [x] 플레이어 최종 결과를 계산한다.
-- [x] 딜러 최종 결과를 계산한다.
-
 ### Participant
 - [x] 카드를 추가한다.
 - [x] 블랙잭 최종 결과 계산한다.
@@ -46,6 +41,12 @@
 
 ### Card
 - [x] 숫자와 문양에 따른 카드 생성
+
+### Betting
+- [x] 플레이어 별로 배팅 금액 입력 받고 저장하기
+- [x] 게임 결과에 따라, 최종 수익 계산하기
+- [x] 플레이어가 딜러와의 값을 비교해서 결과 값 구하기
+- [x] 딜러는 모든 플레이어의 수익의 총합의 inverse 값을 가짐
 
 ## 우아한테크코스 코드리뷰
 * [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)

@@ -1,10 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.GameResult;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,27 +32,29 @@ public class Game {
                                    .collect(Collectors.toList()));
     }
 
-    public void setUpTwoCards() {
-        addTwoCard(dealer);
+    public void startRound() {
+        drawTwoCard(dealer);
         for (Player player : players) {
-            addTwoCard(player);
+            drawTwoCard(player);
         }
     }
 
-    private void addTwoCard(Participant participant) {
-        participant.addCard(deck.draw());
-        participant.addCard(deck.draw());
+    private void drawTwoCard(Participant participant) {
+        participant.startRound(deck.draw(), deck.draw());
     }
 
     public Player getCurrentPlayer() {
         return players.get(playerIndex);
     }
 
-    public void next(boolean willDraw) {
+    public void reflectInput(boolean willDraw) {
         Player player = getCurrentPlayer();
         if (willDraw) {
-            giveCard(player);
+            drawCard(player);
             return;
+        }
+        if (player.isNotFinished()) {
+            player.stay();
         }
         playerIndex += 1;
     }
@@ -64,31 +63,36 @@ public class Game {
         return playerIndex < players.size();
     }
 
-    public void giveCard(Participant participant) {
+    public void drawCard(Participant participant) {
         participant.addCard(deck.draw());
     }
 
     public int playDealerTurn() {
         int cnt = 0;
-        while (!dealer.isStay()) {
-            giveCard(dealer);
+        while (dealer.shouldDraw()) {
+            drawCard(dealer);
             cnt++;
+        }
+        if (dealer.isNotFinished()) {
+            dealer.stay();
         }
         return cnt;
     }
 
-    public void comparePlayersCardsWithDealer() {
+    public void calculateGameResult() {
         for (Player player : players) {
-            player.fight(dealer);
+            player.updateProfitRatio(dealer);
         }
     }
 
-    public GameResult getDealerResult() {
-        GameResult totalPlayerResult = new GameResult();
-        for (Player player : players) {
-            totalPlayerResult.plus(player.getGameResult());
-        }
-        return totalPlayerResult.reverse();
+    public double dealerRevenue(){
+        return (-1) * totalPlayersRevenue();
+    }
+
+    private double totalPlayersRevenue() {
+        return players.stream()
+                      .mapToDouble(Player::revenue)
+                      .sum();
     }
 
     public List<Player> getPlayers() {
@@ -97,5 +101,9 @@ public class Game {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public void bet(Player player, String inputBettingMoney) {
+        player.bet(new Money(inputBettingMoney));
     }
 }

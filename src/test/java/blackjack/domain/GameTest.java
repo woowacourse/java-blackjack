@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class GameTest {
     final List<String> names = Arrays.asList("wannte", "bepoz");
@@ -30,7 +29,7 @@ public class GameTest {
     @Test
     @DisplayName("카드 두장 셋업")
     void setUpTwoCards() {
-        game.setUpTwoCards();
+        game.startRound();
         for (Player player : game.getPlayers()) {
             assertThat(player.getCards()).hasSize(2);
         }
@@ -39,17 +38,9 @@ public class GameTest {
     }
 
     @Test
-    void giveCardToParticipant() {
-        Participant participant = game.getPlayers()
-                                      .get(0);
-        game.giveCard(participant);
-        assertThat(participant.getCards()).hasSize(1);
-    }
-
-    @Test
     void dealerHitUntilStay() {
+        game.startRound();
         game.playDealerTurn();
-        assertTrue(game.getDealer()
-                       .isStay());
+        assertFalse(game.getDealer().shouldDraw());
     }
 }

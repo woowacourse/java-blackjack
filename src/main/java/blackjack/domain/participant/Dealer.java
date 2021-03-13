@@ -4,12 +4,11 @@ public class Dealer extends Participant {
     public static final String DEALER = "딜러";
     public static final int STAY_THRESHOLD = 17;
 
-    public boolean isStay() {
-        return cardResult() >= STAY_THRESHOLD;
+    public Dealer() {
+        super(new Name(DEALER), 1);
     }
 
-    @Override
-    public String getName() {
-        return DEALER;
+    public boolean shouldDraw() {
+        return cardResult() < STAY_THRESHOLD;
     }
 }

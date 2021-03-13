@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.GameResult;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
@@ -15,8 +14,8 @@ public class OutputView {
     public static final String CARD_INFO_MESSAGE = "%s카드: %s";
     public static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     public static final String RESULT_PREFIX = " - 결과 : %d" + LINE_SEPARATOR;
-    public static final String NAME_PREFIX = "%s: ";
-    public static final String GAME_RESULT_MESSAGE = "%d승 %d무 %d패" + LINE_SEPARATOR;
+    public static final String REVENUE_FORMAT = "%s: %d" + LINE_SEPARATOR;
+    public static final String FINAL_REVENUE_HEADER = LINE_SEPARATOR + "## 최종 수익";
 
     private OutputView() {
     }
@@ -27,28 +26,27 @@ public class OutputView {
                                     .collect(Collectors.joining(", "));
         System.out.printf(SET_UP_MESSAGE, dealer.getName(), playerNames);
 
-        printSetUpDealerCardInfo(dealer);
+        printOpenCardInfo(dealer);
         for (Player player : players) {
-            printCardInfoWithLineSeparator(player);
+            printOpenCardInfo(player);
         }
     }
 
-    //TODO: 한장만 보여주는 것은 View 보다는 Game 에서 정의 해야할 듯.
-    public static void printSetUpDealerCardInfo(Dealer dealer) {
-        Card showingCard = dealer.getCards()
-                                 .get(0);
-        String cardInfo = showingCard.getNumber() + showingCard.getShape();
-        System.out.printf(CARD_INFO_MESSAGE, dealer.getName(), cardInfo);
+    public static void printOpenCardInfo(Participant participant) {
+        String cardInfo = cardsToString(participant.getOpenCard());
+        System.out.printf(CARD_INFO_MESSAGE, participant.getName(), cardInfo);
         System.out.print(LINE_SEPARATOR);
     }
 
     public static void printCardInfo(Participant participant) {
-        String cardInfo = participant.getCards()
-                                     .stream()
-                                     .map(card -> card.getNumber() + card.getShape())
-                                     .collect(Collectors.joining(", "));
-
+        String cardInfo = cardsToString(participant.getCards());
         System.out.printf(CARD_INFO_MESSAGE, participant.getName(), cardInfo);
+    }
+
+    private static String cardsToString(List<Card> cards) {
+        return cards.stream()
+                    .map(card -> card.getNumber() + card.getShape())
+                    .collect(Collectors.joining(", "));
     }
 
     public static void printCardInfoWithLineSeparator(Participant participant) {
@@ -74,21 +72,15 @@ public class OutputView {
         System.out.printf(RESULT_PREFIX, participant.cardResult());
     }
 
-    public static void printWinOrLoseResult(Participant participant, GameResult gameResult) {
-        String result = gameResultToString(gameResult);
-        System.out.printf(NAME_PREFIX + result, participant.getName());
+    public static void printFinalRevenueHeader() {
+        System.out.println(FINAL_REVENUE_HEADER);
     }
 
-    private static String gameResultToString(GameResult gameResult) {
-        int win = gameResult.getWinCount();
-        int draw = gameResult.getDrawCount();
-        int lose = gameResult.getLoseCount();
-
-        return String.format(GAME_RESULT_MESSAGE, win, draw, lose);
+    public static void printFinalRevenue(Participant participant, double revenue) {
+        System.out.printf(REVENUE_FORMAT, participant.getName(), (long) revenue);
     }
 
     public static void printMessage(String s) {
         System.out.println(s);
     }
-
 }
