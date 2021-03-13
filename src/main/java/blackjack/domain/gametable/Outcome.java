@@ -36,20 +36,34 @@ public enum Outcome {
     }
 
     private static boolean draw(final Score base, final Score counterpart) {
-        if (base.isBurst() && counterpart.isBurst()) {
-            return true;
-        }
+        return isBothBurst(base, counterpart)
+            || compareScoreWhenNotBurst(base, counterpart);
+    }
+
+    private static boolean compareScoreWhenNotBurst(Score base, Score counterpart) {
         return base.isNotBurst() && counterpart.isNotBurst() && base.isSameAs(counterpart);
     }
 
+    private static boolean isBothBurst(Score base, Score counterpart) {
+        return base.isBurst() && counterpart.isBurst();
+    }
+
     private static boolean win(final Score base, final Score counterpart) {
-        if (base.isBlackjack() && counterpart.isNotBlackjack()) {
-            return true;
-        }
-        if (base.isNotBurst() && counterpart.isBurst()) {
-            return true;
-        }
+        return isOnlyBlackjack(base, counterpart)
+            || isCounterBurst(base, counterpart)
+            || isCounterHigher(base, counterpart);
+    }
+
+    private static boolean isCounterHigher(Score base, Score counterpart) {
         return base.isNotBurst() && counterpart.isNotBurst() && base.isHigherThan(counterpart);
+    }
+
+    private static boolean isCounterBurst(Score base, Score counterpart) {
+        return base.isNotBurst() && counterpart.isBurst();
+    }
+
+    private static boolean isOnlyBlackjack(Score base, Score counterpart) {
+        return base.isBlackjack() && counterpart.isNotBlackjack();
     }
 
 }
