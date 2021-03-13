@@ -1,9 +1,6 @@
 package blakcjack.domain.participant;
 
-import blakcjack.domain.card.Card;
 import blakcjack.domain.score.Score;
-
-import java.util.List;
 
 public class Dealer extends Participant {
     private static final int DEALER_MAXIMUM_DRAWING_CRITERION = 17;
@@ -11,10 +8,6 @@ public class Dealer extends Participant {
 
     public Dealer() {
         super("딜러", INITIAL_MONEY);
-    }
-
-    public List<Card> showFirstCard() {
-        return cards.toListOnlyFirstCard();
     }
 
     public boolean needsAdditionalCard() {
@@ -25,10 +18,5 @@ public class Dealer extends Participant {
     @Override
     public ParticipantType getType() {
         return ParticipantType.DEALER;
-    }
-
-    @Override
-    public boolean supports(final ParticipantType participantType) {
-        return ParticipantType.DEALER.equals(participantType);
     }
 }

@@ -24,8 +24,6 @@ public abstract class Participant {
 
     public abstract ParticipantType getType();
 
-    public abstract boolean supports(ParticipantType participantType);
-
     public void receiveCard(final Card card) {
         cards.add(card);
     }
