@@ -3,21 +3,9 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 
-public class Hit implements State {
-    private final Hand hand;
-
+public class Hit extends Started {
     public Hit(Hand hand) {
         this.hand = hand;
-    }
-
-    @Override
-    public Hand hand() {
-        return hand;
-    }
-
-    @Override
-    public int softHandSum() {
-        return hand.softSum();
     }
 
     @Override
