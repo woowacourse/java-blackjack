@@ -64,11 +64,13 @@ public abstract class Participant {
         return playerCards.calculate();
     }
 
-    public boolean isSameScore(final Participant participant) {
-        return this.calculate() == participant.calculate();
-    }
-
     public abstract Result decideWinner(final Participant participant);
+
+    protected Result decideWinnerWithScores(final Participant participant) {
+        final int score = this.calculate();
+        final int opponentScore = participant.calculate();
+        return Result.compareScore(score, opponentScore);
+    }
 
     public abstract List<Card> initialCards();
 

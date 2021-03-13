@@ -12,6 +12,16 @@ public enum Result {
         this.value = value;
     }
 
+    public static Result compareScore(final int score, final int opponentScore) {
+        if (score == opponentScore) {
+            return Result.DRAW;
+        }
+        if (score > opponentScore) {
+            return Result.WIN;
+        }
+        return Result.LOSE;
+    }
+
     public double calculateRate(final double money) {
         if (this == BLACKJACK) {
             return money * 1.5;
