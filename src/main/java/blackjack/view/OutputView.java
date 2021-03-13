@@ -16,16 +16,16 @@ public class OutputView {
         String gamblerNames = names.stream()
                 .collect(Collectors.joining(","));
 
-        System.out.println(("딜러와 "+ gamblerNames + "에게 2장의 카드를 나누었습니다"));
+        System.out.println(("딜러와 " + gamblerNames + "에게 2장의 카드를 나누었습니다"));
         printLineSeparator();
     }
 
-    public static void printPlayerCardsInformation(final CardInfoDto info){
+    public static void printPlayerCardsInformation(final CardInfoDto info) {
         printMessageByFormat("%s카드: %s", info.getName(), makeCardInformation(info.getCards()));
         printLineSeparator();
     }
 
-    private static String makeCardInformation(final List<Card> cards){
+    private static String makeCardInformation(final List<Card> cards) {
         return cards.stream()
                 .map(card -> card.getDenominationValue() + card.getSuitValue())
                 .collect(Collectors.joining(", "));
@@ -41,7 +41,7 @@ public class OutputView {
         printLineSeparator();
     }
 
-    private static String makeRevenueInfo(final RevenueInfoDto info){
+    private static String makeRevenueInfo(final RevenueInfoDto info) {
         return info.getName() + ": " + info.getRevenue();
     }
 

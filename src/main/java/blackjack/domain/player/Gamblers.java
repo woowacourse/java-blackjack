@@ -12,14 +12,10 @@ public class Gamblers implements Iterable<Gambler> {
         this.gamblers = new ArrayList<>(gamblers);
     }
 
-    public List<String> getNames(){
+    public List<String> getNames() {
         return gamblers.stream()
                 .map(gambler -> gambler.getNameValue())
                 .collect(Collectors.toList());
-    }
-
-    public List<Gambler> getGamblers(){
-        return new ArrayList<>(gamblers);
     }
 
     @Override

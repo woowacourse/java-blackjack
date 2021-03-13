@@ -25,7 +25,7 @@ public class Gambler implements Player {
     }
 
     @Override
-    public int getMoneyValue(){
+    public int getMoneyValue() {
         return money.getValue();
     }
 

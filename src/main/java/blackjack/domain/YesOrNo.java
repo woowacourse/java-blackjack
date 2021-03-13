@@ -16,7 +16,7 @@ public enum YesOrNo {
     }
 
     public static boolean isYes(final String input) {
-        YesOrNo yesOrNo =YesOrNo.from(input);
+        YesOrNo yesOrNo = YesOrNo.from(input);
         return yesOrNo.equals(YesOrNo.YES);
     }
 }

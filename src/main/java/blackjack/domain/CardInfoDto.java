@@ -10,16 +10,16 @@ public class CardInfoDto {
     private final String name;
     private final List<Card> cards;
 
-    public CardInfoDto(final String name, final List<Card> cards){
+    public CardInfoDto(final String name, final List<Card> cards) {
         this.name = name;
         this.cards = cards;
     }
 
-    public CardInfoDto(final String name, final Cards cards){
+    public CardInfoDto(final String name, final Cards cards) {
         this(name, cards.getCards());
     }
 
-    public CardInfoDto(final Player player){
+    public CardInfoDto(final Player player) {
         this(player.getNameValue(), player.getCards());
     }
 

@@ -61,22 +61,22 @@ public class BlackJackController {
         }
     }
 
-    private void showGameResult(final BlackJackGame game){
+    private void showGameResult(final BlackJackGame game) {
         game.calculateMoney();
         showPlayerCards(game.getDealer(), game.getGamblers());
         showFinalRevenue(game.getDealer(), game.getGamblers());
     }
 
-    private void showPlayerCards(final Dealer dealer, final Gamblers gamblers){
+    private void showPlayerCards(final Dealer dealer, final Gamblers gamblers) {
         OutputView.printPlayerCardsInformation(new CardInfoDto(dealer));
-        for(final Gambler gambler : gamblers){
+        for (final Gambler gambler : gamblers) {
             OutputView.printPlayerCardsInformation(new CardInfoDto(gambler));
         }
     }
 
-    private void showFinalRevenue(final Dealer dealer, final Gamblers gamblers){
+    private void showFinalRevenue(final Dealer dealer, final Gamblers gamblers) {
         OutputView.printFinalRevenue(new RevenueInfoDto(dealer));
-        for(final Gambler gambler : gamblers){
+        for (final Gambler gambler : gamblers) {
             OutputView.printFinalRevenue(new RevenueInfoDto(gambler));
         }
     }

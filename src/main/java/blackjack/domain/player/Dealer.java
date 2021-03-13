@@ -31,26 +31,26 @@ public class Dealer implements Player {
         gambler.earn(money);
     }
 
-    public WinOrLose calculateWinOrLose(final Gambler gambler){
+    public WinOrLose calculateWinOrLose(final Gambler gambler) {
         return cards.compareCardsScore(gambler.getCards());
     }
 
-    public void checkBlackJack(final Gambler gambler){
-        if(hasBlackJack() && gambler.hasBlackJack()){
+    public void checkBlackJack(final Gambler gambler) {
+        if (hasBlackJack() && gambler.hasBlackJack()) {
             giveBackBettingMoney(gambler);
         }
 
-        if(!hasBlackJack() && gambler.hasBlackJack()){
+        if (!hasBlackJack() && gambler.hasBlackJack()) {
             giveBlackJackMoney(gambler);
         }
     }
 
     public void calculateMoney(final Gambler gambler, final WinOrLose winOrLose) {
-        if(winOrLose.equals(WinOrLose.LOSE)){
+        if (winOrLose.equals(WinOrLose.LOSE)) {
             giveWinningMoney(gambler);
         }
 
-        if(winOrLose.equals(WinOrLose.DRAW)){
+        if (winOrLose.equals(WinOrLose.DRAW)) {
             giveBackBettingMoney(gambler);
         }
     }
@@ -81,7 +81,7 @@ public class Dealer implements Player {
     }
 
     @Override
-    public int getMoneyValue(){
+    public int getMoneyValue() {
         return money.getValue();
     }
 

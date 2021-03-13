@@ -8,8 +8,8 @@ public class Score {
 
     private static final Score[] scores = new Score[30];
 
-    static{
-        for(int i =0; i<scores.length; i++){
+    static {
+        for (int i = 0; i < scores.length; i++) {
             scores[i] = new Score(i);
         }
     }
@@ -24,8 +24,8 @@ public class Score {
         this.value = value;
     }
 
-    public static Score from(final int score){
-        if(score < scores.length && scores[score] != null){
+    public static Score from(final int score) {
+        if (score < scores.length && scores[score] != null) {
             return scores[score];
         }
 
@@ -40,11 +40,11 @@ public class Score {
         return value == BLACK_JACK;
     }
 
-    public boolean isHigher(final Score score){
+    public boolean isHigher(final Score score) {
         return this.value > score.value;
     }
 
-    public boolean isLower(final Score score){
+    public boolean isLower(final Score score) {
         return this.value < score.value;
     }
 
@@ -53,7 +53,7 @@ public class Score {
     }
 
     public Score useAceAsEleven() {
-        if(value + EXTRA_SCORE_USING_ACE > BLACK_JACK){
+        if (value + EXTRA_SCORE_USING_ACE > BLACK_JACK) {
             return Score.from(value);
         }
         return Score.from(value + EXTRA_SCORE_USING_ACE);

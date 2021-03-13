@@ -25,7 +25,7 @@ public class Money {
         return new Money(Math.abs(money));
     }
 
-    public int getValue(){
+    public int getValue() {
         return money;
     }
 
