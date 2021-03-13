@@ -32,16 +32,20 @@ public class OutputView {
     }
 
     public static void printParticipantStatus(BlackJackParticipant participant) {
-        System.out.println(participant.getName() + "카드: " + getCardNameFormat(participant));
+        System.out.println(participant.getName() + "카드: " + getInitialCardNameFormat(participant));
     }
 
-    private static String getCardNameFormat(BlackJackParticipant participant) {
+    private static String getInitialCardNameFormat(BlackJackParticipant participant) {
         if (participant instanceof Dealer) {
             return participant.getHand().unwrap().stream()
                     .map(Card::getCardName)
                     .findFirst()
                     .orElse(null);
         }
+        return getCardNameFormat(participant);
+    }
+
+    private static String getCardNameFormat(BlackJackParticipant participant) {
         return participant.getHand().unwrap().stream()
                 .map(Card::getCardName)
                 .collect(Collectors.joining(NAME_DELIMITER));
