@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.utils.CardDeck;
-import blackjack.utils.IllegalNameException;
+import blackjack.domain.exception.IllegalNameException;
 
 import java.util.*;
 

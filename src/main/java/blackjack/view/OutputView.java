@@ -5,7 +5,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.results.ResultsDto;
+import blackjack.dto.ResultsDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

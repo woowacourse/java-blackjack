@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.utils.CardDeck;
 import blackjack.utils.FixedCardDeck;
-import blackjack.utils.IllegalNameException;
+import blackjack.domain.exception.IllegalNameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

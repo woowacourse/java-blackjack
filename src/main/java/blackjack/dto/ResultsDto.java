@@ -1,4 +1,4 @@
-package blackjack.domain.results;
+package blackjack.dto;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.utils.CardDeck;
-import blackjack.utils.IllegalNameException;
+import blackjack.domain.exception.IllegalNameException;
 
 import java.util.List;
 import java.util.regex.Pattern;
