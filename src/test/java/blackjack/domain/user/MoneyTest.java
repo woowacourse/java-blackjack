@@ -44,15 +44,4 @@ public class MoneyTest {
 
         assertThat(resultMoney).isEqualTo(1500);
     }
-
-    @Test
-    @DisplayName("금액 간 차이로 수익을 구한다.")
-    void getProfit() {
-        Money money1 = new Money(1000);
-        Money money2 = new Money(2000);
-
-        long result = money1.getProfit(money2);
-
-        assertThat(result).isEqualTo(-1000);
-    }
 }

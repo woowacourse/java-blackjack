@@ -3,7 +3,6 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
-import blackjack.domain.result.Result;
 import blackjack.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -76,63 +75,6 @@ public class PlayerTest {
                 .getCards().size();
 
         assertThat(cardCount).isEqualTo(2);
-    }
-
-    @DisplayName("플레이어의 결과를 산출한다. - 버스트여서 패")
-    @Test
-    public void decideBustUserLose1() {
-        Dealer dealer = new Dealer();
-        Player player = new Player("amazzi");
-        dealer.initializeCards(new Cards(Arrays.asList(
-                new Card(Suit.SPACE, Denomination.EIGHT),
-                new Card(Suit.CLOVER, Denomination.KING)
-        )));
-        player.initializeCards(new Cards(Arrays.asList(
-                new Card(Suit.SPACE, Denomination.EIGHT),
-                new Card(Suit.CLOVER, Denomination.TWO)
-        )));
-
-        Result result = player.produceResult(dealer);
-
-        assertThat(result).isEqualTo(Result.LOSE);
-    }
-
-    @DisplayName("플레이어의 결과를 산출한다. - 버스트 아니고 패")
-    @Test
-    public void decideBustUserLose2() {
-        Dealer dealer = new Dealer();
-        Player player = new Player("amazzi");
-        dealer.initializeCards(new Cards(Arrays.asList(
-                new Card(Suit.SPACE, Denomination.EIGHT),
-                new Card(Suit.CLOVER, Denomination.KING)
-        )));
-        player.initializeCards(new Cards(Arrays.asList(
-                new Card(Suit.SPACE, Denomination.EIGHT),
-                new Card(Suit.CLOVER, Denomination.TWO)
-        )));
-
-        Result result = player.produceResult(dealer);
-
-        assertThat(result).isEqualTo(Result.LOSE);
-    }
-
-    @DisplayName("플레이어의 결과를 산출한다. - 무승부")
-    @Test
-    public void decideBustUserStandOff() {
-        Dealer dealer = new Dealer();
-        Player player = new Player("amazzi");
-        dealer.initializeCards(new Cards(Arrays.asList(
-                new Card(Suit.SPACE, Denomination.EIGHT),
-                new Card(Suit.CLOVER, Denomination.KING)
-        )));
-        player.initializeCards(new Cards(Arrays.asList(
-                new Card(Suit.SPACE, Denomination.EIGHT),
-                new Card(Suit.CLOVER, Denomination.KING)
-        )));
-
-        Result result = player.produceResult(dealer);
-
-        assertThat(result).isEqualTo(Result.STAND_OFF);
     }
 
     @DisplayName("받은 카드에 따라 상태를 확인한다. - Hit")

@@ -26,8 +26,4 @@ public class Money {
     public long getValue() {
         return value;
     }
-
-    public long getProfit(Money anotherMoney) {
-        return value - anotherMoney.value;
-    }
 }

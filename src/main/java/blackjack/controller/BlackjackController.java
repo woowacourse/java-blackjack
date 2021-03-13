@@ -18,11 +18,8 @@ public class BlackjackController {
         proceedPlayersRound(blackjackGame);
         proceedDealerRound(blackjackGame);
         OutputView.printCardsWithTotalValue(blackjackGame.getUsers());
-        // 수익을 구한다.
         long dealerProfit = blackjackGame.getDealerProfit();
         Map<Player, Long> profitResult = blackjackGame.getProfitsByPlayer();
-//        ResultBoard resultBoard = blackjackGame.generateResultBoard();
-//        OutputView.printResultBoard(resultBoard);
         OutputView.printProfitResult(dealerProfit, profitResult);
     }
 

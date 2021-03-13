@@ -48,20 +48,6 @@ public abstract class User {
         this.state = state;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(state.cards(), user.state.cards()) &&
-                Objects.equals(name, user.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(state.cards(), name);
-    }
-
     public final void hit(Card card) {
         changeState(state.draw(card));
     }
@@ -85,5 +71,19 @@ public abstract class User {
 
     public final boolean isBlackJack() {
         return cards().isBlackjack();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(state.cards(), user.state.cards()) &&
+                Objects.equals(name, user.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(state.cards(), name);
     }
 }

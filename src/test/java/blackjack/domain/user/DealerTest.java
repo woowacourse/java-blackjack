@@ -179,22 +179,6 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러가 bust가 아니면서 17을 넘은 경우 stay")
-    void isMustHit3() {
-        Dealer dealer = new Dealer();
-        dealer.initializeCards(new Cards(Arrays.asList(
-                new Card(Suit.SPACE, Denomination.TWO),
-                new Card(Suit.CLOVER, Denomination.JACK)
-        )));
-        dealer.hit(new Card(Suit.SPACE, Denomination.SIX));
-
-        dealer.isMustHit();
-        State state = dealer.getState();
-
-        assertThat(state).isInstanceOf(Stay.class);
-    }
-
-    @Test
     @DisplayName("블랙잭인지 확인한다.")
     void isBlackjack() {
         Dealer dealer = new Dealer();

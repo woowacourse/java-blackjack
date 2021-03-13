@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
-import blackjack.domain.result.ResultBoard;
 import blackjack.domain.state.State;
 import blackjack.domain.state.Stay;
 import blackjack.domain.user.Cards;
@@ -108,16 +107,6 @@ public class BlackjackGameTest {
                 .size();
 
         assertThat(userCount).isEqualTo(4);
-    }
-
-    @Test
-    @DisplayName("결과 보드 만들기 확인")
-    void generateResultBoard() {
-        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
-        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
-        blackjackGame.handOutInitialCards();
-
-        assertThat(blackjackGame.generateResultBoard()).isInstanceOf(ResultBoard.class);
     }
 
     @Test

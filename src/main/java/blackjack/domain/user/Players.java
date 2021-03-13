@@ -36,7 +36,8 @@ public class Players {
         return players.stream()
                 .filter(User::isAbleToHit)
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("남아있는 플레이어가 없습니다."));
+                .orElseThrow(() ->
+                        new IllegalStateException("[ERROR] 남아있는 플레이어가 없습니다."));
     }
 
     public void setUpBettingMoney(String name, long value) {
@@ -49,6 +50,7 @@ public class Players {
                 .filter(player -> player.getName()
                         .equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("찾는 플레이어가 없습니다."));
+                .orElseThrow(() ->
+                        new IllegalArgumentException("[ERROR] 찾는 플레이어가 없습니다."));
     }
 }

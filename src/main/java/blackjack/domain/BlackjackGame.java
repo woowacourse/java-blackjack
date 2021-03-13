@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.ResultBoard;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -39,12 +38,8 @@ public class BlackjackGame {
                 .forEach(player -> player.initializeCards(deck.popToInitialCards()));
     }
 
-    public void hit(User user) {
-        user.hit(deck.popOne());
-    }
-
-    public ResultBoard generateResultBoard() {
-        return ResultBoard.of(players, dealer);
+    public void betByPlayer(String name, long moneyValue) {
+        players.setUpBettingMoney(name, moneyValue);
     }
 
     public Dealer getDealer() {
@@ -91,6 +86,10 @@ public class BlackjackGame {
         throw new IllegalArgumentException("y, n로만 대답할 수 있습니다.");
     }
 
+    public void hit(User user) {
+        user.hit(deck.popOne());
+    }
+
     public boolean isNotFinishPlayersRound() {
         return players.isRemainToProceedPlayers();
     }
@@ -102,10 +101,6 @@ public class BlackjackGame {
             roundCount++;
         }
         return roundCount;
-    }
-
-    public void betByPlayer(String name, long moneyValue) {
-        players.setUpBettingMoney(name, moneyValue);
     }
 
     public Map<Player, Long> getProfitsByPlayer() {

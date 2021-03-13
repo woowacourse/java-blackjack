@@ -1,8 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.Result;
-import blackjack.domain.result.ResultBoard;
 import blackjack.domain.user.*;
 
 import java.util.List;
@@ -74,19 +72,6 @@ public class OutputView {
                 .stream()
                 .map(Card::toString)
                 .collect(Collectors.joining(COMMA));
-    }
-
-    public static void printResultBoard(ResultBoard resultBoard) {
-        System.out.println("\n## 최종 승패");
-        System.out.print("딜러: ");
-        for (Result result : resultBoard.showDealerResultBoard().keySet()) {
-            System.out.print(resultBoard.showDealerResultBoard().get(result) + result.getResult() + " ");
-        }
-        System.out.println();
-        for (Player player : resultBoard.showUserResultBoard().keySet()) {
-            System.out.println(player.getName() + COLON +
-                    resultBoard.showUserResultBoard().get(player).getResult());
-        }
     }
 
     public static void printProfitResult(long dealerProfit, Map<Player, Long> profitResult) {

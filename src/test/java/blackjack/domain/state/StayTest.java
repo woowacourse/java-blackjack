@@ -44,7 +44,6 @@ public class StayTest {
         Stay stay = new Stay(new Cards(
                 new Card(Suit.CLOVER, Denomination.JACK),
                 new Card(Suit.HEART, Denomination.QUEEN)));
-        Card card = new Card(Suit.CLOVER, Denomination.EIGHT);
 
         assertThatThrownBy(stay::stay)
                 .isInstanceOf(IllegalStateException.class);

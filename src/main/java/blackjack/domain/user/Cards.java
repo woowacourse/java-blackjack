@@ -28,6 +28,10 @@ public class Cards {
         return cards.get(FIRST_CARD);
     }
 
+    public void add(Card card) {
+        cards.add(card);
+    }
+
     public Score totalScore() {
         Score totalScore = sum();
         int aceCount = getAceCount();
@@ -52,10 +56,6 @@ public class Cards {
     public boolean isSoftHand() {
         return cards.stream()
                 .anyMatch(Card::isAceCard);
-    }
-
-    public void add(Card card) {
-        cards.add(card);
     }
 
     public boolean isBust() {
