@@ -20,7 +20,7 @@ class HandTest {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
         cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));
-        Hand hand = new Hand(cards, 21);
+        Hand hand = new Hand(cards);
 
         assertThat(hand.calculateHandScore()).isEqualTo(13);
     }
@@ -33,7 +33,7 @@ class HandTest {
         cards.add(new Card(Denomination.ACE, Suit.DIAMONDS));
         cards.add(new Card(Denomination.SEVEN, Suit.DIAMONDS));
         cards.add(new Card(Denomination.TWO, Suit.HEARTS));
-        Hand hand = new Hand(cards, 21);
+        Hand hand = new Hand(cards);
 
         assertThat(hand.calculateHandScore()).isEqualTo(21);
     }
@@ -44,7 +44,7 @@ class HandTest {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.ACE, Suit.CLUBS));
         cards.add(new Card(Denomination.SEVEN, Suit.DIAMONDS));
-        Hand hand = new Hand(cards, 21);
+        Hand hand = new Hand(cards);
 
         hand.addCard(new Card(Denomination.ACE, Suit.HEARTS));
         assertThat(hand.calculateHandScore()).isEqualTo(19);
@@ -57,7 +57,7 @@ class HandTest {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.EIGHT, Suit.CLUBS));
         cards.add(new Card(Denomination.SEVEN, Suit.DIAMONDS));
-        Hand hand = new Hand(cards, 21);
+        Hand hand = new Hand(cards);
 
         hand.addCard(new Card(Denomination.QUEEN, Suit.HEARTS));
         assertTrue(hand.isBust());
@@ -69,7 +69,7 @@ class HandTest {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.TEN, Suit.CLUBS));
         cards.add(new Card(Denomination.SEVEN, Suit.DIAMONDS));
-        Hand hand = new Hand(cards, 21);
+        Hand hand = new Hand(cards);
 
         assertThat(hand.calculateHandScore()).isEqualTo(17);
         assertTrue(hand.isHit());
@@ -81,7 +81,7 @@ class HandTest {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(Denomination.EIGHT, Suit.CLUBS));
         cards.add(new Card(Denomination.SEVEN, Suit.DIAMONDS));
-        Hand hand = new Hand(cards, 16);
+        Hand hand = new Hand(cards);
 
         assertThat(hand.calculateHandScore()).isEqualTo(15);
         assertTrue(hand.isHit());

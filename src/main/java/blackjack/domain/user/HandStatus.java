@@ -6,15 +6,12 @@ public enum HandStatus {
     public static final int MAX_SCORE = 21;
     public static final int BLACK_JACK_CARD_SIZE = 2;
 
-    public static HandStatus calculateStatus(int score, int hitLimit, int cardSize) {
+    public static HandStatus calculateStatus(int score, int cardSize) {
         if (score == MAX_SCORE && cardSize == BLACK_JACK_CARD_SIZE) {
             return BLACK_JACK;
         }
         if (score > MAX_SCORE) {
             return BUST;
-        }
-        if (score > hitLimit) {
-            return STAY;
         }
         return HIT;
     }

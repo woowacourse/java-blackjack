@@ -8,13 +8,11 @@ public class Hand {
     public static final int ACE_CONVERSION_LIMIT = 11;
     public static final int ACE_DIFFERENCE = 10;
 
-    private final int hitLimit;
     private List<Card> cards;
     private HandStatus status;
 
-    public Hand(List<Card> cards, int hitLimit) {
+    public Hand(List<Card> cards) {
         this.cards = cards;
-        this.hitLimit = hitLimit;
         this.status = calculateStatus();
     }
 
@@ -44,7 +42,7 @@ public class Hand {
 
     private HandStatus calculateStatus() {
         int score = calculateHandScore();
-        return HandStatus.calculateStatus(score, hitLimit, cards.size());
+        return HandStatus.calculateStatus(score, cards.size());
     }
 
     public void convertStatusToStay() {

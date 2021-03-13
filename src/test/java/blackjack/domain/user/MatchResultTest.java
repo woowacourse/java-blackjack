@@ -19,40 +19,40 @@ class MatchResultTest {
     @DisplayName("플레이어 결과 테스트 : 플레이어가 블랙잭 이외로 이긴 경우")
     @Test
     void calculateResult_WinNormal() {
-        Player player = new Player("A", money, getPlayerCards(), 21);
-        Dealer dealer = new Dealer(getDealerLosingCards(), 16);
+        Player player = new Player("A", money, getPlayerCards());
+        Dealer dealer = new Dealer(getDealerLosingCards());
         assertEquals(MatchResult.WIN_NORMAL, MatchResult.calculateResult(player, dealer));
     }
 
     @DisplayName("플레이어 결과 테스트 : 플레이어가 블랙잭으로 이긴 경우")
     @Test
     void calculateResult_WinBlackjack() {
-        Player player = new Player("A", money, getPlayerBlackjackCards(), 21);
-        Dealer dealer = new Dealer(getDealerLosingCards(), 16);
+        Player player = new Player("A", money, getPlayerBlackjackCards());
+        Dealer dealer = new Dealer(getDealerLosingCards());
         assertEquals(MatchResult.WIN_BLACKJACK, MatchResult.calculateResult(player, dealer));
     }
 
     @DisplayName("플레이어 결과 테스트 : 플레이어가 진 경우")
     @Test
     void calculateResult_Lose() {
-        Player player = new Player("A", money, getPlayerCards(), 21);
-        Dealer dealer = new Dealer(getDealerBlackjackCards(), 16);
+        Player player = new Player("A", money, getPlayerCards());
+        Dealer dealer = new Dealer(getDealerBlackjackCards());
         assertEquals(MatchResult.LOSE, MatchResult.calculateResult(player, dealer));
     }
 
     @DisplayName("플레이어 결과 테스트 : 블랙잭으로 비긴 경우")
     @Test
     void calculateResult_DrawWithBlackjack() {
-        Player player = new Player("A", money, getPlayerBlackjackCards(), 21);
-        Dealer dealer = new Dealer(getDealerBlackjackCards(), 16);
+        Player player = new Player("A", money, getPlayerBlackjackCards());
+        Dealer dealer = new Dealer(getDealerBlackjackCards());
         assertEquals(MatchResult.DRAW, MatchResult.calculateResult(player, dealer));
     }
 
     @DisplayName("플레이어 결과 테스트 : 동점으로 비긴 경우")
     @Test
     void calculateResult_DrawWithScore() {
-        Player player = new Player("A", money, getPlayerCards(), 21);
-        Dealer dealer = new Dealer(getDealerDrawCards(), 16);
+        Player player = new Player("A", money, getPlayerCards());
+        Dealer dealer = new Dealer(getDealerDrawCards());
         assertEquals(MatchResult.DRAW, MatchResult.calculateResult(player, dealer));
     }
 

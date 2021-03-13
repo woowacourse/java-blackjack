@@ -12,17 +12,13 @@ import java.util.stream.Collectors;
 
 public class Game {
 
-    private static final int PLAYER_STAY_LIMIT = 21;
-    private static final int DEALER_STAY_LIMIT = 16;
-
     private final User dealer;
-    //    private final List<User> players;
     private final List<Player> players;
     private final Deck deck;
 
     public Game(Map<String, Double> playerMoneys) {
         deck = new Deck(CardGenerator.makeShuffledNewDeck());
-        dealer = new Dealer(deck.pickInitialCards(), DEALER_STAY_LIMIT);
+        dealer = new Dealer(deck.pickInitialCards());
         players = createPlayer(playerMoneys);
     }
 
@@ -30,7 +26,7 @@ public class Game {
         return playerMoneys
             .keySet()
             .stream()
-            .map(name -> new Player(name, playerMoneys.get(name), deck.pickInitialCards(), PLAYER_STAY_LIMIT))
+            .map(name -> new Player(name, playerMoneys.get(name), deck.pickInitialCards()))
             .collect(Collectors.toList());
     }
 

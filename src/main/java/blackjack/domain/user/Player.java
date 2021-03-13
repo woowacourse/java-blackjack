@@ -7,8 +7,11 @@ import java.util.List;
 
 public class Player extends User {
 
-    public Player(String name, double bettingMoney, List<Card> cards, int stayLimit) {
-        super(name, bettingMoney, cards, stayLimit);
+    private final double bettingMoney;
+
+    public Player(String name, double bettingMoney, List<Card> cards) {
+        super(name, cards);
+        this.bettingMoney = bettingMoney;
     }
 
     @Override

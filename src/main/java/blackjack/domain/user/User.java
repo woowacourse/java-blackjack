@@ -9,13 +9,11 @@ public abstract class User implements Comparable<User> {
 
     protected Hand hand;
     protected final String name;
-    protected final double bettingMoney;
 
-    protected User(String name, double bettingMoney, List<Card> cards, int stayLimit) {
+    protected User(String name, List<Card> cards) {
         validateNotEmptyName(name);
-        initialHands(cards, stayLimit);
+        initialHands(cards);
         this.name = name;
-        this.bettingMoney = bettingMoney;
     }
 
     private void validateNotEmptyName(String name) {
@@ -24,8 +22,8 @@ public abstract class User implements Comparable<User> {
         }
     }
 
-    private void initialHands(List<Card> cards, int stayLimit) {
-        this.hand = new Hand(cards, stayLimit);
+    private void initialHands(List<Card> cards) {
+        this.hand = new Hand(cards);
     }
 
     public boolean isHit() {

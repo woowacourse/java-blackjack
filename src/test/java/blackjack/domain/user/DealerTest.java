@@ -16,7 +16,7 @@ class DealerTest {
     @DisplayName("딜러 draw 메소드 테스트 : 16 이하일 때")
     @Test
     void draw_underStayLimit_addCard() {
-        User dealer = new Dealer(underStayLimitCards(), 16);
+        User dealer = new Dealer(underStayLimitCards());
         Deck deck = new Deck(CardGenerator.makeShuffledNewDeck());
         assertTrue(dealer.draw(deck));
     }
@@ -24,7 +24,7 @@ class DealerTest {
     @DisplayName("딜러 draw 메소드 테스트 : 16 이상일 때 ")
     @Test
     void draw_overStayLimit_noChange() {
-        User dealer = new Dealer(overStayLimitCards(), 16);
+        User dealer = new Dealer(overStayLimitCards());
         Deck deck = new Deck(CardGenerator.makeShuffledNewDeck());
         assertFalse(dealer.draw(deck));
     }

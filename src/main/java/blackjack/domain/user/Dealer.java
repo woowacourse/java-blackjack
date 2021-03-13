@@ -6,19 +6,21 @@ import blackjack.domain.card.Deck;
 import java.util.List;
 
 public class Dealer extends User {
-    private static final String NAME = "딜러";
-    private static final double BETTING_MONEY = 0;
 
-    public Dealer(List<Card> cards, int stayLimit) {
-        super(NAME, BETTING_MONEY, cards, stayLimit);
+    private static final String NAME = "딜러";
+    private static final int DEALER_HIT_LIMIT = 16;
+
+    public Dealer(List<Card> cards) {
+        super(NAME, cards);
     }
 
     @Override
     public boolean draw(Deck deck) {
-        if (isHit()) {
+        if (getScore() <= DEALER_HIT_LIMIT) {
             hand.addCard(deck.pickSingleCard());
             return true;
         }
+        convertToStay();
         return false;
     }
 }
