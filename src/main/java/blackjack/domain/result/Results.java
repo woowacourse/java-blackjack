@@ -5,12 +5,17 @@ import blackjack.domain.ProfitTable;
 import blackjack.domain.ResultType;
 import blackjack.domain.user.Player;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Objects;
 
 import static java.util.stream.Collectors.*;
 
 public class Results {
     private static final long TO_NEGATIVE_VALUE = -1;
+    private static final int INITIALIZE_VALUE = 0;
 
     private final Map<Player, ResultType> winOrLoseMap;
     private final Map<Player, Money> profitMap;
@@ -37,20 +42,24 @@ public class Results {
     }
 
     public DealerResult generateDealerResult() {
-        return Arrays.stream(ResultType.values())
-                .collect(collectingAndThen(toMap(
-                        ResultType::reverse,
-                        this::count
-                ), reversedResult -> new DealerResult(reversedResult, getTotalProfit() * TO_NEGATIVE_VALUE)));
+        HashMap<ResultType, Integer> dealerWinOrLoseMap = new HashMap<>();
+        Arrays.stream(ResultType.values())
+                .forEach(resultType -> {
+                    dealerWinOrLoseMap.put(resultType, INITIALIZE_VALUE);
+                    dealerWinOrLoseMap.put(
+                            resultType.reverse(),
+                            dealerWinOrLoseMap.get(resultType) + this.count(resultType));
+                });
+        return new DealerResult(dealerWinOrLoseMap, this.getTotalProfit() * TO_NEGATIVE_VALUE);
     }
 
-    long getTotalProfit() {
+    private long getTotalProfit() {
         return profitMap.values().stream()
                 .mapToLong(Money::toLong)
                 .sum();
     }
 
-    int count(ResultType resultType) {
+    private int count(ResultType resultType) {
         return (int) this.winOrLoseMap.values().stream().parallel()
                 .filter(resultType::equals)
                 .count();
@@ -70,7 +79,6 @@ public class Results {
 
     @Override
     public int hashCode() {
-        return Objects.hash(winOrLoseMap);
+        return Objects.hash(winOrLoseMap, profitMap);
     }
-
 }

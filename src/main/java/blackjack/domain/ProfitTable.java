@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.Arrays;
 
 public enum ProfitTable {
+    BLACKJACK_WIN(ResultType.BLACKJACK_WIN, 1.5),
     WIN(ResultType.WIN, 1),
     DRAW(ResultType.DRAW, 0),
     LOSE(ResultType.LOSE, -1);
