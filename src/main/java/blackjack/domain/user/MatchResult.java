@@ -39,9 +39,6 @@ public enum MatchResult {
         if (player.isBlackjack()) {
             return MatchResult.WIN_BLACKJACK;
         }
-        if (player.isBust()) {
-            return MatchResult.LOSE;
-        }
         return MatchResult.WIN_NORMAL;
     }
 

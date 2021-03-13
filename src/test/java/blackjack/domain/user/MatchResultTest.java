@@ -1,8 +1,6 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
+import blackjack.domain.card.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -55,12 +53,43 @@ class MatchResultTest {
         assertEquals(MatchResult.DRAW, MatchResult.calculateResult(player, dealer));
     }
 
+    @DisplayName("플레이어 결과 테스트 : 플레이어가 Bust 로 진 경우")
+    @Test
+    void calculateResult_LoseWithBust() {
+        Player player = mockBustPlayer();
+        Dealer dealer = mockNormalDealer();
+
+        assertEquals(MatchResult.LOSE, MatchResult.calculateResult(player, dealer));
+    }
+
+    @DisplayName("플레이어(Normal) 결과 테스트 : 딜러 Bust 로 이긴 경우")
+    @Test
+    void calculateResult_WinWithDealerBust() {
+        Player player = mockNormalPlayer();
+        Dealer dealer = mockBustDealer();
+
+        assertEquals(MatchResult.WIN_NORMAL, MatchResult.calculateResult(player, dealer));
+    }
+
+    @DisplayName("플레이어(Blackjack) 결과 테스트 : 딜러 Bust 로 이긴 경우")
+    @Test
+    void calculateResult_WinWithDealerBust2() {
+        Player player = mockBlackjackPlayer();
+        Dealer dealer = mockBustDealer();
+
+        assertEquals(MatchResult.WIN_BLACKJACK, MatchResult.calculateResult(player, dealer));
+    }
+
     private Player mockNormalPlayer() {
         return new Player("A", money, getCards());
     }
 
     private Player mockBlackjackPlayer() {
         return new Player("A", money, getBlackjackCards());
+    }
+
+    private Player mockBustPlayer() {
+        return new Player("A", money, getBustCards());
     }
 
     private Dealer mockLosingDealer() {
@@ -73,6 +102,10 @@ class MatchResultTest {
 
     private Dealer mockBlackjackDealer() {
         return new Dealer(getBlackjackCards());
+    }
+
+    private Dealer mockBustDealer() {
+        return new Dealer(getBustCards());
     }
 
     private List<Card> getCards() {
@@ -93,6 +126,14 @@ class MatchResultTest {
         return Arrays.asList(
             new Card(Denomination.ACE, Suit.HEARTS),
             new Card(Denomination.QUEEN, Suit.HEARTS)
+        );
+    }
+
+    private List<Card> getBustCards() {
+        return Arrays.asList(
+            new Card(Denomination.JACK, Suit.HEARTS),
+            new Card(Denomination.QUEEN, Suit.HEARTS),
+            new Card(Denomination.FIVE, Suit.SPADES)
         );
     }
 }
