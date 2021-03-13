@@ -49,7 +49,7 @@
 - [x] Cards 클래스 생성 현재 Participant가 가지고 있는 점수 계산 로직 이동
 - [x] ParticipantDto 생성
 - [x] ParticipantsDto 생성
-- [ ] DTO를 이용하도록 OutputView, Controller 변경
+- [x] DTO를 이용하도록 OutputView, Controller 변경
 - [ ] state 패턴을 이용하여 게임 진행 관리
 
 ## 2단계 추가 요구 사항

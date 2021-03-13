@@ -10,6 +10,7 @@ import blakcjack.domain.participant.Participant;
 import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
 import blakcjack.dto.OutcomeSummaryDto;
 import blakcjack.dto.ParticipantDto;
+import blakcjack.dto.ParticipantsDto;
 import blakcjack.exception.GameTerminationException;
 import blakcjack.view.InputView;
 
@@ -31,7 +32,7 @@ public class BlackJackController {
         final Dealer dealer = (Dealer) blackjackGame.getDealer();
 
         drawInitialCards(blackjackGame);
-        printInitialHands(dealer, players);
+        printInitialHands(ParticipantsDto.of(dealer, players));
 
         drawCardsInTurn(blackjackGame, players, dealer);
 
@@ -92,7 +93,7 @@ public class BlackJackController {
     }
 
     private void notifyFinalSummary(final BlackjackGame blackjackGame, final List<Participant> players, final Dealer dealer) {
-        printFinalHandsSummary(dealer, players);
+        printFinalHandsSummary(ParticipantsDto.of(dealer, players));
 
         final Map<String, Outcome> playersOutcome = blackjackGame.judgePlayersOutcome();
         final Map<Outcome, Integer> dealerOutcome = blackjackGame.judgeDealerOutcome(playersOutcome);

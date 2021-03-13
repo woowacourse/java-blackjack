@@ -17,8 +17,8 @@ public class ParticipantsDto {
     public static ParticipantsDto of(final Participant dealer, final List<Participant> players) {
         return new ParticipantsDto(ParticipantDto.from(dealer),
                 players.stream()
-                .map(ParticipantDto::from)
-                .collect(Collectors.toList())
+                        .map(ParticipantDto::from)
+                        .collect(Collectors.toList())
         );
     }
 
