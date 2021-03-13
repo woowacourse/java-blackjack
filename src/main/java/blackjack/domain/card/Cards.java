@@ -86,5 +86,4 @@ public class Cards {
     public int hashCode() {
         return Objects.hash(cards);
     }
-
 }
