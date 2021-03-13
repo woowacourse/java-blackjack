@@ -36,4 +36,18 @@ class StayTest {
                 .hasMessage("[ERROR] 이미 끝이나서 카드를 뽑을 수 없습니다.");
     }
 
+    @Test
+    void 스테이_상태에서_다시_스테이_테스트() {
+        State hit = StateFactory.drawFirstCards(Cards.of(
+                Card.of(Denomination.KING, Shape.CLUBS),
+                Card.of(Denomination.TWO, Shape.CLUBS)
+        ));
+
+        State stay = hit.stay();
+
+        assertThatThrownBy(() -> {
+            stay.stay();
+        }).isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 이미 끝이나서 스테이할 수 없습니다.");
+    }
 }

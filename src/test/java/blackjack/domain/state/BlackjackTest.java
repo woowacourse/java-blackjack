@@ -33,4 +33,17 @@ class BlackjackTest {
         }).isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 이미 끝이나서 카드를 뽑을 수 없습니다.");
     }
+
+    @Test
+    void 블랙잭_상태에서_스테이_테스트() {
+        State blackjack = StateFactory.drawFirstCards(Cards.of(
+                Card.of(Denomination.KING, Shape.CLUBS),
+                Card.of(Denomination.ACE, Shape.CLUBS)
+        ));
+
+        assertThatThrownBy(() -> {
+            blackjack.stay();
+        }).isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 이미 끝이나서 스테이할 수 없습니다.");
+    }
 }
