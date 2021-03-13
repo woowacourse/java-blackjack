@@ -27,6 +27,7 @@ public abstract class Player {
         return state instanceof Bust;
     }
 
+
     public void stay() {
         if (isHit()) {
             state = state.stay();
