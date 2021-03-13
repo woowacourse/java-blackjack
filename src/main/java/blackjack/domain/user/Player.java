@@ -20,6 +20,10 @@ public class Player extends User {
         }
     }
 
+    public int getMoney() {
+        return money;
+    }
+
     @Override
     public boolean isHit() {
         return hand.isSameStatus(HandStatus.HIT);

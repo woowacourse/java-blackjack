@@ -1,17 +1,11 @@
 package blackjack.view;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-
 import blackjack.domain.card.Card;
-import blackjack.domain.user.MatchResult;
 import blackjack.domain.user.PlayerDto;
 import blackjack.domain.user.ResultDTO;
 import blackjack.domain.user.User;
 import blackjack.domain.user.WinningResultDTO;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -84,26 +78,20 @@ public class OutputView {
 
     public static void printWinningResult(List<WinningResultDTO> winningResultDTOs) {
         System.out.println("\n## 최종 승패");
-        System.out.println("딜러 : " + calculateDealerResult(winningResultDTOs));
+        System.out.println("딜러 : " + calculateDealerProfit(winningResultDTOs));
         winningResultDTOs.forEach(winningResultDto ->
             System.out.printf("%s: %s%n", winningResultDto.getName(),
-                winningResultDto.getResult().getName()));
+                (int) (winningResultDto.getMoney() * winningResultDto.getResult().getMoneyRate())));
     }
 
-    private static String calculateDealerResult(List<WinningResultDTO> winningResultDTOs) {
-        Map<MatchResult, Long> calculate = calculateMathResultCount(winningResultDTOs);
-
-        return calculate.keySet().stream()
-            .filter(matchResult -> calculate.get(matchResult) > 0)
-            .map(matchResult -> String
-                .format("%d%s", calculate.get(matchResult), matchResult.getReverseName()))
-            .collect(Collectors.joining(" "));
+    private static int calculateDealerProfit(List<WinningResultDTO> winningResultDTOs) {
+        return calculatePlayerTotalProfit(winningResultDTOs) * -1;
     }
 
-    public static Map<MatchResult, Long> calculateMathResultCount(
+    private static int calculatePlayerTotalProfit(
         List<WinningResultDTO> winningResultDTOs) {
         return winningResultDTOs.stream()
-            .map(WinningResultDTO::getResult)
-            .collect(groupingBy(Function.identity(), counting()));
+            .mapToInt(winningResultDTO -> (int) (winningResultDTO.getMoney() * winningResultDTO.getResult().getMoneyRate()))
+            .sum();
     }
 }
