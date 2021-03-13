@@ -1,9 +1,6 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,18 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import static blackjack.domain.Fixture.*;
+
 class DealerTest {
     private Dealer dealer;
-    Card jack;
-    Card six;
-    Card seven;
 
     @BeforeEach
     void setUp() {
         this.dealer = new Dealer();
-        this.jack = new Card(Suit.CLUB, Denomination.JACK);
-        this.six = new Card(Suit.CLUB, Denomination.SIX);
-        this.seven = new Card(Suit.CLUB, Denomination.SEVEN);
     }
 
     @DisplayName("딜러는 카드를 받을 수 있다")

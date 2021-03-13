@@ -1,10 +1,10 @@
 package blackjack.domain.user;
 
-import blackjack.domain.Money;
-import blackjack.domain.card.CardDeck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import blackjack.domain.Money;
+import blackjack.domain.card.CardDeck;
 
 import java.util.Arrays;
 

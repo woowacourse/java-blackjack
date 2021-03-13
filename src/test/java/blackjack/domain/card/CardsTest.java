@@ -15,10 +15,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CardsTest {
-    Cards cards;
+    private Cards cards;
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
         this.cards = new Cards();
     }
 

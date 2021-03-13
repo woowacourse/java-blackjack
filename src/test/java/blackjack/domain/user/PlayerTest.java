@@ -1,13 +1,11 @@
 package blackjack.domain.user;
 
 import blackjack.domain.Money;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static blackjack.domain.Fixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -45,13 +43,9 @@ class PlayerTest {
     void isBustTrueWhenOver21Score() {
         Player player = new Player(Name.of("Player"), defaultMoney);
 
-        Card card1 = new Card(Suit.CLUB, Denomination.JACK);
-        Card card2 = new Card(Suit.CLUB, Denomination.SEVEN);
-        Card card3 = new Card(Suit.CLUB, Denomination.SIX);
-
-        player.draw(card1);
-        player.draw(card2);
-        player.draw(card3);
+        player.draw(jack);
+        player.draw(seven);
+        player.draw(six);
 
         assertTrue(player.isBust());
     }
