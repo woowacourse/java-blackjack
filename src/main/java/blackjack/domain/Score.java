@@ -7,13 +7,13 @@ import java.util.Objects;
 
 public class Score implements Comparable<Score> {
 
-    private static final int MAX_SCORE = 21;
+    private static final Score MAX_SCORE = new Score(21);
     private static final int TEN = 10;
     private static final int DEALER_ADD_CARD_BOUNDARY = 17;
 
     private final int value;
 
-    public Score(final int value) {
+    private Score(final int value) {
         this.value = value;
     }
 
@@ -22,7 +22,11 @@ public class Score implements Comparable<Score> {
         return new Score(score);
     }
 
-    public static int calculate(final List<Card> cards) {
+    public static Score of(final int value) {
+        return new Score(value);
+    }
+
+    private static int calculate(final List<Card> cards) {
         int sum = calculateWithoutAce(cards) + Denomination.ACE.getValue() * countAce(cards);
         if (containsAce(cards)) {
             sum = calculateWithAce(sum);
@@ -31,7 +35,7 @@ public class Score implements Comparable<Score> {
     }
 
     private static int calculateWithAce(final int sum) {
-        if (sum + TEN > MAX_SCORE) {
+        if (sum + TEN > MAX_SCORE.value) {
             return sum;
         }
         return sum + TEN;
@@ -57,11 +61,11 @@ public class Score implements Comparable<Score> {
     }
 
     public boolean isBusted() {
-        return value > MAX_SCORE;
+        return value > MAX_SCORE.value;
     }
 
     public boolean isMaxScore() {
-        return value == MAX_SCORE;
+        return value == MAX_SCORE.value;
     }
 
     public boolean dealerAbleToAdd() {
@@ -69,7 +73,7 @@ public class Score implements Comparable<Score> {
     }
 
     public boolean isUnderMaxScore() {
-        return value < MAX_SCORE;
+        return value < MAX_SCORE.value;
     }
 
     public int getValue() {

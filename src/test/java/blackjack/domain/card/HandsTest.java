@@ -41,7 +41,7 @@ class HandsTest {
         Hands hands = new Hands(cards);
         hands.addCard(Card.of(Suit.CLUB, Denomination.KING));
 
-        assertThat(hands.calculate()).isEqualTo(new Score(13));
+        assertThat(hands.calculate()).isEqualTo(Score.of(13));
     }
 
     @DisplayName("포인트 계산 성공 : Ace 존재하고 최대값 21 넘지 않을 때")
@@ -53,7 +53,7 @@ class HandsTest {
         Hands hands = new Hands(cards);
         hands.addCard(Card.of(Suit.CLUB, Denomination.THREE));
 
-        assertThat(hands.calculate()).isEqualTo(new Score(16));
+        assertThat(hands.calculate()).isEqualTo(Score.of(16));
     }
 
     @DisplayName("포인트 계산 성공 : Ace 존재하지 않을 때")
@@ -65,7 +65,7 @@ class HandsTest {
         Hands hands = new Hands(cards);
         hands.addCard(Card.of(Suit.CLUB, Denomination.THREE));
 
-        assertThat(hands.calculate()).isEqualTo(new Score(7));
+        assertThat(hands.calculate()).isEqualTo(Score.of(7));
     }
 
     @DisplayName("포인트 계산 성공 : 특수 케이스 A,2,8")
@@ -77,7 +77,7 @@ class HandsTest {
         Hands hands = new Hands(cards);
         hands.addCard(Card.of(Suit.CLUB, Denomination.EIGHT));
 
-        assertThat(hands.calculate()).isEqualTo(new Score(21));
+        assertThat(hands.calculate()).isEqualTo(Score.of(21));
     }
 
     @DisplayName("포인트 계산 성공 : 특수 케이스 10,3,A,A,A,Q")
@@ -92,7 +92,7 @@ class HandsTest {
         hands.addCard(Card.of(Suit.HEART, Denomination.ACE));
         hands.addCard(Card.of(Suit.CLUB, Denomination.QUEEN));
 
-        assertThat(hands.calculate()).isEqualTo(new Score(26));
+        assertThat(hands.calculate()).isEqualTo(Score.of(26));
     }
 
     @DisplayName("number만큼 카드 가지고 오기")
