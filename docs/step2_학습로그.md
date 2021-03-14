@@ -19,3 +19,4 @@
 - List와 같이 자료구조를 담는 클래스는 캐싱하여 static으로 관리하여 사용할 시, 문제가 될 수 있다.
 - `public static final Cards EMPTY_CARDS = new Cards(Collections.emptyList())`를 사용하려고 했더니 테스트케이스에서
   통과되지 않는 경우가 발상하였다.
+- 불변객체가 아니라면 캐싱하지 않는다.
