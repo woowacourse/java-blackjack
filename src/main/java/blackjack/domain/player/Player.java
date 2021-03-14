@@ -1,49 +1,61 @@
 package blackjack.domain.player;
 
-import blackjack.domain.Status;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.exception.CardDuplicateException;
+import blackjack.domain.card.Score;
+import blackjack.domain.player.state.BlackJack;
+import blackjack.domain.player.state.Bust;
+import blackjack.domain.player.state.State;
+import blackjack.domain.player.state.StateFactory;
 import java.util.List;
 
 public abstract class Player {
 
-    private final Deck deck;
     private final String name;
+    private final int batMoney;
+    private final Deck deck;
+    private State state;
 
-    public Player(String name) {
-        this.deck = new Deck();
+    protected Player(String name, int batMoney, Card first, Card second) {
         this.name = name;
+        this.batMoney = batMoney;
+        this.deck = Deck.of(first, second);
+        this.state = StateFactory.start(Deck.of(first, second));
     }
 
-    public void addCardToDeck(Card card) {
-        if (deck.contains(card)) {
-            throw new CardDuplicateException();
-        }
-
-        deck.add(card);
+    public void drawCard(Card card) {
+        deck.addCard(card);
+        state = state.currentState(deck);
     }
 
-    public List<Card> getDeckAsList() {
-        return deck.getCards();
+    public Score score() {
+        return deck.score();
     }
 
-    public int getScore() {
-        return deck.totalScore();
+    public boolean isBlackJack() {
+        return state instanceof BlackJack;
     }
 
-    public Status getStatus() {
-        return Status.evaluateScore(getScore());
+    public boolean isBust() {
+        return state instanceof Bust;
     }
 
-    public String getName() {
+    public String name() {
         return name;
     }
 
-    public boolean isSameName(String name) {
-        return getName().equals(name);
+    public State state() {
+        return state;
     }
 
-    public abstract boolean isDrawable();
+    public int winningMoney() {
+        return state.winningMoney(batMoney);
+    }
+
+    public List<Card> cards() {
+        return deck.cards();
+    }
+
+    public abstract boolean drawable();
 
 }

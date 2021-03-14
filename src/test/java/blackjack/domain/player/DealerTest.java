@@ -1,23 +1,34 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Symbol;
-import org.assertj.core.api.Assertions;
+import static blackjack.domain.card.CardSpec.ACE;
+import static blackjack.domain.card.CardSpec.SIX;
+import static blackjack.domain.card.CardSpec.TEN;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class DealerTest {
+class DealerTest {
 
     @Test
-    void isDrawable_true() {
-        Dealer dealer1 = new Dealer();
-        dealer1.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.JACK));
-        dealer1.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.FIVE));
-        Assertions.assertThat(dealer1.isDrawable()).isTrue();
+    @DisplayName("16 이하의 카드를 받았을 때 더 받을 수 있는지 확인")
+    void createDealer_drawable() {
+        Dealer dealer = Dealer.of(
+            TEN.card(),
+            SIX.card()
+        );
 
-        Dealer dealer2 = new Dealer();
-        dealer2.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.JACK));
-        dealer2.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.SIX));
-        Assertions.assertThat(dealer2.isDrawable()).isFalse();
+        assertThat(dealer.drawable()).isTrue();
+    }
+
+    @Test
+    @DisplayName("16 초과의 카드를 받았을 때")
+    void createDealer_notDrawable() {
+        Dealer dealer = Dealer.of(
+            ACE.card(),
+            SIX.card()
+        );
+
+        assertThat(dealer.drawable()).isFalse();
     }
 }

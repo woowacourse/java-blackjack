@@ -1,18 +1,24 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Score;
+
 public class Dealer extends Player {
 
+    private static final String DEALER_NAME = "dealer";
     private static final int DRAWABLE_THRESHOLD = 16;
-    private static final String DEALER_NAME = "딜러";
 
-    public Dealer() {
-        super(DEALER_NAME);
+    private Dealer(Card first, Card second) {
+        super(DEALER_NAME, 0, first, second);
+    }
+
+    public static Dealer of(Card first, Card second) {
+        return new Dealer(first, second);
     }
 
     @Override
-    public boolean isDrawable() {
-        return getScore() < DRAWABLE_THRESHOLD;
+    public boolean drawable() {
+        return score().isLessThan(Score.of(DRAWABLE_THRESHOLD));
     }
-
 
 }

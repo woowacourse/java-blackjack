@@ -1,71 +1,64 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
+import static blackjack.domain.card.CardSpec.ACE;
+import static blackjack.domain.card.CardSpec.FOUR;
+import static blackjack.domain.card.CardSpec.JACK;
+import static blackjack.domain.card.CardSpec.KING;
+import static blackjack.domain.card.CardSpec.QUEEN;
+import static blackjack.domain.card.CardSpec.THREE;
+import static blackjack.domain.card.CardSpec.TWO;
+
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Score;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Gamers;
-import blackjack.domain.player.Player;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import blackjack.domain.player.Participant;
+import blackjack.domain.player.Participants;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class GameTest {
+class GameTest {
 
-    private Game game;
-
-    @BeforeEach
-    void setUp() {
-        Player dealer = new Dealer();
-        List<Card> cards = Arrays.asList(
-            new Card(Symbol.CLOVER, CardNumber.ACE),
-            new Card(Symbol.HEART, CardNumber.JACK),
-            new Card(Symbol.CLOVER, CardNumber.JACK),
-            new Card(Symbol.HEART, CardNumber.ACE),
-            new Card(Symbol.SPADE, CardNumber.ACE),
-            new Card(Symbol.DIAMOND, CardNumber.ACE),
-            new Card(Symbol.CLOVER, CardNumber.TWO),
-            new Card(Symbol.HEART, CardNumber.TWO),
-            new Card(Symbol.HEART, CardNumber.THREE)
+    @Test
+    void anyone_blackjack() {
+        Participants participants = Participants.of(
+            Participant.of("blackjack", 1000, ACE.card(), KING.card())
         );
-        game = Game.ofTest(new Cards(cards), dealer, new Gamers("nabom", "neozal"));
+        Game game = Game.of(
+            Dealer.of(TWO.card(), KING.card()),
+            participants,
+            Cards.createNormalCards()
+        );
+        Assertions.assertThat(game.isAnyParticipantBlackjack()).isTrue();
     }
 
     @Test
-    void drawCardToGamer() {
-        Player gamer = game.findGamerByName("nabom");
-        game.drawCardToPlayer(gamer);
-        Assertions.assertThat(game.isPlayerDrawable(gamer)).isTrue();
-        game.drawCardToPlayer(gamer);
-        Assertions.assertThat(game.isPlayerDrawable(gamer)).isFalse();
+    void dealer_notDrawable() {
+        Dealer dealer = Dealer.of(TWO.card(), QUEEN.card());
+        Participants participants = Participants.of(
+            Participant.of("nabom", 1000, TWO.card(), THREE.card())
+        );
+
+        Game game = Game.of(
+            dealer,
+            participants,
+            Cards.of(JACK.card())
+        );
+        Assertions.assertThat(game.drawableDealer()).isTrue();
+
+        game.drawCardTo(dealer);
+        Assertions.assertThat(game.drawableDealer()).isFalse();
     }
 
     @Test
-    void getGamerResult() {
-        Player gamer = game.findGamerByName("nabom");
-        gamer.addCardToDeck(new Card(Symbol.HEART, CardNumber.ACE));
-        gamer.addCardToDeck(new Card(Symbol.HEART, CardNumber.JACK));
+    void participant_drawTest() {
+        Score expectedScore = Score.of(9);
+        Dealer dealer = Dealer.of(TWO.card(), QUEEN.card());
+        Participant participant = Participant.of("nabom", 1000, TWO.card(), THREE.card());
+        Participants participants = Participants.of(participant);
 
-        Player dealer = game.getDealer();
-        dealer.addCardToDeck(new Card(Symbol.CLOVER, CardNumber.ACE));
+        Game game = Game.of(dealer, participants, Cards.of(FOUR.card()));
+        game.drawCardTo(participant);
 
-        Map<String, GameResult.WinOrLose> gamerResult = game.getGamerResult();
-        Assertions.assertThat(gamerResult.get(gamer.getName())).isEqualTo(GameResult.WinOrLose.WIN);
-        Assertions.assertThat(gamerResult.get("neozal")).isEqualTo(GameResult.WinOrLose.LOSE);
+        Assertions.assertThat(participant.score()).isEqualTo(expectedScore);
     }
-
-    @Test
-    void getDealerResult() {
-        getGamerResult();
-        List<GameResult.WinOrLose> dealerResult = game.getDealerResult();
-        Assertions.assertThat(dealerResult.size()).isEqualTo(2);
-        Assertions.assertThat(dealerResult.contains(GameResult.WinOrLose.WIN)).isTrue();
-        Assertions.assertThat(dealerResult.contains(GameResult.WinOrLose.LOSE)).isTrue();
-    }
-
-
 }

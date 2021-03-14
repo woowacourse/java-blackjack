@@ -1,23 +1,28 @@
 package blackjack.domain.card;
 
+
 import java.util.Objects;
 
 public class Card {
 
-    private Symbol symbol;
-    private CardNumber cardNumber;
+    private final CardNumber cardNumber;
+    private final Symbol symbol;
 
-    public Card(Symbol symbol, CardNumber cardNumber) {
-        this.symbol = symbol;
+    private Card(CardNumber cardNumber, Symbol symbol) {
         this.cardNumber = cardNumber;
+        this.symbol = symbol;
     }
 
-    public String getName() {
-        return cardNumber.getName() + symbol.getName();
+    public static Card of(CardNumber cardNumber, Symbol symbol) {
+        return new Card(cardNumber, symbol);
     }
 
-    public int getScore() {
-        return cardNumber.getScore();
+    public int score() {
+        return cardNumber.score();
+    }
+
+    public String name() {
+        return cardNumber.cardName() + symbol.getName();
     }
 
     public boolean isAce() {
@@ -33,17 +38,19 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return symbol == card.symbol && cardNumber == card.cardNumber;
+        return cardNumber == card.cardNumber && symbol == card.symbol;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, cardNumber);
+        return Objects.hash(cardNumber, symbol);
     }
 
     @Override
     public String toString() {
-        return cardNumber.getName() + symbol.getName();
+        return "Card{" +
+            "cardNumber=" + cardNumber +
+            ", symbol=" + symbol +
+            '}';
     }
-
 }

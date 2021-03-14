@@ -1,69 +1,71 @@
 package blackjack.domain;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
-
 import blackjack.domain.card.Cards;
-import blackjack.domain.player.Gamers;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Information;
+import blackjack.domain.player.Participant;
+import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class Game {
 
-    private static final int CARD_INIT_COUNT = 2;
+    private final Dealer dealer;
+    private final Participants participants;
     private final Cards cards;
-    private final Player dealer;
-    private final Gamers gamers;
 
-    private Game(Cards cards, Player dealer, Gamers gamers) {
-        this.cards = cards;
+    private Game(Dealer dealer, Participants participants, Cards cards) {
         this.dealer = dealer;
-        this.gamers = gamers;
+        this.participants = participants;
+        this.cards = cards;
     }
 
-    public static Game of(Cards cards, Player dealer, Gamers gamers) {
-        initialize(cards, dealer, gamers);
-        return new Game(cards, dealer, gamers);
-    }
-
-    public static Game ofTest(Cards cards, Player dealer, Gamers gamers) {
-        return new Game(cards, dealer, gamers);
-    }
-
-    private static void initialize(Cards cards, Player dealer, Gamers gamers) {
+    public static Game of(List<Information> information) {
+        Cards cards = Cards.createNormalCards();
         cards.shuffle();
-
-        for (int i = 0; i < CARD_INIT_COUNT; i++) {
-            dealer.addCardToDeck(cards.next());
-            gamers.drawToGamers(cards);
-        }
+        Dealer dealer = Dealer.of(cards.next(), cards.next());
+        Participants participants = Participants.of(cards, information);
+        return new Game(dealer, participants, cards);
     }
 
-    public void drawCardToPlayer(Player player) {
-        player.addCardToDeck(cards.next());
+    public static Game of(Information... information) {
+        return of(Arrays.asList(information));
     }
 
-    public boolean isPlayerDrawable(Player player) {
-        return player.isDrawable();
+    public static Game of(Dealer dealer, Participants participants, Cards cards) {
+        return new Game(dealer, participants, cards);
     }
 
-    public GameResult gameResult() {
-        GameResult gameResult = new GameResult();
-        gameResult.writeResult(dealer, gamers);
-        return gameResult;
+    public void drawCardTo(Player player) {
+        player.drawCard(cards.next());
     }
 
-    public Player findGamerByName(String name) {
-        return gamers.findGamer(name);
+    public List<Participant> participantsAsList() {
+        return participants.participants();
     }
 
-    public Player getDealer() {
+    public boolean isAnyParticipantBlackjack() {
+        return participants.anyoneBlackjack();
+    }
+
+    public Result result() {
+        return new Result(dealer, participants);
+    }
+
+    public boolean drawableDealer() {
+        return dealer.drawable();
+    }
+
+    public List<Player> allPlayers() {
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(dealer);
+        players.addAll(participantsAsList());
+        return players;
+    }
+
+    public Dealer dealer() {
         return dealer;
-    }
-
-    public List<Player> getGamersAsList() {
-        return Collections.unmodifiableList(gamers.getGamers());
     }
 }

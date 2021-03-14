@@ -1,55 +1,54 @@
 package blackjack.domain.card;
 
-import blackjack.domain.Status;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class Deck {
 
-    private final List<Card> deck;
+    private final List<Card> cards;
 
-    public Deck() {
-        this.deck = new ArrayList<>();
+    private Deck(Card... cards) {
+        this.cards = new ArrayList<>(Arrays.asList(cards));
     }
 
-    public boolean contains(Card card) {
-        return deck.contains(card);
+    public static Deck of(Card... cards) {
+        return new Deck(cards);
     }
 
-    public void add(Card card) {
-        deck.add(card);
+    public void addCard(Card card) {
+        cards.add(card);
     }
 
-    public int totalScore() {
-        int totalScore = sum();
-        for (long i = 0; i < countOfAce(); i++) {
-            totalScore = checkAce(totalScore);
+    public Score score() {
+        Score score = Score.of(sumOfScore());
+        if (containsAce()) {
+            score = score.addAceNumber();
         }
-        return totalScore;
+        return score;
     }
 
-    private int checkAce(int totalScore) {
-        int withAceScore = totalScore + CardNumber.acePlusNumber();
-        if (Status.evaluateScore(withAceScore) != Status.BURST) {
-            totalScore = withAceScore;
-        }
-        return totalScore;
-    }
-
-    private long countOfAce() {
-        return deck.stream()
-            .filter(Card::isAce)
-            .count();
-    }
-
-    private int sum() {
-        return deck.stream()
-            .mapToInt(Card::getScore)
+    private int sumOfScore() {
+        return cards.stream()
+            .mapToInt(Card::score)
             .sum();
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(deck);
+    private boolean containsAce() {
+        return cards.stream()
+            .anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackJack() {
+        return score().isBlackJack();
+    }
+
+    public boolean isBust() {
+        return score().isBust();
+    }
+
+    public List<Card> cards() {
+        return Collections.unmodifiableList(cards);
     }
 }
