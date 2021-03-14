@@ -10,9 +10,9 @@ public class CardDeckTest {
     @Test
     @DisplayName("카드덱이 정상적으로 카드를 분배하는지 확인")
     void distribute() {
-        assertThat(CardDeck.getCards()).hasSize(52);
+        assertThat(CardDeck.size()).isEqualTo(52);
         assertThat(CardDeck.distribute()).isInstanceOf(Card.class);
-        assertThat(CardDeck.getCards()).hasSize(51);
+        assertThat(CardDeck.size()).isEqualTo(51);
     }
 
 }
