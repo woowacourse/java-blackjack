@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 public class MoneyTest {
     @Test

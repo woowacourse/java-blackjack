@@ -8,8 +8,8 @@ import java.util.Objects;
 
 public abstract class Participant {
     protected final String name;
-    protected Money money;
     protected final Hand hand;
+    protected Money money;
 
     public Participant(final String name, final int money) {
         validateName(name);
