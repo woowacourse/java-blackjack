@@ -2,36 +2,40 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Nickname;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import blackjack.domain.participant.*;
+import blackjack.domain.result.MatchResult;
 import blackjack.domain.result.ProfitResult;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
+    private static final BigDecimal LOSE_RATE = new BigDecimal("-1");
+
     private final Players players;
     private final Dealer dealer;
     private final Deck deck;
 
     public BlackJackGame(List<String> playersName) {
-        players = generatePlayers(playersName);
-        players.bettingEachPlayer();
-        dealer = new Dealer();
-        List<Card> cards = new ArrayList<>(Card.values());
-        Collections.shuffle(cards);
-        deck = new Deck(cards);
+        this(generatePlayers(playersName));
     }
 
-    private Players generatePlayers(List<String> allPlayersName) {
-        return new Players(allPlayersName.stream()
+    public BlackJackGame(Players players) {
+        this.players = players;
+        this.dealer = new Dealer();
+        List<Card> cards = new ArrayList<>(Card.values());
+        Collections.shuffle(cards);
+        this.deck = new Deck(cards);
+    }
+
+    private static Players generatePlayers(List<String> allPlayersName) {
+        Players players = new Players(allPlayersName.stream()
                 .map(Nickname::new)
                 .map(Player::new)
                 .collect(Collectors.toList()));
+        players.bettingEachPlayer();
+        return players;
     }
 
     public void distributeCards() {
@@ -43,10 +47,23 @@ public class BlackJackGame {
         return deck.drawCard();
     }
 
-    public ProfitResult profitResult() {
-        ProfitResult profitResult = new ProfitResult();
-        profitResult.calculateProfit(players.verifyResultByCompareScore(dealer), dealer);
-        return profitResult;
+    public ProfitResult calculateProfit(Map<Player, MatchResult> result) {
+        Map<Participant, BigDecimal> profitResult = new LinkedHashMap<>();
+        BigDecimal dealerProfit = BigDecimal.ZERO;
+        profitResult.put(dealer, dealerProfit);
+
+        for (Player player : result.keySet()) {
+            BigDecimal profit = finalProfitByEachStatus(result.get(player), player.profit());
+            profitResult.put(player, profit.setScale(0, BigDecimal.ROUND_DOWN));
+            dealerProfit = dealerProfit.add(profit.multiply(LOSE_RATE));
+        }
+
+        profitResult.put(dealer, dealerProfit.setScale(0, BigDecimal.ROUND_DOWN));
+        return new ProfitResult(profitResult);
+    }
+
+    private BigDecimal finalProfitByEachStatus(MatchResult matchResult, BigDecimal profit) {
+        return matchResult.finalProfitByEachStatus(profit);
     }
 
     public Players getPlayers() {
