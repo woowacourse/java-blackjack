@@ -11,20 +11,28 @@ public class Player implements Participant {
     private final Cards cards;
     private final BettingMoney bettingMoney;
 
-    public Player(Name name) {
+    public Player() {
+        this("a", new Cards(Collections.emptyList()), new BettingMoney(0));
+    }
+
+    public Player(String name) {
         this(name, new Cards(Collections.emptyList()), new BettingMoney(0));
     }
 
-    public Player(Name name, BettingMoney bettingMoney) {
+    public Player(String name, BettingMoney bettingMoney) {
         this(name, new Cards(Collections.emptyList()), bettingMoney);
     }
 
-    public Player(Name name, Cards cards) {
+    public Player(BettingMoney bettingMoney) {
+        this("a", new Cards(Collections.emptyList()), bettingMoney);
+    }
+
+    public Player(String name, Cards cards) {
         this(name, cards, new BettingMoney(0));
     }
 
-    public Player(Name name, Cards cards, BettingMoney bettingMoney) {
-        this.name = name;
+    public Player(String name, Cards cards, BettingMoney bettingMoney) {
+        this.name = new Name(name);
         this.cards = cards;
         this.bettingMoney = bettingMoney;
     }

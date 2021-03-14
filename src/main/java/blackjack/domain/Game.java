@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
@@ -31,7 +30,7 @@ public class Game {
 
         for (String nameAndMoney : participantsInfo) {
             final String[] infos = nameAndMoney.split(",");
-            playersValue.add(new Player(new Name(infos[0]), new BettingMoney(infos[1])));
+            playersValue.add(new Player(infos[0], new BettingMoney(infos[1])));
         }
 
         return playersValue;
