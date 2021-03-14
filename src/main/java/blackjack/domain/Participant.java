@@ -7,14 +7,18 @@ public abstract class Participant {
 
     private static final String INVALID_PARTICIPANT_NAME = "플레이어 이름은 양쪽 공백을 제외한 1글자 이상이어야 합니다.";
     private static final int INVALID_NAME_LENGTH = 0;
+    private static final int BLACKJACK = 21;
+    private static final int TWO_CARDS = 2;
 
     private final String name;
     private final Cards cards;
+    private BetAmount betAmount;
 
     protected Participant(String name) {
         validateName(name);
         this.name = name.trim();
         this.cards = new Cards();
+        this.betAmount = BetAmount.ZERO;
     }
 
     private void validateName(String name) {
@@ -34,6 +38,14 @@ public abstract class Participant {
         return cards.getCards();
     }
 
+    public BetAmount getBetAmount() {
+        return betAmount;
+    }
+
+    public void initBetAmount(double betAmount) {
+        this.betAmount = new BetAmount(betAmount);
+    }
+
     public int calculateScore() {
         return cards.calculateScore();
     }
@@ -44,6 +56,10 @@ public abstract class Participant {
 
     public void receiveCards(Cards receivedCards) {
         cards.addAll(receivedCards);
+    }
+
+    public boolean isBlackjack() {
+        return calculateScore() == BLACKJACK && cards.size() == TWO_CARDS;
     }
 
     public abstract boolean isAbleToReceiveCard();

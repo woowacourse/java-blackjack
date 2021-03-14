@@ -1,12 +1,13 @@
 package blackjack;
 
-import blackjack.domain.*;
+import blackjack.domain.CardDeck;
+import blackjack.domain.Dealer;
+import blackjack.domain.Participants;
+import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Application {
@@ -22,14 +23,16 @@ public class Application {
                                         .map(Player::new)
                                         .collect(Collectors.toList());
         Participants participants = Participants.of(dealer, players);
-
+        for (Player player : players) {
+            double betAmount = InputView.inputBetAmount(player);
+            player.initBetAmount(betAmount);
+        }
         participants.receiveDefaultCards(cardDeck);
         OutputView.printDefaultCardMessage(dealer, players);
         players.forEach(player -> drawMoreCard(player, cardDeck));
         receiveDealerCard(dealer, cardDeck);
         OutputView.printFinalCardsAndScore(participants);
-        StatisticResult statisticResult = createStatisticResult(dealer, players);
-        OutputView.printFinalResult(statisticResult);
+        OutputView.printFinalBetProfits(participants.calculateFinalBetProfits());
     }
 
     private static void drawMoreCard(Player player, CardDeck cardDeck) {
@@ -50,13 +53,5 @@ public class Application {
             dealer.receiveCard(cardDeck.draw());
             OutputView.printDealerDrawingMessage(dealer);
         }
-    }
-
-    private static StatisticResult createStatisticResult(Dealer dealer, List<Player> players) {
-        Map<String, Result> playerNameAndResult = new HashMap<>();
-        players.forEach(player -> {
-            playerNameAndResult.put(player.getName(), player.judgeResult(dealer));
-        });
-        return new StatisticResult(playerNameAndResult);
     }
 }

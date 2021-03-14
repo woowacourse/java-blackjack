@@ -1,43 +1,23 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class PlayerTest {
+import java.util.List;
+import java.util.stream.Stream;
 
-    private static final List<Card> CARDS_SCORE_19 = Arrays.asList(
-        new Card(Symbol.ACE, Shape.HEART),
-        new Card(Symbol.KING, Shape.HEART),
-        new Card(Symbol.EIGHT, Shape.HEART)
-    );
-    private static final List<Card> CARDS_SCORE_20 = Arrays.asList(
-        new Card(Symbol.ACE, Shape.HEART),
-        new Card(Symbol.KING, Shape.HEART),
-        new Card(Symbol.NINE, Shape.HEART)
-    );
-    private static final List<Card> CARDS_SCORE_21 = Arrays.asList(
-        new Card(Symbol.ACE, Shape.HEART),
-        new Card(Symbol.KING, Shape.HEART),
-        new Card(Symbol.TEN, Shape.HEART)
-    );
-    private static final List<Card> CARDS_SCORE_22 = Arrays.asList(
-        new Card(Symbol.JACK, Shape.HEART),
-        new Card(Symbol.TEN, Shape.HEART),
-        new Card(Symbol.TWO, Shape.HEART)
-    );
+import static blackjack.domain.Fixture.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class PlayerTest {
 
     static Stream<Arguments> generateData() {
         return Stream.of(
-            Arguments.of(CARDS_SCORE_20, true),
-            Arguments.of(CARDS_SCORE_21, false)
+                Arguments.of(CARDS_SCORE_20, true),
+                Arguments.of(CARDS_SCORE_21, false)
         );
     }
 
@@ -88,6 +68,49 @@ public class PlayerTest {
         Dealer dealer = new Dealer();
         player.receiveCards(new Cards(CARDS_SCORE_19));
         dealer.receiveCards(new Cards(CARDS_SCORE_22));
-        assertThat(player.judgeResult(dealer)).isEqualTo(Result.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭이고, 딜러가 블랙잭이 아닐 경우에 게임 결과는 '블랙잭'")
+    public void judgeResult_Blackjack() {
+        Player player = new Player("json");
+        Dealer dealer = new Dealer();
+        player.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
+        dealer.receiveCards(new Cards(CARDS_SCORE_22));
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.BLACKJACK);
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러 둘 다 블랙잭인 경우, 게임 결과는 '무승부'")
+    public void judgeResult_BothOfThemBlackjack() {
+        Player player = new Player("json");
+        Dealer dealer = new Dealer();
+        player.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
+        dealer.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
+        assertThat(player.judgeResult(dealer)).isEqualTo(Result.DRAW);
+    }
+
+    @Test
+    @DisplayName("플레이어의 처음 두 장의 카드 합이 21일 경우, 수익이 베팅 금액의 1.5배이다.")
+    public void calculateFinalBetProfit_WhenPlayerIsBlackjack() {
+        Player player = new Player("json");
+        Dealer dealer = new Dealer();
+        player.initBetAmount(10000);
+        player.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
+        dealer.receiveCards(new Cards(CARDS_SCORE_21));
+        System.out.println(player.judgeResult(dealer));
+        assertThat(player.calculateFinalBetProfit(dealer)).isEqualTo(new BetAmount(5000));
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러가 동시에 블랙잭인 경우, 수익은 0이다.")
+    public void calculateFinalBetProfit_WhenPlayerAndDealerAreBlackJack() {
+        Player player = new Player("json");
+        Dealer dealer = new Dealer();
+        player.initBetAmount(10000);
+        player.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
+        dealer.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
+        System.out.println(player.judgeResult(dealer));
+        assertThat(player.calculateFinalBetProfit(dealer)).isEqualTo(new BetAmount(0));
     }
 }

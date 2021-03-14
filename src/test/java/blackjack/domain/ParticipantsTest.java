@@ -1,12 +1,16 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import java.util.Map;
+
+import static blackjack.domain.Fixture.*;
+import static blackjack.domain.Fixture.CARDS_SCORE_21;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 public class ParticipantsTest {
 
@@ -55,5 +59,27 @@ public class ParticipantsTest {
         participants.receiveDefaultCards(cardDeck);
         int afterSize = jasonCards.size();
         assertThat(afterSize).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("참가자들의 수익을 제대로 계산하는 지 테스트")
+    public void calculateFinalBetProfit_1() {
+        Player player1 = new Player("json");
+        player1.initBetAmount(10000);
+        Player player2 = new Player("pobi");
+        player2.initBetAmount(20000);
+        List<Player> players = Arrays.asList(
+                player1,
+                player2
+        );
+        Dealer dealer = new Dealer();
+        player1.receiveCards(new Cards(CARDS_SCORE_20));
+        player2.receiveCards(new Cards(CARDS_SCORE_19));
+        dealer.receiveCards(new Cards(CARDS_SCORE_21));
+        Participants participants = Participants.of(dealer, players);
+        Map<String, BetAmount> result = participants.calculateFinalBetProfits();
+        assertThat(result.get("딜러")).isEqualTo(new BetAmount(30000));
+        assertThat(result.get("json")).isEqualTo(new BetAmount(-10000));
+        assertThat(result.get("pobi")).isEqualTo(new BetAmount(-20000));
     }
 }

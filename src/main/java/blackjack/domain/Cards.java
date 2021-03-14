@@ -8,10 +8,6 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
-    private static final int ACE_BONUS_SCORE = 10;
-    private static final int BOUND_OF_CHANGE_ACE_VALUE = 11;
-    private static final int NO_BONUS_SCORE = 0;
-
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
@@ -44,5 +40,9 @@ public class Cards {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

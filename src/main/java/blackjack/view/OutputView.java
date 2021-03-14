@@ -1,12 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
-import blackjack.domain.Result;
-import blackjack.domain.StatisticResult;
+import blackjack.domain.*;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,7 +11,6 @@ public class OutputView {
     private static final int FIRST_CARD_INDEX = 0;
     private static final String DELIMITER = ", ";
     private static final String NEWLINE = System.getProperty("line.separator");
-    private static final long NO_COUNTS_OF_RESULT = 0L;
 
     private OutputView() {
     }
@@ -25,7 +19,6 @@ public class OutputView {
         String playerNames = players.stream()
                                     .map(Player::getName)
                                     .collect(Collectors.joining(DELIMITER));
-        printEmptyLine();
         System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다." + NEWLINE, dealer.getName(), playerNames);
         printDefaultDealerCard(dealer);
         printDefaultPlayerCards(players);
@@ -77,18 +70,11 @@ public class OutputView {
                 + participant.calculateScore());
     }
 
-    public static void printFinalResult(StatisticResult statisticResult) {
+    public static void printFinalBetProfits(Map<String, BetAmount> finalBetProfits) {
         printEmptyLine();
-        System.out.println("## 최종 승패");
-        Map<Result, Long> dealerStatisticResultMap = statisticResult.aggregateDealerResultAndCount();
-        Map<String, Result> playerNameResultMap = statisticResult.getPlayerNameAneResult();
-        long winCounts = dealerStatisticResultMap.getOrDefault(Result.WIN, NO_COUNTS_OF_RESULT);
-        long lossCounts = dealerStatisticResultMap.getOrDefault(Result.LOSE, NO_COUNTS_OF_RESULT);
-        long drawCounts = dealerStatisticResultMap.getOrDefault(Result.DRAW, NO_COUNTS_OF_RESULT);
-
-        System.out.println("딜러: " + winCounts + "승 " + drawCounts + "무 " + lossCounts + "패");
-        playerNameResultMap.forEach((playerName, result) -> {
-            System.out.println(playerName + ": " + result.getName());
+        System.out.println("## 최종 수익");
+        finalBetProfits.forEach((name, betProfit) -> {
+            System.out.println(name + ": " + (int) betProfit.getBetAmount());
         });
     }
 
