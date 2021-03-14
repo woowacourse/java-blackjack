@@ -32,10 +32,10 @@ public class Player extends User {
         return money.getEarning(earningRate);
     }
 
-    public boolean isYes(String input) {
+    public boolean isDrawable(String input) {
         validateYorN(input);
         input = input.toLowerCase();
-        return input.equals("y");
+        return "y".equals(input);
     }
 
     private static void validateYorN(String input) {
