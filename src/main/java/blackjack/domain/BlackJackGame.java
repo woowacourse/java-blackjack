@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
-    private Players players;
-    private Dealer dealer;
-    private Deck deck;
+    private final Players players;
+    private final Dealer dealer;
+    private final Deck deck;
 
-    public void initialSetting(List<String> playersName) {
+    public BlackJackGame(List<String> playersName) {
         players = generatePlayers(playersName);
         players.bettingEachPlayer();
         dealer = new Dealer();
