@@ -12,15 +12,15 @@ public class Card {
         this.denomination = denomination;
     }
 
-    public String findTypeName() {
+    public String typeName() {
         return type.getName();
     }
 
-    public String findDenominationName() {
+    public String denominationName() {
         return denomination.getName();
     }
 
-    public int findDenominationValue() {
+    public int denominationValue() {
         return denomination.getNumber();
     }
 
@@ -29,7 +29,7 @@ public class Card {
     }
 
     public boolean isNotAce() {
-        return denomination != Denomination.ACE;
+        return !isAce();
     }
 
     @Override

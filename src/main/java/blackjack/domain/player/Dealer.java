@@ -1,25 +1,24 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.GameResult;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends Participant {
 
+    private static final String DEALER_NAME = "딜러";
     private static final int GET_ONE_MORE_CARD_NORM = 16;
     private final List<GameResult> gameResults;
 
-    public Dealer(String name) {
-        super(name);
+    public Dealer() {
+        super(DEALER_NAME);
         gameResults = new ArrayList<>();
     }
 
     public boolean canDraw() {
-        return cards.getScore() <= GET_ONE_MORE_CARD_NORM;
+        return score() <= GET_ONE_MORE_CARD_NORM;
     }
 
-    public int getResultCount(GameResult gameResult) {
+    public int resultCount(GameResult gameResult) {
         return (int) gameResults.stream()
             .filter(it -> it == gameResult)
             .count();
@@ -29,7 +28,12 @@ public class Dealer extends Participant {
         gameResults.add(gameResult);
     }
 
-    public Card getFirstCard() {
-        return cards.getFirstCard();
+    public Money profit(Players players) {
+        Money dealerProfit = new Money();
+        for (Player player : players.getPlayers()) {
+            Money playerProfitMoney = player.profit(this);
+            dealerProfit = dealerProfit.sum(playerProfitMoney.negative());
+        }
+        return dealerProfit;
     }
 }

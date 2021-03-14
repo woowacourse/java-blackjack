@@ -2,32 +2,31 @@ package blackjack.domain.player;
 
 import static blackjack.domain.card.Cards.BLACKJACK_NUMBER;
 
-import blackjack.domain.card.GameResult;
-
 public class Player extends Participant {
 
     private GameResult gameResult;
+    private Money money;
 
     public Player(String name) {
         super(name);
+        this.money = new Money();
     }
 
-    public GameResult getResult() {
+    public GameResult getGameResult() {
         return gameResult;
     }
 
     public boolean canDraw() {
-        return cards.getScore() < BLACKJACK_NUMBER;
+        return score() < BLACKJACK_NUMBER;
     }
 
-    public void calculateGameResult(Dealer dealer) {
-        if (this.isBust() || !this.isBust() && dealer.isBust()) {
+    public void addMoney(Money money) {
+        this.money = this.money.sum(money);
+    }
+
+    public void matchGameResult(Dealer dealer) {
+        if (this.isBust() || dealer.isBust()) {
             calculateBustGameResult(dealer);
-            return;
-        }
-        if (this.getScore() == dealer.getScore()) {
-            dealer.addGameResult(GameResult.DRAW);
-            gameResult = GameResult.DRAW;
             return;
         }
         calculateScoreGameResult(dealer);
@@ -35,24 +34,39 @@ public class Player extends Participant {
 
     private void calculateBustGameResult(Dealer dealer) {
         if (this.isBust()) {
-            dealer.addGameResult(GameResult.WIN);
-            gameResult = GameResult.LOSE;
+            decideGameResult(GameResult.LOSE, dealer);
+            return;
         }
-        if (!this.isBust() && dealer.isBust()) {
-            dealer.addGameResult(GameResult.LOSE);
-            gameResult = GameResult.WIN;
-        }
+        decideGameResult(GameResult.WIN, dealer);
     }
 
     private void calculateScoreGameResult(Dealer dealer) {
-        if (this.getScore() > dealer.getScore()) {
-            dealer.addGameResult(GameResult.LOSE);
-            gameResult = GameResult.WIN;
+        if (this.score() > dealer.score()) {
+            decideGameResult(GameResult.WIN, dealer);
+            return;
         }
-        if (this.getScore() < dealer.getScore()) {
-            dealer.addGameResult(GameResult.WIN);
-            gameResult = GameResult.LOSE;
+        if (this.score() < dealer.score()) {
+            decideGameResult(GameResult.LOSE, dealer);
+            return;
         }
+        decideGameResult(GameResult.DRAW, dealer);
+    }
+
+    private void decideGameResult(GameResult gameResult, Dealer dealer) {
+        this.gameResult = gameResult;
+        dealer.addGameResult(GameResult.opposite(gameResult));
+    }
+
+    public Money profit(Dealer dealer) {
+        if (this.isBlackjack() && dealer.isBlackjack()) {
+            return money.profit(gameResult.earningRate());
+        }
+        if (this.isBust() || this.isBlackjack()) {
+            return money.profit(earningRate());
+        }
+        return money.profit(gameResult.earningRate());
     }
 
 }
+
+

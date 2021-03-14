@@ -22,22 +22,27 @@ public class Cards {
         return Collections.unmodifiableList(cards);
     }
 
-    public void add(Card card) {
+    public void draw(Card card) {
         cards.add(card);
     }
 
+    public void initialDraw(Deck deck) {
+        cards.add(deck.draw());
+        cards.add(deck.draw());
+    }
+
     public boolean isBlackJack() {
-        return getScore() == BLACKJACK_NUMBER && cards.size() == BLACKJACK_CARD_COUNT;
+        return score() == BLACKJACK_NUMBER && cards.size() == BLACKJACK_CARD_COUNT;
     }
 
-    public boolean isBurst() {
-        return getScore() > BLACKJACK_NUMBER;
+    public boolean isBust() {
+        return score() > BLACKJACK_NUMBER;
     }
 
-    public int getScore() {
+    public int score() {
         int score = cards.stream()
             .filter(Card::isNotAce)
-            .mapToInt(Card::findDenominationValue)
+            .mapToInt(Card::denominationValue)
             .sum();
 
         if (containAceCard()) {
@@ -61,11 +66,11 @@ public class Cards {
             .anyMatch(Card::isAce);
     }
 
-    public Card getFirstCard() {
+    public Card firstCard() {
         return cards.get(0);
     }
 
-    public int cardsSize() {
+    public int size() {
         return cards.size();
     }
 

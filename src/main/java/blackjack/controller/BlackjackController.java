@@ -1,12 +1,14 @@
 package blackjack.controller;
 
 import blackjack.domain.blackjackgame.BlackjackGame;
+import blackjack.domain.player.Money;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackjackController {
 
@@ -16,31 +18,36 @@ public class BlackjackController {
         blackjackGame.start();
         printHandOutResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
         while (blackjackGame.isNotEnd()) {
-            Player player = blackjackGame.getCurrentPlayer();
+            Player player = blackjackGame.currentPlayer();
             blackjackGame.drawCurrentPlayer(InputView.getWhetherDrawCard(player));
             OutputView.printPlayerCards(player);
         }
         printGameResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 
-    private List<Player> createPlayers() {
+    private Players createPlayers() {
         List<String> names = InputView.getPlayerNames();
-        return names.stream()
-            .map(Player::new)
-            .collect(Collectors.toList());
+        List<Player> players = new LinkedList<>();
+        for (String name : names) {
+            Player player = new Player(name);
+            Money money = new Money(InputView.getBetMoney(player));
+            player.addMoney(money);
+            players.add(player);
+        }
+        return new Players(players);
     }
 
-    private void printHandOutResult(Dealer dealer, List<Player> players) {
+    private void printHandOutResult(Dealer dealer, Players players) {
         OutputView.printHandOutCardsMessage(dealer, players);
         OutputView.printDealerCards(dealer);
-        players.forEach(OutputView::printPlayerCards);
+        OutputView.printPlayersCards(players);
         OutputView.printNewLine();
     }
 
-    private void printGameResult(Dealer dealer, List<Player> players) {
+    private void printGameResult(Dealer dealer, Players players) {
         OutputView.printDealerCardsScore(dealer);
-        players.forEach(OutputView::printPlayerCardsScore);
-        OutputView.printGameResult(players, dealer);
+        OutputView.printPlayersCardsScore(players);
+        OutputView.printGameProfitResult(players, dealer);
     }
 
 }
