@@ -19,14 +19,14 @@ public class Game {
     private final Players players;
     private final Participant dealer;
 
-    public Game(List<String> participantsInfo) {
+    public Game(final List<String> participantsInfo) {
         List<Player> playersValue = getPlayerList(participantsInfo);
         this.dealer = new Dealer();
         this.players = new Players(playersValue);
         this.gameTable = new GameTable(dealer, players, new RandomCardDeck());
     }
 
-    private List<Player> getPlayerList(List<String> participantsInfo) {
+    private List<Player> getPlayerList(final List<String> participantsInfo) {
         List<Player> playersValue = new ArrayList<>();
 
         for (String nameAndMoney : participantsInfo) {
@@ -45,7 +45,7 @@ public class Game {
         return players.getUnmodifiableList();
     }
 
-    public Player turnForPlayer(Player player) {
+    public Player turnForPlayer(final Player player) {
         gameTable.giveCard(player);
         return player;
     }
@@ -56,7 +56,7 @@ public class Game {
 
     public ResultDto getResultDto() {
         final Score dealerScore = dealer.sumCardsForResult();
-        return new ResultDto(dealerScore, players.resultOfPlayers(dealerScore));
+        return new ResultDto(players.resultOfPlayers(dealerScore));
     }
 
 }

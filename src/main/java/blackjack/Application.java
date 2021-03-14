@@ -2,13 +2,14 @@ package blackjack;
 
 import blackjack.domain.Game;
 import blackjack.domain.gamer.Player;
+import blackjack.dto.ResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
         final Game game = new Game(InputView.requestNameAndMoney());
-        OutputView.printParticipantsCards(game.getProcessDto());
+        OutputView.printCards(game.getProcessDto());
 
         simulate(game);
 
@@ -32,8 +33,10 @@ public class Application {
 
     private static void printFinalView(Game game) {
         OutputView.printCardsResult(game.getProcessDto());
-        OutputView.printOutcome(game.getResultDto());
-        OutputView.printProfit(game.getResultDto());
+
+        final ResultDto resultDto = game.getResultDto();
+        OutputView.printOutcome(resultDto);
+        OutputView.printProfit(resultDto);
     }
 
 }

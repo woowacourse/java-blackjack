@@ -1,6 +1,5 @@
 package blackjack.dto;
 
-import blackjack.domain.card.Score;
 import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gametable.Outcome;
 import java.math.BigDecimal;
@@ -12,11 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ResultDto {
-    private final Score dealerScore;
     private final List<PlayerResult> playerResults;
 
-    public ResultDto(final Score dealerScore, final List<PlayerResult> playerResults) {
-        this.dealerScore = dealerScore;
+    public ResultDto(final List<PlayerResult> playerResults) {
         this.playerResults = playerResults;
     }
 

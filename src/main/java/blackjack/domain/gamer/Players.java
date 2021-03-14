@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class Players {
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    public Players(final List<Player> players) {
         this.players = new ArrayList<>(players);
     }
 
@@ -39,7 +39,7 @@ public class Players {
             .collect(Collectors.toList());
     }
 
-    public void takeTwoCards(CardDeck cardDeck) {
+    public void takeTwoCards(final CardDeck cardDeck) {
         for (Player player : players) {
             player.takeCard(cardDeck.pop());
             player.takeCard(cardDeck.pop());

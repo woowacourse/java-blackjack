@@ -25,7 +25,7 @@ public class OutputView {
         System.out.println(player.getName() + "카드: " + cards);
     }
 
-    public static void printParticipantsCards(ProcessDto processDto) {
+    public static void printCards(ProcessDto processDto) {
         final String joinedNames = String.join(", ", processDto.names());
 
         System.out.printf("\n%s와 %s에게 2장의 나누었습니다.\n", Dealer.DEALER_NAME, joinedNames);
