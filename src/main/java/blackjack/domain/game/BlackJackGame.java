@@ -11,10 +11,20 @@ public class BlackJackGame {
     private final Dealer dealer;
     private final Gamblers gamblers;
 
+    public  BlackJackGame(){
+        deck = new Deck();
+        dealer = new Dealer();
+        this.gamblers = new Gamblers();
+    }
+
     public BlackJackGame(final Gamblers gamblers) {
         deck = new Deck();
         dealer = new Dealer();
         this.gamblers = gamblers;
+    }
+
+    public void addGamblers(final Gamblers gamblers){
+        this.gamblers.addAll(gamblers);
     }
 
     public void initDealerCards() {
@@ -26,10 +36,7 @@ public class BlackJackGame {
     }
 
     public void giveGamblerCard(Gambler gambler) {
-        gamblers.gamblers().stream()
-                .filter(player -> player.isSameName(gambler))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 이름의 겜블러가 없습니다."))
+        gamblers.getGamblerByName(gambler)
                 .drawCard(deck);
     }
 
@@ -43,22 +50,15 @@ public class BlackJackGame {
 
     public Result calculateResult() {
         Result result = new Result(dealer);
-        for (Gambler gambler : gamblers.gamblers()) {
-            addGamblerResult(result, gambler);
-        }
+        gamblers.addGamblerResult(result, dealer);
         return result;
-    }
-
-    private void addGamblerResult(final Result result, final Gambler gambler) {
-        WinOrLose winOrLose = WinOrLose.calculateGamblerWinOrNot(dealer, gambler);
-        result.add(gambler, winOrLose);
     }
 
     public Dealer getDealer() {
         return dealer;
     }
 
-    public Gamblers getGamblers() {
+    public Gamblers Gamblers() {
         return gamblers;
     }
 }

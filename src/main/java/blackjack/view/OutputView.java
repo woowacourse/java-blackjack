@@ -42,7 +42,7 @@ public class OutputView {
 
     public static void printPlayersCardInfo(final Gamblers players) {
         printNewLine();
-        players.gamblers()
+        players.getGamblers()
                 .forEach(OutputView::printPlayerCardInfo);
         printNewLine();
     }

@@ -9,106 +9,106 @@ import blackjack.domain.player.Money;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.*;
-
-import static blackjack.domain.YesOrNo.YES;
-import static blackjack.domain.YesOrNo.of;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class BlackJackController {
 
+    private static final BlackJackGame blackJackGame = new BlackJackGame();
 
     public static void main(String[] args) {
         run();
     }
 
     public static void run() {
-        Gamblers gamblers = createPlayers();
-        BlackJackGame blackJackGame = new BlackJackGame(gamblers);
+        Gamblers gamblers = createGamblers();
+        blackJackGame.addGamblers(gamblers);
 
-        playFirstTurn(blackJackGame);
+        playFirstTurn();
 
-        giveEachGamblerCard(blackJackGame, gamblers);
-        giveDealerCards(blackJackGame);
+        giveEachGamblerCard(gamblers);
+        giveDealerCards();
 
         Result result = blackJackGame.calculateResult();
         result.calculateProfit();
         OutputView.printResult(result);
     }
 
-    private static Gamblers createPlayers() {
-        Map<String, Money> playerInfo = createNameAndBattingMoney();
-        List<Gambler> gamblers = new ArrayList<>();
+    private static Gamblers createGamblers() {
         try {
-            playerInfo.forEach((key, value) -> gamblers.add(new Gambler(key, value)));
-        } catch (Exception e) {
+            return new Gamblers(collectGamblers());
+        } catch (IllegalArgumentException e) {
             OutputView.printError(e);
-            return createPlayers();
+            return createGamblers();
         }
-        return new Gamblers(gamblers);
     }
 
-    private static Map<String, Money> createNameAndBattingMoney() {
-        String allName = InputView.askPlayerNames();
-        List<String> names = Arrays.asList(allName.split(","));
-        Map<String, Money> playerInfo = new HashMap<>();
-        for (String name : names) {
-            Money money = createMoney(name);
-            playerInfo.put(name, money);
-        }
-        return playerInfo;
+    private static List<Gambler> collectGamblers() {
+        String gamblersName = InputView.askGamblersName();
+        List<String> names = Arrays.asList(gamblersName.split(","));
+        List<Gambler> gamblers = new ArrayList<>();
+        names.stream()
+                .map(String::trim)
+                .forEach(name -> {
+                    Money money = createMoney(name);
+                    gamblers.add(new Gambler(name, money));
+                });
+        return gamblers;
     }
 
-    private static Money createMoney(String name) {
+    private static Money createMoney(final String name) {
         try {
             return new Money(InputView.askPlayerBattingMoney(name));
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             OutputView.printError(e);
             return createMoney(name);
         }
     }
 
-    private static void playFirstTurn(BlackJackGame blackJackGame) {
+    private static void playFirstTurn() {
         blackJackGame.initDealerCards();
         blackJackGame.initGamblersCards();
         OutputView.printDealerCardInfo(blackJackGame.getDealer());
-        OutputView.printPlayersCardInfo(blackJackGame.getGamblers());
+        OutputView.printPlayersCardInfo(blackJackGame.Gamblers());
     }
 
-    private static void giveEachGamblerCard(BlackJackGame blackJackGame, Gamblers gamblers) {
-        for (Gambler gambler : gamblers.gamblers()) {
-            giveGamblerCard(blackJackGame, gambler);
+    private static void giveEachGamblerCard(final Gamblers gamblers) {
+        for (Gambler gambler : gamblers.getGamblers()) {
+            giveGamblerCard(gambler);
         }
     }
 
-    private static void giveGamblerCard(BlackJackGame blackJackGame, Gambler gambler) {
+    private static void giveGamblerCard(final Gambler gambler) {
         if (gambler.isBlackJack()) {
             OutputView.printBlackJack(gambler);
             return;
         }
         while (isAbleToDraw(gambler)) {
-            drawCard(blackJackGame, gambler);
+            drawGamblerCard(gambler);
         }
         if (gambler.isTwentyOne()) {
             OutputView.printTwentyOne();
         }
     }
 
-    private static boolean isAbleToDraw(Gambler gambler) {
-        return !gambler.isBust()
-                && !gambler.isTwentyOne()
-                && decideDecision(gambler.name()) == YES;
+    private static boolean isAbleToDraw(final Gambler gambler) {
+        return gambler.isHit()
+                && gambler.isNoTwentyOne()
+                && isYesDecision(gambler.name());
     }
 
-    private static YesOrNo decideDecision(final String playerName) {
+    private static boolean isYesDecision(final String playerName) {
         try {
-            return of(InputView.askDrawOrNot(playerName));
+            YesOrNo decision = YesOrNo.of(InputView.askDrawOrNot(playerName));
+            return decision.isYes();
         } catch (Exception e) {
             OutputView.printError(e);
-            return decideDecision(playerName);
+            return isYesDecision(playerName);
         }
     }
 
-    private static void drawCard(BlackJackGame blackJackGame, Gambler gambler) {
+    private static void drawGamblerCard(final Gambler gambler) {
         blackJackGame.giveGamblerCard(gambler);
         if (gambler.isBust()) {
             OutputView.printBust();
@@ -117,7 +117,7 @@ public class BlackJackController {
         OutputView.printPlayerCardInfo(gambler);
     }
 
-    private static void giveDealerCards(BlackJackGame blackJackGame) {
+    private static void giveDealerCards() {
         while (blackJackGame.ableToDraw()) {
             OutputView.printGiveDealer();
             blackJackGame.giveDealerCard();
