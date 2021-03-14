@@ -120,7 +120,7 @@ public class PlayerTest {
     public void calculateFinalBetProfit_WhenPlayerIsBlackjack() {
         Player player = new Player("json");
         Dealer dealer = new Dealer();
-        player.setBetAmount(10000);
+        player.initBetAmount(10000);
         player.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
         dealer.receiveCards(new Cards(CARDS_SCORE_21));
         System.out.println(player.judgeResult(dealer));
@@ -132,7 +132,7 @@ public class PlayerTest {
     public void calculateFinalBetProfit_WhenPlayerAndDealerAreBlackJack() {
         Player player = new Player("json");
         Dealer dealer = new Dealer();
-        player.setBetAmount(10000);
+        player.initBetAmount(10000);
         player.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
         dealer.receiveCards(new Cards(CARDS_SCORE_BLACKJACK));
         System.out.println(player.judgeResult(dealer));

@@ -25,7 +25,7 @@ public class Application {
         Participants participants = Participants.of(dealer, players);
         for (Player player : players) {
             int betAmount = InputView.inputBetAmount(player);
-            player.setBetAmount(betAmount);
+            player.initBetAmount(betAmount);
         }
         participants.receiveDefaultCards(cardDeck);
         OutputView.printDefaultCardMessage(dealer, players);
