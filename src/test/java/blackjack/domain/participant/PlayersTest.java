@@ -100,6 +100,35 @@ public class PlayersTest {
     }
 
     @Test
+    @DisplayName("모든 플레이어의 수익금을 조회한다")
+    void generateEveyPlayerScore() {
+        Player player1 = new Player("joel", 1000);
+        Player player2 = new Player("bada", 1000);
+        Player player3 = new Player("j.on", 1000);
+        Player player4 = new Player("blackjack", 1000);
+
+        player1.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+        player1.receiveAdditionalCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
+
+        player2.receiveAdditionalCard(new Card(CardLetter.EIGHT, CardSuit.HEART));
+        player2.receiveAdditionalCard(new Card(CardLetter.NINE, CardSuit.HEART));
+
+        player3.receiveAdditionalCard(new Card(CardLetter.TWO, CardSuit.DIAMOND));
+        player3.receiveAdditionalCard(new Card(CardLetter.THREE, CardSuit.DIAMOND));
+
+        player4.receiveAdditionalCard(new Card(CardLetter.ACE, CardSuit.CLOVER));
+        player4.receiveAdditionalCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
+
+        final Players players = new Players(Arrays.asList(player1, player2, player3, player4));
+
+        final Map<Player, Integer> allPlayerProfit = players.generateEveryPlayerScore();
+        assertThat(allPlayerProfit.get(player1)).isEqualTo(20);
+        assertThat(allPlayerProfit.get(player2)).isEqualTo(18);
+        assertThat(allPlayerProfit.get(player3)).isEqualTo(5);
+        assertThat(allPlayerProfit.get(player4)).isEqualTo(21);
+    }
+
+    @Test
     @DisplayName("모든 플레이어에 수익률을 조회한다.")
     void generateEveryPlayerProfit() {
         Player player1 = new Player("joel", 1000);
