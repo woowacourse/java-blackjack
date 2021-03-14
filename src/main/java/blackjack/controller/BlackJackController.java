@@ -9,7 +9,8 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
-    final BlackJackGame game = new BlackJackGame();
+    private static final String NAME_SEPARATOR = ",";
+    private final BlackJackGame game = new BlackJackGame();
 
     public void run() {
         setPlayers();
@@ -21,7 +22,7 @@ public class BlackJackController {
 
     private void setPlayers() {
         final String nameLine = InputView.askPlayerNames();
-        for (final String name : nameLine.split(",")) {
+        for (final String name : nameLine.split(NAME_SEPARATOR)) {
             game.addPlayer(new Gambler(name), InputView.askBettingMoney(name));
         }
         game.distributeInitialCards();
