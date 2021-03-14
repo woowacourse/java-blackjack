@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.controller.BlackJackController;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
@@ -8,6 +7,8 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 
 public class GameTable {
+    public static final String PLAYER_WANT_MORE_CARD = "Y";
+
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
@@ -24,7 +25,7 @@ public class GameTable {
     }
 
     public void draw(Player player, String doesPlayerWantMoreCard) {
-        if (doesPlayerWantMoreCard.equals(BlackJackController.YES)) {
+        if (doesPlayerWantMoreCard.equals(PLAYER_WANT_MORE_CARD)) {
             player.hit(deck.pop());
         }
     }

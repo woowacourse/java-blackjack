@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackController {
-    public static final String YES = "Y";
-
     public void run() {
         GameTable gameTable = new GameTable(makePlayers());
         gameTable.drawAtFirst();
@@ -75,7 +73,7 @@ public class BlackJackController {
             doesPlayerWantMoreCard = InputView.getHitValue();
             gameTable.draw(player, doesPlayerWantMoreCard);
             OutputView.printPlayerCards(player);
-        } while (player.isNotBust() && doesPlayerWantMoreCard.equals(YES));
+        } while (player.isNotBust() && doesPlayerWantMoreCard.equals(GameTable.PLAYER_WANT_MORE_CARD));
     }
 
     private void showResult(Dealer dealer, Players players) {
