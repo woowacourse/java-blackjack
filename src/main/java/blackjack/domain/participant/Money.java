@@ -5,8 +5,16 @@ import java.util.Objects;
 public class Money {
     private final int money;
 
-    public Money(int money) {
+    public Money(final int money) {
         this.money = money;
+    }
+
+    public int calculateProfit(double profitRate) {
+        return (int) (money * profitRate);
+    }
+
+    public Money updateMoneyByProfit(final int profit) {
+        return new Money(money + profit);
     }
 
     @Override

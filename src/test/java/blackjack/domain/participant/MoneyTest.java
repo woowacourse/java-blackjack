@@ -28,4 +28,34 @@ public class MoneyTest {
 
         assertThat(moneySet.size()).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("수익률을 입력받으면, 현재 Money에 대한 수익금을 반환한다.")
+    void calculateProfitTest() {
+        Money money = new Money(1000);
+
+        int profit = money.calculateProfit(1.5);
+        assertThat(profit).isEqualTo(1500);
+
+        profit = money.calculateProfit(1);
+        assertThat(profit).isEqualTo(1000);
+
+        profit = money.calculateProfit(0);
+        assertThat(profit).isEqualTo(0);
+
+        profit = money.calculateProfit(-1);
+        assertThat(profit).isEqualTo(-1000);
+    }
+
+    @Test
+    @DisplayName("현재 Money에 대한 수익을 입력한다면, 수익을 반영한 새로운 Money 객체를 반환한다.")
+    void updateMoneyByProfitTest() {
+        Money money = new Money(1000);
+
+        money = money.updateMoneyByProfit(1500);
+        assertThat(money).isEqualTo(new Money(2500));
+
+        money = money.updateMoneyByProfit(-3000);
+        assertThat(money).isEqualTo(new Money(-500));
+    }
 }
