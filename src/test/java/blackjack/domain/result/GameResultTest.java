@@ -43,27 +43,16 @@ public class GameResultTest {
     }
 
     @Test
-    @DisplayName("플레이어의 승패를 잘 결정하는지 확인")
-    void playersResult() {
-        final Map<Player, Result> expected = new HashMap<>();
-        expected.put(player, Result.WIN);
-        assertThat(gameResult.findPlayersResult(dealer, players)).isEqualTo(expected);
-    }
-
-    @Test
     @DisplayName("플레이어들의 수익계산을 잘 하는지 확인")
     void calculatePlayersProfit() {
         Map<Player, Integer> expected = new HashMap<>();
         expected.put(player, 15000);
-        assertThat(gameResult.calculatePlayersProfit(dealer)).isEqualTo(expected);
+        assertThat(gameResult.getPlayersProfit()).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("딜러의 수익계산을 잘 하는지 확인")
     void calculateDealerProfit() {
-        Map<Player, Integer> playersProfit = new HashMap<>();
-        playersProfit.put(player, 10000);
-        playersProfit.put(new Player("pobi", 10000), 15000);
-        assertThat(gameResult.calculateDealerProfit(playersProfit)).isEqualTo(-25000);
+        assertThat(gameResult.getDealerProfit()).isEqualTo(-15000);
     }
 }
