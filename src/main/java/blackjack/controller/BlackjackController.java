@@ -16,7 +16,7 @@ public class BlackjackController {
         final List<String> playersNames = InputView.receiveNames();
         final List<Integer> playersMoney = InputView.receiveMoney(playersNames);
 
-        final Players players =cardManager.initiateGamers(playersNames, playersMoney);
+        final Players players = cardManager.initiateGamers(playersNames, playersMoney);
         final Dealer dealer = new Dealer(cardManager.giveFirstHand());
         OutputView.gameStart(players, dealer);
 
