@@ -19,7 +19,7 @@ public abstract class HandState {
 
     public abstract boolean isBlackjack();
 
-    public int calculateScore() {
+    public final int calculateScore() {
         final int maximumSum = cards.stream()
                 .mapToInt(card -> card.getCardLetter().getValue())
                 .sum();
@@ -30,13 +30,13 @@ public abstract class HandState {
         return maximumSum;
     }
 
-    private int countAce() {
+    private final int countAce() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
     }
 
-    private int adjustScoreWithAce(final int maximumSum) {
+    private final int adjustScoreWithAce(final int maximumSum) {
         int aceCount = countAce();
         int adjustSum = maximumSum;
         while (aceCount > 0 && adjustSum > BLACKJACK_SCORE) {
@@ -46,7 +46,7 @@ public abstract class HandState {
         return adjustSum;
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 }
