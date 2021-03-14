@@ -13,7 +13,7 @@ class BetAmountTest {
 
     @BeforeEach
     void setUp() {
-        this.betAmount = new BetAmount(1_000);
+        this.betAmount = BetAmount.betting(1_000);
     }
 
     @Test
@@ -37,7 +37,7 @@ class BetAmountTest {
     @Test
     @DisplayName("초기 베팅 금액이 0보다 작을 경우 예외처리")
     void testNegativeException() {
-        assertThatThrownBy(() -> new BetAmount(-3_000))
+        assertThatThrownBy(() -> BetAmount.betting(-3_000))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }

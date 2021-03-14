@@ -5,21 +5,18 @@ import blackjack.domain.Result;
 public class Player extends Participant {
 
     private final Name name;
-    private BetAmount betAmount;
+    private final BetAmount betAmount;
 
-    public Player(final Name name) {
+    public Player(final Name name, final BetAmount betAmount) {
         this.name = name;
-    }
-
-    public void betting(final double betAmount) {
-        this.betAmount = new BetAmount(betAmount);
+        this.betAmount = betAmount;
     }
 
     public Result judgeByDealerState(final Dealer dealer) {
         return this.state.calculatePlayerResult(dealer.state);
     }
 
-    public double profit(final Result result) {
+    public BetAmount profit(final Result result) {
         return this.betAmount.multiply(result.getAmplification());
     }
 
