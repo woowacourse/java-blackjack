@@ -11,12 +11,12 @@ public abstract class Finished extends Started {
 
     @Override
     public State draw(Card card) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("게임이 종료 상태라 카드를 더이상 뽑을 수 없습니다.");
     }
 
     @Override
     public State stay() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("이미 게임턴이 끝난 상태입니다.");
     }
 
     @Override
