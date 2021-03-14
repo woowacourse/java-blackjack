@@ -38,7 +38,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public List<Card> showInitialCards() {
+    public List<Card> getInitialCards() {
         return cards.subList(0, 2);
     }
 

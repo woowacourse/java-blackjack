@@ -34,7 +34,7 @@ public class OutputView {
     }
 
     public static void showInitialCard(final Participant participant) {
-        final String cardStatus = participant.showInitialCards().stream()
+        final String cardStatus = participant.getInitialCards().stream()
                 .map(OutputView::cardFormat)
                 .collect(Collectors.joining(", "));
         System.out.printf(CARD_STATUS_FORMAT + NEWLINE, participant.getName(), cardStatus);

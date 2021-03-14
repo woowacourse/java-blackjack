@@ -48,6 +48,6 @@ public class PlayerTest {
         final Card firstCard = new Card(CardNumber.JACK, CardType.DIAMOND);
         final Card secondCard = new Card(CardNumber.EIGHT, CardType.CLOVER);
         player.receiveInitialCards(firstCard, secondCard);
-        assertThat(player.showInitialCards().size()).isEqualTo(2);
+        assertThat(player.getInitialCards().size()).isEqualTo(2);
     }
 }

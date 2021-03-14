@@ -39,6 +39,6 @@ public class DealerTest {
         final Card firstCard = new Card(CardNumber.JACK, CardType.DIAMOND);
         final Card secondCard = new Card(CardNumber.EIGHT, CardType.CLOVER);
         dealer.receiveInitialCards(firstCard, secondCard);
-        assertThat(dealer.showInitialCards().size()).isEqualTo(1);
+        assertThat(dealer.getInitialCards().size()).isEqualTo(1);
     }
 }

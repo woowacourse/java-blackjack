@@ -80,7 +80,7 @@ public abstract class Participant {
                 .count();
     }
 
-    public abstract List<Card> showInitialCards();
+    public abstract List<Card> getInitialCards();
 
     public abstract boolean checkMoreCardAvailable();
 }
