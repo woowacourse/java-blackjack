@@ -16,21 +16,6 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    private void validateMaxPlayerNumber(final List<Player> players) {
-        if (players.size() > MAX_PLAYER_LIMIT) {
-            throw new IllegalArgumentException("플레이어는 최대 8명까지 허용합니다.");
-        }
-    }
-
-    private void validateDuplicate(final List<Player> players) {
-        final boolean allUnique = players.stream()
-                .allMatch(new HashSet<>()::add);
-
-        if (!allUnique) {
-            throw new IllegalArgumentException("입력된 플레이어의 이름이 중복됩니다.");
-        }
-    }
-
     public static Players of(final List<String> playerName) {
         final List<Player> players = playerName.stream()
                 .map(Player::new)
@@ -50,6 +35,21 @@ public class Players {
     private static void validateSize(final int nameCount, final int moneyCount) {
         if (nameCount != moneyCount) {
             throw new IllegalArgumentException("입력 받은 플레이어의 수와 베팅 금액의 수가 같지 않습니다");
+        }
+    }
+
+    private void validateMaxPlayerNumber(final List<Player> players) {
+        if (players.size() > MAX_PLAYER_LIMIT) {
+            throw new IllegalArgumentException("플레이어는 최대 8명까지 허용합니다.");
+        }
+    }
+
+    private void validateDuplicate(final List<Player> players) {
+        final boolean allUnique = players.stream()
+                .allMatch(new HashSet<>()::add);
+
+        if (!allUnique) {
+            throw new IllegalArgumentException("입력된 플레이어의 이름이 중복됩니다.");
         }
     }
 
