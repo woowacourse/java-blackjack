@@ -15,7 +15,7 @@ public enum YesOrNo {
         throw new IllegalArgumentException("올바르지 않은 입력입니다.");
     }
 
-    public boolean isYes(){
+    public boolean isYes() {
         return this == YES;
     }
 }

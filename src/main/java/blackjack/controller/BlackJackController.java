@@ -93,9 +93,7 @@ public class BlackJackController {
     }
 
     private static boolean isAbleToDraw(final Gambler gambler) {
-        return gambler.isHit()
-                && gambler.isNoTwentyOne()
-                && isYesDecision(gambler.name());
+        return gambler.isHit() && isYesDecision(gambler.name());
     }
 
     private static boolean isYesDecision(final String playerName) {

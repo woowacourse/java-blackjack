@@ -11,7 +11,7 @@ public class BlackJackGame {
     private final Dealer dealer;
     private final Gamblers gamblers;
 
-    public  BlackJackGame(){
+    public BlackJackGame() {
         deck = new Deck();
         dealer = new Dealer();
         this.gamblers = new Gamblers();
@@ -23,7 +23,7 @@ public class BlackJackGame {
         this.gamblers = gamblers;
     }
 
-    public void addGamblers(final Gamblers gamblers){
+    public void addGamblers(final Gamblers gamblers) {
         this.gamblers.addAll(gamblers);
     }
 
@@ -35,7 +35,7 @@ public class BlackJackGame {
         gamblers.initGamblerCards(deck);
     }
 
-    public void giveGamblerCard(Gambler gambler) {
+    public void giveGamblerCard(final Gambler gambler) {
         gamblers.getGamblerByName(gambler)
                 .drawCard(deck);
     }
