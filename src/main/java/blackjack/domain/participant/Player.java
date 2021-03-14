@@ -1,9 +1,9 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.BettingMoney;
+import blackjack.domain.money.BettingMoney;
+import blackjack.domain.money.Profits;
 import blackjack.domain.state.State;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -29,7 +29,7 @@ public class Player extends Participant {
         return !state.isFinished();
     }
 
-    public BigDecimal profit() {
+    public Profits profit() {
         return state.profit(this.bettingMoney);
     }
 }

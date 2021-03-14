@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.money;
 
 import java.math.BigDecimal;
 
@@ -22,7 +22,7 @@ public class BettingMoney {
         }
     }
 
-    public BigDecimal multiply(BigDecimal rate) {
-        return money.multiply(rate);
+    public Profits multiply(BigDecimal rate) {
+        return new Profits(money.multiply(rate));
     }
 }

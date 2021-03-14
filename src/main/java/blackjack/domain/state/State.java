@@ -1,10 +1,9 @@
 package blackjack.domain.state;
 
-import blackjack.domain.BettingMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-
-import java.math.BigDecimal;
+import blackjack.domain.money.BettingMoney;
+import blackjack.domain.money.Profits;
 
 public interface State {
     boolean isFinished();
@@ -15,7 +14,7 @@ public interface State {
 
     State stay();
 
-    BigDecimal profit(BettingMoney money);
+    Profits profit(BettingMoney money);
 
     boolean isBlackJack();
 

@@ -1,8 +1,9 @@
 package blackjack.domain.state;
 
-import blackjack.domain.BettingMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.money.BettingMoney;
+import blackjack.domain.money.Profits;
 
 import java.math.BigDecimal;
 
@@ -16,7 +17,7 @@ public abstract class Finished extends Started {
     public abstract BigDecimal rate();
 
     @Override
-    public BigDecimal profit(BettingMoney money) {
+    public Profits profit(BettingMoney money) {
         return money.multiply(rate());
     }
 

@@ -107,6 +107,6 @@ public class OutputView {
         printNewLine();
         System.out.println(FINAL_RESULT_TITLE);
         result.getProfitResult()
-                .forEach((key, value) -> System.out.println(key.getName().getName() + ": " + value.toString()));
+                .forEach((key, value) -> System.out.println(key.getName().getName() + ": " + value.getProfits().toString()));
     }
 }

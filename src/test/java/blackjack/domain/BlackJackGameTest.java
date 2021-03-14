@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.money.BettingMoney;
+import blackjack.domain.money.Profits;
 import blackjack.domain.participant.*;
 import blackjack.domain.result.MatchResult;
 import blackjack.domain.result.ProfitResult;
@@ -41,10 +43,10 @@ public class BlackJackGameTest {
 
         BlackJackGame blackJackGame = new BlackJackGame(players);
         ProfitResult profitResult = blackJackGame.calculateProfit(result);
-        Map<Participant, BigDecimal> finalResult = profitResult.getProfitResult();
-        assertEquals(finalResult.get(dealer), new BigDecimal("5000"));
-        assertEquals(finalResult.get(player1), new BigDecimal("15000"));
-        assertEquals(finalResult.get(player2), new BigDecimal("-20000"));
-        assertEquals(finalResult.get(player3), new BigDecimal("0"));
+        Map<Participant, Profits> finalResult = profitResult.getProfitResult();
+        assertEquals(finalResult.get(dealer), new Profits(new BigDecimal("5000")));
+        assertEquals(finalResult.get(player1), new Profits(new BigDecimal("15000")));
+        assertEquals(finalResult.get(player2), new Profits(new BigDecimal("-20000")));
+        assertEquals(finalResult.get(player3), new Profits(new BigDecimal("0")));
     }
 }

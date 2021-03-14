@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.BettingMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.money.BettingMoney;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
 

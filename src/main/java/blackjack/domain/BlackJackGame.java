@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.money.Profits;
 import blackjack.domain.participant.*;
 import blackjack.domain.result.MatchResult;
 import blackjack.domain.result.ProfitResult;
@@ -46,21 +47,21 @@ public class BlackJackGame {
     }
 
     public ProfitResult calculateProfit(Map<Player, MatchResult> result) {
-        Map<Participant, BigDecimal> profitResult = new LinkedHashMap<>();
-        BigDecimal dealerProfit = BigDecimal.ZERO;
+        Map<Participant, Profits> profitResult = new LinkedHashMap<>();
+        Profits dealerProfit = new Profits(BigDecimal.ZERO);
         profitResult.put(dealer, dealerProfit);
 
         for (Player player : result.keySet()) {
-            BigDecimal profit = finalProfitByEachStatus(result.get(player), player.profit());
-            profitResult.put(player, profit.setScale(0, BigDecimal.ROUND_DOWN));
-            dealerProfit = dealerProfit.add(profit.multiply(LOSE_RATE));
+            Profits profit = finalProfitByEachStatus(result.get(player), player.profit());
+            profitResult.put(player, profit);
+            dealerProfit = dealerProfit.accumulate(profit.multiply(LOSE_RATE));
         }
 
-        profitResult.put(dealer, dealerProfit.setScale(0, BigDecimal.ROUND_DOWN));
+        profitResult.put(dealer, dealerProfit);
         return new ProfitResult(profitResult);
     }
 
-    private BigDecimal finalProfitByEachStatus(MatchResult matchResult, BigDecimal profit) {
+    private Profits finalProfitByEachStatus(MatchResult matchResult, Profits profit) {
         return matchResult.finalProfitByEachStatus(profit);
     }
 

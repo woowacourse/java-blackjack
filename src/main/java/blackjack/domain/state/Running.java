@@ -1,9 +1,8 @@
 package blackjack.domain.state;
 
-import blackjack.domain.BettingMoney;
 import blackjack.domain.card.Cards;
-
-import java.math.BigDecimal;
+import blackjack.domain.money.BettingMoney;
+import blackjack.domain.money.Profits;
 
 public abstract class Running extends Started {
     public Running(Cards cards) {
@@ -16,7 +15,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public BigDecimal profit(BettingMoney money) {
+    public Profits profit(BettingMoney money) {
         throw new IllegalStateException();
     }
 

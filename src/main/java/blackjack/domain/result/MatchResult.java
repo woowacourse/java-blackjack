@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import blackjack.domain.money.Profits;
 import blackjack.domain.state.State;
 
 import java.math.BigDecimal;
@@ -55,7 +56,7 @@ public enum MatchResult {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public BigDecimal finalProfitByEachStatus(BigDecimal profit) {
-        return this.finalRate.multiply(profit);
+    public Profits finalProfitByEachStatus(Profits profit) {
+        return profit.multiply(finalRate);
     }
 }
