@@ -1,15 +1,13 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.Deque;
 
 public class Deck {
 
-    private final LinkedList<Card> deck;
+    private final Deque<Card> deck;
 
     public Deck() {
-        deck = new LinkedList<>(Card.getCachingCards());
-        Collections.shuffle(deck);
+        deck = Card.getShuffledCards();
     }
 
     public Card draw() {

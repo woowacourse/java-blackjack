@@ -21,8 +21,10 @@ public class Card {
         this.denomination = denomination;
     }
 
-    public static List<Card> getCachingCards() {
-        return new LinkedList<>(CACHED_CARDS);
+    public static Deque<Card> getShuffledCards() {
+        List<Card> cards = new LinkedList<>(CACHED_CARDS);
+        Collections.shuffle(cards);
+        return new LinkedList<>(cards);
     }
 
     public Score getScore() {

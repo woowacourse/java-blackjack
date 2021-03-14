@@ -62,7 +62,6 @@ public class BlackJackController {
     }
 
     private void showGameResult(final BlackJackGame game) {
-        game.checkBlackJack();
         game.calculateMoney();
         showPlayerCards(game.getDealer(), game.getGamblers());
         showFinalRevenue(game.getDealer(), game.getGamblers());

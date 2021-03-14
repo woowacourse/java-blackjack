@@ -2,16 +2,12 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.*;
+import blackjack.view.OutputView;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class BlackJackGame {
-
-    private final String SEPARATOR_OF_NAME_INPUT = ",";
-    private final int NUMBER_OF_INITIAL_CARDS = 2;
+    private static final int NUMBER_OF_INITIAL_CARDS = 2;
 
     private final Deck deck = new Deck();
     private final Dealer dealer = new Dealer();
@@ -42,16 +38,18 @@ public class BlackJackGame {
         player.receiveCard(deck.draw());
     }
 
-    public void checkBlackJack() {
-        for (final Gambler gambler : gamblers) {
-            dealer.checkBlackJack(gambler);
-        }
-    }
-
     public void calculateMoney() {
+        checkBlackJack();
+
         final WinningResult winningResult = calculateResult();
         for (final Gambler gambler : gamblers) {
             giveWinningMoney(gambler, winningResult.get(gambler));
+        }
+    }
+
+    private void checkBlackJack() {
+        for (final Gambler gambler : gamblers) {
+            dealer.checkBlackJack(gambler);
         }
     }
 
