@@ -98,10 +98,10 @@ public class BlackjackController {
     }
 
     private void printBlackjackResult(final BlackjackManager blackjackManager) {
-        Dealer dealer = blackjackManager.getDealer();
+        List<BetAmount> playerAmounts = blackjackManager.getPlayerBetAmounts();
+        ResultDto dealerResult = DtoAssembler.createDealerResultDto(playerAmounts);
         Players players = blackjackManager.getPlayers();
-        ResultDto dealerResult = DtoAssembler.createDealerResultDto(dealer, players);
-        List<ResultDto> playerResultDtos = DtoAssembler.createPlayerResultDtos(dealer, players);
+        List<ResultDto> playerResultDtos = DtoAssembler.createPlayerResultDtos(players, playerAmounts);
         OutputView.printBlackjackResult(dealerResult, playerResultDtos);
     }
 }

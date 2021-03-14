@@ -1,12 +1,15 @@
 package blackjack.domain;
 
 import blackjack.domain.carddeck.Card;
+import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.dto.CardDto;
 import blackjack.view.dto.ParticipantDto;
 import blackjack.view.dto.ResultDto;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,26 +52,36 @@ public class DtoAssembler {
             ;
     }
 
-    public static ResultDto createDealerResultDto(final Dealer dealer, Players players) {
-        return new ResultDto(getSumOfAllPlayerProfits(dealer, players) * -1);
+    public static ResultDto createDealerResultDto(final List<BetAmount> betAmounts) {
+        return new ResultDto(getSumOfAllPlayerProfits(betAmounts) * -1);
     }
 
-    private static double getSumOfAllPlayerProfits(final Dealer dealer, final Players players) {
-        return players.toList()
-            .stream()
-            .mapToDouble(player -> player.profit(player.judgeByDealerState(dealer)))
-            .sum()
-            ;
+    private static double getSumOfAllPlayerProfits(final List<BetAmount> betAmounts) {
+        return betAmounts.stream()
+            .mapToDouble(BetAmount::getValue)
+            .sum();
     }
 
-    public static List<ResultDto> createPlayerResultDtos(final Dealer dealer, final Players players) {
+    public static List<ResultDto> createPlayerResultDtos(final Players players, final List<BetAmount> betAmounts) {
+        Iterator<String> playersIterator = getPlayersIterator(players);
+        Iterator<Double> betAmountIterator = getBetAmountsIterator(betAmounts);
+        List<ResultDto> resultDtos = new ArrayList<>();
+        while (playersIterator.hasNext()) {
+            resultDtos.add(new ResultDto(playersIterator.next(), betAmountIterator.next()));
+        }
+        return resultDtos;
+    }
+
+    private static Iterator<String> getPlayersIterator(final Players players) {
         return players.toList()
             .stream()
-            .map(player -> new ResultDto(
-                player.getName(),
-                player.profit(player.judgeByDealerState(dealer)))
-            )
-            .collect(Collectors.toList())
-            ;
+            .map(Player::getName)
+            .iterator();
+    }
+
+    private static Iterator<Double> getBetAmountsIterator(final List<BetAmount> betAmounts) {
+        return betAmounts.stream()
+            .map(BetAmount::getValue)
+            .iterator();
     }
 }
