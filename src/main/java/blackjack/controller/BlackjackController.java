@@ -4,7 +4,6 @@ import blackjack.domain.BlackjackManager;
 import blackjack.domain.DtoAssembler;
 import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Names;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -101,7 +100,8 @@ public class BlackjackController {
         List<BetAmount> playerAmounts = blackjackManager.getPlayerBetAmounts();
         ResultDto dealerResult = DtoAssembler.createDealerResultDto(playerAmounts);
         Players players = blackjackManager.getPlayers();
-        List<ResultDto> playerResultDtos = DtoAssembler.createPlayerResultDtos(players, playerAmounts);
+        List<ResultDto> playerResultDtos = DtoAssembler
+            .createPlayerResultDtos(players, playerAmounts);
         OutputView.printBlackjackResult(dealerResult, playerResultDtos);
     }
 }

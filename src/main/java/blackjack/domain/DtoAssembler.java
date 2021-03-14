@@ -62,7 +62,8 @@ public class DtoAssembler {
             .sum();
     }
 
-    public static List<ResultDto> createPlayerResultDtos(final Players players, final List<BetAmount> betAmounts) {
+    public static List<ResultDto> createPlayerResultDtos(final Players players,
+        final List<BetAmount> betAmounts) {
         Iterator<String> playersIterator = getPlayersIterator(players);
         Iterator<Double> betAmountIterator = getBetAmountsIterator(betAmounts);
         List<ResultDto> resultDtos = new ArrayList<>();
