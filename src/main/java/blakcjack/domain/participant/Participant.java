@@ -6,8 +6,6 @@ import blakcjack.domain.name.Name;
 
 import java.util.Objects;
 
-import static blakcjack.domain.card.Cards.BLACKJACK_VALUE;
-
 public abstract class Participant {
 	protected final Name name;
 	protected final Cards cards = new Cards();
@@ -21,7 +19,7 @@ public abstract class Participant {
 	}
 
 	public void drawOneCardFrom(Deck deck) {
-		cards.add(deck.drawCard());
+		cards.add(deck.pop());
 	}
 
 	public String getName() {
@@ -33,22 +31,22 @@ public abstract class Participant {
 	}
 
 	public boolean isBust() {
-		return BLACKJACK_VALUE < cards.calculateScore();
+		return cards.isBust();
 	}
 
-	protected boolean hasAnyBust(final Participant thisParticipant, final Participant thatParticipant) {
-		return thisParticipant.isBust() || thatParticipant.isBust();
+	public Cards getHand() {
+		return cards;
 	}
-
-	public String getHand() {
-		return cards.getConcatenatedCards();
-	}
-
-	public abstract String getInitialHand();
 
 	public boolean isDealer() {
 		return this instanceof Dealer;
 	}
+
+	public boolean isBlackJack() {
+		return cards.isBlackjack();
+	}
+
+	public abstract Cards getInitialHand();
 
 	@Override
 	public boolean equals(Object o) {

@@ -1,6 +1,7 @@
 package blakcjack.domain.participant;
 
 import blakcjack.domain.card.*;
+import blakcjack.domain.money.Money;
 import blakcjack.domain.name.Name;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,14 +16,14 @@ public class PlayerTest {
 
 	@BeforeEach
 	void setUp() {
-		player = new Player(new Name("pobi"));
+		player = new Player(new Name("pobi"), new Money(10));
 	}
 
 	@DisplayName("플레이어 객체 생성 제대로 하는지")
 	@Test
 	void create() {
-		final Player player = new Player(new Name("pobi"));
-		assertThat(player).isEqualTo(new Player(new Name("pobi")));
+		final Player player = new Player(new Name("pobi"), new Money(10));
+		assertThat(player).isEqualTo(new Player(new Name("pobi"), new Money(10)));
 	}
 
 	@DisplayName("카드 제대로 뽑는지")
@@ -31,7 +32,7 @@ public class PlayerTest {
 		final Deck customDeck = createCustomDeck(Card.of(CardSymbol.CLUB, CardNumber.ACE));
 		player.drawOneCardFrom(customDeck);
 
-		Cards cards = new Cards();
+		final Cards cards = new Cards();
 		cards.add(Card.of(CardSymbol.CLUB, CardNumber.ACE));
 		assertThat(player.getCards()).isEqualTo(cards);
 	}
@@ -71,7 +72,33 @@ public class PlayerTest {
 		assertThat(player.isBust()).isTrue();
 	}
 
+	@DisplayName("초기 패를 보여줄 때 플레이어들은 2장 다 공개하는지")
+	@Test
+	void getInitialHand() {
+		final Deck customDeck = createCustomDeck(
+				Card.of(CardSymbol.CLUB, CardNumber.ACE),
+				Card.of(CardSymbol.CLUB, CardNumber.TWO),
+				Card.of(CardSymbol.CLUB, CardNumber.THREE),
+				Card.of(CardSymbol.CLUB, CardNumber.FOUR)
+		);
+		final Player player = new Player(new Name("pobi"), new Money(10));
+		player.drawOneCardFrom(customDeck);
+		player.drawOneCardFrom(customDeck);
+
+		assertThat(player.getInitialHand()).isEqualTo(createCustomCards(
+				Card.of(CardSymbol.CLUB, CardNumber.FOUR),
+				Card.of(CardSymbol.CLUB, CardNumber.THREE)));
+	}
+
 	private Deck createCustomDeck(final Card... cards) {
 		return new Deck(Arrays.asList(cards));
+	}
+
+	private Cards createCustomCards(final Card... cards) {
+		final Cards customCards = new Cards();
+		for (Card card : cards) {
+			customCards.add(card);
+		}
+		return customCards;
 	}
 }

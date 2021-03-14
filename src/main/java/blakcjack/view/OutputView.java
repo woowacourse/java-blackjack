@@ -1,28 +1,45 @@
 package blakcjack.view;
 
-import blakcjack.domain.outcome.Outcome;
+import blakcjack.domain.card.Card;
+import blakcjack.domain.card.Cards;
+import blakcjack.domain.money.Money;
 import blakcjack.domain.outcome.OutcomeStatistics;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Participants;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static blakcjack.domain.participant.Dealer.DEALER_NAME;
 
 public class OutputView {
 	public static final String DELIMITER = ", ";
-	public static final String EMPTY_STRING = "";
+
+	private OutputView() {
+	}
 
 	public static void printInitialHandsOf(final Participants participants) {
-		System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.%n", DEALER_NAME, participants.getConcatenatedPlayerNames());
+		System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.%n", DEALER_NAME, getConcatenatedPlayerNamesFrom(participants));
 		printHandSummaryOf(participants);
+	}
+
+	private static String getConcatenatedPlayerNamesFrom(final Participants participants) {
+		return participants.getPlayers()
+				.stream()
+				.map(Participant::getName)
+				.collect(Collectors.joining(DELIMITER));
 	}
 
 	private static void printHandSummaryOf(final Participants participants) {
 		for (final Participant participant : participants.getParticipants()) {
-			System.out.printf("%s: %s%n", participant.getName(), participant.getInitialHand());
+			System.out.printf("%s: %s%n", participant.getName(), getInitialHandOf(participant));
 		}
 		System.out.println();
+	}
+
+	private static String getInitialHandOf(final Participant participant) {
+		final Cards initialHand = participant.getInitialHand();
+		return getConcatenatedCardsFrom(initialHand);
 	}
 
 	public static void printHandOf(final Participant participant) {
@@ -41,39 +58,23 @@ public class OutputView {
 	}
 
 	private static String makeHandSummaryOf(final Participant participant) {
-		return String.format("%s카드: %s", participant.getName(), participant.getHand());
+		final Cards hand = participant.getHand();
+		return String.format("%s카드: %s", participant.getName(), getConcatenatedCardsFrom(hand));
+	}
+
+	private static String getConcatenatedCardsFrom(final Cards cards) {
+		return cards.toList()
+				.stream()
+				.map(Card::getCardInformation)
+				.collect(Collectors.joining(DELIMITER));
 	}
 
 	public static void printFinalOutcomeSummary(final OutcomeStatistics outcomeStatistics) {
 		System.out.println("## 최종 승패");
-		printDealerOutcome(outcomeStatistics.getDealerOutcome());
-		printPlayersOutcome(outcomeStatistics.getPlayersOutcome());
-	}
-
-	private static void printDealerOutcome(final Map<Outcome, Integer> dealerOutcome) {
-		System.out.printf("%s: %s%n", DEALER_NAME, getDealerTotalOutcomeSummary(dealerOutcome));
-	}
-
-	private static String getDealerTotalOutcomeSummary(final Map<Outcome, Integer> dealerOutcome) {
-		StringBuilder stringBuilder = new StringBuilder();
-		for (final Outcome outcome : dealerOutcome.keySet()) {
-			final int count = dealerOutcome.get(outcome);
-			stringBuilder.append(aggregateOutcomeCount(outcome, count));
-		}
-		return stringBuilder.toString();
-	}
-
-	private static String aggregateOutcomeCount(final Outcome outcome, final int count) {
-		if (count == 0) {
-			return EMPTY_STRING;
-		}
-		return String.format("%d%s", count, outcome.getMessage());
-	}
-
-	private static void printPlayersOutcome(final Map<String, Outcome> playersOutcome) {
-		for (final String name : playersOutcome.keySet()) {
-			final Outcome outcome = playersOutcome.get(name);
-			System.out.printf("%s: %s%n", name, outcome.getMessage());
+		final Map<Participant, Money> participantsProfit = outcomeStatistics.getParticipantsProfit();
+		for (final Participant participant : participantsProfit.keySet()) {
+			final Money participantProfit = participantsProfit.get(participant);
+			System.out.printf("%s: %.2f%n", participant.getName(), participantProfit.getMoney());
 		}
 	}
 }

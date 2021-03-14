@@ -1,30 +1,29 @@
 package blakcjack.domain.participant;
 
+import blakcjack.domain.card.Cards;
+import blakcjack.domain.money.Money;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.outcome.Outcome;
 
-import static blakcjack.domain.card.Cards.BLACKJACK_VALUE;
-import static blakcjack.domain.outcome.Outcome.LOSE;
-import static blakcjack.domain.outcome.Outcome.WIN;
-
 public class Player extends Participant {
-	public Player(final Name name) {
-		super(name);
-	}
+	private final Money bettingAmount;
 
-	@Override
-	public String getInitialHand() {
-		return cards.getConcatenatedCards();
+	public Player(final Name name, final Money bettingAmount) {
+		super(name);
+		this.bettingAmount = bettingAmount;
 	}
 
 	public boolean hasAffordableScoreForHit() {
-		return cards.calculateScore() < BLACKJACK_VALUE;
+		return cards.isScoreLowerThanBlackjackScore();
 	}
 
-	public Outcome judgeOutcomeByBust() {
-		if (this.isBust()) {
-			return LOSE;
-		}
-		return WIN;
+	public Money calculateProfit(final Outcome outcome) {
+		final float earningRate = outcome.getEarningRate();
+		return bettingAmount.calculateProfit(earningRate);
+	}
+
+	@Override
+	public Cards getInitialHand() {
+		return cards.getFirstTwoCards();
 	}
 }

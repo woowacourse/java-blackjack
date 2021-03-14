@@ -17,7 +17,7 @@ public class Deck {
 		this.cards.addAll(cards);
 	}
 
-	protected void generateCards() {
+	private void generateCards() {
 		for (final CardSymbol cardSymbol : CardSymbol.values()) {
 			for (final CardNumber cardNumber : CardNumber.values()) {
 				cards.add(Card.of(cardSymbol, cardNumber));
@@ -25,7 +25,7 @@ public class Deck {
 		}
 	}
 
-	public Card drawCard() {
+	public Card pop() {
 		if (cards.empty()) {
 			throw new EmptyDeckException();
 		}

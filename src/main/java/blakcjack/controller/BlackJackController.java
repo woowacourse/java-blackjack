@@ -1,6 +1,7 @@
 package blakcjack.controller;
 
 import blakcjack.domain.card.Deck;
+import blakcjack.domain.money.Money;
 import blakcjack.domain.name.Name;
 import blakcjack.domain.name.Names;
 import blakcjack.domain.outcome.OutcomeStatistics;
@@ -13,8 +14,7 @@ import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
-import static blakcjack.view.InputView.isYes;
-import static blakcjack.view.InputView.takePlayerNamesInput;
+import static blakcjack.view.InputView.*;
 import static blakcjack.view.OutputView.*;
 
 public class BlackJackController {
@@ -30,7 +30,7 @@ public class BlackJackController {
 
 	private Participants createParticipants() {
 		final List<Player> players = createPlayers();
-		Dealer dealer = new Dealer();
+		final Dealer dealer = new Dealer();
 		return new Participants(dealer, players);
 	}
 
@@ -38,7 +38,8 @@ public class BlackJackController {
 		final Names playerNames = new Names(takePlayerNamesInput());
 		final List<Player> players = new ArrayList<>();
 		for (Name name : playerNames.toList()) {
-			players.add(new Player(name));
+			final Money bettingAmount = new Money(takeBettingAmountInput(name));
+			players.add(new Player(name, bettingAmount));
 		}
 		return players;
 	}
@@ -65,6 +66,13 @@ public class BlackJackController {
 		drawPlayerCards((Player) participant, deck);
 	}
 
+	private void drawDealerCards(final Dealer dealer, final Deck deck) {
+		while (dealer.isScoreLowerThanMaximumDrawCriterion()) {
+			dealer.drawOneCardFrom(deck);
+			printDealerAdditionalCardMessage();
+		}
+	}
+
 	private void drawPlayerCards(final Player player, final Deck deck) {
 		while (isHit(player)) {
 			player.drawOneCardFrom(deck);
@@ -74,12 +82,5 @@ public class BlackJackController {
 
 	private boolean isHit(final Player player) {
 		return player.hasAffordableScoreForHit() && isYes(player);
-	}
-
-	private void drawDealerCards(final Dealer dealer, final Deck deck) {
-		while (dealer.isScoreLowerThanMaximumDrawCriterion()) {
-			dealer.drawOneCardFrom(deck);
-			printDealerAdditionalCardMessage();
-		}
 	}
 }

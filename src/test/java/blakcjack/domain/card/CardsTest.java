@@ -24,9 +24,36 @@ class CardsTest {
 		assertThat(cards.calculateScore()).isEqualTo(19);
 	}
 
-	@DisplayName("카드들 중에서 첫번째 인덱스의 카드를 제대로 뽑아 내는지")
+	@DisplayName("카드들 중에서 처음 1장을 반환해주는지")
 	@Test
 	void getFirstCard_multipleCards_returnCardAtFirstPosition() {
-		assertThat(cards.getFirstCard()).isEqualTo(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+		final Cards expectedCards = new Cards();
+		expectedCards.add(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+		assertThat(cards.getFirstCard()).isEqualTo(expectedCards);
+	}
+
+	@DisplayName("카드들 중에서 처음 2장을 반환해주는지")
+	@Test
+	void getFirstTwoCards_multipleCards_returnCardsAtFirstAndSecondPosition() {
+		final Cards expectedCards = new Cards();
+		expectedCards.add(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+		expectedCards.add(Card.of(CardSymbol.HEART, CardNumber.ACE));
+		assertThat(cards.getFirstTwoCards()).isEqualTo(expectedCards);
+	}
+
+	@DisplayName("블랙잭을 제대로 판단 해주는지")
+	@Test
+	void isBlackJack() {
+		final Cards blackjackCards = new Cards();
+		blackjackCards.add(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+		blackjackCards.add(Card.of(CardSymbol.HEART, CardNumber.JACK));
+
+		final Cards nonBlackjackCards = new Cards();
+		nonBlackjackCards.add(Card.of(CardSymbol.HEART, CardNumber.KING));
+		nonBlackjackCards.add(Card.of(CardSymbol.HEART, CardNumber.FIVE));
+		nonBlackjackCards.add(Card.of(CardSymbol.SPADE, CardNumber.SIX));
+
+		assertThat(blackjackCards.isBlackjack()).isTrue();
+		assertThat(nonBlackjackCards.isBlackjack()).isFalse();
 	}
 }
