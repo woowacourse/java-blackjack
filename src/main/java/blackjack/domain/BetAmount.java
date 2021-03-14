@@ -6,9 +6,9 @@ public class BetAmount {
 
     public static final BetAmount ZERO = new BetAmount(0);
 
-    private final int betAmount;
+    private final double betAmount;
 
-    public BetAmount(int betAmount) {
+    public BetAmount(double betAmount) {
         this.betAmount = betAmount;
     }
 
@@ -24,7 +24,7 @@ public class BetAmount {
         return new BetAmount(betAmount + other.betAmount);
     }
 
-    public int getBetAmount() {
+    public double getBetAmount() {
         return betAmount;
     }
 

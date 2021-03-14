@@ -25,16 +25,16 @@ public class InputView {
         return Arrays.asList(playerNames);
     }
 
-    public static int inputBetAmount(Player player) {
+    public static double inputBetAmount(Player player) {
         System.out.println(player.getName() + "의 베팅 금액은?");
         String input = SCANNER.nextLine();
         printEmptyLine();
-        int betAmount = Integer.parseInt(input);
+        double betAmount = Integer.parseInt(input);
         validateInputBetAmount(betAmount);
         return betAmount;
     }
 
-    private static void validateInputBetAmount(int betAmount) {
+    private static void validateInputBetAmount(double betAmount) {
         if (betAmount < MIN_INPUT_BET_AMOUNT) {
             throw new IllegalArgumentException("입력할 베팅 금액은 0이 넘어야 합니다.");
         }

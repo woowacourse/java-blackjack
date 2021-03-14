@@ -42,7 +42,7 @@ public abstract class Participant {
         return betAmount;
     }
 
-    public void initBetAmount(int betAmount) {
+    public void initBetAmount(double betAmount) {
         this.betAmount = new BetAmount(betAmount);
     }
 

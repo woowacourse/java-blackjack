@@ -24,7 +24,7 @@ public class Application {
                                         .collect(Collectors.toList());
         Participants participants = Participants.of(dealer, players);
         for (Player player : players) {
-            int betAmount = InputView.inputBetAmount(player);
+            double betAmount = InputView.inputBetAmount(player);
             player.initBetAmount(betAmount);
         }
         participants.receiveDefaultCards(cardDeck);

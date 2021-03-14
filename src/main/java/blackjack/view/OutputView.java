@@ -74,7 +74,7 @@ public class OutputView {
         printEmptyLine();
         System.out.println("## 최종 수익");
         finalBetProfits.forEach((name, betProfit) -> {
-            System.out.println(name + ": " + betProfit.getBetAmount());
+            System.out.println(name + ": " + (int) betProfit.getBetAmount());
         });
     }
 
