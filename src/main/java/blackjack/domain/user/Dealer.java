@@ -1,12 +1,5 @@
 package blackjack.domain.user;
 
-import blackjack.domain.Status;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 public class Dealer extends User {
 
     public static final int DEALER_HIT_THRESHOLD = 16;
@@ -19,13 +12,6 @@ public class Dealer extends User {
 
     public boolean canHit() {
         return getScore().isLowerThan(DEALER_HIT_THRESHOLD);
-    }
-
-    public List<Integer> calculateMatchResult(Map<Player, Status> result) {
-        List<Integer> winnings = new ArrayList<>();
-        Arrays.stream(Status.values())
-            .forEach(status -> winnings.add(Collections.frequency(result.values(), status)));
-        return winnings;
     }
 
     public String showFirstCard() {

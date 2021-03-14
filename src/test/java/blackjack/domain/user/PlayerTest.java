@@ -15,7 +15,7 @@ public class PlayerTest {
     @Test
     void create() {
         Player player = new Player("papi", 500);
-        assertThat(player).isEqualTo(new Player("papi", 500));
+        assertThat(player).isEqualTo(new Player("papi", 800));
     }
 
     @DisplayName("버스트되지 않고 블랙잭이 아니면 카드를 더 받을 수 있다.")

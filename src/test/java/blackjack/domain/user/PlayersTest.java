@@ -24,11 +24,11 @@ class PlayersTest {
     void makePlayers() {
         List<String> names = new ArrayList<>(Arrays.asList("choonsik", "papi"));
         List<Money> monies = new ArrayList<>(Arrays.asList(new Money(500), new Money(1000)));
-        List<Player> players = Players.makePlayers(names, monies);
-        assertThat(players).isEqualTo(Arrays.asList(
+        Players players = Players.makePlayers(names, monies);
+        assertThat(players).isEqualTo(new Players(Arrays.asList(
             new Player("choonsik", 500),
             new Player("papi", 1000)
-        ));
+        )));
     }
 
     @DisplayName("플레이어들의 이름들을 문자열로 가져올 수 있다.")

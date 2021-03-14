@@ -17,12 +17,12 @@ public class Players {
         validatePlayersNumber(players);
     }
 
-    public static List<Player> makePlayers(List<String> names, List<Money> monies) {
+    public static Players makePlayers(List<String> names, List<Money> monies) {
         List<Player> players = new ArrayList<>();
         for (int count = 0; count < names.size(); count++) {
             players.add(new Player(names.get(count), monies.get(count)));
         }
-        return players;
+        return new Players(players);
     }
 
     private void validatePlayersNumber(List<Player> players) {

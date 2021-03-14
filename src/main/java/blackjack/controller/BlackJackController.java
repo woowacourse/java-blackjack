@@ -22,7 +22,7 @@ public class BlackJackController {
         try {
             OutputView.printPlayersGuideMessage();
             Dealer dealer = new Dealer();
-            Players players = new Players(createPlayers());
+            Players players = createPlayers();
             playGame(dealer, players);
             revealResult(dealer, players);
         } catch (IllegalArgumentException exception) {
@@ -30,7 +30,7 @@ public class BlackJackController {
         }
     }
 
-    private List<Player> createPlayers() {
+    private Players createPlayers() {
         List<String> playerNames = InputView.inputPlayers();
         List<Money> playerBettingMonies = new ArrayList<>();
         for (String name : playerNames) {

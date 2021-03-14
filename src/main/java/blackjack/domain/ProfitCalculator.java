@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class ProfitCalculator {
             profitResult
                 .put(player, calculatePlayerProfit(player.getMoney(), status.getEarningRate()));
         });
-        return profitResult;
+        return Collections.unmodifiableMap(profitResult);
     }
 
     private Money calculateDealerProfit(Map<Player, Status> result) {

@@ -33,11 +33,11 @@ public class Player extends User {
             return false;
         }
         Player player = (Player) o;
-        return Objects.equals(money, player.money);
+        return Objects.equals(name, player.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(money);
+        return Objects.hash(name);
     }
 }
