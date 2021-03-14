@@ -5,6 +5,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
 import blackjack.exception.PlayerNotFoundException;
@@ -13,9 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -45,8 +44,12 @@ class GameTest {
         game = new Game(
                 new Cards(cards),
                 dealer,
-                new Gamers("nabom", "neozal")
-        );
+                new Gamers(
+                        Arrays.asList(
+                                new Gamer("nabom", 1000),
+                                new Gamer("neozal", 1000)
+                        )
+                ));
     }
 
     @Test
@@ -63,22 +66,6 @@ class GameTest {
     void drawCardToDealer() {
         game.drawCardToDealer();
         assertThat(game.getDealer().getDeckAsList().size()).isEqualTo(3);
-    }
-
-    @Test
-    @DisplayName("게임 결과를 반환한다.")
-    void getGamerResult() {
-        Map<String, String> gameResult = game.getGamerResult();
-
-        assertThat(gameResult.keySet()).isEqualTo(new HashSet<>(Arrays.asList("nabom", "neozal")));
-        assertThat(gameResult.values()).containsExactly(GameResult.LOSE.getMessage(), GameResult.LOSE.getMessage());
-
-    }
-
-    @Test
-    @DisplayName("딜러의 결과를 반환한다.")
-    void getDealerResult() {
-        assertThat(game.getDealerResult()).containsExactly(GameResult.WIN.getMessage(), GameResult.WIN.getMessage());
     }
 
     @Test

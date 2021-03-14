@@ -1,7 +1,9 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class CardFactory {
 
@@ -12,18 +14,10 @@ public class CardFactory {
     }
 
     private static List<Card> initNormalCards() {
-        List<Card> cards = new ArrayList<>();
-
-        for (Symbol symbol : Symbol.values()) {
-            createCards(cards, symbol);
-        }
-
-        return cards;
-    }
-
-    private static void createCards(List<Card> cards, Symbol symbol) {
-        for (CardNumber cardNumber : CardNumber.values()) {
-            cards.add(new Card(symbol, cardNumber));
-        }
+        return Arrays.stream(Symbol.values())
+                .flatMap(symbol ->
+                        Arrays.stream(CardNumber.values())
+                                .map(cardNumber -> new Card(symbol, cardNumber))
+                ).collect(toList());
     }
 }

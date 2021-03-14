@@ -1,39 +1,41 @@
 package blackjack.domain.player;
 
+import blackjack.domain.WinOrLose;
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.ResultOfGamer;
 import blackjack.exception.GamerDuplicateException;
 import blackjack.exception.PlayerNotFoundException;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
 public class Gamers {
 
-    private final List<Player> gamers;
+    private final List<? extends Player> gamers;
 
-    public Gamers(List<String> names) {
-        validateDuplicate(names);
-        this.gamers = namesToGamers(names);
+    public Gamers(List<Gamer> gamers) {
+        validateDuplicate(gamers);
+
+        this.gamers = gamers;
     }
 
-    public Gamers(String... input) {
-        this(Arrays.asList(input));
-    }
+    private void validateDuplicate(List<Gamer> gamers) {
+        long distinctGamerNamesCount = gamers.stream()
+                .map(Gamer::getName)
+                .distinct()
+                .count();
 
-    private void validateDuplicate(List<String> names) {
-        if (names.size() != names.stream().distinct().count()) {
+        if (gamers.size() != distinctGamerNamesCount) {
             throw new GamerDuplicateException();
         }
     }
 
-    private List<Player> namesToGamers(List<String> names) {
-        return names.stream()
-            .map(Gamer::new)
-            .collect(Collectors.toList());
+    public List<ResultOfGamer> calculateResultOfGamers(Player dealer) {
+        return gamers.stream()
+                .map(player -> player.getResult(dealer)
+                ).collect(toList());
     }
 
     public void drawToGamers(Cards cards) {
@@ -44,9 +46,9 @@ public class Gamers {
 
     public Player findGamer(String name) {
         return gamers.stream()
-            .filter(gamer -> gamer.isSameName(name))
-            .findAny()
-            .orElseThrow(PlayerNotFoundException::new);
+                .filter(gamer -> gamer.isSameName(name))
+                .findAny()
+                .orElseThrow(PlayerNotFoundException::new);
     }
 
     public List<Player> getGamers() {
@@ -55,8 +57,7 @@ public class Gamers {
 
     public List<String> getGamerNames() {
         return gamers.stream()
-            .map(Player::getName)
-            .collect(toList());
+                .map(Player::getName)
+                .collect(toList());
     }
 }
-

@@ -23,20 +23,30 @@ class GamersTest {
     Gamers gamers;
     @BeforeEach
     void init() {
-        gamers = new Gamers("pobi", "json");
+        gamers = new Gamers(
+                Arrays.asList(
+                new Gamer("pobi", 1000),
+                new Gamer("neozal", 1000)
+        ));
     }
 
     @Test
     @DisplayName("이름이 중복 시 예외")
     void createGamers_GamerDuplicateException() {
         Assertions.assertThatThrownBy(
-                () -> new Gamers("nabom", "nabom")
+                () -> new Gamers( Arrays.asList(
+                        new Gamer("nabom", 1000),
+                        new Gamer("nabom", 1000)
+                ))
         ).isInstanceOf(GamerDuplicateException.class);
     }
 
     @Test
     void createGamers() {
-        Gamers gamers = new Gamers("nabom", "neozal");
+        Gamers gamers = new Gamers( Arrays.asList(
+                new Gamer("nabom", 1000),
+                new Gamer("meozal", 1000)
+        ));
         assertThat(gamers.getGamers().size()).isEqualTo(2);
     }
 

@@ -16,11 +16,11 @@ public class Card {
         return cardNumber.getName() + symbol.getName();
     }
 
-    public int getScore(int accumulatedScore) {
+    public int getAccumulateScore(int accumulatedScore) {
         return cardNumber.getScore(accumulatedScore);
     }
 
-    public int getScore() {
+    public int getAccumulateScore() {
         return cardNumber.getScore();
     }
 

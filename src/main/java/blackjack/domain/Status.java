@@ -8,7 +8,6 @@ public enum Status {
     BLACKJACK(score -> Game.WINNING_NUMBER == score),
     HIT(score -> Game.WINNING_NUMBER > score);
 
-    private static final int  a=  1;
     private final IntPredicate predicate;
 
     Status(IntPredicate predicate) {

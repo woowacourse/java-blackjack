@@ -4,16 +4,18 @@ import blackjack.domain.Game;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
+import blackjack.domain.result.ResultOfPlayers;
 import blackjack.util.DtoAssembler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.PlayerDto;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -27,7 +29,9 @@ public class BlackjackController {
 
         printCurrentDeckAndScore(game.getGamersAsList(), game.getDealer());
 
-        OutputView.printResult(game.getDealerResult(), game.getGamerResult());
+        ResultOfPlayers resultOfPlayers = game.getResultOfPlayers();
+        OutputView.printFinalWinAndLoseResult(resultOfPlayers.getResultOfDealer(), resultOfPlayers.getResultOfGamers());
+        OutputView.printFinalRevenueResult(resultOfPlayers.getResultOfDealer(), resultOfPlayers.getResultOfGamers());
     }
 
     private Game gameInitialize() {
@@ -37,7 +41,14 @@ public class BlackjackController {
         return new Game(
                 cards,
                 new Dealer(),
-                new Gamers(InputView.getGamerNamesFromUser()));
+                new Gamers(createGamerByUser())
+        );
+    }
+
+    private List<Gamer> createGamerByUser() {
+        return InputView.getGamerNamesFromUser().stream()
+                .map(name -> new Gamer(name, InputView.getBettingMoneyFromUser(name)))
+                .collect(toList());
     }
 
     private void printInitializeResult(Game game) {
@@ -80,14 +91,18 @@ public class BlackjackController {
     }
 
     private void printCurrentDeckAndScore(List<Player> gamers, Player dealer) {
-        List<Player> allPlayers = new ArrayList<>(Collections.singletonList(dealer));
-        allPlayers.addAll(gamers);
+        List<Player> allPlayers = Stream.of(gamers.stream(), Stream.of(dealer))
+                .flatMap(Function.identity())
+                .collect(toList());
 
-        OutputView.printCurrentDeckAndScore(
-                allPlayers.stream()
-                        .map(DtoAssembler::createPlayerDto)
-                        .collect(toList())
-        );
+        OutputView.printCurrentDeckAndScore(getAllPlayerDtos(allPlayers));
+
+    }
+
+    private List<PlayerDto> getAllPlayerDtos(List<Player> allPlayers) {
+        return allPlayers.stream()
+                .map(DtoAssembler::createPlayerDto)
+                .collect(toList());
     }
 
 }

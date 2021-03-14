@@ -2,11 +2,10 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import static blackjack.domain.Game.WINNING_NUMBER;
-import static java.util.Comparator.*;
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.reverseOrder;
 
 public class Deck {
 
@@ -30,11 +29,11 @@ public class Deck {
 
     public int getScore() {
         List<Card> deckForCalculate = new ArrayList<>(deck);
-        deckForCalculate.sort(comparing(Card::getScore, reverseOrder()));
+        deckForCalculate.sort(comparing(Card::getAccumulateScore, reverseOrder()));
 
         int score = 0;
         for (Card card : deckForCalculate) {
-            score += card.getScore(score);
+            score += card.getAccumulateScore(score);
         }
 
         return score;
