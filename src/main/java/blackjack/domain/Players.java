@@ -16,7 +16,7 @@ public class Players {
     public static final String COUPLER_COMMA_SPACE = ", ";
 
     private final List<Player> players;
-    private final Gamer dealer;
+    private final Dealer dealer;
 
     public Players(List<Player> players, Dealer dealer) {
         this.players = players;
@@ -74,6 +74,10 @@ public class Players {
         return playerInfo.toString();
     }
 
+    public Gamer getDealer() {
+        return dealer;
+    }
+
     public String getDealerName() {
         return dealer.getName();
     }
@@ -94,7 +98,7 @@ public class Players {
         return Collections.unmodifiableList(this.players);
     }
 
-    public Map<String, Integer> calculateResult() {
+    public Map<String, Integer> judgeResult() {
         Map<String, Integer> matchResult = new HashMap<>();
         int dealerValue = dealer.getPoint();
 
@@ -111,6 +115,12 @@ public class Players {
         result.put(Result.WIN.name(), 0);
         result.put(Result.LOSE.name(), 0);
         result.put(Result.DRAW.name(), 0);
+    }
+
+    public void calculateProfit() {
+        for (Player gamer : players) {
+            gamer.calculateProfit(dealer);
+        }
     }
 
     @Override

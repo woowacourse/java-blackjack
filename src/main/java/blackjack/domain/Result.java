@@ -20,7 +20,7 @@ public enum Result {
         return Stream.of(Result.values())
             .filter(it -> it.predicate.test(playerPoint, dealerPoint))
             .findAny()
-            .orElse(null);
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     public String getMessage() {
@@ -28,11 +28,13 @@ public enum Result {
     }
 
     private static boolean isWin(int playerPoint, int dealerPoint) {
-        return (playerPoint > Cards.HIGHEST_POINT) || (playerPoint < dealerPoint);
+        return (playerPoint > Cards.HIGHEST_POINT && dealerPoint <= Cards.HIGHEST_POINT) || (
+            playerPoint < dealerPoint);
     }
 
     private static boolean isLose(int playerPoint, int dealerPoint) {
-        return (playerPoint > Cards.HIGHEST_POINT) || (playerPoint < dealerPoint);
+        return (dealerPoint > Cards.HIGHEST_POINT && playerPoint <= Cards.HIGHEST_POINT) || (
+            playerPoint > dealerPoint);
     }
 
     private static boolean isDraw(int playerPoint, int dealerPoint) {

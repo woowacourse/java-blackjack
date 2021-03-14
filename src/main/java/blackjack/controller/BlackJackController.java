@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Gamer;
+import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -14,14 +15,30 @@ public class BlackJackController {
         Deck deck = new Deck();
         Players players = new Players(InputView.enterNames(), dealer);
 
+        inputBettingMoney(players);
         dealInitCard(players, deck);
         dealCard(players, deck);
-        printMatchResult(players);
+
+        players.calculateProfit();
+        printMatchProfitResult(players);
     }
 
+    private void inputBettingMoney(Players players) {
+        for (Player player : players.getAllPlayers()) {
+            OutputView.noticeBettingMoney(player);
+            player.giveMoney(InputView.enterMoney());
+        }
+    }
+
+    //match result logic
     private void printMatchResult(Players players) {
         OutputView.noticePlayersPoint(players);
-        OutputView.noticeResult(players);
+        OutputView.noticeMatchResult(players);
+    }
+
+    private void printMatchProfitResult(Players players) {
+        OutputView.noticePlayersPoint(players);
+        OutputView.noticeMatchProfit(players);
     }
 
     private void dealCard(Players players, Deck deck) {

@@ -25,23 +25,23 @@ public class DealerTest {
     @Test
     @DisplayName("딜러가 받은 카드 계산")
     void dealerDealCard() {
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.ACE));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.ACE));
         assertEquals(dealer.getPoint(), 11);
     }
 
     @Test
     @DisplayName("딜러가 카드를 받을 수 있는지 확인")
     void dealerPossibleReceiveCard() {
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.KING));
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.SIX));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.KING));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.SIX));
         assertTrue(dealer.canReceiveCard());
     }
 
     @Test
     @DisplayName("딜러가 카드를 받을 수 없는지 확인")
     void dealerImpossibleReceiveCard() {
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.KING));
-        dealer.receiveCard(new Card(CardPattern.CLOVER, CardNumber.SEVEN));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.KING));
+        dealer.receiveCard(Card.valueOf(CardPattern.CLOVER, CardNumber.SEVEN));
         assertFalse(dealer.canReceiveCard());
     }
 }

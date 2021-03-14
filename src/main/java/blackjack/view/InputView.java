@@ -19,4 +19,8 @@ public class InputView {
         System.out.println(PARTICIPANT_NAME);
         return scanner.nextLine();
     }
+
+    public static String enterMoney() {
+        return scanner.nextLine();
+    }
 }

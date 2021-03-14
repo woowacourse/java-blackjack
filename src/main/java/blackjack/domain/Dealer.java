@@ -3,13 +3,16 @@ package blackjack.domain;
 import blackjack.view.OutputView;
 
 public class Dealer extends Gamer {
+
     private static final int POINT_BOUNDARY_VALUE = 16;
     private static final String DEFAULT_DEALER_NAME = "딜러";
 
-    private static final String COUPLER = ": ";
-
     public Dealer() {
         super(DEFAULT_DEALER_NAME);
+    }
+
+    public void giveMoney(int earnedMoney) {
+        this.earnedMoney += earnedMoney;
     }
 
     @Override
@@ -18,9 +21,9 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public Boolean continueDraw(Deck deck) {
+    public void continueDraw(Deck deck) {
         this.receiveCard(deck.dealCard());
+        state = state.stay();
         OutputView.noticeDealerGetCard();
-        return true;
     }
 }
