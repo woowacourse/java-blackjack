@@ -35,20 +35,8 @@ public class Player extends Participant {
     }
 
     public Player changeProfit(Result result) {
-        if (result.equals(Result.BLACKJACK_WIN)) {
-            return new Player(this.hand, this.getNameAsString(), betting.getBetting(),
-                    betting.getBetting() * Result.BLACKJACK_WIN.getRate());
-        }
-        if (result.equals(Result.WIN)) {
-            return new Player(this.hand, this.getNameAsString(), betting.getBetting(),
-                    betting.getBetting() * Result.WIN.getRate());
-        }
-        if (result.equals(Result.LOSE)) {
-            return new Player(this.hand, this.getNameAsString(), betting.getBetting(),
-                    betting.getBetting() * Result.LOSE.getRate());
-        }
         return new Player(this.hand, this.getNameAsString(), betting.getBetting(),
-                betting.getBetting() * Result.DRAW.getRate());
+                betting.getBetting() * result.getRate());
     }
 
     public double getProfit() {
