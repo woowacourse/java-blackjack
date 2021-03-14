@@ -57,6 +57,13 @@ public class Players {
         this.index += 1;
     }
 
+    public List<BetAmount> getBetAmounts(final Dealer dealer) {
+        return this.players
+            .stream()
+            .map(player -> player.profit(player.judgeByDealerState(dealer)))
+            .collect(Collectors.toList());
+    }
+
     public List<Player> toList() {
         return new ArrayList<>(this.players);
     }

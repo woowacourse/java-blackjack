@@ -38,7 +38,7 @@ public class BlackjackManagerTest {
     private Players initPlayers() {
         List<Player> players = new ArrayList<>();
         Names names = new Names(Arrays.asList("pobi", "jason"));
-        while(!names.isDoneAllPlayers()){
+        while (!names.isDoneAllPlayers()) {
             players.add(new Player(names.getCurrentTurnName(), BetAmount.betting(3000)));
             names.passTurnToNext();
         }
@@ -53,7 +53,8 @@ public class BlackjackManagerTest {
             Card.valueOf(Pattern.HEART, Number.TEN),
             Card.valueOf(Pattern.HEART, Number.QUEEN),
             Card.valueOf(Pattern.HEART, Number.KING),
-            Card.valueOf(Pattern.DIAMOND, Number.KING)
+            Card.valueOf(Pattern.DIAMOND, Number.KING),
+            Card.valueOf(Pattern.CLOVER, Number.KING)
         ));
     }
 
@@ -117,5 +118,20 @@ public class BlackjackManagerTest {
         this.blackjackManager.hitDealer();
         assertThat(this.blackjackManager.isFinishedDealer()).isTrue();
         assertThat(this.blackjackManager.isDealerScoreOverThenLimit()).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭 종료 후 베팅결과 반환")
+    void testGetPlayerBetAmounts() {
+        this.blackjackManager.initDrawCards();
+        this.blackjackManager.hitDealer();
+        this.blackjackManager.hitOrStayCurrentPlayer(false);
+        this.blackjackManager.passTurnToNextPlayer();
+        this.blackjackManager.hitOrStayCurrentPlayer(true);
+
+        BetAmount firstAmount = this.blackjackManager.getPlayerBetAmounts().get(0);
+        assertThat(firstAmount.getValue()).isEqualTo(3000);
+        BetAmount secondAmount = this.blackjackManager.getPlayerBetAmounts().get(1);
+        assertThat(secondAmount.getValue()).isEqualTo(-3000);
     }
 }

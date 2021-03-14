@@ -1,9 +1,11 @@
 package blackjack.domain;
 
 import blackjack.domain.carddeck.CardDeck;
+import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import java.util.List;
 
 public class BlackjackManager {
 
@@ -76,5 +78,9 @@ public class BlackjackManager {
 
     public void passTurnToNextPlayer() {
         this.players.passTurnToNextPlayer();
+    }
+
+    public List<BetAmount> getPlayerBetAmounts() {
+        return this.players.getBetAmounts(this.dealer);
     }
 }
