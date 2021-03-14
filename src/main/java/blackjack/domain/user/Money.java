@@ -3,7 +3,7 @@ package blackjack.domain.user;
 import java.util.Objects;
 
 public class Money {
-    private double money;
+    private final double money;
 
     public Money(double money) {
         this.money = money;
@@ -13,8 +13,8 @@ public class Money {
         return new Money(money * earningRate);
     }
 
-    public Money addProfit(double money) {
-        return new Money(this.money + money);
+    public Money addProfit(Money money) {
+        return new Money(this.money + money.getMoney());
     }
 
     public double getMoney() {
