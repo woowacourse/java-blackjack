@@ -9,7 +9,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
     public void run() {
