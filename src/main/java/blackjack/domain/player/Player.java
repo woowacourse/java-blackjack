@@ -14,7 +14,7 @@ public abstract class Player {
     protected final Cards cards;
     protected Money money;
 
-    public Player(String name, Money money) {
+    protected Player(String name, Money money) {
         this.name = new Name(name);
         this.cards = new Cards();
         this.money = money;
@@ -22,7 +22,7 @@ public abstract class Player {
 
     public final void initializeCards(final Deck deck) {
         for (int i = 0; i < NUMBER_OF_INITIAL_CARDS; i++) {
-            cards.add(deck.draw());
+            drawCard(deck);
         }
     }
 
@@ -34,6 +34,10 @@ public abstract class Player {
         return cards.isBust();
     }
 
+    public final boolean isHit() {
+        return cards.isHit();
+    }
+
     public final boolean isBlackJack() {
         return cards.isBlackJack();
     }
@@ -42,9 +46,14 @@ public abstract class Player {
         return cards.isTwentyOne();
     }
 
+    public final boolean isNoTwentyOne() {
+        return cards.isNoTwentyOne();
+    }
+
     public final boolean isSameName(Player player) {
         return Objects.equals(this.name(), player.name());
     }
+
 
     public final Cards cards() {
         return cards;
