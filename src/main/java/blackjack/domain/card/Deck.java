@@ -17,12 +17,8 @@ public class Deck {
                 .flatMap(shape -> Arrays.stream(Value.values())
                         .map(value -> new Card(shape, value)))
                 .collect(toList());
-        shuffle(cards);
-        return cards;
-    }
-
-    private void shuffle(List<Card> cards) {
         Collections.shuffle(cards);
+        return cards;
     }
 
     public Cards popTwo() {
