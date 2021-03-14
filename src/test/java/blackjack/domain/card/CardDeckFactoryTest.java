@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardDeckFactoryTest {
@@ -31,13 +32,16 @@ public class CardDeckFactoryTest {
     @DisplayName("섞기 전략에 따라서 카드덱을 만들어 낸 후, 그 안에 요소들을 검사한다")
     void shuffleStrategyTest() {
         final CardDeck cardDeck = CardDeckFactory.make(new NoShuffleStrategy());
+        final List<Card> cardInDeck = cardDeck.getCards();
+
         final List<Card> cards = new LinkedList<>();
         for (CardLetter letter : CardLetter.values()) {
             Arrays.stream(CardSuit.values())
                     .map(suit -> new Card(letter, suit))
                     .forEach(cards::add);
         }
-        assertEquals(cardDeck.getCards(), cards);
+
+        assertArrayEquals(cardInDeck.toArray(), cards.toArray());
     }
 
     class NoShuffleStrategy implements ShuffleStrategy {
