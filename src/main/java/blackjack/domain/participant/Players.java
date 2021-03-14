@@ -21,9 +21,9 @@ public class Players {
     }
 
     private List<Player> convertToPlayers(final List<String> names) {
-        return names.
-            stream()
-            .map(name -> new Player(new Name(name)))
+        return names.stream()
+            .map(Name::new)
+            .map(Player::new)
             .collect(Collectors.toList())
             ;
     }
