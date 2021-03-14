@@ -64,6 +64,10 @@ public class Score {
         return value > BLACKJACK_VALUE;
     }
 
+    public boolean isBlackJackValue() {
+        return value == BLACKJACK_VALUE;
+    }
+
     public boolean isHigherThan(final Score other) {
         return this.value > other.value;
     }

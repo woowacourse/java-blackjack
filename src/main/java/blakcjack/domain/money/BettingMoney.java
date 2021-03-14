@@ -1,5 +1,7 @@
 package blakcjack.domain.money;
 
+import blakcjack.domain.outcome.Outcome;
+
 import java.util.Objects;
 
 public class BettingMoney {
@@ -9,8 +11,9 @@ public class BettingMoney {
         this.value = value;
     }
 
-    public int toInt() {
-        return (int) value;
+    public int toEarning(final Outcome outcome, final boolean isBlackJack) {
+        final EarningRate earningRate = EarningRate.of(outcome, isBlackJack);
+        return (int) (value * earningRate.getRate());
     }
 
     @Override

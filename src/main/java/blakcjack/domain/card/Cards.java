@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public class Cards {
     private static final int FIRST_CARD_INDEX = 0;
+    private static final int BLACKJACK_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -43,6 +44,10 @@ public class Cards {
 
     public boolean isBust() {
         return calculateScore().isBust();
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == BLACKJACK_COUNT && calculateScore().isBlackJackValue();
     }
 
     public boolean isLowerThanBlackJack() {

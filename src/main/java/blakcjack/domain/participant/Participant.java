@@ -43,6 +43,10 @@ public abstract class Participant {
         return cards.isBust();
     }
 
+    protected boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

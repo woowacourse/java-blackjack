@@ -94,4 +94,52 @@ public class PlayerTest {
         final Outcome outcome = player.decideOutcome(dealer);
         assertThat(outcome).isEqualTo(Outcome.LOSE);
     }
+
+    @DisplayName("플레이어만 블랙잭인 경우 1.5배의 수익을 얻는다.")
+    @Test
+    void calculateEarning_win_blackjack() {
+        player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+        player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.JACK));
+
+        dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.JACK));
+        dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.QUEEN));
+
+        assertThat(player.calculateEarning(dealer)).isEqualTo(15000);
+    }
+
+    @DisplayName("플레이어가 블랙잭이 아닌 점수로 승리한 경우 1배의 수익을 얻는다.")
+    @Test
+    void calculateEarning_win() {
+        player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.QUEEN));
+        player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.JACK));
+
+        dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.JACK));
+        dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.NINE));
+
+        assertThat(player.calculateEarning(dealer)).isEqualTo(10000);
+    }
+
+    @DisplayName("비긴 경우 수익은 없다.")
+    @Test
+    void calculateEarning_draw() {
+        player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.ACE));
+        player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.JACK));
+
+        dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.ACE));
+        dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.JACK));
+
+        assertThat(player.calculateEarning(dealer)).isEqualTo(0);
+    }
+
+    @DisplayName("플레이어가 진 경우 -1배의 수익을 얻는다.")
+    @Test
+    void calculateEarning_lose() {
+        player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.NINE));
+        player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.JACK));
+
+        dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.ACE));
+        dealer.receiveCard(Card.of(CardSymbol.HEART, CardNumber.JACK));
+
+        assertThat(player.calculateEarning(dealer)).isEqualTo(-10000);
+    }
 }

@@ -47,6 +47,11 @@ public class Player extends Participant {
         return Outcome.DRAW;
     }
 
+    public int calculateEarning(final Dealer dealer) {
+        final Outcome outcome = decideOutcome(dealer);
+        return bettingMoney.toEarning(outcome, isBlackJack());
+    }
+
     @Override
     public ParticipantType getType() {
         return ParticipantType.PLAYER;
