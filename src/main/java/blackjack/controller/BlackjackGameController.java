@@ -1,8 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.scoreboard.DealerGameResult;
-import blackjack.domain.scoreboard.UserGameResult;
+import blackjack.domain.scoreboard.GameResult;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
@@ -22,11 +21,8 @@ public class BlackjackGameController {
         blackjackGame.processDealerRound();
         OutputView.printDealerMoreDrawMessage();
 
-        DealerGameResult dealerGameResult = blackjackGame.createDealerGameResult();
-        UserGameResult userGameResult = blackjackGame.createUserGameResult();
-
-        printParticipantsCardsAndScore(dealerGameResult, userGameResult);
-        printFinalProfit(dealerGameResult, userGameResult);
+        printParticipantsCardsAndScore(blackjackGame);
+        printFinalProfit(blackjackGame.createGameResult());
     }
 
     private static BlackjackGame startGameAndFirstDraw() {
@@ -97,16 +93,15 @@ public class BlackjackGameController {
         OutputView.printCardList(currentUser);
     }
 
-    private void printParticipantsCardsAndScore(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
-        OutputView.printCardListAndScore(dealerGameResult.getDealer());
+    private void printParticipantsCardsAndScore(BlackjackGame blackjackGame) {
+        OutputView.printCardListAndScore(blackjackGame.getDealer());
 
-
-        userGameResult.getUserSet().forEach(OutputView::printCardListAndScore);
+        blackjackGame.getUsers().forEach(OutputView::printCardListAndScore);
         OutputView.println();
     }
 
-    private void printFinalProfit(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
-        OutputView.printFinalDealerProfit(dealerGameResult, userGameResult);
-        OutputView.printFinalUserProfit(userGameResult);
+    private void printFinalProfit(GameResult gameResult) {
+        OutputView.printFinalDealerProfit(gameResult);
+        OutputView.printFinalUserProfit(gameResult);
     }
 }

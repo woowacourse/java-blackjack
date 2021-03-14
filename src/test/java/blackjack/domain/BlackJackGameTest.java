@@ -21,7 +21,7 @@ public class BlackJackGameTest {
         //when
         BlackjackGame blackjackGame = BlackjackGame.createAndFirstDraw(users);
         //then
-        assertThat(blackjackGame.createDealerGameResult().getDealer().handSize()).isEqualTo(2);
+        assertThat(blackjackGame.getDealer().handSize()).isEqualTo(2);
         assertThat(user.handSize()).isEqualTo(2);
     }
 

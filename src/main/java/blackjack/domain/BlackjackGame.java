@@ -2,10 +2,10 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.scoreboard.DealerGameResult;
-import blackjack.domain.scoreboard.UserGameResult;
+import blackjack.domain.scoreboard.GameResult;
 import blackjack.domain.scoreboard.Profit;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Participant;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 
@@ -63,7 +63,7 @@ public class BlackjackGame {
                 .collect(Collectors.toList());
     }
 
-    public UserGameResult createUserGameResult() {
+    public GameResult createGameResult() {
         Map<User, Double> userResult = users.toList().stream()
                 .collect(toMap(
                         Function.identity(),
@@ -71,7 +71,7 @@ public class BlackjackGame {
                         (existed, newer) -> newer,
                         LinkedHashMap::new));
 
-        return new UserGameResult(userResult);
+        return new GameResult(userResult);
     }
 
     private double makeUserProfit(User user) {
@@ -86,15 +86,15 @@ public class BlackjackGame {
         user.drawCard(deck.draw());
     }
 
-    public DealerGameResult createDealerGameResult() {
-        return new DealerGameResult(dealer, dealer.getCards());
-    }
-
     public Card getDealerFirstCard() {
         return dealer.getFirstCard();
     }
 
     public List<User> getUsers() {
         return Collections.unmodifiableList(users.toList());
+    }
+
+    public Participant getDealer() {
+        return dealer;
     }
 }
