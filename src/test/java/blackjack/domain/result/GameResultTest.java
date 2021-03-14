@@ -47,7 +47,7 @@ public class GameResultTest {
     void playersResult() {
         final Map<Player, Result> expected = new HashMap<>();
         expected.put(player, Result.WIN);
-        assertThat(gameResult.getPlayersResult()).isEqualTo(expected);
+        assertThat(gameResult.findPlayersResult(dealer, players)).isEqualTo(expected);
     }
 
     @Test

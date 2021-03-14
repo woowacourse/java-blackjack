@@ -15,7 +15,7 @@ public class GameResult {
         playersResult = findPlayersResult(dealer, players);
     }
 
-    private Map<Player, Result> findPlayersResult(final Dealer dealer, final List<Player> players) {
+    public Map<Player, Result> findPlayersResult(final Dealer dealer, final List<Player> players) {
         final Map<Player, Result> playersResult = new HashMap<>();
         for (final Player player : players) {
             playersResult.put(player, player.findResult(dealer));
@@ -35,9 +35,5 @@ public class GameResult {
         return CHANGE_TO_NEGATIVE * playersProfit.values().stream()
                 .mapToInt(profit -> profit)
                 .sum();
-    }
-
-    public Map<Player, Result> getPlayersResult() {
-        return playersResult;
     }
 }
