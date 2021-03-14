@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class HandState {
-    protected static final int MAXIMUM_SCORE = 21;
+    protected static final int BLACKJACK_SCORE = 21;
     protected static final int INITIAL_CARD_GIVEN = 2;
     protected static final int NO_ACE = 0;
 
@@ -24,7 +24,7 @@ public abstract class HandState {
                 .mapToInt(card -> card.getCardLetter().getValue())
                 .sum();
 
-        if (maximumSum > MAXIMUM_SCORE && countAce() > NO_ACE) {
+        if (maximumSum > BLACKJACK_SCORE && countAce() > NO_ACE) {
             return adjustScoreWithAce(maximumSum);
         }
         return maximumSum;
@@ -39,7 +39,7 @@ public abstract class HandState {
     private int adjustScoreWithAce(final int maximumSum) {
         int aceCount = countAce();
         int adjustSum = maximumSum;
-        while (aceCount > 0 && adjustSum > MAXIMUM_SCORE) {
+        while (aceCount > 0 && adjustSum > BLACKJACK_SCORE) {
             adjustSum = adjustSum - CardLetter.ACE.getValue() + CardLetter.ACE.getExtraValue();
             aceCount--;
         }

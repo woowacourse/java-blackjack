@@ -3,11 +3,17 @@ package blackjack.domain.participant.state;
 import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BlackjackState extends HandState {
-    public BlackjackState(final List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+    public BlackjackState(final HandState handState) {
+        validateBlackjackState(handState);
+        this.cards = new ArrayList<>(handState.getCards());
+    }
+
+    private void validateBlackjackState(final HandState handState) {
+        if (handState.getCards().size() != INITIAL_CARD_GIVEN || handState.calculateScore() != BLACKJACK_SCORE) {
+            throw new IllegalStateException("블랙잭 상태의 카드패가 아닙니다.");
+        }
     }
 
     @Override

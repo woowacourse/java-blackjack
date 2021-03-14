@@ -7,8 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 public class BlackjackStateTest {
@@ -22,12 +20,22 @@ public class BlackjackStateTest {
     }
 
     @Test
-    @DisplayName("BlackjackState 객체를 생성하면, 정상적으로 반환된다")
+    @DisplayName("블랙잭 상태의 handState가 생성자의 매개변수로 넘어오면, BlackjackState 객체가 정상 생성된다")
     void initTest() {
-        assertThatCode(() -> new BlackjackState(Arrays.asList(
-                new Card(CardLetter.ACE, CardSuit.HEART),
-                new Card(CardLetter.KING, CardSuit.HEART))))
+        assertThatCode(() -> new BlackjackState(handState))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("블랙잭 상태가 아닌 handState가 생성자의 매개변수로 넘어오면, 예외가 발생한다")
+    void initExceptionTest() {
+        handState = new InitialState();
+        handState = handState.add(new Card(CardLetter.TWO, CardSuit.HEART));
+        handState = handState.add(new Card(CardLetter.KING, CardSuit.HEART));
+
+        assertThatThrownBy(() -> new BlackjackState(handState))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("블랙잭 상태의 카드패가 아닙니다.");
     }
 
     @Test
