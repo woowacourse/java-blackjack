@@ -13,7 +13,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return cardNumber.getNumber().equals(ACE_NUMBER);
+        return cardNumber == CardNumber.A;
     }
 
     public int getCardValue() {
