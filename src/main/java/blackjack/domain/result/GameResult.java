@@ -21,7 +21,7 @@ public class GameResult {
         final Map<Player, Integer> playersProfit = new HashMap<>();
         players.forEach(player -> {
             final Result result = player.findResult(dealer);
-            playersProfit.put(player, (int) (player.getBettingMoney() * result.findProfitRate(dealer, player)));
+            playersProfit.put(player, result.calculateProfit(player.getBettingMoney()));
         });
         return playersProfit;
     }

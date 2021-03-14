@@ -22,15 +22,32 @@ public class Player extends Participant {
     }
 
     public Result findResult(final Dealer dealer) {
-        final int dealerScore = dealer.calculateScore();
-        final int playerScore = calculateScore();
-        if (dealerScore == playerScore) {
-            return Result.DRAW;
-        }
-        if (isBust() || playerScore < dealerScore && !dealer.isBust()) {
+        if (isBust()) {
             return Result.LOSE;
         }
-        return Result.WIN;
+        if (isBlackjack()) {
+            return findResultWhenBlackjack(dealer);
+        }
+        return calculateOtherCase(dealer);
+    }
+
+    private Result findResultWhenBlackjack(final Dealer dealer) {
+        if (dealer.isBlackjack()) {
+            return Result.DRAW;
+        }
+        return Result.BLACKJACK;
+    }
+
+    private Result calculateOtherCase(final Dealer dealer) {
+        final int dealerScore = dealer.calculateScore();
+        final int playerScore = calculateScore();
+        if (dealer.isBust() || playerScore > dealerScore) {
+            return Result.WIN;
+        }
+        if (playerScore == dealerScore) {
+            return Result.DRAW;
+        }
+        return Result.LOSE;
     }
 
     public int getBettingMoney() {
