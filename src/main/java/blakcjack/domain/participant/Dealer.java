@@ -11,7 +11,7 @@ public class Dealer extends Participant {
 
     public boolean needsAdditionalCard() {
         final Score score = cards.calculateScore();
-        return score.isLowerThan(DEALER_MAXIMUM_DRAWING_CRITERION);
+        return score.isLowerThan(Score.from(DEALER_MAXIMUM_DRAWING_CRITERION));
     }
 
     @Override

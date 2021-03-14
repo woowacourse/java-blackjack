@@ -72,13 +72,8 @@ public class Score {
         return this.value > other.value;
     }
 
-    // TODO : 둘 중 하나 지우기
     public boolean isLowerThan(final Score other) {
         return this.value < other.value;
-    }
-
-    public boolean isLowerThan(final int otherScore) {
-        return this.value < otherScore;
     }
 
     public boolean isLowerThanBlackJackValue() {
