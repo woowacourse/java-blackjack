@@ -102,10 +102,10 @@ public class PlayersTest {
     @Test
     @DisplayName("모든 플레이어에 수익률을 조회한다.")
     void generateEveryPlayerProfit() {
-        Player player1 = new Player("joel", new PlayerMoney(1000));
-        Player player2 = new Player("bada", new PlayerMoney(1000));
-        Player player3 = new Player("j.on", new PlayerMoney(1000));
-        Player player4 = new Player("blackjack", new PlayerMoney(1000));
+        Player player1 = new Player("joel", 1000);
+        Player player2 = new Player("bada", 1000);
+        Player player3 = new Player("j.on", 1000);
+        Player player4 = new Player("blackjack", 1000);
 
         player1.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
         player1.receiveAdditionalCard(new Card(CardLetter.JACK, CardSuit.CLOVER));

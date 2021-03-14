@@ -8,10 +8,8 @@ public class Dealer extends Participant {
     private static final int MAX_SUM_FOR_MORE_CARD = 16;
     private static final String FIXED_DEALER_NAME = "딜러";
 
-    private final DealerMoney dealerMoney = new DealerMoney();
-
     public Dealer() {
-        super(FIXED_DEALER_NAME);
+        super(FIXED_DEALER_NAME, 0);
     }
 
     public boolean canGetMoreCard() {
@@ -32,13 +30,13 @@ public class Dealer extends Participant {
         return generateResultByScore(participant);
     }
 
-    public void calculateProfit(final Map<Player, Integer> playerProfit) {
-        for (Player player : playerProfit.keySet()) {
-            dealerMoney.calculateByOpponentProfit(playerProfit.get(player));
+    public void calculateProfit(final Map<Player, Integer> opponentProfit) {
+        for (Player player : opponentProfit.keySet()) {
+            money = money.updateMoneyByProfit(opponentProfit.get(player) * -1);
         }
     }
 
-    public DealerMoney getDealerMoney() {
-        return dealerMoney;
+    public Money getDealerMoney() {
+        return money;
     }
 }

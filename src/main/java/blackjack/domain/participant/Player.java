@@ -3,19 +3,12 @@ package blackjack.domain.participant;
 import blackjack.domain.result.Result;
 
 public class Player extends Participant {
-    private final PlayerMoney playerMoney;
-
     public Player(final String name) {
-        this(name, new PlayerMoney(0));
+        this(name, 0);
     }
 
     public Player(final String name, final int playerMoney) {
-        this(name, new PlayerMoney(playerMoney));
-    }
-
-    public Player(final String name, final PlayerMoney playerMoney) {
-        super(name);
-        this.playerMoney = playerMoney;
+        super(name, playerMoney);
     }
 
     @Override
@@ -34,7 +27,7 @@ public class Player extends Participant {
 
     public Integer generateProfit(Dealer dealer) {
         final Result result = generateResult(dealer);
-        return playerMoney.calculateProfit(result.getProfitRate());
+        return money.calculateProfit(result.getProfitRate());
     }
 
     @Override

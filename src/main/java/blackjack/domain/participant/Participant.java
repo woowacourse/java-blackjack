@@ -7,18 +7,27 @@ import blackjack.domain.result.Result;
 import java.util.Objects;
 
 public abstract class Participant {
-    protected final Hand hand;
     protected final String name;
+    protected Money money;
+    protected final Hand hand;
 
-    public Participant(final String name) {
+    public Participant(final String name, final int money) {
         validateName(name);
+        validateMoney(money);
         this.name = name;
+        this.money = new Money(money);
         this.hand = new Hand();
     }
 
     private void validateName(final String name) {
         if (Objects.isNull(name) || name.length() == 0) {
             throw new IllegalArgumentException("이름으로 최소 한 글자가 입력되어야 합니다.");
+        }
+    }
+
+    private void validateMoney(final int money) {
+        if (money < 0) {
+            throw new IllegalArgumentException("베팅 금액은 0 이상이여야 합니다.");
         }
     }
 

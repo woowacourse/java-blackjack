@@ -17,6 +17,10 @@ public class Money {
         return new Money(money + profit);
     }
 
+    public int getMoney() {
+        return money;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
