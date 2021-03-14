@@ -78,8 +78,8 @@ public class BlackjackController {
 
     private void showFinalResult(final Players players, final Dealer dealer) {
         OutputView.showNewLine();
-        OutputView.showCardResult(dealer);
-        OutputView.showEveryPlayerCardResult(players);
+        OutputView.showCardResult(dealer, dealer.calculateScore());
+        OutputView.showEveryPlayerCardResult(players.generateEveryPlayerScore());
 
         final Map<Player, Integer> playerProfit = players.generateEveryPlayerProfit(dealer);
         dealer.calculateProfit(playerProfit);

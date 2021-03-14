@@ -5,7 +5,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.Result;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,8 +19,6 @@ public class OutputView {
     private static final String BLACKJACK_MESSAGE = "축하합니다 %s! 블랙잭입니다.";
     private static final String BUST_MESSAGE = "카드의 합이 21을 넘어, 게임에서 패배하였습니다.";
     private static final String DEALER_MORE_CARD_MESSAGE = "%s는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String GAME_RESULT_MESSAGE = "## 최종 승패";
-    private static final String DEALER_GAME_RESULT_FORMAT = "%s: %d승 %d무 %d패";
     private static final String GAME_PROFIT_MESSAGE = "## 최종 수익";
 
     private OutputView() {
@@ -57,17 +54,17 @@ public class OutputView {
                 .forEach(OutputView::showPlayerCard);
     }
 
-    public static void showCardResult(final Participant participant) {
+    public static void showCardResult(final Participant participant, final int score) {
         final String name = participant.getName();
         final String cardStatus = cardStatusFormat(participant);
-        final int result = participant.getHand().calculateScore();
-        System.out.printf(CARD_RESULT_FORMAT, name, cardStatus, result);
+        System.out.printf(CARD_RESULT_FORMAT, name, cardStatus, score);
         showNewLine();
     }
 
-    public static void showEveryPlayerCardResult(final Players players) {
-        players.getPlayers()
-                .forEach(OutputView::showCardResult);
+    public static void showEveryPlayerCardResult(final Map<Player, Integer> playerScore) {
+        for (Player player : playerScore.keySet()) {
+            OutputView.showCardResult(player, playerScore.get(player));
+        }
     }
 
     public static void showPlayerCard(final Player player) {
@@ -86,22 +83,6 @@ public class OutputView {
 
     private static String cardPrintFormat(final Card card) {
         return card.getCardLetter().getLetter() + card.getCardSuit().getType();
-    }
-
-    public static void showDealerGameResult(final Dealer dealer, final Map<Result, Integer> dealerResult) {
-        showNewLine();
-        System.out.println(GAME_RESULT_MESSAGE);
-        System.out.printf(DEALER_GAME_RESULT_FORMAT, dealer.getName(),
-                dealerResult.getOrDefault(Result.WIN, 0),
-                dealerResult.getOrDefault(Result.DRAW, 0),
-                dealerResult.getOrDefault(Result.LOSE, 0));
-        showNewLine();
-    }
-
-    public static void showPlayerGameResult(final Map<Player, Result> playerResult) {
-        for (Player player : playerResult.keySet()) {
-            System.out.println(player.getName() + ": " + playerResult.get(player).getResult());
-        }
     }
 
     public static void showBlackjackMessage(final Player player) {

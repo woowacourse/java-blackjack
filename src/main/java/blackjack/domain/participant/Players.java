@@ -59,6 +59,14 @@ public class Players {
         }
     }
 
+    public Map<Player, Integer> generateEveryPlayerScore() {
+        final Map<Player, Integer> playerScore = new LinkedHashMap<>();
+        for (Player player : players) {
+            playerScore.put(player, player.calculateScore());
+        }
+        return Collections.unmodifiableMap(playerScore);
+    }
+
     public Map<Player, Integer> generateEveryPlayerProfit(final Dealer dealer) {
         final Map<Player, Integer> playerProfit = new LinkedHashMap<>();
         for (Player player : players) {

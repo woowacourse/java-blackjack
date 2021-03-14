@@ -50,6 +50,10 @@ public abstract class Participant {
         return hand.isBlackjack();
     }
 
+    public final int calculateScore() {
+        return hand.calculateScore();
+    }
+
     abstract public Result generateResult(final Participant participant);
 
     protected final Result generateResultByScore(final Participant participant) {
