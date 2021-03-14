@@ -14,7 +14,7 @@ public class DealerTest {
 
         dealer.initialHit(Fixture.CLUBS_TEN, Fixture.CLUBS_TWO);
 
-        assertTrue(dealer.isDealerDrawScore());
+        assertFalse(dealer.isFinished());
     }
 
     @DisplayName("isStay - 딜러는 17 이상일 때 스테이한다.")
@@ -24,6 +24,6 @@ public class DealerTest {
 
         dealer.initialHit(Fixture.CLUBS_KING, Fixture.CLUBS_TEN);
 
-        assertFalse(dealer.isDealerDrawScore());
+        assertTrue(dealer.isFinished());
     }
 }

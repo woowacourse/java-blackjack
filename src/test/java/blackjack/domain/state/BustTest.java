@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.Fixture;
 import blackjack.state.Bust;
 import blackjack.state.Cards;
-import blackjack.state.Hit;
+import blackjack.state.PlayerHit;
 import blackjack.state.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class BustTest {
     void isBust() {
         Cards cards = new Cards(new ArrayList<>(Arrays.asList(Fixture.CLUBS_KING, Fixture.CLUBS_TEN)));
 
-        State state = new Hit(cards);
+        State state = new PlayerHit(cards);
 
         State state2 = state.draw(Fixture.CLUBS_TWO);
 

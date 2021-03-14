@@ -3,9 +3,9 @@ package blackjack.state;
 
 import blackjack.domain.card.Card;
 
-public class Hit extends Running {
+public class PlayerHit extends Running {
 
-    public Hit(Cards cards) {
+    public PlayerHit(Cards cards) {
         super(cards);
     }
 
@@ -17,7 +17,7 @@ public class Hit extends Running {
             return new Bust(cards);
         }
 
-        return new Hit(cards);
+        return new PlayerHit(cards);
     }
 
     @Override
