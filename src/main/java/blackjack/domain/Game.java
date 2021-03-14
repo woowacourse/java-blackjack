@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Score;
-import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
@@ -14,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
+    public static final String DELIMITER = ",";
+
     private final GameTable gameTable;
     private final Players players;
     private final Participant dealer;
@@ -29,8 +30,8 @@ public class Game {
         List<Player> playersValue = new ArrayList<>();
 
         for (String nameAndMoney : participantsInfo) {
-            final String[] infos = nameAndMoney.split(",");
-            playersValue.add(new Player(infos[0], new BettingMoney(infos[1])));
+            final String[] infos = nameAndMoney.split(DELIMITER);
+            playersValue.add(new Player(infos[0], infos[1]));
         }
 
         return playersValue;

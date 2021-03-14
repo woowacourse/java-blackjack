@@ -20,12 +20,12 @@ public class Player implements Participant {
         this(name, new Cards(Collections.emptyList()), new BettingMoney(0));
     }
 
-    public Player(String name, BettingMoney bettingMoney) {
-        this(name, new Cards(Collections.emptyList()), bettingMoney);
+    public Player(String name, String bettingMoney) {
+        this(name, new Cards(Collections.emptyList()), new BettingMoney(bettingMoney));
     }
 
-    public Player(BettingMoney bettingMoney) {
-        this(SAMPLE_NAME, new Cards(Collections.emptyList()), bettingMoney);
+    public Player(long bettingMoney) {
+        this(SAMPLE_NAME, new Cards(Collections.emptyList()), new BettingMoney(bettingMoney));
     }
 
     public Player(String name, Cards cards) {

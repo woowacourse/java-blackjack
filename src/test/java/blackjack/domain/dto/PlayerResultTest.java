@@ -13,7 +13,7 @@ class PlayerResultTest {
 
     @Test
     void getName() {
-        final Player player = new Player("better", new BettingMoney("10000"));
+        final Player player = new Player("better", "10000");
 
         final PlayerResult playerResult = new PlayerResult(player, Outcome.WIN);
         assertThat(playerResult.getName()).isEqualTo("better");
@@ -22,7 +22,7 @@ class PlayerResultTest {
     @Test
     @DisplayName("이겼을 경우")
     void win_case() {
-        final Player player = new Player(new BettingMoney("10000"));
+        final Player player = new Player(10000);
 
         final PlayerResult playerResult = new PlayerResult(player, Outcome.WIN);
 
@@ -33,7 +33,7 @@ class PlayerResultTest {
     @Test
     @DisplayName("비겼을 경우")
     void draw_case() {
-        final Player player = new Player(new BettingMoney("10000"));
+        final Player player = new Player(10000);
 
         final PlayerResult playerResult = new PlayerResult(player, Outcome.DRAW);
 
@@ -44,7 +44,7 @@ class PlayerResultTest {
     @Test
     @DisplayName("졌을 경우")
     void lose_case() {
-        final Player player = new Player(new BettingMoney("10000"));
+        final Player player = new Player(10000);
 
         final PlayerResult playerResult = new PlayerResult(player, Outcome.LOSE);
 
