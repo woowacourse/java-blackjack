@@ -14,7 +14,7 @@ public class HitTest {
     @DisplayName("초기 Hit상태 확인")
     @Test
     void initialHitCheck() {
-        State state = StateFactory.draw(Fixture.CLUBS_KING, Fixture.CLUBS_TWO);
+        State state = StateFactory.initialPlayerDraw(Fixture.CLUBS_KING, Fixture.CLUBS_TWO);
 
         assertThat(state).isExactlyInstanceOf(Hit.class);
     }

@@ -28,11 +28,11 @@ public abstract class User {
 
     public void initialHit(Card firstCard, Card secondCard) {
         if(this.isDealer()){
-            this.state = StateFactory.dealerDraw(firstCard, secondCard);
+            this.state = StateFactory.initialDealerDraw(firstCard, secondCard);
             return;
         }
 
-        this.state = StateFactory.draw(firstCard, secondCard);
+        this.state = StateFactory.initialPlayerDraw(firstCard, secondCard);
     }
 
     public void hit(Card card) {

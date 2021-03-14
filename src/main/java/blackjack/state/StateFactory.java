@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class StateFactory {
 
-    public static State draw(Card firstCard, Card secondCard) {
+    public static State initialPlayerDraw(Card firstCard, Card secondCard) {
         Cards cards = new Cards(Arrays.asList(firstCard, secondCard));
 
         if (cards.list().stream().anyMatch(Card::isAce) &&
@@ -17,7 +17,7 @@ public class StateFactory {
         return new Hit(cards);
     }
 
-    public static State dealerDraw(Card firstCard, Card secondCard) {
+    public static State initialDealerDraw(Card firstCard, Card secondCard) {
         Cards cards = new Cards(Arrays.asList(firstCard, secondCard));
 
         if (cards.list().stream().anyMatch(Card::isAce) &&

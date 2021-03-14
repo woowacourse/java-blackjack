@@ -14,7 +14,7 @@ public class StayTest {
     @DisplayName("stay 상태로 전환되는지 확인")
     @Test
     void isStay() {
-        State state = StateFactory.draw(Fixture.CLUBS_KING, Fixture.CLUBS_TWO);
+        State state = StateFactory.initialPlayerDraw(Fixture.CLUBS_KING, Fixture.CLUBS_TWO);
 
         state = state.stay();
 

@@ -14,7 +14,7 @@ public class BlackJackTest {
     @DisplayName("초기 BlackJack 상태인지 확인")
     @Test
     void isBlackJack() {
-        State state = StateFactory.draw(Fixture.CLUBS_KING, Fixture.CLUBS_ACE);
+        State state = StateFactory.initialPlayerDraw(Fixture.CLUBS_KING, Fixture.CLUBS_ACE);
 
         assertThat(state).isInstanceOf(BlackJack.class);
     }
