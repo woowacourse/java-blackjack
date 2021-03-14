@@ -42,4 +42,24 @@ public class HitStateTest {
         handState = handState.add(new Card(CardLetter.EIGHT, CardSuit.HEART));
         assertThat(handState).isInstanceOf(BustState.class);
     }
+
+    @Test
+    @DisplayName("HitState에서 isBust를 검사하면, false가 나온다")
+    void isBustTest() {
+        HandState handState = new HitState(Arrays.asList(
+                new Card(CardLetter.TEN, CardSuit.HEART),
+                new Card(CardLetter.NINE, CardSuit.HEART)));
+
+        assertThat(handState.isBust()).isFalse();
+    }
+
+    @Test
+    @DisplayName("HitState에서 isBlackjack를 검사하면, false가 나온다")
+    void isBlackjackTest() {
+        HandState handState = new HitState(Arrays.asList(
+                new Card(CardLetter.TEN, CardSuit.HEART),
+                new Card(CardLetter.NINE, CardSuit.HEART)));
+
+        assertThat(handState.isBlackjack()).isFalse();
+    }
 }

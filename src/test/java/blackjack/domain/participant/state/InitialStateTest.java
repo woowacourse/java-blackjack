@@ -6,6 +6,8 @@ import blackjack.domain.card.CardSuit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
@@ -39,5 +41,21 @@ public class InitialStateTest {
 
         handState = handState.add(new Card(CardLetter.THREE, CardSuit.HEART));
         assertThat(handState).isInstanceOf(HitState.class);
+    }
+
+    @Test
+    @DisplayName("InitialState에서 isBust를 검사하면, false가 나온다")
+    void isBustTest() {
+        HandState handState = new InitialState();
+        assertThat(handState.isBust()).isFalse();
+    }
+
+    @Test
+    @DisplayName("InitialState에서 isBlackjack를 검사하면, false가 나온다")
+    void isBlackjackTest() {
+        HandState handState = new InitialState(Arrays.asList(
+                new Card(CardLetter.TEN, CardSuit.HEART)));
+
+        assertThat(handState.isBlackjack()).isFalse();
     }
 }
