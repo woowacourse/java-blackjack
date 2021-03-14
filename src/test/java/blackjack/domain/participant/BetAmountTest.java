@@ -25,13 +25,13 @@ class BetAmountTest {
     @Test
     @DisplayName("블랙잭에 따른 결과로 곱해진 값을 잘 반환하는지 테스트")
     void testBlackjackBetAmountMultiply() {
-        assertThat(this.betAmount.multiply(1.5)).isEqualTo(1_500);
+        assertThat(this.betAmount.multiply(1.5).getValue()).isEqualTo(1_500);
     }
 
     @Test
     @DisplayName("버스트 혹은 패배시 곱해진 값을 잘 반환하는지 테스트")
     void testBustOrLostBetAmountMultiply() {
-        assertThat(this.betAmount.multiply(-1)).isEqualTo(-1_000);
+        assertThat(this.betAmount.multiply(-1).getValue()).isEqualTo(-1_000);
     }
 
     @Test

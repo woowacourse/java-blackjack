@@ -13,8 +13,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        this.player = new Player(new Name("pobi"));
-        this.player.betting(3_000);
+        this.player = new Player(new Name("pobi"), BetAmount.betting(3000));
     }
 
     @Test
@@ -26,24 +25,24 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어가 블랙잭 승리시 베팅한 금액 반환 테스트")
     void testPlayerBlackjackWinProfit() {
-        assertThat(this.player.profit(Result.BLACKJACK_WIN)).isEqualTo(4_500);
+        assertThat(this.player.profit(Result.BLACKJACK_WIN).getValue()).isEqualTo(4_500);
     }
 
     @Test
     @DisplayName("플레이어가 승리시 베팅한 금액 반환 테스트")
     void testPlayerWinProfit() {
-        assertThat(this.player.profit(Result.WIN)).isEqualTo(3_000);
+        assertThat(this.player.profit(Result.WIN).getValue()).isEqualTo(3_000);
     }
 
     @Test
     @DisplayName("플레이어가 무승부시 베팅한 금액 반환 테스트")
     void testPlayerDrawProfit() {
-        assertThat(this.player.profit(Result.DRAW)).isEqualTo(3_000);
+        assertThat(this.player.profit(Result.DRAW).getValue()).isEqualTo(3_000);
     }
 
     @Test
     @DisplayName("플레이어가 패배시 베팅한 금액 반환 테스트")
     void testPlayerLoseProfit() {
-        assertThat(this.player.profit(Result.LOSE)).isEqualTo(-3_000);
+        assertThat(this.player.profit(Result.LOSE).getValue()).isEqualTo(-3_000);
     }
 }
