@@ -9,16 +9,15 @@ public class EarningDto {
         this.earning = earning;
     }
 
-    // TODO : 구조가 확정되면 나중에 수정
-//    public static EarningDto of(final Participant participant) {
-//        return new EarningDto(participant.getNameValue(), participant.getMoneyValue());
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public int getMoney() {
-//        return money;
-//    }
+    public static EarningDto of(final String name, final int earning) {
+        return new EarningDto(name, earning);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getEarning() {
+        return earning;
+    }
 }

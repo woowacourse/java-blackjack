@@ -1,6 +1,11 @@
 package blakcjack.dto;
 
+import blakcjack.domain.participant.Dealer;
+import blakcjack.domain.participant.Participant;
+import blakcjack.domain.participant.Player;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EarningSummaryDto {
     private final EarningDto dealerEarning;
@@ -11,14 +16,25 @@ public class EarningSummaryDto {
         this.playerEarnings = playerEarnings;
     }
 
-    // TODO : 구조가 확정되면 나중에 수정
-//    public static EarningSummaryDto of(final Participant dealer, final List<Participant> players) {
-//        final List<EarningDto> playerEarnings = players.stream()
-//                .map(EarningDto::of)
-//                .collect(Collectors.toList());
-//
-//        return new EarningSummaryDto(EarningDto.of(dealer), playerEarnings);
-//    }
+    public static EarningSummaryDto of(final Participant dealer, final List<Participant> players) {
+        final List<EarningDto> playerEarnings = getPlayerEarnings(dealer, players);
+        final EarningDto dealerEarning = EarningDto.of(dealer.getNameValue(), calculateDealerEarning(playerEarnings));
+        return new EarningSummaryDto(dealerEarning, playerEarnings);
+    }
+
+    private static List<EarningDto> getPlayerEarnings(final Participant dealer, final List<Participant> players) {
+        final Dealer castedDealer = Dealer.class.cast(dealer);
+        return players.stream()
+                .map(Player.class::cast)
+                .map(player -> EarningDto.of(player.getNameValue(), player.calculateEarning(castedDealer)))
+                .collect(Collectors.toList());
+    }
+
+    private static int calculateDealerEarning(final List<EarningDto> playerEarnings) {
+        return -1 * playerEarnings.stream()
+                .mapToInt(EarningDto::getEarning)
+                .sum();
+    }
 
     public EarningDto getDealerEarning() {
         return dealerEarning;

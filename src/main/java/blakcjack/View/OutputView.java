@@ -3,6 +3,8 @@ package blakcjack.view;
 
 import blakcjack.domain.card.Card;
 import blakcjack.domain.outcome.Outcome;
+import blakcjack.dto.EarningDto;
+import blakcjack.dto.EarningSummaryDto;
 import blakcjack.dto.OutcomeSummaryDto;
 import blakcjack.dto.ParticipantDto;
 import blakcjack.dto.ParticipantsDto;
@@ -122,6 +124,21 @@ public class OutputView {
 
     private static String makePlayerOutcomeMessage(final String name, final Outcome outcome) {
         return String.format("%s: %s%n", name, outcome.getValue());
+    }
+
+    public static void printFinalEarningSummary(final EarningSummaryDto earningSummaryDto) {
+        System.out.println("## 최종 수익");
+        printEarning(earningSummaryDto.getDealerEarning());
+        printPlayerEarning(earningSummaryDto.getPlayerEarnings());
+
+    }
+
+    private static void printEarning(final EarningDto earningDto) {
+        System.out.printf("%s: %d%n", earningDto.getName(), earningDto.getEarning());
+    }
+
+    private static void printPlayerEarning(final List<EarningDto> playerEarnings) {
+        playerEarnings.forEach(OutputView::printEarning);
     }
 
     public static void printGameClosing(final String reason) {

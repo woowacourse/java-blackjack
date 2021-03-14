@@ -8,6 +8,7 @@ import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
+import blakcjack.dto.EarningSummaryDto;
 import blakcjack.dto.OutcomeSummaryDto;
 import blakcjack.dto.ParticipantDto;
 import blakcjack.dto.ParticipantsDto;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 import static blakcjack.view.InputView.takePlayerCreationInformation;
 import static blakcjack.view.OutputView.printDealerAdditionalCardMessage;
+import static blakcjack.view.OutputView.printFinalEarningSummary;
 import static blakcjack.view.OutputView.printFinalHandsSummary;
 import static blakcjack.view.OutputView.printFinalOutcomeSummary;
 import static blakcjack.view.OutputView.printGameClosing;
@@ -101,5 +103,6 @@ public class BlackJackController {
         final Map<String, Outcome> playersOutcome = blackjackGame.judgePlayersOutcome();
         final Map<Outcome, Integer> dealerOutcome = blackjackGame.judgeDealerOutcome(playersOutcome);
         printFinalOutcomeSummary(OutcomeSummaryDto.of(dealerOutcome, playersOutcome), dealer.getNameValue());
+        printFinalEarningSummary(EarningSummaryDto.of(dealer, players));
     }
 }
