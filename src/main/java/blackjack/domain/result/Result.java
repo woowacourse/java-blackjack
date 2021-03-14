@@ -12,11 +12,7 @@ public enum Result {
         this.profit = profit;
     }
 
-    private double getProfit() {
-        return profit;
-    }
-
     public int calculateProfit(final int money) {
-        return (int) (money * getProfit());
+        return (int) (money * profit);
     }
 }
