@@ -18,21 +18,21 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("pobi");
+        player = new Player("pobi", 10000);
         dealer = new Dealer();
     }
 
     @DisplayName("플레이어 객체 생성 성공")
     @Test
     void create() {
-        final Player player = new Player("pobi");
-        assertThat(player).isEqualTo(new Player("pobi"));
+        final Player player = new Player("pobi", 10000);
+        assertThat(player).isEqualTo(new Player("pobi", 10000));
     }
 
     @DisplayName("카드 받기 성공")
     @Test
     void receiveCard() {
-        final Player player = new Player("sakjung");
+        final Player player = new Player("sakjung", 10000);
         final Card card = Card.of(CardSymbol.CLUB, CardNumber.ACE);
         player.receiveCard(card);
 
@@ -42,7 +42,7 @@ public class PlayerTest {
     @DisplayName("21점 미만이면 추가 카드를 더 뽑을 수 있다.")
     @Test
     void isNotBust() {
-        final Player player = new Player("pobi");
+        final Player player = new Player("pobi", 10000);
         player.receiveCard(Card.of(CardSymbol.CLUB, CardNumber.KING));
         player.receiveCard(Card.of(CardSymbol.SPADE, CardNumber.QUEEN));
         assertThat(player.canDrawMoreCard()).isTrue();
