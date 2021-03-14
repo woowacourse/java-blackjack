@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class ParticiapantTest {
+public class ParticipantTest {
     private Participant dealer;
     private Participant player;
 
