@@ -1,11 +1,12 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.*;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Nickname;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.domain.result.ProfitResult;
-import blackjack.dto.ParticipantDto;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,25 +47,6 @@ public class BlackJackGame {
         ProfitResult profitResult = new ProfitResult();
         profitResult.calculateProfit(players.verifyResultByCompareScore(dealer), dealer);
         return profitResult;
-    }
-
-    public List<ParticipantDto> playersDto() {
-        return players.getPlayers().stream()
-                .map(this::toParticipantDto)
-                .collect(Collectors.toList());
-    }
-
-    private ParticipantDto toParticipantDto(Participant participant) {
-        Cards cards = participant.getCurrentCards();
-        return new ParticipantDto(participant.getName(), cards, cards.calculateScore());
-    }
-
-    public ParticipantDto dealerDto() {
-        return toParticipantDto(dealer);
-    }
-
-    public ParticipantDto playerDto(Player player) {
-        return toParticipantDto(player);
     }
 
     public Players getPlayers() {

@@ -2,13 +2,17 @@ package blackjack.controller;
 
 import blackjack.domain.BettingMoney;
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
 
@@ -47,7 +51,7 @@ public class BlackJackController {
 
     private void distributeCards(BlackJackGame blackJackGame) {
         blackJackGame.distributeCards();
-        OutputView.distributeFirstTwoCard(blackJackGame.playersDto(), blackJackGame.dealerDto());
+        OutputView.distributeFirstTwoCard(playersDto(blackJackGame.getPlayers()), dealerDto(blackJackGame.getDealer()));
     }
 
     private void playersTurn(Players players, BlackJackGame blackJackGame) {
@@ -57,27 +61,27 @@ public class BlackJackController {
     }
 
     private void eachPlayerTurn(Player player, BlackJackGame blackJackGame) {
-        while (player.canDraw() && askDrawCard(player, blackJackGame)) {
+        while (player.canDraw() && askDrawCard(player)) {
             player.draw(blackJackGame.drawOneCard());
-            OutputView.showCards(blackJackGame.playerDto(player));
+            OutputView.showCards(playerDto(player));
         }
     }
 
-    private boolean askDrawCard(Player player, BlackJackGame blackJackGame) {
+    private boolean askDrawCard(Player player) {
         try {
-            OutputView.askOneMoreCard(blackJackGame.playerDto(player));
+            OutputView.askOneMoreCard(playerDto(player));
             boolean wantDraw = InputView.inputAnswer();
-            playerWantStopDraw(player, blackJackGame, wantDraw);
+            playerWantStopDraw(player, wantDraw);
             return wantDraw;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-            return askDrawCard(player, blackJackGame);
+            return askDrawCard(player);
         }
     }
 
-    private void playerWantStopDraw(Player player, BlackJackGame blackJackGame, boolean wantDraw) {
+    private void playerWantStopDraw(Player player, boolean wantDraw) {
         if (!wantDraw) {
-            OutputView.showCards(blackJackGame.playerDto(player));
+            OutputView.showCards(playerDto(player));
             player.stay();
         }
     }
@@ -93,7 +97,26 @@ public class BlackJackController {
     }
 
     private void showProfitResult(BlackJackGame blackJackGame) {
-        OutputView.showAllCards(blackJackGame.playersDto(), blackJackGame.dealerDto());
+        OutputView.showAllCards(playersDto(blackJackGame.getPlayers()), dealerDto(blackJackGame.getDealer()));
         OutputView.showFinalProfitResult(blackJackGame.profitResult());
+    }
+
+    public List<ParticipantDto> playersDto(Players players) {
+        return players.getPlayers().stream()
+                .map(this::toParticipantDto)
+                .collect(Collectors.toList());
+    }
+
+    private ParticipantDto toParticipantDto(Participant participant) {
+        Cards cards = participant.getCurrentCards();
+        return new ParticipantDto(participant.getName(), cards, cards.calculateScore());
+    }
+
+    private ParticipantDto dealerDto(Dealer dealer) {
+        return toParticipantDto(dealer);
+    }
+
+    private ParticipantDto playerDto(Player player) {
+        return toParticipantDto(player);
     }
 }
