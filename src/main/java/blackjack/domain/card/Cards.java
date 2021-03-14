@@ -7,6 +7,7 @@ import static blackjack.domain.state.BlackJack.BLACKJACK_NUMBER;
 public class Cards {
     private static final String DUPLICATE_CARD_ERROR_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
     private static final int DEALER_DRAW_CONDITION = 16;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -34,7 +35,7 @@ public class Cards {
     }
 
     public boolean isStay() {
-        return cards.size() > 2 && isBlackJack();
+        return cards.size() > BLACKJACK_CARD_SIZE && isBlackJack();
     }
 
     public boolean isWin(Cards cards) {
