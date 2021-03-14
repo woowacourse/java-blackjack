@@ -16,9 +16,10 @@ public class UsersTest {
 
     @BeforeEach
     public void setUp() {
-        users = new Users(new Dealer(), new Players(
-                Arrays.asList("amazzi", "dani", "pobi"),
-                Arrays.asList(10000.0, 10000.0, 20000.0)));
+        users = new Users(new Dealer(), new Players(Arrays.asList(
+                new Player("amazzi", 10000.0),
+                new Player("dani", 10000.0),
+                new Player("pobi", 20000.0))));
     }
 
     @DisplayName("이름별로 참여자들을 생성한다.")

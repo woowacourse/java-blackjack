@@ -1,18 +1,16 @@
 package blackjack.domain.user;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Players {
-    private final List<Player> players = new ArrayList<>();
+    private List<Player> players;
 
-    public Players(List<String> names, List<Double> moneyGroup) {
-        for (int i = 0; i < names.size(); i++) {
-            this.players.add(new Player(names.get(i), moneyGroup.get(i)));
-        }
+    public Players(List<Player> players) {
+        this.players = players;
     }
 
     public List<Player> getPlayers() {
-        return this.players;
+        return Collections.unmodifiableList(this.players);
     }
 }

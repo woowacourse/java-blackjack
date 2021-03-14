@@ -11,8 +11,10 @@ public class PlayersTest {
     @DisplayName("Players 객체를 생성한다.")
     @Test
     public void createPlayers() {
-        Players players = new Players(Arrays.asList("amazzi", "dani", "pobi"),
-                Arrays.asList(10000.0, 10000.0, 20000.0));
+        Players players = new Players(Arrays.asList(
+                new Player("amazzi", 10000.0),
+                new Player("dani", 10000.0),
+                new Player("pobi", 20000.0)));
 
         assertThat(players).isInstanceOf(Players.class);
     }

@@ -27,13 +27,7 @@ public class InputView {
         throw new IllegalArgumentException("구분자는 콤마로 입력해주세요.");
     }
 
-    public static List<Double> inputMoneyGroup(List<String> names) {
-        return names.stream()
-                .map(InputView::inputMoney)
-                .collect(toList());
-    }
-
-    private static double inputMoney(String name) {
+    public static double inputBettingMoney(String name) {
         OutputView.printInputMoney(name);
         String input = deleteWhiteSpaces(SCANNER.nextLine());
         if (input.matches(ONLY_NUMBER)) {

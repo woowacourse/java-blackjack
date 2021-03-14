@@ -11,9 +11,9 @@ public class BlackjackGame {
     private final Users users;
     private final Profit profit;
 
-    public BlackjackGame(List<String> names, List<Double> moneyGroup) {
+    public BlackjackGame(Players players) {
         this.deck = new Deck();
-        this.users = new Users(new Dealer(), new Players(names, moneyGroup));
+        this.users = new Users(new Dealer(), players);
         this.profit = new Profit();
     }
 
