@@ -1,9 +1,11 @@
 package blackjack.domain.card;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
+
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class CardManager {
@@ -26,13 +28,10 @@ public class CardManager {
         return deck.popSingleCard();
     }
 
-    public Players initiateGamers(final List<String> playersNames,
-            final List<Integer> playersMoney) {
-        List<Player> players = IntStream.range(0, playersNames.size())
-                .mapToObj(
-                        i -> new Player(playersNames.get(i), playersMoney.get(i), giveFirstHand()))
-                .collect(Collectors.toList());
-        return new Players(players);
+    public Players initiateGamers(final List<String> playersNames, final List<Integer> playersMoney) {
+        return IntStream.range(0, playersNames.size())
+                .mapToObj(i -> new Player(playersNames.get(i), playersMoney.get(i), giveFirstHand()))
+                .collect(collectingAndThen(toList(), Players::new));
     }
 
     public boolean isEmpty() {
