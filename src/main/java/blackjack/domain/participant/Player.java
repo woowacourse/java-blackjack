@@ -43,20 +43,8 @@ public class Player extends Participant {
         return profit.getProfit();
     }
 
-    public boolean emptyCondition(final Dealer dealer) {
-        return false;
-    }
-
-    public boolean playerBlackJack(final Dealer dealer) {
+    public boolean blackJackWinCondition(final Dealer dealer) {
         return this.isBlackJack() && !dealer.isBlackJack();
-    }
-
-    public boolean dealerBlackJack(final Dealer dealer) {
-        return !this.isBlackJack() && dealer.isBlackJack();
-    }
-
-    public boolean bothBlackJack(final Dealer dealer) {
-        return this.isBlackJack() && dealer.isBlackJack();
     }
 
     public boolean winCondition(final Dealer dealer) {
@@ -65,12 +53,13 @@ public class Player extends Participant {
     }
 
     public boolean lossCondition(final Dealer dealer) {
-        return this.isBust() ||
-                (!dealer.isBust() && this.scoreSmallerThan(dealer));
+        return (!this.isBlackJack() && dealer.isBlackJack()) ||
+                (this.isBust() || (!dealer.isBust() && this.scoreSmallerThan(dealer)));
     }
 
     public boolean drawCondition(final Dealer dealer) {
-        return this.getScore() == dealer.getScore();
+        return (this.isBlackJack() && dealer.isBlackJack()) ||
+                (this.getScore() == dealer.getScore());
     }
 
     private boolean scoreBiggerThan(final Dealer dealer) {
