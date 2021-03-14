@@ -15,7 +15,7 @@ public class Cards {
     }
 
     public Score calculateScore() {
-        Score score = Score.from(0);
+        Score score = Score.of(0);
         for (final Card card : cards) {
             score = score.addScore(card.getScore());
         }
