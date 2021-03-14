@@ -6,7 +6,9 @@ import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.CardDeck;
 import blackjack.domain.carddeck.Number;
 import blackjack.domain.carddeck.Pattern;
+import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.Arrays;
@@ -23,7 +25,10 @@ public class ResultTest {
     @BeforeEach
     void setUp() {
         this.dealer = new Dealer();
-        this.players = new Players(Collections.singletonList("미립"));
+        this.players = new Players(Collections.singletonList(new Player(
+            new Name("미립"),
+            BetAmount.betting(3000)
+        )));
     }
 
     @Test

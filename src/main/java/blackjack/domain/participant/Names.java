@@ -7,10 +7,12 @@ import java.util.stream.Collectors;
 public class Names {
 
     private final List<Name> names;
+    private int index;
 
     public Names(final List<String> names) {
         this.names = convertNames(names);
         validateDuplicate(this.names);
+        this.index = 0;
     }
 
     private List<Name> convertNames(final List<String> names) {
@@ -24,12 +26,24 @@ public class Names {
             .map(Name::getValue)
             .collect(Collectors.toSet());
 
-        if(nameSet.size() != names.size()) {
+        if (nameSet.size() != names.size()) {
             throw new IllegalArgumentException("중복되는 이름은 사용할 수 없습니다.");
         }
     }
 
-    public List<Name> toList() {
-        return this.names;
+    public boolean isDoneAllPlayers() {
+        return this.index == this.names.size();
+    }
+
+    public void passTurnToNext() {
+        this.index += 1;
+    }
+
+    public String getCurrentTurnNameValue() {
+        return getCurrentTurnName().getValue();
+    }
+
+    public Name getCurrentTurnName() {
+        return this.names.get(this.index);
     }
 }

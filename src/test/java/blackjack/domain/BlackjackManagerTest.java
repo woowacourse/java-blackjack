@@ -6,9 +6,14 @@ import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.CardDeck;
 import blackjack.domain.carddeck.Number;
 import blackjack.domain.carddeck.Pattern;
+import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Names;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,12 +27,22 @@ public class BlackjackManagerTest {
     @BeforeEach
     void setUp() {
         this.dealer = new Dealer();
-        this.players = new Players(Arrays.asList("pobi", "jason"));
+        this.players = initPlayers();
         this.blackjackManager = new BlackjackManager(
             getDrawTestCardDeck(),
             this.dealer,
             this.players
         );
+    }
+
+    private Players initPlayers() {
+        List<Player> players = new ArrayList<>();
+        Names names = new Names(Arrays.asList("pobi", "jason"));
+        while(!names.isDoneAllPlayers()){
+            players.add(new Player(names.getCurrentTurnName(), BetAmount.betting(3000)));
+            names.passTurnToNext();
+        }
+        return new Players(players);
     }
 
     private CardDeck getDrawTestCardDeck() {
@@ -102,17 +117,5 @@ public class BlackjackManagerTest {
         this.blackjackManager.hitDealer();
         assertThat(this.blackjackManager.isFinishedDealer()).isTrue();
         assertThat(this.blackjackManager.isDealerScoreOverThenLimit()).isTrue();
-    }
-
-    @Test
-    @DisplayName("모든 플레이어가 베팅을 완료했는지 확인")
-    void testBetAllPlayers() {
-        assertThat(this.blackjackManager.isBetAllPlayers()).isFalse();
-        this.blackjackManager.betCurrentPlayer(1_000);
-        this.blackjackManager.passTurnToNextPlayer();
-        assertThat(this.blackjackManager.isBetAllPlayers()).isFalse();
-        this.blackjackManager.betCurrentPlayer(1_000);
-        this.blackjackManager.passTurnToNextPlayer();
-        assertThat(this.blackjackManager.isBetAllPlayers()).isTrue();
     }
 }

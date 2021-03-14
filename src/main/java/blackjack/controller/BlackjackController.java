@@ -2,39 +2,45 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackManager;
 import blackjack.domain.DtoAssembler;
+import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Names;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.ParticipantDto;
 import blackjack.view.dto.ResultDto;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
 
     public void play() {
-        Dealer dealer = new Dealer();
-        Players players = new Players(InputView.getPlayerNames());
-        BlackjackManager blackjackManager = new BlackjackManager(dealer, players);
-
-        initGame(blackjackManager);
+        BlackjackManager blackjackManager = initBlackjack();
+        initDrawCardsDealerAndAllPlayers(blackjackManager);
         hitOrStayAllPlayers(blackjackManager);
         hitDealerUntilOverLimitScore(blackjackManager);
         printResult(blackjackManager);
     }
 
-    private void initGame(final BlackjackManager blackjackManager) {
-        initBettingAllPlayers(blackjackManager);
-        blackjackManager.readyToPlay();
-        initDrawCardsDealerAndAllPlayers(blackjackManager);
+    private BlackjackManager initBlackjack() {
+        Dealer dealer = new Dealer();
+        Players players = initPlayers(new Names(InputView.getPlayerNames()));
+        return new BlackjackManager(dealer, players);
     }
 
-    private void initBettingAllPlayers(final BlackjackManager blackjackManager) {
-        while(!blackjackManager.isBetAllPlayers()){
-            double betAmount = InputView.getBetAmount(blackjackManager.getCurrentBetPlayerName());
-            blackjackManager.betCurrentPlayer(betAmount);
-            blackjackManager.passTurnToNextPlayer();
+    private Players initPlayers(final Names names) {
+        List<Player> players = new ArrayList<>();
+        while (!names.isDoneAllPlayers()) {
+            players.add(new Player(
+                names.getCurrentTurnName(),
+                BetAmount.betting(InputView.getBetAmount(names.getCurrentTurnNameValue()))
+            ));
+            names.passTurnToNext();
         }
+        return new Players(players);
     }
 
     private void initDrawCardsDealerAndAllPlayers(final BlackjackManager blackjackManager) {

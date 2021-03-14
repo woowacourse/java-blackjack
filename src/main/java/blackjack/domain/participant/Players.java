@@ -13,39 +13,16 @@ public class Players {
     private final List<Player> players;
     private int index;
 
-    public Players(final List<String> names) {
-        this.players = convertToPlayers(names);
+    public Players(final List<Player> players) {
+        this.players = players;
         validatePlayerCount(this.players);
-        validateDuplicate(this.players);
         this.index = 0;
-    }
-
-    private List<Player> convertToPlayers(final List<String> names) {
-        return names.stream()
-            .map(Name::new)
-            .map(Player::new)
-            .collect(Collectors.toList())
-            ;
     }
 
     private void validatePlayerCount(final List<Player> players) {
         if (players.size() > MAX_PLAYER) {
             throw new IllegalArgumentException("최대 참여 플레이어는 " + MAX_PLAYER + "명입니다.");
         }
-    }
-
-    private void validateDuplicate(final List<Player> players) {
-        int setSize = this.players.stream()
-            .map(Player::getName)
-            .collect(Collectors.toSet())
-            .size();
-        if (setSize != players.size()) {
-            throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
-        }
-    }
-
-    public void betCurrentPlayer(final double betAmount) {
-        getCurrentTurnPlayer().betting(betAmount);
     }
 
     public void initDraw(final CardDeck cardDeck) {
@@ -74,10 +51,6 @@ public class Players {
 
     public boolean isAllPlayerDone() {
         return this.index == this.players.size();
-    }
-
-    public void resetIndex() {
-        this.index = 0;
     }
 
     public void passTurnToNextPlayer() {

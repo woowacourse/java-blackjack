@@ -74,23 +74,7 @@ public class BlackjackManager {
         return this.dealer;
     }
 
-    public boolean isBetAllPlayers() {
-        return this.players.isAllPlayerDone();
-    }
-
-    public String getCurrentBetPlayerName() {
-        return this.players.getCurrentPlayerName();
-    }
-
-    public void betCurrentPlayer(final double betAmount) {
-        this.players.betCurrentPlayer(betAmount);
-    }
-
     public void passTurnToNextPlayer() {
         this.players.passTurnToNextPlayer();
-    }
-
-    public void readyToPlay() {
-        this.players.resetIndex();
     }
 }
