@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import static blackjack.domain.card.Rank.ACE_UPPER_VALUE;
+import static blackjack.domain.participant.Dealer.BLACKJACK_HAND_SIZE;
 import static blackjack.domain.participant.Dealer.BLACKJACK_VALUE;
 
 import java.util.ArrayList;
@@ -29,33 +30,30 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return sumAceToOne() > BLACKJACK_VALUE;
-    }
-
-    private int sumAceToOne() {
-        return getTotalByMapper(Card::getRankValue);
+        return getLowerScore() > BLACKJACK_VALUE;
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && getTotalByMapper(this::getAceValue) == 21;
+        return cards.size() == BLACKJACK_HAND_SIZE && getUpperScore() == BLACKJACK_VALUE;
     }
 
-    private int getTotalByMapper(ToIntFunction<Card> mapper) {
+    private int getLowerScore() {
+        return getScoreByMapper(Card::getRankValue);
+    }
+
+    private int getUpperScore() {
+        return getScoreByMapper(Card::getUpperValue);
+    }
+
+    private int getScoreByMapper(ToIntFunction<Card> mapper) {
         return cards.stream()
                 .mapToInt(mapper)
                 .sum();
     }
 
-    private int getAceValue(Card card) {
-        if (card.isAce()) {
-            return ACE_UPPER_VALUE;
-        }
-        return card.getRankValue();
-    }
-
     public int getScore() {
         int aceCount = getCountOfAce();
-        int result = (aceCount * ACE_UPPER_VALUE) + getTotalExceptAce();
+        int result = (aceCount * ACE_UPPER_VALUE) + getScoreWithoutAce();
 
         while (aceCount >= 0 && BLACKJACK_VALUE < result) {
             result -= 10;
@@ -71,7 +69,7 @@ public class Hand {
                 .count();
     }
 
-    private int getTotalExceptAce() {
+    private int getScoreWithoutAce() {
         return cards.stream()
                 .filter(card -> !card.isAce())
                 .mapToInt(Card::getRankValue)

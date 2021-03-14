@@ -20,6 +20,13 @@ public final class Card {
         return rank.getValue();
     }
 
+    public int getUpperValue() {
+        if (isAce()) {
+            return Rank.ACE_UPPER_VALUE;
+        }
+        return rank.getValue();
+    }
+
     public String getSuitName() {
         return suit.getName();
     }

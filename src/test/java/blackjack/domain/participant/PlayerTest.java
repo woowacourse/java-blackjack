@@ -30,14 +30,14 @@ public class PlayerTest {
     }
 
     @ParameterizedTest(name = "플레이어 카드 합계 산출")
-    @MethodSource("getHandTotalTestcase")
-    void getHandTotal(List<Card> cards, int expectedSum) {
+    @MethodSource("getScoreTestcase")
+    void getScore(List<Card> cards, int expectedSum) {
         Player player = new Player(new Name("joy"), new Hand(cards));
 
         assertThat(player.getScore()).isEqualTo(expectedSum);
     }
 
-    private static Stream<Arguments> getHandTotalTestcase() {
+    private static Stream<Arguments> getScoreTestcase() {
         return Stream.of(
                 Arguments.of(createCards(Rank.TWO, Rank.THREE), 5),
                 Arguments.of(createCards(Rank.ACE, Rank.THREE), 14),

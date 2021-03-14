@@ -9,6 +9,7 @@ public class Dealer extends Participant {
 
     public static final Name DEALER_NAME = new Name("딜러");
     public static final int BLACKJACK_VALUE = 21;
+    public static final int BLACKJACK_HAND_SIZE = 2;
     private static final int DEALER_UNDER = 16;
 
     private final Deck deck;
