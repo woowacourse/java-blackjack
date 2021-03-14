@@ -28,7 +28,7 @@ public class CardDeckFactoryTest {
     }
 
     @Test
-    @DisplayName("섞기 전략에 따라서 카드덱을 만들어내면, 그 안에 요소들을 검사한다")
+    @DisplayName("섞기 전략에 따라서 카드덱을 만들어 낸 후, 그 안에 요소들을 검사한다")
     void shuffleStrategyTest() {
         final CardDeck cardDeck = CardDeckFactory.make(new NoShuffleStrategy());
         final List<Card> cards = new LinkedList<>();
