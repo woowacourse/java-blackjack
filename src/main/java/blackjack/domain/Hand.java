@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.util.GameInitializer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class Hand {
 
-    public static final int BUST = 22;
+    private static final int BLACKJACK_NUMBER = 21;
     private static final int DEFAULT_SCORE = 0;
     private final List<Card> hand;
 
@@ -35,7 +36,7 @@ public class Hand {
         return scores.stream()
                 .sorted(Collections.reverseOrder())
                 .map(score -> calculateScore(cardsTail, currentScore + score))
-                .filter(totalScore -> totalScore < BUST)
+                .filter(totalScore -> totalScore <= BLACKJACK_NUMBER)
                 .findFirst()
                 .orElse(calculateScore(cardsTail, currentScore + Collections.min(scores)));
     }
@@ -49,6 +50,10 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return getScore() >= BUST;
+        return getScore() > BLACKJACK_NUMBER;
+    }
+
+    public boolean isBlackJack() {
+        return getScore() == BLACKJACK_NUMBER && hand.size() == GameInitializer.STARTING_CARD_COUNT;
     }
 }

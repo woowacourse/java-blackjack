@@ -17,7 +17,7 @@ import java.util.List;
 
 public class BlackJackController {
 
-    public static void play() throws InvalidNameInputException {
+    public static void play() {
         Deck deck = GameInitializer.initializeDeck();
         Players players = initializePlayers(deck);
         Dealer dealer = GameInitializer.initializeDealer(deck);
@@ -32,11 +32,21 @@ public class BlackJackController {
     private static Players initializePlayers(Deck deck) {
         try {
             OutputView.printInputNames();
-            return GameInitializer.initializePlayers(InputView.inputString(), deck);
+            List<Player> players = createPlayersByNameAndMoney(InputView.inputStringAndSplitByComma());
+            return GameInitializer.initializePlayers(players, deck);
         } catch (InvalidNameInputException e) {
             ErrorView.printErrorMessage(e.getMessage());
             return initializePlayers(deck);
         }
+    }
+
+    private static List<Player> createPlayersByNameAndMoney(List<String> nameInputs) {
+        List<Player> players = new ArrayList<>();
+        for (String name : nameInputs) {
+            OutputView.printInputMoney(name.trim());
+            players.add(new Player(name, InputView.inputString()));
+        }
+        return players;
     }
 
     private static List<BlackJackParticipant> getBlackJackParticipants(Players players, Dealer dealer) {
@@ -74,7 +84,7 @@ public class BlackJackController {
 
     private static void showGameResult(Players players, Dealer dealer, List<BlackJackParticipant> participants) {
         OutputView.printParticipantsStatusWithScore(participants);
-        OutputView.printResult(players.match(dealer));
+        OutputView.printResult(players, dealer);
     }
 }
 

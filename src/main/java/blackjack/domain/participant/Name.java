@@ -14,7 +14,7 @@ public class Name {
         this.value = name;
     }
 
-    private void validateName(String name) throws InvalidNameInputException {
+    private void validateName(String name) {
         if (name == null || name.isEmpty() || !VALID_NAME_FORMAT.matcher(name).matches()) {
             throw new InvalidNameInputException("이름은 한글, 영문 혹은 숫자로 1자 이상 입력해야합니다.");
         }

@@ -1,39 +1,36 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Money;
 import blackjack.domain.Response;
-import blackjack.domain.ResultType;
 import blackjack.domain.card.Card;
-import blackjack.exception.InvalidNameInputException;
 
 public class Player extends BlackJackParticipant {
 
-    public Player(String name) throws InvalidNameInputException {
+    private final Money money;
+
+    public Player(String name, String money) {
         super(name);
+        this.money = new Money(money);
     }
 
     @Override
     public void draw(Card card) {
         getHand().addCard(card);
-        if (isBust()) {
-            cannotDraw();
-        }
+        updateState();
     }
 
     public boolean willContinue(String input) {
         if (!Response.getHitStatus(input)) {
-            cannotDraw();
-            return false;
+            stay();
         }
-        return true;
+        return isContinue();
     }
 
-    public ResultType match(Dealer dealer) {
-        if (isBust()) {
-            return ResultType.LOSE;
-        }
-        if (dealer.isBust()) {
-            return ResultType.WIN;
-        }
-        return ResultType.getResultType(getScore() - dealer.getScore());
+    public double getProfit(Dealer dealer) {
+        return getState().profitRate(dealer, getScore()) * getMoney();
+    }
+
+    public double getMoney() {
+        return money.getValue();
     }
 }

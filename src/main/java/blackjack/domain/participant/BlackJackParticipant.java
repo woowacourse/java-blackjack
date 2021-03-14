@@ -2,7 +2,8 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Hand;
 import blackjack.domain.card.Card;
-import blackjack.exception.InvalidNameInputException;
+import blackjack.domain.state.NotStarted;
+import blackjack.domain.state.State;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -11,12 +12,12 @@ public abstract class BlackJackParticipant {
 
     private final Hand hand;
     private final Name name;
-    private boolean hit;
+    private State state;
 
-    public BlackJackParticipant(String name) throws InvalidNameInputException {
+    public BlackJackParticipant(String name) {
         this.hand = new Hand(new ArrayList<>());
-        this.hit = true;
         this.name = new Name(name);
+        this.state = new NotStarted();
     }
 
     abstract public void draw(Card card);
@@ -33,12 +34,20 @@ public abstract class BlackJackParticipant {
         return name.value();
     }
 
-    protected void cannotDraw() {
-        this.hit = false;
+    public State getState() {
+        return state;
+    }
+
+    protected void updateState() {
+        state = state.update(hand);
+    }
+
+    protected void stay() {
+        state = state.stay();
     }
 
     public boolean isContinue() {
-        return hit;
+        return !state.isFinished();
     }
 
     public boolean isBust() {
