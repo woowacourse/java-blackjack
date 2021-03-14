@@ -8,7 +8,6 @@ import blackjack.domain.gamer.Players;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ProcessDto {
     private final Players players;
@@ -20,9 +19,7 @@ public class ProcessDto {
     }
 
     public List<String> names() {
-        return players.getUnmodifiableList().stream()
-            .map(Player::getName)
-            .collect(Collectors.toList());
+        return players.names();
     }
 
     public Map<String, Cards> cards() {
