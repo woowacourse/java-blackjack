@@ -5,6 +5,8 @@ import java.util.Stack;
 
 public class CardDeck {
 
+    private static final String EMPTY_CARD_ERROR = "[ERROR] 카드를 모두 소진했습니다.";
+
     private final Stack<Card> deck = new Stack<>();
 
     public CardDeck() {
@@ -19,9 +21,8 @@ public class CardDeck {
     }
 
     private void generateCardWithNumber(String cardSymbol) {
-        for (CardNumber numberCandidate : CardNumber.values()) {
-            String cardNumber = numberCandidate.getNumber();
-            deck.add(new Card(cardNumber, cardSymbol));
+        for (CardNumber cardNumber : CardNumber.values()) {
+            deck.add(new Card(cardNumber.getNumber(), cardSymbol));
         }
     }
 
@@ -34,7 +35,7 @@ public class CardDeck {
 
     public Card draw() {
         if (deck.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 카드를 모두 소진했습니다.");
+            throw new IllegalArgumentException(EMPTY_CARD_ERROR);
         }
         return deck.pop();
     }
