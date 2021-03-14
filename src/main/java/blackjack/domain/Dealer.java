@@ -20,7 +20,7 @@ public class Dealer extends Participant {
     public BetAmount calculateFinalBetProfit(List<Player> players) {
         BetAmount finalBetProfit = BetAmount.ZERO;
         for (Player player : players) {
-            finalBetProfit = finalBetProfit.add(player.getBetAmount());
+            finalBetProfit = finalBetProfit.add(player.calculateFinalBetProfit(this));
         }
         return finalBetProfit.toNegative();
     }

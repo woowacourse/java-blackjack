@@ -6,43 +6,18 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static blackjack.domain.Fixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
 
-    private static final List<Card> CARDS_SCORE_19 = Arrays.asList(
-        new Card(Symbol.ACE, Shape.HEART),
-        new Card(Symbol.KING, Shape.HEART),
-        new Card(Symbol.EIGHT, Shape.HEART)
-    );
-    private static final List<Card> CARDS_SCORE_20 = Arrays.asList(
-        new Card(Symbol.ACE, Shape.HEART),
-        new Card(Symbol.KING, Shape.HEART),
-        new Card(Symbol.NINE, Shape.HEART)
-    );
-    private static final List<Card> CARDS_SCORE_21 = Arrays.asList(
-        new Card(Symbol.ACE, Shape.HEART),
-        new Card(Symbol.KING, Shape.HEART),
-        new Card(Symbol.TEN, Shape.HEART)
-    );
-    private static final List<Card> CARDS_SCORE_22 = Arrays.asList(
-        new Card(Symbol.JACK, Shape.HEART),
-        new Card(Symbol.TEN, Shape.HEART),
-        new Card(Symbol.TWO, Shape.HEART)
-    );
-    private static final List<Card> CARDS_SCORE_BLACKJACK = Arrays.asList(
-            new Card(Symbol.ACE, Shape.HEART),
-            new Card(Symbol.KING, Shape.HEART)
-    );
-
     static Stream<Arguments> generateData() {
         return Stream.of(
-            Arguments.of(CARDS_SCORE_20, true),
-            Arguments.of(CARDS_SCORE_21, false)
+                Arguments.of(CARDS_SCORE_20, true),
+                Arguments.of(CARDS_SCORE_21, false)
         );
     }
 
