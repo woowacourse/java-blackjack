@@ -51,7 +51,7 @@ public class Dealer extends Participant {
     }
 
     private Card draw() {
-        return deck.drawCard();
+        return deck.draw();
     }
 
     public Card getOpenCard() {

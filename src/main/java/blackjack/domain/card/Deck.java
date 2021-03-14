@@ -15,7 +15,7 @@ public class Deck {
         this.deck = new ArrayDeque<>(deck);
     }
 
-    public Card drawCard() {
+    public Card draw() {
         return deck.pop();
     }
 
