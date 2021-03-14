@@ -1,12 +1,23 @@
 package blackjack.domain.card;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.NoSuchElementException;
 
 public enum CardNumber {
 
-    TWO("2", 2), THREE("3", 3), FOUR("4", 4), FIVE("5", 5), SIX("6", 6), SEVEN("7", 7),
-    EIGHT("8", 8), NINE("9", 9), TEN("10", 10), J("J", 10), K("K", 10), Q("Q", 10), A("A", 11);
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8),
+    NINE("9", 9),
+    TEN("10", 10),
+    J("J", 10),
+    K("K", 10),
+    Q("Q", 10),
+    A("A", 11);
 
     private final String number;
     private final int value;
@@ -19,8 +30,8 @@ public enum CardNumber {
     public static CardNumber matchByNumber(String input) {
         return Arrays.stream(CardNumber.values())
             .filter(cardNumber -> cardNumber.number.equals(input))
-            .collect(Collectors.toList())
-            .get(0);
+            .findAny()
+            .orElseThrow(NoSuchElementException::new);
     }
 
     public String getNumber() {
