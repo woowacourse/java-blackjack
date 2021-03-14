@@ -7,10 +7,6 @@ import blakcjack.domain.score.Score;
 public class Player extends Participant {
     private final BettingMoney bettingMoney;
 
-    public Player(final String name) {
-        this(name, 0);
-    }
-
     public Player(final String name, final double bettingMoney) {
         super(name);
         this.bettingMoney = new BettingMoney(bettingMoney);

@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Cards {
-    private static final int FIRST_CARD_INDEX = 0;
     private static final int BLACKJACK_COUNT = 2;
 
     private final List<Card> cards;
@@ -56,13 +55,6 @@ public class Cards {
 
     public List<Card> toList() {
         return Collections.unmodifiableList(cards);
-    }
-
-    public List<Card> toListOnlyFirstCard() {
-        if (cards.isEmpty()) {
-            throw new EmptyCardsException();
-        }
-        return Collections.singletonList(cards.get(FIRST_CARD_INDEX));
     }
 
     @Override
