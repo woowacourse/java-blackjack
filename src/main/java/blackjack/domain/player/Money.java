@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Money {
 
-    public static final int INVERS = -1;
+    public static final int INVERSE_SIGN = -1;
     private int money;
 
     public Money(String money) {
@@ -40,7 +40,7 @@ public class Money {
     }
 
     public Money inverseMoney() {
-        return new Money(INVERS * money);
+        return new Money(INVERSE_SIGN * money);
     }
 
     public Money addMoney(Money money) {
