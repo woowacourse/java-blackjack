@@ -64,6 +64,5 @@ class CardsTest {
         assertThat(cards.calculateScore()).isEqualTo(21);
         assertThat(cards.calculateScore()).isNotEqualTo(11);
         assertThat(cards.calculateScore()).isNotEqualTo(31);
-
     }
 }

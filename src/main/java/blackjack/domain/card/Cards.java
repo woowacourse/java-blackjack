@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
-    private static final int BUST_SCORE = 21;
+    private static final int BLACKJACK = 21;
     private static final int ACE_SCORE_CRITERIA = 11;
     private static final int ACE_BONUS_SCORE = 10;
+    private static final int TWO = 2;
 
     private final List<Card> cards;
 
@@ -18,7 +19,7 @@ public class Cards {
 
     public static Cards of(Card... values) {
         List<Card> cards = Arrays.stream(values)
-            .collect(Collectors.toList());
+                .collect(Collectors.toList());
         return new Cards(cards);
     }
 
@@ -42,7 +43,7 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return calculateScore() > BUST_SCORE;
+        return calculateScore() > BLACKJACK;
     }
 
     public List<Card> getCards() {
@@ -55,5 +56,9 @@ public class Cards {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public boolean isBlackjack() {
+        return calculateScore() == BLACKJACK && cards.size() == TWO;
     }
 }

@@ -8,6 +8,8 @@ public class InputView {
     private static final String Y_OR_N_ERROR = "[ERROR] y 또는 n을 입력해주세요.";
     private static final String YES = "y";
     private static final String NO = "n";
+    private static final String INPUT_BETTING_MONEY = "%s의 베팅 금액은?\n";
+    private static final String INVALID_NUMBER_ERROR = "[ERROR] 숫자를 입력해주세요.";
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
@@ -18,7 +20,7 @@ public class InputView {
         return scanner.nextLine().split(",", -1);
     }
 
-    public static boolean inputHitOrStand(String gamerName) {
+    public static boolean inputHitOrStay(String gamerName) {
         System.out.printf(INPUT_HIT_OR_STAND, gamerName);
         String input = scanner.nextLine().toLowerCase();
         validateInput(input);
@@ -28,6 +30,16 @@ public class InputView {
     private static void validateInput(String input) {
         if (!YES.equals(input) && !NO.equals(input)) {
             throw new IllegalArgumentException(Y_OR_N_ERROR);
+        }
+    }
+
+    public static int inputBettingMoney(String gamerName) {
+        try {
+            System.out.println();
+            System.out.printf(INPUT_BETTING_MONEY, gamerName);
+            return Integer.parseInt(scanner.nextLine());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(INVALID_NUMBER_ERROR);
         }
     }
 }

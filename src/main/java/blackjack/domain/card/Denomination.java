@@ -29,9 +29,9 @@ public enum Denomination {
 
     public static Denomination of(String value) {
         return Arrays.stream(Denomination.values())
-            .filter(denomination -> denomination.name.equals(value))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(String.format(NOT_EXIST_ERROR, value)));
+                .filter(denomination -> denomination.name.equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(String.format(NOT_EXIST_ERROR, value)));
     }
 
     public String getName() {
