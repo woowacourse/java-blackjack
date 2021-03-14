@@ -38,7 +38,7 @@ class StatusTest {
         assertThat(Status.compare(dealerBustScore, playerScore)).isEqualTo(Status.WIN);
     }
 
-    @DisplayName("둘 다 버스트 되지 않고 플레이어 점수가 높으 플레이어가 이긴다.")
+    @DisplayName("둘 다 버스트 되지 않고 플레이어 점수가 높은 플레이어가 이긴다.")
     @Test
     void winStatus() {
         Score dealerScore = new Score(18);

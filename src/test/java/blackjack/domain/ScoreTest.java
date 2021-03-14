@@ -36,6 +36,14 @@ class ScoreTest {
         assertThat(score.plusTenIfNotBust()).isEqualTo(new Score(18));
     }
 
+    @DisplayName("특정 점수보다 낮은지 확인한다.")
+    @Test
+    void lower() {
+        Score score = new Score(8);
+        assertThat(score.isLowerThan(3)).isFalse();
+        assertThat(score.isLowerThan(12)).isTrue();
+    }
+
     @DisplayName("점수를 숫자로 반환해준다.")
     @Test
     void scoreToInt() {

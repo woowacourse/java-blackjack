@@ -42,6 +42,14 @@ public class CardsTest {
     }
 
     @Test
+    @DisplayName("리스트에 카드를 한 장 추가한다.")
+    void add() {
+        Cards cards = new Cards();
+        cards.addCard(new Card(Denomination.NINE, Suit.HEART));
+        assertThat(cards.loadCards()).isEqualTo("9하트");
+    }
+
+    @Test
     @DisplayName("리스트에 든 카드(들) 보여준다.")
     void showOne() {
         List<Card> deck = new ArrayList<>(
