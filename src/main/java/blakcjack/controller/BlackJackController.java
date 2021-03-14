@@ -32,7 +32,7 @@ public class BlackJackController {
     public void run() {
         final BlackjackGame blackjackGame = initializeGame();
         final List<Participant> players = blackjackGame.getPlayers();
-        final Dealer dealer = (Dealer) blackjackGame.getDealer();
+        final Participant dealer = blackjackGame.getDealer();
 
         drawInitialCards(blackjackGame);
         printInitialHands(ParticipantsDto.of(dealer, players));
@@ -63,10 +63,10 @@ public class BlackJackController {
     }
 
     private void drawCardsInTurn(final BlackjackGame blackjackGame,
-                                 final List<Participant> players, final Dealer dealer) {
+                                 final List<Participant> players, final Participant dealer) {
         try {
             drawForMaximumCapability(blackjackGame, players);
-            drawForMaximumCapability(blackjackGame, dealer);
+            drawForMaximumCapability(blackjackGame, Dealer.class.cast(dealer));
         } catch (final EmptyDeckException e) {
             printGameClosing(e.getMessage());
             throw new GameTerminationException();
@@ -97,7 +97,7 @@ public class BlackJackController {
         }
     }
 
-    private void notifyFinalSummary(final BlackjackGame blackjackGame, final List<Participant> players, final Dealer dealer) {
+    private void notifyFinalSummary(final BlackjackGame blackjackGame, final List<Participant> players, final Participant dealer) {
         printFinalHandsSummary(ParticipantsDto.of(dealer, players));
 
         final Map<String, Outcome> playersOutcome = blackjackGame.judgePlayersOutcome();
