@@ -1,8 +1,6 @@
-package blackjack;
+package blackjack.utils;
 
-import blackjack.domain.Card;
-import blackjack.utils.CardDeck;
-import blackjack.utils.FixedCardDeck;
+import blackjack.domain.card.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class CardDeckTest {
     @Test
     @DisplayName("카트 뽑기")
-    void pop() {
+    void pop1() {
         CardDeck cardDeck = new FixedCardDeck();
         Card card = cardDeck.pop();
         assertThat(card).isEqualTo(Card.from("A클로버"));
@@ -32,7 +30,7 @@ public class CardDeckTest {
 
     @Test
     @DisplayName("52번 pop empty 확인")
-    void size() {
+    void size1() {
         CardDeck cardDeck = new FixedCardDeck();
 
         for (int i = 0; i < 52; i++) {
@@ -68,7 +66,7 @@ public class CardDeckTest {
 
     @Test
     @DisplayName("초기 2장 확인")
-    void initCards() {
+    void initCards1() {
         CardDeck cardDeck = new FixedCardDeck();
 
         List<Card> cards = cardDeck.initCards();

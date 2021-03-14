@@ -1,9 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.dto.ResultsDto;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -16,14 +20,18 @@ public class OutputView {
 
     public static void printParticipantsCards(Dealer dealer, Players players) {
         System.out.printf("\n%s와 %s에게 2장의 나누었습니다.\n", dealer.getName(), playerNames(players));
-        System.out.println(cardsOf(dealer));
+        System.out.println(halfCardsOf(dealer));
         for (Player player : players.values()) {
             System.out.println(cardsOf(player));
         }
     }
 
+    private static String halfCardsOf(Participant participant) {
+        return participant.getName() + cardsToString(participant.getState().hand().getHalfUnmodifiableList());
+    }
+
     private static String cardsOf(Participant participant) {
-        return participant.getName() + cardsToString(participant.getUnmodifiableCards());
+        return participant.getName() + cardsToString(participant.getState().hand().getUnmodifiableList());
     }
 
     private static String cardsToString(List<Card> cards) {
@@ -39,34 +47,27 @@ public class OutputView {
     }
 
     public static void printDealerGetCard() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printResult(Dealer dealer, Players players) {
-        printParticipantsResults(dealer, players);
-        printWinOrLose(dealer, players);
-    }
-
-    private static void printWinOrLose(Dealer dealer, Players players) {
-        System.out.println("\n## 최종 승패");
-        System.out.println(dealer.getName() + ": " + OutcomesOfDealer(dealer.calculateOutcomes(players)));
-        for (Player player : players.values()) {
-            System.out.println(player.getName() + ": " + player.calculateOutcome(dealer).getWord());
-        }
-    }
-
-    private static String OutcomesOfDealer(Map<Outcome, Integer> dealerOutcomes) {
-        return dealerOutcomes.get(Outcome.WIN) + "승 " + dealerOutcomes.get(Outcome.LOSE) + "패 " + dealerOutcomes.get(Outcome.DRAW) + "무";
-    }
-
-    private static void printParticipantsResults(Dealer dealer, Players players) {
-        System.out.println(resultOf(dealer));
+        System.out.println("\n" + resultOf(dealer));
         for (Player player : players.values()) {
             System.out.println(resultOf(player));
         }
     }
 
+    public static void printProfits(ResultsDto resultsDto) {
+        System.out.println("\n## 최종 수익");
+        System.out.println(resultsDto.getDealerName() + ": " + resultsDto.getDealerProfit());
+        List<String> playersNames = resultsDto.getPlayersNames();
+        List<Double> playersProfits = resultsDto.getPlayersProfits();
+        for (int i = 0; i < resultsDto.getPlayersSize(); i++) {
+            System.out.println(playersNames.get(i) + ": " + playersProfits.get(i));
+        }
+    }
+
     private static String resultOf(Participant participant) {
-        return cardsOf(participant) + " - 결과: " + participant.sumCardsForResult();
+        return cardsOf(participant) + " - 결과: " + participant.getState().hand().softSum();
     }
 }

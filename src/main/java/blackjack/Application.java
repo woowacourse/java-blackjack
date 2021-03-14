@@ -1,8 +1,9 @@
 package blackjack;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.domain.Results;
 import blackjack.utils.CardDeck;
 import blackjack.utils.RandomCardDeck;
 import blackjack.view.InputView;
@@ -14,11 +15,26 @@ public class Application {
         final Dealer dealer = new Dealer(cardDeck.initCards());
         final Players players = new Players(InputView.getNames(), cardDeck);
 
+        setBetMoney(players);
+
         OutputView.printParticipantsCards(dealer, players);
 
         simulate(cardDeck, dealer, players);
 
+        Summerize(dealer, players);
+    }
+
+    private static void Summerize(Dealer dealer, Players players) {
         OutputView.printResult(dealer, players);
+        Results results = new Results(dealer, players);
+        OutputView.printProfits(results.dto());
+    }
+
+    private static void setBetMoney(Players players) {
+        for (Player player : players.values()) {
+            int betMoney = Integer.parseInt(InputView.getBetMoney(player));
+            player.setBetMoney(betMoney);
+        }
     }
 
     private static void simulate(CardDeck cardDeck, Dealer dealer, Players players) {
@@ -26,7 +42,7 @@ public class Application {
             turnForPlayer(cardDeck, player);
         }
 
-        if (dealer.isAvailableToTake()) {
+        while (dealer.isAvailableToTake()) {
             dealer.takeCard(cardDeck.pop());
             OutputView.printDealerGetCard();
         }
