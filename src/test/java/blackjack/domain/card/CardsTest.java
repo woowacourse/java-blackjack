@@ -64,7 +64,7 @@ public class CardsTest {
     @DisplayName("Ace가 섞여 있을 때 최선의 점수를 계산할 수 있다.")
     @ParameterizedTest
     @MethodSource("cardsProvider")
-    void getMaximunScoreTest(int score, Card... cardArray) {
+    void getMaximumScoreTest(int score, Card... cardArray) {
         for (Card card : cardArray) {
             cards.draw(card);
         }
