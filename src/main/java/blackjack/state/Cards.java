@@ -31,20 +31,19 @@ public class Cards {
     }
 
     public Score score() {
-        return checkAce(cardsScoreSum());
+        return cardsScoreSum();
     }
 
     private Score cardsScoreSum() {
-        return new Score(this.values.stream()
+        Score score = new Score(this.values.stream()
                 .mapToInt(Card::getScore)
                 .sum());
-    }
 
-    private Score checkAce(Score score) {
         if (this.values.stream()
-                .anyMatch(Card::isAce) && score.isChangeAceNumber()) {
+                .anyMatch(Card::isAce) && score.isChangeAceNumber()){
             return new Score(score.aceNumberChange());
         }
+
         return score;
     }
 
