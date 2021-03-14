@@ -30,12 +30,10 @@ public class BlackJackGame {
     }
 
     private static Players generatePlayers(List<String> allPlayersName) {
-        Players players = new Players(allPlayersName.stream()
+        return new Players(allPlayersName.stream()
                 .map(Nickname::new)
                 .map(Player::new)
                 .collect(Collectors.toList()));
-        players.bettingEachPlayer();
-        return players;
     }
 
     public void distributeCards() {

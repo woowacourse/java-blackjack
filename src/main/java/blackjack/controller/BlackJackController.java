@@ -19,8 +19,10 @@ public class BlackJackController {
     public void start() {
         try {
             BlackJackGame blackJackGame = new BlackJackGame(playersName());
+            Players players = blackJackGame.getPlayers();
+            bettingPlayers(players);
             distributeCards(blackJackGame);
-            playersTurn(blackJackGame.getPlayers(), blackJackGame);
+            playersTurn(players, blackJackGame);
             dealerTurn(blackJackGame.getDealer(), blackJackGame);
             showProfitResult(blackJackGame);
         } catch (RuntimeException e) {
@@ -39,7 +41,12 @@ public class BlackJackController {
         }
     }
 
-    public static void bettingEachPlayer(Player player) {
+    private void bettingPlayers(Players players) {
+        players.getPlayers()
+                .forEach(this::bettingEachPlayer);
+    }
+
+    public void bettingEachPlayer(Player player) {
         try {
             OutputView.askBettingMoney(player);
             player.betting(new BettingMoney(InputView.inputBettingMoney()));
