@@ -32,4 +32,12 @@ public class CardTest {
         assertThat(card).isEqualTo(sameCard);
         assertThat(card.hashCode()).isEqualTo(sameCard.hashCode());
     }
+
+    @Test
+    @DisplayName("getter에 대한 테스트")
+    void getterTest() {
+        final Card card = new Card(CardLetter.ACE, CardSuit.CLOVER);
+        assertThat(card.getCardLetter()).isEqualTo(CardLetter.ACE);
+        assertThat(card.getCardSuit()).isEqualTo(CardSuit.CLOVER);
+    }
 }
