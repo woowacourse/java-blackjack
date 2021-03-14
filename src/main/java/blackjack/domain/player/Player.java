@@ -46,10 +46,6 @@ public abstract class Player {
         return cards.isTwentyOne();
     }
 
-    public final boolean isNoTwentyOne() {
-        return cards.isNoTwentyOne();
-    }
-
     public final boolean isSameName(Player player) {
         return Objects.equals(this.name(), player.name());
     }

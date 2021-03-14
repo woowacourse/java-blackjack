@@ -61,10 +61,6 @@ public class Cards {
         return totalScore().isTwentyOne();
     }
 
-    public boolean isNoTwentyOne() {
-        return totalScore().isNoTwentyOne();
-    }
-
     public boolean isOnlyTwoCard() {
         return countCards() == 2;
     }

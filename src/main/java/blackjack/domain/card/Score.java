@@ -40,10 +40,6 @@ public class Score {
         return score == BLACK_JACK;
     }
 
-    public boolean isNoTwentyOne() {
-        return score != BLACK_JACK;
-    }
-
     public boolean isBiggerThan(final Score target) {
         return score > target.score;
     }
