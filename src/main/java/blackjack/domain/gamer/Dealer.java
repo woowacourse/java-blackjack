@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Dealer implements Participant {
     public static final String DEALER_NAME = "딜러";
+
     private static final Score MINIMUM_SCORE_OF_TAKING_CARD = Score.of(16);
     private final Cards cards;
 

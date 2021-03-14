@@ -7,12 +7,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class Player implements Participant {
+    private static final String SAMPLE_NAME = "a";
     private final Name name;
     private final Cards cards;
     private final BettingMoney bettingMoney;
 
     public Player() {
-        this("a", new Cards(Collections.emptyList()), new BettingMoney(0));
+        this(SAMPLE_NAME, new Cards(Collections.emptyList()), new BettingMoney(0));
     }
 
     public Player(String name) {
@@ -24,7 +25,7 @@ public class Player implements Participant {
     }
 
     public Player(BettingMoney bettingMoney) {
-        this("a", new Cards(Collections.emptyList()), bettingMoney);
+        this(SAMPLE_NAME, new Cards(Collections.emptyList()), bettingMoney);
     }
 
     public Player(String name, Cards cards) {

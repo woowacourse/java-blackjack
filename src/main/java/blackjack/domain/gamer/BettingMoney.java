@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class BettingMoney {
     public static final BettingMoney ZERO = new BettingMoney(0);
+    private static final String EXCEPTION_NOT_LONG_TYPE = "베팅금액은 소수점이 없는 숫자여야 합니다.";
 
     private final BigDecimal money;
 
@@ -26,7 +27,7 @@ public class BettingMoney {
         if (RegexUtil.isLong(value)) {
             return Long.parseLong(value);
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(EXCEPTION_NOT_LONG_TYPE);
     }
 
     public BettingMoney subtract(BettingMoney value) {

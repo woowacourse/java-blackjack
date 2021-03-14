@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class RandomCardDeck implements CardDeck {
+    private static final String EXCEPTION_RUN_OUT_OF_CARDS = "카드가 소진되었습니다.";
+
     private final Queue<Card> cards;
 
     public RandomCardDeck() {
@@ -29,7 +31,7 @@ public class RandomCardDeck implements CardDeck {
     @Override
     public Card pop() {
         if (isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(EXCEPTION_RUN_OUT_OF_CARDS);
         }
         return cards.poll();
     }

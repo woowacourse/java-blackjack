@@ -22,7 +22,7 @@ public class ResultDto {
         final Map<String, Outcome> results = new LinkedHashMap<>();
 
         for (PlayerResult player : scoreBoard.getUnmodifiableResults()) {
-            results.put(player.getName().toString(), player.getOutcome());
+            results.put(player.getName(), player.getOutcome());
         }
 
         return Collections.unmodifiableMap(results);
@@ -42,7 +42,7 @@ public class ResultDto {
         final Map<String, BigDecimal> results = new LinkedHashMap<>();
 
         for (PlayerResult player : scoreBoard.getUnmodifiableResults()) {
-            results.put(player.getName().toString(), player.getReturnMoney().toBigDecimal());
+            results.put(player.getName(), player.getReturnMoney().toBigDecimal());
         }
 
         return results;

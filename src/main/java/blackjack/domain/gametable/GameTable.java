@@ -31,15 +31,8 @@ public class GameTable {
     }
 
     public void giveCard(Participant participant) {
-        validateRestCards();
         if (participant.isAbleToTake()) {
             participant.takeCard(cardDeck.pop());
-        }
-    }
-
-    private void validateRestCards() {
-        if (cardDeck.isEmpty()) {
-            throw new IllegalArgumentException("카드가 소진되었습니다.");
         }
     }
 
