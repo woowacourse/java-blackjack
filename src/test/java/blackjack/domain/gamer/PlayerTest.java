@@ -16,7 +16,7 @@ public class PlayerTest {
     void create() {
         Participant player = new Player(new Name("john"));
 
-        assertThat(player.getName()).isEqualTo(new Name("john"));
+        assertThat(player.getName()).isEqualTo("john");
     }
 
     @Test
@@ -26,7 +26,7 @@ public class PlayerTest {
         final Cards cards = new Cards(Collections.emptyList());
 
         Participant player = new Player(sarah, cards);
-        assertThat(player.getName()).isEqualTo(sarah);
+        assertThat(player.getName()).isEqualTo("sarah");
     }
 
     @Test
@@ -37,7 +37,7 @@ public class PlayerTest {
         player.takeCard(Card.from(Denominations.KING, Suits.CLOVER));
         player.takeCard(Card.from(Denominations.TWO, Suits.CLOVER));
 
-        assertThat(player.isNotAbleToTake()).isTrue();
+        assertThat(player.isAbleToTake()).isFalse();
     }
 
     @Test
@@ -48,7 +48,7 @@ public class PlayerTest {
         player.takeCard(Card.from(Denominations.KING, Suits.CLOVER));
         player.takeCard(Card.from(Denominations.ACE, Suits.CLOVER));
 
-        assertThat(player.isNotAbleToTake()).isFalse();
+        assertThat(player.isAbleToTake()).isTrue();
     }
 
 

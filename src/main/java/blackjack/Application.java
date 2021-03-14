@@ -6,8 +6,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class Application {
-    public static final String DEALER_NAME = "딜러";
-
     public static void main(String[] args) {
         final Game game = new Game(InputView.requestNameAndMoney());
         OutputView.printParticipantsCards(game.getProcessDto());
@@ -27,8 +25,7 @@ public class Application {
     }
 
     private static void turnForPlayer(Game game, Player player) {
-        while (!player.isNotAbleToTake() && InputView
-            .requestOneMoreCard(player.getName().toString())) {
+        while (player.isAbleToTake() && InputView.requestOneMoreCard(player.getName())) {
             OutputView.printCards(game.turnForPlayer(player));
         }
     }

@@ -32,7 +32,7 @@ public class GameTable {
 
     public void giveCard(Participant participant) {
         validateRestCards();
-        if (!participant.isNotAbleToTake()) {
+        if (participant.isAbleToTake()) {
             participant.takeCard(cardDeck.pop());
         }
     }

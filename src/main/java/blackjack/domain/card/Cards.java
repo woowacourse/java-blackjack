@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
-    public static final Cards EMPTY_CARDS = new Cards(Collections.emptyList());
     private static final int ACE_EXTRA_VALUE = 10;
 
     private final List<Card> cards;

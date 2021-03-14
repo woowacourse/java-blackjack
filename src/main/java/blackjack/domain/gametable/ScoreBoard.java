@@ -23,9 +23,11 @@ public class ScoreBoard {
 
     private List<PlayerResult> playerResults(final Players players) {
         List<PlayerResult> results = new ArrayList<>();
+
         for (Player player : players.getUnmodifiableList()) {
             results.add(new PlayerResult(player, outcomeOfPlayer(player)));
         }
+
         return results;
     }
 
@@ -35,7 +37,7 @@ public class ScoreBoard {
             return blackjackCase(playerScore);
         }
         if (dealerScore.isBurst()) {
-            return burstCase();
+            return Outcome.WIN;
         }
         return compareWith(playerScore);
     }
@@ -45,10 +47,6 @@ public class ScoreBoard {
             return Outcome.DRAW;
         }
         return Outcome.LOSE;
-    }
-
-    private Outcome burstCase() {
-        return Outcome.WIN;
     }
 
     private Outcome compareWith(Score playerScore) {

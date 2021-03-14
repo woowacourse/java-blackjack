@@ -34,9 +34,9 @@ public class Player implements Participant {
     }
 
     @Override
-    public boolean isNotAbleToTake() {
+    public boolean isAbleToTake() {
         final Score score = sumCards();
-        return score.isBurst();
+        return score.isNotBurst();
     }
 
     @Override
@@ -45,8 +45,8 @@ public class Player implements Participant {
     }
 
     @Override
-    public Name getName() {
-        return this.name;
+    public String getName() {
+        return this.name.toString();
     }
 
     @Override

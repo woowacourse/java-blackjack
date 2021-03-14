@@ -6,9 +6,9 @@ import blackjack.domain.card.Score;
 import java.util.List;
 
 public interface Participant {
-    boolean isNotAbleToTake();
+    boolean isAbleToTake();
 
-    Name getName();
+    String getName();
 
     Score sumCards();
 

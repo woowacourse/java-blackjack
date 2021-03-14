@@ -9,17 +9,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerResultTest {
-    private static final Player player = new Player(new Name("better"), new BettingMoney("10000"));
 
     @Test
     void getName() {
+        final Player player = new Player(new Name("better"), new BettingMoney("10000"));
+
         final PlayerResult playerResult = new PlayerResult(player, Outcome.WIN);
-        assertThat(playerResult.getName()).isEqualTo(new Name("better"));
+        assertThat(playerResult.getName()).isEqualTo("better");
     }
 
     @Test
     @DisplayName("이겼을 경우")
     void win_case() {
+        final Player player = new Player(new Name("better"), new BettingMoney("10000"));
+
         final PlayerResult playerResult = new PlayerResult(player, Outcome.WIN);
 
         assertThat(playerResult.getReturnMoney()).isEqualTo(new BettingMoney(15000));
@@ -29,6 +32,8 @@ class PlayerResultTest {
     @Test
     @DisplayName("비겼을 경우")
     void draw_case() {
+        final Player player = new Player(new Name("better"), new BettingMoney("10000"));
+
         final PlayerResult playerResult = new PlayerResult(player, Outcome.DRAW);
 
         assertThat(playerResult.getReturnMoney()).isEqualTo(new BettingMoney(10000));
@@ -38,6 +43,8 @@ class PlayerResultTest {
     @Test
     @DisplayName("졌을 경우")
     void lose_case() {
+        final Player player = new Player(new Name("better"), new BettingMoney("10000"));
+
         final PlayerResult playerResult = new PlayerResult(player, Outcome.LOSE);
 
         assertThat(playerResult.getReturnMoney()).isEqualTo(new BettingMoney(0));

@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.Application;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gametable.Outcome;
 import blackjack.dto.ProcessDto;
@@ -28,7 +28,7 @@ public class OutputView {
     public static void printParticipantsCards(ProcessDto processDto) {
         final String joinedNames = String.join(", ", processDto.names());
 
-        System.out.printf("\n%s와 %s에게 2장의 나누었습니다.\n", Application.DEALER_NAME, joinedNames);
+        System.out.printf("\n%s와 %s에게 2장의 나누었습니다.\n", Dealer.DEALER_NAME, joinedNames);
 
         for (Entry<String, Cards> value : processDto.cards().entrySet()) {
             System.out.println(value.getKey() + cardsToString(value.getValue()));
@@ -44,7 +44,7 @@ public class OutputView {
     }
 
     public static void printDealerGetCard() {
-        System.out.println("\n" + Application.DEALER_NAME + "는 16이하라 한장의 카드를 더 받았습니다.\n");
+        System.out.println("\n" + Dealer.DEALER_NAME + "는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
     public static void printCardsResult(ProcessDto processDto) {
@@ -68,7 +68,7 @@ public class OutputView {
     }
 
     private static void printDealerOutcome(Map<Outcome, Integer> dealerInfo) {
-        System.out.println(Application.DEALER_NAME + ": "
+        System.out.println(Dealer.DEALER_NAME + ": "
             + dealerInfo.get(Outcome.LOSE) + "승"
             + dealerInfo.get(Outcome.WIN) + "패"
             + dealerInfo.get(Outcome.DRAW) + "무"
@@ -84,7 +84,7 @@ public class OutputView {
     }
 
     private static void printDealerProfit(ResultDto resultDto) {
-        System.out.println(Application.DEALER_NAME + ": " + resultDto.summarizeDealerProfit());
+        System.out.println(Dealer.DEALER_NAME + ": " + resultDto.summarizeDealerProfit());
     }
 
     private static void printPlayersProfit(ResultDto resultDto) {

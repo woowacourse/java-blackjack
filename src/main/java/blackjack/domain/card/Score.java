@@ -49,6 +49,10 @@ public class Score implements Comparable<Score> {
         return compareTo(counterpart) > 0;
     }
 
+    public boolean isEqualAndLessThan(Score counterpart) {
+        return compareTo(counterpart) <= 0;
+    }
+
     public boolean isSameAs(Score counterpart) {
         return compareTo(counterpart) == 0;
     }

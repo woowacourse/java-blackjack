@@ -30,7 +30,7 @@ public class DealerTest {
             Card.from(Suits.CLOVER, Denominations.KING));
         Participant dealer = new Dealer(new Cards(cards));
 
-        assertThat(dealer.isNotAbleToTake()).isTrue();
+        assertThat(dealer.isAbleToTake()).isFalse();
     }
 
 }

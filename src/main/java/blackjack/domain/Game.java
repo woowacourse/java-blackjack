@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Cards;
 import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Name;
@@ -13,7 +12,6 @@ import blackjack.domain.utils.RandomCardDeck;
 import blackjack.dto.ProcessDto;
 import blackjack.dto.ResultDto;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Game {
@@ -23,17 +21,19 @@ public class Game {
 
     public Game(List<String> participantsInfo) {
         List<Player> playersValue = getPlayerList(participantsInfo);
-        this.dealer = new Dealer(new Cards(Collections.emptyList()));
+        this.dealer = new Dealer();
         this.players = new Players(playersValue);
         this.gameTable = new GameTable(dealer, players, new RandomCardDeck());
     }
 
     private List<Player> getPlayerList(List<String> participantsInfo) {
         List<Player> playersValue = new ArrayList<>();
+
         for (String nameAndMoney : participantsInfo) {
             final String[] infos = nameAndMoney.split(",");
             playersValue.add(new Player(new Name(infos[0]), new BettingMoney(infos[1])));
         }
+
         return playersValue;
     }
 

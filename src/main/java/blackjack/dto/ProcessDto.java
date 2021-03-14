@@ -1,6 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
@@ -20,20 +21,16 @@ public class ProcessDto {
 
     public List<String> names() {
         return players.getUnmodifiableList().stream()
-            .map(participant -> participant.getName().toString())
+            .map(Player::getName)
             .collect(Collectors.toList());
-    }
-
-    public String dealerName() {
-        return dealer.getName().toString();
     }
 
     public Map<String, Cards> cards() {
         final Map<String, Cards> results = new LinkedHashMap<>();
 
-        results.put(dealer.getName().toString(), dealer.getCards());
+        results.put(Dealer.DEALER_NAME, dealer.getCards());
         for (Player player : players.getUnmodifiableList()) {
-            results.put(player.getName().toString(), player.getCards());
+            results.put(player.getName(), player.getCards());
         }
 
         return results;

@@ -1,6 +1,5 @@
 package blackjack.domain.gamer;
 
-import blackjack.Application;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
@@ -8,37 +7,32 @@ import java.util.Collections;
 import java.util.List;
 
 public class Dealer implements Participant {
+    public static final String DEALER_NAME = "딜러";
     private static final Score MINIMUM_SCORE_OF_TAKING_CARD = Score.of(16);
-    private final Name name;
     private final Cards cards;
 
     public Dealer() {
-        this(new Name(Application.DEALER_NAME), new Cards(Collections.emptyList()));
+        this(new Cards(Collections.emptyList()));
     }
 
     public Dealer(Cards cards) {
-        this(new Name(Application.DEALER_NAME), cards);
-    }
-
-    public Dealer(Name name, Cards cards) {
-        this.name = name;
         this.cards = cards;
     }
 
     @Override
-    public boolean isNotAbleToTake() {
+    public boolean isAbleToTake() {
         final Score score = sumCards();
-        return score.isHigherThan(MINIMUM_SCORE_OF_TAKING_CARD);
+        return score.isEqualAndLessThan(MINIMUM_SCORE_OF_TAKING_CARD);
+    }
+
+    @Override
+    public String getName() {
+        return DEALER_NAME;
     }
 
     @Override
     public void takeCard(Card card) {
         cards.takeCard(card);
-    }
-
-    @Override
-    public Name getName() {
-        return this.name;
     }
 
     @Override
