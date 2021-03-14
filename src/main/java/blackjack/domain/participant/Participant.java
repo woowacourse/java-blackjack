@@ -6,6 +6,7 @@ import blackjack.domain.participant.state.HandState;
 import blackjack.domain.participant.state.InitialState;
 import blackjack.domain.result.Result;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public abstract class Participant {
