@@ -3,8 +3,6 @@ package blackjack.domain.gametable;
 import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.utils.CardDeck;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameTable {
     private final Participant dealer;
@@ -19,15 +17,10 @@ public class GameTable {
     }
 
     private void initCards() {
-        List<Participant> participants = new ArrayList<>();
-        participants.add(dealer);
-        participants.addAll(players.getUnmodifiableList());
+        dealer.takeCard(cardDeck.pop());
+        dealer.takeCard(cardDeck.pop());
 
-        for (Participant participant : participants) {
-            participant.takeCard(cardDeck.pop());
-            participant.takeCard(cardDeck.pop());
-        }
-
+        players.takeTwoCards(cardDeck);
     }
 
     public void giveCard(Participant participant) {

@@ -3,7 +3,6 @@ package blackjack.dto;
 import blackjack.domain.card.Cards;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Participant;
-import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,9 +25,7 @@ public class ProcessDto {
         final Map<String, Cards> results = new LinkedHashMap<>();
 
         results.put(Dealer.DEALER_NAME, dealer.getCards());
-        for (Player player : players.getUnmodifiableList()) {
-            results.put(player.getName(), player.getCards());
-        }
+        results.putAll(players.cards());
 
         return results;
     }

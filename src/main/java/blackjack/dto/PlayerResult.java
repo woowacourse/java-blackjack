@@ -1,7 +1,8 @@
-package blackjack.domain.gametable;
+package blackjack.dto;
 
 import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.gametable.Outcome;
 
 public class PlayerResult {
     private final String name;

@@ -1,12 +1,12 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Score;
 import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.gametable.GameTable;
-import blackjack.domain.gametable.ScoreBoard;
 import blackjack.domain.utils.RandomCardDeck;
 import blackjack.dto.ProcessDto;
 import blackjack.dto.ResultDto;
@@ -54,7 +54,8 @@ public class Game {
     }
 
     public ResultDto getResultDto() {
-        return new ResultDto(new ScoreBoard(dealer, players));
+        final Score dealerScore = dealer.sumCardsForResult();
+        return new ResultDto(dealerScore, players.resultOfPlayers(dealerScore));
     }
 
 }
