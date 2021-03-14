@@ -51,8 +51,8 @@ public class OutputView {
         System.out.println();
     }
 
-    private static String makeCardStringFormat(Dealer dealer) {
-        return String.format("%s 카드 : %s", dealer.getName(), createCardsStringFormat(Arrays.asList(dealer.getCards().get(0))));
+    private static String makeCardStringFormat(User user) {
+        return String.format("%s 카드 : %s", user.getName(), createCardsStringFormat(Arrays.asList(user.getCards().get(0))));
     }
 
     public static String makeCardsStringFormat(User user) {
@@ -81,7 +81,7 @@ public class OutputView {
         }
     }
 
-    private static void printDealerResult(List<Player> players, Dealer dealer) {
+    private static void printDealerResult(List<Player> players, User dealer) {
 
         int dealerTotalMoney = dealer.getBettingMoney();
 

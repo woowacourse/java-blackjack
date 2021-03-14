@@ -1,6 +1,7 @@
 package blackjack.state;
 
 import blackjack.domain.Dealer;
+import blackjack.domain.User;
 import blackjack.domain.card.Card;
 
 public abstract class Finished extends Started {
@@ -25,9 +26,9 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public double profit(double money, Dealer dealer) {
+    public double profit(double money, User dealer) {
         return money * earningRate(dealer);
     }
 
-    public abstract double earningRate(Dealer dealer);
+    public abstract double earningRate(User dealer);
 }

@@ -33,8 +33,8 @@ public class Users {
         return Collections.unmodifiableList(this.users);
     }
 
-    public Dealer getDealer() {
-        return (Dealer) this.users.stream()
+    public User getDealer() {
+        return this.users.stream()
                 .filter(User::isDealer)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("딜러가 존재하지 않습니다."));

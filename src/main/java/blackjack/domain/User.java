@@ -83,7 +83,7 @@ public abstract class User {
         return this.state.isFinished();
     }
 
-    public double profit(int bettingMoney, Dealer dealer) {
+    public double profit(int bettingMoney, User dealer) {
         return this.state.profit(bettingMoney, dealer);
     }
 }
