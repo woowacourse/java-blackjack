@@ -23,11 +23,10 @@ public class Players {
     }
 
     private void validateDuplicate(final List<Player> players) {
-        final boolean duplicate = (int) players.stream()
-                .distinct()
-                .count() != players.size();
+        final boolean allUnique = players.stream()
+                .allMatch(new HashSet<>()::add);
 
-        if (duplicate) {
+        if (!allUnique) {
             throw new IllegalArgumentException("입력된 플레이어의 이름이 중복됩니다.");
         }
     }
