@@ -17,6 +17,9 @@ public class CardDeckFactory {
         }
     }
 
+    private CardDeckFactory() {
+    }
+
     public static CardDeck make(final ShuffleStrategy shuffleStrategy) {
         return new CardDeck(shuffleStrategy.shuffle(cards));
     }
