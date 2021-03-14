@@ -6,19 +6,20 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.*;
 
 public class Deck {
-    private final Deque<Card> deck;
+    private static final List<Card> CARDS;
 
-    public Deck() {
-        this.deck = new ArrayDeque<>(setUpDeck());
-    }
+    private final Deque<Card> deck = new ArrayDeque<>();
 
-    private List<Card> setUpDeck() {
-        List<Card> cards = Arrays.stream(Shape.values())
+    static {
+        CARDS = Arrays.stream(Shape.values())
                 .flatMap(shape -> Arrays.stream(Value.values())
                         .map(value -> new Card(shape, value)))
                 .collect(toList());
-        Collections.shuffle(cards);
-        return cards;
+    }
+
+    public Deck() {
+        Collections.shuffle(CARDS);
+        this.deck.addAll(CARDS);
     }
 
     public Cards popTwo() {
