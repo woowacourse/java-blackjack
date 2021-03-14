@@ -26,7 +26,12 @@ public abstract class User {
         }
     }
 
-    public void hit(Card firstCard, Card secondCard) {
+    public void initialHit(Card firstCard, Card secondCard) {
+        if(this.isDealer()){
+            this.state = StateFactory.dealerDraw(firstCard, secondCard);
+            return;
+        }
+
         this.state = StateFactory.draw(firstCard, secondCard);
     }
 

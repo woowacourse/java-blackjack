@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+    private static final int DEALER_REDRAW_STANDARD = 17;
+
     private final List<Card> values;
 
     public Cards(final List<Card> values) {
@@ -44,5 +46,9 @@ public class Cards {
             return new Score(score.aceNumberChange());
         }
         return score;
+    }
+
+    public boolean isOverDrawScore() {
+        return this.score().getScore() >= DEALER_REDRAW_STANDARD;
     }
 }

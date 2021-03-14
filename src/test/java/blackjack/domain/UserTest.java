@@ -21,7 +21,7 @@ class UserTest {
     void hitCard() {
         User user = new Player("youngE");
 
-        user.hit(Fixture.CLUBS_KING, Fixture.CLUBS_TEN);
+        user.initialHit(Fixture.CLUBS_KING, Fixture.CLUBS_TEN);
 
         assertThat(user.getCards()).hasSize(2);
     }
@@ -49,7 +49,7 @@ class UserTest {
     @Test
     void checkScore() {
         User user = new Player("youngE");
-        user.hit(Fixture.CLUBS_TEN, Fixture.CLUBS_KING);
+        user.initialHit(Fixture.CLUBS_TEN, Fixture.CLUBS_KING);
 
         assertThat(user.getScore()).isEqualTo(20);
     }
@@ -58,7 +58,7 @@ class UserTest {
     @Test
     void isBust() {
         User user = new Player("youngE");
-        user.hit(Fixture.CLUBS_TEN, Fixture.CLUBS_KING);
+        user.initialHit(Fixture.CLUBS_TEN, Fixture.CLUBS_KING);
         user.hit(Fixture.CLUBS_TWO);
 
         assertTrue(user.isBust());
@@ -68,7 +68,7 @@ class UserTest {
     @Test
     void isBlackJackTrueTest() {
         User user = new Player("youngE");
-        user.hit(Fixture.CLUBS_ACE, Fixture.CLUBS_TEN);
+        user.initialHit(Fixture.CLUBS_ACE, Fixture.CLUBS_TEN);
 
         assertTrue(user.isBlackJack());
     }
@@ -77,7 +77,7 @@ class UserTest {
     @Test
     void isBlackJackFalseTest() {
         User user = new Player("youngE");
-        user.hit(Fixture.CLUBS_KING, Fixture.CLUBS_TWO);
+        user.initialHit(Fixture.CLUBS_KING, Fixture.CLUBS_TWO);
 
         assertFalse(user.isBlackJack());
     }
@@ -86,7 +86,7 @@ class UserTest {
     @Test
     void isFinished() {
         User user = new Player("youngE");
-        user.hit(Fixture.CLUBS_KING, Fixture.CLUBS_TWO);
+        user.initialHit(Fixture.CLUBS_KING, Fixture.CLUBS_TWO);
 
         assertFalse(user.isFinished());
     }

@@ -12,7 +12,7 @@ public class DealerTest {
     void check16() {
         Dealer dealer = new Dealer();
 
-        dealer.hit(Fixture.CLUBS_TEN, Fixture.CLUBS_TWO);
+        dealer.initialHit(Fixture.CLUBS_TEN, Fixture.CLUBS_TWO);
 
         assertTrue(dealer.isDealerDrawScore());
     }
@@ -22,7 +22,7 @@ public class DealerTest {
     void check17() {
         Dealer dealer = new Dealer();
 
-        dealer.hit(Fixture.CLUBS_KING, Fixture.CLUBS_TEN);
+        dealer.initialHit(Fixture.CLUBS_KING, Fixture.CLUBS_TEN);
 
         assertFalse(dealer.isDealerDrawScore());
     }

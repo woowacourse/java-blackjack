@@ -24,14 +24,14 @@ public class BlackJackController {
     }
 
     public void run() {
-        if (dealer.isBlackJack()) {
+        if (dealer.isFinished()) {
             users.stay();
             OutputView.printResult(users);
             return;
         }
         users.getPlayers().forEach(this::playGameForEachPlayer);
 
-        while (dealer.isDealerDrawScore()) {
+        while (!dealer.isFinished()) {
             dealer.hit(cardDeck.drawCard());
             OutputView.printDealerGetNewCardsMessage();
         }
