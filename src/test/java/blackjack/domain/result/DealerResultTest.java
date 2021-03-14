@@ -27,7 +27,7 @@ public class DealerResultTest {
         player3 = new Player(Name.of("player3"), Money.of(10000));
         player4 = new Player(Name.of("player4"), Money.of(10000));
 
-        results = Results.of(new HashMap<Player, ResultType>(){
+        results = Results.of(new HashMap<Player, ResultType>() {
             {
                 put(player1, ResultType.BLACKJACK_WIN);
                 put(player2, ResultType.WIN);

@@ -38,7 +38,7 @@ public class ResultsTest {
     @ParameterizedTest
     @MethodSource("resultProvider")
     void computeProfitTest(ResultType resultType, int profit) {
-        Results results = Results.of(new HashMap<Player, ResultType>(){
+        Results results = Results.of(new HashMap<Player, ResultType>() {
             {
                 put(player, resultType);
             }

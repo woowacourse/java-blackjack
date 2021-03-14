@@ -67,7 +67,6 @@ public class OutputView {
         System.out.println(makeCardsStringFormat(user));
     }
 
-
     private static String createUsersCardStringFormat(List<? extends User> users) {
         return users.stream()
                 .map(User::getName)
