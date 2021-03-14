@@ -33,14 +33,6 @@ public enum MatchRule {
                 .orElseThrow(() -> new IllegalArgumentException("조건에 맞는 승부 결과가 없습니다."));
     }
 
-    private static boolean isPlayerBust(Player player, Dealer dealer) {
-        return player.isBust();
-    }
-
-    private static boolean isOnlyDealerBust(Player player, Dealer dealer) {
-        return !player.isBust() && dealer.isBust();
-    }
-
     private static boolean isOnlyPlayerBlackJack(Player player, Dealer dealer) {
         return player.isBlackJack() && !dealer.isBlackJack();
     }
@@ -52,6 +44,15 @@ public enum MatchRule {
     private static boolean isBothBlackJack(Player player, Dealer dealer) {
         return player.isBlackJack() && dealer.isBlackJack();
     }
+
+    private static boolean isPlayerBust(Player player, Dealer dealer) {
+        return player.isBust();
+    }
+
+    private static boolean isOnlyDealerBust(Player player, Dealer dealer) {
+        return !player.isBust() && dealer.isBust();
+    }
+
     private static boolean isPlayerScoreHigher(Player player, Dealer dealer) {
         return player.getScore() > dealer.getScore();
     }
