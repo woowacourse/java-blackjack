@@ -1,8 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.scoreboard.DealerGameResult;
-import blackjack.domain.scoreboard.UserGameResult;
+import blackjack.domain.scoreboard.GameResult;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
@@ -22,20 +21,27 @@ public class BlackjackGameController {
         blackjackGame.processDealerRound();
         OutputView.printDealerMoreDrawMessage();
 
-        DealerGameResult dealerGameResult = blackjackGame.createDealerGameResult();
-        UserGameResult userGameResult = blackjackGame.createUserGameResult();
-
-        printParticipantsCardsAndScore(dealerGameResult, userGameResult);
-        printFinalWinOrLose(dealerGameResult, userGameResult);
+        printParticipantsCardsAndScore(blackjackGame);
+        printFinalProfit(blackjackGame.createGameResult());
     }
 
     private static BlackjackGame startGameAndFirstDraw() {
         try {
             Users users = Users.from(askUserNames());
+            askUserMoney(users);
             return BlackjackGame.createAndFirstDraw(users);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
             return startGameAndFirstDraw();
+        }
+    }
+
+    private static void askUserMoney(Users users) {
+        try {
+            users.toList().forEach(user -> user.batMoney(InputView.askPlayersMoney(user)));
+        } catch (Exception e) {
+            OutputView.printMessage(e.getMessage());
+            askUserMoney(users);
         }
     }
 
@@ -75,7 +81,7 @@ public class BlackjackGameController {
     private static void askHitOrStay(User user, BlackjackGame blackjackGame) {
         try {
             boolean hitOrStay = InputView.askMoreDraw(user.getName());
-            userDrawOrStop(user, hitOrStay, blackjackGame);
+            blackjackGame.userDrawOrStop(user, hitOrStay);
             printUserCurrentCards(user);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
@@ -83,28 +89,19 @@ public class BlackjackGameController {
         }
     }
 
-    private static void userDrawOrStop(User user, boolean hitOrStay, BlackjackGame blackjackGame) {
-        if (hitOrStay) {
-            blackjackGame.drawCardToUser(user);
-            return;
-        }
-        user.stopUser();
-    }
-
     private static void printUserCurrentCards(User currentUser) {
         OutputView.printCardList(currentUser);
     }
 
-    private void printParticipantsCardsAndScore(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
-        OutputView.printCardListAndScore(dealerGameResult.getDealer());
+    private void printParticipantsCardsAndScore(BlackjackGame blackjackGame) {
+        OutputView.printCardListAndScore(blackjackGame.getDealer());
 
-
-        userGameResult.getUserSet().forEach(OutputView::printCardListAndScore);
+        blackjackGame.getUsers().forEach(OutputView::printCardListAndScore);
         OutputView.println();
     }
 
-    private void printFinalWinOrLose(DealerGameResult dealerGameResult, UserGameResult userGameResult) {
-        OutputView.printFinalDealerWinOrLose(dealerGameResult, userGameResult);
-        OutputView.printFinalUserWinOrLose(userGameResult);
+    private void printFinalProfit(GameResult gameResult) {
+        OutputView.printFinalDealerProfit(gameResult);
+        OutputView.printFinalUserProfit(gameResult);
     }
 }

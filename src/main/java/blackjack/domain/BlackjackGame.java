@@ -2,10 +2,10 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.scoreboard.DealerGameResult;
-import blackjack.domain.scoreboard.UserGameResult;
-import blackjack.domain.scoreboard.WinOrLose;
+import blackjack.domain.scoreboard.GameResult;
+import blackjack.domain.scoreboard.Profit;
 import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Participant;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 
@@ -43,14 +43,18 @@ public class BlackjackGame {
         }
     }
 
-    public void processDealerRound() {
-        while (dealerScoreUnderSixTeen()) {
-            drawCardToDealer();
+    public void userDrawOrStop(User user, boolean hitOrStay) {
+        if (hitOrStay) {
+            drawCardToUser(user);
+            return;
         }
+        user.stayUser();
     }
 
-    public boolean dealerScoreUnderSixTeen() {
-        return dealer.calculateScore() < DEALER_MINIMUM_SCORE;
+    public void processDealerRound() {
+        while (dealer.calculateScore() < DEALER_MINIMUM_SCORE) {
+            drawCardToDealer();
+        }
     }
 
     public List<String> getUserNames() {
@@ -59,31 +63,27 @@ public class BlackjackGame {
                 .collect(Collectors.toList());
     }
 
-    public UserGameResult createUserGameResult() {
-        Map<User, WinOrLose> userResult = users.toList().stream()
+    public GameResult createGameResult() {
+        Map<User, Double> userResult = users.toList().stream()
                 .collect(toMap(
                         Function.identity(),
-                        this::makeUserWinOrLose,
+                        this::makeUserProfit,
                         (existed, newer) -> newer,
                         LinkedHashMap::new));
 
-        return new UserGameResult(userResult);
+        return new GameResult(userResult);
     }
 
-    private WinOrLose makeUserWinOrLose(User user) {
-        return WinOrLose.decideWinOrLose(user, dealer);
+    private double makeUserProfit(User user) {
+        return user.getMoney() * Profit.decideProfit(user, dealer).getProfit();
     }
 
-    public void drawCardToDealer() {
+    private void drawCardToDealer() {
         dealer.drawCard(deck.draw());
     }
 
-    public void drawCardToUser(User user) {
+    private void drawCardToUser(User user) {
         user.drawCard(deck.draw());
-    }
-
-    public DealerGameResult createDealerGameResult() {
-        return new DealerGameResult(dealer, dealer.getCards());
     }
 
     public Card getDealerFirstCard() {
@@ -92,5 +92,9 @@ public class BlackjackGame {
 
     public List<User> getUsers() {
         return Collections.unmodifiableList(users.toList());
+    }
+
+    public Participant getDealer() {
+        return dealer;
     }
 }

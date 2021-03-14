@@ -1,5 +1,8 @@
 package blackjack.view;
 
+import blackjack.domain.user.Money;
+import blackjack.domain.user.User;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -13,6 +16,7 @@ public class InputView {
     private static final String YES = "y";
     private static final String NO = "n";
     private static final String ANSWER_MUST_BE_YES_OR_NO_ERROR_MSG_FORMAT = "%s 또는 %s 로 입력해주세요.";
+    public static final String ASK_PLAYERS_MONEY_MSG = "의 배팅 금액은?";
 
     public static List<String> askPlayersName() {
         System.out.println(ASK_PLAYERS_NAME_MSG);
@@ -40,4 +44,11 @@ public class InputView {
         throw new IllegalArgumentException(String.format(ANSWER_MUST_BE_YES_OR_NO_ERROR_MSG_FORMAT, YES, NO));
     }
 
+
+    public static Money askPlayersMoney(User user) {
+        System.out.println();
+        System.out.println(user.getName() + ASK_PLAYERS_MONEY_MSG);
+
+        return Money.from(SCANNER.nextLine());
+    }
 }
