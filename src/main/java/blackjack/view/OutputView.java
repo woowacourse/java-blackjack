@@ -38,7 +38,6 @@ public class OutputView {
 
     public static void printFinalRevenue(final RevenueInfoDto info) {
         System.out.println(makeRevenueInfo(info));
-        printLineSeparator();
     }
 
     private static String makeRevenueInfo(final RevenueInfoDto info) {

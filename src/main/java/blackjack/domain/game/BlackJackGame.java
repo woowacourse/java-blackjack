@@ -15,28 +15,18 @@ public class BlackJackGame {
 
     private final Deck deck = new Deck();
     private final Dealer dealer = new Dealer();
-    private final Gamblers gamblers;
+    private final Gamblers gamblers = new Gamblers();
 
-    public BlackJackGame(final String nameLine) {
-        gamblers = initGamblerWithNames(splitAndParseToNames(nameLine));
-        distributeInitialCards();
+    public BlackJackGame() {
+
     }
 
-    private List<Name> splitAndParseToNames(final String nameLine) {
-        return Arrays.asList(nameLine.split(SEPARATOR_OF_NAME_INPUT))
-                .stream()
-                .map(Name::new)
-                .collect(Collectors.toList());
+    public void addPlayer(final Gambler newGambler, final int bettingMoney) {
+        gamblers.add(newGambler);
+        dealer.takeMoney(newGambler, new Money(bettingMoney));
     }
 
-    private Gamblers initGamblerWithNames(final List<Name> names) {
-        final List<Gambler> gamblers = names.stream()
-                .map(Gambler::new)
-                .collect(Collectors.toList());
-        return new Gamblers(gamblers);
-    }
-
-    private void distributeInitialCards() {
+    public void distributeInitialCards() {
         giveCards(dealer, NUMBER_OF_INITIAL_CARDS);
         for (final Gambler gambler : gamblers) {
             giveCards(gambler, NUMBER_OF_INITIAL_CARDS);
@@ -50,10 +40,6 @@ public class BlackJackGame {
 
     public void giveCard(final Player player) {
         player.receiveCard(deck.draw());
-    }
-
-    public void bet(final Gambler gambler, final int money) {
-        dealer.takeMoney(gambler, new Money(money));
     }
 
     public void checkBlackJack() {

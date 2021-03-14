@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WinningResult {
-    Map<Player, WinOrLose> winningTable = new HashMap<>();
+    final Map<Player, WinOrLose> winningTable = new HashMap<>();
 
     public void add(final Player player, final WinOrLose winOrLose) {
         winningTable.put(player, winOrLose);

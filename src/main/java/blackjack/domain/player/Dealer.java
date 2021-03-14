@@ -11,10 +11,6 @@ public class Dealer implements Player {
     private final Cards cards = new Cards();
     private Money money = Money.emptyMoney;
 
-    public boolean ableToDraw() {
-        return cards.calculateScore().isBelow(LIMIT_SCORE_TO_HIT);
-    }
-
     public void giveWinningMoney(final Gambler gambler) {
         Money bettingMoney = gambler.getBettingMoney();
         Money winningMoney = bettingMoney.add(bettingMoney);
@@ -63,6 +59,16 @@ public class Dealer implements Player {
         final Money bettingMoney = gambler.getBettingMoney();
         final Money winningMoney = bettingMoney.add(bettingMoney.multiply(1.5));
         giveMoney(gambler, winningMoney);
+    }
+
+    @Override
+    public boolean ableToDraw() {
+        return cards.calculateScore().isBelow(LIMIT_SCORE_TO_HIT);
+    }
+
+    @Override
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     @Override

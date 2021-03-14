@@ -12,6 +12,10 @@ public class Gambler implements Player {
         this.name = name;
     }
 
+    public Gambler(final String name) {
+        this.name = new Name(name);
+    }
+
     public void earn(final Money money) {
         this.money = this.money.add(money);
     }
@@ -22,6 +26,16 @@ public class Gambler implements Player {
 
     public Money getBettingMoney() {
         return money.abs();
+    }
+
+    @Override
+    public boolean ableToDraw() {
+        return !(cards.isBust() && cards.isBlackJack());
+    }
+
+    @Override
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     @Override

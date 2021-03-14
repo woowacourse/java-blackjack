@@ -13,4 +13,8 @@ public interface Player {
     boolean hasBlackJack();
 
     int getMoneyValue();
+
+    boolean isBust();
+
+    boolean ableToDraw();
 }

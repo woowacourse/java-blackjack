@@ -4,50 +4,50 @@ import blackjack.domain.CardInfoDto;
 import blackjack.domain.RevenueInfoDto;
 import blackjack.domain.YesOrNo;
 import blackjack.domain.game.BlackJackGame;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Gamblers;
-import blackjack.domain.player.Player;
+import blackjack.domain.player.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.List;
 
 public class BlackJackController {
 
     public void run() {
-        final BlackJackGame game = new BlackJackGame(InputView.askPlayerNames());
+        final BlackJackGame game = new BlackJackGame();
+        addPlayers(game);
 
-        askGamblerBet(game);
+        game.distributeInitialCards();
         showInitialCards(game.getDealer(), game.getGamblers());
 
         drawAdditionalCards(game);
         showGameResult(game);
     }
 
-    private void askGamblerBet(final BlackJackGame game) {
-        for (final Gambler gambler : game.getGamblers()) {
-            game.bet(gambler, InputView.askBettingMoney(gambler));
+    private void addPlayers(final BlackJackGame game) {
+        final String nameLine = InputView.askPlayerNames();
+        for (final String name : nameLine.split(",")) {
+            game.addPlayer(new Gambler(name), InputView.askBettingMoney(name));
         }
-        game.checkBlackJack();
     }
 
     private void showInitialCards(final Dealer dealer, final Gamblers gamblers) {
         OutputView.printDistributeResult(gamblers.getNames());
         OutputView.printPlayerCardsInformation(new CardInfoDto(dealer));
 
-        for (final Player gambler : gamblers) {
+        for (final Gambler gambler : gamblers) {
             OutputView.printPlayerCardsInformation(new CardInfoDto(gambler));
         }
     }
 
     private void drawAdditionalCards(final BlackJackGame game) {
-        for (final Player gambler : game.getGamblers()) {
+        for (final Gambler gambler : game.getGamblers()) {
             askGamblerDraw(game, gambler);
         }
         giveDealerCards(game);
     }
 
-    private void askGamblerDraw(final BlackJackGame game, final Player gambler) {
-        while (YesOrNo.isYes(InputView.askDrawOrNot(gambler))) {
+    private void askGamblerDraw(final BlackJackGame game, final Gambler gambler) {
+        while (gambler.ableToDraw() && YesOrNo.isYes(InputView.askDrawOrNot(gambler.getNameValue()))) {
             game.giveCard(gambler);
             OutputView.printPlayerCardsInformation(new CardInfoDto(gambler));
         }
@@ -62,6 +62,7 @@ public class BlackJackController {
     }
 
     private void showGameResult(final BlackJackGame game) {
+        game.checkBlackJack();
         game.calculateMoney();
         showPlayerCards(game.getDealer(), game.getGamblers());
         showFinalRevenue(game.getDealer(), game.getGamblers());

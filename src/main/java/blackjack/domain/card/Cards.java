@@ -44,6 +44,10 @@ public class Cards {
         return calculateScore().isBlackJack();
     }
 
+    public boolean isBust() {
+        return calculateScore().isBust();
+    }
+
     public List<Card> getCards() {
         return new ArrayList<>(cards);
     }

@@ -5,12 +5,11 @@ import java.util.Objects;
 public class Score {
     private static final int EXTRA_SCORE_USING_ACE = 10;
     private static final int BLACK_JACK = 21;
-
-    private static final Score[] scores = new Score[30];
+    private static final Score[] SCORES = new Score[30];
 
     static {
-        for (int i = 0; i < scores.length; i++) {
-            scores[i] = new Score(i);
+        for (int i = 0; i < SCORES.length; i++) {
+            SCORES[i] = new Score(i);
         }
     }
 
@@ -25,8 +24,8 @@ public class Score {
     }
 
     public static Score from(final int score) {
-        if (score < scores.length && scores[score] != null) {
-            return scores[score];
+        if (score < SCORES.length && SCORES[score] != null) {
+            return SCORES[score];
         }
 
         return new Score(score);

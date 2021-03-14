@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 public class Gamblers implements Iterable<Gambler> {
     private final List<Gambler> gamblers;
 
+    public Gamblers() {
+        gamblers = new ArrayList<>();
+    }
+
     public Gamblers(final List<Gambler> gamblers) {
         this.gamblers = new ArrayList<>(gamblers);
     }
@@ -16,6 +20,10 @@ public class Gamblers implements Iterable<Gambler> {
         return gamblers.stream()
                 .map(gambler -> gambler.getNameValue())
                 .collect(Collectors.toList());
+    }
+
+    public void add(Gambler gambler) {
+        gamblers.add(gambler);
     }
 
     @Override

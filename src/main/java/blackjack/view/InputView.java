@@ -15,13 +15,13 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static String askDrawOrNot(final Player player) {
-        OutputView.printMessage(player.getNameValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public static String askDrawOrNot(final String playerName) {
+        OutputView.printMessage(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return SCANNER.nextLine();
     }
 
-    public static int askBettingMoney(final Player player) {
-        OutputView.printMessage(player.getNameValue() + "의 배팅 금액은?");
+    public static int askBettingMoney(final String playerName) {
+        OutputView.printMessage(playerName + "의 배팅 금액은?");
         return Integer.parseInt(SCANNER.nextLine());
     }
 }
