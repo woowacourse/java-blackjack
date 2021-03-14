@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserGameResultTest {
+public class GameResultTest {
     private Map<User, Double> temp;
     private User first;
     private User second;
@@ -40,20 +40,29 @@ public class UserGameResultTest {
     @DisplayName("유저 게임 결과 생성 테스트")
     @Test
     void testUserGameResult() {
-        UserGameResult userGameResult = new UserGameResult(temp);
+        GameResult gameResult = new GameResult(temp);
         Set<User> userSet = new HashSet<>(Arrays.asList(first, second, third, fourth));
 
-        assertThat(userGameResult.getUserSet()).isEqualTo(userSet);
+        assertThat(gameResult.getUserSet()).isEqualTo(userSet);
     }
 
     @Test
     void testGetUserProfit() {
-        UserGameResult userGameResult = new UserGameResult(temp);
-        Set<Double> userProfits = new HashSet<>();
+        GameResult gameResult = new GameResult(temp);
+        List<Double> userProfits = new ArrayList<>();
         userProfits.add(-1D);
-        userProfits.add(0D);
+        userProfits.add(-1D);
         userProfits.add(1D);
+        userProfits.add(0D);
 
-        assertThat(userGameResult.getUserProfit().collect(Collectors.toSet())).isEqualTo(userProfits);
+        assertThat(gameResult.getUserProfit().collect(Collectors.toList())).isEqualTo(userProfits);
+    }
+
+    @DisplayName("딜러 수익률 테스트")
+    @Test
+    void testCalculateDealerProfit() {
+        GameResult gameResult = new GameResult(temp);
+
+        assertThat(gameResult.calculateDealerProfit()).isEqualTo(1);
     }
 }
