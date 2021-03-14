@@ -40,7 +40,7 @@ public abstract class Participant {
     }
 
     public String getName() {
-        return name.getName();
+        return name.toString();
     }
 
     public boolean isNotStatus(Status status) {

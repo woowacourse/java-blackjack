@@ -23,7 +23,7 @@ public class Name {
         }
     }
 
-    public String getName() {
+    public String toString() {
         return name;
     }
 
