@@ -25,7 +25,7 @@ public enum EarningRate {
         return Arrays.stream(values())
                 .filter(matchedFilter(outcome, isBlackJack))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 EarningRate 타입을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalEarningRateException());
     }
 
     private static Predicate<EarningRate> matchedFilter(final Outcome outcome, final boolean isBlackJack) {
