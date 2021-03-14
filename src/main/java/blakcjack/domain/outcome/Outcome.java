@@ -14,4 +14,8 @@ public enum Outcome {
     public String getValue() {
         return value;
     }
+
+    public boolean isWin() {
+        return equals(WIN);
+    }
 }
