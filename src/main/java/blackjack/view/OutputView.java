@@ -17,6 +17,7 @@ public class OutputView {
     private static final String DEALER_CARD_STATUS_FORMAT = "%s: %s";
     private static final String PLAYER_CARD_STATUS_FORMAT = "%s카드: %s";
     private static final String CARD_RESULT_FORMAT = "%s카드: %s - 결과: %d";
+    private static final String BLACKJACK_MESSAGE = "축하합니다 %s! 블랙잭입니다.";
     private static final String BUST_MESSAGE = "카드의 합이 21을 넘어, 게임에서 패배하였습니다.";
     private static final String DEALER_MORE_CARD_MESSAGE = "%s는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String GAME_RESULT_MESSAGE = "## 최종 승패";
@@ -101,6 +102,12 @@ public class OutputView {
         for (Player player : playerResult.keySet()) {
             System.out.println(player.getName() + ": " + playerResult.get(player).getResult());
         }
+    }
+
+    public static void showBlackjackMessage(final Player player) {
+        showNewLine();
+        System.out.printf(BLACKJACK_MESSAGE, player.getName());
+        showNewLine();
     }
 
     public static void showBustMessage() {

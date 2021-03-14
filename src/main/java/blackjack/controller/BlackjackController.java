@@ -50,9 +50,17 @@ public class BlackjackController {
     }
 
     private void progressSinglePlayerGame(final CardDeck cardDeck, final Player player) {
-        while (!player.isBust() && InputView.requestMoreCard(player)) {
+        while (!player.isBlackjack() && !player.isBust() && InputView.requestMoreCard(player)) {
             player.receiveAdditionalCard(cardDeck.distribute());
             OutputView.showPlayerCard(player);
+        }
+        showSinglePlayerResult(player);
+    }
+
+    private void showSinglePlayerResult(Player player) {
+        if (player.isBlackjack()) {
+            OutputView.showBlackjackMessage(player);
+            return;
         }
         if (player.isBust()) {
             OutputView.showBustMessage();
