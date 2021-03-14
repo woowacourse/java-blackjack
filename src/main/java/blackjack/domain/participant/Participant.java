@@ -2,13 +2,15 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.participant.state.HandState;
+import blackjack.domain.participant.state.InitialState;
 import blackjack.domain.result.Result;
 
 import java.util.Objects;
 
 public abstract class Participant {
     protected final String name;
-    protected final Hand hand;
+    protected HandState hand;
     protected Money money;
 
     public Participant(final String name, final int money) {
@@ -16,7 +18,7 @@ public abstract class Participant {
         validateMoney(money);
         this.name = name;
         this.money = new Money(money);
-        this.hand = new Hand();
+        this.hand = new InitialState();
     }
 
     private void validateName(final String name) {
@@ -32,12 +34,12 @@ public abstract class Participant {
     }
 
     public final void receiveInitialCard(final CardDeck cardDeck) {
-        hand.add(cardDeck.distribute());
-        hand.add(cardDeck.distribute());
+        hand = hand.add(cardDeck.distribute());
+        hand = hand.add(cardDeck.distribute());
     }
 
     public final void receiveAdditionalCard(final Card card) {
-        hand.add(card);
+        hand = hand.add(card);
     }
 
     public final boolean isBust() {
@@ -60,7 +62,7 @@ public abstract class Participant {
         return name;
     }
 
-    public final Hand getHand() {
+    public final HandState getHand() {
         return hand;
     }
 }
