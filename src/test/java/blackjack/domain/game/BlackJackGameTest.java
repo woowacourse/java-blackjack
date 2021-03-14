@@ -17,7 +17,6 @@ public class BlackJackGameTest {
 
     @BeforeEach
     void beforeEach() {
-        //given
         Gambler gambler1 = new Gambler("pobi", new Money(10000));
         Gambler gambler2 = new Gambler("jason", new Money(20000));
         Gamblers gamblers = new Gamblers(Arrays.asList(gambler1, gambler2));
@@ -33,7 +32,7 @@ public class BlackJackGameTest {
 
         //then
         assertThat(blackJackGame.getDealer().cards().countCards()).isEqualTo(2);
-        blackJackGame.getGamblers().gamblers().forEach(gambler -> assertThat(gambler.cards().countCards()).isEqualTo(2));
+        blackJackGame.Gamblers().getGamblers().forEach(gambler -> assertThat(gambler.cards().countCards()).isEqualTo(2));
     }
 
     @Test
@@ -46,10 +45,10 @@ public class BlackJackGameTest {
         blackJackGame.giveGamblerCard(targetGambler);
 
         //then
-        assertThat(blackJackGame.getGamblers().gamblers().stream()
+        assertThat(blackJackGame.Gamblers().getGamblers().stream()
                 .filter(gambler -> gambler.isSameName(targetGambler))
                 .findFirst()
-                .get()
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름의 겜블러가 없습니다."))
                 .cards()
                 .countCards()).isEqualTo(1);
     }

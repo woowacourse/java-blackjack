@@ -14,7 +14,6 @@ public class GamblerTest {
 
     @BeforeEach
     void beforeEach() {
-        //given
         gambler = new Gambler("pobi", new Money(10000));
     }
 

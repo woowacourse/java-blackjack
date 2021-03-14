@@ -19,7 +19,6 @@ public class ResultTest {
 
     @BeforeEach
     void beforeEach() {
-        //given
         dealer = new Dealer();
         dealer.cards().add(Card.of(Suit.SPADE, Denomination.JACK));
         dealer.cards().add(Card.of(Suit.SPADE, Denomination.TEN));
@@ -43,26 +42,72 @@ public class ResultTest {
     }
 
     @Test
-    @DisplayName("딜러와 겜블러 수익률 테스트")
+    @DisplayName("딜러가 이겼을 때 수익률 테스트")
     void testCalculateProfit() {
         //given
-        Gambler gambler2 = new Gambler("jason", new Money(20000));
-        gambler2.cards().add(Card.of(Suit.HEART, Denomination.JACK));
-        gambler2.cards().add(Card.of(Suit.HEART, Denomination.TEN));
-        WinOrLose winOrLose2 = WinOrLose.calculateGamblerWinOrNot(dealer, gambler2);
-        Gambler gambler3 = new Gambler("croffle", new Money(30000));
-        gambler3.cards().add(Card.of(Suit.HEART, Denomination.NINE));
-        gambler3.cards().add(Card.of(Suit.HEART, Denomination.TEN));
-        WinOrLose winOrLose3 = WinOrLose.calculateGamblerWinOrNot(dealer, gambler3);
-        result.add(gambler2, winOrLose2);
-        result.add(gambler3, winOrLose3);
+        Gambler gambler = new Gambler("jason", new Money(20000));
+        gambler.cards().add(Card.of(Suit.HEART, Denomination.JACK));
+        gambler.cards().add(Card.of(Suit.HEART, Denomination.NINE));
+        WinOrLose winOrLose2 = WinOrLose.calculateGamblerWinOrNot(dealer, gambler);
+
+        result.add(gambler, winOrLose2);
 
         //when
         result.calculateProfit();
 
         //then
-        assertThat(dealer.money()).isEqualTo(new Money(30000));
-        assertThat(gambler2.money()).isEqualTo(new Money(0));
-        assertThat(gambler3.money()).isEqualTo(new Money(-30000));
+        assertThat(dealer.money()).isEqualTo(new Money(20000));
+    }
+
+    @Test
+    @DisplayName("겜블러가 졌을 때 수익률 테스트")
+    void testCalculateProfit2() {
+        //given
+        Gambler gambler = new Gambler("croffle", new Money(30000));
+        gambler.cards().add(Card.of(Suit.HEART, Denomination.NINE));
+        gambler.cards().add(Card.of(Suit.HEART, Denomination.TEN));
+        WinOrLose winOrLose3 = WinOrLose.calculateGamblerWinOrNot(dealer, gambler);
+        result.add(gambler, winOrLose3);
+
+        //when
+        result.calculateProfit();
+
+        //then
+        assertThat(gambler.money()).isEqualTo(new Money(-30000));
+    }
+
+    @Test
+    @DisplayName("겜블러가 이겼을 때 수익률 테스트")
+    void testCalculateProfit3() {
+        //given
+        Gambler gambler = new Gambler("croffle", new Money(30000));
+        gambler.cards().add(Card.of(Suit.HEART, Denomination.JACK));
+        gambler.cards().add(Card.of(Suit.HEART, Denomination.TEN));
+        gambler.cards().add(Card.of(Suit.HEART, Denomination.ACE));
+        WinOrLose winOrLose3 = WinOrLose.calculateGamblerWinOrNot(dealer, gambler);
+        result.add(gambler, winOrLose3);
+
+        //when
+        result.calculateProfit();
+
+        //then
+        assertThat(gambler.money()).isEqualTo(new Money(30000));
+    }
+
+    @Test
+    @DisplayName("겜블러가 블랙잭일 때 수익률 테스트")
+    void testCalculateProfit4() {
+        //given
+        Gambler gambler = new Gambler("croffle", new Money(30000));
+        gambler.cards().add(Card.of(Suit.HEART, Denomination.ACE));
+        gambler.cards().add(Card.of(Suit.HEART, Denomination.TEN));
+        WinOrLose winOrLose3 = WinOrLose.calculateGamblerWinOrNot(dealer, gambler);
+        result.add(gambler, winOrLose3);
+
+        //when
+        result.calculateProfit();
+
+        //then
+        assertThat(gambler.money()).isEqualTo(new Money(45000));
     }
 }

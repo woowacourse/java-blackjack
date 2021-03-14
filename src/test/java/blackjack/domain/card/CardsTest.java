@@ -12,7 +12,6 @@ public class CardsTest {
 
     @BeforeEach
     void setUp() {
-        //given
         cards = new Cards();
     }
 
