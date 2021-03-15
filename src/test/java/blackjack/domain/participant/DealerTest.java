@@ -3,24 +3,32 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
     
-    @Test
-    @DisplayName("카드 합이 조건값 이하라면 뽑아야 한다")
-    void shouldReceive_LessThanOrEqualToThreshold_ShouldReceive() {
-        
-        // given
-        Dealer dealer = Dealer.create();
+    private Dealer dealer;
+    
+    @BeforeEach
+    void setUp() {
+        dealer = Dealer.create();
         Card firstCard = new Card(Suit.CLOVER, Rank.TEN);
         Card secondCard = new Card(Suit.CLOVER, Rank.SIX);
         
         dealer.receive(firstCard);
         dealer.receive(secondCard);
+    }
+    
+    @Test
+    @DisplayName("카드 합이 조건값 이하라면 뽑아야 한다")
+    void shouldReceive_LessThanOrEqualToThreshold_ShouldReceive() {
         
         // when
         boolean shouldReceive = dealer.canReceive();
@@ -34,12 +42,8 @@ public class DealerTest {
     void shouldReceive_LessThanThreshold_ShouldNotReceive() {
         
         // given
-        Dealer dealer = Dealer.create();
-        Card firstCard = new Card(Suit.CLOVER, Rank.TEN);
-        Card secondCard = new Card(Suit.CLOVER, Rank.SEVEN);
-        
-        dealer.receive(firstCard);
-        dealer.receive(secondCard);
+        Card card = new Card(Suit.CLOVER, Rank.ACE);
+        dealer.receive(card);
         
         // when
         boolean shouldReceive = dealer.canReceive();
@@ -53,8 +57,6 @@ public class DealerTest {
     void deal() {
         
         // given
-        Dealer dealer = Dealer.create();
-    
         BettingMoney bettingMoney = BettingMoney.from("0");
         Player player = Player.of("pobi", bettingMoney);
         
@@ -63,5 +65,31 @@ public class DealerTest {
         
         // then
         assertThat(player.getCards()).hasSize(1);
+    }
+    
+    @Test
+    void calculateProfit() {
+        
+        // given
+        final BettingMoney bettingMoney = BettingMoney.from("1000");
+        Player jason = Player.of("jason", bettingMoney);
+        jason.receive(new Card(Suit.CLOVER, Rank.TEN));
+        jason.receive(new Card(Suit.CLOVER, Rank.NINE));
+    
+        Player cu = Player.of("cu", bettingMoney);
+        cu.receive(new Card(Suit.SPADE, Rank.TEN));
+        cu.receive(new Card(Suit.SPADE, Rank.FIVE));
+    
+        Player pobi = Player.of("pobi", bettingMoney);
+        pobi.receive(new Card(Suit.HEART, Rank.TEN));
+        pobi.receive(new Card(Suit.HEART, Rank.ACE));
+    
+        List<Player> players = Arrays.asList(jason, cu, pobi);
+        
+        // when
+        double profit = dealer.calculateProfit(players);
+        
+        // then
+        assertThat(profit).isEqualTo(-1000 + 1000 + -1500);
     }
 }

@@ -24,7 +24,7 @@ public class Player extends Participant {
         return sumCardHand() < BLACKJACK_SCORE;
     }
     
-    public BettingMoney getBettingMoney() {
-        return bettingMoney;
+    public double calculateProfit(Dealer dealer) {
+        return bettingMoney.calculateProfitOfPlayer(dealer, this);
     }
 }
