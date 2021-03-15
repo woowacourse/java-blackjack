@@ -6,6 +6,8 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 
+import java.util.List;
+
 public class GameTable {
     public static final String PLAYER_WANT_MORE_CARD = "Y";
 
@@ -40,5 +42,9 @@ public class GameTable {
 
     public Players getPlayers() {
         return this.players;
+    }
+
+    public List<Player> getEveryPlayer() {
+        return this.players.getPlayers();
     }
 }

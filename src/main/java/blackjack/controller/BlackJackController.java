@@ -61,7 +61,7 @@ public class BlackJackController {
     }
 
     private void askPlayersToHit(GameTable gameTable) {
-        gameTable.getPlayers().getPlayers()
+        gameTable.getEveryPlayer()
                 .forEach(player -> askHit(gameTable, player));
     }
 
