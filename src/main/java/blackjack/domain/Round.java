@@ -87,12 +87,18 @@ public class Round {
         AbstractUser dealer = getDealer();
         List<AbstractUser> players = getPlayers();
         List<BigDecimal> profits = getProfits(dealer, players);
-        result.put(dealer.getName(), BigDecimal.valueOf(profits.stream().mapToInt(profit -> -profit.intValue()).sum()));
+        result.put(dealer.getName(), BigDecimal.valueOf(getDealerProfit(profits)));
 
         players.forEach(player ->
                 result.put(player.getName(), profits.remove(FIRST_INDEX))
         );
         return result;
+    }
+
+    private int getDealerProfit(List<BigDecimal> profits) {
+        return profits.stream()
+                .mapToInt(profit -> -profit.intValue())
+                .sum();
     }
 
     private AbstractUser findPlayer(AbstractUser player) {
