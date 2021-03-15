@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProfitResultTest {
 
-    ProfitResult profitResult;
+    private ProfitResult profitResult;
     @BeforeEach
     void setUp() {
         Map<String, Double> result = new HashMap<>();
