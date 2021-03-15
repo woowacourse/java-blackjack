@@ -3,7 +3,6 @@ package blackjack.domain.user;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.UserDeck;
 import blackjack.domain.money.Money;
-import blackjack.exception.BlackJackException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +17,11 @@ public class Players {
             Money betMoney = betCapital.get(i);
             players.add(new Player(playerName, initialRandomUserDeck, betMoney));
         }
+    }
+
+    public void drawOnePlayer(CardDeck cardDeck, int playerIndex) {
+        Player targetPlayer = players.get(playerIndex);
+        targetPlayer.draw(cardDeck.draw());
     }
 
     public int size() {

@@ -28,8 +28,7 @@ public class BlackJackGame {
     }
 
     public void drawOnePlayer(int playerIndex) {
-        Player player = getPlayers().getPlayer(playerIndex);
-        player.draw(entireCardDeck.draw());
+        participants.drawOnePlayer(entireCardDeck, playerIndex);
     }
 
     public GameResult getDealerResult() {
