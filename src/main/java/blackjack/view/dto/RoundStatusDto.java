@@ -48,5 +48,4 @@ public class RoundStatusDto {
     public List<Card> getSingleDealerCards() {
         return Collections.singletonList(dealerCards.get(0));
     }
-
 }

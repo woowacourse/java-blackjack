@@ -8,7 +8,6 @@ public abstract class AbstractUser {
     private State state;
     private final BigDecimal bettingMoney;
 
-
     protected AbstractUser(State state, BigDecimal bettingMoney) {
         validateMoney(bettingMoney);
         this.state = state;
@@ -30,6 +29,10 @@ public abstract class AbstractUser {
     public abstract String getName();
 
     public abstract boolean canDraw();
+
+    public abstract boolean isDealer();
+
+    public abstract boolean isPlayer();
 
     private void validateMoney(BigDecimal bettingMoney) {
         if (bettingMoney.intValue() < 0) {

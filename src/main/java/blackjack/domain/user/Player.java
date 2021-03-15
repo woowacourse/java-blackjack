@@ -24,12 +24,6 @@ public class Player extends AbstractUser {
         this.name = name;
     }
 
-    private void validate(final String name) {
-        if (!PATTERN.matcher(name).matches()) {
-            throw new IllegalArgumentException(String.format(PLAYER_WRONG_NAME_EXCEPTION_MESSAGE, name));
-        }
-    }
-
     @Override
     public String getName() {
         return name;
@@ -40,6 +34,15 @@ public class Player extends AbstractUser {
         return !getState().isFinish();
     }
 
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
+    public boolean isPlayer() {
+        return true;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -52,5 +55,11 @@ public class Player extends AbstractUser {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    private void validate(final String name) {
+        if (!PATTERN.matcher(name).matches()) {
+            throw new IllegalArgumentException(String.format(PLAYER_WRONG_NAME_EXCEPTION_MESSAGE, name));
+        }
     }
 }

@@ -36,22 +36,14 @@ public class Users {
 
     public AbstractUser getDealer() {
         return users.stream()
-                .filter(this::isDealer)
+                .filter(AbstractUser::isDealer)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 유저입니다."));
     }
 
     public List<AbstractUser> getPlayers() {
         return users.stream()
-                .filter(this::isPlayer)
+                .filter(AbstractUser::isPlayer)
                 .collect(Collectors.toList());
-    }
-
-    private boolean isDealer(AbstractUser abstractUser) {
-        return abstractUser instanceof Dealer;
-    }
-
-    private boolean isPlayer(AbstractUser abstractUser) {
-        return abstractUser instanceof Player;
     }
 }
