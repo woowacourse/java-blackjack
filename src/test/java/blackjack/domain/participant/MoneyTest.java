@@ -11,7 +11,7 @@ public class MoneyTest {
 
 	@BeforeEach
 	void setUp() {
-		money = new Money(1000);
+		money = Money.of(1000);
 	}
 
 	@Test

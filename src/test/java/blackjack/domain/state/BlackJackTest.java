@@ -53,7 +53,7 @@ class BlackJackTest {
 	void calculateWinnerProfit() {
 		Dealer dealer = new Dealer();
 		dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SEVEN));
-		assertEquals(150, state.makeProfit(dealer, new Money(100)));
+		assertEquals(150, state.makeProfit(dealer, Money.of(100)));
 	}
 
 	@Test

@@ -3,17 +3,17 @@ package blackjack.domain.participant;
 public class Player extends Gamer {
 	private Money money;
 
-	public Player(String name) {
+	public Player(String name, int money) {
 		super(name);
+		this.money = Money.of(money);
 	}
 
-	public void makeProfit(double askMoney) {
-		this.money = new Money(askMoney);
+	public void makeMoney(double askMoney) {
+		this.money = Money.of(askMoney);
 	}
 
-	public Money calculateProfit(Dealer dealer) {
+	public void calculateProfit(Dealer dealer) {
 		money = Money.of(playerState.makeProfit(dealer, money));
-		return money;
 	}
 
 	@Override

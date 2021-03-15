@@ -19,7 +19,7 @@ public class Players {
 	private List<Player> createPlayers(List<String> value) {
 		List<Player> splitPlayers = new ArrayList<>();
 		for (String name : value) {
-			splitPlayers.add(new Player(name));
+			splitPlayers.add(new Player(name, 0));
 		}
 		return splitPlayers;
 	}
@@ -33,8 +33,8 @@ public class Players {
 
 	public int calculateProfits(Dealer dealer) {
 		int total = players.stream()
-			.map(player -> player.calculateProfit(dealer))
-			.map(Money::getMoney)
+			.peek(player -> player.calculateProfit(dealer))
+			.map(Player::getMoney)
 			.reduce(0, Integer::sum);
 		return total * -1;
 	}

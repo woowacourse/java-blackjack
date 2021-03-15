@@ -18,7 +18,7 @@ public class PlayerTest {
 
 	@BeforeEach
 	void setUp() {
-		player = new Player("pobi");
+		player = new Player("pobi", 0);
 		Card first = new Card(CardPattern.CLOVER, CardNumber.KING);
 		Card second = new Card(CardPattern.HEART, CardNumber.THREE);
 		player.playerState = StateFactory.drawTwoCards(first, second);
@@ -30,7 +30,7 @@ public class PlayerTest {
 		String input = "pobi, jason";
 		assertThatThrownBy(() -> {
 			for (String name : input.split(",")) {
-				new Player(name);
+				new Player(name, 0);
 			}
 		}).isInstanceOf(IllegalArgumentException.class);
 	}
@@ -75,7 +75,7 @@ public class PlayerTest {
 		dealer.playerState = StateFactory.drawTwoCards(new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
 			new Card(CardPattern.DIAMOND, CardNumber.TEN));
 		player.receiveCard(new Card(CardPattern.HEART, CardNumber.TEN));
-		player.makeProfit(1000);
+		player.makeMoney(1000);
 		player.calculateProfit(dealer);
 		assertEquals(-1000, player.getMoney());
 	}

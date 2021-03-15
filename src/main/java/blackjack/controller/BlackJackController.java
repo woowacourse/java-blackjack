@@ -33,6 +33,12 @@ public class BlackJackController {
 		}
 	}
 
+	private void playTurn(Dealer dealer, Players players, Deck deck) {
+		createPlayersWithMoney(players);
+		drawCards(dealer, players, deck);
+		drawUntilPossible(dealer, players, deck);
+	}
+
 	private void createPlayersWithMoney(Players players) {
 		try {
 			askPlayerMoney(players);
@@ -44,7 +50,7 @@ public class BlackJackController {
 
 	private void askPlayerMoney(Players players) {
 		for (Player player : players.toList()) {
-			player.makeProfit(askMoney(player));
+			player.makeMoney(askMoney(player));
 		}
 	}
 
@@ -54,13 +60,6 @@ public class BlackJackController {
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_INPUT);
 		}
-	}
-
-	private void playTurn(Dealer dealer, Players players, Deck deck) {
-		createPlayersWithMoney(players);
-
-		drawCards(dealer, players, deck);
-		drawUntilPossible(dealer, players, deck);
 	}
 
 	private void drawCards(Dealer dealer, Players players, Deck deck) {

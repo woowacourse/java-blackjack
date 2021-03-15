@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Money {
 	private final double money;
 
-	public Money(double money) {
+	private Money(double money) {
 		this.money = money;
 	}
 
