@@ -8,10 +8,6 @@ public class Gambler implements Player {
     private final Cards cards = new Cards();
     private Money money = Money.emptyMoney;
 
-    public Gambler(final Name name) {
-        this.name = name;
-    }
-
     public Gambler(final String name) {
         this.name = new Name(name);
     }

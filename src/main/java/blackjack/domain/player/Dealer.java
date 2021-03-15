@@ -2,10 +2,11 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Score;
 import blackjack.domain.game.WinOrLose;
 
 public class Dealer implements Player {
-    private static final int LIMIT_SCORE_TO_HIT = 16;
+    private static final Score LIMIT_SCORE_TO_HIT = Score.of(16);
 
     private final Name name = new Name("딜러");
     private final Cards cards = new Cards();
