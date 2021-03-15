@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
@@ -18,9 +17,7 @@ public class OutputView {
     }
 
     public static void printCards(Player player) {
-        final String cards = player.getUnmodifiableCards().stream()
-            .map(Card::getCardName)
-            .collect(Collectors.joining(", "));
+        final String cards = String.join(", ", player.getCards().getUnmodifiableCardNames());
 
         System.out.println(player.getName() + "카드: " + cards);
     }
@@ -38,8 +35,7 @@ public class OutputView {
     }
 
     private static String cardsToString(Cards cards) {
-        return cards.getUnmodifiableList().stream()
-            .map(Card::getCardName)
+        return cards.getUnmodifiableCardNames().stream()
             .collect(Collectors.joining(", ", "카드: ", ""));
     }
 

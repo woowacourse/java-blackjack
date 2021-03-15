@@ -3,14 +3,16 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
+import blackjack.domain.state.Hit;
+import blackjack.domain.state.State;
 import java.util.Collections;
-import java.util.List;
 
 public class Player implements Participant {
     private static final String SAMPLE_NAME = "a";
     private final Name name;
     private final Cards cards;
     private final BettingMoney bettingMoney;
+    private State state;
 
     public Player() {
         this(SAMPLE_NAME, new Cards(Collections.emptyList()), new BettingMoney(0));
@@ -36,6 +38,7 @@ public class Player implements Participant {
         this.name = new Name(name);
         this.cards = cards;
         this.bettingMoney = bettingMoney;
+        this.state = new Hit(cards);
     }
 
     public BettingMoney getBettingMoney() {
@@ -44,13 +47,27 @@ public class Player implements Participant {
 
     @Override
     public boolean isAbleToTake() {
-        final Score score = sumCards();
-        return score.isNotBurst();
+        return !state.isBurst();
     }
 
     @Override
     public void takeCard(Card card) {
-        cards.takeCard(card);
+        state = state.takeCard(card);
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return state.isBlackjack();
+    }
+
+    @Override
+    public boolean isBurst() {
+        return state.isBurst();
+    }
+
+    @Override
+    public Score finalScore() {
+        return state.calculateScore();
     }
 
     @Override
@@ -59,23 +76,13 @@ public class Player implements Participant {
     }
 
     @Override
-    public Score sumCards() {
-        return cards.sumCards();
-    }
-
-    @Override
-    public Score sumCardsForResult() {
-        return cards.sumCardsForResult();
-    }
-
-    @Override
     public Cards getCards() {
-        return cards;
+        return state.getCards();
     }
 
     @Override
-    public List<Card> getUnmodifiableCards() {
-        return cards.getUnmodifiableList();
+    public int sizeOfCards() {
+        return state.size();
     }
 
 }

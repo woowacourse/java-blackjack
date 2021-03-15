@@ -50,21 +50,21 @@ public class Players {
         List<PlayerResult> results = new ArrayList<>();
 
         for (Player player : players) {
-            results.add(new PlayerResult(player, outcomeOfPlayer(dealerScore, player)));
+            results
+                .add(new PlayerResult(player, outcomeOfPlayer(dealerScore, player.finalScore())));
         }
 
         return results;
     }
 
-    private Outcome outcomeOfPlayer(final Score dealerScore, final Player player) {
-        final Score playerScore = player.sumCardsForResult();
-        if (dealerScore.isBlackjack()) {
-            return blackjackCase(playerScore);
+    private Outcome outcomeOfPlayer(final Score dealer, final Score player) {
+        if (dealer.isBlackjack()) {
+            return blackjackCase(player);
         }
-        if (dealerScore.isBurst()) {
+        if (dealer.isBurst()) {
             return Outcome.WIN;
         }
-        return compareWith(dealerScore, playerScore);
+        return compareWith(dealer, player);
     }
 
     private Outcome blackjackCase(final Score playerScore) {

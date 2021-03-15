@@ -23,8 +23,8 @@ class GameTableTest {
 
         new GameTable(dealer, players, new FixedCardDeck());
 
-        assertThat(dealer.getUnmodifiableCards()).hasSize(2);
-        assertThat(player.getUnmodifiableCards()).hasSize(2);
+        assertThat(dealer.sizeOfCards()).isEqualTo(2);
+        assertThat(player.sizeOfCards()).isEqualTo(2);
     }
 
     @Test
@@ -38,7 +38,7 @@ class GameTableTest {
         final GameTable gameTable = new GameTable(dealer, players, new FixedCardDeck());
         gameTable.giveCard(player);
 
-        assertThat(player.getUnmodifiableCards()).hasSize(3);
+        assertThat(player.sizeOfCards()).isEqualTo(3);
 
 
     }

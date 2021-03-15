@@ -40,11 +40,11 @@ public enum Outcome {
             || compareScoreWhenNotBurst(base, counterpart);
     }
 
-    private static boolean compareScoreWhenNotBurst(Score base, Score counterpart) {
+    private static boolean compareScoreWhenNotBurst(final Score base, final Score counterpart) {
         return base.isNotBurst() && counterpart.isNotBurst() && base.isSameAs(counterpart);
     }
 
-    private static boolean isBothBurst(Score base, Score counterpart) {
+    private static boolean isBothBurst(final Score base, final Score counterpart) {
         return base.isBurst() && counterpart.isBurst();
     }
 

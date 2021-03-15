@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Score;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
@@ -55,8 +54,7 @@ public class Game {
     }
 
     public ResultDto getResultDto() {
-        final Score dealerScore = dealer.sumCardsForResult();
-        return new ResultDto(players.resultOfPlayers(dealerScore));
+        return new ResultDto(players.resultOfPlayers(dealer.finalScore()));
     }
 
 }

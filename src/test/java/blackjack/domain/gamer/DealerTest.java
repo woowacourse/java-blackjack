@@ -19,7 +19,7 @@ public class DealerTest {
         Participant dealer = new Dealer();
         dealer.takeCard(Card.from(Suits.DIAMOND, Denominations.KING));
 
-        assertThat(dealer.getUnmodifiableCards()).hasSize(1);
+        assertThat(dealer.sizeOfCards()).isEqualTo(1);
     }
 
     @Test
