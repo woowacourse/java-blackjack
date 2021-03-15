@@ -82,7 +82,7 @@ public class BlackJackService {
     }
 
     public void calculateProfits() {
-        players.calculateProfits(gameResult);
+        players.changeProfits(gameResult);
         dealer.changeProfit(gameResult);
     }
 }

@@ -54,7 +54,7 @@ public class Players {
         }
     }
 
-    public void calculateProfits(GameResult gameResult) {
+    public void changeProfits(GameResult gameResult) {
         gameResult.getGameResult().forEach(Player::changeProfit);
     }
 }
