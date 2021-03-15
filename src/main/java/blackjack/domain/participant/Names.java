@@ -8,11 +8,14 @@ import java.util.stream.Stream;
 
 public class Names {
 
+    public static final int MAX_PLAYER = 7;
+
     private final List<Name> names;
 
-    public Names(List<Name> names) {
+    private Names(List<Name> names) {
         this.names = names;
         validateDuplicate(names);
+        validatePlayerCount();
     }
 
     public static Names of(List<String> inputNames) {
@@ -25,6 +28,12 @@ public class Names {
     private void validateDuplicate(final List<Name> names) {
         if (new HashSet<>(names).size() != names.size()) {
             throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
+        }
+    }
+
+    private void validatePlayerCount() {
+        if (names.size() > MAX_PLAYER) {
+            throw new IllegalArgumentException("최대 참여 플레이어는 " + MAX_PLAYER + "명입니다.");
         }
     }
 

@@ -7,19 +7,10 @@ import java.util.stream.Stream;
 
 public class Players {
 
-    public static final int MAX_PLAYER = 7;
-
     private final List<Player> players;
 
     public Players(final List<Player> players) {
         this.players = players;
-        validatePlayerCount();
-    }
-
-    private void validatePlayerCount() {
-        if (players.size() > MAX_PLAYER) {
-            throw new IllegalArgumentException("최대 참여 플레이어는 " + MAX_PLAYER + "명입니다.");
-        }
     }
 
     public void initHandByDealer(final Dealer dealer) {
