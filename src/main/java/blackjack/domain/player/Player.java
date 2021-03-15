@@ -1,35 +1,44 @@
 package blackjack.domain.player;
 
+import blackjack.domain.Money;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.State;
 
 public abstract class Player {
 
     protected final String name;
-    protected final Cards cards;
+    protected State state;
 
-    public Player(String name, Cards cards) {
+    public Player(String name, State state) {
         this.name = name;
-        this.cards = cards;
+        this.state = state;
     }
 
     abstract void addCard(Card card);
 
     abstract boolean canDraw();
 
+    public abstract boolean isDealer();
+
     public final int calculateScore() {
-        return cards.calculateScore();
+        return state.calculateScore();
+    }
+
+    public final Money profit(Money money) {
+        return state.profit(money);
+    }
+
+    public final void stay() {
+        state = state.stay();
     }
 
     public final boolean isBust() {
-        return cards.isBust();
+        return state.isBust();
     }
 
-    public final boolean isDealer() {
-        if (this instanceof Dealer) {
-            return true;
-        }
-        return false;
+    public final boolean isBlackjack() {
+        return state.isBlackjack();
     }
 
     public String getName() {
@@ -37,6 +46,6 @@ public abstract class Player {
     }
 
     public Cards getCards() {
-        return cards;
+        return state.cards();
     }
 }

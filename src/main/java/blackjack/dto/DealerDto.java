@@ -1,6 +1,6 @@
-package blackjack.domain.player;
+package blackjack.dto;
 
-import blackjack.domain.card.CardDto;
+import blackjack.domain.player.Dealer;
 
 public class DealerDto {
 
@@ -13,7 +13,7 @@ public class DealerDto {
     }
 
     public static DealerDto from(Dealer dealer) {
-        CardDto cardDto = CardDto.from(dealer.cards.getFirstCard());
+        CardDto cardDto = CardDto.from(dealer.getCards().getFirstCard());
         String name = dealer.getName();
         return new DealerDto(cardDto, name);
     }

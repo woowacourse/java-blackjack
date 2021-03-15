@@ -1,16 +1,21 @@
 package blackjack.controller;
 
+import blackjack.domain.Money;
+import blackjack.domain.batting.Betting;
+import blackjack.domain.batting.BettingResult;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.DealerDto;
 import blackjack.domain.player.Gamer;
-import blackjack.domain.player.PlayerDto;
-import blackjack.domain.player.PlayersDto;
 import blackjack.domain.result.GameResult;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
+import blackjack.dto.BettingResultDto;
+import blackjack.dto.DealerDto;
+import blackjack.dto.PlayerDto;
+import blackjack.dto.PlayersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
@@ -23,14 +28,16 @@ public class BlackjackController {
         Deck deck = initDeck();
         List<Gamer> gamers = initGamers(deck);
         Dealer dealer = initDealer(deck);
+        Betting bettingController = betGamersAmount(gamers);
         OutputView.printGameStartMessage(DealerDto.from(dealer), PlayersDto.from(gamers));
 
         progressGamersHitOrStand(gamers, deck);
         progressDealerHitOrStand(dealer, deck);
 
         OutputView.printPlayersScoreInfo(PlayerDto.from(dealer), PlayersDto.from(gamers));
-        GameResult gameResult = dealer.judgeGameResultWithGamers(gamers);
-        OutputView.printGameResult(gameResult);
+        GameResult gameResult = GameResult.of(dealer, gamers);
+        BettingResult bettingResult = bettingController.calculateGamersProfit(gameResult);
+        OutputView.printBettingResult(BettingResultDto.from(bettingResult));
     }
 
     private Deck initDeck() {
@@ -46,12 +53,22 @@ public class BlackjackController {
     private List<Gamer> initGamers(Deck deck) {
         String[] gamerNames = InputView.inputGamerNames();
         return Arrays.stream(gamerNames)
-            .map(gamerName -> new Gamer(gamerName, Cards.of(deck.drawTwoStartCards())))
+            .map(gamerName -> new Gamer(gamerName, StateFactory.generateState(deck.draw(), deck.draw())))
             .collect(Collectors.toList());
     }
 
     private Dealer initDealer(Deck deck) {
-        return new Dealer(Cards.of(deck.drawTwoStartCards()));
+        State state = StateFactory.generateState(deck.draw(), deck.draw());
+        return new Dealer(state);
+    }
+
+    private Betting betGamersAmount(List<Gamer> gamers) {
+        Betting betting = new Betting();
+        for (Gamer gamer : gamers) {
+            double bettingAmount = InputView.inputBettingAmount(PlayerDto.from(gamer));
+            betting.betMoney(gamer, Money.of(bettingAmount));
+        }
+        return betting;
     }
 
     private void progressGamersHitOrStand(List<Gamer> gamers, Deck deck) {
@@ -65,6 +82,7 @@ public class BlackjackController {
             gamer.addCard(deck.draw());
             OutputView.printPlayerCardInfo(PlayerDto.from(gamer));
         }
+        gamer.stay();
     }
 
     private void progressDealerHitOrStand(Dealer dealer, Deck deck) {
@@ -72,5 +90,6 @@ public class BlackjackController {
             dealer.addCard(deck.draw());
             OutputView.printDealerOnemoreDrawedMessage();
         }
+        dealer.stay();
     }
 }

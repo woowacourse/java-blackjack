@@ -1,16 +1,17 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
 
-    public static final int BUST = 21;
+    public static final int BLACK_JACK = 21;
     private final List<Card> cards;
 
     private Cards(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public static Cards of(List<Card> values) {
@@ -44,8 +45,12 @@ public class Cards {
         return sum;
     }
 
+    public boolean isBlackjack() {
+        return calculateScore() == BLACK_JACK;
+    }
+
     public boolean isBust() {
-        return calculateScore() > BUST;
+        return calculateScore() > BLACK_JACK;
     }
 
     public List<Card> getCards() {
@@ -53,7 +58,7 @@ public class Cards {
     }
 
     public Card getFirstCard() {
-        return Card.of(cards.get(0));
+        return cards.get(0);
     }
 
     public void addCard(Card card) {

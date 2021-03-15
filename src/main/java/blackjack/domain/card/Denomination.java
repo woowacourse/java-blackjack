@@ -17,8 +17,6 @@ public enum Denomination {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private static final String ACE_NAME = "A";
-
     private String name;
     private int score;
 
@@ -29,7 +27,7 @@ public enum Denomination {
 
     public static Denomination of(String value) {
         return Arrays.stream(Denomination.values())
-            .filter(denomination -> denomination.getName().equals(value))
+            .filter(denomination -> denomination.name.equals(value))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 명칭입니다."));
     }
