@@ -47,18 +47,18 @@ public class GameController {
 
     private void addCardOrPass(final Round round, final AbstractUser player) {
         String answer = "";
-        while (player.canDraw() && !answer.equals(NO)) {
+        while (player.canDraw() && !NO.equals(answer)) {
             answer = inputView.getCardOrPass(player.getName());
             addCardOrPassByInput(round, player, answer);
         }
     }
 
     private void addCardOrPassByInput(final Round round, final AbstractUser player, final String answer) {
-        if (answer.equals(YES)) {
+        if (YES.equals(answer)) {
             round.addPlayerCard(player);
             OutputView.showPlayCardStatus(new PlayerStatusDto(player.getName(), player.getCards(), player.calculateScore()));
         }
-        if (answer.equals(NO)) {
+        if (NO.equals(answer)) {
             round.makePlayerStay(player);
         }
     }
