@@ -47,7 +47,7 @@ public class Score implements Comparable<Score> {
     }
 
     public boolean isEqualAndLessThan(Score counterpart) {
-        return compareTo(counterpart) <= 0;
+        return !isHigherThan(counterpart);
     }
 
     public boolean isSameAs(Score counterpart) {
