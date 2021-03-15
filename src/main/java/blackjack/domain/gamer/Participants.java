@@ -53,6 +53,8 @@ public abstract class Participants {
         state = state.stay();
     }
 
+    public abstract boolean isPlayer();
+
     public boolean isBlackjack() {
         return state.isBlackjack();
     }

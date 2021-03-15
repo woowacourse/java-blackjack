@@ -13,6 +13,11 @@ public class Player extends Participants {
     }
 
     @Override
+    public boolean isPlayer() {
+        return true;
+    }
+
+    @Override
     public boolean canDraw() {
         return !state.isFinished();
     }

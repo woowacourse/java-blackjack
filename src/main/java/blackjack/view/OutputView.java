@@ -36,8 +36,8 @@ public class OutputView {
     public static void distributeCardMessage(List<Participants> participants) {
         String playerName = participants
                 .stream()
+                .filter(Participants::isPlayer)
                 .map(Participants::getName)
-                .filter(name -> !name.equals(Dealer.DEALER_NAME))
                 .collect(Collectors.joining(","));
         System.out.printf((DISTRIBUTE_MESSAGE_FORM) + "%n", playerName);
     }

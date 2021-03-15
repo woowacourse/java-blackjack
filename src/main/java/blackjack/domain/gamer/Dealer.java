@@ -16,6 +16,11 @@ public class Dealer extends Participants {
     }
 
     @Override
+    public boolean isPlayer() {
+        return false;
+    }
+
+    @Override
     public boolean canDraw() {
         return state.score() <= DEALER_MAX_SCORE;
     }
