@@ -1,12 +1,22 @@
 package blackjack.domain;
 
 import java.util.Arrays;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toMap;
 
 public enum ProfitTable {
     BLACKJACK_WIN(ResultType.BLACKJACK_WIN, 1.5),
     WIN(ResultType.WIN, 1),
     DRAW(ResultType.DRAW, 0),
     LOSE(ResultType.LOSE, -1);
+
+    private static final Map<ResultType, Double> searchMap;
+
+    static {
+        searchMap = Arrays.stream(values())
+                .collect(toMap(item -> item.resultType, item -> item.profitRatio));
+    }
 
     private final ResultType resultType;
     private final double profitRatio;
@@ -17,11 +27,6 @@ public enum ProfitTable {
     }
 
     public static Money translateBettingMoney(ResultType resultType, Money bettingMoney) {
-        double ratio = Arrays.stream(values()).parallel()
-                .filter(item -> item.resultType == resultType)
-                .map(item -> item.profitRatio)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("승패 결과에 맞는 배당율이 없습니다."));
-        return bettingMoney.multiply(ratio);
+        return bettingMoney.multiply(searchMap.get(resultType));
     }
 }
