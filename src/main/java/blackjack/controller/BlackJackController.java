@@ -3,25 +3,21 @@ package blackjack.controller;
 import blackjack.domain.YesOrNo;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.game.Result;
+import blackjack.domain.player.BettingMoney;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Gamblers;
-import blackjack.domain.player.Money;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
 
-    private static final BlackJackGame blackJackGame = new BlackJackGame();
+    private final BlackJackGame blackJackGame = new BlackJackGame();
 
-    public static void main(String[] args) {
-        run();
-    }
-
-    public static void run() {
+    public void run() {
         Gamblers gamblers = createGamblers();
         blackJackGame.addGamblers(gamblers);
 
@@ -35,7 +31,7 @@ public class BlackJackController {
         OutputView.printResult(result);
     }
 
-    private static Gamblers createGamblers() {
+    private Gamblers createGamblers() {
         try {
             return new Gamblers(collectGamblers());
         } catch (IllegalArgumentException e) {
@@ -44,42 +40,37 @@ public class BlackJackController {
         }
     }
 
-    private static List<Gambler> collectGamblers() {
+    private List<Gambler> collectGamblers() {
         String gamblersName = InputView.askGamblersName();
         List<String> names = Arrays.asList(gamblersName.split(","));
-        List<Gambler> gamblers = new ArrayList<>();
-        names.stream()
-                .map(String::trim)
-                .forEach(name -> {
-                    Money money = createMoney(name);
-                    gamblers.add(new Gambler(name, money));
-                });
-        return gamblers;
+        return names.stream()
+                .map(name -> new Gambler(name, createBettingMoney(name)))
+                .collect(Collectors.toList());
     }
 
-    private static Money createMoney(final String name) {
+    private BettingMoney createBettingMoney(final String name) {
         try {
-            return new Money(InputView.askPlayerBattingMoney(name));
+            return new BettingMoney(InputView.askPlayerBattingMoney(name));
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
-            return createMoney(name);
+            return createBettingMoney(name);
         }
     }
 
-    private static void playFirstTurn() {
+    private void playFirstTurn() {
         blackJackGame.initDealerCards();
         blackJackGame.initGamblersCards();
         OutputView.printDealerCardInfo(blackJackGame.getDealer());
         OutputView.printPlayersCardInfo(blackJackGame.Gamblers());
     }
 
-    private static void giveEachGamblerCard(final Gamblers gamblers) {
+    private void giveEachGamblerCard(final Gamblers gamblers) {
         for (Gambler gambler : gamblers.getGamblers()) {
             giveGamblerCard(gambler);
         }
     }
 
-    private static void giveGamblerCard(final Gambler gambler) {
+    private void giveGamblerCard(final Gambler gambler) {
         if (gambler.isBlackJack()) {
             OutputView.printBlackJack(gambler);
             return;
@@ -92,11 +83,11 @@ public class BlackJackController {
         }
     }
 
-    private static boolean isAbleToDraw(final Gambler gambler) {
+    private boolean isAbleToDraw(final Gambler gambler) {
         return gambler.isHit() && isYesDecision(gambler.name());
     }
 
-    private static boolean isYesDecision(final String playerName) {
+    private boolean isYesDecision(final String playerName) {
         try {
             YesOrNo decision = YesOrNo.of(InputView.askDrawOrNot(playerName));
             return decision.isYes();
@@ -106,7 +97,7 @@ public class BlackJackController {
         }
     }
 
-    private static void drawGamblerCard(final Gambler gambler) {
+    private void drawGamblerCard(final Gambler gambler) {
         blackJackGame.giveGamblerCard(gambler);
         if (gambler.isBust()) {
             OutputView.printBust();
@@ -115,7 +106,7 @@ public class BlackJackController {
         OutputView.printPlayerCardInfo(gambler);
     }
 
-    private static void giveDealerCards() {
+    private void giveDealerCards() {
         while (blackJackGame.ableToDraw()) {
             OutputView.printGiveDealer();
             blackJackGame.giveDealerCard();
