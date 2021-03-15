@@ -43,10 +43,6 @@ public class BlackJack implements State {
     }
 
     @Override
-    public void draw(Card card) {
-    }
-
-    @Override
     public State changeState() {
         return this;
     }

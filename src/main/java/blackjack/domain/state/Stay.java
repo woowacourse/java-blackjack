@@ -51,11 +51,7 @@ public class Stay implements State {
     public int sumTotalScore(ScoreRule scoreRule) {
         return scoreRule.sumTotalScore(cards.toCardList());
     }
-
-    @Override
-    public void draw(Card card) {
-    }
-
+    
     @Override
     public State changeState() {
         return this;

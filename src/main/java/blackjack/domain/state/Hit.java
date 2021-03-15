@@ -42,11 +42,6 @@ public class Hit implements State {
     }
 
     @Override
-    public void draw(Card card) {
-        cards.receiveCard(card);
-    }
-
-    @Override
     public State changeState() {
         int sum = cards.sumTotalScore(new BlackJackScoreRule());
         if (sum == BLACK_JACK && isInitialState()) {
