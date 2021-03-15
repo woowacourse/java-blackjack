@@ -1,8 +1,6 @@
 package blackjack.domain.blackjack;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,23 +18,19 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class BlackJackGameTest {
 
     private Deck deck;
-    private Participants participants;
-    private Dealer dealer;
-    private List<Player> players;
+    private List<String> players;
 
     @BeforeEach
     void setUp() {
         deck = Deck.generate();
-        players = Arrays.asList(new Player("로키", cards -> 15), new Player("수리", cards -> 19));
-        dealer = new Dealer(cards -> 15);
-        participants = new Participants(players, dealer);
+        players = Arrays.asList("로키", "수리");
     }
 
     @DisplayName("BlackJackGame 객체를 생성한다")
     @Test
     void testInitBlackJackGame() {
         //when
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 0);
 
         //then
         assertThat(blackJackGame).isNotNull();
@@ -46,7 +40,7 @@ class BlackJackGameTest {
     @Test
     void testHandInitCards() {
         //given
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 0);
 
         //when
         blackJackGame.handInitCards();
@@ -61,30 +55,11 @@ class BlackJackGameTest {
         );
     }
 
-    @DisplayName("딜러의 턴을 플레이하는 기능을 테스트한다")
-    @ParameterizedTest
-    @CsvSource(value = {
-            "16:1", "17:0"
-    }, delimiter = ':')
-    void testPlayDealerTurn(int totalDealerScore, int expected) {
-        //given
-        List<Player> players = Arrays.asList(new Player("로키", cards -> 15), new Player("수리", cards -> 19));
-        Dealer dealer = new Dealer(cards -> totalDealerScore);
-        Participants participants = new Participants(players, dealer);
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
-
-        //when
-        blackJackGame.playDealerTurn();
-
-        //then
-        assertThat(blackJackGame.getDealer().showCards()).hasSize(expected);
-    }
-
     @DisplayName("차례를 기다리는 플레이어가 있을 때, 차례를 기다리는 플레이어가 존재하는지 확인하는 기능")
     @Test
     void testExistWaitingPlayerIfExistWaitingPlayer() {
         //given
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 17);
 
         //when
         boolean actual = blackJackGame.isExistWaitingPlayer();
@@ -97,11 +72,7 @@ class BlackJackGameTest {
     @Test
     void testExistWaitingPlayerIfNotExistWaitingPlayer() {
         //given
-        Player waitingPlayer = new Player("로키", cards -> 15);
-        waitingPlayer.endOwnTurn();
-        List<Player> players = Arrays.asList(waitingPlayer);
-        Participants participants = new Participants(players, dealer);
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 22);
 
         //when
         boolean actual = blackJackGame.isExistWaitingPlayer();
@@ -114,7 +85,7 @@ class BlackJackGameTest {
     @Test
     void testFindCurrentTurnPlayerIfExistWaitingPlayer() {
         //given
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 17);
 
         //when
         Player currentPlayer = blackJackGame.findCurrentTurnPlayer();
@@ -126,15 +97,13 @@ class BlackJackGameTest {
         );
     }
 
-    @DisplayName("차례가 남은 Player가 없을 때, 가장 순서가 빠른 Player를 반환하는 기능")
+    @DisplayName("차례가 남은 Player가 없을 때, 예외를 발생시킨다")
     @Test
     void testFindCurrentTurnPlayerIfNotExistWaitingPlayer() {
         //given
         Player waitingPlayer = new Player("로키", cards -> 15);
         waitingPlayer.endOwnTurn();
-        List<Player> players = Arrays.asList(waitingPlayer);
-        Participants participants = new Participants(players, dealer);
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 22);
 
         //when //then
         assertThatThrownBy(() -> blackJackGame.findCurrentTurnPlayer())
@@ -146,16 +115,70 @@ class BlackJackGameTest {
     @CsvSource(value = {
             "true:1", "false:0"
     }, delimiter = ':')
-    void testAskMorkCard(boolean isNeedCard, int expectedCardsNumber) {
+    void testAskMoreCard(boolean isNeedCard, int expectedCardsNumber) {
         //given
-        List<Player> players = Arrays.asList(new Player("로키", cards -> 15));
-        Participants participants = new Participants(players, dealer);
-        BlackJackGame blackJackGame = new BlackJackGame(deck, participants);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 15);
 
         //when
         blackJackGame.askMoreCard(isNeedCard);
 
         //then
         assertThat(blackJackGame.getPlayers().get(0).showCards()).hasSize(expectedCardsNumber);
+    }
+
+    @DisplayName("배팅을 안한 플레이어가 있는지 확인하는 기능")
+    @Test
+    void testIsExistWaitedBattingPlayer() {
+        //given
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 15);
+
+        //when
+        boolean actual = blackJackGame.isExistWaitingBattingPlayer();
+
+        //then
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("배팅을 안한 플레이어가 존재하지 않을 때 배팅을 안한 플레이어가 있는지 확인하는 기능")
+    @Test
+    void testIsExistWaitingBattingPlayerIfNotExistWaitedBattingPlayer() {
+        //given
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 15);
+        blackJackGame.findCurrentBattingPlayer().bet(10000);
+        blackJackGame.findCurrentBattingPlayer().bet(5000);
+
+        //when
+        boolean actual = blackJackGame.isExistWaitingBattingPlayer();
+
+        //then
+        assertThat(actual).isFalse();
+    }
+
+    @DisplayName("배팅을 안한 Player 중 가장 순서가 빠른 Player를 반환하는 기능")
+    @Test
+    void testFindCurrentBattingPlayer() {
+        //given
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 15);
+
+        //when
+        Player currentBattingPlayer = blackJackGame.findCurrentBattingPlayer();
+
+        //then
+        assertThat(currentBattingPlayer).extracting("name").isEqualTo("로키");
+        assertThat(currentBattingPlayer.isNotBatting()).isTrue();
+    }
+
+    @DisplayName("모든 Player가 배팅을 했을 때, 배팅을 해야할 Player를 호출하면 예외를 발생시킨다.")
+    @Test
+    void testFindCurrentBattingPlayerIfNotExistWaitedBattingPlayer() {
+        //given
+        players = Arrays.asList("로키", "수리");
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, cards -> 15);
+        blackJackGame.findCurrentBattingPlayer().bet(1_000);
+        blackJackGame.findCurrentBattingPlayer().bet(2_000);
+
+        //when //then
+        assertThatThrownBy(() -> blackJackGame.findCurrentBattingPlayer())
+                .isExactlyInstanceOf(IllegalStateException.class);
     }
 }

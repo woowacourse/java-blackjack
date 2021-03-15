@@ -29,4 +29,10 @@ public class InputView {
 
         throw new IllegalArgumentException("y 혹은 n만 입력할 수 있습니다.");
     }
+
+    public static int inputBattingMoney(final Player player) {
+        System.out.println(player.getName() + "의 배팅 금액은?");
+        String input = scanner.nextLine();
+        return Integer.parseInt(input);
+    }
 }

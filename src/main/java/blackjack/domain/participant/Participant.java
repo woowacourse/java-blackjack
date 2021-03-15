@@ -16,4 +16,6 @@ public interface Participant {
     int sumTotalScore();
 
     String getName();
+
+    boolean isBlackJack();
 }

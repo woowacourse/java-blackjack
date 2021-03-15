@@ -4,19 +4,28 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.dto.DealerResultDto;
-import blackjack.dto.ScoreResultDto;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.ScoreResult;
+import blackjack.domain.rule.ScoreRule;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
     private final Deck deck;
     private final Participants participants;
 
-    public BlackJackGame(final Deck deck, final Participants participants) {
+    public BlackJackGame(final Deck deck, final List<String> players, ScoreRule scoreRule) {
         this.deck = deck;
-        this.participants = participants;
+        this.participants = createParticipants(players, scoreRule);
+    }
+
+    private Participants createParticipants(final List<String> names, final ScoreRule scoreRule) {
+        List<Player> players = names.stream()
+                .map(name -> new Player(name, scoreRule))
+                .collect(Collectors.toList());
+        return new Participants(players, new Dealer(scoreRule));
     }
 
     public void handInitCards() {
@@ -25,7 +34,7 @@ public class BlackJackGame {
 
     public void playDealerTurn() {
         Dealer dealer = getDealer();
-        if (dealer.isReceiveCard()) {
+        while (dealer.isReceiveCard()) {
             dealer.receiveCard(deck.draw());
         }
     }
@@ -44,19 +53,15 @@ public class BlackJackGame {
                 .orElseThrow(() -> new IllegalArgumentException("턴이 남은 플레이어가 존재하지 않습니다."));
     }
 
-    public Participants getParticipants() {
-        return participants;
-    }
-
     public Dealer getDealer() {
         return participants.extractDealer();
     }
 
-    public DealerResultDto getDealerResult() {
+    public DealerResult getDealerResult() {
         return getDealer().getDealerResult(participants.extractPlayers());
     }
 
-    public List<ScoreResultDto> getPlayersResults() {
+    public List<ScoreResult> getPlayersResults() {
         return getDealer().decideWinOrLoseResults(participants.extractPlayers());
     }
 
@@ -70,7 +75,23 @@ public class BlackJackGame {
         currentPlayer.endOwnTurn();
     }
 
+    public Participants getParticipants() {
+        return participants;
+    }
+
     public List<Player> getPlayers() {
         return participants.extractPlayers();
+    }
+
+    public boolean isExistWaitingBattingPlayer() {
+        return getPlayers().stream()
+                .anyMatch(Player::isNotBatting);
+    }
+
+    public Player findCurrentBattingPlayer() {
+        return getPlayers().stream()
+                .filter(Player::isNotBatting)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("배팅을 하지 않은 플레이어가 존재하지 않습니다."));
     }
 }
