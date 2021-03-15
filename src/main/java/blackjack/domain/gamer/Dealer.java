@@ -2,7 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.state.State;
 
-public class Dealer extends Participants {
+public class Dealer extends Participant {
 
     private static final int DEALER_MAX_SCORE = 16;
     public static final String DEALER_NAME = "딜러";

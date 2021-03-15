@@ -6,7 +6,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Participants;
+import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 
@@ -35,11 +35,11 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void distributeCardMessage(List<Participants> participants) {
+    public static void distributeCardMessage(List<Participant> participants) {
         String playerName = participants
                 .stream()
-                .filter(Participants::isPlayer)
-                .map(Participants::getName)
+                .filter(Participant::isPlayer)
+                .map(Participant::getName)
                 .collect(Collectors.joining(","));
         System.out.printf((DISTRIBUTE_MESSAGE_FORM) + "%n", playerName);
     }
@@ -54,8 +54,8 @@ public class OutputView {
         return denomination.getName() + shape.getName();
     }
 
-    public static void showCards(Participants participants) {
-        System.out.println(getCardsMessageForm(participants));
+    public static void showCards(Participant participant) {
+        System.out.println(getCardsMessageForm(participant));
     }
 
     public static void askOneMoreCard(Player player) {
@@ -81,8 +81,8 @@ public class OutputView {
                 .forEach((playerName, profit) -> System.out.printf((PROFIT_RESULT_FORM) + "%n", playerName, profit));
     }
 
-    private static String getCardsMessageForm(Participants participants) {
-        return String.format(CURRENT_CARD_FORM, participants.getName(), cardsDelimiterByComma(participants.getTakenCards()));
+    private static String getCardsMessageForm(Participant participant) {
+        return String.format(CURRENT_CARD_FORM, participant.getName(), cardsDelimiterByComma(participant.getTakenCards()));
     }
 
     private static String cardsDelimiterByComma(Cards cards) {

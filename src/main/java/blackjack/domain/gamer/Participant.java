@@ -6,18 +6,18 @@ import blackjack.domain.state.Hit;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
 
-public abstract class Participants {
+public abstract class Participant {
 
     private static final int MIN_NAME_LENGTH = 1;
 
     private final String name;
     protected State state;
 
-    public Participants(String name) {
+    public Participant(String name) {
         this(name, new Hit(new Cards()));
     }
 
-    public Participants(String name, State state) {
+    public Participant(String name, State state) {
         validateNameLength(name);
         this.name = name;
         this.state = state;

@@ -5,7 +5,7 @@ import blackjack.domain.ProfitResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Participants;
+import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.view.InputView;
@@ -24,7 +24,7 @@ public class BlackJackGame {
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
         cardDeck.shuffleCard();
-        List<Participants> participants = generateAllParticipants(players, dealer);
+        List<Participant> participants = generateAllParticipants(players, dealer);
 
         firstDraw(participants, cardDeck);
         playerTurn(players, cardDeck);
@@ -60,14 +60,14 @@ public class BlackJackGame {
         return result;
     }
 
-    private List<Participants> generateAllParticipants(Players players, Dealer dealer) {
-        List<Participants> participants = new ArrayList<>(players.getPlayers());
+    private List<Participant> generateAllParticipants(Players players, Dealer dealer) {
+        List<Participant> participants = new ArrayList<>(players.getPlayers());
         participants.add(0, dealer);
 
         return participants;
     }
 
-    private void firstDraw(List<Participants> participants, CardDeck cardDeck) {
+    private void firstDraw(List<Participant> participants, CardDeck cardDeck) {
         participants.forEach(participant ->
                 participant.firstDraw(new Cards(Arrays.asList(
                         cardDeck.drawCard(),

@@ -2,7 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.state.State;
 
-public class Player extends Participants {
+public class Player extends Participant {
 
     public Player(String name) {
         super(name);
