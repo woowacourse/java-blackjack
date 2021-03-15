@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.Hit;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
 
@@ -13,8 +14,7 @@ public abstract class Participants {
     protected State state;
 
     public Participants(String name) {
-        validateNameLength(name);
-        this.name = name;
+        this(name, new Hit(new Cards()));
     }
 
     public Participants(String name, State state) {
