@@ -35,9 +35,9 @@ public class PlayerTest {
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
         Player player = new Player(new Cards(cardList), "pobi");
         player = player.changeBetting((double) 30000);
-        player = player.changeProfit(Result.BLACKJACK_WIN);
+        player.changeProfit(Result.BLACKJACK_WIN);
 
-        assertThat(player.getProfit()).isEqualTo(30000 * 2.5);
+        assertThat(player.getProfit()).isEqualTo(30000 * 1.5);
     }
 
     @Test
@@ -48,9 +48,9 @@ public class PlayerTest {
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
         Player player = new Player(new Cards(cardList), "pobi");
         player = player.changeBetting((double) 30000);
-        player = player.changeProfit(Result.WIN);
+        player.changeProfit(Result.WIN);
 
-        assertThat(player.getProfit()).isEqualTo(30000 * 2);
+        assertThat(player.getProfit()).isEqualTo(30000 * 1);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class PlayerTest {
         cardList.add(new Card(Suit.DIAMOND, Face.KING));
         Player player = new Player(new Cards(cardList), "pobi");
         player = player.changeBetting((double) 30000);
-        player = player.changeProfit(Result.LOSE);
+        player.changeProfit(Result.LOSE);
 
         assertThat(player.getProfit()).isEqualTo(30000 * -1);
     }

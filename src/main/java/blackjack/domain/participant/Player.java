@@ -10,12 +10,6 @@ public class Player extends Participant {
 
     private Betting betting;
 
-    public Player(final Cards cards, final String name, final Double betting, final Double profit) {
-        super(cards, name);
-        this.betting = new Betting(betting);
-        this.profit = new Profit(profit);
-    }
-
     public Player(final Cards cards, final String name, final Double betting) {
         super(cards, name);
         this.betting = new Betting(betting);

@@ -17,9 +17,9 @@ public class BettingTest {
     }
 
     @Test
-    @DisplayName("null값이 생성자에 들어오면, 예외 처리 한다.")
+    @DisplayName("베팅 금액이 0원보다 작으면, 예외 처리 한다.")
     void minValueThrowsIllegalArgumentException() {
         assertThatThrownBy(() -> new Betting((double) -2)).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("배팅 금액은 0원보다 많아야 합니다.");
+                .hasMessage("배팅 금액은 0원 이상이어야 합니다.");
     }
 }

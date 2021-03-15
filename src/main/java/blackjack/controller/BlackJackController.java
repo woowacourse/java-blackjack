@@ -66,7 +66,7 @@ public class BlackJackController {
         OutputView.printResult(requestCardStatus());
     }
 
-    private List<Participant> requestCardStatus(){
+    private List<Participant> requestCardStatus() {
         return blackJackService.getParticipantsAsList();
     }
 

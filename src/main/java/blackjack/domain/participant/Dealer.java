@@ -26,7 +26,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public double getProfit(){
+    public double getProfit() {
         return this.profit.getProfit();
     }
 

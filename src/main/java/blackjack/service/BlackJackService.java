@@ -53,7 +53,7 @@ public class BlackJackService {
         return this.players.getPlayersAsList();
     }
 
-    public List<String> getPlayersAsStrings(){
+    public List<String> getPlayersAsStrings() {
         List<Player> players = this.getPlayersAsList();
         return players.stream()
                 .map(player -> player.getNameAsString())
