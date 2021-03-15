@@ -1,10 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.User;
 import blackjack.domain.Users;
 import blackjack.domain.card.Card;
+import blackjack.state.State;
 
 import java.util.Arrays;
 import java.util.List;
@@ -74,19 +74,18 @@ public class OutputView {
     public static void printResult(Users users) {
         System.out.println("## 최종 수익");
 
-        printDealerResult(users.getPlayers(), users.getDealer());
+        printDealerResult(users.getPlayers(), users.getDealer().getState());
 
-        for (User user : users.getPlayers()) {
-            System.out.printf("%s : %.0f\n", user.getName(), user.profit(user.getBettingMoney(), users.getDealer()));
+        for (Player user : users.getPlayers()) {
+            System.out.printf("%s : %.0f\n", user.getName(), user.profit(user.getBettingMoney(), users.getDealer().getState()));
         }
     }
 
-    private static void printDealerResult(List<Player> players, User dealer) {
-
-        int dealerTotalMoney = dealer.getBettingMoney();
+    private static void printDealerResult(List<Player> players, State dealerState) {
+        int dealerTotalMoney = 0;
 
         for (Player player : players) {
-            dealerTotalMoney -= player.profit(player.getBettingMoney(), dealer);
+            dealerTotalMoney -= player.profit(player.getBettingMoney(), dealerState);
         }
 
         System.out.printf("딜러: %d \n", dealerTotalMoney);

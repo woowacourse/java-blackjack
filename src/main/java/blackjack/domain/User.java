@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class User {
     protected String name;
     protected List<Card> cards;
-    protected BettingMoney bettingMoney;
+
     protected State state;
 
     protected User(String name) {
@@ -71,19 +71,13 @@ public abstract class User {
         return state.cards().score().isBust();
     }
 
-    public void betting(int bettingMoney) {
-        this.bettingMoney = new BettingMoney(bettingMoney);
-    }
 
-    public int getBettingMoney() {
-        return bettingMoney.getBettingMoney();
-    }
 
     public boolean isFinished() {
         return this.state.isFinished();
     }
 
-    public double profit(int bettingMoney, User dealer) {
-        return this.state.profit(bettingMoney, dealer);
+    public double profit(int bettingMoney, State dealerState) {
+        return this.state.profit(bettingMoney, dealerState);
     }
 }

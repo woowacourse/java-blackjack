@@ -1,7 +1,5 @@
 package blackjack.state;
 
-import blackjack.domain.User;
-
 public class BlackJack extends Finished {
 
     public BlackJack(Cards cards) {
@@ -9,10 +7,7 @@ public class BlackJack extends Finished {
     }
 
     @Override
-    public double earningRate(User dealer) {
-        if (dealer.isBlackJack()) {
-            return 1;
-        }
+    public double earningRate(State dealerState) {
         return 1.5;
     }
 }

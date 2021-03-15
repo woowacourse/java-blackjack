@@ -43,7 +43,6 @@ public class BlackJackController {
         for (Player player : players) {
             player.betting(InputView.inputBettingMoney(player));
         }
-        dealer.betting(0);
     }
 
     private void playGameForEachPlayer(Player player) {

@@ -9,7 +9,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public double profit(double money, User dealer) {
+    public double profit(double money, State dealerState) {
         throw new UnsupportedOperationException("게임 진행이 끝나지 않아서 결과를 낼 수 없습니다.");
     }
 

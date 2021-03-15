@@ -1,7 +1,5 @@
 package blackjack.state;
 
-import blackjack.domain.User;
-
 public class Stay extends Finished {
 
     protected Stay(Cards cards) {
@@ -9,9 +7,9 @@ public class Stay extends Finished {
     }
 
     @Override
-    public double earningRate(User dealer) {
-        if (dealer.isBlackJack() ||
-                (!dealer.isBust() && dealer.getScore() > this.cards().score().getScore())) {
+    public double earningRate(State dealerState) {
+        if (dealerState.cards().isBlackJack() ||
+                (!dealerState.cards().isBust() && dealerState.cards().score().getScore() > this.cards().score().getScore())) {
             return -1;
         }
         return 1;
