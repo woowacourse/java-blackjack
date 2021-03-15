@@ -8,6 +8,8 @@ import java.util.Arrays;
 
 public class StateFactory {
 
+    private StateFactory() {}
+
     public static State generateState(Card first, Card second) {
         Cards cards = Cards.of(Arrays.asList(first, second));
 
