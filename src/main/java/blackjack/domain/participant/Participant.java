@@ -73,8 +73,4 @@ public abstract class Participant {
     public double profit(double earningRate) {
         return money.value() * earningRate;
     }
-
-    public void initMoney(Money money) {
-        this.money = money;
-    }
 }
