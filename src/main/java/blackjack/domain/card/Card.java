@@ -5,26 +5,26 @@ import java.util.Objects;
 public final class Card {
 
     private final Suit suit;
-    private final Rank rank;
+    private final Denomination denomination;
 
-    public Card(Suit suit, Rank rank) {
+    public Card(Suit suit, Denomination denomination) {
         this.suit = suit;
-        this.rank = rank;
+        this.denomination = denomination;
     }
 
     public String getRankInitial() {
-        return rank.getInitial();
+        return denomination.getInitial();
     }
 
     public int getRankValue() {
-        return rank.getValue();
+        return denomination.getValue();
     }
 
     public int getUpperValue() {
         if (isAce()) {
-            return Rank.ACE_UPPER_VALUE;
+            return Denomination.ACE_UPPER_VALUE;
         }
-        return rank.getValue();
+        return denomination.getValue();
     }
 
     public String getSuitName() {
@@ -32,7 +32,7 @@ public final class Card {
     }
 
     public boolean isAce() {
-        return rank == Rank.ACE;
+        return denomination == Denomination.ACE;
     }
 
     @Override
@@ -44,11 +44,11 @@ public final class Card {
             return false;
         }
         Card card = (Card) o;
-        return suit == card.suit && rank == card.rank;
+        return suit == card.suit && denomination == card.denomination;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(suit, rank);
+        return Objects.hash(suit, denomination);
     }
 }

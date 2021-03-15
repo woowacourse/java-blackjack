@@ -14,13 +14,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class HandTest {
 
-    private static final Card aceCard = new Card(Suit.CLOVER, Rank.ACE);
-    private static final Card tenCard = new Card(Suit.CLOVER, Rank.KING);
-    private static final Card jackCard = new Card(Suit.CLOVER, Rank.KING);
-    private static final Card queenCard = new Card(Suit.CLOVER, Rank.KING);
-    private static final Card kingCard = new Card(Suit.CLOVER, Rank.KING);
-    private static final Card sevenCard = new Card(Suit.CLOVER, Rank.SEVEN);
-    private static final Card twoCard = new Card(Suit.CLOVER, Rank.TWO);
+    private static final Card aceCard = new Card(Suit.CLOVER, Denomination.ACE);
+    private static final Card tenCard = new Card(Suit.CLOVER, Denomination.KING);
+    private static final Card jackCard = new Card(Suit.CLOVER, Denomination.KING);
+    private static final Card queenCard = new Card(Suit.CLOVER, Denomination.KING);
+    private static final Card kingCard = new Card(Suit.CLOVER, Denomination.KING);
+    private static final Card sevenCard = new Card(Suit.CLOVER, Denomination.SEVEN);
+    private static final Card twoCard = new Card(Suit.CLOVER, Denomination.TWO);
 
     private Card card;
     private Hand emptyHand;
@@ -28,7 +28,7 @@ class HandTest {
     @BeforeEach
     void setUp() {
         emptyHand = new Hand(Collections.emptyList());
-        card = new Card(Suit.CLOVER, Rank.ACE);
+        card = new Card(Suit.CLOVER, Denomination.ACE);
     }
 
     @Test

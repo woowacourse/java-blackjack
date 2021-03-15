@@ -16,8 +16,8 @@ class DeckTest {
 
     @BeforeEach
     void setUp() {
-        card1 = new Card(Suit.CLOVER, Rank.ACE);
-        card2 = new Card(Suit.CLOVER, Rank.TWO);
+        card1 = new Card(Suit.CLOVER, Denomination.ACE);
+        card2 = new Card(Suit.CLOVER, Denomination.TWO);
     }
 
     @Test

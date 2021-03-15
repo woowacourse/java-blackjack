@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Rank.ACE_UPPER_VALUE;
+import static blackjack.domain.card.Denomination.ACE_UPPER_VALUE;
 import static blackjack.domain.participant.Dealer.BLACKJACK_HAND_SIZE;
 import static blackjack.domain.participant.Dealer.BLACKJACK_VALUE;
 

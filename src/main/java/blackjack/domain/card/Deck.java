@@ -28,7 +28,7 @@ public class Deck {
 
     private static List<Card> createDeck() {
         return Arrays.stream(Suit.values())
-                .flatMap(suit -> Arrays.stream(Rank.values())
+                .flatMap(suit -> Arrays.stream(Denomination.values())
                         .map(rank -> new Card(suit, rank)))
                 .collect(Collectors.toList());
     }

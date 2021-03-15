@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.Rank;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
@@ -20,9 +20,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class GameResultDtoTest {
 
-    private static final Card aceCard = new Card(Suit.CLOVER, Rank.ACE);
-    private static final Card kingCard = new Card(Suit.CLOVER, Rank.KING);
-    private static final Card sevenCard = new Card(Suit.CLOVER, Rank.SEVEN);
+    private static final Card aceCard = new Card(Suit.CLOVER, Denomination.ACE);
+    private static final Card kingCard = new Card(Suit.CLOVER, Denomination.KING);
+    private static final Card sevenCard = new Card(Suit.CLOVER, Denomination.SEVEN);
 
     private static final Hand blackjack = new Hand(Arrays.asList(aceCard, kingCard));
     private static final Hand twentyOne = new Hand(Arrays.asList(sevenCard, sevenCard, sevenCard));

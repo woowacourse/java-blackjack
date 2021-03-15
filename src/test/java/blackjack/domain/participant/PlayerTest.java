@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.Rank;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +22,7 @@ public class PlayerTest {
     @DisplayName("플레이어 카드 뽑기")
     void receiveCard() {
         Player player = Player.from(new Name("joy"), Money.ZERO);
-        Card card = new Card(Suit.CLOVER, Rank.ACE);
+        Card card = new Card(Suit.CLOVER, Denomination.ACE);
 
         player.receiveCard(card);
 
@@ -39,11 +39,11 @@ public class PlayerTest {
 
     private static Stream<Arguments> getScoreTestcase() {
         return Stream.of(
-                Arguments.of(createCards(Rank.TWO, Rank.THREE), 5),
-                Arguments.of(createCards(Rank.ACE, Rank.THREE), 14),
-                Arguments.of(createCards(Rank.ACE, Rank.KING), 21),
-                Arguments.of(createCards(Rank.ACE, Rank.TWO, Rank.KING), 13),
-                Arguments.of(createCards(Rank.ACE, Rank.ACE, Rank.TWO), 14)
+                Arguments.of(createCards(Denomination.TWO, Denomination.THREE), 5),
+                Arguments.of(createCards(Denomination.ACE, Denomination.THREE), 14),
+                Arguments.of(createCards(Denomination.ACE, Denomination.KING), 21),
+                Arguments.of(createCards(Denomination.ACE, Denomination.TWO, Denomination.KING), 13),
+                Arguments.of(createCards(Denomination.ACE, Denomination.ACE, Denomination.TWO), 14)
         );
     }
 
@@ -57,16 +57,16 @@ public class PlayerTest {
 
     private static Stream<Arguments> isBustTestcase() {
         return Stream.of(
-                Arguments.of(createCards(Rank.TWO, Rank.KING), false),
-                Arguments.of(createCards(Rank.KING, Rank.KING), false),
-                Arguments.of(createCards(Rank.KING, Rank.KING, Rank.TWO), true),
-                Arguments.of(createCards(Rank.NINE, Rank.KING, Rank.TWO), false),
-                Arguments.of(createCards(Rank.ACE, Rank.ACE, Rank.SIX), false)
+                Arguments.of(createCards(Denomination.TWO, Denomination.KING), false),
+                Arguments.of(createCards(Denomination.KING, Denomination.KING), false),
+                Arguments.of(createCards(Denomination.KING, Denomination.KING, Denomination.TWO), true),
+                Arguments.of(createCards(Denomination.NINE, Denomination.KING, Denomination.TWO), false),
+                Arguments.of(createCards(Denomination.ACE, Denomination.ACE, Denomination.SIX), false)
         );
     }
 
-    private static List<Card> createCards(Rank... ranks) {
-        return Arrays.stream(ranks)
+    private static List<Card> createCards(Denomination... denominations) {
+        return Arrays.stream(denominations)
                 .map(rank -> new Card(Suit.CLOVER, rank))
                 .collect(Collectors.toList());
     }
