@@ -14,4 +14,13 @@ public class ResultTest {
         final Result result = Result.findResult(score, opponentScore);
         assertThat(result).isEqualTo(Result.valueOf(expectedResult));
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"20,10,승,1", "15,15,무,0", "10,20,패,-1"})
+    @DisplayName("getter에 대한 테스트")
+    void getterTest(final int score, final int opponentScore, final String result, final double profitRate) {
+        final Result resultObj = Result.findResult(score, opponentScore);
+        assertThat(resultObj.getResult()).isEqualTo(result);
+        assertThat(resultObj.getProfitRate()).isEqualTo(profitRate);
+    }
 }

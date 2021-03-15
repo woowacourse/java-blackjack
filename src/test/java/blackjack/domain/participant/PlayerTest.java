@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.HashSet;
+
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -58,7 +60,7 @@ public class PlayerTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"TEN,NINE:WIN", "TEN,SEVEN:DRAW", "SIX,SEVEN:LOSE"}, delimiter = ':')
+    @CsvSource(value = {"TEN,ACE:BLACKJACK_WIN", "TEN,NINE:WIN", "TEN,SEVEN:DRAW", "SIX,SEVEN:LOSE"}, delimiter = ':')
     @DisplayName("플레이어와 상대 모두 버스트가 아니라면, 점수 합계로 승무패를 가린다")
     void generateResultByScore(final String playerCardInput, final String expectedResult) {
         dealer.receiveAdditionalCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
@@ -70,5 +72,19 @@ public class PlayerTest {
             player.receiveAdditionalCard(new Card(cardLetter, CardSuit.DIAMOND));
         }
         assertThat(player.generateResult(dealer)).isEqualTo(Result.valueOf(expectedResult));
+    }
+
+    @Test
+    @DisplayName("HashCode, equals 오버라이딩")
+    void equalsTest() {
+        //Given
+        final Player player = new Player("조엘");
+        final Player playerWithSameName = new Player("조엘");
+        assertThat(player).isEqualTo(playerWithSameName);
+
+        final HashSet<Player> players = new HashSet<>();
+        players.add(player);
+        players.add(playerWithSameName);
+        assertThat(players.size()).isEqualTo(1);
     }
 }

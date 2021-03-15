@@ -2,8 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.result.Result;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Dealer extends Participant {
@@ -11,7 +9,7 @@ public class Dealer extends Participant {
     private static final String FIXED_DEALER_NAME = "딜러";
 
     public Dealer() {
-        super(FIXED_DEALER_NAME);
+        super(FIXED_DEALER_NAME, 0);
     }
 
     public boolean canGetMoreCard() {
@@ -20,6 +18,9 @@ public class Dealer extends Participant {
 
     @Override
     public Result generateResult(final Participant participant) {
+        if (this.isBlackjack() && !participant.isBlackjack()) {
+            return Result.BLACKJACK_WIN;
+        }
         if (participant.isBust()) {
             return Result.WIN;
         }
@@ -29,12 +30,13 @@ public class Dealer extends Participant {
         return generateResultByScore(participant);
     }
 
-    public Map<Result, Integer> generateEveryResult(final Players players) {
-        final Map<Result, Integer> dealerResult = new HashMap<>();
-        for (Player player : players.getPlayers()) {
-            Result result = this.generateResult(player);
-            dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
+    public void calculateProfit(final Map<Player, Integer> opponentProfit) {
+        for (Player player : opponentProfit.keySet()) {
+            money = money.updateMoneyByProfit(opponentProfit.get(player) * -1);
         }
-        return Collections.unmodifiableMap(dealerResult);
+    }
+
+    public Money getDealerMoney() {
+        return money;
     }
 }

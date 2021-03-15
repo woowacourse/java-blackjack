@@ -1,24 +1,23 @@
 package blackjack.domain.card;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 public class CardDeck {
+    private static final int CARD_NUMBER = 52;
+
     private final List<Card> cards;
 
-    public CardDeck() {
-        this.cards = new LinkedList<>();
-        initialize();
+    public CardDeck(final List<Card> cards) {
+        validateCards(cards);
+        this.cards = new LinkedList<>(cards);
     }
 
-    private void initialize() {
-        for (final CardSuit type : CardSuit.values()) {
-            Arrays.stream(CardLetter.values())
-                    .forEach(number -> cards.add(new Card(number, type)));
+    private void validateCards(final List<Card> cards) {
+        if (cards.size() != CARD_NUMBER) {
+            throw new IllegalStateException("블랙잭을 진행하기 위해서는 52장의 카드가 필요합니다.");
         }
-        Collections.shuffle(cards);
     }
 
     public Card distribute() {

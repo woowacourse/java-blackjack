@@ -1,6 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardDeckFactory;
+import blackjack.domain.card.shuffle.RandomShuffleStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -8,10 +10,11 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
     public void run() {
-        final CardDeck cardDeck = new CardDeck();
+        final CardDeck cardDeck = CardDeckFactory.make(new RandomShuffleStrategy());
         final Dealer dealer = new Dealer();
         final Players players = playerSetUp();
 
@@ -24,7 +27,8 @@ public class BlackjackController {
     private Players playerSetUp() {
         try {
             final List<String> playerName = InputView.requestName();
-            return Players.of(playerName);
+            final List<Integer> playerMoney = InputView.requestBettingMoney(playerName);
+            return Players.of(playerName, playerMoney);
         } catch (IllegalArgumentException e) {
             OutputView.showErrorMessage(e.getMessage());
             return playerSetUp();
@@ -46,9 +50,17 @@ public class BlackjackController {
     }
 
     private void progressSinglePlayerGame(final CardDeck cardDeck, final Player player) {
-        while (!player.isBust() && InputView.requestMoreCard(player)) {
+        while (!player.isBlackjack() && !player.isBust() && InputView.requestMoreCard(player)) {
             player.receiveAdditionalCard(cardDeck.distribute());
             OutputView.showPlayerCard(player);
+        }
+        showSinglePlayerResult(player);
+    }
+
+    private void showSinglePlayerResult(Player player) {
+        if (player.isBlackjack()) {
+            OutputView.showBlackjackMessage(player);
+            return;
         }
         if (player.isBust()) {
             OutputView.showBustMessage();
@@ -66,9 +78,12 @@ public class BlackjackController {
 
     private void showFinalResult(final Players players, final Dealer dealer) {
         OutputView.showNewLine();
-        OutputView.showCardResult(dealer);
-        OutputView.showEveryPlayerCardResult(players);
-        OutputView.showDealerGameResult(dealer, dealer.generateEveryResult(players));
-        OutputView.showPlayerGameResult(players.generateEveryPlayerResult(dealer));
+        OutputView.showCardResult(dealer, dealer.calculateScore());
+        OutputView.showEveryPlayerCardResult(players.generateEveryPlayerScore());
+
+        final Map<Player, Integer> playerProfit = players.generateEveryPlayerProfit(dealer);
+        dealer.calculateProfit(playerProfit);
+        OutputView.showDealerProfit(dealer);
+        OutputView.showPlayerProfit(playerProfit);
     }
 }
