@@ -9,10 +9,10 @@ import java.util.stream.Collectors;
 public class Deck {
     private static final int FIRST_INDEX = 0;
 
-    private final List<Card> shuffledCards;
+    private final List<Card> cards;
 
-    private Deck(List<Card> shuffledCards) {
-        this.shuffledCards = new ArrayList<>(shuffledCards);
+    private Deck(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public static Deck generateByRandomCard() {
@@ -32,6 +32,6 @@ public class Deck {
     }
 
     public Card makeOneCard() {
-        return shuffledCards.remove(FIRST_INDEX);
+        return cards.remove(FIRST_INDEX);
     }
 }
