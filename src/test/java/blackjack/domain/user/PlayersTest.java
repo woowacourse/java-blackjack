@@ -52,7 +52,7 @@ public class PlayersTest {
         dealer.draw(seven);
         Results results = players.generateResultsMapAgainstDealer(dealer);
 
-        assertThat(results.getResultOf(player1)).isEqualTo(ResultType.WIN);
+        assertThat(results.getResultOf(player1)).isEqualTo(ResultType.BLACKJACK_WIN);
 
         assertThat(results.getResultOf(player2)).isEqualTo(ResultType.LOSE);
     }
@@ -66,7 +66,7 @@ public class PlayersTest {
         player2.draw(seven); // player2 에게 7을 추가로 주어 23을 만들어 버스트 상태로 만든다.
         Results results = players.generateResultsMapAgainstDealer(dealer);
 
-        assertThat(results.getResultOf(player1)).isEqualTo(ResultType.WIN);
+        assertThat(results.getResultOf(player1)).isEqualTo(ResultType.BLACKJACK_WIN);
 
         assertThat(results.getResultOf(player2)).isEqualTo(ResultType.LOSE);
     }
