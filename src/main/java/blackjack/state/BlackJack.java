@@ -8,6 +8,9 @@ public class BlackJack extends Finished {
 
     @Override
     public double earningRate(State dealerState) {
+        if (dealerState.cards().isBlackJack()) {
+            return 0;
+        }
         return 1.5;
     }
 }

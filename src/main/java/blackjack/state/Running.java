@@ -1,7 +1,5 @@
 package blackjack.state;
 
-import blackjack.domain.User;
-
 public abstract class Running extends Started {
 
     public Running(Cards cards) {

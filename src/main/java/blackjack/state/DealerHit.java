@@ -2,7 +2,7 @@ package blackjack.state;
 
 import blackjack.domain.card.Card;
 
-public class DealerHit extends Running{
+public class DealerHit extends Running {
 
     public DealerHit(Cards cards) {
         super(cards);

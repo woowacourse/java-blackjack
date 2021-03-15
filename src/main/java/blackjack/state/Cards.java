@@ -40,7 +40,7 @@ public class Cards {
                 .sum());
 
         if (this.values.stream()
-                .anyMatch(Card::isAce) && score.isChangeAceNumber()){
+                .anyMatch(Card::isAce) && score.isChangeAceNumber()) {
             return new Score(score.aceNumberChange());
         }
 

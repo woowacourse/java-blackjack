@@ -25,7 +25,7 @@ public class StateFactory {
             return new BlackJack(cards);
         }
 
-        if (cards.isOverDrawScore()){
+        if (cards.isOverDrawScore()) {
             return new Stay(cards);
         }
 

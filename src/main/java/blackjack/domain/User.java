@@ -27,7 +27,7 @@ public abstract class User {
     }
 
     public void initialHit(Card firstCard, Card secondCard) {
-        if(this.isDealer()){
+        if (this.isDealer()) {
             this.state = StateFactory.initialDealerDraw(firstCard, secondCard);
             return;
         }
@@ -70,7 +70,6 @@ public abstract class User {
     public boolean isBust() {
         return state.cards().score().isBust();
     }
-
 
 
     public boolean isFinished() {
