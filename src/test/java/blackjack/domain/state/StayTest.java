@@ -73,12 +73,14 @@ class StayTest {
 	@Test
 	@DisplayName("Bust 아님 확인")
 	void isNotBust() {
+		state = state.keepContinue(false);
 		assertFalse(state.isBust());
 	}
 
 	@Test
 	@DisplayName("Blackjack 아님 확인")
 	void isNotBlackJack() {
+		state = state.keepContinue(false);
 		assertFalse(state.isBlackJack());
 	}
 

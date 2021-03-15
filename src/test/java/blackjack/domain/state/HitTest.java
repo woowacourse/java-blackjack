@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import static blackjack.controller.BlackJackController.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
+import blackjack.domain.card.ParticipantCards;
+import blackjack.domain.participant.Money;
 
 class HitTest {
 	private PlayerState state;
@@ -69,5 +72,13 @@ class HitTest {
 	@DisplayName("Blackjack 아님 확인")
 	void isNotBlackJack() {
 		assertFalse(state.isBlackJack());
+	}
+
+	@Test
+	@DisplayName("Running 시 옳지 않은 호출 예외 처리")
+	void makeProfitException() {
+		assertThatThrownBy(() -> state.makeProfit(new BlackJack(new ParticipantCards()), Money.of(100)))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage(ERROR_MESSAGE_CALL);
 	}
 }
