@@ -5,17 +5,17 @@ import static blackjack.controller.BlackJackController.*;
 import java.util.stream.Stream;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.ParticipantCards;
 
 public abstract class Finished implements PlayerState {
 	protected static final int WIN_PROFIT_RATE = 1;
 	protected static final int DRAW_PROFIT_RATE = 0;
 	protected static final int LOSE_PROFIT_RATE = -1;
 
-	protected Cards cards;
+	protected ParticipantCards participantCards;
 
-	public Finished(Cards cards) {
-		this.cards = cards;
+	public Finished(ParticipantCards participantCards) {
+		this.participantCards = participantCards;
 	}
 
 	@Override
@@ -35,11 +35,11 @@ public abstract class Finished implements PlayerState {
 
 	@Override
 	public int calculatePoint() {
-		return cards.calculateIncludeAce();
+		return participantCards.calculateIncludeAce();
 	}
 
 	@Override
 	public Stream<Card> getCardStream() {
-		return cards.getCardStream();
+		return participantCards.getCardStream();
 	}
 }

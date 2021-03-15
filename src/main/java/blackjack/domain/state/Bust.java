@@ -1,12 +1,12 @@
 package blackjack.domain.state;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.ParticipantCards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 
 public class Bust extends Finished {
-	public Bust(Cards cards) {
-		super(cards);
+	public Bust(ParticipantCards participantCards) {
+		super(participantCards);
 	}
 
 	@Override

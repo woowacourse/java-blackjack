@@ -12,17 +12,17 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DeckTest {
-	private final List<Card> cards = new ArrayList<>();
+	private final List<Card> participantCards = new ArrayList<>();
 	private Deck deck;
 
 	@BeforeEach
 	void setUp() {
-		cards.add(new Card(CardPattern.HEART, CardNumber.SEVEN));
-		cards.add(new Card(CardPattern.DIAMOND, CardNumber.FIVE));
-		cards.add(new Card(CardPattern.SPADE, CardNumber.FOUR));
-		cards.add(new Card(CardPattern.CLOVER, CardNumber.TWO));
+		participantCards.add(new Card(CardPattern.HEART, CardNumber.SEVEN));
+		participantCards.add(new Card(CardPattern.DIAMOND, CardNumber.FIVE));
+		participantCards.add(new Card(CardPattern.SPADE, CardNumber.FOUR));
+		participantCards.add(new Card(CardPattern.CLOVER, CardNumber.TWO));
 
-		CardsGenerator cardsGenerator = () -> cards;
+		CardsGenerator cardsGenerator = () -> participantCards;
 		deck = new Deck(cardsGenerator.makeCards());
 	}
 
@@ -42,7 +42,7 @@ public class DeckTest {
 	@Test
 	@DisplayName("덱 카드 섞이는지 확인")
 	void deckShuffle() {
-		Collections.shuffle(cards);
+		Collections.shuffle(participantCards);
 		assertNotEquals(new Card(CardPattern.HEART, CardNumber.SEVEN), deck.dealCard());
 	}
 

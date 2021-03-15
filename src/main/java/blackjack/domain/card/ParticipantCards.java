@@ -5,22 +5,22 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public class Cards {
+public class ParticipantCards {
 	private static final int MAXIMUM_TO_ACE_IS_ELEVEN = 11;
 	private static final int MAKING_ACE_ELEVEN = 10;
 
-	private final List<Card> cards;
+	private final List<Card> participantCards;
 
-	public Cards() {
-		this.cards = new ArrayList<>();
+	public ParticipantCards() {
+		this.participantCards = new ArrayList<>();
 	}
 
 	public void addCard(Card card) {
-		cards.add(card);
+		participantCards.add(card);
 	}
 
 	public int calculateJudgingPoint() {
-		return cards.stream()
+		return participantCards.stream()
 			.map(Card::getNumber)
 			.reduce(0, Integer::sum);
 	}
@@ -34,12 +34,12 @@ public class Cards {
 	}
 
 	private boolean havingAce() {
-		return cards.stream()
+		return participantCards.stream()
 			.anyMatch(Card::isAce);
 	}
 
 	public Stream<Card> getCardStream() {
-		return cards.stream();
+		return participantCards.stream();
 	}
 
 	@Override
@@ -48,12 +48,12 @@ public class Cards {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Cards cards1 = (Cards)o;
-		return Objects.equals(cards, cards1.cards);
+		ParticipantCards participantCards1 = (ParticipantCards)o;
+		return Objects.equals(participantCards, participantCards1.participantCards);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cards);
+		return Objects.hash(participantCards);
 	}
 }

@@ -5,20 +5,20 @@ import static blackjack.controller.BlackJackController.*;
 import java.util.stream.Stream;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.ParticipantCards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 
 public abstract class Running implements PlayerState {
-	protected Cards cards;
+	protected ParticipantCards participantCards;
 
-	public Running(Cards cards) {
-		this.cards = cards;
+	public Running(ParticipantCards participantCards) {
+		this.participantCards = participantCards;
 	}
 
 	@Override
 	public int calculatePoint() {
-		return cards.calculateJudgingPoint();
+		return participantCards.calculateJudgingPoint();
 	}
 
 	@Override
@@ -28,6 +28,6 @@ public abstract class Running implements PlayerState {
 
 	@Override
 	public Stream<Card> getCardStream() {
-		return cards.getCardStream();
+		return participantCards.getCardStream();
 	}
 }

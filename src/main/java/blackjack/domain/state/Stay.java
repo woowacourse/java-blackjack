@@ -1,12 +1,12 @@
 package blackjack.domain.state;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.ParticipantCards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 
 public class Stay extends Finished {
-	public Stay(Cards cards) {
-		super(cards);
+	public Stay(ParticipantCards participantCards) {
+		super(participantCards);
 	}
 
 	@Override

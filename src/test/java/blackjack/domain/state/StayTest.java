@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.ParticipantCards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 
@@ -20,11 +20,11 @@ class StayTest {
 
 	@BeforeEach
 	void setUp() {
-		Cards cards = new Cards();
+		ParticipantCards participantCards = new ParticipantCards();
 		Card firstCard = new Card(CardPattern.DIAMOND, CardNumber.TEN);
 		Card secondCard = new Card(CardPattern.DIAMOND, CardNumber.THREE);
-		cards.addCard(firstCard);
-		cards.addCard(secondCard);
+		participantCards.addCard(firstCard);
+		participantCards.addCard(secondCard);
 		state = StateFactory.drawTwoCards(firstCard, secondCard);
 	}
 

@@ -1,14 +1,14 @@
 package blackjack.domain.state;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.ParticipantCards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 
 public class BlackJack extends Finished {
 	private static final double BLACKJACK_PROFIT_RATE = 1.5;
 
-	public BlackJack(Cards cards) {
-		super(cards);
+	public BlackJack(ParticipantCards participantCards) {
+		super(participantCards);
 	}
 
 	@Override

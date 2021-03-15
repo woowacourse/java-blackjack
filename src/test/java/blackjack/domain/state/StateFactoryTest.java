@@ -8,33 +8,33 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.ParticipantCards;
 
 public class StateFactoryTest {
-	private Cards cards;
+	private ParticipantCards participantCards;
 
 	@BeforeEach
 	void setUp() {
-		cards = new Cards();
+		participantCards = new ParticipantCards();
 	}
 
 	@Test
 	void checkBlackJack() {
 		Card firstCard = new Card(CardPattern.DIAMOND, CardNumber.TEN);
 		Card secondCard = new Card(CardPattern.DIAMOND, CardNumber.ACE);
-		cards.addCard(firstCard);
-		cards.addCard(secondCard);
+		participantCards.addCard(firstCard);
+		participantCards.addCard(secondCard);
 		PlayerState state = StateFactory.drawTwoCards(firstCard, secondCard);
 		assertThat(state).isInstanceOf(BlackJack.class);
 	}
 
 	@Test
 	void checkHit() {
-		Cards cards = new Cards();
+		ParticipantCards participantCards = new ParticipantCards();
 		Card firstCard = new Card(CardPattern.DIAMOND, CardNumber.TEN);
 		Card secondCard = new Card(CardPattern.DIAMOND, CardNumber.THREE);
-		cards.addCard(firstCard);
-		cards.addCard(secondCard);
+		participantCards.addCard(firstCard);
+		participantCards.addCard(secondCard);
 		PlayerState state = StateFactory.drawTwoCards(firstCard, secondCard);
 		assertThat(state).isInstanceOf(Hit.class);
 	}

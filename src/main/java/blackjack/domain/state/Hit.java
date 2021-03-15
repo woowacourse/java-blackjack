@@ -1,13 +1,13 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.ParticipantCards;
 
 public class Hit extends Running {
 	private static final int THRESHOLD_OF_BUST = 21;
 
-	public Hit(Cards cards) {
-		super(cards);
+	public Hit(ParticipantCards participantCards) {
+		super(participantCards);
 	}
 
 	@Override
@@ -18,16 +18,16 @@ public class Hit extends Running {
 	@Override
 	public PlayerState keepContinue(boolean input) {
 		if (!input) {
-			return new Stay(cards);
+			return new Stay(participantCards);
 		}
 		return this;
 	}
 
 	@Override
 	public PlayerState drawNewCard(Card card) {
-		cards.addCard(card);
-		if (cards.calculateIncludeAce() > THRESHOLD_OF_BUST) {
-			return new Bust(cards);
+		participantCards.addCard(card);
+		if (participantCards.calculateIncludeAce() > THRESHOLD_OF_BUST) {
+			return new Bust(participantCards);
 		}
 		return this;
 	}

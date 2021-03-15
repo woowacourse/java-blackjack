@@ -1,16 +1,16 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.ParticipantCards;
 
 public class StateFactory {
 	public static PlayerState drawTwoCards(Card firstCard, Card secondCard) {
-		Cards cards = new Cards();
-		cards.addCard(firstCard);
-		cards.addCard(secondCard);
-		if (cards.calculateIncludeAce() == 21) {
-			return new BlackJack(cards);
+		ParticipantCards participantCards = new ParticipantCards();
+		participantCards.addCard(firstCard);
+		participantCards.addCard(secondCard);
+		if (participantCards.calculateIncludeAce() == 21) {
+			return new BlackJack(participantCards);
 		}
-		return new Hit(cards);
+		return new Hit(participantCards);
 	}
 }

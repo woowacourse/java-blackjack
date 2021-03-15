@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.ParticipantCards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 
@@ -20,8 +20,8 @@ class BustTest {
 
 	@BeforeEach
 	void setUp() {
-		Cards cards = new Cards();
-		state = new Bust(cards);
+		ParticipantCards participantCards = new ParticipantCards();
+		state = new Bust(participantCards);
 	}
 
 	@Test

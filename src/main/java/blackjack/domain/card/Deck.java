@@ -8,8 +8,8 @@ public class Deck {
 
 	private final List<Card> deck;
 
-	public Deck(List<Card> cards) {
-		this.deck = cards;
+	public Deck(List<Card> participantCards) {
+		this.deck = participantCards;
 	}
 
 	public Card dealCard() {
