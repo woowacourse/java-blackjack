@@ -12,12 +12,12 @@ public abstract class Player {
 
     protected final Name name;
     protected final Cards cards;
-    protected Money money;
+    protected BettingMoney bettingMoney;
 
-    protected Player(String name, Money money) {
+    protected Player(String name, BettingMoney bettingMoney) {
         this.name = new Name(name);
         this.cards = new Cards();
-        this.money = money;
+        this.bettingMoney = bettingMoney;
     }
 
     public final void initializeCards(final Deck deck) {
@@ -63,7 +63,7 @@ public abstract class Player {
         return cards.totalScore();
     }
 
-    public final Money money() {
-        return money;
+    public final BettingMoney money() {
+        return bettingMoney;
     }
 }

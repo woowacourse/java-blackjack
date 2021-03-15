@@ -1,8 +1,8 @@
 package blackjack.domain.game;
 
+import blackjack.domain.player.BettingMoney;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Gamblers;
-import blackjack.domain.player.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +17,8 @@ public class BlackJackGameTest {
 
     @BeforeEach
     void beforeEach() {
-        Gambler gambler1 = new Gambler("pobi", new Money(10000));
-        Gambler gambler2 = new Gambler("jason", new Money(20000));
+        Gambler gambler1 = new Gambler("pobi", new BettingMoney(10000));
+        Gambler gambler2 = new Gambler("jason", new BettingMoney(20000));
         Gamblers gamblers = new Gamblers(Arrays.asList(gambler1, gambler2));
         blackJackGame = new BlackJackGame(gamblers);
     }
@@ -39,7 +39,7 @@ public class BlackJackGameTest {
     @DisplayName("겜블러 카드 드로우 테스트")
     void testGiveGamblerCard() {
         //given
-        Gambler targetGambler = new Gambler("pobi", new Money(10000));
+        Gambler targetGambler = new Gambler("pobi", new BettingMoney(10000));
 
         //when
         blackJackGame.giveGamblerCard(targetGambler);

@@ -99,10 +99,10 @@ public class OutputView {
 
     private static void printFinalWinningResult(final Result result) {
         printMessage("## 최종 수익");
-        printMessageByFormat(PROFIT_RESULT, result.getDealerInfo().name(), result.getDealerInfo().money().getMoney());
+        printMessageByFormat(PROFIT_RESULT, result.getDealerInfo().name(), result.getDealerInfo().money().getBettingMoney());
 
         result.getGamblerResult()
-                .forEach((key, value) -> printMessageByFormat(PROFIT_RESULT, key.name(), key.money().getMoney()));
+                .forEach((key, value) -> printMessageByFormat(PROFIT_RESULT, key.name(), key.money().getBettingMoney()));
 
 
     }

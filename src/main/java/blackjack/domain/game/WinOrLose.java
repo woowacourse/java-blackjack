@@ -1,7 +1,7 @@
 package blackjack.domain.game;
 
+import blackjack.domain.player.BettingMoney;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Money;
 import blackjack.domain.player.Player;
 
 public enum WinOrLose {
@@ -48,8 +48,8 @@ public enum WinOrLose {
         return WIN_NORMAL;
     }
 
-    public Money calculateProfit(Money money) {
-        return money.calculateProfit(yield);
+    public BettingMoney calculateProfit(BettingMoney bettingMoney) {
+        return bettingMoney.calculateProfit(yield);
     }
 
     public String getSymbol() {

@@ -2,17 +2,17 @@ package blackjack.domain.player;
 
 import java.util.Objects;
 
-public class Money {
+public class BettingMoney {
 
     public static final int INVERSE_SIGN = -1;
-    private int money;
+    private int bettingMoney;
 
-    public Money(String money) {
-        this(ChangeToInt(money));
+    public BettingMoney(String bettingMoney) {
+        this(ChangeToInt(bettingMoney));
     }
 
-    public Money(int money) {
-        this.money = money;
+    public BettingMoney(int bettingMoney) {
+        this.bettingMoney = bettingMoney;
     }
 
     private static int ChangeToInt(String input) {
@@ -35,32 +35,32 @@ public class Money {
         }
     }
 
-    public Money calculateProfit(double yield) {
-        return new Money((int) (money * yield));
+    public BettingMoney calculateProfit(double yield) {
+        return new BettingMoney((int) (bettingMoney * yield));
     }
 
-    public Money inverseMoney() {
-        return new Money(INVERSE_SIGN * money);
+    public BettingMoney inverseMoney() {
+        return new BettingMoney(INVERSE_SIGN * bettingMoney);
     }
 
-    public Money addMoney(Money money) {
-        return new Money(this.money + money.money);
+    public BettingMoney addMoney(BettingMoney bettingMoney) {
+        return new BettingMoney(this.bettingMoney + bettingMoney.bettingMoney);
     }
 
-    public int getMoney() {
-        return money;
+    public int getBettingMoney() {
+        return bettingMoney;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Money money1 = (Money) o;
-        return money == money1.money;
+        BettingMoney bettingMoney = (BettingMoney) o;
+        return this.bettingMoney == bettingMoney.bettingMoney;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(money);
+        return Objects.hash(bettingMoney);
     }
 }

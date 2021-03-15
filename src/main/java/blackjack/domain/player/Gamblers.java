@@ -19,14 +19,6 @@ public class Gamblers {
         this.gamblers = gamblers;
     }
 
-    public void add(Gambler gambler) {
-        gamblers.add(gambler);
-    }
-
-    public void addAll(Gamblers gamblers) {
-        gamblers.getGamblers().forEach(this::add);
-    }
-
     public List<Gambler> getGamblers() {
         return Collections.unmodifiableList(gamblers);
     }

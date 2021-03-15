@@ -14,7 +14,7 @@ public class GamblerTest {
 
     @BeforeEach
     void beforeEach() {
-        gambler = new Gambler("pobi", new Money(10000));
+        gambler = new Gambler("pobi", new BettingMoney(10000));
     }
 
     @Test
@@ -37,25 +37,25 @@ public class GamblerTest {
         this.gambler.calculateProfit(WinOrLose.WIN_BLACK_JACK);
 
         //then
-        assertThat(this.gambler.money()).isEqualTo(new Money(15000));
+        assertThat(this.gambler.money()).isEqualTo(new BettingMoney(15000));
     }
 
     @Test
     @DisplayName("Money inverse 테스트")
     void testInverseMoney() {
         //when
-        Money inverseMoney = gambler.inverseMoney();
+        BettingMoney inverseBettingMoney = gambler.inverseMoney();
 
         //then
-        assertThat(inverseMoney).isEqualTo(new Money(-10000));
+        assertThat(inverseBettingMoney).isEqualTo(new BettingMoney(-10000));
     }
 
     @Test
     @DisplayName("이름을 통해 객체 구분 테스트")
     void testIsSameName() {
         //given
-        Gambler gambler1 = new Gambler("pobi", new Money(10000));
-        Gambler gambler2 = new Gambler("jason", new Money(20000));
+        Gambler gambler1 = new Gambler("pobi", new BettingMoney(10000));
+        Gambler gambler2 = new Gambler("jason", new BettingMoney(20000));
 
         //when
         boolean test1 = gambler.isSameName(gambler1);

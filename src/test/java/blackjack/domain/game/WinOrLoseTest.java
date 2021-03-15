@@ -3,9 +3,9 @@ package blackjack.domain.game;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.player.BettingMoney;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ public class WinOrLoseTest {
     @DisplayName("겜블러 블랙잭 승리 테스트")
     void testCalculateWinBlackJack() {
         //given
-        Gambler gambler = new Gambler("pobi", new Money(10000));
+        Gambler gambler = new Gambler("pobi", new BettingMoney(10000));
         gambler.cards().add(Card.of(Suit.HEART, Denomination.ACE));
         gambler.cards().add(Card.of(Suit.HEART, Denomination.JACK));
 
@@ -42,7 +42,7 @@ public class WinOrLoseTest {
     @DisplayName("겜블러 일반 승리 테스트")
     void testCalculateWinNormal() {
         //given
-        Gambler gambler = new Gambler("jason", new Money(20000));
+        Gambler gambler = new Gambler("jason", new BettingMoney(20000));
         gambler.cards().add(Card.of(Suit.HEART, Denomination.SIX));
         gambler.cards().add(Card.of(Suit.HEART, Denomination.TEN));
         gambler.cards().add(Card.of(Suit.HEART, Denomination.FIVE));
@@ -58,7 +58,7 @@ public class WinOrLoseTest {
     @DisplayName("겜블러와 딜러 무승부 테스트")
     void testCalculateDraw() {
         //given
-        Gambler gambler = new Gambler("croffle", new Money(30000));
+        Gambler gambler = new Gambler("croffle", new BettingMoney(30000));
         gambler.cards().add(Card.of(Suit.HEART, Denomination.QUEEN));
         gambler.cards().add(Card.of(Suit.HEART, Denomination.TEN));
 
@@ -73,7 +73,7 @@ public class WinOrLoseTest {
     @DisplayName("겜블러 패배 테스트")
     void testCalculateGamblerWinOrNot() {
         //given
-        Gambler gambler = new Gambler("html", new Money(40000));
+        Gambler gambler = new Gambler("html", new BettingMoney(40000));
         gambler.cards().add(Card.of(Suit.HEART, Denomination.NINE));
         gambler.cards().add(Card.of(Suit.HEART, Denomination.TEN));
 

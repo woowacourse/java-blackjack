@@ -33,21 +33,21 @@ public class DealerTest {
     @DisplayName("딜러 수익률 계산 테스트")
     void testCalculateProfit() {
         //given
-        Gambler gambler = new Gambler("pobi", new Money(10000));
+        Gambler gambler = new Gambler("pobi", new BettingMoney(10000));
 
         //when
         dealer.calculateProfit(gambler);
 
         //then
-        assertThat(dealer.money()).isEqualTo(new Money(-10000));
+        assertThat(dealer.money()).isEqualTo(new BettingMoney(-10000));
     }
 
     @Test
     @DisplayName("이름을 통해 객체 구분 테스트")
     void testIsSameName() {
         //given
-        Gambler gambler1 = new Gambler("딜러", new Money(10000));
-        Gambler gambler2 = new Gambler("jason", new Money(20000));
+        Gambler gambler1 = new Gambler("딜러", new BettingMoney(10000));
+        Gambler gambler2 = new Gambler("jason", new BettingMoney(20000));
 
         //when
         boolean test1 = dealer.isSameName(gambler1);

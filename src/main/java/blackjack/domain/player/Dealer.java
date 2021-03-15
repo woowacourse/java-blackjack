@@ -7,12 +7,12 @@ public class Dealer extends Player {
     private static final int MIN_SCORE_TO_STAND = 17;
 
     public Dealer() {
-        super("딜러", new Money(0));
+        super("딜러", new BettingMoney(0));
     }
 
     public void calculateProfit(final Gambler gambler) {
-        Money dealerProfit = gambler.inverseMoney();
-        money = money.addMoney(dealerProfit);
+        BettingMoney dealerProfit = gambler.inverseMoney();
+        bettingMoney = bettingMoney.addMoney(dealerProfit);
     }
 
     public boolean ableToDraw() {
