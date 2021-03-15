@@ -1,21 +1,22 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.List;
 
 public class Deck {
 
     private static final String EMPTY_DECK_ERROR_MESSAGE = "덱이 비어있습니다.";
 
-    private final Stack<Card> deck = new Stack<>();
+    private final Deque<Card> deck = new ArrayDeque<Card>() {
+    };
 
-    public Deck() {
-        this.deck.addAll(CardFactory.generateCards());
-        Collections.shuffle(deck);
+    public Deck(List<Card> cards) {
+        this.deck.addAll(cards);
     }
 
     public Card pop() {
-        if (deck.empty()) {
+        if (deck.isEmpty()) {
             throw new RuntimeException(EMPTY_DECK_ERROR_MESSAGE);
         }
         return deck.pop();

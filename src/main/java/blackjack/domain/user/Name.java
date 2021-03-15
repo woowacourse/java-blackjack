@@ -13,13 +13,13 @@ public class Name {
     }
 
     private String validateName(String name) {
-        if (isEmpty(name) || name.trim().length() < 1) {
+        if (isNull(name) || name.trim().length() < 1) {
             throw new IllegalArgumentException(INVALID_PLAYER_NAME_LENGTH_ERROR_MESSAGE);
         }
         return name.trim();
     }
 
-    private boolean isEmpty(String name) {
+    private boolean isNull(String name) {
         return name == null;
     }
 

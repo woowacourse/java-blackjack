@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.DeckFactory;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
@@ -16,7 +17,7 @@ public class GameTable {
     private final Players players;
 
     public GameTable(Dealer dealer, Players players) {
-        deck = new Deck();
+        deck = DeckFactory.create();
         this.dealer = dealer;
         this.players = players;
     }

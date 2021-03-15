@@ -1,12 +1,8 @@
-package blackjack;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Score;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -43,6 +39,14 @@ public class CardsTest {
         Cards actual = new Cards();
         actual.addCards(deck);
         assertThat(cards).isEqualTo(actual);
+    }
+
+    @Test
+    @DisplayName("리스트에 카드를 한 장 추가한다.")
+    void add() {
+        Cards cards = new Cards();
+        cards.addCard(new Card(Denomination.NINE, Suit.HEART));
+        assertThat(cards.loadCards()).isEqualTo("9하트");
     }
 
     @Test
