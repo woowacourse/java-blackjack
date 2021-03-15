@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.ProfitResult;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
 import blackjack.domain.gamer.Dealer;
@@ -20,6 +21,7 @@ public class OutputView {
     private static final String CARD_AND_SCORE_RESULT = "%s - 결과 : %d";
     private static final String ASK_BETTING_MONEY = "%s의 배팅 금액은?";
     private static final String PROFIT_RESULT_FORM = "%s: %.0f";
+    private static final String COMMA = ",";
 
     private OutputView() {
 
@@ -80,9 +82,14 @@ public class OutputView {
     }
 
     private static String getCardsMessageForm(Participants participants) {
-        String cardsName = participants.getTakenCards().getCards().stream().map(OutputView::cardForm).collect(Collectors.joining(","));
+        return String.format(CURRENT_CARD_FORM, participants.getName(), cardsDelimiterByComma(participants.getTakenCards()));
+    }
 
-        return String.format(CURRENT_CARD_FORM, participants.getName(), cardsName);
+    private static String cardsDelimiterByComma(Cards cards) {
+        return cards.getCards()
+                    .stream()
+                    .map(OutputView::cardForm)
+                    .collect(Collectors.joining(COMMA));
     }
 
     public static void printAskBettingMoney(String name) {
