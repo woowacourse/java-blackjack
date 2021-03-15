@@ -123,7 +123,7 @@ public class PlayersTest {
 
         final Map<Player, Integer> allPlayerProfit = players.generateEveryPlayerScore();
         assertThat(allPlayerProfit.get(player1)).isEqualTo(20);
-        assertThat(allPlayerProfit.get(player2)).isEqualTo(18);
+        assertThat(allPlayerProfit.get(player2)).isEqualTo(17);
         assertThat(allPlayerProfit.get(player3)).isEqualTo(5);
         assertThat(allPlayerProfit.get(player4)).isEqualTo(21);
     }
