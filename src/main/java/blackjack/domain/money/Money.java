@@ -1,8 +1,7 @@
 package blackjack.domain.money;
 
 public class Money {
-
-
+    
     private int value;
 
     public Money(int betMoney) {
