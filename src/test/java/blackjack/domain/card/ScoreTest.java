@@ -11,7 +11,10 @@ public class ScoreTest {
     @Test
     @DisplayName("Score 생성 테스트")
     void testInit() {
+        //when
         Score score = Score.of(13);
+
+        //then
         assertThat(score).isEqualTo(Score.of(13));
     }
 
@@ -24,37 +27,70 @@ public class ScoreTest {
     @Test
     @DisplayName("Score 더하기 테스트")
     void testAddScore() {
-        assertThat(Score.of(13).addScore(Score.of(7)))
-                .isEqualTo(Score.of(20));
+        //when
+        Score addScore = Score.of(13).addScore(Score.of(7));
+
+        //then
+        assertThat(addScore).isEqualTo(Score.of(20));
     }
 
     @Test
     @DisplayName("점수가 21인지 확인한다.")
     void testIsBlackJack() {
-        Score score = Score.of(13);
-        assertThat(score.isTwentyOne()).isFalse();
-        score = Score.of(21);
-        assertThat(score.isTwentyOne()).isTrue();
+        //given
+        Score score1 = Score.of(13);
+        Score score2 = Score.of(21);
+
+        //when
+        boolean NotTwentyOne = score1.isTwentyOne();
+        boolean TwentyOne = score2.isTwentyOne();
+
+        //then
+        assertThat(NotTwentyOne).isFalse();
+        assertThat(TwentyOne).isTrue();
     }
 
     @Test
     @DisplayName("21이 넘었는지 확인한다.")
     void testIsBust() {
-        Score score = Score.of(21);
-        assertThat(score.isBust()).isFalse();
-        score = Score.of(22);
-        assertThat(score.isBust()).isTrue();
+        //given
+        Score score1 = Score.of(21);
+        Score score2 = Score.of(22);
+
+        //when
+        boolean NotBust = score1.isBust();
+        boolean Bust = score2.isBust();
+
+        //then
+        assertThat(NotBust).isFalse();
+        assertThat(Bust).isTrue();
     }
 
     @Test
     @DisplayName("비교대상보다 클 때 테스트")
     void testIsBiggerThan() {
-        assertThat(Score.of(21).isBiggerThan(Score.of(20))).isTrue();
+        //given
+        Score score1 = Score.of(21);
+        Score score2 = Score.of(20);
+
+        //when
+        boolean biggerOne = score1.isBiggerThan(score2);
+
+        //then
+        assertThat(biggerOne).isTrue();
     }
 
     @Test
     @DisplayName("비교대상보다 작을 때 테스트")
     void testIsLessThan() {
-        assertThat(Score.of(20).isLessThan(Score.of(21))).isTrue();
+        //given
+        Score score1 = Score.of(20);
+        Score score2 = Score.of(21);
+
+        //when
+        boolean smallerOne = score1.isLessThan(score2);
+
+        //then
+        assertThat(smallerOne).isTrue();
     }
 }

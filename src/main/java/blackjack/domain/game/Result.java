@@ -1,40 +1,39 @@
 package blackjack.domain.game;
 
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Result {
-    private final Map<Player, WinOrLose> gamblerResults = new LinkedHashMap<>();
+    private final Map<Gambler, WinOrLose> gamblerResults = new LinkedHashMap<>();
     private final Dealer dealer;
 
     public Result(Dealer dealer) {
         this.dealer = dealer;
     }
 
-    public void add(final Player player, final WinOrLose winOrLose) {
-        gamblerResults.put(player, winOrLose);
+    public void add(final Gambler gambler, final WinOrLose winOrLose) {
+        gamblerResults.put(gambler, winOrLose);
     }
 
-    public int countDealerWin() {
-        return (int) gamblerResults.keySet().stream()
-                .filter(name -> gamblerResults.get(name) == WinOrLose.LOSE)
-                .count();
+    public void calculateProfit() {
+        gamblerResults.entrySet().forEach(entry -> {
+            calculateGamblerProfit(entry);
+            calculateDealerProfit(entry);
+        });
     }
 
-    public int countDealerLose() {
-        return (int) gamblerResults.keySet().stream()
-                .filter(name -> gamblerResults.get(name) == WinOrLose.WIN)
-                .count();
+    private void calculateGamblerProfit(Entry<Gambler, WinOrLose> entry) {
+        entry.getKey().calculateProfit(entry.getValue());
     }
 
-    public int countDealerDraw() {
-        return (int) gamblerResults.keySet().stream()
-                .filter(name -> gamblerResults.get(name) == WinOrLose.DRAW)
-                .count();
+    private void calculateDealerProfit(Entry<Gambler, WinOrLose> entry) {
+        dealer.calculateProfit(entry.getKey());
     }
 
     public Map<Player, WinOrLose> getGamblerResult() {

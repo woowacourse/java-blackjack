@@ -4,23 +4,66 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 
-public interface Player {
+import java.util.Objects;
 
-    int NUMBER_OF_INITIAL_CARDS = 2;
+public abstract class Player {
 
-    void initializeCards(final Deck deck);
+    public static final int NUMBER_OF_INITIAL_CARDS = 2;
 
-    void drawCard(final Deck deck);
+    protected final Name name;
+    protected final Cards cards;
+    protected BettingMoney bettingMoney;
 
-    boolean isBust();
+    protected Player(String name, BettingMoney bettingMoney) {
+        this.name = new Name(name);
+        this.cards = new Cards();
+        this.bettingMoney = bettingMoney;
+    }
 
-    boolean isBlackJack();
+    public final void initializeCards(final Deck deck) {
+        for (int i = 0; i < NUMBER_OF_INITIAL_CARDS; i++) {
+            drawCard(deck);
+        }
+    }
 
-    boolean isTwentyOne();
+    public final void drawCard(final Deck deck) {
+        cards.add(deck.draw());
+    }
 
-    Cards cards();
+    public final boolean isBust() {
+        return cards.isBust();
+    }
 
-    String name();
+    public final boolean isHit() {
+        return cards.isHit();
+    }
 
-    Score score();
+    public final boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
+    public final boolean isTwentyOne() {
+        return cards.isTwentyOne();
+    }
+
+    public final boolean isSameName(Player player) {
+        return Objects.equals(this.name(), player.name());
+    }
+
+
+    public final Cards cards() {
+        return cards;
+    }
+
+    public final String name() {
+        return name.getName();
+    }
+
+    public final Score score() {
+        return cards.totalScore();
+    }
+
+    public final BettingMoney money() {
+        return bettingMoney;
+    }
 }

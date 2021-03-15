@@ -45,6 +45,14 @@ public class Cards {
                 .anyMatch(Card::isAce);
     }
 
+    public boolean isBust() {
+        return totalScore().isBust();
+    }
+
+    public boolean isHit() {
+        return totalScore().isHit();
+    }
+
     public boolean isBlackJack() {
         return isTwentyOne() && isOnlyTwoCard();
     }
@@ -55,10 +63,6 @@ public class Cards {
 
     public boolean isOnlyTwoCard() {
         return countCards() == 2;
-    }
-
-    public boolean isBust() {
-        return totalScore().isBust();
     }
 
     public boolean isBiggerThan(Cards cards) {

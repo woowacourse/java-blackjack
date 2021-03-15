@@ -3,105 +3,110 @@ package blackjack.controller;
 import blackjack.domain.YesOrNo;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.game.Result;
+import blackjack.domain.player.BettingMoney;
 import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
+import blackjack.domain.player.Gamblers;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.YesOrNo.YES;
-import static blackjack.domain.YesOrNo.of;
-
 public class BlackJackController {
 
+    private final BlackJackGame blackJackGame = new BlackJackGame();
 
-    public static void main(String[] args) {
-        run();
-    }
+    public void run() {
+        Gamblers gamblers = createGamblers();
+        blackJackGame.addGamblers(gamblers);
 
-    public static void run() {
-        Players gamblers = createPlayers(InputView.askPlayerNames());
-        BlackJackGame blackJackGame = new BlackJackGame(gamblers);
+        playFirstTurn();
 
-        playFirstTurn(blackJackGame);
-
-        giveEachGamblerCard(blackJackGame, gamblers);
-        giveDealerCards(blackJackGame);
+        giveEachGamblerCard(gamblers);
+        giveDealerCards();
 
         Result result = blackJackGame.calculateResult();
+        result.calculateProfit();
         OutputView.printResult(result);
     }
 
-    private static Players createPlayers(final String allName) {
-        List<String> names = Arrays.asList(allName.split(","));
-        List<Player> players;
+    private Gamblers createGamblers() {
         try {
-            players = names.stream()
-                    .map(Gambler::new)
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
+            return new Gamblers(collectGamblers());
+        } catch (IllegalArgumentException e) {
             OutputView.printError(e);
-            return createPlayers(InputView.askPlayerNames());
+            return createGamblers();
         }
-        return new Players(players);
     }
 
-    private static void playFirstTurn(BlackJackGame blackJackGame) {
+    private List<Gambler> collectGamblers() {
+        String gamblersName = InputView.askGamblersName();
+        List<String> names = Arrays.asList(gamblersName.split(","));
+        return names.stream()
+                .map(name -> new Gambler(name, createBettingMoney(name)))
+                .collect(Collectors.toList());
+    }
+
+    private BettingMoney createBettingMoney(final String name) {
+        try {
+            return new BettingMoney(InputView.askPlayerBattingMoney(name));
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e);
+            return createBettingMoney(name);
+        }
+    }
+
+    private void playFirstTurn() {
         blackJackGame.initDealerCards();
-        blackJackGame.initPlayerCards();
+        blackJackGame.initGamblersCards();
         OutputView.printDealerCardInfo(blackJackGame.getDealer());
-        OutputView.printPlayersCardInfo(blackJackGame.getGamblers());
+        OutputView.printPlayersCardInfo(blackJackGame.Gamblers());
     }
 
-    private static void giveEachGamblerCard(BlackJackGame blackJackGame, Players gamblers) {
-        for (Player player : gamblers.players()) {
-            giveGamblerCard(blackJackGame, player);
+    private void giveEachGamblerCard(final Gamblers gamblers) {
+        for (Gambler gambler : gamblers.getGamblers()) {
+            giveGamblerCard(gambler);
         }
     }
 
-    private static void giveGamblerCard(BlackJackGame blackJackGame, Player gambler) {
+    private void giveGamblerCard(final Gambler gambler) {
         if (gambler.isBlackJack()) {
-            OutputView.printMessage(gambler.name() + "님 BLACK JACK!");
+            OutputView.printBlackJack(gambler);
             return;
         }
         while (isAbleToDraw(gambler)) {
-            drawCard(blackJackGame, gambler);
+            drawGamblerCard(gambler);
         }
         if (gambler.isTwentyOne()) {
-            OutputView.printMessage("21이 되었습니다.");
+            OutputView.printTwentyOne();
         }
     }
 
-    private static boolean isAbleToDraw(Player gambler) {
-        return !gambler.isBust()
-                && !gambler.isTwentyOne()
-                && decideDecision(gambler.name()) == YES;
+    private boolean isAbleToDraw(final Gambler gambler) {
+        return gambler.isHit() && isYesDecision(gambler.name());
     }
 
-    private static YesOrNo decideDecision(final String playerName) {
+    private boolean isYesDecision(final String playerName) {
         try {
-            return of(InputView.askDrawOrNot(playerName));
-        } catch (Exception e) {
+            YesOrNo decision = YesOrNo.of(InputView.askDrawOrNot(playerName));
+            return decision.isYes();
+        } catch (IllegalArgumentException e) {
             OutputView.printError(e);
-            return decideDecision(playerName);
+            return isYesDecision(playerName);
         }
     }
 
-    private static void drawCard(BlackJackGame blackJackGame, Player gambler) {
+    private void drawGamblerCard(final Gambler gambler) {
         blackJackGame.giveGamblerCard(gambler);
         if (gambler.isBust()) {
-            OutputView.printMessage("카드의 합이 21이 넘어 bust 되었습니다.");
+            OutputView.printBust();
             return;
         }
         OutputView.printPlayerCardInfo(gambler);
     }
 
-    private static void giveDealerCards(BlackJackGame blackJackGame) {
+    private void giveDealerCards() {
         while (blackJackGame.ableToDraw()) {
             OutputView.printGiveDealer();
             blackJackGame.giveDealerCard();

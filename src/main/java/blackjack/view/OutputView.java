@@ -2,19 +2,17 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Result;
-import blackjack.domain.game.WinOrLose;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gamblers;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
     public static final String CARDS_INFORMATION = "%s카드: %s";
     public static final String RESULT_INFORMATION = "%s카드: %s - 결과 %s" + System.lineSeparator();
-    public static final String DEALER_RESULT = "딜러: %d승 %d무 %d패";
+    public static final String PROFIT_RESULT = "%s: %d" + System.lineSeparator();
 
     private OutputView() {
     }
@@ -42,9 +40,9 @@ public class OutputView {
         printMessageByFormat(CARDS_INFORMATION, dealer.name(), oneCardInfo);
     }
 
-    public static void printPlayersCardInfo(final Players players) {
+    public static void printPlayersCardInfo(final Gamblers players) {
         printNewLine();
-        players.players()
+        players.getGamblers()
                 .forEach(OutputView::printPlayerCardInfo);
         printNewLine();
     }
@@ -60,8 +58,19 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
+    public static void printBlackJack(Player player) {
+        printMessage(player.name() + "님 BLACK JACK!");
+    }
+
+    public static void printBust() {
+        printMessage("카드의 합이 21이 넘어 bust 되었습니다.");
+    }
+
+    public static void printTwentyOne() {
+        printMessage("21이 되었습니다.");
+    }
+
     public static void printGiveDealer() {
-        printNewLine();
         printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
@@ -89,15 +98,12 @@ public class OutputView {
     }
 
     private static void printFinalWinningResult(final Result result) {
-        printMessageByFormat(DEALER_RESULT,
-                result.countDealerWin(),
-                result.countDealerDraw(),
-                result.countDealerLose());
-        printNewLine();
+        printMessage("## 최종 수익");
+        printMessageByFormat(PROFIT_RESULT, result.getDealerInfo().name(), result.getDealerInfo().money().getBettingMoney());
 
-        Map<Player, WinOrLose> winningTable = result.getGamblerResult();
-        for (Player player : winningTable.keySet()) {
-            OutputView.printMessage(player.name() + " : " + winningTable.get(player).getSymbol());
-        }
+        result.getGamblerResult()
+                .forEach((key, value) -> printMessageByFormat(PROFIT_RESULT, key.name(), key.money().getBettingMoney()));
+
+
     }
 }

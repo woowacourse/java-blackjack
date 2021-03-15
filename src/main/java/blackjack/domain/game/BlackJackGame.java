@@ -2,33 +2,42 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
+import blackjack.domain.player.Gambler;
+import blackjack.domain.player.Gamblers;
 
 public class BlackJackGame {
 
     private final Deck deck;
     private final Dealer dealer;
-    private final Players gamblers;
+    private final Gamblers gamblers;
 
-    public BlackJackGame(final Players gamblers) {
+    public BlackJackGame() {
+        deck = new Deck();
+        dealer = new Dealer();
+        this.gamblers = new Gamblers();
+    }
+
+    public BlackJackGame(final Gamblers gamblers) {
         deck = new Deck();
         dealer = new Dealer();
         this.gamblers = gamblers;
+    }
+
+    public void addGamblers(final Gamblers gamblers) {
+        this.gamblers.addAll(gamblers);
     }
 
     public void initDealerCards() {
         dealer.initializeCards(deck);
     }
 
-    public void initPlayerCards() {
-        gamblers.initPlayerCards(deck);
+    public void initGamblersCards() {
+        gamblers.initGamblerCards(deck);
     }
 
-    public void giveGamblerCard(Player gambler) {
-        gamblers.players().stream()
-                .filter(player -> player == gambler)
-                .forEach(player -> player.drawCard(deck));
+    public void giveGamblerCard(final Gambler gambler) {
+        gamblers.getGamblerByName(gambler)
+                .drawCard(deck);
     }
 
     public boolean ableToDraw() {
@@ -41,22 +50,15 @@ public class BlackJackGame {
 
     public Result calculateResult() {
         Result result = new Result(dealer);
-        for (Player player : gamblers.players()) {
-            addGamblerResult(result, player);
-        }
+        gamblers.addGamblerResult(result, dealer);
         return result;
-    }
-
-    private void addGamblerResult(final Result result, final Player player) {
-        WinOrLose winOrLose = dealer.calculateGamblerWinOrNot(player);
-        result.add(player, winOrLose);
     }
 
     public Dealer getDealer() {
         return dealer;
     }
 
-    public Players getGamblers() {
+    public Gamblers Gamblers() {
         return gamblers;
     }
 }

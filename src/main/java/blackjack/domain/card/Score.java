@@ -28,12 +28,16 @@ public class Score {
         return of(this.score + score.score);
     }
 
-    public boolean isTwentyOne() {
-        return score == BLACK_JACK;
-    }
-
     public boolean isBust() {
         return score > BLACK_JACK;
+    }
+
+    public boolean isHit() {
+        return score < BLACK_JACK;
+    }
+
+    public boolean isTwentyOne() {
+        return score == BLACK_JACK;
     }
 
     public boolean isBiggerThan(final Score target) {
