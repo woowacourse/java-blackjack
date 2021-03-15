@@ -41,7 +41,7 @@ public class Score {
 
     @Override
     public boolean equals(Object o) {
-        if(o instanceof Score){
+        if (o instanceof Score) {
             return ((Score) o).score == this.score;
         }
 

@@ -36,6 +36,10 @@ public class Dealer extends User {
         return state.isBust();
     }
 
+    public Score score() {
+        return state.score();
+    }
+
     @Override
     public String getName() {
         return name.getName();
