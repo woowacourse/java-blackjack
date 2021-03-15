@@ -14,7 +14,7 @@ class MoneyTest {
     @Test
     @DisplayName("Money 객체 생성된다.")
     void createMoneyTest() {
-        Money money = new Money("10000");
+        Money money = Money.of("10000");
 
         assertThat(money).isInstanceOf(Money.class);
     }
@@ -23,7 +23,7 @@ class MoneyTest {
     @NullSource
     void moneyInputNull(String input) {
         assertThatThrownBy(() -> {
-            new Money(input);
+            Money.of(input);
         }).isInstanceOf(NullPointerException.class).hasMessage("베팅 입력값은 null이 될 수 없습니다.");
     }
 
@@ -31,7 +31,7 @@ class MoneyTest {
     @EmptySource
     void moneyInputEmpty(String input) {
         assertThatThrownBy(() -> {
-            new Money(input);
+            Money.of(input);
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("베팅 입력값은 빈값이 될 수 없습니다.");
     }
 
@@ -39,7 +39,7 @@ class MoneyTest {
     @DisplayName("Money 입력값으로 문자열을 입력하면 예외가 발생합니다.")
     void moneyInputString() {
         assertThatThrownBy(() -> {
-            new Money("이건 문자열이다.");
+            Money.of("이건 문자열이다.");
         }).isInstanceOf(NumberFormatException.class).hasMessage("베팅 입력값은 숫자여야 합니다.");
     }
 
@@ -47,7 +47,7 @@ class MoneyTest {
     @DisplayName("Money 입력값으로 음수를 입력하면 예외가 발생합니다.")
     void moneyInputNegativeNumber() {
         assertThatThrownBy(() -> {
-            new Money("-10000");
+            Money.of("-10000");
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("베팅 입력값은 1이상의 양의 정수 여야합니다.");
     }
 }

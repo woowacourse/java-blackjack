@@ -1,7 +1,7 @@
 package blackjack.domain.state.running;
 
-import blackjack.domain.state.hand.Hand;
 import blackjack.domain.state.Started;
+import blackjack.domain.state.hand.Hand;
 
 public abstract class Running extends Started {
 

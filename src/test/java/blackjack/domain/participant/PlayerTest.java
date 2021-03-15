@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Money;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.Number;
 import blackjack.domain.carddeck.Pattern;
@@ -19,7 +20,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player(new Name("pobi"));
+        player = new Player(new Name("pobi"), Money.of(1));
         List<Card> cards = Arrays.asList(
                 new Card(Pattern.CLOVER, Number.TEN),
                 new Card(Pattern.DIAMOND, Number.TEN)

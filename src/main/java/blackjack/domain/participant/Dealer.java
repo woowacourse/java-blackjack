@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.Money;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.CardDeck;
 
@@ -18,6 +19,7 @@ public class Dealer extends Participant {
     private final CardDeck cardDeck;
 
     public Dealer() {
+        super(Money.of(1));
         this.cardDeck = CardDeck.newShuffledDeck();
     }
 

@@ -1,24 +1,20 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackjackManager;
-import blackjack.domain.GameResultDto;
-import blackjack.domain.Money;
-import blackjack.domain.UserAnswer;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import blackjack.controller.dto.PlayerRequestDto;
+import blackjack.domain.*;
+import blackjack.domain.participant.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BlackjackController {
 
     public void play() {
         Dealer dealer = new Dealer();
         Players players = initPlayers();
-
-        initBettingMoney(players);
 
         initGame(dealer, players);
         if (!dealer.isBlackjack()) {
@@ -31,28 +27,40 @@ public class BlackjackController {
     }
 
     private Players initPlayers() {
+        Names names = initPlayerNames();
+        Moneys moneys = initBettingMoneys(names);
+        List<PlayerRequestDto> playerRequestDtos = createPlayersRequestDto(names, moneys);
+        return BlackjackManager.createPlayers(playerRequestDtos);
+    }
+
+    private Names initPlayerNames() {
         try {
-            return new Players(InputView.getPlayerNames());
+            return Names.of(InputView.getPlayerNames());
         } catch (NullPointerException | IllegalArgumentException e) {
             OutputView.printException(e);
-            return initPlayers();
+            return initPlayerNames();
         }
     }
 
-    private void initBettingMoney(final Players players) {
-        for (Player player : players.toList()) {
-            Money money = inputBettingMoney(player);
-            BlackjackManager.playerInitBettingMoney(player, money);
+    private Moneys initBettingMoneys(final Names names) {
+        return new Moneys(names.stream()
+                .map(this::initBettingMoney)
+                .collect(Collectors.toList()));
+    }
+
+    private Money initBettingMoney(final Name name) {
+        try {
+            return Money.of(InputView.getBettingMoney(name.getValue()));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            OutputView.printException(e);
+            return initBettingMoney(name);
         }
     }
 
-    private Money inputBettingMoney(final Player player) {
-        try {
-            return new Money(InputView.getBettingMoney(player.getName()));
-        } catch (NullPointerException | IllegalArgumentException e) {
-            OutputView.printException(e);
-        }
-        return inputBettingMoney(player);
+    private List<PlayerRequestDto> createPlayersRequestDto(Names names, Moneys moneys) {
+        return IntStream.range(0, names.size())
+                .mapToObj(i -> new PlayerRequestDto(names.get(i), moneys.get(i)))
+                .collect(Collectors.toList());
     }
 
     private void initGame(final Dealer dealer, final Players players) {

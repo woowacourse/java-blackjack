@@ -5,8 +5,9 @@ import java.util.Objects;
 public class Score {
 
     private static final int BLACKJACK = 21;
-    private static final int CHANGE_TO_ACE_SCORE = 10;
-    private static final int DEALER_STAY_SCORE = 17;
+    private static final int CHANGE_TO_ACE = 10;
+    private static final int DEALER_HIT = 16;
+
 
     private final int value;
 
@@ -16,7 +17,7 @@ public class Score {
 
     public Score changeHardAce() {
         if (this.isBust()) {
-            return new Score(this.value - CHANGE_TO_ACE_SCORE);
+            return new Score(this.value - CHANGE_TO_ACE);
         }
         return this;
     }
@@ -34,7 +35,7 @@ public class Score {
     }
 
     public boolean isDealerStateStay() {
-        return this.value >= DEALER_STAY_SCORE;
+        return this.value > DEALER_HIT;
     }
 
     public int getValue() {

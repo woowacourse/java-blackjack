@@ -22,7 +22,7 @@ public class GameResultTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        player = new Player(new Name("pobi"));
+        player = new Player(new Name("pobi"), Money.of(1000));
         dealer.receiveFirstHand(Arrays.asList(
                 new Card(Pattern.HEART, Number.TEN),
                 new Card(Pattern.HEART, Number.JACK)
@@ -36,7 +36,7 @@ public class GameResultTest {
     @Test
     @DisplayName("플레이어가 블랙잭이고 딜러가 스테이라면 플레이어 승리")
     void playerBlackjackAndDealerStay() {
-        Player blackjackPlayer = new Player(new Name("brown"));
+        Player blackjackPlayer = new Player(new Name("brown"), Money.of(1000));
         blackjackPlayer.receiveFirstHand(Arrays.asList(
                 new Card(Pattern.HEART, Number.TEN),
                 new Card(Pattern.HEART, Number.ACE)
@@ -48,7 +48,7 @@ public class GameResultTest {
     @Test
     @DisplayName("플레이어가 블랙잭이고 딜러가 버스트라면 플레이어 승리")
     void playerBlackjackAndDealerBust() {
-        Player blackjackPlayer = new Player(new Name("brown"));
+        Player blackjackPlayer = new Player(new Name("brown"), Money.of(1000));
         blackjackPlayer.receiveFirstHand(Arrays.asList(
                 new Card(Pattern.HEART, Number.TEN),
                 new Card(Pattern.HEART, Number.ACE)
@@ -60,7 +60,7 @@ public class GameResultTest {
     @Test
     @DisplayName("플레이어와 딜러가 둘다 블랙잭 이라면 무승부")
     void playerBlackjackAndDealerBlackjack() {
-        Player blackjackPlayer = new Player(new Name("brown"));
+        Player blackjackPlayer = new Player(new Name("brown"), Money.of(1000));
         blackjackPlayer.receiveFirstHand(Arrays.asList(
                 new Card(Pattern.HEART, Number.TEN),
                 new Card(Pattern.HEART, Number.ACE)

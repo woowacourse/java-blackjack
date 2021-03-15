@@ -2,7 +2,8 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Money;
 import blackjack.domain.carddeck.Card;
-import blackjack.domain.state.*;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
 import blackjack.domain.state.finished.Blackjack;
 import blackjack.domain.state.finished.Bust;
 import blackjack.domain.state.finished.Stay;
@@ -17,7 +18,8 @@ public abstract class Participant {
     protected State state;
     protected Money money;
 
-    protected Participant() {
+    protected Participant(Money money) {
+        this.money = money;
     }
 
     public void receiveFirstHand(final List<Card> cards) {

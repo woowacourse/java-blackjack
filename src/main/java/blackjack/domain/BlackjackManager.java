@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.controller.dto.PlayerRequestDto;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -16,8 +17,10 @@ public class BlackjackManager {
     private BlackjackManager() {
     }
 
-    public static void playerInitBettingMoney(final Player player, final Money money) {
-        player.initMoney(money);
+    public static Players createPlayers(List<PlayerRequestDto> playerRequestDtos) {
+        return new Players(playerRequestDtos.stream()
+                .map(PlayerRequestDto::toEntity)
+                .collect(Collectors.toList()));
     }
 
     public static void initGame(final Players players, final Dealer dealer) {
