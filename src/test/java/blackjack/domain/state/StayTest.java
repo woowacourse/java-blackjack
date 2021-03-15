@@ -85,8 +85,9 @@ class StayTest {
 	@Test
 	@DisplayName("끝난 상태인데 새 카드 받으려 하면 에러 호출")
 	void exception() {
+		Card card = new Card(CardPattern.DIAMOND, CardNumber.NINE);
 		state = state.keepContinue(false);
-		assertThatThrownBy(() -> state.drawNewCard(new Card(CardPattern.DIAMOND, CardNumber.NINE)))
+		assertThatThrownBy(() -> state.drawNewCard(card))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessage(ERROR_MESSAGE_CALL);
 	}
