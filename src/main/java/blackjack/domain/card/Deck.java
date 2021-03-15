@@ -7,29 +7,26 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Deck {
+    private static final List<Card> CACHE_CARD;
     private static final int START_COUNT = 0;
+
     private final Queue<Card> deck;
 
-    public Deck() {
-        this.deck = createDeck();
-    }
-
-    private Queue<Card> createDeck() {
-        List<Card> cards = new ArrayList<>();
+    static {
+        CACHE_CARD = new ArrayList<>();
         Arrays.stream(Suit.values())
-                .forEach(shape -> cards.addAll(createByShape(shape)));
-        shuffle(cards);
-        return new ArrayDeque<>(cards);
+                .forEach(shape -> CACHE_CARD.addAll(createByShape(shape)));
     }
 
-    private List<Card> createByShape(Suit suit) {
+    private static List<Card> createByShape(Suit suit) {
         return Arrays.stream(Denomination.values())
                 .map(value -> new Card(suit, value))
                 .collect(Collectors.toList());
     }
 
-    private void shuffle(List<Card> cards) {
-        Collections.shuffle(cards);
+    public Deck() {
+        Collections.shuffle(CACHE_CARD);
+        this.deck = new ArrayDeque<>(CACHE_CARD);
     }
 
     public Cards popToInitialCards() {
