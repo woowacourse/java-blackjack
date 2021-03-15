@@ -15,8 +15,10 @@ public class BlackjackController {
         betAllPlayers(blackjackGame);
         blackjackGame.handOutInitialCards();
         showInitialStatus(blackjackGame);
+
         proceedPlayersRound(blackjackGame);
         proceedDealerRound(blackjackGame);
+
         OutputView.printCardsWithTotalValue(blackjackGame.getUsers());
         ProfitResult profitResult = blackjackGame.calculateResult();
         OutputView.printProfitResult(profitResult);
