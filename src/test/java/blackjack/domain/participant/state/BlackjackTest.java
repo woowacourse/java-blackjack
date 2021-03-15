@@ -72,7 +72,8 @@ class BlackjackTest {
         Card secondCard = Card.valueOf(Pattern.DIAMOND, Number.TEN);
         State dealerHit = Init.draw(firstCard, secondCard);
         State dealerStay = dealerHit.stay();
-        assertThat(this.blackjack.calculatePlayerResult(dealerStay)).isEqualTo(Result.WIN);
+        assertThat(this.blackjack.calculatePlayerResult(dealerStay))
+            .isEqualTo(Result.BLACKJACK_WIN);
     }
 
     @Test
@@ -82,6 +83,7 @@ class BlackjackTest {
         Card secondCard = Card.valueOf(Pattern.DIAMOND, Number.TEN);
         State dealerHit = Init.draw(firstCard, secondCard);
         State dealerBust = dealerHit.draw(Card.valueOf(Pattern.HEART, Number.JACK));
-        assertThat(this.blackjack.calculatePlayerResult(dealerBust)).isEqualTo(Result.WIN);
+        assertThat(this.blackjack.calculatePlayerResult(dealerBust))
+            .isEqualTo(Result.BLACKJACK_WIN);
     }
 }

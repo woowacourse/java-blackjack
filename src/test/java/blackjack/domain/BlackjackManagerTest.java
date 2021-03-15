@@ -6,9 +6,14 @@ import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.CardDeck;
 import blackjack.domain.carddeck.Number;
 import blackjack.domain.carddeck.Pattern;
+import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Names;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,12 +27,22 @@ public class BlackjackManagerTest {
     @BeforeEach
     void setUp() {
         this.dealer = new Dealer();
-        this.players = new Players(Arrays.asList("pobi", "jason"));
+        this.players = initPlayers();
         this.blackjackManager = new BlackjackManager(
             getDrawTestCardDeck(),
             this.dealer,
             this.players
         );
+    }
+
+    private Players initPlayers() {
+        List<Player> players = new ArrayList<>();
+        Names names = new Names(Arrays.asList("pobi", "jason"));
+        while (!names.isDoneAllPlayers()) {
+            players.add(new Player(names.getCurrentTurnName(), BetAmount.betting(3000)));
+            names.passTurnToNext();
+        }
+        return new Players(players);
     }
 
     private CardDeck getDrawTestCardDeck() {
@@ -38,7 +53,8 @@ public class BlackjackManagerTest {
             Card.valueOf(Pattern.HEART, Number.TEN),
             Card.valueOf(Pattern.HEART, Number.QUEEN),
             Card.valueOf(Pattern.HEART, Number.KING),
-            Card.valueOf(Pattern.DIAMOND, Number.KING)
+            Card.valueOf(Pattern.DIAMOND, Number.KING),
+            Card.valueOf(Pattern.CLOVER, Number.KING)
         ));
     }
 
@@ -56,35 +72,12 @@ public class BlackjackManagerTest {
     }
 
     @Test
-    @DisplayName("한 명의 플레이어 카드뽑기 완료 테스트")
-    void testOnePlayerCompleteHit() {
-        this.blackjackManager.initDrawCards();
-        this.blackjackManager.hitOrStayCurrentPlayer(true);
-        assertThat(this.blackjackManager.isFinishedCurrentPlayer()).isTrue();
-    }
-
-    @Test
-    @DisplayName("한 명의 플레이어가 stay 상태 변화 완료")
-    void testOnePlayerCompleteToStay() {
-        this.blackjackManager.initDrawCards();
-        this.blackjackManager.hitOrStayCurrentPlayer(false);
-        assertThat(this.blackjackManager.isFinishedCurrentPlayer()).isTrue();
-    }
-
-    @Test
     @DisplayName("플레이어 턴 넘기기 완료")
     void testPassTurnToNextPlayer() {
+        this.blackjackManager.initDrawCards();
         assertThat(this.blackjackManager.getCurrentPlayerName()).isEqualTo("pobi");
         this.blackjackManager.passTurnToNextPlayer();
         assertThat(this.blackjackManager.getCurrentPlayerName()).isEqualTo("jason");
-    }
-
-    @Test
-    @DisplayName("한 플레이어의 차례가 끝났는지 확인 테스트")
-    void testOnePlayerFinished() {
-        this.blackjackManager.initDrawCards();
-        this.blackjackManager.hitOrStayCurrentPlayer(true);
-        assertThat(this.blackjackManager.isFinishedCurrentPlayer()).isTrue();
     }
 
     @Test
@@ -94,6 +87,7 @@ public class BlackjackManagerTest {
         this.blackjackManager.hitOrStayCurrentPlayer(false);
         this.blackjackManager.passTurnToNextPlayer();
         this.blackjackManager.hitOrStayCurrentPlayer(false);
+        this.blackjackManager.passTurnToNextPlayer();
         assertThat(this.blackjackManager.isFinishedAllPlayers()).isTrue();
     }
 
@@ -124,5 +118,20 @@ public class BlackjackManagerTest {
         this.blackjackManager.hitDealer();
         assertThat(this.blackjackManager.isFinishedDealer()).isTrue();
         assertThat(this.blackjackManager.isDealerScoreOverThenLimit()).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭 종료 후 베팅결과 반환")
+    void testGetPlayerBetAmounts() {
+        this.blackjackManager.initDrawCards();
+        this.blackjackManager.hitDealer();
+        this.blackjackManager.hitOrStayCurrentPlayer(false);
+        this.blackjackManager.passTurnToNextPlayer();
+        this.blackjackManager.hitOrStayCurrentPlayer(true);
+
+        BetAmount firstAmount = this.blackjackManager.getPlayerBetAmounts().get(0);
+        assertThat(firstAmount.getValue()).isEqualTo(3000);
+        BetAmount secondAmount = this.blackjackManager.getPlayerBetAmounts().get(1);
+        assertThat(secondAmount.getValue()).isEqualTo(-3000);
     }
 }

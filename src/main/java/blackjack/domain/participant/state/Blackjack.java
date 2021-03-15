@@ -13,6 +13,6 @@ public class Blackjack extends Finished {
         if (dealerState.score().isBlackjack()) {
             return Result.DRAW;
         }
-        return Result.WIN;
+        return Result.BLACKJACK_WIN;
     }
 }

@@ -1,9 +1,11 @@
 package blackjack.domain;
 
 import blackjack.domain.carddeck.CardDeck;
+import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import java.util.List;
 
 public class BlackjackManager {
 
@@ -28,22 +30,18 @@ public class BlackjackManager {
 
     public void hitOrStayCurrentPlayer(boolean isPlayerHit) {
         if (isPlayerHit) {
-            this.players.drawFirstOrderPlayer(this.cardDeck.draw());
+            this.players.drawCurrentTurnPlayer(this.cardDeck.draw());
             return;
         }
-        this.players.stayFirstOrderPlayer();
-    }
-
-    public void passTurnToNextPlayer() {
-        this.players.passTurnToNextPlayer();
+        this.players.stayCurrentTurnPlayer();
     }
 
     public boolean isFinishedCurrentPlayer() {
-        return this.players.isFinishedCurrentPlayer();
+        return this.players.isCurrentPlayerDone();
     }
 
     public boolean isFinishedAllPlayers() {
-        return this.players.isAllPlayerFinished();
+        return this.players.isAllPlayerDone();
     }
 
     public void hitDealer() {
@@ -67,14 +65,22 @@ public class BlackjackManager {
     }
 
     public Player getCurrentPlayer() {
-        return this.players.getFirstOrderPlayer();
+        return this.players.getCurrentTurnPlayer();
     }
 
     public String getCurrentPlayerName() {
-        return this.players.getFirstOrderPlayerName();
+        return this.players.getCurrentPlayerName();
     }
 
     public Dealer getDealer() {
         return this.dealer;
+    }
+
+    public void passTurnToNextPlayer() {
+        this.players.passTurnToNextPlayer();
+    }
+
+    public List<BetAmount> getPlayerBetAmounts() {
+        return this.players.getBetAmounts(this.dealer);
     }
 }

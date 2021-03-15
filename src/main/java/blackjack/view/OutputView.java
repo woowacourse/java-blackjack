@@ -14,10 +14,9 @@ public class OutputView {
     private static final String INIT_GAME_FORMAT = "%s와 %s에게 2장을 나누었습니다.";
     private static final String HAND_FORMAT = "%s 카드: %s";
     private static final String SCORE_FORMAT = " - 결과: %d";
-    private static final String PARTICIPANT_BURST_FORMAT = "%s(은)는 21점을 넘어 버스트 되었습니다.";
     private static final String DEALER_HIT_IF_UNDER_LIMIT_SCORE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String TOTAL_GAME_RESULT_MESSAGE = "## 최종 승패";
-    private static final String TOTAL_GAME_RESULT_FORMAT = "%s: %s";
+    private static final String TOTAL_PROFIT_RESULT_MESSAGE = "## 최종 수익";
+    private static final String TOTAL_GAME_RESULT_FORMAT = "%s: %d";
 
     public static void printInitStatuses(final ParticipantDto dealer,
         final List<ParticipantDto> players) {
@@ -63,26 +62,16 @@ public class OutputView {
         System.out.println(DEALER_HIT_IF_UNDER_LIMIT_SCORE);
     }
 
-    private static void printDealerHandWithScore(final ParticipantDto dealer) {
-        System.out.printf(HAND_FORMAT, dealer.getName(), dealer.getCards()
-            .stream()
-            .map(CardDto::getName)
-            .collect(joining(DELIMITER))
-        );
-        System.out.printf(SCORE_FORMAT, dealer.getScore());
-        System.out.print(NEW_LINE);
-    }
-
     public static void printBlackjackResult(final ResultDto dealerResult,
         final List<ResultDto> playerResultDtos) {
         System.out.print(NEW_LINE);
-        System.out.println(TOTAL_GAME_RESULT_MESSAGE);
+        System.out.println(TOTAL_PROFIT_RESULT_MESSAGE);
         printResult(dealerResult);
         playerResultDtos.forEach(OutputView::printResult);
     }
 
     private static void printResult(final ResultDto result) {
-        System.out.printf(TOTAL_GAME_RESULT_FORMAT, result.getName(), result.getResult());
+        System.out.printf(TOTAL_GAME_RESULT_FORMAT, result.getName(), result.getAmount());
         System.out.print(NEW_LINE);
     }
 

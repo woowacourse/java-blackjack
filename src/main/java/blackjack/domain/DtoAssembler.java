@@ -1,18 +1,19 @@
 package blackjack.domain;
 
 import blackjack.domain.carddeck.Card;
+import blackjack.domain.participant.BetAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.dto.CardDto;
 import blackjack.view.dto.ParticipantDto;
 import blackjack.view.dto.ResultDto;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DtoAssembler {
-
-    private static final String DELIMITER = ", ";
 
     public static ParticipantDto createDealerInitStatusDto(final Dealer dealer) {
         return new ParticipantDto(
@@ -51,35 +52,37 @@ public class DtoAssembler {
             ;
     }
 
-    public static ResultDto createDealerResultDto(final Dealer dealer, Players players) {
-        List<Result> results = getResults(dealer, players);
-        return new ResultDto(
-            getResultString(results, Result.WIN) + DELIMITER
-                + getResultString(results, Result.LOSE) + DELIMITER
-                + getResultString(results, Result.DRAW)
-        );
+    public static ResultDto createDealerResultDto(final List<BetAmount> betAmounts) {
+        return new ResultDto(getSumOfAllPlayerProfits(betAmounts) * -1);
     }
 
-    private static List<Result> getResults(final Dealer dealer, final Players players) {
+    private static double getSumOfAllPlayerProfits(final List<BetAmount> betAmounts) {
+        return betAmounts.stream()
+            .mapToDouble(BetAmount::getValue)
+            .sum();
+    }
+
+    public static List<ResultDto> createPlayerResultDtos(final Players players,
+        final List<BetAmount> betAmounts) {
+        Iterator<String> playersIterator = getPlayersIterator(players);
+        Iterator<Double> betAmountIterator = getBetAmountsIterator(betAmounts);
+        List<ResultDto> resultDtos = new ArrayList<>();
+        while (playersIterator.hasNext()) {
+            resultDtos.add(new ResultDto(playersIterator.next(), betAmountIterator.next()));
+        }
+        return resultDtos;
+    }
+
+    private static Iterator<String> getPlayersIterator(final Players players) {
         return players.toList()
             .stream()
-            .map(player -> player.judgeByDealerState(dealer))
-            .map(Result::reverse)
-            .collect(Collectors.toList());
+            .map(Player::getName)
+            .iterator();
     }
 
-    private static String getResultString(final List<Result> results, final Result result) {
-        return results.stream()
-            .filter(compareResult -> compareResult.equals(result))
-            .count() + result.getResult();
-    }
-
-    public static List<ResultDto> createPlayerResultDtos(final Dealer dealer,
-        final Players players) {
-        return players.toList()
-            .stream()
-            .map(player -> new ResultDto(player.getName(),
-                player.judgeByDealerState(dealer).getResult()))
-            .collect(Collectors.toList());
+    private static Iterator<Double> getBetAmountsIterator(final List<BetAmount> betAmounts) {
+        return betAmounts.stream()
+            .map(BetAmount::getValue)
+            .iterator();
     }
 }

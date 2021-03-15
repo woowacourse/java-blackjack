@@ -2,27 +2,18 @@ package blackjack.domain;
 
 public enum Result {
 
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    BLACKJACK_WIN(1.5),
+    WIN(1),
+    DRAW(1),
+    LOSE(-1);
 
-    private final String result;
+    private final double amplification;
 
-    Result(final String result) {
-        this.result = result;
+    Result(final double amplification) {
+        this.amplification = amplification;
     }
 
-    public Result reverse() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
-    }
-
-    public String getResult() {
-        return this.result;
+    public double getAmplification() {
+        return this.amplification;
     }
 }

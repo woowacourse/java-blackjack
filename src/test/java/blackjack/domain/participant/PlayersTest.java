@@ -1,13 +1,13 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.BlackjackManager;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.CardDeck;
 import blackjack.domain.carddeck.Number;
 import blackjack.domain.carddeck.Pattern;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -19,39 +19,17 @@ class PlayersTest {
     @Test
     @DisplayName("이름들을 입력받아서 플레이어들을 생성")
     void testCreatePlayers() {
-        List<String> names = Arrays.asList("pobi", "brown", "jason");
-        Players players = new Players(names);
+        Names names = new Names(Arrays.asList("미립", "현구막", "포비"));
+        Players players = getCustomPlayers(names);
         assertThat(players.toList()).hasSize(3);
-    }
-
-    @Test
-    @DisplayName("중복된 이름 입력시 예외처리")
-    void testDuplicateException() {
-        List<String> names = Arrays.asList("pobi", "pobi", "jason");
-        assertThatThrownBy(() -> new Players(names))
-            .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    @DisplayName("NULL 혹은 공백을 입력했을 시 예외처리")
-    void testNullOrBlankException() {
-        List<String> blank1 = Collections.singletonList("");
-        assertThatThrownBy(() -> new Players(blank1))
-            .isInstanceOf(IllegalArgumentException.class);
-        List<String> blank2 = Collections.singletonList(" ");
-        assertThatThrownBy(() -> new Players(blank2))
-            .isInstanceOf(IllegalArgumentException.class);
-        List<String> nullList = null;
-        assertThatThrownBy(() -> new Players(nullList))
-            .isInstanceOf(NullPointerException.class);
     }
 
     @Test
     @DisplayName("각 플레이어가 초기 2장씩 소지한다.")
     void testAllPlayersGetTwoCards() {
-        List<String> names = Arrays.asList("pobi", "jason");
         Dealer dealer = new Dealer();
-        Players players = new Players(names);
+        Names names = new Names(Arrays.asList("미립", "현구막"));
+        Players players = getCustomPlayers(names);
         BlackjackManager blackjackManager = new BlackjackManager(dealer, players);
         blackjackManager.initDrawCards();
 
@@ -65,15 +43,66 @@ class PlayersTest {
     @Test
     @DisplayName("모든 플레이어가 플레이를 완료했는지 확인한다.")
     void testIsAllPlayerPlayedBlackJack() {
-        List<String> names = Arrays.asList("미립", "현구막");
-        Players players = new Players(names);
+        Names names = new Names(Arrays.asList("미립", "현구막"));
+        Players players = getCustomPlayers(names);
         players.initDraw(getCustomCardDeck());
 
-        players.drawFirstOrderPlayer(Card.valueOf(Pattern.SPADE, Number.JACK));
+        players.drawCurrentTurnPlayer(Card.valueOf(Pattern.SPADE, Number.JACK));
         players.passTurnToNextPlayer();
-        players.drawFirstOrderPlayer(Card.valueOf(Pattern.DIAMOND, Number.JACK));
+        players.drawCurrentTurnPlayer(Card.valueOf(Pattern.DIAMOND, Number.JACK));
+        players.passTurnToNextPlayer();
 
-        assertThat(players.isAllPlayerFinished()).isTrue();
+        assertThat(players.isAllPlayerDone()).isTrue();
+    }
+
+    @Test
+    @DisplayName("현재 차례 플레이어 턴이 넘어갔는지 확인한다.")
+    void testIsSuccessPassThePlayerTurn() {
+        Names names = new Names(Arrays.asList("미립", "현구막"));
+        Players players = getCustomPlayers(names);
+        players.initDraw(getCustomCardDeck());
+
+        assertThat(players.getCurrentPlayerName()).isEqualTo("미립");
+        players.passTurnToNextPlayer();
+        assertThat(players.getCurrentPlayerName()).isEqualTo("현구막");
+    }
+
+    @Test
+    @DisplayName("현재 차례 플레이어가 카드를 뽑았는지 확인한다.")
+    void testPlayerDrawCard() {
+        Players players = getCustomPlayers(new Names(Collections.singletonList("미립")));
+        players.initDraw(getDrawTestCardDeck());
+
+        assertThat(players.getCurrentTurnPlayer().getScoreToInt()).isEqualTo(12);
+        players.drawCurrentTurnPlayer(Card.valueOf(Pattern.DIAMOND, Number.THREE));
+        assertThat(players.getCurrentTurnPlayer().getScoreToInt()).isEqualTo(15);
+    }
+
+    @Test
+    @DisplayName("플레이어들의 결과에 대한 배팅결과 리스트 반환")
+    void testGetBetAmounts() {
+        Dealer dealer = new Dealer();
+        dealer.initDraw(getCustomCardDeck());
+        Players players = getCustomPlayers(new Names(Arrays.asList("미립", "현구막")));
+        players.initDraw(getCustomCardDeck());
+        players.stayCurrentTurnPlayer();
+        players.passTurnToNextPlayer();
+        players.drawCurrentTurnPlayer(Card.valueOf(Pattern.DIAMOND, Number.FOUR));
+
+        BetAmount firstAmount = players.getBetAmounts(dealer).get(0);
+        assertThat(firstAmount.getValue()).isEqualTo(3000);
+        BetAmount secondAmount = players.getBetAmounts(dealer).get(1);
+        assertThat(secondAmount.getValue()).isEqualTo(-3000);
+
+    }
+
+    private Players getCustomPlayers(final Names names) {
+        List<Player> players = new ArrayList<>();
+        while (!names.isDoneAllPlayers()) {
+            players.add(new Player(names.getCurrentTurnName(), BetAmount.betting(3000)));
+            names.passTurnToNext();
+        }
+        return new Players(players);
     }
 
     private CardDeck getCustomCardDeck() {
@@ -82,41 +111,6 @@ class PlayersTest {
         Card thirdCard = Card.valueOf(Pattern.HEART, Number.QUEEN);
         Card fourthCard = Card.valueOf(Pattern.HEART, Number.JACK);
         return CardDeck.customDeck(Arrays.asList(firstCard, secondCard, thirdCard, fourthCard));
-    }
-
-    @Test
-    @DisplayName("가장 앞 차례 플레이어 턴이 넘어갔는지 확인한다.")
-    void testIsSuccessPassThePlayerTurn() {
-        List<String> names = Arrays.asList("미립", "현구막");
-        Players players = new Players(names);
-        players.initDraw(getCustomCardDeck());
-
-        assertThat(players.getFirstOrderPlayerName()).isEqualTo("미립");
-        players.passTurnToNextPlayer();
-        assertThat(players.getFirstOrderPlayerName()).isEqualTo("현구막");
-    }
-
-    @Test
-    @DisplayName("가장 앞 차례 플레이어가 카드를 뽑았는지 확인한다.")
-    void testPlayerDrawCard() {
-        List<String> name = Collections.singletonList("미립");
-        Players players = new Players(name);
-        players.initDraw(getDrawTestCardDeck());
-
-        assertThat(players.getFirstOrderPlayer().getScoreToInt()).isEqualTo(12);
-        players.drawFirstOrderPlayer(Card.valueOf(Pattern.DIAMOND, Number.THREE));
-        assertThat(players.getFirstOrderPlayer().getScoreToInt()).isEqualTo(15);
-    }
-
-    @Test
-    @DisplayName("가장 앞 차례 플레이어가 Stay 상태로 변화에 성공했는지 확인한다.")
-    void testPlayerStateToStay() {
-        List<String> name = Collections.singletonList("미립");
-        Players players = new Players(name);
-        players.initDraw(getDrawTestCardDeck());
-        players.stayFirstOrderPlayer();
-
-        assertThat(players.isFinishedCurrentPlayer()).isTrue();
     }
 
     private CardDeck getDrawTestCardDeck() {
