@@ -75,7 +75,7 @@ public class Results {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Results results1 = (Results) o;
-        return Objects.equals(results, results1.results);
+        return Objects.equals(results, results1.results) && Objects.equals(profits, results1.profits);
     }
 
     @Override
