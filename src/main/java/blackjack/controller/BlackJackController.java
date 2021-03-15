@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.DeckGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -14,8 +15,7 @@ public class BlackJackController {
 	public void run() {
 		Dealer dealer = new Dealer();
 		Players players = askPlayers(dealer);
-		createPlayersWithMoney(players);
-		Deck deck = new Deck();
+		Deck deck = new Deck(new DeckGenerator().makeCards());
 
 		playTurn(dealer, players, deck);
 
@@ -57,7 +57,8 @@ public class BlackJackController {
 	}
 
 	private void playTurn(Dealer dealer, Players players, Deck deck) {
-		deck.shuffleCards();
+		createPlayersWithMoney(players);
+
 		drawCards(dealer, players, deck);
 		drawUntilPossible(dealer, players, deck);
 	}
@@ -72,7 +73,7 @@ public class BlackJackController {
 		for (Player player : players.toList()) {
 			askKeepDrawing(player, deck);
 		}
-		while (dealer.canReceiveCard(true)) { //TODO: true 넘기는게 맞는가?
+		while (dealer.canReceiveCard(true)) {
 			dealer.receiveCard(deck.dealCard());
 			OutputView.noticeDealerReceiveCard();
 		}

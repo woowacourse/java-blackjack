@@ -1,9 +1,6 @@
 package blackjack.domain.card;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Deck {
 	private static final int FIRST_INDEX = 0;
@@ -11,19 +8,8 @@ public class Deck {
 
 	private final List<Card> deck;
 
-	public Deck() {
-		this.deck = makeCards();
-	}
-
-	private List<Card> makeCards() {
-		return Arrays.stream(CardPattern.values())
-			.flatMap(cardPattern -> Arrays.stream(CardNumber.values())
-				.map(cardNumber -> new Card(cardPattern, cardNumber)))
-			.collect(Collectors.toList());
-	}
-
-	public void shuffleCards() {
-		Collections.shuffle(deck);
+	public Deck(List<Card> cards) {
+		this.deck = cards;
 	}
 
 	public Card dealCard() {
