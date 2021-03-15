@@ -39,7 +39,7 @@ public abstract class Participant {
     }
     
     public abstract boolean canReceive();
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -51,7 +51,7 @@ public abstract class Participant {
         Participant that = (Participant) o;
         return Objects.equals(name, that.name) && Objects.equals(cardHand, that.cardHand);
     }
-
+    
     @Override
     public int hashCode() {
         return Objects.hash(name, cardHand);

@@ -82,6 +82,6 @@ public class BlackJackController {
     
     private void printResult() {
         OutputView.printSummaryStatistics(dealer, players);
-        OutputView.printGameResult(dealer, players);
+        OutputView.printProfit(dealer, players);
     }
 }

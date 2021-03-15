@@ -51,7 +51,7 @@ public class PlayerTest {
     void canReceive_GreaterThanThreshold_CannotReceive() {
         
         // given
-        Player player = Player.of("pobi",bettingMoney);
+        Player player = Player.of("pobi", bettingMoney);
         Card firstCard = new Card(Suit.CLOVER, Rank.TEN);
         Card secondCard = new Card(Suit.CLOVER, Rank.JACK);
         Card thirdCard = new Card(Suit.CLOVER, Rank.ACE);

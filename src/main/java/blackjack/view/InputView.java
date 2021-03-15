@@ -20,7 +20,8 @@ public class InputView {
     public static String getPlayerName() {
         System.out.println(ASK_PLAYER_NAMES);
         
-        String input = scanner.nextLine();
+        String input = scanner.nextLine()
+                              .trim();
         
         System.out.println();
         
