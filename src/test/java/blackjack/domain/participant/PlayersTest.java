@@ -31,7 +31,7 @@ public class PlayersTest {
 	void playerReceiveCards() {
 		players.initialCards(new Deck());
 		assertEquals(2, (int)players.toList().stream()
-			.filter(player -> player.playerState.cards().getCards().size() == 2)
+			.filter(player -> player.playerState.getCardStream().count() == 2)
 			.count());
 	}
 

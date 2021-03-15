@@ -2,6 +2,8 @@ package blackjack.domain.state;
 
 import static blackjack.controller.BlackJackController.*;
 
+import java.util.stream.Stream;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
@@ -32,12 +34,12 @@ public abstract class Finished implements PlayerState {
 	}
 
 	@Override
-	public Cards cards() {
-		return cards;
+	public int calculatePoint() {
+		return cards.calculateIncludeAce();
 	}
 
 	@Override
-	public int calculatePoint() {
-		return cards.calculateIncludeAce();
+	public Stream<Card> getCardStream() {
+		return cards.getCardStream();
 	}
 }

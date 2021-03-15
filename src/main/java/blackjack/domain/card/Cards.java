@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class Cards {
 	private static final int MAXIMUM_TO_ACE_IS_ELEVEN = 11;
@@ -37,8 +38,8 @@ public class Cards {
 			.anyMatch(Card::isAce);
 	}
 
-	public List<Card> getCards() {
-		return cards;
+	public Stream<Card> getCardStream() {
+		return cards.stream();
 	}
 
 	@Override

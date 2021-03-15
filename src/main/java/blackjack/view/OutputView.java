@@ -48,13 +48,13 @@ public class OutputView {
 	}
 
 	private static String makePlayerCardNames(Gamer player) {
-		return player.getPlayerState().cards().getCards().stream()
+		return player.getPlayerState().getCardStream()
 			.map(OutputView::makeCardInfo)
 			.collect(Collectors.joining(COMMA_DELIMITER_TO_PRINT));
 	}
 
 	private static String makeDealerCardNames(Gamer dealer) {
-		return dealer.getPlayerState().cards().getCards().stream()
+		return dealer.getPlayerState().getCardStream()
 			.limit(COUNT_OF_DEALER_OPENING_CARDS)
 			.map(OutputView::makeCardInfo)
 			.collect(Collectors.joining(COMMA_DELIMITER));

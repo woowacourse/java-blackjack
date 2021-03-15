@@ -33,11 +33,6 @@ public class Hit extends Running {
 	}
 
 	@Override
-	public Cards cards() {
-		return cards;
-	}
-
-	@Override
 	public boolean isBust() {
 		return false;
 	}

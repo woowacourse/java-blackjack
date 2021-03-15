@@ -1,7 +1,8 @@
 package blackjack.domain.state;
 
+import java.util.stream.Stream;
+
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 
@@ -14,11 +15,11 @@ public interface PlayerState {
 
 	int calculatePoint();
 
-	Cards cards();
-
 	double makeProfit(Dealer dealer, Money money);
 
 	boolean isBust();
 
 	boolean isBlackJack();
+
+	Stream<Card> getCardStream();
 }

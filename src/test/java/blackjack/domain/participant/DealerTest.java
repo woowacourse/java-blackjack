@@ -31,7 +31,7 @@ public class DealerTest {
 		dealer.playerState = StateFactory.drawTwoCards((new Card(CardPattern.CLOVER, CardNumber.KING)),
 			new Card(CardPattern.HEART, CardNumber.SIX));
 		dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.TWO));
-		assertEquals(3, dealer.playerState.cards().getCards().size());
+		assertEquals(3, dealer.playerState.getCardStream().count());
 	}
 
 	@Test

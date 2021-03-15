@@ -19,7 +19,7 @@ public class CardsTest {
 	@DisplayName("새로운 카드 추가 확인")
 	void addNewCard() {
 		cards.addCard(new Card(CardPattern.DIAMOND, CardNumber.SEVEN));
-		assertEquals(2, cards.getCards().size());
+		assertEquals(2, cards.getCardStream().count());
 	}
 
 	@Test
