@@ -5,6 +5,7 @@ import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.GameResultDto;
+import blackjack.exception.InvalidInputException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
@@ -31,7 +32,7 @@ public class Application {
         try {
             String playerNames = InputView.getPlayerName();
             return toNameList(playerNames);
-        } catch (RuntimeException e) {
+        } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
             return getPlayerNames();
         }
@@ -53,7 +54,7 @@ public class Application {
         try {
             String bettingMoneyInput = InputView.getBettingMoney(name.getName());
             return Money.getBettingMoney(bettingMoneyInput);
-        } catch (RuntimeException e) {
+        } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
             return getBettingMoney(name);
         }
@@ -73,7 +74,7 @@ public class Application {
     private static void playerTurn(Dealer dealer, Player player) {
         try {
             deal(dealer, player);
-        } catch (RuntimeException e) {
+        } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
             playerTurn(dealer, player);
         }
