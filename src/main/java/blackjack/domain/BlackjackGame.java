@@ -10,7 +10,7 @@ import blackjack.dto.ResultDto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game {
+public class BlackjackGame {
     public static final String DELIMITER = ",";
 
 
@@ -18,7 +18,7 @@ public class Game {
     private final Participant dealer;
     private final CardDeck cardDeck;
 
-    public Game(final List<String> participantsInfo, CardDeck cardDeck) {
+    public BlackjackGame(final List<String> participantsInfo, CardDeck cardDeck) {
         List<Player> playersValue = getPlayerList(participantsInfo);
         this.dealer = new Dealer();
         this.players = new Players(playersValue);
@@ -26,7 +26,7 @@ public class Game {
         initGame();
     }
 
-    public Game(final Participant dealer, Players players, CardDeck cardDeck) {
+    public BlackjackGame(final Participant dealer, Players players, CardDeck cardDeck) {
         this.dealer = dealer;
         this.players = players;
         this.cardDeck = cardDeck;

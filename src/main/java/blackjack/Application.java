@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.Game;
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.utils.RandomCardDeck;
 import blackjack.dto.ResultDto;
@@ -9,33 +9,33 @@ import blackjack.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        final Game game = new Game(InputView.requestNameAndMoney(), new RandomCardDeck());
-        OutputView.printCards(game.getProcessDto());
+        final BlackjackGame blackjackGame = new BlackjackGame(InputView.requestNameAndMoney(), new RandomCardDeck());
+        OutputView.printCards(blackjackGame.getProcessDto());
 
-        simulate(game);
+        simulate(blackjackGame);
 
-        printFinalView(game);
+        printFinalView(blackjackGame);
     }
 
-    private static void simulate(Game game) {
-        for (Player player : game.getPlayers()) {
-            turnForPlayer(game, player);
+    private static void simulate(BlackjackGame blackjackGame) {
+        for (Player player : blackjackGame.getPlayers()) {
+            turnForPlayer(blackjackGame, player);
         }
 
-        game.turnForDealer();
+        blackjackGame.turnForDealer();
         OutputView.printDealerGetCard();
     }
 
-    private static void turnForPlayer(Game game, Player player) {
+    private static void turnForPlayer(BlackjackGame blackjackGame, Player player) {
         while (player.isAbleToTake() && InputView.requestOneMoreCard(player.getName())) {
-            OutputView.printCards(game.turnForPlayer(player));
+            OutputView.printCards(blackjackGame.turnForPlayer(player));
         }
     }
 
-    private static void printFinalView(Game game) {
-        OutputView.printCardsResult(game.getProcessDto());
+    private static void printFinalView(BlackjackGame blackjackGame) {
+        OutputView.printCardsResult(blackjackGame.getProcessDto());
 
-        final ResultDto resultDto = game.getResultDto();
+        final ResultDto resultDto = blackjackGame.getResultDto();
         OutputView.printOutcome(resultDto);
         OutputView.printProfit(resultDto);
     }
