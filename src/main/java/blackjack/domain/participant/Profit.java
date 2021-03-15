@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import java.util.Objects;
 
 public class Profit {
+
     private final double profit;
 
     public Profit(Double profit) {

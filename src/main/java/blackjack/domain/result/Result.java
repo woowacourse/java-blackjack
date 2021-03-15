@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum Result {
+
     BLACKJACK_WIN("블랙잭승", Player::blackJackWinCondition, 2.5),
     WIN("승", Player::winCondition, 2.0),
     LOSE("패", Player::lossCondition, -1),

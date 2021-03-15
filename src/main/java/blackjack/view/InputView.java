@@ -38,7 +38,7 @@ public class InputView {
 
     public static Map<String, Double> getBettings(List<String> playerNames) {
         Map<String, Double> bettings = new HashMap<>();
-        for(String name : playerNames) {
+        for (String name : playerNames) {
             System.out.print(NEW_LINE);
             System.out.println(name + "의 베팅 금액은?");
             bettings.put(name, Double.parseDouble(scanner.nextLine()));
