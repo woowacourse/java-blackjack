@@ -10,7 +10,6 @@ import java.util.Collections;
 public class Player implements Participant {
     private static final String SAMPLE_NAME = "a";
     private final Name name;
-    private final Cards cards;
     private final BettingMoney bettingMoney;
     private State state;
 
@@ -36,7 +35,6 @@ public class Player implements Participant {
 
     public Player(String name, Cards cards, BettingMoney bettingMoney) {
         this.name = new Name(name);
-        this.cards = cards;
         this.bettingMoney = bettingMoney;
         this.state = new Hit(cards);
     }
