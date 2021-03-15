@@ -18,15 +18,15 @@ public class Results {
     private static final int INITIALIZE_VALUE = 0;
 
     private final Map<Player, ResultType> matchResults;
-    private final Map<Player, Money> profits;
+    private final Map<Player, Double> profits;
 
-    public Results(Map<Player, ResultType> matchResults, Map<Player, Money> profits) {
+    public Results(Map<Player, ResultType> matchResults, Map<Player, Double> profits) {
         this.matchResults = matchResults;
         this.profits = profits;
     }
 
     public static Results of(Map<Player, ResultType> matchResults) {
-        Map<Player, Money> profitMap = matchResults.keySet().stream().parallel()
+        Map<Player, Double> profitMap = matchResults.keySet().stream().parallel()
                 .collect(toMap(
                         player -> player,
                         player -> ProfitTable.translateBettingMoney(matchResults.get(player), player.getBettingMoney())));
@@ -37,7 +37,7 @@ public class Results {
         return matchResults.get(player);
     }
 
-    public Money getEarningMoneyOf(Player player) {
+    public double getProfitOf(Player player) {
         return profits.get(player);
     }
 
@@ -54,9 +54,8 @@ public class Results {
         return new DealerResult(dealerMatchResult, this.getTotalProfit() * TO_NEGATIVE_VALUE);
     }
 
-    private long getTotalProfit() {
-        return profits.values().stream()
-                .mapToLong(Money::toLong)
+    private double getTotalProfit() {
+        return profits.values().stream().mapToDouble(profit -> profit)
                 .sum();
     }
 

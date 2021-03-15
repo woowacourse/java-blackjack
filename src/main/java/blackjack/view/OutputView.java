@@ -84,12 +84,12 @@ public class OutputView {
 
         for (Player player : results.playerSet()) {
             String result = results.getResultOf(player).getName();
-            System.out.printf("%s: %s, 수익: %d\n", player.getName(), result, results.getEarningMoneyOf(player).toLong());
+            System.out.printf("%s: %s, 수익: %.0f\n", player.getName(), result, results.getProfitOf(player));
         }
     }
 
     public static void printDealerResult(DealerResult dealerResult) {
-        System.out.printf("딜러: %d승 %d무 %d패, 수익: %d\n",
+        System.out.printf("딜러: %d승 %d무 %d패, 수익: %.0f\n",
                 dealerResult.getCountOfResultOf(ResultType.WIN),
                 dealerResult.getCountOfResultOf(ResultType.DRAW),
                 dealerResult.getCountOfResultOf(ResultType.LOSE),

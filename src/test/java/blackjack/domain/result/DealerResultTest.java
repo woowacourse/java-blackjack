@@ -49,6 +49,6 @@ public class DealerResultTest {
     @DisplayName("딜러의 수익은 사용자들 수익의 총합과 반대의 부호를 가진 수가 된다.")
     @Test
     void computeDealerProfitTest() {
-        assertThat(dealerResult.getProfit()).isEqualTo(-15000);
+        assertThat(dealerResult.getProfit()).isEqualTo(-15000.d);
     }
 }

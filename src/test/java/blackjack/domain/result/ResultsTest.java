@@ -2,7 +2,6 @@ package blackjack.domain.result;
 
 import blackjack.domain.Money;
 import blackjack.domain.ResultType;
-import blackjack.domain.result.Results;
 import blackjack.domain.user.Name;
 import blackjack.domain.user.Player;
 
@@ -27,22 +26,22 @@ public class ResultsTest {
 
     private static Stream<Arguments> resultProvider() {
         return Stream.of(
-                Arguments.of(ResultType.BLACKJACK_WIN, 15000),
-                Arguments.of(ResultType.WIN, 10000),
-                Arguments.of(ResultType.DRAW, 0),
-                Arguments.of(ResultType.LOSE, -10000)
+                Arguments.of(ResultType.BLACKJACK_WIN, 15000.d),
+                Arguments.of(ResultType.WIN, 10000.d),
+                Arguments.of(ResultType.DRAW, 0.d),
+                Arguments.of(ResultType.LOSE, -10000.d)
         );
     }
 
     @DisplayName("결과에 따라 베팅한 금액에 비례한 수익을 얻는다.")
     @ParameterizedTest
     @MethodSource("resultProvider")
-    void computeProfitTest(ResultType resultType, int profit) {
+    void computeProfitTest(ResultType resultType, double profit) {
         Results results = Results.of(new HashMap<Player, ResultType>() {
             {
                 put(player, resultType);
             }
         });
-        assertThat(results.getEarningMoneyOf(player).toLong()).isEqualTo(profit);
+        assertThat(results.getProfitOf(player)).isEqualTo(profit);
     }
 }

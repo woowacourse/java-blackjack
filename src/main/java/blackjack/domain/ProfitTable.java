@@ -26,7 +26,7 @@ public enum ProfitTable {
         this.profitRatio = profitRatio;
     }
 
-    public static Money translateBettingMoney(ResultType resultType, Money bettingMoney) {
-        return bettingMoney.multiply(searchMap.get(resultType));
+    public static double translateBettingMoney(ResultType resultType, Money bettingMoney) {
+        return bettingMoney.toLong() * searchMap.get(resultType);
     }
 }
