@@ -17,7 +17,7 @@ public class Application {
         final Dealer dealer = Dealer.getInstance();
         final List<Player> players = getPlayersByNamesAndBettingMoney(getPlayerNames());
 
-        initializeParticipants(dealer, players);
+        drawBaseCard(dealer, players);
         OutputView.printParticipantHands(dealer, players);
 
         progressPlayersTurn(dealer, players);
@@ -57,10 +57,9 @@ public class Application {
             System.out.println(e.getMessage());
             return getBettingMoney(name);
         }
-
     }
 
-    private static void initializeParticipants(Dealer dealer, List<Player> players) {
+    private static void drawBaseCard(Dealer dealer, List<Player> players) {
         dealer.drawBaseCard();
         dealer.drawBaseCardToPlayers(players);
     }
