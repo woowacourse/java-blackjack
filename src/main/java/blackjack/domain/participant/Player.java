@@ -49,6 +49,9 @@ public class Player extends Participant {
         if (isBust()) {
             return true;
         }
+        if (dealer.isBust()) {
+            return false;
+        }
         if (dealer.isBlackjack() && !isBlackjack()) {
             return true;
         }

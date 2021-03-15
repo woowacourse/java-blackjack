@@ -55,7 +55,9 @@ class HandTest {
         return Stream.of(
                 Arguments.of(createHand(aceCard), 11),
                 Arguments.of(createHand(aceCard, kingCard), 21),
-                Arguments.of(createHand(aceCard, aceCard, aceCard), 13)
+                Arguments.of(createHand(aceCard, aceCard, aceCard), 13),
+                Arguments.of(createHand(kingCard, kingCard, twoCard), 22),
+                Arguments.of(createHand(kingCard, kingCard, kingCard), 30)
         );
     }
 

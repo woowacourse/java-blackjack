@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.ACE_UPPER_VALUE;
 import static blackjack.domain.participant.Dealer.BLACKJACK_HAND_SIZE;
 import static blackjack.domain.participant.Dealer.BLACKJACK_VALUE;
@@ -29,37 +30,14 @@ public class Hand {
         return Collections.unmodifiableList(cards);
     }
 
-    public boolean isBust() {
-        return getLowerScore() > BLACKJACK_VALUE;
-    }
-
-    public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_HAND_SIZE && getUpperScore() == BLACKJACK_VALUE;
-    }
-
-    private int getLowerScore() {
-        return getScoreByMapper(Card::getRankValue);
-    }
-
-    private int getUpperScore() {
-        return getScoreByMapper(Card::getUpperValue);
-    }
-
-    private int getScoreByMapper(ToIntFunction<Card> mapper) {
-        return cards.stream()
-                .mapToInt(mapper)
-                .sum();
-    }
-
     public int getScore() {
-        int aceCount = getCountOfAce();
-        int result = (aceCount * ACE_UPPER_VALUE) + getScoreWithoutAce();
+        int countOfAce = getCountOfAce();
+        int result = getUpperScore();
 
-        while (aceCount >= 0 && BLACKJACK_VALUE < result) {
-            result -= 10;
-            aceCount--;
+        while (BLACKJACK_VALUE < result && countOfAce > 0) {
+            result -= (ACE_UPPER_VALUE - ACE.getValue());
+            countOfAce--;
         }
-
         return result;
     }
 
@@ -69,10 +47,25 @@ public class Hand {
                 .count();
     }
 
-    private int getScoreWithoutAce() {
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_HAND_SIZE && getUpperScore() == BLACKJACK_VALUE;
+    }
+
+    private int getUpperScore() {
+        return getScoreByMapper(Card::getUpperValue);
+    }
+
+    public boolean isBust() {
+        return getLowerScore() > BLACKJACK_VALUE;
+    }
+
+    private int getLowerScore() {
+        return getScoreByMapper(Card::getRankValue);
+    }
+
+    private int getScoreByMapper(ToIntFunction<Card> mapper) {
         return cards.stream()
-                .filter(card -> !card.isAce())
-                .mapToInt(Card::getRankValue)
+                .mapToInt(mapper)
                 .sum();
     }
 }
