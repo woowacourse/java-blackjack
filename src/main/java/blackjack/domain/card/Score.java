@@ -11,6 +11,10 @@ public class Score {
         this.score = score;
     }
 
+    public static Score Of(int score) {
+        return new Score(score);
+    }
+
     public Score plusTenIfNotBust() {
         Score score = new Score(TEN.score + this.score);
         if (score.isBust()) {

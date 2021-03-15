@@ -18,11 +18,11 @@ public enum Number {
     KING("K", 10);
 
     private final String name;
-    private final int score;
+    private final Score score;
 
     Number(String name, int score) {
         this.name = name;
-        this.score = score;
+        this.score = Score.Of(score);
     }
 
     public static Number from(String name) {
@@ -41,7 +41,7 @@ public enum Number {
     }
 
     public int getScore() {
-        return score;
+        return score.toInt();
     }
 
     public boolean isAce() {
