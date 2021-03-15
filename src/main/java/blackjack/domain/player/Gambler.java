@@ -13,6 +13,6 @@ public class Gambler extends Player {
     }
 
     public BettingMoney inverseMoney() {
-        return bettingMoney.inverseMoney();
+        return bettingMoney.inverseBettingMoney();
     }
 }

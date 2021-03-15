@@ -12,7 +12,7 @@ public class Dealer extends Player {
 
     public void calculateProfit(final Gambler gambler) {
         BettingMoney dealerProfit = gambler.inverseMoney();
-        bettingMoney = bettingMoney.addMoney(dealerProfit);
+        bettingMoney = bettingMoney.addBettingMoney(dealerProfit);
     }
 
     public boolean ableToDraw() {

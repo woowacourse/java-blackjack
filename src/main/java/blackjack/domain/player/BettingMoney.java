@@ -5,6 +5,7 @@ import java.util.Objects;
 public class BettingMoney {
 
     public static final int INVERSE_SIGN = -1;
+
     private int bettingMoney;
 
     public BettingMoney(String bettingMoney) {
@@ -39,11 +40,11 @@ public class BettingMoney {
         return new BettingMoney((int) (bettingMoney * yield));
     }
 
-    public BettingMoney inverseMoney() {
+    public BettingMoney inverseBettingMoney() {
         return new BettingMoney(INVERSE_SIGN * bettingMoney);
     }
 
-    public BettingMoney addMoney(BettingMoney bettingMoney) {
+    public BettingMoney addBettingMoney(BettingMoney bettingMoney) {
         return new BettingMoney(this.bettingMoney + bettingMoney.bettingMoney);
     }
 
