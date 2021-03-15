@@ -5,13 +5,10 @@ import blackjack.domain.card.CardHand;
 import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Dealer extends Participant {
     
     private static final int DEALER_THRESHOLD = 16;
-    
-    private static final int REVERSE = -1;
     
     private static final String NAME = "딜러";
     
@@ -44,11 +41,5 @@ public class Dealer extends Participant {
     
     public Card getCard(int cardIndex) {
         return cardHand.get(cardIndex);
-    }
-    
-    public double calculateProfit(List<Player> players) {
-        return players.stream()
-                      .mapToDouble(player -> player.calculateProfit(this) * REVERSE)
-                      .sum();
     }
 }

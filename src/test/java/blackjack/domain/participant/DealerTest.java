@@ -7,9 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
@@ -65,31 +62,5 @@ public class DealerTest {
         
         // then
         assertThat(player.getCards()).hasSize(1);
-    }
-    
-    @Test
-    void calculateProfit() {
-        
-        // given
-        final BettingMoney bettingMoney = BettingMoney.from("1000");
-        Player jason = Player.of("jason", bettingMoney);
-        jason.receive(new Card(Suit.CLOVER, Rank.TEN));
-        jason.receive(new Card(Suit.CLOVER, Rank.NINE));
-    
-        Player cu = Player.of("cu", bettingMoney);
-        cu.receive(new Card(Suit.SPADE, Rank.TEN));
-        cu.receive(new Card(Suit.SPADE, Rank.FIVE));
-    
-        Player pobi = Player.of("pobi", bettingMoney);
-        pobi.receive(new Card(Suit.HEART, Rank.TEN));
-        pobi.receive(new Card(Suit.HEART, Rank.ACE));
-    
-        List<Player> players = Arrays.asList(jason, cu, pobi);
-        
-        // when
-        double profit = dealer.calculateProfit(players);
-        
-        // then
-        assertThat(profit).isEqualTo(-1000 + 1000 + -1500);
     }
 }

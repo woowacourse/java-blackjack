@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.CardHand;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static blackjack.domain.BlackjackConstant.BLACKJACK_SCORE;
 
@@ -16,7 +17,7 @@ public class Player extends Participant {
     }
     
     public static Player of(String name, BettingMoney bettingMoney) {
-        return new Player(name.trim(), new CardHand(new ArrayList<>()), bettingMoney);
+        return new Player(name, new CardHand(new ArrayList<>()), bettingMoney);
     }
     
     @Override
@@ -24,7 +25,27 @@ public class Player extends Participant {
         return sumCardHand() < BLACKJACK_SCORE;
     }
     
-    public double calculateProfit(Dealer dealer) {
-        return bettingMoney.calculateProfitOfPlayer(dealer, this);
+    public double getBettingMoney() {
+        return bettingMoney.getMoney();
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Player player = (Player) o;
+        return Objects.equals(bettingMoney, player.bettingMoney);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), bettingMoney);
     }
 }
