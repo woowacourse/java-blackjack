@@ -17,12 +17,12 @@ public class Player extends AbstractParticipant {
     }
 
     @Override
-    boolean isReceivable() {
+    public boolean isReceivable() {
         return !isEnd();
     }
 
     @Override
-    boolean handOutCard(Card card) {
+    public boolean handOutCard(Card card) {
         if (!isReceivable()) return false;
 
         receiveCard(card);
@@ -31,12 +31,12 @@ public class Player extends AbstractParticipant {
     }
 
     @Override
-    boolean isDealer() {
+    public boolean isDealer() {
         return false;
     }
 
     @Override
-    List<Card> showInitCards() {
+    public List<Card> showInitCards() {
         return showCards();
     }
 

@@ -15,10 +15,10 @@ public abstract class AbstractParticipant implements Participant {
         this.state = state;
     }
 
-    abstract boolean isReceivable();
-    abstract boolean handOutCard(Card card);
-    abstract boolean isDealer();
-    abstract List<Card> showInitCards();
+    public abstract boolean isReceivable();
+    public abstract boolean handOutCard(Card card);
+    public abstract boolean isDealer();
+    public abstract List<Card> showInitCards();
 
 
     @Override

@@ -19,13 +19,13 @@ public class Dealer extends AbstractParticipant {
     }
 
     @Override
-    boolean isReceivable() {
+    public boolean isReceivable() {
         int totalScore = sumTotalScore(new BlackJackScoreRule());
         return totalScore <= DRAW_BOUND_SCORE && !isEnd();
     }
 
     @Override
-    boolean handOutCard(Card card) {
+    public boolean handOutCard(Card card) {
         if (!isReceivable()) {
             return false;
         }
@@ -38,12 +38,12 @@ public class Dealer extends AbstractParticipant {
     }
 
     @Override
-    boolean isDealer() {
+    public boolean isDealer() {
         return true;
     }
 
     @Override
-    List<Card> showInitCards() {
+    public List<Card> showInitCards() {
         return getState().getCards().splitCardsFromTo(FROM, TO);
     }
 
