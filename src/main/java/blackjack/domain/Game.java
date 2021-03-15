@@ -89,9 +89,9 @@ public class Game {
         return resultDTOS;
     }
 
-    public List<WinningResultDTO> getWinningResultDTOs() {
+    public List<WinningResult> getWinningResult() {
         return players.stream().map(player ->
-            new WinningResultDTO(player.getName(), ((Player)player).getMoney(), MatchResult.calculateResult(player, dealer)))
+            new WinningResult(player.getName(), ((Player)player).getMoney(), MatchResult.calculateResult(player, dealer)))
             .collect(Collectors.toList());
     }
 }

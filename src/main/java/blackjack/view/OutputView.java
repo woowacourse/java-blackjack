@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.user.PlayerDto;
 import blackjack.domain.user.ResultDTO;
 import blackjack.domain.user.User;
-import blackjack.domain.user.WinningResultDTO;
+import blackjack.domain.user.WinningResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,22 +76,22 @@ public class OutputView {
             resultDTO.getScore()));
     }
 
-    public static void printWinningResult(List<WinningResultDTO> winningResultDTOs) {
+    public static void printWinningResult(List<WinningResult> winningResults) {
         System.out.println("\n## 최종 승패");
-        System.out.println("딜러 : " + calculateDealerProfit(winningResultDTOs));
-        winningResultDTOs.forEach(winningResultDto ->
-            System.out.printf("%s: %s%n", winningResultDto.getName(),
-                (int) (winningResultDto.getMoney() * winningResultDto.getResult().getMoneyRate())));
+        System.out.println("딜러 : " + calculateDealerProfit(winningResults));
+        winningResults.forEach(winningResult ->
+            System.out.printf("%s: %s%n", winningResult.getName(),
+               winningResult.getProfit()));
     }
 
-    private static int calculateDealerProfit(List<WinningResultDTO> winningResultDTOs) {
-        return calculatePlayerTotalProfit(winningResultDTOs) * -1;
+    private static int calculateDealerProfit(List<WinningResult> winningResults) {
+        return calculatePlayerTotalProfit(winningResults) * -1;
     }
 
     private static int calculatePlayerTotalProfit(
-        List<WinningResultDTO> winningResultDTOs) {
-        return winningResultDTOs.stream()
-            .mapToInt(winningResultDTO -> (int) (winningResultDTO.getMoney() * winningResultDTO.getResult().getMoneyRate()))
+        List<WinningResult> winningResults) {
+        return winningResults.stream()
+            .mapToInt(WinningResult::getProfit)
             .sum();
     }
 }
