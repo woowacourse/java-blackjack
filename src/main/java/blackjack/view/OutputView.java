@@ -11,8 +11,8 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 
 public class OutputView {
-	public static final String COLON_DELIMITER = ": ";
-	public static final String RESULT_DELIMITER = " - 결과: ";
+	private static final String COLON_DELIMITER = ": ";
+	private static final String RESULT_DELIMITER = " - 결과: ";
 	private static final int INITIAL_DRAWING_COUNT = 2;
 	private static final String COMMA_DELIMITER_TO_PRINT = ", ";
 	private static final int COUNT_OF_DEALER_OPENING_CARDS = 1;

@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public class Hit extends Running {
-	public static final int THRESHOLD_OF_BUST = 21;
+	private static final int THRESHOLD_OF_BUST = 21;
 
 	public Hit(Cards cards) {
 		super(cards);

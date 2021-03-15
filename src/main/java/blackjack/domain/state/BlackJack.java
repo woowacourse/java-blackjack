@@ -5,7 +5,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 
 public class BlackJack extends Finished {
-	public static final double BLACKJACK_PROFIT_RATE = 1.5;
+	private static final double BLACKJACK_PROFIT_RATE = 1.5;
 
 	public BlackJack(Cards cards) {
 		super(cards);

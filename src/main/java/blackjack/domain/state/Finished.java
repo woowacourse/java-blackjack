@@ -6,9 +6,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public abstract class Finished implements PlayerState {
-	public static final int WIN_PROFIT_RATE = 1;
-	public static final int DRAW_PROFIT_RATE = 0;
-	public static final int LOSE_PROFIT_RATE = -1;
+	protected static final int WIN_PROFIT_RATE = 1;
+	protected static final int DRAW_PROFIT_RATE = 0;
+	protected static final int LOSE_PROFIT_RATE = -1;
 
 	protected Cards cards;
 
