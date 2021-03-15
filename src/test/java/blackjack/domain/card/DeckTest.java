@@ -6,7 +6,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class DeckTest {
 
     private Deck deck;
@@ -23,26 +22,27 @@ class DeckTest {
         assertThat(deck).isNotNull();
     }
 
-    @Order(1)
     @DisplayName("Deck의 초기 Card 갯수는 52개이다")
     @Test
     void testInitialSize() {
+        //when
+        Deck.generate();
         //then
         assertThat(deck.size()).isEqualTo(52);
     }
 
-    @Order(2)
     @DisplayName("Deck에서 카드를 뽑는다")
     @Test
     void testDraw() {
+        //given
+        int currentDeckSize = deck.size();
         //when
         deck.draw();
 
         //then
-        assertThat(deck.size()).isEqualTo(51);
+        assertThat(deck.size()).isEqualTo(currentDeckSize - 1);
     }
 
-    @Order(3)
     @DisplayName("초기 패를 두장 뽑는다")
     @Test
     void testHandOutInitCards() {
