@@ -47,7 +47,7 @@ class StayTest {
 		Dealer dealer = new Dealer();
 		dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SEVEN));
 		state = state.keepContinue(false);
-		assertEquals(100, state.makeProfit(dealer, Money.of(100)));
+		assertEquals(100, state.makeProfit(dealer.getPlayerState(), Money.of(100)));
 	}
 
 	@Test
@@ -57,7 +57,7 @@ class StayTest {
 		dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SEVEN));
 		dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SIX));
 		state = state.keepContinue(false);
-		assertEquals(0, state.makeProfit(dealer, Money.of(100)));
+		assertEquals(0, state.makeProfit(dealer.getPlayerState(), Money.of(100)));
 	}
 
 	@Test
@@ -67,7 +67,7 @@ class StayTest {
 		dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SEVEN));
 		dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SEVEN));
 		state = state.keepContinue(false);
-		assertEquals(-100, state.makeProfit(dealer, Money.of(100)));
+		assertEquals(-100, state.makeProfit(dealer.getPlayerState(), Money.of(100)));
 	}
 
 	@Test

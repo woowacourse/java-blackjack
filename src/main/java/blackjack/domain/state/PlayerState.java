@@ -3,7 +3,6 @@ package blackjack.domain.state;
 import java.util.stream.Stream;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 
 public interface PlayerState {
@@ -15,7 +14,7 @@ public interface PlayerState {
 
 	int calculatePoint();
 
-	double makeProfit(Dealer dealer, Money money);
+	double makeProfit(PlayerState comparingState, Money money);
 
 	boolean isBust();
 

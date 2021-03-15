@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.state.PlayerState;
 import blackjack.domain.state.StateFactory;
 
 public class Players {
@@ -32,8 +33,9 @@ public class Players {
 	}
 
 	public int calculateProfits(Dealer dealer) {
+		PlayerState dealerState = dealer.playerState;
 		int total = players.stream()
-			.peek(player -> player.calculateProfit(dealer))
+			.peek(player -> player.calculateProfit(dealerState))
 			.map(Player::getMoney)
 			.reduce(0, Integer::sum);
 		return total * -1;

@@ -49,7 +49,7 @@ class BustTest {
 		dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SEVEN));
 		dealer.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SIX));
 		state = state.keepContinue(false);
-		assertEquals(-100, state.makeProfit(dealer, Money.of(100)));
+		assertEquals(-100, state.makeProfit(dealer.getPlayerState(), Money.of(100)));
 	}
 
 	@Test

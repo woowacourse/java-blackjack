@@ -1,7 +1,6 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.ParticipantCards;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 
 public class Bust extends Finished {
@@ -20,7 +19,7 @@ public class Bust extends Finished {
 	}
 
 	@Override
-	public double makeProfit(Dealer dealer, Money money) {
+	public double makeProfit(PlayerState comparingState, Money money) {
 		return money.multiplyMoneyWithOperation(LOSE_PROFIT_RATE);
 	}
 }

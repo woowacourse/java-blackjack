@@ -1,7 +1,6 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.ParticipantCards;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 
 public class Stay extends Finished {
@@ -20,11 +19,11 @@ public class Stay extends Finished {
 	}
 
 	@Override
-	public double makeProfit(Dealer dealer, Money money) {
-		if (dealer.calculatePoint() == calculatePoint()) {
+	public double makeProfit(PlayerState comparingState, Money money) {
+		if (comparingState.calculatePoint() == calculatePoint()) {
 			return money.multiplyMoneyWithOperation(DRAW_PROFIT_RATE);
 		}
-		if (!dealer.getPlayerState().isBust() && dealer.calculatePoint() > calculatePoint()) {
+		if (!comparingState.isBust() && comparingState.calculatePoint() > calculatePoint()) {
 			return money.multiplyMoneyWithOperation(LOSE_PROFIT_RATE);
 		}
 		return money.multiplyMoneyWithOperation(WIN_PROFIT_RATE);

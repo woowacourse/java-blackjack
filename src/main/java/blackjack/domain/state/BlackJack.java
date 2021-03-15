@@ -1,7 +1,6 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.ParticipantCards;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Money;
 
 public class BlackJack extends Finished {
@@ -22,8 +21,8 @@ public class BlackJack extends Finished {
 	}
 
 	@Override
-	public double makeProfit(Dealer dealer, Money money) {
-		if (dealer.getPlayerState().isBlackJack()) {
+	public double makeProfit(PlayerState comparingState, Money money) {
+		if (comparingState.isBlackJack()) {
 			return money.multiplyMoneyWithOperation(WIN_PROFIT_RATE);
 		}
 		return money.multiplyMoneyWithOperation(BLACKJACK_PROFIT_RATE);
