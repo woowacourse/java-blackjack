@@ -3,8 +3,8 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Score {
-    private static final int BLACKJACK = 21;
-    public static final int TEN = 10;
+    private static final Score BLACKJACK = new Score(21);
+    private static final Score TEN = new Score(10);
     private final int score;
 
     public Score(int score) {
@@ -12,36 +12,38 @@ public class Score {
     }
 
     public Score plusTenIfNotBust() {
-        Score score = new Score(this.score + TEN);
+        Score score = new Score(TEN.score + this.score);
         if (score.isBust()) {
             return this;
         }
         return score;
     }
 
-    public boolean isBust() {
-        return this.score > BLACKJACK;
-    }
-
-    protected boolean isBlackjack() {
-        return this.score == BLACKJACK;
-    }
-
     public int toInt() {
         return score;
     }
 
-    public boolean isBelow(int turnOverCount) {
-        return this.score <= turnOverCount;
+    public boolean isBust() {
+        return BLACKJACK.score < this.score;
+    }
+
+    protected boolean isBlackjack() {
+        return BLACKJACK.score == score;
+    }
+
+    public boolean lessThan(Score other) {
+        return this.score < other.score;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Score score1 = (Score) o;
-        return score == score1.score;
+        if(o instanceof Score){
+            return ((Score) o).score == this.score;
+        }
+
+        return false;
     }
+
 
     @Override
     public int hashCode() {

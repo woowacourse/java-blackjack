@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Score;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
 
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Dealer extends User {
-    public static final int TURN_OVER_COUNT = 16;
+    public static final Score TURN_OVER_COUNT = new Score(17);
 
     private static final Name name = new Name("딜러");
     private State state;
@@ -18,7 +19,7 @@ public class Dealer extends User {
     }
 
     public boolean canAddCard() {
-        return state.score().isBelow(TURN_OVER_COUNT);
+        return state.score().lessThan(TURN_OVER_COUNT);
     }
 
     public boolean isBlackjack() {

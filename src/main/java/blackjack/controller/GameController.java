@@ -69,7 +69,7 @@ public class GameController {
         players.forEach(player -> askAddCardOrPass(player, deck));
         while (dealer.canAddCard()) {
             dealer.addCard(deck.drawCard());
-            OutputView.showDealerAddCard(Dealer.TURN_OVER_COUNT);
+            OutputView.showDealerAddCard(Dealer.TURN_OVER_COUNT.toInt());
         }
         dealer.stayIfNotFinished();
     }
