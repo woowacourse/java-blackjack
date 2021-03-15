@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 
 public class Players {
 
+    private static final int MAX_PLAYER_COUNT = 7;
+    private static final int MIN_PLAYER_COUNT = 1;
+
     private List<Player> players;
 
     public Players(final List<Cards> cards, final List<String> playerNames) {
@@ -47,7 +50,7 @@ public class Players {
     }
 
     private void validatePlayersCount(final List<Player> players) {
-        if (players.size() < 1 || players.size() > 7) {
+        if (players.size() < MIN_PLAYER_COUNT || players.size() > MAX_PLAYER_COUNT) {
             throw new IllegalArgumentException("게임 참가자의수는 1명 이상 7명 이하여야 합니다.");
         }
     }
