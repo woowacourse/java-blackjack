@@ -57,11 +57,16 @@ public class OutputView {
             .getCard();
         System.out.printf(DEALER_CARD + NEWLINE, dealerCard);
         for (Player player : players.getRawPlayers()) {
-            showPlayerCard(player);
+            showPlayerUnitCard(player);
         }
     }
 
-    public static void showPlayerCard(Player player) {
+    public static void showPlayerCard(BlackJackGame blackJackGame, int playerIndex) {
+        Player player = blackJackGame.getPlayer(playerIndex);
+        showPlayerUnitCard(player);
+    }
+
+    private static void showPlayerUnitCard(Player player) {
         String cards = combineAllCard(player);
         System.out.printf(PLAYER_CARD + NEWLINE, player.getName(), cards);
     }

@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.money.Money;
 import blackjack.domain.user.GameResult;
-import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -31,19 +30,19 @@ public class BlackJackController {
     }
 
     private void processPlayer(BlackJackGame blackJackGame, int playerIndex) {
-        Player player = blackJackGame.getPlayer(playerIndex);
-        while(player.isAvailableDraw() && isYes(player)) {
+        while (blackJackGame.isAvailablePlayerDraw(playerIndex) &&
+            isPlayerYes(blackJackGame, playerIndex)) {
             blackJackGame.drawOnePlayer(playerIndex);
-            OutputView.showPlayerCard(player);
+            OutputView.showPlayerCard(blackJackGame, playerIndex);
         }
     }
 
-    private boolean isYes(Player player) {
-        return InputView.requestMoreDraw(player.getName());
+    private boolean isPlayerYes(BlackJackGame blackJackGame, int playerIndex) {
+        return InputView.requestMoreDraw(blackJackGame, playerIndex);
     }
 
     private void processDealer(BlackJackGame blackJackGame) {
-        while(blackJackGame.isAvailableDealerTurn()) {
+        while (blackJackGame.isAvailableDealerTurn()) {
             blackJackGame.dealerTurn();
             OutputView.showDealerDraw();
         }

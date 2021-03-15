@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.BlackJackGame;
 import blackjack.domain.money.Money;
 import blackjack.exception.BlackJackException;
 import java.util.ArrayList;
@@ -25,8 +26,6 @@ public class InputView {
     private InputView() {
     }
 
-    ;
-
     public static List<String> requestPlayers() {
         System.out.println(REQUEST_NAME_MESSAGE);
         try {
@@ -46,7 +45,9 @@ public class InputView {
         return betCapital;
     }
 
-    public static boolean requestMoreDraw(String name) {
+    public static boolean requestMoreDraw(BlackJackGame blackJackGame, int playerIndex) {
+        String name = blackJackGame.getPlayer(playerIndex)
+            .getName();
         System.out.println(name + MORE_DRAW_MESSAGE);
         String input = SCANNER.nextLine();
         try {
@@ -54,7 +55,7 @@ public class InputView {
             return translateSignal(input);
         } catch (BlackJackException blackJackException) {
             System.out.println(blackJackException.getMessage());
-            return requestMoreDraw(name);
+            return requestMoreDraw(blackJackGame, playerIndex);
         }
     }
 

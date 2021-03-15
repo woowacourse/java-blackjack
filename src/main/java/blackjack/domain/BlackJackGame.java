@@ -23,6 +23,11 @@ public class BlackJackGame {
         participants.dealerTurn(entireCardDeck);
     }
 
+    public boolean isAvailablePlayerDraw(int playerIndex) {
+        return getPlayer(playerIndex)
+            .isAvailableDraw();
+    }
+
     public boolean isAvailableDealerTurn() {
         return this.participants.isAvailableDealerTurn();
     }
