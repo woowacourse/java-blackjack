@@ -3,6 +3,7 @@ package blackjack.domain.state;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
@@ -19,6 +20,7 @@ public class StateFactoryTest {
 	}
 
 	@Test
+	@DisplayName("BlackJack 생성 테스트")
 	void checkBlackJack() {
 		Card firstCard = new Card(CardPattern.DIAMOND, CardNumber.TEN);
 		Card secondCard = new Card(CardPattern.DIAMOND, CardNumber.ACE);
@@ -29,6 +31,7 @@ public class StateFactoryTest {
 	}
 
 	@Test
+	@DisplayName("Hit 생성 테스트")
 	void checkHit() {
 		ParticipantCards participantCards = new ParticipantCards();
 		Card firstCard = new Card(CardPattern.DIAMOND, CardNumber.TEN);
