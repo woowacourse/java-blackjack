@@ -10,12 +10,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
     
+    private final BettingMoney bettingMoney = BettingMoney.from("0");
+    
     @Test
     @DisplayName("플레이어 카드 받기")
     void receive() {
         
         // given
-        double bettingMoney = 0;
         Player player = Player.of("pobi", bettingMoney);
         Card card = new Card(Suit.CLOVER, Rank.ACE);
         
@@ -31,7 +32,6 @@ public class PlayerTest {
     void canReceive_LessThanOrEqualToThreshold_CanReceive() {
         
         // given
-        double bettingMoney = 0;
         Player player = Player.of("pobi", bettingMoney);
         Card firstCard = new Card(Suit.CLOVER, Rank.TEN);
         Card secondCard = new Card(Suit.CLOVER, Rank.JACK);
@@ -51,7 +51,6 @@ public class PlayerTest {
     void canReceive_GreaterThanThreshold_CannotReceive() {
         
         // given
-        double bettingMoney = 0;
         Player player = Player.of("pobi",bettingMoney);
         Card firstCard = new Card(Suit.CLOVER, Rank.TEN);
         Card secondCard = new Card(Suit.CLOVER, Rank.JACK);

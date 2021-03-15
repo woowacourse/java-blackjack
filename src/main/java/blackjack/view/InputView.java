@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.participant.BettingMoney;
 import blackjack.domain.participant.Player;
 
 import java.util.Scanner;
@@ -15,7 +16,6 @@ public class InputView {
     private static final String ASK_BETTING_MONEY = "%s의 배팅 금액은?" + LINE_SEPARATOR;
     
     private static final String ERROR_IS_NOT_Y_OR_N = "y 또는 n을 입력해주세요";
-    private static final String ERROR_IS_NOT_DIGIT = "숫자만 입력해주세요";
     
     public static String getPlayerName() {
         System.out.println(ASK_PLAYER_NAMES);
@@ -27,24 +27,12 @@ public class InputView {
         return input;
     }
     
-    public static int getBettingMoney(String name) {
+    public static BettingMoney getBettingMoney(String name) {
         System.out.printf(ASK_BETTING_MONEY, name);
         String input = scanner.nextLine();
         System.out.println();
         
-        if (!isDigit(input)) {
-            throw new IllegalArgumentException(ERROR_IS_NOT_DIGIT);
-        }
-        return Integer.parseInt(input);
-    }
-    
-    private static boolean isDigit(String input) {
-        try {
-            Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        return true;
+        return BettingMoney.from(input);
     }
     
     public static boolean wantsReceive(Player player) {

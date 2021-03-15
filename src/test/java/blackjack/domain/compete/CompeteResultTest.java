@@ -3,10 +3,10 @@ package blackjack.domain.compete;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.compete.CompeteResult;
-import blackjack.domain.compete.CompeteResultGroup;
+import blackjack.domain.participant.BettingMoney;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,17 +18,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CompeteResultTest {
     
+    private final BettingMoney bettingMoney = BettingMoney.from("0");
+    
+    private Dealer dealer;
+    
+    @BeforeEach
+    void setUpDealer() {
+        dealer = Dealer.create();
+        dealer.receive(new Card(Suit.HEART, Rank.TEN));
+        dealer.receive(new Card(Suit.HEART, Rank.JACK));
+    }
     
     @Test
     @DisplayName("딜러와 모든 플레이어간의 승패 계산 테스트")
     void compete() {
         
         // given
-        Dealer dealer = Dealer.create();
-        dealer.receive(new Card(Suit.HEART, Rank.TEN));
-        dealer.receive(new Card(Suit.HEART, Rank.JACK));
-    
-        double bettingMoney = 0;
         Player jason = Player.of("jason", bettingMoney);
         jason.receive(new Card(Suit.CLOVER, Rank.TEN));
         jason.receive(new Card(Suit.CLOVER, Rank.NINE));
@@ -53,12 +58,6 @@ class CompeteResultTest {
     void compete_playerSumGreaterThanDealerSum_Win() {
         
         // given
-        Dealer dealer = Dealer.create();
-        dealer.receive(new Card(Suit.HEART, Rank.TEN));
-        dealer.receive(new Card(Suit.HEART, Rank.JACK));
-    
-    
-        double bettingMoney = 0;
         Player pobi = Player.of("pobi", bettingMoney);
         pobi.receive(new Card(Suit.DIAMOND, Rank.TEN));
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
@@ -79,11 +78,6 @@ class CompeteResultTest {
     void compete_playerSumLessThanDealerSum_Defeat() {
         
         // given
-        Dealer dealer = Dealer.create();
-        dealer.receive(new Card(Suit.HEART, Rank.TEN));
-        dealer.receive(new Card(Suit.HEART, Rank.JACK));
-    
-        double bettingMoney = 0;
         Player pobi = Player.of("pobi", bettingMoney);
         pobi.receive(new Card(Suit.CLOVER, Rank.TEN));
         pobi.receive(new Card(Suit.CLOVER, Rank.FIVE));
@@ -103,11 +97,6 @@ class CompeteResultTest {
     void compete_playerSumEqualToDealerSum_Draw() {
         
         // given
-        Dealer dealer = Dealer.create();
-        dealer.receive(new Card(Suit.HEART, Rank.TEN));
-        dealer.receive(new Card(Suit.HEART, Rank.JACK));
-    
-        double bettingMoney = 0;
         Player pobi = Player.of("pobi", bettingMoney);
         pobi.receive(new Card(Suit.DIAMOND, Rank.TEN));
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
@@ -127,12 +116,6 @@ class CompeteResultTest {
     void compete_isBust_Defeat() {
         
         // given
-        Dealer dealer = Dealer.create();
-        dealer.receive(new Card(Suit.HEART, Rank.TEN));
-        dealer.receive(new Card(Suit.HEART, Rank.JACK));
-        dealer.receive(new Card(Suit.HEART, Rank.JACK));
-    
-        double bettingMoney = 0;
         Player pobi = Player.of("pobi", bettingMoney);
         pobi.receive(new Card(Suit.DIAMOND, Rank.TEN));
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
