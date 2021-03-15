@@ -7,10 +7,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class AnswerTest {
 
-    @DisplayName("'y' 입력 시 YES를, 'n' 입력 시 NO 객체를 반환한다.")
+    @DisplayName("'y' 입력 시 boolean을, 'n' 입력 시 false를 반환한다.")
     @Test
     void generate_test() {
-        assertThat(Answer.YES.equals("y")).isTrue();
-        assertThat(Answer.NO.equals("n")).isTrue();
+        assertThat(Answer.isYes("y")).isTrue();
+        assertThat(Answer.isYes("n")).isFalse();
     }
 }
