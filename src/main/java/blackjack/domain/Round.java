@@ -14,6 +14,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Round {
+    private static final int FIRST_INDEX = 0;
+
     private final Deck deck;
     private final Users users;
 
@@ -27,7 +29,7 @@ public class Round {
         users.add(new Dealer(drawTwoCard(deck)));
 
         List<AbstractUser> players = playerNames.stream()
-                .map(playerName -> new Player(drawTwoCard(deck), playerName, bettingMoneys.remove(0)))
+                .map(playerName -> new Player(drawTwoCard(deck), playerName, bettingMoneys.remove(FIRST_INDEX)))
                 .collect(Collectors.toList());
 
         users.addAll(players);
@@ -57,7 +59,7 @@ public class Round {
 
     public void addDealerCard() {
         AbstractUser findDealer = getDealer();
-        State state = findDealer.getState().draw(deck.makeOneCard());
+        State state = users.dealerDraw(deck.makeOneCard());
         if (!state.isFinish() && !findDealer.canDraw()) {
             findDealer.changeState(new DealerTurnOver(state.cards()));
         }
@@ -65,21 +67,14 @@ public class Round {
 
     public void addPlayerCard(AbstractUser player) {
         AbstractUser findPlayer = findPlayer(player);
-        State state = findPlayer.getState().draw(deck.makeOneCard());
+        State state = users.playerDraw(deck.makeOneCard(), player);
         findPlayer.changeState(state);
     }
 
     public void makePlayerStay(AbstractUser player) {
         AbstractUser findPlayer = findPlayer(player);
-        State state = findPlayer.getState().stay();
+        State state = findPlayer.stay();
         findPlayer.changeState(state);
-    }
-
-    private AbstractUser findPlayer(AbstractUser player) {
-        return getPlayers().stream()
-                .filter(p -> p.equals(player))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 유저입니다"));
     }
 
     public Map<String, BigDecimal> findUsersProfit() {
@@ -90,14 +85,21 @@ public class Round {
         result.put(dealer.getName(), BigDecimal.valueOf(profits.stream().mapToInt(profit -> -profit.intValue()).sum()));
 
         players.forEach(player ->
-                result.put(player.getName(), profits.remove(0))
+                result.put(player.getName(), profits.remove(FIRST_INDEX))
         );
         return result;
     }
 
+    private AbstractUser findPlayer(AbstractUser player) {
+        return getPlayers().stream()
+                .filter(p -> p.equals(player))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 유저입니다"));
+    }
+
     private List<BigDecimal> getProfits(AbstractUser dealer, List<AbstractUser> players) {
         return players.stream()
-                .map(player -> player.getState().profit(dealer.getState(), player.getBettingMoney()))
+                .map(player -> player.profit(dealer.getState(), player.getBettingMoney()))
                 .collect(Collectors.toList());
     }
 }

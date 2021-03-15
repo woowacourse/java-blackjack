@@ -1,5 +1,8 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.state.State;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -45,5 +48,14 @@ public class Users {
         return users.stream()
                 .filter(AbstractUser::isPlayer)
                 .collect(Collectors.toList());
+    }
+
+    public State dealerDraw(Card card) {
+        AbstractUser dealer = getDealer();
+        return dealer.draw(card);
+    }
+
+    public State playerDraw(Card card, AbstractUser player) {
+        return player.draw(card);
     }
 }

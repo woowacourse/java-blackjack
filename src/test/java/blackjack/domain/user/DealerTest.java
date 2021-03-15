@@ -22,7 +22,7 @@ class DealerTest {
 
         //then
         assertThat(dealer.getState()).isInstanceOf(DealerTurnOver.class);
-        assertThat(dealer.getState().isFinish()).isEqualTo(true);
+        assertThat(dealer.isFinish()).isEqualTo(true);
     }
 
     @DisplayName("딜러의 첫 카드가 21점 초과하는 경우(A가 2장) 하나의 A를 1로 계산한다.")
@@ -35,9 +35,9 @@ class DealerTest {
         Dealer dealer = new Dealer(state);
 
         //then
-        assertThat(dealer.getState().calculateScore()).isEqualTo(12);
+        assertThat(dealer.calculateScore()).isEqualTo(12);
         assertThat(dealer.getState()).isInstanceOf(Hit.class);
-        assertThat(dealer.getState().isFinish()).isEqualTo(false);
+        assertThat(dealer.isFinish()).isEqualTo(false);
     }
 
     @DisplayName("딜러의 첫 카드가 17점 이상인 경우 경우 딜러의 턴은 끝난다. ")
@@ -51,7 +51,7 @@ class DealerTest {
 
         //then
         assertThat(dealer.getState()).isInstanceOf(Finish.class);
-        assertThatThrownBy(() -> dealer.getState().draw(SPADE_TWO))
+        assertThatThrownBy(() -> dealer.draw(SPADE_TWO))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 }

@@ -56,7 +56,7 @@ public class GameController {
     private void addCardOrPassByInput(final Round round, final AbstractUser player, final String answer) {
         if (answer.equals(YES)) {
             round.addPlayerCard(player);
-            OutputView.showPlayCardStatus(new PlayerStatusDto(player.getName(), player.getState().cards().getCards(), player.getState().calculateScore()));
+            OutputView.showPlayCardStatus(new PlayerStatusDto(player.getName(), player.getCards(), player.calculateScore()));
         }
         if (answer.equals(NO)) {
             round.makePlayerStay(player);

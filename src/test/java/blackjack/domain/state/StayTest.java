@@ -35,10 +35,10 @@ class StayTest {
         State state = StateFactory.draw(SPADE_TWO, SPADE_TEN);
         Player player = new Player(state, "pobi");
 
-        State stay = player.getState().stay();
+        State stay = player.stay();
         player.changeState(stay);
 
-        assertThatThrownBy(() -> player.getState().stay())
+        assertThatThrownBy(() -> player.stay())
                 .isInstanceOf(UnsupportedOperationException.class);
 
     }

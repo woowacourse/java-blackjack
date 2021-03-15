@@ -31,7 +31,7 @@ public class Player extends AbstractUser {
 
     @Override
     public boolean canDraw() {
-        return !getState().isFinish();
+        return !isFinish();
     }
 
     @Override

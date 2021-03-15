@@ -20,7 +20,7 @@ class StateTest {
         State dealerState = StateFactory.draw(HEART_TWO, HEART_ACE);
         Dealer dealer = new Dealer(dealerState);
 
-        BigDecimal profit = player.getState().profit(dealer.getState(), player.getBettingMoney());
+        BigDecimal profit = player.profit(dealer.getState(), player.getBettingMoney());
         assertThat(profit).isEqualTo(new BigDecimal("15000.0"));
     }
 
@@ -33,7 +33,7 @@ class StateTest {
         State dealerState = StateFactory.draw(HEART_ACE, HEART_TEN);
         Dealer dealer = new Dealer(dealerState);
 
-        BigDecimal profit = player.getState().profit(dealer.getState(), player.getBettingMoney());
+        BigDecimal profit = player.profit(dealer.getState(), player.getBettingMoney());
         assertThat(profit).isEqualTo(new BigDecimal("0"));
     }
 
@@ -42,13 +42,13 @@ class StateTest {
     void playerBusterLoose() {
         State state = StateFactory.draw(HEART_TEN, SPADE_TEN);
         Player player = new Player(state, "pobi", new BigDecimal("10000"));
-        State draw = player.getState().draw(SPADE_TWO);
+        State draw = player.draw(SPADE_TWO);
         player.changeState(draw);
 
         State dealerState = StateFactory.draw(HEART_ACE, HEART_TEN);
         Dealer dealer = new Dealer(dealerState);
 
-        BigDecimal profit = player.getState().profit(dealer.getState(), player.getBettingMoney());
+        BigDecimal profit = player.profit(dealer.getState(), player.getBettingMoney());
         assertThat(profit).isEqualTo(new BigDecimal("-10000"));
     }
 
@@ -57,14 +57,14 @@ class StateTest {
     void dealerLooseWhenBuster() {
         State state = StateFactory.draw(HEART_TEN, SPADE_TEN);
         Player player = new Player(state, "pobi", new BigDecimal("10000"));
-        State stay = player.getState().stay();
+        State stay = player.stay();
         player.changeState(stay);
 
         State dealerState = StateFactory.draw(HEART_TWO, HEART_TEN);
         Dealer dealer = new Dealer(dealerState);
-        State draw = dealer.getState().draw(SPADE_TEN);
+        State draw = dealer.draw(SPADE_TEN);
         dealer.changeState(draw);
-        BigDecimal profit = player.getState().profit(dealer.getState(), player.getBettingMoney());
+        BigDecimal profit = player.profit(dealer.getState(), player.getBettingMoney());
 
         assertThat(profit).isEqualTo(new BigDecimal("10000"));
     }
@@ -74,18 +74,18 @@ class StateTest {
     void resultTest() {
         State state = StateFactory.draw(HEART_TWO, SPADE_TEN);
         Player player = new Player(state, "pobi", new BigDecimal("10000"));
-        State stay = player.getState().stay();
+        State stay = player.stay();
         player.changeState(stay);
 
         State drawState = StateFactory.draw(HEART_TEN, SPADE_TEN);
         Player drawPlayer = new Player(drawState, "tobi", new BigDecimal("10000"));
-        State drawStay = drawPlayer.getState().stay();
+        State drawStay = drawPlayer.stay();
         drawPlayer.changeState(drawStay);
 
         State dealerState = StateFactory.draw(HEART_JACK, HEART_TEN);
         Dealer dealer = new Dealer(dealerState);
-        BigDecimal profit = player.getState().profit(dealer.getState(), player.getBettingMoney());
-        BigDecimal profit2 = drawPlayer.getState().profit(dealer.getState(), drawPlayer.getBettingMoney());
+        BigDecimal profit = player.profit(dealer.getState(), player.getBettingMoney());
+        BigDecimal profit2 = drawPlayer.profit(dealer.getState(), drawPlayer.getBettingMoney());
 
         assertThat(profit).isEqualTo(new BigDecimal("-10000"));
         assertThat(profit2).isEqualTo(new BigDecimal("0"));

@@ -17,7 +17,7 @@ public class Dealer extends AbstractUser {
 
     @Override
     public boolean canDraw() {
-        return getState().calculateScore() <= TURN_OVER_COUNT && !getState().isFinish();
+        return calculateScore() <= TURN_OVER_COUNT && !isFinish();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Dealer extends AbstractUser {
     }
 
     private void checkTurnOver() {
-        if (getState().calculateScore() > TURN_OVER_COUNT) {
+        if (calculateScore() > TURN_OVER_COUNT) {
             changeState(new DealerTurnOver(getState().cards()));
         }
     }

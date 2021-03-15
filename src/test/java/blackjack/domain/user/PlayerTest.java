@@ -40,7 +40,7 @@ class PlayerTest {
     @DisplayName("21이 넘지 않을 경우 카드를 더 받도록 선택한다.")
     @Test
     void more_card_add_test() {
-        State draw = player.getState().draw(HEART_TWO);
+        State draw = player.draw(HEART_TWO);
 
         assertThat(draw).isInstanceOf(Running.class);
     }
@@ -48,7 +48,7 @@ class PlayerTest {
     @DisplayName("플레이어의 카드가 21점 초과하는 경우 카드를 받을 수 없는 상태가 된다.")
     @Test
     void game_over_score() {
-        State draw = player.getState().draw(HEART_TEN);
+        State draw = player.draw(HEART_TEN);
 
         assertThat(draw).isInstanceOf(Finish.class);
     }
@@ -60,7 +60,7 @@ class PlayerTest {
 
         Player player = new Player(state, "pobi");
 
-        assertThat(player.getState().calculateScore()).isEqualTo(12);
+        assertThat(player.calculateScore()).isEqualTo(12);
     }
 
     @DisplayName("플레이어의 추가 카드 포함한 점수가 21점 초과이고, A를 21 이하일때까지 A를 1로 계산한다.")
@@ -71,7 +71,7 @@ class PlayerTest {
 
         Player player = new Player(draw, "pobi");
 
-        assertThat(player.getState().calculateScore()).isEqualTo(21);
+        assertThat(player.calculateScore()).isEqualTo(21);
     }
 
     @DisplayName("A가 없고, 카드의 숫자가 21점 초과이면 플레이어의 게임이 끝난다.")
