@@ -11,7 +11,7 @@ public class Dealer extends User {
     }
 
     @Override
-    public boolean isAvailableDraw() {
-        return this.getScore() < DEALER_DRAW_NUMBER;
+    public boolean isFinished() {
+        return super.isFinished() || score() >= DEALER_DRAW_NUMBER;
     }
 }

@@ -2,7 +2,8 @@ package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.result.BlackjackResult;
-import blackjack.domain.result.Result;
+//import blackjack.domain.result.Result;
+import blackjack.domain.state.StateFactory;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Names;
 import blackjack.domain.user.Player;
@@ -23,7 +24,7 @@ public class BlackJackController {
         processPlayers(cardDeck, players);
         processDealer(cardDeck, dealer);
 
-        endBlackJack(dealer, players);
+//        endBlackJack(dealer, players);
     }
 
     private void processPlayers(CardDeck cardDeck, Players players) {
@@ -33,31 +34,33 @@ public class BlackJackController {
     }
 
     private void playerDraw(CardDeck cardDeck, Player player) {
-        String input = InputView.requestMoreDraw(player.getName());
-        if (player.isAvailableDraw() && player.isDrawable(input)) {
-            player.draw(cardDeck.draw());
-            OutputView.showPlayerCard(player);
-            playerDraw(cardDeck, player);
+        if (!player.isFinished()) {
+            String input = InputView.requestMoreDraw(player.getName());
+            if (player.isDrawable(input)) {
+                player.draw(cardDeck);
+                OutputView.showPlayerCard(player);
+                playerDraw(cardDeck, player);
+            }
         }
     }
 
     private void processDealer(CardDeck cardDeck, Dealer dealer) {
-        if (dealer.isAvailableDraw()) {
-            dealer.draw(cardDeck.draw());
+        if (!dealer.isFinished()) {
+            dealer.draw(cardDeck);
             OutputView.showDealerDraw();
             processDealer(cardDeck, dealer);
         }
     }
 
-    private void endBlackJack(Dealer dealer, Players players) {
-        OutputView.showScoreResult(dealer, players);
-        double dealerEarning = 0;
-        for (Player player : players.getPlayers()) {
-            BlackjackResult result = Result.getResult(player, dealer);
-            double earning = player.getMoney(result.getEarningRate());
-            dealerEarning += earning;
-            OutputView.showEarning(player.getName(), earning);
-        }
-        OutputView.showEarning(dealerEarning * -1);
-    }
+//    private void endBlackJack(Dealer dealer, Players players) {
+//        OutputView.showScoreResult(dealer, players);
+//        double dealerEarning = 0;
+//        for (Player player : players.getPlayers()) {
+//            BlackjackResult result = Result.getResult(player, dealer);
+//            double earning = player.getMoney(result.getEarningRate());
+//            dealerEarning += earning;
+//            OutputView.showEarning(player.getName(), earning);
+//        }
+//        OutputView.showEarning(dealerEarning * -1);
+//    }
 }

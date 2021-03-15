@@ -91,7 +91,7 @@ public class OutputView {
     }
 
     private static String getScore(User user) {
-        int userScore = user.getScore();
+        int userScore = user.score();
         if (userScore == 0) {
             return BUST_MESSAGE;
         }

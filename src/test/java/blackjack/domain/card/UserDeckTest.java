@@ -13,9 +13,9 @@ public class UserDeckTest {
         Card one = new Card("8", "클로버");
         Card two = new Card("5", "하트");
         UserDeck userDeck = new UserDeck();
-        userDeck.add(one);
-        userDeck.add(two);
-        assertThat(userDeck.deckScore()).isEqualTo(13);
+        userDeck.draw(one);
+        userDeck.draw(two);
+        assertThat(userDeck.score()).isEqualTo(13);
     }
 
     @Test
@@ -24,9 +24,9 @@ public class UserDeckTest {
         Card one = new Card("A", "클로버");
         Card two = new Card("5", "하트");
         UserDeck userDeck = new UserDeck();
-        userDeck.add(one);
-        userDeck.add(two);
-        assertThat(userDeck.deckScore()).isEqualTo(16);
+        userDeck.draw(one);
+        userDeck.draw(two);
+        assertThat(userDeck.score()).isEqualTo(16);
     }
 
     @Test
@@ -36,10 +36,10 @@ public class UserDeckTest {
         Card two = new Card("5", "하트");
         Card three = new Card("A", "스페이드");
         UserDeck userDeck = new UserDeck();
-        userDeck.add(one);
-        userDeck.add(two);
-        userDeck.add(three);
-        assertThat(userDeck.deckScore()).isEqualTo(17);
+        userDeck.draw(one);
+        userDeck.draw(two);
+        userDeck.draw(three);
+        assertThat(userDeck.score()).isEqualTo(17);
     }
 
 }

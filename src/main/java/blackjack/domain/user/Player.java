@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.UserDeck;
+import blackjack.domain.state.State;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,10 +43,5 @@ public class Player extends User {
         if (!YES_OR_NO_VALIDATION.contains(input)) {
             throw new IllegalArgumentException(YES_OR_NO_ERROR);
         }
-    }
-
-    @Override
-    public boolean isAvailableDraw() {
-        return !this.isBust() && !this.isBlackjack();
     }
 }

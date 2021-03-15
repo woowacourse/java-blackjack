@@ -28,8 +28,8 @@ public class CardDeck {
 
     public synchronized UserDeck generateUserDeck() {
         UserDeck userDeck = new UserDeck();
-        userDeck.add(this.draw());
-        userDeck.add(this.draw());
+        userDeck.draw(this.draw());
+        userDeck.draw(this.draw());
         return userDeck;
     }
 

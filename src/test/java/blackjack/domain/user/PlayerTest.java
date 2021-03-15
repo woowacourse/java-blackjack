@@ -14,8 +14,8 @@ public class PlayerTest {
     private final UserDeck userDeck = new UserDeck();
 
     {
-        userDeck.add(one);
-        userDeck.add(two);
+        userDeck.draw(one);
+        userDeck.draw(two);
     }
 
     private final Money money = new Money(100);
@@ -26,7 +26,7 @@ public class PlayerTest {
         String name = "Sorong";
         Player player = new Player(userDeck, name, money);
         int playerScore = 15;
-        assertThat(player.getScore()).isEqualTo(playerScore);
+        assertThat(player.score()).isEqualTo(playerScore);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class PlayerTest {
     void getAvailableDraw() {
         String name = "Sorong";
         Player player = new Player(userDeck, name, money);
-        assertThat(player.isAvailableDraw()).isTrue();
+        assertThat(player.isFinished()).isTrue();
     }
 
     @Test
@@ -42,8 +42,8 @@ public class PlayerTest {
     void getUnavailableDraw() {
         String name = "Sorong";
         Card card3 = new Card("J", "다이아몬드");
-        userDeck.add(card3);
+        userDeck.draw(card3);
         Player player = new Player(userDeck, name, money);
-        assertThat(!player.isAvailableDraw()).isTrue();
+        assertThat(!player.isFinished()).isTrue();
     }
 }

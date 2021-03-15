@@ -10,11 +10,11 @@ public class UserDeck {
 
     private final List<Card> userCards = new ArrayList<>();
 
-    public void add(Card card) {
+    public void draw(Card card) {
         userCards.add(card);
     }
 
-    public int deckScore() {
+    public int score() {
         int score = calculateScore();
         int aceCount = getAceCount();
         while (aceCount != 0 && score > BLACK_JACK_NUMBER) {
@@ -38,5 +38,13 @@ public class UserDeck {
 
     public List<Card> getUserCards() {
         return userCards;
+    }
+
+    public boolean isBlackjack() {
+        return score() == BLACK_JACK_NUMBER && getUserCards().size() == 2;
+    }
+
+    public boolean isBust() {
+        return score() > BLACK_JACK_NUMBER;
     }
 }
