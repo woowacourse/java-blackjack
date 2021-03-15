@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public class Stay implements State{
+public class Stay implements State {
     private static final String STAY_ADD_CARD_ERROR_MESSAGE = "스테이일 때에는 카드를 받을 수 없습니다.";
     private final Cards cards;
 

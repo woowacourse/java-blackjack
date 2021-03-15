@@ -1,4 +1,4 @@
-package blackjack.Controller;
+package blackjack.controller;
 
 import blackjack.domain.Game;
 import blackjack.domain.participant.Dealer;
@@ -7,10 +7,8 @@ import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -25,16 +23,12 @@ public class GameController {
 
     private Game initializeGame() {
         Players players = createPlayers();
-        return Game.of(players);
+        return new Game(players);
     }
 
     private Players createPlayers() {
         Map<String, Integer> playerInformation = getPlayerNameAndBattingMoney();
-        List<Player> players = playerInformation.entrySet().stream()
-                .map(entry -> new Player(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList());
-
-        return new Players(players);
+        return new Players(playerInformation);
     }
 
     private Map<String, Integer> getPlayerNameAndBattingMoney() {
@@ -76,7 +70,7 @@ public class GameController {
     private void doDealerTurn(Game game) {
         Dealer dealer = game.getDealer();
         while (dealer.isDrawable()) {
-            game.giveCardToDealer(dealer);
+            game.giveCardToDealer();
             OutputView.printDealerDrawMessage();
         }
     }

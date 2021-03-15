@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.state.Hit;
 
-public class Dealer extends Participant{
+public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
     private static final int DEALER_STAY_LIMIT = 17;
 
@@ -23,7 +23,7 @@ public class Dealer extends Participant{
     @Override
     public void setUpParticipantTwoCardsAndState() {
         super.setUpParticipantTwoCardsAndState();
-        if (getCardsScore() >= DEALER_STAY_LIMIT) {
+        if (getCardsScore() >= DEALER_STAY_LIMIT && !isBlackjack()) {
             state.stay();
         }
     }

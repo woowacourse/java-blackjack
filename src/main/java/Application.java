@@ -1,4 +1,4 @@
-import blackjack.Controller.GameController;
+import blackjack.controller.GameController;
 
 public class Application {
     public static void main(String[] args) {

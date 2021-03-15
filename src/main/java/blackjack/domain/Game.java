@@ -16,7 +16,7 @@ public class Game {
     private final Players players;
     private final Dealer dealer;
 
-    private Game(Players players) {
+    public Game(Players players) {
         this.players = players;
         this.dealer = new Dealer();
         setUpTwoCardsAndState();
@@ -27,10 +27,6 @@ public class Game {
             player.setUpParticipantTwoCardsAndState();
         }
         dealer.setUpParticipantTwoCardsAndState();
-    }
-
-    public static Game of(Players players) {
-        return new Game(players);
     }
 
     public Dealer getDealer() {
@@ -45,13 +41,13 @@ public class Game {
         player.addCard(Deck.draw());
     }
 
-    public void giveCardToDealer(Dealer dealer) {
+    public void giveCardToDealer() {
         dealer.addCard(Deck.draw());
         dealer.doStayIfPossible();
     }
 
     public Map<String, Integer> getPlayersProfitResult() {
-        return players.getPlayersProfitResult(dealer.getCardsScore());
+        return players.getPlayersProfitResult(dealer);
     }
 
     public Map<String, Integer> getDealerProfitResult(Map<String, Integer> playersProfitResult) {

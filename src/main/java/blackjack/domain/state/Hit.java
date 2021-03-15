@@ -3,7 +3,7 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public class Hit implements State{
+public class Hit implements State {
     private final Cards cards;
 
     public Hit(Cards cards) {
@@ -23,7 +23,7 @@ public class Hit implements State{
     @Override
     public State addCard(Card card) {
         cards.addCard(card);
-        if (cards.calculateCardsScore() > 21) {
+        if (cards.isBust()) {
             return new Bust(cards);
         }
         return this;

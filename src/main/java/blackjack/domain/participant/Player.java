@@ -1,37 +1,40 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Game;
-import blackjack.domain.card.Card;
-import blackjack.domain.state.Bust;
-import blackjack.domain.state.Stay;
-
-public class Player extends Participant{
-    private final BattingMoney battingMoney;
+public class Player extends Participant {
+    private final BettingMoney bettingMoney;
 
     public Player(String name, int money) {
         super(name);
-        battingMoney = new BattingMoney(money);
+        bettingMoney = new BettingMoney(money);
     }
 
-    public Integer getProfit(int dealerScore) {
-        int expectedProfit = (int) (battingMoney.getMoney() * state.earningsRate());
+    public int getProfit(Dealer dealer) {
+        int expectedProfit = (int) (bettingMoney.getMoney() * state.earningsRate());
+        if (isBlackjack()) {
+            return getProfitWhenBlackjack(expectedProfit, dealer);
+        }
+        if (isBust()) {
+            return expectedProfit;
+        }
+        return getProfitWhenStay(expectedProfit, dealer);
+    }
 
-        if (dealerScore > Game.BLACKJACK_NUMBER && state instanceof Bust) {
+    private int getProfitWhenBlackjack(int expectedProfit, Dealer dealer) {
+        if (dealer.isBlackjack()) {
             return 0;
         }
-
-        if (dealerScore < Game.BLACKJACK_NUMBER && state instanceof Stay) {
-            return getProfitWhenStayState(dealerScore);
-        }
-
         return expectedProfit;
     }
 
-    private Integer getProfitWhenStayState(int dealerScore) {
-        int expectedProfit = (int) (battingMoney.getMoney() * state.earningsRate());
-        if (getCardsScore() > dealerScore) {
+    private int getProfitWhenStay(int expectedProfit, Dealer dealer) {
+        int dealerScore = dealer.getCardsScore();
+        int playerScore = getCardsScore();
+        if (dealer.isBust() || playerScore > dealerScore) {
             return expectedProfit;
         }
-        return expectedProfit * -1;
+        if (dealer.isBlackjack() || playerScore < dealerScore) {
+            return expectedProfit * -1;
+        }
+        return 0;
     }
 }

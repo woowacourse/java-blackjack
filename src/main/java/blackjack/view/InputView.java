@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.participant.Player;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -20,9 +21,17 @@ public class InputView {
     public static List<String> inputNames() {
         OutputView.printMessage(INPUT_PLAYER_NAME_MESSAGE);
         String rawNames = inputString();
-        return Arrays.stream(rawNames.split(","))
+        List<String> inputNames = Arrays.stream(rawNames.split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
+        validateDuplicatedPlayerName(inputNames);
+        return inputNames;
+    }
+
+    private static void validateDuplicatedPlayerName(List<String> inputNames) {
+        if (new HashSet<>(inputNames).size() != inputNames.size()) {
+            throw new IllegalArgumentException("중복된 이름을 허용하지 않습니다.");
+        }
     }
 
     public static int inputBattingMoney(String name) {

@@ -21,6 +21,10 @@ public class Cards {
         return cards.size() == Game.BLACKJACK_CONDITION_CARDS_SIZE && calculateCardsScore() == Game.BLACKJACK_NUMBER;
     }
 
+    public boolean isBust() {
+        return calculateCardsScore() > Game.BLACKJACK_NUMBER;
+    }
+
     public int calculateCardsScore() {
         int currentCardsScore = sumCardsScore();
         int possibleLoopCount = countAce();

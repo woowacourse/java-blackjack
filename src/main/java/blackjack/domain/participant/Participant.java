@@ -6,8 +6,8 @@ import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
 
 public abstract class Participant {
-    protected State state;
     protected final Name name;
+    protected State state;
 
     public Participant(String name) {
         this.name = new Name(name);
@@ -19,6 +19,14 @@ public abstract class Participant {
 
     public String getCurrentCardsInfo() {
         return state.cards().getCardsInfoToString();
+    }
+
+    public boolean isBust() {
+        return state.cards().isBust();
+    }
+
+    public boolean isBlackjack() {
+        return state.cards().isBlackjack();
     }
 
     public boolean isDrawable() {

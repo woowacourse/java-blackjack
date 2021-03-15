@@ -4,21 +4,21 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CardsTest {
     private static Stream<Arguments> provideCardsAndExpectedScore() {
         return Stream.of(
                 Arguments.of(new Cards(new Card(CardNumber.ACE, Shape.CLOVER),
-                        new Card(CardNumber.ACE, Shape.CLOVER)),12),
+                        new Card(CardNumber.ACE, Shape.CLOVER)), 12),
                 Arguments.of(new Cards(new Card(CardNumber.ACE, Shape.CLOVER),
-                        new Card(CardNumber.KING, Shape.CLOVER)),21)
+                        new Card(CardNumber.KING, Shape.CLOVER)), 21)
         );
     }
 
