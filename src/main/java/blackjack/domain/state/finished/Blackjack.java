@@ -33,6 +33,6 @@ public class Blackjack extends Finished {
 
     @Override
     public Money profit(Money money) {
-        return money.multiply(Money.of(1.5));
+        return money.multiply(1.5);
     }
 }

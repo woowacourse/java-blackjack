@@ -27,17 +27,16 @@ public class Betting {
         gameResult.getGamersResult().forEach((gamer, result) -> {
             Money bettingAmount = gamersBattingAmount.getOrDefault(gamer, Money.ZERO);
             int profitWeight = result.getProfit();
-            profitResult.computeIfAbsent(gamer, (key) -> gamer.profit(bettingAmount.multiply(Money.of(profitWeight))));
+            profitResult.computeIfAbsent(gamer, (key) -> gamer.profit(bettingAmount.multiply(profitWeight)));
         });
         Money dealerProfit = calculateDealerProfit(profitResult);
         return BettingResult.of(profitResult, dealerProfit);
     }
 
     private Money calculateDealerProfit(Map<Player, Money> gamersProfit) {
-        double dealerProfit = gamersProfit.values()
+        return gamersProfit.values()
             .stream()
-            .mapToDouble(gamerProfit -> Double.valueOf(-1 * gamerProfit.toDouble()))
-            .sum();
-        return Money.of(dealerProfit);
+            .reduce(Money.ZERO, Money::plus)
+            .reverse();
     }
 }

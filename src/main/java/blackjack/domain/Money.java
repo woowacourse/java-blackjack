@@ -15,16 +15,20 @@ public class Money {
         return new Money(value);
     }
 
-    public Money multiply(Money money) {
-        return new Money(value * money.toDouble());
+    public Money multiply(double money) {
+        return new Money(value * money);
+    }
+
+    public Money plus(Money money) {
+        return new Money(value + money.value);
+    }
+
+    public Money reverse() {
+        return new Money(-1 * value);
     }
 
     public int toInt() {
         return (int) value;
-    }
-
-    public double toDouble() {
-        return value;
     }
 
     @Override
