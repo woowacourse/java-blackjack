@@ -8,7 +8,6 @@ import blackjack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class BlackjackController {
     public void run() {
@@ -50,8 +49,10 @@ public class BlackjackController {
     }
 
     private void isDealerHit(BlackjackGame blackjackGame) {
-        IntStream.range(0, blackjackGame.drawCardToDealer())
-                .forEach(i -> OutputView.printDealerHit());
+        if (blackjackGame.isAbleToDrawCardToDealer()) {
+            OutputView.printDealerHit();
+            return;
+        }
         OutputView.printDealerNotHit();
     }
 

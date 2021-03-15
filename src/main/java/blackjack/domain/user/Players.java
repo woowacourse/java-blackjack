@@ -27,12 +27,12 @@ public class Players {
 
     public boolean remainAnyPlayer() {
         return this.players.stream()
-                .anyMatch(Player::isHit);
+                .anyMatch(User::isRunning);
     }
 
     public Player currentPlayer() {
         return this.players.stream()
-                .filter(Player::isHit)
+                .filter(User::isRunning)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("남은 플레이어가 없습니다."));
     }

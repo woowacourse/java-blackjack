@@ -31,27 +31,26 @@ public class BlackjackGame {
         return this.players.remainAnyPlayer();
     }
 
+    public void drawCardToPlayer(String answer) {
+        Player currentPlayer = currentPlayer();
+        if (YES.equals(answer)) {
+            currentPlayer.hit(deck.popOne());
+        }
+        if (NO.equals(answer)) {
+            currentPlayer.stay();
+        }
+    }
+
     public Player currentPlayer() {
         return this.players.currentPlayer();
     }
 
-    public void drawCardToPlayer(String answer) {
-        Player player = this.players.currentPlayer();
-        if (YES.equals(answer)) {
-            player.hit(deck.popOne());
-        }
-        if (NO.equals(answer)) {
-            player.stay();
-        }
-    }
-
-    public int drawCardToDealer() {
-        int dealerHitCount = 0;
-        while (getDealer().isHit()) {
+    public boolean isAbleToDrawCardToDealer() {
+        if (getDealer().isRunning() && getDealer().isHit()) {
             getDealer().hit(this.deck.popOne());
-            dealerHitCount++;
+            return true;
         }
-        return dealerHitCount;
+        return false;
     }
 
     public void calculateProfit() {
