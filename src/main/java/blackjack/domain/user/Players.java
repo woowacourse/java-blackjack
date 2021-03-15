@@ -1,12 +1,12 @@
 package blackjack.domain.user;
 
 import blackjack.domain.MatchRule;
-import blackjack.domain.ResultType;
+import blackjack.domain.result.Results;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 public class Players {
     private final List<Player> players;
@@ -15,21 +15,18 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(List<String> players) {
-        return new Players(players.stream()
-                .map(Player::new)
-                .collect(Collectors.toList()));
+    public static Players of(List<Player> players) {
+        return new Players(players);
+    }
+
+    public Results generateResultsMapAgainstDealer(Dealer dealer) {
+        return this.players.stream()
+                .collect(collectingAndThen(toMap(player -> player,
+                        player -> MatchRule.getMatchResult(player, dealer)),
+                        Results::of));
     }
 
     public List<Player> players() {
         return Collections.unmodifiableList(this.players);
-    }
-
-    public Map<User, ResultType> generateResultsMapAgainstDealer(Dealer dealer) {
-        return players.stream()
-                .collect(Collectors.toMap(
-                        player -> player,
-                        player -> MatchRule.getMatchResult(player.getCards(), dealer.getCards())
-                ));
     }
 }

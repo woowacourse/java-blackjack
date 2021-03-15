@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.util.StringUtil;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -22,5 +24,15 @@ public class InputView {
             return false;
         }
         throw new IllegalArgumentException("잘못된 선택지입니다.");
+    }
+
+    public static long scanBettingMoney(String name) {
+        try {
+            System.out.println(name + "의 배팅 금액은?");
+            String input = scanner.nextLine();
+            return Long.parseLong(StringUtil.deleteWhiteSpaces(input));
+        } catch (RuntimeException e) {
+            throw new IllegalArgumentException("유효하지 않은 입력입니다. 숫자만 입력해주세요.");
+        }
     }
 }

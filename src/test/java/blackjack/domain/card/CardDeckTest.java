@@ -10,6 +10,7 @@ class CardDeckTest {
     @Test
     void deckCreationTest() {
         CardDeck deck = CardDeck.createDeck();
+
         assertThat(deck).isInstanceOf(CardDeck.class);
     }
 }

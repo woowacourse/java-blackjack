@@ -1,65 +1,72 @@
 package blackjack.controller;
 
+import blackjack.domain.Money;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
-import blackjack.domain.user.Users;
+import blackjack.domain.result.Results;
+import blackjack.domain.user.*;
 import blackjack.util.Repeater;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackJackController {
-    private final Players players;
-    private final Dealer dealer;
-    private final CardDeck cardDeck;
-    private final Users users;
+import static java.util.stream.Collectors.*;
 
-    public BlackJackController() {
-        this.dealer = new Dealer();
-        this.cardDeck = CardDeck.createDeck();
-        this.players = Repeater.supplierGetsArgumentOfFunction(Players::of, InputView::scanPlayerNames);
-        this.users = new Users(this.dealer, this.players);
-    }
+public class BlackJackController {
 
     public void run() {
-        dealingTwoCards(users);
-
-        if (dealer.isBlackJack()) {
-            OutputView.printResult(players.generateResultsMapAgainstDealer(dealer));
-            return;
-        }
-
-        players.players().forEach(this::playGameForEachPlayer);
-        drawCardsOfDealerUntilOver16Score();
-
-        printOverallResults();
+        Players players = createPlayers();
+        Dealer dealer = new Dealer();
+        Users users = Users.of(dealer, players);
+        startGame(dealer, players, users);
+        printOverallResults(dealer, players, users);
     }
 
-    private void drawCardsOfDealerUntilOver16Score() {
-        while (dealer.canContinue()) {
-            dealer.addCard(cardDeck.drawCard());
-            OutputView.printDealerGetNewCardsMessage();
-        }
+    private Players createPlayers() {
+        Names names = Repeater.supplierGetsArgumentOfFunction(Names::of, InputView::scanPlayerNames);
+        return names.stream()
+                .map(name -> Repeater.supplier(() -> {
+                    Money money = Money.of(InputView.scanBettingMoney(name.getName()));
+                    return new Player(name, money);
+                }))
+                .collect(collectingAndThen(toList(), Players::of));
     }
 
-    private void dealingTwoCards(Users users) {
-        users.dealTwoCards(cardDeck);
+    private void startGame(Dealer dealer, Players players, Users users) {
+        CardDeck cardDeck = CardDeck.createDeck();
+
+        users.dealCards(cardDeck);
+
         OutputView.printInitialComment(dealer, players);
         OutputView.printCardsOfDealerWithOneCardOpened(dealer);
         OutputView.printCardsOfPlayersWithoutScore(players);
+
+        if (!dealer.isBlackJack()) {
+            playPlayersTurn(players, cardDeck);
+            playDealersTurn(dealer, cardDeck);
+        }
     }
 
-    private void playGameForEachPlayer(Player player) {
+    private void playPlayersTurn(Players players, CardDeck cardDeck) {
+        players.players().forEach(player -> playGameForEachPlayer(player, cardDeck));
+    }
+
+    private void playGameForEachPlayer(Player player, CardDeck cardDeck) {
         while (player.canContinue() &&
                 Repeater.supplierGetsArgumentOfFunction(InputView::isHit, player::getName)) {
-            player.addCard(cardDeck.drawCard());
+            player.draw(cardDeck.drawCard());
             OutputView.printCardsOfUser(player);
         }
     }
 
-    private void printOverallResults() {
+    private void playDealersTurn(Dealer dealer, CardDeck cardDeck) {
+        while (dealer.canContinue()) {
+            dealer.draw(cardDeck.drawCard());
+            OutputView.printDealerGetNewCardsMessage();
+        }
+    }
+
+    private void printOverallResults(Dealer dealer, Players players, Users users) {
         OutputView.printCardsOfUsersWithScore(users);
-        OutputView.printResult(players.generateResultsMapAgainstDealer(dealer));
+        Results results = players.generateResultsMapAgainstDealer(dealer);
+        OutputView.printResult(results, results.generateDealerResult());
     }
 }

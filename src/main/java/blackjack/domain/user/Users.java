@@ -11,14 +11,18 @@ public class Users {
 
     private final List<User> users = new ArrayList<>();
 
-    public Users(Dealer dealer, Players players) {
+    private Users(Dealer dealer, Players players) {
         this.users.add(dealer);
         this.users.addAll(new ArrayList<>(players.players()));
     }
 
-    public void dealTwoCards(CardDeck cardDeck) {
+    public static Users of(Dealer dealer, Players players) {
+        return new Users(dealer, players);
+    }
+
+    public void dealCards(CardDeck cardDeck) {
         for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
-            this.users.forEach(user -> user.addCard(cardDeck.drawCard()));
+            this.users.forEach(user -> user.draw(cardDeck.drawCard()));
         }
     }
 
