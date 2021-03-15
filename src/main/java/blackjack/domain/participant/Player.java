@@ -34,12 +34,15 @@ public class Player extends Participant {
         if (this == o) {
             return true;
         }
+        
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+        
         if (!super.equals(o)) {
             return false;
         }
+        
         Player player = (Player) o;
         return Objects.equals(bettingMoney, player.bettingMoney);
     }

@@ -13,6 +13,7 @@ public class Profit {
     private static final double BLACKJACK_RATIO = 1.5;
     private static final double NORMAL_RATIO = 1.0;
     private static final double DEFEAT_RATIO = -1.0;
+    
     private static final int MINUS = -1;
     
     private final Map<Player, Double> profitOfPlayers;

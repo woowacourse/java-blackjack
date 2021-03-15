@@ -39,14 +39,9 @@ public class BlackJackController {
     }
     
     public void run() {
-        betMoney();
         dealBaseCards();
         dealAdditionalCards();
         printResult();
-    }
-    
-    private void betMoney() {
-    
     }
     
     private void dealBaseCards() {
