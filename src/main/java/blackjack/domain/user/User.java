@@ -28,8 +28,6 @@ public abstract class User {
         return this.cards.isBust();
     }
 
-    abstract boolean canContinue();
-
     public Cards getCards() {
         return this.cards;
     }
@@ -37,4 +35,6 @@ public abstract class User {
     public String getName() {
         return this.name.getName();
     }
+
+    abstract boolean canContinue();
 }
