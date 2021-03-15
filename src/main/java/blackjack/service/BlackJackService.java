@@ -56,7 +56,7 @@ public class BlackJackService {
     public List<String> getPlayersAsStrings() {
         List<Player> players = this.getPlayersAsList();
         return players.stream()
-                .map(player -> player.getNameAsString())
+                .map(Participant::getNameAsString)
                 .collect(Collectors.toList());
     }
 
