@@ -83,5 +83,6 @@ public class BlackJackService {
 
     public void calculateProfits() {
         players.calculateProfits(gameResult);
+        dealer.changeProfit(gameResult);
     }
 }

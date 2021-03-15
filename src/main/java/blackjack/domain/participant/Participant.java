@@ -12,6 +12,7 @@ public abstract class Participant {
     private final static int TWO_CARDS = 2;
 
     protected final Cards hand;
+    protected Profit profit;
     private final Name name;
 
     public Participant(final Cards cards, final String name) {
@@ -20,6 +21,8 @@ public abstract class Participant {
     }
 
     public abstract List<Card> getInitCardsAsList();
+
+    public abstract double getProfit();
 
     public List<Card> getCardsAsList() {
         return new ArrayList<>(hand.getCardsAsList());

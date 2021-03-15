@@ -4,7 +4,6 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.result.GameResult;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,7 +41,7 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public Player findPlayerByName(String name){
+    public Player findPlayerByName(String name) {
         return players.stream()
                 .filter(player -> player.getNameAsString().equals(name))
                 .findAny()
@@ -56,12 +55,6 @@ public class Players {
     }
 
     public void calculateProfits(GameResult gameResult) {
-        players = Collections.unmodifiableList(
-                new ArrayList<>(
-                        gameResult
-                                .getGameResult()
-                                .entrySet()
-                                .stream()
-                                .map(entry -> entry.getKey().changeProfit(entry.getValue())).collect(Collectors.toList())));
+        gameResult.getGameResult().forEach(Player::changeProfit);
     }
 }

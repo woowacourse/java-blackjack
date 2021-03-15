@@ -8,10 +8,10 @@ import java.util.function.BiPredicate;
 
 public enum Result {
 
-    BLACKJACK_WIN("블랙잭승", Player::blackJackWinCondition, 2.5),
-    WIN("승", Player::winCondition, 2.0),
+    BLACKJACK_WIN("블랙잭승", Player::blackJackWinCondition, 1.5),
+    WIN("승", Player::winCondition, 1.0),
     LOSE("패", Player::lossCondition, -1),
-    DRAW("무", Player::drawCondition, 1);
+    DRAW("무", Player::drawCondition, 0);
 
     private final String value;
     private final BiPredicate<Player, Dealer> matchCondition;

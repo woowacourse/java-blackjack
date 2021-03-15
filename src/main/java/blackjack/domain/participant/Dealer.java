@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.GameResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +19,15 @@ public class Dealer extends Participant {
 
     public boolean doneReceiving() {
         return getScore() > DEALER_SCORE_PIVOT;
+    }
+
+    public void changeProfit(GameResult result) {
+        this.profit = new Profit(result.calculateDealerProfit());
+    }
+
+    @Override
+    public double getProfit(){
+        return this.profit.getProfit();
     }
 
     @Override

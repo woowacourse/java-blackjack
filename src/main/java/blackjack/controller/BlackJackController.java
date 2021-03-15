@@ -74,7 +74,7 @@ public class BlackJackController {
         blackJackService.initGameResult();
         blackJackService.calculateProfits();
         OutputView.printSummary(blackJackService.getGameResult());
-        OutputView.printProfits(blackJackService.getPlayersAsList());
+        OutputView.printProfits(blackJackService.getParticipantsAsList());
     }
 
     private List<String> requestNames() {

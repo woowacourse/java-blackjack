@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -21,8 +20,20 @@ public class OutputView {
     }
 
     public static void printInitCards(final Dealer dealer, final List<Player> players) {
-        printDealerInitCard(dealer);
-        printPlayersInitCards(players);
+        printParticipantInitCards(dealer);
+        for (Player player : players) {
+            printParticipantInitCards(player);
+        }
+    }
+
+    private static void printParticipantInitCards(final Participant participant) {
+        System.out.print(participant.getNameAsString() + "카드: ");
+        List<String> playersCards = participant
+                .getInitCardsAsList()
+                .stream()
+                .map(card -> card.getFaceValueAsInt() + card.getSuitAsString()).collect(Collectors.toList());
+        System.out.print(String.join(", ", playersCards));
+        printNewLine();
     }
 
     public static void printParticipantCards(final Participant participant) {
@@ -50,6 +61,7 @@ public class OutputView {
     }
 
     public static void printResult(final List<Participant> participants) {
+        printNewLine();
         for (Participant participant : participants) {
             printParticipantCards(participant);
             System.out.println(" - 결과: " + participant.getScore());
@@ -61,24 +73,11 @@ public class OutputView {
         System.out.print(NEW_LINE);
     }
 
-    private static void printDealerInitCard(final Dealer dealer) {
-        System.out.print("딜러: ");
-        List<Card> dealerCards = dealer.getInitCardsAsList();
-        dealerCards.forEach(dealerCard -> System.out.println(dealerCard.getFaceValueAsInt() + dealerCard.getSuitAsString()));
-    }
-
-    private static void printPlayersInitCards(final List<Player> players) {
-        for (Player player : players) {
-            printParticipantCards(player);
-            printNewLine();
-        }
-    }
-
-    public static void printProfits(final List<Player> players) {
+    public static void printProfits(final List<Participant> participants) {
         printNewLine();
         System.out.println("## 최종 수익");
-        for (Player player : players) {
-            System.out.printf("%s: %d", player.getNameAsString(), (int) player.getProfit());
+        for (Participant participant : participants) {
+            System.out.printf("%s: %d", participant.getNameAsString(), (int) participant.getProfit());
             printNewLine();
         }
     }

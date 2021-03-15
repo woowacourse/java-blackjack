@@ -9,7 +9,6 @@ import java.util.List;
 public class Player extends Participant {
 
     private Betting betting;
-    private Profit profit;
 
     public Player(final Cards cards, final String name, final Double betting, final Double profit) {
         super(cards, name);
@@ -34,13 +33,8 @@ public class Player extends Participant {
         return betting.getBetting();
     }
 
-    public Player changeProfit(Result result) {
-        return new Player(this.hand, this.getNameAsString(), betting.getBetting(),
-                betting.getBetting() * result.getRate());
-    }
-
-    public double getProfit() {
-        return profit.getProfit();
+    public void changeProfit(Result result) {
+        this.profit = new Profit(betting.getBetting() * result.getRate());
     }
 
     public boolean blackJackWinCondition(final Dealer dealer) {
@@ -68,6 +62,11 @@ public class Player extends Participant {
 
     private boolean scoreSmallerThan(final Dealer dealer) {
         return this.getScore() < dealer.getScore();
+    }
+
+    @Override
+    public double getProfit() {
+        return profit.getProfit();
     }
 
     @Override

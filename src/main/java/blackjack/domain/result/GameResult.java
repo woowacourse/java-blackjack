@@ -29,6 +29,11 @@ public class GameResult {
         return calculateDealerResult(Result.WIN) + calculateDealerResult(Result.BLACKJACK_WIN);
     }
 
+    public double calculateDealerProfit() {
+        return -gameResult.keySet()
+                .stream().mapToDouble(player -> (int) player.getProfit()).sum();
+    }
+
     private int calculateDealerResult(final Result result) {
         return Collections.frequency(gameResult.values(), result);
     }
