@@ -8,7 +8,6 @@ public class Score {
     private static final int CHANGE_TO_ACE = 10;
     private static final int DEALER_HIT = 16;
 
-
     private final int value;
 
     public Score(final int value) {
