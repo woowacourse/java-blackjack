@@ -83,7 +83,7 @@ public class Round {
     }
 
     public Map<String, BigDecimal> findUsersProfit() {
-        LinkedHashMap<String, BigDecimal> result = new LinkedHashMap<>();
+        Map<String, BigDecimal> result = new LinkedHashMap<>();
         AbstractUser dealer = getDealer();
         List<AbstractUser> players = getPlayers();
         List<BigDecimal> profits = getProfits(dealer, players);
