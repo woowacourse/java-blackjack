@@ -20,3 +20,11 @@
 - `public static final Cards EMPTY_CARDS = new Cards(Collections.emptyList())`를 사용하려고 했더니 테스트케이스에서
   통과되지 않는 경우가 발생하였다.
 - 불변객체가 아니라면 캐싱하지 않는다.
+
+# [Java] interface, abstract class - 4
+
+## 내용
+
+- interface는 field를 가질 수 없다.
+- abstract class는 field를 가질 수 있지만, 생성자로 초기화해줘야 예외상황이 발생하지 않는다.
+- 이때, 생성자에서 초기화해주는 항목이 만족하지 않는다면 불온전한 계층관계일 가능성이 높다. 명확한 계층관계가 아닐 때는 상속을 사용하면 안된다.
