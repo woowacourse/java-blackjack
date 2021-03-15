@@ -1,7 +1,9 @@
 package blackjack.domain.card;
 
+import blackjack.domain.user.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -60,5 +62,37 @@ public class ScoreTest {
         Score score = new Score(20);
 
         assertThat(score.isBlackjack()).isFalse();
+    }
+
+    @DisplayName("플레이어가 힛인지 확인한다. - 힛인 경우")
+    @Test
+    public void isPlayerHitTrue() {
+        Score score = new Score(18);
+
+        assertThat(score.isPlayerHit()).isTrue();
+    }
+
+    @DisplayName("플레이어가 힛인지 확인한다. - 힛이 아닌 경우")
+    @Test
+    public void isPlayerHitFalse() {
+        Score score = new Score(23);
+
+        assertThat(score.isPlayerHit()).isFalse();
+    }
+
+    @DisplayName("딜러가 힛인지 확인한다. - 힛인 경우")
+    @Test
+    public void isDealerHitTrue() {
+        Score score = new Score(15);
+
+        assertThat(score.isDealerHit()).isTrue();
+    }
+
+    @DisplayName("딜러가 힛인지 확인한다. - 힛이 아닌 경우")
+    @Test
+    public void isDealerHitFalse() {
+        Score score = new Score(17);
+
+        assertThat(score.isDealerHit()).isFalse();
     }
 }
