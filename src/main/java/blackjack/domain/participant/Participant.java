@@ -20,10 +20,6 @@ public abstract class Participant {
         this.name = new Name(name);
     }
 
-    public abstract List<Card> getInitCardsAsList();
-
-    public abstract double getProfit();
-
     public List<Card> getCardsAsList() {
         return new ArrayList<>(hand.getCardsAsList());
     }
@@ -47,4 +43,8 @@ public abstract class Participant {
     public boolean isBlackJack() {
         return hand.getScore() == BLACK_JACK_SCORE && hand.size() == TWO_CARDS;
     }
+
+    public abstract List<Card> getInitCardsAsList();
+
+    public abstract double getProfit();
 }
