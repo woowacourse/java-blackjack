@@ -18,7 +18,7 @@ public class Profit {
 
     public void addEachPlayerProfit(Dealer dealer, List<Player> players) {
         this.profit.addAll(players.stream()
-                .map(player -> player.decide(dealer))
+                .map(player -> player.state().profit(player.getMoney(), dealer))
                 .collect(toList()));
     }
 

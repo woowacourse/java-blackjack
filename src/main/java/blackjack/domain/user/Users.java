@@ -20,20 +20,20 @@ public class Users {
 
     public void distributeToPlayers(Deck deck) {
         this.players.getPlayers()
-                .forEach(player -> player.distribute(deck.popTwo()));
+                .forEach(player -> player.drawInitialCards(deck.popTwo()));
     }
 
     public List<Cards> showCardsByPlayers() {
         List<Cards> cards = new ArrayList<>();
         this.players.getPlayers()
-                .forEach(player -> cards.add(new Cards(player.getCards())));
+                .forEach(player -> cards.add(new Cards(player.cards().getCards())));
         return cards;
     }
 
     public List<String> getPlayerNames() {
         return Collections.unmodifiableList(this.players.getPlayers()
                 .stream()
-                .map(Player::getName)
+                .map(User::name)
                 .collect(toList()));
     }
 

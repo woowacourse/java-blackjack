@@ -1,11 +1,14 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.*;
+import blackjack.domain.state.Bust;
+import blackjack.domain.state.Hit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,61 +28,96 @@ public class DealerTest {
 
     @DisplayName("카드를 두장 분배받는다.")
     @Test
-    public void distributeTwoCards() {
-        dealer.distribute(new Cards(Arrays.asList(
+    public void drawInitialCards() {
+        dealer.drawInitialCards(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
-        Cards cards = dealer.cards;
+        int cardSize = dealer.cards().getCards().size();
 
-        assertThat(cards.getCards()).hasSize(2);
+        assertThat(cardSize).isEqualTo(2);
     }
 
     @DisplayName("카드 합계가 16 이하인지 확인한다. - 카드를 더 받을 수 있다.")
     @Test
-    public void isHitTrue() {
-        dealer.distribute(new Cards(Arrays.asList(
+    public void isRunningTrue() {
+        dealer.drawInitialCards(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.TWO),
                 new Card(Shape.CLOVER, Value.KING)
         )));
 
-        assertThat(dealer.isHit()).isTrue();
+        assertThat(dealer.isRunning()).isTrue();
     }
 
     @DisplayName("카드 합계가 17 이상인지 확인한다. - 카드를 더 받을 수 없다.")
     @Test
-    public void isHitFalse() {
-        dealer.distribute(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.TWO),
-                new Card(Shape.CLOVER, Value.KING),
-                new Card(Shape.SPACE, Value.QUEEN)
-        )));
-
-        assertThat(dealer.isHit()).isFalse();
-    }
-
-    @DisplayName("카드 합계가 16이하인 경우 카드를 한장 추가로 받는다.")
-    @Test
-    void draw() {
-        Deck deck = new Deck();
-        dealer.distribute(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
+    public void isRunningFalse() {
+        dealer.drawInitialCards(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.ACE),
                 new Card(Shape.CLOVER, Value.KING)
         )));
-        dealer.draw(deck);
-        Cards cards = dealer.cards;
 
-        assertThat(cards.getCards()).hasSize(3);
+        assertThat(dealer.isRunning()).isFalse();
     }
 
     @DisplayName("카드 한장은 공개하고 한장은 숨긴다.")
     @Test
     void show() {
-        dealer.distribute(new Cards(Arrays.asList(
+        dealer.drawInitialCards(new Cards(Arrays.asList(
                 new Card(Shape.SPACE, Value.EIGHT),
                 new Card(Shape.CLOVER, Value.KING)
         )));
 
         assertThat(dealer.showOneCard()).isInstanceOf(Card.class);
+    }
+
+    @DisplayName("상태에 따라 카드를 더 받는다. - Hit")
+    @Test
+    void drawHit() {
+        dealer.drawInitialCards(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.THREE),
+                new Card(Shape.CLOVER, Value.KING)
+        )));
+        dealer.hit(new Cards(Collections.singletonList(
+                new Card(Shape.CLOVER, Value.FIVE))));
+
+        assertThat(dealer.state()).isInstanceOf(Hit.class);
+    }
+
+    @DisplayName("상태에 따라 카드를 더 받는다. - Bust")
+    @Test
+    void drawBust() {
+        dealer.drawInitialCards(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.THREE),
+                new Card(Shape.CLOVER, Value.KING)
+        )));
+        dealer.hit(new Cards(Collections.singletonList(
+                new Card(Shape.CLOVER, Value.QUEEN))));
+
+        assertThat(dealer.state()).isInstanceOf(Bust.class);
+    }
+
+    @DisplayName("상태를 확인한다. - Blackjack")
+    @Test
+    void isBlackjack() {
+        dealer.drawInitialCards(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.ACE),
+                new Card(Shape.CLOVER, Value.KING)
+        )));
+
+        assertThat(dealer.isBlackjack()).isTrue();
+    }
+
+    @DisplayName("상태를 확인한다. - Bust")
+    @Test
+    void isBust() {
+        dealer.drawInitialCards(new Cards(Arrays.asList(
+                new Card(Shape.SPACE, Value.THREE),
+                new Card(Shape.CLOVER, Value.KING)
+        )));
+        dealer.hit(new Cards(Collections.singletonList(
+                new Card(Shape.CLOVER, Value.QUEEN))));
+
+        assertThat(dealer.isBust()).isTrue();
     }
 }

@@ -34,8 +34,8 @@ public class OutputView {
     }
 
     public static void printPlayerCards(Player player) {
-        System.out.print(player.getName() + "카드: ");
-        printCards(player.getCards());
+        System.out.print(player.name() + "카드: ");
+        printCards(player.cards().getCards());
     }
 
     private static void printCards(List<Card> cards) {
@@ -46,7 +46,7 @@ public class OutputView {
     }
 
     public static void printPlayerHit(Player player) {
-        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(player.name() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
     public static void printDealerHit() {
@@ -64,12 +64,12 @@ public class OutputView {
     }
 
     private static void printResult(User user) {
-        System.out.println(user.getName() + "카드: " +
-                user.getCards()
+        System.out.println(user.name() + "카드: " +
+                user.cards().getCards()
                         .stream()
                         .map(Card::toString)
                         .collect(joining(COMMA_WITH_BLANK)) + " - 결과: " +
-                user.getScore());
+                user.score());
     }
 
     public static void printProfit(Users users, List<Money> profit) {
@@ -78,9 +78,9 @@ public class OutputView {
     }
 
     private static void printEachProfit(Users users, List<Money> profit) {
-        System.out.println(users.getDealer().getName() + ": " + profit.get(0).toInteger());
+        System.out.println(users.getDealer().name() + ": " + profit.get(0).toInteger());
         for (int i = 0; i < users.getPlayers().size(); i++) {
-            System.out.println(users.getPlayers().get(i).getName() + ": " + profit.get(i+1).toInteger());
+            System.out.println(users.getPlayers().get(i).name() + ": " + profit.get(i+1).toInteger());
         }
     }
 }

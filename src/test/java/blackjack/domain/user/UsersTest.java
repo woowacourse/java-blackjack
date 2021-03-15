@@ -36,7 +36,7 @@ public class UsersTest {
 
         assertThat(users.getPlayers()
                 .stream()
-                .allMatch(user -> user.cards.getCards().size() == 2)).isTrue();
+                .allMatch(user -> user.cards().getCards().size() == 2)).isTrue();
     }
 
     @DisplayName("각 플레이어의 모든 카드를 보여준다.")

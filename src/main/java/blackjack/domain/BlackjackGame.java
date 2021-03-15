@@ -18,12 +18,12 @@ public class BlackjackGame {
     }
 
     public void distributeToUsers() {
-        getDealer().distribute(this.deck.popTwo());
+        getDealer().drawInitialCards(this.deck.popTwo());
         this.users.distributeToPlayers(this.deck);
     }
 
     public void drawCardToPlayer(Player player) {
-        player.draw(this.deck);
+        player.hit(this.deck.popOne());
     }
 
     public boolean isPlayerHit(Player player) {
@@ -32,7 +32,7 @@ public class BlackjackGame {
 
     public boolean drawCardToDealer() {
         if (isDealerHit()) {
-            getDealer().draw(this.deck);
+            getDealer().hit(this.deck.popOne());
             return true;
         }
         return false;
