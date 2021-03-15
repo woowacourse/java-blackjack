@@ -46,10 +46,8 @@ public class OutputView {
     }
 
     public static void printMatchResult(MatchResult result) {
-        Map<Player, Double> profitResult = result.getMatchProfitResult();
-        double dealerProfit = profitResult.values().stream()
-                .mapToDouble(i -> -i)
-                .sum();
+        Map<Player, Double> profitResult = result.getPlayersProfitResult();
+        double dealerProfit = result.getDealerProfitResult();
         System.out.println("## 최종 수익");
         System.out.println("딜러: " + dealerProfit);
         profitResult.forEach(

@@ -24,7 +24,13 @@ public class MatchResult {
         return Collections.unmodifiableMap(matchResult);
     }
 
-    public Map<Player, Double> getMatchProfitResult() {
+    public double getDealerProfitResult() {
+        return getPlayersProfitResult().values().stream()
+                .mapToDouble(i -> -i)
+                .sum();
+    }
+
+    public Map<Player, Double> getPlayersProfitResult() {
         Map<Player, Double> profitResult = new LinkedHashMap<>();
         this.matchResult.forEach(
                 ((player, matchResultType) -> profitResult.put(player, matchResultType.calculateProfit(player.getBettingMoney())))
