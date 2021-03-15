@@ -2,13 +2,10 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Score;
 
-public class Blackjack implements State {
-    private final Cards cards;
-
+public class Blackjack extends Finished {
     public Blackjack(Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 
     @Override
@@ -25,21 +22,6 @@ public class Blackjack implements State {
     @Override
     public boolean isBurst() {
         return false;
-    }
-
-    @Override
-    public Score calculateScore() {
-        return cards.sumCardsForResult();
-    }
-
-    @Override
-    public Cards getCards() {
-        return cards;
-    }
-
-    @Override
-    public int size() {
-        return cards.size();
     }
 
 }

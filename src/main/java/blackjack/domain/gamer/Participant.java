@@ -9,10 +9,6 @@ public interface Participant {
 
     String getName();
 
-    Cards getCards();
-
-    int sizeOfCards();
-
     void takeCard(Card card);
 
     boolean isBlackjack();
@@ -20,5 +16,9 @@ public interface Participant {
     boolean isBurst();
 
     Score finalScore();
+
+    Cards getCards();
+
+    int sizeOfCards();
 
 }

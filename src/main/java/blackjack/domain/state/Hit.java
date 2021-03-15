@@ -4,11 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
 
-public class Hit implements State {
-    private final Cards cards;
-
+public class Hit extends Running {
     public Hit(Cards cards) {
-        this.cards = cards;
+        super(cards);
     }
 
     @Override
@@ -26,29 +24,6 @@ public class Hit implements State {
         return new Hit(cards);
     }
 
-    @Override
-    public boolean isBlackjack() {
-        return false;
-    }
 
-    @Override
-    public boolean isBurst() {
-        return false;
-    }
-
-    @Override
-    public Score calculateScore() {
-        return cards.sumCards();
-    }
-
-    @Override
-    public Cards getCards() {
-        return cards;
-    }
-
-    @Override
-    public int size() {
-        return cards.size();
-    }
 
 }

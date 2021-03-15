@@ -14,11 +14,11 @@ public class Player implements Participant {
     private State state;
 
     public Player() {
-        this(SAMPLE_NAME, new Cards(Collections.emptyList()), new BettingMoney(0));
+        this(SAMPLE_NAME, new Cards(Collections.emptyList()), BettingMoney.ZERO);
     }
 
     public Player(String name) {
-        this(name, new Cards(Collections.emptyList()), new BettingMoney(0));
+        this(name, new Cards(Collections.emptyList()), BettingMoney.ZERO);
     }
 
     public Player(String name, String bettingMoney) {
@@ -30,7 +30,7 @@ public class Player implements Participant {
     }
 
     public Player(String name, Cards cards) {
-        this(name, cards, new BettingMoney(0));
+        this(name, cards, BettingMoney.ZERO);
     }
 
     public Player(String name, Cards cards, BettingMoney bettingMoney) {
@@ -46,6 +46,11 @@ public class Player implements Participant {
     @Override
     public boolean isAbleToTake() {
         return !state.isBurst();
+    }
+
+    @Override
+    public String getName() {
+        return this.name.toString();
     }
 
     @Override
@@ -66,11 +71,6 @@ public class Player implements Participant {
     @Override
     public Score finalScore() {
         return state.calculateScore();
-    }
-
-    @Override
-    public String getName() {
-        return this.name.toString();
     }
 
     @Override
