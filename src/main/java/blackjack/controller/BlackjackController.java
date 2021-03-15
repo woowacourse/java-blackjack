@@ -1,43 +1,50 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Deck;
-import blackjack.domain.gamer.Gamer;
-import blackjack.domain.gamer.Gamers;
+import blackjack.domain.card.CardManager;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
 
 public class BlackjackController {
 
     public void run() {
-        final Deck deck = Deck.create();
-        final Gamers gamers = deck.initiateGamers(InputView.receiveNames());
-        OutputView.gameStart(gamers);
+        final CardManager cardManager = CardManager.create();
 
-        for (Gamer gamer : gamers.players()) {
-            hitOrStand(deck, gamer);
+        final List<String> playersNames = InputView.receiveNames();
+        final List<Integer> playersMoney = InputView.receiveMoney(playersNames);
+
+        final Players players = cardManager.initiateGamers(playersNames, playersMoney);
+        final Dealer dealer = new Dealer(cardManager.giveFirstHand());
+        OutputView.gameStart(players, dealer);
+
+        for (Player player : players) {
+            playerHitOrStand(cardManager, player);
         }
-        dealerHitOrStand(deck, gamers);
-        printResult(gamers);
+        dealerHitOrStand(cardManager, dealer);
+        printResult(players, dealer);
     }
 
-    private void hitOrStand(Deck deck, Gamer gamer) {
-        while (InputView.receiveAnswer(gamer.getName())) {
-            gamer.receiveCard(deck.giveCard());
-            OutputView.allCards(gamer);
+    private void playerHitOrStand(final CardManager cardManager, final Player player) {
+        while (InputView.receiveAnswer(player.getName())) {
+            player.receiveCard(cardManager.giveCard());
+            OutputView.allCards(player);
         }
     }
 
-    private void dealerHitOrStand(Deck deck, Gamers gamers) {
-        if (gamers.dealer().checkBoundary()) {
-            gamers.dealer().receiveCard(deck.giveCard());
+    private void dealerHitOrStand(final CardManager cardManager, final Dealer dealer) {
+        if (dealer.checkBoundary()) {
+            dealer.receiveCard(cardManager.giveCard());
             OutputView.dealerHit();
         }
     }
 
-    private void printResult(Gamers gamers) {
-        OutputView.gamersAllCards(gamers);
+    private void printResult(final Players players, final Dealer dealer) {
+        OutputView.gamersAllCards(players, dealer);
         OutputView.printResultTitle();
-        OutputView.dealerResult(gamers.resultWithCount());
-        OutputView.playersResult(gamers.resultWithName());
+        OutputView.dealerResult(players.dealerResult(dealer));
+        OutputView.playersResult(players.resultWithName(dealer));
     }
 }

@@ -5,48 +5,45 @@ import blackjack.domain.gamer.Player;
 
 public class ResultCalculator {
 
-    private static final int MAX_WINNING_POINT = 21;
-
     private ResultCalculator() {
     }
 
-    public static ResultType decideWinner(Player player, Dealer dealer) {
-        if (player.getPoint() > MAX_WINNING_POINT) {
+    public static ResultType decideWinner(final Player player, final Dealer dealer) {
+        if (player.isBusted()) {
             return ResultType.LOSE;
         }
-        if (dealer.getPoint() > MAX_WINNING_POINT) {
+        if (dealer.isBusted()) {
             return ResultType.WIN;
         }
         return findWinner(player, dealer);
     }
 
-    private static ResultType findWinner(Player player, Dealer dealer) {
-        if (bothUnderWinningPoint(player, dealer)) {
+    private static ResultType findWinner(final Player player, final Dealer dealer) {
+        if (bothUnderMaxScore(player, dealer)) {
             return compare(player, dealer);
         }
-        if (bothWinningPoint(player, dealer)) {
-            return checkAce(player, dealer);
+        if (bothMaxScore(player, dealer)) {
+            return checkBlackjack(player, dealer);
         }
-        return confirmPlayerWinningPoint(player);
+        return confirmPlayerMaxScore(player);
     }
 
-    private static ResultType confirmPlayerWinningPoint(Player player) {
-        if (player.getPoint() == MAX_WINNING_POINT) {
+    private static ResultType confirmPlayerMaxScore(final Player player) {
+        if (player.isMaxScore()) {
             return ResultType.WIN;
         }
         return ResultType.LOSE;
     }
 
-    private static boolean bothWinningPoint(Player player, Dealer dealer) {
-        return player.getPoint() == MAX_WINNING_POINT && dealer.getPoint() == MAX_WINNING_POINT;
+    private static boolean bothMaxScore(final Player player, final Dealer dealer) {
+        return player.isMaxScore() && dealer.isMaxScore();
     }
 
-    private static boolean bothUnderWinningPoint(Player player, Dealer dealer) {
-        return player.getPoint() < MAX_WINNING_POINT &&
-                dealer.getPoint() < MAX_WINNING_POINT;
+    private static boolean bothUnderMaxScore(final Player player, final Dealer dealer) {
+        return player.isUnderMaxScore() && dealer.isUnderMaxScore();
     }
 
-    private static ResultType checkAce(Player player, Dealer dealer) {
+    private static ResultType checkBlackjack(final Player player, final Dealer dealer) {
         if (player.hasBlackjack() && dealer.hasBlackjack()) {
             return ResultType.DRAW;
         }
@@ -60,8 +57,8 @@ public class ResultCalculator {
     }
 
 
-    private static ResultType compare(Player player, Dealer dealer) {
-        int compare = Integer.compare(player.getPoint(), dealer.getPoint());
+    private static ResultType compare(final Player player, final Dealer dealer) {
+        int compare = player.calculateScore().compareTo(dealer.calculateScore());
         if (compare < 0) {
             return ResultType.LOSE;
         }

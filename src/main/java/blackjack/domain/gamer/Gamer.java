@@ -1,5 +1,6 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import java.util.List;
@@ -7,9 +8,9 @@ import java.util.List;
 public abstract class Gamer {
 
     protected final Hands hands;
-    private String name;
+    private final String name;
 
-    protected Gamer(String name, Hands hands) {
+    protected Gamer(final String name, final Hands hands) {
         this.name = name;
         this.hands = hands;
     }
@@ -24,19 +25,31 @@ public abstract class Gamer {
         return name;
     }
 
-    public boolean containsAce() {
-        return hands.containsAce();
+    public Score calculateScore() {
+        return hands.calculate();
     }
 
-    public int getPoint() {
-        return hands.calculate();
+    public boolean isBusted() {
+        return calculateScore().isBusted();
+    }
+
+    public boolean isMaxScore() {
+        return hands.isMaxScore();
+    }
+
+    public boolean isUnderMaxScore() {
+        return hands.isUnderMaxScore();
     }
 
     public boolean hasBlackjack() {
         return hands.isBlackjack();
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         hands.addCard(card);
+    }
+
+    public int getScore() {
+        return calculateScore().getValue();
     }
 }

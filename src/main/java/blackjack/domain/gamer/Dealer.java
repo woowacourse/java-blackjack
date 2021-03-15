@@ -6,22 +6,22 @@ import java.util.List;
 
 public class Dealer extends Gamer {
 
-    private static final int ADD_CARD_BOUNDARY = 17;
+    private static final int OPEN_HAND_COUNT = 1;
 
-    public Dealer(Hands hands) {
+    public Dealer(final Hands hands) {
         this("딜러", hands);
     }
 
-    private Dealer(String name, Hands hands) {
+    private Dealer(final String name, final Hands hands) {
         super(name, hands);
     }
 
     public boolean checkBoundary() {
-        return (hands.calculate() < ADD_CARD_BOUNDARY);
+        return hands.calculate().dealerAbleToAdd();
     }
 
     @Override
     public List<Card> showOpenHands() {
-        return hands.getCardOf(1);
+        return hands.cardsOf(OPEN_HAND_COUNT);
     }
 }

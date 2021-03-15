@@ -1,39 +1,37 @@
 package blackjack.domain.card;
 
-import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamers;
-import blackjack.domain.gamer.Player;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Deck {
 
-    private final CardStack cards;
+    private final Deque<Card> cards;
 
-    private Deck(CardStack cards) {
-        this.cards = cards;
+    private Deck(final List<Card> cards) {
+        this.cards = new ArrayDeque<>(cards);
     }
 
     public static Deck create() {
-        return new Deck(CardStack.create());
+        List<Card> cards = Card.createDeck();
+        Collections.shuffle(cards);
+        return new Deck(cards);
     }
 
-    public Hands giveFirstHand() {
-        return new Hands(cards.getTwoCards());
+    public List<Card> popTwoCards() {
+        return new ArrayList<>(
+                Arrays.asList(cards.pop(), cards.pop())
+        );
+    }
+
+    public Card popSingleCard() {
+        return cards.pop();
     }
 
     public boolean isEmpty() {
         return cards.isEmpty();
-    }
-
-    public Card giveCard() {
-        return cards.getSingleCard();
-    }
-
-    public Gamers initiateGamers(List<String> names) {
-        List<Player> players = names.stream()
-                .map(name -> new Player(name, giveFirstHand()))
-                .collect(Collectors.toList());
-        return new Gamers(players, new Dealer(giveFirstHand()));
     }
 }

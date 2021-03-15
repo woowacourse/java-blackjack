@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-public enum CardSymbol {
+public enum Suit {
     SPADE("스페이드"),
     HEART("하트"),
     CLUB("클럽"),
@@ -8,7 +8,7 @@ public enum CardSymbol {
 
     private final String symbol;
 
-    CardSymbol(final String symbol) {
+    Suit(final String symbol) {
         this.symbol = symbol;
     }
 

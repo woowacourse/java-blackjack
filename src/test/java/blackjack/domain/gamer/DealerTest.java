@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardSymbol;
-import blackjack.domain.card.CardValue;
+import blackjack.domain.card.Suit;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Hands;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +19,13 @@ class DealerTest {
     @Test
     void checkBoundary() {
         List<Card> lowerCards = new ArrayList<>();
-        lowerCards.add(Card.create(CardSymbol.HEART, CardValue.EIGHT));
-        lowerCards.add(Card.create(CardSymbol.CLUB, CardValue.EIGHT));
+        lowerCards.add(Card.of(Suit.HEART, Denomination.EIGHT));
+        lowerCards.add(Card.of(Suit.CLUB, Denomination.EIGHT));
         Hands lowerHands = new Hands(lowerCards);
 
         List<Card> higherCards = new ArrayList<>();
-        higherCards.add(Card.create(CardSymbol.HEART, CardValue.EIGHT));
-        higherCards.add(Card.create(CardSymbol.CLUB, CardValue.NINE));
+        higherCards.add(Card.of(Suit.HEART, Denomination.EIGHT));
+        higherCards.add(Card.of(Suit.CLUB, Denomination.NINE));
         Hands higherHands = new Hands(higherCards);
 
         final Dealer higherDealer = new Dealer(higherHands);
