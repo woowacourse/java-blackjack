@@ -39,10 +39,10 @@ public class OutputView {
 
     public static void printCardsAndScore(Dealer dealer, Players players) {
         System.out.println(dealer.getName() + " 카드: " + dealer.getCardsInformation() + "- 결과: " + dealer.calculateScore());
-        players.getPlayers()
-                .forEach(player ->
-                        System.out.println(player.getName() + " 카드: " + player.getCardsInformation() + "- 결과: " + player.calculateScore())
-                );
+
+        for (Player player : players.getPlayers()) {
+            System.out.println(player.getName() + " 카드: " + player.getCardsInformation() + "- 결과: " + player.calculateScore());
+        }
     }
 
     public static void printMatchResult(MatchResult result) {
