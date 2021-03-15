@@ -8,26 +8,13 @@ import java.util.List;
 
 public interface Participant {
 
-    default int sumTotalScore(ScoreRule scoreRule) {
-        return getStatus().getCards().sumTotalScore(scoreRule);
-    }
-
-    boolean handOutCard(Card card);
-
-    List<Card> showInitCards();
-
+    int sumTotalScore(ScoreRule scoreRule);
     List<Card> showCards();
-
-    boolean isReceiveCard();
-
-    String getName();
-
-    boolean isDealer();
-
-    State getStatus();
-
-    void betting(int money);
-
+    void receiveCard(Card card);
+    void changeState();
     void stay();
+    boolean isEnd();
+    boolean isBust();
+    boolean isBlackJack();
 }
 

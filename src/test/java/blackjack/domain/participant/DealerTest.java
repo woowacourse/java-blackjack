@@ -28,7 +28,7 @@ class DealerTest {
     @DisplayName("카드를 받는다.")
     void test_receive_card() {
         State state = new Hit(defaultInitialCard);
-        Participant dealer = new Dealer(state);
+        AbstractParticipant dealer = new Dealer(state);
         Card card = new Card(CardType.DIAMOND, CardValue.THREE);
         dealer.handOutCard(card);
         assertThat(dealer.showCards().contains(card)).isTrue();
@@ -39,7 +39,7 @@ class DealerTest {
     void test_dealer_show_card() {
         //given
         State state = new Hit(defaultInitialCard);
-        Participant dealer = new Dealer(state);
+        AbstractParticipant dealer = new Dealer(state);
 
         //when
         List<Card> cards = dealer.showInitCards();
@@ -52,8 +52,8 @@ class DealerTest {
     @DisplayName("딜러가 HIT 상태를 가지는 경우 테스트")
     void test_state_hit_dealer() {
         State state = new Hit(defaultInitialCard);
-        Participant dealer = new Dealer(state);
-        assertThat(dealer.getStatus()).isInstanceOf(Hit.class);
+        AbstractParticipant dealer = new Dealer(state);
+        assertThat(dealer.getState()).isInstanceOf(Hit.class);
     }
 
     @Test
@@ -64,17 +64,17 @@ class DealerTest {
         initialCard.add(new Card(CardType.DIAMOND, CardValue.ACE));
 
         State state = new Hit(initialCard);
-        Participant dealer = new Dealer(state);
-        assertThat(dealer.getStatus()).isInstanceOf(BlackJack.class);
+        AbstractParticipant dealer = new Dealer(state);
+        assertThat(dealer.getState()).isInstanceOf(BlackJack.class);
     }
 
     @Test
     @DisplayName("딜러가 BUST 상태를 가지는 경우 테스트")
     void test_state_bust_dealer() {
         State state = new Hit(defaultInitialCard);
-        Participant dealer = new Dealer(state);
+        AbstractParticipant dealer = new Dealer(state);
         dealer.handOutCard(new Card(CardType.SPADE, CardValue.TEN));
-        assertThat(dealer.getStatus()).isInstanceOf(Bust.class);
+        assertThat(dealer.getState()).isInstanceOf(Bust.class);
     }
 
 
@@ -82,17 +82,17 @@ class DealerTest {
     @DisplayName("딜러가 STAY 상태를 가지는 경우 테스트")
     void test_state_stay_dealer() {
         State state = new Hit(defaultInitialCard);
-        Participant dealer = new Dealer(state);
+        AbstractParticipant dealer = new Dealer(state);
         dealer.stay();
-        assertThat(dealer.getStatus()).isInstanceOf(Stay.class);
+        assertThat(dealer.getState()).isInstanceOf(Stay.class);
     }
 
     @Test
     @DisplayName("딜러는 블랙잭이 아닐때, 카드를 뽑아 17이상 21이하이면 STAY상태가 된다")
     void test_state_stay_dealer_when_score_17_over() {
         State state = new Hit(defaultInitialCard);
-        Participant dealer = new Dealer(state);
+        AbstractParticipant dealer = new Dealer(state);
         dealer.handOutCard(new Card(CardType.DIAMOND, CardValue.SIX));
-        assertThat(dealer.getStatus()).isInstanceOf(Stay.class);
+        assertThat(dealer.getState()).isInstanceOf(Stay.class);
     }
 }

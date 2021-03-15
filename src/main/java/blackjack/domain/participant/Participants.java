@@ -9,15 +9,15 @@ import java.util.stream.Collectors;
 
 public class Participants {
 
-    private final List<Participant> participants;
+    private final List<AbstractParticipant> participants;
 
-    public Participants(List<Participant> participants) {
+    public Participants(List<AbstractParticipant> participants) {
         this.participants = participants;
     }
 
     public Dealer extractDealer() {
         return (Dealer) participants.stream()
-                .filter(Participant::isDealer)
+                .filter(AbstractParticipant::isDealer)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("Dealer가 존재하지 않습니다!"));
     }

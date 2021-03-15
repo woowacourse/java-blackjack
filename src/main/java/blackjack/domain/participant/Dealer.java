@@ -4,84 +4,52 @@ import blackjack.domain.card.Card;
 import blackjack.domain.rule.BlackJackScoreRule;
 import blackjack.domain.state.State;
 
-import java.util.*;
+import java.util.List;
 
-public class Dealer implements Participant {
+
+public class Dealer extends AbstractParticipant {
     private static final int FROM = 0;
     private static final int TO = 1;
     private static final int DRAW_BOUND_SCORE = 16;
     private static final String DEALER_NAME = "딜러";
 
-    private final String name;
-    private State state;
-
     public Dealer(State state) {
-        this.name = DEALER_NAME;
-        this.state = state.changeState();
+        super(DEALER_NAME, state);
+        changeState();
     }
 
     @Override
-    public boolean handOutCard(Card card) {
-        if (isReceiveCard()) {
-            receiveCard(card);
-            this.state = state.changeState();
+    boolean isReceivable() {
+        int totalScore = sumTotalScore(new BlackJackScoreRule());
+        return totalScore <= DRAW_BOUND_SCORE && !isEnd();
+    }
+
+    @Override
+    boolean handOutCard(Card card) {
+        if (!isReceivable()) {
+            return false;
         }
 
-        if (checkStay()) stay();
+        receiveCard(card);
+        changeState();
+        checkStay();
 
         return false;
     }
 
-    private void receiveCard(Card card) {
-        state.draw(card);
-        this.state = state.changeState();
-    }
-
-    private boolean checkStay() {
-        return !state.isEndState() && sumTotalScore(new BlackJackScoreRule()) > DRAW_BOUND_SCORE;
-    }
-
     @Override
-    public List<Card> showInitCards() {
-        return state.getCards().splitCardsFromTo(FROM, TO);
-    }
-
-    @Override
-    public List<Card> showCards() {
-        return state.getCards().toCardList();
-    }
-
-    @Override
-    public boolean isReceiveCard() {
-        int totalScore = state.getCards().sumTotalScore(new BlackJackScoreRule());
-        return totalScore <= DRAW_BOUND_SCORE && !state.isEndState();
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public boolean isDealer() {
+    boolean isDealer() {
         return true;
     }
 
     @Override
-    public State getStatus() {
-        return state;
+    List<Card> showInitCards() {
+        return getState().getCards().splitCardsFromTo(FROM, TO);
     }
 
-    @Override
-    public void betting(int money) {
-    }
-
-    @Override
-    public void stay() {
-        state = state.stay();
-    }
-
-    public int payWinPrize(int winPrize) {
-        return winPrize * -1;
+    private void checkStay() {
+        if (!isEnd() && sumTotalScore(new BlackJackScoreRule()) >= DRAW_BOUND_SCORE) {
+            stay();
+        }
     }
 }
