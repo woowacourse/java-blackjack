@@ -6,6 +6,7 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.dto.ProcessDto;
 import blackjack.dto.ResultDto;
+
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,7 +20,7 @@ public class OutputView {
     public static void printCards(Player player) {
         final String cards = String.join(", ", player.getCards().getUnmodifiableCardNames());
 
-        System.out.println(player.getName() + "카드: " + cards);
+        System.out.printf("%s카드: %s\n", player.getName(), cards);
     }
 
     public static void printCards(ProcessDto processDto) {
@@ -36,17 +37,17 @@ public class OutputView {
 
     private static String cardsToString(Cards cards) {
         return cards.getUnmodifiableCardNames().stream()
-            .collect(Collectors.joining(", ", "카드: ", ""));
+                .collect(Collectors.joining(", ", "카드: ", ""));
     }
 
     public static void printDealerGetCard() {
-        System.out.println("\n" + Dealer.DEALER_NAME + "는 16이하라 한장의 카드를 더 받았습니다.\n");
+        System.out.printf("\n%s는 16이하라 한장의 카드를 더 받았습니다.\n\n", Dealer.DEALER_NAME);
     }
 
     public static void printCardsResult(ProcessDto processDto) {
         for (Entry<String, Cards> value : processDto.cards().entrySet()) {
-            System.out.println(value.getKey() + cardsToString(value.getValue())
-                + " - 결과: " + value.getValue().sumCardsForResult());
+            System.out.printf("%s%s - 결과: %s\n",
+                    value.getKey(), cardsToString(value.getValue()), value.getValue().sumCardsForResult());
         }
     }
 
@@ -59,17 +60,13 @@ public class OutputView {
 
     private static void printPlayersOutcome(Map<String, Outcome> playersFinalOutcome) {
         for (Map.Entry<String, Outcome> entry : playersFinalOutcome.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue().getWord());
+            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue().getWord());
         }
     }
 
     private static void printDealerOutcome(Map<Outcome, Integer> dealerInfo) {
-        System.out.println(Dealer.DEALER_NAME + ": "
-            + dealerInfo.get(Outcome.LOSE) + "승"
-            + dealerInfo.get(Outcome.WIN) + "패"
-            + dealerInfo.get(Outcome.DRAW) + "무"
-        );
-
+        System.out.printf("%s: %s승%s패%s무\n", Dealer.DEALER_NAME,
+                dealerInfo.get(Outcome.LOSE), dealerInfo.get(Outcome.WIN), dealerInfo.get(Outcome.DRAW));
     }
 
     public static void printProfit(ResultDto resultDto) {
@@ -80,12 +77,12 @@ public class OutputView {
     }
 
     private static void printDealerProfit(ResultDto resultDto) {
-        System.out.println(Dealer.DEALER_NAME + ": " + resultDto.summarizeDealerProfit());
+        System.out.printf("%s: %s\n", Dealer.DEALER_NAME, resultDto.summarizeDealerProfit());
     }
 
     private static void printPlayersProfit(ResultDto resultDto) {
         for (Map.Entry<String, BigDecimal> entry : resultDto.summarizePlayersProfit().entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
+            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue());
         }
     }
 
