@@ -26,7 +26,7 @@ public class Hit extends Running {
 	@Override
 	public PlayerState drawNewCard(Card card) {
 		participantCards.addCard(card);
-		if (participantCards.calculateIncludeAce() > THRESHOLD_OF_BUST) {
+		if (participantCards.calculateIncludeAce() >= THRESHOLD_OF_BUST) {
 			return new Bust(participantCards);
 		}
 		return this;

@@ -88,7 +88,14 @@ public class BlackJackController {
 	}
 
 	private void playEachPlayer(Player player, Deck deck) {
-		while (player.canReceiveCard(InputView.isContinueDraw(player))) {
+		while (!player.getPlayerState().isFinished()) {
+			boolean keepPlaying = player.canReceiveCard(InputView.isContinueDraw(player));
+			drawMoreCard(player, deck, keepPlaying);
+		}
+	}
+
+	private void drawMoreCard(Player player, Deck deck, boolean keepPlaying) {
+		if (keepPlaying) {
 			player.receiveCard(deck.dealCard());
 			OutputView.noticePlayerCards(player);
 		}
