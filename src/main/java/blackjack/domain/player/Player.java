@@ -25,11 +25,11 @@ public abstract class Player {
         return state.calculateScore();
     }
 
-    public Money profit(Money money) {
+    public final Money profit(Money money) {
         return state.profit(money);
     }
 
-    public void stay() {
+    public final void stay() {
         state = state.stay();
     }
 
@@ -47,9 +47,5 @@ public abstract class Player {
 
     public Cards getCards() {
         return state.cards();
-    }
-
-    public State getState() {
-        return state;
     }
 }
