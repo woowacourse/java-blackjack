@@ -1,49 +1,68 @@
 package blackjack;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Money;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.GameResultDto;
+import blackjack.exception.InvalidInputException;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackJackApplication {
+public class Application {
 
     public static void main(String[] args) {
-        Dealer dealer = new Dealer();
-        List<Player> players = getPlayers();
+        final Dealer dealer = Dealer.getInstance();
+        final List<Player> players = getPlayersByNamesAndBettingMoney(getPlayerNames());
 
-        initializeParticipants(dealer, players);
+        drawBaseCard(dealer, players);
         OutputView.printParticipantHands(dealer, players);
 
         progressPlayersTurn(dealer, players);
         progressDealerTurn(dealer);
 
-        GameResultDto result = getResult(dealer, players);
-        OutputView.printGameResult(result);
+        OutputView.printCardResult(dealer, players);
+        OutputView.printGameResult(GameResultDto.calculate(dealer, players));
     }
 
-    private static void initializeParticipants(Dealer dealer, List<Player> players) {
-        dealer.drawBaseCard();
-        dealer.drawBaseCardToPlayers(players);
-    }
-
-    private static List<Player> getPlayers() {
+    private static List<Name> getPlayerNames() {
         try {
             String playerNames = InputView.getPlayerName();
-            return namesToPlayers(playerNames);
-        } catch (RuntimeException e) {
+            return toNameList(playerNames);
+        } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
-            return getPlayers();
+            return getPlayerNames();
         }
     }
 
-    private static List<Player> namesToPlayers(String playerNames) {
-        return Arrays.stream(playerNames.split(","))
-                .map(Player::from)
+    private static List<Player> getPlayersByNamesAndBettingMoney(List<Name> names) {
+        return names.stream()
+                .map(name -> Player.from(name, getBettingMoney(name)))
                 .collect(Collectors.toList());
+    }
+
+    private static List<Name> toNameList(String playerNames) {
+        return Arrays.stream(playerNames.split(","))
+                .map(Name::new)
+                .collect(Collectors.toList());
+    }
+
+    private static Money getBettingMoney(Name name) {
+        try {
+            String bettingMoneyInput = InputView.getBettingMoney(name.getName());
+            return Money.getBettingMoney(bettingMoneyInput);
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
+            return getBettingMoney(name);
+        }
+    }
+
+    private static void drawBaseCard(Dealer dealer, List<Player> players) {
+        dealer.drawBaseCard();
+        dealer.drawBaseCardToPlayers(players);
     }
 
     private static void progressPlayersTurn(Dealer dealer, List<Player> players) {
@@ -55,7 +74,7 @@ public class BlackJackApplication {
     private static void playerTurn(Dealer dealer, Player player) {
         try {
             deal(dealer, player);
-        } catch (RuntimeException e) {
+        } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
             playerTurn(dealer, player);
         }
@@ -73,9 +92,5 @@ public class BlackJackApplication {
             OutputView.printDealerDrawMessage();
             dealer.selfDraw();
         }
-    }
-
-    private static GameResultDto getResult(Dealer dealer, List<Player> players) {
-        return dealer.getGameResult(players);
     }
 }

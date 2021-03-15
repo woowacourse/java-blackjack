@@ -1,44 +1,27 @@
 package blackjack.domain.result;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.participant.Money;
 import blackjack.domain.participant.Player;
-import java.util.List;
 
 public class PlayerResultDto {
 
     private final String name;
-    private final List<Card> cards;
-    private final int sum;
-    private final MatchResult winOrLose;
+    private final int winningMoney;
 
-    public PlayerResultDto(String name, List<Card> cards, int sum, MatchResult winOrLose) {
+    public PlayerResultDto(String name, int winningMoney) {
         this.name = name;
-        this.cards = cards;
-        this.sum = sum;
-        this.winOrLose = winOrLose;
+        this.winningMoney = winningMoney;
     }
 
-    public static PlayerResultDto from(Player player, MatchResult winOrLose) {
-        return new PlayerResultDto(
-                player.getName(),
-                player.getCards(),
-                player.getHandTotal(),
-                winOrLose);
+    public static PlayerResultDto of(Player player, Money earningMoney) {
+        return new PlayerResultDto(player.getName(), earningMoney.toInt());
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
-    public int getSum() {
-        return sum;
-    }
-
-    public String getWinOrLose() {
-        return winOrLose.getName();
+    public int getWinningMoney() {
+        return winningMoney;
     }
 }

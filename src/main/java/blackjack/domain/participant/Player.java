@@ -1,39 +1,67 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.result.HandResult.BLACKJACK;
+import static blackjack.domain.result.HandResult.BUST;
+import static blackjack.domain.result.HandResult.STAY;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.result.MatchResult;
 
 public class Player extends Participant {
 
-    public Player(String name, Hand cardHand) {
+    private Money bettingMoney = Money.ZERO;
+
+    public Player(Name name, Hand cardHand) {
         super(name, cardHand);
     }
 
-    public static Player from(String name) {
-        return new Player(name, Hand.createEmptyHand());
+    public Player(Name name, Hand cardHand, Money bettingMoney) {
+        super(name, cardHand);
+        this.bettingMoney = bettingMoney;
+    }
+
+    public static Player from(Name name, Money bettingMoney) {
+        return new Player(name, Hand.createEmptyHand(), bettingMoney);
     }
 
     public void receiveCard(Card card) {
         cardHand.add(card);
     }
 
-    public MatchResult getMatchResult(int dealerCardSum) {
-        if (isBust() || getHandTotal() < dealerCardSum) {
-            return MatchResult.LOSE;
+    public Money getWinningMoney(Dealer dealer) {
+        if (blackjackWin(dealer)) {
+            return bettingMoney.getWinningMoney(BLACKJACK);
         }
-        if (dealerCardSum == getHandTotal()) {
-            return MatchResult.TIE;
+        if (lose(dealer)) {
+            return bettingMoney.getWinningMoney(BUST);
         }
-        if (dealerCardSum < getHandTotal()) {
-            return MatchResult.WIN;
+        if (tie(dealer)) {
+            return Money.ZERO;
         }
-
-        throw new IllegalArgumentException("입력값이 잘못되었습니다. 승무패를 계산할 수 없습니다.");
+        return bettingMoney.getWinningMoney(STAY);
     }
 
-    @Override
-    public int getHandTotal() {
-        return cardHand.getPlayerTotal();
+    private boolean blackjackWin(Dealer dealer) {
+        return isBlackjack() && !dealer.isBlackjack();
+    }
+
+    private boolean lose(Dealer dealer) {
+        if (isBust()) {
+            return true;
+        }
+        if (dealer.isBust()) {
+            return false;
+        }
+        if (dealer.isBlackjack() && !isBlackjack()) {
+            return true;
+        }
+        return getScore() < dealer.getScore();
+    }
+
+    private boolean tie(Dealer dealer) {
+        if (isBlackjack() && dealer.isBlackjack()) {
+            return true;
+        }
+        return dealer.getScore() == getScore();
     }
 }

@@ -11,11 +11,11 @@ public class Deck {
 
     private final Deque<Card> deck;
 
-    private Deck(List<Card> deck) {
+    public Deck(List<Card> deck) {
         this.deck = new ArrayDeque<>(deck);
     }
 
-    public Card drawCard() {
+    public Card draw() {
         return deck.pop();
     }
 
@@ -28,7 +28,7 @@ public class Deck {
 
     private static List<Card> createDeck() {
         return Arrays.stream(Suit.values())
-                .flatMap(suit -> Arrays.stream(Rank.values())
+                .flatMap(suit -> Arrays.stream(Denomination.values())
                         .map(rank -> new Card(suit, rank)))
                 .collect(Collectors.toList());
     }

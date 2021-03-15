@@ -6,7 +6,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.DealerResultDto;
 import blackjack.domain.result.GameResultDto;
 import blackjack.domain.result.PlayerResultDto;
 import java.util.List;
@@ -43,40 +42,32 @@ public class OutputView {
     }
 
     public static void printDealerDrawMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printCardResult(Dealer dealer, List<Player> players) {
+        System.out.println();
+        printCardResult(dealer.getName(), cardsToString(dealer.getCards()), dealer.getScore());
+
+        for (Player player : players) {
+            printCardResult(player.getName(), cardsToString(player.getCards()), player.getScore());
+        }
     }
 
     public static void printGameResult(GameResultDto result) {
-        printCardResult(DEALER_NAME, cardsToString(result.getDealerCards()), result.getDealerSum());
-
-        for (PlayerResultDto playerResult : result.getPlayersResults()) {
-            printPlayerCardResult(playerResult);
-        }
-
-        System.out.println("\n## 최종 승패");
-        printDealerResult(result.getDealerResult());
-        for (PlayerResultDto playersResult : result.getPlayersResults()) {
-            System.out.printf("%s: %s\n", playersResult.getName(), playersResult.getWinOrLose());
+        System.out.println("\n## 최종 수익");
+        printWinningMoney(DEALER_NAME.getName(), result.getDealerWinningMoney());
+        for (PlayerResultDto playerResult : result.getPlayerResults()) {
+            printWinningMoney(playerResult.getName(), playerResult.getWinningMoney());
         }
     }
 
-    private static void printPlayerCardResult(PlayerResultDto playerResult) {
-        printCardResult(
-                playerResult.getName(),
-                cardsToString(playerResult.getCards()),
-                playerResult.getSum());
+    private static void printWinningMoney(String name, int winningMoney) {
+        System.out.printf("%s: %d\n", name, winningMoney);
     }
 
     private static void printCardResult(String name, String cards, int result) {
         System.out.printf("%s 카드: %s - 결과: %d\n", name, cards, result);
-    }
-
-    private static void printDealerResult(DealerResultDto dealerResult) {
-        int win = dealerResult.getWinCount();
-        int lose = dealerResult.getLoseCount();
-        int tie = dealerResult.getTieCount();
-
-        System.out.printf("%s: %d승 %d패 %d무\n", DEALER_NAME, win, lose, tie);
     }
 
     public static String cardsToString(List<Card> cards) {

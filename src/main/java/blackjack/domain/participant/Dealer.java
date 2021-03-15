@@ -3,29 +3,41 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
-import blackjack.domain.result.DealerResultDto;
-import blackjack.domain.result.GameResultDto;
-import blackjack.domain.result.MatchResult;
-import blackjack.domain.result.PlayerResultDto;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends Participant {
 
-    public static final String DEALER_NAME = "딜러";
-    public static final int TWENTY_ONE = 21;
+    public static final Name DEALER_NAME = new Name("딜러");
+    public static final int BLACKJACK_VALUE = 21;
+    public static final int BLACKJACK_HAND_SIZE = 2;
     private static final int DEALER_UNDER = 16;
 
     private final Deck deck;
 
-    public Dealer() {
-        super(DEALER_NAME, Hand.createEmptyHand());
-        this.deck = Deck.createShuffledDeck();
+    public Dealer(Hand hand) {
+        this(hand, Deck.createShuffledDeck());
+    }
+
+    public Dealer(Hand hand, Deck deck) {
+        this(DEALER_NAME, hand, deck);
+    }
+
+    private Dealer(Name name, Hand hand, Deck deck) {
+        super(name, hand);
+        this.deck = deck;
+    }
+
+    public static Dealer getInstance() {
+        return new Dealer(Hand.createEmptyHand());
     }
 
     public void drawBaseCard() {
         selfDraw();
         selfDraw();
+    }
+
+    public void selfDraw() {
+        cardHand.add(draw());
     }
 
     public void drawBaseCardToPlayers(List<Player> players) {
@@ -39,12 +51,8 @@ public class Dealer extends Participant {
         player.receiveCard(draw());
     }
 
-    public void selfDraw() {
-        cardHand.add(draw());
-    }
-
     private Card draw() {
-        return deck.drawCard();
+        return deck.draw();
     }
 
     public Card getOpenCard() {
@@ -52,28 +60,6 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldReceive() {
-        return cardHand.getDealerTotal() <= DEALER_UNDER;
-    }
-
-    public GameResultDto getGameResult(List<Player> players) {
-        List<PlayerResultDto> playersResults = new ArrayList<>();
-        DealerResultDto dealerMatchCount = new DealerResultDto();
-        int dealerTotal = getHandTotal();
-
-        for (Player player : players) {
-            MatchResult matchResult = player.getMatchResult(dealerTotal);
-
-            playersResults.add(PlayerResultDto.from(player, matchResult));
-
-            MatchResult dealerMatch = matchResult.reverse();
-            dealerMatchCount.add(dealerMatch);
-        }
-
-        return new GameResultDto(getCards(), dealerTotal, dealerMatchCount, playersResults);
-    }
-
-    @Override
-    public int getHandTotal() {
-        return cardHand.getDealerTotal();
+        return cardHand.getScore() <= DEALER_UNDER;
     }
 }
