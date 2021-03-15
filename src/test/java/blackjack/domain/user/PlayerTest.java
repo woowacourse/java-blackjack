@@ -3,8 +3,6 @@ package blackjack.domain.user;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.UserDeck;
 import blackjack.domain.money.Money;
 import blackjack.domain.state.BasicState;
@@ -14,8 +12,8 @@ import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
-    private Card one = Card.from("J", "클로버");
-    private Card two = Card.from("5", "하트");
+    private Card one = Card.of("J", "클로버");
+    private Card two = Card.of("5", "하트");
     private UserDeck userDeck = new UserDeck();
 
     {
@@ -50,7 +48,7 @@ public class PlayerTest {
     @DisplayName("플레이어 드로우 실패 테스트")
     void getUnavailableDraw() {
         String name = "Sorong";
-        Card card3 = Card.from("J", "다이아몬드");
+        Card card3 = Card.of("J", "다이아몬드");
         Player player = new Player(name, userDeck, new Money(0));
         player.draw(card3);
 
@@ -64,10 +62,10 @@ public class PlayerTest {
     void playerBlackJack() {
         int betMoney = 1000;
         UserDeck blackJackUserDeck = new UserDeck();
-        blackJackUserDeck.add(Card.from("J", "하트"));
-        blackJackUserDeck.add(Card.from("A", "하트"));
+        blackJackUserDeck.add(Card.of("J", "하트"));
+        blackJackUserDeck.add(Card.of("A", "하트"));
         Player player = new Player("sorong", userDeck, new Money(betMoney));
-        Card dealerCard = Card.from("J", "클로버");
+        Card dealerCard = Card.of("J", "클로버");
         UserDeck dealerDeck = new UserDeck();
         dealerDeck.add(dealerCard);
         Dealer dealer = new Dealer(dealerDeck);
@@ -85,7 +83,7 @@ public class PlayerTest {
     void playerWin() {
         int betMoney = 1000;
         Player player = new Player("sorong", userDeck, new Money(betMoney));
-        Card dealerCard = Card.from("J", "클로버");
+        Card dealerCard = Card.of("J", "클로버");
         UserDeck dealerDeck = new UserDeck();
         dealerDeck.add(dealerCard);
         Dealer dealer = new Dealer(dealerDeck);
@@ -103,12 +101,12 @@ public class PlayerTest {
     void playerDealerBlackJack() {
         int betMoney = 1000;
         UserDeck blackJackUserDeck = new UserDeck();
-        blackJackUserDeck.add(Card.from("J", "하트"));
-        blackJackUserDeck.add(Card.from("A", "하트"));
+        blackJackUserDeck.add(Card.of("J", "하트"));
+        blackJackUserDeck.add(Card.of("A", "하트"));
         Player player = new Player("sorong", blackJackUserDeck, new Money(betMoney));
         UserDeck dealerDeck = new UserDeck();
-        dealerDeck.add(Card.from("Q", "다이아몬드"));
-        dealerDeck.add(Card.from("A", "하트"));
+        dealerDeck.add(Card.of("Q", "다이아몬드"));
+        dealerDeck.add(Card.of("A", "하트"));
         Dealer dealer = new Dealer(dealerDeck);
 
         String playerResult = player.betResult(dealer)
@@ -124,8 +122,8 @@ public class PlayerTest {
     void playerTie() {
         int betMoney = 1000;
         Player player = new Player("sorong", userDeck, new Money(betMoney));
-        Card dealerCard = Card.from("J", "클로버");
-        Card dealerCard2 = Card.from("5", "하트");
+        Card dealerCard = Card.of("J", "클로버");
+        Card dealerCard2 = Card.of("5", "하트");
         UserDeck dealerDeck = new UserDeck();
         dealerDeck.add(dealerCard);
         dealerDeck.add(dealerCard2);
@@ -143,10 +141,10 @@ public class PlayerTest {
     @DisplayName("플레이어 버스트 패배 체크")
     void playerBurst() {
         int betMoney = 1000;
-        Card card3 = Card.from("J", "다이아몬드");
+        Card card3 = Card.of("J", "다이아몬드");
         userDeck.add(card3);
         Player player = new Player("sorong", userDeck, new Money(betMoney));
-        Card dealerCard = Card.from("J", "클로버");
+        Card dealerCard = Card.of("J", "클로버");
         UserDeck dealerDeck = new UserDeck();
         dealerDeck.add(dealerCard);
         Dealer dealer = new Dealer(dealerDeck);
@@ -164,8 +162,8 @@ public class PlayerTest {
     void playerLose() {
         int betMoney = 1000;
         Player player = new Player("sorong", userDeck, new Money(betMoney));
-        Card dealerCard = Card.from("J", "클로버");
-        Card dealerCard2 = Card.from("K", "하트");
+        Card dealerCard = Card.of("J", "클로버");
+        Card dealerCard2 = Card.of("K", "하트");
         UserDeck dealerDeck = new UserDeck();
         dealerDeck.add(dealerCard);
         dealerDeck.add(dealerCard2);

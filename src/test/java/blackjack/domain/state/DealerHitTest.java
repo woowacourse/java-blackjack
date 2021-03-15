@@ -3,8 +3,6 @@ package blackjack.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.UserDeck;
 import blackjack.domain.card.UserDeckTest;
 import org.junit.jupiter.api.DisplayName;
@@ -12,15 +10,15 @@ import org.junit.jupiter.api.Test;
 
 public class DealerHitTest {
 
-    private final Card basicOne = Card.from("8", "클로버");
-    private final Card basicTwo = Card.from("5", "하트");
+    private final Card basicOne = Card.of("8", "클로버");
+    private final Card basicTwo = Card.of("5", "하트");
 
     @Test
     @DisplayName("카드 뽑기 시에 다음 Hit 반환")
     void returnHit() {
         UserDeck userDeck = UserDeckTest.generateActiveUserDeck(basicOne, basicTwo);
         DealerHit dealerHitState = new DealerHit(userDeck);
-        Card smallValueCard = Card.from("2", "다이아몬드");
+        Card smallValueCard = Card.of("2", "다이아몬드");
 
         State nextState = dealerHitState.draw(smallValueCard);
         boolean isHit = nextState instanceof DealerHit;
@@ -33,7 +31,7 @@ public class DealerHitTest {
     void returnBust() {
         UserDeck userDeck = UserDeckTest.generateActiveUserDeck(basicOne, basicTwo);
         DealerHit dealerHitState = new DealerHit(userDeck);
-        Card bigValueCard = Card.from("J", "다이아몬드");
+        Card bigValueCard = Card.of("J", "다이아몬드");
 
         State nextState = dealerHitState.draw(bigValueCard);
         boolean isBust = nextState instanceof Bust;
@@ -46,7 +44,7 @@ public class DealerHitTest {
     void returnStay() {
         UserDeck userDeck = UserDeckTest.generateActiveUserDeck(basicOne, basicTwo);
         DealerHit dealerHitState = new DealerHit(userDeck);
-        Card stayCard = Card.from("4", "하트");
+        Card stayCard = Card.of("4", "하트");
 
         State nextState = dealerHitState.draw(stayCard);
         boolean isStay = nextState instanceof Stay;

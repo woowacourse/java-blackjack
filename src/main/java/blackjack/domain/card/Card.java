@@ -35,7 +35,7 @@ public class Card {
         this.cardSymbol = symbol;
     }
 
-    public static Card from(String cardRawNumber, String cardRawSymbol) {
+    public static Card of(String cardRawNumber, String cardRawSymbol) {
         CardSymbol cardSymbol = CardSymbol.from(cardRawSymbol);
         CardNumber cardNumber = CardNumber.from(cardRawNumber);
         return CARD_CACHE.get(cardSymbol)

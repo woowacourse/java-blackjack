@@ -3,18 +3,14 @@ package blackjack.domain.user;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.UserDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 
 public class DealerTest {
 
-    private Card one = Card.from("J", "클로버");
-    private Card two = Card.from("5", "하트");
+    private Card one = Card.of("J", "클로버");
+    private Card two = Card.of("5", "하트");
     private UserDeck userDeck = new UserDeck();
     {
         userDeck.add(one);
@@ -45,7 +41,7 @@ public class DealerTest {
     @Test
     @DisplayName("딜러 드로우 실패 테스트")
     void getUnavailableDraw() {
-        Card card3 = Card.from("J", "다이아몬드");
+        Card card3 = Card.of("J", "다이아몬드");
         Dealer dealer = new Dealer(userDeck);
         dealer.draw(card3);
 

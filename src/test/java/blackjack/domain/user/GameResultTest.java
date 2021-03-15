@@ -14,10 +14,10 @@ import org.junit.jupiter.api.Test;
 
 public class GameResultTest {
 
-    private Card one = Card.from("J", "클로버");
-    private Card winCard = Card.from("A", "클로버");
-    private Card tieCard = Card.from("J", "하트");
-    private Card loseCard = Card.from("9", "다이아몬드");
+    private Card one = Card.of("J", "클로버");
+    private Card winCard = Card.of("A", "클로버");
+    private Card tieCard = Card.of("J", "하트");
+    private Card loseCard = Card.of("9", "다이아몬드");
     private UserDeck dealerDeck = new UserDeck();
     {
         dealerDeck.add(one);
