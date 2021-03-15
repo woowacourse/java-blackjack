@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
@@ -21,7 +22,7 @@ public class BlackJackController {
         initBettings();
         printInitCards();
         distributeCards();
-        cardStatus();
+        printCardStatus();
         gameResult();
     }
 
@@ -61,8 +62,12 @@ public class BlackJackController {
         receiveDealerMoreCard(blackJackService.getDealer());
     }
 
-    private void cardStatus() {
-        OutputView.printResult(blackJackService.getParticipantsAsList());
+    private void printCardStatus() {
+        OutputView.printResult(requestCardStatus());
+    }
+
+    private List<Participant> requestCardStatus(){
+        return blackJackService.getParticipantsAsList();
     }
 
     private void gameResult() {

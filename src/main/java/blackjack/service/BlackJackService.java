@@ -38,6 +38,10 @@ public class BlackJackService {
         players.initBettings(bettings);
     }
 
+    public void initGameResult() {
+        gameResult = new GameResult(getPlayersAsList(), getDealer());
+    }
+
     public List<Participant> getParticipantsAsList() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
@@ -66,10 +70,6 @@ public class BlackJackService {
 
     public boolean isDealerBlackJack() {
         return this.dealer.isBlackJack();
-    }
-
-    public void initGameResult() {
-        gameResult = new GameResult(getPlayersAsList(), getDealer());
     }
 
     public GameResult getGameResult() {
