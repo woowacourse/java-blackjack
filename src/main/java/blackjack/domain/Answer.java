@@ -10,11 +10,7 @@ public enum Answer {
         this.answer = answer;
     }
 
-    public boolean equals(String value) {
-        return answer.equals(value);
-    }
-
     public static boolean isYes(String value) {
-        return YES.equals(value);
+        return YES.answer.equals(value);
     }
 }
