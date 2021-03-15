@@ -40,4 +40,13 @@ public class NameTest {
                 .hasMessage("이름으로 \"딜러\" 는 사용할 수 없습니다.");
     }
 
+    @Test
+    @DisplayName("이름 반환된다.")
+    void getValueTest() {
+        String nameString = "pobi";
+
+        Name name = new Name(nameString);
+
+        assertThat(name.getValue()).isEqualTo("pobi");
+    }
 }

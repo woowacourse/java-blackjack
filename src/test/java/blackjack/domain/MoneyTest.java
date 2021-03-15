@@ -50,4 +50,16 @@ class MoneyTest {
             Money.of("-10000");
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("베팅 입력값은 1이상의 양의 정수 여야합니다.");
     }
+
+    @Test
+    @DisplayName("Money의 객체는 값만 같으면 같은 객체로 취급한다.")
+    void equalsAndHashCodeTest() {
+        Money money1 = Money.of("10");
+        Money money2 = Money.of("10");
+        Money money3 = Money.of("11");
+
+        assertThat(money1.equals(money2)).isTrue();
+        assertThat(money1.equals(money3)).isFalse();
+        assertThat(money1.hashCode()).isEqualTo(money2.hashCode());
+    }
 }

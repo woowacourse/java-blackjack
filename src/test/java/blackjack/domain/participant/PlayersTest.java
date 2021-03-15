@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -54,5 +56,29 @@ class PlayersTest {
                 .filter(player -> player.toHandList().size() == 2)
                 .count())
                 .isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("Players 일급 컬렉션에 stream() 메서드 바로 사용할 수 있다.")
+    void streamTest() {
+        List<Player> playerList = Arrays.asList(
+                new Player(new Name("pobi"), Money.of(1)),
+                new Player(new Name("jason"), Money.of(1))
+        );
+        Players players = new Players(playerList);
+
+        assertThat(players.stream()).isInstanceOf(Stream.class);
+    }
+
+    @Test
+    @DisplayName("Players 일급 컬렉션에 map() 메서드 사용할 수 있다.")
+    void mapTest() {
+        List<Player> playerList = Arrays.asList(
+                new Player(new Name("pobi"), Money.of(1)),
+                new Player(new Name("jason"), Money.of(1))
+        );
+        Players players = new Players(playerList);
+
+        assertThat(players.map(player -> player)).isInstanceOf(Stream.class);
     }
 }

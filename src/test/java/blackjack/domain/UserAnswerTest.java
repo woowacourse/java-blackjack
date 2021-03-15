@@ -45,4 +45,14 @@ public class UserAnswerTest {
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("요청은 " + UserAnswer.HIT.getAnswer() + "또는 " + UserAnswer.STAY.getAnswer() + "이어야 합니다.");
     }
+
+    @Test
+    @DisplayName("유저의 대답이 STAY 인지 아닌지 판단한다.")
+    void isStayTest() {
+        UserAnswer stay = UserAnswer.STAY;
+        UserAnswer hit = UserAnswer.HIT;
+
+        assertThat(stay.isStay()).isTrue();
+        assertThat(hit.isStay()).isFalse();
+    }
 }

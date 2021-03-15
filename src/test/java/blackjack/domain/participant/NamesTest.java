@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static blackjack.domain.participant.Names.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -108,5 +109,49 @@ class NamesTest {
 
         /*then*/
         assertThat(name).isEqualTo(new Name("gobi"));
+    }
+
+    @Test
+    @DisplayName("Names 에서 바로 stream을 사용할 수 있다.")
+    void namesStreamTest() {
+        /*give*/
+        List<String> inputNames = Arrays.asList(
+                "pobi",
+                "gobi",
+                "dobi",
+                "eobi",
+                "robi",
+                "win",
+                "lobi"
+        );
+
+        /*when*/
+        Names names = Names.of(inputNames);
+
+        /*then*/
+        assertThat(names.stream()).isInstanceOf(Stream.class);
+    }
+
+    @Test
+    @DisplayName("Names의 toList는 불변리스트를 반환한다.")
+    void toListIsUnmodifiableList() {
+        /*give*/
+        List<String> inputNames = Arrays.asList(
+                "pobi",
+                "gobi",
+                "dobi",
+                "eobi",
+                "robi",
+                "win",
+                "lobi"
+        );
+
+        /*when*/
+        Names names = Names.of(inputNames);
+
+        /*then*/
+        assertThatThrownBy(() -> {
+            names.toList().add(new Name("thisIsName"));
+        }).isInstanceOf(UnsupportedOperationException.class);
     }
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class HitTest {
 
@@ -26,6 +27,20 @@ class HitTest {
                 new Card(Pattern.CLOVER, Number.KING),
                 new Card(Pattern.CLOVER, Number.TEN)
         )));
+    }
+
+    @Test
+    @DisplayName("hand를 가져올 수 있다.")
+    void getHandTest() {
+        State state = new Hit(hand);
+
+        Hand hand = state.hand();
+
+        assertThat(hand.toList()).hasSize(2);
+        assertThat(hand.toList()).containsExactly(
+                new Card(Pattern.CLOVER, Number.KING),
+                new Card(Pattern.CLOVER, Number.TEN)
+        );
     }
 
     @Test
@@ -56,10 +71,19 @@ class HitTest {
     @Test
     @DisplayName("힛 상태에서 스테이 상태로 전환된다.")
     void changeStayTest() {
-
         State state = new Hit(hand);
 
         assertThat(state.receiveCard(new Card(Pattern.CLOVER, Number.ACE))).isInstanceOf(Hit.class);
         assertThat(state.stay()).isInstanceOf(Stay.class);
+    }
+
+    @Test
+    @DisplayName("힛 상태에서 profit 메서드를 호출하면 예외 발생한다.")
+    void profitTestI() {
+        State state = new Hit(hand);
+
+        assertThatThrownBy(() -> {
+           state.profit(1.0d);
+        }).isInstanceOf(UnsupportedOperationException.class);
     }
 }

@@ -67,4 +67,15 @@ public class ScoreTest {
         assertThat(noneBlackjackScore.isBlackjack()).isFalse();
         assertThat(blackjackScore.isBlackjack()).isTrue();
     }
+
+    @Test
+    @DisplayName("값이 같으면 같은 hashCode를 반환한다.")
+    void hashCodeTest() {
+        /*give*/
+        Score score1 = new Score(20);
+        Score score2 = new Score(20);
+
+        /*then*/
+        assertThat(score1.hashCode()).isEqualTo(score2.hashCode());
+    }
 }
