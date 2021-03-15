@@ -28,28 +28,6 @@ public class UsersTest {
         assertThat(users).isInstanceOf(Users.class);
     }
 
-    @DisplayName("각 플레이어에게 초기에 카드 두장을 배분한다.")
-    @Test
-    void DistributeToEachPlayer() {
-        Deck deck = new Deck();
-        users.distributeToPlayers(deck);
-
-        assertThat(users.getPlayers()
-                .stream()
-                .allMatch(user -> user.cards().getCards().size() == 2)).isTrue();
-    }
-
-    @DisplayName("각 플레이어의 모든 카드를 보여준다.")
-    @Test
-    void showCardsByPlayers() {
-        Deck deck = new Deck();
-        users.distributeToPlayers(deck);
-        List<Cards> cardsGroup = users.showCardsByPlayers();
-
-        assertThat(cardsGroup.stream()
-                .allMatch(cards -> cards.getCards().size() == 2)).isTrue();
-    }
-
     @DisplayName("플레이어 이름들을 확인한다.")
     @Test
     void getNames() {

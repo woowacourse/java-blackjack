@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,11 +15,6 @@ public class Users {
     public Users(Dealer dealer, Players players) {
         this.dealer = dealer;
         this.players = players;
-    }
-
-    public void distributeToPlayers(Deck deck) {
-        this.players.getPlayers()
-                .forEach(player -> player.drawInitialCards(deck.popTwo()));
     }
 
     public List<Cards> showCardsByPlayers() {

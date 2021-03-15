@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import javax.swing.plaf.PanelUI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -44,10 +45,10 @@ public class InputView {
         throw new IllegalArgumentException("베팅 금액은 양의 정수로 입력해주세요.");
     }
 
-    public static boolean inputHitYes() {
+    public static String inputHitAnswer() {
         String input = deleteWhiteSpaces(SCANNER.nextLine());
         if (YES.equals(input) || NO.equals(input)) {
-            return YES.equals(input);
+            return input;
         }
         throw new IllegalArgumentException("y 또는 n으로 입력해주세요.");
     }

@@ -7,35 +7,51 @@ import blackjack.domain.user.*;
 import java.util.List;
 
 public class BlackjackGame {
+    private static final String YES = "y";
+    private static final String NO = "n";
+
     private final Deck deck;
+    private final Players players;
     private final Users users;
     private final Profit profit;
 
     public BlackjackGame(Players players) {
         this.deck = new Deck();
-        this.users = new Users(new Dealer(), players);
+        this.players = players;
+        this.users = new Users(new Dealer(), this.players);
         this.profit = new Profit();
     }
 
     public void distributeToUsers() {
         getDealer().drawInitialCards(this.deck.popTwo());
-        this.users.distributeToPlayers(this.deck);
+        this.players.drawInitialCardsToPlayers(this.deck);
     }
 
-    public void drawCardToPlayer(Player player) {
-        player.hit(this.deck.popOne());
+    public boolean isRunningForPlayers() {
+        return this.players.remainAnyPlayer();
     }
 
-    public boolean isPlayerHit(Player player) {
-        return player.isHit();
+    public Player currentPlayer() {
+        return this.players.currentPlayer();
     }
 
-    public boolean drawCardToDealer() {
-        if (isDealerHit()) {
-            getDealer().hit(this.deck.popOne());
-            return true;
+    public void drawCardToPlayer(String answer) {
+        Player player = this.players.currentPlayer();
+        if (YES.equals(answer)) {
+            player.hit(deck.popOne());
         }
-        return false;
+        if (NO.equals(answer)) {
+            player.stay();
+        }
+    }
+
+    public int drawCardToDealer() {
+        int dealerHitCount = 0;
+        while (getDealer().isHit()) {
+            getDealer().hit(this.deck.popOne());
+            dealerHitCount++;
+        }
+        return dealerHitCount;
     }
 
     public void calculateProfit() {
@@ -43,20 +59,16 @@ public class BlackjackGame {
         this.profit.addDealerProfit();
     }
 
-    private boolean isDealerHit() {
-        return getDealer().isHit();
-    }
-
-    public Users getUsers() {
-        return this.users;
-    }
-
     public Dealer getDealer() {
         return this.users.getDealer();
     }
 
     public List<Player> getPlayers() {
-        return this.users.getPlayers();
+        return this.players.getPlayers();
+    }
+
+    public Users getUsers() {
+        return this.users;
     }
 
     public List<Money> getProfit() {

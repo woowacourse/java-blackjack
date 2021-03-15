@@ -8,13 +8,14 @@ import blackjack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class BlackjackController {
     public void run() {
         BlackjackGame blackjackGame = new BlackjackGame(setUpPlayers());
         distributeCards(blackjackGame);
         showUsersCards(blackjackGame);
-        askToPlayersForHit(blackjackGame);
+        isPlayersHit(blackjackGame);
         isDealerHit(blackjackGame);
         showResults(blackjackGame);
     }
@@ -39,31 +40,18 @@ public class BlackjackController {
         OutputView.printCards(blackjackGame.getUsers());
     }
 
-    private void askToPlayersForHit(BlackjackGame blackjackGame) {
-        blackjackGame.getPlayers()
-                .forEach(player -> askToPlayerForHit(blackjackGame, player));
-    }
-
-    private void askToPlayerForHit(BlackjackGame blackjackGame, Player player) {
-        while (isPlayerHit(blackjackGame, player) && InputView.inputHitYes()) {
-            blackjackGame.drawCardToPlayer(player);
-            OutputView.printPlayerCards(player);
+    private void isPlayersHit(BlackjackGame blackjackGame) {
+        while (blackjackGame.isRunningForPlayers()) {
+            Player currentPlayer = blackjackGame.currentPlayer();
+            OutputView.printPlayerHit(currentPlayer);
+            blackjackGame.drawCardToPlayer(InputView.inputHitAnswer());
+            OutputView.printPlayerCards(currentPlayer);
         }
-    }
-
-    private boolean isPlayerHit(BlackjackGame blackjackGame, Player player) {
-        if (blackjackGame.isPlayerHit(player)) {
-            OutputView.printPlayerHit(player);
-            return true;
-        }
-        return false;
     }
 
     private void isDealerHit(BlackjackGame blackjackGame) {
-        if (blackjackGame.drawCardToDealer()) {
-            OutputView.printDealerHit();
-            return;
-        }
+        IntStream.range(0, blackjackGame.drawCardToDealer())
+                .forEach(i -> OutputView.printDealerHit());
         OutputView.printDealerNotHit();
     }
 
