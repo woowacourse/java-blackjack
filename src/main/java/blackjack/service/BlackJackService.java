@@ -7,27 +7,39 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.result.GameResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackService {
 
-    private Deck deck = new Deck();
+    private Deck deck = Deck.create();
     private Players players;
     private Dealer dealer;
+    private GameResult gameResult;
 
     public void initDealer() {
         this.dealer = new Dealer(getInitCards());
     }
 
     public void initPlayers(final List<String> requestNames) {
-        List<Player> players = new ArrayList<>();
-        for (String name : requestNames) {
-            players.add(new Player(getInitCards(), name));
+        List<Cards> playerCards = new ArrayList<>();
+        for (int i = 0; i < requestNames.size(); i++) {
+            playerCards.add(getInitCards());
         }
-        this.players = new Players(players);
+        this.players = new Players(playerCards, requestNames);
+    }
+
+    public void initBettings(Map<String, Double> bettings) {
+        players.initBettings(bettings);
+    }
+
+    public void initGameResult() {
+        gameResult = new GameResult(getPlayersAsList(), getDealer());
     }
 
     public List<Participant> getParticipantsAsList() {
@@ -41,12 +53,15 @@ public class BlackJackService {
         return this.players.getPlayersAsList();
     }
 
-    public Dealer getDealer() {
-        return this.dealer;
+    public List<String> getPlayersAsStrings() {
+        List<Player> players = this.getPlayersAsList();
+        return players.stream()
+                .map(Participant::getNameAsString)
+                .collect(Collectors.toList());
     }
 
-    public Players getPlayers() {
-        return this.players;
+    public Dealer getDealer() {
+        return this.dealer;
     }
 
     public void receiveMoreCard(final Participant participant) {
@@ -57,8 +72,17 @@ public class BlackJackService {
         return this.dealer.isBlackJack();
     }
 
+    public GameResult getGameResult() {
+        return gameResult;
+    }
+
     private Cards getInitCards() {
         List<Card> cards = Arrays.asList(deck.draw(), deck.draw());
         return new Cards(cards);
+    }
+
+    public void calculateProfits() {
+        players.changeProfits(gameResult);
+        dealer.changeProfit(gameResult);
     }
 }

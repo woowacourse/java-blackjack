@@ -1,9 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
-import blackjack.domain.result.ResultStatistics;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -19,44 +18,63 @@ public class BlackJackController {
     }
 
     public void run() {
-        initBlackJackGame();
+        initSeats();
+        initBettings();
+        printInitCards();
         distributeCards();
-        cardStatus();
+        printCardStatus();
         gameResult();
     }
 
-    private void initBlackJackGame() {
+    private void initSeats() {
         try {
             blackJackService.initPlayers(requestNames());
             blackJackService.initDealer();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            initBlackJackGame();
-            return;
+            OutputView.printIllegalArgumentError(e);
+            initSeats();
         }
+    }
+
+    private void initBettings() {
+        try {
+            List<String> playerNames = blackJackService.getPlayersAsStrings();
+            blackJackService.initBettings(InputView.getBettings(playerNames));
+        } catch (NumberFormatException e) {
+            OutputView.printNumberFormatExceptionError(e);
+            initBettings();
+        }
+    }
+
+    private void printInitCards() {
         OutputView.printInitSetting(blackJackService.getPlayersAsList());
-        OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getPlayers());
+        OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getPlayersAsList());
     }
 
     private void distributeCards() {
         if (blackJackService.isDealerBlackJack()) {
             return;
         }
-
-        Players players = blackJackService.getPlayers();
-        for (Player player : players.getPlayersAsList()) {
+        List<Player> players = blackJackService.getPlayersAsList();
+        for (Player player : players) {
             receivePlayerMoreCard(player);
         }
         receiveDealerMoreCard(blackJackService.getDealer());
     }
 
-    private void cardStatus() {
-        OutputView.printResult(blackJackService.getParticipantsAsList());
+    private void printCardStatus() {
+        OutputView.printResult(requestCardStatus());
+    }
+
+    private List<Participant> requestCardStatus() {
+        return blackJackService.getParticipantsAsList();
     }
 
     private void gameResult() {
-        ResultStatistics resultStatistics = new ResultStatistics(blackJackService.getPlayers(), blackJackService.getDealer());
-        OutputView.printSummary(resultStatistics);
+        blackJackService.initGameResult();
+        blackJackService.calculateProfits();
+        OutputView.printSummary(blackJackService.getGameResult());
+        OutputView.printProfits(blackJackService.getParticipantsAsList());
     }
 
     private List<String> requestNames() {

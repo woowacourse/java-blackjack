@@ -13,7 +13,7 @@ public class DeckTest {
     @Test
     @DisplayName("52장의 카드가 매번 다른 것이 나온다.")
     void cardNotHaveDuplicate() {
-        Deck deck = new Deck();
+        Deck deck = Deck.create();
         List<Card> cards = new ArrayList<>();
         for (int i = 1; i <= 52; i++) {
             cards.add(deck.draw());

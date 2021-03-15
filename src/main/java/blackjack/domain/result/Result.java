@@ -8,67 +8,33 @@ import java.util.function.BiPredicate;
 
 public enum Result {
 
-    WIN("승", Result::playerBlackJack, Result::winCondition),
-    LOSE("패", Result::dealerBlackJack, Result::lossCondition),
-    DRAW("무", Result::bothBlackJack, Result::drawCondition);
+    BLACKJACK_WIN("승", Player::blackJackWinCondition, 1.5),
+    WIN("승", Player::winCondition, 1.0),
+    LOSE("패", Player::lossCondition, -1),
+    DRAW("무", Player::drawCondition, 0);
 
     private final String value;
-    private final BiPredicate<Player, Dealer> blackJackCheck;
-    private final BiPredicate<Player, Dealer> scoreCheck;
+    private final BiPredicate<Player, Dealer> matchCondition;
+    private final double rate;
 
-    Result(String value, final BiPredicate<Player, Dealer> blackJackCheck, final BiPredicate<Player, Dealer> scoreCheck) {
+    Result(String value, final BiPredicate<Player, Dealer> matchCondition, double rate) {
         this.value = value;
-        this.blackJackCheck = blackJackCheck;
-        this.scoreCheck = scoreCheck;
+        this.matchCondition = matchCondition;
+        this.rate = rate;
     }
 
-    public static Result getPlayerResult(final Player player, final Dealer dealer) {
+    public static Result evaluate(final Player player, final Dealer dealer) {
         return Arrays.stream(Result.values())
-                .filter(result -> result.blackJackCheck.test(player, dealer))
+                .filter(result -> result.matchCondition.test(player, dealer))
                 .findAny()
-                .orElseGet(() ->
-                        Arrays.stream(Result.values())
-                                .filter(result -> result.scoreCheck.test(player, dealer))
-                                .findAny()
-                                .orElseThrow(() -> new RuntimeException("승패를 가리지 못합니다."))
-                );
+                .orElseThrow(() -> new RuntimeException("승패를 가리지 못합니다."));
     }
 
     public String getResultAsString() {
         return this.value;
     }
 
-    private static boolean playerBlackJack(final Player player, final Dealer dealer) {
-        return player.isBlackJack() && !dealer.isBlackJack();
-    }
-
-    private static boolean dealerBlackJack(final Player player, final Dealer dealer) {
-        return !player.isBlackJack() && dealer.isBlackJack();
-    }
-
-    private static boolean bothBlackJack(final Player player, final Dealer dealer) {
-        return player.isBlackJack() && dealer.isBlackJack();
-    }
-
-    private static boolean winCondition(final Player player, final Dealer dealer) {
-        return dealer.isBust() && !player.isBust() ||
-                !player.isBust() && scoreBiggerThan(player, dealer);
-    }
-
-    private static boolean lossCondition(final Player player, final Dealer dealer) {
-        return player.isBust() ||
-                (!dealer.isBust() && scoreSmallerThan(player, dealer));
-    }
-
-    private static boolean drawCondition(final Player player, final Dealer dealer) {
-        return player.getScore() == dealer.getScore();
-    }
-
-    private static boolean scoreBiggerThan(final Player player, final Dealer dealer) {
-        return player.getScore() > dealer.getScore();
-    }
-
-    private static boolean scoreSmallerThan(final Player player, final Dealer dealer) {
-        return player.getScore() < dealer.getScore();
+    public double getRate() {
+        return this.rate;
     }
 }

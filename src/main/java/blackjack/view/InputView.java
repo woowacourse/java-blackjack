@@ -2,10 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.participant.Player;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
+import static blackjack.view.OutputView.NEW_LINE;
 import static blackjack.view.OutputView.printNewLine;
 
 public class InputView {
@@ -20,7 +19,7 @@ public class InputView {
     public static boolean wantMoreCard(final Player player) {
         try {
             printNewLine();
-            System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getNameAsString()));
+            System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getNameAsString());
             String yesOrNo = scanner.nextLine();
             validateYesOrNo(yesOrNo);
             return "y".equals(yesOrNo);
@@ -35,5 +34,15 @@ public class InputView {
         if (!("y".equals(yesOrNo) || "n".equals(yesOrNo))) {
             throw new IllegalArgumentException("y 혹은 n 으로만 입력해주세요.");
         }
+    }
+
+    public static Map<String, Double> getBettings(List<String> playerNames) {
+        Map<String, Double> bettings = new HashMap<>();
+        for (String name : playerNames) {
+            System.out.print(NEW_LINE);
+            System.out.println(name + "의 베팅 금액은?");
+            bettings.put(name, Double.parseDouble(scanner.nextLine()));
+        }
+        return bettings;
     }
 }
