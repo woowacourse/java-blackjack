@@ -18,4 +18,3 @@ public class Dealer extends Participant {
         return !state.isFinished() && state.getCards().lessThanSixteen();
     }
 }
-

@@ -1,14 +1,9 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Deck;
 import blackjack.domain.result.MatchResult;
-import blackjack.dto.ParticipantDto;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class Players {
     private static final String PLAYER_NUMBER_ERROR_MESSAGE = "인원 수는 2 ~ 8명입니다.";
@@ -31,10 +26,8 @@ public class Players {
     }
 
     private void validateDuplicate(List<Player> players) {
-        boolean isDuplicate = players.stream()
-                .distinct()
-                .count() != players.size();
-        if (isDuplicate) {
+        Set<Player> set = new HashSet<>(players);
+        if (players.size() != set.size()) {
             throw new IllegalArgumentException(PLAYER_DUPLICATE_ERROR_MESSAGE);
         }
     }
@@ -47,19 +40,13 @@ public class Players {
         return result;
     }
 
-    public void eachPlayerFirstDraw(CardDeck cardDeck) {
+    public void eachPlayerFirstDraw(Deck deck) {
         for (Player player : players) {
-            player.firstDraw(cardDeck.drawCard(), cardDeck.drawCard());
+            player.firstDraw(deck.drawCard(), deck.drawCard());
         }
     }
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
-    }
-
-    public List<ParticipantDto> toPlayersDto() {
-        return players.stream()
-                .map(Player::toParticipantDto)
-                .collect(Collectors.toList());
     }
 }

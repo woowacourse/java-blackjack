@@ -4,11 +4,14 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Shape;
+import blackjack.domain.money.Profits;
 import blackjack.domain.state.Bust;
 import blackjack.domain.state.State;
 import blackjack.domain.state.Stay;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,10 +36,12 @@ public class MatchResultTest {
     }
 
     @Test
-    @DisplayName("플레이어 결과에 따른 딜러 결과")
-    void checkDealerMatchResult() {
-        assertThat(MatchResult.getDealerMatchResultByPlayer(MatchResult.WIN)).isEqualTo(MatchResult.LOSE);
-        assertThat(MatchResult.getDealerMatchResultByPlayer(MatchResult.LOSE)).isEqualTo(MatchResult.WIN);
-        assertThat(MatchResult.getDealerMatchResultByPlayer(MatchResult.DRAW)).isEqualTo(MatchResult.DRAW);
+    @DisplayName("결과에 따른 수익 변화")
+    void finalProfitsByResult() {
+        Profits profits = new Profits(new BigDecimal("1000"));
+
+        assertThat(MatchResult.WIN.finalProfitByEachStatus(profits)).isEqualTo(new Profits(new BigDecimal("1000")));
+        assertThat(MatchResult.LOSE.finalProfitByEachStatus(profits)).isEqualTo(new Profits(new BigDecimal("-1000")));
+        assertThat(MatchResult.DRAW.finalProfitByEachStatus(profits)).isEqualTo(new Profits(BigDecimal.ZERO));
     }
 }

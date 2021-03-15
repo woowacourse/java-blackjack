@@ -2,18 +2,24 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.money.BettingMoney;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
-import blackjack.dto.ParticipantDto;
 
 import java.util.Objects;
 
 public abstract class Participant {
     protected Nickname nickname;
     protected State state;
+    protected BettingMoney bettingMoney;
 
     protected Participant(Nickname nickname) {
         this.nickname = nickname;
+    }
+
+    protected Participant(Nickname nickname, State state) {
+        this.nickname = nickname;
+        this.state = state;
     }
 
     public abstract boolean canDraw();
@@ -30,17 +36,8 @@ public abstract class Participant {
         state = state.stay();
     }
 
-    public boolean isBust() {
-        return state.getCards().isBust();
-    }
-
     public boolean isHit() {
         return !state.isFinished();
-    }
-
-    public final ParticipantDto toParticipantDto() {
-        Cards cards = state.getCards();
-        return new ParticipantDto(this.nickname, cards, cards.calculateScore());
     }
 
     public final Cards getCurrentCards() {
@@ -56,11 +53,11 @@ public abstract class Participant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Participant that = (Participant) o;
-        return Objects.equals(nickname, that.nickname) && Objects.equals(state, that.state);
+        return Objects.equals(nickname, that.nickname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nickname, state);
+        return Objects.hash(nickname);
     }
 }

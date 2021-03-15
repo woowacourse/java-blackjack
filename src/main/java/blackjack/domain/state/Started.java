@@ -10,6 +10,16 @@ public abstract class Started implements State {
     }
 
     @Override
+    public boolean isWin(State state) {
+        return cards.isWin(state.getCards());
+    }
+
+    @Override
+    public boolean isDraw(State state) {
+        return cards.isDraw(state.getCards());
+    }
+
+    @Override
     public Cards getCards() {
         return cards;
     }

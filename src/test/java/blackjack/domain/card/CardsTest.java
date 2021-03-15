@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static blackjack.domain.card.Cards.TOP_CARD;
+import static blackjack.domain.card.Deck.TOP_CARD;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -61,22 +61,6 @@ public class CardsTest {
     void peekCardTest() {
         cards.addCard(new Card(Shape.SPADE, Denomination.FIVE));
         assertThat(cards.getCards().get(TOP_CARD)).isEqualTo(new Card(Shape.SPADE, Denomination.FIVE));
-    }
-
-    @Test
-    @DisplayName("카드 꾸러미에서 카드 뽑기 성공")
-    void removeCardSucceed() {
-        cards.addCard(new Card(Shape.SPADE, Denomination.FIVE));
-        cards.draw();
-        assertThat(cards.getCards().size()).isEqualTo(0);
-    }
-
-    @Test
-    @DisplayName("카드 꾸러미에서 카드 뽑기 실패")
-    void removeCardFail() {
-        assertThatThrownBy(() ->
-                cards.draw()
-        ).isInstanceOf(IndexOutOfBoundsException.class);
     }
 
     @Test
