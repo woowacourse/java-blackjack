@@ -78,8 +78,7 @@ class NamesTest {
                 "eobi",
                 "robi",
                 "win",
-                "lobi",
-                "kobi"
+                "lobi"
         );
 
         /*when*/
