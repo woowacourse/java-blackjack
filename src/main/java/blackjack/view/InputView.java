@@ -1,8 +1,6 @@
 package blackjack.view;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class InputView {
     private static final Scanner sc = new Scanner(System.in);
@@ -17,13 +15,15 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<String> requestNameAndMoney() {
-        List<String> playersInfo = new ArrayList<>();
+    public static Map<String, String> requestNameAndMoney() {
+        Map<String, String> playersInfo = new HashMap<>();
+
         final String[] names = requestNames();
         for (String name : names) {
             final String money = requestBettingMoney(name.trim());
-            playersInfo.add(name + DELIMITER + money);
+            playersInfo.put(name,money);
         }
+
         return playersInfo;
     }
 

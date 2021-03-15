@@ -7,18 +7,17 @@ import blackjack.domain.gamer.Players;
 import blackjack.domain.utils.CardDeck;
 import blackjack.dto.ProcessDto;
 import blackjack.dto.ResultDto;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
-    public static final String DELIMITER = ",";
-
-
     private final Players players;
     private final Participant dealer;
     private final CardDeck cardDeck;
 
-    public BlackjackGame(final List<String> participantsInfo, CardDeck cardDeck) {
+    public BlackjackGame(final Map<String,String> participantsInfo, CardDeck cardDeck) {
         List<Player> playersValue = getPlayerList(participantsInfo);
         this.dealer = new Dealer();
         this.players = new Players(playersValue);
@@ -33,12 +32,11 @@ public class BlackjackGame {
         initGame();
     }
 
-    private List<Player> getPlayerList(final List<String> participantsInfo) {
+    private List<Player> getPlayerList(final Map<String,String> participantsInfo) {
         List<Player> playersValue = new ArrayList<>();
 
-        for (String nameAndMoney : participantsInfo) {
-            final String[] infos = nameAndMoney.split(DELIMITER);
-            playersValue.add(new Player(infos[0], infos[1]));
+        for (Map.Entry<String, String> info : participantsInfo.entrySet()) {
+            playersValue.add(new Player(info.getKey(), info.getValue()));
         }
 
         return playersValue;
