@@ -100,7 +100,7 @@ public class BlackJackController {
         try {
             YesOrNo decision = YesOrNo.of(InputView.askDrawOrNot(playerName));
             return decision.isYes();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             OutputView.printError(e);
             return isYesDecision(playerName);
         }
