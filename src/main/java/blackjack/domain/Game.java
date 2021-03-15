@@ -5,10 +5,9 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.MatchResult;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.PlayerDto;
-import blackjack.domain.user.PlayerInitialDto;
 import blackjack.domain.user.ResultDTO;
 import blackjack.domain.user.User;
-import blackjack.domain.user.WinningResultDTO;
+import blackjack.domain.user.WinningResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,16 +20,10 @@ public class Game {
     private final List<User> players;
     private final Deck deck;
 
-    public Game(List<PlayerInitialDto> playerInitialDtos) {
-        dealer = new Dealer();
-        players = createPlayer(playerInitialDtos);
-        deck = new Deck();
-    }
-
-    private List<User> createPlayer(List<PlayerInitialDto> playerInitialDtos) {
-        return playerInitialDtos.stream()
-            .map(Player::create)
-            .collect(Collectors.toList());
+    public Game(List<User> players) {
+        this.dealer = new Dealer();
+        this.players = players;
+        this.deck = new Deck();
     }
 
     public void initialCards() {

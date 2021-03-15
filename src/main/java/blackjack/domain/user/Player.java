@@ -10,8 +10,8 @@ public class Player extends User {
         this.money = money;
     }
 
-    public static Player create(PlayerInitialDto playerInitialDto) {
-        return new Player(playerInitialDto.getName(), playerInitialDto.getMoney());
+    public static Player create(String name, int money) {
+        return new Player(name, money);
     }
 
     private void validateNotEmptyName(String name) {

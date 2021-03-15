@@ -23,7 +23,7 @@ class PlayerTest {
 
         String name = "pobi";
         int money = 10000;
-        Player player = Player.create(new PlayerInitialDto(name, money));
+        Player player = Player.create(name, money);
 
         player.initialHands(cards);
         player.draw(deck.pickSingleCard());

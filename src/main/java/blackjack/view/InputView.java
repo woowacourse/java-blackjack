@@ -1,7 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.user.Player;
 import blackjack.domain.user.PlayerDto;
-import blackjack.domain.user.PlayerInitialDto;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -19,11 +19,11 @@ public class InputView {
             .collect(Collectors.toList());
     }
 
-    public static PlayerInitialDto askMoney(String playerName) {
+    public static Player askMoney(String playerName) {
         System.out.printf("%s의 배팅 금액은?%n", playerName);
         int money = inputDecimal();
         validateUnderZeroMoney(money);
-        return new PlayerInitialDto(playerName, money);
+        return Player.create(playerName, money);
     }
 
     public static String askIfMoreCardV2(PlayerDto player) {

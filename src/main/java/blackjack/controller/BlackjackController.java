@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.Game;
 import blackjack.domain.user.PlayerDto;
-import blackjack.domain.user.PlayerInitialDto;
+import blackjack.domain.user.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -17,7 +17,7 @@ public class BlackjackController {
         printResults(game);
     }
 
-    private List<PlayerInitialDto> initPlayer() {
+    private List<User> initPlayer() {
         List<String> playerNames = InputView.receivePlayerNames();
         return playerNames.stream()
             .map(InputView::askMoney)
