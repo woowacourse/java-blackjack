@@ -13,8 +13,8 @@ public class Players {
     private final List<Player> players;
 
     public Players(List<Player> players) {
-        validateNumberOfPlayer(new ArrayList<>(players));
-        this.players = players;
+        this.players = new ArrayList<>(players);
+        validateNumberOfPlayer(players);
     }
 
     private void validateNumberOfPlayer(List<Player> players) {
