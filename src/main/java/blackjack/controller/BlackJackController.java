@@ -25,11 +25,6 @@ public class BlackJackController {
         gameResult();
     }
 
-    private void printInitCards() {
-        OutputView.printInitSetting(blackJackService.getPlayersAsList());
-        OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getPlayersAsList());
-    }
-
     private void initSeats() {
         try {
             blackJackService.initPlayers(requestNames());
@@ -38,10 +33,6 @@ public class BlackJackController {
             OutputView.printIllegalArgumentError(e);
             initSeats();
         }
-    }
-
-    private List<String> requestNames() {
-        return InputView.getNames();
     }
 
     private void initBettings() {
@@ -54,6 +45,11 @@ public class BlackJackController {
         }
     }
 
+    private void printInitCards() {
+        OutputView.printInitSetting(blackJackService.getPlayersAsList());
+        OutputView.printInitCards(blackJackService.getDealer(), blackJackService.getPlayersAsList());
+    }
+
     private void distributeCards() {
         if (blackJackService.isDealerBlackJack()) {
             return;
@@ -63,6 +59,21 @@ public class BlackJackController {
             receivePlayerMoreCard(player);
         }
         receiveDealerMoreCard(blackJackService.getDealer());
+    }
+
+    private void cardStatus() {
+        OutputView.printResult(blackJackService.getParticipantsAsList());
+    }
+
+    private void gameResult() {
+        blackJackService.initGameResult();
+        blackJackService.calculateProfits();
+        OutputView.printSummary(blackJackService.getGameResult());
+        OutputView.printProfits(blackJackService.getPlayersAsList());
+    }
+
+    private List<String> requestNames() {
+        return InputView.getNames();
     }
 
     private void receivePlayerMoreCard(final Player player) {
@@ -77,16 +88,5 @@ public class BlackJackController {
             blackJackService.receiveMoreCard(dealer);
             OutputView.printDealerReceiveMessage();
         }
-    }
-
-    private void cardStatus() {
-        OutputView.printResult(blackJackService.getParticipantsAsList());
-    }
-
-    private void gameResult() {
-        blackJackService.initGameResult();
-        blackJackService.calculateProfits();
-        OutputView.printSummary(blackJackService.getGameResult());
-        OutputView.printProfits(blackJackService.getPlayersAsList());
     }
 }
