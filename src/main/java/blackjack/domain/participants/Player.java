@@ -7,27 +7,34 @@ import java.util.List;
 
 public class Player extends Participant {
 
+    public Player(final Name name, final double money) {
+        super(name, money);
+    }
+
+    public Player(final String name, final double money) {
+        super(new Name(name), money);
+    }
+
     public Player(final String name) {
         super(name);
     }
 
-    public Player(final Name name) {
-        super(name);
-    }
-
     @Override
-    public Result decideWinner(Participant participant) {
-        if (this.calculate() == participant.calculate() || (this.isBust() && participant.isBust())) {
-            return Result.DRAW;
+    public Result decideWinner(final Participant participant) {
+        if (this.isBlackjack() && !participant.isBlackjack()) {
+            return Result.BLACKJACK;
         }
-        if (this.isBust() || (!participant.isBust() && participant.calculate() > this.calculate())) {
+        if (this.isBust()) {
             return Result.LOSE;
         }
-        return Result.WIN;
+        if (participant.isBust()) {
+            return Result.WIN;
+        }
+        return decideWinnerWithScores(participant);
     }
 
     @Override
-    public List<Card> showCards() {
+    public List<Card> initialCards() {
         return new ArrayList<>(getPlayerCards());
     }
 

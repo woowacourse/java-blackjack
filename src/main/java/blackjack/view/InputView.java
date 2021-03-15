@@ -15,6 +15,7 @@ public class InputView {
     private static final String MORE_CARD_MESSAGE = "%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String CONTINUE_GAME_MARK = "y";
     private static final String END_GAME_MARK = "n";
+    private static final String REQUEST_MONEY_MESSAGE = "%s의 배팅 금액은?";
 
     public static List<String> requestName() {
         System.out.println(REQUEST_NAME_MESSAGE);
@@ -44,4 +45,24 @@ public class InputView {
         throw new IllegalArgumentException("y 또는 n을 입력해야 합니다.");
     }
 
+    public static double requestMoney(final Name name) {
+        try {
+            System.out.printf(REQUEST_MONEY_MESSAGE + NEWLINE, name.getValue());
+            return validateNonZeroPositive(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            OutputView.getErrorMessage("숫자를 입력해야 합니다.");
+            return requestMoney(name);
+        } catch (IllegalArgumentException e) {
+            OutputView.getErrorMessage(e.getMessage());
+            return requestMoney(name);
+        }
+    }
+
+    private static double validateNonZeroPositive(final String input) {
+        final double money = Double.parseDouble(input);
+        if (money <= 0) {
+            throw new IllegalArgumentException("배팅 금액은 0원보다 많아야 합니다.");
+        }
+        return money;
+    }
 }

@@ -3,6 +3,7 @@ package blackjack.domain.participants;
 import java.util.Objects;
 
 public class Name {
+
     private final String value;
 
     public Name(final String value) {
@@ -12,7 +13,7 @@ public class Name {
 
     private void validateEmptyString(final String value) {
         if ("".equals(value)) {
-            throw new IllegalArgumentException("[ERROR] 이름은 빈 문자열이면 안 됩니다.");
+            throw new IllegalArgumentException("이름은 빈 문자열이면 안 됩니다.");
         }
     }
 

@@ -1,31 +1,34 @@
 package blackjack.domain.card;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
 public class CardDeck {
 
-    private final List<Card> cards = new ArrayList<>();
+    private static final Deque<Card> cards = new ArrayDeque<>();
 
-    public CardDeck() {
-        initialize();
-    }
-
-    private void initialize() {
+    static {
+        final List<Card> cardGroup = new ArrayList<>();
         for (final CardType type : CardType.values()) {
             Arrays.stream(CardNumber.values())
-                .forEach(number -> cards.add(new Card(number, type)));
+                .forEach(number -> cardGroup.add(new Card(number, type)));
         }
-        Collections.shuffle(cards);
+        Collections.shuffle(cardGroup);
+        cards.addAll(cardGroup);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    private CardDeck() {
     }
 
-    public Card distribute() {
-        return cards.remove(0);
+    public static Card distribute() {
+        return cards.pop();
+    }
+
+    public static int size() {
+        return cards.size();
     }
 }

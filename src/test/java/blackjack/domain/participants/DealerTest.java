@@ -1,21 +1,13 @@
-package blackjack.participants;
+package blackjack.domain.participants;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.InstanceOfAssertFactories.comparable;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
-import blackjack.domain.participants.Dealer;
-import blackjack.domain.participants.Participant;
-import blackjack.domain.participants.Player;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,10 +16,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public class DealerTest {
 
+    private Participant player;
     private Participant dealer;
 
     @BeforeEach
     void setUp() {
+        player = new Player("j.on");
         dealer = new Dealer();
     }
 
@@ -36,6 +30,23 @@ public class DealerTest {
     void create() {
         assertThatCode(Dealer::new)
             .doesNotThrowAnyException();
+
+        assertThatCode(() -> new Dealer("딜러", 1000.0))
+            .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("딜러의 초기 돈을 확인")
+    void checkInitialMoney() {
+        final Participant dealer = new Dealer();
+        assertThat(dealer.getMoney()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("딜러의 현재 돈을 확인")
+    void checkMoney() {
+        final Participant dealer = new Dealer(1000.0);
+        assertThat(dealer.getMoney()).isEqualTo(1000.0);
     }
 
     @Test
@@ -58,7 +69,7 @@ public class DealerTest {
     void showCards() {
         dealer.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
-        assertThat(dealer.showCards()).hasSize(1);
+        assertThat(dealer.initialCards()).hasSize(1);
     }
 
     @Test
@@ -103,40 +114,50 @@ public class DealerTest {
         dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
         dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.HEART));
-        AssertionsForClassTypes.assertThat(dealer.isBust()).isTrue();
+        assertThat(dealer.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러가 블랙잭인지 확인")
+    void isBlackjack() {
+        dealer.receiveCard(new Card(CardNumber.TEN, CardType.CLOVER));
+        dealer.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
+        assertThat(dealer.isBlackjack()).isTrue();
+
+        dealer.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
+        dealer.receiveCard(new Card(CardNumber.NINE, CardType.HEART));
+        assertThat(dealer.isBlackjack()).isFalse();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"ACE,KING:LOSE", "TWO,THREE:WIN"}, delimiter = ':')
-    @DisplayName("딜러의 승패를 확인")
-    void isWinner(final String input, final Result expected) {
+    @DisplayName("플레이어가 블랙잭이 아닌 상황에서 딜러의 경기 결과 구하기")
+    @CsvSource(value = {"KING,KING,KING:LOSE", "ACE:LOSE", "KING,NINE:DRAW", "ACE,TEN:BLACKJACK",
+        "KING,KING:WIN"}, delimiter = ':')
+    void checkPlayerGameResult(final String input, final Result result) {
+        player.receiveCard(new Card(CardNumber.KING, CardType.CLOVER));
+        player.receiveCard(new Card(CardNumber.NINE, CardType.CLOVER));
+
         final String[] inputs = input.split(",");
-        final List<CardNumber> cardNumbers = Arrays.stream(inputs)
-            .map(CardNumber::valueOf)
-            .collect(Collectors.toList());
-        final Participant player = new Player("j.on");
-        player.receiveCard(new Card(cardNumbers.get(0), CardType.CLOVER));
-        player.receiveCard(new Card(cardNumbers.get(1), CardType.CLOVER));
-        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
-        dealer.receiveCard(new Card(CardNumber.TEN, CardType.HEART));
-        assertThat(dealer.decideWinner(player).isSameResult(expected)).isTrue();
+        for (final String number : inputs) {
+            final CardNumber cardNumber = CardNumber.valueOf(number);
+            dealer.receiveCard(new Card(cardNumber, CardType.CLOVER));
+        }
+        assertThat(dealer.decideWinner(player)).isEqualTo(result);
     }
 
-    @Test
-    @DisplayName("딜러가 버스트가 되는 경우 패배가 되는지 확인")
-    void isWinnerWhenDealerIsBust() {
-        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
-        dealer.receiveCard(new Card(CardNumber.TEN, CardType.HEART));
-        dealer.receiveCard(new Card(CardNumber.TEN, CardType.SPADE));
-        assertThat(dealer.decideWinner(new Player("j.on")).isSameResult(Result.LOSE)).isTrue();
+    @ParameterizedTest
+    @DisplayName("딜러가 블랙잭인 상황에서 참가자의 경기 결과 구하기")
+    @CsvSource(value = {"ACE,TEN:DRAW", "ACE:LOSE"}, delimiter = ':')
+    void checkPlayerGameResultWhenDealerBlackjack(final String input, final Result result) {
+        player.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
+        player.receiveCard(new Card(CardNumber.KING, CardType.CLOVER));
+
+        final String[] inputs = input.split(",");
+        for (final String number : inputs) {
+            final CardNumber cardNumber = CardNumber.valueOf(number);
+            dealer.receiveCard(new Card(cardNumber, CardType.CLOVER));
+        }
+        assertThat(dealer.decideWinner(player)).isEqualTo(result);
     }
 
-    @Test
-    @DisplayName("딜러의 결과가 무승부가 되는지 확인")
-    void isWinner() {
-        dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
-        final Participant player = new Player("j.on");
-        player.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
-        assertThat(dealer.decideWinner(player)).isEqualTo(Result.DRAW);
-    }
 }

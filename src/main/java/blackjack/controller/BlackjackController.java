@@ -1,7 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.GameResult;
-import blackjack.domain.Result;
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Names;
@@ -9,21 +8,21 @@ import blackjack.domain.participants.Participant;
 import blackjack.domain.participants.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
 
     public void run() {
-        final CardDeck cardDeck = new CardDeck();
-        final Participants participants = new Participants(requestName());
-        participants.distributeCard(cardDeck);
-        OutputView.showNameAndCardInfo(participants);
+        final Names names = requestName();
+        final BlackjackGame blackjackGame = new BlackjackGame(names, requestMoneys(names));
+        blackjackGame.distributeCard();
+        OutputView.showNameAndCardInfo(blackjackGame.getParticipants());
 
-        gameProgress(participants.getPlayers(), participants.getDealer(), cardDeck);
-        OutputView.showCardsResult(participants.getParticipantGroup());
-        showGameResult(participants.getDealer(), participants.getPlayers());
+        gameProgress(blackjackGame.getParticipants());
+        OutputView.showCardsResult(blackjackGame.getParticipants().getParticipantGroup());
+        OutputView.showGameResult(blackjackGame.makeParticipantResults().getResults());
     }
 
     private Names requestName() {
@@ -42,38 +41,40 @@ public class BlackjackController {
         return new Names(names);
     }
 
-    private void gameProgress(final List<Participant> participants, final Participant dealer,
-        final CardDeck cardDeck) {
-        for (final Participant participant : participants) {
-            singlePlayerGameProgress(cardDeck, participant);
+    private List<Double> requestMoneys(final Names names) {
+        final List<Double> moneys = new ArrayList<>();
+        for (final Name name : names.toList()) {
+            final double value = InputView.requestMoney(name);
+            moneys.add(value);
         }
-        dealerGameProgress(dealer, cardDeck);
+        return moneys;
     }
 
-    private void singlePlayerGameProgress(final CardDeck cardDeck, final Participant participant) {
-        while (!participant.isBust() && InputView.askMoreCard(participant.getName())) {
-            participant.receiveCard(cardDeck.distribute());
-            OutputView.showParticipantCard(participant, participant.getPlayerCards());
+    private void gameProgress(final Participants participants) {
+        final Participant dealer = participants.getDealer();
+        final List<Participant> players = participants.getPlayers();
+        for (final Participant player : players) {
+            singlePlayerGameProgress(player);
         }
-        if (participant.isBust()) {
+        dealerGameProgress(dealer);
+    }
+
+    private void singlePlayerGameProgress(final Participant player) {
+        while (!player.isBust() && InputView.askMoreCard(player.getName())) {
+            player.receiveCard(CardDeck.distribute());
+            OutputView.showParticipantCard(player, player.getPlayerCards());
+        }
+        if (player.isBust()) {
             OutputView.bustMessage();
             return;
         }
-        OutputView.showParticipantCard(participant, participant.getPlayerCards());
+        OutputView.showParticipantCard(player, player.getPlayerCards());
     }
 
-    private void dealerGameProgress(final Participant dealer, final CardDeck cardDeck) {
+    private void dealerGameProgress(final Participant dealer) {
         while (dealer.checkMoreCardAvailable()) {
             OutputView.dealerMoreCard();
-            dealer.receiveCard(cardDeck.distribute());
+            dealer.receiveCard(CardDeck.distribute());
         }
     }
-
-    private void showGameResult(final Participant dealer, final List<Participant> players) {
-        final GameResult gameResult = new GameResult();
-        OutputView.showGameResult(dealer, players, gameResult);
-        final Map<Name, Result> results = gameResult.makePlayerResults(players, dealer);
-        OutputView.showPlayerGameResult(results);
-    }
-
 }

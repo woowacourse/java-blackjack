@@ -9,31 +9,34 @@ public class Dealer extends Participant {
 
     private static final int MAX_SUM_FOR_MORE_CARD = 16;
 
+    public Dealer(final String name, final double money) {
+        super(new Name(name), money);
+    }
+
     public Dealer() {
         super("딜러");
     }
 
-    public Dealer(final String name) {
-        super(name);
-    }
-
-    public Dealer(final Name name) {
-        super(name);
+    public Dealer(final double money) {
+        super(new Name("딜러"), money);
     }
 
     @Override
-    public Result decideWinner(Participant player) {
-        if (this.calculate() == player.calculate()) {
-            return Result.DRAW;
+    public Result decideWinner(final Participant player) {
+        if (this.isBlackjack() && !player.isBlackjack()) {
+            return Result.BLACKJACK;
         }
-        if (player.isBust() || (player.calculate() < this.calculate() && !this.isBust())) {
+        if (player.isBust()) {
             return Result.WIN;
         }
-        return Result.LOSE;
+        if (this.isBust()) {
+            return Result.LOSE;
+        }
+        return decideWinnerWithScores(player);
     }
 
     @Override
-    public List<Card> showCards() {
+    public List<Card> initialCards() {
         return Collections.singletonList(getPlayerCards().get(0));
     }
 

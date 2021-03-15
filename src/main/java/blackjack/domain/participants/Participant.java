@@ -7,13 +7,21 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private static final int BUST_LIMIT = 22;
-
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int INITIAL_CARDS_COUNT = 2;
     private final Name name;
+    private final double money;
     private final PlayerCards playerCards;
+
+    public Participant(final Name name, final double money) {
+        this.name = name;
+        this.money = money;
+        this.playerCards = new PlayerCards();
+    }
 
     public Participant(final Name name) {
         this.name = name;
+        money = 0;
         this.playerCards = new PlayerCards();
     }
 
@@ -29,6 +37,10 @@ public abstract class Participant {
         return name;
     }
 
+    public double getMoney() {
+        return money;
+    }
+
     public int getCardCount() {
         return playerCards.getCardCount();
     }
@@ -37,8 +49,15 @@ public abstract class Participant {
         return playerCards.toList();
     }
 
+    public boolean isBlackjack() {
+        if (isBust()) {
+            return false;
+        }
+        return calculate() == BLACKJACK_SCORE && getCardCount() == INITIAL_CARDS_COUNT;
+    }
+
     public boolean isBust() {
-        return calculate() >= BUST_LIMIT;
+        return calculate() > BLACKJACK_SCORE;
     }
 
     public int calculate() {
@@ -47,7 +66,13 @@ public abstract class Participant {
 
     public abstract Result decideWinner(final Participant participant);
 
-    public abstract List<Card> showCards();
+    protected Result decideWinnerWithScores(final Participant participant) {
+        final int score = this.calculate();
+        final int opponentScore = participant.calculate();
+        return Result.compareScore(score, opponentScore);
+    }
+
+    public abstract List<Card> initialCards();
 
     public abstract boolean checkMoreCardAvailable();
 
