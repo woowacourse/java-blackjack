@@ -37,7 +37,7 @@ public abstract class AbstractUser {
     }
 
     public final BigDecimal profit(State state, BigDecimal bettingMoney) {
-        return state.profit(state, bettingMoney);
+        return this.state.profit(state, bettingMoney);
     }
 
     public final int calculateScore() {

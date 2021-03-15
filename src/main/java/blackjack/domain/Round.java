@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.state.DealerTurnOver;
 import blackjack.domain.state.State;
@@ -41,10 +42,6 @@ public class Round {
         return StateFactory.draw(deck.makeOneCard(), deck.makeOneCard());
     }
 
-    public AbstractUser getDealer() {
-        return users.getDealer();
-    }
-
     public String getDealerName() {
         return getDealer().getName();
     }
@@ -53,8 +50,16 @@ public class Round {
         return Collections.unmodifiableList(users.getPlayers());
     }
 
+    public List<Card> getDealerCards() {
+        return getDealer().getCards();
+    }
+
     public boolean isDealerCanDraw() {
         return getDealer().canDraw();
+    }
+
+    public int calculateDealerScore() {
+        return getDealer().calculateScore();
     }
 
     public void addDealerCard() {
@@ -101,5 +106,9 @@ public class Round {
         return players.stream()
                 .map(player -> player.profit(dealer.getState(), player.getBettingMoney()))
                 .collect(Collectors.toList());
+    }
+
+    private AbstractUser getDealer() {
+        return users.getDealer();
     }
 }
