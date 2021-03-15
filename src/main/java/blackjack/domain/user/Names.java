@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.*;
 
 public class Names {
-    private List<Name> names;
+    private final List<Name> names;
 
     private Names(List<Name> names) {
         this.names = names;
