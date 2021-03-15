@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,28 +12,29 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class ParticiapantTest {
+public class ParticipantTest {
     private Participant dealer;
     private Participant player;
 
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        player = new Player("bada");
+        player = new Player("bada", 10000);
     }
 
     @Test
     @DisplayName("player 이름의 빈값을 잘 검증하는지 확인")
     void validateEmptyName() {
-        assertThatThrownBy(() -> new Player("")).isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> new Player("", 10000)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(Participant.EMPTY_NAME_ERROR);
     }
 
     @Test
     @DisplayName("초기카드로 2장씩을 잘 분배하는지 확인")
     void receiveInitialCards() {
-        final CardDeck cardDeck = new CardDeck();
-        dealer.receiveInitialCards(cardDeck);
+        final Card firstCard = new Card(CardNumber.JACK, CardType.DIAMOND);
+        final Card secondCard = new Card(CardNumber.EIGHT, CardType.CLOVER);
+        dealer.receiveInitialCards(firstCard, secondCard);
         assertThat(dealer.cardCount()).isEqualTo(2);
     }
 
@@ -92,5 +92,13 @@ public class ParticiapantTest {
         dealer.receiveOneCard(new Card(CardNumber.NINE, CardType.HEART));
         dealer.receiveOneCard(new Card(CardNumber.EIGHT, CardType.HEART));
         assertThat(dealer.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("블랙잭 확인이 잘 되는지 확인")
+    void isBlackjack() {
+        dealer.receiveOneCard(new Card(CardNumber.ACE, CardType.CLOVER));
+        dealer.receiveOneCard(new Card(CardNumber.JACK, CardType.CLOVER));
+        assertThat(dealer.isBlackjack()).isTrue();
     }
 }

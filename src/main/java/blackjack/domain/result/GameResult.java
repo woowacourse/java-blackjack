@@ -3,69 +3,40 @@ package blackjack.domain.result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameResult {
-    private final List<Integer> resultCounts;
-    private final List<Result> playersResult;
+    private static final int CHANGE_TO_NEGATIVE = -1;
+    private final Map<Player, Integer> playersProfit;
+    private final int dealerProfit;
 
     public GameResult(final Dealer dealer, final List<Player> players) {
-        resultCounts = findResultCounts(dealer, players);
-        playersResult = findPlayersResult(dealer, players);
+        playersProfit = calculatePlayersProfit(dealer, players);
+        dealerProfit = calculateDealerProfit(playersProfit);
     }
 
-    private List<Integer> findResultCounts(final Dealer dealer, final List<Player> players) {
-        final List<Integer> resultCounts = new ArrayList<>();
-        resultCounts.add(findResult(dealer, players, Result.WIN));
-        resultCounts.add(findResult(dealer, players, Result.LOSE));
-        resultCounts.add(findResult(dealer, players, Result.DRAW));
-        return resultCounts;
+    private Map<Player, Integer> calculatePlayersProfit(final Dealer dealer, final List<Player> players) {
+        final Map<Player, Integer> playersProfit = new HashMap<>();
+        players.forEach(player -> {
+            final Result result = player.findResult(dealer);
+            playersProfit.put(player, result.calculateProfit(player.getBettingMoney()));
+        });
+        return playersProfit;
     }
 
-    private int findResult(final Dealer dealer, final List<Player> players, final Result result) {
-        return (int) players.stream()
-                .filter(player -> findDealerResult(dealer, player)
-                        .isSame(result)).count();
+    private int calculateDealerProfit(final Map<Player, Integer> playersProfit) {
+        return CHANGE_TO_NEGATIVE * playersProfit.values().stream()
+                .mapToInt(profit -> profit)
+                .sum();
     }
 
-    private Result findDealerResult(final Dealer dealer, final Player player) {
-        final int dealerScore = dealer.calculateScore();
-        final int playerScore = player.calculateScore();
-        if (dealerScore == playerScore) {
-            return Result.DRAW;
-        }
-        if (player.isBust() || playerScore < dealerScore && !dealer.isBust()) {
-            return Result.WIN;
-        }
-        return Result.LOSE;
+    public int getDealerProfit() {
+        return dealerProfit;
     }
 
-    private List<Result> findPlayersResult(final Dealer dealer, final List<Player> players) {
-        final List<Result> playersResult = new ArrayList<>();
-        for (final Player player : players) {
-            playersResult.add(findPlayerResult(dealer, player));
-        }
-        return playersResult;
-    }
-
-    private Result findPlayerResult(final Dealer dealer, final Player player) {
-        final int dealerScore = dealer.calculateScore();
-        final int playerScore = player.calculateScore();
-        if (dealerScore == playerScore) {
-            return Result.DRAW;
-        }
-        if (player.isBust() || playerScore < dealerScore && !dealer.isBust()) {
-            return Result.LOSE;
-        }
-        return Result.WIN;
-    }
-
-    public List<Result> getPlayersResult() {
-        return playersResult;
-    }
-
-    public List<Integer> getResultCounts() {
-        return resultCounts;
+    public Map<Player, Integer> getPlayersProfit() {
+        return playersProfit;
     }
 }

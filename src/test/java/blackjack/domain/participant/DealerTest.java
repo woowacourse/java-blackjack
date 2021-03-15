@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,8 +36,9 @@ public class DealerTest {
     @Test
     @DisplayName("딜러의 초기 카드 출력이 한 장만 되는지 확인")
     void showInitialCards() {
-        final CardDeck cardDeck = new CardDeck();
-        dealer.receiveInitialCards(cardDeck);
-        assertThat(dealer.showInitialCards().size()).isEqualTo(1);
+        final Card firstCard = new Card(CardNumber.JACK, CardType.DIAMOND);
+        final Card secondCard = new Card(CardNumber.EIGHT, CardType.CLOVER);
+        dealer.receiveInitialCards(firstCard, secondCard);
+        assertThat(dealer.getInitialCards().size()).isEqualTo(1);
     }
 }

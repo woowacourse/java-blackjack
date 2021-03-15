@@ -30,7 +30,7 @@ public enum CardNumber {
     }
 
     public boolean isAce() {
-        return value == ACE.value;
+        return ACE.equals(this);
     }
 
     public String getSymbol() {

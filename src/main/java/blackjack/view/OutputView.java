@@ -4,9 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.Result;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -17,7 +17,8 @@ public class OutputView {
     private static final String DISTRIBUTE_MESSAGE = "딜러와 %s에게 2장의 카드를 나누어주었습니다.";
     private static final String CARD_STATUS_FORMAT = "%s카드: %s";
     private static final String CARD_RESULT_FORMAT = "%s카드: %s - 결과: %d";
-    private static final String GAME_RESULT_MESSAGE = "## 최종 승패";
+    private static final String GAME_RESULT_MESSAGE = "## 최종 수익";
+    private static final String SHOW_PROFIT_FORMAT = "%s: %d";
 
     public static void showDistributedCard(final List<Player> players, final Dealer dealer) {
         distributeMessage(players);
@@ -33,16 +34,14 @@ public class OutputView {
     }
 
     public static void showInitialCard(final Participant participant) {
-        final String cardStatus = participant.showInitialCards().stream()
+        final String cardStatus = participant.getInitialCards().stream()
                 .map(OutputView::cardFormat)
                 .collect(Collectors.joining(", "));
-        System.out.printf(CARD_STATUS_FORMAT, participant.getName(), cardStatus + NEWLINE);
+        System.out.printf(CARD_STATUS_FORMAT + NEWLINE, participant.getName(), cardStatus);
     }
 
     private static void showPlayersCard(final List<Player> players) {
-        for (final Player player : players) {
-            showInitialCard(player);
-        }
+        players.forEach(OutputView::showInitialCard);
     }
 
     public static void showPlayerCard(final Player player) {
@@ -75,26 +74,13 @@ public class OutputView {
         }
     }
 
-    public static void showGameResult(final Dealer dealer, final List<Integer> resultCounts) {
+    public static void showGameResult(final Dealer dealer, final int dealerProfit) {
         System.out.println(NEWLINE + GAME_RESULT_MESSAGE);
-        showDealerGameResult(dealer, resultCounts);
+        showDealerProfit(dealer, dealerProfit);
     }
 
-    private static void showDealerGameResult(final Dealer dealer, final List<Integer> resultCounts) {
-        System.out.printf("%s: %d%s %d%s %d%s" + NEWLINE, dealer.getName(),
-                resultCounts.get(0), Result.WIN.getValue(),
-                resultCounts.get(1), Result.LOSE.getValue(),
-                resultCounts.get(2), Result.DRAW.getValue());
-    }
-
-    public static void showPlayersGameResult(final List<Player> players, final List<Result> playersResult) {
-        for (int i = 0; i < players.size(); i++) {
-            showPlayerGameResult(players.get(i), playersResult.get(i));
-        }
-    }
-
-    private static void showPlayerGameResult(final Player player, final Result result) {
-        System.out.printf("%s: %S" + NEWLINE, player.getName(), result.getValue());
+    private static void showDealerProfit(final Dealer dealer, final int dealerProfit) {
+        System.out.printf(SHOW_PROFIT_FORMAT + NEWLINE, dealer.getName(), dealerProfit);
     }
 
     public static void showBustMessage() {
@@ -107,5 +93,13 @@ public class OutputView {
 
     public static void showErrorMessage(final String message) {
         System.out.println(ERROR_MARK + message);
+    }
+
+    public static void showPlayersProfit(final Map<Player, Integer> playersProfit) {
+        playersProfit.forEach(OutputView::showPlayerProfit);
+    }
+
+    private static void showPlayerProfit(final Player player, final Integer profit) {
+        System.out.printf(SHOW_PROFIT_FORMAT + NEWLINE, player.getName(), profit);
     }
 }

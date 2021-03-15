@@ -1,21 +1,18 @@
 package blackjack.domain.result;
 
 public enum Result {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    BLACKJACK(1.5),
+    WIN(1.0),
+    LOSE(-1.0),
+    DRAW(0);
 
-    private final String value;
+    private final double profit;
 
-    Result(final String value) {
-        this.value = value;
+    Result(final double profit) {
+        this.profit = profit;
     }
 
-    public boolean isSame(final Result result) {
-        return this == result;
-    }
-
-    public String getValue() {
-        return value;
+    public int calculateProfit(final int money) {
+        return (int) (money * profit);
     }
 }

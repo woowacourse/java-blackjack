@@ -18,7 +18,7 @@ public class CardDeckTest {
     @DisplayName("카드덱의 사이즈가 52인지 확인")
     void size() {
         final CardDeck cardDeck = new CardDeck();
-        assertThat(cardDeck.getCards().size()).isEqualTo(52);
+        assertThat(cardDeck.initialize().size()).isEqualTo(52);
     }
 
     @Test
@@ -26,6 +26,5 @@ public class CardDeckTest {
     void distribute() {
         final CardDeck cardDeck = new CardDeck();
         assertThat(cardDeck.distribute()).isInstanceOf(Card.class);
-        assertThat(cardDeck.getCards().size()).isEqualTo(51);
     }
 }
