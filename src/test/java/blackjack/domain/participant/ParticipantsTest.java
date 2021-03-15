@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ParticipantsTest {
 
-    private List<Participant> participantGroup;
+ /*   private List<Participant> participantGroup;
     private List<Card> defaultInitialCard;
 
     @BeforeEach
@@ -101,5 +101,5 @@ class ParticipantsTest {
         assertThat(actualParticipants.get(0).showCards()).hasSize(2);
         assertThat(actualParticipants.get(1).showCards()).hasSize(2);
         assertThat(actualParticipants.get(2).showCards()).hasSize(2);
-    }
+    }*/
 }

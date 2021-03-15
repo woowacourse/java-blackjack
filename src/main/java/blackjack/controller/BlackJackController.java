@@ -1,10 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.*;
 import blackjack.domain.state.Hit;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.WinPrizeDto;
@@ -18,7 +15,7 @@ import static blackjack.view.OutputView.MSG_DEALER_GET_MORE_CARD;
 
 public class BlackJackController {
 
-    public void play() {
+public void play() {
         Deck deck = Deck.generate();
         Participants participants = getParticipants(InputView.inputNames(), deck);
         OutputView.printInitialCardStatus(participants);
@@ -28,7 +25,7 @@ public class BlackJackController {
     }
 
     private Participants getParticipants(List<String> names, Deck deck) {
-        List<Participant> participants = names.stream()
+        List<AbstractParticipant> participants = names.stream()
                 .map(name -> new Player(name, new Hit(deck.handOutInitCards())))
                 .collect(Collectors.toList());
         bettingPlayer(participants);
@@ -49,7 +46,7 @@ public class BlackJackController {
     }
 
     private void playPlayerTurn(Player player, Deck deck) {
-        while (!player.getStatus().isEndState()) {
+        while (!player.getState().isEndState()) {
             if (!InputView.inputAskMoreCard(player)) {
                 player.stay();
                 break;
@@ -61,16 +58,16 @@ public class BlackJackController {
     }
 
     private void playDealerTurn(Dealer dealer, Deck deck) {
-        while (!dealer.getStatus().isEndState()) {
+        while (!dealer.getState().isEndState()) {
             OutputView.printMessage(MSG_DEALER_GET_MORE_CARD);
             dealer.handOutCard(deck.draw());
         }
     }
 
-    private void bettingPlayer(List<Participant> participantList) {
-        for (Participant participant : participantList) {
+    private void bettingPlayer(List<AbstractParticipant> participantList) {
+        for (AbstractParticipant participant : participantList) {
             int bettingMoney = InputView.inputBettingMoney(participant);
-            participant.betting(bettingMoney);
+            ((Player) participant).betting(bettingMoney);
         }
     }
 
@@ -88,13 +85,14 @@ public class BlackJackController {
 
     private List<WinPrizeDto> getPlayerWinPrizeDtoList(List<Player> players, Dealer dealer) {
         return players.stream()
-                .map(player -> new WinPrizeDto(player.getName(), player.calculateWinPrize(dealer.getStatus())))
+                .map(player -> new WinPrizeDto(player.getName(), player.calculateWinPrize(dealer.getState())))
                 .collect(Collectors.toList());
     }
 
     private int getTotalPlayerWinPrize(List<Player> players, Dealer dealer) {
         return players.stream()
-                .mapToInt(player -> player.calculateWinPrize(dealer.getStatus()))
+                .mapToInt(player -> player.calculateWinPrize(dealer.getState()))
                 .sum();
     }
+
 }

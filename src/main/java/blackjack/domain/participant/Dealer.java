@@ -52,4 +52,8 @@ public class Dealer extends AbstractParticipant {
             stay();
         }
     }
+
+    public int payWinPrize(int winPrize) {
+        return winPrize * -1;
+    }
 }

@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.participant.AbstractParticipant;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 
@@ -18,13 +19,13 @@ public class InputView {
     }
 
 
-    public static int inputBettingMoney(Participant participant) {
+    public static int inputBettingMoney(AbstractParticipant participant) {
         System.out.println(participant.getName() + "의 배팅 금액은?");
         int money = Integer.parseInt(scanner.nextLine());
         return money;
     }
 
-    public static boolean inputAskMoreCard(Participant participant) {
+    public static boolean inputAskMoreCard(AbstractParticipant participant) {
         System.out.println(participant.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = scanner.nextLine();
         if ("y".equals(input)) {

@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.participant.AbstractParticipant;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.rule.BlackJackScoreRule;
@@ -19,9 +20,9 @@ public class OutputView {
 
     public static void printInitialCardStatus(Participants participants) {
         System.out.println();
-        List<Participant> participantsGroup = participants.getParticipants();
-        for (Participant participant : participantsGroup) {
-            System.out.println(participant.getName() + ": " + printCards(participant.showInitCards()));
+        List<AbstractParticipant> participantsGroup = participants.getParticipants();
+        for (AbstractParticipant participant : participantsGroup) {
+            System.out.println(participant.getName() + ": " + printCards(participant.showCards()));
         }
         System.out.println();
     }
@@ -36,14 +37,14 @@ public class OutputView {
         return card.getCardValue().getValue() + "" + card.getCardType().getValue();
     }
 
-    public static void printParticipantCards(Participant participant) {
+    public static void printParticipantCards(AbstractParticipant participant) {
         System.out.println(participant.getName() + ": " + printCards(participant.showCards()));
     }
 
     public static void printAllParticipantsCards(Participants participants) {
         System.out.println();
-        List<Participant> participantsGroup = participants.getParticipants();
-        for (Participant participant : participantsGroup) {
+        List<AbstractParticipant> participantsGroup = participants.getParticipants();
+        for (AbstractParticipant participant : participantsGroup) {
             System.out.println(participant.getName() + ": "
                     + printCards(participant.showCards()) + " - 결과:" + participant.sumTotalScore(new BlackJackScoreRule()));
         }

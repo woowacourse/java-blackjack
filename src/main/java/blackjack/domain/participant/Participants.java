@@ -29,7 +29,7 @@ public class Participants {
                 .collect(Collectors.toList());
     }
 
-    public List<Participant> getParticipants() {
+    public List<AbstractParticipant> getParticipants() {
         return new ArrayList<>(participants);
     }
 }
