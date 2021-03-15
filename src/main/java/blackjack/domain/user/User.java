@@ -3,7 +3,6 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.UserDeck;
 import blackjack.domain.money.Money;
-import blackjack.domain.state.Bust;
 import blackjack.domain.state.State;
 
 public abstract class User {
