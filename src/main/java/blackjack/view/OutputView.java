@@ -1,11 +1,15 @@
 package blackjack.view;
 
 import blackjack.domain.result.ProfitResult;
-import blackjack.domain.user.*;
+import blackjack.domain.user.Cards;
+import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static blackjack.domain.user.Dealer.DEALER_NAME;
 
 public class OutputView {
     private static final String COLON = ": ";
@@ -19,23 +23,18 @@ public class OutputView {
         System.out.println(playerName + "의 배팅 금액은?");
     }
 
-    public static void printDistribute(Dealer dealer, List<String> playersNames) {
+    public static void printDistribute(List<String> playersNames) {
         System.out.printf("\n%s와 %s에게 2장의 카드를 나누었습니다.\n",
-                dealer.getName(), String.join(COMMA, playersNames));
+                DEALER_NAME, String.join(COMMA, playersNames));
     }
 
-    public static void printDealerCard(Dealer dealer) {
-        System.out.println(dealer.getName() + COLON + dealer.showOneCard());
+    public static void printUsersCards(List<User> users) {
+        users.forEach(OutputView::printUserCards);
     }
 
-    public static void printPlayersCards(Players players) {
-        players.getPlayers()
-                .forEach(OutputView::printPlayerCards);
-    }
-
-    public static void printPlayerCards(Player player) {
-        System.out.print(player.getName() + "카드" + COLON);
-        printCards(player.cards());
+    public static void printUserCards(User user) {
+        System.out.print(user.getName() + "카드" + COLON);
+        printCards(user.showInitialCard());
     }
 
     private static void printCards(Cards cards) {
@@ -76,7 +75,7 @@ public class OutputView {
 
     public static void printProfitResult(ProfitResult profitResult) {
         System.out.println("## 최종 수익");
-        System.out.println("딜러: " + profitResult.getDealerProfit());
+        System.out.println(DEALER_NAME + ": " + profitResult.getDealerProfit());
         Map<Player, Long> playersProfits = profitResult.getPlayersProfits();
         for (Player player : playersProfits.keySet()) {
             System.out.println(player.getName() + COLON + playersProfits.get(player));

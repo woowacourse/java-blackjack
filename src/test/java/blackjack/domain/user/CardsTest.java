@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CardsTest {
     @DisplayName("Card 객체 하나를 보여준다.")
@@ -112,5 +113,29 @@ public class CardsTest {
         boolean isBlackjack = cards.isBlackjack();
 
         assertThat(isBlackjack).isTrue();
+    }
+
+    @Test
+    @DisplayName("갯수별 카드를 반환받는다.")
+    void getCardsByCount() {
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.SPACE, Denomination.ACE)));
+
+        Cards result = cards.getCardsByCount(1);
+        int count = result.getCards().size();
+
+        assertThat(count).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("갯수별 카드를 반환받는다. - 카드 갯수보다 많은 카드를 가져올 경우 예외.")
+    void getCardsByCount1() {
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.SPACE, Denomination.ACE)));
+
+        assertThatThrownBy(() -> cards.getCardsByCount(3))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

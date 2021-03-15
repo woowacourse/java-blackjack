@@ -255,4 +255,20 @@ public class PlayerTest {
 
         assertThat(isBlackjack).isFalse();
     }
+
+    @DisplayName("초기 카드 상태를 공개한다.")
+    @Test
+    void showInitialCard() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.CLOVER, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+
+        Cards cards = player.showInitialCard();
+        int count = cards.getCards().size();
+
+        assertThat(count).isEqualTo(2);
+    }
 }

@@ -38,9 +38,8 @@ public class BlackjackController {
     }
 
     private void showInitialStatus(BlackjackGame blackjackGame) {
-        OutputView.printDistribute(blackjackGame.getDealer(), blackjackGame.getPlayersName());
-        OutputView.printDealerCard(blackjackGame.getDealer());
-        OutputView.printPlayersCards(blackjackGame.getPlayers());
+        OutputView.printDistribute(blackjackGame.getPlayersName());
+        OutputView.printUsersCards(blackjackGame.getUsers());
     }
 
     private void proceedPlayersRound(BlackjackGame blackjackGame) {
@@ -48,7 +47,7 @@ public class BlackjackController {
             Player currentPlayer = blackjackGame.getCurrentPlayer();
             OutputView.printAskOneMoreCard(currentPlayer);
             blackjackGame.proceedPlayersRound(InputView.inputString());
-            OutputView.printPlayerCards(currentPlayer);
+            OutputView.printUserCards(currentPlayer);
         }
     }
 

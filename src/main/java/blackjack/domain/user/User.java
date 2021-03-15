@@ -3,7 +3,6 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
-import blackjack.domain.state.Stay;
 
 public abstract class User {
     protected final Name name;
@@ -70,4 +69,6 @@ public abstract class User {
     public final boolean isBlackJack() {
         return cards().isBlackjack();
     }
+
+    public abstract Cards showInitialCard();
 }

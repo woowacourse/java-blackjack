@@ -62,18 +62,6 @@ public class DealerTest {
         assertThat(isAbleToHit).isFalse();
     }
 
-    @DisplayName("카드 한장은 공개하고 한장은 숨긴다.")
-    @Test
-    void show() {
-        Dealer dealer = new Dealer();
-        dealer.initializeCards(new Cards(Arrays.asList(
-                new Card(Suit.SPACE, Denomination.EIGHT),
-                new Card(Suit.CLOVER, Denomination.KING)
-        )));
-
-        assertThat(dealer.showOneCard()).isInstanceOf(Card.class);
-    }
-
     @DisplayName("받은 카드에 따라 상태를 확인한다. - Hit")
     @Test
     void receiveCardsState() {
@@ -205,5 +193,21 @@ public class DealerTest {
         boolean isBust = dealer.isBust();
 
         assertThat(isBust).isTrue();
+    }
+
+
+    @DisplayName("카드 한장은 공개하고 한장은 숨긴다.")
+    @Test
+    void show() {
+        Dealer dealer = new Dealer();
+        dealer.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.KING)
+        )));
+
+        Cards cards = dealer.showInitialCard();
+        int count = cards.getCards().size();
+
+        assertThat(count).isEqualTo(1);
     }
 }

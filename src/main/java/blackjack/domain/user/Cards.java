@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Cards {
     private static final int FIRST_CARD = 0;
@@ -64,5 +66,15 @@ public class Cards {
 
     public boolean isBlackjack() {
         return totalScore().isBlackjack();
+    }
+
+    public Cards getCardsByCount(int count) {
+        try {
+            return IntStream.range(FIRST_CARD, count)
+                    .mapToObj(cards::get)
+                    .collect(Collectors.collectingAndThen(Collectors.toList(), Cards::new));
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("[ERROR] 카드 갯수보다 많은 카드를 가져올 수 없습니다.");
+        }
     }
 }
