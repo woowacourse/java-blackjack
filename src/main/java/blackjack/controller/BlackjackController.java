@@ -12,6 +12,7 @@ import blackjack.domain.player.Gamer;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
+import blackjack.dto.BettingResultDto;
 import blackjack.dto.DealerDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayersDto;
@@ -36,7 +37,7 @@ public class BlackjackController {
         OutputView.printPlayersScoreInfo(PlayerDto.from(dealer), PlayersDto.from(gamers));
         GameResult gameResult = GameResult.of(dealer, gamers);
         BettingResult bettingResult = bettingController.calculateGamersProfit(gameResult);
-        OutputView.printBettingResult(bettingResult);
+        OutputView.printBettingResult(BettingResultDto.from(bettingResult));
     }
 
     private Deck initDeck() {

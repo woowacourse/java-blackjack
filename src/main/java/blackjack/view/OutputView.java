@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.batting.BettingResult;
+import blackjack.dto.BettingResultDto;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerDto;
 import blackjack.dto.PlayerDto;
@@ -63,12 +64,12 @@ public class OutputView {
             .forEach(gamer -> System.out.printf("%s - 결과: %d\n", playerInfoToString(gamer), gamer.getScore()));
     }
 
-    public static void printBettingResult(BettingResult bettingResult) {
+    public static void printBettingResult(BettingResultDto bettingResultDto) {
         System.out.println();
         System.out.println("## 최종 수익");
-        System.out.println("딜러: " + bettingResult.getDealerProfit().toInt());
-        bettingResult.getGamersProfit()
-            .forEach((gamer, profit) -> System.out.println(gamer.getName() + ": " + profit.toInt()));
+        System.out.println("딜러: " + bettingResultDto.getDealerProfit());
+        bettingResultDto.getGamersProfitResults()
+            .forEach((gamer, profit) -> System.out.println(gamer.getName() + ": " + profit));
     }
 
     public static void printExceptionMessage(Exception e) {
