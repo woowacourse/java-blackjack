@@ -1,63 +1,53 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
-
-import java.util.List;
 import java.util.Objects;
 
-import static blackjack.domain.participant.Player.THRESHOLD_OF_BURST;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.ParticipantCards;
+import blackjack.domain.state.Hit;
+import blackjack.domain.state.PlayerState;
 
 public abstract class Gamer {
-    public static final String COMMA_DELIMITER = ",";
+	public static final String COMMA_DELIMITER = ",";
 
-    private final PlayerName name;
-    private final Cards cards;
+	protected final PlayerName name;
+	protected PlayerState playerState;
 
-    protected Gamer(String name) {
-        this.name = new PlayerName(name);
-        this.cards = new Cards();
-    }
+	protected Gamer(String name) {
+		this.name = new PlayerName(name);
+		this.playerState = new Hit(new ParticipantCards());
+	}
 
-    public void receiveCard(Card card) {
-        cards.addCard(card);
-    }
+	public void receiveCard(Card card) {
+		playerState = playerState.drawNewCard(card);
+	}
 
-    public boolean isBurst(int point) {
-        return point > THRESHOLD_OF_BURST;
-    }
+	public abstract boolean canReceiveCard(boolean drawFlag);
 
-    public int makeJudgingPoint() {
-        return cards.calculateJudgingPoint();
-    }
+	public int calculatePoint() {
+		return playerState.calculatePoint();
+	}
 
-    public int makeFinalPoint() {
-        return cards.addAcePoint();
-    }
+	public PlayerState getPlayerState() {
+		return playerState;
+	}
 
-    public abstract boolean canReceiveCard();
+	public String getName() {
+		return name.getName();
+	}
 
-    public abstract boolean continueDraw(String draw, Deck deck);
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Gamer gamer = (Gamer)o;
+		return Objects.equals(name, gamer.name) && Objects.equals(playerState, gamer.playerState);
+	}
 
-    public String getName() {
-        return name.getName();
-    }
-
-    public List<Card> getCards() {
-        return cards.getCards();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Gamer gamer = (Gamer) o;
-        return Objects.equals(name, gamer.name) && Objects.equals(cards, gamer.cards);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, cards);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, playerState);
+	}
 }
