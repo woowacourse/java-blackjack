@@ -2,13 +2,14 @@ package blackjack;
 
 import blackjack.domain.Game;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.utils.RandomCardDeck;
 import blackjack.dto.ResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        final Game game = new Game(InputView.requestNameAndMoney());
+        final Game game = new Game(InputView.requestNameAndMoney(), new RandomCardDeck());
         OutputView.printCards(game.getProcessDto());
 
         simulate(game);

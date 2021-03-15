@@ -1,9 +1,9 @@
 package blackjack.view;
 
+import blackjack.domain.Outcome;
 import blackjack.domain.card.Cards;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.gametable.Outcome;
 import blackjack.dto.ProcessDto;
 import blackjack.dto.ResultDto;
 import java.math.BigDecimal;

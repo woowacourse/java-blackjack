@@ -1,7 +1,7 @@
 package blackjack.dto;
 
+import blackjack.domain.Outcome;
 import blackjack.domain.gamer.BettingMoney;
-import blackjack.domain.gametable.Outcome;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;

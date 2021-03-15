@@ -2,9 +2,9 @@ package blackjack.domain.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.Outcome;
 import blackjack.domain.gamer.BettingMoney;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.gametable.Outcome;
 import blackjack.dto.PlayerResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

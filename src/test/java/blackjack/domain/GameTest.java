@@ -1,4 +1,4 @@
-package blackjack.domain.gametable;
+package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,7 +12,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class GameTableTest {
+class GameTest {
     @Test
     @DisplayName("초기 카드 2장 배부 확인")
     void create() {
@@ -21,7 +21,7 @@ class GameTableTest {
         List<Player> playersValue = Arrays.asList(player);
         final Players players = new Players(playersValue);
 
-        new GameTable(dealer, players, new FixedCardDeck());
+        new Game(dealer, players, new FixedCardDeck());
 
         assertThat(dealer.sizeOfCards()).isEqualTo(2);
         assertThat(player.sizeOfCards()).isEqualTo(2);
@@ -35,8 +35,8 @@ class GameTableTest {
         List<Player> playersValue = Arrays.asList(player);
         final Players players = new Players(playersValue);
 
-        final GameTable gameTable = new GameTable(dealer, players, new FixedCardDeck());
-        gameTable.giveCard(player);
+        final Game game = new Game(dealer, players, new FixedCardDeck());
+        game.turnForPlayer(player);
 
         assertThat(player.sizeOfCards()).isEqualTo(3);
 

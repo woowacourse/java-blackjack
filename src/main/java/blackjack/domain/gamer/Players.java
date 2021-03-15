@@ -1,8 +1,8 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.Outcome;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
-import blackjack.domain.gametable.Outcome;
 import blackjack.domain.utils.CardDeck;
 import blackjack.dto.PlayerResult;
 import java.util.ArrayList;
