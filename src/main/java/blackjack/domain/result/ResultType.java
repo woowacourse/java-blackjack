@@ -57,12 +57,12 @@ public enum ResultType {
     }
 
     public ResultType reverse() {
-        if (this == ResultType.WIN) {
-            return ResultType.LOSE;
+        if (this == WIN) {
+            return LOSE;
         }
-        if (this == ResultType.LOSE) {
-            return ResultType.WIN;
+        if (this == LOSE) {
+            return WIN;
         }
-        return ResultType.DRAW;
+        return DRAW;
     }
 }
