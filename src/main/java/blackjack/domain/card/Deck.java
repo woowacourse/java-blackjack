@@ -16,7 +16,7 @@ public class Deck {
         Deck.deck = deck;
     }
 
-    public static Deck of() {
+    public static Deck create() {
         List<Card> deck = Arrays.stream(Suit.values())
                 .flatMap(suit -> Arrays.stream(Face.values()).map(face -> new Card(suit, face)))
                 .collect(Collectors.toList());

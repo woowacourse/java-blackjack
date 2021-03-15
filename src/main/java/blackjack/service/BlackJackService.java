@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class BlackJackService {
 
-    private Deck deck = Deck.of();
+    private Deck deck = Deck.create();
     private Players players;
     private Dealer dealer;
     private GameResult gameResult;
