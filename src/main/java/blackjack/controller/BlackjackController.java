@@ -1,12 +1,12 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.result.ProfitResult;
 import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.IntStream;
 
 public class BlackjackController {
@@ -18,9 +18,8 @@ public class BlackjackController {
         proceedPlayersRound(blackjackGame);
         proceedDealerRound(blackjackGame);
         OutputView.printCardsWithTotalValue(blackjackGame.getUsers());
-        long dealerProfit = blackjackGame.getDealerProfit();
-        Map<Player, Long> profitResult = blackjackGame.getProfitsByPlayer();
-        OutputView.printProfitResult(dealerProfit, profitResult);
+        ProfitResult profitResult = blackjackGame.calculateResult();
+        OutputView.printProfitResult(profitResult);
     }
 
     private BlackjackGame setUpBlackjackGame() {

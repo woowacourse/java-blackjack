@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.ProfitResult;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -101,6 +102,10 @@ public class BlackjackGame {
             roundCount++;
         }
         return roundCount;
+    }
+
+    public ProfitResult calculateResult() {
+        return ProfitResult.generateByUsers(players, dealer);
     }
 
     public Map<Player, Long> getProfitsByPlayer() {
