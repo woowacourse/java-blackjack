@@ -23,4 +23,8 @@ public class Player extends Participant {
     public boolean canReceive() {
         return sumCardHand() < BLACKJACK_SCORE;
     }
+    
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
+    }
 }

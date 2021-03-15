@@ -12,6 +12,8 @@ public class CardHand {
     private static final int ELEVEN_OF_ACE_VALUE = 11;
     private static final int ONE_OF_ACE_VALUE = 1;
     
+    private static final int BLACKJACK_HAND_SIZE = 2;
+    
     private final List<Card> cards;
     
     public CardHand(List<Card> cards) {
@@ -56,6 +58,10 @@ public class CardHand {
     
     public Card get(int cardIndex) {
         return cards.get(cardIndex);
+    }
+    
+    public boolean isBlackjack() {
+        return (sum() == BLACKJACK_SCORE) && (cards.size() == BLACKJACK_HAND_SIZE);
     }
     
     @Override
