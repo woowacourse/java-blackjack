@@ -14,9 +14,9 @@ public class Result {
 
     public Result(Dealer dealer, List<Player> players) {
         for (Player player : players) {
-            double money = player.getProfit(dealer).getMoney();
-            playerProfits.put(player.getName(), money);
-            dealerProfit = dealerProfit.addProfit(-money);
+            Money playerProfit = player.getProfit(dealer);
+            playerProfits.put(player.getName(), playerProfit.getMoney());
+            dealerProfit = dealerProfit.minusProfit(playerProfit);
         }
     }
 
