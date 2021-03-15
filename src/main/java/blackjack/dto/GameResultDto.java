@@ -3,8 +3,8 @@ package blackjack.dto;
 import java.util.List;
 
 public class GameResultDto {
-    WinPrizeDto dealerWinPrize;
-    List<WinPrizeDto> playersWinPrize;
+    private WinPrizeDto dealerWinPrize;
+    private List<WinPrizeDto> playersWinPrize;
 
     public GameResultDto(WinPrizeDto winPrizeDto, List<WinPrizeDto> playersWinPrize) {
         this.dealerWinPrize = winPrizeDto;

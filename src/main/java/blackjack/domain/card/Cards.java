@@ -4,7 +4,7 @@ import blackjack.domain.rule.ScoreRule;
 import java.util.List;
 
 public class Cards {
-    List<Card> cards;
+    private List<Card> cards;
 
     public Cards(List<Card> initialCard) {
         this.cards = initialCard;

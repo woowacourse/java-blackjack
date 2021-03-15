@@ -1,8 +1,8 @@
 package blackjack.dto;
 
 public class WinPrizeDto {
-    String name;
-    int money;
+    private String name;
+    private int money;
 
     public WinPrizeDto(String name, int money) {
         this.name = name;
