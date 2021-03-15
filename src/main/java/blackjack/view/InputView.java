@@ -2,9 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.participant.Player;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static blackjack.view.OutputView.NEW_LINE;
 import static blackjack.view.OutputView.printNewLine;
@@ -38,9 +36,13 @@ public class InputView {
         }
     }
 
-    public static double getBettings(String nameAsString) {
-        System.out.print(NEW_LINE);
-        System.out.println(nameAsString + "의 베팅 금액은?");
-        return Double.parseDouble(scanner.nextLine());
+    public static Map<String, Double> getBettings(List<String> playerNames) {
+        Map<String, Double> bettings = new HashMap<>();
+        for(String name : playerNames) {
+            System.out.print(NEW_LINE);
+            System.out.println(name + "의 베팅 금액은?");
+            bettings.put(name, Double.parseDouble(scanner.nextLine()));
+        }
+        return bettings;
     }
 }

@@ -2,11 +2,11 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.result.GameResult;
-import blackjack.view.InputView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -32,13 +32,18 @@ public class Players {
         return new ArrayList<>(players);
     }
 
-    public void initBettings() {
-        players = Collections.unmodifiableList(
-                new ArrayList<>(
-                        getPlayersAsList()
-                                .stream()
-                                .map(player -> player.changeBetting(InputView.getBettings(player.getNameAsString())))
-                                .collect(Collectors.toList())));
+    public void initBettings(Map<String, Double> bettings) {
+        players = bettings.entrySet()
+                .stream()
+                .map(nameAndBetting -> findPlayerByName(nameAndBetting.getKey()).changeBetting(nameAndBetting.getValue()))
+                .collect(Collectors.toList());
+    }
+
+    public Player findPlayerByName(String name){
+        return players.stream()
+                .filter(player -> player.getNameAsString().equals(name))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("플레이어가 존재하지 않습니다."));
     }
 
     private void validatePlayersCount(final List<Player> players) {

@@ -46,7 +46,8 @@ public class BlackJackController {
 
     private void initBettings() {
         try {
-            blackJackService.initBettings();
+            List<String> playerNames = blackJackService.getPlayersAsStrings();
+            blackJackService.initBettings(InputView.getBettings(playerNames));
         } catch (NumberFormatException e) {
             OutputView.printNumberFormatExceptionError(e);
             initBettings();

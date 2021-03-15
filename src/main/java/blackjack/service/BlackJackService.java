@@ -12,6 +12,8 @@ import blackjack.domain.result.GameResult;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackService {
 
@@ -32,8 +34,8 @@ public class BlackJackService {
         this.players = new Players(playerCards, requestNames);
     }
 
-    public void initBettings() {
-        players.initBettings();
+    public void initBettings(Map<String, Double> bettings) {
+        players.initBettings(bettings);
     }
 
     public List<Participant> getParticipantsAsList() {
@@ -45,6 +47,13 @@ public class BlackJackService {
 
     public List<Player> getPlayersAsList() {
         return this.players.getPlayersAsList();
+    }
+
+    public List<String> getPlayersAsStrings(){
+        List<Player> players = this.getPlayersAsList();
+        return players.stream()
+                .map(player -> player.getNameAsString())
+                .collect(Collectors.toList());
     }
 
     public Dealer getDealer() {
