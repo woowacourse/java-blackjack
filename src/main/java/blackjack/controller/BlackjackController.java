@@ -1,14 +1,14 @@
 package blackjack.controller;
 
 import blackjack.domain.Game;
-import blackjack.domain.user.User;
+import blackjack.domain.user.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackjackController {
 
     public void run() {
-        Game game = new Game(InputView.receivePlayerNames());
+        Game game = new Game(InputView.receiveInitialInfo());
 
         initCards(game);
         drawCards(game);
@@ -26,18 +26,18 @@ public class BlackjackController {
         OutputView.printDealerDraw(game.giveCardToDealer());
     }
 
-    private void addNewCard(Game game, User player) {
+    private void addNewCard(Game game, Player player) {
         if (InputView.askIfMoreCard(player)) {
             game.giveCardToPlayer(player);
             OutputView.printPlayerCard(player);
             return;
         }
-         player.convertToStay();
+        player.convertToStay();
     }
 
     private void printResults(Game game) {
-        OutputView.printUserResult(game.getResultDTOs());
-        OutputView.printWinningResult(game.getWinningResultDTOs());
+        OutputView.printUserResult(game.getUsers());
+        OutputView.printWinningResult(game.getWinningResults());
     }
 }
 

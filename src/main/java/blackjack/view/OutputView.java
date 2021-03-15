@@ -1,48 +1,43 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.user.MatchResult;
-import blackjack.domain.user.ResultDto;
+import blackjack.domain.user.BettingResult;
+import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
-import blackjack.domain.user.WinningResultDto;
 
 import java.io.PrintStream;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.*;
-
 public class OutputView {
+    private static final int DEALER_OPEN_CARD_INDEX = 0;
     private static final String COMMA = ", ";
-    public static final int DEALER_OPEN_CARD_INDEX = 0;
 
-    public static void printInitialCards(User dealer, List<User> players) {
+    public static void printInitialCards(User dealer, List<Player> players) {
         printIntroMessage(dealer, players);
         printUserCard(dealer, players);
         System.out.println();
     }
 
-    private static void printIntroMessage(User dealer, List<User> players) {
+    private static void printIntroMessage(User dealer, List<Player> players) {
         String playerNames = players.stream()
             .map(User::getName)
             .collect(Collectors.joining(COMMA));
         System.out.printf("%n%s와 %s에게 2장의 나누었습니다.%n", dealer.getName(), playerNames);
     }
 
-    public static void printUserCard(User dealer, List<User> players) {
+    public static void printUserCard(User dealer, List<Player> players) {
         printDealerCard(dealer);
         players.forEach(OutputView::printPlayerCard);
     }
 
-    private static void printDealerCard (User dealer) {
+    private static void printDealerCard(User dealer) {
         Card dealerOpenCard = dealer.getCards().get(DEALER_OPEN_CARD_INDEX);
         String dealerCards = dealerOpenCard.getDenomination().getName() + dealerOpenCard.getSuit().getName();
         System.out.printf("%s: %s%n", dealer.getName(), dealerCards);
     }
 
-    public static void printPlayerCard(User player) {
+    public static void printPlayerCard(Player player) {
         String cardString = makeCardString(player.getCards());
         System.out.printf("%s의 카드: %s%n", player.getName(), cardString);
     }
@@ -62,36 +57,28 @@ public class OutputView {
         System.out.println("\n딜러는 16초과로 카드를 받지 않았습니다.\n");
     }
 
-    public static void printUserResult(List<ResultDto> resultDtos) {
-        resultDtos.forEach(OutputView::printResultDto);
+    public static void printUserResult(List<User> users) {
+        users.forEach(OutputView::printScoreResult);
     }
 
-    private static PrintStream printResultDto(ResultDto resultDTO) {
+    private static PrintStream printScoreResult(User user) {
         return System.out.printf("%s 카드 : %s - 결과: %d%n",
-            resultDTO.getName(),
-            makeCardString(resultDTO.getCards()),
-            resultDTO.getScore());
+            user.getName(),
+            makeCardString(user.getCards()),
+            user.getScore());
     }
 
-    public static void printWinningResult(List<WinningResultDto> winningResultDtos) {
-        System.out.println("\n## 최종 승패");
-        System.out.println("딜러 : " + calculateDealerResult(winningResultDtos));
-        winningResultDtos.forEach(winningResultDto ->
-            System.out.printf("%s: %s%n", winningResultDto.getName(), winningResultDto.getResult().getName()));
+    public static void printWinningResult(List<BettingResult> bettingResults) {
+        System.out.println("\n## 최종 수익");
+        System.out.printf("딜러 : %.2f%n", calculateDealerResult(bettingResults));
+        bettingResults.forEach(bettingResult ->
+            System.out.printf("%s: %.2f%n", bettingResult.getName(), bettingResult.getEarningMoney()));
     }
 
-    private static String calculateDealerResult(List<WinningResultDto> winningResultDtos) {
-        Map<MatchResult, Long> calculate = countEachResults(winningResultDtos);
-
-        return calculate.keySet().stream()
-            .filter(matchResult -> calculate.get(matchResult) > 0)
-            .map(matchResult -> String.format("%d%s", calculate.get(matchResult), matchResult.getReverseName()))
-            .collect(Collectors.joining(" "));
-    }
-
-    public static Map<MatchResult, Long> countEachResults(List<WinningResultDto> winningResultDtos) {
-        return winningResultDtos.stream()
-            .map(WinningResultDto::getResult)
-            .collect(groupingBy(Function.identity(), counting()));
+    private static Double calculateDealerResult(List<BettingResult> bettingResults) {
+        return -1.0 * bettingResults
+            .stream()
+            .mapToDouble(BettingResult::getEarningMoney)
+            .sum();
     }
 }

@@ -11,14 +11,13 @@ public class Application {
 
     private static void runApplication(BlackjackController blackjackController) {
         try {
-            runBlackjack(blackjackController);
+            blackjackController.run();
+        } catch (NumberFormatException e) {
+            System.out.println("잘못된 숫자 입력입니다.");
+            runApplication(blackjackController);
         } catch (IllegalArgumentException e) {
             System.out.println("\n" + e.getMessage());
             runApplication(blackjackController);
         }
-    }
-
-    private static void runBlackjack(BlackjackController blackjackController) {
-        blackjackController.run();
     }
 }

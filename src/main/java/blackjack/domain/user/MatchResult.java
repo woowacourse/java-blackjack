@@ -1,50 +1,48 @@
 package blackjack.domain.user;
 
 public enum MatchResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN_BLACKJACK(1.5),
+    WIN_NORMAL(1.0),
+    DRAW(0),
+    LOSE(-1.0);
 
-    private final String name;
+    private final double earningRate;
 
-    MatchResult(String name) {
-        this.name = name;
+    MatchResult(double earningRate) {
+        this.earningRate = earningRate;
     }
 
-    public static MatchResult calculateResult(User player, User dealer) {
+    public static MatchResult calculateResult(Player player, User dealer) {
         if (player.isBust()) {
             return MatchResult.LOSE;
         }
         if (dealer.isBust()) {
-            return MatchResult.WIN;
+            return checkPlayerBlackjack(player);
         }
         if (dealer.isBlackjack() && player.isBlackjack()) {
             return MatchResult.DRAW;
         }
-        return compareScore(player.getScore(), dealer.getScore());
+        return compareScore(player, dealer);
     }
 
-    private static MatchResult compareScore(int playerScore, int dealerScore) {
-        if (playerScore < dealerScore) {
+    private static MatchResult compareScore(Player player, User dealer) {
+        if (player.compareTo(dealer) < 0) {
             return MatchResult.LOSE;
         }
-        if (playerScore == dealerScore) {
+        if (player.compareTo(dealer) == 0) {
             return MatchResult.DRAW;
         }
-        return MatchResult.WIN;
+        return checkPlayerBlackjack(player);
     }
 
-    public String getReverseName() {
-        if(this == MatchResult.WIN) {
-            return LOSE.name;
+    private static MatchResult checkPlayerBlackjack(Player player) {
+        if (player.isBlackjack()) {
+            return MatchResult.WIN_BLACKJACK;
         }
-        if(this == MatchResult.LOSE) {
-            return WIN.name;
-        }
-        return DRAW.name;
+        return MatchResult.WIN_NORMAL;
     }
 
-    public String getName() {
-        return name;
+    public double calculateEarningMoney(double bettingMoney) {
+        return bettingMoney * earningRate;
     }
 }

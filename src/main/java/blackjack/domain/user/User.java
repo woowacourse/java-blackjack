@@ -1,19 +1,25 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 
 import java.util.List;
 
-public abstract class User {
+public abstract class User implements Comparable<User> {
 
-    protected Hand hand;
+    protected final Hand hand;
+    protected final String name;
 
-    public void initialHands(List<Card> cards, int stayLimit) {
-        this.hand = new Hand(cards, stayLimit);
+    protected User(String name, List<Card> cards) {
+        validateNotEmptyName(name);
+        this.hand = new Hand(cards);
+        this.name = name;
     }
 
-    public void draw(Card card) {
-        hand.addCard(card);
+    private void validateNotEmptyName(String name) {
+        if ("".equals(name)) {
+            throw new IllegalArgumentException("빈 이름이 입력되었습니다.");
+        }
     }
 
     public boolean isHit() {
@@ -32,21 +38,22 @@ public abstract class User {
         hand.convertStatusToStay();
     }
 
-    public ResultDto createResultDTO() {
-        return new ResultDto(getName(), getCards(), getScore());
-    }
-
     public List<Card> getCards() {
         return hand.getCards();
     }
 
     public int getScore() {
-        return hand.getScore();
+        return hand.calculateHandScore();
     }
 
-    public HandStatus getStatus() {
-        return hand.getStatus();
+    public String getName() {
+        return this.name;
     }
 
-    public abstract String getName();
+    @Override
+    public int compareTo(User user) {
+        return Integer.compare(hand.calculateHandScore(), user.getScore());
+    }
+
+    public abstract boolean draw(Deck deck);
 }

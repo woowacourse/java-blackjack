@@ -1,16 +1,16 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
+import blackjack.domain.card.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class PlayerTest {
 
@@ -18,40 +18,48 @@ class PlayerTest {
     @Test
     void new_emptyName_ExceptionThrown() {
         assertThatIllegalArgumentException().isThrownBy(
-            () -> Player.create("")
+            () -> new Player("", 10000, makeCards())
         );
     }
 
     @DisplayName("카드 추가 테스트")
     @Test
-    public void draw_additionalCard() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
-        cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));
-        Player player = Player.create("pobi");
-        player.initialHands(cards, 21);
+    void draw_additionalCard() {
+        Player player = mockPlayer();
+        Deck deck = new Deck(CardGenerator.makeShuffledNewDeck());
 
-        player.draw(new Card(Denomination.TWO, Suit.SPADES));
+        player.draw(deck);
         assertThat(player.getCards()).hasSize(3);
     }
 
     @DisplayName("player의 HandStatus.STAY 로 번경")
     @Test
-    public void convertToStay() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Denomination.FIVE, Suit.CLUBS));
-        cards.add(new Card(Denomination.EIGHT, Suit.DIAMONDS));
-        Player player = Player.create("pobi");
-        player.initialHands(cards, 21);
+    void convertToStay() {
+        Player player = mockPlayer();
 
         player.convertToStay();
-        assertThat(player.getStatus()).isEqualTo(HandStatus.STAY);
+        assertFalse(player.isBlackjack());
+        assertFalse(player.isHit());
+        assertFalse(player.isBust());
+
     }
 
     @DisplayName("플레이어 이름 가져오기")
     @Test
     void getName() {
-        User player = Player.create("pobi");
+        User player = mockPlayer();
         assertThat(player.getName()).isEqualTo("pobi");
+    }
+
+    private Player mockPlayer() {
+        return new Player("pobi", 10000, makeCards());
+    }
+
+    private List<Card> makeCards() {
+        return Stream.<Card>builder()
+            .add(new Card(Denomination.FIVE, Suit.CLUBS))
+            .add(new Card(Denomination.EIGHT, Suit.DIAMONDS))
+            .build()
+            .collect(Collectors.toList());
     }
 }

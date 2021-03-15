@@ -8,24 +8,22 @@ public class Hand {
     public static final int ACE_CONVERSION_LIMIT = 11;
     public static final int ACE_DIFFERENCE = 10;
 
-    private final int hitLimit;
-    private List<Card> cards;
+    private final List<Card> cards;
     private HandStatus status;
 
-    public Hand(List<Card> cards, int hitLimit) {
+    public Hand(List<Card> cards) {
         this.cards = cards;
-        this.hitLimit = hitLimit;
-        this.status = calculateStatus(calculateHandScore());
+        this.status = calculateStatus();
     }
 
     public void addCard(Card card) {
         cards.add(card);
-        status = calculateStatus(calculateHandScore());
+        status = calculateStatus();
     }
 
     public int calculateHandScore() {
         int score = calculateScore();
-        if(score <= ACE_CONVERSION_LIMIT && hasAce()) {
+        if (score <= ACE_CONVERSION_LIMIT && hasAce()) {
             score += ACE_DIFFERENCE;
         }
         return score;
@@ -42,8 +40,9 @@ public class Hand {
             .anyMatch(Card::isAce);
     }
 
-    private HandStatus calculateStatus(int score) {
-        return HandStatus.calculateStatus(score, hitLimit, cards.size());
+    private HandStatus calculateStatus() {
+        int score = calculateHandScore();
+        return HandStatus.calculateStatus(score, cards.size());
     }
 
     public void convertStatusToStay() {
@@ -51,23 +50,15 @@ public class Hand {
     }
 
     public boolean isHit() {
-        return status == HandStatus.HIT;
+        return status.isHit();
     }
 
     public boolean isBust() {
-        return status == HandStatus.BUST;
+        return status.isBust();
     }
 
     public boolean isBlackjack() {
-        return status == HandStatus.BLACK_JACK;
-    }
-
-    public int getScore() {
-        return calculateHandScore();
-    }
-
-    public HandStatus getStatus() {
-        return status;
+        return status.isBlackjack();
     }
 
     public List<Card> getCards() {

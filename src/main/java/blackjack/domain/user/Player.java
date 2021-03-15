@@ -1,26 +1,29 @@
 package blackjack.domain.user;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+
+import java.util.List;
+
 public class Player extends User {
 
-    private final String name;
+    private final double bettingMoney;
 
-    private Player(String name) {
-        validateNotEmptyName(name);
-        this.name = name;
-    }
-
-    public static Player create(String name) {
-        return new Player(name);
-    }
-
-    private void validateNotEmptyName(String name) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("빈 이름이 입력되었습니다.");
-        }
+    public Player(String name, double bettingMoney, List<Card> cards) {
+        super(name, cards);
+        this.bettingMoney = bettingMoney;
     }
 
     @Override
-    public String getName() {
-        return name;
+    public boolean draw(Deck deck) {
+        hand.addCard(deck.pickSingleCard());
+        return true;
+    }
+
+
+    public BettingResult computeBettingResult(MatchResult matchResult) {
+        double earningMoney = matchResult.calculateEarningMoney(bettingMoney);
+        return new BettingResult(this.name, earningMoney);
     }
 }
+
