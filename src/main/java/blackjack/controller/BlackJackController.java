@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.InitialCardsDrawStrategy;
+import blackjack.domain.card.strategy.InitialCardsDrawStrategy;
 import blackjack.domain.participant.*;
 import blackjack.domain.state.Hit;
 import blackjack.dto.GameResultDto;
