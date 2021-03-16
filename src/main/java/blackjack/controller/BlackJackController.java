@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.InitialCardsDrawStrategy;
 import blackjack.domain.participant.*;
 import blackjack.domain.state.Hit;
 import blackjack.dto.GameResultDto;
@@ -15,7 +16,7 @@ import static blackjack.view.OutputView.MSG_DEALER_GET_MORE_CARD;
 
 public class BlackJackController {
 
-public void play() {
+    public void play() {
         Deck deck = Deck.generate();
         Participants participants = getParticipants(InputView.inputNames(), deck);
         OutputView.printInitialCardStatus(participants);
@@ -26,10 +27,10 @@ public void play() {
 
     private Participants getParticipants(List<String> names, Deck deck) {
         List<AbstractParticipant> participants = names.stream()
-                .map(name -> new Player(name, new Hit(deck.handOutInitCards())))
+                .map(name -> new Player(name, new Hit(deck.drawCards(new InitialCardsDrawStrategy()))))
                 .collect(Collectors.toList());
         bettingPlayer(participants);
-        participants.add(0, new Dealer(new Hit(deck.handOutInitCards())));
+        participants.add(0, new Dealer(new Hit(deck.drawCards(new InitialCardsDrawStrategy()))));
         return new Participants(participants);
     }
 
