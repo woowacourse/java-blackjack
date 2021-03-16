@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
+    public static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
+
     private final List<Card> cards;
 
     public Cards() {
@@ -42,5 +45,44 @@ public class Cards {
 
     public void shuffle() {
         Collections.shuffle(cards);
+    }
+
+    public int calculateScore() {
+        int score = 0;
+        score += noneAceCardScore();
+        score = aceCardScore(score);
+
+        return score;
+    }
+
+    private int noneAceCardScore() {
+        return cards.stream()
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::score)
+                .sum();
+    }
+
+    private int aceCardScore(int score) {
+        int aceCount = (int) cards
+                .stream()
+                .filter(Card::isAce)
+                .count();
+        for (int i = 0; i < aceCount; i++) {
+            score += Denomination.selectAceScore(score);
+        }
+
+        return score;
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_SCORE;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_SCORE;
+    }
+
+    public boolean isStay() {
+        return cards.size() > BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_SCORE;
     }
 }

@@ -19,6 +19,14 @@ public class Card {
         return this.shape;
     }
 
+    public int score() {
+        return this.denomination.score();
+    }
+
+    public boolean isAce() {
+        return this.denomination.equals(Denomination.ACE);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

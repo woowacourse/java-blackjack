@@ -19,6 +19,15 @@ public class InputView {
         return Arrays.stream(scanner.nextLine().split(COMMA)).collect(Collectors.toList());
     }
 
+    public static double inputMoney() {
+        try {
+            return Double.parseDouble(scanner.nextLine());
+        } catch (IllegalArgumentException e) {
+            OutputView.printError("유효하지 않은 배팅 금액입니다.");
+            return inputMoney();
+        }
+    }
+
     public static String inputAnswer() {
         String answer = scanner.nextLine();
         if (!answer.equals(YES) && !answer.equals(NO)) {

@@ -1,15 +1,24 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.Score;
+import blackjack.domain.state.State;
 
-public class Player extends Participants {
+public class Player extends Participant {
 
     public Player(String name) {
         super(name);
     }
 
+    public Player(String name, State state) {
+        super(name, state);
+    }
+
+    @Override
+    public boolean isPlayer() {
+        return true;
+    }
+
     @Override
     public boolean canDraw() {
-        return Score.calculatorScore(this.getTakenCards()) < Score.MAX_SCORE;
+        return !state.isFinished();
     }
 }

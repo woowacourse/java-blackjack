@@ -1,24 +1,27 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.MatchResult;
-import blackjack.domain.Score;
+import blackjack.domain.state.State;
 
-public class Dealer extends Participants {
+public class Dealer extends Participant {
 
     private static final int DEALER_MAX_SCORE = 16;
-    private static final String DEALER_NAME = "딜러";
+    public static final String DEALER_NAME = "딜러";
 
     public Dealer() {
         super(DEALER_NAME);
     }
 
-    public MatchResult matchGame(Player player) {
-        return MatchResult.getPlayerMatchResult(Score.calculatorScore(player.getTakenCards()), Score.calculatorScore(this.getTakenCards()));
+    public Dealer(State state) {
+        super(DEALER_NAME, state);
+    }
+
+    @Override
+    public boolean isPlayer() {
+        return false;
     }
 
     @Override
     public boolean canDraw() {
-        return Score.calculatorScore(this.getTakenCards()) <= DEALER_MAX_SCORE;
+        return state.score() <= DEALER_MAX_SCORE;
     }
 }
-

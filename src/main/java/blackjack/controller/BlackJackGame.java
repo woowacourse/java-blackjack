@@ -1,31 +1,35 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackResult;
+import blackjack.domain.ProfitResult;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Cards;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
-    private static final int INIT_DRAW_COUNT = 2;
     private static final String YES = "y";
 
     public void start() {
         Players players = registerPlayers();
+        ProfitResult profitResult = new ProfitResult(inputBettingMoney(players));
         Dealer dealer = new Dealer();
         CardDeck cardDeck = new CardDeck();
         cardDeck.shuffleCard();
+        List<Participant> participants = generateAllParticipants(players, dealer);
 
-        firstDraw(players, dealer, cardDeck);
+        firstDraw(participants, cardDeck);
         playerTurn(players, cardDeck);
         dealerTurn(dealer, cardDeck);
-        showResult(players, dealer);
+        showResult(players, dealer, profitResult);
     }
 
     private Players registerPlayers() {
@@ -46,21 +50,33 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    private void firstDraw(Players players, Dealer dealer, CardDeck cardDeck) {
-        eachDrawTwoCards(players, dealer, cardDeck);
-        OutputView.distributeCardMessage(players);
-        OutputView.showDealerFirstCard(dealer);
+    private Map<String, Double> inputBettingMoney(Players players) {
+        Map<String, Double> result = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            OutputView.showCards(player);
+            OutputView.printAskBettingMoney(player.getName());
+            result.put(player.getName(), InputView.inputMoney());
         }
+
+        return result;
     }
 
-    private void eachDrawTwoCards(Players players, Dealer dealer, CardDeck cardDeck) {
-        for (int i = 0; i < INIT_DRAW_COUNT; i++) {
-            dealer.receiveCard(cardDeck.drawCard());
-            players.getPlayers()
-                    .forEach(player -> player.receiveCard(cardDeck.drawCard()));
-        }
+    private List<Participant> generateAllParticipants(Players players, Dealer dealer) {
+        List<Participant> participants = new ArrayList<>(players.getPlayers());
+        participants.add(0, dealer);
+
+        return participants;
+    }
+
+    private void firstDraw(List<Participant> participants, CardDeck cardDeck) {
+        participants.forEach(participant ->
+                participant.firstDraw(new Cards(Arrays.asList(
+                        cardDeck.drawCard(),
+                        cardDeck.drawCard()))));
+        OutputView.distributeCardMessage(participants);
+        OutputView.showDealerFirstCard(participants.get(0).getTakenCards().peekCard());
+        participants.stream()
+                .filter(participant -> !participant.getName().equals(Dealer.DEALER_NAME))
+                .forEach(OutputView::showCards);
     }
 
     private void playerTurn(Players players, CardDeck cardDeck) {
@@ -71,7 +87,7 @@ public class BlackJackGame {
 
     private void askDraw(Player player, CardDeck cardDeck) {
         while (playerCanDraw(player)) {
-            player.receiveCard(cardDeck.drawCard());
+            player.draw(cardDeck.drawCard());
             OutputView.showCards(player);
         }
     }
@@ -85,19 +101,24 @@ public class BlackJackGame {
             return true;
         }
         OutputView.showCards(player);
+        player.stay();
         return false;
     }
 
     private void dealerTurn(Dealer dealer, CardDeck cardDeck) {
         while (dealer.canDraw()) {
-            dealer.receiveCard(cardDeck.drawCard());
+            dealer.draw(cardDeck.drawCard());
             OutputView.dealerReceiveOneCard();
+        }
+        if (dealer.isHit()) {
+            dealer.stay();
         }
     }
 
-    private void showResult(Players players, Dealer dealer) {
+    private void showResult(Players players, Dealer dealer, ProfitResult profitResult) {
         OutputView.showAllCards(players, dealer);
         BlackJackResult blackJackResult = new BlackJackResult(players.verifyResultByCompareScore(dealer));
-        OutputView.showFinalResult(blackJackResult);
+        profitResult.calculateProfit(blackJackResult.getResult(), players);
+        OutputView.showFinalResult(profitResult, profitResult.calculateDealerProfit());
     }
 }
