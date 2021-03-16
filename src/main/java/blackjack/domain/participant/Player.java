@@ -6,9 +6,6 @@ import blackjack.domain.state.State;
 import java.util.List;
 
 public class Player extends AbstractParticipant {
-    private static final int FROM = 0;
-    private static final int TO = 2;
-
     private int money;
 
     public Player(String name, State state) {
@@ -23,7 +20,9 @@ public class Player extends AbstractParticipant {
 
     @Override
     public boolean handOutCard(Card card) {
-        if (!isReceivable()) return false;
+        if (!isReceivable()) {
+            return false;
+        }
 
         receiveCard(card);
         changeState();
