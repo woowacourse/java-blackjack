@@ -29,11 +29,11 @@ public class Score {
     }
 
     public boolean isBust() {
-        return BLACKJACK.score < this.score;
+        return BLACKJACK.lessThan(Score.Of(score));
     }
 
     protected boolean isBlackjack() {
-        return BLACKJACK.score == score;
+        return BLACKJACK.equals(Score.Of(score));
     }
 
     public boolean lessThan(Score other) {
