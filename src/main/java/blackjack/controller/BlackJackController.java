@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.result.Result;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Names;
 import blackjack.domain.user.Player;
@@ -54,7 +55,7 @@ public class BlackJackController {
 
     private void endBlackJack(Dealer dealer, Players players) {
         OutputView.showScoreResult(dealer, players);
-        Map<Player, Double> playerEarning = playerEarningResult(players);
+        Map<Player, Double> playerEarning = playerEarningResult(dealer, players);
         double dealerEarning = playerEarning.values()
             .stream()
             .mapToDouble(Double::doubleValue)
@@ -63,12 +64,20 @@ public class BlackJackController {
         OutputView.showEarning(dealerEarning * -1);
     }
 
-    private Map<Player, Double> playerEarningResult(Players players) {
+    private Map<Player, Double> playerEarningResult(Dealer dealer, Players players) {
         Map<Player, Double> playerEarning = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            double earning = player.getMoney();
+            double earning = earningResult(dealer, player);
             playerEarning.put(player, earning);
         }
         return Collections.unmodifiableMap(playerEarning);
+    }
+
+    private double earningResult(Dealer dealer, Player player) {
+        double earning = player.getEarning();
+        if (earning == player.getMoney()) {
+            earning = player.getEarning(Result.compareScoreResult(player, dealer));
+        }
+        return earning;
     }
 }

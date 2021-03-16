@@ -10,7 +10,7 @@ public abstract class Running implements State {
     }
 
     @Override
-    public double profit(Money money) {
+    public double earning(Money money) {
         throw new UnsupportedOperationException();
     }
 }

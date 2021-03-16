@@ -9,5 +9,5 @@ public interface State {
 
     State draw(UserDeck userDeck);
 
-    double profit(Money money);
+    double earning(Money money);
 }

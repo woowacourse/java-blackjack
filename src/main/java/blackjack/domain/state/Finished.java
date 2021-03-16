@@ -18,7 +18,7 @@ public abstract class Finished implements State {
     }
 
     @Override
-    public double profit(Money money) {
+    public double earning(Money money) {
         return money.getEarning(earningRate());
     }
 

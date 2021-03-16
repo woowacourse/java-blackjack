@@ -37,4 +37,12 @@ public abstract class User {
     public int compare(User user) {
         return this.score() - user.score();
     }
+
+    public boolean isBlackjack() {
+        return userDeck.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return userDeck.isBust();
+    }
 }

@@ -21,7 +21,8 @@ public class OutputView {
     private static final String PLAYER_RESULT = "%s: %s";
     private static final String SCORE_RESULT = " - 결과: ";
     private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String BUST_MESSAGE = "BUST";
+    private static final String BUST_MESSAGE = "버스트";
+    private static final String BLACKJACK_MESSAGE = "블랙잭";
 
     private OutputView() {
     }
@@ -76,7 +77,8 @@ public class OutputView {
     private static void showPlayersEntireCard(Players players) {
         for (Player player : players.getPlayers()) {
             String dealerCards =
-                String.format(PLAYER_RESULT, player.getName(), combineAllCard(player))
+                String.format(
+                    PLAYER_RESULT, player.getName(), combineAllCard(player))
                     + SCORE_RESULT
                     + getScore(player);
             System.out.println(dealerCards);
@@ -85,18 +87,22 @@ public class OutputView {
 
     private static void showDealerEntireCard(Dealer dealer) {
         String dealerCards =
-            String.format(DEALER_RESULT, combineAllCard(dealer)) + SCORE_RESULT
-                + getScore(
-                dealer);
+            String.format(
+                DEALER_RESULT, combineAllCard(dealer))
+                + SCORE_RESULT
+                + getScore(dealer);
         System.out.println(dealerCards);
     }
 
     private static String getScore(User user) {
         int userScore = user.score();
-        if (userScore == 0) {
+        if (user.isBlackjack()) {
+            return BLACKJACK_MESSAGE;
+        }
+        if (user.isBust()) {
             return BUST_MESSAGE;
         }
-        return Integer.toString(userScore);
+        return Integer.toString(user.score());
     }
 
     public static void showEarning(Map<Player, Double> playerEarning) {
