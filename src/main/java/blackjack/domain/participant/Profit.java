@@ -2,11 +2,9 @@ package blackjack.domain.participant;
 
 import blackjack.domain.compete.CompeteResult;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-
-import static java.util.stream.Collectors.*;
 
 public class Profit {
     
@@ -23,10 +21,11 @@ public class Profit {
     }
     
     public static Profit of(final Dealer dealer, final List<Player> players) {
-        final Map<Player, Double> profitOfPlayers = players.stream()
-                                                           .collect(groupingBy(Function.identity(),
-                                                                   mapping(player -> calculateProfitOfPlayer(dealer, player),
-                                                                           reducing(null, (preProfit, postProfit) -> postProfit))));
+        final Map<Player, Double> profitOfPlayers = new HashMap<>();
+        for (Player player : players) {
+            final double profit = calculateProfitOfPlayer(dealer, player);
+            profitOfPlayers.put(player, profit);
+        }
         
         return new Profit(profitOfPlayers);
     }
