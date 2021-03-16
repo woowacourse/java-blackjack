@@ -26,7 +26,7 @@ class DeckTest {
     @Test
     void testInitialSize() {
         //when
-        Deck.generate();
+        Deck.generate().refresh();
         //then
         assertThat(deck.size()).isEqualTo(52);
     }
@@ -47,7 +47,7 @@ class DeckTest {
     @Test
     void testHandOutInitCards() {
         //when
-        List<Card> cards = deck.handOutInitCards();
+        List<Card> cards = deck.drawCards(new InitialCardsDrawStrategy());
 
         //then
         assertThat(cards).hasSize(2);
