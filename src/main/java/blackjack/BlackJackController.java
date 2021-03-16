@@ -54,7 +54,7 @@ public class BlackJackController {
     
     private void dealAdditionalCards() {
         dealToPlayers();
-        dealToMyself();
+        drawCardByDealer();
     }
     
     private void dealToPlayers() {
@@ -68,7 +68,7 @@ public class BlackJackController {
         }
     }
     
-    private void dealToMyself() {
+    private void drawCardByDealer() {
         while (dealer.canReceive()) {
             dealer.draw();
             OutputView.printDealerDrewMessage();
