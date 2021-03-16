@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.Arrays;
 
 public enum Number {
-    ACE("A", 11, 1),
+    ACE("A", 11),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -21,16 +21,10 @@ public enum Number {
 
     private final String name;
     private final int score;
-    private final int secondScore;
-
-    Number(final String name, final int score, final int secondScore) {
-        this.name = name;
-        this.score = score;
-        this.secondScore = secondScore;
-    }
 
     Number(final String name, final int score) {
-        this(name, score, score);
+        this.name = name;
+        this.score = score;
     }
 
     public static Number from(final String name) {
@@ -50,9 +44,5 @@ public enum Number {
 
     public boolean isAce() {
         return this.equals(ACE);
-    }
-
-    public int useSecondScore(final int score) {
-        return score - this.score + secondScore;
     }
 }

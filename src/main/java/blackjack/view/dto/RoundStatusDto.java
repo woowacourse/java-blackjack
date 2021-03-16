@@ -22,11 +22,12 @@ public class RoundStatusDto {
 
     public static RoundStatusDto toDto(Round round) {
         return new RoundStatusDto(round.getDealerName(),
-                round.getDealer().getCards(),
-                round.getPlayers().stream()
-                        .map(player -> new PlayerStatusDto(player.getName(), player.getCards(), player.getScore()))
+                round.getDealerCards(),
+                round.getPlayers()
+                        .stream()
+                        .map(player -> new PlayerStatusDto(player.getName(), player.getCards(), player.calculateScore()))
                         .collect(Collectors.toList()),
-                round.getDealer().getScore());
+                round.calculateDealerScore());
     }
 
     public int getDealerScore() {
@@ -48,5 +49,4 @@ public class RoundStatusDto {
     public List<Card> getSingleDealerCards() {
         return Collections.singletonList(dealerCards.get(0));
     }
-
 }

@@ -1,5 +1,8 @@
 package blackjack.domain.user;
 
+import blackjack.domain.state.State;
+
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -9,15 +12,16 @@ public class Player extends AbstractUser {
 
     private final String name;
 
-    public Player(final String name) {
+    public Player(State state, String name, BigDecimal bettingMoney) {
+        super(state, bettingMoney);
         validate(name);
         this.name = name;
     }
 
-    private void validate(final String name) {
-        if (!PATTERN.matcher(name).matches()) {
-            throw new IllegalArgumentException(String.format(PLAYER_WRONG_NAME_EXCEPTION_MESSAGE, name));
-        }
+    public Player(State state, String name) {
+        super(state, new BigDecimal("0"));
+        validate(name);
+        this.name = name;
     }
 
     @Override
@@ -25,11 +29,19 @@ public class Player extends AbstractUser {
         return name;
     }
 
+    @Override
+    public boolean canDraw() {
+        return !isFinish();
+    }
 
     @Override
-    public boolean isGameOver(final int gameOverScore) {
-        int score = getScore();
-        return (score > gameOverScore);
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
+    public boolean isPlayer() {
+        return true;
     }
 
     @Override
@@ -43,5 +55,11 @@ public class Player extends AbstractUser {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    private void validate(final String name) {
+        if (!PATTERN.matcher(name).matches()) {
+            throw new IllegalArgumentException(String.format(PLAYER_WRONG_NAME_EXCEPTION_MESSAGE, name));
+        }
     }
 }

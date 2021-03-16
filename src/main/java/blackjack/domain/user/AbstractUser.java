@@ -1,47 +1,68 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
+import blackjack.domain.state.State;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.math.BigDecimal;
 import java.util.List;
 
-import static blackjack.domain.Round.GAME_OVER_SCORE;
-
 public abstract class AbstractUser {
-    private final List<Card> cards = new ArrayList<>();
+    private final BigDecimal bettingMoney;
+    private State state;
+
+    protected AbstractUser(State state, BigDecimal bettingMoney) {
+        validateMoney(bettingMoney);
+        this.state = state;
+        this.bettingMoney = bettingMoney;
+    }
+
+    public final State draw(Card card) {
+        return state.draw(card);
+    }
+
+    public final State stay() {
+        return state.stay();
+    }
+
+    public final State getState() {
+        return state;
+    }
 
     public final List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return state.cards().getCards();
     }
 
-    public final int getScore() {
-        int score = cards.stream()
-                .mapToInt(Card::numberScore)
-                .sum();
-        int aceCount = getAceCount();
-        while (aceCount-- > 0 && score > GAME_OVER_SCORE) {
-            score = Number.ACE.useSecondScore(score);
-        }
-        return score;
+    public final BigDecimal getBettingMoney() {
+        return bettingMoney;
     }
 
-    public final void addFirstCards(final List<Card> cards) {
-        this.cards.addAll(cards);
+    public final BigDecimal profit(State state, BigDecimal bettingMoney) {
+        return this.state.profit(state, bettingMoney);
     }
 
-    public final void addCard(final Card card) {
-        cards.add(card);
+    public final int calculateScore() {
+        return state.calculateScore();
     }
 
-    public final int getAceCount() {
-        return (int) cards.stream()
-                .filter(Card::containAce)
-                .count();
+    public final boolean isFinish() {
+        return state.isFinish();
+    }
+
+    public final void changeState(State state) {
+        this.state = state;
     }
 
     public abstract String getName();
 
-    public abstract boolean isGameOver(final int gameOverScore);
+    public abstract boolean canDraw();
+
+    public abstract boolean isDealer();
+
+    public abstract boolean isPlayer();
+
+    private void validateMoney(BigDecimal bettingMoney) {
+        if (bettingMoney.intValue() < 0) {
+            throw new IllegalArgumentException("양수의 금액만 가능합니다.");
+        }
+    }
 }

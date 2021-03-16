@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class InputView {
     private static final String PLAYER_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String PLAYER_BETTING_MONEY_MESSAGE = "%s의 배팅 금액은?";
     private static final String PLAYER_WRONG_NAME_EXCEPTION_MESSAGE = "이름을 잘못 입력하였습니다. (입력값 : %s)";
     private static final String PLAYER_ADD_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(에는 y, 아니오는 n)";
     private static final String DELIMITER = ",";
@@ -41,5 +43,14 @@ public class InputView {
         if (!PATTERN.matcher(name).matches()) {
             throw new IllegalArgumentException(String.format(PLAYER_WRONG_NAME_EXCEPTION_MESSAGE, name));
         }
+    }
+
+    public BigDecimal getBettingMoney(String playerName) {
+        System.out.println(String.format(PLAYER_BETTING_MONEY_MESSAGE, playerName));
+        return new BigDecimal(stringToInt());
+    }
+
+    private int stringToInt() {
+        return Integer.parseInt(getNextLine());
     }
 }
