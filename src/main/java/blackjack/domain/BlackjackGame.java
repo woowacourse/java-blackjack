@@ -59,16 +59,18 @@ public class BlackjackGame {
     }
 
     public PlayerCardsDto turnForPlayer(final Player player) {
-        if (player.isAbleToTake()) {
-            player.takeCard(cardDeck.pop());
-        }
+        turnFor(player);
 
         return new PlayerCardsDto(player.getName(), player.getCards());
     }
 
     public void turnForDealer() {
-        if (dealer.isAbleToTake()) {
-            dealer.takeCard(cardDeck.pop());
+        turnFor(dealer);
+    }
+
+    private void turnFor(Participant participant) {
+        if (participant.isAbleToTake()) {
+            participant.takeCard(cardDeck.pop());
         }
     }
 
