@@ -22,7 +22,7 @@ public class OutputView {
         System.out.println();
         List<AbstractParticipant> participantsGroup = participants.getParticipants();
         for (AbstractParticipant participant : participantsGroup) {
-            System.out.println(participant.getName() + ": " + printCards(participant.showCards()));
+            System.out.println(participant.getName() + ": " + printCards(participant.showInitCards()));
         }
         System.out.println();
     }
