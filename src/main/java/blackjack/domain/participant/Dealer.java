@@ -48,7 +48,7 @@ public class Dealer extends AbstractParticipant {
     }
 
     private void checkStay() {
-        if (!isEnd() && sumTotalScore(new BlackJackScoreRule()) >= DRAW_BOUND_SCORE) {
+        if (!isEnd() && sumTotalScore(new BlackJackScoreRule()) > DRAW_BOUND_SCORE) {
             stay();
         }
     }
