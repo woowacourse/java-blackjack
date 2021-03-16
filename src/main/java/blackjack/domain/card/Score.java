@@ -5,20 +5,28 @@ import java.util.List;
 import java.util.Objects;
 
 public class Score {
+    public static final int MAX_SCORE = 44;
     public static final int BLACKJACK = 21;
     public static final int TEN = 10;
 
-    private final int score;
     private static final List<Score> CACHE = new ArrayList<>();
+    private final int score;
 
     static {
-        for (int i = 0; i <= 44; i++) {
+        for (int i = 0; i <= MAX_SCORE; i++) {
             CACHE.add(new Score(i));
         }
     }
 
     private Score(int score) {
+        validate(score);
         this.score = score;
+    }
+
+    private void validate(int score) {
+        if (score < 0 || score > MAX_SCORE) {
+            throw new IllegalArgumentException("처리될 수 없는 점수값입니다!");
+        }
     }
 
     public static Score of(int value) {
