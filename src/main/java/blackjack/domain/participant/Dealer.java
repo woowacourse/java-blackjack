@@ -16,6 +16,7 @@ public class Dealer extends AbstractParticipant {
     public Dealer(State state) {
         super(DEALER_NAME, state);
         changeState();
+        checkStay();
     }
 
     @Override
@@ -33,7 +34,6 @@ public class Dealer extends AbstractParticipant {
         receiveCard(card);
         changeState();
         checkStay();
-
         return false;
     }
 
