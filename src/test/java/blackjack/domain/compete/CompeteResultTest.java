@@ -3,70 +3,41 @@ package blackjack.domain.compete;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.compete.CompeteResult;
-import blackjack.domain.compete.CompeteResultGroup;
+import blackjack.domain.participant.BettingMoney;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CompeteResultTest {
     
+    private final BettingMoney bettingMoney = BettingMoney.from("0");
     
-    @Test
-    @DisplayName("딜러와 모든 플레이어간의 승패 계산 테스트")
-    void compete() {
-        
-        // given
-        Dealer dealer = Dealer.create();
+    private Dealer dealer;
+    
+    @BeforeEach
+    void setUpDealer() {
+        dealer = Dealer.create();
         dealer.receive(new Card(Suit.HEART, Rank.TEN));
         dealer.receive(new Card(Suit.HEART, Rank.JACK));
-        
-        Player jason = Player.from("jason");
-        jason.receive(new Card(Suit.CLOVER, Rank.TEN));
-        jason.receive(new Card(Suit.CLOVER, Rank.NINE));
-        
-        Player cu = Player.from("cu");
-        cu.receive(new Card(Suit.SPADE, Rank.TEN));
-        cu.receive(new Card(Suit.SPADE, Rank.JACK));
-        
-        List<Player> players = Arrays.asList(jason, cu);
-        
-        // when
-        final CompeteResultGroup competeResultGroup = CompeteResult.compete(dealer, players);
-        final String result = competeResultGroup.getCompeteResultOfDealer();
-        
-        // then
-        assertThat(result).isEqualTo("1승 1무");
     }
-    
     
     @Test
     @DisplayName("플레이어의 카드 합이 딜러의 합보다 클 경우 승리")
     void compete_playerSumGreaterThanDealerSum_Win() {
         
         // given
-        Dealer dealer = Dealer.create();
-        dealer.receive(new Card(Suit.HEART, Rank.TEN));
-        dealer.receive(new Card(Suit.HEART, Rank.JACK));
-        
-        
-        Player pobi = Player.from("pobi");
+        Player pobi = Player.of("pobi", bettingMoney);
         pobi.receive(new Card(Suit.DIAMOND, Rank.TEN));
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
         pobi.receive(new Card(Suit.DIAMOND, Rank.ACE));
         
-        List<Player> players = Collections.singletonList(pobi);
-        
         // when
-        final CompeteResultGroup competeResultGroup = CompeteResult.compete(dealer, players);
-        final String result = competeResultGroup.getCompeteResultOfPlayer(pobi);
+        final String result = CompeteResult.getCompeteResultOfPlayer(dealer, pobi)
+                                           .getCompeteResult();
         
         // then
         assertThat(result).isEqualTo("승");
@@ -77,19 +48,13 @@ class CompeteResultTest {
     void compete_playerSumLessThanDealerSum_Defeat() {
         
         // given
-        Dealer dealer = Dealer.create();
-        dealer.receive(new Card(Suit.HEART, Rank.TEN));
-        dealer.receive(new Card(Suit.HEART, Rank.JACK));
-        
-        Player pobi = Player.from("pobi");
+        Player pobi = Player.of("pobi", bettingMoney);
         pobi.receive(new Card(Suit.CLOVER, Rank.TEN));
         pobi.receive(new Card(Suit.CLOVER, Rank.FIVE));
         
-        List<Player> players = Collections.singletonList(pobi);
-        
         // when
-        final CompeteResultGroup competeResultGroup = CompeteResult.compete(dealer, players);
-        final String result = competeResultGroup.getCompeteResultOfPlayer(pobi);
+        final String result = CompeteResult.getCompeteResultOfPlayer(dealer, pobi)
+                                           .getCompeteResult();
         
         // then
         assertThat(result).isEqualTo("패");
@@ -100,20 +65,13 @@ class CompeteResultTest {
     void compete_playerSumEqualToDealerSum_Draw() {
         
         // given
-        Dealer dealer = Dealer.create();
-        dealer.receive(new Card(Suit.HEART, Rank.TEN));
-        dealer.receive(new Card(Suit.HEART, Rank.JACK));
-        
-        
-        Player pobi = Player.from("pobi");
+        Player pobi = Player.of("pobi", bettingMoney);
         pobi.receive(new Card(Suit.DIAMOND, Rank.TEN));
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
         
-        List<Player> players = Collections.singletonList(pobi);
-        
         // when
-        final CompeteResultGroup competeResultGroup = CompeteResult.compete(dealer, players);
-        final String result = competeResultGroup.getCompeteResultOfPlayer(pobi);
+        final String result = CompeteResult.getCompeteResultOfPlayer(dealer, pobi)
+                                           .getCompeteResult();
         
         // then
         assertThat(result).isEqualTo("무");
@@ -124,22 +82,14 @@ class CompeteResultTest {
     void compete_isBust_Defeat() {
         
         // given
-        Dealer dealer = Dealer.create();
-        dealer.receive(new Card(Suit.HEART, Rank.TEN));
-        dealer.receive(new Card(Suit.HEART, Rank.JACK));
-        dealer.receive(new Card(Suit.HEART, Rank.JACK));
-        
-        
-        Player pobi = Player.from("pobi");
+        Player pobi = Player.of("pobi", bettingMoney);
         pobi.receive(new Card(Suit.DIAMOND, Rank.TEN));
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
         pobi.receive(new Card(Suit.DIAMOND, Rank.JACK));
         
-        List<Player> players = Collections.singletonList(pobi);
-        
         // when
-        final CompeteResultGroup competeResultGroup = CompeteResult.compete(dealer, players);
-        final String result = competeResultGroup.getCompeteResultOfPlayer(pobi);
+        final String result = CompeteResult.getCompeteResultOfPlayer(dealer, pobi)
+                                           .getCompeteResult();
         
         // then
         assertThat(result).isEqualTo("패");

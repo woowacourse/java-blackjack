@@ -1,9 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.compete.CompeteResult;
-import blackjack.domain.compete.CompeteResultGroup;
-import blackjack.domain.participant.*;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Profit;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +21,9 @@ public class OutputView {
     private static final String DEALER_RECEIVE_MESSAGE = LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     
     private static final String SUMMARY_STATISTICS_FORMAT = "%s - 결과 : %d" + LINE_SEPARATOR;
-    private static final String COMPETE_RESULT_FORMAT = "%s : %s" + LINE_SEPARATOR;
+    
+    private static final String PROFIT_TITLE = "## 최종 수익";
+    private static final String PROFIT_FORMAT = "%s: %.0f" + LINE_SEPARATOR;
     
     private static final String CARD_HANDS_DELIMITER = ", ";
     private static final String PLAYER_NAMES_DELIMITER = ", ";
@@ -58,6 +61,10 @@ public class OutputView {
                           .collect(Collectors.joining(CARD_HANDS_DELIMITER));
     }
     
+    public static void printDealerDrewMessage() {
+        System.out.println(DEALER_RECEIVE_MESSAGE);
+    }
+    
     public static void printSummaryStatistics(Dealer dealer, List<Player> players) {
         System.out.println();
         
@@ -67,21 +74,14 @@ public class OutputView {
         }
     }
     
-    public static void printDealerDrewMessage() {
-        System.out.println(DEALER_RECEIVE_MESSAGE);
-    }
-    
-    public static void printGameResult(Dealer dealer, List<Player> players) {
+    public static void printProfit(Dealer dealer, List<Player> players) {
         System.out.println();
         
-        CompeteResultGroup competeResultGroup = CompeteResult.compete(dealer, players);
-        printCompeteResult(dealer.getName(), competeResultGroup.getCompeteResultOfDealer());
+        Profit profit = Profit.of(dealer, players);
+        System.out.println(PROFIT_TITLE);
+        System.out.printf(PROFIT_FORMAT, dealer.getName(), profit.calculateProfitOfDealer());
         for (Player player : players) {
-            printCompeteResult(player.getName(), competeResultGroup.getCompeteResultOfPlayer(player));
+            System.out.printf(PROFIT_FORMAT, player.getName(), profit.getProfitOfPlayer(player));
         }
-    }
-    
-    private static void printCompeteResult(String name, String competeResult) {
-        System.out.printf(COMPETE_RESULT_FORMAT, name, competeResult);
     }
 }

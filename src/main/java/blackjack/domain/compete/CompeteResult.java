@@ -3,12 +3,6 @@ package blackjack.domain.compete;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-
-import static java.util.stream.Collectors.*;
-
 public enum CompeteResult {
     WIN("승"), DRAW("무"), DEFEAT("패");
     
@@ -18,15 +12,7 @@ public enum CompeteResult {
         this.competeResult = competeResult;
     }
     
-    public static CompeteResultGroup compete(final Dealer dealer, final List<Player> players) {
-        final Map<Player, CompeteResult> collect = players.stream()
-                                                          .collect(groupingBy(Function.identity(),
-                                                                  mapping(player -> CompeteResult.getCompeteResultOfPlayer(dealer, player), reducing(null, (competeResult1, competeResult2) -> competeResult2))));
-        
-        return new CompeteResultGroup(collect);
-    }
-    
-    private static CompeteResult getCompeteResultOfPlayer(Dealer dealer, Player player) {
+    public static CompeteResult getCompeteResultOfPlayer(Dealer dealer, Player player) {
         if (isPlayerWin(dealer, player)) {
             return CompeteResult.WIN;
         }
@@ -42,8 +28,12 @@ public enum CompeteResult {
         return ((dealer.sumCardHand() < player.sumCardHand()) && !player.isBust());
     }
     
-    private static boolean isPlayerDefeat(Dealer dealer, Player player) {
+    public static boolean isPlayerDefeat(Dealer dealer, Player player) {
         return (dealer.sumCardHand() > player.sumCardHand()) || player.isBust();
+    }
+    
+    public static boolean isPlayerWinAsBlackjack(Dealer dealer, Player player) {
+        return !dealer.isBlackjack() && player.isBlackjack();
     }
     
     public String getCompeteResult() {

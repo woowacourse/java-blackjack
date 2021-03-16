@@ -13,25 +13,38 @@ public class BlackJackController {
     
     private static final int BASE_CARD_COUNT = 2;
     
-    public void run() {
-        List<Player> players = enterPlayers();
-        Dealer dealer = Dealer.create();
-        dealBaseCards(dealer, players);
-        progressPlayersTurn(dealer, players);
-        progressDealerTurn(dealer);
-        printResult(dealer, players);
+    private static final String NAME_DELIMITER = ",";
+    
+    private final Dealer dealer;
+    private final List<Player> players;
+    
+    private BlackJackController(Dealer dealer, List<Player> players) {
+        this.players = players;
+        this.dealer = dealer;
     }
     
-    private List<Player> enterPlayers() {
+    public static BlackJackController create() {
+        List<Player> players = enterPlayers();
+        Dealer dealer = Dealer.create();
+        return new BlackJackController(dealer, players);
+    }
+    
+    private static List<Player> enterPlayers() {
         String[] playerNames = InputView.getPlayerName()
-                                        .split(",");
+                                        .split(NAME_DELIMITER);
         
         return Arrays.stream(playerNames)
-                     .map(Player::from)
+                     .map(name -> Player.of(name, InputView.getBettingMoney(name)))
                      .collect(Collectors.toList());
     }
     
-    private void dealBaseCards(Dealer dealer, List<Player> players) {
+    public void run() {
+        dealBaseCards();
+        dealAdditionalCards();
+        printResult();
+    }
+    
+    private void dealBaseCards() {
         for (int i = 0; i < BASE_CARD_COUNT; i++) {
             dealer.draw();
             players.forEach(dealer::deal);
@@ -39,24 +52,31 @@ public class BlackJackController {
         OutputView.printDealtBaseCards(dealer, players);
     }
     
-    private void progressPlayersTurn(Dealer dealer, List<Player> players) {
-        for (Player player : players) {
-            while (player.canReceive() && InputView.wantsReceive(player)) {
-                dealer.deal(player);
-                OutputView.printNameAndHand(player);
-            }
+    private void dealAdditionalCards() {
+        dealToPlayers();
+        drawCardByDealer();
+    }
+    
+    private void dealToPlayers() {
+        players.forEach(this::dealToPlayer);
+    }
+    
+    private void dealToPlayer(Player player) {
+        while (player.canReceive() && InputView.wantsReceive(player)) {
+            dealer.deal(player);
+            OutputView.printNameAndHand(player);
         }
     }
     
-    private void progressDealerTurn(Dealer dealer) {
+    private void drawCardByDealer() {
         while (dealer.canReceive()) {
             dealer.draw();
             OutputView.printDealerDrewMessage();
         }
     }
     
-    private void printResult(Dealer dealer, List<Player> players) {
+    private void printResult() {
         OutputView.printSummaryStatistics(dealer, players);
-        OutputView.printGameResult(dealer, players);
+        OutputView.printProfit(dealer, players);
     }
 }
