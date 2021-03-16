@@ -41,6 +41,10 @@ public class Users {
     }
 
     public void stay() {
-        users.forEach(user -> user.state.stay());
+        users.stream()
+                .filter(user -> user.isPlayer())
+                .map(user -> user.state.stay()
+                );
+
     }
 }
