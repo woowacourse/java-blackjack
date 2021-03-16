@@ -13,6 +13,13 @@ public class Score {
     }
 
     public static Score Of(int score) {
+        if (BLACKJACK.equals(score)) {
+            return BLACKJACK;
+        }
+        
+        if (TEN.equals(score)) {
+            return TEN;
+        }
         return new Score(score);
     }
 
@@ -29,7 +36,11 @@ public class Score {
     }
 
     public boolean isBust() {
-        return BLACKJACK.lessThan(Score.Of(score));
+        return BLACKJACK.lessThan(score);
+    }
+
+    private boolean lessThan(int score) {
+        return this.score == score;
     }
 
     protected boolean isBlackjack() {
