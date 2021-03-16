@@ -1,8 +1,7 @@
 package blackjack.domain.card;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.Stack;
 
 public class Deck {
     private static final int TOP_OF_DECK = 0;

@@ -1,8 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.participant.AbstractParticipant;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
 
 import java.util.Arrays;
 import java.util.List;

@@ -6,7 +6,7 @@ import blackjack.domain.rule.ScoreRule;
 
 import java.util.List;
 
-public class Bust implements State{
+public class Bust implements State {
     private Cards cards;
 
     public Bust(List<Card> cards) {

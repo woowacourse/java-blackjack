@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.AbstractParticipant;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.rule.BlackJackScoreRule;
 import blackjack.dto.GameResultDto;

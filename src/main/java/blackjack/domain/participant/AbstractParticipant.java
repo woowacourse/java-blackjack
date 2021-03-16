@@ -16,8 +16,11 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     public abstract boolean isReceivable();
+
     public abstract boolean handOutCard(Card card);
+
     public abstract boolean isDealer();
+
     public abstract List<Card> showInitCards();
 
 

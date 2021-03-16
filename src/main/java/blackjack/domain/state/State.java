@@ -12,11 +12,18 @@ public interface State {
     }
 
     boolean isEndState();
+
     boolean isBust();
+
     boolean isBlackJack();
+
     double calculateEarningRate(State enemyState);
+
     int sumTotalScore(ScoreRule scoreRule);
+
     State changeState();
+
     State stay();
+
     Cards getCards();
 }
