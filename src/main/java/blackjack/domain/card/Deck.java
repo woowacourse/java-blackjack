@@ -4,29 +4,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class Deck {
     private static final List<Card> cards = new ArrayList<>();
 
     static {
-        for (Shape shape : Shape.values()) {
-            cards.addAll(cardsOf(shape));
-        }
-    }
-
-    private static List<Card> cardsOf(Shape shape) {
-        return Arrays.stream(CardNumber.values())
-                .map(number -> new Card(number, shape))
-                .collect(Collectors.toList());
+        List<Card> createdCards = Arrays.stream(CardNumber.values())
+                .flatMap(number -> Arrays.stream(Shape.values()).map(shape -> new Card(number, shape)))
+                .collect(toList());
+        cards.addAll(createdCards);
     }
 
     public static Card draw() {
         Collections.shuffle(cards);
         return cards.get(0);
-    }
-
-    public static List<Card> getCards() {
-        return cards;
     }
 }

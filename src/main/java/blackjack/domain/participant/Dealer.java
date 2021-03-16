@@ -1,33 +1,30 @@
 package blackjack.domain.participant;
 
-import java.util.Map;
+import blackjack.domain.state.Hit;
 
 public class Dealer extends Participant {
-    private static final int STAY_THRESHOLD = 17;
+    private static final String DEALER_NAME = "딜러";
+    private static final int DEALER_STAY_LIMIT = 17;
 
     public Dealer() {
-        super("딜러");
+        super(DEALER_NAME);
     }
 
-    public boolean isStay() {
-        return calculateCardsScoreResult() >= STAY_THRESHOLD;
+    public String getFirstCardsInfoToString() {
+        return state.cards().getFirstCardInfoToString();
     }
 
-    public String getGameResult(Map<String, String> playersGameResult) {
-        int winCount = (int) playersGameResult.entrySet().stream()
-                .filter(entry -> "승".equals(entry.getValue()))
-                .count();
-        int loseCount = playersGameResult.size() - winCount;
-
-        return String.format("%d승 %d패", winCount, loseCount);
-    }
-
-    public String getFirstCardInfo() {
-        return cards.get(0).toString();
+    public void doStayIfPossible() {
+        if (getCardsScore() >= DEALER_STAY_LIMIT && state instanceof Hit) {
+            state = state.stay();
+        }
     }
 
     @Override
-    public String getName() {
-        return name.toString();
+    public void setUpParticipantTwoCardsAndState() {
+        super.setUpParticipantTwoCardsAndState();
+        if (getCardsScore() >= DEALER_STAY_LIMIT && !isBlackjack()) {
+            state.stay();
+        }
     }
 }

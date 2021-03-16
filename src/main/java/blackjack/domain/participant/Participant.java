@@ -1,66 +1,51 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Game;
 import blackjack.domain.card.Card;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import blackjack.domain.card.Deck;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
 
 public abstract class Participant {
-    private static final int ZERO = 0;
-    private static final int DIFFERENCE_OF_ACE_VALUE = 10;
-
     protected final Name name;
-    protected final List<Card> cards = new ArrayList<>();
+    protected State state;
 
-    protected Participant(String inputName) {
-        this.name = new Name(inputName);
+    public Participant(String name) {
+        this.name = new Name(name);
+    }
+
+    public void setUpParticipantTwoCardsAndState() {
+        state = StateFactory.createInitialState(Deck.draw(), Deck.draw());
+    }
+
+    public String getCurrentCardsInfo() {
+        return state.cards().getCardsInfoToString();
+    }
+
+    public boolean isBust() {
+        return state.cards().isBust();
+    }
+
+    public boolean isBlackjack() {
+        return state.cards().isBlackjack();
+    }
+
+    public boolean isDrawable() {
+        return !state.isFinished();
     }
 
     public void addCard(Card card) {
-        cards.add(card);
+        state = state.addCard(card);
     }
 
-    public int calculateCardsScoreResult() {
-        int currentCardsScore = calculateCardsScore();
-        int possibleLoopCount = countAce();
-
-        while (canLowerCardsValue(currentCardsScore, possibleLoopCount)) {
-            currentCardsScore = lowerValueOfAce(currentCardsScore);
-            possibleLoopCount--;
-        }
-
-        return currentCardsScore;
+    public int getCardsScore() {
+        return state.cards().calculateCardsScore();
     }
 
-    public int countAce() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+    public String getName() {
+        return name.getName();
     }
 
-    private int calculateCardsScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+    public void stay() {
+        state = state.stay();
     }
-
-    private boolean canLowerCardsValue(int score, int remainLoop) {
-        return score > Game.BLACKJACK_NUMBER && remainLoop > ZERO;
-    }
-
-    public boolean isBurst() {
-        return calculateCardsScoreResult() > Game.BLACKJACK_NUMBER;
-    }
-
-    private int lowerValueOfAce(int value) {
-        return value - DIFFERENCE_OF_ACE_VALUE;
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
-    public abstract String getName();
 }

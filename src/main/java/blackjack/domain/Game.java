@@ -5,31 +5,36 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Game {
     public static final int BLACKJACK_NUMBER = 21;
-    private static final int SET_UP_CARD_COUNT = 2;
+    public static final int BLACKJACK_CONDITION_CARDS_SIZE = 2;
 
-    private final Dealer dealer;
     private final Players players;
+    private final Dealer dealer;
 
-    private Game(Players players) {
-        this.dealer = new Dealer();
+    public Game(Players players) {
         this.players = players;
-        setUpTwoCards();
+        this.dealer = new Dealer();
+        setUpTwoCardsAndState();
     }
 
-    public static Game of(Players players) {
-        return new Game(players);
-    }
-
-    private void setUpTwoCards() {
-        for (int i = 0; i < SET_UP_CARD_COUNT; i++) {
-            players.addCardToPlayer();
-            dealer.addCard(Deck.draw());
+    private void setUpTwoCardsAndState() {
+        for (Player player : players.getPlayers()) {
+            player.setUpParticipantTwoCardsAndState();
         }
+        dealer.setUpParticipantTwoCardsAndState();
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 
     public void giveCardToPlayer(Player player) {
@@ -38,29 +43,20 @@ public class Game {
 
     public void giveCardToDealer() {
         dealer.addCard(Deck.draw());
+        dealer.doStayIfPossible();
     }
 
-    public boolean isPlayerDrawable(Player player) {
-        return !player.isBurst() && !player.isBlackJack();
+    public Map<String, Integer> getPlayersProfitResult() {
+        return players.getPlayersProfitResult(dealer);
     }
 
-    public boolean isDealerDrawable() {
-        return !dealer.isStay();
-    }
+    public Map<String, Integer> getDealerProfitResult(Map<String, Integer> playersProfitResult) {
+        int playersTotalProfit = playersProfitResult.values().stream()
+                .mapToInt(value -> value)
+                .sum();
 
-    public String getDealerGameResult(Map<String, String> playersGameResult) {
-        return dealer.getGameResult(playersGameResult);
-    }
-
-    public Map<String, String> getPlayersGameResult() {
-        return players.getGameResults(dealer);
-    }
-
-    public List<Player> getPlayers() {
-        return players.getPlayers();
-    }
-
-    public Dealer getDealer() {
-        return dealer;
+        Map<String, Integer> dealerProfitResult = new HashMap<>();
+        dealerProfitResult.put(dealer.getName(), playersTotalProfit * (-1));
+        return dealerProfitResult;
     }
 }
