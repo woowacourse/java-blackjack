@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.gamer.Player;
+import blackjack.domain.gamer.Participant;
 import blackjack.domain.utils.RandomCardDeck;
 import blackjack.dto.ResultDto;
 import blackjack.view.InputView;
@@ -18,7 +18,7 @@ public class Application {
     }
 
     private static void simulate(BlackjackGame blackjackGame) {
-        for (Player player : blackjackGame.getPlayers()) {
+        for (Participant player : blackjackGame.getPlayers()) {
             turnForPlayer(blackjackGame, player);
         }
 
@@ -26,9 +26,10 @@ public class Application {
         OutputView.printDealerGetCard();
     }
 
-    private static void turnForPlayer(BlackjackGame blackjackGame, Player player) {
+    private static void turnForPlayer(BlackjackGame blackjackGame, Participant player) {
         while (player.isAbleToTake() && InputView.requestOneMoreCard(player.getName())) {
-            OutputView.printPlayerCards(blackjackGame.turnForPlayer(player));
+            blackjackGame.turnFor(player);
+            OutputView.printPlayerCards(player);
         }
     }
 

@@ -37,7 +37,7 @@ class BlackjackGameTest {
         final Players players = new Players(playersValue);
 
         final BlackjackGame blackjackGame = new BlackjackGame(dealer, players, new FixedCardDeck());
-        blackjackGame.turnForPlayer(player);
+        blackjackGame.turnFor(player);
 
         assertThat(player.sizeOfCards()).isEqualTo(3);
 

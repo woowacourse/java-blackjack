@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.Outcome;
 import blackjack.domain.card.Cards;
 import blackjack.domain.gamer.Dealer;
-import blackjack.dto.PlayerCardsDto;
+import blackjack.domain.gamer.Participant;
 import blackjack.dto.ProcessDto;
 import blackjack.dto.ResultDto;
 
@@ -27,10 +27,10 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printPlayerCards(PlayerCardsDto playerInfo) {
-        final String cards = String.join(DELIMITER, playerInfo.getCards().getUnmodifiableCardNames());
+    public static void printPlayerCards(Participant player) {
+        final String cards = String.join(DELIMITER, player.getCards().getUnmodifiableCardNames());
 
-        System.out.printf(CARDS_RESULT_FORMAT, playerInfo.getName(), cards);
+        System.out.printf(CARDS_RESULT_FORMAT, player.getName(), cards);
     }
 
     public static void printInitialCards(ProcessDto processDto) {
