@@ -1,15 +1,15 @@
 package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.result.BlackjackResult;
-//import blackjack.domain.result.Result;
-import blackjack.domain.state.StateFactory;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Names;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BlackJackController {
 
@@ -24,7 +24,7 @@ public class BlackJackController {
         processPlayers(cardDeck, players);
         processDealer(cardDeck, dealer);
 
-//        endBlackJack(dealer, players);
+        endBlackJack(dealer, players);
     }
 
     private void processPlayers(CardDeck cardDeck, Players players) {
@@ -36,7 +36,7 @@ public class BlackJackController {
     private void playerDraw(CardDeck cardDeck, Player player) {
         if (!player.isFinished()) {
             String input = InputView.requestMoreDraw(player.getName());
-            if (player.isDrawable(input)) {
+            if (player.wantToDraw(input)) {
                 player.draw(cardDeck);
                 OutputView.showPlayerCard(player);
                 playerDraw(cardDeck, player);
@@ -52,15 +52,23 @@ public class BlackJackController {
         }
     }
 
-//    private void endBlackJack(Dealer dealer, Players players) {
-//        OutputView.showScoreResult(dealer, players);
-//        double dealerEarning = 0;
-//        for (Player player : players.getPlayers()) {
-//            BlackjackResult result = Result.getResult(player, dealer);
-//            double earning = player.getMoney(result.getEarningRate());
-//            dealerEarning += earning;
-//            OutputView.showEarning(player.getName(), earning);
-//        }
-//        OutputView.showEarning(dealerEarning * -1);
-//    }
+    private void endBlackJack(Dealer dealer, Players players) {
+        OutputView.showScoreResult(dealer, players);
+        Map<Player, Double> playerEarning = playerEarningResult(players);
+        double dealerEarning = playerEarning.values()
+            .stream()
+            .mapToDouble(Double::doubleValue)
+            .sum();
+        OutputView.showEarning(playerEarning);
+        OutputView.showEarning(dealerEarning * -1);
+    }
+
+    private Map<Player, Double> playerEarningResult(Players players) {
+        Map<Player, Double> playerEarning = new HashMap<>();
+        for (Player player : players.getPlayers()) {
+            double earning = player.getMoney();
+            playerEarning.put(player, earning);
+        }
+        return Collections.unmodifiableMap(playerEarning);
+    }
 }

@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.UserDeck;
 import blackjack.domain.state.State;
+import blackjack.domain.state.Stay;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,13 +30,17 @@ public class Player extends User {
         return name.getName();
     }
 
-    public Double getMoney(double earningRate) {
-        return money.getEarning(earningRate);
+    public Double getMoney() {
+        return state.profit(money);
     }
 
-    public boolean isDrawable(String input) {
+    public boolean wantToDraw(String input) {
         validateYorN(input);
         input = input.toLowerCase();
+        if ("n".equals(input)) {
+            state = new Stay();
+            return false;
+        }
         return "y".equals(input);
     }
 

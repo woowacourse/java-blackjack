@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class User {
 
     private final UserDeck userDeck;
-    private State state;
+    protected State state;
 
     public User(UserDeck userDeck) {
         this.userDeck = userDeck;

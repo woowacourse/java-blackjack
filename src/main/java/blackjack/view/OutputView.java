@@ -8,6 +8,7 @@ import blackjack.domain.user.User;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -98,8 +99,14 @@ public class OutputView {
         return Integer.toString(userScore);
     }
 
-    public static void showEarning(String name, double money) {
-        System.out.printf(PLAYER_RESULT + NEWLINE, name, formatEarning(money));
+    public static void showEarning(Map<Player, Double> playerEarning) {
+        for (Map.Entry<Player, Double> player : playerEarning.entrySet()) {
+            System.out.printf(
+                PLAYER_RESULT + NEWLINE,
+                player.getKey().getName(),
+                formatEarning(player.getValue())
+            );
+        }
     }
 
     public static void showEarning(double money) {

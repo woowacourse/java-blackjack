@@ -1,6 +1,7 @@
 package blackjack.domain.state;
 
 import blackjack.domain.card.UserDeck;
+import blackjack.domain.user.Money;
 
 public abstract class Finished implements State {
 
@@ -14,6 +15,11 @@ public abstract class Finished implements State {
     @Override
     public State draw(UserDeck userDeck) {
         throw new IllegalStateException(FINISHED_ERROR);
+    }
+
+    @Override
+    public double profit(Money money) {
+        return money.getEarning(earningRate());
     }
 
     public abstract double earningRate();
