@@ -1,31 +1,19 @@
 package blackjack.domain.user;
 
-import blackjack.domain.result.Result;
-
-import java.util.Arrays;
-
 public class Player extends User {
-    private static final int BUST = 21;
+    private Money money;
 
-    public Player(String name) {
+    public Player(String name, double bettingMoney) {
         super(new Name(name));
+        this.money = new Money(bettingMoney);
     }
 
-    public Result decide(Dealer dealer) {
-        if (isBust()) {
-            return Result.LOSE;
-        }
-        if (dealer.isBust() && !isBust()) {
-            return Result.WIN;
-        }
-        return Arrays.stream(Result.values())
-                .filter(value -> value.getCompareResult() == this.cards.compareTo(dealer.cards))
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+    public Money getMoney() {
+        return this.money;
     }
 
     @Override
     public boolean isHit() {
-        return cards.calculateScore() <= BUST;
+        return this.cards.calculateScore().isPlayerHit();
     }
 }

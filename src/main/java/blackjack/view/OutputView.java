@@ -1,8 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.Result;
-import blackjack.domain.result.ResultBoard;
+import blackjack.domain.user.Money;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
@@ -19,6 +18,10 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
+    public static void printInputMoney(String name) {
+        System.out.println("\n" + name + "의 베팅 금액은?");
+    }
+
     public static void printDistribute(Users users) {
         System.out.println("\n딜러와 " + String.join(COMMA, users.getPlayerNames()) + "에게 2장의 카드를 나누었습니다.");
     }
@@ -31,8 +34,8 @@ public class OutputView {
     }
 
     public static void printPlayerCards(Player player) {
-        System.out.print(player.getName() + "카드: ");
-        printCards(player.getCards());
+        System.out.print(player.name() + "카드: ");
+        printCards(player.cards().getCards());
     }
 
     private static void printCards(List<Card> cards) {
@@ -43,7 +46,7 @@ public class OutputView {
     }
 
     public static void printPlayerHit(Player player) {
-        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(player.name() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
     public static void printDealerHit() {
@@ -61,23 +64,23 @@ public class OutputView {
     }
 
     private static void printResult(User user) {
-        System.out.println(user.getName() + "카드: " +
-                user.getCards()
+        System.out.println(user.name() + "카드: " +
+                user.cards().getCards()
                         .stream()
                         .map(Card::toString)
                         .collect(joining(COMMA_WITH_BLANK)) + " - 결과: " +
-                user.getScore());
+                user.score());
     }
 
-    public static void printResultBoard(ResultBoard resultBoard) {
-        System.out.println("\n## 최종 승패");
-        System.out.print("딜러: ");
-        for (Result result : resultBoard.getDealerResultBoard().keySet()) {
-            System.out.print(resultBoard.getDealerResultBoard().get(result) + result.getResult() + " ");
-        }
-        System.out.println();
-        for (Player player : resultBoard.getPlayerResultBoard().keySet()) {
-            System.out.println(player.getName() + ": " + resultBoard.getPlayerResultBoard().get(player).getResult());
+    public static void printProfit(Users users, List<Money> profit) {
+        System.out.println("\n## 최종 수익");
+        printEachProfit(users, profit);
+    }
+
+    private static void printEachProfit(Users users, List<Money> profit) {
+        System.out.println(users.getDealer().name() + ": " + profit.get(0).toInteger());
+        for (int i = 0; i < users.getPlayers().size(); i++) {
+            System.out.println(users.getPlayers().get(i).name() + ": " + profit.get(i+1).toInteger());
         }
     }
 }

@@ -16,35 +16,16 @@ public class UsersTest {
 
     @BeforeEach
     public void setUp() {
-        users = new Users(new Dealer(), Arrays.asList("amazzi", "dani", "pobi"));
+        users = new Users(new Dealer(), new Players(Arrays.asList(
+                new Player("amazzi", 10000.0),
+                new Player("dani", 10000.0),
+                new Player("pobi", 20000.0))));
     }
 
     @DisplayName("이름별로 참여자들을 생성한다.")
     @Test
     void createPlayers() {
         assertThat(users).isInstanceOf(Users.class);
-    }
-
-    @DisplayName("각 플레이어에게 초기에 카드 두장을 배분한다.")
-    @Test
-    void DistributeToEachPlayer() {
-        Deck deck = new Deck();
-        users.distributeToPlayer(deck);
-
-        assertThat(users.getPlayers()
-                .stream()
-                .allMatch(user -> user.cards.getCards().size() == 2)).isTrue();
-    }
-
-    @DisplayName("각 플레이어의 모든 카드를 보여준다.")
-    @Test
-    void showCardsByPlayers() {
-        Deck deck = new Deck();
-        users.distributeToPlayer(deck);
-        List<Cards> cardsGroup = users.showCardsByPlayers();
-
-        assertThat(cardsGroup.stream()
-                .allMatch(cards -> cards.getCards().size() == 2)).isTrue();
     }
 
     @DisplayName("플레이어 이름들을 확인한다.")

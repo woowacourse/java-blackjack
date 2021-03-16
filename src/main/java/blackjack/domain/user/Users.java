@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,34 +10,25 @@ import static java.util.stream.Collectors.toList;
 
 public class Users {
     private final Dealer dealer;
-    private final List<Player> players;
+    private final Players players;
 
-    public Users(Dealer dealer, List<String> names) {
+    public Users(Dealer dealer, Players players) {
         this.dealer = dealer;
-        this.players = names.stream()
-                .map(Player::new)
-                .collect(toList());
-    }
-
-    public void distributeToPlayer(Deck deck) {
-        this.players.forEach(player -> player.distribute(deck.popTwo()));
+        this.players = players;
     }
 
     public List<Cards> showCardsByPlayers() {
         List<Cards> cards = new ArrayList<>();
-        this.players
-                .forEach(player -> cards.add(new Cards(player.getCards())));
+        this.players.getPlayers()
+                .forEach(player -> cards.add(new Cards(player.cards().getCards())));
         return cards;
     }
 
     public List<String> getPlayerNames() {
-        return Collections.unmodifiableList(this.players.stream()
-                .map(Player::getName)
+        return Collections.unmodifiableList(this.players.getPlayers()
+                .stream()
+                .map(User::name)
                 .collect(toList()));
-    }
-
-    public String getDealerName() {
-        return this.dealer.getName();
     }
 
     public Dealer getDealer() {
@@ -46,6 +36,6 @@ public class Users {
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(this.players);
+        return Collections.unmodifiableList(this.players.getPlayers());
     }
 }

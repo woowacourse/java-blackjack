@@ -40,7 +40,7 @@ public class CardsTest {
                 new Card(Shape.CLOVER, Value.KING)
         ));
 
-        assertThat(cards.calculateScore()).isEqualTo(18);
+        assertThat(cards.calculateScore()).isEqualTo(new Score(18));
     }
 
     @DisplayName("Ace 카드를 포함하고 있고, 카드 합계가 21이 넘은 경우 총합에서 -10을 한다.")
@@ -51,17 +51,7 @@ public class CardsTest {
                 new Card(Shape.SPACE, Value.ACE),
                 new Card(Shape.CLOVER, Value.KING)));
 
-        assertThat(cards.calculateScore()).isEqualTo(19);
-    }
-
-    @DisplayName("카드들에 ACE 카드가 포함되는지 확인한다.")
-    @Test
-    void contains() {
-        Cards cards = new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.QUEEN),
-                new Card(Shape.SPACE, Value.ACE)));
-
-        assertThat(cards.containAce()).isTrue();
+        assertThat(cards.calculateScore()).isEqualTo(new Score(19));
     }
 
     @DisplayName("카드들을 하나의 객체로 합친다.")
@@ -92,5 +82,27 @@ public class CardsTest {
                 new Card(Shape.SPACE, Value.ACE)));
 
         assertThat(cards.isBust()).isFalse();
+    }
+
+    @DisplayName("카드의 총합이 블랙잭인 경우를 확인한다.")
+    @Test
+    void isBlackjackTrue() {
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Shape.HEART, Value.ACE),
+                new Card(Shape.CLOVER, Value.JACK)
+        ));
+
+        assertThat(cards.isBlackjack()).isTrue();
+    }
+
+    @DisplayName("카드의 총합이 블랙잭이 아닌 경우를 확인한다.")
+    @Test
+    void isBlackjackFalse() {
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Shape.HEART, Value.EIGHT),
+                new Card(Shape.CLOVER, Value.JACK)
+        ));
+
+        assertThat(cards.isBlackjack()).isFalse();
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Cards implements Comparable<Cards> {
     private static final int FIRST_CARD = 0;
-    private static final int BUST = 21;
+    private static final int INITIAL_CARD_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -23,20 +23,32 @@ public class Cards implements Comparable<Cards> {
     }
 
     public boolean isBust() {
-        return this.calculateScore() > BUST;
+        return calculateScore().isBust();
     }
 
-    public int calculateScore() {
-        int score = cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
-        if (this.containAce() && score > BUST) {
-            score -= 10;
+    public boolean isBlackjack() {
+        return isInitialCardSize() && calculateScore().isBlackjack();
+    }
+
+    private boolean isInitialCardSize() {
+        return this.cards.size() == INITIAL_CARD_SIZE;
+    }
+
+    public Score calculateScore() {
+        Score score = new Score(sumScore());
+        if (hasAce()) {
+            score = score.minusTenIfBust();
         }
         return score;
     }
 
-    public boolean containAce() {
+    private int sumScore() {
+        return this.cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+    }
+
+    private boolean hasAce() {
         return this.cards.stream()
                 .anyMatch(Card::hasAce);
     }
@@ -45,8 +57,12 @@ public class Cards implements Comparable<Cards> {
         return Collections.unmodifiableList(this.cards);
     }
 
+    public int getScore() {
+        return this.calculateScore().getScore();
+    }
+
     @Override
     public int compareTo(Cards otherCards) {
-        return Integer.compare(this.calculateScore(), otherCards.calculateScore());
+        return Integer.compare(this.calculateScore().getScore(), otherCards.calculateScore().getScore());
     }
 }
