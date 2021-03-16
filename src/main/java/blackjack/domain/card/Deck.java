@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Stack;
 
 public class Deck {
-    private static final int TOP_OF_DECK = 0;
-
     private static Deck deck = null;
     private static Stack<Card> cards = null;
 
@@ -46,7 +44,7 @@ public class Deck {
     }
 
     public Card draw() {
-        return cards.remove(TOP_OF_DECK);
+        return cards.pop();
     }
 
     public List<Card> drawCards(DrawCardsStrategy drawCardsStrategy) {
