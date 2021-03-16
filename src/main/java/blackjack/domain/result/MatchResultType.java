@@ -3,17 +3,18 @@ package blackjack.domain.result;
 import static blackjack.domain.card.Cards.BLACKJACK_SCORE;
 
 public enum MatchResultType {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BLACKJACK_WIN(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSE(-1);
 
-    private final String status;
+    private final double earningRate;
 
-    MatchResultType(String status) {
-        this.status = status;
+    MatchResultType(double earningRate) {
+        this.earningRate = earningRate;
     }
 
-    public static MatchResultType getStatus(int dealerScore, int playerScore) {
+    public static MatchResultType getMatchResultType(int dealerScore, int playerScore) {
         if (isDealerBusted(dealerScore) || (playerScore > dealerScore && isPlayerNotBusted(playerScore))) {
             return WIN;
         }
@@ -31,8 +32,7 @@ public enum MatchResultType {
         return playerScore <= BLACKJACK_SCORE;
     }
 
-    @Override
-    public String toString() {
-        return status;
+    public double calculateProfit(int bettingMoney) {
+        return this.earningRate * bettingMoney;
     }
 }

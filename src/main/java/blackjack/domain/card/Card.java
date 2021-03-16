@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -16,14 +17,14 @@ public class Card {
     }
 
     public static List<Card> values() {
-        return CardCache.CARD_CACHE;
+        return Collections.unmodifiableList(CardCache.CARD_CACHE);
     }
 
     public boolean isAce() {
         return denomination.isAce();
     }
 
-    public String getName() {
+    public String getCardInformation() {
         return denomination.getDenomination() + suit;
     }
 

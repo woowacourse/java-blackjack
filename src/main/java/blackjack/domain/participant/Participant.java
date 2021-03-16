@@ -11,9 +11,9 @@ public abstract class Participant {
         cards = new Cards();
     }
 
-    public abstract String showCardsAtFirst();
+    protected abstract String showCardsAtFirst();
 
-    public abstract String getName();
+    protected abstract String getName();
 
     public void drawAtFirst(Deck deck) {
         hit(deck.pop());
@@ -24,8 +24,16 @@ public abstract class Participant {
         this.cards.addCard(card);
     }
 
-    public String getCards() {
-        return this.cards.getCards();
+    public String getCardsInformation() {
+        return this.cards.getCardsInformation();
+    }
+
+    protected boolean isNotBlackJack() {
+        return !isBlackJack();
+    }
+
+    protected boolean isBlackJack() {
+        return (cards.calculateScore() == Cards.BLACKJACK_SCORE) && (cards.size() == 2);
     }
 
     public int calculateScore() {
