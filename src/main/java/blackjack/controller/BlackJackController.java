@@ -59,7 +59,7 @@ public class BlackJackController {
     }
 
     private void playDealerTurn(Dealer dealer, Deck deck) {
-        while (!dealer.getState().isEndState()) {
+        while (!dealer.isEnd()) {
             OutputView.printMessage(MSG_DEALER_GET_MORE_CARD);
             dealer.handOutCard(deck.draw());
         }
