@@ -32,6 +32,10 @@ public enum CompeteResult {
         return (dealer.sumCardHand() > player.sumCardHand()) || player.isBust();
     }
     
+    public static boolean isPlayerWinAsBlackjack(Dealer dealer, Player player) {
+        return !dealer.isBlackjack() && player.isBlackjack();
+    }
+    
     public String getCompeteResult() {
         return competeResult;
     }

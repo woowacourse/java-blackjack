@@ -38,6 +38,10 @@ public abstract class Participant {
         return sumCardHand() > BLACKJACK_SCORE;
     }
     
+    public boolean isBlackjack() {
+        return cardHand.isBlackjack();
+    }
+    
     public abstract boolean canReceive();
     
     @Override

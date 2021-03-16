@@ -26,14 +26,13 @@ public class Profit {
             final double profit = calculateProfitOfPlayer(dealer, player);
             profitOfPlayers.put(player, profit);
         }
-        
         return new Profit(profitOfPlayers);
     }
     
     private static double calculateProfitOfPlayer(Dealer dealer, Player player) {
         final double bettingMoney = player.getBettingMoney();
         
-        if (isPlayerWinAsBlackjack(dealer, player)) {
+        if (CompeteResult.isPlayerWinAsBlackjack(dealer, player)) {
             return bettingMoney * BLACKJACK_RATIO;
         }
         
@@ -42,13 +41,6 @@ public class Profit {
         }
         
         return bettingMoney * NORMAL_RATIO;
-    }
-    
-    private static boolean isPlayerWinAsBlackjack(Dealer dealer, Player player) {
-        final boolean isDealerBlackjack = dealer.cardHand.isBlackjack();
-        final boolean isPlayerBlackjack = player.cardHand.isBlackjack();
-        
-        return !isDealerBlackjack && isPlayerBlackjack;
     }
     
     public double getProfitOfPlayer(Player player) {
