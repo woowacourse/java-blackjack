@@ -3,11 +3,12 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Score {
-    private static final Score BLACKJACK = new Score(21);
-    private static final Score TEN = new Score(10);
+    private static final Score BLACKJACK = Score.Of(21);
+    private static final Score TEN = Score.Of(10);
+
     private final int score;
 
-    public Score(int score) {
+    private Score(int score) {
         this.score = score;
     }
 
