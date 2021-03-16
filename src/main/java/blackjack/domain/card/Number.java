@@ -22,7 +22,7 @@ public enum Number {
 
     Number(String name, int score) {
         this.name = name;
-        this.score = Score.Of(score);
+        this.score = Score.of(score);
     }
 
     public static Number from(String name) {

@@ -1,30 +1,37 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Score {
-    private static final Score BLACKJACK = new Score(21);
-    private static final Score TEN = new Score(10);
+    public static final int BLACKJACK = 21;
+    public static final int TEN = 10;
 
     private final int score;
+    private static final List<Score> CACHE = new ArrayList<>();
+
+    static {
+        for (int i = 0; i <= 44; i++) {
+            CACHE.add(new Score(i));
+        }
+    }
 
     private Score(int score) {
         this.score = score;
     }
 
-    public static Score Of(int score) {
-        if (BLACKJACK.equals(score)) {
-            return BLACKJACK;
-        }
+    public static Score of(int value) {
+        Score score = CACHE.get(value);
 
-        if (TEN.equals(score)) {
-            return TEN;
+        if (Objects.isNull(score)) {
+            score = new Score(value);
         }
-        return new Score(score);
+        return score;
     }
 
     public Score plusTenIfNotBust() {
-        Score score = new Score(TEN.score + this.score);
+        Score score = Score.of(CACHE.get(TEN).score + this.score);
         if (score.isBust()) {
             return this;
         }
@@ -36,19 +43,15 @@ public class Score {
     }
 
     public boolean isBust() {
-        return BLACKJACK.lessThan(Score.Of(score));
+        return CACHE.get(BLACKJACK).lessThan(Score.of(score));
     }
 
     protected boolean isBlackjack() {
-        return BLACKJACK.equals(Score.Of(score));
+        return CACHE.get(BLACKJACK).equals(Score.of(score));
     }
 
     public boolean lessThan(Score other) {
         return this.score < other.score;
-    }
-
-    private boolean equals(int value) {
-        return score == value;
     }
 
     @Override
@@ -59,7 +62,6 @@ public class Score {
 
         return false;
     }
-
 
     @Override
     public int hashCode() {

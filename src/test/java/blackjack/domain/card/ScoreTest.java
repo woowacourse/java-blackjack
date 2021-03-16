@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ScoreTest {
     @Test
     void generate_test() {
-        Score score = Score.Of(20);
-        assertThat(score).isEqualTo(Score.Of(20));
+        Score score = Score.of(20);
+        assertThat(score).isEqualTo(Score.of(20));
     }
 }

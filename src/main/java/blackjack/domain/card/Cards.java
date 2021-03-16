@@ -31,7 +31,7 @@ public class Cards {
     }
 
     private Score sum() {
-        return Score.Of(cards.stream()
+        return Score.of(cards.stream()
                 .mapToInt(Card::score)
                 .sum());
     }
