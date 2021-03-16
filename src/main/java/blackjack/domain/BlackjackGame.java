@@ -5,6 +5,7 @@ import blackjack.domain.gamer.Participant;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import blackjack.domain.utils.CardDeck;
+import blackjack.dto.PlayerCardsDto;
 import blackjack.dto.ProcessDto;
 import blackjack.dto.ResultDto;
 
@@ -57,11 +58,12 @@ public class BlackjackGame {
         return players.getUnmodifiableList();
     }
 
-    public Player turnForPlayer(final Player player) {
+    public PlayerCardsDto turnForPlayer(final Player player) {
         if (player.isAbleToTake()) {
             player.takeCard(cardDeck.pop());
         }
-        return player;
+
+        return new PlayerCardsDto(player.getName(), player.getCards());
     }
 
     public void turnForDealer() {

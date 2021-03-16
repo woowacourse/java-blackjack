@@ -10,7 +10,7 @@ import blackjack.view.OutputView;
 public class Application {
     public static void main(String[] args) {
         final BlackjackGame blackjackGame = new BlackjackGame(InputView.requestNameAndMoney(), new RandomCardDeck());
-        OutputView.printCards(blackjackGame.getProcessDto());
+        OutputView.printInitialCards(blackjackGame.getProcessDto());
 
         simulate(blackjackGame);
 
@@ -28,7 +28,7 @@ public class Application {
 
     private static void turnForPlayer(BlackjackGame blackjackGame, Player player) {
         while (player.isAbleToTake() && InputView.requestOneMoreCard(player.getName())) {
-            OutputView.printCards(blackjackGame.turnForPlayer(player));
+            OutputView.printPlayerCards(blackjackGame.turnForPlayer(player));
         }
     }
 

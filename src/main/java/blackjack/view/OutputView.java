@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.Outcome;
 import blackjack.domain.card.Cards;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Player;
+import blackjack.dto.PlayerCardsDto;
 import blackjack.dto.ProcessDto;
 import blackjack.dto.ResultDto;
 
@@ -17,13 +17,13 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printCards(Player player) {
-        final String cards = String.join(", ", player.getCards().getUnmodifiableCardNames());
+    public static void printPlayerCards(PlayerCardsDto playerInfo) {
+        final String cards = String.join(", ", playerInfo.getCards().getUnmodifiableCardNames());
 
-        System.out.printf("%s카드: %s\n", player.getName(), cards);
+        System.out.printf("%s카드: %s\n", playerInfo.getName(), cards);
     }
 
-    public static void printCards(ProcessDto processDto) {
+    public static void printInitialCards(ProcessDto processDto) {
         final String joinedNames = String.join(", ", processDto.names());
 
         System.out.printf("\n%s와 %s에게 2장의 나누었습니다.\n", Dealer.DEALER_NAME, joinedNames);
