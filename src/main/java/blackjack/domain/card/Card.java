@@ -4,48 +4,47 @@ import java.util.*;
 
 public class Card {
 
-    private static final List<Card> ORIGINAL_CARDS = new ArrayList<>();
+    private static final List<Card> CACHED_CARDS = new LinkedList<>();
 
     static {
         for (Suit suit : Suit.values()) {
             Arrays.stream(Denomination.values())
-                    .forEach(denomination -> ORIGINAL_CARDS.add(new Card(suit, denomination)));
+                    .forEach(denomination -> CACHED_CARDS.add(new Card(suit, denomination)));
         }
     }
 
     private final Suit suit;
     private final Denomination denomination;
 
-    private Card(final Suit suit, final Denomination denomination) {
+    public Card(final Suit suit, final Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
     }
 
-    public static Card of(final Suit suit, final Denomination denomination) {
-        return ORIGINAL_CARDS.stream()
-                .filter(card -> card.equals(new Card(suit, denomination)))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 카드입니다."));
+    public static Deque<Card> getShuffledCards() {
+        List<Card> cards = new LinkedList<>(CACHED_CARDS);
+        Collections.shuffle(cards);
+        return new LinkedList<>(cards);
     }
 
-    public static LinkedList<Card> getCachingCards() {
-        return new LinkedList<>(ORIGINAL_CARDS);
-    }
-
-    public Denomination getDenomination() {
-        return denomination;
-    }
-
-    public Suit getSuit() {
-        return suit;
+    public Score getScore() {
+        return denomination.getScore();
     }
 
     public boolean isAce() {
-        return denomination == Denomination.ACE;
+        return denomination.isAce();
+    }
+
+    public String getDenominationValue() {
+        return denomination.denomination();
+    }
+
+    public String getSuitValue() {
+        return suit.suit();
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;

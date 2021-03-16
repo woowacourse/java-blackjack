@@ -2,45 +2,60 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.Score;
 
 public class Gambler implements Player {
-
-    private static final int NUMBER_OF_INITIAL_CARDS = 2;
-
     private final Name name;
-    private final Cards cards;
+    private final Cards cards = new Cards();
+    private Money money = Money.emptyMoney;
 
-    public Gambler(final Name name) {
-        this.name = name;
-        this.cards = new Cards();
+    public Gambler(final String name) {
+        this.name = new Name(name);
+    }
+
+    public void earn(final Money money) {
+        this.money = this.money.add(money);
+    }
+
+    public void lose(final Money money) {
+        this.money = this.money.sub(money);
+    }
+
+    public Money getBettingMoney() {
+        return money.abs();
     }
 
     @Override
-    public void initializeCards(final Deck deck) {
-        for (int i = 0; i < NUMBER_OF_INITIAL_CARDS; i++) {
-            cards.add(deck.draw());
-        }
+    public boolean ableToDraw() {
+        return !(cards.isBust() && cards.isBlackJack());
     }
 
     @Override
-    public void drawCard(final Card card) {
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
+    @Override
+    public int getMoneyValue() {
+        return money.getValue();
+    }
+
+    @Override
+    public void receiveCard(final Card card) {
         cards.add(card);
     }
 
     @Override
-    public Name getName() {
-        return name;
-    }
-
-    @Override
-    public Score getScore() {
-        return cards.getScore();
+    public String getNameValue() {
+        return name.getValue();
     }
 
     @Override
     public Cards getCards() {
         return cards;
+    }
+
+    @Override
+    public boolean hasBlackJack() {
+        return cards.isBlackJack();
     }
 }

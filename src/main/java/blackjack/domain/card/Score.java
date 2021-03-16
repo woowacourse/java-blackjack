@@ -3,57 +3,69 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Score {
-    private final static int BLACK_JACK = 21;
-    public final static Score ZERO_SCORE = new Score(0);
+    private static final Score EXTRA_SCORE_USING_ACE = Score.of(10);
+    private static final Score BLACK_JACK = Score.of(21);
+    private static final Score[] SCORES = new Score[30];
+
+    static {
+        for (int i = 0; i < SCORES.length; i++) {
+            SCORES[i] = new Score(i);
+        }
+    }
 
     private final int value;
 
-    public Score(int value) {
+    private Score(final int value) {
         if (value < 0) {
             throw new IllegalArgumentException("유효하지 않은 점수입니다.");
         }
-
         this.value = value;
     }
 
+    public static Score of(final int score) {
+        if (score < SCORES.length && SCORES[score] != null) {
+            return SCORES[score];
+        }
+        return new Score(score);
+    }
+
     public boolean isBust() {
-        return value > BLACK_JACK;
+        return isHigher(BLACK_JACK);
     }
 
     public boolean isBlackJack() {
-        return value == BLACK_JACK;
-    }
-
-    public boolean isBelow(int score) {
-        return value <= score;
-    }
-
-    public boolean isLessThan(final Score target) {
-        return value < target.value;
+        return equals(BLACK_JACK);
     }
 
     public Score useAceAsEleven() {
-        return new Score(value + 10);
+        if(addScore(EXTRA_SCORE_USING_ACE).isBust()) {
+            return Score.of(value);
+        }
+        return addScore(EXTRA_SCORE_USING_ACE);
     }
 
     public Score addScore(final Score score) {
-        return new Score(score.value + this.value);
+        return Score.of(score.value + this.value);
     }
 
-    public boolean isBellowThanBlackJack() {
-        return value <= BLACK_JACK;
+    public boolean isHigher(final Score score) {
+        return this.value > score.value;
     }
 
-    public int getValue() {
-        return value;
+    public boolean isLower(final Score score) {
+        return this.value < score.value;
+    }
+
+    public boolean isBelow(final Score score) {
+        return this.value <= score.value;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Score score = (Score) o;
-        return value == score.value;
+    public boolean equals(final Object o){
+        if(o instanceof Score){
+            return ((Score) o).value == this.value;
+        }
+        return false;
     }
 
     @Override

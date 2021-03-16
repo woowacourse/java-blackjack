@@ -21,7 +21,7 @@ public enum Suit {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 Suit입니다."));
     }
 
-    private boolean isMatch(String suit) {
+    private boolean isMatch(final String suit) {
         return this.suit.equals(suit);
     }
 
