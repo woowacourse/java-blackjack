@@ -95,7 +95,6 @@ public class OutputView {
     }
 
     private static String getScore(User user) {
-        int userScore = user.score();
         if (user.isBlackjack()) {
             return BLACKJACK_MESSAGE;
         }
