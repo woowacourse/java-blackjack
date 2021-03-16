@@ -6,7 +6,8 @@ import java.util.Map;
 
 public class Card {
     private static final Map<String, Card> CARDS;
-    public static final int CARDS_CAPACITY = 52;
+    private static final int CARDS_CAPACITY = 52;
+    private static final String EXCEPTION_NOT_EXISTING_CARD = "존재하지 않는 카드 입니다.";
 
     private final Suits suit;
     private final Denominations denomination;
@@ -44,7 +45,7 @@ public class Card {
     public static Card from(Denominations denomination, Suits suit) {
         Card card = CARDS.get(denomination.getName() + suit.getName());
         if (card == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(EXCEPTION_NOT_EXISTING_CARD);
         }
         return card;
     }

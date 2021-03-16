@@ -1,31 +1,44 @@
 package blackjack;
 
-import blackjack.domain.Game;
-import blackjack.domain.gamer.Player;
+import blackjack.domain.BlackjackGame;
+import blackjack.domain.gamer.Participant;
+import blackjack.domain.utils.RandomCardDeck;
+import blackjack.dto.ResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        final Game game = new Game(InputView.getNames());
-        OutputView.printParticipantsCards(game.getParticipants());
+        final BlackjackGame blackjackGame = new BlackjackGame(InputView.requestNameAndMoney(), new RandomCardDeck());
+        OutputView.printInitialCards(blackjackGame.getProcessDto());
 
-        simulate(game);
-        OutputView.printResult(game.getParticipants());
+        simulate(blackjackGame);
+
+        printFinalView(blackjackGame);
     }
 
-    private static void simulate(Game game) {
-        for (Player player : game.getPlayers()) {
-            turnForPlayer(game, player);
+    private static void simulate(BlackjackGame blackjackGame) {
+        for (Participant player : blackjackGame.getPlayers()) {
+            turnForPlayer(blackjackGame, player);
         }
-        game.turnForDealer();
+
+        blackjackGame.turnForDealer();
         OutputView.printDealerGetCard();
     }
 
-    private static void turnForPlayer(Game game, Player player) {
-        while (!player.isNotAbleToTake() && InputView.requestOneMoreCard(player.getName())) {
-            OutputView.printCards(game.turnForPlayer(player));
+    private static void turnForPlayer(BlackjackGame blackjackGame, Participant player) {
+        while (player.isAbleToTake() && InputView.requestOneMoreCard(player.getName())) {
+            blackjackGame.turnFor(player);
+            OutputView.printPlayerCards(player);
         }
+    }
+
+    private static void printFinalView(BlackjackGame blackjackGame) {
+        OutputView.printCardsResult(blackjackGame.getProcessDto());
+
+        final ResultDto resultDto = blackjackGame.getResultDto();
+        OutputView.printOutcome(resultDto);
+        OutputView.printProfit(resultDto);
     }
 
 }

@@ -26,9 +26,8 @@ public class CardsTest {
             Card.from(Suits.DIAMOND, Denominations.ACE),
             Card.from(Suits.HEART, Denominations.ACE));
 
-        assertThat(new Cards(cards).getUnmodifiableList())
-            .contains(Card.from(Suits.DIAMOND, Denominations.ACE),
-                Card.from(Suits.HEART, Denominations.ACE));
+        assertThat(new Cards(cards).getUnmodifiableCardNames())
+            .contains("A다이아몬드", "A하트");
     }
 
     @Test
@@ -41,8 +40,8 @@ public class CardsTest {
 
         cardsValue.takeCard(Card.from(Suits.SPADE, Denominations.ACE));
 
-        assertThat(cardsValue.getUnmodifiableList())
-            .contains(Card.from(Suits.SPADE, Denominations.ACE));
+        assertThat(cardsValue.getUnmodifiableCardNames())
+            .contains("A스페이드");
     }
 
 

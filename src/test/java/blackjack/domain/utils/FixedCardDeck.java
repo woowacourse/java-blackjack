@@ -3,8 +3,8 @@ package blackjack.domain.utils;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denominations;
 import blackjack.domain.card.Suits;
-
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class FixedCardDeck implements CardDeck {
     private final Queue<Card> cards;
@@ -28,7 +28,7 @@ public class FixedCardDeck implements CardDeck {
 
     @Override
     public Card pop() {
-        if(isEmpty()){
+        if (isEmpty()) {
             throw new IllegalArgumentException();
         }
         return cards.poll();

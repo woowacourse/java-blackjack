@@ -3,60 +3,63 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
+import blackjack.domain.state.Hit;
+import blackjack.domain.state.State;
 import java.util.Collections;
-import java.util.List;
 
 public class Dealer implements Participant {
-    private static final Score MINIMUM_SCORE_OF_NOT_TAKING_CARD = Score.of(17);
-    private final Name name;
-    private final Cards cards;
+    public static final String DEALER_NAME = "딜러";
+
+    private static final Score MINIMUM_SCORE_OF_TAKING_CARD = Score.of(16);
+    private State state;
 
     public Dealer() {
-        this(new Name("딜러"), new Cards(Collections.emptyList()));
+        this(new Cards(Collections.emptyList()));
     }
 
     public Dealer(Cards cards) {
-        this(new Name("딜러"), cards);
-    }
-
-    public Dealer(Name name, Cards cards) {
-        this.name = name;
-        this.cards = cards;
+        this.state = new Hit(cards);
     }
 
     @Override
-    public boolean isNotAbleToTake() {
-        return sumCards().isHigherThan(MINIMUM_SCORE_OF_NOT_TAKING_CARD);
-    }
-
-    @Override
-    public void takeCard(Card card) {
-        cards.takeCard(card);
+    public boolean isAbleToTake() {
+        final Score score = state.calculateScore();
+        return score.isEqualAndLessThan(MINIMUM_SCORE_OF_TAKING_CARD);
     }
 
     @Override
     public String getName() {
-        return this.name.toString();
+        return DEALER_NAME;
     }
 
     @Override
-    public Score sumCards() {
-        return cards.sumCards();
+    public void takeCard(Card card) {
+        state = state.takeCard(card);
     }
 
     @Override
-    public Score sumCardsForResult() {
-        return cards.sumCardsForResult();
+    public boolean isBlackjack() {
+        return state.isBlackjack();
+    }
+
+    @Override
+    public boolean isBurst() {
+        return state.isBurst();
+    }
+
+    @Override
+    public Score finalScore() {
+        return state.calculateScore();
     }
 
     @Override
     public Cards getCards() {
-        return cards;
+        return state.getCards();
     }
 
     @Override
-    public List<Card> getUnmodifiableCards() {
-        return cards.getUnmodifiableList();
+    public int sizeOfCards() {
+        return state.size();
     }
 
 }

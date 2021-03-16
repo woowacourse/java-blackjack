@@ -4,11 +4,12 @@ import java.util.Objects;
 
 public class Score implements Comparable<Score> {
     private static final int BLACK_JACK = 21;
+    private static final String EXCEPTION_CANNOT_BE_NEGATIVE_SCORE = "점수는 음수가 될 수 없어요";
     private final int score;
 
     private Score(int score) {
         if (score < 0) {
-            throw new IllegalArgumentException("점수는 음수가 될 수 없어요");
+            throw new IllegalArgumentException(EXCEPTION_CANNOT_BE_NEGATIVE_SCORE);
         }
         this.score = score;
     }
@@ -25,16 +26,28 @@ public class Score implements Comparable<Score> {
         return new Score(score - value);
     }
 
-    public boolean isBlackJack() {
+    public boolean isBlackjack() {
         return score == BLACK_JACK;
+    }
+
+    public boolean isNotBlackjack() {
+        return !isBlackjack();
     }
 
     public boolean isBurst() {
         return score > BLACK_JACK;
     }
 
+    public boolean isNotBurst() {
+        return !isBurst();
+    }
+
     public boolean isHigherThan(Score counterpart) {
         return compareTo(counterpart) > 0;
+    }
+
+    public boolean isEqualAndLessThan(Score counterpart) {
+        return !isHigherThan(counterpart);
     }
 
     public boolean isSameAs(Score counterpart) {
@@ -43,7 +56,7 @@ public class Score implements Comparable<Score> {
 
     @Override
     public int compareTo(Score o) {
-        return score - o.score;
+        return Integer.compare(score, o.score);
     }
 
     @Override
