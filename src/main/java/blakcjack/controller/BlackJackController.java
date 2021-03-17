@@ -66,7 +66,7 @@ public class BlackJackController {
                                  final List<Participant> players, final Participant dealer) {
         try {
             drawForMaximumCapability(blackjackGame, players);
-            drawForMaximumCapability(blackjackGame, Dealer.class.cast(dealer));
+            drawForMaximumCapability(blackjackGame, (Dealer) dealer);
         } catch (final EmptyDeckException e) {
             printGameClosing(e.getMessage());
             throw new GameTerminationException();
