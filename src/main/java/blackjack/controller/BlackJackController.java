@@ -1,18 +1,18 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.user.DealerResult;
-import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
+import blackjack.domain.money.Money;
+import blackjack.domain.user.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
 
 public class BlackJackController {
 
     public void play() {
-        String requestPlayers = InputView.requestPlayers();
-        BlackJackGame blackJackGame = new BlackJackGame(requestPlayers);
+        List<String> requestPlayers = InputView.requestPlayers();
+        List<Money> requestCapital = InputView.requestCapital(requestPlayers);
+        BlackJackGame blackJackGame = new BlackJackGame(requestPlayers, requestCapital);
         OutputView.showInitiate(blackJackGame);
         process(blackJackGame);
         terminateGame(blackJackGame);
@@ -24,35 +24,33 @@ public class BlackJackController {
     }
 
     private void processPlayers(BlackJackGame blackJackGame) {
-        Players players = blackJackGame.getPlayers();
-        CardDeck cardDeck = blackJackGame.getCardDeck();
-        for (Player player : players.getRawPlayers()) {
-            playerDraw(cardDeck, player);
+        for (int i = 0; i < blackJackGame.playersSize(); i++) {
+            processPlayer(blackJackGame, i);
         }
     }
 
-    private void playerDraw(CardDeck cardDeck, Player player) {
-        while (player.isAvailableDraw() && isYes(player)) {
-            player.draw(cardDeck.draw());
-            OutputView.showPlayerCard(player);
+    private void processPlayer(BlackJackGame blackJackGame, int playerIndex) {
+        while (blackJackGame.isAvailablePlayerDraw(playerIndex) &&
+            isPlayerYes(blackJackGame, playerIndex)) {
+            blackJackGame.drawOnePlayer(playerIndex);
+            OutputView.showPlayerCard(blackJackGame, playerIndex);
         }
     }
 
-    private boolean isYes(Player player) {
-        return InputView.requestMoreDraw(player.getName());
+    private boolean isPlayerYes(BlackJackGame blackJackGame, int playerIndex) {
+        return InputView.requestMoreDraw(blackJackGame, playerIndex);
     }
 
     private void processDealer(BlackJackGame blackJackGame) {
-        while(blackJackGame.isAvailableDealerTurn()) {
+        while (blackJackGame.isAvailableDealerTurn()) {
             blackJackGame.dealerTurn();
             OutputView.showDealerDraw();
         }
     }
 
     private void terminateGame(BlackJackGame blackJackGame) {
-        DealerResult dealerResult = blackJackGame.getDealerResult();
+        GameResult gameResult = blackJackGame.getDealerResult();
         OutputView.showScoreResult(blackJackGame);
-        OutputView.showDealerTable(dealerResult);
-        OutputView.showIndividualTable(blackJackGame);
+        OutputView.showMoneyStatue(blackJackGame);
     }
 }

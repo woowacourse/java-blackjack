@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.Card;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.DealerResult;
+import blackjack.domain.user.GameResult;
 import blackjack.domain.user.OneGameResult;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
@@ -32,6 +32,7 @@ public class OutputView {
     }
 
     public static void showInitiate(BlackJackGame blackJackGame) {
+        System.out.println();
         Dealer dealer = blackJackGame.getDealer();
         Players players = blackJackGame.getPlayers();
         showName(players);
@@ -54,11 +55,16 @@ public class OutputView {
             .getCard();
         System.out.printf(DEALER_CARD + NEWLINE, dealerCard);
         for (Player player : players.getRawPlayers()) {
-            showPlayerCard(player);
+            showPlayerUnitCard(player);
         }
     }
 
-    public static void showPlayerCard(Player player) {
+    public static void showPlayerCard(BlackJackGame blackJackGame, int playerIndex) {
+        Player player = blackJackGame.getPlayer(playerIndex);
+        showPlayerUnitCard(player);
+    }
+
+    private static void showPlayerUnitCard(Player player) {
         String cards = combineAllCard(player);
         System.out.printf(PLAYER_CARD + NEWLINE, player.getName(), cards);
     }
@@ -105,16 +111,16 @@ public class OutputView {
         return Integer.toString(userScore);
     }
 
-    public static void showDealerTable(DealerResult dealerResult) {
+    public static void showDealerTable(GameResult gameResult) {
         System.out.println(NEWLINE + FINAL_RESULT);
-        String conventionResult = getDealerResult(dealerResult);
+        String conventionResult = getDealerResult(gameResult);
         String conventionResultMessage = String.format(DEALER_RESULT, conventionResult);
         System.out.println(conventionResultMessage);
     }
 
-    private static String getDealerResult(DealerResult dealerResult) {
+    private static String getDealerResult(GameResult gameResult) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<OneGameResult, Integer> element : dealerResult.getResult().entrySet()) {
+        for (Map.Entry<OneGameResult, Integer> element : gameResult.getDealerResult().entrySet()) {
             stringBuilder.append(validValue(element));
         }
         return stringBuilder.toString();
@@ -127,16 +133,49 @@ public class OutputView {
         return "";
     }
 
-    public static void showIndividualTable(BlackJackGame blackJackGame) {
-        Players players = blackJackGame.getPlayers();
-        Dealer dealer = blackJackGame.getDealer();
-
-        for (Player player : players.getRawPlayers()) {
-            String playerName = player.getName();
-            OneGameResult gameIndividualResult = player.betResult(dealer);
-            String individualResultMessage = String
-                .format(PLAYER_RESULT, playerName, gameIndividualResult.getResult());
-            System.out.println(individualResultMessage);
+    public static void showIndividualTable(GameResult gameResult) {
+        Map<Player, OneGameResult> gamePlayerResult = gameResult.getPlayersResult();
+        for (Map.Entry<Player, OneGameResult> playerResult : gamePlayerResult.entrySet()) {
+            showEachPlayerResult(playerResult);
         }
+    }
+
+    private static void showEachPlayerResult(Map.Entry<Player, OneGameResult> playerResult) {
+        String playerName = playerResult.getKey()
+            .getName();
+        String gameIndividualResult = playerResult.getValue()
+            .getResult();
+        String individualResultMessage = String
+            .format(PLAYER_RESULT, playerName, gameIndividualResult);
+        System.out.println(individualResultMessage);
+    }
+
+    public static void showMoneyStatue(BlackJackGame blackJackGame) {
+        Dealer dealer = blackJackGame.getDealer();
+        Players players = blackJackGame.getPlayers();
+        System.out.println("## 최종 수익");
+        showDealerMoneyState(dealer);
+        showPlayersMoneyState(players);
+    }
+
+    private static void showDealerMoneyState(Dealer dealer) {
+        int rawMoneyValue = dealer.getMoney()
+            .getValue();
+        String rawMoneyValueMessage = String.valueOf(rawMoneyValue);
+        System.out.printf(DEALER_RESULT, rawMoneyValueMessage);
+        System.out.println();
+    }
+
+    private static void showPlayersMoneyState(Players players) {
+        players.getRawPlayers()
+            .forEach(OutputView::showPlayerMoneyState);
+    }
+
+    private static void showPlayerMoneyState(Player player) {
+        int rawMoneyValue = player.getMoney()
+            .getValue();
+        String rawMoneyValueMessage = String.valueOf(rawMoneyValue);
+        System.out.printf(PLAYER_RESULT, player.getName(), rawMoneyValueMessage);
+        System.out.println();
     }
 }
