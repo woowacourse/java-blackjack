@@ -48,21 +48,21 @@ class BlackjackGameTest {
     @Test
     void validateDuplicateNames() {
         assertThatThrownBy(() -> new BlackjackGame(deck, Arrays.asList("pobi", "pobi"), moneys))
-                .isInstanceOf(ExpectedGameExitException.class);
+                .isInstanceOf(GameExitException.class);
     }
 
     @DisplayName("이름과 베팅 금액의 수가 다르면 예외 발생")
     @Test
     void validateSameSize() {
         assertThatThrownBy(() -> new BlackjackGame(deck, Arrays.asList("pobi", "mediumBear"), Arrays.asList(10000)))
-                .isInstanceOf(ExpectedGameExitException.class);
+                .isInstanceOf(GameExitException.class);
     }
 
     @DisplayName("이름과 베팅 금액이 없으면 예외 발생")
     @Test
     void validateNotEmpty() {
         assertThatThrownBy(() -> new BlackjackGame(deck, Collections.emptyList(), Collections.emptyList()))
-                .isInstanceOf(ExpectedGameExitException.class);
+                .isInstanceOf(GameExitException.class);
     }
 
     @DisplayName("카드 한 장 나눠주기 성공")

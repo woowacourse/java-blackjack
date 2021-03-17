@@ -1,7 +1,7 @@
 package blakcjack.controller;
 
 import blakcjack.domain.blackjackgame.BlackjackGame;
-import blakcjack.domain.blackjackgame.ExpectedGameExitException;
+import blakcjack.domain.blackjackgame.GameExitException;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.card.EmptyDeckException;
 import blakcjack.domain.outcome.Outcome;
@@ -47,7 +47,7 @@ public class BlackJackController {
             final PlayerCreationDto creationInfo = takePlayerCreationInformation();
             return new BlackjackGame(new Deck(new RandomShuffleStrategy()),
                     creationInfo.getNames(), creationInfo.getBettingMoneys());
-        } catch (ExpectedGameExitException e) {
+        } catch (GameExitException e) {
             printGameClosing(e.getMessage());
             throw new GameTerminationException();
         }
