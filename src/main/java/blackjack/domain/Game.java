@@ -7,7 +7,7 @@ import blackjack.domain.user.Player;
 import blackjack.domain.user.PlayerDto;
 import blackjack.domain.user.ResultDTO;
 import blackjack.domain.user.User;
-import blackjack.domain.user.WinningResultDTO;
+import blackjack.domain.user.WinningResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,16 +20,10 @@ public class Game {
     private final List<User> players;
     private final Deck deck;
 
-    public Game(List<String> names) {
-        dealer = new Dealer();
-        players = createPlayer(names);
-        deck = new Deck();
-    }
-
-    private List<User> createPlayer(List<String> names) {
-        return names.stream()
-            .map(Player::create)
-            .collect(Collectors.toList());
+    public Game(List<User> players) {
+        this.dealer = new Dealer();
+        this.players = players;
+        this.deck = new Deck();
     }
 
     public void initialCards() {
@@ -95,9 +89,9 @@ public class Game {
         return resultDTOS;
     }
 
-    public List<WinningResultDTO> getWinningResultDTOs() {
+    public List<WinningResult> getWinningResult() {
         return players.stream().map(player ->
-            new WinningResultDTO(player.getName(), MatchResult.calculateResult(player, dealer)))
+            new WinningResult(player.getName(), ((Player)player).getMoney(), MatchResult.calculateResult(player, dealer)))
             .collect(Collectors.toList());
     }
 }

@@ -1,14 +1,17 @@
 package blackjack.domain.user;
 
 public enum MatchResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BLACKJACK_WIN("블랙잭", 1.5),
+    WIN("승", 1),
+    DRAW("무", 0),
+    LOSE("패", -1);
 
     private final String name;
+    private final double moneyRate;
 
-    MatchResult(String name) {
+    MatchResult(String name, double moneyRate) {
         this.name = name;
+        this.moneyRate = moneyRate;
     }
 
     public static MatchResult calculateResult(User player, User dealer) {
@@ -31,7 +34,7 @@ public enum MatchResult {
         if (dealer.isSameStatus(HandStatus.BLACK_JACK)) {
             return MatchResult.DRAW;
         }
-        return MatchResult.WIN;
+        return MatchResult.BLACKJACK_WIN;
     }
 
     private static MatchResult compareScore(User player, User dealer) {
@@ -50,15 +53,7 @@ public enum MatchResult {
         return name;
     }
 
-    public String getReverseName() {
-        if (this == MatchResult.WIN) {
-            return "패";
-        }
-
-        if (this == MatchResult.LOSE) {
-            return "승";
-        }
-
-        return "무";
+    public double getMoneyRate() {
+        return moneyRate;
     }
 }

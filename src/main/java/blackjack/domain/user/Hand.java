@@ -7,7 +7,7 @@ public class Hand {
     public static final int MAX_SCORE = 21;
     public static final int BLACK_JACK_CARD_SIZE = 2;
 
-    private List<Card> cards;
+    private final List<Card> cards;
     private int score;
     private HandStatus status;
 
