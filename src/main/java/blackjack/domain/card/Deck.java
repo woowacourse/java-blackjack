@@ -20,9 +20,10 @@ public class Deck {
         return shuffledCards.pollLast();
     }
 
-    public List<Card> drawCards(int number) {
+    public List<Card> drawCard(int number) {
         return Stream.generate(() -> shuffledCards.pollLast())
                 .limit(number)
                 .collect(Collectors.toList());
+
     }
 }

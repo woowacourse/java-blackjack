@@ -1,10 +1,11 @@
 package blackjack.view;
 
+import blackjack.controller.dto.PlayerStatusDto;
+import blackjack.controller.dto.RoundStatusDto;
 import blackjack.domain.Result;
-import blackjack.view.dto.PlayerStatusDto;
-import blackjack.view.dto.RoundStatusDto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -70,9 +71,10 @@ public class OutputView {
 
     public static void showOutcomes(Result result) {
         System.out.println("## 최종 승패");
-        System.out.println(String.format("딜러: %d승 %d패 %d무",
-                result.findDealerWinCount(), result.findDealerLoseCount(), result.findDealerDrawCount()));
-        result.getPlayerOutcomes().forEach((name, outcome) ->
-                System.out.println(String.format(PARTICIPANT_STATUS_MESSAGE, name, outcome.getName())));
+        System.out.println(String.format("딜러: %f", result.getDealerProfit()));
+        Map<String, Double> playerProfits = result.getPlayerProfits();
+        for (String playerName : playerProfits.keySet()) {
+            System.out.println(String.format("%s: %f", playerName, playerProfits.get(playerName)));
+        }
     }
 }

@@ -1,17 +1,29 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Player extends User {
-    protected final List<Card> cards = new ArrayList<>();
     private final Name name;
+    private final Money money;
+    private State state;
 
-    public Player(String name) {
+    public Player(String name, int money, List<Card> cards) {
         this.name = new Name(name);
+        this.money = new Money(money);
+        this.state = StateFactory.createState(cards.get(0), cards.get(1));
+    }
+
+    public String getState() {
+        return state.toString();
+    }
+
+    public Money getProfit(Dealer dealer) {
+        return money.multiplyByRate(state.earningRate(dealer));
     }
 
     @Override
@@ -21,12 +33,28 @@ public class Player extends User {
 
     @Override
     protected List<Card> getCards() {
-        return cards;
+        return state.getCards();
     }
 
     @Override
-    public boolean isGameOver(int gameOverScore) {
-        return calculateScore(gameOverScore) > gameOverScore;
+    public void addCard(Card card) {
+        this.state = state.draw(card);
+    }
+
+    @Override
+    public int scoreToInt() {
+        return state.score().toInt();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    public void stayIfNotFinished() {
+        if (!state.isFinished()) {
+            state = state.stay();
+        }
     }
 
     @Override

@@ -8,36 +8,35 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
 class PlayerTest {
-    public static final int GAME_OVER_SCORE = 21;
     private Player player;
+    private List<Card> cards;
 
     @BeforeEach
     void setUp() {
-        player = new Player("pobi");
-        player.addFirstCards(Arrays.asList(
-                Card.of("스페이드", "10"),
-                Card.of("하트", "J")
-        ));
+        cards = Arrays.asList(Card.of("스페이드", "10"),
+                Card.of("하트", "J"));
+        player = new Player("pobi", 2000, cards);
     }
 
     @DisplayName("플레이어가 올바르게 생성되는 지 테스트")
     @ParameterizedTest
     @ValueSource(strings = {"pobi", "brown"})
     void create_player_test(String name) {
-        assertThatCode(() -> new Player(name))
+        assertThatCode(() -> new Player(name, 2000, cards))
                 .doesNotThrowAnyException();
-        assertThat(new Player(name)).isEqualTo(new Player(name));
+        assertThat(new Player(name, 2000, cards)).isEqualTo(new Player(name, 2000, cards));
     }
 
     @DisplayName("플레이어가 잘못 생성되는 경우 에러가 발생한다.")
     @ParameterizedTest
     @ValueSource(strings = {"#pobi", "bro wn"})
     void create_invalid_player_test(String name) {
-        assertThatThrownBy(() -> new Player(name))
+        assertThatThrownBy(() -> new Player(name, 2000, Arrays.asList()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("이름을 잘못 입력하였습니다. (입력값 : %s)", name));
     }
@@ -58,39 +57,37 @@ class PlayerTest {
     @DisplayName("플레이어의 카드가 21점 초과하는 경우 카드를 받을 수 없는 상태가 된다.")
     @Test
     void game_over_score() {
-        assertThat(player.isGameOver(GAME_OVER_SCORE)).isEqualTo(false);
+        assertThat(player.isFinished()).isEqualTo(false);
     }
 
     @DisplayName("플레이어의 첫 카드가 21점 초과하는 경우(A가 2장) A를 21 이하일때까지 1로 계산한다.")
     @Test
     void first_cards_game_over_score() {
-        Player player = new Player("pobi");
-        player.addFirstCards(Arrays.asList(
-                Card.of("스페이드", "A"),
-                Card.of("하트", "A")
-        ));
-
-        assertThat(player.isGameOver(GAME_OVER_SCORE)).isEqualTo(false);
-        assertThat(player.calculateScore(GAME_OVER_SCORE)).isEqualTo(12);
+        Player player = new Player("pobi", 2000,
+                Arrays.asList(Card.of("스페이드", "A"), Card.of("하트", "A")));
+        assertThat(player.isFinished()).isEqualTo(false);
+        assertThat(player.scoreToInt()).isEqualTo(12);
     }
 
     @DisplayName("플레이어의 추가 카드 포함한 점수가 21점 초과이고, A를 21 이하일때까지 A를 1로 계산한다.")
     @Test
     void add_card_game_over_score() {
-        Player player = new Player("pobi");
-        player.addFirstCards(Arrays.asList(
-                Card.of("스페이드", "A"),
-                Card.of("하트", "A")
-        ));
+        Player player = new Player("pobi", 2000,
+                Arrays.asList(Card.of("스페이드", "A"), Card.of("하트", "A")));
         player.addCard(Card.of("클로버", "A"));
-        assertThat(player.isGameOver(GAME_OVER_SCORE)).isEqualTo(false);
-        assertThat(player.calculateScore(GAME_OVER_SCORE)).isEqualTo(13);
+        assertThat(player.isFinished()).isEqualTo(false);
+        assertThat(player.scoreToInt()).isEqualTo(13);
     }
 
     @DisplayName("A가 없고, 카드의 숫자가 21점 초과이면 플레이어의 게임이 끝난다.")
     @Test
     void add_card_game_over_test() {
         player.addCard(Card.of("다이아몬드", "4"));
-        assertThat(player.isGameOver(GAME_OVER_SCORE)).isEqualTo(true);
+        assertThat(player.isFinished()).isEqualTo(true);
+    }
+
+    @Test
+    void name() {
+
     }
 }

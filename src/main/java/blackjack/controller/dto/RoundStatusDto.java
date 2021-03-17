@@ -1,11 +1,11 @@
-package blackjack.view.dto;
+package blackjack.controller.dto;
 
 import java.util.List;
 
 public class RoundStatusDto {
-    private final String dealerName;
     private final List<String> dealerCardStatus;
     private final List<PlayerStatusDto> playerStatusDto;
+    private final String dealerName;
     private final int dealerScore;
 
     public RoundStatusDto(String dealerName, List<String> dealerCardStatus, List<PlayerStatusDto> playerStatusDto, int dealerScore) {

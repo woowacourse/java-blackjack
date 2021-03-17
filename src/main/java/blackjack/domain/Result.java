@@ -1,46 +1,30 @@
 package blackjack.domain;
 
-import blackjack.domain.user.Users;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Money;
+import blackjack.domain.user.Player;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Result {
-    private final List<Outcome> dealerOutcomes;
-    private final Map<String, Outcome> playerOutcomes = new LinkedHashMap<>();
+    private Money dealerProfit = new Money(0);
+    private final Map<String, Double> playerProfits = new LinkedHashMap<>();
 
-    public Result(Users users, int gameOverScore) {
-        dealerOutcomes = users.getPlayers().stream()
-                .map(player ->
-                        Outcome.findOutcome(users.getDealer().calculateScore(gameOverScore), player.calculateScore(gameOverScore)))
-                .collect(Collectors.toList());
-
-        for (int i = 0; i < dealerOutcomes.size(); i++) {
-            playerOutcomes.put(users.getPlayers().get(i).getName(), Outcome.reverseResult(dealerOutcomes.get(i)));
+    public Result(Dealer dealer, List<Player> players) {
+        for (Player player : players) {
+            Money playerProfit = player.getProfit(dealer);
+            playerProfits.put(player.getName(), playerProfit.getMoney());
+            dealerProfit = dealerProfit.minusProfit(playerProfit);
         }
     }
 
-    public Map<String, Outcome> getPlayerOutcomes() {
-        return playerOutcomes;
+    public double getDealerProfit() {
+        return dealerProfit.getMoney();
     }
 
-    public int findDealerWinCount() {
-        return (int) dealerOutcomes.stream()
-                .filter(Outcome::isWin)
-                .count();
-    }
-
-    public int findDealerLoseCount() {
-        return (int) dealerOutcomes.stream()
-                .filter(Outcome::isLose)
-                .count();
-    }
-
-    public int findDealerDrawCount() {
-        return (int) dealerOutcomes.stream()
-                .filter(Outcome::isDraw)
-                .count();
+    public Map<String, Double> getPlayerProfits() {
+        return playerProfits;
     }
 }

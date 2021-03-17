@@ -10,7 +10,7 @@ public class InputView {
     public static final String PLAYER_WRONG_NAME_EXCEPTION_MESSAGE = "이름을 잘못 입력하였습니다. (입력값 : %s)";
     public static final String PLAYER_ADD_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(에는 y, 아니오는 n)";
     private static final String DELIMITER = ",";
-    private static final Pattern PATTERN = Pattern.compile("^[가-힣a-zA-Z]*$");
+    private static final Pattern NAME_PATTERN = Pattern.compile("^[가-힣a-zA-Z]*$");
     private final Scanner scanner;
 
     public InputView(Scanner scanner) {
@@ -34,7 +34,7 @@ public class InputView {
     }
 
     private void validatePlayerName(String name) {
-        if (!PATTERN.matcher(name).matches()) {
+        if (!NAME_PATTERN.matcher(name).matches()) {
             throw new IllegalArgumentException(String.format(PLAYER_WRONG_NAME_EXCEPTION_MESSAGE, name));
         }
     }
@@ -42,5 +42,14 @@ public class InputView {
     public String getCardOrPass(String playerName) {
         System.out.println(String.format(PLAYER_ADD_CARD_MESSAGE, playerName));
         return input();
+    }
+
+    public int getBattingAmount(String playerName) {
+        System.out.println(playerName + "의 배팅 금액은?");
+        try {
+            return Integer.parseInt(input());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(playerName + "의 배팅 금액을 잘못 입력하셨습니다.");
+        }
     }
 }
