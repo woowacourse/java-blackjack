@@ -38,7 +38,7 @@ public class BlackjackGame {
         if (names.size() != bettingMoneys.size()) {
             throw new GameExitException("이름과 베팅 금액의 수가 일치하지 않습니다.");
         }
-        if (names.size() == 0) {
+        if (names.isEmpty()) {
             throw new GameExitException("초기 생성 데이터가 없습니다.");
         }
     }
