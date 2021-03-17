@@ -45,15 +45,19 @@ class CardsTest {
                 .isEqualTo(Score.from(22));
     }
 
-    @DisplayName("Ace가 있는 경우 점수 계산")
+    @DisplayName("Ace를 1로 계산하는 경우 점수 계산")
     @Test
-    void score_include_ace() {
+    void score_include_oneAce() {
         assertThat(new Cards(Arrays.asList(clubAce, spadeAce, clubTen))
                 .calculateScore())
                 .isEqualTo(Score.from(12));
+    }
 
-        assertThat(new Cards(Arrays.asList(clubAce, spadeAce, clubTwo))
+    @DisplayName("Ace를 11로 계산하는 경우 점수 계산")
+    @Test
+    void score_include_elevenAce() {
+        assertThat(new Cards(Arrays.asList(clubAce, clubTen))
                 .calculateScore())
-                .isEqualTo(Score.from(14));
+                .isEqualTo(Score.from(21));
     }
 }
