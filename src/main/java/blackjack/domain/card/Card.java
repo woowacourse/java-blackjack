@@ -1,24 +1,23 @@
 package blackjack.domain.card;
 
 public class Card {
-    private final Shape shape;
-    private final Value value;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    public Card(Shape shape, Value value) {
-        this.shape = shape;
-        this.value = value;
+    public Card(Suit suit, Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
-    public int value() {
-        return this.value.getValue();
+    public String getSuit() {
+        return suit.getShape();
+    }
+
+    public int getDenomination() {
+        return denomination.getValue();
     }
 
     public boolean isAceCard() {
-        return value.isAce();
-    }
-
-    @Override
-    public String toString() {
-        return value.getValue() + shape.getShape();
+        return denomination.isAce();
     }
 }

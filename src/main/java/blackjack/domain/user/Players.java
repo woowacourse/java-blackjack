@@ -23,7 +23,34 @@ public class Players {
 
     public List<Cards> showCardsByUsers() {
         return players.stream()
-                .map(Player::getCards)
+                .map(Player::cards)
                 .collect(Collectors.toList());
+    }
+
+    public boolean isRemainToProceedPlayers() {
+        return players.stream()
+                .anyMatch(User::isAbleToHit);
+    }
+
+    public Player getCurrentPlayer() {
+        return players.stream()
+                .filter(User::isAbleToHit)
+                .findFirst()
+                .orElseThrow(() ->
+                        new NullPointerException("[ERROR] 남아있는 플레이어가 없습니다."));
+    }
+
+    public void setUpBettingMoney(String name, long value) {
+        Player player = findPlayerByName(name);
+        player.betMoney(new Money(value));
+    }
+
+    private Player findPlayerByName(String name) {
+        return players.stream()
+                .filter(player -> player.getName()
+                        .equals(name))
+                .findFirst()
+                .orElseThrow(() ->
+                        new IllegalArgumentException("[ERROR] 찾는 플레이어가 없습니다."));
     }
 }

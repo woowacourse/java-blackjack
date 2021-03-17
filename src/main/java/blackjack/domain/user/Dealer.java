@@ -1,20 +1,27 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
-
 public class Dealer extends User {
-    private static final String DEALER_NAME = "딜러";
-    private static final int MAX_HIT_VALUE = 16;
+    public static final String DEALER_NAME = "딜러";
+    public static final int INITIAL_COUNT = 1;
 
     public Dealer() {
         super(DEALER_NAME);
     }
 
     public boolean isMustHit() {
-        return cards.calculateTotalValue() <= MAX_HIT_VALUE;
+        return state.cards()
+                .totalScore()
+                .isDealerMustToHitScore();
     }
 
-    public Card showOneCard() {
-        return cards.getOneCard();
+    public Cards showOneCard() {
+        return new Cards(state.cards()
+                .getOneCard());
+    }
+
+    @Override
+    public Cards showInitialCard() {
+        return state.cards()
+                .getCardsByCount(INITIAL_COUNT);
     }
 }

@@ -1,72 +1,74 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
 
 public abstract class User {
-    protected final Cards cards;
     protected final Name name;
+    protected State state;
+    protected Money bettingMoney;
 
     public User(String name) {
         this(new Name(name));
     }
 
     public User(Name name) {
-        this(new ArrayList<>(), name);
-    }
-
-    public User(List<Card> cards, String name) {
-        this(new Cards(cards), new Name(name));
-    }
-
-    public User(List<Card> cards, Name name) {
-        this(new Cards(cards), name);
-    }
-
-    public User(Cards cards, Name name) {
-        this.cards = cards;
         this.name = name;
     }
 
-    public final void receiveCards(Cards cards) {
-        this.cards.combine(cards);
+    public final void initializeCards(Cards cards) {
+        state = StateFactory.generateStateByCards(cards);
     }
 
     public final boolean isAbleToHit() {
-        return !cards.isBust();
+        return !state.isFinish();
     }
 
-    public final int score() {
-        return cards.calculateTotalValue();
+    public final Score score() {
+        return state.cards().totalScore();
     }
 
-    public final Cards getCards() {
-        return cards;
+    public final Cards cards() {
+        return state.cards();
     }
 
     public final String getName() {
         return name.getName();
     }
 
-    @Override
-    public final String toString() {
-        return name.toString();
+    public State getState() {
+        return state;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(cards, user.cards) &&
-                Objects.equals(name, user.name);
+    private void changeState(State state) {
+        this.state = state;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(cards, name);
+    public final void hit(Card card) {
+        changeState(state.draw(card));
     }
+
+    public final void stay() {
+        changeState(state.stay());
+    }
+
+    public final void betMoney(Money money) {
+        bettingMoney = money;
+    }
+
+    public final boolean isBlackjack() {
+        return cards().totalScore()
+                .isBlackjack();
+    }
+
+    public final boolean isBust() {
+        return cards().isBust();
+    }
+
+    public final boolean isBlackJack() {
+        return cards().isBlackjack();
+    }
+
+    public abstract Cards showInitialCard();
 }

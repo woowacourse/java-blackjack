@@ -1,6 +1,5 @@
 package blackjack.domain.user;
 
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Name {
@@ -17,7 +16,7 @@ public class Name {
 
     private void validate(String name) {
         if (isInvalidCharacter(name) || isEmpty(name)) {
-            throw new IllegalArgumentException("유효하지 읺은 이름입니다.");
+            throw new IllegalArgumentException("유효하지 않은 이름입니다.");
         }
     }
 
@@ -31,23 +30,5 @@ public class Name {
 
     public String getName() {
         return this.name;
-    }
-
-    @Override
-    public String toString() {
-        return name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Name name1 = (Name) o;
-        return Objects.equals(name, name1.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 }

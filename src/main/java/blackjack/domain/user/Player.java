@@ -1,20 +1,19 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.result.Result;
-
-import java.util.List;
-
 public class Player extends User {
+    public static final int INITIAL_COUNT = 2;
+
     public Player(String name) {
         super(name);
     }
 
-    public Player(List<Card> cards, String name) {
-        super(cards, name);
+    public long getProfit(Dealer dealer) {
+        return state.getProfit(dealer, bettingMoney);
     }
 
-    public Result produceResult(User dealer) {
-        return Result.decide(this, dealer);
+    @Override
+    public Cards showInitialCard() {
+        return state.cards()
+                .getCardsByCount(INITIAL_COUNT);
     }
 }

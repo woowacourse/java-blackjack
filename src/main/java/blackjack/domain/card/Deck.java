@@ -7,40 +7,35 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Deck {
+    private static final List<Card> CACHE_CARD;
     private static final int START_COUNT = 0;
-    private final Deque<Card> deck;
 
-    public Deck() {
-        this.deck = createDeck();
+    private final Queue<Card> deck;
+
+    static {
+        CACHE_CARD = new ArrayList<>();
+        Arrays.stream(Suit.values())
+                .forEach(shape -> CACHE_CARD.addAll(createByShape(shape)));
     }
 
-    private Deque<Card> createDeck() {
-        List<Card> cards = new ArrayList<>();
-        Arrays.stream(Shape.values())
-                .forEach(shape -> cards.addAll(createByShape(shape)));
-        shuffle(cards);
-        return new ArrayDeque<>(cards);
-    }
-
-    private List<Card> createByShape(Shape shape) {
-        return Arrays.stream(Value.values())
-                .map(value -> new Card(shape, value))
+    private static List<Card> createByShape(Suit suit) {
+        return Arrays.stream(Denomination.values())
+                .map(value -> new Card(suit, value))
                 .collect(Collectors.toList());
     }
 
-    private void shuffle(List<Card> cards) {
-        Collections.shuffle(cards);
+    public Deck() {
+        Collections.shuffle(CACHE_CARD);
+        this.deck = new ArrayDeque<>(CACHE_CARD);
     }
 
-    public Cards popTwo() {
+    public Cards popToInitialCards() {
         return new Cards(IntStream.range(START_COUNT, 2)
-                .mapToObj(c -> deck.pop())
+                .mapToObj(c -> deck.poll())
                 .collect(Collectors.toList()));
     }
 
-    public Cards popOne() {
-        return new Cards(IntStream.range(START_COUNT, 1)
-                .mapToObj(c -> deck.pop())
-                .collect(Collectors.toList()));
+    public Card popOne() {
+        return deck.poll();
     }
 }

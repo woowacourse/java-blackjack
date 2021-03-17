@@ -18,11 +18,19 @@ public class InputView {
         return Arrays.asList(input.split(COMMA));
     }
 
-    public static String inputDrawAnswer() {
+    private static String deleteWhiteSpaces(String input) {
+        return input.replaceAll(WITH_BLANK, NO_BLANK);
+    }
+
+    public static String inputString() {
         return SCANNER.nextLine();
     }
 
-    private static String deleteWhiteSpaces(String input) {
-        return input.replaceAll(WITH_BLANK, NO_BLANK);
+    public static long inputLong() {
+        try {
+            return Long.parseLong(SCANNER.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("입력값은 정수여야 합니다.");
+        }
     }
 }

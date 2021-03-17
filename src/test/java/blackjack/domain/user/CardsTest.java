@@ -2,21 +2,22 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Value;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CardsTest {
     @DisplayName("Card 객체 하나를 보여준다.")
     @Test
     public void oneCard() {
         Deck deck = new Deck();
-        Cards cards = deck.popTwo();
+        Cards cards = deck.popToInitialCards();
 
         Card card = cards.getOneCard();
 
@@ -27,11 +28,12 @@ public class CardsTest {
     @Test
     public void calculateTotalCards() {
         Cards cards = new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.KING)
         ));
 
-        int totalValue = cards.calculateTotalValue();
+        Score totalScore = cards.totalScore();
+        int totalValue = totalScore.getValue();
 
         assertThat(totalValue).isEqualTo(18);
     }
@@ -40,11 +42,12 @@ public class CardsTest {
     @Test
     public void containsAce() {
         Cards cards = new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.SPACE, Value.ACE),
-                new Card(Shape.CLOVER, Value.KING)));
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.KING)));
 
-        int totalValue = cards.calculateTotalValue();
+        Score totalScore = cards.totalScore();
+        int totalValue = totalScore.getValue();
 
         assertThat(totalValue).isEqualTo(19);
     }
@@ -53,34 +56,21 @@ public class CardsTest {
     @Test
     void contains() {
         Cards cards = new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.QUEEN),
-                new Card(Shape.SPACE, Value.ACE)));
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.SPACE, Denomination.ACE)));
 
         boolean isSoftHand = cards.isSoftHand();
 
         assertThat(isSoftHand).isTrue();
     }
 
-    @DisplayName("카드들을 하나의 객체로 합친다.")
-    @Test
-    void combineCards() {
-        Deck deck = new Deck();
-        Cards cards = deck.popTwo();
-        Cards otherCards = deck.popTwo();
-        cards.combine(otherCards);
-
-        int cardCount = cards.getCards().size();
-
-        assertThat(cardCount).isEqualTo(4);
-    }
-
     @DisplayName("카드의 총합이 버스트인 경우를 확인한다.")
     @Test
     void isBustTrue() {
         Cards cards = new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.QUEEN),
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.SPACE, Value.JACK)));
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.SPACE, Denomination.JACK)));
 
         boolean isBust = cards.isBust();
 
@@ -91,11 +81,61 @@ public class CardsTest {
     @Test
     void isBustFalse() {
         Cards cards = new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.QUEEN),
-                new Card(Shape.SPACE, Value.ACE)));
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.SPACE, Denomination.ACE)));
 
         boolean isBust = cards.isBust();
 
         assertThat(isBust).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드 한장을 더한다.")
+    void add() {
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.SPACE, Denomination.ACE)));
+        Card card = new Card(Suit.DIAMOND, Denomination.QUEEN);
+
+        cards.add(card);
+        int count = cards.getCards().size();
+
+        assertThat(count).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("블랙잭인지 확인한다.")
+    void isBlackjack() {
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.SPACE, Denomination.QUEEN)));
+
+        boolean isBlackjack = cards.isBlackjack();
+
+        assertThat(isBlackjack).isTrue();
+    }
+
+    @Test
+    @DisplayName("갯수별 카드를 반환받는다.")
+    void getCardsByCount() {
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.SPACE, Denomination.ACE)));
+
+        Cards result = cards.getCardsByCount(1);
+        int count = result.getCards().size();
+
+        assertThat(count).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("갯수별 카드를 반환받는다. - 카드 갯수보다 많은 카드를 가져올 경우 예외.")
+    void getCardsByCount1() {
+        Cards cards = new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.SPACE, Denomination.ACE)));
+
+        assertThatThrownBy(() -> cards.getCardsByCount(3))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

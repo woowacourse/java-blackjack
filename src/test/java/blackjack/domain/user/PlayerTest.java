@@ -1,9 +1,9 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Value;
-import blackjack.domain.result.Result;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
+import blackjack.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,11 +25,11 @@ public class PlayerTest {
     public void distributeTwoCards() {
         Player player = new Player("amazzi");
 
-        player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.HEART, Value.NINE),
-                new Card(Shape.DIAMOND, Value.JACK)
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.HEART, Denomination.NINE),
+                new Card(Suit.DIAMOND, Denomination.JACK)
         )));
-        int cardCount = player.cards.getCards().size();
+        int cardCount = player.cards().getCards().size();
 
         assertThat(cardCount).isEqualTo(2);
     }
@@ -38,9 +38,9 @@ public class PlayerTest {
     @Test
     public void isDrawableTrue() {
         Player player = new Player("amazzi");
-        player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.HEART, Value.TWO),
-                new Card(Shape.DIAMOND, Value.JACK)
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.DIAMOND, Denomination.JACK)
         )));
 
         boolean isAbleToHit = player.isAbleToHit();
@@ -52,87 +52,223 @@ public class PlayerTest {
     @Test
     public void isDrawableFalse() {
         Player player = new Player("amazzi");
-        player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.HEART, Value.TWO),
-                new Card(Shape.DIAMOND, Value.JACK),
-                new Card(Shape.CLOVER, Value.QUEEN)
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.DIAMOND, Denomination.JACK)
         )));
 
         boolean isAbleToHit = player.isAbleToHit();
 
-        assertThat(isAbleToHit).isFalse();
+        assertThat(isAbleToHit).isTrue();
     }
 
     @DisplayName("카드를 공개한다.")
     @Test
     void show() {
         Player player = new Player("amazzi");
-        player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.EIGHT),
+                new Card(Suit.CLOVER, Denomination.KING)
         )));
 
-        int cardCount = player.cards
+        int cardCount = player.cards()
                 .getCards().size();
 
         assertThat(cardCount).isEqualTo(2);
     }
 
-    @DisplayName("플레이어의 결과를 산출한다. - 버스트여서 패")
+    @DisplayName("받은 카드에 따라 상태를 확인한다. - Hit")
     @Test
-    public void decideBustUserLose1() {
-        Dealer dealer = new Dealer();
+    public void receiveCardsState() {
         Player player = new Player("amazzi");
-        dealer.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
-        )));
-        player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING),
-                new Card(Shape.HEART, Value.QUEEN)
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.TWO),
+                new Card(Suit.CLOVER, Denomination.KING)
         )));
 
-        Result result = player.produceResult(dealer);
+        State state = player.getState();
 
-        assertThat(result).isEqualTo(Result.LOSE);
+        assertThat(state).isInstanceOf(Hit.class);
     }
 
-    @DisplayName("플레이어의 결과를 산출한다. - 버스트 아니고 패")
+    @DisplayName("받은 카드에 따라 상태를 확인한다. - blackjack")
     @Test
-    public void decideBustUserLose2() {
-        Dealer dealer = new Dealer();
+    public void receiveCardsState2() {
         Player player = new Player("amazzi");
-        dealer.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
-        )));
-        player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.TWO)
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.KING)
         )));
 
-        Result result = player.produceResult(dealer);
+        State state = player.getState();
 
-        assertThat(result).isEqualTo(Result.LOSE);
+        assertThat(state).isInstanceOf(Blackjack.class);
     }
 
-    @DisplayName("플레이어의 결과를 산출한다. - 무승부")
     @Test
-    public void decideBustUserStandOff() {
-        Dealer dealer = new Dealer();
+    @DisplayName("상태에 따라 카드를 받는다. - hit")
+    void draw1() {
         Player player = new Player("amazzi");
-        dealer.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
-        )));
-        player.receiveCards(new Cards(Arrays.asList(
-                new Card(Shape.SPACE, Value.EIGHT),
-                new Card(Shape.CLOVER, Value.KING)
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.TWO)
         )));
 
-        Result result = player.produceResult(dealer);
+        player.hit(new Card(Suit.SPACE, Denomination.TWO));
+        State state = player.getState();
 
-        assertThat(result).isEqualTo(Result.STAND_OFF);
+        assertThat(state).isInstanceOf(Hit.class);
+    }
+
+    @Test
+    @DisplayName("상태에 따라 카드를 받는다. - bust")
+    void draw2() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.TWO)
+        )));
+
+        player.hit(new Card(Suit.HEART, Denomination.JACK));
+        State state = player.getState();
+
+        assertThat(state).isInstanceOf(Bust.class);
+    }
+
+    @Test
+    @DisplayName("카드를 더이상 받지 않는다.")
+    void stay() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.TWO)
+        )));
+
+        player.stay();
+        State state = player.getState();
+
+        assertThat(state).isInstanceOf(Stay.class);
+    }
+
+    @Test
+    @DisplayName("블랙잭인지 확인한다.")
+    void isBlackjack() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+
+        boolean isBlackjack = player.isBlackjack();
+
+        assertThat(isBlackjack).isTrue();
+    }
+
+    @Test
+    @DisplayName("버스트인지 확인한다.")
+    void isBust() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+        player.hit(new Card(Suit.HEART, Denomination.JACK));
+
+        boolean isBust = player.isBust();
+
+        assertThat(isBust).isTrue();
+    }
+
+    @Test
+    @DisplayName("수익을 구한다. - 플레이어 버스트")
+    void calculateProfit() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+        player.betMoney(new Money(1000));
+        player.hit(new Card(Suit.HEART, Denomination.JACK));
+        Dealer dealer = new Dealer();
+        dealer.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.QUEEN)
+        )));
+
+        long profit = player.getProfit(dealer);
+
+        assertThat(profit).isEqualTo(-1000);
+    }
+
+    @Test
+    @DisplayName("수익을 구한다. - 딜러, 플레이어 블랙잭인 경우")
+    void calculateProfit2() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+        player.betMoney(new Money(1000));
+        Dealer dealer = new Dealer();
+        dealer.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.ACE),
+                new Card(Suit.CLOVER, Denomination.QUEEN)
+        )));
+
+        long profit = player.getProfit(dealer);
+
+        assertThat(profit).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("수익을 구한다. - 플레이어 수가 더 큰 경우")
+    void calculateProfit3() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+        player.betMoney(new Money(1000));
+        player.stay();
+        Dealer dealer = new Dealer();
+        dealer.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.SIX),
+                new Card(Suit.CLOVER, Denomination.SIX)
+        )));
+
+        long profit = player.getProfit(dealer);
+
+        assertThat(profit).isEqualTo(1000);
+    }
+
+    @Test
+    @DisplayName("블랙잭인지 확인한다.")
+    void isBlackJack() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+        player.betMoney(new Money(1000));
+
+        boolean isBlackjack = player.isBlackJack();
+
+        assertThat(isBlackjack).isFalse();
+    }
+
+    @DisplayName("초기 카드 상태를 공개한다.")
+    @Test
+    void showInitialCard() {
+        Player player = new Player("amazzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.QUEEN),
+                new Card(Suit.CLOVER, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.JACK)
+        )));
+
+        Cards cards = player.showInitialCard();
+        int count = cards.getCards().size();
+
+        assertThat(count).isEqualTo(2);
     }
 }

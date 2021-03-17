@@ -1,9 +1,11 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Shape;
-import blackjack.domain.card.Value;
-import blackjack.domain.result.ResultBoard;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
+import blackjack.domain.state.State;
+import blackjack.domain.state.Stay;
+import blackjack.domain.user.Cards;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BlackjackGameTest {
     @Test
@@ -32,13 +35,13 @@ public class BlackjackGameTest {
         blackjackGame.handOutInitialCards();
 
         int dealerCardCount = blackjackGame.getDealer()
-                .getCards()
+                .cards()
                 .getCards()
                 .size();
         boolean isPlayersCountTwo = blackjackGame.getPlayers()
                 .getPlayers()
                 .stream()
-                .allMatch(player -> player.getCards()
+                .allMatch(player -> player.cards()
                         .getCards()
                         .size() == 2);
 
@@ -51,14 +54,11 @@ public class BlackjackGameTest {
     void proceedPlayersRound() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
-        Player player = new Player(Arrays.asList(
-                new Card(Shape.SPACE, Value.QUEEN),
-                new Card(Shape.HEART, Value.QUEEN),
-                new Card(Shape.SPACE, Value.EIGHT)), "amazzzi");
+        blackjackGame.handOutInitialCards();
 
-        boolean isNotGameOver = blackjackGame.isNotGameOver(player);
+        boolean isNotGameOver = blackjackGame.isNotFinishPlayersRound();
 
-        assertThat(isNotGameOver).isFalse();
+        assertThat(isNotGameOver).isTrue();
     }
 
     @Test
@@ -67,13 +67,17 @@ public class BlackjackGameTest {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
         Player player = new Player("amazzzi");
+        player.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.TWO)
+        )));
 
         blackjackGame.hit(player);
-        int cardCount = player.getCards()
+        int cardCount = player.cards()
                 .getCards()
                 .size();
 
-        assertThat(cardCount).isEqualTo(1);
+        assertThat(cardCount).isEqualTo(3);
     }
 
     @Test
@@ -82,11 +86,15 @@ public class BlackjackGameTest {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
         Dealer dealer = new Dealer();
+        dealer.initializeCards(new Cards(Arrays.asList(
+                new Card(Suit.SPACE, Denomination.JACK),
+                new Card(Suit.CLOVER, Denomination.TWO)
+        )));
 
         blackjackGame.hit(dealer);
-        int cardCount = dealer.getCards().getCards().size();
+        int cardCount = dealer.cards().getCards().size();
 
-        assertThat(cardCount).isEqualTo(1);
+        assertThat(cardCount).isEqualTo(3);
     }
 
     @Test
@@ -102,11 +110,46 @@ public class BlackjackGameTest {
     }
 
     @Test
-    @DisplayName("결과 보드 만들기 확인")
-    void generateResultBoard() {
+    @DisplayName("n을 입력할 경우 상태를 stay로 변경한다.")
+    void proceedPlayersRound1() {
         List<String> names = Arrays.asList("amazzi", "dani", "pobi");
         BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+        blackjackGame.handOutInitialCards();
+        Player player = blackjackGame.getCurrentPlayer();
+        String answer = "n";
+        blackjackGame.proceedPlayersRound(answer);
 
-        assertThat(blackjackGame.generateResultBoard()).isInstanceOf(ResultBoard.class);
+        State state = player.getState();
+
+        assertThat(state).isInstanceOf(Stay.class);
+    }
+
+    @Test
+    @DisplayName("사용자 별로 베팅 금액을 설정한다. - 존재하지 않는 사용자 입력 시 예외")
+    void bet() {
+        List<String> names = Arrays.asList("amazzi", "dani", "pobi");
+        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+        assertThatThrownBy(() -> blackjackGame.betByPlayer("amazi", 1000))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("게임 진행 가능한 플레이어가 없을 때 현재 플레이어를 가져오려하면 예외가 발생한다.")
+    void getCurrentPlayer() {
+        List<String> names = Arrays.asList("amazzi", "dani");
+        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+
+        assertThatThrownBy(blackjackGame::getCurrentPlayer)
+                .isInstanceOf(NullPointerException.class);
+    }
+
+    @Test
+    @DisplayName("y, n가 아닌 대답이 들어올 경우 예외가 발생한다.")
+    void answer() {
+        List<String> names = Arrays.asList("amazzi", "dani");
+        BlackjackGame blackjackGame = BlackjackGame.generateByUser(names);
+
+        assertThatThrownBy(() -> blackjackGame.proceedPlayersRound("ㄴ"))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

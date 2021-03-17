@@ -9,25 +9,35 @@ public class CardTest {
     @DisplayName("Card 객체를 생성한다.")
     @Test
     public void createCard() {
-        Card card = new Card(Shape.SPACE, Value.ACE);
+        Card card = new Card(Suit.SPACE, Denomination.ACE);
 
         assertThat(card).isInstanceOf(Card.class);
     }
 
-    @DisplayName("Card 객체의 값을 확인한다.")
+    @DisplayName("Card의 Denomination을 확인한다.")
     @Test
-    public void checkValue() {
-        Card card = new Card(Shape.SPACE, Value.ACE);
+    public void checkDenomination() {
+        Card card = new Card(Suit.SPACE, Denomination.ACE);
 
-        int cardValue = card.value();
+        int denomination = card.getDenomination();
 
-        assertThat(cardValue).isEqualTo(1);
+        assertThat(denomination).isEqualTo(1);
+    }
+
+    @DisplayName("Card의 shape을 확인한다.")
+    @Test
+    public void checkSuit() {
+        Card card = new Card(Suit.SPACE, Denomination.ACE);
+
+        String suit = card.getSuit();
+
+        assertThat(suit).isEqualTo("스페이스");
     }
 
     @Test
     @DisplayName("에이스카드인지 확인한다.")
     void isAceCard() {
-        Card card = new Card(Shape.CLOVER, Value.ACE);
+        Card card = new Card(Suit.CLOVER, Denomination.ACE);
 
         boolean isAce = card.isAceCard();
 

@@ -3,15 +3,20 @@ package blackjack.domain.user;
 import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public class Cards implements Comparable<Cards> {
+public class Cards {
     private static final int FIRST_CARD = 0;
-    private static final int BUST_VALUE = 21;
-    private static final int TEN = 10;
 
     private final List<Card> cards;
+
+    public Cards(Card... cards) {
+        this(Arrays.asList(cards));
+    }
 
     public Cards(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
@@ -25,19 +30,23 @@ public class Cards implements Comparable<Cards> {
         return cards.get(FIRST_CARD);
     }
 
-    public int calculateTotalValue() {
-        int totalValue = sum();
-        int aceCount = getAceCount();
-        for (int i = 0; i < aceCount; i++) {
-            totalValue += decideAceValue(totalValue);
-        }
-        return totalValue;
+    public void add(Card card) {
+        cards.add(card);
     }
 
-    private int sum() {
-        return cards.stream()
-                .mapToInt(Card::value)
-                .sum();
+    public Score totalScore() {
+        Score totalScore = sum();
+        int aceCount = getAceCount();
+        for (int i = 0; i < aceCount; i++) {
+            totalScore = totalScore.decideScoreByStatus();
+        }
+        return totalScore;
+    }
+
+    private Score sum() {
+        return new Score(cards.stream()
+                .mapToInt(Card::getDenomination)
+                .sum());
     }
 
     private int getAceCount() {
@@ -46,28 +55,26 @@ public class Cards implements Comparable<Cards> {
                 .count();
     }
 
-    private int decideAceValue(int totalValue) {
-        if (isSoftHand() && totalValue + TEN < BUST_VALUE) {
-            return TEN;
-        }
-        return 0;
-    }
-
     public boolean isSoftHand() {
         return cards.stream()
                 .anyMatch(Card::isAceCard);
     }
 
-    public void combine(Cards otherCards) {
-        this.cards.addAll(otherCards.getCards());
-    }
-
     public boolean isBust() {
-        return calculateTotalValue() > BUST_VALUE;
+        return totalScore().isBust();
     }
 
-    @Override
-    public int compareTo(Cards otherCards) {
-        return Integer.compare(this.calculateTotalValue(), otherCards.calculateTotalValue());
+    public boolean isBlackjack() {
+        return totalScore().isBlackjack();
+    }
+
+    public Cards getCardsByCount(int count) {
+        try {
+            return IntStream.range(FIRST_CARD, count)
+                    .mapToObj(cards::get)
+                    .collect(Collectors.collectingAndThen(Collectors.toList(), Cards::new));
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("[ERROR] 카드 갯수보다 많은 카드를 가져올 수 없습니다.");
+        }
     }
 }
