@@ -13,7 +13,7 @@ import blakcjack.dto.OutcomeSummaryDto;
 import blakcjack.dto.ParticipantDto;
 import blakcjack.dto.ParticipantsDto;
 import blakcjack.dto.PlayerCreationDto;
-import blakcjack.exception.GameTerminationException;
+import blakcjack.exception.GameExitException;
 import blakcjack.view.InputView;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public class BlackJackController {
                     creationInfo.getNames(), creationInfo.getBettingMoneys());
         } catch (GameInitializationFailureException e) {
             printGameClosing(e.getMessage());
-            throw new GameTerminationException();
+            throw new GameExitException();
         }
     }
 
@@ -58,7 +58,7 @@ public class BlackJackController {
             blackjackGame.initializeHands();
         } catch (final EmptyDeckException e) {
             printGameClosing(e.getMessage());
-            throw new GameTerminationException();
+            throw new GameExitException();
         }
     }
 
@@ -69,7 +69,7 @@ public class BlackJackController {
             drawForMaximumCapability(blackjackGame, (Dealer) dealer);
         } catch (final EmptyDeckException e) {
             printGameClosing(e.getMessage());
-            throw new GameTerminationException();
+            throw new GameExitException();
         }
     }
 
