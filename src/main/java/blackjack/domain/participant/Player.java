@@ -1,54 +1,49 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.rule.ScoreRule;
+import blackjack.domain.state.State;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Player implements Participant {
-    private static final int FROM = 0;
-    private static final int TO = 2;
-    private static final int DRAW_BOUND_SCORE = 21;
+public class Player extends AbstractParticipant {
+    private int money;
 
-    private String name;
-    private List<Card> cards;
-    private ScoreRule scoreRule;
-
-    public Player(String name, ScoreRule scoreRule) {
-        this.name = name;
-        this.cards = new ArrayList<>();
-        this.scoreRule = scoreRule;
+    public Player(String name, State state) {
+        super(name, state);
+        changeState();
     }
 
     @Override
-    public void receiveCard(Card card) {
-        cards.add(card);
+    public boolean isReceivable() {
+        return !isEnd();
+    }
+
+    @Override
+    public boolean handOutCard(Card card) {
+        if (!isReceivable()) {
+            return false;
+        }
+
+        receiveCard(card);
+        changeState();
+        return true;
+    }
+
+    @Override
+    public boolean isDealer() {
+        return false;
     }
 
     @Override
     public List<Card> showInitCards() {
-        return cards.subList(FROM, TO);
+        return showCards();
     }
 
-    @Override
-    public List<Card> showCards() {
-        return cards;
+    public void betting(int money) {
+        this.money = money;
     }
 
-    @Override
-    public boolean isReceiveCard() {
-        int totalScore = scoreRule.sumTotalScore(cards);
-        return totalScore <= DRAW_BOUND_SCORE;
-    }
-
-    @Override
-    public int sumTotalScore() {
-        return scoreRule.sumTotalScore(cards);
-    }
-
-    @Override
-    public String getName() {
-        return name;
+    public int calculateWinPrize(State enemyState) {
+        return (int) (money * getState().calculateEarningRate(enemyState));
     }
 }

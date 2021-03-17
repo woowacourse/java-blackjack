@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.AbstractParticipant;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,8 +16,15 @@ public class InputView {
         return Arrays.asList(input.split(DELIMITER_COMMA));
     }
 
-    public static boolean inputAskMoreCard(Player player) {
-        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+
+    public static int inputBettingMoney(AbstractParticipant participant) {
+        System.out.println(participant.getName() + "의 배팅 금액은?");
+        int money = Integer.parseInt(scanner.nextLine());
+        return money;
+    }
+
+    public static boolean inputAskMoreCard(AbstractParticipant participant) {
+        System.out.println(participant.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = scanner.nextLine();
         if ("y".equals(input)) {
             return true;

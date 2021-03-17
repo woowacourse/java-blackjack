@@ -1,8 +1,7 @@
 package blackjack.domain.card;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import blackjack.domain.card.strategy.InitialCardsDrawStrategy;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 
@@ -27,6 +26,8 @@ class DeckTest {
     @DisplayName("Deck의 초기 Card 갯수는 52개이다")
     @Test
     void testInitialSize() {
+        //when
+        Deck.generate().refresh();
         //then
         assertThat(deck.size()).isEqualTo(52);
     }
@@ -34,18 +35,20 @@ class DeckTest {
     @DisplayName("Deck에서 카드를 뽑는다")
     @Test
     void testDraw() {
+        //given
+        int currentDeckSize = deck.size();
         //when
         deck.draw();
 
         //then
-        assertThat(deck.size()).isEqualTo(51);
+        assertThat(deck.size()).isEqualTo(currentDeckSize - 1);
     }
 
     @DisplayName("초기 패를 두장 뽑는다")
     @Test
     void testHandOutInitCards() {
         //when
-        List<Card> cards = deck.handOutInitCards();
+        List<Card> cards = deck.drawCards(new InitialCardsDrawStrategy());
 
         //then
         assertThat(cards).hasSize(2);

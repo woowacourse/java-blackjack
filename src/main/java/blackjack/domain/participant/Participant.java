@@ -1,19 +1,26 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.rule.ScoreRule;
 
 import java.util.List;
 
 public interface Participant {
-    void receiveCard(Card card);
 
-    List<Card> showInitCards();
+    int sumTotalScore(ScoreRule scoreRule);
 
     List<Card> showCards();
 
-    boolean isReceiveCard();
+    void receiveCard(Card card);
 
-    int sumTotalScore();
+    void changeState();
 
-    String getName();
+    void stay();
+
+    boolean isEnd();
+
+    boolean isBust();
+
+    boolean isBlackJack();
 }
+
