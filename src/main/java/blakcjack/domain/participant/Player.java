@@ -4,6 +4,8 @@ import blakcjack.domain.money.BettingMoney;
 import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.score.Score;
 
+import java.util.Objects;
+
 public class Player extends Participant {
     private final BettingMoney bettingMoney;
 
@@ -51,5 +53,19 @@ public class Player extends Participant {
     @Override
     public ParticipantType getType() {
         return ParticipantType.PLAYER;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        final Player player = (Player) o;
+        return Objects.equals(bettingMoney, player.bettingMoney);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), bettingMoney);
     }
 }
