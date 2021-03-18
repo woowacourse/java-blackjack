@@ -8,6 +8,7 @@ import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +61,7 @@ public class BlackjackGame {
     }
 
     public Map<Player, Double> playerEarningResult() {
-        Map<Player, Double> playerEarning = new HashMap<>();
+        Map<Player, Double> playerEarning = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             double earning = earningResult(dealer, player);
             playerEarning.put(player, earning);
