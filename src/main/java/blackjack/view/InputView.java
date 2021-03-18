@@ -35,13 +35,12 @@ public class InputView {
             System.out.printf(REQUEST_MONEY_MESSAGE + NEWLINE, name.getName());
             moneys.add(getMoneyInput());
         }
-        SCANNER.nextLine();
         return Collections.unmodifiableList(moneys);
     }
 
     private static double getMoneyInput() {
         try {
-            return SCANNER.nextDouble();
+            return Double.parseDouble(SCANNER.nextLine());
         } catch (Exception e) {
             throw new IllegalArgumentException(NUMERAL_ERROR);
         }
