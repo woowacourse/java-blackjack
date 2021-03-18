@@ -13,7 +13,7 @@ public class Card {
     }
 
     public Card(String cardNumber, String cardSymbol) {
-        this(CardNumber.matchByNumber(cardNumber), CardSymbol.matchByInput(cardNumber));
+        this(CardNumber.matchByNumber(cardNumber), CardSymbol.matchByInput(cardSymbol));
     }
 
     public boolean isAce() {
