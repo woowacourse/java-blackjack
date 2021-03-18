@@ -32,8 +32,8 @@ public class BlackJackController {
         while (!player.isFinished() && playerSayYes) {
             String input = InputView.requestMoreDraw(player.getName());
             playerSayYes = blackjackGame.isPlayerDraw(player, input);
+            OutputView.showPlayerCard(player);
         }
-        OutputView.showPlayerCard(player);
     }
 
     private void processDealer(BlackjackGame blackjackGame, Dealer dealer) {
