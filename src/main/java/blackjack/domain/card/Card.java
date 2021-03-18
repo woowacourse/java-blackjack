@@ -24,7 +24,7 @@ public class Card {
         return cardNumber.getValue();
     }
 
-    public String getCard() {
+    public String parseToString() {
         return cardNumber.getNumber() + cardSymbol.getSymbol();
     }
 }

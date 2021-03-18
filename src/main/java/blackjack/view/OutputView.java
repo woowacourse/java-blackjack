@@ -34,7 +34,7 @@ public class OutputView {
     }
 
     private static void showCards(Dealer dealer, Players players) {
-        String dealerCard = dealer.getCards().get(0).getCard();
+        String dealerCard = dealer.getCards().get(0).parseToString();
         System.out.printf(DEALER_CARD + NEWLINE, dealerCard);
         for (Player player : players.getPlayers()) {
             showPlayerCard(player);
@@ -58,7 +58,7 @@ public class OutputView {
     private static String combineAllCard(User user) {
         List<String> allCards = new ArrayList<>();
         for (Card card : user.getCards()) {
-            allCards.add(card.getCard());
+            allCards.add(card.parseToString());
         }
         return String.join(STRING_DELIMITER, allCards);
     }
