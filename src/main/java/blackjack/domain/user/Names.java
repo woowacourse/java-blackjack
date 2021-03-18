@@ -1,9 +1,11 @@
 package blackjack.domain.user;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Names {
 
@@ -21,13 +23,11 @@ public class Names {
     }
 
     private List<Name> makeNames(String input) {
-        List<Name> names = new ArrayList<>();
-        for (String value : input.split(DELIMITER)) {
-            value = value.trim();
-            names.add(new Name(value));
-        }
+        List<Name> names = Arrays.stream(input.split(DELIMITER))
+            .map(Name::new)
+            .collect(Collectors.toList());
         validateDuplicate(names);
-        return names;
+        return Collections.unmodifiableList(names);
     }
 
     private void validateDuplicate(List<Name> names) {
