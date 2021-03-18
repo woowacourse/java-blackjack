@@ -16,13 +16,13 @@ public class CardDeck {
 
     private void generateCardWithSymbol() {
         for (CardSymbol cardSymbol : CardSymbol.values()) {
-            generateCardWithNumber(cardSymbol.getSymbol());
+            generateCardWithNumber(cardSymbol);
         }
     }
 
-    private void generateCardWithNumber(String cardSymbol) {
+    private void generateCardWithNumber(CardSymbol cardSymbol) {
         for (CardNumber cardNumber : CardNumber.values()) {
-            deck.add(new Card(cardNumber.getNumber(), cardSymbol));
+            deck.add(new Card(cardNumber, cardSymbol));
         }
     }
 

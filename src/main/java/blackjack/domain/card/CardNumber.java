@@ -35,10 +35,10 @@ public enum CardNumber {
     }
 
     public String getNumber() {
-        return this.number;
+        return number;
     }
 
     public int getValue() {
-        return this.value;
+        return value;
     }
 }

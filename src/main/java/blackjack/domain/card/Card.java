@@ -7,9 +7,13 @@ public class Card {
     private final CardNumber cardNumber;
     private final CardSymbol cardSymbol;
 
-    public Card(String number, String symbol) {
-        this.cardNumber = CardNumber.matchByNumber(number);
-        this.cardSymbol = CardSymbol.matchByInput(symbol);
+    public Card(CardNumber cardNumber, CardSymbol cardSymbol) {
+        this.cardNumber = cardNumber;
+        this.cardSymbol = cardSymbol;
+    }
+
+    public Card(String cardNumber, String cardSymbol) {
+        this(CardNumber.matchByNumber(cardNumber), CardSymbol.matchByInput(cardNumber));
     }
 
     public boolean isAce() {
