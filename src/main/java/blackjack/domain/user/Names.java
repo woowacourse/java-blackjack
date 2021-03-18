@@ -24,6 +24,7 @@ public class Names {
 
     private List<Name> makeNames(String input) {
         List<Name> names = Arrays.stream(input.split(DELIMITER))
+            .map(String::trim)
             .map(Name::new)
             .collect(Collectors.toList());
         validateDuplicate(names);
