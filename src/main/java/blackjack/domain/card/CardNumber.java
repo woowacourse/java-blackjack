@@ -27,13 +27,6 @@ public enum CardNumber {
         this.value = value;
     }
 
-    public static CardNumber matchByNumber(String input) {
-        return Arrays.stream(CardNumber.values())
-            .filter(cardNumber -> cardNumber.number.equals(input))
-            .findAny()
-            .orElseThrow(NoSuchElementException::new);
-    }
-
     public String getNumber() {
         return number;
     }

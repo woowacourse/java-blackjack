@@ -12,9 +12,9 @@ public class CardTest {
 
     private static Stream<Arguments> testCardSample() {
         return Stream.of(
-            Arguments.of(new Card("5", "클로버"), 5),
-            Arguments.of(new Card("K", "스페이드"), 10),
-            Arguments.of(new Card("A", "하트"), 11)
+            Arguments.of(new Card(CardNumber.FIVE, CardSymbol.CLOVER), 5),
+            Arguments.of(new Card(CardNumber.K, CardSymbol.SPADE), 10),
+            Arguments.of(new Card(CardNumber.A, CardSymbol.HEART), 11)
         );
     }
 

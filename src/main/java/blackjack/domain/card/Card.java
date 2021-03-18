@@ -12,10 +12,6 @@ public class Card {
         this.cardSymbol = cardSymbol;
     }
 
-    public Card(String cardNumber, String cardSymbol) {
-        this(CardNumber.matchByNumber(cardNumber), CardSymbol.matchByInput(cardSymbol));
-    }
-
     public boolean isAce() {
         return cardNumber == CardNumber.A;
     }

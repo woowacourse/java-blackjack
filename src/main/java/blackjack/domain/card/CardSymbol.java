@@ -16,13 +16,6 @@ public enum CardSymbol {
         this.symbol = symbol;
     }
 
-    public static CardSymbol matchByInput(String input) {
-        return Arrays.stream(CardSymbol.values())
-            .filter(cardSymbol -> cardSymbol.symbol.equals(input))
-            .collect(Collectors.toList())
-            .get(0);
-    }
-
     public String getSymbol() {
         return this.symbol;
     }
