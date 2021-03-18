@@ -1,83 +1,56 @@
 package blackjack.controller;
 
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.result.Result;
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Names;
 import blackjack.domain.user.Player;
-import blackjack.domain.user.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public class BlackJackController {
 
     public void run() {
-        CardDeck cardDeck = new CardDeck();
-        Dealer dealer = new Dealer(cardDeck.generateUserDeck());
+        BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.makeNames(InputView.requestPlayers());
+        blackjackGame.makePlayers(InputView.requestMoney(blackjackGame.getNames()));
+        OutputView.showInitiate(blackjackGame.getDealer(), blackjackGame.getPlayers());
 
-        Names names = new Names(InputView.requestPlayers());
-        Players players = new Players(cardDeck, names, InputView.requestMoney(names));
-        OutputView.showInitiate(dealer, players);
+        play(blackjackGame);
 
-        processPlayers(cardDeck, players);
-        processDealer(cardDeck, dealer);
-
-        endBlackJack(dealer, players);
+        end(blackjackGame);
     }
 
-    private void processPlayers(CardDeck cardDeck, Players players) {
-        for (Player player : players.getPlayers()) {
-            playerDraw(cardDeck, player);
+    private void play(BlackjackGame blackjackGame) {
+        for (Player player : blackjackGame.getPlayersList()) {
+            processPlayer(blackjackGame, player);
         }
+        processDealer(blackjackGame, blackjackGame.getDealer());
     }
 
-    private void playerDraw(CardDeck cardDeck, Player player) {
-        if (!player.isFinished()) {
+    private void processPlayer(BlackjackGame blackjackGame, Player player) {
+        boolean playerSayYes = true;
+        while (!player.isFinished() && playerSayYes) {
             String input = InputView.requestMoreDraw(player.getName());
-            if (player.wantToDraw(input)) {
-                player.draw(cardDeck);
-                OutputView.showPlayerCard(player);
-                playerDraw(cardDeck, player);
-            }
+            playerSayYes = blackjackGame.isPlayerDraw(player, input);
         }
+        OutputView.showPlayerCard(player);
     }
 
-    private void processDealer(CardDeck cardDeck, Dealer dealer) {
+    private void processDealer(BlackjackGame blackjackGame, Dealer dealer) {
         if (!dealer.isFinished()) {
-            dealer.draw(cardDeck);
+            blackjackGame.dealerDraw();
             OutputView.showDealerDraw();
-            processDealer(cardDeck, dealer);
+            processDealer(blackjackGame, dealer);
         }
     }
 
-    private void endBlackJack(Dealer dealer, Players players) {
-        OutputView.showScoreResult(dealer, players);
-        Map<Player, Double> playerEarning = playerEarningResult(dealer, players);
-        double dealerEarning = playerEarning.values()
-            .stream()
-            .mapToDouble(Double::doubleValue)
-            .sum();
+    private void end(BlackjackGame blackjackGame) {
+        OutputView.showScoreResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
+
+        Map<Player, Double> playerEarning = blackjackGame.playerEarningResult();
+        double dealerEarning = blackjackGame.getDealerEarning(playerEarning);
+
         OutputView.showEarning(playerEarning);
         OutputView.showEarning(dealerEarning * -1);
-    }
-
-    private Map<Player, Double> playerEarningResult(Dealer dealer, Players players) {
-        Map<Player, Double> playerEarning = new HashMap<>();
-        for (Player player : players.getPlayers()) {
-            double earning = earningResult(dealer, player);
-            playerEarning.put(player, earning);
-        }
-        return Collections.unmodifiableMap(playerEarning);
-    }
-
-    private double earningResult(Dealer dealer, Player player) {
-        double earning = player.getEarning();
-        if (earning == player.getMoney()) {
-            earning = player.getEarning(Result.compareScoreResult(player, dealer));
-        }
-        return earning;
     }
 }
