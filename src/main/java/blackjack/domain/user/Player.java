@@ -33,11 +33,11 @@ public class Player extends User {
         return money.getEarning(1);
     }
 
-    public double getEarning() {
+    public double earning() {
         return state.earning(money);
     }
 
-    public double getEarning(double earningRate) {
+    public double earning(double earningRate) {
         return money.getEarning(earningRate);
     }
 

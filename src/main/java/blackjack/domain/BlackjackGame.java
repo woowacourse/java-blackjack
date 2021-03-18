@@ -7,7 +7,6 @@ import blackjack.domain.user.Names;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,9 +76,9 @@ public class BlackjackGame {
     }
 
     private double earningResult(Dealer dealer, Player player) {
-        double earning = player.getEarning();
+        double earning = player.earning();
         if (earning == player.getMoney()) {
-            earning = player.getEarning(Result.compareScoreResult(player, dealer));
+            earning = player.earning(Result.compareScoreResult(player, dealer));
         }
         return earning;
     }
