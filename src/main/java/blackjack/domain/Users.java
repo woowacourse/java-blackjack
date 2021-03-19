@@ -42,9 +42,8 @@ public class Users {
 
     public void stay() {
         users.stream()
-                .filter(user -> user.isPlayer())
-                .map(user -> user.state.stay()
-                );
+                .filter(User::isPlayer)
+                .map(user -> user.state.stay());
 
     }
 }

@@ -71,7 +71,6 @@ public abstract class User {
         return state.cards().score().isBust();
     }
 
-
     public boolean isFinished() {
         return this.state.isFinished();
     }

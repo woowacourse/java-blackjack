@@ -39,12 +39,16 @@ public class Cards {
                 .mapToInt(Card::getScore)
                 .sum());
 
-        if (this.values.stream()
-                .anyMatch(Card::isAce) && score.isChangeAceNumber()) {
+        if (isScoreChangableStatus(score)) {
             return new Score(score.aceNumberChange());
         }
 
         return score;
+    }
+
+    private boolean isScoreChangableStatus(final Score score) {
+        return this.values.stream()
+                .anyMatch(Card::isAce) && score.isChangeAceNumber();
     }
 
     public boolean isOverDrawScore() {
