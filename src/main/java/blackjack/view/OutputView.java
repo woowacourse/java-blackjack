@@ -1,16 +1,13 @@
 package blackjack.view;
 
 import blackjack.domain.Player;
-import blackjack.domain.Result;
 import blackjack.domain.User;
 import blackjack.domain.Users;
 import blackjack.domain.card.Card;
-import blackjack.util.BlackJackConstant;
+import blackjack.state.State;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -20,27 +17,33 @@ public class OutputView {
     }
 
     public static void printInitialComment(Users users) {
-        System.out.printf("%s와 %s에게 2장의 카드를 나누어주었습니다.\n", users.getDealer().getName(), createPlayersCardStringFormat(users.getPlayers()));
-        for (User user : users.gerUsers()) {
-            System.out.println(makeCardsStringFormat(user));
-        }
-    }
+        System.out.printf("%s와 %s에게 2장의 카드를 나누어주었습니다.\n",
+                users.getDealer().getName(),
+                createPlayersCardStringFormat(users.getPlayers())
+        );
 
-    public static void printCardsOfPlayersWithScore(Users users) {
-        for (User user : users.gerUsers()) {
-            System.out.print(makeCardsStringFormat(user) + " - 결과: " + makeResultComment(user.getScore()) + "\n");
+        System.out.println(makeCardStringFormat(users.getDealer()));
+        for (User user : users.getPlayers()) {
+            System.out.println(makeCardsStringFormat(user));
         }
         System.out.println();
     }
 
-    private static String makeResultComment(int score) {
-        if (score == BlackJackConstant.BLACKJACK_SCORE) {
+    public static void printCardsOfPlayersWithScore(Users users) {
+        for (User user : users.getUsers()) {
+            System.out.print(makeCardsStringFormat(user) + " - 결과: " + makeResultComment(user) + "\n");
+        }
+        System.out.println();
+    }
+
+    private static String makeResultComment(User user) {
+        if (user.isBlackJack()) {
             return "블랙잭";
         }
-        if (score == BlackJackConstant.BUST) {
+        if (user.isBust()) {
             return "버스트";
         }
-        return Integer.toString(score);
+        return Integer.toString(user.getScore());
     }
 
     public static void printCardsOfPlayer(Player player) {
@@ -48,6 +51,10 @@ public class OutputView {
         System.out.println();
     }
 
+    private static String makeCardStringFormat(User user) {
+        return String.format("%s 카드 : %s", user.getName(),
+                createCardsStringFormat(Collections.singletonList(user.getCards().get(0))));
+    }
 
     public static String makeCardsStringFormat(User user) {
         return String.format("%s 카드 : %s", user.getName(), createCardsStringFormat(user.getCards()));
@@ -65,33 +72,30 @@ public class OutputView {
                 .collect(Collectors.joining(COMMA_WITH_BLANK));
     }
 
-    public static void printResult(Map<User, Result> checkWinOrLose) {
-        System.out.println("## 최종 승패");
+    public static void printResult(Users users) {
+        System.out.println("## 최종 수익");
 
-        printDealerResult(checkWinOrLose);
+        printDealerResult(users.getPlayers(), users.getDealer().getState());
 
-        for (User user : checkWinOrLose.keySet()) {
-            String temp = checkWinOrLose.get(user).getName();
-            System.out.printf("%s: %s\n", user.getName(), temp);
+        for (Player user : users.getPlayers()) {
+            System.out.printf("%s : %.0f\n", user.getName(),
+                    user.profit(user.getBettingMoney(), users.getDealer().getState())
+            );
         }
     }
 
-    private static void printDealerResult(Map<User, Result> checkWinOrLose) {
-        Map<Result, Integer> countMap = new HashMap<>();
-        Arrays.stream(Result.values())
-                .forEach(value -> countMap.put(value, 0));
+    private static void printDealerResult(List<Player> players, State dealerState) {
+        int dealerTotalMoney = 0;
 
-        checkWinOrLose.values()
-                .forEach(value -> countMap.put(value, countMap.get(value) + 1));
+        for (Player player : players) {
+            dealerTotalMoney -= player.profit(player.getBettingMoney(), dealerState);
+        }
 
-        System.out.printf("딜러: %d승 %d무 %d패 \n",
-                countMap.get(Result.LOSE),
-                countMap.get(Result.DRAW),
-                countMap.get(Result.WIN)
-        );
+        System.out.printf("딜러: %d \n", dealerTotalMoney);
     }
 
     public static void printDealerGetNewCardsMessage() {
         System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+        System.out.println();
     }
 }

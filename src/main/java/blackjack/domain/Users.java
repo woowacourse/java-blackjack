@@ -2,13 +2,12 @@ package blackjack.domain;
 
 import blackjack.domain.card.CardDeck;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Users {
-    private final int INITIAL_DRAW_CARD_NUMBER = 2;
-
     private final List<User> users = new ArrayList<>();
 
     public Users(Dealer dealer, List<String> players) {
@@ -19,10 +18,8 @@ public class Users {
     }
 
     public void initialHit(CardDeck cardDeck) {
-        for (int i = 0; i < INITIAL_DRAW_CARD_NUMBER; i++) {
-            gerUsers()
-                    .forEach(user -> user.hit(cardDeck.drawCard()));
-        }
+        getUsers()
+                .forEach(user -> user.initialHit(cardDeck.drawCard(), cardDeck.drawCard()));
     }
 
     public List<Player> getPlayers() {
@@ -32,7 +29,7 @@ public class Users {
                 .collect(Collectors.toList());
     }
 
-    public List<User> gerUsers() {
+    public List<User> getUsers() {
         return Collections.unmodifiableList(this.users);
     }
 
@@ -43,14 +40,10 @@ public class Users {
                 .orElseThrow(() -> new RuntimeException("딜러가 존재하지 않습니다."));
     }
 
-    public Map<User, Result> checkResult(int dealerScore) {
-        return users.stream()
+    public void stay() {
+        users.stream()
                 .filter(User::isPlayer)
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        player -> ((Player) player).getResult(dealerScore),
-                        (key1, key2) -> key1,
-                        LinkedHashMap::new
-                ));
+                .map(user -> user.state.stay());
+
     }
 }

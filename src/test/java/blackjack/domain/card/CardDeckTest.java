@@ -34,7 +34,7 @@ class CardDeckTest {
             cardDeck.drawCard();
         }
 
-        assertThatThrownBy(()->{
+        assertThatThrownBy(() -> {
             cardDeck.drawCard();
         }).isInstanceOf(NoSuchElementException.class);
     }

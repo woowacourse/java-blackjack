@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RentCompany {
-    private static String STRING_FORMAT = "%s : %.0f리터" + System.getProperty("line.separator");
+    private static final String STRING_FORMAT = "%s : %.0f리터" + System.getProperty("line.separator");
 
-    private List<Car> cars = new ArrayList<>();
+    private final List<Car> cars = new ArrayList<>();
 
     public static RentCompany create() {
         return new RentCompany();

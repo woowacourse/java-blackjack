@@ -1,8 +1,9 @@
 package blackjack.domain.card;
 
-import blackjack.util.BlackJackConstant;
-
 public class Card {
+    public static final int ACE_SCORE = 1;
+    public static final int TEN_SCORE = 10;
+
     private final Suit suit;
     private final CardNumber cardNumber;
 
@@ -16,7 +17,11 @@ public class Card {
     }
 
     public boolean isAce() {
-        return cardNumber.getScore() == BlackJackConstant.ACE_SCORE;
+        return cardNumber.getScore() == ACE_SCORE;
+    }
+
+    public boolean isTen() {
+        return cardNumber.getScore() == TEN_SCORE;
     }
 
     @Override

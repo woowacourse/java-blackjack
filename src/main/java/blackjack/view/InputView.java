@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.Player;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -25,5 +27,15 @@ public class InputView {
             return false;
         }
         throw new IllegalArgumentException("잘못된 선택지입니다.");
+    }
+
+    public static int inputBettingMoney(Player player) {
+        System.out.println(player.getName() + "의 배팅 금액은?");
+        String stringMoney = scanner.nextLine();
+        if (!stringMoney.chars().allMatch(Character::isDigit)) {
+            throw new IllegalArgumentException("배팅 금액은 숫자여야만 합니다. ");
+        }
+
+        return Integer.parseInt(stringMoney);
     }
 }

@@ -7,6 +7,8 @@ import blackjack.domain.card.CardDeck;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+
 public class BlackJackController {
     private final Users users;
     private final Dealer dealer;
@@ -16,36 +18,40 @@ public class BlackJackController {
         this.dealer = new Dealer();
         this.cardDeck = CardDeck.createDeck();
         this.users = new Users(dealer, InputView.scanPlayerNames());
+        playersBetting(users.getPlayers());
         users.initialHit(cardDeck);
         OutputView.printInitialComment(users);
     }
 
     public void run() {
         if (dealer.isBlackJack()) {
-            OutputView.printResult(users.checkResult(dealer.getScore()));
+            users.stay();
+            OutputView.printResult(users);
             return;
         }
         users.getPlayers().forEach(this::playGameForEachPlayer);
 
-        while (dealer.isDealerDrawScore()) {
+        while (!dealer.isFinished()) {
             dealer.hit(cardDeck.drawCard());
             OutputView.printDealerGetNewCardsMessage();
         }
         OutputView.printCardsOfPlayersWithScore(users);
-        OutputView.printResult(users.checkResult(dealer.getScore()));
+        OutputView.printResult(users);
+    }
+
+    private void playersBetting(List<Player> players) {
+        for (Player player : players) {
+            player.betting(InputView.inputBettingMoney(player));
+        }
     }
 
     private void playGameForEachPlayer(Player player) {
-        while (requestHitOrNot(player)) {
+        while (!player.isFinished() && InputView.isHit(player.getName())) {
             player.hit(cardDeck.drawCard());
             OutputView.printCardsOfPlayer(player);
         }
-    }
-
-    private boolean requestHitOrNot(Player player) {
-        if (player.isBlackJack() || player.isBust()) {
-            return false;
+        if (!player.isFinished()) {
+            player.stay();
         }
-        return InputView.isHit(player.getName());
     }
 }

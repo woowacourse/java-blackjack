@@ -1,16 +1,18 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.util.BlackJackConstant;
+import blackjack.state.State;
+import blackjack.state.StateFactory;
 import blackjack.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class User {
     protected String name;
     protected List<Card> cards;
+
+    protected State state;
 
     protected User(String name) {
         validate(name);
@@ -24,8 +26,21 @@ public abstract class User {
         }
     }
 
+    public void initialHit(Card firstCard, Card secondCard) {
+        if (this.isDealer()) {
+            this.state = StateFactory.initialDealerDraw(firstCard, secondCard);
+            return;
+        }
+
+        this.state = StateFactory.initialPlayerDraw(firstCard, secondCard);
+    }
+
     public void hit(Card card) {
-        cards.add(card);
+        this.state = state.draw(card);
+    }
+
+    public State getState() {
+        return state;
     }
 
     public boolean isPlayer() {
@@ -37,21 +52,11 @@ public abstract class User {
     }
 
     public int getScore() {
-        if (this.isBlackJack()) {
-            return BlackJackConstant.BLACKJACK_SCORE;
-        }
-
-        int score = this.cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-
-        score += checkAce(score);
-
-        return checkBust(score);
+        return this.state.cards().score().getScore();
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return this.state.cards().list();
     }
 
     public String getName() {
@@ -59,30 +64,18 @@ public abstract class User {
     }
 
     public boolean isBlackJack() {
-        if (this.cards.stream().anyMatch(Card::isAce) &&
-                this.cards.size() == BlackJackConstant.BLACKJACK_SIZE_CONDITION) {
-            return cards.stream()
-                    .anyMatch(card -> card.getScore() == BlackJackConstant.TEN_SCORE);
-        }
-        return false;
+        return state.cards().score().isBlackJack();
     }
 
     public boolean isBust() {
-        return this.getScore() == BlackJackConstant.BUST;
+        return state.cards().score().isBust();
     }
 
-    private int checkBust(int score) {
-        if (score > BlackJackConstant.BLACKJACK) {
-            return BlackJackConstant.BUST;
-        }
-        return score;
+    public boolean isFinished() {
+        return this.state.isFinished();
     }
 
-    private int checkAce(int score) {
-        if (this.cards.stream()
-                .anyMatch(Card::isAce) && score <= BlackJackConstant.ACE_CHECK_SCORE) {
-            return BlackJackConstant.TEN_SCORE;
-        }
-        return 0;
+    public double profit(int bettingMoney, State dealerState) {
+        return this.state.profit(bettingMoney, dealerState);
     }
 }

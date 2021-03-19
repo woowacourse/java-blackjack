@@ -1,9 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Suit;
-import blackjack.util.BlackJackConstant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,14 +16,14 @@ class UserTest {
         assertThat(user.getName()).isEqualTo("youngE");
     }
 
-    @DisplayName("카드 받는 기능 확인")
+    @DisplayName("카드 처음 2장 받는 기능 확인")
     @Test
     void hitCard() {
         User user = new Player("youngE");
 
-        user.hit(new Card(Suit.SPADE, CardNumber.ACE));
+        user.initialHit(Fixture.CLUBS_KING, Fixture.CLUBS_TEN);
 
-        assertThat(user.getCards()).hasSize(1);
+        assertThat(user.getCards()).hasSize(2);
     }
 
 
@@ -53,8 +49,7 @@ class UserTest {
     @Test
     void checkScore() {
         User user = new Player("youngE");
-        user.hit(new Card(Suit.SPADE, CardNumber.ACE));
-        user.hit(new Card(Suit.SPADE, CardNumber.NINE));
+        user.initialHit(Fixture.CLUBS_TEN, Fixture.CLUBS_KING);
 
         assertThat(user.getScore()).isEqualTo(20);
     }
@@ -63,30 +58,18 @@ class UserTest {
     @Test
     void isBust() {
         User user = new Player("youngE");
-        user.hit(new Card(Suit.SPADE, CardNumber.TEN));
-        user.hit(new Card(Suit.SPADE, CardNumber.NINE));
-        user.hit(new Card(Suit.SPADE, CardNumber.NINE));
+        user.initialHit(Fixture.CLUBS_TEN, Fixture.CLUBS_KING);
+        user.hit(Fixture.CLUBS_TWO);
 
         assertTrue(user.isBust());
-    }
-
-    @DisplayName("BUST 점수 확인")
-    @Test
-    void checkBustScore() {
-        User user = new Player("youngE");
-        user.hit(new Card(Suit.SPADE, CardNumber.TEN));
-        user.hit(new Card(Suit.SPADE, CardNumber.NINE));
-        user.hit(new Card(Suit.SPADE, CardNumber.NINE));
-
-        assertThat(user.getScore()).isEqualTo(BlackJackConstant.BUST);
     }
 
     @DisplayName("블랙잭인 경우를 판별한다. - 참")
     @Test
     void isBlackJackTrueTest() {
         User user = new Player("youngE");
-        user.hit(new Card(Suit.SPADE, CardNumber.ACE));
-        user.hit(new Card(Suit.SPADE, CardNumber.JACK));
+        user.initialHit(Fixture.CLUBS_ACE, Fixture.CLUBS_TEN);
+
         assertTrue(user.isBlackJack());
     }
 
@@ -94,18 +77,18 @@ class UserTest {
     @Test
     void isBlackJackFalseTest() {
         User user = new Player("youngE");
-        user.hit(new Card(Suit.SPADE, CardNumber.ACE));
-        user.hit(new Card(Suit.SPADE, CardNumber.NINE));
+        user.initialHit(Fixture.CLUBS_KING, Fixture.CLUBS_TWO);
+
         assertFalse(user.isBlackJack());
     }
 
-    @DisplayName("블랙잭 점수 확인")
+    @DisplayName("플레이어 상태가 Finished 인지 확인")
     @Test
-    void checkBlackJackScore() {
+    void isFinished() {
         User user = new Player("youngE");
-        user.hit(new Card(Suit.SPADE, CardNumber.ACE));
-        user.hit(new Card(Suit.SPADE, CardNumber.JACK));
+        user.initialHit(Fixture.CLUBS_KING, Fixture.CLUBS_TWO);
 
-        assertThat(user.getScore()).isEqualTo(BlackJackConstant.BLACKJACK_SCORE);
+        assertFalse(user.isFinished());
     }
+
 }
