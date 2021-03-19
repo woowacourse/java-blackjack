@@ -9,8 +9,7 @@ public class StateFactory {
     public static State initialPlayerDraw(Card firstCard, Card secondCard) {
         Cards cards = new Cards(Arrays.asList(firstCard, secondCard));
 
-        if (cards.list().stream().anyMatch(Card::isAce) &&
-                cards.list().stream().anyMatch(Card::isTen)) {
+        if (isBlackJack(cards)) {
             return new BlackJack(cards);
         }
 
@@ -20,8 +19,7 @@ public class StateFactory {
     public static State initialDealerDraw(Card firstCard, Card secondCard) {
         Cards cards = new Cards(Arrays.asList(firstCard, secondCard));
 
-        if (cards.list().stream().anyMatch(Card::isAce) &&
-                cards.list().stream().anyMatch(Card::isTen)) {
+        if (isBlackJack(cards)) {
             return new BlackJack(cards);
         }
 
@@ -30,5 +28,10 @@ public class StateFactory {
         }
 
         return new DealerHit(cards);
+    }
+
+    private static boolean isBlackJack(final Cards cards) {
+        return cards.list().stream().anyMatch(Card::isAce) &&
+                cards.list().stream().anyMatch(Card::isTen);
     }
 }
