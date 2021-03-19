@@ -6,7 +6,7 @@ import blackjack.domain.Users;
 import blackjack.domain.card.Card;
 import blackjack.state.State;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +52,8 @@ public class OutputView {
     }
 
     private static String makeCardStringFormat(User user) {
-        return String.format("%s 카드 : %s", user.getName(), createCardsStringFormat(Arrays.asList(user.getCards().get(0))));
+        return String.format("%s 카드 : %s", user.getName(),
+                createCardsStringFormat(Collections.singletonList(user.getCards().get(0))));
     }
 
     public static String makeCardsStringFormat(User user) {
@@ -77,7 +78,9 @@ public class OutputView {
         printDealerResult(users.getPlayers(), users.getDealer().getState());
 
         for (Player user : users.getPlayers()) {
-            System.out.printf("%s : %.0f\n", user.getName(), user.profit(user.getBettingMoney(), users.getDealer().getState()));
+            System.out.printf("%s : %.0f\n", user.getName(),
+                    user.profit(user.getBettingMoney(), users.getDealer().getState())
+            );
         }
     }
 

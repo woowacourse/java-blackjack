@@ -50,7 +50,7 @@ public class BlackJackController {
             player.hit(cardDeck.drawCard());
             OutputView.printCardsOfPlayer(player);
         }
-        if(!player.isFinished()){
+        if (!player.isFinished()) {
             player.stay();
         }
     }
