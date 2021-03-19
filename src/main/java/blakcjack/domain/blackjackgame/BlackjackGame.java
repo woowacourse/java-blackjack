@@ -1,8 +1,7 @@
 package blakcjack.domain.blackjackgame;
 
-import blakcjack.domain.Outcome;
-import blakcjack.domain.OutcomeStatistics;
 import blakcjack.domain.card.Deck;
+import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
 import blakcjack.domain.participant.Player;
@@ -22,21 +21,32 @@ public class BlackjackGame {
     private final Participant dealer;
     private final List<Participant> players = new ArrayList<>();
 
-    public BlackjackGame(final Deck deck, final List<String> names) {
-        validate(names);
+    public BlackjackGame(final Deck deck, final List<String> names, final List<Integer> bettingMoneys) {
+        validateSize(names, bettingMoneys);
+        validateDuplication(names);
 
         this.deck = deck;
         this.dealer = new Dealer();
 
-        for (String name : names) {
-            players.add(new Player(name));
+        int size = names.size();
+        for (int i = 0; i < size; i++) {
+            players.add(new Player(names.get(i), bettingMoneys.get(i)));
         }
     }
 
-    private void validate(final List<String> names) {
+    private void validateSize(final List<String> names, final List<Integer> bettingMoneys) {
+        if (names.size() != bettingMoneys.size()) {
+            throw new GameInitializationFailureException("이름과 베팅 금액의 수가 일치하지 않습니다.");
+        }
+        if (names.isEmpty()) {
+            throw new GameInitializationFailureException("초기 생성 데이터가 없습니다.");
+        }
+    }
+
+    private void validateDuplication(final List<String> names) {
         Set<String> nameGroup = new HashSet<>(names);
         if (nameGroup.size() != names.size()) {
-            throw new GameInitializationFailureException();
+            throw new GameInitializationFailureException("플레이어 이름에 중복이 있습니다.");
         }
     }
 
@@ -57,23 +67,19 @@ public class BlackjackGame {
         participant.receiveCard(deck.drawCard());
     }
 
-    public OutcomeStatistics judgeOutcome() {
-        final Map<String, Outcome> playersOutcome = judgePlayersOutcome();
-        final Map<Outcome, Integer> dealerOutcome = judgeDealerOutcome(playersOutcome);
-        return new OutcomeStatistics(dealerOutcome, playersOutcome);
-    }
-
-    private Map<String, Outcome> judgePlayersOutcome() {
+    public Map<String, Outcome> judgePlayersOutcome() {
         final Map<String, Outcome> playersOutcome = new LinkedHashMap<>();
+        final Dealer castedDealer = Dealer.class.cast(dealer);
 
         for (final Participant player : players) {
-            final Outcome playerOutcome = player.decideOutcome(dealer);
+            final Player castedPlayer = Player.class.cast(player);
+            final Outcome playerOutcome = castedPlayer.decideOutcome(castedDealer);
             playersOutcome.put(player.getNameValue(), playerOutcome);
         }
         return playersOutcome;
     }
 
-    private Map<Outcome, Integer> judgeDealerOutcome(final Map<String, Outcome> playersOutcome) {
+    public Map<Outcome, Integer> judgeDealerOutcome(final Map<String, Outcome> playersOutcome) {
         final Map<Outcome, Integer> dealerOutcome = new LinkedHashMap<>();
 
         dealerOutcome.put(Outcome.WIN, Collections.frequency(playersOutcome.values(), Outcome.LOSE));

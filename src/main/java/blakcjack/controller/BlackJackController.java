@@ -4,15 +4,24 @@ import blakcjack.domain.blackjackgame.BlackjackGame;
 import blakcjack.domain.blackjackgame.GameInitializationFailureException;
 import blakcjack.domain.card.Deck;
 import blakcjack.domain.card.EmptyDeckException;
+import blakcjack.domain.outcome.Outcome;
 import blakcjack.domain.participant.Dealer;
 import blakcjack.domain.participant.Participant;
-import blakcjack.exception.GameTerminationException;
+import blakcjack.domain.shufflestrategy.RandomShuffleStrategy;
+import blakcjack.dto.EarningSummaryDto;
+import blakcjack.dto.OutcomeSummaryDto;
+import blakcjack.dto.ParticipantDto;
+import blakcjack.dto.ParticipantsDto;
+import blakcjack.dto.PlayerCreationDto;
+import blakcjack.exception.GameExitException;
 import blakcjack.view.InputView;
 
 import java.util.List;
+import java.util.Map;
 
-import static blakcjack.view.InputView.takePlayerNamesInput;
+import static blakcjack.view.InputView.takePlayerCreationInformation;
 import static blakcjack.view.OutputView.printDealerAdditionalCardMessage;
+import static blakcjack.view.OutputView.printFinalEarningSummary;
 import static blakcjack.view.OutputView.printFinalHandsSummary;
 import static blakcjack.view.OutputView.printFinalOutcomeSummary;
 import static blakcjack.view.OutputView.printGameClosing;
@@ -23,10 +32,10 @@ public class BlackJackController {
     public void run() {
         final BlackjackGame blackjackGame = initializeGame();
         final List<Participant> players = blackjackGame.getPlayers();
-        final Dealer dealer = (Dealer) blackjackGame.getDealer();
+        final Participant dealer = blackjackGame.getDealer();
 
         drawInitialCards(blackjackGame);
-        printInitialHands(dealer, players);
+        printInitialHands(ParticipantsDto.of(dealer, players));
 
         drawCardsInTurn(blackjackGame, players, dealer);
 
@@ -35,10 +44,12 @@ public class BlackJackController {
 
     private BlackjackGame initializeGame() {
         try {
-            return new BlackjackGame(new Deck(), takePlayerNamesInput());
+            final PlayerCreationDto creationInfo = takePlayerCreationInformation();
+            return new BlackjackGame(new Deck(new RandomShuffleStrategy()),
+                    creationInfo.getNames(), creationInfo.getBettingMoneys());
         } catch (GameInitializationFailureException e) {
             printGameClosing(e.getMessage());
-            throw new GameTerminationException();
+            throw new GameExitException();
         }
     }
 
@@ -47,18 +58,18 @@ public class BlackJackController {
             blackjackGame.initializeHands();
         } catch (final EmptyDeckException e) {
             printGameClosing(e.getMessage());
-            throw new GameTerminationException();
+            throw new GameExitException();
         }
     }
 
     private void drawCardsInTurn(final BlackjackGame blackjackGame,
-                                 final List<Participant> players, final Dealer dealer) {
+                                 final List<Participant> players, final Participant dealer) {
         try {
             drawForMaximumCapability(blackjackGame, players);
-            drawForMaximumCapability(blackjackGame, dealer);
+            drawForMaximumCapability(blackjackGame, (Dealer) dealer);
         } catch (final EmptyDeckException e) {
             printGameClosing(e.getMessage());
-            throw new GameTerminationException();
+            throw new GameExitException();
         }
     }
 
@@ -69,9 +80,9 @@ public class BlackJackController {
     }
 
     private void drawForMaximumCapability(final BlackjackGame blackjackGame, final Participant player) {
-        while (player.isScoreLowerThanBlackJackValue() && isHitSelected(player)) {
+        while (player.canDrawMoreCard() && isHitSelected(player)) {
             blackjackGame.distributeOneCard(player);
-            printPlayerHand(player);
+            printPlayerHand(ParticipantDto.from(player));
         }
     }
 
@@ -86,8 +97,12 @@ public class BlackJackController {
         }
     }
 
-    private void notifyFinalSummary(final BlackjackGame blackjackGame, final List<Participant> players, final Dealer dealer) {
-        printFinalHandsSummary(dealer, players);
-        printFinalOutcomeSummary(blackjackGame.judgeOutcome(), dealer.getNameValue());
+    private void notifyFinalSummary(final BlackjackGame blackjackGame, final List<Participant> players, final Participant dealer) {
+        printFinalHandsSummary(ParticipantsDto.of(dealer, players));
+
+        final Map<String, Outcome> playersOutcome = blackjackGame.judgePlayersOutcome();
+        final Map<Outcome, Integer> dealerOutcome = blackjackGame.judgeDealerOutcome(playersOutcome);
+        printFinalOutcomeSummary(OutcomeSummaryDto.of(dealerOutcome, playersOutcome), dealer.getNameValue());
+        printFinalEarningSummary(EarningSummaryDto.of(dealer, players));
     }
 }

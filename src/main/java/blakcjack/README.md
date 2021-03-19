@@ -15,13 +15,6 @@
 - [x] 각 플레이어와 딜러의 최종 카드 현황 출력 기능
 - [x] 게임 승패 출력 기능
 
-## 고려하고 있는 사항
-
-- 점수 클래스 생성
-- 구조 변경 고민
-    - Player 리스트를 가지는 Players 생성
-    - DTO를 만들만한 것 있는지 생각
-
 ## 1단계 피드백 이후 리팩토링 목록
 
 - [x] 커스텀 예외 추가
@@ -39,9 +32,26 @@
     - [x] OutputView 리팩터링
     - [x] Controller 리팩터링
     - [x] BlackjackGame 리팩터링
-- [x] Outcome이 가지고 있던 승무패 도출 로직을 Participant로 이동 
+- [x] Outcome이 가지고 있던 승무패 도출 로직을 Participant로 이동
 
-## 2단계에서 리팩토링 할 목록
+## 1단계 머지 후 리팩토링 목록
 
-- [ ] OutcomeStatistics DTO로 변경
-- [ ] Cards 클래스 생성하여 현재 Participant가 가지고 있는 점수 계산 로직 이동
+- [x] Symbol과 Number 정보를 조합하여 Map<String, Card> 형태로 관리하던 Card Cache를 EnumMap<Symbol, EnumMap<Number, Card>> 형태로 변경
+- [x] Score 클래스 생성
+- [x] OutcomeStatistics DTO로 변경를 (OutcomeSummaryDto)
+- [x] Cards 클래스 생성 현재 Participant가 가지고 있는 점수 계산 로직 이동
+- [x] ParticipantDto 생성
+- [x] ParticipantsDto 생성
+- [x] DTO를 이용하도록 OutputView, Controller 변경
+
+## 2단계 추가 요구 사항
+
+- [x] 플레이어의 배팅 금액을 입력받는 기능
+- [x] 베팅 금액 관련 도메인 생성
+    - [x] 예외: 자연수가 아닌 값 입력 (View에서 처리)
+- [x] 최종 수익을 계산 하는 기능
+- [x] 최종 수익을 출력하는 기능
+
+## 추후 리팩터링 목록
+
+- [ ] state 패턴을 이용하여 게임 진행 관리

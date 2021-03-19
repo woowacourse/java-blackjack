@@ -1,4 +1,4 @@
-package blakcjack.domain;
+package blakcjack.domain.outcome;
 
 public enum Outcome {
     WIN("승"),
@@ -13,5 +13,9 @@ public enum Outcome {
 
     public String getValue() {
         return value;
+    }
+
+    public boolean isWin() {
+        return equals(WIN);
     }
 }

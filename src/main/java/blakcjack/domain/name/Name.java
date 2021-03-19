@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Name {
     public static final String NULL_NAME_ERROR = "플레이어 이름에 null이 입력되었습니다.";
-    public static final String EMPTY_NAME_ERROR = "빈 문자열이 입력";
+    public static final String EMPTY_NAME_ERROR = "빈 문자열이 입력되었습니다.";
 
     private final String name;
 
