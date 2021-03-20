@@ -5,6 +5,8 @@ import java.util.Stack;
 
 public class CardDeck {
 
+    private static final String EMPTY_CARD_ERROR = "[ERROR] 카드를 모두 소진했습니다.";
+
     private final Stack<Card> deck = new Stack<>();
 
     public CardDeck() {
@@ -13,29 +15,27 @@ public class CardDeck {
     }
 
     private void generateCardWithSymbol() {
-        for (SymbolCandidate symbolCandidate : SymbolCandidate.values()) {
-            CardSymbol cardSymbol = CardSymbol.from(symbolCandidate.getSymbol());
+        for (CardSymbol cardSymbol : CardSymbol.values()) {
             generateCardWithNumber(cardSymbol);
         }
     }
 
     private void generateCardWithNumber(CardSymbol cardSymbol) {
-        for (NumberCandidate numberCandidate : NumberCandidate.values()) {
-            CardNumber cardNumber = CardNumber.from(numberCandidate.getNumber());
+        for (CardNumber cardNumber : CardNumber.values()) {
             deck.add(new Card(cardNumber, cardSymbol));
         }
     }
 
     public synchronized UserDeck generateUserDeck() {
         UserDeck userDeck = new UserDeck();
-        userDeck.add(this.draw());
-        userDeck.add(this.draw());
+        userDeck.draw(this.draw());
+        userDeck.draw(this.draw());
         return userDeck;
     }
 
-    public synchronized Card draw() {
+    public Card draw() {
         if (deck.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 카드를 모두 소진했습니다.");
+            throw new IllegalArgumentException(EMPTY_CARD_ERROR);
         }
         return deck.pop();
     }

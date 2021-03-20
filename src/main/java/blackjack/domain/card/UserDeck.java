@@ -7,22 +7,19 @@ public class UserDeck {
 
     private static final int ACE_CALIBRATION = 10;
     public static final int BLACK_JACK_NUMBER = 21;
-    public static final int BUST_CONDITION = 0;
+
     private final List<Card> userCards = new ArrayList<>();
 
-    public void add(Card card) {
+    public void draw(Card card) {
         userCards.add(card);
     }
 
-    public int deckScore() {
+    public int score() {
         int score = calculateScore();
         int aceCount = getAceCount();
         while (aceCount != 0 && score > BLACK_JACK_NUMBER) {
             score -= ACE_CALIBRATION;
             aceCount -= 1;
-        }
-        if (score > BLACK_JACK_NUMBER) {
-            return BUST_CONDITION;
         }
         return score;
     }
@@ -41,5 +38,13 @@ public class UserDeck {
 
     public List<Card> getUserCards() {
         return userCards;
+    }
+
+    public boolean isBlackjack() {
+        return score() == BLACK_JACK_NUMBER && getUserCards().size() == 2;
+    }
+
+    public boolean isBust() {
+        return score() > BLACK_JACK_NUMBER;
     }
 }

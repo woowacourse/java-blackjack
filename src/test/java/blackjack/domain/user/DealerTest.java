@@ -11,12 +11,13 @@ import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 
-    private final Card one = new Card(CardNumber.from("J"), CardSymbol.from("클로버"));
-    private final Card two = new Card(CardNumber.from("5"), CardSymbol.from("하트"));
+    private final Card one = new Card(CardNumber.J, CardSymbol.CLOVER);
+    private final Card two = new Card(CardNumber.FIVE, CardSymbol.HEART);
     private final UserDeck userDeck = new UserDeck();
+
     {
-        userDeck.add(one);
-        userDeck.add(two);
+        userDeck.draw(one);
+        userDeck.draw(two);
     }
 
     @Test
@@ -24,22 +25,22 @@ public class DealerTest {
     void getPlayerPoint() {
         Dealer dealer = new Dealer(userDeck);
         int playerScore = 15;
-        assertThat(dealer.getScore()).isEqualTo(playerScore);
+        assertThat(dealer.score()).isEqualTo(playerScore);
     }
 
     @Test
     @DisplayName("딜러 드로우 성공 테스트")
     void getAvailableDraw() {
         Dealer dealer = new Dealer(userDeck);
-        assertThat(dealer.isAvailableDraw()).isTrue();
+        assertThat(dealer.isFinished()).isTrue();
     }
 
     @Test
     @DisplayName("딜러 드로우 실패 테스트")
     void getUnavailableDraw() {
-        Card card3 = new Card(CardNumber.from("2"), CardSymbol.from("다이아몬드"));
-        userDeck.add(card3);
+        Card card3 = new Card(CardNumber.TWO, CardSymbol.DIAMOND);
+        userDeck.draw(card3);
         Dealer dealer = new Dealer(userDeck);
-        assertThat(!dealer.isAvailableDraw()).isTrue();
+        assertThat(dealer.isFinished()).isFalse();
     }
 }

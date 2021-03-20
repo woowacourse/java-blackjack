@@ -1,31 +1,21 @@
 package blackjack.domain.result;
 
-import blackjack.domain.user.User;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
 
 public class Result {
-
-    private static final String WIN = "승";
-    private static final String TIE = "무";
-    private static final String LOSE = "패";
 
     private Result() {
     }
 
-    public static String getResult(User targetUser, User compareUser) {
-        if (targetUser.isBustCondition() && compareUser.isBustCondition()) {
-            return WIN;
+    public static double compareScoreResult(Player player, Dealer dealer) {
+        int compareResult = player.compare(dealer);
+        if (!player.isBust() && compareResult == 0) {
+            return BlackjackResult.TIE.getEarningRate();
         }
-        return compareScore(targetUser, compareUser);
-    }
-
-    private static String compareScore(User dealer, User player) {
-        int compareResult = dealer.compare(player);
-        if (compareResult == 0) {
-            return TIE;
+        if (dealer.isBust() || compareResult > 0) {
+            return BlackjackResult.WIN.getEarningRate();
         }
-        if (compareResult > 0) {
-            return WIN;
-        }
-        return LOSE;
+        return BlackjackResult.LOSE.getEarningRate();
     }
 }

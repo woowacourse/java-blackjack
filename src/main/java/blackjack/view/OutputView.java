@@ -1,12 +1,11 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.DealerResult;
-import blackjack.domain.result.Result;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Players;
 import blackjack.domain.user.User;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,20 +21,20 @@ public class OutputView {
     private static final String PLAYER_RESULT = "%s: %s";
     private static final String SCORE_RESULT = " - 결과: ";
     private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String FINAL_RESULT = "## 최종 승패";
-    private static final String BUST_MESSAGE = "BUST";
-
+    private static final String BUST_MESSAGE = "버스트";
+    private static final String BLACKJACK_MESSAGE = "블랙잭";
 
     private OutputView() {
     }
 
     public static void showInitiate(Dealer dealer, Players players) {
+        showPlayerNames(players);
         showCards(dealer, players);
         System.out.println();
     }
 
     private static void showCards(Dealer dealer, Players players) {
-        String dealerCard = dealer.getUserDeck().getUserCards().get(1).getCard();
+        String dealerCard = dealer.getCards().get(0).parseToString();
         System.out.printf(DEALER_CARD + NEWLINE, dealerCard);
         for (Player player : players.getPlayers()) {
             showPlayerCard(player);
@@ -58,8 +57,8 @@ public class OutputView {
 
     private static String combineAllCard(User user) {
         List<String> allCards = new ArrayList<>();
-        for (Card card : user.getUserDeck().getUserCards()) {
-            allCards.add(card.getCard());
+        for (Card card : user.getCards()) {
+            allCards.add(card.parseToString());
         }
         return String.join(STRING_DELIMITER, allCards);
     }
@@ -72,63 +71,55 @@ public class OutputView {
         System.out.println();
         showDealerEntireCard(dealer);
         showPlayersEntireCard(players);
+        System.out.println();
     }
 
     private static void showPlayersEntireCard(Players players) {
         for (Player player : players.getPlayers()) {
             String dealerCards =
-                String.format(PLAYER_RESULT, player.getName(), combineAllCard(player))
+                String.format(
+                    PLAYER_RESULT, player.getName(), combineAllCard(player))
                     + SCORE_RESULT
-                    + getConventionScore(player);
+                    + getScore(player);
             System.out.println(dealerCards);
         }
     }
 
     private static void showDealerEntireCard(Dealer dealer) {
         String dealerCards =
-            String.format(DEALER_RESULT, combineAllCard(dealer)) + SCORE_RESULT
-                + getConventionScore(
-                dealer);
+            String.format(
+                DEALER_RESULT, combineAllCard(dealer))
+                + SCORE_RESULT
+                + getScore(dealer);
         System.out.println(dealerCards);
     }
 
-    private static String getConventionScore(User user) {
-        int userScore = user.getScore();
-        if (userScore == 0) {
+    private static String getScore(User user) {
+        if (user.isBlackjack()) {
+            return BLACKJACK_MESSAGE;
+        }
+        if (user.isBust()) {
             return BUST_MESSAGE;
         }
-        return Integer.toString(userScore);
+        return Integer.toString(user.score());
     }
 
-    public static void showDealerTable(DealerResult dealerResult) {
-        System.out.println(NEWLINE + FINAL_RESULT);
-        String conventionResult = getDealerResult(dealerResult);
-        String conventionResultMessage = String.format(DEALER_RESULT, conventionResult);
-        System.out.println(conventionResultMessage);
-    }
-
-    private static String getDealerResult(DealerResult dealerResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<String, Integer> element : dealerResult.getDealerResult().entrySet()) {
-            stringBuilder.append(validValue(element));
+    public static void showEarning(Map<Player, Double> playerEarning) {
+        for (Map.Entry<Player, Double> player : playerEarning.entrySet()) {
+            System.out.printf(
+                PLAYER_RESULT + NEWLINE,
+                player.getKey().getName(),
+                formatEarning(player.getValue())
+            );
         }
-        return stringBuilder.toString();
     }
 
-    private static String validValue(Map.Entry<String, Integer> element) {
-        if (element.getValue() > 0) {
-            return element.getValue() + element.getKey();
-        }
-        return "";
+    public static void showEarning(double money) {
+        System.out.printf(DEALER_RESULT + NEWLINE, formatEarning(money));
     }
 
-    public static void showPlayerTable(Dealer dealer, Players players) {
-        for (Player player : players.getPlayers()) {
-            String playerName = player.getName();
-            String gameIndividualResult = Result.getResult(player, dealer);
-            String individualResultMessage = String
-                .format(PLAYER_RESULT, playerName, gameIndividualResult);
-            System.out.println(individualResultMessage);
-        }
+    private static String formatEarning(double earning) {
+        DecimalFormat decimalFormat = new DecimalFormat("#");
+        return decimalFormat.format(earning);
     }
 }

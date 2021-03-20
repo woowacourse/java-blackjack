@@ -1,38 +1,48 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.UserDeck;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateFactory;
+import java.util.List;
 
-public class User {
+public abstract class User {
 
     private final UserDeck userDeck;
-    protected int DRAWABLE_NUMBER;
+    protected State state;
 
     public User(UserDeck userDeck) {
         this.userDeck = userDeck;
+        this.state = StateFactory.draw(userDeck);
     }
 
-    public void draw(Card card) {
-        userDeck.add(card);
+    public void draw(CardDeck cardDeck) {
+        userDeck.draw(cardDeck.draw());
+        state = state.draw(userDeck);
     }
 
-    public boolean isBustCondition() {
-        return this.getScore() == UserDeck.BUST_CONDITION;
+    public int score() {
+        return userDeck.score();
     }
 
-    public boolean isAvailableDraw() {
-        return !this.isBustCondition() && this.getScore() < DRAWABLE_NUMBER;
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
-    public UserDeck getUserDeck() {
-        return userDeck;
-    }
-
-    public int getScore() {
-        return userDeck.deckScore();
+    public List<Card> getCards() {
+        return userDeck.getUserCards();
     }
 
     public int compare(User user) {
-        return this.getScore() - user.getScore();
+        return this.score() - user.score();
+    }
+
+    public boolean isBlackjack() {
+        return userDeck.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return userDeck.isBust();
     }
 }

@@ -1,47 +1,22 @@
 package blackjack.domain.card;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
-public class CardSymbol {
+public enum CardSymbol {
 
-    private static final Map<String, CardSymbol> SYMBOL_CACHE = new HashMap<>();
+    CLOVER("클로버"),
+    HEART("하트"),
+    SPADE("스페이드"),
+    DIAMOND("다이아몬드");
+
     private final String symbol;
 
-    static {
-        for (SymbolCandidate symbolCandidate : SymbolCandidate.values()) {
-            CardSymbol cardSymbol = new CardSymbol(symbolCandidate);
-            SYMBOL_CACHE.put(symbolCandidate.getSymbol(), cardSymbol);
-        }
-    }
-
-    private CardSymbol(SymbolCandidate targetSymbol) {
-        this.symbol = targetSymbol.getSymbol();
-    }
-
-    public static CardSymbol from(String symbol) {
-        return SYMBOL_CACHE.get(symbol);
+    CardSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public String getSymbol() {
         return this.symbol;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        CardSymbol that = (CardSymbol) o;
-        return Objects.equals(symbol, that.symbol);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(symbol);
     }
 }
