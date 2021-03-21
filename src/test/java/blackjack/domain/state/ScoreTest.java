@@ -40,8 +40,8 @@ public class ScoreTest {
         Score score2 = new Score(21);
 
         /*then*/
-        assertThat(score1.compareTo(score2)).isFalse();
-        assertThat(score2.compareTo(score1)).isTrue();
+        assertThat(score1.isHigher(score2)).isFalse();
+        assertThat(score2.isHigher(score1)).isTrue();
     }
 
     @Test

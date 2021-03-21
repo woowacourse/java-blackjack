@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Score {
 
-    private static final int BLACKJACK = 21;
-    private static final int CHANGE_TO_ACE = 10;
-    private static final int DEALER_HIT = 16;
+    private static final Score BLACKJACK = new Score(21);
+    private static final Score CHANGE_TO_ACE = new Score(10);
+    private static final Score DEALER_HIT = new Score(16);
 
     private final int value;
 
@@ -16,25 +16,29 @@ public class Score {
 
     public Score changeHardAce() {
         if (this.isBust()) {
-            return new Score(this.value - CHANGE_TO_ACE);
+            return this.minus(CHANGE_TO_ACE);
         }
         return this;
     }
 
-    public boolean compareTo(final Score score) {
+    public boolean isHigher(final Score score) {
         return this.value > score.value;
     }
 
-    public boolean isBlackjack() {
-        return this.value == BLACKJACK;
-    }
-
     public boolean isBust() {
-        return this.value > BLACKJACK;
+        return this.isHigher(BLACKJACK);
     }
 
     public boolean isDealerStateStay() {
-        return this.value > DEALER_HIT;
+        return this.isHigher(DEALER_HIT);
+    }
+
+    public boolean isBlackjack() {
+        return this.equals(BLACKJACK);
+    }
+
+    private Score minus(Score score) {
+        return new Score(this.value - score.value);
     }
 
     public int getValue() {

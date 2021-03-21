@@ -66,7 +66,7 @@ public abstract class Participant {
     }
 
     public boolean isHigherThan(Participant participant) {
-        return this.getTotalScore().compareTo(participant.getTotalScore());
+        return this.getTotalScore().isHigher(participant.getTotalScore());
     }
 
     public double profit() {
