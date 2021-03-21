@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.controller.dto;
 
 public class GameResultDto {
 

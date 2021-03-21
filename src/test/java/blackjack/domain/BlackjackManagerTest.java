@@ -16,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BlackjackManagerTest {
 
     private Players players;
-    private Dealer dealer;
 
     @BeforeEach
     void setUp() {
@@ -24,14 +23,14 @@ public class BlackjackManagerTest {
                 new Player(new Name("pobi"), Money.of(1)),
                 new Player(new Name("jason"), Money.of(1))
         );
-        players = new Players(playerList);
-        dealer = new Dealer();
+        players = Players.createPlayers(playerList);
     }
 
     @Test
     @DisplayName("각 플레이어가 초기 2장씩 소지한다.")
     void testAllPlayersGetTwoCards() {
-        BlackjackManager.initGame(players, dealer);
+        BlackjackManager blackjackManager = new BlackjackManager(players);
+        blackjackManager.initGame();
 
         assertThat(players.toList()
                 .stream()

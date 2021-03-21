@@ -5,15 +5,17 @@ import blackjack.domain.carddeck.Card;
 
 public class Player extends Participant {
 
-    private final Name name;
+    private static final String DEALER_NAME = "딜러";
 
     public Player(final Name name, final Money money) {
-        super(money);
-        this.name = name;
+        super(name, money);
+        validateName(name);
     }
 
-    public String getName() {
-        return this.name.getValue();
+    private void validateName(final Name name) {
+        if (DEALER_NAME.equals(name.getValue())) {
+            throw new IllegalArgumentException("이름으로 \"딜러\" 는 사용할 수 없습니다.");
+        }
     }
 
     @Override

@@ -1,9 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.GameResultDto;
-import blackjack.domain.carddeck.Card;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.controller.dto.CardDto;
+import blackjack.controller.dto.GameResultDto;
+import blackjack.controller.dto.ParticipantResponseDto;
+import blackjack.controller.dto.ParticipantsResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,87 +19,87 @@ public class OutputView {
     private static final int BUST_SCORE = 21;
     private static final String SCORE_FORMAT = " - 결과: ";
 
-    public static void printInitGame(final List<Player> players, Dealer dealer) {
+    public static void printInitGame(final ParticipantsResponseDto participantsResponseDto) {
         System.out.print(NEW_LINE);
-        System.out.printf(INIT_GAME_FORMAT, joinPlayerNames(players));
+        System.out.printf(INIT_GAME_FORMAT, joinPlayerNames(participantsResponseDto.getPlayers()));
         System.out.print(NEW_LINE);
-        OutputView.printDealerHand(dealer);
-        OutputView.printPlayersHand(players);
+        OutputView.printDealerHand(participantsResponseDto.getDealer());
+        OutputView.printPlayersHand(participantsResponseDto.getPlayers());
     }
 
-    private static String joinPlayerNames(final List<Player> players) {
+    private static String joinPlayerNames(final List<ParticipantResponseDto> players) {
         return players.stream()
-                .map(Player::getName)
+                .map(ParticipantResponseDto::getName)
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    public static void printHandResult(List<Player> players, Dealer dealer) {
+    public static void printHandResult(final ParticipantsResponseDto participantsResponseDto) {
         System.out.print(NEW_LINE);
-        System.out.print(joinDealerResult(dealer));
-        System.out.println(joinPlayersResult(players));
+        System.out.print(joinDealerResult(participantsResponseDto.getDealer()));
+        System.out.println(joinPlayersResult(participantsResponseDto.getPlayers()));
     }
 
-    private static String joinDealerResult(Dealer dealer) {
+    private static String joinDealerResult(final ParticipantResponseDto dealer) {
         StringBuilder sb = new StringBuilder();
         sb.append("딜러")
                 .append(HAND_FORMAT)
-                .append(joinCards(dealer.toHandList()))
+                .append(joinCards(dealer.getHand()))
                 .append(SCORE_FORMAT)
-                .append(dealer.getTotalScore().getValue())
+                .append(dealer.getTotalScore())
                 .append(NEW_LINE);
         return sb.toString();
     }
 
-    private static String joinPlayersResult(List<Player> players) {
+    private static String joinPlayersResult(final List<ParticipantResponseDto> players) {
         StringBuilder sb = new StringBuilder();
-        for (Player player : players) {
+        for (ParticipantResponseDto player : players) {
             sb.append(player.getName())
                     .append(HAND_FORMAT)
-                    .append(joinCards(player.toHandList()))
+                    .append(joinCards(player.getHand()))
                     .append(SCORE_FORMAT)
-                    .append(player.getTotalScore().getValue())
+                    .append(player.getTotalScore())
                     .append(NEW_LINE);
         }
         return sb.toString();
     }
 
-    public static void printDealerHand(final Dealer dealer) {
-        printCards(dealer);
+    public static void printDealerHand(final ParticipantResponseDto dealer) {
+        printDealerOneCard(dealer);
     }
 
-    public static void printPlayersHand(final List<Player> players) {
+    public static void printPlayersHand(final List<ParticipantResponseDto> players) {
         players.forEach(OutputView::printCards);
         System.out.print(NEW_LINE);
     }
 
-    public static void printCards(final Player player) {
+    public static void printCards(final ParticipantResponseDto player) {
         StringBuilder sb = new StringBuilder();
         sb.append(player.getName())
                 .append(HAND_FORMAT)
-                .append(joinCards(player.toHandList()))
+                .append(joinCards(player.getHand()))
                 .append(NEW_LINE);
         System.out.print(sb);
     }
 
-    public static void printCards(final Dealer dealer) {
+    public static void printDealerOneCard(final ParticipantResponseDto dealer) {
         StringBuilder sb = new StringBuilder();
-        sb.append("딜러")
+        sb.append(dealer.getName())
                 .append(HAND_FORMAT)
-                .append(formatsCardName(dealer.toHandList().get(0)))
+                .append(formatsCardName(dealer.getHand().get(0)))
                 .append(NEW_LINE);
         System.out.print(sb);
     }
 
-    private static String joinCards(final List<Card> cards) {
+    private static String joinCards(final List<CardDto> cards) {
         List<String> cardStrings = new ArrayList<>();
-        for (Card card : cards) {
+        for (CardDto card : cards) {
             cardStrings.add(formatsCardName(card));
         }
         return String.join(DELIMITER, cardStrings);
     }
 
-    private static String formatsCardName(Card card) {
-        return card.getNumberName() + card.getPatternName();
+    private static String formatsCardName(CardDto cardDto) {
+        return cardDto.getNumber() + cardDto.getPattern();
     }
 
     public static void printDealerHit() {

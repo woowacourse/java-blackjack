@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import blackjack.controller.dto.GameResultDto;
+import blackjack.controller.dto.ParticipantResponseDto;
 import blackjack.controller.dto.PlayerRequestDto;
 import blackjack.domain.*;
 import blackjack.domain.participant.*;
@@ -12,25 +14,31 @@ import java.util.stream.IntStream;
 
 public class BlackjackController {
 
-    public void play() {
-        Dealer dealer = new Dealer();
-        Players players = initPlayers();
+    private BlackjackManager blackjackManager;
 
-        initGame(dealer, players);
-        if (!dealer.isBlackjack()) {
-            playBlackjack(dealer, players);
+    public void play() {
+        blackjackManager = new BlackjackManager(initPlayers());
+
+        initGame();
+        if (!blackjackManager.isDealerBlackjack()) {
+            playBlackjack();
         }
 
-        OutputView.printHandResult(players.toList(), dealer);
-        List<GameResultDto> gameResultDtos = BlackjackManager.getGameResult(dealer, players);
+        OutputView.printHandResult(blackjackManager.createParticipantsResponseDto());
+        List<GameResultDto> gameResultDtos = blackjackManager.getGameResult();
         OutputView.printGameResult(gameResultDtos);
     }
 
-    private Players initPlayers() {
+    private List<PlayerRequestDto> initPlayers() {
         Names names = initPlayerNames();
         Moneys moneys = initBettingMoneys(names);
-        List<PlayerRequestDto> playerRequestDtos = createPlayersRequestDto(names, moneys);
-        return BlackjackManager.createPlayers(playerRequestDtos);
+        return createPlayersRequestDto(names, moneys);
+    }
+
+    private List<PlayerRequestDto> createPlayersRequestDto(Names names, Moneys moneys) {
+        return IntStream.range(0, names.size())
+                .mapToObj(i -> new PlayerRequestDto(names.get(i), moneys.get(i)))
+                .collect(Collectors.toList());
     }
 
     private Names initPlayerNames() {
@@ -57,24 +65,49 @@ public class BlackjackController {
         }
     }
 
-    private List<PlayerRequestDto> createPlayersRequestDto(Names names, Moneys moneys) {
-        return IntStream.range(0, names.size())
-                .mapToObj(i -> new PlayerRequestDto(names.get(i), moneys.get(i)))
-                .collect(Collectors.toList());
+    private void initGame() {
+        OutputView.printInitGame(blackjackManager.initGame());
     }
 
-    private void initGame(final Dealer dealer, final Players players) {
-        BlackjackManager.initGame(players, dealer);
-        OutputView.printInitGame(players.toList(), dealer);
-    }
-
-    private void playBlackjack(final Dealer dealer, final Players players) {
-        for (Player player : players.toList()) {
-            playHit(player, dealer);
+    private void playBlackjack() {
+        while(!blackjackManager.isFinishedAllOfPlayer()) {
+            playPlayersTurn();
         }
-        while (!dealer.isFinished()) {
-            dealer.receiveCard(dealer.drawCard());
+        while (blackjackManager.isDealerHit()) {
+            blackjackManager.dealerDrawCard();
             OutputView.printDealerHit();
+        }
+    }
+
+    private void playPlayersTurn() {
+        ParticipantResponseDto playerDto = blackjackManager.getCurrentPlayerDto();
+        if (blackjackManager.isCurrentPlayerBlackJack()) {
+            OutputView.printPlayerBlackjack(playerDto.getName());
+            blackjackManager.nextTurn();
+            return;
+        }
+        blackjackManager.playerHitOrStay(getUserAnswer(playerDto.getName()));
+        OutputView.printCards(blackjackManager.getCurrentPlayerDto());
+        currentPlayerFinished();
+    }
+
+    private void currentPlayerFinished() {
+        ParticipantResponseDto playerDto = blackjackManager.getCurrentPlayerDto();
+        if (!blackjackManager.isCurrentPlayerFinished()) {
+            return;
+        }
+        if (blackjackManager.isCurrentPlayerBust()) {
+            OutputView.printPlayerBurst(playerDto.getName());
+        }
+        blackjackManager.nextTurn();
+    }
+
+    private UserAnswer getUserAnswer(String playerName) {
+        try {
+            return UserAnswer.getUserAnswer(InputView.getHitOrStay(playerName));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            OutputView.printException(e);
+            return getUserAnswer(playerName);
         }
     }
 
@@ -95,11 +128,11 @@ public class BlackjackController {
         UserAnswer userAnswer = UserAnswer.getUserAnswer(InputView.getHitOrStay(player.getName()));
         if (userAnswer.isStay()) {
             player.stay();
-            OutputView.printCards(player);
+            OutputView.printCards(ParticipantResponseDto.from(player));
             return;
         }
         player.receiveCard(dealer.drawCard());
-        OutputView.printCards(player);
+        OutputView.printCards(ParticipantResponseDto.from(player));
         if (player.isFinished()) {
             OutputView.printPlayerBurst(player.getName());
             return;

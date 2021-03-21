@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.controller.dto.GameResultDto;
+import blackjack.controller.dto.ParticipantResponseDto;
+import blackjack.controller.dto.ParticipantsResponseDto;
 import blackjack.controller.dto.PlayerRequestDto;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -7,30 +10,65 @@ import blackjack.domain.participant.Players;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BlackjackManager {
 
-    private static final double LOSE_EARNING_RATE = -2.0d;
-    private static final double TIE_EARNING_RATE = 0d;
+    private final Dealer dealer;
+    private final Players players;
+    private int cursor = 0;
 
-    private BlackjackManager() {
+    public BlackjackManager(Players players) {
+        this.dealer = new Dealer();
+        this.players = players;
     }
 
-    public static Players createPlayers(List<PlayerRequestDto> playerRequestDtos) {
-        return new Players(playerRequestDtos.stream()
-                .map(PlayerRequestDto::toEntity)
-                .collect(Collectors.toList()));
+    public BlackjackManager(List<PlayerRequestDto> playerRequestDtos) {
+        this(Players.valueOf(playerRequestDtos));
     }
 
-    public static void initGame(final Players players, final Dealer dealer) {
+    public ParticipantsResponseDto initGame() {
         dealer.receiveFirstHand(dealer.drawCards());
-        players.initHandByDealer(dealer);
+        this.dealer.initHand(this.players);
+        return createParticipantsResponseDto();
     }
 
-    public static List<GameResultDto> getGameResult(final Dealer dealer, final Players players) {
-        List<GameResultDto> playersResultDtos = getPlayersResult(dealer, players);
-        GameResultDto dealerResultDto = getDealerResult(playersResultDtos);
+    public boolean isDealerBlackjack() {
+        return dealer.isBlackjack();
+    }
+
+    public boolean isFinishedAllOfPlayer() {
+        return players.size() == cursor;
+    }
+
+    public boolean isCurrentPlayerBlackJack() {
+        return currentPlayer().isBlackjack();
+    }
+
+    public String currentPlayerName() {
+        return players.indexOfName(cursor);
+    }
+
+    public void playerHitOrStay(UserAnswer userAnswer) {
+        Player currentPlayer = currentPlayer();
+        if (userAnswer.isStay()) {
+            currentPlayer.stay();
+            return;
+        }
+        currentPlayer.receiveCard(dealer.drawCard());
+    }
+
+    public ParticipantResponseDto getCurrentPlayerDto() {
+        return ParticipantResponseDto.from(players.get(cursor));
+    }
+
+    public ParticipantsResponseDto createParticipantsResponseDto() {
+        return ParticipantsResponseDto.of(this.dealer, this.players);
+    }
+
+    public List<GameResultDto> getGameResult() {
+        List<GameResultDto> playersResultDtos = dealer.getPlayersResult(players);
+        GameResultDto dealerResultDto = dealer.getDealerResult(playersResultDtos);
 
         List<GameResultDto> gameResultDtos = new ArrayList<>();
         gameResultDtos.add(dealerResultDto);
@@ -38,27 +76,27 @@ public class BlackjackManager {
         return gameResultDtos;
     }
 
-    private static List<GameResultDto> getPlayersResult(final Dealer dealer, final Players players) {
-        return players.map(player -> new GameResultDto(player.getName(), calculateEarning(dealer, player)))
-                .collect(Collectors.toList());
+    public void nextTurn() {
+        cursor++;
     }
 
-    private static GameResultDto getDealerResult(final List<GameResultDto> playerResults) {
-        double dealerEarning = playerResults.stream()
-                .filter(playerResult -> playerResult.getEarning() < 0)
-                .mapToDouble(GameResultDto::getEarning)
-                .reduce(0.0, (a, b) -> a + (Math.abs(b) / 2));
-        return new GameResultDto("딜러", dealerEarning);
+    public boolean isCurrentPlayerFinished() {
+        return currentPlayer().isFinished();
     }
 
-    private static double calculateEarning(final Dealer dealer, final Player player) {
-        GameResult gameResult = dealer.judgePlayer(player);
-        if (gameResult == GameResult.WIN) {
-            return player.profit();
-        }
-        if (gameResult == GameResult.LOSE) {
-            return player.profit(LOSE_EARNING_RATE);
-        }
-        return player.profit(TIE_EARNING_RATE);
+    public boolean isCurrentPlayerBust() {
+        return currentPlayer().isBust();
+    }
+
+    public boolean isDealerHit() {
+        return dealer.isHit();
+    }
+
+    public void dealerDrawCard() {
+        dealer.receiveCard(dealer.drawCard());
+    }
+
+    private Player currentPlayer() {
+        return players.get(cursor);
     }
 }

@@ -34,13 +34,6 @@ public class NameTest {
     }
 
     @Test
-    @DisplayName("딜러 라는 이름은 플레이어의 이름으로 사용할 수 없습니다.")
-    void validateNameTest() {
-        assertThatThrownBy(() -> new Name("딜러")).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이름으로 \"딜러\" 는 사용할 수 없습니다.");
-    }
-
-    @Test
     @DisplayName("이름 반환된다.")
     void getValueTest() {
         String nameString = "pobi";

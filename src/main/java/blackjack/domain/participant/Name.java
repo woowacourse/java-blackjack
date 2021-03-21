@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import java.util.Objects;
 
 public class Name {
-    private static final String DEALER_NAME = "딜러";
 
     private final String value;
 
@@ -11,7 +10,6 @@ public class Name {
         validateNull(value);
         this.value = value.trim();
         validateEmpty(this.value);
-        validateName(this.value);
     }
 
     private void validateNull(final String name) {
@@ -21,12 +19,6 @@ public class Name {
     private void validateEmpty(final String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("이름은 빈값 일 수 없습니다.");
-        }
-    }
-
-    private void validateName(final String name) {
-        if (DEALER_NAME.equals(name)) {
-            throw new IllegalArgumentException("이름으로 \"딜러\" 는 사용할 수 없습니다.");
         }
     }
 

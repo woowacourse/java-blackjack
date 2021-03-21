@@ -9,6 +9,7 @@ import blackjack.domain.state.finished.Bust;
 import blackjack.domain.state.finished.Stay;
 import blackjack.domain.state.hand.Hand;
 import blackjack.domain.state.hand.Score;
+import blackjack.domain.state.running.Hit;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,9 +17,11 @@ import java.util.List;
 public abstract class Participant {
 
     protected State state;
-    protected Money money;
+    protected final Money money;
+    private final Name name;
 
-    protected Participant(Money money) {
+    protected Participant(Name name, Money money) {
+        this.name = name;
         this.money = money;
     }
 
@@ -62,6 +65,8 @@ public abstract class Participant {
         return this.state instanceof Bust;
     }
 
+    public boolean isHit() { return this.state instanceof Hit; }
+
     public boolean isHigherThan(Participant participant) {
         return this.getTotalScore().compareTo(participant.getTotalScore());
     }
@@ -72,5 +77,9 @@ public abstract class Participant {
 
     public double profit(double earningRate) {
         return money.value() * earningRate;
+    }
+
+    public String getName() {
+        return this.name.getValue();
     }
 }

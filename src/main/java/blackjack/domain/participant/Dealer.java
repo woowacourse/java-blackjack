@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.controller.dto.GameResultDto;
 import blackjack.domain.GameResult;
 import blackjack.domain.Money;
 import blackjack.domain.carddeck.Card;
@@ -19,7 +20,7 @@ public class Dealer extends Participant {
     private final CardDeck cardDeck;
 
     public Dealer() {
-        super(Money.of(1));
+        super(new Name("딜러"), Money.of(1));
         this.cardDeck = CardDeck.newShuffledDeck();
     }
 
@@ -31,22 +32,28 @@ public class Dealer extends Participant {
         }
     }
 
-    @Override
-    public boolean isOverLimitScore() {
-        return getTotalScore().isDealerStateStay();
-    }
-
     public List<Card> drawCards() {
         return Stream.generate(this::drawCard)
                 .limit(INIT_HAND_COUNT)
                 .collect(Collectors.toList());
     }
 
+    public void initHand(Players players) {
+        for (Player player : players.toList()) {
+            player.receiveFirstHand(drawCards());
+        }
+    }
+
+    @Override
+    public boolean isOverLimitScore() {
+        return getTotalScore().isDealerStateStay();
+    }
+
     @Override
     public void receiveCard(final Card card) {
         this.state = this.state.receiveCard(card);
         if (isOverLimitScore() && !isFinished()) {
-            stay();
+            this.stay();
         }
     }
 
@@ -68,5 +75,18 @@ public class Dealer extends Participant {
     private boolean didLose(final Player player) {
         return player.isBust() || (this.isBlackjack() && !player.isBlackjack()) ||
                 (player.isStay() && this.isStay() && this.isHigherThan(player));
+    }
+
+    public List<GameResultDto> getPlayersResult(final Players players) {
+        return players
+                .map(player -> new GameResultDto(player.getName(), GameResult.calculateEarning(this, player)))
+                .collect(Collectors.toList());
+    }
+
+    public GameResultDto getDealerResult(final List<GameResultDto> playerResults) {
+        double dealerEarning = playerResults.stream()
+                .mapToDouble(GameResultDto::getEarning)
+                .reduce(0.0, (a, b) -> a + (b * -1));
+        return new GameResultDto(this.getName(), dealerEarning);
     }
 }
