@@ -3,8 +3,14 @@ package blackjack.controller;
 import blackjack.controller.dto.GameResultDto;
 import blackjack.controller.dto.ParticipantResponseDto;
 import blackjack.controller.dto.PlayerRequestDto;
-import blackjack.domain.*;
-import blackjack.domain.participant.*;
+import blackjack.domain.BlackjackManager;
+import blackjack.domain.Money;
+import blackjack.domain.Moneys;
+import blackjack.domain.UserAnswer;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Names;
+import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -70,7 +76,7 @@ public class BlackjackController {
     }
 
     private void playBlackjack() {
-        while(!blackjackManager.isFinishedAllOfPlayer()) {
+        while (!blackjackManager.isFinishedAllOfPlayer()) {
             playPlayersTurn();
         }
         while (blackjackManager.isDealerHit()) {

@@ -83,7 +83,7 @@ class HitTest {
         State state = new Hit(hand);
 
         assertThatThrownBy(() -> {
-           state.profit(1.0d);
+            state.profit(1.0d);
         }).isInstanceOf(UnsupportedOperationException.class);
     }
 }

@@ -4,7 +4,6 @@ import blackjack.domain.carddeck.Card;
 import blackjack.domain.carddeck.Number;
 import blackjack.domain.carddeck.Pattern;
 import blackjack.domain.state.finished.Bust;
-import blackjack.domain.state.finished.Stay;
 import blackjack.domain.state.hand.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

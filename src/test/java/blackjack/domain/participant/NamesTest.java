@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static blackjack.domain.participant.Names.*;
+import static blackjack.domain.participant.Names.MAX_PLAYER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -18,9 +18,9 @@ class NamesTest {
     void createNamesTest() {
         /*give*/
         List<String> inputNames = Arrays.asList(
-            "pobi",
-            "json",
-            "min"
+                "pobi",
+                "json",
+                "min"
         );
 
         /*when*/

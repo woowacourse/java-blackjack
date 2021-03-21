@@ -65,7 +65,9 @@ public abstract class Participant {
         return this.state instanceof Bust;
     }
 
-    public boolean isHit() { return this.state instanceof Hit; }
+    public boolean isHit() {
+        return this.state instanceof Hit;
+    }
 
     public boolean isHigherThan(Participant participant) {
         return this.getTotalScore().compareTo(participant.getTotalScore());
