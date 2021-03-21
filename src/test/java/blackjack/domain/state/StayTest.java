@@ -48,4 +48,20 @@ public class StayTest {
             stay.receiveCard(new Card(Pattern.DIAMOND, Number.NINE));
         }).isInstanceOf(UnsupportedOperationException.class);
     }
+
+    @Test
+    @DisplayName("스테이 상태에서 isStay를 호출하면 true를 반환한다.")
+    void isStayTest() {
+        //given
+        boolean isStay = stay.isStay();
+
+        //then
+        assertThat(isStay).isTrue();
+    }
+
+    @Test
+    @DisplayName("스테이 상태에서 isHit를 호출하면 false를 반환한다.")
+    void isHitTest() {
+        assertThat(stay.isHit()).isFalse();
+    }
 }

@@ -130,4 +130,19 @@ public class GameResultTest {
     void tieTest() {
         assertThat(dealer.judgePlayer(player)).isEqualTo(GameResult.TIE);
     }
+
+    @Test
+    @DisplayName("플레이어가 이겼을 때 배당율은 플레이어의 상태에 있는 배당율을 사용한다.")
+    void calculateEarningTest() {
+        //given
+        player.receiveCard(new Card(Pattern.HEART, Number.ACE));
+        player.stay();
+        dealer.stay();
+
+        //when
+        double earning = GameResult.calculateEarning(dealer, player);
+
+        //then
+        assertThat(earning).isEqualTo(1000);
+    }
 }

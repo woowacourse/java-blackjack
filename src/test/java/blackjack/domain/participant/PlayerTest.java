@@ -113,4 +113,10 @@ public class PlayerTest {
                 new Card(Pattern.DIAMOND, Number.TEN)
         );
     }
+
+    @Test
+    @DisplayName("플레이어가 Hit 상태면 isHit를 호출했을 때 true를 반환한다.")
+    void isHitTest() {
+        assertThat(player.isHit()).isTrue();
+    }
 }

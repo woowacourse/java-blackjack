@@ -34,7 +34,7 @@ public class ScoreTest {
 
     @Test
     @DisplayName("Score 비교 테스트")
-    void compareToTest() {
+    void isHigherTest() {
         /*give*/
         Score score1 = new Score(20);
         Score score2 = new Score(21);
@@ -77,5 +77,34 @@ public class ScoreTest {
 
         /*then*/
         assertThat(score1.hashCode()).isEqualTo(score2.hashCode());
+    }
+
+    @Test
+    @DisplayName("딜러의 점수가 히트할 수 있는 한계 점수(16점을 초과)인지 체크 16점을 초과하면 true, 아니면 false반환")
+    void isDealerLimitScoreTest() {
+        //give
+        Score score1 = new Score(16);
+        Score score2 = new Score(17);
+
+        //when
+        boolean isDealerLimitScore1 = score1.isDealerLimitScore();
+        boolean isDealerLimitScore2 = score2.isDealerLimitScore();
+
+        //then
+        assertThat(isDealerLimitScore1).isFalse();
+        assertThat(isDealerLimitScore2).isTrue();
+    }
+
+    @Test
+    @DisplayName("getValue로 Score의 value 반환된다.")
+    void getValueTest() {
+        //give
+        Score score = new Score(10);
+
+        //when
+        int value = score.getValue();
+
+        //then
+        assertThat(value).isEqualTo(10);
     }
 }

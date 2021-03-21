@@ -25,7 +25,7 @@ public class Score {
         return this.isHigher(BLACKJACK);
     }
 
-    public boolean isDealerStateStay() {
+    public boolean isDealerLimitScore() {
         return this.isHigher(DEALER_HIT);
     }
 

@@ -86,4 +86,14 @@ class HitTest {
             state.profit(1.0d);
         }).isInstanceOf(UnsupportedOperationException.class);
     }
+
+    @Test
+    @DisplayName("힛 상태에서 isHit을 호출하면 true를 반환한다.")
+    void isHitTest() {
+        //given
+        State state = new Hit(hand);
+
+        //then
+        assertThat(state.isHit()).isTrue();
+    }
 }

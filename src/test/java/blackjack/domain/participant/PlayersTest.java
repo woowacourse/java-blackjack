@@ -1,6 +1,8 @@
 package blackjack.domain.participant;
 
+import blackjack.controller.dto.PlayerRequestDto;
 import blackjack.domain.Money;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +15,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayersTest {
+
+    private Players players;
+
+    @BeforeEach
+    void setUp() {
+        List<Player> playerList = Arrays.asList(
+                new Player(new Name("pobi"), Money.of(1)),
+                new Player(new Name("brown"), Money.of(1)),
+                new Player(new Name("jason"), Money.of(1))
+        );
+        players = Players.createPlayers(playerList);
+    }
 
     @Test
     @DisplayName("이름들을 입력받아서 플레이어들을 생성")
@@ -80,4 +94,60 @@ class PlayersTest {
 
         assertThat(players.map(player -> player)).isInstanceOf(Stream.class);
     }
+
+    @Test
+    @DisplayName("PlayerRequestDto의 List를 매개변수로 Players 생성된다.")
+    void valueOfTest() {
+        //give
+        List<PlayerRequestDto> playerRequestDtos = Arrays.asList(
+            new PlayerRequestDto(new Name("pobi"), Money.of(10)),
+            new PlayerRequestDto(new Name("jason"), Money.of(10))
+        );
+
+        //when
+        Players players = Players.valueOf(playerRequestDtos);
+
+        //then
+        assertThat(players).isInstanceOf(Players.class);
+    }
+
+    @Test
+    @DisplayName("get을 호출하면 매개변수로 준 index의 위치에 있는 Player를 반환한다.")
+    void getTest() {
+        //give
+        Player player = players.get(0);
+
+        Name name = new Name("pobi");
+        Money money = Money.of(1);
+
+        assertThat(player.getName()).isEqualTo(name.getValue());
+        assertThat(player.money).isEqualTo(money);
+    }
+
+    @Test
+    @DisplayName("size를 호출하면 플레이어의 숫자를 반환한다.")
+    void sizeTest() {
+        //give
+        int size = players.size();
+
+        //then
+        assertThat(size).isEqualTo(3);
+    }
+
+    /*
+    public static Players valueOf(final List<PlayerRequestDto> playerRequestDtos) {
+        return new Players(playerRequestDtos.stream()
+                .map(PlayerRequestDto::toEntity)
+                .collect(Collectors.toList()));
+    }
+
+    public int size() {
+        return players.size();
+    }
+
+    public Player get(int index) {
+        return players.get(index);
+    }
+
+    * */
 }

@@ -46,7 +46,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isOverLimitScore() {
-        return getTotalScore().isDealerStateStay();
+        return getTotalScore().isDealerLimitScore();
     }
 
     @Override
