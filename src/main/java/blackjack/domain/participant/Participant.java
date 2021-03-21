@@ -4,12 +4,8 @@ import blackjack.domain.Money;
 import blackjack.domain.carddeck.Card;
 import blackjack.domain.state.State;
 import blackjack.domain.state.StateFactory;
-import blackjack.domain.state.finished.Blackjack;
-import blackjack.domain.state.finished.Bust;
-import blackjack.domain.state.finished.Stay;
 import blackjack.domain.state.hand.Hand;
 import blackjack.domain.state.hand.Score;
-import blackjack.domain.state.running.Hit;
 
 import java.util.Collections;
 import java.util.List;
@@ -54,19 +50,19 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return this.state instanceof Blackjack;
+        return this.state.isBlackJack();
     }
 
     public boolean isStay() {
-        return this.state instanceof Stay;
+        return this.state.isStay();
     }
 
     public boolean isBust() {
-        return this.state instanceof Bust;
+        return this.state.isBust();
     }
 
     public boolean isHit() {
-        return this.state instanceof Hit;
+        return this.state.isHit();
     }
 
     public boolean isHigherThan(Participant participant) {

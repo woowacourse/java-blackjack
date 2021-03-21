@@ -12,4 +12,9 @@ public class Stay extends Finished {
     public double earningRate() {
         return 1.0d;
     }
+
+    @Override
+    public boolean isStay() {
+        return true;
+    }
 }

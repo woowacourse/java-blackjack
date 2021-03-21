@@ -28,4 +28,24 @@ public abstract class Started implements State {
     public Score totalScore() {
         return hand.totalScore();
     }
+
+    @Override
+    public boolean isStay() {
+        return false;
+    }
+
+    @Override
+    public boolean isHit() {
+        return false;
+    }
+
+    @Override
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackJack() {
+        return false;
+    }
 }

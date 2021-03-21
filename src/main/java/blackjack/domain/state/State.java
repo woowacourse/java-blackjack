@@ -9,6 +9,14 @@ import java.util.List;
 public interface State {
     boolean isFinished();
 
+    boolean isStay();
+
+    boolean isHit();
+
+    boolean isBust();
+
+    boolean isBlackJack();
+
     State receiveCard(final Card card);
 
     State stay();
