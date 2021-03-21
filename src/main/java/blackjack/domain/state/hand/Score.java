@@ -21,10 +21,6 @@ public class Score {
         return this;
     }
 
-    public boolean isHigher(final Score score) {
-        return this.value > score.value;
-    }
-
     public boolean isBust() {
         return this.isHigher(BLACKJACK);
     }
@@ -35,6 +31,10 @@ public class Score {
 
     public boolean isBlackjack() {
         return this.equals(BLACKJACK);
+    }
+
+    public boolean isHigher(final Score score) {
+        return this.value > score.value;
     }
 
     private Score minus(Score score) {
