@@ -7,10 +7,8 @@ import blackjack.domain.BlackjackManager;
 import blackjack.domain.Money;
 import blackjack.domain.Moneys;
 import blackjack.domain.UserAnswer;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Names;
-import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -115,34 +113,5 @@ public class BlackjackController {
             OutputView.printException(e);
             return getUserAnswer(playerName);
         }
-    }
-
-    private void playHit(final Player player, final Dealer dealer) {
-        try {
-            hitOrStay(player, dealer);
-        } catch (NullPointerException | IllegalArgumentException e) {
-            OutputView.printException(e);
-            playHit(player, dealer);
-        }
-    }
-
-    private void hitOrStay(final Player player, final Dealer dealer) {
-        if (player.isBlackjack()) {
-            OutputView.printPlayerBlackjack(player.getName());
-            return;
-        }
-        UserAnswer userAnswer = UserAnswer.getUserAnswer(InputView.getHitOrStay(player.getName()));
-        if (userAnswer.isStay()) {
-            player.stay();
-            OutputView.printCards(ParticipantResponseDto.from(player));
-            return;
-        }
-        player.receiveCard(dealer.drawCard());
-        OutputView.printCards(ParticipantResponseDto.from(player));
-        if (player.isFinished()) {
-            OutputView.printPlayerBurst(player.getName());
-            return;
-        }
-        playHit(player, dealer);
     }
 }

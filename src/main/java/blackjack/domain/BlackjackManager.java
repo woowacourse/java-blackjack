@@ -44,10 +44,6 @@ public class BlackjackManager {
         return currentPlayer().isBlackjack();
     }
 
-    public String currentPlayerName() {
-        return players.indexOfName(cursor);
-    }
-
     public void playerHitOrStay(UserAnswer userAnswer) {
         Player currentPlayer = currentPlayer();
         if (userAnswer.isStay()) {

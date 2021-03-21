@@ -9,10 +9,6 @@ public class PlayerRequestDto {
     private Name name;
     private Money money;
 
-    public PlayerRequestDto(Name name) {
-        this.name = name;
-    }
-
     public PlayerRequestDto(Name name, Money money) {
         this.name = name;
         this.money = money;

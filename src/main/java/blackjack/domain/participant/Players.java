@@ -34,10 +34,6 @@ public class Players {
         return players.get(index);
     }
 
-    public String indexOfName(int index) {
-        return this.get(index).getName();
-    }
-
     public Stream<Player> stream() {
         return players.stream();
     }
