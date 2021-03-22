@@ -1,53 +1,117 @@
 package blackjack.controller;
 
+import blackjack.controller.dto.GameResultDto;
+import blackjack.controller.dto.ParticipantResponseDto;
+import blackjack.controller.dto.PlayerRequestDto;
 import blackjack.domain.BlackjackManager;
-import blackjack.domain.GameResultDto;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import blackjack.domain.Money;
+import blackjack.domain.Moneys;
+import blackjack.domain.UserAnswer;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Names;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class BlackjackController {
 
+    private BlackjackManager blackjackManager;
+
     public void play() {
-        Dealer dealer = new Dealer();
-        Players players = new Players(InputView.getPlayerNames());
+        blackjackManager = new BlackjackManager(initPlayers());
 
-        initGame(dealer, players);
-        playBlackjack(dealer, players);
-
-        OutputView.printHandResult(players.toList(), dealer);
-        GameResultDto gameResultDto = BlackjackManager.getGameResult(dealer, players);
-        OutputView.printGameResult(gameResultDto);
-    }
-
-    private void initGame(Dealer dealer, Players players) {
-        BlackjackManager.initGame(players, dealer);
-        OutputView.printInitGame(players.toList());
-        OutputView.printDealerHand(dealer);
-        OutputView.printPlayersHand(players.toList());
-    }
-
-    private void playBlackjack(Dealer dealer, Players players) {
-        for (Player player : players.toList()) {
-            playHit(player, dealer);
+        initGame();
+        if (!blackjackManager.isDealerBlackjack()) {
+            playBlackjack();
         }
 
-        while (!dealer.isOverLimitScore()) {
-            dealer.receiveCard(dealer.giveCard());
+        OutputView.printHandResult(blackjackManager.createParticipantsResponseDto());
+        List<GameResultDto> gameResultDtos = blackjackManager.getGameResult();
+        OutputView.printGameResult(gameResultDtos);
+    }
+
+    private List<PlayerRequestDto> initPlayers() {
+        Names names = initPlayerNames();
+        Moneys moneys = initBettingMoneys(names);
+        return createPlayersRequestDto(names, moneys);
+    }
+
+    private List<PlayerRequestDto> createPlayersRequestDto(Names names, Moneys moneys) {
+        return IntStream.range(0, names.size())
+                .mapToObj(i -> new PlayerRequestDto(names.get(i), moneys.get(i)))
+                .collect(Collectors.toList());
+    }
+
+    private Names initPlayerNames() {
+        try {
+            return Names.of(InputView.getPlayerNames());
+        } catch (NullPointerException | IllegalArgumentException e) {
+            OutputView.printException(e);
+            return initPlayerNames();
+        }
+    }
+
+    private Moneys initBettingMoneys(final Names names) {
+        return new Moneys(names.stream()
+                .map(this::initBettingMoney)
+                .collect(Collectors.toList()));
+    }
+
+    private Money initBettingMoney(final Name name) {
+        try {
+            return Money.of(InputView.getBettingMoney(name.getValue()));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            OutputView.printException(e);
+            return initBettingMoney(name);
+        }
+    }
+
+    private void initGame() {
+        OutputView.printInitGame(blackjackManager.initGame());
+    }
+
+    private void playBlackjack() {
+        while (!blackjackManager.isFinishedAllOfPlayer()) {
+            playPlayersTurn();
+        }
+        while (blackjackManager.isDealerHit()) {
+            blackjackManager.dealerDrawCard();
             OutputView.printDealerHit();
         }
     }
 
-    private void playHit(Player player, Dealer dealer) {
-        while (!player.isOverLimitScore() && InputView.getHitOrStay(player.getName())) {
-            player.receiveCard(dealer.giveCard());
-            OutputView.printCards(player);
+    private void playPlayersTurn() {
+        ParticipantResponseDto playerDto = blackjackManager.getCurrentPlayerDto();
+        if (blackjackManager.isCurrentPlayerBlackJack()) {
+            OutputView.printPlayerBlackjack(playerDto.getName());
+            blackjackManager.nextTurn();
+            return;
         }
-        if (player.isOverLimitScore()) {
-            OutputView.printPlayerBurst(player.getName());
+        blackjackManager.playerHitOrStay(getUserAnswer(playerDto.getName()));
+        OutputView.printCards(blackjackManager.getCurrentPlayerDto());
+        currentPlayerFinished();
+    }
+
+    private void currentPlayerFinished() {
+        ParticipantResponseDto playerDto = blackjackManager.getCurrentPlayerDto();
+        if (!blackjackManager.isCurrentPlayerFinished()) {
+            return;
         }
-        OutputView.printCards(player);
+        if (blackjackManager.isCurrentPlayerBust()) {
+            OutputView.printPlayerBurst(playerDto.getName());
+        }
+        blackjackManager.nextTurn();
+    }
+
+    private UserAnswer getUserAnswer(String playerName) {
+        try {
+            return UserAnswer.getUserAnswer(InputView.getHitOrStay(playerName));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            OutputView.printException(e);
+            return getUserAnswer(playerName);
+        }
     }
 }

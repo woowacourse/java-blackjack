@@ -1,26 +1,21 @@
 package blackjack.domain.carddeck;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CardDeckGenerator {
 
-    private static final List<Card> CACHE_DECK = new ArrayList<>();
+    private static final List<Card> CACHE_DECK;
 
     static {
-        for (Pattern pattern : Pattern.values()) {
-            addNumbersByPattern(pattern);
-        }
-    }
-
-    private static void addNumbersByPattern(Pattern pattern) {
-        for (Number number : Number.values()) {
-            CACHE_DECK.add(new Card(pattern, number));
-        }
+        CACHE_DECK = Arrays.stream(Pattern.values())
+                .flatMap(pattern -> Arrays.stream(Number.values()).map(number -> new Card(pattern, number)))
+                .collect(Collectors.toList());
     }
 
     public static List<Card> generate() {
         return new ArrayList<>(CACHE_DECK);
     }
-
 }

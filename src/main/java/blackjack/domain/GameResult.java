@@ -1,38 +1,25 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+
 public enum GameResult {
 
-    WIN("승"),
-    LOSE("패"),
-    TIE("무");
+    WIN(0.0d),
+    LOSE(-1.0d),
+    TIE(0.0d);
 
-    private final String name;
+    private final double earningRate;
 
-    GameResult(final String name) {
-        this.name = name;
+    GameResult(double earningRate) {
+        this.earningRate = earningRate;
     }
 
-    public static GameResult judgeHand(final int dealerScore, final int playerScore) {
-        if (playerScore > 21 || dealerScore > playerScore) {
-            return LOSE;
+    public static double calculateEarning(Dealer dealer, Player player) {
+        GameResult gameResult = dealer.judgePlayer(player);
+        if (gameResult == GameResult.WIN) {
+            return player.profit();
         }
-        if (dealerScore < playerScore) {
-            return WIN;
-        }
-        return TIE;
-    }
-
-    public static GameResult reverseResult(final GameResult gameResult) {
-        if (gameResult == WIN) {
-            return LOSE;
-        }
-        if (gameResult == LOSE) {
-            return WIN;
-        }
-        return TIE;
-    }
-
-    public String getName() {
-        return name;
+        return player.profit(gameResult.earningRate);
     }
 }

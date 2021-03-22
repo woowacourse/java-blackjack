@@ -10,7 +10,7 @@ public class CardDeck {
     private final Deque<Card> deck;
 
     private CardDeck(final Deque<Card> cards) {
-        this.deck = cards;
+        this.deck = new ArrayDeque<>(cards);
     }
 
     public static CardDeck newShuffledDeck() {

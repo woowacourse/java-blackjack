@@ -1,13 +1,13 @@
 package blackjack.domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class NameTest {
 
@@ -19,16 +19,27 @@ public class NameTest {
         assertThat(name).isEqualTo(new Name(nameString));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "이름 입력값이 null 이라면 예외가 발생한다.")
     @NullSource
     void testValidateNull(String name) {
-        assertThatThrownBy(() -> new Name(name)).isInstanceOf(NullPointerException.class);
+        assertThatThrownBy(() -> new Name(name)).isInstanceOf(NullPointerException.class)
+                .hasMessage("이름은 null 일 수 없습니다.");
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "이름 입력값에 공백만 있거나 빈값이라면 예외가 발생한다.")
     @ValueSource(strings = {"", " ", "  "})
     void testCreateName(String name) {
-        assertThatThrownBy(() -> new Name(name)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Name(name)).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름은 빈값 일 수 없습니다.");
     }
 
+    @Test
+    @DisplayName("이름 반환된다.")
+    void getValueTest() {
+        String nameString = "pobi";
+
+        Name name = new Name(nameString);
+
+        assertThat(name.getValue()).isEqualTo("pobi");
+    }
 }

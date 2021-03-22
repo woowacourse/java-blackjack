@@ -15,21 +15,19 @@ public class InputView {
         return splitNames(SCANNER.nextLine());
     }
 
+    public static String getBettingMoney(String playerName) {
+        System.out.printf("%s의 베팅 금액은?", playerName);
+        System.out.print(NEW_LINE);
+        return SCANNER.nextLine();
+    }
+
     private static List<String> splitNames(final String inputString) {
         return Arrays.asList(inputString.split(","));
     }
 
-    public static boolean getHitOrStay(String name) {
+    public static String getHitOrStay(String name) {
         System.out.printf("%s(은)는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
         System.out.print(NEW_LINE);
-        String input = SCANNER.nextLine().toLowerCase();
-        validateHitOrStay(input);
-        return input.equals("y");
-    }
-
-    private static void validateHitOrStay(String input) {
-        if (!input.equals("y") && !input.equals("n")) {
-            throw new IllegalArgumentException("요청은 y(Y) 또는 n(N) 이어야 합니다.");
-        }
+        return SCANNER.nextLine().toLowerCase();
     }
 }

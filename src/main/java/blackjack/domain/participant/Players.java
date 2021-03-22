@@ -1,50 +1,48 @@
 package blackjack.domain.participant;
 
-import java.util.ArrayList;
+import blackjack.controller.dto.PlayerRequestDto;
+
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Players {
 
-    public static final int MAX_PLAYER = 7;
-
     private final List<Player> players;
 
-    public Players(List<String> names) {
-        this.players = convertToPlayers(names);
-        validatePlayerCount(names);
-        validateDuplicate(names);
+    private Players(final List<Player> players) {
+        this.players = players;
     }
 
-    private List<Player> convertToPlayers(final List<String> names) {
-        List<Player> players = new ArrayList<>();
-        for (String name : names) {
-            players.add(new Player(new Name(name)));
-        }
-        return players;
+    public static Players createPlayers(final List<Player> players) {
+        return new Players(players);
     }
 
-    private void validatePlayerCount(List<String> names) {
-        if (names.size() > MAX_PLAYER) {
-            throw new IllegalArgumentException("최대 참여 플레이어는 7명입니다.");
-        }
+    public static Players valueOf(final List<PlayerRequestDto> playerRequestDtos) {
+        return new Players(playerRequestDtos.stream()
+                .map(PlayerRequestDto::toEntity)
+                .collect(Collectors.toList()));
     }
 
-    private void validateDuplicate(List<String> names) {
-        if (new HashSet<>(names).size() != names.size()) {
-            throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
-        }
+    public int size() {
+        return players.size();
     }
 
-    public void initTwoCardsByDealer(Dealer dealer) {
-        for (Player player : this.players) {
-            player.receiveCard(dealer.giveCard());
-            player.receiveCard(dealer.giveCard());
-        }
+    public Player get(int index) {
+        return players.get(index);
+    }
+
+    public Stream<Player> stream() {
+        return players.stream();
+    }
+
+    public <R> Stream<R> map(Function<? super Player, ? extends R> function) {
+        return this.players.stream().map(function);
     }
 
     public List<Player> toList() {
-        return Collections.unmodifiableList(new ArrayList<>(this.players));
+        return Collections.unmodifiableList(this.players);
     }
 }
