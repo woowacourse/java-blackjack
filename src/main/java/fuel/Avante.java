@@ -1,11 +1,11 @@
 package fuel;
 
-public class Sonata extends Car{
-	private final String name = "Sonata";
+public class Avante extends Car{
+	private final String name = "Avante";
 	private final double tripDistance;
-	private final double distancePerLitter = 10;
+	private final double distancePerLitter = 15;
 
-	public Sonata(double tripDistance) {
+	public Avante(double tripDistance) {
 		validateDistance(tripDistance);
 		this.tripDistance = tripDistance;
 	}
