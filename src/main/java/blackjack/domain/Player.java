@@ -20,7 +20,13 @@ public class Player {
         }
     }
 
-    public boolean isEndPlayer() {
+    public boolean canDraw() {
         return turnState;
+    }
+
+    public void draw(final Card card) {
+        if (!canDraw()) {
+            throw new IllegalStateException("[ERROR] 턴이 종료되었으면 카드를 받을 수 없습니다.");
+        }
     }
 }
