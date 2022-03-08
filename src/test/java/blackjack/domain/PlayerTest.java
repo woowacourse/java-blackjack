@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,8 +46,38 @@ class PlayerTest {
 
         // when
         int actual = rich.getResult();
-        
+
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("딜러는 현재 합산 16이하인지 확인할 수 있다")
+    void less_than_or_same_sixteen() {
+        // given
+        final Dealer rich = new Dealer("rich");
+        rich.addCard(PlayingCard.of(Suit.HEARTS, Denomination.FIVE));
+        rich.addCard(PlayingCard.of(Suit.SPADES, Denomination.FIVE));
+
+        // when
+        boolean actual = rich.isUnderSixteen();
+
+        // then
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러는 현재 합산 17이상인지 확인할 수 있다")
+    void over_than_sixteen() {
+        // given
+        final Dealer rich = new Dealer("rich");
+        rich.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
+        rich.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
+
+        // when
+        boolean actual = rich.isUnderSixteen();
+
+        // then
+        assertThat(actual).isFalse();
     }
 }
