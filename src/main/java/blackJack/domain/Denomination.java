@@ -15,11 +15,15 @@ public enum Denomination {
     K(10, "K"),
     A(11, "A");
 
-    private final int number;
+    private final int score;
     private final String denomination;
 
-    Denomination(int number, String denomination) {
-        this.number = number;
+    Denomination(int score, String denomination) {
+        this.score = score;
         this.denomination = denomination;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

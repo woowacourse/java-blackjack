@@ -9,4 +9,8 @@ public class Card {
         this.symbol = symbol;
         this.denomination = denomination;
     }
+
+    public int getScore() {
+        return denomination.getScore();
+    }
 }
