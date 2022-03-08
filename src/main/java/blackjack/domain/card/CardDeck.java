@@ -11,6 +11,12 @@ public class CardDeck {
     }
 
     public Card draw() {
-        return cards.get(0);
+        Card card = cards.get(0);
+        cards.remove(0);
+        return card;
+    }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
     }
 }
