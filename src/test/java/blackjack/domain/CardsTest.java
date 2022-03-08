@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class CardsTest {
@@ -64,29 +65,32 @@ class CardsTest {
         assertThat(actual).isEqualTo(2);
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {"SIX:BUST", "FOUR:NOT_BUST"}, delimiter = ':')
     @DisplayName("합산한 값이 21을 초과하면 BUST를 반환한다.")
-    void isBust1() {
+    void isBust1(CardNumber cardNumber, Status expected) {
         // give
-        final Cards cards = new Cards(Set.of(new Card(DIAMOND, ACE), new Card(DIAMOND, TEN), new Card(DIAMOND, JACK)));
+        final Cards cards = new Cards(Set.of(new Card(DIAMOND, ACE), new Card(DIAMOND, FIVE),
+                new Card(DIAMOND, cardNumber)));
 
         // when
         final Status actual = cards.isBust();
 
         // then
-        assertThat(actual).isEqualTo(Status.BUST);
+        assertThat(actual).isEqualTo(expected);
     }
 
-    @Test
-    @DisplayName("합산한 값이 21을 초과하지 않으면 NOT_BUST를 반환한다.")
-    void isBust2() {
+    @ParameterizedTest
+    @CsvSource(value = {"ACE:true", "KING:false"}, delimiter = ':')
+    @DisplayName("ACE 포함 여부를 확인한다.")
+    void hasAce(CardNumber cardNumber, boolean expected) {
         // give
-        final Cards cards = new Cards(Set.of(new Card(DIAMOND, ACE), new Card(DIAMOND, TEN)));
+        final Cards cards = new Cards(Set.of(new Card(DIAMOND, cardNumber)));
 
         // when
-        final Status actual = cards.isBust();
+        boolean actual = cards.hasAce();
 
         // then
-        assertThat(actual).isEqualTo(Status.NOT_BUST);
+        assertThat(actual).isEqualTo(expected);
     }
 }

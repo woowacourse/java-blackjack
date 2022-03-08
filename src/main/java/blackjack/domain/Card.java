@@ -10,16 +10,20 @@ public class Card {
         this.number = number;
     }
 
-    public CardSymbol getSymbol() {
-        return symbol;
+    public boolean isAce() {
+        return number == CardNumber.ACE;
+    }
+
+    public int getNumberValue() {
+        return number.getValue();
     }
 
     public CardNumber getNumber() {
         return number;
     }
 
-    public int getNumberValue() {
-        return number.getValue();
+    public CardSymbol getSymbol() {
+        return symbol;
     }
 
     @Override

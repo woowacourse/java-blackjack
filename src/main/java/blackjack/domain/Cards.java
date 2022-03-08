@@ -32,6 +32,11 @@ public class Cards {
                 .sum();
     }
 
+    public boolean hasAce() {
+        return value.stream()
+                .anyMatch(Card::isAce);
+    }
+
     @Override
     public String toString() {
         return "Cards{" +
