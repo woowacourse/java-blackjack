@@ -5,9 +5,11 @@ import java.util.List;
 
 public class Participator {
     private final List<Card> cards;
+    private final PlayerName playerName;
 
-    public Participator() {
+    public Participator(PlayerName playerName) {
         this.cards = new ArrayList<>();
+        this.playerName = playerName;
     }
 
     public void receiveCard(Card card) {
