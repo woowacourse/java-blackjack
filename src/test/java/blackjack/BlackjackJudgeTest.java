@@ -8,40 +8,40 @@ import org.junit.jupiter.api.Test;
 public class BlackjackJudgeTest {
     @Test
     void 딜러가_패배하는_경우_테스트() {
-        boolean dealerWin = BlackjackJudge.judge(new Cards("1다이아몬드", "2하트"), new Cards("3클로버", "4하트"));
-        assertThat(dealerWin).isFalse();
+        Result result = BlackjackJudge.judge(new Cards("1다이아몬드", "2하트"), new Cards("3클로버", "4하트"));
+        assertThat(result).isEqualTo(Result.LOSS);
     }
 
     @Test
     void 딜러가_이기는_경우_테스트() {
-        boolean dealerWin = BlackjackJudge.judge(new Cards("3클로버", "4하트"), new Cards("1다이아몬드", "2하트"));
-        assertThat(dealerWin).isTrue();
+        Result result = BlackjackJudge.judge(new Cards("3클로버", "4하트"), new Cards("1다이아몬드", "2하트"));
+        assertThat(result).isEqualTo(Result.WIN);
     }
 
     @Test
     void J_Q_K_카드_점수_계산() {
-        boolean dealerWin = BlackjackJudge.judge(new Cards("Q클로버", "J하트"), new Cards("K다이아몬드", "2하트"));
-        assertThat(dealerWin).isTrue();
+        Result result = BlackjackJudge.judge(new Cards("Q클로버", "J하트"), new Cards("K다이아몬드", "2하트"));
+        assertThat(result).isEqualTo(Result.WIN);
     }
 
     @Test
     void ACE_카드_점수_계산() {
-        boolean dealerWin = BlackjackJudge.judge(new Cards("Q클로버", "J하트"), new Cards("A다이아몬드", "2하트"));
-        assertThat(dealerWin).isTrue();
+        Result result = BlackjackJudge.judge(new Cards("Q클로버", "J하트"), new Cards("A다이아몬드", "2하트"));
+        assertThat(result).isEqualTo(Result.WIN);
     }
 
     @Test
     void 버스트가_발생하는_경우_테스트() {
-        boolean dealerWin = BlackjackJudge
+        Result result = BlackjackJudge
             .judge(new Cards("Q클로버", "J하트", "K클로버"), new Cards("A다이아몬드", "2하트"));
-        assertThat(dealerWin).isFalse();
+        assertThat(result).isEqualTo(Result.LOSS);
     }
 
     @Test
     void ACE를_1로_처리해야_이기는_경우_테스트() {
-        boolean dealerWin = BlackjackJudge
+        Result result = BlackjackJudge
             .judge(new Cards("A다이아몬드", "J하트", "Q클로버"), new Cards("Q클로버", "J하트"));
-        assertThat(dealerWin).isTrue();
+        assertThat(result).isEqualTo(Result.WIN);
     }
 
     @Test

@@ -2,11 +2,17 @@ package blackjack;
 
 public class BlackjackJudge {
 
-    public static boolean judge(Cards player1, Cards player2) {
+    public static Result judge(Cards player1, Cards player2) {
         if (player1.isBust()) {
-            return false;
+            return Result.LOSS;
         }
 
-        return player1.score() > player2.score();
+        if (player1.score() > player2.score()) {
+            return Result.WIN;
+        }
+        if (player1.score() == player2.score()) {
+            return Result.DRAW;
+        }
+        return Result.LOSS;
     }
 }
