@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;

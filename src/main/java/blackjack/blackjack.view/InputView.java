@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.blackjack.view;
 
 import static java.util.stream.Collectors.toList;
 

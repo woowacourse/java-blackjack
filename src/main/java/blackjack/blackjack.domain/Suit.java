@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.blackjack.domain;
 
 public enum Suit {
     CLUBS,

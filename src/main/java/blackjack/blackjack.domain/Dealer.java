@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.blackjack.domain;
 
 public class Dealer extends Player {
     private static final int MORE_CARD_CRITERIA = 16;

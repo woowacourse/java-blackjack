@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.blackjack.domain;
 
 import java.util.Arrays;
 import java.util.Collections;
