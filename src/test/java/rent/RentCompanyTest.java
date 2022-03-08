@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import rent.car.Avante;
 
 public class RentCompanyTest {
 
@@ -17,5 +18,17 @@ public class RentCompanyTest {
                 () -> assertThatCode(RentCompany::create),
                 () -> assertThat(RentCompany.create()).isInstanceOf(RentCompany.class)
         );
+    }
+
+    @DisplayName("회사에 렌트카를 추가 할 수 있다.")
+    @Test
+    public void testAddCar() {
+        //given
+        RentCompany rentCompany = RentCompany.create();
+        Avante avante = new Avante(100);
+
+        //when & then
+        assertThatNoException().isThrownBy(() -> rentCompany.addCar(avante));
+
     }
 }
