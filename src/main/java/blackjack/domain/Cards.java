@@ -18,4 +18,10 @@ public class Cards {
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
+
+    public int sumDenominationPoint() {
+        return cards.stream()
+                .mapToInt(card -> card.getDenomination().getPoint())
+                .sum();
+    }
 }

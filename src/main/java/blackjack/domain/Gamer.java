@@ -39,7 +39,7 @@ public class Gamer implements Player{
 
     @Override
     public int calculateResult() {
-        return 0;
+        return cards.sumDenominationPoint();
     }
 
     @Override

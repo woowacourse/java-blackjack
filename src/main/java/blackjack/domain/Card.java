@@ -28,4 +28,8 @@ public class Card {
     public int hashCode() {
         return Objects.hash(suit, denomination);
     }
+
+    public Denomination getDenomination() {
+        return denomination;
+    }
 }
