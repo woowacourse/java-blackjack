@@ -12,6 +12,6 @@ public class DeckTest {
     void checkDeckCardsSize(){
         Deck deck = Deck.init();
 
-        assertThat(deck.findDeckSize()).isEqualTo(52);
+        assertThat(deck.size()).isEqualTo(52);
     }
 }
