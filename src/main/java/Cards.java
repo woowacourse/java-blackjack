@@ -12,8 +12,8 @@ public class Cards {
 		this.cards = new HashMap<>();
 	}
 
-	public void addCard(String cardName, int cardValue) {
-		this.cards.put(cardName, cardValue);
+	public void addCard(Map<String, Integer> card) {
+		this.cards.putAll(card);
 	}
 
 	public int sum() {
