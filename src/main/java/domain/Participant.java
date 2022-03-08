@@ -31,4 +31,12 @@ public class Participant {
 	public void addCard(Card card) {
 		hand.add(card);
 	}
+
+	public boolean isBurst() {
+		return getMinScore() > 21;
+	}
+
+	protected int getMinScore() {
+		return hand.stream().mapToInt(Card::getPoint).sum();
+	}
 }
