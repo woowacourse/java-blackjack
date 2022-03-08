@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import rent.car.Avante;
 import rent.car.Car;
+import rent.car.K5;
 import rent.car.Sonata;
 
 public class RentCompanyTest {
@@ -49,6 +50,30 @@ public class RentCompanyTest {
         //then
         assertThat(report).isEqualTo(
                 "Sonata : 10리터" + NEWLINE
+        );
+    }
+
+    @DisplayName("여러대의 차량에 대한 보고서를 생성한다.")
+    @Test
+    public void testReportGenerationWithMultipleCars() {
+        //given
+        RentCompany company = RentCompany.create();
+        company.addCar(new Sonata(150));
+        company.addCar(new K5(260));
+        company.addCar(new Sonata(120));
+        company.addCar(new Avante(300));
+        company.addCar(new K5(390));
+
+        //when
+        String report = company.generateReport();
+
+        //then
+        assertThat(report).isEqualTo(
+                "Sonata : 15리터" + NEWLINE +
+                        "K5 : 20리터" + NEWLINE +
+                        "Sonata : 12리터" + NEWLINE +
+                        "Avante : 20리터" + NEWLINE +
+                        "K5 : 30리터" + NEWLINE
         );
     }
 }
