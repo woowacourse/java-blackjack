@@ -10,10 +10,8 @@ public class CardTest {
     @Test
     @DisplayName("카드를 생성한다.")
     void createCard() {
-        String pattern = "다이아몬드";
-        String denomination = "A";
-
-        Card card = new Card(pattern, denomination);
+        // when
+        Card card = new Card(Pattern.DIAMOND, Denomination.ACE);
 
         assertThat(card).isNotNull();
     }

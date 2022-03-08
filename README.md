@@ -33,8 +33,10 @@
     - 게임의 플레이어
     - 카드를 소유하고 있다.
 - Card
-    - 끗수(숫자 혹은 알파벳: denomination)
-    - 문양(pattern)
+    - Pattern
+        - 카드의 문양이 저장된 enum
+    - Denomination
+        - 카드의 끗수가 저장된 enum
 - CardDeck
     - 게임에서 사용하는 카드들을 관리하고 있다.
 - Result

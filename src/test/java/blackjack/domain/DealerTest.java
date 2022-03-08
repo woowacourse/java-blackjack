@@ -14,8 +14,8 @@ public class DealerTest {
     void startWithDraw() {
         // given
         String name = "Dealer";
-        Card card1 = new Card("다이아몬드", "3");
-        Card card2 = new Card("클로버", "3");
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
+        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
         List<Card> cards = List.of(card1, card2);
 
         // when
@@ -41,9 +41,9 @@ public class DealerTest {
     void cardsSizeNotTwo() {
         // given
         String name = "Dealer";
-        Card card1 = new Card("다이아몬드", "3");
-        Card card2 = new Card("클로버", "3");
-        Card card3 = new Card("하트", "3");
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
+        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
+        Card card3 = new Card(Pattern.HEART, Denomination.THREE);
         List<Card> cards = List.of(card1, card2, card3);
 
         // then
@@ -56,7 +56,7 @@ public class DealerTest {
     @DisplayName("딜러를 생성할 때 카드가 중복되면 예외가 발생한다.")
     void duplicatedCards() {
         String name = "Dealer";
-        Card card1 = new Card("다이아몬드", "3");
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         List<Card> cards = List.of(card1, card1);
 
         // then

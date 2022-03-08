@@ -2,10 +2,10 @@ package blackjack.domain;
 
 public class Card {
 
-    private final String pattern;
-    private final String denomination;
+    private final Pattern pattern;
+    private final Denomination denomination;
 
-    public Card(String pattern, String denomination) {
+    public Card(Pattern pattern, Denomination denomination) {
         this.pattern = pattern;
         this.denomination = denomination;
     }
@@ -21,16 +21,16 @@ public class Card {
 
         Card card = (Card) o;
 
-        if (!pattern.equals(card.pattern)) {
+        if (pattern != card.pattern) {
             return false;
         }
-        return denomination.equals(card.denomination);
+        return denomination == card.denomination;
     }
 
     @Override
     public int hashCode() {
-        int result = pattern.hashCode();
-        result = 31 * result + denomination.hashCode();
+        int result = pattern != null ? pattern.hashCode() : 0;
+        result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
         return result;
     }
 }
