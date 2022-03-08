@@ -38,3 +38,27 @@
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+
+
+// BlackJackGame(List<Player> players, Dealer dealer)
+// blackJackGame.distributeCard() - 각자 카드 2장씩
+
+// for (Player player : players)
+// player.canDraw() - y입력되면 true, n 입력되면 false
+// player.drawCard(Card){값추가}
+// player.getter() ->  view에서 보여주기
+// Dealer.drawCard()
+
+//  승패결과 BlackJackResult
+
+/* 보고계시나요~~~`~~`` 정리되셨나여 hrd 퇴실
+for(Player player: players) {
+    if(!player.isBurst() && InputView.wantDraw()) {
+        player.drawCard(CardDistributor.distribute());
+    }
+}
+
+if(!dealer.isBurst()) {
+    dealer.drawCard(CardDistributor.distribute());
+}
+*/

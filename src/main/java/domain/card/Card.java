@@ -11,6 +11,18 @@ public class Card {
         this.suit = suit;
     }
 
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
+    public int toInt() {
+        return this.denomination.getValue();
+    }
+
+    public boolean isAce() {
+        return this.denomination == Denomination.ACE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
