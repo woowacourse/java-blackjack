@@ -22,6 +22,6 @@ public class GamerTest {
         Gamer gamer = new Gamer("judy");
         gamer.receiveCard(new Card(Suit.CLOVER, Denomination.FIVE));
 
-        assertThat(gamer.cards().size()).isEqualTo(1);
+        assertThat(gamer.showCards().size()).isEqualTo(1);
     }
 }

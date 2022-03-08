@@ -2,9 +2,9 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class Gamer {
+public class Gamer implements Player{
 
-    private static final String BANNED_GAMER_NAME = "딜러";
+    private final static String BANNED_GAMER_NAME = "딜러";
 
     private final String name;
     private final Cards cards;
@@ -21,15 +21,33 @@ public class Gamer {
         }
     }
 
+    @Override
     public void receiveCard(Card card) {
         cards.save(card);
+    }
+
+    @Override
+    public List<Card> openCards() {
+        return null;
+    }
+
+    @Override
+    public List<Card> showCards() {
+        return cards.getCards();
+    }
+
+    @Override
+    public int calculateResult() {
+        return 0;
+    }
+
+    @Override
+    public boolean isSatisfyReceiveCardCondition() {
+        return false;
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Card> cards() {
-        return cards.getCards();
-    }
 }
