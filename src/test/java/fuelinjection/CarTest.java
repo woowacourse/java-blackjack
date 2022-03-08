@@ -11,6 +11,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class CarTest {
 
+    private static Stream<Arguments> provideSource() {
+        return Stream.of(
+                Arguments.of(new Sonata(150)),
+                Arguments.of(new Avante(225)),
+                Arguments.of(new K5(195))
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("provideSource")
     @DisplayName("연료 생성 값 확인")
@@ -20,13 +28,5 @@ public class CarTest {
 
         // then
         assertThat(actual).isCloseTo(15, Percentage.withPercentage(0.99));
-    }
-
-    private static Stream<Arguments> provideSource() {
-        return Stream.of(
-                Arguments.of(new Sonata(150)),
-                Arguments.of(new Avante(225)),
-                Arguments.of(new K5(195))
-        );
     }
 }

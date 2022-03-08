@@ -28,7 +28,7 @@ public class RentCompany {
         for (Car car : value) {
             stringBuilder.append(car.getName())
                     .append(" : ")
-                    .append((int) car.getChargeQuantity())
+                    .append((int) Math.round(car.getChargeQuantity()))
                     .append("리터\n");
         }
 
