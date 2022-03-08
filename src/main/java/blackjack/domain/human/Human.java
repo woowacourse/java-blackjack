@@ -11,6 +11,8 @@ public abstract class Human {
 
     public abstract List<Card> getCards();
 
+//    public abstract boolean getCards();
+
     public int getPoint() {
         int point = 0;
         for (Card card : getCards()) {

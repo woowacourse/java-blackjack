@@ -30,4 +30,9 @@ public class Dealer extends Human {
     public List<Card> getCards() {
         return cards;
     }
+
+//    @Override
+//    public boolean isOneMoreCard() {
+//        return false;
+//    }
 }
