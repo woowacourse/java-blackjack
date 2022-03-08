@@ -25,7 +25,10 @@ public class GameController {
         // 카드 2장 지급
         Dealer dealer = Dealer.of();
         dealer.addCard(CardDeck.giveCard());
-        // 52장 Deck ->
+        dealer.addCard(CardDeck.giveCard());
+        players.giveCard();
+        players.giveCard();
+
         // 카드 받을지 물어보는 기능
         boolean moreCard = InputView.inputOneMoreCard("jack");
         System.out.println(moreCard);

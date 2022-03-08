@@ -1,5 +1,6 @@
 package blackjack.domain.human;
 
+import blackjack.domain.CardDeck;
 import java.util.List;
 
 public class Players {
@@ -16,5 +17,11 @@ public class Players {
 
     public int size() {
         return players.size();
+    }
+
+    public void giveCard() {
+        for (Player player : players) {
+            player.addCard(CardDeck.giveCard());
+        }
     }
 }
