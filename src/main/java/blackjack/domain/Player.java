@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +35,10 @@ public class Player {
         if (cards.stream().distinct().count() != cards.size()) {
             throw new IllegalArgumentException("[ERROR] 카드는 중복될 수 없습니다.");
         }
+    }
+
+    public void hit(CardDeck deck) {
+        cards.add(deck.draw());
     }
 
     public List<Card> getCards() {
