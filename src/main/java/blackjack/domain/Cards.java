@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Cards {
@@ -15,5 +17,13 @@ public class Cards {
         return value.stream()
                 .mapToInt(Card::getScore)
                 .sum();
+    }
+
+    public void combine(Card card) {
+        value.add(card);
+    }
+
+    public List<Card> getValue() {
+        return Collections.unmodifiableList(value);
     }
 }
