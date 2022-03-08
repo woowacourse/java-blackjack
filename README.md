@@ -1,7 +1,17 @@
-# java-blackjack
+# 연료 주입
 
-블랙잭 미션 저장소
+## 기능 요구 사항
 
-## 우아한테크코스 코드리뷰
+1. 렌터카 회사는 이동할 거리가 정해져있는 자동차를 받을 수 있다.
+2. 자동차는 Sonata, Avante, K5 3종류가 존재한다.
+3. 자동차 회사는 각 차량 별로 주입해야 할 연료량을 확인할 수 있는 보고서를 출력해야 한다.
 
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+### 자동차 정보
+
+자동차 연비는 아래와 같다.
+
+```
+* Sonata : 10km/리터
+* Avante : 15km/리터
+* K5 : 13km/리터
+```
