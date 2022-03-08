@@ -1,7 +1,7 @@
 package blackjack.domain.human;
 
 import blackjack.domain.Card;
-import java.util.List;
+import blackjack.domain.Cards;
 
 public abstract class Human {
 
@@ -9,15 +9,9 @@ public abstract class Human {
 
     public abstract void addCard(Card card);
 
-    public abstract List<Card> getCards();
-
-//    public abstract boolean getCards();
+    public abstract Cards getCards();
 
     public int getPoint() {
-        int point = 0;
-        for (Card card : getCards()) {
-            point += card.getNumber();
-        }
-        return point;
+        return getCards().getPoint();
     }
 }
