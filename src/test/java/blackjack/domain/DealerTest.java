@@ -12,14 +12,24 @@ public class DealerTest {
     void getCard(){
         Dealer dealer = createDealer();
 
-        assertThat(dealer.cards().size()).isEqualTo(1);
+        assertThat(dealer.showCards().size()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("카드를 한 장만 공개한다.")
     void openCard() {
         Dealer dealer = createDealer();
-        assertThat(dealer.openCard()).isEqualTo(new Card(Suit.CLOVER, Denomination.FIVE));
+        assertThat(dealer.openCards()).contains(new Card(Suit.CLOVER, Denomination.FIVE));
+    }
+
+    @Test
+    @DisplayName("카드를 모두 공개한다.")
+    void showAllCards() {
+        Dealer dealer = createDealer();
+        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.SIX));
+
+        assertThat(dealer.showCards()).contains(new Card(Suit.CLOVER, Denomination.FIVE),
+                new Card(Suit.CLOVER, Denomination.SIX));
     }
 
     private Dealer createDealer() {

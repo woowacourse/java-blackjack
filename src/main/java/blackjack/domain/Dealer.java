@@ -1,8 +1,9 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Dealer {
+public class Dealer implements Player{
 
     private final Cards cards;
 
@@ -14,12 +15,26 @@ public class Dealer {
         cards.save(card);
     }
 
-    public Card openCard() {
-        return cards.getCards().get(0);
+    @Override
+    public List<Card> openCards() {
+        return new ArrayList<>(cards.getCards().subList(0, 1));
     }
 
-    public List<Card> cards() {
+    @Override
+    public List<Card> showCards() {
         return cards.getCards();
     }
+
+    @Override
+    public int calculateResult() {
+        return 0;
+    }
+
+    @Override
+    public boolean isReceivable() {
+        return false;
+    }
+
+
 
 }
