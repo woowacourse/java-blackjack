@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -30,5 +31,16 @@ public class ParticipantTest {
 		Card card2 = new Card(Rank.RANK_9, Suit.SPADE);
 		Participant participant = new Participant("pobi", List.of(card1, card2));
 		assertThat(participant.showHand()).isEqualTo("pobi카드: A하트, 9스페이드");
+	}
+
+	@Test
+	@DisplayName("")
+	void addCard() {
+		Card card1 = new Card(Rank.RANK_A, Suit.HEART);
+		Card card2 = new Card(Rank.RANK_9, Suit.SPADE);
+		Card card3 = new Card(Rank.RANK_8, Suit.CLOVER);
+		Participant participant = new Participant("pobi", new ArrayList<>(Arrays.asList(card1, card2)));
+		participant.addCard(card3);
+		assertThat(participant.showHand()).isEqualTo("pobi카드: A하트, 9스페이드, 8클로버");
 	}
 }

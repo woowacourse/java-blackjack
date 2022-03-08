@@ -8,7 +8,7 @@ public class Participant {
 	public static final String SHOW_HAND_FORMAT = "%s카드: %s";
 
 	protected final String name;
-	protected final List<Card> hand;
+	protected List<Card> hand;
 
 	public Participant(String name, List<Card> hand) {
 		validateName(name);
@@ -24,5 +24,9 @@ public class Participant {
 
 	public String showHand() {
 		return String.format(SHOW_HAND_FORMAT, name, hand.toString().substring(1, hand.toString().length() - 1));
+	}
+
+	public void addCard(Card card) {
+		hand.add(card);
 	}
 }
