@@ -29,8 +29,8 @@ public class Cards {
     }
 
     private int calculateAceAsSmallerStandard(int point, final Card card) {
-        if (card.isAce() && point > 21) {
-            point -= 10;
+        if (card.isAce() && point > Gamer.LIMIT_TOTAL_POINT) {
+            point -= Denomination.adjustAce();
         }
         return point;
     }

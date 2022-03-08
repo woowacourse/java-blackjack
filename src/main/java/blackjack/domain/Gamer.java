@@ -5,7 +5,9 @@ import java.util.List;
 
 public class Gamer implements Player {
 
-    private final static String BANNED_GAMER_NAME = "딜러";
+    public static final int LIMIT_TOTAL_POINT = 21;
+
+    private static final String BANNED_GAMER_NAME = "딜러";
 
     private final String name;
     private final Cards cards;
@@ -43,8 +45,8 @@ public class Gamer implements Player {
     }
 
     @Override
-    public boolean isSatisfyReceiveCardCondition() {
-        return false;
+    public boolean isReceivable() {
+        return calculateResult() < LIMIT_TOTAL_POINT;
     }
 
     public String getName() {

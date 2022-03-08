@@ -12,5 +12,5 @@ public interface Player {
 
     int calculateResult();
 
-    boolean isSatisfyReceiveCardCondition();
+    boolean isReceivable();
 }

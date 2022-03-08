@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -43,6 +44,13 @@ public class GamerTest {
     void calculateGamerPoint() {
         Gamer gamer = initGamer();
         assertThat(gamer.calculateResult()).isEqualTo(10);
+    }
+
+    @Test
+    @DisplayName("21이하 일 때 카드를 받을 수 있는지 확인한다.")
+    void checkReceivableCondition(){
+        Gamer gamer = initGamer();
+        assertTrue(gamer.isReceivable());
     }
 
     private Gamer initGamer() {

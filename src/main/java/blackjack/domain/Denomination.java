@@ -25,4 +25,8 @@ public enum Denomination {
     public int getPoint() {
         return point;
     }
+
+    public static int adjustAce() {
+        return 10;
+    }
 }
