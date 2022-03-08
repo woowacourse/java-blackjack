@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gamer implements Player{
+public class Gamer implements Player {
 
     private final static String BANNED_GAMER_NAME = "딜러";
 
@@ -17,7 +17,7 @@ public class Gamer implements Player{
     }
 
     private void checkBannedName(final String name) {
-        if (name.equals(BANNED_GAMER_NAME)){
+        if (name.equals(BANNED_GAMER_NAME)) {
             throw new IllegalArgumentException("[ERROR] Gamer의 이름은 딜러일 수 없습니다.");
         }
     }
