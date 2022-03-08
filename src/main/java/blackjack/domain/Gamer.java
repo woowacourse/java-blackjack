@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Gamer implements Player{
@@ -28,7 +29,7 @@ public class Gamer implements Player{
 
     @Override
     public List<Card> openCards() {
-        return null;
+        return new ArrayList<>(cards.getCards().subList(0, 2));
     }
 
     @Override
