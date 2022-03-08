@@ -2,8 +2,10 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
 
 public class Gamer {
 
@@ -28,8 +30,24 @@ public class Gamer {
 	}
 
 	public int getCardsNumberSum() {
-		return cards.stream()
-				.map(Card::getNumber)
-				.reduce(ZERO_POINT, Integer::sum);
+		int sum = cards.stream()
+				.filter(Card::isNotAce)
+				.mapToInt(Card::getNumber)
+				.sum();
+
+		List<Card> aces = cards.stream()
+				.filter(card -> !card.isNotAce())
+				.collect(Collectors.toList());
+
+		for (Card ace : aces) {
+			if (sum + ace.getNumber() > 21) {
+				sum += CardNumber.LOWER_ACE_VALUE;
+			}
+			else {
+				sum += ace.getNumber();
+			}
+		}
+
+		return sum;
 	}
 }

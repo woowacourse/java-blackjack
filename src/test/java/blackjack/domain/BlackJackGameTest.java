@@ -15,8 +15,8 @@ class BlackJackGameTest {
     @Test
     @DisplayName("딜러와 플레이어에게 게임 시작 시 2장씩 배분한다.")
     void initDistribution() {
-        Gamer dealer = new Gamer();
-        List<Gamer> players = Arrays.asList(new Gamer(), new Gamer());
+        Dealer dealer = new Dealer();
+        List<Player> players = Arrays.asList(new Player(), new Player());
 
         BlackJackGame blackJackGame = new BlackJackGame();
         blackJackGame.initDistribution(dealer, players);

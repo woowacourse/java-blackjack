@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 public enum CardNumber {
 
-	ACE(1),
+	ACE(11),
 	TWO(2),
 	THREE(3),
 	FOUR(4),
@@ -16,19 +16,12 @@ public enum CardNumber {
 	QUEEN(10),
 	KING(10);
 
-	public static final int BIGGER_ACE_VALUE = 11;
+	public static final int LOWER_ACE_VALUE = 1;
 
 	private final int value;
 
 	CardNumber(int value) {
 		this.value = value;
-	}
-
-	public int getBiggerValue() {
-		if (this == ACE) {
-			return BIGGER_ACE_VALUE;
-		}
-		return value;
 	}
 
 	public int getValue() {

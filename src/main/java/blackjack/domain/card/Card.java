@@ -39,6 +39,10 @@ public class Card {
 		return cardShape == shape && cardNumber == number;
 	}
 
+	public boolean isNotAce() {
+		return !cardNumber.equals(CardNumber.ACE);
+	}
+
 	public static List<Card> getCards() {
 		return new LinkedList<>(cards);
 	}

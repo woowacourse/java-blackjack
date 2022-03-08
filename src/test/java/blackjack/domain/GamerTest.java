@@ -56,4 +56,20 @@ class GamerTest {
 		int sum = gamer.getCardsNumberSum();
 		assertThat(sum).isEqualTo(15);
 	}
+
+	@Test
+	@DisplayName("Ace 포함된 보유 카드 번호 합 반환")
+	void calculateCardsNumberSumWithAce() {
+		Gamer gamer = new Gamer();
+		Card card1 = Card.getInstance(CardShape.SPADE, CardNumber.NINE);
+		Card card2 = Card.getInstance(CardShape.SPADE, CardNumber.QUEEN);
+		Card card3 = Card.getInstance(CardShape.SPADE, CardNumber.ACE);
+
+		gamer.addCard(card1);
+		gamer.addCard(card2);
+		gamer.addCard(card3);
+
+		int sum = gamer.getCardsNumberSum();
+		assertThat(sum).isEqualTo(20);
+	}
 }

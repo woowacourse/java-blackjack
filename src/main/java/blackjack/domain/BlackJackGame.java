@@ -16,7 +16,7 @@ public class BlackJackGame {
         this.cardFactory = new CardFactory(Card.getCards());
     }
 
-    public void initDistribution(Gamer dealer, List<Gamer> players) {
+    public void initDistribution(Dealer dealer, List<Player> players) {
         for (int i = 0; i < INIT_DISTRIBUTION_COUNT; i++) {
             distributeCard(dealer);
             players.forEach(this::distributeCard);
