@@ -11,6 +11,7 @@ public class Dealer implements Player{
         cards = new Cards();
     }
 
+    @Override
     public void receiveCard(final Card card) {
         cards.save(card);
     }
@@ -27,7 +28,7 @@ public class Dealer implements Player{
 
     @Override
     public int calculateResult() {
-        return 0;
+        return cards.calculateTotalPoint();
     }
 
     @Override

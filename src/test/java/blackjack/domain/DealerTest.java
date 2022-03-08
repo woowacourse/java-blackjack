@@ -10,7 +10,7 @@ public class DealerTest {
     @Test
     @DisplayName("카드 한 장을 받는다.")
     void getCard(){
-        Dealer dealer = createDealer();
+        Dealer dealer = initDealer();
 
         assertThat(dealer.showCards().size()).isEqualTo(1);
     }
@@ -18,21 +18,28 @@ public class DealerTest {
     @Test
     @DisplayName("카드를 한 장만 공개한다.")
     void openCard() {
-        Dealer dealer = createDealer();
+        Dealer dealer = initDealer();
         assertThat(dealer.openCards()).contains(new Card(Suit.CLOVER, Denomination.FIVE));
     }
 
     @Test
     @DisplayName("카드를 모두 공개한다.")
     void showAllCards() {
-        Dealer dealer = createDealer();
+        Dealer dealer = initDealer();
         dealer.receiveCard(new Card(Suit.CLOVER, Denomination.SIX));
 
         assertThat(dealer.showCards()).contains(new Card(Suit.CLOVER, Denomination.FIVE),
                 new Card(Suit.CLOVER, Denomination.SIX));
     }
 
-    private Dealer createDealer() {
+    @Test
+    @DisplayName("딜러가 보유하는 카드의 점수를 계산한다.")
+    void calculateDealerPoint() {
+        Dealer dealer = initDealer();
+        assertThat(dealer.calculateResult()).isEqualTo(5);
+    }
+
+    private Dealer initDealer() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.CLOVER, Denomination.FIVE));
         return dealer;
