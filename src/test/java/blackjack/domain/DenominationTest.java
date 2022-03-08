@@ -14,4 +14,12 @@ public class DenominationTest {
 
         assertThat(score).isEqualTo(1);
     }
+
+    @DisplayName("끗수 갯수는 13개 이어야한다. ")
+    @Test
+    void 끗수_갯수_확인() {
+        int size = Denomination.values().length;
+
+        assertThat(size).isEqualTo(13);
+    }
 }
