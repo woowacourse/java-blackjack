@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Gamer implements Player {
 
-    public static final int LIMIT_TOTAL_POINT = 21;
+    public static final int LIMIT_GAMER_TOTAL_POINT = 21;
 
     private static final String BANNED_GAMER_NAME = "딜러";
 
@@ -46,7 +46,7 @@ public class Gamer implements Player {
 
     @Override
     public boolean isReceivable() {
-        return calculateResult() <= LIMIT_TOTAL_POINT;
+        return calculateResult() <= LIMIT_GAMER_TOTAL_POINT;
     }
 
     public String getName() {

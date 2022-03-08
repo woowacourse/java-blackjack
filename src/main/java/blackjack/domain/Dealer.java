@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Dealer implements Player{
 
+    private static final int DEALER_RECEIVE_STANDARD = 16;
+
     private final Cards cards;
 
     public Dealer() {
@@ -33,7 +35,7 @@ public class Dealer implements Player{
 
     @Override
     public boolean isReceivable() {
-        return false;
+        return calculateResult() <= DEALER_RECEIVE_STANDARD;
     }
 
 

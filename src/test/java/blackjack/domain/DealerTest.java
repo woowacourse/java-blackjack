@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,25 @@ public class DealerTest {
     void calculateDealerPoint() {
         Dealer dealer = initDealer();
         assertThat(dealer.calculateResult()).isEqualTo(5);
+    }
+
+    @Test
+    @DisplayName("딜러가 추가 카드를 받을 수 있다.")
+    void isReceivableStandardTrue() {
+        Dealer dealer = initDealer();
+        dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.ACE));
+
+        assertTrue(dealer.isReceivable());
+    }
+
+    @Test
+    @DisplayName("딜러가 추가 카드를 받을 수 없다.")
+    void isReceivableStandardFalse() {
+        Dealer dealer = initDealer();
+        dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
+        dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.FIVE));
+
+        assertFalse(dealer.isReceivable());
     }
 
     private Dealer initDealer() {
