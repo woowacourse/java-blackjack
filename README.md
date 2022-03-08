@@ -7,6 +7,10 @@
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
 ## 블랙잭 미션
+- 카드 생성 기능
+  - J, Q, K를 11, 12, 13으로 간주한다.
+  - 카드의 숫자는 1~13의 수여야 한다.
+
 - 유저 입력 기능
   - 쉼표 기준으로 분리한다.
   - 유저의 이름은 1글자 이상이어야 한다.
