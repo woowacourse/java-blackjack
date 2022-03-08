@@ -77,4 +77,12 @@ public class PlayerTest {
         player.draw(card);
         assertThat(player.cards()).containsExactly(card);
     }
+
+    @Test
+    @DisplayName("턴을 종료할 수 있다.")
+    void endTurn() {
+        final Player player = new Player("user", false, new ArrayList<>());
+        player.endTurn();
+        assertFalse(player.canDraw());
+    }
 }

@@ -38,4 +38,8 @@ public class Player {
     public List<Card> cards() {
         return List.copyOf(owningCards);
     }
+
+    public void endTurn() {
+        turnState = false;
+    }
 }
