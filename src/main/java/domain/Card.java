@@ -37,4 +37,8 @@ public class Card {
     public static Card draw(){
         return CACHE.remove();
     }
+
+    public int getScore(){
+        return denomination.getScore();
+    }
 }

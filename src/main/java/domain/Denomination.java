@@ -24,4 +24,7 @@ public enum Denomination {
         this.letter = letter;
     }
 
+    public int getScore() {
+        return score;
+    }
 }
