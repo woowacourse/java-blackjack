@@ -8,10 +8,10 @@ public class PlayerTest {
 	@Test
 	void distribute_card_to_player() {
 		//given
-		Gamer player = new Player();
+		Gamer player = new Player("pobi");
 		Deck deck = new Deck();
 		//when
-		player.addCard(deck);
+		player.addCard(deck.distributeCard());
 		//then
 		assertThat(player.getCards().size()).isEqualTo(1);
 	}
