@@ -1,8 +1,8 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-
 public abstract class Player {
+    private static final int BURST_CRITERIA = 21;
+
     private final String name;
     private PlayingCards playingCards = new PlayingCards();
 
@@ -20,5 +20,9 @@ public abstract class Player {
 
     public int getResult() {
         return playingCards.getResult();
+    }
+
+    public boolean isBurst() {
+        return getResult() > BURST_CRITERIA;
     }
 }

@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -79,5 +80,30 @@ class PlayerTest {
 
         // then
         assertThat(actual).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러와 겜블러 모두 버스트 여부를 확인할 수 있다.")
+    void is_burst() {
+        // given
+        final Dealer rich = new Dealer("rich");
+        final Player dolbum = new Gambler("dolbum");
+        rich.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
+        rich.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
+        rich.addCard(PlayingCard.of(Suit.CLUBS, Denomination.KING));
+
+        dolbum.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
+        dolbum.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
+        dolbum.addCard(PlayingCard.of(Suit.CLUBS, Denomination.KING));
+
+        // when
+        boolean isBurstForDealer = rich.isBurst();
+        boolean isBurstForGambler = rich.isBurst();
+
+        // then
+        assertAll(
+            () -> assertThat(isBurstForDealer).isTrue(),
+            () -> assertThat(isBurstForGambler).isTrue()
+        );
     }
 }
