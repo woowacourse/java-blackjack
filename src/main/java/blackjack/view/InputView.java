@@ -19,7 +19,7 @@ public class InputView {
 
         return Arrays.stream(input.split(",", -1))
                 .map(String::trim)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 
 
