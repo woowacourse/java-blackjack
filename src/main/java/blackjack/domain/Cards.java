@@ -21,15 +21,21 @@ public class Cards {
 
     public int calculateTotalPoint() {
         int point = sumDenominationPoint();
+
         for (Card card : cards) {
-            if (card.isAce() && point > 21) {
-                point -= 10;
-            }
+            point = calculateAceAsSmallerStandard(point, card);
         }
         return point;
     }
 
-    public int sumDenominationPoint() {
+    private int calculateAceAsSmallerStandard(int point, Card card) {
+        if (card.isAce() && point > 21) {
+            point -= 10;
+        }
+        return point;
+    }
+
+    private int sumDenominationPoint() {
         return cards.stream()
                 .mapToInt(card -> card.getDenomination().getPoint())
                 .sum();
