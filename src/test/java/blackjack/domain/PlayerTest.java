@@ -37,14 +37,18 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("카드 지급 테스트")
+    @DisplayName("보유한 카드 기준 합산 점수 반환 테스트")
     void supply_card() {
         // given
-        final Player rich = new Gambler("rich");
+        final Player rich = new Dealer("rich");
+        rich.addCard(PlayingCard.of(Suit.HEARTS, Denomination.FIVE));
+        rich.addCard(PlayingCard.of(Suit.SPADES, Denomination.FIVE));
+        int expected = 10;
 
-        // when & then
-        assertThatCode(
-            () -> rich.addCard(PlayingCard.of(Suit.HEARTS, Denomination.FIVE))
-        ).doesNotThrowAnyException();
+        // when
+        int actual = rich.getResult();
+        
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 }

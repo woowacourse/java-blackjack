@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Player {
     private final String name;
-    private PlayingCards playingCards;
+    private PlayingCards playingCards = new PlayingCards();
 
     protected Player(final String name) {
         this.name = name;
@@ -16,5 +16,9 @@ public abstract class Player {
 
     public void addCard(PlayingCard playingCard) {
         playingCards.addCard(playingCard);
+    }
+
+    public int getResult() {
+        return playingCards.getResult();
     }
 }
