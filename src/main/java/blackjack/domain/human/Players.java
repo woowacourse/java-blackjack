@@ -2,6 +2,7 @@ package blackjack.domain.human;
 
 import blackjack.domain.CardDeck;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
@@ -23,5 +24,11 @@ public class Players {
         for (Player player : players) {
             player.addCard(CardDeck.giveCard());
         }
+    }
+
+    public List<Player> getCardNeedPlayers() {
+        return players.stream()
+                .filter(Player::isOneMoreCard)
+                .collect(Collectors.toList());
     }
 }

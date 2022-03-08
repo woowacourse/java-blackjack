@@ -7,6 +7,7 @@ import blackjack.domain.Name;
 public class Player extends Human {
     private final Name name;
     private final Cards cards;
+    private boolean isCardNeeded = true;
 
     private Player(Name name) {
         this.name = name;
@@ -17,8 +18,13 @@ public class Player extends Human {
         return new Player(name);
     }
 
-    public boolean isOneMoreCard(boolean input) {
-        return input;
+    public void toNoCardNeeded() {
+        isCardNeeded = false;
+    }
+
+    @Override
+    public boolean isOneMoreCard() {
+        return cards.getPoint() < 21 && isCardNeeded;
     }
 
     @Override

@@ -11,6 +11,8 @@ public abstract class Human {
 
     public abstract Cards getCards();
 
+    public abstract boolean isOneMoreCard();
+
     public int getPoint() {
         return getCards().getPoint();
     }

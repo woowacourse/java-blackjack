@@ -15,6 +15,7 @@ public class Dealer extends Human {
         return new Dealer();
     }
 
+    @Override
     public boolean isOneMoreCard() {
         return cards.getPoint() <= 16;
     }
