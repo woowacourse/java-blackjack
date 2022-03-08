@@ -18,22 +18,8 @@
 - 화장실 타임은 자유롭게 말 끊고 간다. (기분 나빠하지 않는다.)
 - 언제든지 코드를 이해하고 싶을 때는 "타임"을 외친다. "타임"을 누군가 외치면 코드 작성을 멈추고 둘다 코드를 이해한 후 다시 시작한다.
 
-### 블랙잭 용어 사전
 
-- 한장 더 : HIT
-- 그만 받음 : STAY
-- 21이 넘어서 탈락 : BUST
-- 카드를 나눠줌 : DRAW
-- 카드 명칭 🃏
-    - 숫자인 카드 : pip
-    - JQK : face
-    - Ace : ace
-    - heart (❤️)
-    - club (🍀)
-    - spade (♠️)
-    - diamond (💎)
-
-
+```java
 public class hello {
 
 private final static private final static
@@ -58,6 +44,7 @@ private f
 
 getter
 
-@Override toString }
-
+@Override toString 
+}
+```
 
