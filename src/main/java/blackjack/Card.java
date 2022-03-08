@@ -9,6 +9,10 @@ public class Card {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
