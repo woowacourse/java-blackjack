@@ -21,6 +21,10 @@ public class ParticipantCards {
         return totalScore;
     }
 
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
     private int getAceCount() {
         return (int) cards.stream().filter(card -> card.isAce()).count();
     }
