@@ -14,13 +14,23 @@ class BlackJackGameTest {
     void initDistribution() {
         Gamer dealer = new Gamer();
         List<Gamer> players = Arrays.asList(new Gamer(), new Gamer());
-        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
-        blackJackGame.initDistribution();
+        BlackJackGame blackJackGame = new BlackJackGame();
+        blackJackGame.initDistribution(dealer, players);
 
         assertThat(dealer.getCards().size()).isEqualTo(2);
         assertThat(players)
                 .map(gamer -> gamer.getCards().size())
                 .containsExactly(2, 2);
+    }
+
+    @Test
+    @DisplayName("")
+    void distributeCard() {
+        Gamer dealer = new Gamer();
+        BlackJackGame blackJackGame = new BlackJackGame();
+        blackJackGame.distributeCard(dealer);
+
+        assertThat(dealer.getCards().size()).isEqualTo(1);
     }
 }
