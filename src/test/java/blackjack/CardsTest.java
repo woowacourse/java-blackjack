@@ -6,15 +6,39 @@ import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
+@SuppressWarnings("NonAsciiCharacters")
 public class CardsTest {
 
     @Test
     void 카드_합_계산() {
         Cards cards = new Cards("1다이아몬드", "2다이아몬드");
         assertThat(cards.score()).isEqualTo(3);
+    }
+
+    @Test
+    void J_Q_K_카드_점수_계산() {
+        Cards cards = new Cards("Q클로버", "J하트", "K다이아몬드");
+        assertThat(cards.score()).isEqualTo(30);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideAceData")
+    void ACE_카드_점수_계산(List<String> input) {
+        Cards cards = new Cards(input.toArray(String[]::new));
+        assertThat(cards.score()).isEqualTo(21);
+    }
+
+    protected static Stream<Arguments> provideAceData() {
+        return Stream.of(
+                Arguments.of(List.of("A스페이스", "J하트")),
+                Arguments.of(List.of("A다이아몬드", "J다이아몬드", "K클로버"))
+        );
     }
 
     @ParameterizedTest(name = "입력값 : {1}")
@@ -30,5 +54,4 @@ public class CardsTest {
             Arguments.of(false, List.of("A다이아몬드", "J다이아몬드", "4하트"))
         );
     }
-
 }
