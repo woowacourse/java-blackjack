@@ -40,6 +40,10 @@
     - 카드의 문양과 끗수를 저장하고 있다.
 - CardDeck
     - 게임에서 사용하는 카드들을 관리하고 있다.
+    - CardsGenerator
+        - 카드를 생성하는 전략을 제공하는 인터페이스
+        - BlackJackCardsGenerator
+            - CardsGenerator의 구현체로 서로 다른 52장의 카드를 가진 덱을 생성한다.
 - Result
     - 플레이어와 딜러의 카드를 받는다.
     - 점수를 계산하고 승패를 결정한다.
