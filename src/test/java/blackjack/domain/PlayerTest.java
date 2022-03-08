@@ -35,4 +35,5 @@ class PlayerTest {
         // then
         assertThat(actual).isEqualTo(expected);
     }
+
 }
