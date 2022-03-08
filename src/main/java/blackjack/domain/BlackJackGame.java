@@ -8,6 +8,7 @@ import java.util.List;
 public class BlackJackGame {
 
     private static final int INIT_DISTRIBUTION_COUNT = 2;
+    private static final int ADDITIONAL_DISTRIBUTE_STANDARD = 16;
 
     private final CardFactory cardFactory;
 
@@ -24,5 +25,11 @@ public class BlackJackGame {
 
     public void distributeCard(Gamer gamer) {
         gamer.addCard(cardFactory.draw());
+    }
+
+    public void distributeAdditionalToDealer(Dealer dealer) {
+        while (!dealer.isOverThan(ADDITIONAL_DISTRIBUTE_STANDARD)) {
+            distributeCard(dealer);
+        }
     }
 }

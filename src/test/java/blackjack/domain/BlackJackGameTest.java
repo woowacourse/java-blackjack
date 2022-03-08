@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackJackGameTest {
     @Test
-    @DisplayName("")
+    @DisplayName("딜러와 플레이어에게 게임 시작 시 2장씩 배분한다.")
     void initDistribution() {
         Gamer dealer = new Gamer();
         List<Gamer> players = Arrays.asList(new Gamer(), new Gamer());
@@ -25,12 +28,23 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("플레이어에게 1장 배분한다.")
     void distributeCard() {
-        Gamer dealer = new Gamer();
+        Gamer gamer = new Gamer();
         BlackJackGame blackJackGame = new BlackJackGame();
-        blackJackGame.distributeCard(dealer);
+        blackJackGame.distributeCard(gamer);
 
-        assertThat(dealer.getCards().size()).isEqualTo(1);
+        assertThat(gamer.getCards().size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("딜러의 점수가 17이상일 때 까지 카드를 1장씩 받는다.")
+    void dealerDistribution() {
+        Dealer dealer = new Dealer();
+        BlackJackGame blackJackGame = new BlackJackGame();
+        dealer.addCard(Card.getInstance(CardShape.CLOVER,  CardNumber.EIGHT));
+
+        blackJackGame.distributeAdditionalToDealer(dealer);
+        assertThat(dealer.isOverThan(16)).isTrue();
     }
 }
