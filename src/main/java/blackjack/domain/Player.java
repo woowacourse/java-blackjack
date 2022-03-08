@@ -6,16 +6,20 @@ import java.util.Objects;
 public class Player {
 
     private final String name;
-    private final List<Card> owningCards;
+    private final Cards owningCards;
     private boolean turnState;
 
-    public Player(final String name, final boolean turnState, final List<Card> owningCards) {
+    private Player(final String name, final boolean turnState, final Cards owningCards) {
         Objects.requireNonNull(name, "[Error] 플레이어의 이름은 null이 들어올 수 없습니다.");
         Objects.requireNonNull(owningCards, "[Error] 보유 카드에는 null이 들어올 수 없습니다.");
         validateEmptyName(name);
         this.name = name;
         this.turnState = turnState;
         this.owningCards = owningCards;
+    }
+
+    public Player(final String name, final boolean turnState, final List<Card> owningCards) {
+        this(name, turnState, new Cards(owningCards));
     }
 
     private void validateEmptyName(final String name) {
@@ -32,11 +36,11 @@ public class Player {
         if (!canDraw()) {
             throw new IllegalStateException("[ERROR] 턴이 종료되었으면 카드를 받을 수 없습니다.");
         }
-        owningCards.add(card);
+        owningCards.addCard(card);
     }
 
     public List<Card> cards() {
-        return List.copyOf(owningCards);
+        return owningCards.cards();
     }
 
     public void endTurn() {

@@ -33,14 +33,6 @@ public class PlayerTest {
                 .hasMessage("[Error] 플레이어의 이름은 공백이 들어올 수 없습니다.");
     }
 
-    @Test
-    @DisplayName("owning 카드에 null이 들어올 경우 예외가 발생해야 한다.")
-    void createExceptionByNullCards() {
-        assertThatThrownBy(() -> new Player("user", true, null))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("[Error] 보유 카드에는 null이 들어올 수 없습니다.");
-    }
-
     @Nested
     @DisplayName("드로우 가능 여부를 확인할 수 있다.")
     class CanDraw {
