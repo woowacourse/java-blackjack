@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class Cards {
 
+    private static final int BLACK_JACK_NUMBER = 21;
+
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
@@ -20,7 +22,14 @@ public class Cards {
     }
 
     public void addCard(final Card card) {
+        validateScoreSize();
         cards.add(card);
+    }
+
+    private void validateScoreSize() {
+        if (calculateScore() > BLACK_JACK_NUMBER) {
+            throw new IllegalStateException("[Error] 21이 넘을때는 카드를 더 추가할 수 없습니다.");
+        }
     }
 
     public List<Card> cards() {
