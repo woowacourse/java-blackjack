@@ -15,11 +15,19 @@ public class DenominationTest {
         assertThat(score).isEqualTo(1);
     }
 
-    @DisplayName("끗수 갯수는 13개 이어야한다. ")
+    @DisplayName("끗수 갯수는 13개 이어야한다.")
     @Test
     void 끗수_갯수_확인() {
         int size = Denomination.values().length;
 
         assertThat(size).isEqualTo(13);
+    }
+
+    @DisplayName("끗수 이름을 조회한다.")
+    @Test
+    void 끗수_이름_조회() {
+        String name = Denomination.KING.getName();
+
+        assertThat(name).isEqualTo("K");
     }
 }
