@@ -6,6 +6,7 @@ public class K5 extends Car {
     private final int tripDistance;
 
     public K5(int tripDistance) {
+        super(tripDistance);
         this.tripDistance = tripDistance;
     }
 

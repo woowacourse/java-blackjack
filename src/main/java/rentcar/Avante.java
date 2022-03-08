@@ -6,6 +6,7 @@ public class Avante extends Car {
     private final int tripDistance;
 
     public Avante(int tripDistance) {
+        super(tripDistance);
         this.tripDistance = tripDistance;
     }
 

@@ -6,6 +6,7 @@ public class Sonata extends Car {
     private final int tripDistance;
 
     public Sonata(int tripDistance) {
+        super(tripDistance);
         this.tripDistance = tripDistance;
     }
 
