@@ -2,9 +2,9 @@ package rentcompany;
 
 public abstract class Car {
 
-    protected double distancePerLiter;
-    protected double tripDistance;
-    protected String name;
+    protected final double distancePerLiter;
+    protected final double tripDistance;
+    protected final String name;
 
     public Car(int distancePerLiter, int tripDistance, String name) {
         this.distancePerLiter = distancePerLiter;

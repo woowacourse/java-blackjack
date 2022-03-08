@@ -1,9 +1,9 @@
 package rentcompany;
 
-public class Sonata extends Car {
+public class Avante extends Car {
 
-    public Sonata(int tripDistance) {
-        super(10, tripDistance, "Sonata");
+    public Avante(int tripDistance) {
+        super(15, tripDistance, "Avante");
     }
 
     @Override

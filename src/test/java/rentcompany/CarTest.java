@@ -16,8 +16,8 @@ class CarTest {
 
     @DisplayName("필요 주유량 테스트")
     @Test
-    void getChangeQuantity_travels150_need10liter () {
+    void getChangeQuantity_travels150_need10liter() {
         Car car = new Sonata(150);
-        assertThat(car.getChargeQuantity()).isEqualTo(10);
+        assertThat(car.getChargeQuantity()).isEqualTo(15);
     }
 }
