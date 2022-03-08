@@ -17,4 +17,8 @@ public class Card {
     public CardNumber getNumber() {
         return number;
     }
+
+    public int getNumberValue() {
+        return number.getValue();
+    }
 }

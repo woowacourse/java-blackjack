@@ -2,9 +2,12 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class CardTest {
 
@@ -34,5 +37,24 @@ class CardTest {
 
         // then
         assertThat(actual).isEqualTo(cardNumber);
+    }
+
+    @ParameterizedTest
+    @DisplayName("CardNumber의 값을 꺼낸다.")
+    @MethodSource("provideCard")
+    void getNumber(Card card, int expected) {
+        // when
+        int actual = card.getNumberValue();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideCard() {
+        return Stream.of(
+                Arguments.of(new Card(CardSymbol.DIAMOND, CardNumber.ACE), 11),
+                Arguments.of(new Card(CardSymbol.DIAMOND, CardNumber.JACK), 10),
+                Arguments.of(new Card(CardSymbol.DIAMOND, CardNumber.TEN), 10)
+        );
     }
 }
