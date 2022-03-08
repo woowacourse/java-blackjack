@@ -10,6 +10,10 @@ public class Card {
         this.denomination = denomination;
     }
 
+    public int getValue() {
+        return denomination.getValue();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
