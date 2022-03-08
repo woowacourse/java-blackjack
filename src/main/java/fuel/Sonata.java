@@ -1,6 +1,6 @@
 package fuel;
 
-public class Sonata {
+public class Sonata implements Car {
     private final String name = "Sonata";
     private final int fuelEfficiency = 10;
     private final int distance;
