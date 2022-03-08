@@ -8,6 +8,7 @@ public class Card {
         this.number = number;
         this.shape = shape;
     }
+
     public static Card of(final int number, final String shape) {
         return new Card(number, shape);
     }

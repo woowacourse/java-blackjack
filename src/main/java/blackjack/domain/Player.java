@@ -11,6 +11,7 @@ public class Player {
         this.name = name;
         this.cards = new ArrayList<>();
     }
+
     public static Player of(String name) {
         return new Player(name);
     }

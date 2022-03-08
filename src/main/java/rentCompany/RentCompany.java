@@ -22,7 +22,8 @@ public class RentCompany {
     public String generateReport() {
         StringBuilder report = new StringBuilder();
         for (Car car : cars) {
-            report.append(String.format("%s : %1.0f리터" + System.lineSeparator(), car.getName(), car.getChargeQuantity()));
+            report.append(
+                    String.format("%s : %1.0f리터" + System.lineSeparator(), car.getName(), car.getChargeQuantity()));
         }
         return report.toString();
     }
