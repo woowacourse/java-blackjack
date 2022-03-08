@@ -1,8 +1,8 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Card {
 
@@ -16,14 +16,16 @@ public class Card {
 
     public static List<Card> cards() {
         final List<CardPattern> patterns = CardPattern.cardPatterns();
-        final List<CardNumber> numbers = CardNumber.cardNumbers();
-        final List<Card> cards = new ArrayList<>();
-        for (CardPattern pattern : patterns) {
-            for (CardNumber number : numbers) {
-                cards.add(new Card(pattern, number));
-            }
-        }
-        return cards;
+        return patterns.stream()
+                .map(Card::createPatternCards)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+    }
+
+    private static List<Card> createPatternCards(final CardPattern pattern) {
+        return CardNumber.cardNumbers().stream()
+                .map(number -> new Card(pattern, number))
+                .collect(Collectors.toList());
     }
 
     @Override
