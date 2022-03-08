@@ -1,27 +1,23 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CardMachine {
 
-    private final List<Card> cards = new ArrayList<>();
+    private final int INIT_CARD_COUNT = 2;
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    private final Cards cards = new Cards();
+
+    public CardMachine() {
+        cards.generate();
     }
 
-    public void generate() {
-        for (CardNumber cardNumber : CardNumber.values()) {
-            selectCardShape(cardNumber);
+    public List<Card> giveInitCard() {
+        List<Card> givenCards = new ArrayList<>();
+        for (int i = 0; i < INIT_CARD_COUNT; i++) {
+            givenCards.add(cards.giveCard());
         }
-        Collections.shuffle(cards);
-    }
-
-    private void selectCardShape(final CardNumber cardNumber) {
-        for (CardShape cardShape : CardShape.values()) {
-            cards.add(new Card(cardNumber, cardShape));
-        }
+        return givenCards;
     }
 }
