@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PlayerTest {
+class PlayerTest {
 
     @Test
     @DisplayName("hit 가능하다면 참을 반환한다")

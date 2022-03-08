@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DealerTest {
+class DealerTest {
 
     @Test
     @DisplayName("추가 카드가 필요한 경우 참을 반환한다")

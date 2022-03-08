@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DeckTest {
+class DeckTest {
 
     @Test
     @DisplayName("덱은 48장의 카드를 가지고 있다")
