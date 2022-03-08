@@ -55,4 +55,8 @@ public class Cards {
     public Card getFirstCard(int index) {
         return cards.get(index);
     }
+
+    public Result getResult(Cards other) {
+        return Result.of(this.getSum(), other.getSum());
+    }
 }
