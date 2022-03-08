@@ -1,9 +1,15 @@
 package fuelinjection;
 
 public class K5 extends Car {
-    private final int tripDistance;
 
-    public K5(int tripDistance) {
-        this.tripDistance = tripDistance;
+    private static final double DISTANCE_PER_LITTER = 13;
+
+    public K5(double tripDistance) {
+        super(tripDistance);
+    }
+
+    @Override
+    double getDistancePerLiter() {
+        return DISTANCE_PER_LITTER;
     }
 }

@@ -1,9 +1,15 @@
 package fuelinjection;
 
 public class Avante extends Car {
-    private final int tripDistance;
 
-    public Avante(int tripDistance) {
-        this.tripDistance = tripDistance;
+    private static final double DISTANCE_PER_LITTER = 15;
+
+    public Avante(double tripDistance) {
+        super(tripDistance);
+    }
+
+    @Override
+    double getDistancePerLiter() {
+        return DISTANCE_PER_LITTER;
     }
 }
