@@ -3,7 +3,6 @@ package domain;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -14,10 +13,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class ParticipantTest {
 
-	@ParameterizedTest
+	@ParameterizedTest(name = "이름이 공백이거나 빈칸일 경우 - case : {0}")
 	@NullAndEmptySource
 	@ValueSource(strings = {"", " ", "\t", "\n"})
-	@DisplayName("이름이 공백이거나 빈칸일 경우")
 	void validateName(String name) {
 		assertThatThrownBy(() -> new Participant(name, new ArrayList<Card>())).isInstanceOf(
 			IllegalArgumentException.class)
@@ -25,7 +23,7 @@ public class ParticipantTest {
 	}
 
 	@Test
-	@DisplayName("")
+	@DisplayName("자신의 손패를 문자열로 반환하는 기능")
 	void showHand() {
 		Card card1 = new Card(Rank.RANK_A, Suit.HEART);
 		Card card2 = new Card(Rank.RANK_9, Suit.SPADE);
@@ -34,12 +32,12 @@ public class ParticipantTest {
 	}
 
 	@Test
-	@DisplayName("")
+	@DisplayName("손패에 새로운 카드를 추가하는 기능")
 	void addCard() {
 		Card card1 = new Card(Rank.RANK_A, Suit.HEART);
 		Card card2 = new Card(Rank.RANK_9, Suit.SPADE);
 		Card card3 = new Card(Rank.RANK_8, Suit.CLOVER);
-		Participant participant = new Participant("pobi", new ArrayList<>(Arrays.asList(card1, card2)));
+		Participant participant = new Participant("pobi", new ArrayList<>(List.of(card1, card2)));
 		participant.addCard(card3);
 		assertThat(participant.showHand()).isEqualTo("pobi카드: A하트, 9스페이드, 8클로버");
 	}
