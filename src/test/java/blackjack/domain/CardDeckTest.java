@@ -33,4 +33,11 @@ class CardDeckTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[Error] 남은 카드가 없습니다.");
     }
+
+    @Test
+    @DisplayName("카드 1장을 반환할 수 있다.")
+    void provideCard() {
+        final CardDeck cardDeck = new CardDeck(Card.cards());
+        assertThat(cardDeck.provideCard()).isInstanceOf(Card.class);
+    }
 }

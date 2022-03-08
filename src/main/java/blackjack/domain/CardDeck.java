@@ -25,6 +25,6 @@ public class CardDeck {
         if (cards.isEmpty()) {
             throw new IllegalStateException("[Error] 남은 카드가 없습니다.");
         }
-        return null;
+        return cards.poll();
     }
 }
