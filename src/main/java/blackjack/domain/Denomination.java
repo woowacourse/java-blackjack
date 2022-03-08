@@ -21,4 +21,8 @@ public enum Denomination {
         this.value = value;
         this.name = name;
     }
+
+    public int getValue() {
+        return value;
+    }
 }
