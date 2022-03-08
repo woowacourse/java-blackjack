@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 public class InitCards {
 
 	public static final int INIT_SIZE = 2;
+	
 	private final List<Card> intiCards;
 
 	public InitCards(Deck deck) {

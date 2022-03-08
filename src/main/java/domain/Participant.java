@@ -61,6 +61,25 @@ public class Participant {
 		return bestScore;
 	}
 
+	public Versus compare(Participant other) {
+		if (isBurst()) {
+			return Versus.LOSE;
+		}
+
+		if (other.isBurst()) {
+			return Versus.WIN;
+		}
+		
+		if (getBestScore() > other.getBestScore()) {
+			return Versus.WIN;
+		}
+
+		if (getBestScore() == other.getBestScore()) {
+			return Versus.DRAW;
+		}
+		return Versus.LOSE;
+	}
+
 	protected int getAceCount() {
 		return (int)hand.stream().filter(Card::isAce).count();
 	}
