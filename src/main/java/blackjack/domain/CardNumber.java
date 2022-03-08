@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum CardNumber {
 
     A(1),
@@ -21,5 +24,9 @@ public enum CardNumber {
 
     CardNumber(final int defaultValue) {
         this.defaultValue = defaultValue;
+    }
+
+    public static List<CardNumber> cardNumbers() {
+        return Arrays.asList(values());
     }
 }
