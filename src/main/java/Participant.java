@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class Participant {
 	private static final String ERROR_MESSAGE_EMPTY_NAME = "[ERROR] 이름은 공백일 수 없습니다.";
 	private static final String ERROR_MESSAGE_UNAVAILABLE_CHARACTER = "[ERROR] 이름에 특수문자가 포함될 수 없습니다.";
@@ -5,9 +7,11 @@ public class Participant {
 	private static final String DEALER_NAME = "딜러";
 
 	private final String name;
+	private final Cards cards;
 
 	private Participant(String name) {
 		this.name = name;
+		this.cards = new Cards();
 	}
 
 	public static Participant createDealer() {
@@ -36,4 +40,7 @@ public class Participant {
 		}
 	}
 
+	public void receiveCard(Map<String, Integer> card){
+		cards.addCard(card);
+	}
 }
