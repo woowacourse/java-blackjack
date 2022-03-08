@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Participant {
 
@@ -23,7 +24,8 @@ public class Participant {
 	}
 
 	public String showHand() {
-		return String.format(SHOW_HAND_FORMAT, name, hand.toString().substring(1, hand.toString().length() - 1));
+		String joinedCards = String.join(", ", hand.stream().map(Card::toString).collect(Collectors.toList()));
+		return String.format(SHOW_HAND_FORMAT, name, joinedCards);
 	}
 
 	public void addCard(Card card) {
