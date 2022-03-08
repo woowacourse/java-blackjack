@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Card {
@@ -10,6 +12,18 @@ public class Card {
     public Card(final CardPattern pattern, final CardNumber number) {
         this.pattern = pattern;
         this.number = number;
+    }
+
+    public static List<Card> cards() {
+        final List<CardPattern> patterns = CardPattern.cardPatterns();
+        final List<CardNumber> numbers = CardNumber.cardNumbers();
+        final List<Card> cards = new ArrayList<>();
+        for (CardPattern pattern : patterns) {
+            for (CardNumber number : numbers) {
+                cards.add(new Card(pattern, number));
+            }
+        }
+        return cards;
     }
 
     @Override
