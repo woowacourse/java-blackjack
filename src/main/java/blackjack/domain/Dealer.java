@@ -29,7 +29,7 @@ public class Dealer implements Player {
 
     @Override
     public List<Card> showCards() {
-        return cards.getCards();
+        return List.copyOf(cards.getCards());
     }
 
     @Override

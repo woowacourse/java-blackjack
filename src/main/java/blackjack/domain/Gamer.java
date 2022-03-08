@@ -34,7 +34,7 @@ public class Gamer implements Player {
 
     @Override
     public List<Card> showCards() {
-        return cards.getCards();
+        return List.copyOf(cards.getCards());
     }
 
     @Override
