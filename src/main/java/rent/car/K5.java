@@ -2,22 +2,19 @@ package rent.car;
 
 public class K5 extends Car {
 
-    public K5(int distance) {
-        super();
+    private static final double DISTANCE_PER_LITER = 13;
+
+    public K5(double distance) {
+        super(distance);
     }
 
     @Override
-    double getDistancePerLiter() {
-        return 0;
+    public double getDistancePerLiter() {
+        return DISTANCE_PER_LITER;
     }
 
     @Override
-    double getTripDistance() {
-        return 0;
-    }
-
-    @Override
-    String getName() {
+    public String getName() {
         return null;
     }
 }

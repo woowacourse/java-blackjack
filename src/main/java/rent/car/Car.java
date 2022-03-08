@@ -2,14 +2,21 @@ package rent.car;
 
 public abstract class Car {
 
-    double getChargeQuantity() {
+    private final double distance;
+
+    public Car(double distance) {
+        this.distance = distance;
+    }
+
+    public double getChargeQuantity() {
         return getTripDistance() / getDistancePerLiter();
     }
 
-    abstract double getDistancePerLiter();
+    public abstract double getDistancePerLiter();
 
-    abstract double getTripDistance();
+    public double getTripDistance() {
+        return distance;
+    };
 
-    abstract String getName();
-
+    public abstract String getName();
 }
