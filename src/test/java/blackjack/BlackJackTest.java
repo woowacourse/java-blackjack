@@ -38,7 +38,7 @@ public class BlackJackTest {
 
     @Test
     void ACE를_1로_처리해야_이기는_경우_테스트() {
-        boolean dealerWin = BlackJack.play(List.of("Q클로버", "J하트"), List.of("A다이아몬드", "J하트", "Q클로버"));
-        assertThat(dealerWin).isFalse();
+        boolean dealerWin = BlackJack.play(List.of("A다이아몬드", "J하트", "Q클로버"), List.of("Q클로버", "J하트"));
+        assertThat(dealerWin).isTrue();
     }
 }
