@@ -22,6 +22,10 @@ public class Cards {
         }
     }
 
+    public int calculateScore() {
+        return cards.stream().mapToInt(card -> card.getScore().getAmount()).sum();
+    }
+
     public List<Card> getCards() {
         return this.cards;
     }

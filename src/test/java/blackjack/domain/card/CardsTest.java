@@ -27,4 +27,15 @@ public class CardsTest {
 
         assertThat(cards.getCards().size()).isEqualTo(3);
     }
+
+    @Test
+    @DisplayName("cards의 점수 합을 구한다.")
+    void sumCardScore(){
+        Cards cards = new Cards();
+        cards.addCard(new Card(Type.SPADE, Score.ACE));
+        cards.addCard(new Card(Type.DIAMOND, Score.TWO));
+        cards.addCard(new Card(Type.CLOVER, Score.THREE));
+
+        assertThat(cards.calculateScore()).isEqualTo(6);
+    }
 }
