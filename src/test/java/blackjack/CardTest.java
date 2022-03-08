@@ -8,10 +8,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 public class CardTest {
 
     @Test
-    @DisplayName("범위 밖의 숫자로 생성시 예외를 발생한다.")
+    @DisplayName("범위 밖의 숫자로 생성시 예외를 발생시킨다.")
     void exceptionNumberOutOfRange() {
-        assertThatThrownBy(() -> new Card(0))
+        assertThatThrownBy(() -> new Card(0, CardType.DIAMOND))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR]");
+                .hasMessageContaining("[ERROR] 올바른 카드 번호가 아닙니다.");
     }
 }
