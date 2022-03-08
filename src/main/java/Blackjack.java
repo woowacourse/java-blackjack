@@ -5,16 +5,16 @@ public class Blackjack {
 	private static final String ERROR_MESSAGE_PLAYER_NUMBER_EXCEED = "[ERROR] 참가자의 수는 8명을 초과할 수 없습니다.";
 	private static final int MAX_PLAYER_NUMBER = 8;
 
-	private final List<Player> players;
+	private final List<Participant> players;
 
-	private Blackjack(List<Player> players) {
+	private Blackjack(List<Participant> players) {
 		this.players = players;
 	}
 
 	public static Blackjack createFrom(List<String> playerNames){
 		validatePlayerNumber(playerNames);
-		List<Player> players = playerNames.stream()
-				.map(Player::new)
+		List<Participant> players = playerNames.stream()
+				.map(Participant::createPlayer)
 				.collect(Collectors.toList());
 
 		return new Blackjack(players);
