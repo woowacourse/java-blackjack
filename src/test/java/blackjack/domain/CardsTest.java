@@ -63,4 +63,30 @@ class CardsTest {
         // then
         assertThat(actual).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("합산한 값이 21을 초과하면 BUST를 반환한다.")
+    void isBust1() {
+        // give
+        final Cards cards = new Cards(Set.of(new Card(DIAMOND, ACE), new Card(DIAMOND, TEN), new Card(DIAMOND, JACK)));
+
+        // when
+        final Status actual = cards.isBust();
+
+        // then
+        assertThat(actual).isEqualTo(Status.BUST);
+    }
+
+    @Test
+    @DisplayName("합산한 값이 21을 초과하지 않으면 NOT_BUST를 반환한다.")
+    void isBust2() {
+        // give
+        final Cards cards = new Cards(Set.of(new Card(DIAMOND, ACE), new Card(DIAMOND, TEN)));
+
+        // when
+        final Status actual = cards.isBust();
+
+        // then
+        assertThat(actual).isEqualTo(Status.NOT_BUST);
+    }
 }

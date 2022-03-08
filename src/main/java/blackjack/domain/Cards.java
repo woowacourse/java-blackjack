@@ -10,18 +10,26 @@ public class Cards {
         this.value = new LinkedHashSet<>(value);
     }
 
+    public void add(Card card) {
+        value.add(card);
+    }
+
     public int getSize() {
         return value.size();
+    }
+
+    public Status isBust() {
+        if (sum() > 21) {
+            return Status.BUST;
+        }
+
+        return Status.NOT_BUST;
     }
 
     public int sum() {
         return value.stream()
                 .mapToInt(Card::getNumberValue)
                 .sum();
-    }
-
-    public void add(Card card) {
-        value.add(card);
     }
 
     @Override
