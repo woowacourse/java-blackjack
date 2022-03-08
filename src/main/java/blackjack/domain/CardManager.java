@@ -11,4 +11,6 @@ public interface CardManager {
 	List<Card> getCards();
 
 	boolean isOverThan(int number);
+
+	int getCardsNumberSum();
 }

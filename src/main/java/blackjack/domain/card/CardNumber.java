@@ -30,4 +30,8 @@ public enum CardNumber {
 		}
 		return value;
 	}
+
+	public int getValue() {
+		return this.value;
+	}
 }

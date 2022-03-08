@@ -43,4 +43,18 @@ class DealerTest {
 
 		assertThat(dealer.isOverThan(input)).isEqualTo(result);
 	}
+
+	@Test
+	@DisplayName("보유 카드 번호 합 반환")
+	void calculateCardsNumberSum() {
+		Dealer dealer = new Dealer();
+		Card card1 = Card.getInstance(CardShape.SPADE, CardNumber.TEN);
+		Card card2 = Card.getInstance(CardShape.SPADE, CardNumber.FIVE);
+
+		dealer.addCard(card1);
+		dealer.addCard(card2);
+
+		int sum = dealer.getCardsNumberSum();
+		assertThat(sum).isEqualTo(15);
+	}
 }

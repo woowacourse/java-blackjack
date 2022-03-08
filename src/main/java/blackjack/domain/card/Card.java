@@ -43,6 +43,10 @@ public class Card {
 		return new LinkedList<>(cards);
 	}
 
+	public int getNumber() {
+		return cardNumber.getValue();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

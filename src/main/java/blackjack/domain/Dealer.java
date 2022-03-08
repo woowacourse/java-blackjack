@@ -5,8 +5,9 @@ import java.util.List;
 
 import blackjack.domain.card.Card;
 
-public class Dealer implements CardManager{
+public class Dealer implements CardManager {
 
+	public static final int ZERO_POINT = 0;
 	private final List<Card> cards;
 
 	public Dealer() {
@@ -18,15 +19,20 @@ public class Dealer implements CardManager{
 		cards.add(card);
 	}
 
+	@Override
 	public List<Card> getCards() {
 		return new ArrayList<>(cards);
 	}
 
 	@Override
 	public boolean isOverThan(int number) {
-		int sum = cards.stream()
-			.map(card -> card.getNumber())
-			.reduce(0, Integer::sum);
-		return sum > number;
+		return getCardsNumberSum() > number;
+	}
+
+	@Override
+	public int getCardsNumberSum() {
+		return cards.stream()
+			.map(Card::getNumber)
+			.reduce(ZERO_POINT, Integer::sum);
 	}
 }
