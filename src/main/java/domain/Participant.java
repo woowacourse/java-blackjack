@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public class Participant {
 	public Participant(String name, List<Card> hand) {
 		validateName(name);
 		this.name = name;
-		this.hand = hand;
+		this.hand = new ArrayList<>(hand);
 	}
 
 	protected void validateName(String name) {
