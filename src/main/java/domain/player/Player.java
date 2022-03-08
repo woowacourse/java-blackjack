@@ -3,7 +3,7 @@ package domain.player;
 import domain.card.Card;
 import domain.card.Cards;
 
-public class Player {
+public class Player implements Participant {
     private final String name;
     private final Cards cards;
 
@@ -12,10 +12,12 @@ public class Player {
         this.cards = cards;
     }
 
+    @Override
     public boolean isFinished() {
         return cards.isBust();
     }
 
+    @Override
     public void drawCard(Card card) {
         cards.add(card);
     }

@@ -3,7 +3,7 @@ package domain.player;
 import domain.card.Card;
 import domain.card.Cards;
 
-public class Dealer {
+public class Dealer implements Participant {
     private static final int DRAW_STANDARD = 16;
 
     private final String name = "딜러";
@@ -13,10 +13,12 @@ public class Dealer {
         this.cards = cards;
     }
 
+    @Override
     public boolean isFinished() {
         return cards.isBust() || cards.sum() > DRAW_STANDARD;
     }
 
+    @Override
     public void drawCard(Card card) {
         cards.add(card);
     }
