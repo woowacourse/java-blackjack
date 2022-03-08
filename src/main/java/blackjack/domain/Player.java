@@ -32,5 +32,10 @@ public class Player {
         if (!canDraw()) {
             throw new IllegalStateException("[ERROR] 턴이 종료되었으면 카드를 받을 수 없습니다.");
         }
+        owningCards.add(card);
+    }
+
+    public List<Card> cards() {
+        return List.copyOf(owningCards);
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -66,5 +67,14 @@ public class PlayerTest {
         assertThatThrownBy(() -> player.draw(Card.cards().get(0)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[ERROR] 턴이 종료되었으면 카드를 받을 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("카드를 받을 수 있다.")
+    void draw() {
+        final Player player = new Player("user", true, new ArrayList<>());
+        final Card card = Card.cards().get(0);
+        player.draw(card);
+        assertThat(player.cards()).containsExactly(card);
     }
 }
