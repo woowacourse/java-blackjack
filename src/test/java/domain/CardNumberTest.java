@@ -1,2 +1,5 @@
-package domain;public class CardNumberTest {
+package domain;
+
+public class CardNumberTest {
+
 }
