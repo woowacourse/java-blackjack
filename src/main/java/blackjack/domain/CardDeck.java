@@ -12,7 +12,7 @@ public class CardDeck {
 
     private final Queue<Card> cards;
 
-    public CardDeck(final Queue<Card> cards) {
+    private CardDeck(final Queue<Card> cards) {
         this.cards = cards;
     }
 
