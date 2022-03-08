@@ -43,4 +43,39 @@ public class Cards {
         }
         return Integer.parseInt(value);
     }
+
+    public Result compare(Cards other) {
+        if (hasBust(other)) {
+            return judgeBustCase(other);
+        }
+        return judgeNormalCase(other);
+    }
+
+    private boolean hasBust(Cards other) {
+        return this.isBust() || other.isBust();
+    }
+
+    private Result judgeBustCase(Cards other) {
+        if (this.isBust() && other.isBust()) {
+            return Result.DRAW;
+        }
+
+        if (this.isBust()) {
+            return Result.LOSS;
+        }
+
+        return Result.WIN;
+    }
+
+    private Result judgeNormalCase(Cards other) {
+        if (this.score() > other.score()) {
+            return Result.WIN;
+        }
+
+        if (this.score() == other.score()) {
+            return Result.DRAW;
+        }
+
+        return Result.LOSS;
+    }
 }
