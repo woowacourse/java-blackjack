@@ -52,7 +52,7 @@ class CardTest {
 
     private static Stream<Arguments> provideCard() {
         return Stream.of(
-                Arguments.of(new Card(CardSymbol.DIAMOND, CardNumber.ACE), 11),
+                Arguments.of(new Card(CardSymbol.DIAMOND, CardNumber.ACE), 1),
                 Arguments.of(new Card(CardSymbol.DIAMOND, CardNumber.JACK), 10),
                 Arguments.of(new Card(CardSymbol.DIAMOND, CardNumber.TEN), 10)
         );

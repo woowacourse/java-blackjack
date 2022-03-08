@@ -81,20 +81,6 @@ class CardsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"ACE:true", "KING:false"}, delimiter = ':')
-    @DisplayName("ACE 포함 여부를 확인한다.")
-    void hasAce(CardNumber cardNumber, boolean expected) {
-        // give
-        final Cards cards = new Cards(Set.of(new Card(DIAMOND, cardNumber)));
-
-        // when
-        boolean actual = cards.hasAce();
-
-        // then
-        assertThat(actual).isEqualTo(expected);
-    }
-    
-    @ParameterizedTest
     @MethodSource("provideSource")
     @DisplayName("BUST이고 ACE를 포함하면 ACE의 값을 1로 바꾼다.")
     void changeAceValue(Cards cards, int expected) {
