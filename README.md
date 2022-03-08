@@ -27,6 +27,7 @@
 ## Deck
 - [x] 52장의 카드를 갖고 있다.
 - [x] 카드를 뽑는다.
+- [x] [Error] 카드가 0장이면 예외를 발생시킨다.
 
 ## Card
 - [x] Enum - Denomination

@@ -27,7 +27,14 @@ public class Deck {
     }
 
     public Card draw() {
+        checkCardSize();
         return cards.pop();
+    }
+
+    private void checkCardSize() {
+        if (size() == 0) {
+            throw new IllegalStateException("[ERROR] 더이상 카드를 뽑을 수 없습니다.");
+        }
     }
 
     public int size() {
