@@ -1,20 +1,23 @@
 package blackjack.domain.human;
 
 import blackjack.domain.Card;
-import java.util.ArrayList;
-import java.util.List;
+import blackjack.domain.Cards;
 
 public class Player extends Human {
     private final String name;
-    private final List<Card> cards;
+    private final Cards cards;
 
     private Player(String name) {
         this.name = name;
-        this.cards = new ArrayList<>();
+        this.cards = Cards.of();
     }
 
     public static Player of(String name) {
         return new Player(name);
+    }
+
+    public boolean isOneMoreCard(boolean input) {
+        return input;
     }
 
     @Override
@@ -28,7 +31,7 @@ public class Player extends Human {
     }
 
     @Override
-    public List<Card> getCards() {
+    public Cards getCards() {
         return cards;
     }
 }

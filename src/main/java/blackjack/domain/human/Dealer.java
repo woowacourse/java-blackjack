@@ -1,19 +1,22 @@
 package blackjack.domain.human;
 
 import blackjack.domain.Card;
-import java.util.ArrayList;
-import java.util.List;
+import blackjack.domain.Cards;
 
 public class Dealer extends Human {
-    private final List<Card> cards;
+    private final Cards cards;
     private final String name = "딜러";
 
     private Dealer() {
-        this.cards = new ArrayList<>();
+        this.cards = Cards.of();
     }
 
     public static Dealer of() {
         return new Dealer();
+    }
+
+    public boolean isOneMoreCard() {
+        return cards.getPoint() <= 16;
     }
 
     @Override
@@ -27,12 +30,7 @@ public class Dealer extends Human {
     }
 
     @Override
-    public List<Card> getCards() {
+    public Cards getCards() {
         return cards;
     }
-
-//    @Override
-//    public boolean isOneMoreCard() {
-//        return false;
-//    }
 }

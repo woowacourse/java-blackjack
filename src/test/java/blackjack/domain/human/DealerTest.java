@@ -21,4 +21,6 @@ class DealerTest {
         assertThat(dealer.getPoint())
                 .isEqualTo(11);
     }
+
+
 }
