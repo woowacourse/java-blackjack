@@ -9,7 +9,7 @@ public class Card {
     private final CardPattern pattern;
     private final CardNumber number;
 
-    public Card(final CardPattern pattern, final CardNumber number) {
+    private Card(final CardPattern pattern, final CardNumber number) {
         this.pattern = pattern;
         this.number = number;
     }
