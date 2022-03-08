@@ -14,7 +14,12 @@ public class Dealer {
         cards.save(card);
     }
 
+    public Card openCard() {
+        return cards.getCards().get(0);
+    }
+
     public List<Card> cards() {
         return cards.getCards();
     }
+
 }
