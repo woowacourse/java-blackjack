@@ -1,9 +1,7 @@
 package blackjack.domain;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class Card {
@@ -16,12 +14,12 @@ public class Card {
         this.number = number;
     }
 
-    public static Queue<Card> cards() {
+    public static List<Card> cards() {
         final List<CardPattern> patterns = CardPattern.cardPatterns();
         return patterns.stream()
                 .map(Card::createPatternCards)
                 .flatMap(List::stream)
-                .collect(Collectors.toCollection(LinkedList::new));
+                .collect(Collectors.toList());
     }
 
     private static List<Card> createPatternCards(final CardPattern pattern) {

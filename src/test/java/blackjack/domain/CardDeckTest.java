@@ -21,7 +21,7 @@ class CardDeckTest {
     @Test
     @DisplayName("초기 카드 2장을 반환할 수 있다.")
     void provideInitCards() {
-        final CardDeck cardDeck = new CardDeck(Card.cards());
+        final CardDeck cardDeck = CardDeck.init();
         assertThat(cardDeck.provideInitCards()).hasSize(2);
     }
 
@@ -37,7 +37,7 @@ class CardDeckTest {
     @Test
     @DisplayName("카드 1장을 반환할 수 있다.")
     void provideCard() {
-        final CardDeck cardDeck = new CardDeck(Card.cards());
+        final CardDeck cardDeck = CardDeck.init();
         assertThat(cardDeck.provideCard()).isInstanceOf(Card.class);
     }
 }
