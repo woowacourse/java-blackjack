@@ -10,6 +10,8 @@ public abstract class Car {
 
     abstract double getDistancePerLiter();
 
+    abstract String getName();
+
     double getTripDistance() {
         return tripDistance;
     }

@@ -22,4 +22,16 @@ public class RentCompany {
     public void addCar(Car car) {
         value.add(car);
     }
+
+    public String generateReport() {
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (Car car : value) {
+            stringBuilder.append(car.getName())
+                    .append(" : ")
+                    .append((int) car.getChargeQuantity())
+                    .append("리터\n");
+        }
+
+        return stringBuilder.toString();
+    }
 }

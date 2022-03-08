@@ -13,6 +13,14 @@ public class RentCompanyTest {
 
     private static final String NEWLINE = System.getProperty("line.separator");
 
+    private static Stream<Arguments> provideSource() {
+        return Stream.of(
+                Arguments.of(new Sonata(150)),
+                Arguments.of(new Avante(200)),
+                Arguments.of(new K5(300))
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("provideSource")
     @DisplayName("자동차 1대 추가 성공")
@@ -26,14 +34,6 @@ public class RentCompanyTest {
 
         // then
         assertThat(actual).isEqualTo(1);
-    }
-
-    private static Stream<Arguments> provideSource() {
-        return Stream.of(
-                Arguments.of(new Sonata(150)),
-                Arguments.of(new Avante(200)),
-                Arguments.of(new K5(300))
-        );
     }
 
     @Test
@@ -51,9 +51,10 @@ public class RentCompanyTest {
         assertThat(actual).isEqualTo(2);
     }
 
-/*
     @Test
-    public void report() {
+    @DisplayName("자동차 보고서 생성")
+    void report() {
+        // give
         RentCompany company = RentCompany.create();
         company.addCar(new Sonata(150));
         company.addCar(new K5(260));
@@ -61,8 +62,11 @@ public class RentCompanyTest {
         company.addCar(new Avante(300));
         company.addCar(new K5(390));
 
-        String report = company.generateReport();
-        assertThat(report).isEqualTo(
+        // when
+        String actual = company.generateReport();
+
+        // then
+        assertThat(actual).isEqualTo(
                 "Sonata : 15리터" + NEWLINE +
                         "K5 : 20리터" + NEWLINE +
                         "Sonata : 12리터" + NEWLINE +
@@ -70,5 +74,4 @@ public class RentCompanyTest {
                         "K5 : 30리터" + NEWLINE
         );
     }
-*/
 }
