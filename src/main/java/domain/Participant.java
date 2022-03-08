@@ -5,8 +5,10 @@ import java.util.stream.Collectors;
 
 public class Participant {
 
-	public static final String BLANK_NAME_ERROR_MESSAGE = "[Error] 이름은 공백이거나 빈칸일 수 없습니다.";
-	public static final String SHOW_HAND_FORMAT = "%s카드: %s";
+	protected static final String BLANK_NAME_ERROR_MESSAGE = "[Error] 이름은 공백이거나 빈칸일 수 없습니다.";
+	protected static final String SHOW_HAND_FORMAT = "%s카드: %s";
+	protected static final int BLACK_JACK_NUMBER = 21;
+	protected static final String JOINING_DELIMITER = ", ";
 
 	protected final String name;
 	protected List<Card> hand;
@@ -24,7 +26,8 @@ public class Participant {
 	}
 
 	public String showHand() {
-		String joinedCards = String.join(", ", hand.stream().map(Card::toString).collect(Collectors.toList()));
+		String joinedCards = String.join(JOINING_DELIMITER,
+			hand.stream().map(Card::toString).collect(Collectors.toList()));
 		return String.format(SHOW_HAND_FORMAT, name, joinedCards);
 	}
 
@@ -33,7 +36,7 @@ public class Participant {
 	}
 
 	public boolean isBurst() {
-		return getMinScore() > 21;
+		return getMinScore() > BLACK_JACK_NUMBER;
 	}
 
 	protected int getMinScore() {

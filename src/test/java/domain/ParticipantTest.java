@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class ParticipantTest {
 
-	@ParameterizedTest(name = "이름이 공백이거나 빈칸일 경우 - case : {0}")
+	@ParameterizedTest(name = "이름이 공백이거나 빈칸일 경우")
 	@NullAndEmptySource
 	@ValueSource(strings = {"", " ", "\t", "\n"})
 	void validateName(String name) {
