@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Dealer implements Player{
 
+    public static final String DEALER_NAME = "딜러";
+
     private static final int DEALER_RECEIVE_STANDARD = 16;
 
     private final Cards cards;
