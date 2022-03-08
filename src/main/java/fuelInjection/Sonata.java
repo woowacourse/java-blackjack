@@ -2,9 +2,9 @@ package fuelInjection;
 
 public class Sonata {
 
-    private int distance;
+    private final double distance;
 
-    public Sonata(int distance) {
+    public Sonata(double distance) {
         this.distance = distance;
     }
 }

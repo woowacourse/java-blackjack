@@ -2,9 +2,9 @@ package fuelInjection;
 
 public class Avante {
 
-    private int distance;
+    private final double distance;
 
-    public Avante(int distance) {
+    public Avante(double distance) {
         this.distance = distance;
     }
 }
