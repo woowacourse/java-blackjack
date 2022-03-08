@@ -9,8 +9,8 @@ public class Participant {
 	protected static final String SHOW_HAND_FORMAT = "%s카드: %s";
 	protected static final int BLACK_JACK_NUMBER = 21;
 	protected static final String JOINING_DELIMITER = ", ";
-	public static final int ACE_COUNT_LOWER_BOUND = 0;
-	public static final int ACE_PLUS_SCORE = 10;
+	protected static final int ACE_COUNT_LOWER_BOUND = 0;
+	protected static final int ACE_PLUS_SCORE = 10;
 
 	protected final String name;
 	protected List<Card> hand;
