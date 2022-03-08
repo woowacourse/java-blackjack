@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.Card;
 import blackjack.domain.Denomination;
 import blackjack.domain.Name;
+import blackjack.domain.Symbol;
 import blackjack.domain.human.Player;
 import org.junit.jupiter.api.Test;
 
@@ -21,9 +22,8 @@ class PlayerTest {
     public void 참여자에_카드_추가() {
         Player player = Player.of(Name.of("test"));
 
-        Card card5 = Card.of(Denomination.of("5"), "spade");
-        Card card6 = Card.of(Denomination.of("6"), "heart");
-
+        Card card5 = Card.of(Denomination.of("5"), Symbol.of("스페이드"));
+        Card card6 = Card.of(Denomination.of("6"), Symbol.of("하트"));
         player.addCard(card5);
         player.addCard(card6);
 
