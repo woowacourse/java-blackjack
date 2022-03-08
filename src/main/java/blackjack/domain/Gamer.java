@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Gamer {
@@ -8,12 +7,12 @@ public class Gamer {
     private static final String BANNED_GAMER_NAME = "딜러";
 
     private final String name;
-    private List<Card> cards;
+    private final Cards cards;
 
     public Gamer(final String name) {
         checkBannedName(name);
         this.name = name;
-        cards = new ArrayList<>();
+        cards = new Cards();
     }
 
     private void checkBannedName(String name) {
@@ -23,10 +22,14 @@ public class Gamer {
     }
 
     public void receiveCard(Card card) {
-        cards.add(card);
+        cards.save(card);
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public String getName() {
+        return name;
+    }
+
+    public List<Card> cards() {
+        return cards.getCards();
     }
 }
