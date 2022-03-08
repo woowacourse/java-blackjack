@@ -1,9 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.human;
 
+import blackjack.domain.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public class Player extends Human {
     private final String name;
     private final List<Card> cards;
 
@@ -16,19 +17,18 @@ public class Player {
         return new Player(name);
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void addCard(Card card) {
         cards.add(card);
     }
 
-    public int getPoint() {
-        int point = 0;
-        for (Card card : cards) {
-            point += card.getNumber();
-        }
-        return point;
+    @Override
+    public List<Card> getCards() {
+        return cards;
     }
 }
