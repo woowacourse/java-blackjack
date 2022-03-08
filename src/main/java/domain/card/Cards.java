@@ -12,6 +12,10 @@ public class Cards {
         this.value = cards;
     }
 
+    public void add(Card card) {
+        this.value.add(card);
+    }
+
     public int sum() {
         int sum = value.stream()
                 .mapToInt(Card::toInt)
@@ -31,5 +35,9 @@ public class Cards {
     private boolean hasAce() {
         return value.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public List<Card> getValue() {
+        return value;
     }
 }

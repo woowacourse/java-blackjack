@@ -6,7 +6,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,5 +47,18 @@ public class CardsTest {
         Cards cards = new Cards(Arrays.asList(new Card(Denomination.ACE, Suit.CLOVER)
                 , new Card(Denomination.ACE, Suit.HEART)));
         assertThat(cards.sum()).isEqualTo(12);
+    }
+
+    @Test
+    @DisplayName("카드 추가하기")
+    void add() {
+        List<Card> list = new ArrayList<>();
+        list.add(new Card(Denomination.ACE, Suit.CLOVER));
+        Cards cards = new Cards(list);
+
+        cards.add(new Card(Denomination.JACK, Suit.HEART));
+
+        List<Card> cardList = cards.getValue();
+        assertThat(cardList.size()).isEqualTo(2);
     }
 }
