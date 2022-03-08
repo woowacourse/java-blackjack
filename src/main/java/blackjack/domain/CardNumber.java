@@ -29,4 +29,8 @@ public enum CardNumber {
     public static List<CardNumber> cardNumbers() {
         return Arrays.asList(values());
     }
+
+    public int getDefaultValue() {
+        return defaultValue;
+    }
 }

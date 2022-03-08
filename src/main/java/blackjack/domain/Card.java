@@ -46,6 +46,10 @@ public class Card {
         return new ArrayList<>(CARDS_CACHE);
     }
 
+    public CardNumber getNumber() {
+        return number;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
