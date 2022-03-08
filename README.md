@@ -29,8 +29,8 @@
 - [ ] 카드를 뽑는다.
 
 ## Card
-- [ ] 숫자
-- [ ] 모양
+- [ ] Enum - Denomination
+- [ ] Enum - Pattern
 
 ## Yes / No
 - [ ] [Error] y/ n 중 입력이 없으면 예외를 발생시킨다.
