@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

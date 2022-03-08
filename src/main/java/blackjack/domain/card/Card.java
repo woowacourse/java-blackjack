@@ -28,6 +28,17 @@ public class Card {
 		this.cardNumber = cardNumber;
 	}
 
+	public static Card getInstance(CardShape shape, CardNumber number) {
+		return cards.stream()
+			.filter(card -> card.isSame(shape, number))
+			.findAny()
+			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."));
+	}
+
+	private boolean isSame(CardShape shape, CardNumber number) {
+		return cardShape == shape && cardNumber == number;
+	}
+
 	public static List<Card> getCards() {
 		return new LinkedList<>(cards);
 	}
