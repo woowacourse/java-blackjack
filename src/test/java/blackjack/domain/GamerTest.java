@@ -3,7 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -33,8 +33,8 @@ public class GamerTest {
 
         List<Card> cards = gamer.openCards();
         assertAll(
-                () -> assertThat(cards).contains(new Card(Suit.CLOVER, Denomination.FIVE)
-                        , new Card(Suit.DIAMOND, Denomination.FIVE)),
+                () -> assertThat(cards).contains(new Card(Suit.CLOVER, Denomination.JACK)
+                        , new Card(Suit.DIAMOND, Denomination.ACE)),
                 () -> assertThat(cards.size()).isEqualTo(2)
         );
     }
@@ -43,20 +43,31 @@ public class GamerTest {
     @DisplayName("Gamer가 보유하는 카드의 점수를 계산한다.")
     void calculateGamerPoint() {
         Gamer gamer = initGamer();
-        assertThat(gamer.calculateResult()).isEqualTo(10);
+        assertThat(gamer.calculateResult()).isEqualTo(21);
     }
 
     @Test
-    @DisplayName("21이하 일 때 카드를 받을 수 있는지 확인한다.")
-    void checkReceivableCondition(){
+    @DisplayName("21이하 일 때 카드를 받을 수 있다.")
+    void checkReceivableConditionTrue(){
         Gamer gamer = initGamer();
         assertTrue(gamer.isReceivable());
     }
 
+    @Test
+    @DisplayName("21이상 일 때 카드를 받을 수 없다.")
+    void checkReceivableConditionFalse(){
+        Gamer gamer = initGamer();
+        gamer.receiveCard(new Card(Suit.DIAMOND,Denomination.JACK));
+        gamer.receiveCard(new Card(Suit.HEART,Denomination.JACK));
+
+        assertFalse(gamer.isReceivable());
+    }
+
     private Gamer initGamer() {
         Gamer gamer = new Gamer("judy");
-        gamer.receiveCard(new Card(Suit.CLOVER, Denomination.FIVE));
-        gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.FIVE));
+
+        gamer.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
+        gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.ACE));
         return gamer;
     }
 }

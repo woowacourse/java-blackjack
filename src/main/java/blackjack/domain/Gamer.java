@@ -46,7 +46,7 @@ public class Gamer implements Player {
 
     @Override
     public boolean isReceivable() {
-        return calculateResult() < LIMIT_TOTAL_POINT;
+        return calculateResult() <= LIMIT_TOTAL_POINT;
     }
 
     public String getName() {
