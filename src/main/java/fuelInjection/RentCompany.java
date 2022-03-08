@@ -5,6 +5,9 @@ import java.util.List;
 
 public class RentCompany {
 
+    private static final String NEWLINE = System.getProperty("line.separator");
+    private static final String REPORT_FORMAT = "%s : %.0f리터".concat(NEWLINE);
+
     private final List<Car> cars;
 
     private RentCompany() {
@@ -21,5 +24,13 @@ public class RentCompany {
 
     public List<Car> getCars() {
         return cars;
+    }
+
+    public String generateReport() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Car car : cars) {
+            stringBuilder.append(String.format(REPORT_FORMAT, car.getName(), car.getChargeQuantity()));
+        }
+        return stringBuilder.toString();
     }
 }
