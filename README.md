@@ -30,7 +30,7 @@
 
 ## Card
 - [ ] Enum - Denomination
-- [ ] Enum - Pattern
+- [ ] Enum - Suit
 
 ## Yes / No
 - [ ] [Error] y/ n 중 입력이 없으면 예외를 발생시킨다.
