@@ -25,4 +25,10 @@ public class BlackJackTest {
         assertThat(dealerWin).isTrue();
     }
 
+    @Test
+    void ACE_카드_점수_계산() {
+        boolean dealerWin = BlackJack.play(List.of("Q클로버", "J하트"), List.of("A다이아몬드", "2하트"));
+        assertThat(dealerWin).isTrue();
+    }
+
 }
