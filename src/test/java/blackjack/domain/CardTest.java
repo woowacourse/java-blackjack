@@ -13,6 +13,7 @@ public class CardTest {
         // when
         Card card = new Card(Pattern.DIAMOND, Denomination.ACE);
 
+        // then
         assertThat(card).isNotNull();
     }
 }

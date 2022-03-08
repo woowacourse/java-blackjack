@@ -37,6 +37,7 @@
         - 카드의 문양이 저장된 enum
     - Denomination
         - 카드의 끗수가 저장된 enum
+    - 카드의 문양과 끗수를 저장하고 있다.
 - CardDeck
     - 게임에서 사용하는 카드들을 관리하고 있다.
 - Result
