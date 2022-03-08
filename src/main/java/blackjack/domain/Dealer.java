@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dealer implements Player{
+public class Dealer implements Player {
 
     public static final String DEALER_NAME = "딜러";
 
@@ -41,7 +41,6 @@ public class Dealer implements Player{
     public boolean isReceivable() {
         return calculateResult() <= DEALER_RECEIVE_STANDARD;
     }
-
 
 
 }

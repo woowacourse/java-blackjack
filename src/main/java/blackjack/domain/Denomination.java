@@ -22,11 +22,11 @@ public enum Denomination {
         this.point = point;
     }
 
-    public int getPoint() {
-        return point;
-    }
-
     public static int adjustAce() {
         return 10;
+    }
+
+    public int getPoint() {
+        return point;
     }
 }

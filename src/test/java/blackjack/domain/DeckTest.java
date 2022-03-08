@@ -1,6 +1,7 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.stream.IntStream;
@@ -36,7 +37,7 @@ public class DeckTest {
     @DisplayName("Deck에 카드가 없을 때 에러가 발생한다.")
     void drawCardExceptionWhenNoCard() {
         IntStream.range(0, 52)
-                        .forEach(index -> deck.draw());
+                .forEach(index -> deck.draw());
 
         assertThatThrownBy(() -> deck.draw())
                 .isInstanceOf(IllegalStateException.class)

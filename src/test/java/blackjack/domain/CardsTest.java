@@ -11,7 +11,7 @@ public class CardsTest {
     @DisplayName("카드 한 장을 저장한다.")
     void saveCard() {
         Cards cards = new Cards();
-        cards.save(new Card(Suit.CLOVER,Denomination.FIVE));
+        cards.save(new Card(Suit.CLOVER, Denomination.FIVE));
         assertThat(cards.getCards().size()).isEqualTo(1);
     }
 

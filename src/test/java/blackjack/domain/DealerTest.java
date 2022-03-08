@@ -1,7 +1,8 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ public class DealerTest {
 
     @Test
     @DisplayName("카드 한 장을 받는다.")
-    void getCard(){
+    void getCard() {
         Dealer dealer = initDealer();
 
         assertThat(dealer.showCards().size()).isEqualTo(1);

@@ -3,7 +3,8 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -48,17 +49,17 @@ public class GamerTest {
 
     @Test
     @DisplayName("21이하 일 때 카드를 받을 수 있다.")
-    void checkReceivableConditionTrue(){
+    void checkReceivableConditionTrue() {
         Gamer gamer = initGamer();
         assertTrue(gamer.isReceivable());
     }
 
     @Test
     @DisplayName("21이상 일 때 카드를 받을 수 없다.")
-    void checkReceivableConditionFalse(){
+    void checkReceivableConditionFalse() {
         Gamer gamer = initGamer();
-        gamer.receiveCard(new Card(Suit.DIAMOND,Denomination.JACK));
-        gamer.receiveCard(new Card(Suit.HEART,Denomination.JACK));
+        gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
+        gamer.receiveCard(new Card(Suit.HEART, Denomination.JACK));
 
         assertFalse(gamer.isReceivable());
     }
