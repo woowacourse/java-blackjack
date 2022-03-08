@@ -9,6 +9,10 @@ public class PlayingCards {
         this.playingCards = List.copyOf(playingCards);
     }
 
+    public void addCard(PlayingCard playingCard) {
+        playingCards.add(playingCard);
+    }
+
     public List<PlayingCard> getPlayingCards() {
         return playingCards;
     }

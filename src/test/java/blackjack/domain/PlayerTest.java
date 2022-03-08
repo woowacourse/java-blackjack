@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,4 +36,15 @@ class PlayerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("카드 지급 테스트")
+    void supply_card() {
+        // given
+        final Player rich = new Gambler("rich");
+
+        // when & then
+        assertThatCode(
+            () -> rich.addCard(PlayingCard.of(Suit.HEARTS, Denomination.FIVE))
+        ).doesNotThrowAnyException();
+    }
 }

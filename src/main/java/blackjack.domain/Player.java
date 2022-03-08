@@ -1,7 +1,10 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
+
 public abstract class Player {
     private final String name;
+    private PlayingCards playingCards;
 
     protected Player(final String name) {
         this.name = name;
@@ -9,5 +12,9 @@ public abstract class Player {
 
     public String getName() {
         return this.name;
+    }
+
+    public void addCard(PlayingCard playingCard) {
+        playingCards.addCard(playingCard);
     }
 }
