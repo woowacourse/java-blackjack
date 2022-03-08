@@ -6,6 +6,8 @@ import java.util.Queue;
 
 public class CardDeck {
 
+    private static final int INIT_PROVIDING_CARD_SIZE = 2;
+
     private final Queue<Card> cards;
 
     public CardDeck(final Queue<Card> cards) {
@@ -13,7 +15,7 @@ public class CardDeck {
     }
 
     public List<Card> provideInitCards() {
-        if (cards.size() < 2) {
+        if (cards.size() < INIT_PROVIDING_CARD_SIZE) {
             throw new IllegalStateException("[Error] 남은 카드가 2장 미만입니다.");
         }
         return Arrays.asList(cards.poll(), cards.poll());
