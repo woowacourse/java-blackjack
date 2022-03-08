@@ -29,4 +29,8 @@ public class Dealer {
                 .mapToInt(CardNumber::getDefaultValue)
                 .sum();
     }
+
+    public boolean isEnd() {
+        return score() >= DEALER_LIMIT_SCORE;
+    }
 }
