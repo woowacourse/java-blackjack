@@ -34,4 +34,11 @@ public class DealerTest {
 		Dealer dealer = new Dealer(new ArrayList<>(List.of(card, card1, card2)));
 		assertThat(dealer.isEnoughCard()).isTrue();
 	}
+
+	@Test
+	@DisplayName("딜러의 첫번째 손패만 문자열로 반환하기")
+	void showOneHand() {
+		Dealer dealer = new Dealer(new ArrayList<>(List.of(card1, card2)));
+		assertThat(dealer.showOneHand()).isEqualTo("딜러: J스페이드");
+	}
 }
