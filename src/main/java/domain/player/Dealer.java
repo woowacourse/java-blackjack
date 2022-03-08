@@ -3,17 +3,18 @@ package domain.player;
 import domain.card.Card;
 import domain.card.Cards;
 
-public class Player {
-    private final String name;
+public class Dealer {
+    private static final int DRAW_STANDARD = 16;
+
+    private final String name = "딜러";
     private final Cards cards;
 
-    public Player(String name, Cards cards) {
-        this.name = name;
+    public Dealer(Cards cards) {
         this.cards = cards;
     }
 
     public boolean isFinished() {
-        return cards.isBust();
+        return cards.isBust() || cards.sum() > DRAW_STANDARD;
     }
 
     public void drawCard(Card card) {
