@@ -10,17 +10,17 @@ public class K5 extends Car {
     }
 
     @Override
-    double getDistancePerLiter() {
+    public double getDistancePerLiter() {
         return DISTANCE_PER_LITER;
     }
 
     @Override
-    double getTripDistance() {
+    public double getTripDistance() {
         return tripDistance;
     }
 
     @Override
-    String getName() {
+    public String getName() {
         return NAME;
     }
 }
