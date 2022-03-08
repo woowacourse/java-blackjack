@@ -2,8 +2,6 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,10 +21,13 @@ class CardsTest {
         Card heart = new Card(CardShape.HEART, number1);
         Card spade = new Card(CardShape.SPADE, number2);
         Card club = new Card(CardShape.CLUB, number3);
-        List<Card> cards = Arrays.asList(heart, spade, club);
         
-        Cards playerCards = new Cards(cards);
-        boolean isBust = playerCards.isBust();
+        CardGroup playerCardGroup = new CardGroup();
+        playerCardGroup.addCard(heart);
+        playerCardGroup.addCard(spade);
+        playerCardGroup.addCard(club);
+
+        boolean isBust = playerCardGroup.isBust();
 
         assertThat(isBust).isEqualTo(result);
     }

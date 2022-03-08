@@ -10,12 +10,13 @@ public enum CardNumber {
     SEVEN(7),
     EIGHT(8),
     NINE(9),
+    TEN(10),
     Q(10),
     K(10),
     J(10)
     ;
 
-    private int number;
+    private final int number;
 
     CardNumber(int number) {
         this.number = number;
