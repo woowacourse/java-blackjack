@@ -66,11 +66,11 @@ class CardsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"SIX:BUST", "FOUR:NOT_BUST"}, delimiter = ':')
+    @CsvSource(value = {"SEVEN:BUST", "FOUR:NOT_BUST"}, delimiter = ':')
     @DisplayName("합산한 값이 21을 초과하면 BUST를 반환한다.")
     void isBust1(CardNumber cardNumber, Status expected) {
         // give
-        final Cards cards = new Cards(Set.of(new Card(DIAMOND, ACE), new Card(DIAMOND, FIVE),
+        final Cards cards = new Cards(Set.of(new Card(DIAMOND, JACK), new Card(DIAMOND, FIVE),
                 new Card(DIAMOND, cardNumber)));
 
         // when
@@ -92,5 +92,32 @@ class CardsTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+    
+    @ParameterizedTest
+    @MethodSource("provideSource")
+    @DisplayName("BUST이고 ACE를 포함하면 ACE의 값을 1로 바꾼다.")
+    void changeAceValue(Cards cards, int expected) {
+        // when
+        final int actual = cards.sum();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideSource() {
+        return Stream.of(
+                Arguments.of(new Cards(Set.of(new Card(DIAMOND, ACE),
+                        new Card(CLUB, TEN),
+                        new Card(CLUB, FIVE))), 16),
+                Arguments.of(new Cards(Set.of(new Card(DIAMOND, ACE),
+                        new Card(CLUB, ACE),
+                        new Card(SPADE, ACE),
+                        new Card(HEART, ACE))), 14),
+                Arguments.of(new Cards(Set.of(new Card(DIAMOND, ACE),
+                        new Card(CLUB, ACE),
+                        new Card(SPADE, ACE),
+                        new Card(HEART, TEN))), 13)
+        );
     }
 }

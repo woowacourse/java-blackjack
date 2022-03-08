@@ -27,9 +27,27 @@ public class Cards {
     }
 
     public int sum() {
-        return value.stream()
-                .mapToInt(Card::getNumberValue)
-                .sum();
+        int sum = 0;
+        int countAce = 0;
+        for (Card card : value) {
+            int numberValue = card.getNumberValue();
+            sum += numberValue;
+            if (card.isAce()) {
+                countAce++;
+            }
+        }
+        if (countAce > 0) {
+            sum = getSum(sum, countAce);
+        }
+        return sum;
+    }
+
+    private int getSum(int sum, int countAce) {
+        while (sum > 21 && countAce > 0) {
+            sum -= 10;
+            countAce--;
+        }
+        return sum;
     }
 
     public boolean hasAce() {
