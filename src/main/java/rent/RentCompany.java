@@ -21,19 +21,16 @@ public class RentCompany {
     }
 
     public String generateReport() {
-        StringBuilder stringBuilder = new StringBuilder();
+        return carList.stream()
+                .map(this::formatName)
+                .collect(Collectors.joining());
+    }
 
-        for (Car car : carList) {
-            String name = car.getName();
-            long chargeQuantity = Math.round(car.getChargeQuantity());
-
-            stringBuilder.append(name);
-            stringBuilder.append(" : ");
-            stringBuilder.append(chargeQuantity);
-            stringBuilder.append("리터");
-            stringBuilder.append("\n");
-        }
-
-        return stringBuilder.toString();
+    private String formatName(Car car) {
+        return String.format(
+                "%s : %d리터\n",
+                car.getName(),
+                Math.round(car.getChargeQuantity())
+        );
     }
 }
