@@ -1,24 +1,20 @@
 package fuelinjection.car;
 
-public class K5 extends Car{
-    private int fuelEfficiency = 13;
+public class K5 implements Car{
+    private final int fuelEfficiency = 13;
+    private final int distance;
 
-    public K5(final int distance) {
-        super(distance);
-    }
-
-    @Override
-    double getDistancePerLiter() {
-        return fuelEfficiency;
-    }
-
-    @Override
-    double getTripDistance() {
-        return super.distance;
+    public K5(int distance) {
+        this.distance = distance;
     }
 
     @Override
     public String getName() {
         return "K5";
+    }
+
+    @Override
+    public double getChargeQuantity() {
+        return (double) distance/fuelEfficiency;
     }
 }
