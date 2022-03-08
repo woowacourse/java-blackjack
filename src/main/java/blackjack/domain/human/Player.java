@@ -2,17 +2,18 @@ package blackjack.domain.human;
 
 import blackjack.domain.Card;
 import blackjack.domain.Cards;
+import blackjack.domain.Name;
 
 public class Player extends Human {
-    private final String name;
+    private final Name name;
     private final Cards cards;
 
-    private Player(String name) {
+    private Player(Name name) {
         this.name = name;
         this.cards = Cards.of();
     }
 
-    public static Player of(String name) {
+    public static Player of(Name name) {
         return new Player(name);
     }
 
@@ -22,7 +23,7 @@ public class Player extends Human {
 
     @Override
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     @Override

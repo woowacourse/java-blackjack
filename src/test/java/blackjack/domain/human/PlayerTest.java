@@ -3,6 +3,7 @@ package blackjack.domain.human;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Card;
+import blackjack.domain.Name;
 import blackjack.domain.human.Player;
 import org.junit.jupiter.api.Test;
 
@@ -11,13 +12,13 @@ class PlayerTest {
 
     @Test
     public void 참여자생성() {
-        Player player = Player.of("test");
+        Player player = Player.of(Name.of("test"));
         assertThat(player.getName()).isEqualTo("test");
     }
 
     @Test
     public void 참여자에_카드_추가() {
-        Player player = Player.of("test");
+        Player player = Player.of(Name.of("test"));
 
         Card card5 = Card.of(5, "spade");
         Card card6 = Card.of(6, "heart");
