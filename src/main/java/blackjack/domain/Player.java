@@ -33,10 +33,14 @@ public class Player {
     }
 
     public void draw(final Card card) {
+        validateEndTurn();
+        owningCards.addCard(card);
+    }
+
+    private void validateEndTurn() {
         if (!canDraw()) {
             throw new IllegalStateException("[ERROR] 턴이 종료되었으면 카드를 받을 수 없습니다.");
         }
-        owningCards.addCard(card);
     }
 
     public List<Card> cards() {
