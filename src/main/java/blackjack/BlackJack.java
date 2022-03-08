@@ -14,9 +14,15 @@ public class BlackJack {
         int score = 0;
         for (String s : dealerCards) {
             String value = s.substring(0, 1);
-            int number = Integer.parseInt(value);
-            score += number;
+            score += number(value);
         }
         return score;
+    }
+
+    private static int number(String value) {
+        if (value.equals("J") || value.equals("Q") || value.equals("K")) {
+            return 10;
+        }
+        return Integer.parseInt(value);
     }
 }
