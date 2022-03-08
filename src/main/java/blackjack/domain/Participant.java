@@ -27,7 +27,9 @@ public class Participant {
     }
 
     public void endTurn() {
-        int aceCount = (int) cards.stream().map(Card::isAce).count();
+        int aceCount = (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
 
         boolean changed = true;
         while (aceCount-- > 0 && changed) {
