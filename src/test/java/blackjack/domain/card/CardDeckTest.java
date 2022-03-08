@@ -11,7 +11,7 @@ public class CardDeckTest {
     @DisplayName("카드 뭉치에서 카드를 한 장 뽑아서 준다.")
     void drawCard() {
         // given
-        CardDeck deck = new CardDeck();
+        CardDeck deck = new CardDeck(new BlackJackCardsGenerator());
 
         // when
         Card actual = deck.draw();
