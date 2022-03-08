@@ -25,4 +25,11 @@ public enum CardNumber {
     public int getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return "CardNumber{" +
+                "value=" + value +
+                '}';
+    }
 }

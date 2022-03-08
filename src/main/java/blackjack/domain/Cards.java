@@ -12,4 +12,17 @@ public class Cards {
     public int getSize() {
         return value.size();
     }
+
+    public int sum() {
+        return value.stream()
+                .mapToInt(Card::getNumberValue)
+                .sum();
+    }
+
+    @Override
+    public String toString() {
+        return "Cards{" +
+                "value=" + value +
+                '}';
+    }
 }

@@ -21,4 +21,12 @@ public class Card {
     public int getNumberValue() {
         return number.getValue();
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "symbol=" + symbol +
+                ", number=" + number +
+                '}';
+    }
 }
