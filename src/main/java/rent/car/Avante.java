@@ -3,6 +3,7 @@ package rent.car;
 public class Avante extends Car {
 
     private static final double DISTANCE_PER_LITER = 15;
+    private static final String NAME = "Avante";
 
     public Avante(double distance) {
         super(distance);
@@ -14,6 +15,6 @@ public class Avante extends Car {
 
     @Override
     public String getName() {
-        return null;
+        return NAME;
     }
 }

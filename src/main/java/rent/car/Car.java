@@ -9,14 +9,10 @@ public abstract class Car {
     }
 
     public double getChargeQuantity() {
-        return getTripDistance() / getDistancePerLiter();
+        return distance / getDistancePerLiter();
     }
 
     public abstract double getDistancePerLiter();
-
-    public double getTripDistance() {
-        return distance;
-    };
 
     public abstract String getName();
 }
