@@ -21,4 +21,8 @@ public enum CardFace {
     CardFace(int cardScore) {
         this.cardScore = cardScore;
     }
+
+    public int getCardScore() {
+        return cardScore;
+    }
 }

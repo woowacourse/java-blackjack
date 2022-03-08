@@ -8,4 +8,12 @@ public class Card {
         this.cardSuit = cardSuit;
         this.cardFace = cardFace;
     }
+
+    public int getCardScore() {
+        return cardFace.getCardScore();
+    }
+
+    public boolean isAceCard() {
+        return this.cardFace == CardFace.ACE;
+    }
 }
