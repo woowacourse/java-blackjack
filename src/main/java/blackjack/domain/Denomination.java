@@ -2,7 +2,6 @@ package blackjack.domain;
 
 public enum Denomination {
 
-    ACE(1),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -15,7 +14,7 @@ public enum Denomination {
     KING(10),
     QUEEN(10),
     JACK(10),
-    ;
+    ACE(11);
 
     private final int point;
 

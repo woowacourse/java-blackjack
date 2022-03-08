@@ -19,6 +19,16 @@ public class Cards {
         return List.copyOf(cards);
     }
 
+    public int calculateTotalPoint() {
+        int point = sumDenominationPoint();
+        for (Card card : cards) {
+            if (card.isAce() && point > 21) {
+                point -= 10;
+            }
+        }
+        return point;
+    }
+
     public int sumDenominationPoint() {
         return cards.stream()
                 .mapToInt(card -> card.getDenomination().getPoint())
