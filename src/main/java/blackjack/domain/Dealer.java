@@ -9,9 +9,11 @@ public class Dealer implements Player{
 
     private static final int DEALER_RECEIVE_STANDARD = 16;
 
+    private final String name;
     private final Cards cards;
 
     public Dealer() {
+        name = DEALER_NAME;
         cards = new Cards();
     }
 
