@@ -28,7 +28,7 @@ class CarTest {
     @Test
     @DisplayName("자동차에 주입해야할 연료량 테스트")
     void checkChargeQuantity() {
-        K5 k5 = new K5(260);
+        Car k5 = new K5(260);
         assertThat(k5.getChargeQuantity()).isEqualTo(20);
     }
 }
