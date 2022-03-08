@@ -46,4 +46,14 @@ public class CardsTest {
         final Cards cards = new Cards(List.of(card1, card2, card3));
         assertThat(cards.canReceiveCard()).isFalse();
     }
+
+    @Test
+    void getSum() {
+        final Card card1 = new Card(HEART, CardFace.ACE);
+        final Card card2 = new Card(DIAMOND, CardFace.ACE);
+        final Card card3 = new Card(SPADE, CardFace.NINE);
+        final Cards cards = new Cards(List.of(card1, card2, card3));
+
+        assertThat(cards.getSum()).isEqualTo(21);
+    }
 }

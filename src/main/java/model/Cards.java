@@ -17,7 +17,7 @@ public class Cards {
         return getSum() < BLACK_JACK_SCORE;
     }
 
-    private int getSum() {
+    int getSum() {
         if (countAce() == 0) {
             return getMinimumSum();
         }
@@ -38,5 +38,21 @@ public class Cards {
         return (int) cards.stream()
                 .filter(card -> card.isAceCard())
                 .count();
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
+    public List<Card> getValue() {
+        return cards;
+    }
+
+    public boolean canReceiveCardForDealer() {
+        return getSum() <= 16;
+    }
+
+    public Card getFirstCard(int index) {
+        return cards.get(index);
     }
 }

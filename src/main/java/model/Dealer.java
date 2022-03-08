@@ -11,6 +11,11 @@ public class Dealer extends Participator {
 
     @Override
     public List<Card> getCards() {
-        return List.of(cards.get(1));
+        return List.of(cards.getFirstCard(1));
+    }
+
+    @Override
+    public boolean canReceiveCard() {
+        return cards.canReceiveCardForDealer();
     }
 }
