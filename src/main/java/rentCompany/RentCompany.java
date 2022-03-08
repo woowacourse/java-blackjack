@@ -2,6 +2,7 @@ package rentCompany;
 
 import java.util.ArrayList;
 import java.util.List;
+import rentCompany.car.Car;
 
 public class RentCompany {
     private final List<Car> cars;
