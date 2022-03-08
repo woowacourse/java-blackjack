@@ -1,10 +1,10 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cards {
+public class CardDeck {
 	private final Map<String, Integer> valueOf;
 
-	public Cards() {
+	public CardDeck() {
 		valueOf = new HashMap<>();
 
 		for (CardType type : CardType.values()) {
@@ -17,9 +17,5 @@ public class Cards {
 			String key = value.getName().concat(type.getName());
 			valueOf.put(key, value.getValue());
 		}
-	}
-
-	public Map<String, Integer> getValueOf() {
-		return valueOf;
 	}
 }
