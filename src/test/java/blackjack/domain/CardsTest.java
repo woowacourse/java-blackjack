@@ -10,8 +10,8 @@ public class CardsTest {
     @Test
     public void 카드모음_생성_테스트(){
         Cards cards = Cards.of();
-        cards.add(Card.of(10, "spade"));
-        cards.add(Card.of(5, "heart"));
+        Card card5 = Card.of(Denomination.of("10"), "spade");
+        Card card6 = Card.of(Denomination.of("5"), "heart");
         assertThat(cards.size()).isEqualTo(2);
     }
 }

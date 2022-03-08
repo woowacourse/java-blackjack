@@ -26,7 +26,7 @@ public class Cards {
     public int getPoint() {
         int point = 0;
         for (Card card : cards) {
-            point += card.getNumber();
+            point += card.getDenomination().getPoint();
         }
         return point;
     }
