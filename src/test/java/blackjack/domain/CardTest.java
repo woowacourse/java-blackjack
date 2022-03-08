@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ public class CardTest {
         Denomination denomination = Denomination.ACE;
         Suit suit = Suit.SPADE;
 
-        Assertions.assertDoesNotThrow(() -> new Card(denomination, suit));
+        Assertions.assertDoesNotThrow(() -> Card.of(denomination, suit));
     }
 
     @DisplayName("ACE 카드 점수를 조회한다.")
@@ -23,7 +24,7 @@ public class CardTest {
         Denomination denomination = Denomination.ACE;
         Suit suit = Suit.SPADE;
 
-        Card card = new Card(denomination, suit);
+        Card card = Card.of(denomination, suit);
 
         assertThat(card.getScore()).isEqualTo(1);
     }
@@ -34,8 +35,16 @@ public class CardTest {
         Denomination denomination = Denomination.KING;
         Suit suit = Suit.SPADE;
 
-        Card card = new Card(denomination, suit);
+        Card card = Card.of(denomination, suit);
 
         assertThat(card.getScore()).isEqualTo(10);
+    }
+
+    @DisplayName("끗수와 무늬를 조합하여 52장의 카드를 만든다.")
+    @Test
+    void 카드_52장_생성() {
+        Set<Card> cards = Card.VALUES;
+
+        assertThat(cards.size()).isEqualTo(52);
     }
 }
