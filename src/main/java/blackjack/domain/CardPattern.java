@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum CardPattern {
 
     SPADE("스페이드"),
@@ -12,5 +15,9 @@ public enum CardPattern {
 
     CardPattern(final String name) {
         this.name = name;
+    }
+
+    public static List<CardPattern> cardPatterns() {
+        return Arrays.asList(values());
     }
 }
