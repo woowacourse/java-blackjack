@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Participator {
-    private final List<Card> cards;
+    protected final List<Card> cards;
     private final PlayerName playerName;
 
     public Participator(PlayerName playerName) {
