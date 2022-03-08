@@ -14,13 +14,15 @@ public class PlayerTest {
     void startWithDraw() {
         // given
         String name = "ohzzi";
-        List<String> cards = List.of("3다이아몬드", "9클로버");
+        Card card1 = new Card("다이아몬드", "3");
+        Card card2 = new Card("클로버", "3");
+        List<Card> cards = List.of(card1, card2);
 
         // when
         Player player = new Player(name, cards);
 
         // then
-        assertThat(player.getCards()).containsOnly("3다이아몬드", "9클로버");
+        assertThat(player.getCards()).containsOnly(card1, card2);
     }
 
     @Test
@@ -39,7 +41,10 @@ public class PlayerTest {
     void cardsSizeNotTwo() {
         // given
         String name = "ohzzi";
-        List<String> cards = List.of("3다이아몬드", "9클로버", "10하트");
+        Card card1 = new Card("다이아몬드", "3");
+        Card card2 = new Card("클로버", "3");
+        Card card3 = new Card("하트", "3");
+        List<Card> cards = List.of(card1, card2, card3);
 
         // then
         assertThatThrownBy(() -> new Player(name, cards))
@@ -51,7 +56,8 @@ public class PlayerTest {
     @DisplayName("플레이어를 생성할 때 카드가 중복되면 예외가 발생한다.")
     void duplicatedCards() {
         String name = "ohzzi";
-        List<String> cards = List.of("3다이아몬드", "3다이아몬드");
+        Card card1 = new Card("다이아몬드", "3");
+        List<Card> cards = List.of(card1, card1);
 
         // then
         assertThatThrownBy(() -> new Player(name, cards))
