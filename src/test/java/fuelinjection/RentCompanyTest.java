@@ -2,25 +2,38 @@ package fuelinjection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class RentCompanyTest {
 
     private static final String NEWLINE = System.getProperty("line.separator");
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("provideSource")
     @DisplayName("자동차 1대 추가 성공")
-    void addCar1_OK() {
+    void addCar1_OK(Car car) {
         // give
         RentCompany company = RentCompany.create();
 
         // when
-        company.addCar(new Sonata(150));
+        company.addCar(car);
         int actual = company.getCarCount();
 
         // then
         assertThat(actual).isEqualTo(1);
+    }
+
+    private static Stream<Arguments> provideSource() {
+        return Stream.of(
+                Arguments.of(new Sonata(150)),
+                Arguments.of(new Avante(200)),
+                Arguments.of(new K5(300))
+        );
     }
 
     @Test

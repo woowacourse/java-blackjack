@@ -5,7 +5,7 @@ import java.util.List;
 
 public class RentCompany {
 
-    private final List<Sonata> value;
+    private final List<Car> value;
 
     private RentCompany() {
         this.value = new ArrayList<>();
@@ -19,7 +19,7 @@ public class RentCompany {
         return value.size();
     }
 
-    public void addCar(Sonata car) {
+    public void addCar(Car car) {
         value.add(car);
     }
 }

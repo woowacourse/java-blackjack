@@ -1,6 +1,6 @@
 package fuelinjection;
 
-public class Sonata {
+public class Sonata extends Car {
     private final int tripDistance;
 
     public Sonata(int tripDistance) {
