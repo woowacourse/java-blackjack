@@ -9,9 +9,20 @@ public class CardsTest {
 
     @DisplayName("카드 한장 뽑기 테스트")
     @Test
-    void duplicate() {
+    void pickCard() {
         Cards cards = new Cards();
         NumberGenerator numberGenerator = new IntendedNumberGenerator(2);
         assertThat(cards.pickCard(numberGenerator).getName()).isEqualTo("3다이아몬드");
+    }
+
+    @DisplayName("카드 중복 테스트")
+    @Test
+    void duplicate() {
+        Cards cards = new Cards();
+        NumberGenerator numberGenerator = new IntendedNumberGenerator(2);
+        cards.pickCard(numberGenerator);
+
+        assertThatThrownBy(() -> cards.pickCard(numberGenerator))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

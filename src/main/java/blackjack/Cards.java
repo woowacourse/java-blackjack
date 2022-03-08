@@ -4,9 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+    private static final String DUPLICATED_INDEX_EXCEPTION = "[ERROR] 이미 뽑힌 카드입니다.";
     private List<Card> cards;
+    private List<Boolean> isUsed;
 
     public Cards() {
+        isUsed = new ArrayList<>();
+        for (int i = 0; i<52; ++i) {
+            isUsed.add(false);
+        }
+
+
         cards = new ArrayList<>();
         cards.add(new Card("A다이아몬드"));
         cards.add(new Card("2다이아몬드"));
@@ -66,7 +74,14 @@ public class Cards {
 
     public Card pickCard(NumberGenerator numberGenerator) {
         int index = numberGenerator.generateNumber();
-
+        validateDuplicated(index);
         return cards.get(index);
+    }
+
+    private void validateDuplicated(int index) {
+        if (isUsed.get(index)) {
+            throw new IllegalArgumentException(DUPLICATED_INDEX_EXCEPTION);
+        }
+        isUsed.set(index, true);
     }
 }
