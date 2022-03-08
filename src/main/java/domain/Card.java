@@ -14,6 +14,10 @@ public class Card {
 		return rank.getPoint();
 	}
 
+	public boolean isAce() {
+		return rank.getRank() == 'A';
+	}
+
 	@Override
 	public String toString() {
 		return rank.getRank() + suit.getSuit();
