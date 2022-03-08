@@ -6,6 +6,7 @@ import java.util.List;
 public class Participant {
 
     private static final int ADDITIONAL_SCORE_FOR_ACE = 10;
+    protected static final int GOAL_SCORE = 21;
 
     private int score = 0;
     private final List<Card> cards = new ArrayList<>();
@@ -38,7 +39,7 @@ public class Participant {
     }
 
     private boolean moreScoreForAceOrNot() {
-        if (score + ADDITIONAL_SCORE_FOR_ACE <= 21) {
+        if (score + ADDITIONAL_SCORE_FOR_ACE <= GOAL_SCORE) {
             score += ADDITIONAL_SCORE_FOR_ACE;
             return true;
         }
