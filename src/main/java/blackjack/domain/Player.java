@@ -35,6 +35,13 @@ public class Player {
     public void draw(final Card card) {
         validateEndTurn();
         owningCards.addCard(card);
+        checkBust();
+    }
+
+    private void checkBust() {
+        if (owningCards.isBust()) {
+            endTurn();
+        }
     }
 
     private void validateEndTurn() {

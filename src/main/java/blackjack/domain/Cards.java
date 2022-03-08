@@ -32,6 +32,10 @@ public class Cards {
         }
     }
 
+    public boolean isBust() {
+        return calculateScore() > BLACK_JACK_NUMBER;
+    }
+
     public List<Card> cards() {
         return List.copyOf(cards);
     }
