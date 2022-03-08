@@ -5,17 +5,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    List<Card> cards = new ArrayList<>();
+    private List<Card> cards = new ArrayList<>();
 
-    public Deck(){
+    public Deck() {
         for (Symbol symbol : Symbol.values()) {
             addDenomination(symbol);
         }
     }
 
     private void addDenomination(Symbol symbol) {
-        for(Denomination denomination : Denomination.values()){
-            cards.add(new Card(symbol,denomination));
+        for (Denomination denomination : Denomination.values()) {
+            cards.add(new Card(symbol, denomination));
         }
     }
 
@@ -30,10 +30,10 @@ public class Deck {
         return card;
     }
 
-    public List<Card> initialDraw(){
+    public List<Card> initialDraw() {
         Collections.shuffle(cards);
-        List<Card> result = cards.subList(0,2);
-        cards = cards.subList(2,size());
+        List<Card> result = cards.subList(0, 2);
+        cards = cards.subList(2, size());
         return result;
     }
 }
