@@ -2,14 +2,11 @@ package blackjack.domain;
 
 public class Card {
 
-    private final String pattern;
-    private final String denomination;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    public Card(final String pattern, final String denomination) {
-        this.pattern = pattern;
+    public Card(Suit suit, Denomination denomination) {
+        this.suit = suit;
         this.denomination = denomination;
     }
-
-
-
 }

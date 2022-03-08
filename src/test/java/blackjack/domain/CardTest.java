@@ -10,8 +10,8 @@ public class CardTest {
     @Test
     @DisplayName("카드 생성 확인")
     void createCard() {
-        String pattern = "하트";
-        String point = "King";
+        Suit pattern = Suit.HEART;
+        Denomination point = Denomination.ACE;
 
         Card card = new Card(pattern, point);
 
