@@ -18,7 +18,7 @@ public enum Denomination {
 
     private final int point;
 
-    Denomination(int point) {
+    Denomination(final int point) {
         this.point = point;
     }
 

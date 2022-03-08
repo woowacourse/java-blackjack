@@ -11,7 +11,7 @@ public class Cards {
         cards = new ArrayList<>();
     }
 
-    public void save(Card card) {
+    public void save(final Card card) {
         cards.add(card);
     }
 
@@ -28,7 +28,7 @@ public class Cards {
         return point;
     }
 
-    private int calculateAceAsSmallerStandard(int point, Card card) {
+    private int calculateAceAsSmallerStandard(int point, final Card card) {
         if (card.isAce() && point > 21) {
             point -= 10;
         }

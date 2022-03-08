@@ -1,7 +1,11 @@
 package blackjack.domain;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Deck {
 
@@ -20,7 +24,7 @@ public class Deck {
         return new Deck(cards);
     }
 
-    private static void pushCard(final Stack<Card> cards, final Suit suit) {
+    private static void pushCard(Stack<Card> cards, final Suit suit) {
         for (Denomination denomination : Denomination.values()) {
             cards.push(new Card(suit, denomination));
         }

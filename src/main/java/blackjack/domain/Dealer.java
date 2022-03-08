@@ -10,7 +10,7 @@ public class Dealer {
         cards = new Cards();
     }
 
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         cards.save(card);
     }
 

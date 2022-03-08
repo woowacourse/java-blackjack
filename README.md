@@ -34,7 +34,7 @@
 
 ## Cards
 - [x] 카드를 저장한다.
-- [x] 카드 총 포인트 합을 계산한다.
+- [x] 카드의 합을 계산한다.
 
 ## Card
 - [x] Enum - Denomination

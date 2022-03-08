@@ -16,14 +16,14 @@ public class Gamer implements Player{
         cards = new Cards();
     }
 
-    private void checkBannedName(String name) {
+    private void checkBannedName(final String name) {
         if (name.equals(BANNED_GAMER_NAME)){
             throw new IllegalArgumentException("[ERROR] Gamer의 이름은 딜러일 수 없습니다.");
         }
     }
 
     @Override
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         cards.save(card);
     }
 
