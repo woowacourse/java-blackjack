@@ -49,4 +49,18 @@ class CardsTest {
                 Arguments.of(Set.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, JACK)), 20)
         );
     }
+
+    @Test
+    @DisplayName("카드를 추가한다.")
+    void add() {
+        // give
+        final Cards cards = new Cards(Set.of(new Card(DIAMOND, ACE)));
+
+        // when
+        cards.add(new Card(DIAMOND, TEN));
+        int actual = cards.getSize();
+
+        // then
+        assertThat(actual).isEqualTo(2);
+    }
 }
