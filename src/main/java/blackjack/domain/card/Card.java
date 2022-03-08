@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Card {
+    private static final String TO_STRING_FORMAT = "Card{%s%s}";
     private final CardRank rank;
     private final CardSymbol symbol;
 
@@ -18,10 +19,8 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
-                "rank=" + rank +
-                ", symbol=" + symbol +
-                '}';
+        return String.format(TO_STRING_FORMAT,
+                rank.getDisplayName(), symbol.getDisplayName());
     }
 
     private static class CardCache {
