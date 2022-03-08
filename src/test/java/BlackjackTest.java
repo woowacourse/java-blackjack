@@ -14,7 +14,7 @@ public class BlackjackTest {
 	void Player_Number_Exceed_Exception() {
 		assertThatThrownBy(() -> {
 			List<String> players = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h", "i");
-			new Blackjack(players);
+			Blackjack.createFrom(players);
 		}).isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("[ERROR] 참가자의 수는 8명을 초과할 수 없습니다.");
 	}
