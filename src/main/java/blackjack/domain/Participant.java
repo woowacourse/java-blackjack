@@ -19,13 +19,13 @@ public class Participant {
     }
 
     public static Participant createPlayer(String input) {
-        validateName(input);
-        return new Participant(input);
+        return new Participant(validateName(input.trim()));
     }
 
-    private static void validateName(String input) {
+    private static String validateName(String input) {
         checkBlankName(input);
         checkUnavailableName(input);
+        return input;
     }
 
     private static void checkBlankName(String input) {
