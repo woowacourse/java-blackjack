@@ -8,14 +8,13 @@ import java.util.stream.Stream;
 
 public class Deck {
 
-    private static final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
-    {
+    public Deck() {
         for (Suit suit : Suit.values()) {
             Stream.of(Denomination.values())
                 .forEach(denomination -> cards.add(new Card(suit, denomination)));
         }
-
         Collections.shuffle(cards);
     }
 
@@ -27,6 +26,6 @@ public class Deck {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 }
