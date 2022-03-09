@@ -1,8 +1,6 @@
 package blackjack.domain;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -27,6 +25,16 @@ public class Players {
         Players players = new Players(names);
         players.distributeCards(deck);
         return players;
+    }
+
+    public Map<String, WinningResult> judgeWinners(Dealer dealer) {
+        final Map<String, WinningResult> winningResults = new HashMap<>();
+        for (Player player : players) {
+            final String playerName = player.getName();
+            final WinningResult winningResult = dealer.judgeWinner(player);
+            winningResults.put(playerName, winningResult);
+        }
+        return winningResults;
     }
 
     private void distributeCards(Deck deck) {

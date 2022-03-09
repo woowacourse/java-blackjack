@@ -17,5 +17,4 @@ class PlayerTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어명은 공백이 될 수 없습니다.");
     }
-
 }

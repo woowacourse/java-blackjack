@@ -14,4 +14,8 @@ public class Player extends Participant {
             throw new IllegalArgumentException("플레이어명은 공백이 될 수 없습니다.");
         }
     }
+
+    public String getName() {
+        return this.name;
+    }
 }

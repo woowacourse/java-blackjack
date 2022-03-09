@@ -19,7 +19,17 @@ public class Dealer extends Participant {
     }
 
     private boolean isPossibleToDrawCard() {
-        return calculateCardSum() < 17;
+        return calculateScore() < 17;
     }
 
+    public WinningResult judgeWinner(final Player player) {
+        if (player.isBurst()) {
+            return WinningResult.LOSS;
+        }
+        if (this.isBurst()) {
+            return WinningResult.WIN;
+        }
+
+        return WinningResult.valueOf(player.isHigherThan(this));
+    }
 }
