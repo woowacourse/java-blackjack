@@ -34,8 +34,20 @@ public class Cards {
         }
     }
 
-    public int calculateScore() {
+    public int calculateScoreByAceOne() {
         return cards.stream().mapToInt(card -> card.getScore().getAmount()).sum();
+    }
+
+    public int calculateScoreByAceEleven() {
+        changeAceEleven(cards);
+
+        return calculateScoreByAceOne();
+    }
+
+    private void changeAceEleven(List<Card> cards) {
+        cards.stream()
+                .filter(card -> card.getScore() == Score.ACE)
+                .findFirst().ifPresent(Card::changeAceToEleven);
     }
 
     public List<Card> getCards() {

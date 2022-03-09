@@ -45,7 +45,7 @@ public class CardsTest {
         ));
         cards.addCard(new Card(Type.CLOVER, Score.THREE));
 
-        assertThat(cards.calculateScore()).isEqualTo(6);
+        assertThat(cards.calculateScoreByAceOne()).isEqualTo(6);
     }
 
     @ParameterizedTest

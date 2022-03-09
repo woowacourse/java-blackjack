@@ -32,4 +32,10 @@ public class Card {
     public int hashCode() {
         return Objects.hash(type, score);
     }
+
+    public void changeAceToEleven() {
+        if (this.score == Score.ACE) {
+            this.score = Score.ACE_ELEVEN;
+        }
+    }
 }
