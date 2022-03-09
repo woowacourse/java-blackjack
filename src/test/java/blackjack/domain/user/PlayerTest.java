@@ -55,4 +55,21 @@ public class PlayerTest {
         assertThat(player.isDrawable()).isFalse();
     }
 
+    @DisplayName("플레어어가 보여주는 초기 카드는 2장이다.")
+    @Test
+    public void testShowInitCards() {
+        //given
+        Deck deck = new Deck();
+        Player player = new Player("pobi");
+
+        player.drawCard(deck);
+        player.drawCard(deck);
+
+        //when
+        List<Card> cards = player.showInitCards();
+
+        //then
+        assertThat(cards.size()).isEqualTo(2);
+    }
+
 }
