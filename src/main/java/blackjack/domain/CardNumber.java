@@ -1,6 +1,4 @@
-package blackjack;
-
-import rentcompany.Car;
+package blackjack.domain;
 
 import java.util.Arrays;
 
