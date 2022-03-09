@@ -22,7 +22,7 @@ public class CardGenerator {
 
     private void createCardByType(List<Card> cards, CardType type) {
         for (CardNumber number : CardNumber.values()) {
-            cards.add(new Card(number.getNumber(), type));
+            cards.add(new Card(number, type));
         }
     }
 }
