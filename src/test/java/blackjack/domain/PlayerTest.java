@@ -16,7 +16,12 @@ public class PlayerTest {
     void test(String name) {
         CardDeck cardDeck = new CardDeck();
         List<Card> cards = Arrays.asList(cardDeck.getCard(1), cardDeck.getCard(2));
-        Assertions.assertThatThrownBy(() -> new Player(name, cards))
+        Assertions.assertThatThrownBy(() -> new Player(name, cards) {
+                    @Override
+                    public boolean canAddCard() {
+                        return false;
+                    }
+                })
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름은 공백일 수 없습니다.");
     }
@@ -30,7 +35,13 @@ public class PlayerTest {
         for (int i = 0; i < size; i++) {
             cards.add(cardDeck.getCard(i));
         }
-        Assertions.assertThatThrownBy(() -> new Player("엘리", cards))
+
+        Assertions.assertThatThrownBy(() -> new Player("엘리", cards) {
+                    @Override
+                    public boolean canAddCard() {
+                        return false;
+                    }
+                })
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 가장 처음에는 카드를 2장씩 나눠줘야 합니다.");
     }

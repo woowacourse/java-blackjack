@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class Player {
+abstract public class Player {
 
     private static final int INITIAL_CARD_SIZE = 2;
 
@@ -27,4 +27,14 @@ public class Player {
             throw new IllegalArgumentException("[ERROR] 가장 처음에는 카드를 " + INITIAL_CARD_SIZE + "장씩 나눠줘야 합니다.");
         }
     }
+
+    public void addCard(final Card card) {
+        cards.addCard(card);
+    }
+
+    public int getTotalScore() {
+        return cards.getTotalScore();
+    }
+
+    abstract public boolean canAddCard();
 }
