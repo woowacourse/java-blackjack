@@ -7,6 +7,10 @@ public class Player {
     private final Cards cards = new Cards();
     private final Name name;
 
+    public Player(String name) {
+        this(new Name(name));
+    }
+
     public Player(Name name) {
         this.name = name;
     }
