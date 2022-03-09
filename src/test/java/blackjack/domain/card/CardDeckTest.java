@@ -10,7 +10,7 @@ public class CardDeckTest {
     @Test
     @DisplayName("사용한 카드는 제거한다")
     void drawCard() {
-        final CardDeck cardDeck = new CardDeck(CardGenerator.createCardDeckByCardNumber());
+        final CardDeck cardDeck = CardDeckGenerator.createCardDeckByCardNumber();
         final int expected = 51;
 
         cardDeck.drawCard();

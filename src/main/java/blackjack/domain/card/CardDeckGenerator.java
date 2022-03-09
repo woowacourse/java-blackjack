@@ -3,9 +3,9 @@ package blackjack.domain.card;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class CardGenerator {
+public class CardDeckGenerator {
 
-    public static LinkedList<Card> createCardDeckByCardNumber() {
+    public static CardDeck createCardDeckByCardNumber() {
         LinkedList<Card> cards = new LinkedList<>();
         for (CardNumber cardNumber : CardNumber.values()) {
             cards.add(new Diamond(cardNumber));
@@ -13,7 +13,7 @@ public class CardGenerator {
             cards.add(new Heart(cardNumber));
             cards.add(new Spade(cardNumber));
         }
-        return shuffleCard(cards);
+        return new CardDeck(shuffleCard(cards));
     }
 
     private static LinkedList<Card> shuffleCard(LinkedList<Card> cards) {
