@@ -12,6 +12,10 @@ public class Card {
         this.number = number;
     }
 
+    public int getNumber() {
+        return number.getNumber();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

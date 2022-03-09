@@ -49,4 +49,75 @@ class ParticipantTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("provideForCannotContinueDrawCardTest")
+    @DisplayName("카드의 합계가 21 초과인지 확인할 수 있어야 한다.")
+    void cannotContinueDrawTest(final List<Card> expectedCards) {
+        manualCardStrategy.initCards(expectedCards);
+        final Deck deck = Deck.generate(manualCardStrategy);
+        final Participant participant = new Participant();
+
+        for (int i = 0; i < expectedCards.size(); i++) {
+            participant.drawCard(deck);
+        }
+
+        assertThat(participant.isNotBurst()).isTrue();
+    }
+
+    private static Stream<Arguments> provideForCannotContinueDrawCardTest() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(
+                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
+                                new Card(CardPattern.DIAMOND, CardNumber.JACK),
+                                new Card(CardPattern.DIAMOND, CardNumber.QUEEN),
+                                new Card(CardPattern.DIAMOND, CardNumber.KING)
+                        )
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardPattern.SPADE, CardNumber.ACE),
+                                new Card(CardPattern.HEART, CardNumber.TEN),
+                                new Card(CardPattern.DIAMOND, CardNumber.JACK),
+                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT)
+                        )
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideForCanContinueDrawCardTest")
+    @DisplayName("카드의 합계가 21 이하인지 확인할 수 있어야 한다.")
+    void canContinueDrawTest(final List<Card> expectedCards) {
+        manualCardStrategy.initCards(expectedCards);
+        final Deck deck = Deck.generate(manualCardStrategy);
+        final Participant participant = new Participant();
+
+        for (int i = 0; i < expectedCards.size(); i++) {
+            participant.drawCard(deck);
+        }
+
+        assertThat(participant.isNotBurst()).isFalse();
+    }
+
+    private static Stream<Arguments> provideForCanContinueDrawCardTest() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(
+                                new Card(CardPattern.DIAMOND, CardNumber.KING),
+                                new Card(CardPattern.DIAMOND, CardNumber.THREE),
+                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT)
+                        )
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardPattern.SPADE, CardNumber.ACE),
+                                new Card(CardPattern.SPADE, CardNumber.TWO),
+                                new Card(CardPattern.SPADE, CardNumber.SEVEN),
+                                new Card(CardPattern.SPADE, CardNumber.THREE)
+                        )
+                )
+        );
+    }
+
 }
