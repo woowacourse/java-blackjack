@@ -1,8 +1,10 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Card {
     private final CardSuit cardSuit;
@@ -14,13 +16,9 @@ public class Card {
     }
 
     public static List<Card> getAllCards() {
-        List<Card> allCards = new ArrayList<>();
-        for (CardSuit suit : CardSuit.values()) {
-            for (CardFace face : CardFace.values()) {
-                allCards.add(new Card(suit, face));
-            }
-        }
-        return allCards;
+        return Arrays.stream(CardSuit.values())
+                .flatMap(suit -> Arrays.stream(CardFace.values()).map(face -> new Card(suit, face)))
+                .collect(Collectors.toList());
     }
 
     public int getCardScore() {
