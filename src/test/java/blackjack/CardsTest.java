@@ -2,6 +2,8 @@ package blackjack;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
+
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,7 @@ public class CardsTest {
     @Test
     void pickCard() {
         Cards cards = new Cards();
-        NumberGenerator numberGenerator = new IntendedNumberGenerator(2);
+        NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(2));
         assertThat(cards.pickCard(numberGenerator).getName()).isEqualTo("3다이아몬드");
     }
 
@@ -19,10 +21,10 @@ public class CardsTest {
     @Test
     void duplicate() {
         Cards cards = new Cards();
-        NumberGenerator numberGenerator = new IntendedNumberGenerator(2);
+        NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(2));
         cards.pickCard(numberGenerator);
 
         assertThatThrownBy(() -> cards.pickCard(numberGenerator))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IndexOutOfBoundsException.class);
     }
 }

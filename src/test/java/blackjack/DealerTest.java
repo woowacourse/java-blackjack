@@ -2,6 +2,7 @@ package blackjack;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ public class DealerTest {
     @Test
     void handOut() {
         Dealer dealer = new Dealer();
-        NumberGenerator numberGenerator = new IntendedNumberGenerator(2);
+        NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(2));
         Card card = dealer.handOutCard(numberGenerator);
 
         assertThat(card.getName()).isEqualTo("3다이아몬드");
