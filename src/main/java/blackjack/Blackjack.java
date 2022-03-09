@@ -2,6 +2,7 @@ package blackjack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Blackjack {
@@ -41,5 +42,9 @@ public class Blackjack {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public Map<Player, Integer> result() {
+        return ScoreBoard.calculateResult(dealer, players);
     }
 }

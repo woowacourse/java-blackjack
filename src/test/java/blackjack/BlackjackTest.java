@@ -1,6 +1,7 @@
 package blackjack;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -61,5 +62,12 @@ public class BlackjackTest {
         blackjack.distributeAdditionalCardPlayer(numberGenerator, player, false);
 
         assertThat(player.getMyCards().size()).isEqualTo(2);
+    }
+
+    @DisplayName("최종 승패 기능 테스트")
+    @Test
+
+    void result() {
+       assertDoesNotThrow(() -> blackjack.result());
     }
 }

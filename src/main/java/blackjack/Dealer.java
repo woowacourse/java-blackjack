@@ -16,4 +16,14 @@ public class Dealer extends Person{
     public boolean isHit() {
         return (score() <= CONDITION_HIT);
     }
+
+    public int isWin(Player player) {
+        if (this.score() > player.score()) {
+            return 1;
+        }
+        if (this.score() < player.score()) {
+            return -1;
+        }
+        return 0;
+    }
 }
