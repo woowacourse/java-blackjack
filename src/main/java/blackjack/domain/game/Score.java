@@ -7,6 +7,7 @@ import java.util.Optional;
 public class Score implements Comparable<Score> {
     private final int value;
 
+    // TODO: 음수 값에 대한 유효성 검증
     private Score(final int value) {
         this.value = value;
     }
