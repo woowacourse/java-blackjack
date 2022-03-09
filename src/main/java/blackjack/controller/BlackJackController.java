@@ -22,6 +22,7 @@ public class BlackJackController {
         spreadCards(gamblers, dealer, cardDeck);
         hitOrStay(gamblers, cardDeck);
         addCardForDealer(dealer, cardDeck);
+        printCardAndScore(dealer, gamblers);
     }
 
     public List<Gambler> setupGamblers() {
@@ -74,7 +75,12 @@ public class BlackJackController {
 
         do {
             gambler.addCard(cardDeck.getCard());
-            outputView.printCards(PlayerDto.from(gambler));
+            final PlayerDto playerDto = PlayerDto.from(gambler);
+            outputView.printCards(playerDto);
+            if (gambler.isBurst()){
+                outputView.printBurst(playerDto);
+                break;
+            }
         } while (inputView.scanHitOrStay(gambler.getName()));
     }
 
@@ -83,5 +89,13 @@ public class BlackJackController {
             dealer.addCard(cardDeck.getCard());
             outputView.printDealerAddCard(dealer);
         }
+    }
+
+    private void printCardAndScore(Dealer dealer, List<Gambler> gamblers) {
+        System.out.println();
+        outputView.printCardAndScore(PlayerDto.from(dealer));
+        gamblers.stream()
+            .map(PlayerDto::from)
+            .forEach(outputView::printCardAndScore);
     }
 }
