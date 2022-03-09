@@ -6,6 +6,7 @@ import java.util.List;
 public class User {
 
     private static final String ERROR_INVALID_NAME = "[ERROR] 유저의 이름은 한 글자 이상이어야 합니다.";
+    public static final int BUST_STANDARD = 21;
 
     private final String name;
     private final List<Card> cards;
@@ -30,9 +31,13 @@ public class User {
         this.cards.add(card);
     }
 
-    public int cardSum() {
+    private int cardSum() {
         return this.cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
+    }
+
+    public Result checkResult(int otherScore) {
+        return Result.check(cardSum(), otherScore);
     }
 }

@@ -27,13 +27,43 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("유저는 보유한 카드의 합을 구할 수 있다.")
-    void calculateCardSum() {
+    @DisplayName("유저는 보유한 카드의 합이 21이 넘으면 패배한다.")
+    void userLoseExceedTwentyOneTest() {
         User user = new User("Pobi");
         user.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
         user.receiveCard(new Card(CardNumber.SEVEN, CardType.CLOVER));
         user.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
 
-        assertThat(user.cardSum()).isEqualTo(25);
+        assertThat(user.checkResult(19)).isEqualTo(Result.LOSE);
+    }
+
+    @Test
+    @DisplayName("유저는 보유한 카드의 합이 딜러보다 작으면 패배한다.")
+    void userLoseTest() {
+        User user = new User("Pobi");
+        user.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
+        user.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
+
+        assertThat(user.checkResult(20)).isEqualTo(Result.LOSE);
+    }
+
+    @Test
+    @DisplayName("유저는 보유한 카드의 합이 딜러의 카드 합보다 크면 승리한다.")
+    void userWinTest() {
+        User user = new User("Pobi");
+        user.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
+        user.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
+
+        assertThat(user.checkResult(17)).isEqualTo(Result.WIN);
+    }
+
+    @Test
+    @DisplayName("유저는 보유한 카드의 합이 딜러의 카드의 합과 같으면 무승부이다.")
+    void userDrawTest() {
+        User user = new User("Pobi");
+        user.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
+        user.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
+
+        assertThat(user.checkResult(18)).isEqualTo(Result.DRAW);
     }
 }
