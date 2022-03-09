@@ -51,6 +51,16 @@ class BlackJackTest {
                 .containsExactly(entry(Match.WIN, 1), entry(Match.LOSE, 1), entry(Match.DRAW, 0));
     }
 
+    @Test
+    @DisplayName("페퍼는 승리, 애쉬는 패배해야 한다.")
+    void getPlayerResult() {
+        GameResult gameResult = initializeGameResult();
+        PlayerResult playerResult = gameResult.getPlayerResult();
+        Map<String, Match> playerResults = playerResult.get();
+        assertThat(playerResults)
+                .containsExactly(entry("페퍼", Match.WIN), entry("애쉬", Match.LOSE));
+    }
+
     private GameResult initializeGameResult() {
         Player pepper = new Player("페퍼");
         pepper.addCard(new Card(CardShape.HEART, CardNumber.THREE));

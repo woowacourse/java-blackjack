@@ -30,10 +30,13 @@ public class BlackJack {
 
     public GameResult getGameResult() {
         Map<String, Match> playerResults = playerGroup.getPlayerResult(dealer.getCardGroupSum());
+        PlayerResult playerResult = new PlayerResult(playerResults);
+
         Collection<Match> playerMatches = playerResults.values();
         Map<Match, Integer> dealerMatches = initializeMatchResults(playerMatches);
         DealerResult dealerResult = new DealerResult(dealerMatches);
-        return new GameResult(dealerResult);
+
+        return new GameResult(dealerResult, playerResult);
     }
 
     private Map<Match, Integer> initializeMatchResults(Collection<Match> matches) {
