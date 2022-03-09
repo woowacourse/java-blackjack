@@ -2,6 +2,7 @@ package blackjack.domain.strategy;
 
 import blackjack.domain.Card;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ManualCardStrategy implements CardStrategy {
@@ -14,7 +15,7 @@ public class ManualCardStrategy implements CardStrategy {
 
     @Override
     public List<Card> generate() {
-        return cards;
+        return new LinkedList<>(cards);
     }
 
 }
