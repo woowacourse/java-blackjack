@@ -44,4 +44,8 @@ public class Player {
     public List<Card> getCards() {
         return cards;
     }
+
+    public String getName() {
+        return name;
+    }
 }
