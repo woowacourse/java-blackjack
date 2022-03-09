@@ -39,4 +39,26 @@ public class Players {
 	public List<String> showHands() {
 		return players.stream().map(Participant::showHand).collect(Collectors.toList());
 	}
+
+	public void addCardByName(String name, Card card) {
+		players.stream().filter(player -> player.compareName(name)).forEach(player -> player.addCard(card));
+	}
+
+	public String showHandByName(String name) {
+		return players.stream()
+			.filter(player -> player.compareName(name))
+			.map(Participant::showHand).findFirst().orElseThrow();
+	}
+
+	public boolean isBurstByName(String name) {
+		return players.stream()
+			.filter(player -> player.compareName(name))
+			.map((Participant::isBurst)).findFirst().orElseThrow();
+	}
+
+	public boolean isBlackJackByName(String name) {
+		return players.stream()
+			.filter(player -> player.compareName(name))
+			.map((Participant::isBlackJack)).findFirst().orElseThrow();
+	}
 }

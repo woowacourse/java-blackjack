@@ -26,6 +26,37 @@ public class Controller {
 			.collect(Collectors.toList());
 		Players players = new Players(names, initCardForPlayers);
 
-		OutputView.printHand(names, dealer.showOneHand(), players.showHands());
+		OutputView.printHands(names, dealer.showOneHand(), players.showHands());
+
+		for (String name : names) {
+			while (askDraw(name)) {
+				players.addCardByName(name, deck.draw());
+				OutputView.printHand(players.showHandByName(name));
+				if (players.isBlackJackByName(name)) {
+					OutputView.printBlackJackMessage();
+					break;
+				}
+				if (players.isBurstByName(name)) {
+					OutputView.printBurstMessage();
+					break;
+				}
+			}
+		}
+	}
+
+	private boolean askDraw(String name) {
+		String resultAskDraw = InputView.inputAskDraw(name);
+		validateAskDraw(resultAskDraw);
+		if (resultAskDraw.equals("y")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private void validateAskDraw(String resultAsk) {
+		if (!(resultAsk.equals("y") || resultAsk.equals("n"))) {
+			throw new IllegalArgumentException();
+		}
 	}
 }

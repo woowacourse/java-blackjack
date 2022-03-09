@@ -96,4 +96,8 @@ public class Participant {
 	protected int getAceCount() {
 		return (int)hand.stream().filter(Card::isAce).count();
 	}
+
+	public boolean compareName(String name) {
+		return this.name.equals(name);
+	}
 }
