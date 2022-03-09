@@ -1,4 +1,4 @@
-package blackjack.domain.player;
+package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
@@ -34,8 +34,12 @@ public class Player {
         }
     }
 
-    public void hit(Card card) {
+    void hit(Card card) {
         cards.add(card);
+    }
+
+    public void hit(CardFactory cardFactory) {
+        cards.add(cardFactory.drawCard());
     }
 
     public int getScore() {
