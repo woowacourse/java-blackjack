@@ -27,4 +27,16 @@ public abstract class Player {
     public boolean isBurst() {
         return getResult() > BURST_CRITERIA;
     }
+
+    public List<PlayingCard> getCards() {
+        return playingCards.getPlayingCards();
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+            "name='" + name + '\'' +
+            ", playingCards=" + playingCards +
+            '}';
+    }
 }

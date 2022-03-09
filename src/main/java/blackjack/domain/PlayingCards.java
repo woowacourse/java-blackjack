@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PlayingCards {
@@ -11,7 +12,7 @@ public class PlayingCards {
     }
 
     public List<PlayingCard> getPlayingCards() {
-        return playingCards;
+        return Collections.unmodifiableList(playingCards);
     }
 
     public int getResult() {

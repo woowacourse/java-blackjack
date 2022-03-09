@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.CardDeck;
@@ -20,8 +21,6 @@ public class BlackJackController {
         final CardDeck cardDeck = setupCards();
         spreadCards(gamblers, dealer, cardDeck);
         hitOrStay(gamblers, cardDeck);
-//        addCardForDealer(dealer);
-        // printCards();
     }
 
     public List<Gambler> setupGamblers() {
@@ -49,6 +48,8 @@ public class BlackJackController {
     }
 
     private void printCards(Dealer dealer, List<Gambler> gamblers) {
+        final String playerNames = gamblers.stream().map(Gambler::getName).collect(joining(", "));
+        outputView.printAfterSpread(dealer.getName(), playerNames);
         outputView.printCards(PlayerDto.from(dealer));
 
         gamblers
@@ -63,7 +64,7 @@ public class BlackJackController {
     }
 
     private void playGame(Gambler gambler, CardDeck cardDeck) {
-        final boolean isHit = inputView.scanHitOrStay(gambler.getName());
+        boolean isHit = inputView.scanHitOrStay(gambler.getName());
 
         if (!isHit) {
             outputView.printCards(PlayerDto.from(gambler));
@@ -74,6 +75,7 @@ public class BlackJackController {
             gambler.addCard(cardDeck.getCard());
             outputView.printCards(PlayerDto.from(gambler));
         } while (inputView.scanHitOrStay(gambler.getName()));
+
     }
 
 }

@@ -21,6 +21,10 @@ public class PlayingCard {
         return denomination;
     }
 
+    public String getCardName() {
+        return this.denomination.getScore() + this.suit.getName();
+    }
+
     @Override
     public boolean equals(final Object object) {
         if (this == object) {
