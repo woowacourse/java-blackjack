@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import static blackjack.domain.card.CardNumber.FIVE;
+import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardNumber.QUEEN;
 import static blackjack.domain.card.CardSymbol.CLUB;
 import static blackjack.domain.card.CardSymbol.DIAMOND;
@@ -46,5 +47,20 @@ class DealerTest {
 
         // then
         assertThat(actual).isEqualTo(Status.NOT_BUST);
+    }
+
+    @Test
+    @DisplayName("처음 받은 카드 중에 한 장의 카드를 공개한다.")
+    void openCard() {
+        // give
+        final Dealer dealer = new Dealer();
+        final CardFactory cardFactory = CardFactory.createNoShuffle();
+        dealer.init(cardFactory);
+
+        // when
+        final Card actual = dealer.openCard();
+
+        // then
+        assertThat(actual).isEqualTo(new Card(CLUB, KING));
     }
 }

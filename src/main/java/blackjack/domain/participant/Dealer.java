@@ -45,4 +45,8 @@ public class Dealer {
     public void hit(CardFactory cardFactory) {
         cards.add(cardFactory.drawCard());
     }
+
+    public Card openCard() {
+        return cards.findFirst();
+    }
 }
