@@ -23,6 +23,7 @@ public class BlackJackApplication {
             progressGamerAdditionalCard(deck, gamer);
         }
         progressDealerAdditionalCard(deck, blackJackGame.getDealer());
+        OutputView.printFinalResult(blackJackGame);
 
     }
 
@@ -58,7 +59,7 @@ public class BlackJackApplication {
     private static void progressGamerAdditionalCard(Deck deck, Gamer gamer) {
         while (isReceivable(gamer)) {
             gamer.receiveCard(deck.draw());
-            OutputView.printCards(gamer);
+            OutputView.printGamerCards(gamer);
         }
     }
 

@@ -4,6 +4,7 @@ import blackjack.domain.BlackJackGame;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Gamer;
+import blackjack.domain.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,8 +15,9 @@ public class OutputView {
     private static final String PRINT_JOINING_DELIMITER = ", ";
     private static final String PRINT_OPEN_CARD_FORMAT_MESSAGE = "%s: %s\n";
     private static final String PRINT_SHOW_CARD_FORMAT_MESSAGE = "%s카드: %s\n";
-    private static final String PRINT_DEALER_RECEIVE_CARD = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String PRINT_DEALER_NOT_RECEIVE_CARD = "\n딜러는 17이상이라 한장의 카드를 더 받지 못했습니다.";
+    private static final String PRINT_DEALER_RECEIVE_CARD = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
+    private static final String PRINT_DEALER_NOT_RECEIVE_CARD = "\n딜러는 17이상이라 한장의 카드를 더 받지 못했습니다.\n";
+    private static final String PRINT_FINAL_CARD_RESULT = "%s카드: %s - 결과: %d\n";
 
     public static void printOpenCards(final BlackJackGame blackJackGame) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -58,7 +60,7 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printCards(Gamer gamer) {
+    public static void printGamerCards(Gamer gamer) {
         System.out.printf(PRINT_SHOW_CARD_FORMAT_MESSAGE,
                 gamer.getName(),
                 joinCards(gamer.showCards()));
@@ -70,5 +72,24 @@ public class OutputView {
             return;
         }
         System.out.println(PRINT_DEALER_NOT_RECEIVE_CARD);
+    }
+
+    public static void printFinalResult(BlackJackGame blackJackGame) {
+        printDealerCardsResult(blackJackGame.getDealer());
+        blackJackGame.getGamers().forEach(OutputView::printGamerCardsResult);
+    }
+
+    public static void printDealerCardsResult(Player dealer) {
+        System.out.printf(PRINT_FINAL_CARD_RESULT,
+                Dealer.DEALER_NAME,
+                joinCards(dealer.showCards()),
+                dealer.calculateResult());
+    }
+
+    public static void printGamerCardsResult(Gamer gamer) {
+        System.out.printf(PRINT_FINAL_CARD_RESULT,
+                gamer.getName(),
+                joinCards(gamer.showCards()),
+                gamer.calculateResult());
     }
 }
