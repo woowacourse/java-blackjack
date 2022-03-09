@@ -1,12 +1,13 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class Cards {
 
-    private final Stack<Card> cards = new Stack<>();
+    private final List<Card> cards = new ArrayList<>();
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
@@ -21,11 +22,26 @@ public class Cards {
 
     private void selectCardShape(final CardNumber cardNumber) {
         for (CardShape cardShape : CardShape.values()) {
-            cards.push(new Card(cardNumber, cardShape));
+            cards.add(new Card(cardNumber, cardShape));
         }
     }
 
     public Card giveCard() {
-        return cards.pop();
+        return cards.remove(0);
+    }
+
+    public void add(final List<Card> initCards) {
+        cards.addAll(initCards);
+    }
+
+    public void add(final Card card) {
+        cards.add(card);
+    }
+
+    public int calculateTotal() {
+        List<CardNumber> cardNumbers = cards.stream()
+                .map(Card::getCardNumber)
+                .collect(Collectors.toList());
+        return CardNumber.getTotal(cardNumbers);
     }
 }

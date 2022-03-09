@@ -9,4 +9,8 @@ public class Card {
         this.cardNumber = cardNumber;
         this.cardShape = cardShape;
     }
+
+    public CardNumber getCardNumber() {
+        return this.cardNumber;
+    }
 }
