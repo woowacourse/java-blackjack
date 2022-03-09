@@ -77,4 +77,9 @@ public class BlackjackController {
         }
         OutputView.printDealerDenyCard();
     }
+
+    public void announcePlayersFinishInfo(Players players) {
+        OutputView.printFinishDealerInfo(players.getDealer());
+        OutputView.printFinishParticipantInfo(players.getParticipants());
+    }
 }

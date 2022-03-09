@@ -33,7 +33,7 @@ public class OutputView {
 
     private static void printInitDealerInfo(final Dealer dealer) {
         Card dealerCard = dealer.getCardOne();
-        System.out.println("딜러: " + dealerCard.getScore().getAmount() + dealerCard.getType().getName());
+        System.out.println("딜러: " + dealerCard.getScore().getSymbol() + dealerCard.getType().getName());
     }
 
     private static void printParticipantsInfo(final List<Participant> participants) {
@@ -48,7 +48,7 @@ public class OutputView {
 
     private static List<String> convertToText(final List<Card> cards) {
         return cards.stream()
-                .map(card -> card.getScore().getAmount() + card.getType().getName())
+                .map(card -> card.getScore().getSymbol() + card.getType().getName())
                 .collect(Collectors.toList());
     }
 
@@ -63,6 +63,21 @@ public class OutputView {
 
     public static void printDealerDenyCard() {
         System.out.println("딜러는 " + ADD_CARD_CONDITION + "을 초과하여 스탠드 하였습니다.");
+        System.out.println();
+    }
+
+    public static void printFinishDealerInfo(Dealer dealer) {
+        System.out.print("딜러 카드: ");
+        System.out.print(String.join(DELIMITER, convertToText(dealer.getCards())));
+        System.out.println(" - 결과:" + dealer.calculateScore());
+    }
+
+    public static void printFinishParticipantInfo(List<Participant> participants) {
+        participants.forEach(participant -> {
+            System.out.print(participant.getName() + "카드: ");
+            System.out.print(String.join(DELIMITER, convertToText(participant.getCards())));
+            System.out.println(" - 결과:" + participant.calculateScore());
+        });
         System.out.println();
     }
 }
