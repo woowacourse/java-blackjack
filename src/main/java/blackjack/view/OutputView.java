@@ -25,4 +25,8 @@ public class OutputView {
     public static void printBustPlayer(String name, int calculateScore) {
         System.out.println(name + "은(는) " + calculateScore + "점으로 버스트 됐습니다.");
     }
+
+    public static void printBlackjackPlayer(String name) {
+        System.out.println(name + "은(는) 블랙잭입니다. 히트를 마무리합니다.");
+    }
 }

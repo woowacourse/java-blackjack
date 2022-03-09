@@ -35,15 +35,20 @@ public class Main {
 
     private static void playerHit(Player player) {
         HitOrStand flag = HitOrStand.valueOf(InputView.inputHitOrStand(player.getName()));
-        if (flag.isValue()) {
-            player.hit();
-            OutputView.printPresentStatus(player.getName(), toListCardDto(player));
-            if (player.isBust()) {
-                OutputView.printBustPlayer(player.getName(), player.getCards().calculateScore());
-                return;
-            }
-            playerHit(player);
+        if (!flag.isValue()) {
+            return;
         }
+        player.hit();
+        OutputView.printPresentStatus(player.getName(), toListCardDto(player));
+        if (player.isBust()) {
+            OutputView.printBustPlayer(player.getName(), player.getCards().calculateScore());
+            return;
+        }
+        if (player.isBlackjack()) {
+            OutputView.printBlackjackPlayer(player.getName());
+            return;
+        }
+        playerHit(player);
     }
 
     private static void addCardDto(Map<String, List<CardDto>> cardStatus, Gamer gamer) {

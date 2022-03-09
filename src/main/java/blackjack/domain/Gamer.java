@@ -34,6 +34,10 @@ public abstract class Gamer {
         return cards.calculateScore() > 21;
     }
 
+    public boolean isBlackjack() {
+        return cards.calculateScore() == 21;
+    }
+
     public abstract void hit();
 
     public abstract List<Card> getViewCard();
