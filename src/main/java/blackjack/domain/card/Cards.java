@@ -7,8 +7,12 @@ public class Cards {
 
     private final List<Card> cards;
 
-    Cards() {
+    public Cards() {
         cards = new ArrayList<>();
+    }
+
+    public void addCards(final List<Card> cards) {
+        cards.forEach(this::addCard);
     }
 
     public void addCard(final Card card) {
