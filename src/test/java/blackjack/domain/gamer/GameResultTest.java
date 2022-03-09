@@ -74,4 +74,35 @@ class GameResultTest {
         assertThat(pobiResult).isEqualTo(BlackJackResult.LOSE);
         assertThat(jasonResult).isEqualTo(BlackJackResult.WIN);
     }
+
+
+
+    @Test
+    @DisplayName("딜러 게임 결과 확인")
+    void dealerResultCreate() {
+        Dealer dealer = new Dealer();
+        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.THREE));
+        dealer.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.NINE));
+        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.EIGHT));
+
+        Player pobi = new Player("pobi");
+        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.TWO));
+        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
+        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.ACE));
+
+        Player jason = new Player("jason");
+        jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.SEVEN));
+        jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
+
+        BlackJackGame blackJackGame = new BlackJackGame();
+        GameResult gameResult = blackJackGame.createResult(dealer, List.of(pobi, jason));
+
+        Map<BlackJackResult, Integer> dealerResult = gameResult.getDealerResult();
+        int winningCount = dealerResult.get(BlackJackResult.WIN);
+        int losingCount = dealerResult.get(BlackJackResult.LOSE);
+        int drawingCount = dealerResult.get(BlackJackResult.DRAW);
+
+        assertThat(List.of(winningCount, losingCount, drawingCount))
+                .containsExactly(1, 1, 0);
+    }
 }

@@ -32,6 +32,16 @@ public enum BlackJackResult {
                 .orElseThrow(() -> new IllegalArgumentException("옯바른 결과를 찾을 수 없습니다."));
     }
 
+    public BlackJackResult getReverse() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
     private static class ResultValue {
         private static final int WIN = 1;
         private static final int LOSE = -1;
