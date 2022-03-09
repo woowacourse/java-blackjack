@@ -7,6 +7,11 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackJack.domain.WinOrLose;
+import blackJack.domain.card.Card;
+import blackJack.domain.card.Denomination;
+import blackJack.domain.card.Symbol;
+
 public class ParticipantsTest {
 
     @Test
@@ -35,5 +40,23 @@ public class ParticipantsTest {
         assertThatThrownBy(() -> new Participants(new Dealer(), players))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("플레이어의 인원수는 1명 이상 7명 이하여야 합니다.");
+    }
+
+    @Test
+    @DisplayName("게임의 결과를 계산해주는 기능 테스트")
+    void calculateGameResult() {
+        Player player1 = new Player("kei");
+        Player player2 = new Player("rookie");
+        Dealer dealer = new Dealer();
+
+        player1.receiveCard(new Card(Symbol.SPADE, Denomination.EIGHT));
+        player2.receiveCard(new Card(Symbol.SPADE, Denomination.J));
+        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.NINE));
+
+        Participants participants = new Participants(dealer, List.of(player1, player2));
+
+        assertThat(participants.calculateGameResult().values()).containsExactly(
+            WinOrLose.LOSE, WinOrLose.WIN
+        );
     }
 }

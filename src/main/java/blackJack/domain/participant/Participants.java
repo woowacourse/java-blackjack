@@ -1,7 +1,11 @@
 package blackJack.domain.participant;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import blackJack.domain.WinOrLose;
 
 public class Participants {
 
@@ -32,5 +36,14 @@ public class Participants {
         }
     }
 
+    public Map<Player, WinOrLose> calculateGameResult() {
+        final Map<Player, WinOrLose> gameResult = new LinkedHashMap<>();
 
+        for (Player player : players) {
+            WinOrLose winOrLose = WinOrLose.calculateWinOrLose(player.calculateScore(), dealer.calculateScore());
+            gameResult.put(player, winOrLose);
+        }
+
+        return gameResult;
+    }
 }
