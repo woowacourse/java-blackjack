@@ -1,13 +1,17 @@
 package blackjack.domain;
 
-public class Player {
-    private String name;
+import java.util.List;
 
-    public Player(String name) {
+public class Player extends Participant {
+    private final String name;
+    private final HoldingCard holdingCard;
+
+    public Player(String name, List<Card> cards) {
         this.name = name;
+        this.holdingCard = new HoldingCard(cards);
     }
 
-    public String getName() {
-        return name;
+    public boolean isFinished() {
+        return holdingCard.isBust();
     }
 }

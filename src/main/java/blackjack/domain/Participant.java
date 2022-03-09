@@ -13,4 +13,6 @@ public abstract class Participant {
     List<Card> showCards(){
         return holdingCard.getHoldingCard();
     };
+
+    abstract boolean isFinished();
 }
