@@ -20,18 +20,18 @@ public class Application {
         OutputView.printAllOutcomeResult(blackJackGame.calculateAllResults());
     }
 
-    private static void runDealerTurn(final BlackJackGame blackJackGame) {
-        while (!blackJackGame.isDealerTurnEnd()) {
-            blackJackGame.drawDealer();
-            OutputView.printDealerDraw();
-        }
-    }
-
     private static void runPlayerTurn(final BlackJackGame blackJackGame) {
         while (!blackJackGame.isPlayersTurnEnd()) {
             final String command = InputView.inputDrawCommand(blackJackGame.getCurrentTurnPlayerInfo());
             final PlayerInfo currentPlayerInfo = blackJackGame.drawCurrentPlayer(command);
             OutputView.printPlayerCardInfo(currentPlayerInfo);
+        }
+    }
+
+    private static void runDealerTurn(final BlackJackGame blackJackGame) {
+        while (!blackJackGame.isDealerTurnEnd()) {
+            blackJackGame.drawDealer();
+            OutputView.printDealerDraw();
         }
     }
 }
