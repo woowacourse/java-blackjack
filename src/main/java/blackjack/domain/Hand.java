@@ -6,6 +6,12 @@ import java.util.function.Predicate;
 
 public class Hand {
 
+    private static final int BLACKJACK_CARD_SIZE = 2;
+    private static final int BLACKJACK_SYMBOL_SCORE = 21;
+    private static final int ACE_UPPER_SCORE = 11;
+    private static final int ACE_LOWER_SCORE = 1;
+    private static final int ACE_SCORE_DIFFERENCE = ACE_UPPER_SCORE - ACE_LOWER_SCORE;
+
     private List<Card> cards = new ArrayList<>();
 
     public void add(Card... cards) {
@@ -17,26 +23,23 @@ public class Hand {
     }
 
     public int getScore() {
-        int max = 0;
-        
         if (hasAce()) {
-            max = getAceSum();
-            return max;
+            return getSumIncludingOnlyAce();
         }
 
-        return sumOfNoAce();
+        return getSumExcludingAce();
     }
 
-    private int getAceSum() {
+    private int getSumIncludingOnlyAce() {
         int countOfAce = findCountOfAce();
-        int sumOfNoAce = sumOfNoAce() + (countOfAce * 11);
-        
+        int sumOfNoAce = getSumExcludingAce() + (countOfAce * ACE_UPPER_SCORE);
+
         List<Integer> sums = new ArrayList<>();
         for (int aceCount = countOfAce - 1; aceCount >= 0; aceCount--) {
-            sums.add(sumOfNoAce - (aceCount * 10));
+            sums.add(sumOfNoAce - (aceCount * ACE_SCORE_DIFFERENCE));
         }
 
-        return findLargestSum(sums, summation -> summation <= 21);
+        return findLargestSum(sums, summation -> summation <= BLACKJACK_SYMBOL_SCORE);
     }
 
     private int findLargestSum(List<Integer> sums, Predicate<Integer> condition) {
@@ -47,7 +50,7 @@ public class Hand {
                 .getAsInt();
     }
 
-    private int sumOfNoAce() {
+    private int getSumExcludingAce() {
         return cards.stream()
                 .filter(card -> !card.isAce())
                 .mapToInt(Card::getScore)
@@ -65,10 +68,10 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return getScore() > 21;
+        return getScore() > BLACKJACK_SYMBOL_SCORE;
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && getScore() == 21;
+        return cards.size() == BLACKJACK_CARD_SIZE && getScore() == BLACKJACK_SYMBOL_SCORE;
     }
 }
