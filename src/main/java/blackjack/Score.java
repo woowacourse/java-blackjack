@@ -2,7 +2,7 @@ package blackjack;
 
 import java.util.Objects;
 
-public class Score implements Comparable<Score> {
+public class Score {
 
     private final int value;
 
@@ -42,24 +42,11 @@ public class Score implements Comparable<Score> {
             '}';
     }
 
-    public Score compare(Score other) {
-        if (isBust() && other.isBust()) {
-            return this;
-        }
-
-        if (isBust()) {
-            return other;
-        }
-
-        if (other.isBust()) {
-            return this;
-        }
-
-        return value > other.value ? this : other;
+    public boolean lessThan(Score other) {
+        return getValue() < other.getValue();
     }
 
-    @Override
-    public int compareTo(Score score) {
-        return Integer.compare(getValue(), score.getValue());
+    public boolean moreThan(Score other) {
+        return getValue() > other.getValue();
     }
 }

@@ -20,6 +20,6 @@ public class ScoreTest {
     void compare_score() {
         Score score1 = new Score(7);
         Score score2 = new Score(8);
-        assertThat(score1.compare(score2)).isEqualTo(score2);
+        assertThat(score1.lessThan(score2)).isTrue();
     }
 }

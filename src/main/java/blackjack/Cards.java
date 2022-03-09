@@ -1,5 +1,6 @@
 package blackjack;
 
+import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
@@ -17,7 +18,8 @@ public class Cards {
 
     public Score score() {
         return possibleScores().stream()
-            .reduce(Score::compare)
+            .filter(not(Score::isBust))
+            .reduce(this::bestScore)
             .orElse(new Score(hardHand()));
     }
 
@@ -44,6 +46,13 @@ public class Cards {
         return (int) cards.stream()
             .filter(Card::isAce)
             .count();
+    }
+
+    private Score bestScore(Score score1, Score score2) {
+        if (score1.moreThan(score2)) {
+            return score1;
+        }
+        return score2;
     }
 
     @Override
