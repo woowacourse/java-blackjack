@@ -16,6 +16,18 @@ public class Card {
         return new Card(number, kind);
     }
 
+    public boolean isAce() {
+        return number == Number.ACE;
+    }
+
+    public Number getNumber() {
+        return number;
+    }
+
+    public Kind getKind() {
+        return kind;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
