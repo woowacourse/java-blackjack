@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.strategy.ManualCardStrategy;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -78,4 +79,14 @@ class DeckTest {
         );
     }
 
+    @Test
+    @DisplayName("뽑을 수 있는 카드가 없을 시 예외 발생")
+    void validateDrawCardTest() {
+        manualCardStrategy.initCards(List.of(new Card(CardPattern.DIAMOND, CardNumber.ACE)));
+        final Deck deck = Deck.generate(manualCardStrategy);
+        deck.drawCard();
+        assertThatThrownBy(deck::drawCard)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("더 이상 뽑을 수 있는 카드가 없습니다.");
+    }
 }
