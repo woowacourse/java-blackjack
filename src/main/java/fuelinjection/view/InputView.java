@@ -1,6 +1,5 @@
 package fuelinjection.view;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InputView {
@@ -9,15 +8,10 @@ public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public int askDistance() {
+    public int askDistance() throws IllegalArgumentException {
         System.out.println(QUESTION_DISTANCE);
+        return readInt();
 
-        try {
-            return readInt();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return askDistance();
-        }
     }
 
     private int readInt() {
