@@ -19,4 +19,8 @@ public class BlackJack {
     public Dealer getDealer() {
         return dealer;
     }
+
+    public void addCard(Player player) {
+        player.addCard(cardPack.pickOne());
+    }
 }

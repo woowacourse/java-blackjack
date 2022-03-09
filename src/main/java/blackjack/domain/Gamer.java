@@ -10,4 +10,8 @@ public class Gamer {
     public void addTwoCards(Card firstCard, Card secondCard) {
         cardGroup.addTwoCards(firstCard, secondCard);
     }
+
+    public void addCard(Card card) {
+        cardGroup.addCard(card);
+    }
 }
