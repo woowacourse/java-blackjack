@@ -15,12 +15,22 @@ public class Player {
         this.cards = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void pickCard(Card card) {
         cards.add(card);
+    }
+
+    public boolean isPossibleToPickCard() {
+        return calculateScore() <= 21;
+    }
+
+    public int calculateScore() {
+        return cards.stream()
+                .mapToInt(Card::getCardNumber)
+                .sum();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<Card> getCards() {
