@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Dealer {
@@ -13,5 +14,9 @@ public class Dealer {
 
     public void receiveCard(Card card) {
         cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

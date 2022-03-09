@@ -5,8 +5,8 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackController {
+
     public void play() {
-        // 분배
         Users users = new Users(InputView.inputUsersName());
         Dealer dealer = new Dealer();
         Deck deck = new Deck(new CardGenerator());
@@ -19,11 +19,15 @@ public class BlackJackController {
     }
 
     private void initDistribute(Deck deck, Users users, Dealer dealer) {
+        for (int i = 0; i < 2; i++) {
+            userDistribute(deck, users);
+            dealer.receiveCard(deck.drawCard());
+        }
+    }
+
+    private void userDistribute(Deck deck, Users users) {
         for (User user : users.getUsers()) {
             user.receiveCard(deck.drawCard());
-            user.receiveCard(deck.drawCard());
         }
-        dealer.receiveCard(deck.drawCard());
-        dealer.receiveCard(deck.drawCard());
     }
 }

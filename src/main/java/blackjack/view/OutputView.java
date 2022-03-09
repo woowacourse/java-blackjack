@@ -8,12 +8,15 @@ import blackjack.domain.Users;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.System.lineSeparator;
+
 public class OutputView {
 
-    private static final String INIT_DISTRIBUTE_FORMAT = "딜러와 %s에게 2장의 나누었습니다.\n";
+    private static final String INIT_DISTRIBUTE_FORMAT = "딜러와 %s에게 2장의 카드를 나누었습니다.\n";
 
     public static void printInitDistribute(Users users, Dealer dealer) {
-        System.out.printf(INIT_DISTRIBUTE_FORMAT, String.join(", ", toUserName(users)));
+        System.out.printf(lineSeparator() + INIT_DISTRIBUTE_FORMAT, String.join(", ", toUserName(users)));
+        printDealerData(dealer);
         for (User user : users.getUsers()) {
             printUserData(user);
         }
@@ -26,10 +29,14 @@ public class OutputView {
     }
 
     private static void printUserData(User user) {
-        System.out.printf("%s: %s", user.getName(), getUserCards(user.getCards()));
+        System.out.printf("%s: %s", user.getName(), getHoldingCards(user.getCards()));
     }
 
-    private static String getUserCards(List<Card> cards) {
+    private static void printDealerData(Dealer dealer) {
+        System.out.printf("딜러: %s", getHoldingCards(dealer.getCards().subList(1, dealer.getCards().size())));
+    }
+
+    private static String getHoldingCards(List<Card> cards) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Card card : cards) {
             stringBuilder.append(card.getOriginalNumber())
@@ -37,7 +44,7 @@ public class OutputView {
                     .append(", ");
         }
         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
-        stringBuilder.append(System.lineSeparator());
+        stringBuilder.append(lineSeparator());
         return stringBuilder.toString();
     }
 }
