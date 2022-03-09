@@ -28,7 +28,7 @@ class NumberTest {
     @DisplayName("카드 점수 테스트")
     @Test
     void getScoreTest() {
-        assertThat(Number.ACE.getScore()).isEqualTo(11);
+        assertThat(Number.ACE.getScore()).isEqualTo(1);
         assertThat(Number.TWO.getScore()).isEqualTo(2);
         assertThat(Number.THREE.getScore()).isEqualTo(3);
         assertThat(Number.FOUR.getScore()).isEqualTo(4);
