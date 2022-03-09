@@ -1,23 +1,23 @@
 package rentcar;
 
-public class Avante extends Car {
+public class Avante extends AbstractCar {
 
     public Avante(double tripDistance) {
         super(tripDistance);
     }
 
     @Override
-    double getDistancePerLiter() {
+    public double getDistancePerLiter() {
         return 15;
     }
 
     @Override
-    double getTripDistance() {
+    public double getTripDistance() {
         return tripDistance;
     }
 
     @Override
-    String getName() {
+    public String getName() {
         return "Avante";
     }
 }
