@@ -10,10 +10,8 @@ import java.util.List;
 public class Application {
     public static void main(String[] args) {
         BlackjackController blackjackController = new BlackjackController();
-        List<String> inputPlayerNames = InputView.inputPlayerNames();
-        List<UserDto> userDtos = blackjackController.joinGame(inputPlayerNames);
-        OutputView.printDrawMessage(inputPlayerNames);
-        OutputView.printTotalUserCards(userDtos);
+        blackjackController.run();
+
     }
 
 }
