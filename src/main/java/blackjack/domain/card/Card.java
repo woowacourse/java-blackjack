@@ -1,26 +1,23 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Card {
 
 	private final CardShape cardShape;
 	private final CardNumber cardNumber;
 
-	private final static List<Card> cards = new LinkedList<>();
+	private final static List<Card> cards;
 
 	static {
-		for (CardShape shape : CardShape.values()) {
-			addCards(shape);
-		}
-	}
-
-	private static void addCards(CardShape shape) {
-		for (CardNumber number : CardNumber.values()) {
-			cards.add(new Card(shape, number));
-		}
+		cards = Arrays.stream(CardShape.values())
+				.flatMap(shape -> Arrays.stream(CardNumber.values())
+						.map(number -> new Card(shape, number)))
+				.collect(Collectors.toList());
 	}
 
 	private Card(CardShape cardShape, CardNumber cardNumber) {
