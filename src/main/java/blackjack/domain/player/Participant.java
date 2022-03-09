@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Participant {
 
+    private static final int MAX_SCORE = 21;
+
     private final String name;
     private final Cards cards;
 
@@ -28,5 +30,15 @@ public class Participant {
 
     public void addCard(Card card) {
         cards.addCard(card);
+    }
+
+    public int calculateScore() {
+        final int scoreByAceOne = cards.calculateScoreByAceOne();
+        final int scoreByAceEleven = cards.calculateScoreByAceEleven();
+
+        if (scoreByAceEleven <= MAX_SCORE) {
+            return scoreByAceEleven;
+        }
+        return scoreByAceOne;
     }
 }
