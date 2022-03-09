@@ -44,9 +44,9 @@ public class Blackjack {
     }
 
     private void handOutCard() {
-        dealer.receiveCard(cardDeck.pickCard());
+        handOutCardTo(dealer);
         for (Participant player : players) {
-            player.receiveCard(cardDeck.pickCard());
+            handOutCardTo(player);
         }
     }
 
@@ -54,7 +54,7 @@ public class Blackjack {
         choice = choice.toLowerCase(Locale.ROOT);
         checkValidChoice(choice);
         if (choice.equals(CHOICE_YES)) {
-            player.receiveCard(cardDeck.pickCard());
+            handOutCardTo(player);
         }
     }
 
@@ -64,13 +64,11 @@ public class Blackjack {
         }
     }
 
-    public void handOutAdditionalCard() {
-        if (isDealerNeedAdditionalCard()) {
-            dealer.receiveCard(cardDeck.pickCard());
-        }
+    public void handOutCardTo(Participant participant) {
+		participant.receiveCard(cardDeck.pickCard());
     }
 
-    private boolean isDealerNeedAdditionalCard() {
+    public boolean isDealerNeedAdditionalCard() {
         return dealer.getScore() <= DEALER_ADDITIONAL_CARD_STANDARD;
     }
 
