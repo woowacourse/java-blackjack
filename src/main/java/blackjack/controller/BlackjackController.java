@@ -24,6 +24,8 @@ public class BlackjackController {
         ResultView.printInitCard(dealer, players);
         takeTurns(players, deck);
         takeDealerCards(dealer, deck);
+
+        ResultView.printResults(dealer, players);
     }
 
     private Gamer createDealer(Deck deck) {
