@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
+    public static final int MAX_DRAWABLE_COUNT = 11;
+
     @DisplayName("플레이어 생성 검증")
     @Test
     public void createPlayer() {
@@ -37,4 +39,20 @@ public class PlayerTest {
         //then
         assertThat(cards.size()).isEqualTo(1);
     }
+
+    @DisplayName("카드를 뽑을 수 있는지 여부를 확인할 수 있다.")
+    @Test
+    public void testCardDrawable() {
+        //given
+        Deck deck = new Deck();
+        Player player = new Player("pobi");
+
+        //when
+        for (int i = 0; i < MAX_DRAWABLE_COUNT; i++) {
+            player.drawCard(deck);
+        }
+        //then
+        assertThat(player.isDrawable()).isFalse();
+    }
+
 }

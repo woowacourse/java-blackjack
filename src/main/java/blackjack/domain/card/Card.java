@@ -31,4 +31,8 @@ public class Card {
     public int hashCode() {
         return Objects.hash(suit, denomination);
     }
+
+    public int getPoint() {
+        return denomination.getPoint();
+    }
 }
