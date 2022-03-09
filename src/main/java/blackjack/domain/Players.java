@@ -30,6 +30,11 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
+    public void turnToNextPlayer() {
+        validateAllTurnEnd();
+        currentTurnIndex++;
+    }
+
     public void drawCurrentPlayer(final Card card) {
         validateAllTurnEnd();
         final Player currentPlayer = values.get(currentTurnIndex);
@@ -39,7 +44,7 @@ public class Players {
 
     private void validateAllTurnEnd() {
         if (isAllTurnEnd()) {
-            throw new IllegalStateException("모든 턴이 종료되어 카드를 더 드로우할 수 없습니다.");
+            throw new IllegalStateException("모든 턴이 종료되었습니다.");
         }
     }
 

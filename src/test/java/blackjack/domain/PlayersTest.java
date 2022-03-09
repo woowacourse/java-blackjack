@@ -49,6 +49,19 @@ class PlayersTest {
 
         assertThatThrownBy(() -> players.drawCurrentPlayer(Card.of(SPADE, A)))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("모든 턴이 종료되어 카드를 더 드로우할 수 없습니다.");
+                .hasMessage("모든 턴이 종료되었습니다.");
+    }
+
+    @Test
+    @DisplayName("모든 턴이 종료되었을 때 턴 증가를 할 수 없다.")
+    void turnToNextPlayerExceptionByEndAllTurn() {
+        final Player player
+                = new Player("user", true, Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
+        final Players players = new Players(Collections.singletonList(player));
+        players.turnToNextPlayer();
+
+        assertThatThrownBy(() -> players.turnToNextPlayer())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("모든 턴이 종료되었습니다.");
     }
 }
