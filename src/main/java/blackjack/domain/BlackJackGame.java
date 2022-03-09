@@ -61,7 +61,7 @@ public class BlackJackGame {
     }
 
     public PlayerInfo getInitDealerInfo() {
-        return PlayerInfo.from(dealer);
+        return PlayerInfo.toPlayerInitInfo(dealer);
     }
 
     public List<PlayerInfo> getInitPlayerInfo() {

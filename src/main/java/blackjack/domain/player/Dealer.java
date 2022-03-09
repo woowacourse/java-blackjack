@@ -24,7 +24,7 @@ public class Dealer extends AbstractPlayer {
 
     @Override
     public List<Card> initCards() {
-        return List.copyOf(cards().subList(0, 1));
+        return List.copyOf(super.cards().subList(0, 1));
     }
 
     @Override

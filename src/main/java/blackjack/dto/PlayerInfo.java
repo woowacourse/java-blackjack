@@ -14,10 +14,17 @@ public class PlayerInfo {
         this.cards = cards;
     }
 
-    public static PlayerInfo from(final Player dealer) {
+    public static PlayerInfo toPlayerInitInfo(final Player player) {
         return new PlayerInfo(
-                dealer.getName(),
-                dealer.initCards()
+                player.getName(),
+                player.initCards()
+        );
+    }
+
+    public static PlayerInfo toPlayerInfo(final Player player) {
+        return new PlayerInfo(
+                player.getName(),
+                player.cards()
         );
     }
 
