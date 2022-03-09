@@ -33,6 +33,10 @@ public class User {
         return Result.check(cardSum(), otherScore);
     }
 
+    public boolean checkBust() {
+        return cardSum() > BUST_STANDARD;
+    }
+
     private int cardSum() {
         int sum = this.cards.stream()
                 .mapToInt(Card::getNumber)

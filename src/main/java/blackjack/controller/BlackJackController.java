@@ -15,7 +15,28 @@ public class BlackJackController {
         OutputView.printInitDistribute(users, dealer);
 
         // 각각의 유저에 따라 추가 지급
+        for (User user : users.getUsers()) {
+            playEachUser(user, deck);
+        }
         // 승패 여부
+    }
+
+    private boolean isContinue(User user) {
+        String userData = InputView.inputMoreCard(user);
+        if (userData.equals("y")) {
+            return true;
+        }
+        if (userData.equals("n")) {
+            return false;
+        }
+        throw new IllegalArgumentException("[ERROR] y 또는 n만 입력 가능합니다.");
+    }
+
+    private void playEachUser(User user, Deck deck) {
+        while (!user.checkBust() && isContinue(user)) {
+            user.receiveCard(deck.drawCard());
+            OutputView.printUserData(user);
+        }
     }
 
     private void initDistribute(Deck deck, Users users, Dealer dealer) {

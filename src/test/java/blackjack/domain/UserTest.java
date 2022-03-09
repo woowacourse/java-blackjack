@@ -77,4 +77,26 @@ public class UserTest {
 
         assertThat(user.checkResult(13)).isEqualTo(Result.DRAW);
     }
+
+    @Test
+    @DisplayName("유저가 버스트인 경우를 체크한다.")
+    void burstTest() {
+        User user = new User("Pobi");
+        user.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
+        user.receiveCard(new Card(CardNumber.QUEEN, CardType.HEART));
+        user.receiveCard(new Card(CardNumber.QUEEN, CardType.DIAMOND));
+
+        assertThat(user.checkBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("유저가 버스트가 아닌 경우를 체크한다.")
+    void notBurstTest() {
+        User user = new User("Pobi");
+        user.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
+        user.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
+        user.receiveCard(new Card(CardNumber.ACE, CardType.DIAMOND));
+
+        assertThat(user.checkBust()).isFalse();
+    }
 }

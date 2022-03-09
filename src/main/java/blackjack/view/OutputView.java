@@ -20,6 +20,7 @@ public class OutputView {
         for (User user : users.getUsers()) {
             printUserData(user);
         }
+        System.out.print(lineSeparator());
     }
 
     private static List<String> toUserName(Users users) {
@@ -28,11 +29,11 @@ public class OutputView {
                 .collect(Collectors.toList());
     }
 
-    private static void printUserData(User user) {
+    public static void printUserData(User user) {
         System.out.printf("%s: %s", user.getName(), getHoldingCards(user.getCards()));
     }
 
-    private static void printDealerData(Dealer dealer) {
+    public static void printDealerData(Dealer dealer) {
         System.out.printf("딜러: %s", getHoldingCards(dealer.getCards().subList(1, dealer.getCards().size())));
     }
 
