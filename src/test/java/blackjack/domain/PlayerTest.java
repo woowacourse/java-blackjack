@@ -14,7 +14,7 @@ public class PlayerTest {
         @Test
         @DisplayName("Card를 자신의 패에 추가한다.")
         void addCard() {
-            Player player = new Player("roma");
+            Player player = new Player(new Name("roma"));
             player.drawCard(Card.of(CardPattern.CLOVER, CardNumber.J));
             Assertions.assertThat(player.getTotalNumber()).isEqualTo(10);
         }
@@ -22,7 +22,7 @@ public class PlayerTest {
         @Test
         @DisplayName("자신의 패의 합이 21을 초과하는 경우 예외를 발생시킨다.")
         void throwExceptionOver21() {
-            Player player = new Player("roma");
+            Player player = new Player(new Name("roma"));
             player.drawCard(Card.of(CardPattern.CLOVER, CardNumber.J));
             player.drawCard(Card.of(CardPattern.CLOVER, CardNumber.K));
             player.drawCard(Card.of(CardPattern.CLOVER, CardNumber.TWO));
