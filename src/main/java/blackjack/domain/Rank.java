@@ -1,34 +1,34 @@
 package blackjack.domain;
 
 public enum Rank {
-    ACE(1, true),
-    TWO(2, false),
-    THREE(3, false),
-    FOUR(4, false),
-    FIVE(5, false),
-    SIX(6, false),
-    SEVEN(7, false),
-    EIGHT(8, false),
-    NINE(9, false),
-    TEN(10, false),
-    JACK(10, false),
-    QUEEN(10, false),
-    KING(10, false)
+    ACE(1, "1"),
+    TWO(2, "2"),
+    THREE(3, "3"),
+    FOUR(4, "4"),
+    FIVE(5, "5"),
+    SIX(6, "6"),
+    SEVEN(7, "7"),
+    EIGHT(8, "8"),
+    NINE(9, "9"),
+    TEN(10, "10"),
+    JACK(10, "J"),
+    QUEEN(10, "Q"),
+    KING(10, "K")
     ;
 
     private final int point;
-    private final boolean aceBonus;
+    private final String value;
 
-    Rank(int point, boolean aceBonus) {
+    Rank(int point, String value) {
         this.point = point;
-        this.aceBonus = aceBonus;
+        this.value = value;
     }
 
     public int getPoint() {
         return point;
     }
 
-    public boolean isAceBonus() {
-        return aceBonus;
+    public String getValue() {
+        return value;
     }
 }

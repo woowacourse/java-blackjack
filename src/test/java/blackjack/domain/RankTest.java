@@ -26,11 +26,4 @@ public class RankTest {
     void checkEnumNumberPoint(Rank value, int point) {
         assertThat(value.getPoint()).isEqualTo(point);
     }
-
-    @ParameterizedTest
-    @DisplayName("ace bonus 확인")
-    @CsvSource(value = {"ACE:true", "KING:false"}, delimiter = ':')
-    void checkEnumAceBonus(Rank value, boolean aceBonus) {
-        assertThat(value.isAceBonus()).isEqualTo(aceBonus);
-    }
 }
