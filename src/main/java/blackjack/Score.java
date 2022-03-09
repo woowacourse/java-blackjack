@@ -1,6 +1,5 @@
 package blackjack;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 public class Score {
@@ -15,7 +14,7 @@ public class Score {
         this.value = value;
     }
 
-    public Result compare(Score other) {
+    public Result judge(Score other) {
         if (hasBust(other)) {
             return compareBustCase(other);
         }
@@ -70,5 +69,9 @@ public class Score {
         return "Score{" +
             "value=" + value +
             '}';
+    }
+
+    public Score compare(Score other) {
+        return Integer.compare(value, other.getValue()) == -1 ? other : this;
     }
 }

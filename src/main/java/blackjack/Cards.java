@@ -19,7 +19,7 @@ public class Cards {
     public Score score() {
         return possibleScores().stream()
             .filter(not(Score::isBust))
-            .reduce(this::bestScore)
+            .reduce(Score::compare)
             .orElse(new Score(hardHand()));
     }
 
@@ -46,10 +46,6 @@ public class Cards {
         return (int) cards.stream()
             .filter(Card::isAce)
             .count();
-    }
-
-    public Score bestScore(Score a, Score b) {
-        return Integer.compare(a.getValue(), b.getValue()) == -1 ? b : a;
     }
 
     @Override

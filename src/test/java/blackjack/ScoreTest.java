@@ -2,9 +2,10 @@ package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 
 public class ScoreTest {
 
@@ -13,7 +14,7 @@ public class ScoreTest {
     void 점수_비교_테스트(int value1, int value2, String result) {
         Score score1 = new Score(value1);
         Score score2 = new Score(value2);
-        assertThat(score1.compare(score2)).isEqualTo(Result.valueOf(result));
+        assertThat(score1.judge(score2)).isEqualTo(Result.valueOf(result));
     }
 
     @ParameterizedTest
@@ -21,12 +22,20 @@ public class ScoreTest {
     void 버스트_점수_비교(int value1, int value2, String result) {
         Score score1 = new Score(value1);
         Score score2 = new Score(value2);
-        assertThat(score1.compare(score2)).isEqualTo(Result.valueOf(result));
+        assertThat(score1.judge(score2)).isEqualTo(Result.valueOf(result));
     }
 
     @ParameterizedTest(name = "입력값 : {1}")
     @CsvSource({"22,True", "21,False", "17,False"})
     void 버스트_발생(int scoreValue, boolean expect) {
         assertThat(new Score(scoreValue).isBust()).isEqualTo(expect);
+    }
+
+    @Test
+    @DisplayName("Score 비교 테스트")
+    void compare_score() {
+        Score score1 = new Score(7);
+        Score score2 = new Score(8);
+        assertThat(score1.compare(score2)).isEqualTo(score2);
     }
 }
