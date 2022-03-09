@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
-    private static final int BLACK_JACK_NUMBER = 21;
+    public static final int BLACK_JACK_NUMBER = 21;
     private static final int BLACK_JACK_SIZE = 2;
 
     private final List<Card> cards;
