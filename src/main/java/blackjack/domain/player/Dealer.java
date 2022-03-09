@@ -58,4 +58,8 @@ public class Dealer implements Player {
     public List<Card> getCards() {
         return cards.getCards();
     }
+
+    public Card getCardOne(){
+        return cards.getCards().get(0);
+    }
 }

@@ -2,8 +2,9 @@ package blackjack.controller;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Participant;
+import blackjack.domain.player.Players;
+import blackjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,5 +32,9 @@ public class BlackjackController {
         return Arrays.stream(nameInput.split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
+    }
+
+    public void announcePlayersInitCardInfo(Players players) {
+        OutputView.printPlayersInitCardInfo(players);
     }
 }

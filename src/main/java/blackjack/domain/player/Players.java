@@ -34,9 +34,17 @@ public class Players {
         }
     }
 
-    private Set<String> extractNames(final List<Participant> participants) {
+    public Set<String> extractNames(final List<Participant> participants) {
         return participants.stream()
                 .map(Participant::getName)
                 .collect(Collectors.toSet());
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Participant> getParticipants() {
+        return participants;
     }
 }
