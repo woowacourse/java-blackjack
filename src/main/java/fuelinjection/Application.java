@@ -6,7 +6,10 @@ public class Application {
 
     public static void main(String[] args) {
         InputView inputView = new InputView();
-        initializeDistance(inputView);
+        Distance distance = initializeDistance(inputView);
+
+        Cars cars = Cars.ofAllCars();
+        cars.injectFuel(distance);
     }
 
     private static Distance initializeDistance(InputView inputView) {
