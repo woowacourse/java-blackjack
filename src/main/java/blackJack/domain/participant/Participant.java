@@ -33,16 +33,20 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        final int score = calculateScore();
-        if (hasAceDenomination(score)) {
-            return score - (Denomination.A.getScore() - OTHER_SCORE_OF_ACE_DENOMINATION);
+        int score = calculateScore();
+        int countAce = countAce();
+
+        while (score > BLACK_JACK && countAce > 0) {
+            score -= Denomination.A.getScore() - OTHER_SCORE_OF_ACE_DENOMINATION;
+            countAce--;
         }
         return score;
     }
 
-    private boolean hasAceDenomination(int score) {
-        return score > BLACK_JACK &&
-            cards.stream().anyMatch(card -> card.getDenomination() == Denomination.A);
+    private int countAce() {
+        return (int)cards.stream()
+            .filter(card -> card.getDenomination() == Denomination.A)
+            .count();
     }
 
     private int calculateScore() {

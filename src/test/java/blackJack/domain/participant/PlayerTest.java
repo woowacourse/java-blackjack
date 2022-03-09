@@ -65,4 +65,17 @@ class PlayerTest {
 
         assertThat(player.getScore()).isEqualTo(19);
     }
+
+    @Test
+    @DisplayName("Player 카드에 Ace가 여러개인 경우 계산 테스트")
+    void calculateScoreWithAceCountThree() {
+        Player player = new Player("rookie");
+
+        player.receiveCard(new Card(Symbol.CLOVER, Denomination.A));
+        player.receiveCard(new Card(Symbol.HEART, Denomination.A));
+        player.receiveCard(new Card(Symbol.DIAMOND, Denomination.A));
+        player.receiveCard(new Card(Symbol.SPADE, Denomination.EIGHT));
+
+        assertThat(player.getScore()).isEqualTo(21);
+    }
 }
