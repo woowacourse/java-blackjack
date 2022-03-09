@@ -5,6 +5,7 @@ import blackjack.domain.BlackJackGame;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Gamer;
+import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.HashSet;
@@ -19,9 +20,9 @@ public class BlackJackApplication {
         Deck deck = Deck.init();
         BlackJackGame blackJackGame = startBlackJackGame(gamers, deck);
         for (Gamer gamer : blackJackGame.getGamers()) {
-            progressAdditionalCard(deck, gamer);
-            OutputView.printCards(gamer);
+            progressGamerAdditionalCard(deck, gamer);
         }
+        progressDealerAdditionalCard(deck, blackJackGame.getDealer());
 
     }
 
@@ -54,7 +55,7 @@ public class BlackJackApplication {
         return blackJackGame;
     }
 
-    private static void progressAdditionalCard(Deck deck, Gamer gamer) {
+    private static void progressGamerAdditionalCard(Deck deck, Gamer gamer) {
         while (isReceivable(gamer)) {
             gamer.receiveCard(deck.draw());
             OutputView.printCards(gamer);
@@ -71,6 +72,14 @@ public class BlackJackApplication {
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return isAnswerYes(name);
+        }
+    }
+
+    private static void progressDealerAdditionalCard(Deck deck, Player dealer) {
+        boolean receivable = dealer.isReceivable();
+        OutputView.printDealerReceive(receivable);
+        if (receivable) {
+            dealer.receiveCard(deck.draw());
         }
     }
 }

@@ -14,6 +14,8 @@ public class OutputView {
     private static final String PRINT_JOINING_DELIMITER = ", ";
     private static final String PRINT_OPEN_CARD_FORMAT_MESSAGE = "%s: %s\n";
     private static final String PRINT_SHOW_CARD_FORMAT_MESSAGE = "%s카드: %s\n";
+    private static final String PRINT_DEALER_RECEIVE_CARD = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String PRINT_DEALER_NOT_RECEIVE_CARD = "\n딜러는 17이상이라 한장의 카드를 더 받지 못했습니다.";
 
     public static void printOpenCards(final BlackJackGame blackJackGame) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -60,5 +62,13 @@ public class OutputView {
         System.out.printf(PRINT_SHOW_CARD_FORMAT_MESSAGE,
                 gamer.getName(),
                 joinCards(gamer.showCards()));
+    }
+
+    public static void printDealerReceive(final boolean receivable) {
+        if (receivable) {
+            System.out.println(PRINT_DEALER_RECEIVE_CARD);
+            return;
+        }
+        System.out.println(PRINT_DEALER_NOT_RECEIVE_CARD);
     }
 }
