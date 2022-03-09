@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class BlackjackDto {
+public class ParticipantsDto {
     private static final String NAME_DELIMITER = ": ";
     private static final String CARD_DELIMITER = ", ";
     private static final int FIRST_CARD = 0;
@@ -10,13 +10,13 @@ public class BlackjackDto {
     private final Participant dealer;
     private final List<Participant> players;
 
-    public BlackjackDto(Participant dealer, List<Participant> players) {
+    public ParticipantsDto(Participant dealer, List<Participant> players) {
         this.dealer = dealer;
         this.players = players;
     }
 
-    public static BlackjackDto from(Blackjack blackjack) {
-        return new BlackjackDto(blackjack.getDealer(), blackjack.getPlayers());
+    public static ParticipantsDto from(Participants participants) {
+        return new ParticipantsDto(participants.getDealer(), participants.getPlayers());
     }
 
     public String getDealerOpenCard() {
@@ -26,7 +26,7 @@ public class BlackjackDto {
 
     public String getPlayerCardStatus(Participant participant) {
         String[] playerCardStatus = participant.getCards().stream()
-            .map(card -> card.getName())
+            .map(Card::getName)
             .toArray(String[]::new);
         return participant.getName() + NAME_DELIMITER + String.join(CARD_DELIMITER, playerCardStatus);
     }

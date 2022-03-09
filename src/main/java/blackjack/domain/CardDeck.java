@@ -20,14 +20,14 @@ public class CardDeck {
 		}
 	}
 
-	public Card pickCard() {
+	public static Card pickCard() {
 		Collections.shuffle(deck);
 		Card pickedCard = deck.get(0);
 		removeCard(pickedCard);
 		return pickedCard;
 	}
 
-	private void removeCard(Card card) {
+	private static void removeCard(Card card) {
 		deck.remove(card);
 	}
 }
