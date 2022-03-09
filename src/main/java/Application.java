@@ -19,5 +19,8 @@ public class Application {
         blackjackController.announcePlayersInitCardInfo(players);
         blackjackController.decideMoreCard(players, deck);
         blackjackController.announcePlayersFinishInfo(players);
+
+        blackjackController.competeWithDealer(players);
+        blackjackController.announcePlayersResult(players);
     }
 }

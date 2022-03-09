@@ -84,7 +84,15 @@ class ParticipantTest {
                 Arguments.of(List.of(
                         new Card(Type.SPADE, Score.ACE),
                         new Card(Type.HEART, Score.KING)
-                ), Collections.emptyList(), 21)
+                ), Collections.emptyList(), 21),
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.ACE),
+                        new Card(Type.HEART, Score.ACE)
+                ),List.of(new Card(Type.HEART, Score.SIX)), 18),
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.FIVE),
+                        new Card(Type.HEART, Score.SIX)
+                ),List.of(new Card(Type.HEART, Score.ACE)), 12)
         );
     }
 }

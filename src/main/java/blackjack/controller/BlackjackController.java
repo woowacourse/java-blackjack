@@ -48,7 +48,7 @@ public class BlackjackController {
     }
 
     private void decideOneMoreCard(Participant participant, Deck deck) {
-        while (isNotOverMaxScore(participant) && oneMoreCard(participant)){
+        while (isNotOverMaxScore(participant) && oneMoreCard(participant)) {
             participant.addCard(deck.draw());
             OutputView.printParticipantCards(participant);
         }
@@ -63,14 +63,14 @@ public class BlackjackController {
     }
 
     private boolean isNotOverMaxScore(Participant participant) {
-        if (participant.isOverMaxScore()){
+        if (participant.isOverMaxScore()) {
             OutputView.printParticipantOverMaxScore(participant.getName());
         }
         return !participant.isOverMaxScore();
     }
 
     private void decideOneMoreCard(Dealer dealer, Deck deck) {
-        if(dealer.acceptableCard()) {
+        if (dealer.acceptableCard()) {
             dealer.addCard(deck.draw());
             OutputView.printDealerAcceptCard();
             return;
@@ -81,5 +81,13 @@ public class BlackjackController {
     public void announcePlayersFinishInfo(Players players) {
         OutputView.printFinishDealerInfo(players.getDealer());
         OutputView.printFinishParticipantInfo(players.getParticipants());
+    }
+
+    public void announcePlayersResult(Players players) {
+        OutputView.printResult(players);
+    }
+
+    public void competeWithDealer(Players players) {
+        players.getParticipants().forEach(participant -> players.getDealer().compete(participant));
     }
 }

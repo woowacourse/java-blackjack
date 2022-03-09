@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
+import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
 import java.util.List;
@@ -79,5 +80,28 @@ public class OutputView {
             System.out.println(" - 결과:" + participant.calculateScore());
         });
         System.out.println();
+    }
+
+    public static void printResult(Players players) {
+        System.out.println("## 최종 승패");
+        printDealerResult(players.getDealer());
+        printParticipantsResult(players.getParticipants());
+    }
+
+    private static void printDealerResult(Dealer dealer) {
+        System.out.printf("딜러: %d승 %d패%n", dealer.getWinCount(), dealer.getLoseCount());
+    }
+
+    private static void printParticipantsResult(List<Participant> participants) {
+        participants.forEach(OutputView::printParticipantResult);
+    }
+
+    private static void printParticipantResult(Participant participant) {
+        System.out.print(participant.getName() + ": ");
+        if (participant.getWinState()) {
+            System.out.println("승");
+            return;
+        }
+        System.out.println("패");
     }
 }

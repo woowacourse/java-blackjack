@@ -59,7 +59,15 @@ public class Dealer implements Player {
         return cards.getCards();
     }
 
-    public Card getCardOne(){
+    public Card getCardOne() {
         return cards.getCards().get(0);
+    }
+
+    public int getWinCount() {
+        return this.winCount;
+    }
+
+    public int getLoseCount() {
+        return this.loseCount;
     }
 }
