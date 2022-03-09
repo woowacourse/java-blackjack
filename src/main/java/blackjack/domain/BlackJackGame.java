@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 public class BlackJackGame {
 
     private final Player dealer;
-    private final List<Player> gamers;
+    private final List<Gamer> gamers;
 
-    public BlackJackGame(final Player dealer, final List<Player> gamers) {
+    public BlackJackGame(final Player dealer, final List<Gamer> gamers) {
         this.dealer = dealer;
         this.gamers = gamers;
     }
@@ -18,7 +18,7 @@ public class BlackJackGame {
     public void giveFirstCards(final Deck deck) {
         giveTwoCards(dealer, deck);
 
-        for (Player gamer : gamers) {
+        for (Gamer gamer : gamers) {
             giveTwoCards(gamer, deck);
         }
     }
@@ -29,7 +29,7 @@ public class BlackJackGame {
         }
     }
 
-    public Map<Player, Result> calculateResult() {
+    public Map<Gamer, Result> calculateResult() {
         int dealerResult = dealer.calculateResult();
         return gamers.stream()
                 .collect(Collectors.toMap(gamer -> gamer,
@@ -37,5 +37,13 @@ public class BlackJackGame {
                                 gamer.calculateResult()),
                         (e1, e2) -> e1,
                         LinkedHashMap::new));
+    }
+
+    public Player getDealer() {
+        return dealer;
+    }
+
+    public List<Gamer> getGamers() {
+        return List.copyOf(gamers);
     }
 }

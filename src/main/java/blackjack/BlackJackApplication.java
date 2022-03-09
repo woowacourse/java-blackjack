@@ -1,7 +1,9 @@
 package blackjack;
 
+import blackjack.domain.BlackJackGame;
+import blackjack.domain.Dealer;
+import blackjack.domain.Deck;
 import blackjack.domain.Gamer;
-import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.HashSet;
@@ -12,10 +14,14 @@ import java.util.stream.Collectors;
 public class BlackJackApplication {
 
     public static void main(String[] args) {
-        List<Player> gamers = createGamers();
+        List<Gamer> gamers = createGamers();
+        Deck deck = Deck.init();
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), gamers);
+        blackJackGame.giveFirstCards(deck);
+        OutputView.printOpenCards(blackJackGame);
     }
 
-    private static List<Player> createGamers() {
+    private static List<Gamer> createGamers() {
         try {
             return toGamerList();
         } catch (IllegalArgumentException e) {
@@ -24,7 +30,7 @@ public class BlackJackApplication {
         }
     }
 
-    private static List<Player> toGamerList() {
+    private static List<Gamer> toGamerList() {
         List<String> names = InputView.requestPlayerName();
         checkDuplicateName(names);
         return names.stream()
