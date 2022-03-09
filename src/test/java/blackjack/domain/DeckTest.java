@@ -27,15 +27,18 @@ class DeckTest {
 
     private static Stream<Arguments> provideForValidateCardDuplicatedTest() {
         final CardPattern pattern = CardPattern.CLOVER;
+        final CardNumber number = CardNumber.ACE;
+        final CardNumber otherNumber = CardNumber.TWO;
+
         return Stream.of(
                 Arguments.of(
-                        List.of(new Card(pattern, 1),
-                                new Card(pattern, 1))
+                        List.of(new Card(pattern, number),
+                                new Card(pattern, number))
                 ),
                 Arguments.of(
-                        List.of(new Card(pattern, 1),
-                                new Card(pattern, 2),
-                                new Card(pattern, 1))
+                        List.of(new Card(pattern, otherNumber),
+                                new Card(pattern, otherNumber),
+                                new Card(pattern, otherNumber))
                 )
         );
     }
