@@ -27,4 +27,8 @@ public enum Denomination {
     public int getPoint() {
         return point;
     }
+
+    public String getName() {
+        return name;
+    }
 }

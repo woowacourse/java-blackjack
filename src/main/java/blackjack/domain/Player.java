@@ -1,13 +1,8 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class Player implements Participant {
+public class Player extends Participant {
 
     private final String name;
-    private ParticipantCards participantCards;
 
     public Player(String name) {
         validateName(name);
@@ -20,16 +15,7 @@ public class Player implements Participant {
         }
     }
 
-    public void receiveInitCards(List<Card> cards) {
-        participantCards = new ParticipantCards(new ArrayList<>(cards));
+    public String getName() {
+        return name;
     }
-
-    public void receiveCard(Card card) {
-        participantCards.addCard(card);
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(participantCards.getCards());
-    }
-
 }
