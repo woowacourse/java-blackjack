@@ -26,7 +26,7 @@ public class OutputView {
 
     private static String getPlayerNames(List<Player> players) {
         return players.stream()
-                .map(Player::getName)
+                .map(player -> player.getName().getValue())
                 .collect(Collectors.joining(", "));
     }
 

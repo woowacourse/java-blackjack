@@ -22,7 +22,7 @@ public class PlayerTest {
     @MethodSource("provideParameters")
     @DisplayName("턴 강제 종료 여부")
     void player(String comment,Cards cards, boolean expect) {
-        Player player = new Player("name", cards);
+        Player player = new Player(new Name("name"), cards);
         assertThat(player.isFinished()).isEqualTo(expect);
     }
 
@@ -43,7 +43,7 @@ public class PlayerTest {
 
     @Test
     void drawCard() {
-        Player player = new Player("name", new Cards(getCardList(Denomination.QUEEN)));
+        Player player = new Player(new Name("name"), new Cards(getCardList(Denomination.QUEEN)));
         player.drawCard(new Card(Denomination.ACE, Suit.CLOVER));
         assertThat(player.getCards().getValue().size()).isEqualTo(2);
     }

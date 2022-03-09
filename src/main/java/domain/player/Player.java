@@ -6,10 +6,10 @@ import domain.card.Cards;
 import java.util.Objects;
 
 public class Player implements Participant {
-    private final String name;
+    private final Name name;
     private final Cards cards;
 
-    public Player(String name, Cards cards) {
+    public Player(Name name, Cards cards) {
         this.name = name;
         this.cards = cards;
     }
@@ -24,7 +24,7 @@ public class Player implements Participant {
         cards.add(card);
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 

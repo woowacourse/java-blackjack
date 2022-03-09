@@ -6,7 +6,7 @@ import domain.card.Cards;
 public class Dealer implements Participant {
     private static final int DRAW_STANDARD = 16;
 
-    private final String name = "딜러";
+    private final Name name = new Name("딜러");
     private final Cards cards;
 
     public Dealer(Cards cards) {
@@ -22,7 +22,7 @@ public class Dealer implements Participant {
         cards.add(card);
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 

@@ -1,8 +1,11 @@
 package view;
 
+import domain.player.Name;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
@@ -11,31 +14,22 @@ public class InputView {
 
     }
 
-    public static List<String> inputPlayerNames() {
+    public static List<Name> inputPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = scanner.nextLine();
 
-        List<String> names = Arrays.asList(input.split(",", -1));
-        validateNames(names);
-
+        List<Name> names = toNameList(Arrays.asList(input.split(",", -1)));
+        checkDistinct(names);
         return names;
     }
 
-    private static void validateNames(List<String> list) {
-        checkEmpty(list);
-        checkDistinct(list);
+    private static List<Name> toNameList(List<String> names) {
+        return names.stream()
+                .map(name -> new Name(name.trim()))
+                .collect(Collectors.toUnmodifiableList());
     }
 
-    private static void checkEmpty(List<String> list) {
-        boolean isEmpty = list.stream()
-                .anyMatch(string -> string == null || string.isBlank());
-
-        if (isEmpty) {
-            throw new IllegalArgumentException("[ERROR] 빈 값은 이름으로 등록할 수 없습니다.");
-        }
-    }
-
-    private static void checkDistinct(List<String> list) {
+    private static void checkDistinct(List<Name> list) {
         long distinctCount = list.stream()
                 .distinct()
                 .count();

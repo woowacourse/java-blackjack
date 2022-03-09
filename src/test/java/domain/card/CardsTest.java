@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -19,7 +20,7 @@ public class CardsTest {
     @MethodSource("provideParameters")
     @DisplayName("단일 카드 총합 구하기")
     void sum(Denomination denomination, int expect) {
-        Cards cards = new Cards(Arrays.asList(new Card(denomination, Suit.CLOVER)));
+        Cards cards = new Cards(Collections.singletonList(new Card(denomination, Suit.CLOVER)));
         assertThat(cards.sum()).isEqualTo(expect);
     }
 
