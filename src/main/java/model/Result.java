@@ -21,7 +21,7 @@ public enum Result {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public static Result match(Status from, Status to) {
+    public static Result of(Status from, Status to) {
         int powerGap = Status.getPowerGap(from, to);
         return Result.of(powerGap, 0);
     }

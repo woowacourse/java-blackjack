@@ -53,10 +53,10 @@ public class Cards {
     }
 
     public Result getResult(Cards other) {
-        if (this.getStatus() == Status.STAND && other.getStatus() == Status.STAND){
+        if (this.getStatus() == Status.STAND && other.getStatus() == Status.STAND) {
             return Result.of(this.getSum(), other.getSum());
         }
-        return Result.match(this.getStatus(), other.getStatus());
+        return Result.of(this.getStatus(), other.getStatus());
     }
 
     private Status getStatus() {
