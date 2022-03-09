@@ -149,7 +149,7 @@ jason: 패
 
 - TrumpSymbol와 TrumpNumber 한 쌍
 
-### TrumpCards
+### TrumpCardPack
 
 - 모든 종류의 TrumpCard를 캐싱
 - 랜덤한 카드를 뽑는다.
