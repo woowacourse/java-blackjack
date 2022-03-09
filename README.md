@@ -69,50 +69,10 @@ jason: 패
 3개 이상의 인스턴스 변수를 가진 클래스를 쓰지 않는다.
 딜러와 플레이어에서 발생하는 중복 코드를 제거해야 한다.
 
-```java
-public interface  Participator {
-    void bringCard(CardGenerator generator);
-}
-
-public class Dealer implements Participator {
-    void bringCard(DealerGenerator generator) {
-        
-    }
-}
-
-public class Player implements Participator {
-    void bringCard(PlayerGenerator generator) {
-    
-    }
-}
-
-public interface CardGenerator {
-    boolean canGenerate();
-}
-
-public class DealerGenerator implements CardGenerator {
-    private final int sum;
-    public DealerGenerator(int sum) {
-        this.sum = sum;
-    }
-    
-    public boolean canGenerate() {
-        return sum <= 16;
-    }
-}
-
-public class Application {
-  public static void main(String[] args) {
-    Participator dealer = new Dealer();
-    dealer.bringCard(new DealerGenerator());
-  }
-}
-```
-
 ## 도메인
-- [ ] 참가자 생성 (이름을 받아서)
+- [x] 참가자 생성 (이름을 받아서)
 - [ ] 딜러 생성
-- [ ] 섞인 카드 덱을 준비한다.
+- [x] 섞인 카드 덱을 준비한다.
 - [ ] 카드덱이 각 플레이어에게 두장씩 카드를 나눠준다.
 - [ ] 칙촉 차례가 되면, 칙촉이 보유한 카드가 총 합계를 계산한다.
   - [ ] 21이 되거나 넘으면 카드를 더 받지 않는다. -> 보유카드가 하면 될 듯
@@ -125,18 +85,7 @@ public class Application {
   - [ ] 카드를 더 받게 되면, 카드덱(제너레이터)가 참가자에게 카드를 준다.
 - [ ] 딜러.보유한카드.합계 와 참가자.보유한카드.합계를 비교해서 결과 객체에 넣는다.
 
-## 도메인
-- [ ] 참가자 생성 (이름을 받아서)
-- [ ] 딜러 생성
-- [ ] 섞인 카드 덱을 준비한다.
-- [ ] 카드덱이 각 플레이어에게 두장씩 카드를 나눠준다.
-- [ ] 칙촉 차례가 되면, 칙촉이 보유한 카드가 총 합계를 계산한다.
-  - [ ] 21이 되거나 넘으면 카드를 더 받지 않는다. -> 보유카드가 하면 될 듯
-  - [ ] **사용자의 입력에 따라 카드를 더 받는다.**
-  - [ ] 카드를 더 받게 되면, 카드덱(제너레이터)가 참가자에게 카드를 준다.
-  - [ ] 참가자가 카드를 받으면 보유하고 있는 카드에 전달해준다.
-- [ ] 딜러 차례가 되면, 딜러의 보유한 카드가 합계를 계산한다.
-  - [ ] 21이 되거나 넘으면 카드를 더 받지 않는다. -> 보유카드가 하면 될 듯
-  - [ ] **16이하면 카드를 더 받는다.**
-  - [ ] 카드를 더 받게 되면, 카드덱(제너레이터)가 참가자에게 카드를 준다.
-- [ ] 딜러.보유한카드.합계 와 참가자.보유한카드.합계를 비교해서 결과 객체에 넣는다.
+## 승부 규칙
+1. 카드가 두장이고 카드의 합이 21이면 블랙잭(가장 강함)
+2. 카드가 두장 초과하면 카드 합이 21 이하면 카드 합이 큰 사람이 승리
+3. 카드 갯수 상관없이 카드 합이 21 초과면 가장 약함.

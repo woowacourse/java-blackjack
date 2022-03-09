@@ -44,10 +44,6 @@ public class Cards {
         cards.add(card);
     }
 
-    public List<Card> getValue() {
-        return cards;
-    }
-
     public boolean canReceiveCardForDealer() {
         return getSum() <= 16;
     }
@@ -57,6 +53,17 @@ public class Cards {
     }
 
     public Result getResult(Cards other) {
-        return Result.of(this.getSum(), other.getSum());
+        if (this.getStatus() == Status.STAND && other.getStatus() == Status.STAND){
+            return Result.of(this.getSum(), other.getSum());
+        }
+        return Result.match(this.getStatus(), other.getStatus());
+    }
+
+    private Status getStatus() {
+        return Status.of(cards.size(), getSum());
+    }
+
+    public List<Card> getValue() {
+        return cards;
     }
 }
