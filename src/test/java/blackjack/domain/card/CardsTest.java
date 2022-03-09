@@ -74,7 +74,7 @@ class CardsTest {
                 new Card(DIAMOND, cardNumber)));
 
         // when
-        final Status actual = cards.isBust();
+        final Status actual = cards.getStatus();
 
         // then
         assertThat(actual).isEqualTo(expected);

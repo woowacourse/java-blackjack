@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Status;
 import java.util.LinkedHashSet;
 
 public class Player {
@@ -38,5 +39,9 @@ public class Player {
 
     public int getScore() {
         return cards.sum();
+    }
+
+    public Status getStatus() {
+        return cards.getStatus();
     }
 }

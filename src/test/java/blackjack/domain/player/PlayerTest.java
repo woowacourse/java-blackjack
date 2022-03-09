@@ -1,15 +1,19 @@
 package blackjack.domain.player;
 
+import static blackjack.domain.card.CardNumber.*;
+import static blackjack.domain.card.CardSymbol.*;
 import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardSymbol;
+import blackjack.domain.card.Status;
 import fuelinjection.Car;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
@@ -43,7 +47,7 @@ class PlayerTest {
     void hit() {
         // give
         final Player player = new Player("pobi");
-        final Card card = new Card(CardSymbol.DIAMOND, CardNumber.JACK);
+        final Card card = new Card(DIAMOND, JACK);
 
         // when
         player.hit(card);
@@ -51,5 +55,22 @@ class PlayerTest {
 
         // then
         assertThat(actual).isEqualTo(10);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"TWO:BUST", "ACE:NOT_BUST"}, delimiter = ':')
+    @DisplayName("카드의 합이 21을 초과하면 BUST를 반환한다.")
+    void returnBust(CardNumber cardNumber, Status expected) {
+        // give
+        final Player player = new Player("pobi");
+        player.hit(new Card(DIAMOND, JACK));
+        player.hit(new Card(DIAMOND, QUEEN));
+        player.hit(new Card(DIAMOND, cardNumber));
+
+        // when
+        final Status actual = player.getStatus();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 }

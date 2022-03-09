@@ -18,7 +18,7 @@ public class Cards {
         return value.size();
     }
 
-    public Status isBust() {
+    public Status getStatus() {
         if (sum() > 21) {
             return Status.BUST;
         }
