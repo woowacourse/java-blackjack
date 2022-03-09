@@ -3,6 +3,7 @@ package blackjack.controller;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.BlackJackResult;
 import blackjack.domain.CardDeck;
 import blackjack.domain.Dealer;
 import blackjack.domain.Gambler;
@@ -23,6 +24,7 @@ public class BlackJackController {
         hitOrStay(gamblers, cardDeck);
         addCardForDealer(dealer, cardDeck);
         printCardAndScore(dealer, gamblers);
+        outputView.printResult(BlackJackResult.of(dealer, gamblers));
     }
 
     public List<Gambler> setupGamblers() {
