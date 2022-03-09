@@ -1,6 +1,6 @@
 package controller;
 
-import domain.card.Card;
+import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -40,14 +40,14 @@ public class BlackJackController {
 
     private void hitCardByPlayer(Player player) {
         while (player.canDrawCard() && inputView.inputMoreCardOrNot(player.getName())) {
-            player.hit(Card.draw());
+            player.hit(Deck.handOut());
             outputView.showPlayerCardStatus(player);
         }
     }
 
     private void hitCardByDealer(Dealer dealer) {
         if (dealer.canDrawCard()) {
-            dealer.hit(Card.draw());
+            dealer.hit(Deck.handOut());
             outputView.showDealerHitCardMessage();
         }
     }

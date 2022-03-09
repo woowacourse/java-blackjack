@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +33,7 @@ public class Participant {
     }
 
     public void hitInitialTurn(){
-        cards.addCards(Card.handOutInitialTurn());
+        cards.addCards(Deck.handOutInitialTurn());
     }
 
     public String getName() {

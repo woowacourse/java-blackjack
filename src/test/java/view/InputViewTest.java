@@ -19,7 +19,7 @@ class InputViewTest {
 
     @Test
     @DisplayName("유저 이름 공백 입력 에러 테스트")
-    void inputPlayerName() {
+    void inputPlayerNameTest() {
         //given
         InputStream in = new ByteArrayInputStream("".getBytes());
         System.setIn(in);
@@ -27,5 +27,17 @@ class InputViewTest {
         //then
         assertThatThrownBy(() -> inputView.inputPlayerName()).isInstanceOf(Exception.class);
     }
+
+    @Test
+    @DisplayName("유~~~~~")
+    void inputMoreCardOrNotTest() {
+        //given
+        InputStream in = new ByteArrayInputStream("f\\n".getBytes());
+        System.setIn(in);
+
+        //then
+        assertThatThrownBy(() -> inputView.inputMoreCardOrNot("12")).isInstanceOf(IllegalArgumentException.class);
+    }
+
 
 }
