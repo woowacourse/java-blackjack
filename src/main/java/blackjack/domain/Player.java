@@ -10,8 +10,8 @@ public class Player {
     private boolean turnState;
 
     private Player(final String name, final boolean turnState, final Cards owningCards) {
-        Objects.requireNonNull(name, "[Error] 플레이어의 이름은 null이 들어올 수 없습니다.");
-        Objects.requireNonNull(owningCards, "[Error] 보유 카드에는 null이 들어올 수 없습니다.");
+        Objects.requireNonNull(name, "플레이어의 이름은 null이 들어올 수 없습니다.");
+        Objects.requireNonNull(owningCards, "보유 카드에는 null이 들어올 수 없습니다.");
         validateEmptyName(name);
         this.name = name;
         this.turnState = turnState;
@@ -24,7 +24,7 @@ public class Player {
 
     private void validateEmptyName(final String name) {
         if (name.isBlank()) {
-            throw new IllegalArgumentException("[Error] 플레이어의 이름은 공백이 들어올 수 없습니다.");
+            throw new IllegalArgumentException("플레이어의 이름은 공백이 들어올 수 없습니다.");
         }
     }
 
@@ -46,7 +46,7 @@ public class Player {
 
     private void validateEndTurn() {
         if (!canDraw()) {
-            throw new IllegalStateException("[ERROR] 턴이 종료되었으면 카드를 받을 수 없습니다.");
+            throw new IllegalStateException("턴이 종료되었으면 카드를 받을 수 없습니다.");
         }
     }
 

@@ -34,7 +34,7 @@ class CardsTest {
     void createNullException() {
         assertThatThrownBy(() -> new Cards(null))
                 .isInstanceOf(NullPointerException.class)
-                .hasMessage("[Error] 카드에는 null이 들어올 수 없습니다.");
+                .hasMessage("카드에는 null이 들어올 수 없습니다.");
     }
 
     @Test
@@ -43,7 +43,7 @@ class CardsTest {
         final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, KING), Card.of(SPADE, TWO)));
         assertThatThrownBy(() -> cards.addCard(Card.of(SPADE, FIVE)))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[Error] 21이 넘을때는 카드를 더 추가할 수 없습니다.");
+                .hasMessage("21이 넘을때는 카드를 더 추가할 수 없습니다.");
     }
 
     @Test

@@ -25,7 +25,7 @@ public class Dealer {
 
     private void validateLimitScore() {
         if (cards.calculateScore() >= DEALER_LIMIT_SCORE) {
-            throw new IllegalStateException("[Error] 딜러 카드가 이미 17이상입니다.");
+            throw new IllegalStateException("딜러 카드가 이미 17이상입니다.");
         }
     }
 

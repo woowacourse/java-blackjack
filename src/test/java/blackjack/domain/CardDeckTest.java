@@ -21,7 +21,7 @@ class CardDeckTest {
         pollCards(cardDeck, 51);
         assertThatThrownBy(() -> cardDeck.provideInitCards())
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[Error] 남은 카드가 2장 미만입니다.");
+                .hasMessage("남은 카드가 2장 미만입니다.");
     }
 
     @Test
@@ -38,7 +38,7 @@ class CardDeckTest {
         pollCards(cardDeck, 52);
         assertThatThrownBy(() -> cardDeck.provideCard())
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[Error] 남은 카드가 없습니다.");
+                .hasMessage("남은 카드가 없습니다.");
     }
 
     @Test

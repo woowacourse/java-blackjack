@@ -27,7 +27,7 @@ public class PlayerTest {
     void createExceptionByNull(String input) {
         assertThatThrownBy(() -> new Player(input, true, new ArrayList<>()))
                 .isInstanceOf(NullPointerException.class)
-                .hasMessage("[Error] 플레이어의 이름은 null이 들어올 수 없습니다.");
+                .hasMessage("플레이어의 이름은 null이 들어올 수 없습니다.");
     }
 
     @ParameterizedTest
@@ -36,7 +36,7 @@ public class PlayerTest {
     void createExceptionByEmpty(String input) {
         assertThatThrownBy(() -> new Player(input, true, new ArrayList<>()))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[Error] 플레이어의 이름은 공백이 들어올 수 없습니다.");
+                .hasMessage("플레이어의 이름은 공백이 들어올 수 없습니다.");
     }
 
     @Nested
@@ -64,7 +64,7 @@ public class PlayerTest {
         final Player player = new Player("user", false, new ArrayList<>());
         assertThatThrownBy(() -> player.draw(Card.cards().get(0)))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[ERROR] 턴이 종료되었으면 카드를 받을 수 없습니다.");
+                .hasMessage("턴이 종료되었으면 카드를 받을 수 없습니다.");
     }
 
     @Test

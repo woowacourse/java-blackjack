@@ -29,7 +29,7 @@ public class CardDeck {
 
     private void validateEnoughDeckSize() {
         if (cards.size() < INIT_PROVIDING_CARD_SIZE) {
-            throw new IllegalStateException("[Error] 남은 카드가 2장 미만입니다.");
+            throw new IllegalStateException("남은 카드가 2장 미만입니다.");
         }
     }
 
@@ -40,7 +40,7 @@ public class CardDeck {
 
     private void validateEmptyDeck() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("[Error] 남은 카드가 없습니다.");
+            throw new IllegalStateException("남은 카드가 없습니다.");
         }
     }
 }
