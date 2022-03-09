@@ -1,6 +1,9 @@
 package blackjack.domain;
 
 import blackjack.dto.PlayerInfo;
+import blackjack.dto.PlayerResultInfo;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,5 +60,11 @@ public class BlackJackGame {
 
     public PlayerInfo getCurrentTurnPlayerInfo() {
         return players.getCurrentTurnPlayerInfo();
+    }
+
+    public List<PlayerResultInfo> getPlayerResultInfos() {
+        final List<PlayerResultInfo> resultInfos = new ArrayList<>(Arrays.asList(PlayerResultInfo.from(dealer)));
+        resultInfos.addAll(players.getResultPlayerInfo());
+        return List.copyOf(resultInfos);
     }
 }

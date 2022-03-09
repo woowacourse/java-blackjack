@@ -4,6 +4,7 @@ import blackjack.domain.Card;
 import blackjack.domain.CardNumber;
 import blackjack.domain.CardPattern;
 import blackjack.dto.PlayerInfo;
+import blackjack.dto.PlayerResultInfo;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,5 +45,14 @@ public class OutputView {
 
     public static void printDealerDraw() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printResultPlayerInfos(final List<PlayerResultInfo> playerResultInfos) {
+        playerResultInfos.forEach(playerResultInfo -> printResultPlayerInfo(playerResultInfo));
+    }
+
+    private static void printResultPlayerInfo(final PlayerResultInfo playerResultInfo) {
+        System.out.printf("%s 카드: %s - 결과: %d\n", playerResultInfo.getName(),
+                joinPlayerCardInfos(playerResultInfo.getCards()), playerResultInfo.getScore());
     }
 }

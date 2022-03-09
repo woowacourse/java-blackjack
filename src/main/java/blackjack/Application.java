@@ -24,5 +24,7 @@ public class Application {
             blackJackGame.drawDealer();
             OutputView.printDealerDraw();
         }
+
+        OutputView.printResultPlayerInfos(blackJackGame.getPlayerResultInfos());
     }
 }

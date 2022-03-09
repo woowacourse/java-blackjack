@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.dto.PlayerInfo;
+import blackjack.dto.PlayerResultInfo;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,7 @@ public class Players {
 
     public void turnToNextPlayer() {
         validateAllTurnEnd();
+        currentTurnPlayer().endTurn();
         currentTurnIndex++;
     }
 
@@ -65,5 +67,11 @@ public class Players {
     private Player currentTurnPlayer() {
         validateAllTurnEnd();
         return values.get(currentTurnIndex);
+    }
+
+    public List<PlayerResultInfo> getResultPlayerInfo() {
+        return values.stream()
+                .map(PlayerResultInfo::from)
+                .collect(Collectors.toUnmodifiableList());
     }
 }
