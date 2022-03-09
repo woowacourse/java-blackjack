@@ -8,4 +8,8 @@ public class Card {
         this.suit = suit;
         this.number = number;
     }
+
+    public Number getNumber() {
+        return this.number;
+    }
 }
