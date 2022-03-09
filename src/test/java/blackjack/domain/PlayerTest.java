@@ -58,4 +58,18 @@ public class PlayerTest {
 
         assertThat(player.isPlaying()).isFalse();
     }
+
+    @DisplayName("카드를 받아서 합칠 수 있다.")
+    @Test
+    void 카드_합침() {
+        String name = "mat";
+        List<Card> cards = List.of(Card.of(Denomination.JACK, Suit.CLOVER), Card.of(Denomination.KING, Suit.DIAMOND),
+                Card.of(Denomination.KING, Suit.HEART));
+        Player player = new Player(name, cards);
+        Card card = Card.of(Denomination.FIVE, Suit.SPADE);
+
+        player.combine(card);
+
+        assertThat(player.getCards().size()).isEqualTo(4);
+    }
 }
