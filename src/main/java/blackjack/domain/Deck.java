@@ -27,6 +27,13 @@ public class Deck {
     }
 
     public Card drawCard() {
+        validateDrawCard();
         return cards.remove(0);
+    }
+
+    private void validateDrawCard() {
+        if (cards.size() == 0) {
+            throw new IllegalArgumentException("더 이상 뽑을 수 있는 카드가 없습니다.");
+        }
     }
 }
