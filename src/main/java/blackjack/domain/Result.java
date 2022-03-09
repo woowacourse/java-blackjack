@@ -32,6 +32,12 @@ public class Result {
         int dealerScore = Rule.INSTANCE.calculateSum(dealer.getCards());
         int playerScore = Rule.INSTANCE.calculateSum(player.getCards());
 
+        if (Rule.INSTANCE.isBust(player.getCards())) {
+            dealerResult.merge(Judgement.WIN, 1, Integer::sum);
+            playersResult.put(player.getName(), Judgement.LOSE);
+            return;
+        }
+
         if (dealerScore == playerScore) {
             dealerResult.merge(Judgement.DRAW, 1, Integer::sum);
             playersResult.put(player.getName(), Judgement.DRAW);
