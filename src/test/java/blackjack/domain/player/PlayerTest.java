@@ -1,5 +1,11 @@
 package blackjack.domain.player;
 
+import static org.assertj.core.api.Assertions.*;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardSymbol;
+import fuelinjection.Car;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +19,7 @@ class PlayerTest {
     @DisplayName("이름이 유효하지 않으면 예외를 던진다.")
     void emptyName(String name) {
         // then
-        Assertions.assertThatThrownBy(() -> new Player(name))
+        assertThatThrownBy(() -> new Player(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("공백은 허용되지 않습니다.");
     }
@@ -26,9 +32,24 @@ class PlayerTest {
         stringBuilder.append("1");
 
         // then
-        Assertions.assertThatThrownBy(() -> new Player(stringBuilder.toString()))
+        assertThatThrownBy(() -> new Player(stringBuilder.toString()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("길이는 100자를 초과할 수 없습니다.");
 
+    }
+
+    @Test
+    @DisplayName("카드를 받아 저장한다.")
+    void hit() {
+        // give
+        final Player player = new Player("pobi");
+        final Card card = new Card(CardSymbol.DIAMOND, CardNumber.JACK);
+
+        // when
+        player.hit(card);
+        final int actual = player.getScore();
+
+        // then
+        assertThat(actual).isEqualTo(10);
     }
 }
