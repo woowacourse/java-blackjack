@@ -1,11 +1,6 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Dealer {
-
-    private final List<Card> cards = new ArrayList<>();
+public class Dealer extends Participant {
 
     private Dealer() {
     }
@@ -15,13 +10,5 @@ public class Dealer {
         dealer.drawCard(deck);
         dealer.drawCard(deck);
         return dealer;
-    }
-
-    public void drawCard(final Deck deck) {
-        cards.add(deck.drawCard());
-    }
-
-    public List<Card> getCards() {
-        return List.copyOf(cards);
     }
 }
