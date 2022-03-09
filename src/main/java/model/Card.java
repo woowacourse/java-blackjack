@@ -47,4 +47,12 @@ public class Card {
     public int hashCode() {
         return Objects.hash(cardSuit, cardFace);
     }
+
+    public CardSuit getCardSuit() {
+        return cardSuit;
+    }
+
+    public CardFace getCardFace() {
+        return cardFace;
+    }
 }

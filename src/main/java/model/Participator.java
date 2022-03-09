@@ -23,4 +23,8 @@ public abstract class Participator {
     public boolean canReceiveCard() {
         return cards.canReceiveCard();
     }
+
+    public PlayerName getPlayerName() {
+        return playerName;
+    }
 }

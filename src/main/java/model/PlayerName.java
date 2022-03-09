@@ -7,4 +7,8 @@ public class PlayerName {
     public PlayerName(String value) {
         this.value = value;
     }
+
+    public String getValue() {
+        return value;
+    }
 }
