@@ -16,4 +16,20 @@ public class DeckTest {
         //then
         assertThat(deck).isNotNull();
     }
+
+    @DisplayName("덱에서 카드를 뽑을 수 있다.")
+    @Test
+    public void testDrawCard() {
+        //given
+        Deck deck = new Deck();
+
+        //when
+        Card firstCard = deck.drawCard();
+        Card secondCard = deck.drawCard();
+
+        //then
+        assertThat(firstCard).isNotEqualTo(secondCard);
+    }
+
+
 }

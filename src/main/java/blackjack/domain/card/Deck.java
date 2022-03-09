@@ -27,4 +27,8 @@ public class Deck {
                         .map(denomination -> new Card(suit, denomination)))
                 .collect(Collectors.toList());
     }
+
+    public Card drawCard() {
+        return cards.pop();
+    }
 }
