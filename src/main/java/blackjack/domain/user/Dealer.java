@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Dealer {
 
+    public static final int INIT_COUNT = 1;
     private final List<Card> cards;
 
     public Dealer() {
@@ -20,5 +21,9 @@ public class Dealer {
 
     public List<Card> showCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public List<Card> showInitCards() {
+        return Collections.unmodifiableList(cards.subList(0, INIT_COUNT));
     }
 }

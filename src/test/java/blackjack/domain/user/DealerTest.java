@@ -34,4 +34,19 @@ public class DealerTest {
         //then
         assertThat(cards.size()).isEqualTo(1);
     }
+
+    @DisplayName("딜러는 처음에 카드를 한 장만 보여준다.")
+    @Test
+    public void testShowInitCards() {
+        //given
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer();
+
+        dealer.drawCard(deck);
+        dealer.drawCard(deck);
+        //when
+        List<Card> cards = dealer.showInitCards();
+        //then
+        assertThat(cards.size()).isEqualTo(1);
+    }
 }
