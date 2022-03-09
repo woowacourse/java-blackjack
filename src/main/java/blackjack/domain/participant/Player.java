@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    public static final int ACE_OPTION_NUMBER = 10;
+    public static final int ACE_ADDITIONAL_NUMBER = 10;
     public static final int BEST_SCORE = 21;
 
     private final Name name;
@@ -19,7 +19,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isReceivable() {
-        return false;
+        return calculateBestScore() <= BEST_SCORE;
     }
 
     @Override
@@ -39,8 +39,8 @@ public class Player extends Participant {
     }
 
     private int getBest(int sum, Card card) {
-        if (card.isAce() && sum + ACE_OPTION_NUMBER <= BEST_SCORE) {
-            sum += ACE_OPTION_NUMBER;
+        if (card.isAce() && sum + ACE_ADDITIONAL_NUMBER <= BEST_SCORE) {
+            sum += ACE_ADDITIONAL_NUMBER;
         }
         return sum;
     }
