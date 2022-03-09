@@ -37,17 +37,4 @@ public class CardsTest {
                 Arguments.of(new Cards(new Card("A다이아몬드"), new Card("A스페이드"), new Card("9클로버")))
         );
     }
-
-    @ParameterizedTest(name = "입력값 : {1}")
-    @MethodSource("provideBustFixture")
-    void 버스트_발생(boolean expect, Cards cards) {
-        assertThat(cards.isBust()).isEqualTo(expect);
-    }
-
-    protected static Stream<Arguments> provideBustFixture() {
-        return Stream.of(
-            Arguments.of(true, new Cards(new Card("J다이아몬드"),new Card("Q다이아몬드"),new Card("2클로버"))),
-            Arguments.of(false, new Cards(new Card("A다이아몬드"), new Card("J다이아몬드"), new Card("4하트")))
-        );
-    }
 }

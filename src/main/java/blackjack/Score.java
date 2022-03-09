@@ -6,6 +6,10 @@ public class Score {
 
     private final int value;
 
+    public int getValue() {
+        return value;
+    }
+
     public Score(int value) {
         this.value = value;
     }

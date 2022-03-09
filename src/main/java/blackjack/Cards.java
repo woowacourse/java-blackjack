@@ -21,8 +21,9 @@ public class Cards {
 
     private int bestScore(List<Integer> temp) {
         return temp.stream()
-                .filter(tmp -> !isBust(tmp))
-                .mapToInt(Integer::intValue)
+                .map(Score::new)
+                .filter(tmp -> !tmp.isBust())
+                .mapToInt(Score::getValue)
                 .max().orElse(hardHand());
     }
 
@@ -46,16 +47,8 @@ public class Cards {
 
     private int numberOfAce() {
         return (int) cards.stream()
-                .filter(card -> card.getRank() == 1)
+                .filter(Card::isAce)
                 .count();
-    }
-
-    private boolean isBust(int score) {
-        return score > 21;
-    }
-
-    public boolean isBust() {
-        return score().isBust();
     }
 
     @Override

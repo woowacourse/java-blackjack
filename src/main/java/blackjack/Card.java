@@ -20,4 +20,8 @@ public class Card {
         }
         return Integer.parseInt(value);
     }
+
+    public boolean isAce() {
+        return getRank() == 1;
+    }
 }

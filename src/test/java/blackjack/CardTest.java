@@ -15,4 +15,12 @@ public class CardTest {
         Card card = new Card(input);
         assertThat(card.getRank()).isEqualTo(expect);
     }
+
+    @ParameterizedTest
+    @CsvSource({"A다이아몬드,true", "5하트,false"})
+    @DisplayName("ACE인지 판별하는 테스트")
+    void is_ace(String input, boolean expect) {
+        Card card = new Card(input);
+        assertThat(card.isAce()).isEqualTo(expect);
+    }
 }
