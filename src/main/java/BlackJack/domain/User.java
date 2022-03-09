@@ -2,10 +2,10 @@ package BlackJack.domain;
 
 import java.util.List;
 
-public class User {
+public abstract class User {
 
-    private String name;
-    private List<Card> cards;
+    protected String name;
+    protected List<Card> cards;
 
     public User(String name){
         this.name = name;
@@ -19,4 +19,7 @@ public class User {
     public List<Card> getCards() {
         return cards;
     }
+
+    abstract void addCard();
+
 }
