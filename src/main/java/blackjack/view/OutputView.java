@@ -13,6 +13,18 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
+    private static final String PROVIDE_INIT_CARD_TO_PLAYER_MESSAGE = "%s와 %s에게 2장의 나누었습니다.\n";
+    private static final String PROVIDED_CARD_TO_DEALER_INFO_MESSAGE = "%s: %s\n";
+    private static final String PROVIDED_CARD_TO_PLAYER_INFO_MESSAGE = "%s카드: %s\n";
+
+    private static final String PROVIDE_CARD_TO_DEALER_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+
+    private static final String PLAYER_CARD_RESULT_AND_SCORE_MESSAGE = "%s 카드: %s - 결과: %d\n";
+
+    private static final String OUTCOME_TITLE = "## 최종 승패";
+    private static final String DEALER_OUTCOME_RESULT_MESSAGE = "딜러: %s\n";
+    private static final String PLAYER_OUTCOME_RESULT_MESSAGE = "%s: %s\n";
+
     private static final String PLAYER_NAME_DELIMITER = ", ";
     private static final String CARD_INFO_DELIMITER = ", ";
 
@@ -21,8 +33,9 @@ public class OutputView {
     }
 
     public static void showGameInitInfo(final PlayerInfo dealerInfo, final List<PlayerInfo> playerInfos) {
-        System.out.printf("%s와 %s에게 2장의 나누었습니다.\n", dealerInfo.getName(), joinPlayerNames(playerInfos));
-        System.out.printf("%s: %s\n", dealerInfo.getName(), joinPlayerCardInfos(dealerInfo.getCards()));
+        System.out.printf(PROVIDE_INIT_CARD_TO_PLAYER_MESSAGE, dealerInfo.getName(), joinPlayerNames(playerInfos));
+        System.out.printf(PROVIDED_CARD_TO_DEALER_INFO_MESSAGE,
+                dealerInfo.getName(), joinPlayerCardInfos(dealerInfo.getCards()));
         playerInfos.forEach(OutputView::printPlayerCardInfo);
     }
 
@@ -43,25 +56,26 @@ public class OutputView {
     }
 
     public static void printPlayerCardInfo(final PlayerInfo playerInfo) {
-        System.out.printf("%s카드: %s\n", playerInfo.getName(), joinPlayerCardInfos(playerInfo.getCards()));
+        System.out.printf(PROVIDED_CARD_TO_PLAYER_INFO_MESSAGE,
+                playerInfo.getName(), joinPlayerCardInfos(playerInfo.getCards()));
     }
 
     public static void printDealerDraw() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(PROVIDE_CARD_TO_DEALER_MESSAGE);
     }
 
     public static void printResultPlayerInfos(final List<PlayerResultInfo> playerResultInfos) {
-        playerResultInfos.forEach(playerResultInfo -> printResultPlayerInfo(playerResultInfo));
+        playerResultInfos.forEach(OutputView::printResultPlayerInfo);
     }
 
     private static void printResultPlayerInfo(final PlayerResultInfo playerResultInfo) {
-        System.out.printf("%s 카드: %s - 결과: %d\n", playerResultInfo.getName(),
+        System.out.printf(PLAYER_CARD_RESULT_AND_SCORE_MESSAGE, playerResultInfo.getName(),
                 joinPlayerCardInfos(playerResultInfo.getCards()), playerResultInfo.getScore());
     }
 
     public static void printAllOutcomeResult(final OutComeResult outComeResult) {
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %s\n", printDealerResult(outComeResult.getDealerResult()));
+        System.out.println(OUTCOME_TITLE);
+        System.out.printf(DEALER_OUTCOME_RESULT_MESSAGE, printDealerResult(outComeResult.getDealerResult()));
         printPlayerResults(outComeResult.getPlayerResults());
     }
 
@@ -77,6 +91,6 @@ public class OutputView {
     }
 
     private static void printPlayerResult(final String playerName, final GameOutcome gameOutcome) {
-        System.out.printf("%s: %s\n", playerName, gameOutcome.getPrintValue());
+        System.out.printf(PLAYER_OUTCOME_RESULT_MESSAGE, playerName, gameOutcome.getPrintValue());
     }
 }
