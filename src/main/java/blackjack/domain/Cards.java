@@ -47,7 +47,9 @@ public class Cards {
     }
 
     public GameOutcome fightResult(final Cards compareCards) {
-        if (this.isBlackJack() && compareCards.isBlackJack()) {
+        if (this.isBust() && compareCards.isBust()) {
+            return DRAW;
+        } else if (this.isBlackJack() && compareCards.isBlackJack()) {
             return DRAW;
         } else if (this.isBlackJack()) {
             return WIN;

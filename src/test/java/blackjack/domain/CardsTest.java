@@ -4,6 +4,7 @@ import static blackjack.domain.CardNumber.A;
 import static blackjack.domain.CardNumber.FIVE;
 import static blackjack.domain.CardNumber.JACK;
 import static blackjack.domain.CardNumber.KING;
+import static blackjack.domain.CardNumber.QUEEN;
 import static blackjack.domain.CardNumber.TEN;
 import static blackjack.domain.CardNumber.THREE;
 import static blackjack.domain.CardNumber.TWO;
@@ -76,6 +77,16 @@ class CardsTest {
         final Cards cards = new Cards(Arrays.asList(Card.of(HEART, KING), Card.of(HEART, JACK), Card.of(HEART, A)));
         final Cards compareCards
                 = new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, JACK), Card.of(SPADE, A)));
+        assertThat(cards.fightResult(compareCards)).isEqualTo(DRAW);
+    }
+
+    @Test
+    @DisplayName("둘 다 버스트일 경우, 무승부를 반환한다.")
+    void fightResult() {
+        final Cards cards = new Cards(
+                Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN), Card.of(SPADE, JACK)));
+        final Cards compareCards = new Cards(
+                Arrays.asList(Card.of(HEART, KING), Card.of(HEART, QUEEN), Card.of(HEART, JACK)));
         assertThat(cards.fightResult(compareCards)).isEqualTo(DRAW);
     }
 }
