@@ -17,7 +17,7 @@ public class Cards {
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
-        Objects.requireNonNull(cards, "[Error] 카드에는 null이 들어올 수 없습니다.");
+        Objects.requireNonNull(cards, "카드에는 null이 들어올 수 없습니다.");
         this.cards = new ArrayList<>(cards);
     }
 
@@ -35,7 +35,7 @@ public class Cards {
 
     private void validateScoreSize() {
         if (calculateScore() > BLACK_JACK_NUMBER) {
-            throw new IllegalStateException("[Error] 21이 넘을때는 카드를 더 추가할 수 없습니다.");
+            throw new IllegalStateException("21이 넘을때는 카드를 더 추가할 수 없습니다.");
         }
     }
 
