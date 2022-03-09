@@ -10,6 +10,8 @@ public class Participant implements Player {
     private final String name;
     private final Cards cards;
 
+    private boolean winState = false;
+
     public Participant(final List<Card> cards, final String name) {
         validateEmpty(name);
         this.cards = new Cards(cards);
@@ -38,6 +40,10 @@ public class Participant implements Player {
         return scoreByAceOne;
     }
 
+    public void win(){
+        this.winState = true;
+    }
+
     @Override
     public List<Card> getCards() {
         return cards.getCards();
@@ -45,5 +51,9 @@ public class Participant implements Player {
 
     public String getName(){
         return this.name;
+    }
+
+    public boolean getWinState() {
+        return this.winState;
     }
 }

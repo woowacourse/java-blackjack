@@ -11,6 +11,9 @@ public class Dealer implements Player {
 
     private final Cards cards;
 
+    private int winCount = 0;
+    private int loseCount = 0;
+
     public Dealer(final List<Card> cards) {
         this.cards = new Cards(cards);
     }
@@ -33,6 +36,22 @@ public class Dealer implements Player {
             return scoreByAceEleven;
         }
         return scoreByAceOne;
+    }
+
+    public void compete(final Participant participant) {
+        final int dealerScore = calculateScore();
+        final int participantScore = participant.calculateScore();
+
+        if (isDealerWin(dealerScore, participantScore)) {
+            winCount += 1;
+            return;
+        }
+        participant.win();
+        this.loseCount += 1;
+    }
+
+    private boolean isDealerWin(int dealerScore, int participantScore) {
+        return participantScore > MAX_SCORE || (dealerScore <= MAX_SCORE && dealerScore >= participantScore);
     }
 
     @Override

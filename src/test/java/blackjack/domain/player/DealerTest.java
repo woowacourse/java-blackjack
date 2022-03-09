@@ -10,7 +10,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -61,7 +60,7 @@ class DealerTest {
     void calculateParticipantScore(List<Card> cards, Card addCard, int score) {
         Dealer dealer = new Dealer(cards);
 
-        if (dealer.acceptableCard()){
+        if (dealer.acceptableCard()) {
             dealer.addCard(addCard);
         }
 
@@ -90,6 +89,81 @@ class DealerTest {
                         new Card(Type.SPADE, Score.TWO),
                         new Card(Type.HEART, Score.EIGHT)
                 ), new Card(Type.HEART, Score.ACE), 21)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("participantAndResult")
+    @DisplayName("딜러는 참여자와 점수를 비교해 승패를 결정한다.")
+    void calculateWinner(Participant participant, Dealer dealer, boolean result) {
+        dealer.compete(participant);
+        assertThat(participant.getWinState()).isEqualTo(result);
+    }
+
+    private static Stream<Arguments> participantAndResult() {
+        Participant participant = new Participant(List.of(
+                new Card(Type.SPADE, Score.TEN),
+                new Card(Type.HEART, Score.TEN)), "zero");
+        participant.addCard(new Card(Type.HEART, Score.THREE));
+        Dealer dealer = new Dealer(List.of(
+                new Card(Type.SPADE, Score.TEN),
+                new Card(Type.HEART, Score.TEN)
+        ));
+        dealer.addCard(new Card(Type.DIAMOND, Score.TWO));
+        return Stream.of(
+                Arguments.of(
+                        new Participant(List.of(
+                                new Card(Type.SPADE, Score.SEVEN),
+                                new Card(Type.HEART, Score.EIGHT)
+                        ), "zero"), new Dealer(List.of(
+                                new Card(Type.SPADE, Score.EIGHT),
+                                new Card(Type.HEART, Score.EIGHT)
+                        )), false),
+                Arguments.of(
+                        new Participant(List.of(
+                                new Card(Type.SPADE, Score.EIGHT),
+                                new Card(Type.HEART, Score.EIGHT)
+                        ), "zero"), new Dealer(List.of(
+                                new Card(Type.SPADE, Score.EIGHT),
+                                new Card(Type.HEART, Score.EIGHT)
+                        )), false),
+                Arguments.of(
+                        new Participant(List.of(
+                                new Card(Type.SPADE, Score.EIGHT),
+                                new Card(Type.HEART, Score.NINE)
+                        ), "zero"), new Dealer(List.of(
+                                new Card(Type.SPADE, Score.EIGHT),
+                                new Card(Type.HEART, Score.EIGHT)
+                        )), true),
+                Arguments.of(
+                        new Participant(List.of(
+                                new Card(Type.SPADE, Score.JACK),
+                                new Card(Type.HEART, Score.TEN)
+                        ), "zero"), new Dealer(List.of(
+                                new Card(Type.SPADE, Score.ACE),
+                                new Card(Type.HEART, Score.JACK)
+                        )), false),
+                Arguments.of(
+                        new Participant(List.of(
+                                new Card(Type.SPADE, Score.ACE),
+                                new Card(Type.HEART, Score.TEN)
+                        ), "zero"), new Dealer(List.of(
+                                new Card(Type.SPADE, Score.ACE),
+                                new Card(Type.HEART, Score.TEN)
+                        )), false),
+                Arguments.of(
+                        participant
+                        , new Dealer(List.of(
+                                new Card(Type.SPADE, Score.ACE),
+                                new Card(Type.HEART, Score.JACK)
+                        )), false),
+                Arguments.of(
+                        new Participant(List.of(
+                                new Card(Type.SPADE, Score.ACE),
+                                new Card(Type.HEART, Score.TEN)
+                        ), "zero"),
+                        dealer, true),
+                Arguments.of(participant, dealer, false)
         );
     }
 }
