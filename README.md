@@ -28,3 +28,7 @@
 3. 게임 결과
     1. 각 플레이어는 딜러와 대결을 하여 승패 여부를 결정하고 결과를 출력한다.
     2. 딜러는 각 플레이어와의 대결 결과를 모두 종합하여 결과를 출력한다.
+
+## 블랙잭 모델 다이어그램
+
+<img src="blackJackModelDiagram.png" alt="black jack model diagram" />
