@@ -25,10 +25,8 @@ public class OutputView {
     }
 
     public void showInitialTurnStatus(Players players, Dealer dealer) {
-        List<String> playerNames = players.toNames();
-
         System.out.printf(PARTICIPANTS_INITIAL_HAND_OUT_MESSAGE,
-            dealer.getName(), String.join(COMMA, playerNames));
+            dealer.getName(), String.join(COMMA, players.toNames()));
 
         showInitialDealerCardStatus(dealer);
 
