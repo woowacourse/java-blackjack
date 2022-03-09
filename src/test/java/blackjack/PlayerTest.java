@@ -15,4 +15,15 @@ public class PlayerTest {
 
         assertThat(player.countCards()).isEqualTo(21);
     }
+    
+    @Test
+    @DisplayName("한장의 카드를 추가한다.")
+    void putCard() {
+        Card card1 = Card.valueOf(Suit.SPADE, Number.NINE);
+        Card card2 = Card.valueOf(Suit.SPADE, Number.ACE);
+        Player player = new Player("jason", card1, card2);
+        player.putCard(Card.valueOf(Suit.SPADE, Number.ACE));
+
+        assertThat(player.countCards()).isEqualTo(21);
+    }
 }

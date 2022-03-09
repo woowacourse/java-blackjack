@@ -13,5 +13,15 @@ public class BlackjackGame {
         List<Player> players = playerNames.stream()
                 .map(name -> new Player(name, deck.draw(), deck.draw()))
                 .collect(Collectors.toList());
+
+        List<String> yesOrNo = List.of("y", "y", "n");
+
+        for (Player player : players) {
+            for (String answer : yesOrNo) {
+                while (answer.equals("y")) {
+                    player.putCard(deck.draw());
+                }
+            }
+        }
     }
 }

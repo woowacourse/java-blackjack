@@ -14,4 +14,8 @@ public class Player {
     public int countCards() {
         return holdCards.countBestNumber();
     }
+
+    public void putCard(Card card) {
+        holdCards.addCard(card);
+    }
 }
