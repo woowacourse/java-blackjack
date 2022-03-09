@@ -5,18 +5,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HoldCards {
-    private final List<Card> deck;
+    private final List<Card> cards;
 
     public HoldCards() {
-        this.deck = new ArrayList<>();
+        this.cards = new ArrayList<>();
     }
 
     public void addCard(Card card) {
-        deck.add(card);
+        cards.add(card);
     }
 
     public int countBestNumber() {
-        return Number.sum(deck.stream()
+        return Number.sum(cards.stream()
                 .map(Card::getNumber)
                 .collect(Collectors.toList()));
     }
