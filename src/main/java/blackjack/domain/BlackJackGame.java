@@ -1,6 +1,9 @@
 package blackjack.domain;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGame {
 
@@ -25,5 +28,17 @@ public class BlackJackGame {
         for (int i = 0; i < 2; i++) {
             player.receiveCard(deck.draw());
         }
+    }
+
+    public Map<Player,String> calculateResult() {
+        Map<Player,String> gameResult=new LinkedHashMap<>();
+        for (Player gamer : gamers) {
+            if (dealer.calculateResult()> gamer.calculateResult()){
+                gameResult.put(gamer,"패");
+                continue;
+            }
+            gameResult.put(gamer,"승");
+        }
+        return gameResult;
     }
 }
