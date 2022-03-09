@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,8 +9,8 @@ public class Users {
 
     private final List<User> users;
 
-    public Users(List<String> users) {
-        this.users = users.stream()
+    public Users(String[] users) {
+        this.users = Arrays.stream(users)
                 .map(User::new)
                 .collect(Collectors.toList());
     }

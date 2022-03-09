@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class User {
@@ -22,10 +23,6 @@ public class User {
         if (name.length() == 0) {
             throw new IllegalArgumentException(ERROR_INVALID_NAME);
         }
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void receiveCard(Card card) {
@@ -62,5 +59,13 @@ public class User {
         return (int) this.cards.stream()
                 .filter(card -> card.getNumber() == CardNumber.ACE.getNumber())
                 .count();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
