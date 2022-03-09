@@ -23,6 +23,13 @@ public class CardDeck {
     }
 
     public Card drawCard() {
+        checkIsEmpty();
         return deck.poll();
+    }
+
+    private void checkIsEmpty() {
+        if (isEmpty()) {
+            throw new IllegalArgumentException("카드를 모두 소진했습니다!!");
+        }
     }
 }
