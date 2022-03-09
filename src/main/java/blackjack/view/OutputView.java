@@ -68,7 +68,7 @@ public class OutputView {
     private static String printDealerResult(final Map<GameOutcome, Integer> dealerResult) {
         return dealerResult.keySet().stream()
                 .filter(key -> dealerResult.get(key) > 0)
-                .map(key -> dealerResult.get(key) + key.getKoreanSymbol())
+                .map(key -> dealerResult.get(key) + key.getPrintValue())
                 .collect(Collectors.joining(" "));
     }
 
@@ -77,6 +77,6 @@ public class OutputView {
     }
 
     private static void printPlayerResult(final String playerName, final GameOutcome gameOutcome) {
-        System.out.printf("%s: %s\n", playerName, gameOutcome.getKoreanSymbol());
+        System.out.printf("%s: %s\n", playerName, gameOutcome.getPrintValue());
     }
 }

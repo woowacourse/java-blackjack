@@ -11,10 +11,10 @@ public enum GameOutcome {
     LOSE("패"),
     ;
 
-    private final String koreanSymbol;
+    private final String printValue;
 
-    GameOutcome(final String koreanSymbol) {
-        this.koreanSymbol = koreanSymbol;
+    GameOutcome(final String printValue) {
+        this.printValue = printValue;
     }
 
     public static GameOutcome calculateOutcome(final int score, final int compareScore) {
@@ -26,6 +26,11 @@ public enum GameOutcome {
         return DRAW;
     }
 
+    public static Map<GameOutcome, Integer> createInitMap() {
+        return Arrays.stream(values())
+                .collect(Collectors.toMap(value -> value, value -> 0));
+    }
+
     public GameOutcome reverse() {
         if (this == WIN) {
             return LOSE;
@@ -35,12 +40,7 @@ public enum GameOutcome {
         return DRAW;
     }
 
-    public static Map<GameOutcome, Integer> createInitMap() {
-        return Arrays.stream(values())
-                .collect(Collectors.toMap(value -> value, value -> 0));
-    }
-
-    public String getKoreanSymbol() {
-        return koreanSymbol;
+    public String getPrintValue() {
+        return printValue;
     }
 }
