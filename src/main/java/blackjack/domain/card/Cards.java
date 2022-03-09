@@ -1,7 +1,9 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Cards {
 
@@ -10,12 +12,20 @@ public class Cards {
     private final List<Card> cardHand;
 
     public Cards(List<Card> cardHand) {
+        validateDuplicate(cardHand);
         this.cardHand = new ArrayList<>(cardHand);
     }
 
     public void receive(Card card) {
         validateDuplicate(card);
         cardHand.add(card);
+    }
+
+    private void validateDuplicate(List<Card> cards) {
+        Set<Card> distinctCards = new HashSet<>(cards);
+        if (distinctCards.size() != cards.size()) {
+            throw new IllegalArgumentException(DUPLICATE_EXCEPTION_MESSAGE);
+        }
     }
 
     private void validateDuplicate(Card card) {
