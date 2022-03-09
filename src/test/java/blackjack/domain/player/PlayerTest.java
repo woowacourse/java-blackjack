@@ -1,15 +1,14 @@
 package blackjack.domain.player;
 
-import static blackjack.domain.card.CardNumber.*;
-import static blackjack.domain.card.CardSymbol.*;
-import static org.assertj.core.api.Assertions.*;
+import static blackjack.domain.card.CardNumber.JACK;
+import static blackjack.domain.card.CardNumber.QUEEN;
+import static blackjack.domain.card.CardSymbol.DIAMOND;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.Status;
-import fuelinjection.Car;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
