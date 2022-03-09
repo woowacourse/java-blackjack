@@ -7,9 +7,16 @@ public class Cards {
 
     private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    public Cards(final List<Card> cards) {
+        validateInitCards(cards);
         this.cards = new ArrayList<>();
         addCards(cards);
+    }
+
+    private void validateInitCards(List<Card> cards) {
+        if (cards == null || cards.size() != Deck.INIT_DISTRIBUTE_SIZE) {
+            throw new IllegalArgumentException("[ERROR] 잘못 배분된 카드입니다.");
+        }
     }
 
     public void addCards(final List<Card> cards) {

@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 
 public class Deck {
 
-    private static final int INIT_DISTRIBUTE_SIZE = 2;
+    protected static final int INIT_DISTRIBUTE_SIZE = 2;
 
     private final Stack<Card> deck;
 
