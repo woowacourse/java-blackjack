@@ -8,9 +8,22 @@ public class Deck {
     private final Set<Card> cards = new LinkedHashSet<>();
 
     public int sumPoints() {
-        return cards.stream()
+        int sumWithoutAce = cards.stream()
+                .filter(this::excludeAce)
                 .mapToInt(this::getCardPoint)
                 .sum();
+
+        int aceCount = (int) cards.stream().filter(card -> !excludeAce(card)).count();
+        if (aceCount > 0) {
+            if (sumWithoutAce + aceCount + 10 <= 21) {
+                return sumWithoutAce + aceCount + 10;
+            }
+        }
+        return sumWithoutAce + aceCount;
+    }
+
+    private boolean excludeAce(Card card) {
+        return !card.getRank().equals(Rank.ACE);
     }
 
     private int getCardPoint(Card card) {
