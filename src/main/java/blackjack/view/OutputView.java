@@ -35,5 +35,34 @@ public class OutputView {
     private static String cardInfo(Card card) {
         return card.getDenomination().getName() + card.getSuit().getName();
     }
+
+    public static void printDealerDrawableInfo() {
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printResultInfo(Dealer dealer, List<Player> players) {
+        System.out.println();
+        createDealerResultInfo(dealer);
+        for (Player player : players) {
+            createPlayerResultInfo(player);
+        }
+    }
+
+    private static void createPlayerResultInfo(Player player) {
+        String cardsInfo = player.getCards().stream()
+                .map(card -> cardInfo(card))
+                .collect(joining(", "));
+
+        System.out.println(player.getName() + ": " + cardsInfo + " - 결과: " + player.getTotalScore());
+    }
+
+    private static void createDealerResultInfo(Dealer dealer) {
+        String cardsInfo = dealer.getCards().stream()
+                .map(card -> cardInfo(card))
+                .collect(joining(", "));
+
+        System.out.println("딜러: " + cardsInfo + " - 결과: " + dealer.getTotalScore());
+    }
+
 }
 
