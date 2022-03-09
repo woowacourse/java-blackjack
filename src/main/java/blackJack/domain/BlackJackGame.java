@@ -7,6 +7,7 @@ import java.util.Map;
 
 import blackJack.domain.card.Deck;
 import blackJack.domain.participant.Dealer;
+import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Player;
 
 public class BlackJackGame {
@@ -15,6 +16,7 @@ public class BlackJackGame {
     private static final String ERROR_MESSAGE_PLAYER_COUNT = "플레이어의 인원수는 1명 이상 7명 이하여야 합니다.";
     private static final int MINIMUM_COUNT = 1;
     private static final int MAXIMUM_COUNT = 7;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final Deck deck;
     private final Dealer dealer;
@@ -37,6 +39,17 @@ public class BlackJackGame {
     private void validatePlayerCount(List<Player> players) {
         if (players.size() < MINIMUM_COUNT || players.size() > MAXIMUM_COUNT) {
             throw new IllegalArgumentException(ERROR_MESSAGE_PLAYER_COUNT);
+        }
+    }
+
+    public void firstCardDispensing() {
+        distributeCard(dealer, INITIAL_CARD_COUNT);
+        players.forEach(player -> distributeCard(player, INITIAL_CARD_COUNT));
+    }
+
+    private void distributeCard(Participant participant, int count) {
+        for (int i = 0; i < count; i++) {
+            participant.receiveCard(deck.getCard());
         }
     }
 

@@ -44,6 +44,18 @@ class BlackJackGameTest {
     }
 
     @Test
+    @DisplayName("게임 시작시 최초 카드 분배 기능 테스트")
+    void firstCardDispensing() {
+        Player player1 = new Player("kei");
+        Player player2 = new Player("rookie");
+
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), List.of(player1, player2));
+        blackJackGame.firstCardDispensing();
+
+        assertThat(player1.getCards().size()).isEqualTo(2);
+    }
+
+    @Test
     @DisplayName("게임의 결과를 계산해주는 기능 테스트")
     void calculateGameResult() {
         Player player1 = new Player("kei");
@@ -54,9 +66,9 @@ class BlackJackGameTest {
         player2.receiveCard(new Card(Symbol.SPADE, Denomination.J));
         dealer.receiveCard(new Card(Symbol.SPADE, Denomination.NINE));
 
-        BlackJackGame participants = new BlackJackGame(dealer, List.of(player1, player2));
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, List.of(player1, player2));
 
-        assertThat(participants.calculateGameResult().values()).containsExactly(
+        assertThat(blackJackGame.calculateGameResult().values()).containsExactly(
             WinOrLose.LOSE, WinOrLose.WIN
         );
     }

@@ -35,6 +35,10 @@ public abstract class Participant {
             .sum();
     }
 
+    public List<Card> getCards() {
+        return cards;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
