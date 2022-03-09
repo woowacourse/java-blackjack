@@ -2,6 +2,7 @@ package blackJack.domain.participant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import blackJack.domain.card.Card;
 
@@ -32,5 +33,20 @@ public abstract class Participant {
         return cards.stream()
             .mapToInt(Card::getScore)
             .sum();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Participant))
+            return false;
+        Participant that = (Participant)o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
