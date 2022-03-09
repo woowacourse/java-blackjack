@@ -31,8 +31,10 @@ public class BlackJackGame {
 
     public Map<Player, Result> calculateResult() {
         Map<Player, Result> gameResult = new LinkedHashMap<>();
+
+        int dealerResult = dealer.calculateResult();
         for (Player gamer : gamers) {
-            gameResult.put(gamer, Result.findResult(dealer, gamer));
+            gameResult.put(gamer, Result.findResult(dealerResult, gamer.calculateResult()));
         }
         return gameResult;
     }
