@@ -27,22 +27,45 @@ class DealerTest {
         assertThat(cards).isEqualTo(initializedCards.subList(0, 2));
     }
 
+    @ParameterizedTest
+    @MethodSource("provideForStartWithDrawCardTest")
+    @DisplayName("딜러의 카드가 17 미만이라면 추가로 드로우한다.")
+    void dealerUnderMinimumTotal(final List<Card> initializedCards, final List<Card> expectedCards) {
+        manualCardStrategy.initCards(initializedCards);
+        Deck deck = Deck.generate(manualCardStrategy);
+        final Dealer dealer = Dealer.startWithTwoCards(deck);
+        dealer.continueDraw(deck);
+
+        List<Card> actualCards = dealer.getCards();
+        assertThat(actualCards).isEqualTo(expectedCards);
+    }
+
     private static Stream<Arguments> provideForStartWithDrawCardTest() {
         return Stream.of(
                 Arguments.of(
                         List.of(
                                 new Card(CardPattern.DIAMOND, CardNumber.ACE),
-                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT)
+                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
+                                new Card(CardPattern.DIAMOND, CardNumber.KING)
+                        ),
+                        List.of(
+                                new Card(CardPattern.DIAMOND, CardNumber.ACE),
+                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
+                                new Card(CardPattern.DIAMOND, CardNumber.KING)
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.SPADE, CardNumber.ACE),
-                                new Card(CardPattern.HEART, CardNumber.EIGHT),
-                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT)
+                                new Card(CardPattern.SPADE, CardNumber.NINE),
+                                new Card(CardPattern.HEART, CardNumber.KING),
+                                new Card(CardPattern.HEART, CardNumber.SEVEN),
+                                new Card(CardPattern.HEART, CardNumber.JACK)
+                        ),
+                        List.of(
+                                new Card(CardPattern.SPADE, CardNumber.NINE),
+                                new Card(CardPattern.HEART, CardNumber.KING)
                         )
                 )
         );
     }
-
 }
