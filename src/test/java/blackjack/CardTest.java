@@ -10,7 +10,7 @@ public class CardTest {
     @DisplayName("카드 생성자 테스트")
     @Test
     void construct() {
-        assertDoesNotThrow(() -> new Card("3다이아몬드"));
+        assertDoesNotThrow(() -> new Card("3다이아몬드", 3));
     }
 
 }

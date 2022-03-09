@@ -3,10 +3,12 @@ package blackjack;
 import java.util.Objects;
 
 public class Card {
-    private String name;
+    private final String name;
+    private final int number;
 
-    public Card(String name) {
+    public Card(String name, int number) {
         this.name = name;
+        this.number = number;
     }
 
     public String getName() {
