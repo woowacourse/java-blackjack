@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Cards {
 
@@ -15,10 +16,10 @@ public class Cards {
     }
 
     public int calculateScore() {
-        return cards.stream()
+        final List<CardNumber> cardNumbers = cards.stream()
                 .map(Card::getNumber)
-                .mapToInt(CardNumber::getDefaultValue)
-                .sum();
+                .collect(Collectors.toUnmodifiableList());
+        return CardNumber.calculateScore(cardNumbers);
     }
 
     public void addCard(final Card card) {
