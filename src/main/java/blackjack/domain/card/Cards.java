@@ -17,7 +17,7 @@ public class Cards {
 
     public int calculateScore() {
         int oneAceScore = calculateOneAceScore();
-        if (hasAce() || oneAceScore + 10 <= 21) {
+        if (hasAce() && oneAceScore + 10 <= 21) {
             return oneAceScore + 10;
         }
         return oneAceScore;
