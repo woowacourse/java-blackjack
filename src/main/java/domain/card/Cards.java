@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Cards {
     private static final int ACE_ADDITIONAL_VALUE = 10;
-    private static final int BUST_COUNT = 21;
+    private static final int BLACKJACK_COUNT = 21;
 
     private final List<Card> value;
 
@@ -18,7 +18,11 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return sum() >= BUST_COUNT;
+        return sum() > BLACKJACK_COUNT;
+    }
+
+    public boolean isBlackJack() {
+        return sum() == BLACKJACK_COUNT;
     }
 
     public int sum() {
@@ -34,7 +38,7 @@ public class Cards {
     }
 
     private boolean exceedBust(int sum) {
-        return sum + ACE_ADDITIONAL_VALUE > BUST_COUNT;
+        return sum + ACE_ADDITIONAL_VALUE > BLACKJACK_COUNT;
     }
 
     private boolean hasAce() {

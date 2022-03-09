@@ -13,9 +13,8 @@ public class Dealer implements Participant {
         this.cards = cards;
     }
 
-    @Override
     public boolean isFinished() {
-        return cards.isBust() || cards.sum() > DRAW_STANDARD;
+        return cards.isBust() || cards.sum() > DRAW_STANDARD || cards.isBlackJack();
     }
 
     @Override

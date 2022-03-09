@@ -3,6 +3,8 @@ package domain.player;
 import domain.card.Card;
 import domain.card.Cards;
 
+import java.util.Objects;
+
 public class Player implements Participant {
     private final String name;
     private final Cards cards;
@@ -14,7 +16,7 @@ public class Player implements Participant {
 
     @Override
     public boolean isFinished() {
-        return cards.isBust();
+        return cards.isBust() || cards.isBlackJack();
     }
 
     @Override
@@ -28,5 +30,18 @@ public class Player implements Participant {
 
     public Cards getCards() {
         return cards;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return name.equals(player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
