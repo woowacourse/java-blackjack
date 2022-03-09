@@ -1,9 +1,11 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,5 +38,37 @@ class BlackJackTest {
         blackJack.addCard(pepper);
 
         assertThat(pepper.getCardsSize()).isEqualTo(pepperCardsSize + 1);
+    }
+
+    @Test
+    @DisplayName("딜러의 게임 결과가 1승 1패 0무가 나와야 한다.")
+    void getDealerResult() {
+        GameResult gameResult = initializeGameResult();
+        DealerResult dealerResult = gameResult.getDealerResult();
+        Map<Match, Integer> dealerResults = dealerResult.get();
+
+        assertThat(dealerResults)
+                .containsExactly(entry(Match.WIN, 1), entry(Match.LOSE, 1), entry(Match.DRAW, 0));
+    }
+
+    private GameResult initializeGameResult() {
+        Player pepper = new Player("페퍼");
+        pepper.addCard(new Card(CardShape.HEART, CardNumber.THREE));
+        pepper.addCard(new Card(CardShape.SPADE, CardNumber.EIGHT));
+        pepper.addCard(new Card(CardShape.CLUB, CardNumber.Q));
+
+        Player ash = new Player("애쉬");
+        ash.addCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
+        ash.addCard(new Card(CardShape.SPADE, CardNumber.K));
+
+        PlayerGroup playerGroup = new PlayerGroup(Arrays.asList(pepper, ash));
+        BlackJack blackJack = new BlackJack(playerGroup);
+
+        Dealer dealer = blackJack.getDealer();
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
+        dealer.addCard(new Card(CardShape.CLUB, CardNumber.NINE));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+
+        return blackJack.getGameResult();
     }
 }

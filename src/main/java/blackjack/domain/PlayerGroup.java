@@ -1,6 +1,9 @@
 package blackjack.domain;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class PlayerGroup {
     private final List<Player> players;
@@ -13,5 +16,14 @@ public class PlayerGroup {
         for (Player player : players) {
             player.addTwoCards(firstCard, secondCard);
         }
+    }
+
+    public Map<String, Match> getPlayerResult(int sum) {
+        Map<String, Match> result = new HashMap<>();
+        for (Player player : players) {
+            Optional<Match> matchResult = Match.of(player.compareCardsSumTo(sum));
+            matchResult.ifPresent(match -> result.put(player.getName(), match));
+        }
+        return result;
     }
 }
