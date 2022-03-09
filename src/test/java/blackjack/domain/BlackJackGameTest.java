@@ -26,7 +26,7 @@ public class BlackJackGameTest {
 
     @Test
     @DisplayName("game의 승패를 계산한다.")
-    void calculateResult2(){
+    void calculateResult(){
         // given
         Player dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.DIAMOND,Denomination.FIVE));
