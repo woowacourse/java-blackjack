@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,7 @@ public class BlackJackGameTest {
     void initializeBlackJackGame() {
         BlackJackGame blackJackGame = new BlackJackGame(new Dealer(),
                 List.of(new Gamer("judy"),
-                new Gamer("huni")));
+                        new Gamer("huni")));
 
         Deck deck = Deck.init();
         blackJackGame.giveFirstCards(deck);
@@ -26,16 +25,16 @@ public class BlackJackGameTest {
 
     @Test
     @DisplayName("game의 승패를 계산한다.")
-    void calculateResult(){
+    void calculateResult() {
         // given
         Player dealer = new Dealer();
-        dealer.receiveCard(new Card(Suit.DIAMOND,Denomination.FIVE));
+        dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.FIVE));
 
         Gamer judy = new Gamer("judy");
-        judy.receiveCard(new Card(Suit.CLOVER,Denomination.SIX));
+        judy.receiveCard(new Card(Suit.CLOVER, Denomination.SIX));
 
         Gamer huni = new Gamer("huni");
-        huni.receiveCard(new Card(Suit.DIAMOND,Denomination.FOUR));
+        huni.receiveCard(new Card(Suit.DIAMOND, Denomination.FOUR));
 
         BlackJackGame blackJackGame = new BlackJackGame(dealer, List.of(judy, huni));
 

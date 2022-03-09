@@ -11,9 +11,16 @@ public class Gamer implements Player {
     private final Cards cards;
 
     public Gamer(final String name) {
+        checkEmptyName(name);
         checkBannedName(name);
         this.name = name;
         cards = new Cards();
+    }
+
+    private void checkEmptyName(String name) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("[ERROR] Gamer의 이름은 공백일 수 없습니다.");
+        }
     }
 
     private void checkBannedName(final String name) {

@@ -10,7 +10,6 @@ public class BlackJackGame {
     private final Player dealer;
     private final List<Player> gamers;
 
-
     public BlackJackGame(final Player dealer, final List<Player> gamers) {
         this.dealer = dealer;
         this.gamers = gamers;
