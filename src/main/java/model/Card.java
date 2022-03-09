@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +25,15 @@ public class Card {
     }
 
     public boolean isAceCard() {
-        return this.cardFace == CardFace.ACE;
+        return this.cardFace.isAce();
+    }
+
+    public CardSuit getCardSuit() {
+        return cardSuit;
+    }
+
+    public CardFace getCardFace() {
+        return cardFace;
     }
 
     @Override
@@ -44,13 +51,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(cardSuit, cardFace);
-    }
-
-    public CardSuit getCardSuit() {
-        return cardSuit;
-    }
-
-    public CardFace getCardFace() {
-        return cardFace;
     }
 }

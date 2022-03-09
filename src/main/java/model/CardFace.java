@@ -25,4 +25,8 @@ public enum CardFace {
     public int getCardScore() {
         return cardScore;
     }
+
+    public boolean isAce() {
+        return this.equals(ACE);
+    }
 }
