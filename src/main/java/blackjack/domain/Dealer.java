@@ -44,10 +44,6 @@ public class Dealer {
         return cards.calculateScore() >= DEALER_LIMIT_SCORE;
     }
 
-    public GameOutcome fightResult(final Player player) {
-        return cards.fightResult(new Cards(player.cards()));
-    }
-
     public List<Card> initCards() {
         return cards.firstCard();
     }

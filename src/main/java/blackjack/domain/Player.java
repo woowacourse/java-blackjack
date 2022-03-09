@@ -69,6 +69,10 @@ public class Player {
         }
     }
 
+    public GameOutcome fightResult(final Dealer dealer) {
+        return owningCards.fightResult(new Cards(dealer.getCards()));
+    }
+
     public String getName() {
         return name;
     }

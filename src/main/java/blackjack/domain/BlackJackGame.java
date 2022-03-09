@@ -1,10 +1,12 @@
 package blackjack.domain;
 
+import blackjack.dto.OutComeResult;
 import blackjack.dto.PlayerInfo;
 import blackjack.dto.PlayerResultInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
@@ -66,5 +68,11 @@ public class BlackJackGame {
         final List<PlayerResultInfo> resultInfos = new ArrayList<>(Arrays.asList(PlayerResultInfo.from(dealer)));
         resultInfos.addAll(players.getResultPlayerInfo());
         return List.copyOf(resultInfos);
+    }
+
+    public OutComeResult calculateAllResults() {
+        final Map<String, GameOutcome> playerResults = players.getValues().stream()
+                .collect(Collectors.toMap(Player::getName, player -> player.fightResult(dealer)));
+        return OutComeResult.from(playerResults);
     }
 }

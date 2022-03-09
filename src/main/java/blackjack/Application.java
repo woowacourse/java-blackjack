@@ -26,5 +26,6 @@ public class Application {
         }
 
         OutputView.printResultPlayerInfos(blackJackGame.getPlayerResultInfos());
+
     }
 }

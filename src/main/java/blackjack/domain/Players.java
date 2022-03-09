@@ -74,4 +74,8 @@ public class Players {
                 .map(PlayerResultInfo::from)
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    public List<Player> getValues() {
+        return values;
+    }
 }

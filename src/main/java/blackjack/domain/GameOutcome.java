@@ -1,5 +1,9 @@
 package blackjack.domain;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public enum GameOutcome {
 
     WIN("승"),
@@ -12,7 +16,7 @@ public enum GameOutcome {
     GameOutcome(final String koreanSymbol) {
         this.koreanSymbol = koreanSymbol;
     }
-    
+
     public static GameOutcome calculateOutcome(final int score, final int compareScore) {
         if (score > compareScore) {
             return WIN;
@@ -20,5 +24,19 @@ public enum GameOutcome {
             return LOSE;
         }
         return DRAW;
+    }
+
+    public GameOutcome reverse() {
+        if (this == WIN) {
+            return LOSE;
+        } else if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
+    public static Map<GameOutcome, Integer> createInitMap() {
+        return Arrays.stream(values())
+                .collect(Collectors.toMap(value -> value, value -> 0));
     }
 }
