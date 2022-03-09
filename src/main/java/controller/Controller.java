@@ -10,6 +10,7 @@ import domain.Dealer;
 import domain.Deck;
 import domain.InitCards;
 import domain.Players;
+import domain.Result;
 import view.InputView;
 import view.OutputView;
 
@@ -27,6 +28,17 @@ public class Controller {
 		Players players = new Players(names, initCardForPlayers);
 
 		OutputView.printHands(names, dealer.showOneHand(), players.showHands());
+
+		if (players.isExistBlackJack() || dealer.isBlackJack()) {
+			Result initResult = new Result(players.initCompare(dealer.isBlackJack()));
+			OutputView.printResultTitle();
+			OutputView.printDealerResult(initResult.getDealerWinCount(), initResult.getDealerDrawCount(),
+				initResult.getDealerLoseCount());
+			for (String name : names) {
+				OutputView.printPlayerResult(name, initResult.getVersus(name).getResult());
+			}
+			return;
+		}
 
 		for (String name : names) {
 			while (askDraw(name)) {
