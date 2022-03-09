@@ -30,13 +30,13 @@ public class Cards {
     }
 
     public void addCard(final Card card) {
-        validateScoreSize();
+        validateDuplicateCard(card);
         cards.add(card);
     }
 
-    private void validateScoreSize() {
-        if (calculateScore() > BLACK_JACK_NUMBER) {
-            throw new IllegalStateException("21이 넘을때는 카드를 더 추가할 수 없습니다.");
+    private void validateDuplicateCard(final Card card) {
+        if (cards.contains(card)) {
+            throw new IllegalArgumentException("중복된 카드를 추가할 수 없습니다.");
         }
     }
 

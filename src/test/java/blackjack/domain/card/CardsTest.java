@@ -4,7 +4,6 @@ import static blackjack.domain.GameOutcome.DRAW;
 import static blackjack.domain.GameOutcome.LOSE;
 import static blackjack.domain.GameOutcome.WIN;
 import static blackjack.domain.card.CardNumber.A;
-import static blackjack.domain.card.CardNumber.FIVE;
 import static blackjack.domain.card.CardNumber.JACK;
 import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardNumber.QUEEN;
@@ -17,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
+import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,12 +38,12 @@ class CardsTest {
     }
 
     @Test
-    @DisplayName("21이 넘는데 카드를 더할 경우 예외가 발생해야 한다.")
+    @DisplayName("중복된 카드를 더할 경우 예외가 발생해야 한다.")
     void addExceptionBySumIsLargerThanBlackJack() {
-        final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, KING), Card.of(SPADE, TWO)));
-        assertThatThrownBy(() -> cards.addCard(Card.of(SPADE, FIVE)))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("21이 넘을때는 카드를 더 추가할 수 없습니다.");
+        final Cards cards = new Cards(Collections.singletonList(Card.of(SPADE, TEN)));
+        assertThatThrownBy(() -> cards.addCard(Card.of(SPADE, TEN)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 카드를 추가할 수 없습니다.");
     }
 
     @Test
