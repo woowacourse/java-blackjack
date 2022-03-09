@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.domain.Gamer;
 import blackjack.domain.Player;
 import blackjack.view.InputView;
+import blackjack.view.OutputView;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ public class BlackJackApplication {
         try {
             return toGamerList();
         } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
             return createGamers();
         }
     }
