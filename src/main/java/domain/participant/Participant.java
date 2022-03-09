@@ -30,4 +30,12 @@ public class Participant {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards.getCards());
     }
+
+    public void hitInitialTurn(){
+        cards.addCards(Card.handOutInitialTurn());
+    }
+
+    public String getName() {
+        return name.getValue();
+    }
 }
