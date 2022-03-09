@@ -17,5 +17,4 @@ class SuitTest {
 
 		assertThat(actualName).isEqualTo(expectedName);
 	}
-
 }
