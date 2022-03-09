@@ -26,7 +26,7 @@ public class BlackJackGameTest {
 
     @Test
     @DisplayName("game의 승패를 계산한다.")
-    void calculateResult(){
+    void calculateResult2(){
         // given
         Player dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.DIAMOND,Denomination.FIVE));
@@ -40,12 +40,12 @@ public class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(dealer, List.of(judy, huni));
 
         //when
-        Map<Player,String> gameResult = blackJackGame.calculateResult();
+        Map<Player,Result> gameResult = blackJackGame.calculateResult();
 
         //then
         assertAll(
-                () -> assertThat(gameResult.get(judy)).isEqualTo("승"),
-                () -> assertThat(gameResult.get(huni)).isEqualTo("패")
+                () -> assertThat(gameResult.get(judy)).isEqualTo(Result.WIN),
+                () -> assertThat(gameResult.get(huni)).isEqualTo(Result.LOSE)
         );
     }
 

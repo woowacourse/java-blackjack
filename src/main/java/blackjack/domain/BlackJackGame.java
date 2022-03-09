@@ -30,14 +30,14 @@ public class BlackJackGame {
         }
     }
 
-    public Map<Player,String> calculateResult() {
-        Map<Player,String> gameResult=new LinkedHashMap<>();
+    public Map<Player,Result> calculateResult() {
+        Map<Player,Result> gameResult=new LinkedHashMap<>();
         for (Player gamer : gamers) {
             if (dealer.calculateResult()> gamer.calculateResult()){
-                gameResult.put(gamer,"패");
+                gameResult.put(gamer,Result.LOSE);
                 continue;
             }
-            gameResult.put(gamer,"승");
+            gameResult.put(gamer,Result.WIN);
         }
         return gameResult;
     }
