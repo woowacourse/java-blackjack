@@ -4,6 +4,7 @@ import static blackjack.domain.CardNumber.A;
 import static blackjack.domain.CardNumber.SEVEN;
 import static blackjack.domain.CardNumber.SIX;
 import static blackjack.domain.CardNumber.TEN;
+import static blackjack.domain.CardNumber.TWO;
 import static blackjack.domain.CardPattern.SPADE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -55,5 +56,16 @@ class DealerTest {
         assertThatThrownBy(() -> dealer.getCards())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("딜러는 턴이 종료되지 않을 때 모든 카드를 반환할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("턴이 종료되지 않았는데 스코어를 반환하려고 하면 예외를 발생시킨다.")
+    void calculateResultScoreExceptionByNotEndTurn() {
+        final Dealer dealer = new Dealer(
+                new ArrayList<>(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, TWO))));
+
+        assertThatThrownBy(() -> dealer.calculateResultScore())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
     }
 }

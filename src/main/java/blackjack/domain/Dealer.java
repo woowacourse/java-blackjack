@@ -24,17 +24,24 @@ public class Dealer {
     }
 
     private void validateLimitScore() {
-        if (score() >= DEALER_LIMIT_SCORE) {
+        if (calculateResultScore() >= DEALER_LIMIT_SCORE) {
             throw new IllegalStateException("[Error] 딜러 카드가 이미 17이상입니다.");
         }
     }
 
-    private int score() {
+    public int calculateResultScore() {
+        validateCanCalculateResultScore();
         return cards.calculateScore();
     }
 
+    private void validateCanCalculateResultScore() {
+        if (!isEnd()) {
+            throw new IllegalStateException("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
+        }
+    }
+
     public boolean isEnd() {
-        return score() >= DEALER_LIMIT_SCORE;
+        return cards.calculateScore() >= DEALER_LIMIT_SCORE;
     }
 
     public GameOutcome fightResult(final Player player) {
