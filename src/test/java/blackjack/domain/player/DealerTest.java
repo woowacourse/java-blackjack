@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -52,6 +53,43 @@ class DealerTest {
                         new Card(Type.SPADE, Score.ACE),
                         new Card(Type.HEART, Score.SIX)
                 ), false)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("dealerList")
+    void calculateParticipantScore(List<Card> cards, Card addCard, int score) {
+        Dealer dealer = new Dealer(cards);
+
+        if (dealer.acceptableCard()){
+            dealer.addCard(addCard);
+        }
+
+        assertThat(dealer.calculateScore()).isEqualTo(score);
+    }
+
+    private static Stream<Arguments> dealerList() {
+        return Stream.of(
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.EIGHT),
+                        new Card(Type.HEART, Score.EIGHT)
+                ), new Card(Type.SPADE, Score.EIGHT), 24),
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.EIGHT),
+                        new Card(Type.HEART, Score.NINE)
+                ), new Card(Type.SPADE, Score.EIGHT), 17),
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.ACE),
+                        new Card(Type.HEART, Score.ACE)
+                ), new Card(Type.HEART, Score.NINE), 21),
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.ACE),
+                        new Card(Type.HEART, Score.JACK)
+                ), new Card(Type.HEART, Score.ACE), 21),
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.TWO),
+                        new Card(Type.HEART, Score.EIGHT)
+                ), new Card(Type.HEART, Score.ACE), 21)
         );
     }
 }
