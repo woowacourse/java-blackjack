@@ -47,24 +47,33 @@ public class Cards {
     }
 
     public GameOutcome fightResult(final Cards compareCards) {
+        if (this.isBust() || compareCards.isBust()) {
+            return bustGameFightResult(compareCards);
+        } else if (this.isBlackJack() || compareCards.isBlackJack()) {
+            return blackJackGameFightResult(compareCards);
+        }
+        return GameOutcome.calculateOutcome(this.calculateScore(), compareCards.calculateScore());
+    }
+
+    private GameOutcome bustGameFightResult(final Cards compareCards) {
         if (this.isBust() && compareCards.isBust()) {
             return DRAW;
         } else if (this.isBust()) {
             return LOSE;
-        } else if (compareCards.isBust()) {
-            return WIN;
-        } else if (this.isBlackJack() && compareCards.isBlackJack()) {
+        }
+        return WIN;
+    }
+
+    private GameOutcome blackJackGameFightResult(final Cards compareCards) {
+        if (this.isBlackJack() && compareCards.isBlackJack()) {
             return DRAW;
         } else if (this.isBlackJack()) {
             return WIN;
-        } else if (compareCards.isBlackJack()) {
-            return LOSE;
         }
-        return GameOutcome.calculateOutcome(this.calculateScore(), compareCards.calculateScore());
+        return LOSE;
     }
 
     private boolean isBlackJack() {
         return cards.size() == BLACK_JACK_SIZE && calculateScore() == BLACK_JACK_NUMBER;
     }
-
 }
