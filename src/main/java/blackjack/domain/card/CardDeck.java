@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class CardDeck {
+public class CardDeck implements CardStack {
     private final LinkedList<Card> cards = new LinkedList<>();
 
     public CardDeck() {
@@ -23,8 +23,12 @@ public class CardDeck {
     }
 
     public Card pop() {
+        // TODO: handle NoSuchElementException on popping on empty list
         return cards.pop();
     }
 
-    // TODO: handle NoSuchElementException on popping on empty list
+    @Override
+    public String toString() {
+        return "CardDeck{" + "cards=" + cards + '}';
+    }
 }
