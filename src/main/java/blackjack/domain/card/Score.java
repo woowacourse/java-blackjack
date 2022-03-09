@@ -16,7 +16,7 @@ public enum Score {
     QUEEN(10),
     ACE_ELEVEN(11);
 
-    private int amount;
+    private final int amount;
 
     Score(final int amount) {
         this.amount = amount;

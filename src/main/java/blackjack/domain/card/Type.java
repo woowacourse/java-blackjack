@@ -6,7 +6,7 @@ public enum Type {
     CLOVER("클로버"),
     HEART("하트");
 
-    String name;
+    private final String name;
 
     Type(String name){
         this.name = name;
