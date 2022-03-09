@@ -16,11 +16,11 @@ public class CardDistributorTest {
     @Test
     void failed() {
         CardDistributor cardDistributor = new CardDistributor();
-        for (int i = 0; i < 51; i++) {
+        for (int i = 0; i < 52; i++) {
             cardDistributor.distribute();
         }
         assertThatThrownBy(cardDistributor::distribute)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR]");
+                .hasMessageContaining("[ERROR] 카드가 모두 소요됐습니다.");
     }
 }

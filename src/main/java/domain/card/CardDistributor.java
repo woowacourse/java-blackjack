@@ -1,23 +1,27 @@
 package domain.card;
 
-import java.util.Collections;
-import java.util.Stack;
+import java.util.*;
 
 public class CardDistributor {
-    private static final Stack<Card> deck = new Stack<>();
+    private static final List<Card> CACHE = new ArrayList<>();
+    private final Stack<Card> deck = new Stack<>();
 
     static {
         for (Suit suit : Suit.values()) {
             for (Denomination denomination : Denomination.values()) {
-                deck.push(new Card(denomination, suit));
+                CACHE.add(new Card(denomination, suit));
             }
         }
-        Collections.shuffle(deck);
+    }
+
+    public CardDistributor() {
+        Collections.shuffle(CACHE);
+        deck.addAll(CACHE);
     }
 
     public Card distribute() {
-        if (deck == null || deck.empty()) {
-            throw new IllegalArgumentException("[ERROR]");
+        if (deck == null || deck.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 카드가 모두 소요됐습니다.");
         }
         return deck.pop();
     }
