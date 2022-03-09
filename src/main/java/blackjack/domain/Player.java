@@ -1,23 +1,16 @@
 package blackjack.domain;
 
-public class Player implements Gamer {
+import blackjack.domain.card.Cards;
+import java.util.ArrayList;
 
-    public static final String NAME_INPUT_ERROR_MESSAGE = "참가자의 이름으로 공백이나 빈 문자열은 입력할 수 없습니다.";
-
-    private final String name;
+public class Player extends Gamer {
 
     public Player(String name) {
-        validate(name);
-        this.name = name;
+        super(name, new Cards(new ArrayList<>()));
     }
 
-    private void validate(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException(NAME_INPUT_ERROR_MESSAGE);
-        }
-    }
+    @Override
+    public void hit() {
 
-    public String getName() {
-        return name;
     }
 }

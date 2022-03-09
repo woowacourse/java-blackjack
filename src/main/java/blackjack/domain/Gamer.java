@@ -30,6 +30,8 @@ public abstract class Gamer {
         return true;
     }
 
+    public abstract void hit();
+
     public  Cards getCards() {
         return cards;
     }
