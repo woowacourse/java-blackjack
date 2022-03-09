@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.game.Score;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,10 @@ public class Card {
 
     public static Card of(CardRank rank, CardSymbol symbol) {
         return CardCache.getCache(rank, symbol);
+    }
+
+    public Score getRankValue() {
+        return rank.getValue();
     }
 
     @Override

@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.game.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,5 +22,16 @@ public class CardTest {
         Card sameCard = Card.of(CardRank.ACE, CardSymbol.CLOVER);
 
         assertThat(card).isEqualTo(sameCard);
+    }
+
+    @DisplayName("getRankValue 는 카드 랭크에 담긴 값을 가져온다.")
+    @Test
+    void getRankValue() {
+        Card card = Card.of(CardRank.FIVE, CardSymbol.CLOVER);
+
+        Score actual = card.getRankValue();
+        Score expected = Score.valueOf(5);
+
+        assertThat(actual).isEqualTo(expected);
     }
 }
