@@ -10,6 +10,14 @@ public class Card {
         this.suit = suit;
     }
 
+    public boolean isAce() {
+        return denomination == Denomination.ACE;
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
     @Override
     public String toString() {
         return denomination.getName() + suit.getName();
