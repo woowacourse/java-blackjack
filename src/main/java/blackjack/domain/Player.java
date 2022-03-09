@@ -5,17 +5,17 @@ import java.util.Objects;
 
 public class Player {
 
-    private final String name;
     private final Cards owningCards;
+    private final String name;
     private boolean turnState;
 
     private Player(final String name, final boolean turnState, final Cards owningCards) {
         Objects.requireNonNull(name, "플레이어의 이름은 null이 들어올 수 없습니다.");
         Objects.requireNonNull(owningCards, "보유 카드에는 null이 들어올 수 없습니다.");
         validateEmptyName(name);
+        this.owningCards = owningCards;
         this.name = name;
         this.turnState = turnState;
-        this.owningCards = owningCards;
     }
 
     public Player(final String name, final boolean turnState, final List<Card> owningCards) {
@@ -38,20 +38,16 @@ public class Player {
         checkBust();
     }
 
-    private void checkBust() {
-        if (owningCards.isBust()) {
-            endTurn();
-        }
-    }
-
     private void validateEndTurn() {
         if (!canDraw()) {
             throw new IllegalStateException("턴이 종료되었으면 카드를 받을 수 없습니다.");
         }
     }
 
-    public List<Card> cards() {
-        return owningCards.cards();
+    private void checkBust() {
+        if (owningCards.isBust()) {
+            endTurn();
+        }
     }
 
     public void endTurn() {
@@ -73,11 +69,11 @@ public class Player {
         return owningCards.fightResult(new Cards(dealer.getCards()));
     }
 
-    public String getName() {
-        return name;
+    public List<Card> getCards() {
+        return List.copyOf(owningCards.cards());
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards());
+    public String getName() {
+        return name;
     }
 }

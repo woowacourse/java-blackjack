@@ -18,7 +18,7 @@ public class PlayerResultInfo {
     }
 
     public static PlayerResultInfo from(final Player player) {
-        return new PlayerResultInfo(player.getName(), player.cards(), player.calculateResultScore());
+        return new PlayerResultInfo(player.getName(), player.getCards(), player.calculateResultScore());
     }
 
     public static PlayerResultInfo from(final Dealer dealer) {

@@ -73,7 +73,7 @@ public class PlayerTest {
         final Player player = new Player("user", true, new ArrayList<>());
         final Card card = Card.cards().get(0);
         player.draw(card);
-        assertThat(player.cards()).containsExactly(card);
+        assertThat(player.getCards()).containsExactly(card);
     }
 
     @Test
