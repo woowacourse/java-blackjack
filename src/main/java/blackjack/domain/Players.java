@@ -16,19 +16,22 @@ public class Players {
     }
 
     private void validateDuplicationPlayers(final List<Player> players) {
-        final int distinctCount = (int) players.stream()
-                .map(player -> player.getName())
-                .distinct()
-                .count();
-        if (distinctCount != players.size()) {
+        if (calculateDistinctCount(players) != players.size()) {
             throw new IllegalArgumentException("이름 간에 중복이 있으면 안됩니다.");
         }
+    }
+
+    private int calculateDistinctCount(final List<Player> players) {
+        return (int) players.stream()
+                .map(Player::getName)
+                .distinct()
+                .count();
     }
 
     public List<PlayerInfo> getInitPlayerInfo() {
         return values.stream()
                 .map(PlayerInfo::playerToInfo)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public void turnToNextPlayer() {
@@ -37,22 +40,9 @@ public class Players {
         currentTurnIndex++;
     }
 
-    public PlayerInfo drawCurrentPlayer(final Card card) {
-        final Player currentPlayer = currentTurnPlayer();
-        currentPlayer.draw(card);
-        checkCurrentPlayerCanDraw(currentPlayer);
-        return PlayerInfo.playerToInfo(currentPlayer);
-    }
-
     private void validateAllTurnEnd() {
         if (isAllTurnEnd()) {
             throw new IllegalStateException("모든 턴이 종료되었습니다.");
-        }
-    }
-
-    private void checkCurrentPlayerCanDraw(final Player currentPlayer) {
-        if (!currentPlayer.canDraw()) {
-            currentTurnIndex++;
         }
     }
 
@@ -60,13 +50,26 @@ public class Players {
         return values.size() <= currentTurnIndex;
     }
 
-    public PlayerInfo getCurrentTurnPlayerInfo() {
-        return PlayerInfo.playerToInfo(currentTurnPlayer());
+    public PlayerInfo drawCurrentPlayer(final Card card) {
+        final Player currentPlayer = currentTurnPlayer();
+        currentPlayer.draw(card);
+        checkCanTurnNext(currentPlayer);
+        return PlayerInfo.playerToInfo(currentPlayer);
+    }
+
+    private void checkCanTurnNext(final Player currentPlayer) {
+        if (!currentPlayer.canDraw()) {
+            currentTurnIndex++;
+        }
     }
 
     private Player currentTurnPlayer() {
         validateAllTurnEnd();
         return values.get(currentTurnIndex);
+    }
+
+    public PlayerInfo getCurrentTurnPlayerInfo() {
+        return PlayerInfo.playerToInfo(currentTurnPlayer());
     }
 
     public List<PlayerResultInfo> getResultPlayerInfo() {
@@ -76,6 +79,6 @@ public class Players {
     }
 
     public List<Player> getValues() {
-        return values;
+        return List.copyOf(values);
     }
 }
