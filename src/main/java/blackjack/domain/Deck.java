@@ -25,4 +25,8 @@ public class Deck {
     public static Deck generate(final CardStrategy strategy) {
         return new Deck(strategy.generate());
     }
+
+    public Card drawCard() {
+        return cards.remove(0);
+    }
 }
