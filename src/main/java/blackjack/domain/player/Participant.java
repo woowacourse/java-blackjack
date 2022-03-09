@@ -42,4 +42,8 @@ public class Participant implements Player {
     public List<Card> getCards() {
         return cards.getCards();
     }
+
+    public String getName(){
+        return this.name;
+    }
 }

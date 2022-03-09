@@ -1,8 +1,10 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -72,5 +74,18 @@ class PlayersTest {
                         new Participant(deck.initDistributeCard(), "9")
                 )
         );
+    }
+
+    @Test
+    @DisplayName("참가자 이름은 중복될 수 없다.")
+    void thrownExceptionWhenNamesDuplicated() {
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer(deck.initDistributeCard());
+        Assertions.assertThatThrownBy(() -> new Players(List.of(
+                new Participant(deck.initDistributeCard(), "pobi"),
+                new Participant(deck.initDistributeCard(), "pobi")
+        ), dealer))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 참가자 이름은 중복될 수 없습니다.");
     }
 }
