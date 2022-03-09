@@ -31,9 +31,16 @@ public class Players {
     }
 
     public void drawCurrentPlayer(final Card card) {
+        validateAllTurnEnd();
         final Player currentPlayer = values.get(currentTurnIndex);
         currentPlayer.draw(card);
         checkCurrentPlayerCanDraw(currentPlayer);
+    }
+
+    private void validateAllTurnEnd() {
+        if (isAllTurnEnd()) {
+            throw new IllegalStateException("모든 턴이 종료되어 카드를 더 드로우할 수 없습니다.");
+        }
     }
 
     private void checkCurrentPlayerCanDraw(final Player currentPlayer) {

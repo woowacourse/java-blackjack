@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static blackjack.domain.CardNumber.A;
 import static blackjack.domain.CardNumber.JACK;
 import static blackjack.domain.CardNumber.KING;
 import static blackjack.domain.CardNumber.QUEEN;
@@ -36,5 +37,18 @@ class PlayersTest {
         final Players players = new Players(Collections.singletonList(player));
         players.drawCurrentPlayer(Card.of(SPADE, JACK));
         assertTrue(players.isAllTurnEnd());
+    }
+
+    @Test
+    @DisplayName("모든 플레이어의 턴이 종료되었는데 드로우하려고하면 예외가 발생해야 한다.")
+    void drawCurrentPlayerExceptionByEndAllTurn() {
+        final Player player
+                = new Player("user", true, Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
+        final Players players = new Players(Collections.singletonList(player));
+        players.drawCurrentPlayer(Card.of(SPADE, JACK));
+
+        assertThatThrownBy(() -> players.drawCurrentPlayer(Card.of(SPADE, A)))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("모든 턴이 종료되어 카드를 더 드로우할 수 없습니다.");
     }
 }
