@@ -1,5 +1,6 @@
 package blackjack;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Score {

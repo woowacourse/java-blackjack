@@ -1,5 +1,6 @@
 package blackjack;
 
+import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
@@ -16,20 +17,16 @@ public class Cards {
     }
 
     public Score score() {
-        return new Score(bestScore(getPossibleScore()));
+        return possibleScores().stream()
+            .filter(not(Score::isBust))
+            .reduce(this::bestScore)
+            .orElse(new Score(hardHand()));
     }
 
-    private int bestScore(List<Integer> temp) {
-        return temp.stream()
-                .map(Score::new)
-                .filter(tmp -> !tmp.isBust())
-                .mapToInt(Score::getValue)
-                .max().orElse(hardHand());
-    }
-
-    private List<Integer> getPossibleScore() {
+    private List<Score> possibleScores() {
         return Stream.concat(Stream.of(hardHand()), softHands().stream())
-                .collect(toUnmodifiableList());
+            .map(Score::new)
+            .collect(toUnmodifiableList());
     }
 
     public int hardHand() {
@@ -40,15 +37,19 @@ public class Cards {
 
     public List<Integer> softHands() {
         return IntStream.rangeClosed(1, numberOfAce())
-                .map(value -> 10 * value + hardHand())
-                .boxed()
-                .collect(toList());
+            .map(value -> 10 * value + hardHand())
+            .boxed()
+            .collect(toList());
     }
 
     private int numberOfAce() {
         return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+            .filter(Card::isAce)
+            .count();
+    }
+
+    public Score bestScore(Score a, Score b) {
+        return Integer.compare(a.getValue(), b.getValue()) == -1 ? b : a;
     }
 
     @Override
