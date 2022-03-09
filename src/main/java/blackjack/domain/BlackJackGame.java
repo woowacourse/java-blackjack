@@ -4,7 +4,7 @@ import blackjack.dto.OutComeResult;
 import blackjack.dto.PlayerInfo;
 import blackjack.dto.PlayerResultInfo;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,18 +24,18 @@ public class BlackJackGame {
     public static BlackJackGame init(final List<String> playerNames) {
         final CardDeck cardDeck = CardDeck.init();
         final Dealer dealer = new Dealer(cardDeck.provideInitCards());
-        final List<Player> players = playerNames.stream()
+        final List<Player> players = provideInitCardsToPlayers(playerNames, cardDeck);
+        return new BlackJackGame(cardDeck, dealer, new Players(players));
+    }
+
+    private static List<Player> provideInitCardsToPlayers(final List<String> playerNames, final CardDeck cardDeck) {
+        return playerNames.stream()
                 .map(name -> new Player(name, true, cardDeck.provideInitCards()))
                 .collect(Collectors.toList());
-        return new BlackJackGame(cardDeck, dealer, new Players(players));
     }
 
     public boolean isPlayersTurnEnd() {
         return players.isAllTurnEnd();
-    }
-
-    public boolean isDealerTurnEnd() {
-        return dealer.isEnd();
     }
 
     public PlayerInfo drawCurrentPlayer(final String command) {
@@ -46,6 +46,10 @@ public class BlackJackGame {
             return currentPlayer;
         }
         return players.drawCurrentPlayer(cardDeck.provideCard());
+    }
+
+    public boolean isDealerTurnEnd() {
+        return dealer.isEnd();
     }
 
     public void drawDealer() {
@@ -65,14 +69,15 @@ public class BlackJackGame {
     }
 
     public List<PlayerResultInfo> getPlayerResultInfos() {
-        final List<PlayerResultInfo> resultInfos = new ArrayList<>(Arrays.asList(PlayerResultInfo.from(dealer)));
+        final List<PlayerResultInfo> resultInfos =
+                new ArrayList<>(Collections.singletonList(PlayerResultInfo.from(dealer)));
         resultInfos.addAll(players.getResultPlayerInfo());
         return List.copyOf(resultInfos);
     }
 
     public OutComeResult calculateAllResults() {
         final Map<String, GameOutcome> playerResults = players.getValues().stream()
-                .collect(Collectors.toMap(Player::getName, player -> player.fightResult(dealer)));
+                .collect(Collectors.toUnmodifiableMap(Player::getName, player -> player.fightResult(dealer)));
         return OutComeResult.from(playerResults);
     }
 }
