@@ -7,38 +7,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CardDeck {
-	private final Map<String, Integer> valueOf;
+    private final static List<Card> deck = new ArrayList<>();
 
-	public CardDeck() {
-		valueOf = new HashMap<>();
+    static {
+        for (CardType type : CardType.values()) {
+            generateCardWith(type);
+        }
+    }
 
-		for (CardType type : CardType.values()) {
-			generateCardWith(type);
-		}
-	}
+    private static void generateCardWith(CardType type) {
+        for (CardValue value : CardValue.values()) {
+            String key = value.getName().concat(type.getName());
+            deck.add(new Card(key, value.getValue()));
+        }
+    }
 
-	private void generateCardWith(CardType type) {
-		for (CardValue value : CardValue.values()) {
-			String key = value.getName().concat(type.getName());
-			valueOf.put(key, value.getValue());
-		}
-	}
+    public Card pickCard() {
+        Collections.shuffle(deck);
+        Card pickedCard = deck.get(0);
+        removeCard(pickedCard);
+        return pickedCard;
+    }
 
-	public Map<String, Integer> pickCard() {
-		String key = pickRandomKey();
-		Map<String, Integer> pickedCard = new HashMap<>();
-		pickedCard.put(key, valueOf.get(key));
-		removeCard(key);
-		return pickedCard;
-	}
-
-	private String pickRandomKey() {
-		List<String> keys = new ArrayList(valueOf.keySet());
-		Collections.shuffle(keys);
-		return keys.get(0);
-	}
-
-	private void removeCard(String key) {
-		valueOf.remove(key);
-	}
+    private void removeCard(Card card) {
+        deck.remove(card);
+    }
 }

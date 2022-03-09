@@ -44,5 +44,4 @@ public class Blackjack {
 			player.receiveCard(cardDeck.pickCard());
 		}
 	}
-
 }
