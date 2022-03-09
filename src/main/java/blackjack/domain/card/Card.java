@@ -14,6 +14,10 @@ public class Card {
         return denomination.getValue();
     }
 
+    public boolean isSameValueWith(Denomination denomination) {
+        return this.denomination == denomination;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
