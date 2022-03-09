@@ -36,8 +36,7 @@ public class Players {
     }
 
     public void drawCurrentPlayer(final Card card) {
-        validateAllTurnEnd();
-        final Player currentPlayer = values.get(currentTurnIndex);
+        final Player currentPlayer = currentTurnPlayer();
         currentPlayer.draw(card);
         checkCurrentPlayerCanDraw(currentPlayer);
     }
@@ -56,5 +55,14 @@ public class Players {
 
     public boolean isAllTurnEnd() {
         return values.size() <= currentTurnIndex;
+    }
+
+    public PlayerInfo getCurrentTurnPlayerInfo() {
+        return PlayerInfo.playerToInfo(currentTurnPlayer());
+    }
+
+    private Player currentTurnPlayer() {
+        validateAllTurnEnd();
+        return values.get(currentTurnIndex);
     }
 }
