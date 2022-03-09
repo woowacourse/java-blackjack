@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Dealer {
 
     private final String name;
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Dealer(String name, List<Card> cards) {
         cards = new ArrayList<>(cards);
