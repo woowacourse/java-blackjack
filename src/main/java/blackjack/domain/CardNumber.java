@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public enum CardNumber {
 
@@ -32,5 +33,37 @@ public enum CardNumber {
 
     public int getDefaultValue() {
         return defaultValue;
+    }
+
+    public static int calculateScore(final List<CardNumber> numbers) {
+        final int bonusMaxScore = calculateAceCount(numbers) * 10;
+        final int defaultScore = sumDefaultScore(numbers);
+        final int startScore = defaultScore + bonusMaxScore;
+
+        return IntStream.range(0, calculateAceCount(numbers))
+                .map(aceCount -> decreaseByAceCount(startScore, aceCount))
+                .filter(CardNumber::filterBlackJack)
+                .findFirst()
+                .orElse(defaultScore);
+    }
+
+    private static int calculateAceCount(final List<CardNumber> numbers) {
+        return (int) numbers.stream()
+                .filter(number -> number == A)
+                .count();
+    }
+
+    private static int sumDefaultScore(final List<CardNumber> numbers) {
+        return numbers.stream()
+                .mapToInt(number -> number.defaultValue)
+                .sum();
+    }
+
+    private static int decreaseByAceCount(final int startScore, final int aceCount) {
+        return startScore - aceCount * 10;
+    }
+
+    private static boolean filterBlackJack(final int sumCount) {
+        return sumCount <= 21;
     }
 }
