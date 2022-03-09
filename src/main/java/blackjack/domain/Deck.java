@@ -1,11 +1,11 @@
 package blackjack.domain;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class Deck {
 
-    private final Set<Card> cards = new HashSet<>();
+    private final Set<Card> cards = new LinkedHashSet<>();
 
     public int sumPoints() {
         return cards.stream()
@@ -19,6 +19,10 @@ public class Deck {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public Set<Card> getCards() {
+        return cards;
     }
 
     @Override
