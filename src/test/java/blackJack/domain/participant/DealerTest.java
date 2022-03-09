@@ -22,6 +22,6 @@ public class DealerTest {
     void calculateScore() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
-        assertThat(dealer.calculateScore()).isEqualTo(8);
+        assertThat(dealer.getScore()).isEqualTo(8);
     }
 }

@@ -40,6 +40,29 @@ class PlayerTest {
     void calculateScore() {
         Player player = new Player("rookie");
         player.receiveCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
-        assertThat(player.calculateScore()).isEqualTo(8);
+        assertThat(player.getScore()).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("Player 카드에 Ace가 11로 되는 경우 합계 계산 테스트")
+    void calculateScoreWithAceEleven() {
+        Player player = new Player("rookie");
+
+        player.receiveCard(new Card(Symbol.CLOVER, Denomination.A));
+        player.receiveCard(new Card(Symbol.CLOVER, Denomination.J));
+
+        assertThat(player.getScore()).isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("Player 카드에 Ace가 1로 되는 경우 합계 계산 테스트")
+    void calculateScoreWithAceOne() {
+        Player player = new Player("rookie");
+
+        player.receiveCard(new Card(Symbol.CLOVER, Denomination.A));
+        player.receiveCard(new Card(Symbol.CLOVER, Denomination.J));
+        player.receiveCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
+
+        assertThat(player.getScore()).isEqualTo(19);
     }
 }
