@@ -29,4 +29,8 @@ public class OutputView {
         System.out.println();
         System.out.println(dealerName + "와 " + playerNames + "에게 2장을 나누었습니다.");
     }
+
+    public void printSingleCardForDealer(PlayerDto dealer) {
+        System.out.println(dealer.getName() + ": " + dealer.getPlayingCards().get(0).getCardName());
+    }
 }
