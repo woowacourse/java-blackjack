@@ -16,4 +16,8 @@ public class Distance {
             throw new IllegalArgumentException(ERROR_MIN_DISTANCE);
         }
     }
+
+    public int calculateRequiredFuel(int efficiency) {
+        return value / efficiency;
+    }
 }
