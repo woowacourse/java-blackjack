@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import java.util.Objects;
+
 public class Card {
 
     private Type type;
@@ -16,5 +18,18 @@ public class Card {
 
     public Type getType() {
         return type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Card)) return false;
+        Card card = (Card) o;
+        return type == card.type && score == card.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, score);
     }
 }

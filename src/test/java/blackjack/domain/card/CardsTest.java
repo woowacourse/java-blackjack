@@ -30,7 +30,7 @@ public class CardsTest {
 
     @Test
     @DisplayName("cards의 점수 합을 구한다.")
-    void sumCardScore(){
+    void sumCardScore() {
         Cards cards = new Cards();
         cards.addCard(new Card(Type.SPADE, Score.ACE));
         cards.addCard(new Card(Type.DIAMOND, Score.TWO));
@@ -38,4 +38,5 @@ public class CardsTest {
 
         assertThat(cards.calculateScore()).isEqualTo(6);
     }
+
 }

@@ -1,5 +1,9 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum Score {
     ACE(1),
     TWO(2),
@@ -24,5 +28,11 @@ public enum Score {
 
     public int getAmount() {
         return amount;
+    }
+
+    public static List<Score> getScoreValues() {
+        return Arrays.stream(Score.values())
+                .filter(score -> score != Score.ACE_ELEVEN)
+                .collect(Collectors.toList());
     }
 }
