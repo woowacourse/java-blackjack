@@ -6,15 +6,19 @@ public class Dealer {
 
     private static final int DEALER_LIMIT_SCORE = 17;
 
-    private final List<Card> cards;
+    private final Cards cards;
+
+    public Dealer(final Cards cards) {
+        this.cards = cards;
+    }
 
     public Dealer(final List<Card> cards) {
-        this.cards = cards;
+        this(new Cards(cards));
     }
 
     public void draw(final Card card) {
         validateLimitScore();
-        cards.add(card);
+        cards.addCard(card);
     }
 
     private void validateLimitScore() {
@@ -24,10 +28,7 @@ public class Dealer {
     }
 
     private int score() {
-        return cards.stream()
-                .map(Card::getNumber)
-                .mapToInt(CardNumber::getDefaultValue)
-                .sum();
+        return cards.calculateScore();
     }
 
     public boolean isEnd() {
