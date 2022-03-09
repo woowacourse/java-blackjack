@@ -82,11 +82,21 @@ class CardsTest {
 
     @Test
     @DisplayName("둘 다 버스트일 경우, 무승부를 반환한다.")
-    void fightResult() {
+    void fightResultBothBust() {
         final Cards cards = new Cards(
                 Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN), Card.of(SPADE, JACK)));
         final Cards compareCards = new Cards(
                 Arrays.asList(Card.of(HEART, KING), Card.of(HEART, QUEEN), Card.of(HEART, JACK)));
         assertThat(cards.fightResult(compareCards)).isEqualTo(DRAW);
+    }
+
+    @Test
+    @DisplayName("본인만 버스트일 경우, 패배를 반환한다.")
+    void fightResultSelfBust() {
+        final Cards cards = new Cards(
+                Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN), Card.of(SPADE, JACK)));
+        final Cards compareCards = new Cards(
+                Arrays.asList(Card.of(HEART, KING), Card.of(HEART, QUEEN)));
+        assertThat(cards.fightResult(compareCards)).isEqualTo(LOSE);
     }
 }
