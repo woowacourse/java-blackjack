@@ -51,6 +51,8 @@ public class Cards {
             return DRAW;
         } else if (this.isBust()) {
             return LOSE;
+        } else if (compareCards.isBust()) {
+            return WIN;
         } else if (this.isBlackJack() && compareCards.isBlackJack()) {
             return DRAW;
         } else if (this.isBlackJack()) {

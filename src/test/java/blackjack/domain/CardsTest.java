@@ -99,4 +99,14 @@ class CardsTest {
                 Arrays.asList(Card.of(HEART, KING), Card.of(HEART, QUEEN)));
         assertThat(cards.fightResult(compareCards)).isEqualTo(LOSE);
     }
+
+    @Test
+    @DisplayName("상대만 버스트일 경우, 우승을 반환한다.")
+    void fightResultNotSelfBust() {
+        final Cards compareCards = new Cards(
+                Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN), Card.of(SPADE, JACK)));
+        final Cards cards = new Cards(
+                Arrays.asList(Card.of(HEART, KING), Card.of(HEART, QUEEN)));
+        assertThat(cards.fightResult(compareCards)).isEqualTo(WIN);
+    }
 }
