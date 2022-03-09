@@ -5,11 +5,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class InputViewTest {
 
@@ -37,4 +39,36 @@ public class InputViewTest {
                 Arguments.of("pobi,,,", List.of("pobi", "", "", ""))
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("provideForParseHitAndStandTest")
+    @DisplayName("y 또는 n을 입력받을 수 있어야 한다.")
+    void parseProgress(final String inputLine, final boolean expectedContinuable) {
+        customReader.initTest(inputLine);
+
+        final boolean actualContinuable = inputView.requestContinuable();
+
+        assertThat(actualContinuable).isEqualTo(expectedContinuable);
+    }
+
+    public static Stream<Arguments> provideForParseHitAndStandTest() {
+        return Stream.of(
+                Arguments.of("y", true),
+                Arguments.of("Y", true),
+                Arguments.of("n", false),
+                Arguments.of("n", false)
+        );
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", " ", "yyy", "nnn", "123"})
+    @DisplayName("y 또는 n만 입력할 수 있습니다.")
+    void parseProgress(final String inputLine) {
+        customReader.initTest(inputLine);
+
+        assertThatThrownBy(inputView::requestContinuable)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("입력은 y 또는 n이어야 합니다.");
+    }
+
 }

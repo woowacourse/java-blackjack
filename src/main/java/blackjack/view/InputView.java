@@ -22,5 +22,8 @@ public class InputView {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-
+    public boolean requestContinuable() {
+        String input = reader.readLine();
+        return Choice.from(input).getContinuable();
+    }
 }
