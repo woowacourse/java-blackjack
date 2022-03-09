@@ -1,4 +1,4 @@
-package blackJack.participant;
+package blackJack.domain.participant;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import blackJack.domain.Card;
-import blackJack.domain.Denomination;
-import blackJack.domain.Symbol;
+import blackJack.domain.card.Card;
+import blackJack.domain.card.Denomination;
+import blackJack.domain.card.Symbol;
 
 class PlayerTest {
 

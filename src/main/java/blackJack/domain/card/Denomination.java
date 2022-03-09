@@ -1,4 +1,4 @@
-package blackJack.domain;
+package blackJack.domain.card;
 
 public enum Denomination {
     TWO(2, "2"),

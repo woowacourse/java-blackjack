@@ -1,9 +1,9 @@
-package blackJack.participant;
+package blackJack.domain.participant;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import blackJack.domain.Card;
+import blackJack.domain.card.Card;
 
 public abstract class Participant {
 

@@ -1,4 +1,4 @@
-package blackJack.domain;
+package blackJack.domain.card;
 
 public class Card {
 

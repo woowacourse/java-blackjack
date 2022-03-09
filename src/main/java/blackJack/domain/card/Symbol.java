@@ -1,4 +1,4 @@
-package blackJack.domain;
+package blackJack.domain.card;
 
 public enum Symbol {
     SPADE("스페이드"),
