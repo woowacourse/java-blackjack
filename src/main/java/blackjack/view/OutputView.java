@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String DELIMITER = ", ";
     private static final int INIT_DISTRIBUTE_SIZE = 2;
+    private static final int ADD_CARD_CONDITION = 16;
+    private static final String DELIMITER = ", ";
     private static final String BASIC_DISTRIBUTE = "딜러와 %s에게 " + INIT_DISTRIBUTE_SIZE + "을 나누어주었습니다.";
-
 
     public static void printPlayersInitCardInfo(final Players players) {
         final List<Participant> participants = players.getParticipants();
@@ -37,20 +37,32 @@ public class OutputView {
     }
 
     private static void printParticipantsInfo(final List<Participant> participants) {
-        participants.forEach(participant -> {
-            System.out.print(participant.getName() + "카드: ");
-            printCards(participant.getCards());
-        });
+        participants.forEach(OutputView::printParticipantCards);
         System.out.println();
     }
 
-    private static void printCards(final List<Card> cards) {
-        System.out.println(String.join(DELIMITER, convertToText(cards)));
+    public static void printParticipantCards(final Participant participant) {
+        System.out.print(participant.getName() + "카드: ");
+        System.out.println(String.join(DELIMITER, convertToText(participant.getCards())));
     }
 
     private static List<String> convertToText(final List<Card> cards) {
         return cards.stream()
                 .map(card -> card.getScore().getAmount() + card.getType().getName())
                 .collect(Collectors.toList());
+    }
+
+    public static void printParticipantOverMaxScore(final String name) {
+        System.out.println(name + "은 최고점수를 초과하여 카드를 더 이상 받을 수 없습니다.");
+    }
+
+    public static void printDealerAcceptCard() {
+        System.out.println("딜러는 " + ADD_CARD_CONDITION + "이하라 한장의 카드를 더 받았습니다.");
+        System.out.println();
+    }
+
+    public static void printDealerDenyCard() {
+        System.out.println("딜러는 " + ADD_CARD_CONDITION + "을 초과하여 스탠드 하였습니다.");
+        System.out.println();
     }
 }

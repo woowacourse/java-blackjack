@@ -17,5 +17,6 @@ public class Application {
         Players players = new Players(participants, dealer);
 
         blackjackController.announcePlayersInitCardInfo(players);
+        blackjackController.decideMoreCard(players, deck);
     }
 }

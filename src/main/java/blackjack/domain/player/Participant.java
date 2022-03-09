@@ -44,6 +44,10 @@ public class Participant implements Player {
         this.winState = true;
     }
 
+    public boolean isOverMaxScore() {
+        return calculateScore() > MAX_SCORE;
+    }
+
     @Override
     public List<Card> getCards() {
         return cards.getCards();

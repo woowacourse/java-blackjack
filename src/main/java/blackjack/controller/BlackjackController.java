@@ -1,8 +1,10 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Players;
+import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.Arrays;
@@ -36,5 +38,43 @@ public class BlackjackController {
 
     public void announcePlayersInitCardInfo(Players players) {
         OutputView.printPlayersInitCardInfo(players);
+    }
+
+    public void decideMoreCard(final Players players, final Deck deck) {
+        for (Participant participant : players.getParticipants()) {
+            decideOneMoreCard(participant, deck);
+        }
+        decideOneMoreCard(players.getDealer(), deck);
+    }
+
+    private void decideOneMoreCard(Participant participant, Deck deck) {
+        while (isNotOverMaxScore(participant) && oneMoreCard(participant)){
+            participant.addCard(deck.draw());
+            OutputView.printParticipantCards(participant);
+        }
+    }
+
+    private boolean oneMoreCard(Participant participant) {
+        String input = InputView.inputSelectMoreCard(participant.getName());
+        if (!input.equals("y") && !input.equals("n")) {
+            throw new IllegalArgumentException("[ERROR] y 또는 n으로 입력하세요.");
+        }
+        return input.equals("y");
+    }
+
+    private boolean isNotOverMaxScore(Participant participant) {
+        if (participant.isOverMaxScore()){
+            OutputView.printParticipantOverMaxScore(participant.getName());
+        }
+        return !participant.isOverMaxScore();
+    }
+
+    private void decideOneMoreCard(Dealer dealer, Deck deck) {
+        if(dealer.acceptableCard()) {
+            dealer.addCard(deck.draw());
+            OutputView.printDealerAcceptCard();
+            return;
+        }
+        OutputView.printDealerDenyCard();
     }
 }
