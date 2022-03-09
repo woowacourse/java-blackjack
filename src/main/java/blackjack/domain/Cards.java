@@ -54,7 +54,7 @@ public class Cards {
         } else if (compareCards.isBlackJack()) {
             return LOSE;
         }
-        return null;
+        return GameOutcome.calculateOutcome(this.calculateScore(), compareCards.calculateScore());
     }
 
     private boolean isBlackJack() {

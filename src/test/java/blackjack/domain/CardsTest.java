@@ -57,7 +57,8 @@ class CardsTest {
     @DisplayName("자신만 블랙잭인 경우 우승를 반환한다.")
     void fightResultSelfBlackJack() {
         final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, A)));
-        final Cards compareCards = new Cards(Arrays.asList(Card.of(HEART, KING), Card.of(HEART, JACK), Card.of(HEART, A)));
+        final Cards compareCards =
+                new Cards(Arrays.asList(Card.of(HEART, KING), Card.of(HEART, JACK), Card.of(HEART, A)));
         assertThat(cards.fightResult(compareCards)).isEqualTo(WIN);
     }
 
@@ -67,5 +68,14 @@ class CardsTest {
         final Cards cards = new Cards(Arrays.asList(Card.of(HEART, KING), Card.of(HEART, JACK), Card.of(HEART, A)));
         final Cards compareCards = new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, A)));
         assertThat(cards.fightResult(compareCards)).isEqualTo(LOSE);
+    }
+
+    @Test
+    @DisplayName("모두 블랙잭이 아닌 경우 숫자로 비교한다.")
+    void fightResultBothNotBlackJack() {
+        final Cards cards = new Cards(Arrays.asList(Card.of(HEART, KING), Card.of(HEART, JACK), Card.of(HEART, A)));
+        final Cards compareCards
+                = new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, JACK), Card.of(SPADE, A)));
+        assertThat(cards.fightResult(compareCards)).isEqualTo(DRAW);
     }
 }
