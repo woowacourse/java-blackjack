@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
@@ -21,5 +22,9 @@ public class Deck {
             throw new IllegalArgumentException("카드가 모두 소진되었습니다.");
         }
         return values.poll();
+    }
+
+    public List<Card> getInitCards() {
+        return List.of(draw(), draw());
     }
 }

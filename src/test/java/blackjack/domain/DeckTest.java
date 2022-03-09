@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,5 +36,15 @@ public class DeckTest {
         Card drawCard = deck.draw();
 
         assertThat(card).isEqualTo(drawCard);
+    }
+
+    @DisplayName("최초에 카드 두장을 뽑는다.")
+    @Test
+    void 카드_두장_뽑기() {
+        Deck deck = new Deck(Card.VALUES);
+
+        List<Card> cards = deck.getInitCards();
+
+        assertThat(cards.size()).isEqualTo(2);
     }
 }
