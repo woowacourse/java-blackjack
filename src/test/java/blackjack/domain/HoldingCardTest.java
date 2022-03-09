@@ -29,6 +29,27 @@ class HoldingCardTest {
     }
 
     @Test
+    @DisplayName("Ace를 포함한 합이 21보다 작을 경우 버스트가 아니다.")
+    void under21withAce_isNotBust() {
+        List<Card> cards = new ArrayList<>(
+                List.of(new Card(Symbol.CLOVER, CardNumber.JACK), new Card(Symbol.CLOVER, CardNumber.KING)));
+        HoldingCard holdingCard = new HoldingCard(cards);
+        holdingCard.add(new Card(Symbol.CLOVER, CardNumber.ACE));
+        Assertions.assertThat(holdingCard.isBust()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Ace를 포함한 합이 21보다 클 경우 버스트다.")
+    void under21withAce_isBust() {
+        List<Card> cards = new ArrayList<>(
+                List.of(new Card(Symbol.CLOVER, CardNumber.JACK), new Card(Symbol.CLOVER, CardNumber.KING)));
+        HoldingCard holdingCard = new HoldingCard(cards);
+        holdingCard.add(new Card(Symbol.CLOVER, CardNumber.ACE));
+        holdingCard.add(new Card(Symbol.SPADE, CardNumber.ACE));
+        Assertions.assertThat(holdingCard.isBust()).isTrue();
+    }
+
+    @Test
     @DisplayName("A가 4장 존재할 때 14로 계산할 수 있는가?")
     void fourAce_calculate() {
         List<Card> cards = new ArrayList<>(
