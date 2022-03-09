@@ -40,7 +40,7 @@ public class Participant {
 		}
 	}
 
-	public void receiveCard(Card card){
+	public void receiveCard(Card card) {
 		cards.addCard(card);
 	}
 }
