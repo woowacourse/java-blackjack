@@ -5,10 +5,16 @@ import java.util.List;
 public class Dealer extends Human {
 
     public static final int RECEIVED_MAXIMUM = 16;
-    Cards cards = new Cards();
+    private static final String name = "딜러";
+
+    private final Cards cards = new Cards();
 
     public Dealer(List<Card> initCards) {
         cards.add(initCards);
+    }
+
+    public static String getName() {
+        return name;
     }
 
     public boolean isReceived() {

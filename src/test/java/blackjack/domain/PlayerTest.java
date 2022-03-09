@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.CardMachine;
-import blackjack.domain.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +16,7 @@ public class PlayerTest {
 
     @BeforeEach
     void before() {
-        player = new Player(cardMachine.giveInitCard());
+        player = new Player("woowahan");
     }
 
     @DisplayName("y, Y를 입력 받았을 때 True 를 반환하는지 확인한다.")
@@ -45,5 +43,13 @@ public class PlayerTest {
         assertThatThrownBy(() -> player.isReceived("a"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("y, n 중에서 입력해주세요.");
+    }
+
+    @DisplayName("딜러 이름과 동일한 이름을 입력할 경우 예외를 발생시킨다.")
+    @Test
+    void equals_dealer_name() {
+        assertThatThrownBy(() -> new Player("딜러"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("딜러와 동일한 이름은 사용할 수 없습니다.");
     }
 }

@@ -30,7 +30,8 @@ class WinnerTest {
         Dealer dealer = new Dealer(dealerCards);
 
         List<Card> playerCards = new ArrayList<>(List.of(queenSpade, queenSpade, twoSpade));
-        Player player = new Player(playerCards);
+        Player player = new Player("pobi");
+        player.receiveInitCard(playerCards);
 
         Winner winner = new Winner();
         winner.compare(dealer, player);
@@ -45,7 +46,8 @@ class WinnerTest {
         Dealer dealer = new Dealer(dealerCards);
 
         List<Card> playerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
-        Player player = new Player(playerCards);
+        Player player = new Player("pobi");
+        player.receiveInitCard(playerCards);
 
         Winner winner = new Winner();
         winner.compare(dealer, player);
@@ -60,7 +62,8 @@ class WinnerTest {
         Dealer dealer = new Dealer(dealerCards);
 
         List<Card> playerCards = new ArrayList<>(List.of(twoSpade, twoSpade));
-        Player player = new Player(playerCards);
+        Player player = new Player("pobi");
+        player.receiveInitCard(playerCards);
 
         Winner winner = new Winner();
         winner.compare(dealer, player);
@@ -75,7 +78,8 @@ class WinnerTest {
         Dealer dealer = new Dealer(dealerCards);
 
         List<Card> playerCards = new ArrayList<>(List.of(twoSpade, twoSpade, twoSpade));
-        Player player = new Player(playerCards);
+        Player player = new Player("pobi");
+        player.receiveInitCard(playerCards);
 
         Winner winner = new Winner();
         winner.compare(dealer, player);
