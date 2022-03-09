@@ -26,6 +26,10 @@ public class Player {
         cards.combine(card);
     }
 
+    public String getName() {
+        return name;
+    }
+
     public List<Card> getCards() {
         return cards.getValue();
     }
