@@ -15,13 +15,19 @@ public class Participant {
         return List.copyOf(cards);
     }
 
-    protected int calculateCardSum() {
+    protected int calculateScore() {
         return cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
     }
 
-    public boolean isNotBurst() {
-        return calculateCardSum() > 21;
+    public boolean isBurst() {
+        return calculateScore() > 21;
+    }
+
+    public boolean isHigherThan(Participant other) {
+        final int thisScore = this.calculateScore();
+        final int otherScore = other.calculateScore();
+        return thisScore > otherScore;
     }
 }

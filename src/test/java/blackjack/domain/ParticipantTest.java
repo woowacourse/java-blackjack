@@ -61,7 +61,7 @@ class ParticipantTest {
             participant.drawCard(deck);
         }
 
-        assertThat(participant.isNotBurst()).isTrue();
+        assertThat(participant.isBurst()).isTrue();
     }
 
     private static Stream<Arguments> provideForCannotContinueDrawCardTest() {
@@ -97,7 +97,7 @@ class ParticipantTest {
             participant.drawCard(deck);
         }
 
-        assertThat(participant.isNotBurst()).isFalse();
+        assertThat(participant.isBurst()).isFalse();
     }
 
     private static Stream<Arguments> provideForCanContinueDrawCardTest() {
@@ -119,5 +119,43 @@ class ParticipantTest {
                 )
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("provideForIsHigherThanTest")
+    @DisplayName("두 참여자의 카드 합계를 비교한다.")
+    void isHigherThanTest(final List<Card> initializedCards) {
+        manualCardStrategy.initCards(initializedCards);
+        final Deck deck = Deck.generate(manualCardStrategy);
+        final Participant participant1 = new Participant();
+        participant1.drawCard(deck);
+        participant1.drawCard(deck);
+        final Participant participant2 = new Participant();
+        participant2.drawCard(deck);
+        participant2.drawCard(deck);
+
+        assertThat(participant1.isHigherThan(participant2)).isTrue();
+    }
+
+    private static Stream<Arguments> provideForIsHigherThanTest() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(
+                                new Card(CardPattern.DIAMOND, CardNumber.KING),
+                                new Card(CardPattern.DIAMOND, CardNumber.TEN),
+                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
+                                new Card(CardPattern.DIAMOND, CardNumber.NINE)
+                        )
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardPattern.SPADE, CardNumber.TEN),
+                                new Card(CardPattern.SPADE, CardNumber.EIGHT),
+                                new Card(CardPattern.SPADE, CardNumber.NINE),
+                                new Card(CardPattern.HEART, CardNumber.EIGHT)
+                        )
+                )
+        );
+    }
+
 
 }

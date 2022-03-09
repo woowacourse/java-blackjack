@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -61,6 +62,52 @@ public class PlayersTest {
                                 new Card(CardPattern.DIAMOND, CardNumber.TWO),
                                 new Card(CardPattern.DIAMOND, CardNumber.THREE),
                                 new Card(CardPattern.DIAMOND, CardNumber.FOUR)
+                        )
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideForCompareCardTotalTest")
+    @DisplayName("각 플레이어는 딜러와의 승패를 계산한다.")
+    void compareCardSum(final List<String> names,
+                        final List<Card> initializedCards,
+                        final Map<String, WinningResult> expectedWinningResults) {
+        manualCardStrategy.initCards(initializedCards);
+        final Deck deck = Deck.generate(manualCardStrategy);
+
+        final Dealer dealer = Dealer.startWithTwoCards(deck);
+        final Players players = Players.startWithTwoCards(names, deck);
+
+        final Map<String, WinningResult> actualWinningResults = players.judgeWinners(dealer);
+        assertThat(actualWinningResults).isEqualTo(expectedWinningResults);
+    }
+
+    private static Stream<Arguments> provideForCompareCardTotalTest() {
+        return Stream.of(
+                Arguments.of(
+                        List.of("sun"),
+                        List.of(
+                                new Card(CardPattern.DIAMOND, CardNumber.KING),
+                                new Card(CardPattern.DIAMOND, CardNumber.TEN),
+                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
+                                new Card(CardPattern.DIAMOND, CardNumber.NINE)
+                        ),
+                        Map.of("sun", WinningResult.LOSS)
+                ),
+                Arguments.of(
+                        List.of("sun", "if"),
+                        List.of(
+                                new Card(CardPattern.SPADE, CardNumber.NINE),
+                                new Card(CardPattern.HEART, CardNumber.EIGHT),
+                                new Card(CardPattern.SPADE, CardNumber.TEN),
+                                new Card(CardPattern.SPADE, CardNumber.EIGHT),
+                                new Card(CardPattern.HEART, CardNumber.TEN),
+                                new Card(CardPattern.SPADE, CardNumber.TWO)
+                        ),
+                        Map.of(
+                                "sun", WinningResult.WIN,
+                                "if", WinningResult.LOSS
                         )
                 )
         );
