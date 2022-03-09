@@ -11,6 +11,6 @@ public class Player extends Gamer {
 
     @Override
     public void hit() {
-
+        draw();
     }
 }

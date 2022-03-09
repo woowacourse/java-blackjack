@@ -27,7 +27,7 @@ public abstract class Gamer {
     }
 
     public boolean isBust() {
-        return true;
+        return cards.calculateScore() > 21;
     }
 
     public abstract void hit();
