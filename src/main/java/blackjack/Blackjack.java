@@ -16,11 +16,22 @@ public class Blackjack {
     }
 
     public void distributeInitialCards(NumberGenerator numberGenerator) {
-
         for (int i = 0; i<2; ++i) {
             dealer.addCard(dealer.handOutCard(numberGenerator));
             players.forEach(player -> player
                     .addCard(dealer.handOutCard(numberGenerator)));
+        }
+    }
+
+    public void distributeAdditionalCardDealer(NumberGenerator numberGenerator) {
+        while(dealer.isHit()) {
+            dealer.addCard(dealer.handOutCard(numberGenerator));
+        }
+    }
+
+    public void distributeAdditionalCardPlayer(NumberGenerator numberGenerator, Player player, boolean flag) {
+        if (flag) {
+            player.addCard(dealer.handOutCard(numberGenerator));
         }
     }
 

@@ -4,17 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
-    private List<Card> cards;
+    private List<Card> myCards;
 
     public Person() {
-        this.cards = new ArrayList<>();
+        this.myCards = new ArrayList<>();
     }
 
     public void addCard(Card card) {
-        cards.add(card);
+        myCards.add(card);
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<Card> getMyCards() {
+        return myCards;
+    }
+
+    public int score() {
+        return myCards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
     }
 }
