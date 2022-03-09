@@ -32,4 +32,8 @@ public class Dealer {
         }
         return Result.DRAW;
     }
+
+    public boolean isPossibleTakeCard() {
+        return cards.score().getValue() < 17;
+    }
 }
