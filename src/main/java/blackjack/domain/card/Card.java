@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.card.Denomination.ACE;
+
 import java.util.Objects;
 
 public class Card {
@@ -14,6 +16,15 @@ public class Card {
     public String getName() {
         return denomination.getPoint() + suit.getName();
     }
+
+    public int getPoint() {
+        return denomination.getPoint();
+    }
+
+    public boolean isAce() {
+        return denomination == ACE;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -30,9 +41,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(suit, denomination);
-    }
-
-    public int getPoint() {
-        return denomination.getPoint();
     }
 }
