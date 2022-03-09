@@ -21,6 +21,7 @@ public class BlackJackController {
         final CardDeck cardDeck = setupCards();
         spreadCards(gamblers, dealer, cardDeck);
         hitOrStay(gamblers, cardDeck);
+        addCardForDealer(dealer, cardDeck);
     }
 
     public List<Gambler> setupGamblers() {
@@ -50,7 +51,7 @@ public class BlackJackController {
     private void printCards(Dealer dealer, List<Gambler> gamblers) {
         final String playerNames = gamblers.stream().map(Gambler::getName).collect(joining(", "));
         outputView.printAfterSpread(dealer.getName(), playerNames);
-        outputView.printCards(PlayerDto.from(dealer));
+        outputView.printSingleCardForDealer(PlayerDto.from(dealer));
 
         gamblers
             .forEach(gambler -> outputView.printCards(PlayerDto.from(gambler)));
@@ -75,7 +76,12 @@ public class BlackJackController {
             gambler.addCard(cardDeck.getCard());
             outputView.printCards(PlayerDto.from(gambler));
         } while (inputView.scanHitOrStay(gambler.getName()));
-
     }
 
+    private void addCardForDealer(Dealer dealer, CardDeck cardDeck) {
+        while (dealer.isUnderSixteen()) {
+            dealer.addCard(cardDeck.getCard());
+            outputView.printDealerAddCard(dealer);
+        }
+    }
 }

@@ -2,6 +2,7 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
+import blackjack.domain.Dealer;
 import blackjack.domain.PlayerDto;
 import blackjack.domain.PlayingCard;
 import java.util.List;
@@ -32,5 +33,10 @@ public class OutputView {
 
     public void printSingleCardForDealer(PlayerDto dealer) {
         System.out.println(dealer.getName() + ": " + dealer.getPlayingCards().get(0).getCardName());
+    }
+
+    public void printDealerAddCard(Dealer dealer) {
+        System.out.println();
+        System.out.println(dealer.getName() + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 }
