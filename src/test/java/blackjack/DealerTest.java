@@ -66,17 +66,17 @@ public class DealerTest {
     @ParameterizedTest
     @MethodSource("provideCardsForDealer")
     @DisplayName("카드 발급 가능 여부 확인 테스트")
-    void possibleTakeCard(Cards cards, boolean expect) {
+    void possibleTakeCard(DealerCards cards, boolean expect) {
         Dealer dealer = new Dealer(cards);
         assertThat(dealer.isPossibleTakeCard()).isEqualTo(expect);
     }
 
     private static Stream<Arguments> provideCardsForDealer() {
         return Stream.of(
-            Arguments.of(new Cards(new Card("J다이아몬드"), new Card("6클로버")), true),
-            Arguments.of(new Cards(new Card("J다이아몬드"), new Card("7클로버")), false),
-            Arguments.of(new Cards(new Card("A다이아몬드"), new Card("6클로버")), false),
-            Arguments.of(new Cards(new Card("A다이아몬드"), new Card("A클로버")), false)
+            Arguments.of(new DealerCards(new Card("J다이아몬드"), new Card("6클로버")), true),
+            Arguments.of(new DealerCards(new Card("J다이아몬드"), new Card("7클로버")), false),
+            Arguments.of(new DealerCards(new Card("A다이아몬드"), new Card("6클로버")), false),
+            Arguments.of(new DealerCards(new Card("A다이아몬드"), new Card("A클로버")), false)
         );
     }
 }

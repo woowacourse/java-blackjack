@@ -23,21 +23,6 @@ public class Cards {
             .orElse(new Score(hardHand()));
     }
 
-    public int scoreForDealer() {
-        int value = 0;
-        for (Card card : cards) {
-            value += valueForDealer(card);
-        }
-        return value;
-    }
-
-    private int valueForDealer(Card card) {
-        if (card.isAce()) {
-            return 11;
-        }
-        return card.getRank();
-    }
-
     private List<Score> possibleScores() {
         return Stream.concat(Stream.of(hardHand()), softHands().stream())
             .map(Score::new)

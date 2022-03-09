@@ -3,9 +3,16 @@ package blackjack;
 public class Dealer {
 
     private final Cards cards;
+    private final DealerCards dealerCards;
 
     public Dealer(Cards cards) {
         this.cards = cards;
+        this.dealerCards = null;
+    }
+
+    public Dealer(DealerCards dealerCards) {
+        this.cards = null;
+        this.dealerCards = dealerCards;
     }
 
     public Result judge(Cards cards) {
@@ -34,6 +41,6 @@ public class Dealer {
     }
 
     public boolean isPossibleTakeCard() {
-        return cards.scoreForDealer() < 17;
+        return dealerCards.scoreForDealer() < 17;
     }
 }
