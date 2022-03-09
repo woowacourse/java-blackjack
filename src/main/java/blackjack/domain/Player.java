@@ -16,14 +16,11 @@ public class Player {
     }
 
     public void drawCard(Card card) {
-        validateBust();
         cards.add(card);
     }
 
-    private void validateBust() {
-        if (getTotalNumber() > BLACKJACK_NUMBER) {
-            throw new IllegalStateException("버스트여서 더 이상 드로우할 수 없습니다.");
-        }
+    public boolean isBust() {
+        return getTotalNumber() > BLACKJACK_NUMBER;
     }
 
     public int getTotalNumber() {
