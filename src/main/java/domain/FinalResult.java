@@ -2,11 +2,11 @@ package domain;
 
 import java.util.Map;
 
-public class Result {
+public class FinalResult {
 
 	private final Map<String, Versus> playerResults;
 
-	public Result(Dealer dealer, Players players) {
+	public FinalResult(Dealer dealer, Players players) {
 		this.playerResults = compare(dealer, players);
 	}
 

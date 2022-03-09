@@ -15,7 +15,7 @@ public class Card {
 	}
 
 	public boolean isAce() {
-		return rank.getRank() == 'A';
+		return rank.getRank() == "A";
 	}
 
 	@Override

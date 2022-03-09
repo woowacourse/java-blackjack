@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ResultTest {
+public class FinalResultTest {
 	Card card_A = new Card(Rank.RANK_A, Suit.CLOVER);
 	Card card_2 = new Card(Rank.RANK_2, Suit.CLOVER);
 	Card card_Q = new Card(Rank.RANK_Q, Suit.CLOVER);
@@ -25,49 +25,50 @@ public class ResultTest {
 	Players players = new Players(names, initCards);
 	Dealer dealer_17 = new Dealer(List.of(card_A, card_6));
 	Dealer dealer_BURST = new Dealer(List.of(card_K, card_Q, card_2));
-	Result result = new Result(dealer_17, players);
-	Result result_dealer_burst = new Result(dealer_BURST, players);
+	FinalResult finalResult = new FinalResult(dealer_17, players);
+	FinalResult finalResult_dealer_burst = new FinalResult(dealer_BURST, players);
 
 	@Test
 	@DisplayName("딜러도 safe, 플레이어 safe, 플레이어 승")
 	void getVersus_Pobi() {
-		assertThat(result.getVersus("pobi").getResult()).isEqualTo("승");
+		assertThat(finalResult.getVersus("pobi").getResult()).isEqualTo("승");
 	}
 
 	@Test
 	@DisplayName("딜러도 safe, 플레이어 safe, 무승부")
 	void getVersus_Gugu() {
-		assertThat(result.getVersus("gugu").getResult()).isEqualTo("무");
+		assertThat(finalResult.getVersus("gugu").getResult()).isEqualTo("무");
 	}
 
 	@Test
 	@DisplayName("딜러도 safe, 플레이어 safe, 플레이어 패")
 	void getVersus_Jason() {
-		assertThat(result.getVersus("jason").getResult()).isEqualTo("패");
+		assertThat(finalResult.getVersus("jason").getResult()).isEqualTo("패");
 	}
 
 	@Test
 	@DisplayName("딜러도 safe, 플레이어 burst, 플레이어 패")
 	void getVersus_Woni() {
-		assertThat(result.getVersus("woni").getResult()).isEqualTo("패");
+		assertThat(finalResult.getVersus("woni").getResult()).isEqualTo("패");
 	}
 
 	@Test
 	@DisplayName("딜러도 burst, 플레이어 safe, 플레이어 승")
 	void getVersus_Pobi2() {
-		assertThat(result_dealer_burst.getVersus("pobi").getResult()).isEqualTo("승");
+		assertThat(finalResult_dealer_burst.getVersus("pobi").getResult()).isEqualTo("승");
 	}
 
 	@Test
 	@DisplayName("딜러도 burst, 플레이어 burst, 플레이어 패")
 	void getVersus_Woni2() {
-		assertThat(result_dealer_burst.getVersus("woni").getResult()).isEqualTo("패");
+		assertThat(finalResult_dealer_burst.getVersus("woni").getResult()).isEqualTo("패");
 	}
 
 	@Test
 	@DisplayName("딜러 결과 확인")
 	void getDealerResult() {
-		assertThat(Arrays.asList(result.getDealerWinCount(), result.getDealerDrawCount(), result.getDealerLoseCount()))
+		assertThat(Arrays.asList(finalResult.getDealerWinCount(), finalResult.getDealerDrawCount(),
+			finalResult.getDealerLoseCount()))
 			.isEqualTo(Arrays.asList(2, 1, 1));
 	}
 }
