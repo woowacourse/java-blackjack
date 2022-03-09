@@ -2,7 +2,7 @@ package blackjack;
 
 import java.util.Objects;
 
-public class Score {
+public class Score implements Comparable<Score> {
 
     private final int value;
 
@@ -14,37 +14,8 @@ public class Score {
         this.value = value;
     }
 
-    public Result judge(Score other) {
-        if (hasBust(other)) {
-            return compareBustCase(other);
-        }
-        return compareNormalCase(other);
-    }
-
     public boolean isBust() {
         return value > 21;
-    }
-
-    private boolean hasBust(Score other) {
-        return isBust() || other.isBust();
-    }
-
-    private Result compareBustCase(Score other) {
-        if (isBust() && other.isBust()) {
-            return Result.DRAW;
-        } else if (isBust()) {
-            return Result.LOSS;
-        }
-        return Result.WIN;
-    }
-
-    private Result compareNormalCase(Score other) {
-        if (value > other.value) {
-            return Result.WIN;
-        } else if (value == other.value) {
-            return Result.DRAW;
-        }
-        return Result.LOSS;
     }
 
     @Override
@@ -85,5 +56,10 @@ public class Score {
         }
 
         return value > other.value ? this : other;
+    }
+
+    @Override
+    public int compareTo(Score score) {
+        return Integer.compare(getValue(), score.getValue());
     }
 }

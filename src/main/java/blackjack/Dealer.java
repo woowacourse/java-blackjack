@@ -36,12 +36,12 @@ public class Dealer {
     }
 
     private Result compareNormalCase(Score score, Score other) {
-        if (score.getValue() > other.getValue()) {
-            return Result.WIN;
-        } else if (score.getValue() == other.getValue()) {
+        if (score.compareTo(other) == -1) {
+            return Result.LOSS;
+        } else if(score.compareTo(other) == 0) {
             return Result.DRAW;
         }
-        return Result.LOSS;
+        return Result.WIN;
     }
 
 }
