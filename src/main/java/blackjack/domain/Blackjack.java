@@ -73,4 +73,12 @@ public class Blackjack {
     private boolean isDealerNeedAdditionalCard() {
         return dealer.getScore() <= DEALER_ADDITIONAL_CARD_STANDARD;
     }
+
+    public Participant getDealer() {
+        return dealer;
+    }
+
+    public List<Participant> getPlayers() {
+        return players;
+    }
 }
