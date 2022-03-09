@@ -23,5 +23,9 @@ public class BlackjackGame {
                 }
             }
         }
+
+        if (dealer.shouldHaveMoreCard()) {
+            dealer.putCard(deck.draw());
+        }
     }
 }
