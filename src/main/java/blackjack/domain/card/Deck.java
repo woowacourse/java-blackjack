@@ -5,10 +5,10 @@ import java.util.stream.Collectors;
 
 public class Deck {
 
-    private static final Stack<Card> deck = init();
-
+    private final Stack<Card> deck;
 
     public Deck() {
+        deck = init();
     }
 
     private static Stack<Card> init() {
@@ -34,6 +34,6 @@ public class Deck {
     }
 
     public boolean containCard(Card card) {
-        return false;
+        return deck.contains(card);
     }
 }
