@@ -1,45 +1,49 @@
 package blackjack.view;
 
-import blackjack.domain.ParticipantsDto;
+import blackjack.domain.BlackJackDto;
 import blackjack.domain.Participant;
-import blackjack.domain.Participants;
+
+import java.util.Map;
 
 public class ResultView {
 
     private static final String RESULT_DELIMITER = " - 결과: ";
+    private static final String NAME_DELIMITER = ": ";
 
-    public void showStartingStatus(ParticipantsDto participantsDto) {
-        System.out.println(participantsDto.getDealerOpenCard());
-        for (Participant player : participantsDto.getPlayers()) {
-            showEachPlayerCurrentStatus(participantsDto, player);
+    public void showStartingStatus(BlackJackDto blackJackDto) {
+        System.out.println(blackJackDto.getDealerOpenCard());
+        for (Participant player : blackJackDto.getPlayers()) {
+            showEachPlayerCurrentStatus(blackJackDto, player);
         }
     }
 
-    public void showCurrentStatus(ParticipantsDto participantsDto) {
-        Participant dealer = participantsDto.getDealer();
-        showEachPlayerCurrentStatus(participantsDto, dealer);
-        for (Participant player : participantsDto.getPlayers()) {
-            showEachPlayerCurrentStatus(participantsDto, player);
+    public void showCurrentStatus(BlackJackDto blackJackDto) {
+        Participant dealer = blackJackDto.getDealer();
+        showEachPlayerCurrentStatus(blackJackDto, dealer);
+        for (Participant player : blackJackDto.getPlayers()) {
+            showEachPlayerCurrentStatus(blackJackDto, player);
         }
     }
 
-    public void showEachPlayerCurrentStatus(ParticipantsDto participantsDto, Participant participant) {
-        System.out.println(getEachPlayerStatus(participantsDto, participant));
+    public void showEachPlayerCurrentStatus(BlackJackDto blackJackDto, Participant participant) {
+        System.out.println(getEachPlayerStatus(blackJackDto, participant));
     }
 
-    private String getEachPlayerStatus(ParticipantsDto participantsDto, Participant participant) {
-        return participantsDto.getPlayerCardStatus(participant);
+    private String getEachPlayerStatus(BlackJackDto blackJackDto, Participant participant) {
+        return blackJackDto.getPlayerCardStatus(participant);
     }
 
-    public void showFinishedStatus(ParticipantsDto participantsDto) {
-        Participant dealer = participantsDto.getDealer();
-        System.out.println(getEachPlayerStatus(participantsDto, dealer) + RESULT_DELIMITER + dealer.getScore());
-        for (Participant player : participantsDto.getPlayers()) {
-            System.out.println(getEachPlayerStatus(participantsDto, player) + RESULT_DELIMITER + player.getScore());
+    public void showFinishedStatus(BlackJackDto blackJackDto) {
+        Participant dealer = blackJackDto.getDealer();
+        System.out.println(getEachPlayerStatus(blackJackDto, dealer) + RESULT_DELIMITER + dealer.getScore());
+        for (Participant player : blackJackDto.getPlayers()) {
+            System.out.println(getEachPlayerStatus(blackJackDto, player) + RESULT_DELIMITER + player.getScore());
         }
     }
 
-	public void showResult(Participants participants) {
-
-	}
+    public void showResult(BlackJackDto blackJackDto) {
+        System.out.println("## 최종 승패");
+        System.out.println(blackJackDto.getDealerResult());
+        blackJackDto.getPlayersResult().forEach(System.out::println);
+    }
 }
