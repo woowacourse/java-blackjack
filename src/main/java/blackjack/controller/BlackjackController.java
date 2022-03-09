@@ -21,6 +21,34 @@ public class BlackjackController {
 
         OutputView.announceStartGame(players.stream().map(Player::getName).collect(Collectors.toList()));
         OutputView.announcePresentCards(toResponse(players));
+
+        for (Player player : players) {
+            if (player.getName().equals("딜러")) {
+                continue;
+            }
+            while (!player.isOverLimit(21)) {
+                if (InputView.requestMoreCard(player.getName()).equals("y")) {
+                    blackjackGame.addCard(player);
+                    List<GameResponse> gameResponses = new ArrayList<>();
+                    GameResponse gameResponse = new GameResponse(player.getName(), player.getDeck());
+                    gameResponses.add(gameResponse);
+                    OutputView.announcePresentCards(gameResponses);
+                    continue;
+                }
+                break;
+            }
+        }
+        Player dealer = players.get(0);
+        announceDealerCanGetMoreCard(blackjackGame, dealer);
+    }
+
+    private void announceDealerCanGetMoreCard(BlackjackGame blackjackGame, Player dealer) {
+        if (!dealer.isOverLimit(16)) {
+            OutputView.announceDealerGetMoreCard();
+            blackjackGame.addCard(dealer);
+            return;
+        }
+        OutputView.announceDealerStopMoreCard();
     }
 
     private List<GameResponse> toResponse(List<Player> players) {

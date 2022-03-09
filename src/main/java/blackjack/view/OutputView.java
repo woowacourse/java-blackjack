@@ -32,4 +32,12 @@ public class OutputView {
             System.out.println(sb);
         }
     }
+
+    public static void announceDealerGetMoreCard() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void announceDealerStopMoreCard() {
+        System.out.println("딜러는 17이상이라 카드를 더 받지 않습니다.");
+    }
 }

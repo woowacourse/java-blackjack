@@ -24,4 +24,8 @@ public class BlackjackGame {
         }
         return blackjackPlayers;
     }
+
+    public void addCard(Player player) {
+        player.addCard(cards.assignCard());
+    }
 }
