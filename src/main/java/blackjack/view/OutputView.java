@@ -13,6 +13,7 @@ public class OutputView {
     private static final String PRINT_OPEN_CARD_SUFFIX_MESSAGE = "에게 2장의 카드를 나누었습니다.\n";
     private static final String PRINT_JOINING_DELIMITER = ", ";
     private static final String PRINT_OPEN_CARD_FORMAT_MESSAGE = "%s: %s\n";
+    private static final String PRINT_SHOW_CARD_FORMAT_MESSAGE = "%s카드: %s\n";
 
     public static void printOpenCards(final BlackJackGame blackJackGame) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -21,7 +22,7 @@ public class OutputView {
                 .append(PRINT_OPEN_CARD_SUFFIX_MESSAGE);
 
         List<Card> cards = blackJackGame.getDealer().openCards();
-        stringBuilder.append(String.format(PRINT_OPEN_CARD_FORMAT_MESSAGE,Dealer.DEALER_NAME, joinCards(cards)));
+        stringBuilder.append(String.format(PRINT_OPEN_CARD_FORMAT_MESSAGE, Dealer.DEALER_NAME, joinCards(cards)));
         appendGamerFormat(blackJackGame.getGamers(), stringBuilder);
 
         System.out.println(stringBuilder);
@@ -41,7 +42,7 @@ public class OutputView {
 
     private static void appendGamerFormat(final List<Gamer> gamers, final StringBuilder stringBuilder) {
         for (Gamer gamer : gamers) {
-            stringBuilder.append(String.format(PRINT_OPEN_CARD_FORMAT_MESSAGE,
+            stringBuilder.append(String.format(PRINT_SHOW_CARD_FORMAT_MESSAGE,
                     gamer.getName(),
                     joinCards(gamer.openCards())));
         }
@@ -53,5 +54,11 @@ public class OutputView {
 
     public static void printErrorMessage(final String message) {
         System.out.println(message);
+    }
+
+    public static void printCards(Gamer gamer) {
+        System.out.printf(PRINT_SHOW_CARD_FORMAT_MESSAGE,
+                gamer.getName(),
+                joinCards(gamer.showCards()));
     }
 }

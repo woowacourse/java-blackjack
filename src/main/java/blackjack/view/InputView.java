@@ -11,6 +11,7 @@ public class InputView {
     private static final String DELIMITER = ",";
     private static final String INPUT_BLANK = " ";
     private static final String INPUT_NOT_BLANK = "";
+    private static final String REQUEST_PLAYER_ANSWER_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -27,4 +28,8 @@ public class InputView {
     }
 
 
+    public static String requestAnswer(String name) {
+        System.out.printf(REQUEST_PLAYER_ANSWER_MESSAGE, name);
+        return scanner.nextLine();
+    }
 }

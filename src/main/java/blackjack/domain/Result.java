@@ -15,7 +15,7 @@ public enum Result {
         this.predicate = predicate;
     }
 
-    public static Result findResult(final int dealerResult, final int gamerResult){
+    public static Result findResult(final int dealerResult, final int gamerResult) {
         return Arrays.stream(values())
                 .filter((result) -> result.predicate.test(dealerResult, gamerResult))
                 .findFirst()

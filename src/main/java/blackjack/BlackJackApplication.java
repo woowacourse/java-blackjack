@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.Answer;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
@@ -16,9 +17,12 @@ public class BlackJackApplication {
     public static void main(String[] args) {
         List<Gamer> gamers = createGamers();
         Deck deck = Deck.init();
-        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), gamers);
-        blackJackGame.giveFirstCards(deck);
-        OutputView.printOpenCards(blackJackGame);
+        BlackJackGame blackJackGame = startBlackJackGame(gamers, deck);
+        for (Gamer gamer : blackJackGame.getGamers()) {
+            progressAdditionalCard(deck, gamer);
+            OutputView.printCards(gamer);
+        }
+
     }
 
     private static List<Gamer> createGamers() {
@@ -33,15 +37,40 @@ public class BlackJackApplication {
     private static List<Gamer> toGamerList() {
         List<String> names = InputView.requestPlayerName();
         checkDuplicateName(names);
-        return names.stream()
-                .map(Gamer::new)
-                .collect(Collectors.toList());
+        return names.stream().map(Gamer::new).collect(Collectors.toList());
     }
 
     private static void checkDuplicateName(final List<String> names) {
         Set<String> tempSet = new HashSet<>(names);
         if (names.size() != tempSet.size()) {
             throw new IllegalArgumentException("[ERROR] 중복된 이름은 입력할 수 없습니다.");
+        }
+    }
+
+    private static BlackJackGame startBlackJackGame(List<Gamer> gamers, Deck deck) {
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), gamers);
+        blackJackGame.giveFirstCards(deck);
+        OutputView.printOpenCards(blackJackGame);
+        return blackJackGame;
+    }
+
+    private static void progressAdditionalCard(Deck deck, Gamer gamer) {
+        while (isReceivable(gamer)) {
+            gamer.receiveCard(deck.draw());
+            OutputView.printCards(gamer);
+        }
+    }
+
+    private static boolean isReceivable(Gamer gamer) {
+        return gamer.isReceivable() && isAnswerYes(gamer.getName());
+    }
+
+    private static boolean isAnswerYes(String name) {
+        try {
+            return Answer.YES == Answer.of(InputView.requestAnswer(name));
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return isAnswerYes(name);
         }
     }
 }
