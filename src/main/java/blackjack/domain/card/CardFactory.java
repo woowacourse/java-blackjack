@@ -25,7 +25,7 @@ public class CardFactory {
         return new CardFactory(deck);
     }
 
-    static CardFactory createNoShuffle() {
+    public static CardFactory createNoShuffle() {
         final List<Card> list = getCards();
 
         final Stack<Card> deck = new Stack<>();
@@ -49,7 +49,7 @@ public class CardFactory {
                 .collect(Collectors.toList());
     }
 
-    public Card createCard() {
+    public Card drawCard() {
         return deck.pop();
     }
 

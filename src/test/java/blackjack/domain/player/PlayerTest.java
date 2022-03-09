@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Status;
 import org.junit.jupiter.api.DisplayName;
@@ -71,5 +72,19 @@ class PlayerTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("게임준비를 위해 가진 카드를 초기화한다.")
+    void init() {
+        // give
+        final Player player = new Player("pobi");
+
+        // when
+        player.init(CardFactory.createNoShuffle());
+        final int actual = player.getScore();
+
+        // then
+        assertThat(actual).isEqualTo(20);
     }
 }

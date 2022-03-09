@@ -27,7 +27,7 @@ public class CardFactoryTest {
         final CardFactory cardFactory = CardFactory.createNoShuffle();
 
         // when
-        final Card card = cardFactory.createCard();
+        final Card card = cardFactory.drawCard();
 
         // then
         assertThat(card).isInstanceOf(Card.class);

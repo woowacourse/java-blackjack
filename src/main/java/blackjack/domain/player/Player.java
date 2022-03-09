@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Status;
 import java.util.LinkedHashSet;
@@ -43,5 +44,10 @@ public class Player {
 
     public Status getStatus() {
         return cards.getStatus();
+    }
+
+    public void init(CardFactory cardFactory) {
+        cards.add(cardFactory.drawCard());
+        cards.add(cardFactory.drawCard());
     }
 }
