@@ -59,9 +59,13 @@ public class Player {
     }
 
     public int calculateResultScore() {
+        validateCanCalculateResultScore();
+        return owningCards.calculateScore();
+    }
+
+    private void validateCanCalculateResultScore() {
         if (canDraw()) {
             throw new IllegalStateException("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
         }
-        return owningCards.calculateScore();
     }
 }
