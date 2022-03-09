@@ -1,15 +1,16 @@
 package blackjack.domain;
 
-import static blackjack.domain.CardNumber.A;
-import static blackjack.domain.CardNumber.SEVEN;
-import static blackjack.domain.CardNumber.SIX;
-import static blackjack.domain.CardNumber.TEN;
-import static blackjack.domain.CardNumber.TWO;
-import static blackjack.domain.CardPattern.SPADE;
+import static blackjack.domain.card.CardNumber.A;
+import static blackjack.domain.card.CardNumber.SEVEN;
+import static blackjack.domain.card.CardNumber.SIX;
+import static blackjack.domain.card.CardNumber.TEN;
+import static blackjack.domain.card.CardNumber.TWO;
+import static blackjack.domain.card.CardPattern.SPADE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;

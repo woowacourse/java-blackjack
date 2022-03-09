@@ -1,8 +1,8 @@
 package blackjack.dto;
 
-import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
+import blackjack.domain.card.Card;
 import java.util.List;
 
 public class PlayerInfo {
