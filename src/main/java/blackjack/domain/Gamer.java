@@ -12,6 +12,13 @@ public class Gamer {
     }
 
     public void addCard(Card card) {
+        if (cardGroup.isBust()) {
+            return;
+        }
         cardGroup.addCard(card);
+    }
+
+    public int getCardGroupSum() {
+        return cardGroup.getSum();
     }
 }

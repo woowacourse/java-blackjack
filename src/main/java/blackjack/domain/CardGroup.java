@@ -12,7 +12,7 @@ public class CardGroup {
         return getSum() > BLACKJACK_NUMBER;
     }
 
-    private int getSum() {
+    public int getSum() {
         return cards.stream()
                 .map(Card::getNumber)
                 .mapToInt(CardNumber::getNumber)
