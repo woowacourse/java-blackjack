@@ -20,4 +20,30 @@ public class ResultTest {
                 , judy.calculateResult())).isEqualTo(Result.WIN);
     }
 
+    @Test
+    @DisplayName("패배한 경우를 계산한다.")
+    void findLosingResult() {
+        Player dealer = new Dealer();
+        dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.FIVE));
+
+        Gamer judy = new Gamer("judy");
+        judy.receiveCard(new Card(Suit.CLOVER, Denomination.FOUR));
+
+        assertThat(Result.findResult(dealer.calculateResult()
+                , judy.calculateResult())).isEqualTo(Result.LOSE);
+    }
+
+    @Test
+    @DisplayName("무승부인 경우를 계산한다.")
+    void findDrawResult() {
+        Player dealer = new Dealer();
+        dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.FIVE));
+
+        Gamer judy = new Gamer("judy");
+        judy.receiveCard(new Card(Suit.CLOVER, Denomination.FIVE));
+
+        assertThat(Result.findResult(dealer.calculateResult()
+                , judy.calculateResult())).isEqualTo(Result.DRAW);
+    }
+
 }
