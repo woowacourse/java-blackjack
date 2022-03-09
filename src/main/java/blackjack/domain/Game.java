@@ -1,9 +1,11 @@
 package blackjack.domain;
 
 import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Game {
@@ -31,5 +33,21 @@ public class Game {
 
     public int getRemainAmount() {
         return cardFactory.getRemainAmount();
+    }
+
+    public void drawCard(Status status) {
+        final Optional<Player> optionalPlayer = findHitPlayer();
+
+        if (status == Status.HIT) {
+            optionalPlayer.ifPresent(player -> player.hit(cardFactory));
+            return;
+        }
+        optionalPlayer.ifPresent(Player::stay);
+    }
+
+    private Optional<Player> findHitPlayer() {
+        return players.stream()
+                .filter(Player::isHit)
+                .findFirst();
     }
 }

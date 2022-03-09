@@ -58,7 +58,7 @@ class PlayerTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"TWO:BUST", "ACE:NOT_BUST"}, delimiter = ':')
+    @CsvSource(value = {"TWO:BUST", "ACE:HIT"}, delimiter = ':')
     @DisplayName("카드의 합이 21을 초과하면 BUST를 반환한다.")
     void returnBust(CardNumber cardNumber, Status expected) {
         // give
@@ -86,5 +86,19 @@ class PlayerTest {
 
         // then
         assertThat(actual).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("상태를 STAY로 변경한다.")
+    void stay() {
+        // give
+        final Player player = new Player("pobi");
+
+        // when
+        player.stay();
+        final Status actual = player.getStatus();
+
+        // then
+        assertThat(actual).isEqualTo(Status.STAY);
     }
 }

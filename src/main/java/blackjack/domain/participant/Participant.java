@@ -8,9 +8,11 @@ import java.util.LinkedHashSet;
 public abstract class Participant {
 
     protected final Cards cards;
+    protected Status status;
 
     public Participant() {
         this.cards = new Cards(new LinkedHashSet<>());
+        this.status = Status.HIT;
     }
 
     public void init(CardFactory cardFactory) {
@@ -19,7 +21,11 @@ public abstract class Participant {
     }
 
     public Status getStatus() {
-        return cards.getStatus();
+        return status;
+    }
+
+    public boolean isHit() {
+        return status == Status.HIT;
     }
 
     public int getScore() {
@@ -28,5 +34,12 @@ public abstract class Participant {
 
     public void hit(CardFactory cardFactory) {
         cards.add(cardFactory.drawCard());
+        updateStatus();
+    }
+
+    private void updateStatus() {
+        if (cards.getStatus() == Status.BUST) {
+            status = Status.BUST;
+        }
     }
 }

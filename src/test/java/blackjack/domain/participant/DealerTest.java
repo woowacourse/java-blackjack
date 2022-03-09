@@ -34,7 +34,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("조건에 만족할 때 까지 카드르 뽑는다. (버스트 X)")
+    @DisplayName("조건에 만족할 때 까지 카드르 뽑는다. (BUST X)")
     void drawCards_NOT_BUST() {
         // give
         final Dealer dealer = new Dealer();
@@ -46,7 +46,7 @@ class DealerTest {
         final Status actual = dealer.getStatus();
 
         // then
-        assertThat(actual).isEqualTo(Status.NOT_BUST);
+        assertThat(actual).isEqualTo(Status.HIT);
     }
 
     @Test

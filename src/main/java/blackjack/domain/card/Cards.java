@@ -23,7 +23,7 @@ public class Cards {
             return Status.BUST;
         }
 
-        return Status.NOT_BUST;
+        return Status.HIT;
     }
 
     public int sum() {

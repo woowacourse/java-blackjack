@@ -18,7 +18,7 @@ public class Dealer extends Participant {
     }
 
     public void drawCards(CardFactory cardFactory) {
-        while (getStatus() == Status.NOT_BUST && getScore() <= 16) {
+        while (getStatus() == Status.HIT && getScore() <= 16) {
             hit(cardFactory);
         }
     }

@@ -66,7 +66,7 @@ class CardsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"SEVEN:BUST", "FOUR:NOT_BUST"}, delimiter = ':')
+    @CsvSource(value = {"SEVEN:BUST", "FOUR:HIT"}, delimiter = ':')
     @DisplayName("합산한 값이 21을 초과하면 BUST를 반환한다.")
     void isBust1(CardNumber cardNumber, Status expected) {
         // give

@@ -1,6 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Status;
 
 public class Player extends Participant {
 
@@ -30,5 +32,24 @@ public class Player extends Participant {
 
     void hit(Card card) {
         cards.add(card);
+        updateStatus();
+    }
+
+    private void updateStatus() {
+        if (cards.getStatus() == Status.BUST) {
+            super.status = Status.BUST;
+        }
+    }
+
+    public void hitOrStay(Status status, CardFactory cardFactory) {
+        if (status == Status.HIT) {
+            hit(cardFactory);
+            return;
+        }
+        stay();
+    }
+
+    public void stay() {
+        status = Status.STAY;
     }
 }
