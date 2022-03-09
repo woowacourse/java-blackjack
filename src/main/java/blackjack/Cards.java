@@ -9,9 +9,9 @@ import java.util.stream.Stream;
 
 public class Cards {
 
-    private final List<String> cards;
+    private final List<Card> cards;
 
-    public Cards(String... cards) {
+    public Cards(Card... cards) {
         this.cards = List.of(cards);
     }
 
@@ -32,12 +32,9 @@ public class Cards {
     }
 
     public int hardHand() {
-        int result = 0;
-        for (String card : cards) {
-            String value = card.substring(0, 1);
-            result += number(value);
-        }
-        return result;
+        return cards.stream()
+            .mapToInt(Card::getRank)
+            .sum();
     }
 
     public List<Integer> softHands() {
@@ -49,8 +46,7 @@ public class Cards {
 
     private int numberOfAce() {
         return (int) cards.stream()
-                .map(s -> s.substring(0, 1))
-                .filter(s -> s.equals("A"))
+                .filter(card -> card.getRank() == 1)
                 .count();
     }
 
@@ -60,16 +56,6 @@ public class Cards {
 
     public boolean isBust() {
         return score().isBust();
-    }
-
-    private int number(String value) {
-        if (value.equals("J") || value.equals("Q") || value.equals("K")) {
-            return 10;
-        }
-        if (value.equals("A")) {
-            return 1;
-        }
-        return Integer.parseInt(value);
     }
 
     @Override

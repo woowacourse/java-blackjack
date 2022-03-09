@@ -21,10 +21,10 @@ public class DealerTest {
 
     private static Stream<Arguments> provideDealerWinningCaseCards() {
         return Stream.of(
-            Arguments.of(new Cards("8다이아몬드", "J하트"), new Cards("7클로버", "8하트")),
-            Arguments.of(new Cards("8다이아몬드", "J하트"), new Cards("J하트", "Q하트", "4다이아몬드")),
-            Arguments.of(new Cards("A다이아몬드", "5하트"), new Cards("7클로버", "6하트")),
-            Arguments.of(new Cards("A다이아몬드", "J하트", "Q클로버"), new Cards("Q클로버", "J하트"))
+            Arguments.of(new Cards(new Card("8다이아몬드"), new Card("J하트")), new Cards(new Card("7클로버"), new Card("8하트"))),
+            Arguments.of(new Cards(new Card("8다이아몬드"), new Card("J하트")), new Cards(new Card("J하트"), new Card("Q하트"), new Card("4다이아몬드"))),
+            Arguments.of(new Cards(new Card("A다이아몬드"), new Card("5하트")), new Cards(new Card("7클로버"), new Card("6하트"))),
+            Arguments.of(new Cards(new Card("A다이아몬드"), new Card("J하트"), new Card("Q클로버")), new Cards(new Card("Q클로버"), new Card("J하트")))
         );
     }
 
@@ -38,15 +38,15 @@ public class DealerTest {
 
     private static Stream<Arguments> provideDealerLosingCaseCards() {
         return Stream.of(
-            Arguments.of(new Cards("7클로버", "8하트"), new Cards("Q클로버", "J하트")),
-            Arguments.of(new Cards("J하트", "Q하트", "4다이아몬드"), new Cards("Q클로버", "J하트"))
+            Arguments.of(new Cards(new Card("7클로버"), new Card("8하트")), new Cards(new Card("Q클로버"), new Card("J하트"))),
+            Arguments.of(new Cards(new Card("J하트"), new Card("Q하트"), new Card("4다이아몬드")), new Cards(new Card("Q클로버"), new Card("J하트")))
         );
     }
 
     @Test
     @DisplayName("비기는 경우 판별 테스트")
     void dealerIsDraw() {
-        Dealer dealer = new Dealer(new Cards("J다이아몬드", "4하트"));
-        assertThat(dealer.judge(new Cards("8클로버", "6하트"))).isEqualTo(Result.DRAW);
+        Dealer dealer = new Dealer(new Cards(new Card("J다이아몬드"), new Card("4하트")));
+        assertThat(dealer.judge(new Cards(new Card("8클로버"), new Card("6하트")))).isEqualTo(Result.DRAW);
     }
 }

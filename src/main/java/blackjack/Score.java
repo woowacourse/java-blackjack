@@ -59,4 +59,11 @@ public class Score {
     public int hashCode() {
         return Objects.hash(value);
     }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+            "value=" + value +
+            '}';
+    }
 }

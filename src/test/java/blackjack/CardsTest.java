@@ -14,42 +14,40 @@ public class CardsTest {
 
     @Test
     void 카드_합_계산() {
-        Cards cards = new Cards("1다이아몬드", "2다이아몬드");
-        assertThat(cards.score()).isEqualTo(new Score(3));
+        Cards cards = new Cards(new Card("3다이아몬드"), new Card("2다이아몬드"));
+        assertThat(cards.score()).isEqualTo(new Score(5));
     }
 
     @Test
     void J_Q_K_카드_점수_계산() {
-        Cards cards = new Cards("Q클로버", "J하트", "K다이아몬드");
+        Cards cards = new Cards(new Card("Q클로버"), new Card("J하트"), new Card("K다이아몬드"));
         assertThat(cards.score()).isEqualTo(new Score(30));
     }
 
     @ParameterizedTest
     @MethodSource("provideAceData")
-    void ACE_카드_점수_계산(List<String> input) {
-        Cards cards = new Cards(input.toArray(String[]::new));
+    void ACE_카드_점수_계산(Cards cards) {
         assertThat(cards.score()).isEqualTo(new Score(21));
     }
 
     protected static Stream<Arguments> provideAceData() {
         return Stream.of(
-                Arguments.of(List.of("A스페이스", "J하트")),
-                Arguments.of(List.of("A다이아몬드", "J다이아몬드", "K클로버")),
-                Arguments.of(List.of("A다이아몬드", "A스페이드", "9클로버"))
+                Arguments.of(new Cards(new Card("A스페이스"), new Card("J하트"))),
+                Arguments.of(new Cards(new Card("A다이아몬드"), new Card("J다이아몬드"), new Card("K클로버"))),
+                Arguments.of(new Cards(new Card("A다이아몬드"), new Card("A스페이드"), new Card("9클로버")))
         );
     }
 
     @ParameterizedTest(name = "입력값 : {1}")
     @MethodSource("provideBustFixture")
-    void 버스트_발생(boolean expect, List<String> values) {
-        Cards cards = new Cards(values.toArray(String[]::new));
+    void 버스트_발생(boolean expect, Cards cards) {
         assertThat(cards.isBust()).isEqualTo(expect);
     }
 
     protected static Stream<Arguments> provideBustFixture() {
         return Stream.of(
-            Arguments.of(true, List.of("J다이아몬드","Q다이아몬드","2클로버")),
-            Arguments.of(false, List.of("A다이아몬드", "J다이아몬드", "4하트"))
+            Arguments.of(true, new Cards(new Card("J다이아몬드"),new Card("Q다이아몬드"),new Card("2클로버"))),
+            Arguments.of(false, new Cards(new Card("A다이아몬드"), new Card("J다이아몬드"), new Card("4하트")))
         );
     }
 }
