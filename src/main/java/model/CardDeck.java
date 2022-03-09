@@ -18,17 +18,13 @@ public class CardDeck {
         return cards;
     }
 
-    public boolean isEmpty() {
-        return deck.isEmpty();
-    }
-
     public Card drawCard() {
         checkIsEmpty();
         return deck.poll();
     }
 
     private void checkIsEmpty() {
-        if (isEmpty()) {
+        if (deck.isEmpty()) {
             throw new IllegalArgumentException("카드를 모두 소진했습니다!!");
         }
     }
