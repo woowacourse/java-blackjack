@@ -1,3 +1,4 @@
+package blackjack;
 
 public enum CardValue {
 	ACE("A", 1),

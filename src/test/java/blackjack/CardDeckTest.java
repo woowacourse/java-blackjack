@@ -1,5 +1,8 @@
+package blackjack;
+
 import static org.assertj.core.api.Assertions.*;
 
+import blackjack.CardDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

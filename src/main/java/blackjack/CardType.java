@@ -1,3 +1,5 @@
+package blackjack;
+
 public enum CardType {
 	SPADE("스페이드"),
 	DIAMOND("다이아몬드"),
