@@ -8,7 +8,7 @@ public class Dealer {
         this.cards = cards;
     }
 
-    Result judge(Cards cards) {
+    public Result judge(Cards cards) {
         Score playerScore = cards.score();
         if (playerScore.isBust()) {
             return Result.WIN;
@@ -34,6 +34,6 @@ public class Dealer {
     }
 
     public boolean isPossibleTakeCard() {
-        return cards.score().getValue() < 17;
+        return cards.scoreForDealer() < 17;
     }
 }

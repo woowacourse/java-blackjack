@@ -24,4 +24,11 @@ public class Card {
     public boolean isAce() {
         return getRank() == 1;
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+            "cardInfo='" + cardInfo + '\'' +
+            '}';
+    }
 }

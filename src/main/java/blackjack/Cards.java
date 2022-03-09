@@ -23,19 +23,34 @@ public class Cards {
             .orElse(new Score(hardHand()));
     }
 
+    public int scoreForDealer() {
+        int value = 0;
+        for (Card card : cards) {
+            value += valueForDealer(card);
+        }
+        return value;
+    }
+
+    private int valueForDealer(Card card) {
+        if (card.isAce()) {
+            return 11;
+        }
+        return card.getRank();
+    }
+
     private List<Score> possibleScores() {
         return Stream.concat(Stream.of(hardHand()), softHands().stream())
             .map(Score::new)
             .collect(toUnmodifiableList());
     }
 
-    public int hardHand() {
+    private int hardHand() {
         return cards.stream()
             .mapToInt(Card::getRank)
             .sum();
     }
 
-    public List<Integer> softHands() {
+    private List<Integer> softHands() {
         return IntStream.rangeClosed(1, numberOfAce())
             .map(value -> 10 * value + hardHand())
             .boxed()
