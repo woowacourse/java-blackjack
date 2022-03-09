@@ -11,4 +11,15 @@ public class Dealer extends Participant {
         dealer.drawCard(deck);
         return dealer;
     }
+
+    public void continueDraw(Deck deck) {
+        while (isPossibleToDrawCard()) {
+            drawCard(deck);
+        }
+    }
+
+    private boolean isPossibleToDrawCard() {
+        return calculateCardSum() < 17;
+    }
+
 }
