@@ -8,42 +8,29 @@ public class Dealer {
     }
 
     Result judge(Cards cards) {
-        if (this.cards.score().isBust() && cards.score().isBust()) {
-            return Result.WIN;
-        }
         return judge(cards.score());
     }
 
-    public Result judge(Score other) {
-        if (hasBust(other)) {
-            return compareBustCase(other);
+    public Result judge(Score playerScore) {
+        if (playerScore.isBust()) {
+            return Result.WIN;
         }
-        return compareNormalCase(other);
-    }
-
-    private boolean hasBust(Score other) {
-        return score().isBust() || other.isBust();
-    }
-
-    private Result compareBustCase(Score other) {
-        if (score().isBust() && other.isBust()) {
-            return Result.DRAW;
-        } else if (score().isBust()) {
+        if (dealerScore().isBust()) {
             return Result.LOSS;
         }
-        return Result.WIN;
+        return compare(playerScore);
     }
 
-    private Result compareNormalCase(Score other) {
-        if (score().compareTo(other) == -1) {
+    private Result compare(Score playerScore) {
+        if (dealerScore().compareTo(playerScore) == -1) {
             return Result.LOSS;
-        } else if(score().compareTo(other) == 0) {
+        } else if(dealerScore().compareTo(playerScore) == 0) {
             return Result.DRAW;
         }
         return Result.WIN;
     }
 
-    private Score score() {
+    private Score dealerScore() {
         return cards.score();
     }
 }
