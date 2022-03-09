@@ -6,20 +6,19 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.result.BlackJackResult;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.result.PlayerResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
 
 class GameResultTest {
 
     @Test
     @DisplayName("아무도 버스트가 아닐 때 플레이어 게임 결과 확인")
-    void playerResultCreateNotBurst() {
+    void playerResultCreateNotBurst2() {
         Dealer dealer = new Dealer();
         dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.THREE));
         dealer.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.NINE));
@@ -37,12 +36,13 @@ class GameResultTest {
         BlackJackGame blackJackGame = new BlackJackGame();
         GameResult gameResult = blackJackGame.createResult(dealer, List.of(pobi, jason));
 
-        List<PlayerResult> playerResults = gameResult.getPlayerResult();
+        Map<Name, BlackJackResult> playerResults = gameResult.getPlayerResult();
 
-        assertThat(playerResults)
-                .extracting("name", "result")
-                .contains(tuple(new Name("pobi"), BlackJackResult.WIN),
-                        tuple(new Name("jason"), BlackJackResult.LOSE));
+        BlackJackResult pobiResult = playerResults.get(new Name("pobi"));
+        BlackJackResult jasonResult = playerResults.get(new Name("jason"));
+
+        assertThat(pobiResult).isEqualTo(BlackJackResult.WIN);
+        assertThat(jasonResult).isEqualTo(BlackJackResult.LOSE);
     }
 
     @Test
@@ -66,11 +66,12 @@ class GameResultTest {
         BlackJackGame blackJackGame = new BlackJackGame();
         GameResult gameResult = blackJackGame.createResult(dealer, List.of(pobi, jason));
 
-        List<PlayerResult> playerResults = gameResult.getPlayerResult();
+        Map<Name, BlackJackResult> playerResults = gameResult.getPlayerResult();
 
-        assertThat(playerResults)
-                .extracting("name", "result")
-                .contains(tuple(new Name("pobi"), BlackJackResult.LOSE),
-                        tuple(new Name("jason"), BlackJackResult.WIN));
+        BlackJackResult pobiResult = playerResults.get(new Name("pobi"));
+        BlackJackResult jasonResult = playerResults.get(new Name("jason"));
+
+        assertThat(pobiResult).isEqualTo(BlackJackResult.LOSE);
+        assertThat(jasonResult).isEqualTo(BlackJackResult.WIN);
     }
 }
