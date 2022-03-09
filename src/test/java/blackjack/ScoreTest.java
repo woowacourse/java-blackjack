@@ -15,11 +15,21 @@ public class ScoreTest {
         assertThat(new Score(scoreValue).isBust()).isEqualTo(expect);
     }
 
-    @Test
-    @DisplayName("Score 비교 테스트")
-    void compare_score() {
-        Score score1 = new Score(7);
-        Score score2 = new Score(8);
-        assertThat(score1.lessThan(score2)).isTrue();
+    @ParameterizedTest
+    @DisplayName("less than 테스트")
+    @CsvSource({"7,8,True", "8,7,False", "8,8,False"})
+    void compareLessThan(int input1, int input2, boolean expect) {
+        Score score1 = new Score(input1);
+        Score score2 = new Score(input2);
+        assertThat(score1.lessThan(score2)).isEqualTo(expect);
+    }
+
+    @ParameterizedTest
+    @DisplayName("more than 테스트")
+    @CsvSource({"7,8,False", "8,7,True", "8,8,False"})
+    void compareMoreThan(int input1, int input2, boolean expect) {
+        Score score1 = new Score(input1);
+        Score score2 = new Score(input2);
+        assertThat(score1.moreThan(score2)).isEqualTo(expect);
     }
 }
