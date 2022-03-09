@@ -31,15 +31,15 @@ public class DealerTest {
     @ParameterizedTest
     @MethodSource("provideDealerLosingCaseCards")
     @DisplayName("딜러가 지는 경우 판별 테스트")
-    void dealerIsLoser(Cards dealerCards) {
+    void dealerIsLoser(Cards dealerCards, Cards playerCards) {
         Dealer dealer = new Dealer(dealerCards);
-        assertThat(dealer.judge(new Cards("Q클로버", "J하트"))).isEqualTo(Result.LOSS);
+        assertThat(dealer.judge(playerCards)).isEqualTo(Result.LOSS);
     }
 
     private static Stream<Arguments> provideDealerLosingCaseCards() {
         return Stream.of(
-            Arguments.of(new Cards("7클로버", "8하트")),
-            Arguments.of(new Cards("J하트", "Q하트", "4다이아몬드"))
+            Arguments.of(new Cards("7클로버", "8하트"), new Cards("Q클로버", "J하트")),
+            Arguments.of(new Cards("J하트", "Q하트", "4다이아몬드"), new Cards("Q클로버", "J하트"))
         );
     }
 

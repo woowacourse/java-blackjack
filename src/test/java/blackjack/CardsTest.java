@@ -34,7 +34,8 @@ public class CardsTest {
     protected static Stream<Arguments> provideAceData() {
         return Stream.of(
                 Arguments.of(List.of("A스페이스", "J하트")),
-                Arguments.of(List.of("A다이아몬드", "J다이아몬드", "K클로버"))
+                Arguments.of(List.of("A다이아몬드", "J다이아몬드", "K클로버")),
+                Arguments.of(List.of("A다이아몬드", "A스페이드", "9클로버"))
         );
     }
 
