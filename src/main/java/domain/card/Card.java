@@ -1,15 +1,13 @@
 package domain.card;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public class Card {
 
-    private static final Queue<Card> CACHE;
+    private static final LinkedList<Card> CACHE = new LinkedList<>();
 
     private final Symbol symbol;
     private final Denomination denomination;
@@ -21,22 +19,20 @@ public class Card {
     }
 
     static {
-        List<Card> tmpCards = new ArrayList<>();
         for (Symbol symbol : Symbol.values()) {
-            addCard(symbol, tmpCards);
+            addCard(symbol);
         }
-        Collections.shuffle(tmpCards);
-        CACHE = new LinkedList<>(tmpCards);
+        Collections.shuffle(CACHE);
     }
 
-    private static void addCard(Symbol symbol, List<Card> tmpCards) {
+    private static void addCard(Symbol symbol) {
         for (Denomination denomination : Denomination.values()) {
-            tmpCards.add(new Card(symbol, denomination));
+            CACHE.add(new Card(symbol, denomination));
         }
     }
 
     public static Card draw(){
-        return CACHE.remove();
+        return CACHE.pop();
     }
 
     public static List<Card> handOutInitialTurn(){
@@ -45,5 +41,13 @@ public class Card {
 
     public int getScore(){
         return denomination.getScore();
+    }
+
+    public String getDenomination(){
+        return denomination.getLetter();
+    }
+
+    public String getSymbol() {
+        return symbol.getLetter();
     }
 }

@@ -11,4 +11,8 @@ public enum Symbol {
     Symbol(String letter) {
         this.letter = letter;
     }
+
+    public String getLetter() {
+        return letter;
+    }
 }

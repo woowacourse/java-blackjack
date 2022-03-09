@@ -27,4 +27,8 @@ public enum Denomination {
     public int getScore() {
         return score;
     }
+
+    public String getLetter() {
+        return letter;
+    }
 }
