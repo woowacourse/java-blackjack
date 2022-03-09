@@ -66,4 +66,15 @@ public class UserTest {
 
         assertThat(user.checkResult(18)).isEqualTo(Result.DRAW);
     }
+
+    @Test
+    @DisplayName("Ace는 1 또는 11로 계산될 수 있다.")
+    void userDrawTest2() {
+        User user = new User("Pobi");
+        user.receiveCard(new Card(CardNumber.ACE, CardType.CLOVER));
+        user.receiveCard(new Card(CardNumber.ACE, CardType.HEART));
+        user.receiveCard(new Card(CardNumber.ACE, CardType.DIAMOND));
+
+        assertThat(user.checkResult(13)).isEqualTo(Result.DRAW);
+    }
 }
