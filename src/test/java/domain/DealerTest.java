@@ -6,17 +6,6 @@ import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 	@Test
-	void distribute_card_to_dealer() {
-		//given
-		Gamer dealer = new Dealer();
-		Deck deck = new Deck();
-		//when
-		dealer.addCard(deck.distributeCard());
-		//then
-		assertThat(dealer.getCards().size()).isEqualTo(1);
-	}
-
-	@Test
 	void dealer_score_higher_than_player_score() {
 	    //given
 	    Dealer dealer = new Dealer();
