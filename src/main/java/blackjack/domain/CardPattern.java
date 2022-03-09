@@ -20,4 +20,8 @@ public enum CardPattern {
     public static List<CardPattern> cardPatterns() {
         return Arrays.asList(values());
     }
+
+    public String getName() {
+        return name;
+    }
 }

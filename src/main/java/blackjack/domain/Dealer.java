@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Dealer {
 
+    private static final String NAME = "딜러";
+
     private static final int DEALER_LIMIT_SCORE = 17;
 
     private final Cards cards;
@@ -37,5 +39,13 @@ public class Dealer {
 
     public GameOutcome fightResult(final Player player) {
         return cards.fightResult(new Cards(player.cards()));
+    }
+
+    public List<Card> initCards() {
+        return cards.firstCard();
+    }
+
+    public String getName() {
+        return NAME;
     }
 }

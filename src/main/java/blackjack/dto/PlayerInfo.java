@@ -1,0 +1,39 @@
+package blackjack.dto;
+
+import blackjack.domain.Card;
+import blackjack.domain.Dealer;
+import blackjack.domain.Player;
+import java.util.List;
+
+public class PlayerInfo {
+
+    private final String name;
+    private final List<Card> cards;
+
+    private PlayerInfo(final String name, final List<Card> cards) {
+        this.name = name;
+        this.cards = cards;
+    }
+
+    public static PlayerInfo dealerToInfo(final Dealer dealer) {
+        return new PlayerInfo(
+                dealer.getName(),
+                dealer.initCards()
+        );
+    }
+
+    public static PlayerInfo playerToInfo(final Player player) {
+        return new PlayerInfo(
+                player.getName(),
+                player.initCards()
+        );
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+}

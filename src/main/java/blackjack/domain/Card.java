@@ -46,6 +46,10 @@ public class Card {
         return new ArrayList<>(CARDS_CACHE);
     }
 
+    public CardPattern getPattern() {
+        return pattern;
+    }
+
     public CardNumber getNumber() {
         return number;
     }

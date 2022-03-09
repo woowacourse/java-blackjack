@@ -68,4 +68,12 @@ public class Player {
             throw new IllegalStateException("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Card> initCards() {
+        return List.copyOf(cards().subList(0, 2));
+    }
 }
