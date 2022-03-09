@@ -10,7 +10,6 @@ public class BlackJackController {
         Users users = new Users(InputView.inputUsersName());
         Dealer dealer = new Dealer();
         Deck deck = new Deck(new CardGenerator());
-
         initDistribute(deck, users, dealer);
         OutputView.printInitDistribute(users, dealer);
 
@@ -18,10 +17,19 @@ public class BlackJackController {
             playEachUser(user, deck);
         }
 
-        // 딜러 추가 지급
         playDealer(dealer, deck);
         OutputView.printFinalResult(users, dealer);
-        // 승패 여부
+        calculateResult(users, dealer);
+    }
+
+    private void calculateResult(Users users, Dealer dealer) {
+        DealerResult result = new DealerResult(users, dealer);
+        OutputView.printDealerResult(result.getCount());
+
+        int dealerSum = dealer.getCardSum();
+        for (User user : users.getUsers()) {
+            OutputView.printUserResult(user, user.checkResult(dealerSum));
+        }
     }
 
     private void playDealer(Dealer dealer, Deck deck) {

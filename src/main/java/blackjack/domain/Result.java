@@ -4,13 +4,15 @@ import java.util.Arrays;
 
 public enum Result {
 
-    LOSE((userScore, dealerScore) -> userScore > 21 || (dealerScore <= 21 && userScore < dealerScore)),
-    WIN((userScore, dealerScore) -> dealerScore > 21 || userScore > dealerScore),
-    DRAW((userScore, dealerScore) -> userScore == dealerScore);
+    LOSE("패", (userScore, dealerScore) -> userScore > 21 || (dealerScore <= 21 && userScore < dealerScore)),
+    WIN("승", (userScore, dealerScore) -> dealerScore > 21 || userScore > dealerScore),
+    DRAW("무", (userScore, dealerScore) -> userScore == dealerScore);
 
+    private String name;
     private ScoreComparator comparator;
 
-    Result(ScoreComparator comparator) {
+    Result(String name, ScoreComparator comparator) {
+        this.name = name;
         this.comparator = comparator;
     }
 
@@ -19,5 +21,19 @@ public enum Result {
                 .filter(result -> result.comparator.compare(userScore, dealerScore))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public static Result swap(Result result) {
+        if (result == WIN) {
+            return LOSE;
+        }
+        if (result == LOSE) {
+            return WIN;
+        }
+        return result;
+    }
+
+    public String getName() {
+        return name;
     }
 }
