@@ -1,4 +1,6 @@
-package blackjack.blackjack.domain;
+package blackjack.domain;
+
+import java.util.List;
 
 public abstract class Player {
     private static final int BURST_CRITERIA = 21;

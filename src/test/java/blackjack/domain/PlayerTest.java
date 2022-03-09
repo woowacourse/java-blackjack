@@ -3,12 +3,6 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.blackjack.domain.Dealer;
-import blackjack.blackjack.domain.Denomination;
-import blackjack.blackjack.domain.Gambler;
-import blackjack.blackjack.domain.Player;
-import blackjack.blackjack.domain.PlayingCard;
-import blackjack.blackjack.domain.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
