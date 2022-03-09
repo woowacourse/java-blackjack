@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import blackJack.domain.Card;
+import blackJack.domain.Denomination;
+import blackJack.domain.Symbol;
+
 class PlayerTest {
 
     @Test
@@ -22,5 +26,13 @@ class PlayerTest {
         assertThatThrownBy(() -> new Player(value))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("플레이어의 이름이 존재하지 않습니다.");
+    }
+
+    @Test
+    @DisplayName("Player 카드 합계 계산 테스트")
+    void calculateScore() {
+        Player player = new Player("rookie");
+        player.receiveCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
+        assertThat(player.calculateScore()).isEqualTo(8);
     }
 }
