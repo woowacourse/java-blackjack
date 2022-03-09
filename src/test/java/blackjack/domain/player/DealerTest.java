@@ -13,48 +13,60 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
+    private static List<Card> createCards(Card firstCard, Card... remainCard) {
+        final List<Card> cards = new ArrayList<>();
+        cards.add(firstCard);
+        cards.addAll(Arrays.stream(remainCard)
+                .collect(Collectors.toList()));
+        return cards;
+    }
+
     @Test
     @DisplayName("딜러의 카드가 17이상일 때 카드를 추가하면 예외가 발생해야 한다.")
     void drawExceptionByLimitDealerScore() {
-        final Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN))));
+        final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN));
+        final Player dealer = Dealer.init(cards);
         assertThatThrownBy(() -> dealer.draw(Card.of(SPADE, A)))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("딜러 카드가 이미 17이상입니다.");
+                .hasMessage("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
     }
 
     @Nested
     @DisplayName("딜러가 카드 한 장을 더 받을 수 있는지 확인할 수 있다.")
-    class IsEnd {
+    class CanDraw {
 
         @Test
         @DisplayName("헌 장을 더 받을 수 있다.")
         void isNotEnd() {
-            final Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, SIX))));
-            assertFalse(dealer.isEnd());
+            final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SIX));
+            final Player dealer = Dealer.init(cards);
+            assertTrue(dealer.canDraw());
         }
 
         @Test
         @DisplayName("헌 장을 더 받을 수 없다.")
         void isEnd() {
-            final Dealer dealer = new Dealer(
-                    new ArrayList<>(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN))));
-            assertTrue(dealer.isEnd());
+            final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN));
+            final Player dealer = Dealer.init(cards);
+            assertFalse(dealer.canDraw());
         }
     }
 
     @Test
     @DisplayName("종료되지 않은 딜러가 모든 카드를 반환하려고 하는 경우 예외가 발생해야 한다.")
     void getCardsException() {
-        final Dealer dealer = new Dealer(
-                new ArrayList<>(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, SIX))));
+        final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SIX));
+        final Dealer dealer = Dealer.init(cards);
 
-        assertThatThrownBy(() -> dealer.getCards())
+        assertThatThrownBy(() -> dealer.cards())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("딜러는 턴이 종료되지 않을 때 모든 카드를 반환할 수 없습니다.");
     }
@@ -62,8 +74,8 @@ class DealerTest {
     @Test
     @DisplayName("턴이 종료되지 않았는데 스코어를 반환하려고 하면 예외를 발생시킨다.")
     void calculateResultScoreExceptionByNotEndTurn() {
-        final Dealer dealer = new Dealer(
-                new ArrayList<>(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, TWO))));
+        final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, TWO));
+        final Dealer dealer = Dealer.init(cards);
 
         assertThatThrownBy(() -> dealer.calculateResultScore())
                 .isInstanceOf(IllegalStateException.class)

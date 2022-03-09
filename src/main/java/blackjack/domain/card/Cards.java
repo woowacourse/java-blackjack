@@ -40,6 +40,10 @@ public class Cards {
         }
     }
 
+    public int size() {
+        return cards.size();
+    }
+
     public boolean isBust() {
         return calculateScore() > BLACK_JACK_NUMBER;
     }

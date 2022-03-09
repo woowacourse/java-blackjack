@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.ParticipatingPlayer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.dto.OutComeResult;
@@ -15,10 +16,10 @@ import java.util.stream.Collectors;
 public class BlackJackGame {
 
     private final CardDeck cardDeck;
-    private final Dealer dealer;
+    private final Player dealer;
     private final Players players;
 
-    private BlackJackGame(final CardDeck cardDeck, final Dealer dealer, final Players players) {
+    private BlackJackGame(final CardDeck cardDeck, final Player dealer, final Players players) {
         this.cardDeck = cardDeck;
         this.dealer = dealer;
         this.players = players;
@@ -26,14 +27,14 @@ public class BlackJackGame {
 
     public static BlackJackGame init(final List<String> playerNames) {
         final CardDeck cardDeck = CardDeck.init();
-        final Dealer dealer = new Dealer(cardDeck.provideInitCards());
+        final Player dealer = Dealer.init(cardDeck.provideInitCards());
         final List<Player> players = provideInitCardsToPlayers(playerNames, cardDeck);
         return new BlackJackGame(cardDeck, dealer, new Players(players));
     }
 
     private static List<Player> provideInitCardsToPlayers(final List<String> playerNames, final CardDeck cardDeck) {
         return playerNames.stream()
-                .map(name -> new Player(name, true, cardDeck.provideInitCards()))
+                .map(name -> ParticipatingPlayer.init(name, cardDeck.provideInitCards()))
                 .collect(Collectors.toList());
     }
 
@@ -52,7 +53,7 @@ public class BlackJackGame {
     }
 
     public boolean isDealerTurnEnd() {
-        return dealer.isEnd();
+        return !dealer.canDraw();
     }
 
     public void drawDealer() {
@@ -60,7 +61,7 @@ public class BlackJackGame {
     }
 
     public PlayerInfo getInitDealerInfo() {
-        return PlayerInfo.dealerToInitInfo(dealer);
+        return PlayerInfo.from(dealer);
     }
 
     public List<PlayerInfo> getInitPlayerInfo() {

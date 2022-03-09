@@ -1,7 +1,6 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import java.util.List;
 
@@ -15,17 +14,10 @@ public class PlayerInfo {
         this.cards = cards;
     }
 
-    public static PlayerInfo dealerToInitInfo(final Dealer dealer) {
+    public static PlayerInfo from(final Player dealer) {
         return new PlayerInfo(
                 dealer.getName(),
                 dealer.initCards()
-        );
-    }
-
-    public static PlayerInfo playerToInfo(final Player player) {
-        return new PlayerInfo(
-                player.getName(),
-                player.getCards()
         );
     }
 

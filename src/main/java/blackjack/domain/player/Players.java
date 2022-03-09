@@ -31,7 +31,7 @@ public class Players {
 
     public List<PlayerInfo> getInitPlayerInfo() {
         return values.stream()
-                .map(PlayerInfo::playerToInfo)
+                .map(PlayerInfo::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -55,7 +55,7 @@ public class Players {
         final Player currentPlayer = currentTurnPlayer();
         currentPlayer.draw(card);
         checkCanTurnNext(currentPlayer);
-        return PlayerInfo.playerToInfo(currentPlayer);
+        return PlayerInfo.from(currentPlayer);
     }
 
     private void checkCanTurnNext(final Player currentPlayer) {
@@ -70,7 +70,7 @@ public class Players {
     }
 
     public PlayerInfo getCurrentTurnPlayerInfo() {
-        return PlayerInfo.playerToInfo(currentTurnPlayer());
+        return PlayerInfo.from(currentTurnPlayer());
     }
 
     public List<PlayerResultInfo> getResultPlayerInfo() {
