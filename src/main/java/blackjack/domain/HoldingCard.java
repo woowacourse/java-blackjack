@@ -15,7 +15,24 @@ public class HoldingCard {
     }
 
     public boolean isBust() {
-        return sum() > BLACK_JACK_SCORE;
+        return calculateTotal() > BLACK_JACK_SCORE;
+    }
+
+    public int calculateTotal() {
+        int sum = sum();
+        for (int i = 0; i < countAce(); i++) {
+            if (sum <= 21) {
+                break;
+            }
+            sum -= 10;
+        }
+        return sum;
+    }
+
+    private int countAce() {
+        return (int) holdingCard.stream()
+                .filter(card -> card.getCardNumber() == CardNumber.ACE)
+                .count();
     }
 
     private int sum() {

@@ -12,4 +12,8 @@ public class Card {
     public int getCardNumberValue() {
         return cardNumber.getCardNumberValue();
     }
+
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
 }
