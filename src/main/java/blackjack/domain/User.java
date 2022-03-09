@@ -1,14 +1,19 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
     private static final String ERROR_INVALID_NAME = "[ERROR] 유저의 이름은 한 글자 이상이어야 합니다.";
 
     private final String name;
+    private final List<Card> cards;
 
     public User(String name) {
         validateName(name);
         this.name = name;
+        this.cards = new ArrayList<>();
     }
 
     private void validateName(String name) {
@@ -19,5 +24,15 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    public void receiveCard(Card card) {
+        this.cards.add(card);
+    }
+
+    public int cardSum() {
+        return this.cards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
     }
 }
