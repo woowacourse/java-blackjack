@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.ArrayList;
@@ -13,9 +14,8 @@ public class PlayerTest {
     @DisplayName("Player 클래스는 이름, 카드들을 입력받으면 정상적으로 생성된다.")
     void create_player() {
         Name name = new Name("aki");
-        List<Card> cards = new ArrayList<>();
 
-        assertThatCode(() -> new Player(name, cards)).doesNotThrowAnyException();
+        assertThatCode(() -> new Player(name)).doesNotThrowAnyException();
     }
 
     @Test
