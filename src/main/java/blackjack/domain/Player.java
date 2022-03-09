@@ -15,8 +15,8 @@ public class Player {
         this.name = name;
     }
 
-    public void drawCard(Card card) {
-        cards.add(card);
+    public void drawCard(Drawable drawable) {
+        cards.add(drawable.draw());
     }
 
     public boolean isBust() {
