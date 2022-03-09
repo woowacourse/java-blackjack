@@ -12,5 +12,13 @@ public class Player extends Participant {
         return getScore() < GOAL_SCORE;
     }
 
-
+    public boolean isWin(int score) {
+        if (getScore() > GOAL_SCORE) {
+            return false;
+        }
+        if (score > GOAL_SCORE) {
+            return true;
+        }
+        return getScore() >= score;
+    }
 }
