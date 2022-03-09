@@ -4,13 +4,14 @@ import domain.player.Dealer;
 import domain.player.Participant;
 import domain.player.Player;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class GameResult {
 
-    private final Map<Participant, MatchResult> gameResult = new LinkedHashMap<>();
+    private final Map<Player, MatchResult> gameResult = new LinkedHashMap<>();
 
     public GameResult(List<Player> players, Dealer dealer) {
         for (Player player : players) {
@@ -39,5 +40,9 @@ public class GameResult {
 
     public long getDealerLoseCount() {
         return gameResult.size() - getDealerWinCount();
+    }
+
+    public Map<Player, MatchResult> getGameResult() {
+        return Collections.unmodifiableMap(gameResult);
     }
 }

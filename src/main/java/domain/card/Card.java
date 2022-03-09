@@ -15,6 +15,10 @@ public class Card {
         return denomination;
     }
 
+    public Suit getSuit() {
+        return suit;
+    }
+
     public int toInt() {
         return this.denomination.getValue();
     }
