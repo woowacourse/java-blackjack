@@ -25,11 +25,29 @@ public class BlackJackGame {
         return new BlackJackGame(cardDeck, dealer, new Players(players));
     }
 
+    public boolean isPlayersTurnEnd() {
+        return players.isAllTurnEnd();
+    }
+
+    public PlayerInfo drawCurrentPlayer(final String command) {
+        final DrawCommand drawCommand = DrawCommand.from(command);
+        if (drawCommand.isNo()) {
+            final PlayerInfo currentPlayer = players.getCurrentTurnPlayerInfo();
+            players.turnToNextPlayer();
+            return currentPlayer;
+        }
+        return players.drawCurrentPlayer(cardDeck.provideCard());
+    }
+
     public PlayerInfo getInitDealerInfo() {
-        return PlayerInfo.dealerToInfo(dealer);
+        return PlayerInfo.dealerToInitInfo(dealer);
     }
 
     public List<PlayerInfo> getInitPlayerInfo() {
         return players.getInitPlayerInfo();
+    }
+
+    public PlayerInfo getCurrentTurnPlayerInfo() {
+        return players.getCurrentTurnPlayerInfo();
     }
 }

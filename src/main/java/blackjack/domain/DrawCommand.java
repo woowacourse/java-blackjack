@@ -21,4 +21,8 @@ public enum DrawCommand {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("없는 커맨드입니다."));
     }
+
+    public boolean isNo() {
+        return this == NO;
+    }
 }

@@ -4,7 +4,6 @@ import blackjack.domain.Card;
 import blackjack.domain.CardNumber;
 import blackjack.domain.CardPattern;
 import blackjack.dto.PlayerInfo;
-import java.io.PrintStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +38,8 @@ public class OutputView {
         return number.getPrintValue() + pattern.getName();
     }
 
-    private static PrintStream printPlayerCardInfo(final PlayerInfo playerInfo) {
-        return System.out.printf("%s카드: %s\n", playerInfo.getName(), joinPlayerCardInfos(playerInfo.getCards()));
+    public static void printPlayerCardInfo(final PlayerInfo playerInfo) {
+        System.out.printf("%s카드: %s\n", playerInfo.getName(), joinPlayerCardInfos(playerInfo.getCards()));
     }
+
 }

@@ -73,7 +73,7 @@ public class Player {
         return name;
     }
 
-    public List<Card> initCards() {
-        return List.copyOf(cards().subList(0, 2));
+    public List<Card> getCards() {
+        return List.copyOf(cards());
     }
 }

@@ -45,6 +45,13 @@ public class Dealer {
         return cards.firstCard();
     }
 
+    public List<Card> getCards() {
+        if (!isEnd()) {
+            throw new IllegalStateException("딜러는 턴이 종료되지 않을 때 모든 카드를 반환할 수 없습니다.");
+        }
+        return cards.cards();
+    }
+
     public String getName() {
         return NAME;
     }

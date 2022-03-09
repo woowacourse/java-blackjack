@@ -35,10 +35,11 @@ public class Players {
         currentTurnIndex++;
     }
 
-    public void drawCurrentPlayer(final Card card) {
+    public PlayerInfo drawCurrentPlayer(final Card card) {
         final Player currentPlayer = currentTurnPlayer();
         currentPlayer.draw(card);
         checkCurrentPlayerCanDraw(currentPlayer);
+        return PlayerInfo.playerToInfo(currentPlayer);
     }
 
     private void validateAllTurnEnd() {

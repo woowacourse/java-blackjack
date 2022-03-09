@@ -15,17 +15,24 @@ public class PlayerInfo {
         this.cards = cards;
     }
 
-    public static PlayerInfo dealerToInfo(final Dealer dealer) {
+    public static PlayerInfo dealerToInitInfo(final Dealer dealer) {
         return new PlayerInfo(
                 dealer.getName(),
                 dealer.initCards()
         );
     }
 
+    public static PlayerInfo dealerToInfo(final Dealer dealer) {
+        return new PlayerInfo(
+                dealer.getName(),
+                dealer.getCards()
+        );
+    }
+
     public static PlayerInfo playerToInfo(final Player player) {
         return new PlayerInfo(
                 player.getName(),
-                player.initCards()
+                player.getCards()
         );
     }
 

@@ -45,4 +45,15 @@ class DealerTest {
             assertTrue(dealer.isEnd());
         }
     }
+
+    @Test
+    @DisplayName("종료되지 않은 딜러가 모든 카드를 반환하려고 하는 경우 예외가 발생해야 한다.")
+    void getCardsException() {
+        final Dealer dealer = new Dealer(
+                new ArrayList<>(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN))));
+
+        assertThatThrownBy(() -> dealer.getCards())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("딜러는 턴이 종료되지 않을 때 모든 카드를 반환할 수 없습니다.");
+    }
 }
