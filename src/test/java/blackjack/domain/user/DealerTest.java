@@ -49,4 +49,26 @@ public class DealerTest {
         //then
         assertThat(cards.size()).isEqualTo(1);
     }
+
+    @DisplayName("딜러는 17이상이면 카드를 뽑을 수 없다.")
+    @Test
+    public void testDrawCardIfSumOfPointUnder16() {
+        //given
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer();
+        //when
+
+        while (sumPoint(dealer.showCards()) < 17) {
+            dealer.drawCard(deck);
+        }
+
+        //then
+        assertThat(dealer.isDrawable()).isFalse();
+    }
+
+    private int sumPoint(List<Card> cards) {
+        return cards.stream()
+                .mapToInt(Card::getPoint)
+                .sum();
+    }
 }
