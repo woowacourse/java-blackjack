@@ -72,6 +72,18 @@ public class Score {
     }
 
     public Score compare(Score other) {
-        return Integer.compare(value, other.getValue()) == -1 ? other : this;
+        if (isBust() && other.isBust()) {
+            return this;
+        }
+
+        if (isBust()) {
+            return other;
+        }
+
+        if (other.isBust()) {
+            return this;
+        }
+
+        return value > other.value ? this : other;
     }
 }
