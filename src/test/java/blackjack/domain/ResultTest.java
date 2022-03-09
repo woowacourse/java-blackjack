@@ -21,6 +21,21 @@ public class ResultTest {
     }
 
     @Test
+    @DisplayName("21이 넘어 패배한 경우를 계산한다.")
+    void findLosingResultOverStandard() {
+        Player dealer = new Dealer();
+        dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.FIVE));
+
+        Gamer judy = new Gamer("judy");
+        judy.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
+        judy.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
+        judy.receiveCard(new Card(Suit.SPADE, Denomination.TWO));
+
+        assertThat(Result.findResult(dealer.calculateResult()
+                , judy.calculateResult())).isEqualTo(Result.LOSE);
+    }
+
+    @Test
     @DisplayName("패배한 경우를 계산한다.")
     void findLosingResult() {
         Player dealer = new Dealer();
