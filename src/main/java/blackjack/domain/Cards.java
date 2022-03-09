@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static blackjack.domain.GameOutcome.DRAW;
+import static blackjack.domain.GameOutcome.WIN;
 
 import java.util.List;
 import java.util.Objects;
@@ -47,6 +48,8 @@ public class Cards {
     public GameOutcome fightResult(final Cards compareCards) {
         if (this.isBlackJack() && compareCards.isBlackJack()) {
             return DRAW;
+        } else if (this.isBlackJack()) {
+            return WIN;
         }
         return null;
     }

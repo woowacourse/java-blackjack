@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static blackjack.domain.CardNumber.A;
 import static blackjack.domain.CardNumber.FIVE;
+import static blackjack.domain.CardNumber.JACK;
 import static blackjack.domain.CardNumber.KING;
 import static blackjack.domain.CardNumber.TEN;
 import static blackjack.domain.CardNumber.THREE;
@@ -9,6 +10,7 @@ import static blackjack.domain.CardNumber.TWO;
 import static blackjack.domain.CardPattern.HEART;
 import static blackjack.domain.CardPattern.SPADE;
 import static blackjack.domain.GameOutcome.DRAW;
+import static blackjack.domain.GameOutcome.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -48,5 +50,13 @@ class CardsTest {
         final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, A)));
         final Cards compareCards = new Cards(Arrays.asList(Card.of(HEART, KING), Card.of(HEART, A)));
         assertThat(cards.fightResult(compareCards)).isEqualTo(DRAW);
+    }
+
+    @Test
+    @DisplayName("자신만 블랙잭인 경우 우승를 반환한다.")
+    void fightResultSelfBlackJack() {
+        final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, A)));
+        final Cards compareCards = new Cards(Arrays.asList(Card.of(HEART, KING), Card.of(HEART, JACK), Card.of(HEART, A)));
+        assertThat(cards.fightResult(compareCards)).isEqualTo(WIN);
     }
 }
