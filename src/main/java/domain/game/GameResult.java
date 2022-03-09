@@ -30,4 +30,14 @@ public class GameResult {
     public MatchResult getMatchResult(Player player) {
         return gameResult.get(player);
     }
+
+    public long getDealerWinCount() {
+        return gameResult.entrySet().stream()
+                .filter(entry -> entry.getValue() == MatchResult.LOSE)
+                .count();
+    }
+
+    public long getDealerLoseCount() {
+        return gameResult.size() - getDealerWinCount();
+    }
 }

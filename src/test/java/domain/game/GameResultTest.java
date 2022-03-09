@@ -7,6 +7,7 @@ import domain.card.Suit;
 import domain.player.Dealer;
 import domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -36,6 +37,34 @@ class GameResultTest {
                         new Player("abc", new Cards(getCardList(Denomination.KING, Denomination.QUEEN))),
                         new Dealer(new Cards(getCardList(Denomination.QUEEN, Denomination.NINE))))
         );
+    }
+
+    @Test
+    @DisplayName("딜러가 승리한 횟수")
+    void dealer_win_count_test() {
+        Player player1 = new Player("abc1", new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
+        Player player2 = new Player("abc2", new Cards(getCardList(Denomination.EIGHT, Denomination.NINE)));    // 17
+        Player player3 = new Player("abc3", new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
+        Dealer dealer = new Dealer(new Cards(getCardList(Denomination.QUEEN, Denomination.NINE)));                  // 19
+
+        List<Player> players = Arrays.asList(player1, player2, player3);
+        GameResult gameResult = new GameResult(players, dealer);
+
+        assertThat(gameResult.getDealerWinCount()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("딜러가 패배한 횟수")
+    void dealer_lose_count_test() {
+        Player player1 = new Player("abc1", new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
+        Player player2 = new Player("abc2", new Cards(getCardList(Denomination.EIGHT, Denomination.NINE)));    // 17
+        Player player3 = new Player("abc3", new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
+        Dealer dealer = new Dealer(new Cards(getCardList(Denomination.QUEEN, Denomination.NINE)));                  // 19
+
+        List<Player> players = Arrays.asList(player1, player2, player3);
+        GameResult gameResult = new GameResult(players, dealer);
+
+        assertThat(gameResult.getDealerLoseCount()).isEqualTo(2);
     }
 
     private static List<Card> getCardList(Denomination... arguments) {
