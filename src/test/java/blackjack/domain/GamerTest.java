@@ -14,7 +14,7 @@ class GamerTest {
     void checkBustTest() {
         Dealer dealer = Dealer.init();
         while (dealer.getCards().calculateScore() <= 21) {
-            dealer.draw();
+            dealer.hit();
         }
 
         assertThat(dealer.isBust()).isTrue();

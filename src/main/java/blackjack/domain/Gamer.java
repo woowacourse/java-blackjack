@@ -14,8 +14,8 @@ public abstract class Gamer {
         validate(name);
         this.name = name;
         this.cards = cards;
-        draw();
-        draw();
+        hit();
+        hit();
     }
 
     private void validate(String name) {
@@ -23,11 +23,6 @@ public abstract class Gamer {
             throw new IllegalArgumentException(NAME_INPUT_ERROR_MESSAGE);
 
         }
-    }
-
-
-    public void draw() {
-        cards.add(Card.draw());
     }
 
     public boolean isBust() {
@@ -38,7 +33,9 @@ public abstract class Gamer {
         return cards.calculateScore() == 21;
     }
 
-    public abstract void hit();
+    public void hit() {
+        cards.add(Card.draw());
+    };
 
     public abstract List<Card> getViewCard();
 

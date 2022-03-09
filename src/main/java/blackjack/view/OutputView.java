@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.CardDto;
+import blackjack.domain.HitResultDto;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -28,5 +29,9 @@ public class OutputView {
 
     public static void printBlackjackPlayer(String name) {
         System.out.println(name + "은(는) 블랙잭입니다. 히트를 마무리합니다.");
+    }
+
+    public static void printHitResult(List<HitResultDto> hitResultDtos) {
+        hitResultDtos.forEach(hitResultDto -> System.out.println(hitResultDto.getName() + ": " + printCard(hitResultDto.getCards()) + "- 결과: " + hitResultDto.getScore()));
     }
 }

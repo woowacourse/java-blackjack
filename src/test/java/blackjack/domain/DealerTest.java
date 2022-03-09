@@ -17,7 +17,7 @@ public class DealerTest {
     @DisplayName("딜러가 카드 두장을 뽑는지 확인")
     void drawCardTest() {
         Gamer dealer = Dealer.init();
-        dealer.draw();
+        dealer.hit();
         assertThat(dealer.getCards().getCards().size())
                 .isEqualTo(2);
     }

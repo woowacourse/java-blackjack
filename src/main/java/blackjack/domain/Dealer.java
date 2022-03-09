@@ -16,11 +16,8 @@ public class Dealer extends Gamer {
         return dealer;
     }
 
-    @Override
-    public void hit() {
-        if (getCards().calculateScore() <= 16) {
-            dealer.draw();
-        }
+    public boolean checkHitFlag() {
+        return getCards().calculateScore() <= 16;
     }
 
     @Override

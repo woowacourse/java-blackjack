@@ -12,11 +12,6 @@ public class Player extends Gamer {
     }
 
     @Override
-    public void hit() {
-        draw();
-    }
-
-    @Override
     public List<Card> getViewCard() {
         return getCards().getCards();
     }

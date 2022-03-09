@@ -4,10 +4,12 @@ import blackjack.domain.CardDto;
 import blackjack.domain.Dealer;
 import blackjack.domain.Gamer;
 import blackjack.domain.HitOrStand;
+import blackjack.domain.HitResultDto;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,7 +32,22 @@ public class Main {
             playerHit(player);
         }
 
+        while (dealer.checkHitFlag()) {
+            dealer.hit();
+        }
 
+        List<HitResultDto> hitResultDtos = new ArrayList<>();
+        hitResultDtos.add(new HitResultDto(dealer.getName(), toListCardDto(dealer), dealer.getCards().calculateScore()));
+        for (Player player : playerList) {
+            hitResultDtos.add(new HitResultDto(player.getName(), toListCardDto(player), player.getCards().calculateScore()));
+        }
+
+        OutputView.printHitResult(hitResultDtos);
+
+        if (dealer.isBust()) {
+            // todo: 딜러 버스트니까 버스트 아닌 참가자는 다 승리처리
+
+        }
     }
 
     private static void playerHit(Player player) {
