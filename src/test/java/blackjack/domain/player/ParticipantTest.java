@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class ParticipantTest {
@@ -26,6 +27,16 @@ class ParticipantTest {
     void checkParticipantCardSize() {
         Deck deck = new Deck();
         Participant participant = new Participant(deck.initDistributeCard(), "pobi");
-        Assertions.assertThat(participant.getCards().size()).isEqualTo(2);
+        assertThat(participant.getCards().size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("참가자는 추가로 카드를 받을 수 있다.")
+    void addParticipantCard() {
+        Deck deck = new Deck();
+        Participant participant = new Participant(deck.initDistributeCard(), "pobi");
+        int size = participant.getCards().size();
+        participant.addCard(deck.draw());
+        assertThat(participant.getCards().size()).isEqualTo(size + 1);
     }
 }

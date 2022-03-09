@@ -25,4 +25,8 @@ public class Participant {
     public List<Card> getCards() {
         return cards.getCards();
     }
+
+    public void addCard(Card card) {
+        cards.addCard(card);
+    }
 }
