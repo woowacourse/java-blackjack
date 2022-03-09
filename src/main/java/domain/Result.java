@@ -1,26 +1,15 @@
 package domain;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class Result {
-	private final List<Player> winners;
-	private final List<Player> losers;
 
-	public Result(List<Player> players, Dealer dealer) {
-		winners = players.stream()
-			.filter(player -> !dealer.isHigher(player) && !player.isBurst())
-			.collect(Collectors.toList());
-		losers = players.stream()
-			.filter(player -> dealer.isHigher(player) || player.isBurst())
-			.collect(Collectors.toList());
-	}
-
-	public List<Player> getWinners() {
-		return winners;
-	}
-
-	public List<Player> getLosers() {
-		return losers;
+	public Map<Player, ResultType> getResult(List<Player> players, Dealer dealer) {
+		final Map<Player, ResultType> gameResult = new HashMap<>();
+		players.stream()
+			.forEach(player -> gameResult.put(player, ResultType.generateResultType(player, dealer)));
+		return gameResult;
 	}
 }
