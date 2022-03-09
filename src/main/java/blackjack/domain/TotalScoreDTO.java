@@ -2,13 +2,13 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class ResultDTO {
+public class TotalScoreDTO {
 
     private final String name;
     private final List<Card> cards;
     private final int score;
 
-    public ResultDTO(Participant participant) {
+    public TotalScoreDTO(Participant participant) {
         name = participant.getName();
         cards = participant.getCards();
         score = participant.getScore();

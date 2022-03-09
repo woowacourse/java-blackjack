@@ -3,9 +3,7 @@ package blackjack.domain;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BlackJack {
@@ -35,9 +33,19 @@ public class BlackJack {
             OutputView.printDealerAdded(dealer.getName());
         }
 
-        OutputView.printResult(generateAllResultDTO(players, dealer));
+        OutputView.printTotalScore(generateAllResultDTO(players, dealer));
 
+        List<PlayerResultDTO> playersResult = new ArrayList<>();
+        for (Player player : players) {
+            playersResult.add(new PlayerResultDTO(player.getName(), player.isWin(dealer.getScore())));
+        }
 
+        int loseCount = (int) playersResult.stream().filter(PlayerResultDTO::isWin).count();
+        int winCount = playersResult.size() - loseCount;
+
+        DealerResultDTO dealerResult = new DealerResultDTO(dealer.getName(), winCount, loseCount);
+
+        OutputView.printResult(dealerResult, playersResult);
 
     }
 
@@ -50,11 +58,11 @@ public class BlackJack {
         return dtos;
     }
 
-    private List<ResultDTO> generateAllResultDTO(List<Player> players, Dealer dealer) {
-        List<ResultDTO> dtos = new ArrayList<>();
-        dtos.add(new ResultDTO(dealer));
+    private List<TotalScoreDTO> generateAllResultDTO(List<Player> players, Dealer dealer) {
+        List<TotalScoreDTO> dtos = new ArrayList<>();
+        dtos.add(new TotalScoreDTO(dealer));
         dtos.addAll(players.stream()
-                .map(ResultDTO::new)
+                .map(TotalScoreDTO::new)
                 .collect(Collectors.toList()));
         return dtos;
     }
