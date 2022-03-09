@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Gamer {
+    private final Name name;
 
     private final List<Card> cards;
 
-    public Gamer() {
+    public Gamer(String name) {
+        this.name = new Name(name);
         cards = new ArrayList<>();
     }
 
@@ -67,5 +69,9 @@ public class Gamer {
         if (!ace.isAce()) {
             throw new IllegalArgumentException("입력받은 값이 에이스 카드가 아닙니다.");
         }
+    }
+
+    public Name getName() {
+        return name;
     }
 }

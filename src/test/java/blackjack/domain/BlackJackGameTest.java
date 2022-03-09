@@ -3,6 +3,9 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +19,7 @@ class BlackJackGameTest {
     @DisplayName("딜러와 플레이어에게 게임 시작 시 2장씩 배분한다.")
     void initDistribution() {
         Dealer dealer = new Dealer();
-        List<Player> players = Arrays.asList(new Player(), new Player());
+        List<Player> players = Arrays.asList(new Player("a"), new Player("a"));
 
         BlackJackGame blackJackGame = new BlackJackGame();
         blackJackGame.initDistribution(dealer, players);
@@ -30,7 +33,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어에게 1장 배분한다.")
     void distributeCard() {
-        Gamer gamer = new Gamer();
+        Gamer gamer = new Gamer("name");
         BlackJackGame blackJackGame = new BlackJackGame();
         blackJackGame.distributeCard(gamer);
 

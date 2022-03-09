@@ -2,6 +2,10 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.result.GameResult;
 
 import java.util.List;
 
@@ -31,5 +35,9 @@ public class BlackJackGame {
         while (!dealer.isOverThan(ADDITIONAL_DISTRIBUTE_STANDARD)) {
             distributeCard(dealer);
         }
+    }
+
+    public GameResult createResult(Dealer dealer, List<Player> players) {
+        return new GameResult(players, dealer);
     }
 }
