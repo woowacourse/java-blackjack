@@ -4,5 +4,5 @@ public enum CardSymbol {
     DIAMOND,
     SPADE,
     HEART,
-    CLUB;
+    CLUB
 }
