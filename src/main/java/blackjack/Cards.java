@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+// 최적화된 점수를 계산
 public class Cards {
 
     private final List<Card> cards;

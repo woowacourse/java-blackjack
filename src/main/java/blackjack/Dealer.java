@@ -5,14 +5,9 @@ public class Dealer {
     private final Cards cards;
     private final DealerCards dealerCards;
 
-    public Dealer(Cards cards) {
-        this.cards = cards;
-        this.dealerCards = null;
-    }
-
-    public Dealer(DealerCards dealerCards) {
-        this.cards = null;
-        this.dealerCards = dealerCards;
+    public Dealer(Card... cards) {
+        this.cards = new Cards(cards);
+        this.dealerCards = new DealerCards(cards);
     }
 
     public Result judge(Cards cards) {
@@ -41,6 +36,6 @@ public class Dealer {
     }
 
     public boolean isPossibleTakeCard() {
-        return dealerCards.scoreForDealer() < 17;
+        return dealerCards.score().lessThan(new Score(17));
     }
 }
