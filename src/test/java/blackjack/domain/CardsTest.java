@@ -1,11 +1,14 @@
 package blackjack.domain;
 
+import static blackjack.domain.CardNumber.A;
 import static blackjack.domain.CardNumber.FIVE;
 import static blackjack.domain.CardNumber.KING;
 import static blackjack.domain.CardNumber.TEN;
 import static blackjack.domain.CardNumber.THREE;
 import static blackjack.domain.CardNumber.TWO;
+import static blackjack.domain.CardPattern.HEART;
 import static blackjack.domain.CardPattern.SPADE;
+import static blackjack.domain.GameOutcome.DRAW;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -37,5 +40,13 @@ class CardsTest {
         assertThatThrownBy(() -> cards.addCard(Card.of(SPADE, FIVE)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("[Error] 21이 넘을때는 카드를 더 추가할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("둘 다 블랙잭인 경우 무승부를 반환한다.")
+    void fightResultBothBlackJack() {
+        final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, A)));
+        final Cards compareCards = new Cards(Arrays.asList(Card.of(HEART, KING), Card.of(HEART, A)));
+        assertThat(cards.fightResult(compareCards)).isEqualTo(DRAW);
     }
 }

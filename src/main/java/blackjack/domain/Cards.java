@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static blackjack.domain.GameOutcome.DRAW;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -7,6 +9,7 @@ import java.util.stream.Collectors;
 public class Cards {
 
     private static final int BLACK_JACK_NUMBER = 21;
+    private static final int BLACK_JACK_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -40,4 +43,16 @@ public class Cards {
     public List<Card> cards() {
         return List.copyOf(cards);
     }
+
+    public GameOutcome fightResult(final Cards compareCards) {
+        if (this.isBlackJack() && compareCards.isBlackJack()) {
+            return DRAW;
+        }
+        return null;
+    }
+
+    private boolean isBlackJack() {
+        return cards.size() == BLACK_JACK_SIZE && calculateScore() == BLACK_JACK_NUMBER;
+    }
+
 }
