@@ -13,8 +13,11 @@ public class BlackjackGameTest {
     void createDealerTest() {
         BlackjackGame blackjackGame = new BlackjackGame();
         Dealer dealer = blackjackGame.createDealer(new FixDeck());
-        assertThat(dealer.getCards().get(0)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
-        assertThat(dealer.getCards().get(1)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
+        Cards dealerCards = dealer.getCards();
+        List<Card> cards = dealerCards.get();
+
+        assertThat(cards.get(0)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
+        assertThat(cards.get(1)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
     }
 
     @Test
@@ -26,8 +29,10 @@ public class BlackjackGameTest {
         List<Player> allPlayer = players.get();
 
         assertThat(allPlayer).allSatisfy(player -> {
-            assertThat(player.getCards().get(0)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
-            assertThat(player.getCards().get(1)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
+            Cards playerCards = player.getCards();
+            List<Card> cards = playerCards.get();
+            assertThat(cards.get(0)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
+            assertThat(cards.get(1)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
         });
     }
 }

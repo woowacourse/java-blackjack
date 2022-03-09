@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Gamer {
@@ -9,11 +8,11 @@ public class Gamer {
     private static final int MAX_SCORE = 21;
 
     private final Name name;
-    private final List<Card> cards;
+    private final Cards cards;
 
     public Gamer(Name name) {
         this.name = name;
-        this.cards = new ArrayList<>();
+        this.cards = new Cards(new ArrayList<>());
     }
 
     public void hit(Card card) {
@@ -28,14 +27,12 @@ public class Gamer {
         return name;
     }
 
-    public List<Card> getCards() {
+    public Cards getCards() {
         return cards;
     }
 
     public int getScore() {
-        return cards.stream()
-                .mapToInt(value -> value.getCardNumber().getValue())
-                .sum();
+        return cards.getTotalScore();
     }
 
     @Override

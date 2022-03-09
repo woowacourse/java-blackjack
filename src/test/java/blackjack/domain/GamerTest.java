@@ -15,7 +15,7 @@ public class GamerTest {
         gamer.hit(new Card(CardNumber.EIGHT, Type.CLOVER));
         gamer.hit(new Card(CardNumber.FIVE, Type.SPADE));
         gamer.hit(new Card(CardNumber.TEN, Type.SPADE));
-        List<Card> cards = gamer.getCards();
+        List<Card> cards = gamer.getCards().get();
 
         assertThat(cards.get(0)).isEqualTo(new Card(CardNumber.EIGHT, Type.CLOVER));
         assertThat(cards.get(1)).isEqualTo(new Card(CardNumber.FIVE, Type.SPADE));
@@ -41,5 +41,26 @@ public class GamerTest {
         gamer.hit(new Card(CardNumber.TEN, Type.SPADE));
 
         assertThat(gamer.isValidRange()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Ace 가진 카드의 총합이 21을 넘지 않으면 Ace는 11로 계산한다.")
+    void ace_calculate_11() {
+        Gamer gamer = new Gamer(new Name("aki"));
+        gamer.hit(new Card(CardNumber.TEN, Type.CLOVER));
+        gamer.hit(new Card(CardNumber.ACE, Type.SPADE));
+
+        assertThat(gamer.getScore()).isEqualTo(21);
+    }
+
+    @Test
+    @DisplayName("Ace 가진 카드의 총합이 21을 넘으면 Ace는 1로 계산한다.")
+    void ace_calculate_1() {
+        Gamer gamer = new Gamer(new Name("aki"));
+        gamer.hit(new Card(CardNumber.TEN, Type.CLOVER));
+        gamer.hit(new Card(CardNumber.THREE, Type.HEART));
+        gamer.hit(new Card(CardNumber.ACE, Type.SPADE));
+
+        assertThat(gamer.getScore()).isEqualTo(14);
     }
 }

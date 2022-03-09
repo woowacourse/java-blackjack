@@ -5,6 +5,7 @@ import blackjack.domain.Name;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.Card;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResultView {
@@ -15,7 +16,8 @@ public class ResultView {
 
     public static void printInitCard(Dealer dealer, Players players) {
         System.out.println(String.format(PRINT_INIT_CARD_FORMAT, printPlayersName(players)));
-        System.out.println(dealer.getName().get() + NAME_DELIMITER + getNumberAndType(dealer.getCards().get(0)));
+        List<Card> dealerCards = dealer.getCards().get();
+        System.out.println(dealer.getName().get() + NAME_DELIMITER + getNumberAndType(dealerCards.get(0)));
         printPlayersCard(players);
         System.out.println();
     }
@@ -30,7 +32,7 @@ public class ResultView {
     private static void printPlayersCard(Players players) {
         for (Player player : players.get()) {
             System.out.print(player.getName().get() + NAME_DELIMITER);
-            String cards = player.getCards().stream()
+            String cards = player.getCards().get().stream()
                     .map(ResultView::getNumberAndType)
                     .collect(Collectors.joining(CARD_DELIMITER));
             System.out.println(cards);

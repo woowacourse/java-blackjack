@@ -24,8 +24,10 @@ public class PlayersTest {
         Player aki = new Player(new Name("aki"));
         Players players = new Players(List.of(aki));
         players.initCards(new FixDeck());
+        Cards akiCards = aki.getCards();
+        List<Card> cards = akiCards.get();
 
-        assertThat(aki.getCards().get(0)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
-        assertThat(aki.getCards().get(1)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
+        assertThat(cards.get(0)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
+        assertThat(cards.get(1)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
     }
 }
