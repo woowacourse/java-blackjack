@@ -1,13 +1,14 @@
 package blackjack.domain.strategy;
 
 import blackjack.domain.Card;
+import blackjack.domain.CardNumber;
 import blackjack.domain.CardPattern;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class RandomCardStrategy implements CardStrategy {
 
@@ -22,8 +23,8 @@ public class RandomCardStrategy implements CardStrategy {
     }
 
     private List<Card> createCardsPerPattern(CardPattern cardPattern) {
-        return IntStream.rangeClosed(1, 13)
-                .mapToObj(number -> new Card(cardPattern, number))
+        return Arrays.stream(CardNumber.values())
+                .map(cardNumber -> new Card(cardPattern, cardNumber))
                 .collect(Collectors.toList());
     }
 
