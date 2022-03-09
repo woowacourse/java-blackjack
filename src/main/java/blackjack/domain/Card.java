@@ -1,19 +1,25 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Card {
 
-    static final List<Card> cachingCard = new ArrayList<>();
+    private static final List<Card> cachingCard = new ArrayList<>();
+
     private final CardPattern pattern;
     private final CardNumber number;
 
     static {
         for (CardPattern pattern : CardPattern.values()) {
-            for (CardNumber number : CardNumber.values()) {
-                cachingCard.add(new Card(pattern, number));
-            }
+            addAllNumberOf(pattern);
+        }
+    }
+
+    private static void addAllNumberOf(CardPattern pattern) {
+        for (CardNumber number : CardNumber.values()) {
+            cachingCard.add(new Card(pattern, number));
         }
     }
 
@@ -27,6 +33,10 @@ public class Card {
             .filter(card -> card.isContain(pattern, number))
             .findAny()
             .orElse(null);
+    }
+
+    public static List<Card> createDeck() {
+        return new LinkedList<>(cachingCard);
     }
 
     public boolean isContain(CardPattern pattern, CardNumber number) {
