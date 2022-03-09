@@ -5,29 +5,26 @@ import blackjack.domain.card.Cards;
 
 import java.util.List;
 
-public class Dealer {
+public class Dealer implements Player {
 
-    private static final int MAX_SCORE = 21;
     private static final int ADD_CARD_CONDITION = 16;
 
     private final Cards cards;
 
-    public Dealer(List<Card> cards) {
+    public Dealer(final List<Card> cards) {
         this.cards = new Cards(cards);
-    }
-
-    public List<Card> getCards() {
-        return cards.getCards();
     }
 
     public boolean acceptableCard() {
         return cards.calculateScoreByAceEleven() <= ADD_CARD_CONDITION;
     }
 
-    public void addCard(Card card) {
+    @Override
+    public void addCard(final Card card) {
         this.cards.addCard(card);
     }
 
+    @Override
     public int calculateScore() {
         final int scoreByAceOne = cards.calculateScoreByAceOne();
         final int scoreByAceEleven = cards.calculateScoreByAceEleven();
@@ -36,5 +33,10 @@ public class Dealer {
             return scoreByAceEleven;
         }
         return scoreByAceOne;
+    }
+
+    @Override
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 }
