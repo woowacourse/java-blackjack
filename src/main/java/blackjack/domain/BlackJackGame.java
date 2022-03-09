@@ -29,7 +29,7 @@ public class BlackJackGame {
         }
     }
 
-    public Map<Gamer, Result> calculateResult() {
+    public Map<Gamer, Result> calculateResultBoard() {
         int dealerResult = dealer.calculateResult();
         return gamers.stream()
                 .collect(Collectors.toMap(gamer -> gamer,

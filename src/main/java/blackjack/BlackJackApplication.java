@@ -24,7 +24,7 @@ public class BlackJackApplication {
         }
         progressDealerAdditionalCard(deck, blackJackGame.getDealer());
         OutputView.printFinalResult(blackJackGame);
-
+        OutputView.printFinalResultBoard(blackJackGame);
     }
 
     private static List<Gamer> createGamers() {
