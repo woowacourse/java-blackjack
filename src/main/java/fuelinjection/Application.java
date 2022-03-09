@@ -1,6 +1,7 @@
 package fuelinjection;
 
 import fuelinjection.view.InputView;
+import fuelinjection.view.ResultView;
 
 public class Application {
 
@@ -10,6 +11,7 @@ public class Application {
 
         Cars cars = Cars.ofAllCars();
         cars.injectFuel(distance);
+        new ResultView().printFuelMap(cars.mapFuel());
     }
 
     private static Distance initializeDistance(InputView inputView) {
