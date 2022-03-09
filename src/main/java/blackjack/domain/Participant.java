@@ -14,4 +14,12 @@ public class Participant {
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
+
+    public boolean isNotBurst() {
+        int totalSum = cards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
+
+        return totalSum > 21;
+    }
 }

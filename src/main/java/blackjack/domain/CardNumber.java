@@ -24,4 +24,7 @@ public enum CardNumber {
         this.number = number;
     }
 
+    public int getNumber() {
+        return number;
+    }
 }
