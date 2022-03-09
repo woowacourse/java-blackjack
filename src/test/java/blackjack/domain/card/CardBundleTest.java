@@ -1,5 +1,8 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.fixture.CardRepository.CLOVER4;
+import static blackjack.domain.fixture.CardRepository.CLOVER5;
+import static blackjack.domain.fixture.CardRepository.CLOVER6;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -8,9 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardBundleTest {
-    private static final Card CLOVER4 = Card.of(CardRank.FOUR, CardSymbol.CLOVER);
-    private static final Card CLOVER5 = Card.of(CardRank.FIVE, CardSymbol.CLOVER);
-    private static final Card CLOVER6 = Card.of(CardRank.SIX, CardSymbol.CLOVER);
 
     @DisplayName("of 팩토리 메소드는 두개의 카드를 받아 CardBundle 인스턴스를 생성한다.")
     @Test

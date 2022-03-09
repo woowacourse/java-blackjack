@@ -1,12 +1,15 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.fixture.CardRepository.CLOVER4;
+import static blackjack.domain.fixture.CardRepository.CLOVER5;
+import static blackjack.domain.fixture.CardRepository.CLOVER6;
+import static blackjack.domain.fixture.CardRepository.CLOVER7;
+import static blackjack.domain.fixture.CardRepository.CLOVER8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.card.CardRank;
-import blackjack.domain.card.CardSymbol;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,11 +17,6 @@ import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 
-    private static final Card CLOVER4 = Card.of(CardRank.FOUR, CardSymbol.CLOVER);
-    private static final Card CLOVER5 = Card.of(CardRank.FIVE, CardSymbol.CLOVER);
-    private static final Card CLOVER6 = Card.of(CardRank.SIX, CardSymbol.CLOVER);
-    private static final Card CLOVER7 = Card.of(CardRank.SEVEN, CardSymbol.CLOVER);
-    private static final Card CLOVER8 = Card.of(CardRank.EIGHT, CardSymbol.CLOVER);
 
     private Dealer dealer;
 
