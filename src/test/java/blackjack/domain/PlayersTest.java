@@ -1,30 +1,68 @@
 package blackjack.domain;
 
+import blackjack.domain.strategy.ManualCardStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayersTest {
 
+    private final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
+
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("provideForPlayerNamesDuplicatedExceptionTest")
     @DisplayName("플레이어명 중복 시 예외 발생")
-    void PlayerNamesDuplicatedExceptionTest(final List<String> playerNames) {
-        assertThatThrownBy(() -> new Players(playerNames))
+    void playerNamesDuplicatedExceptionTest(final List<String> playerNames, final List<Card> initializedCards) {
+        manualCardStrategy.initCards(initializedCards);
+        final Deck deck = Deck.generate(manualCardStrategy);
+        assertThatThrownBy(() -> Players.startWithTwoCards(playerNames, deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어명은 중복될 수 없습니다.");
     }
 
     private static Stream<Arguments> provideForPlayerNamesDuplicatedExceptionTest() {
         return Stream.of(
-                Arguments.of(List.of("pobi", "pobi")),
-                Arguments.of(List.of("pobi", "sun", "pobi"))
+                Arguments.of(List.of("pobi", "pobi"), Collections.emptyList()),
+                Arguments.of(List.of("pobi", "sun", "pobi"), Collections.emptyList())
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideForStartWithDrawCardTest")
+    @DisplayName("각 플레이어는 카드 2장을 지닌채 게임을 시작한다.")
+    void startWithDrawCardTest(final List<String> playerNames, final List<Card> initializedCards) {
+        manualCardStrategy.initCards(initializedCards);
+        final Deck deck = Deck.generate(manualCardStrategy);
+        final Players players = Players.startWithTwoCards(playerNames, deck);
+        final List<Player> actualPlayers = players.getStatuses();
+
+        final List<Card> actualCards = new ArrayList<>();
+        for (Player player : actualPlayers) {
+            actualCards.addAll(player.getCards());
+        }
+        assertThat(actualCards).isEqualTo(initializedCards);
+    }
+
+    private static Stream<Arguments> provideForStartWithDrawCardTest() {
+        return Stream.of(
+                Arguments.of(
+                        List.of("sun", "if"),
+                        List.of(
+                                new Card(CardPattern.DIAMOND, CardNumber.ACE),
+                                new Card(CardPattern.DIAMOND, CardNumber.TWO),
+                                new Card(CardPattern.DIAMOND, CardNumber.THREE),
+                                new Card(CardPattern.DIAMOND, CardNumber.FOUR)
+                        )
+                )
         );
     }
 }

@@ -1,7 +1,11 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
 
+    private final List<Card> cards = new ArrayList<>();
     private final String name;
 
     public Player(final String name) {
@@ -15,4 +19,11 @@ public class Player {
         }
     }
 
+    public void drawCard(final Deck deck) {
+        cards.add(deck.drawCard());
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
+    }
 }
