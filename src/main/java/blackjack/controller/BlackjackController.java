@@ -8,6 +8,7 @@ import blackjack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
@@ -42,6 +43,10 @@ public class BlackjackController {
         announceDealerCanGetMoreCard(blackjackGame, dealer);
 
         OutputView.announceResultCards(toResponse(players));
+
+        Map<Player, String> results = blackjackGame.calculateResult(players);
+        OutputView.announceResultWinner(results);
+
     }
 
     private void announceDealerCanGetMoreCard(BlackjackGame blackjackGame, Player dealer) {

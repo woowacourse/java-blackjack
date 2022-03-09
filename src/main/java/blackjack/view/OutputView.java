@@ -3,8 +3,10 @@ package blackjack.view;
 import blackjack.domain.Card;
 import blackjack.domain.Deck;
 import blackjack.domain.GameResponse;
+import blackjack.domain.Player;
 
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -53,6 +55,12 @@ public class OutputView {
 
             sb.append(" - 결과: " + gameResponse.getDeck().sumPoints());
             System.out.println(sb);
+        }
+    }
+
+    public static void announceResultWinner(Map<Player, String> results) {
+        for (Player player : results.keySet()) {
+            System.out.println(player.getName() + ": " + results.get(player));
         }
     }
 }
