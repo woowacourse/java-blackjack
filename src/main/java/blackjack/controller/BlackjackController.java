@@ -40,6 +40,8 @@ public class BlackjackController {
         }
         Player dealer = players.get(0);
         announceDealerCanGetMoreCard(blackjackGame, dealer);
+
+        OutputView.announceResultCards(toResponse(players));
     }
 
     private void announceDealerCanGetMoreCard(BlackjackGame blackjackGame, Player dealer) {

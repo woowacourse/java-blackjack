@@ -40,4 +40,19 @@ public class OutputView {
     public static void announceDealerStopMoreCard() {
         System.out.println("딜러는 17이상이라 카드를 더 받지 않습니다.");
     }
+
+    public static void announceResultCards(List<GameResponse> gameResponses) {
+        for (GameResponse gameResponse : gameResponses) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(gameResponse.getName()).append(" 카드: ");
+
+            for (Card card : gameResponse.getDeck().getCards()) {
+                sb.append(card.getRank().getValue()).append(card.getSuit().getName()).append(", ");
+            }
+            sb.deleteCharAt(sb.length()-2);
+
+            sb.append(" - 결과: " + gameResponse.getDeck().sumPoints());
+            System.out.println(sb);
+        }
+    }
 }
