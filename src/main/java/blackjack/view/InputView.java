@@ -29,5 +29,4 @@ public class InputView {
         System.out.printf(INPUT_DRAW_COMMAND_MESSAGE, playerInfo.getName());
         return scanner.nextLine();
     }
-
 }
