@@ -35,4 +35,8 @@ public class Players {
 		players.stream().forEach(participant -> map.put(participant.name, participant.finalCompare(other)));
 		return map;
 	}
+
+	public List<String> showHands() {
+		return players.stream().map(Participant::showHand).collect(Collectors.toList());
+	}
 }

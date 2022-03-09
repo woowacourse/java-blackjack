@@ -2,6 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -13,6 +14,7 @@ public class Deck {
 		Arrays.stream(Rank.values()).forEach(rank -> {
 			Arrays.stream(Suit.values()).map(suit -> new Card(rank, suit)).forEach(cards::add);
 		});
+		Collections.shuffle(cards);
 		this.cards = cards;
 	}
 
