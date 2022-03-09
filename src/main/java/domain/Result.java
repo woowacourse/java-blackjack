@@ -2,16 +2,16 @@ package domain;
 
 import java.util.Map;
 
-public class FinalResult {
+public class Result {
 
 	private final Map<String, Versus> playerResults;
 
-	public FinalResult(Dealer dealer, Players players) {
-		this.playerResults = compare(dealer, players);
-	}
+	// //public Result(Dealer dealer, Players players) {
+	// 	this.playerResults = players.compare(dealer);
+	// }
 
-	private Map<String, Versus> compare(Dealer dealer, Players players) {
-		return players.compare(dealer);
+	public Result(Map<String, Versus> playerResults) {
+		this.playerResults = playerResults;
 	}
 
 	public Versus getVersus(String name) {

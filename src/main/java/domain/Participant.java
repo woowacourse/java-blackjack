@@ -11,7 +11,7 @@ public class Participant {
 	protected static final int BLACK_JACK_NUMBER = 21;
 	protected static final String JOINING_DELIMITER = ", ";
 	protected static final int ACE_COUNT_LOWER_BOUND = 0;
-	protected static final int ACE_PLUS_SCORE = 10;
+	protected static final int ADDITIONAL_SCORE_ACE = 10;
 
 	protected final String name;
 	protected List<Card> hand;
@@ -54,8 +54,8 @@ public class Participant {
 		int aceCount = getAceCount();
 		int bestScore = getMinScore();
 
-		while (aceCount > ACE_COUNT_LOWER_BOUND && bestScore + ACE_PLUS_SCORE <= BLACK_JACK_NUMBER) {
-			bestScore += ACE_PLUS_SCORE;
+		while (aceCount > ACE_COUNT_LOWER_BOUND && bestScore + ADDITIONAL_SCORE_ACE <= BLACK_JACK_NUMBER) {
+			bestScore += ADDITIONAL_SCORE_ACE;
 			aceCount--;
 		}
 		return bestScore;
@@ -69,7 +69,7 @@ public class Participant {
 		if (other.isBurst()) {
 			return Versus.WIN;
 		}
-		
+
 		if (getBestScore() > other.getBestScore()) {
 			return Versus.WIN;
 		}
