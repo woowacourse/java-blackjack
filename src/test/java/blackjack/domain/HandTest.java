@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.domain.factory.CardMockFactory;
+import blackjack.domain.util.CreateHand;
 
 @DisplayName("Hand 테스트")
 class HandTest {
@@ -38,12 +39,12 @@ class HandTest {
 	}
 
 	private static Stream<Arguments> getHandAndScore() {
-		final Hand hand1 = createHand(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
-		final Hand hand2 = createHand(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"),
+		final Hand hand1 = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
+		final Hand hand2 = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"),
 			CardMockFactory.of("J클로버"));
-		final Hand hand3 = createHand(CardMockFactory.of("10클로버"), CardMockFactory.of("K클로버"),
+		final Hand hand3 = CreateHand.create(CardMockFactory.of("10클로버"), CardMockFactory.of("K클로버"),
 			CardMockFactory.of("J클로버"));
-		final Hand hand4 = createHand(CardMockFactory.of("10클로버"), CardMockFactory.of("K클로버"));
+		final Hand hand4 = CreateHand.create(CardMockFactory.of("10클로버"), CardMockFactory.of("K클로버"));
 
 		return Stream.of(
 			Arguments.of(hand1, 21),
@@ -52,11 +53,4 @@ class HandTest {
 			Arguments.of(hand4, 20));
 	}
 
-	private static Hand createHand(Card... cards) {
-		final Hand hand = new Hand();
-		for (Card card : cards) {
-			hand.addCard(card);
-		}
-		return hand;
-	}
 }
