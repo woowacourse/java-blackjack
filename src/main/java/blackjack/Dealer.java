@@ -8,6 +8,6 @@ public class Dealer {
     }
 
     Result judge(Cards cards) {
-        return this.cards.compare(cards);
+        return this.cards.score().compare(cards.score());
     }
 }

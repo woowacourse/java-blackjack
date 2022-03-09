@@ -51,11 +51,4 @@ public class CardsTest {
             Arguments.of(false, List.of("A다이아몬드", "J다이아몬드", "4하트"))
         );
     }
-
-    @Test
-    void 카드_비교_테스트() {
-        Cards cards1 = new Cards("1다이아몬드", "2하트");
-        Cards cards2 = new Cards("3클로버", "4하트");
-        assertThat(cards1.compare(cards2)).isEqualTo(Result.LOSS);
-    }
 }
