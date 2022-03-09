@@ -14,16 +14,6 @@ public class Hand {
 	public void addCard(final Card card) {
 		cards.add(card);
 	}
-	// if(calculateOptimalScore < 17){
-	// 	draw
-	// }
-	// if(hasAce()){
-	// 	random
-	// }
-
-	// if(calculateOptimalScore <= 21){
-	// 	draw ->? 요청
-	// }
 
 	public int calculateOptimalScore() {
 		int totalScore = cards.stream()
@@ -42,7 +32,7 @@ public class Hand {
 		return totalScore > 21;
 	}
 
-	private boolean hasAce() {
+	public boolean hasAce() {
 		return cards.stream()
 			.mapToInt(Card::getScore)
 			.anyMatch(score -> score == Denomination.ACE.getScore());
