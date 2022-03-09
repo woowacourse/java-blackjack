@@ -10,6 +10,8 @@ import blackJack.domain.card.Denomination;
 public abstract class Participant {
 
     private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
+    private static final String ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
+
     private static final int BLACK_JACK = 21;
     private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 1;
 
@@ -29,6 +31,9 @@ public abstract class Participant {
     }
 
     public void receiveCard(Card card) {
+        if (cards.contains(card)) {
+            throw new IllegalArgumentException(ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD);
+        }
         cards.add(card);
     }
 

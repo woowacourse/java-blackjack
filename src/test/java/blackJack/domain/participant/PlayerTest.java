@@ -78,4 +78,17 @@ class PlayerTest {
 
         assertThat(player.getScore()).isEqualTo(21);
     }
+
+    @Test
+    @DisplayName("중복된 카드를 받는 경우 예외 발생 테스트")
+    void receiveDuplicatedCard() {
+        Card card1 = new Card(Symbol.CLOVER, Denomination.A);
+        Card card2 = new Card(Symbol.CLOVER, Denomination.A);
+        Participant participant = new Player("rookie");
+        participant.receiveCard(card1);
+
+        assertThatThrownBy(() -> participant.receiveCard(card2))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("중복된 카드는 받을 수 없습니다.");
+    }
 }
