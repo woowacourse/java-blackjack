@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +34,5 @@ public class CardTest {
 
         //then
         assertThat(card.getName()).isEqualTo("8스페이드");
-
     }
 }

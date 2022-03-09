@@ -1,7 +1,9 @@
 package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,5 +33,19 @@ public class DeckTest {
         assertThat(firstCard).isNotEqualTo(secondCard);
     }
 
+    @DisplayName("카드는 52장 이어야한다.")
+    @Test
+    public void testDeckSize() {
+        //given
+        Deck deck = new Deck();
 
+        //when
+        for (int i = 0; i < 52; i++) {
+            deck.drawCard();
+        }
+
+        //then
+        assertThatThrownBy(() -> deck.drawCard())
+                .isInstanceOf(IllegalStateException.class);
+    }
 }
