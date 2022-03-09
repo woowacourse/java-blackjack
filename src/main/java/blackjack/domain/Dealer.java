@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Dealer {
 
+    private static final int MIN_SUM_STANDARD = 16;
+
     private final List<Card> cards;
 
     public Dealer() {
@@ -18,5 +20,13 @@ public class Dealer {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public boolean checkUnderSumStandard() {
+        return PointCalculator.cardSum(cards) <= MIN_SUM_STANDARD;
+    }
+
+    public int getCardSum() {
+        return PointCalculator.cardSum(cards);
     }
 }

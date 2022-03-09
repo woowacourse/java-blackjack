@@ -38,6 +38,10 @@ public class User {
         return cardSum(cards) > BUST_STANDARD;
     }
 
+    public int getCardSum() {
+        return PointCalculator.cardSum(cards);
+    }
+
     public String getName() {
         return name;
     }

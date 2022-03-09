@@ -14,11 +14,21 @@ public class BlackJackController {
         initDistribute(deck, users, dealer);
         OutputView.printInitDistribute(users, dealer);
 
-        // 각각의 유저에 따라 추가 지급
         for (User user : users.getUsers()) {
             playEachUser(user, deck);
         }
+
+        // 딜러 추가 지급
+        playDealer(dealer, deck);
+        OutputView.printFinalResult(users, dealer);
         // 승패 여부
+    }
+
+    private void playDealer(Dealer dealer, Deck deck) {
+        while (dealer.checkUnderSumStandard()) {
+            OutputView.printDealerDraw();
+            dealer.receiveCard(deck.drawCard());
+        }
     }
 
     private boolean isContinue(User user) {
@@ -36,6 +46,7 @@ public class BlackJackController {
         while (!user.checkBust() && isContinue(user)) {
             user.receiveCard(deck.drawCard());
             OutputView.printUserData(user);
+            OutputView.printLineSeparator();
         }
     }
 
