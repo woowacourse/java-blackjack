@@ -44,4 +44,12 @@ public class Player implements Participant {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name=" + name +
+                ", cards=" + cards +
+                '}';
+    }
 }

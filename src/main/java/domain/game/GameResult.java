@@ -3,16 +3,17 @@ package domain.game;
 import domain.player.Dealer;
 import domain.player.Player;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameResult {
 
     private final Map<Player, MatchResult> gameResult = new LinkedHashMap<>();
 
     public GameResult(List<Player> players, Dealer dealer) {
+        initialGameResult(new ArrayList<>(players), dealer);
+    }
+
+    private void initialGameResult(List<Player> players, Dealer dealer) {
         for (Player player : players) {
             if (playerWinCondition(player, dealer)) {
                 gameResult.put(player, MatchResult.WIN);
@@ -43,5 +44,12 @@ public class GameResult {
 
     public Map<Player, MatchResult> getGameResult() {
         return Collections.unmodifiableMap(gameResult);
+    }
+
+    @Override
+    public String toString() {
+        return "GameResult{" +
+                "gameResult=" + gameResult +
+                '}';
     }
 }

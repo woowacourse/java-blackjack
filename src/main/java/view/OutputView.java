@@ -12,6 +12,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
+    private static final String JOIN_DELIMITER = ", ";
+
     private OutputView() {
 
     }
@@ -27,13 +30,13 @@ public class OutputView {
     private static String getPlayerNames(List<Player> players) {
         return players.stream()
                 .map(player -> player.getName().getValue())
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(JOIN_DELIMITER));
     }
 
     private static String getCardNames(Cards cards) {
         return cards.getValue().stream()
                 .map(card -> getCardName(card))
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(JOIN_DELIMITER));
     }
 
     private static String getCardName(Card card) {
@@ -45,13 +48,15 @@ public class OutputView {
     }
 
     public static void printDealerDrawInfo() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.%n", Dealer.DRAW_STANDARD);
     }
 
     public static void printCardsResult(Dealer dealer, List<Player> players) {
-        System.out.printf("%s 카드: %s - 결과: %d%n", dealer.getName(), getCardNames(dealer.getCards()), dealer.getCards().sum());
+        System.out.printf("%s 카드: %s - 결과: %d%n",
+                dealer.getName(), getCardNames(dealer.getCards()), dealer.getCards().sum());
         for (Player player : players) {
-            System.out.printf("%s 카드: %s - 결과: %d%n", player.getName(), getCardNames(player.getCards()), player.getCards().sum());
+            System.out.printf("%s 카드: %s - 결과: %d%n",
+                    player.getName(), getCardNames(player.getCards()), player.getCards().sum());
         }
     }
 
