@@ -19,13 +19,20 @@ class PlayerTest {
         assertThat(new Player("rookie")).isNotNull();
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Player 이름 공백인 경우 검증 테스트")
     @ValueSource(strings = {" ", ""})
-    @DisplayName("Player 이름 검증 테스트")
     void checkPlayerName(String value) {
         assertThatThrownBy(() -> new Player(value))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("플레이어의 이름이 존재하지 않습니다.");
+    }
+
+    @Test
+    @DisplayName("Player 이름이 '딜러'인 경우 검증 테스트")
+    void checkProhibitName() {
+        assertThatThrownBy(() -> new Player("딜러"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("플레이어의 이름은 '딜러'일 수 없습니다.");
     }
 
     @Test
