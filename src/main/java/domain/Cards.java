@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
+    private final int BLACKJACK = 21;
+
     private final List<Card> cards = new ArrayList<>();
 
     public List<Card> getCards() {
@@ -43,5 +45,9 @@ public class Cards {
                 .map(Card::getCardNumber)
                 .collect(Collectors.toList());
         return CardNumber.getTotal(cardNumbers);
+    }
+
+    public boolean isOverBlackjack() {
+        return calculateTotal() > BLACKJACK;
     }
 }

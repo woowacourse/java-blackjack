@@ -28,5 +28,11 @@ public class Player extends Human {
         cards.add(card);
     }
 
+    public int getTotal() {
+        return cards.calculateTotal();
+    }
 
+    public boolean isBurst() {
+        return cards.isOverBlackjack();
+    }
 }
