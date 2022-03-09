@@ -34,4 +34,8 @@ public class Dealer {
     public boolean isEnd() {
         return score() >= DEALER_LIMIT_SCORE;
     }
+
+    public GameOutcome fightResult(final Player player) {
+        return cards.fightResult(new Cards(player.cards()));
+    }
 }
