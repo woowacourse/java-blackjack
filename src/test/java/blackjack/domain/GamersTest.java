@@ -6,24 +6,24 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayersTest {
+public class GamersTest {
 
     @Test
-    @DisplayName("Players 클래스는 Player들을 입력받으면 정상적으로 생성된다.")
-    void create_players() {
-        Player aki = new Player(new Name("aki"));
-        Player alien = new Player(new Name("alien"));
-        List<Player> players = List.of(aki, alien);
+    @DisplayName("Gamers 클래스는 Gamer들을 입력받으면 정상적으로 생성된다.")
+    void create_gamers() {
+        Gamer aki = new Gamer(new Name("aki"));
+        Gamer alien = new Gamer(new Name("alien"));
+        List<Gamer> gamers = List.of(aki, alien);
 
-        assertThatCode(() -> new Players(players)).doesNotThrowAnyException();
+        assertThatCode(() -> new Gamers(gamers)).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("initCards 메서드를 통해 모든 플레이어들이 처음에 2장의 카드를 받는다.")
-    void init_cards_players() {
-        Player aki = new Player(new Name("aki"));
-        Players players = new Players(List.of(aki));
-        players.initCards(new FixDeck());
+    void init_cards_gamers() {
+        Gamer aki = new Gamer(new Name("aki"));
+        Gamers gamers = new Gamers(List.of(aki));
+        gamers.initCards(new FixDeck());
         Cards akiCards = aki.getCards();
         List<Card> cards = akiCards.get();
 

@@ -6,7 +6,7 @@ public class Player extends Gamer {
         super(name);
     }
 
-    public static Player from(Name name) {
+    public static Gamer from(Name name) {
         return new Player(name);
     }
 

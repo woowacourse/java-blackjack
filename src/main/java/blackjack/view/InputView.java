@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Name;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -19,5 +20,14 @@ public class InputView {
 
     private static String readLine() {
         return scanner.nextLine();
+    }
+
+    public static String requestHitOrStay(Name name) {
+        System.out.println(name.get() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        return toLowerCase(readLine());
+    }
+
+    private static String toLowerCase(String input) {
+        return input.toLowerCase();
     }
 }
