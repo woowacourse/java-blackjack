@@ -1,26 +1,10 @@
 package blackJack.participant;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Dealer extends Participant {
 
-import blackJack.domain.Card;
-
-public class Dealer {
-
-    private final String name = "딜러";
-    private final List<Card> cards;
+    private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        this.cards = new ArrayList<>();
-    }
-
-    public void receiveCard(Card card) {
-        cards.add(card);
-    }
-
-    public int calculateScore() {
-        return cards.stream()
-            .mapToInt(Card::getScore)
-            .sum();
+        super(DEALER_NAME);
     }
 }
