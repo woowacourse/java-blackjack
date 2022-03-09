@@ -16,12 +16,24 @@ public class Players {
     }
 
     public static Players of(String names) {
-        List<Player> players =  Arrays.stream(names.split(DELIMITER))
+        List<Player> players = Arrays.stream(names.split(DELIMITER))
             .map(String::trim)
             .map(Player::new)
             .collect(Collectors.toList());
 
         return new Players(players);
+    }
+
+    public void initialTurn() {
+        for (Player player : players) {
+            player.hitInitialTurn();
+        }
+    }
+
+    public List<String> toNames() {
+        return players.stream()
+            .map(Player::getName)
+            .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {

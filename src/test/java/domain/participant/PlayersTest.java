@@ -27,4 +27,17 @@ class PlayersTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage(ExceptionMessages.EMPTY_NAME_ERROR);
     }
+
+    @Test
+    @DisplayName("첫 턴에서 모든 참가자가 카드를 두개씩 뽑는지 확인")
+    void initialTurnTest(){
+        Players players = Players.of("runa, kun");
+
+        players.initialTurn();
+        int actual = (int)players.getPlayers().stream()
+            .filter(participant -> participant.getCards().size() == 2)
+            .count();
+
+        assertThat(actual).isEqualTo(2);
+    }
 }
