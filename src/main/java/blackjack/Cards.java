@@ -83,14 +83,15 @@ public class Cards {
 
     public Card pickCard(NumberGenerator numberGenerator) {
         int index = numberGenerator.generateNumber();
-        validateDuplicated(index);
+        while(isDuplicated(index)) {
+            index = numberGenerator.generateNumber();
+        }
+
+        isUsed.set(index, true);
         return cards.get(index);
     }
 
-    private void validateDuplicated(int index) {
-        if (isUsed.get(index)) {
-            throw new IllegalArgumentException(DUPLICATED_INDEX_EXCEPTION);
-        }
-        isUsed.set(index, true);
+    private boolean isDuplicated(int index) {
+        return isUsed.get(index);
     }
 }
