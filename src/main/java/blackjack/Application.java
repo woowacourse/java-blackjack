@@ -1,7 +1,6 @@
 package blackjack;
 
 import blackjack.domain.BlackJackGame;
-import blackjack.dto.OutComeResult;
 import blackjack.dto.PlayerInfo;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -11,23 +10,28 @@ public class Application {
 
     public static void main(final String[] args) {
         final List<String> playerNames = InputView.inputPlayerNames();
-
         final BlackJackGame blackJackGame = BlackJackGame.init(playerNames);
         OutputView.showGameInitInfo(blackJackGame.getInitDealerInfo(), blackJackGame.getInitPlayerInfo());
 
+        runPlayerTurn(blackJackGame);
+        runDealerTurn(blackJackGame);
+
+        OutputView.printResultPlayerInfos(blackJackGame.getPlayerResultInfos());
+        OutputView.printAllOutcomeResult(blackJackGame.calculateAllResults());
+    }
+
+    private static void runDealerTurn(final BlackJackGame blackJackGame) {
+        while (!blackJackGame.isDealerTurnEnd()) {
+            blackJackGame.drawDealer();
+            OutputView.printDealerDraw();
+        }
+    }
+
+    private static void runPlayerTurn(final BlackJackGame blackJackGame) {
         while (!blackJackGame.isPlayersTurnEnd()) {
             final String command = InputView.inputDrawCommand(blackJackGame.getCurrentTurnPlayerInfo());
             final PlayerInfo currentPlayerInfo = blackJackGame.drawCurrentPlayer(command);
             OutputView.printPlayerCardInfo(currentPlayerInfo);
         }
-
-        while (!blackJackGame.isDealerTurnEnd()) {
-            blackJackGame.drawDealer();
-            OutputView.printDealerDraw();
-        }
-
-        OutputView.printResultPlayerInfos(blackJackGame.getPlayerResultInfos());
-        OutComeResult outComeResult = blackJackGame.calculateAllResults();
-        OutputView.printAllOutcomeResult(outComeResult);
     }
 }
