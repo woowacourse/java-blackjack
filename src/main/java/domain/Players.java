@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,13 +20,19 @@ public class Players {
 		return players.stream().map(Participant::getBestScore).collect(Collectors.toList());
 	}
 
-	public List<Participant> getPlayers() {
-		return Collections.unmodifiableList(players);
+	public boolean isExistBlackJack() {
+		return players.stream().filter(Participant::isBlackJack).count() != 0;
 	}
 
-	public Map<String, Versus> compare(Participant other) {
+	public Map<String, Versus> initCompare(boolean isBlackJack) {
 		Map<String, Versus> map = new LinkedHashMap<>();
-		players.stream().forEach(participant -> map.put(participant.name, participant.compare(other)));
+		players.stream().forEach(participant -> map.put(participant.name, participant.initCompare(isBlackJack)));
+		return map;
+	}
+
+	public Map<String, Versus> finalCompare(Participant other) {
+		Map<String, Versus> map = new LinkedHashMap<>();
+		players.stream().forEach(participant -> map.put(participant.name, participant.finalCompare(other)));
 		return map;
 	}
 }

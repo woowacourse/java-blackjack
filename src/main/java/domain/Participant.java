@@ -61,20 +61,33 @@ public class Participant {
 		return bestScore;
 	}
 
-	public Versus compare(Participant other) {
+	public Versus initCompare(boolean isDealerBlackJack) {
+		boolean isParticipantBlackJack = isBlackJack();
+		if (isDealerBlackJack && isParticipantBlackJack) {
+			return Versus.DRAW;
+		}
+		if (!isDealerBlackJack && isParticipantBlackJack) {
+			return Versus.WIN;
+		}
+		return Versus.LOSE;
+	}
+
+	public Versus finalCompare(Participant other) {
 		if (isBurst()) {
 			return Versus.LOSE;
 		}
-
 		if (other.isBurst()) {
 			return Versus.WIN;
 		}
+		return whoIsHigh(other.getBestScore());
+	}
 
-		if (getBestScore() > other.getBestScore()) {
+	private Versus whoIsHigh(int otherScore) {
+		int myScore = getBestScore();
+		if (myScore > otherScore) {
 			return Versus.WIN;
 		}
-
-		if (getBestScore() == other.getBestScore()) {
+		if (myScore == otherScore) {
 			return Versus.DRAW;
 		}
 		return Versus.LOSE;

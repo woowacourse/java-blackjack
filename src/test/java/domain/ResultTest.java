@@ -25,8 +25,8 @@ public class ResultTest {
 	Players players = new Players(names, initCards);
 	Dealer dealer_17 = new Dealer(List.of(card_A, card_6));
 	Dealer dealer_BURST = new Dealer(List.of(card_K, card_Q, card_2));
-	Result result = new Result(players.compare(dealer_17));
-	Result result_dealer_burst = new Result(players.compare(dealer_BURST));
+	Result result = new Result(players.finalCompare(dealer_17));
+	Result result_dealer_burst = new Result(players.finalCompare(dealer_BURST));
 
 	@Test
 	@DisplayName("딜러도 safe, 플레이어 safe, 플레이어 승")

@@ -6,10 +6,6 @@ public class Result {
 
 	private final Map<String, Versus> playerResults;
 
-	// //public Result(Dealer dealer, Players players) {
-	// 	this.playerResults = players.compare(dealer);
-	// }
-
 	public Result(Map<String, Versus> playerResults) {
 		this.playerResults = playerResults;
 	}
