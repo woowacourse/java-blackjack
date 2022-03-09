@@ -1,23 +1,25 @@
 package blackjack;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class Deck {
-    private final List<Card> cards;
+    private final Queue<Card> deck;
 
-    public Deck() {
-        this.cards = new ArrayList<>();
+    private Deck(Queue<Card> deck) {
+        this.deck = deck;
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public static Deck create() {
+        List<Card> deck = new ArrayList<>(Card.createDeck());
+        Collections.shuffle(deck);
+        return new Deck(new LinkedList<>(deck));
     }
 
-    public int countBestNumber() {
-        return Number.sum(cards.stream()
-                .map(Card::getNumber)
-                .collect(Collectors.toList()));
+    public Card draw() {
+        if (deck.isEmpty()) {
+            throw new IllegalArgumentException("더 이상 꺼낼 카드가 존재하지 않습니다.");
+        }
+
+        return deck.poll();
     }
 }

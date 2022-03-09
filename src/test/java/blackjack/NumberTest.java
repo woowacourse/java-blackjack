@@ -31,6 +31,7 @@ class NumberTest {
 
                 Arguments.of(18, List.of(Number.ACE, Number.SEVEN, Number.KING)),
                 Arguments.of(20, List.of(Number.ACE, Number.ACE, Number.EIGHT)),
+                Arguments.of(21, List.of(Number.ACE, Number.ACE, Number.ACE, Number.EIGHT)),
                 Arguments.of(21, List.of(Number.ACE, Number.ACE, Number.NINE)),
 
                 Arguments.of(12, List.of(Number.ACE, Number.ACE)),

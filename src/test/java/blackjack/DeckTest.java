@@ -3,29 +3,38 @@ package blackjack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
-class DeckTest {
-
+public class DeckTest {
     @Test
-    @DisplayName("덱에서 카드의 합을 구한다")
-    void countCardNumber() {
-        Deck deck = new Deck();
-        deck.addCard(new Card(Suit.CLUB, Number.THREE));
-        deck.addCard(new Card(Suit.HEART, Number.FOUR));
-        int bestNumber = deck.countBestNumber();
+    @DisplayName("카드 뭉치에서 카드 한 장을 꺼낸다.")
+    void getCard() {
+        Deck deck = Deck.create();
 
-        assertThat(bestNumber).isEqualTo(7);
+        assertThat(deck.draw()).isInstanceOf(Card.class);
     }
 
     @Test
-    @DisplayName("에이스가 포함 될 경우 21에 가까운 숫자를 반환한다")
-    void countCardNumberContainsAce() {
-        Deck deck = new Deck();
-        deck.addCard(new Card(Suit.CLUB, Number.ACE));
-        deck.addCard(new Card(Suit.HEART, Number.TEN));
-        int bestNumber = deck.countBestNumber();
+    @DisplayName("카드 뭉치의 카드가 52장인지 확인한다.")
+    void draw52() {
+        Deck deck = Deck.create();
+        assertThatCode(() -> {
+            for (int i = 0; i < 52; i++) {
+                deck.draw();
+            }
+        }).doesNotThrowAnyException();
+    }
 
-        assertThat(bestNumber).isEqualTo(21);
+    @Test
+    @DisplayName("카드 뭉치가 비어있을때 드로우를 하면 예외를 발생한다.")
+    void throwExceptionDrawEmptyCard() {
+        Deck deck = Deck.create();
+        for (int i = 0; i < 52; i++) {
+            deck.draw();
+        }
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(deck::draw)
+                .withMessageContaining("더 이상 꺼낼 카드가 존재하지 않습니다.");
     }
 }
