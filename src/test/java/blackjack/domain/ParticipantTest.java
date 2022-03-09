@@ -18,7 +18,7 @@ class ParticipantTest {
                 new Card(Symbol.DIAMOND, Denomination.KING)
         );
 
-        Participant participant = new Participant(cards);
+        Participant participant = new Participant("pobi", cards);
         participant.addCard(new Card(Symbol.HEART, Denomination.TWO));
         participant.endTurn();
 
@@ -33,7 +33,7 @@ class ParticipantTest {
                 new Card(Symbol.HEART, Denomination.TWO)
         );
 
-        Participant participant = new Participant(cards);
+        Participant participant = new Participant("pobi", cards);
         participant.addCard(new Card(Symbol.SPADE, Denomination.ACE));
         participant.endTurn();
 

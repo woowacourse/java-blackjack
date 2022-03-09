@@ -10,9 +10,9 @@ public enum Denomination {
     SEVEN(7, "7"),
     EIGHT(8, "8"),
     NINE(9, "9"),
-    KING(10, "KING"),
-    QUEEN(10, "QUEEN"),
-    JACK(10, "JACK");
+    KING(10, "K"),
+    QUEEN(10, "Q"),
+    JACK(10, "J");
 
     private final int value;
     private final String name;
@@ -24,5 +24,9 @@ public enum Denomination {
 
     public int getValue() {
         return value;
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -17,4 +17,12 @@ public class Card {
     public boolean isAce() {
         return denomination == Denomination.ACE;
     }
+
+    public String getDenominationName() {
+        return denomination.getName();
+    }
+
+    public String getSymbolName() {
+        return symbol.getName();
+    }
 }

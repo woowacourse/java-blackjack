@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Participant {
@@ -8,10 +9,12 @@ public class Participant {
     private static final int ADDITIONAL_SCORE_FOR_ACE = 10;
     protected static final int GOAL_SCORE = 21;
 
-    private int score = 0;
+    private final String name;
     private final List<Card> cards = new ArrayList<>();
+    private int score = 0;
 
-    Participant(List<Card> cards) {
+    Participant(String name, List<Card> cards) {
+        this.name = name;
         this.cards.addAll(cards);
         for (Card card : cards) {
             addScore(card);
@@ -46,7 +49,16 @@ public class Participant {
         return false;
     }
 
+
     public int getScore() {
         return score;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
