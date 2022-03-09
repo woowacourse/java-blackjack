@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.Command;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -26,5 +28,11 @@ public class InputView {
     public static boolean requestHitOrNot(String name) {
         System.out.println(name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return scanner.nextLine().equals("y");
+    }
+
+    public static Command requestHitOrStay(String name) {
+        System.out.println(name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        String input = scanner.nextLine();
+        return Command.of(input);
     }
 }
