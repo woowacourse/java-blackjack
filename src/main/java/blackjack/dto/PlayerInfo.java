@@ -22,13 +22,6 @@ public class PlayerInfo {
         );
     }
 
-    public static PlayerInfo dealerToInfo(final Dealer dealer) {
-        return new PlayerInfo(
-                dealer.getName(),
-                dealer.getCards()
-        );
-    }
-
     public static PlayerInfo playerToInfo(final Player player) {
         return new PlayerInfo(
                 player.getName(),
