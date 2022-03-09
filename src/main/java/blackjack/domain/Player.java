@@ -1,7 +1,9 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends Gamer {
 
@@ -12,5 +14,10 @@ public class Player extends Gamer {
     @Override
     public void hit() {
         draw();
+    }
+
+    @Override
+    public List<Card> getViewCard() {
+        return getCards().getCards();
     }
 }

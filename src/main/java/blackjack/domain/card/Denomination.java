@@ -28,6 +28,10 @@ public enum Denomination {
         return score;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public boolean isAce() {
         return this == ACE;
     }

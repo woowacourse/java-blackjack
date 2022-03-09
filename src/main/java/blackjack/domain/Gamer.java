@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import java.util.List;
 
 public abstract class Gamer {
     private static final String NAME_INPUT_ERROR_MESSAGE = "참가자의 이름으로 공백이나 빈 문자열은 입력할 수 없습니다.";
@@ -11,10 +12,10 @@ public abstract class Gamer {
 
     public Gamer(String name, Cards cards) {
         validate(name);
-        draw();
-        draw();
         this.name = name;
         this.cards = cards;
+        draw();
+        draw();
     }
 
     private void validate(String name) {
@@ -34,7 +35,13 @@ public abstract class Gamer {
 
     public abstract void hit();
 
+    public abstract List<Card> getViewCard();
+
     public  Cards getCards() {
         return cards;
+    }
+
+    public String getName() {
+        return name;
     }
 }
