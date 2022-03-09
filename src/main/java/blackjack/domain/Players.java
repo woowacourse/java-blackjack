@@ -15,7 +15,7 @@ public class Players {
 
     public Players(final String input) {
         Validator.validateNullOrEmpty(input);
-        List<String> names = getNames(input);
+        List<String> names = trimNames(input);
 
         validateNames(names);
 
@@ -24,7 +24,17 @@ public class Players {
         }
     }
 
-    private List<String> getNames(String input) {
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
+
+    public List<String> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    private List<String> trimNames(String input) {
         return Arrays.stream(input.split(",", -1))
                 .map(String::trim)
                 .collect(Collectors.toList());

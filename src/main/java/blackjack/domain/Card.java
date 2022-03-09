@@ -13,4 +13,8 @@ public class Card {
     public CardNumber getCardNumber() {
         return this.cardNumber;
     }
+
+    public String getName() {
+        return cardNumber.getName() + cardShape.getShape();
+    }
 }

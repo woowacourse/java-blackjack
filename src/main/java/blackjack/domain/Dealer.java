@@ -9,12 +9,12 @@ public class Dealer extends Human {
 
     private final Cards cards = new Cards();
 
-    public Dealer(List<Card> initCards) {
-        cards.add(initCards);
-    }
-
     public static String getName() {
         return name;
+    }
+
+    public void receiveInitCard(final List<Card> initCards) {
+        cards.add(initCards);
     }
 
     public boolean isReceived() {
@@ -34,5 +34,9 @@ public class Dealer extends Human {
 
     public int getTotal() {
         return cards.calculateTotal();
+    }
+
+    public List<String> getInitCard() {
+        return cards.getDealerInitCard();
     }
 }

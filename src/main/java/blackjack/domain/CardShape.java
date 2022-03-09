@@ -13,4 +13,8 @@ public enum CardShape {
     CardShape(final String shape) {
         this.shape = shape;
     }
+
+    public String getShape() {
+        return shape;
+    }
 }

@@ -22,7 +22,7 @@ public class DealerTest {
 
     @BeforeEach
     void before() {
-        dealer = new Dealer(cardMachine.giveInitCard());
+        dealer = new Dealer();
         twoSpade = new Card(CardNumber.TWO, CardShape.SPADE);
         threeSpade = new Card(CardNumber.THREE, CardShape.SPADE);
         queenSpade = new Card(CardNumber.QUEEN, CardShape.SPADE);
@@ -33,7 +33,8 @@ public class DealerTest {
     void isGiven_true() {
         List<Card> cards = new ArrayList<>(List.of(twoSpade, threeSpade));
 
-        Dealer dealer = new Dealer(cards);
+        Dealer dealer = new Dealer();
+        dealer.receiveInitCard(cards);
 
         final boolean given = dealer.isReceived();
         assertThat(given).isTrue();
@@ -44,7 +45,8 @@ public class DealerTest {
     void isGiven_false() {
         List<Card> cards = new ArrayList<>(List.of(twoSpade, threeSpade, queenSpade, threeSpade));
 
-        Dealer dealer = new Dealer(cards);
+        Dealer dealer = new Dealer();
+        dealer.receiveInitCard(cards);
 
         final boolean given = dealer.isReceived();
         assertThat(given).isFalse();

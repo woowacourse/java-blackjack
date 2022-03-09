@@ -28,6 +28,10 @@ public enum CardNumber {
         this.number = number;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public static int getTotal(final List<CardNumber> cardNumbers) {
         int total = cardNumbers.stream()
                 .map(cardNumber -> cardNumber.number)

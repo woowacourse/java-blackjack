@@ -20,6 +20,14 @@ public class Player extends Human {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public List<String> getCards() {
+        return cards.getAllCards();
+    }
+
     private void validateEqualsDealerName(final String name) {
         if (name.equals(Dealer.getName())) {
             throw new IllegalArgumentException(EQUALS_DEALER_NAME_MESSAGE);

@@ -27,7 +27,8 @@ class WinnerTest {
     @Test
     void burst() {
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade));
-        Dealer dealer = new Dealer(dealerCards);
+        Dealer dealer = new Dealer();
+        dealer.receiveInitCard(dealerCards);
 
         List<Card> playerCards = new ArrayList<>(List.of(queenSpade, queenSpade, twoSpade));
         Player player = new Player("pobi");
@@ -43,7 +44,8 @@ class WinnerTest {
     @Test
     void winner_player() {
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade));
-        Dealer dealer = new Dealer(dealerCards);
+        Dealer dealer = new Dealer();
+        dealer.receiveInitCard(dealerCards);
 
         List<Card> playerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
         Player player = new Player("pobi");
@@ -59,7 +61,8 @@ class WinnerTest {
     @Test
     void winner_dealer() {
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
-        Dealer dealer = new Dealer(dealerCards);
+        Dealer dealer = new Dealer();
+        dealer.receiveInitCard(dealerCards);
 
         List<Card> playerCards = new ArrayList<>(List.of(twoSpade, twoSpade));
         Player player = new Player("pobi");
@@ -75,7 +78,8 @@ class WinnerTest {
     @Test
     void equals_score() {
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade, twoSpade));
-        Dealer dealer = new Dealer(dealerCards);
+        Dealer dealer = new Dealer();
+        dealer.receiveInitCard(dealerCards);
 
         List<Card> playerCards = new ArrayList<>(List.of(twoSpade, twoSpade, twoSpade));
         Player player = new Player("pobi");

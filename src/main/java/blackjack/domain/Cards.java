@@ -50,4 +50,14 @@ public class Cards {
     public boolean isOverBlackjack() {
         return calculateTotal() > BLACKJACK;
     }
+
+    public List<String> getDealerInitCard() {
+        return List.of(cards.get(0).getName());
+    }
+
+    public List<String> getAllCards() {
+        return cards.stream()
+                .map(Card::getName)
+                .collect(Collectors.toList());
+    }
 }
