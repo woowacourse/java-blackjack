@@ -1,7 +1,6 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,5 +27,18 @@ class GamerTest {
 		gamer.addCard(new Card(Number.TWO, Type.SPADE));
 		//then
 		assertThat(gamer.isBurst()).isTrue();
+	}
+
+	@Test
+	void check_optimal_ace_sum() {
+		// given
+		Gamer gamer = new Player("pobi");
+		gamer.addCard(new Card(Number.ACE, Type.HEART));
+		gamer.addCard(new Card(Number.ACE, Type.SPADE));
+		gamer.addCard(new Card(Number.NINE, Type.SPADE));
+		// when
+		int optimal = gamer.calculateAceSum();
+		// then
+		assertThat(optimal).isEqualTo(21);
 	}
 }
