@@ -26,14 +26,6 @@ public class BlackjackJudge {
     }
 
     private static Result judgeNormalCase(Cards cards1, Cards cards2) {
-        if (cards1.score() > cards2.score()) {
-            return Result.WIN;
-        }
-
-        if (cards1.score() == cards2.score()) {
-            return Result.DRAW;
-        }
-
-        return Result.LOSS;
+        return cards1.score().compare(cards2.score());
     }
 }

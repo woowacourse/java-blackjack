@@ -12,32 +12,32 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class DealerTest {
     
     @ParameterizedTest
-    @MethodSource("providePlayerLoseCards")
+    @MethodSource("provideLoseCards")
     @DisplayName("딜러가 이기는 경우 판별 테스트")
     void dealerIsWinner(Cards playerCards) {
         Dealer dealer = new Dealer(new Cards("8다이아몬드", "J하트"));
         assertThat(dealer.judge(playerCards)).isEqualTo(Result.WIN);
     }
 
-    private static Stream<Arguments> providePlayerLoseCards() {
+    private static Stream<Arguments> provideLoseCards() {
         return Stream.of(
             Arguments.of(new Cards("7클로버", "8하트")),
             Arguments.of(new Cards("J하트", "Q하트", "4다이아몬드"))
         );
     }
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("provideLoseCards")
     @DisplayName("딜러가 지는 경우 판별 테스트")
-    void dealerIsLoser() {
-        Dealer dealer = new Dealer(new Cards("3다이아몬드", "4하트"));
+    void dealerIsLoser(Cards dealerCards) {
+        Dealer dealer = new Dealer(dealerCards);
         assertThat(dealer.judge(new Cards("Q클로버", "J하트"))).isEqualTo(Result.LOSS);
     }
 
     @Test
-    @DisplayName("딜러가 지는 경우 판별 테스트")
+    @DisplayName("비기는 경우 판별 테스트")
     void dealerIsDraw() {
         Dealer dealer = new Dealer(new Cards("J다이아몬드", "4하트"));
         assertThat(dealer.judge(new Cards("8클로버", "6하트"))).isEqualTo(Result.DRAW);
     }
-
 }

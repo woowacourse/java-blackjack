@@ -10,11 +10,11 @@ public class Cards {
         this.cards = List.of(cards);
     }
 
-    public int score() {
+    public Score score() {
         if (isBust(totalScore(11))) {
-            return totalScore(1);
+            return new Score(totalScore(1));
         }
-        return totalScore(11);
+        return new Score(totalScore(11));
     }
 
     private boolean isBust(int score) {
@@ -22,7 +22,7 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return score() > 21;
+        return score().isBust();
     }
 
     private int totalScore(int aceValue) {
@@ -68,14 +68,6 @@ public class Cards {
     }
 
     private Result judgeNormalCase(Cards other) {
-        if (this.score() > other.score()) {
-            return Result.WIN;
-        }
-
-        if (this.score() == other.score()) {
-            return Result.DRAW;
-        }
-
-        return Result.LOSS;
+        return score().compare(other.score());
     }
 }

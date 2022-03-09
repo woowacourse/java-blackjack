@@ -15,20 +15,20 @@ public class CardsTest {
     @Test
     void 카드_합_계산() {
         Cards cards = new Cards("1다이아몬드", "2다이아몬드");
-        assertThat(cards.score()).isEqualTo(3);
+        assertThat(cards.score()).isEqualTo(new Score(3));
     }
 
     @Test
     void J_Q_K_카드_점수_계산() {
         Cards cards = new Cards("Q클로버", "J하트", "K다이아몬드");
-        assertThat(cards.score()).isEqualTo(30);
+        assertThat(cards.score()).isEqualTo(new Score(30));
     }
 
     @ParameterizedTest
     @MethodSource("provideAceData")
     void ACE_카드_점수_계산(List<String> input) {
         Cards cards = new Cards(input.toArray(String[]::new));
-        assertThat(cards.score()).isEqualTo(21);
+        assertThat(cards.score()).isEqualTo(new Score(21));
     }
 
     protected static Stream<Arguments> provideAceData() {
