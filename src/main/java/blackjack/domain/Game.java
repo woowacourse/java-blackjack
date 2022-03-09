@@ -23,4 +23,13 @@ public class Game {
     public int getParticipantCount() {
         return players.size() + 1;
     }
+
+    public void init() {
+        dealer.init(cardFactory);
+        players.forEach(player -> player.init(cardFactory));
+    }
+
+    public int getRemainAmount() {
+        return cardFactory.getRemainAmount();
+    }
 }
