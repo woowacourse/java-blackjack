@@ -12,9 +12,17 @@ public class OutputView {
         cardStatus.forEach((key, value) -> System.out.println(key + ": " + printCard(value)));
     }
 
+    public static void printPresentStatus(String name, List<CardDto> cardDtos) {
+        System.out.println(name + ": " + printCard(cardDtos));
+    }
+
     private static String printCard(List<CardDto> cardDtos) {
         return cardDtos.stream()
                 .map(card -> card.getDenomination() + card.getSuit())
                 .collect(Collectors.joining(", "));
+    }
+
+    public static void printBustPlayer(String name, int calculateScore) {
+        System.out.println(name + "은(는) " + calculateScore + "점으로 버스트 됐습니다.");
     }
 }

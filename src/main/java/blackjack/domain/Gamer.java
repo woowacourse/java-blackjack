@@ -21,6 +21,7 @@ public abstract class Gamer {
     private void validate(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(NAME_INPUT_ERROR_MESSAGE);
+
         }
     }
 

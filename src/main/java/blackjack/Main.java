@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.domain.CardDto;
 import blackjack.domain.Dealer;
 import blackjack.domain.Gamer;
+import blackjack.domain.HitOrStand;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
@@ -24,6 +25,25 @@ public class Main {
             addCardDto(cardStatus, player);
         }
         OutputView.printInitCard(cardStatus);
+
+        for (Player player : playerList) {
+            playerHit(player);
+        }
+
+
+    }
+
+    private static void playerHit(Player player) {
+        HitOrStand flag = HitOrStand.valueOf(InputView.inputHitOrStand(player.getName()));
+        if (flag.isValue()) {
+            player.hit();
+            OutputView.printPresentStatus(player.getName(), toListCardDto(player));
+            if (player.isBust()) {
+                OutputView.printBustPlayer(player.getName(), player.getCards().calculateScore());
+                return;
+            }
+            playerHit(player);
+        }
     }
 
     private static void addCardDto(Map<String, List<CardDto>> cardStatus, Gamer gamer) {
