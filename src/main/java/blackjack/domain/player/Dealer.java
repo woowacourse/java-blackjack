@@ -20,7 +20,7 @@ public class Dealer {
     }
 
     public List<Card> initCards() {
-        return cards.firstCard();
+        return cards.cards().subList(0, 1);
     }
 
     public boolean isEnd() {

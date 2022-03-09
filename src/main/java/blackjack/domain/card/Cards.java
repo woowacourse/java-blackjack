@@ -48,10 +48,6 @@ public class Cards {
         return List.copyOf(cards);
     }
 
-    public List<Card> firstCard() {
-        return List.copyOf(cards.subList(0, 1));
-    }
-
     public GameOutcome fightResult(final Cards compareCards) {
         if (this.isBust() || compareCards.isBust()) {
             return bustGameFightResult(compareCards);
