@@ -38,8 +38,8 @@ public class BlackJackDto {
     }
 
     public String getDealerResult() {
-        long winCount = result.values().stream().filter(value -> value).count();
-        long loseCount = result.size() - winCount;
+        long loseCount = result.values().stream().filter(value -> value).count();
+        long winCount = result.size() - loseCount;
 
         return dealer.getName() + NAME_DELIMITER + winCount + MESSAGE_WIN + loseCount + MESSAGE_LOSE;
     }

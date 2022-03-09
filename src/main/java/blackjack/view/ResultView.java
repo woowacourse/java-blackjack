@@ -3,47 +3,55 @@ package blackjack.view;
 import blackjack.domain.BlackJackDto;
 import blackjack.domain.Participant;
 
-import java.util.Map;
-
 public class ResultView {
 
-    private static final String RESULT_DELIMITER = " - 결과: ";
-    private static final String NAME_DELIMITER = ": ";
+	private static final String RESULT_DELIMITER = " - 결과: ";
+	private static final String MESSAGE_DEALER_NOT_RECEIVE = "딜러는 16이하라 한장의 카드를 더 받았습니다";
+	private static final String MESSAGE_DEALER_RECEIVE = "딜러는 17이상이라 카드를 더 받지 않았습니다.";
+	private static final String NAME_DELIMITER = ", ";
+	private static final String MESSAGE_HAND_OUT_CARD = "%n딜러와 %s 에게 2장의 카드를 나누었습니다.%n";
 
-    public void showStartingStatus(BlackJackDto blackJackDto) {
-        System.out.println(blackJackDto.getDealerOpenCard());
-        for (Participant player : blackJackDto.getPlayers()) {
-            showEachPlayerCurrentStatus(blackJackDto, player);
-        }
-    }
+	public static void showStartingStatus(BlackJackDto blackJackDto) {
+		String[] playerNames = blackJackDto.getPlayers().stream()
+			.map(Participant::getName)
+			.toArray(String[]::new);
+		System.out.printf(MESSAGE_HAND_OUT_CARD, String.join(NAME_DELIMITER, playerNames));
+		System.out.println(blackJackDto.getDealerOpenCard());
+		for (Participant player : blackJackDto.getPlayers()) {
+			showEachPlayerCurrentStatus(blackJackDto, player);
+		}
+		System.out.println();
+	}
 
-    public void showCurrentStatus(BlackJackDto blackJackDto) {
-        Participant dealer = blackJackDto.getDealer();
-        showEachPlayerCurrentStatus(blackJackDto, dealer);
-        for (Participant player : blackJackDto.getPlayers()) {
-            showEachPlayerCurrentStatus(blackJackDto, player);
-        }
-    }
+	public static void showEachPlayerCurrentStatus(BlackJackDto blackJackDto, Participant participant) {
+		System.out.println(getEachPlayerStatus(blackJackDto, participant));
+	}
 
-    public void showEachPlayerCurrentStatus(BlackJackDto blackJackDto, Participant participant) {
-        System.out.println(getEachPlayerStatus(blackJackDto, participant));
-    }
+	private static String getEachPlayerStatus(BlackJackDto blackJackDto, Participant participant) {
+		return blackJackDto.getPlayerCardStatus(participant);
+	}
 
-    private String getEachPlayerStatus(BlackJackDto blackJackDto, Participant participant) {
-        return blackJackDto.getPlayerCardStatus(participant);
-    }
+	public static void showWhetherDealerReceivedOrNot(Boolean isReceived) {
+		System.out.println();
+		if (isReceived) {
+			System.out.println(MESSAGE_DEALER_NOT_RECEIVE);
+			return;
+		}
+		System.out.println(MESSAGE_DEALER_RECEIVE);
+	}
 
-    public void showFinishedStatus(BlackJackDto blackJackDto) {
-        Participant dealer = blackJackDto.getDealer();
-        System.out.println(getEachPlayerStatus(blackJackDto, dealer) + RESULT_DELIMITER + dealer.getScore());
-        for (Participant player : blackJackDto.getPlayers()) {
-            System.out.println(getEachPlayerStatus(blackJackDto, player) + RESULT_DELIMITER + player.getScore());
-        }
-    }
+	public static void showFinalStatus(BlackJackDto blackJackDto) {
+		System.out.println();
+		Participant dealer = blackJackDto.getDealer();
+		System.out.println(getEachPlayerStatus(blackJackDto, dealer) + RESULT_DELIMITER + dealer.getScore());
+		for (Participant player : blackJackDto.getPlayers()) {
+			System.out.println(getEachPlayerStatus(blackJackDto, player) + RESULT_DELIMITER + player.getScore());
+		}
+	}
 
-    public void showResult(BlackJackDto blackJackDto) {
-        System.out.println("## 최종 승패");
-        System.out.println(blackJackDto.getDealerResult());
-        blackJackDto.getPlayersResult().forEach(System.out::println);
-    }
+	public static void showResult(BlackJackDto blackJackDto) {
+		System.out.println("\n## 최종 승패");
+		System.out.println(blackJackDto.getDealerResult());
+		blackJackDto.getPlayersResult().forEach(System.out::println);
+	}
 }
