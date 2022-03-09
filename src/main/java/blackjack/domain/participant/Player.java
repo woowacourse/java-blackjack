@@ -1,20 +1,14 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardFactory;
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Status;
-import java.util.LinkedHashSet;
 
-public class Player {
+public class Player extends Participant {
 
     private final String name;
-    private final Cards cards;
 
     public Player(String name) {
         validateName(name);
         this.name = name;
-        this.cards = new Cards(new LinkedHashSet<>());
     }
 
     private void validateName(String name) {
@@ -36,22 +30,5 @@ public class Player {
 
     void hit(Card card) {
         cards.add(card);
-    }
-
-    public void hit(CardFactory cardFactory) {
-        cards.add(cardFactory.drawCard());
-    }
-
-    public int getScore() {
-        return cards.sum();
-    }
-
-    public Status getStatus() {
-        return cards.getStatus();
-    }
-
-    public void init(CardFactory cardFactory) {
-        cards.add(cardFactory.drawCard());
-        cards.add(cardFactory.drawCard());
     }
 }
