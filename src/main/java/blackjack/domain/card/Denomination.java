@@ -21,4 +21,8 @@ public enum Denomination {
     Denomination(int point) {
         this.point = point;
     }
+
+    public int getPoint() {
+        return point;
+    }
 }

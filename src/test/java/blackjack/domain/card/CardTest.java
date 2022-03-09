@@ -20,4 +20,19 @@ public class CardTest {
         //then
         assertThat(card).isNotNull();
     }
+
+    @DisplayName("카드의 이름을 얻을 수 있다.")
+    @Test
+    public void testGetCardName() {
+        //given
+        Suit suit = Suit.SPADE;
+        Denomination denomination = Denomination.EIGHT;
+
+        //when
+        Card card = new Card(suit, denomination);
+
+        //then
+        assertThat(card.getName()).isEqualTo("8스페이드");
+
+    }
 }

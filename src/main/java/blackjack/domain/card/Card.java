@@ -8,4 +8,8 @@ public class Card {
         this.suit = suit;
         this.denomination = denomination;
     }
+
+    public String getName() {
+        return denomination.getPoint() + suit.getName();
+    }
 }
