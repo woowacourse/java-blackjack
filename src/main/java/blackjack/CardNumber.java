@@ -1,5 +1,7 @@
 package blackjack;
 
+import rentcompany.Car;
+
 import java.util.Arrays;
 
 public enum CardNumber {
@@ -31,5 +33,9 @@ public enum CardNumber {
                 .filter(cardNumber -> cardNumber.number == number)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_INVALID_CARD_NUMBER));
+    }
+
+    public int getNumber() {
+        return number;
     }
 }
