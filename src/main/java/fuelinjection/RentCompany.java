@@ -19,7 +19,8 @@ public class RentCompany {
     public String generateReport() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Car car : garage) {
-            stringBuilder.append(car.getName()).append(" : ").append((int) car.getChargeQuantity()).append("리터").append("\n");
+            String carReport = car.getName() + " : " + ((int) car.getChargeQuantity()) + "리터";
+            stringBuilder.append(carReport).append("\n");
         }
         return stringBuilder.toString();
     }
