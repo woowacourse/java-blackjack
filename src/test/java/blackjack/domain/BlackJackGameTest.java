@@ -40,7 +40,7 @@ public class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(dealer, List.of(judy, huni));
 
         //when
-        Map<Player,Result> gameResult = blackJackGame.calculateResult();
+        Map<Player, Result> gameResult = blackJackGame.calculateResult();
 
         //then
         assertAll(

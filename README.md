@@ -6,9 +6,6 @@
 - [ ] Dealer가 카드를 받을 수 있으면 준다.
 - [ ] Gamer에게 카드를 줄지/ 안줄지 묻고 카드를 준다.
 - [x] 승패를 계산한다.
-
-## GamerResult
-- [ ] Gamer, Win/Draw/Lose
  
 ## Player <Interface>
 - [x] 카드를 받는다

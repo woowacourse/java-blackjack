@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
@@ -30,12 +31,12 @@ public class BlackJackGame {
     }
 
     public Map<Player, Result> calculateResult() {
-        Map<Player, Result> gameResult = new LinkedHashMap<>();
-
         int dealerResult = dealer.calculateResult();
-        for (Player gamer : gamers) {
-            gameResult.put(gamer, Result.findResult(dealerResult, gamer.calculateResult()));
-        }
-        return gameResult;
+        return gamers.stream()
+                .collect(Collectors.toMap(gamer -> gamer,
+                        gamer -> Result.findResult(dealerResult,
+                                gamer.calculateResult()),
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new));
     }
 }
