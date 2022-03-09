@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
@@ -10,7 +11,7 @@ public class Cards {
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public int getTotalScore() {
@@ -36,5 +37,9 @@ public class Cards {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
     }
 }
