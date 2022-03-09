@@ -9,7 +9,7 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(final List<String> playerNames) {
+    private Players(final List<String> playerNames) {
         validatePlayerNamesDuplicated(playerNames);
         this.players = playerNames.stream()
                 .map(Player::new)
@@ -23,4 +23,20 @@ public class Players {
         }
     }
 
+    public static Players startWithTwoCards(final List<String> names, final Deck deck) {
+        Players players = new Players(names);
+        players.distributeCards(deck);
+        return players;
+    }
+
+    private void distributeCards(Deck deck) {
+        for (Player player : players) {
+            player.drawCard(deck);
+            player.drawCard(deck);
+        }
+    }
+
+    public List<Player> getStatuses() {
+        return List.copyOf(players);
+    }
 }
