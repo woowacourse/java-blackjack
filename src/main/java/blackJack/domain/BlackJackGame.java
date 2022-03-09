@@ -1,25 +1,29 @@
-package blackJack.domain.participant;
+package blackJack.domain;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import blackJack.domain.WinOrLose;
+import blackJack.domain.card.Deck;
+import blackJack.domain.participant.Dealer;
+import blackJack.domain.participant.Player;
 
-public class Participants {
+public class BlackJackGame {
 
     private static final String ERROR_MESSAGE_DUPLICATE_PLAYER_NAME = "플레이어의 이름은 중복될 수 없습니다.";
     private static final String ERROR_MESSAGE_PLAYER_COUNT = "플레이어의 인원수는 1명 이상 7명 이하여야 합니다.";
     private static final int MINIMUM_COUNT = 1;
     private static final int MAXIMUM_COUNT = 7;
 
+    private final Deck deck;
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Participants(Dealer dealer, List<Player> players) {
+    public BlackJackGame(Dealer dealer, List<Player> players) {
         validateDuplicatePlayerName(players);
         validatePlayerCount(players);
+        this.deck = new Deck();
         this.dealer = dealer;
         this.players = players;
     }

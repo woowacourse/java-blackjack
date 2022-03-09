@@ -1,4 +1,4 @@
-package blackJack.domain.participant;
+package blackJack.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -7,17 +7,18 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackJack.domain.WinOrLose;
 import blackJack.domain.card.Card;
 import blackJack.domain.card.Denomination;
 import blackJack.domain.card.Symbol;
+import blackJack.domain.participant.Dealer;
+import blackJack.domain.participant.Player;
 
-public class ParticipantsTest {
+class BlackJackGameTest {
 
     @Test
     @DisplayName("Participants 생성 테스트")
     void createValidDealer() {
-        assertThat(new Participants(new Dealer(), List.of(new Player("rookie")))).isNotNull();
+        assertThat(new BlackJackGame(new Dealer(), List.of(new Player("rookie")))).isNotNull();
     }
 
     @Test
@@ -25,7 +26,7 @@ public class ParticipantsTest {
     void checkDuplicatePlayerName() {
         List<Player> players = List.of(new Player("rookie"), new Player("rookie"));
 
-        assertThatThrownBy(() -> new Participants(new Dealer(), players))
+        assertThatThrownBy(() -> new BlackJackGame(new Dealer(), players))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("플레이어의 이름은 중복될 수 없습니다.");
     }
@@ -37,7 +38,7 @@ public class ParticipantsTest {
             new Player("k1"), new Player("k2"), new Player("k3"), new Player("k4"),
             new Player("k5"), new Player("k6"), new Player("k7"), new Player("k8"));
 
-        assertThatThrownBy(() -> new Participants(new Dealer(), players))
+        assertThatThrownBy(() -> new BlackJackGame(new Dealer(), players))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("플레이어의 인원수는 1명 이상 7명 이하여야 합니다.");
     }
@@ -53,7 +54,7 @@ public class ParticipantsTest {
         player2.receiveCard(new Card(Symbol.SPADE, Denomination.J));
         dealer.receiveCard(new Card(Symbol.SPADE, Denomination.NINE));
 
-        Participants participants = new Participants(dealer, List.of(player1, player2));
+        BlackJackGame participants = new BlackJackGame(dealer, List.of(player1, player2));
 
         assertThat(participants.calculateGameResult().values()).containsExactly(
             WinOrLose.LOSE, WinOrLose.WIN
