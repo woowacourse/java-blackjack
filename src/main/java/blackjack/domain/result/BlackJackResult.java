@@ -2,13 +2,14 @@ package blackjack.domain.result;
 
 import java.util.Arrays;
 
+import static blackjack.domain.BlackJackGame.POSSIBLE_MAX_VALUE;
+
 public enum BlackJackResult {
 
     WIN(ResultValue.WIN),
     LOSE(ResultValue.LOSE),
     DRAW(ResultValue.DRAW);
 
-    private static final int POSSIBLE_MAX_VALUE = 21;
     private final int value;
 
     BlackJackResult(int value) {

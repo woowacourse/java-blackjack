@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.BlackJackGame.POSSIBLE_MAX_VALUE;
+
 public class Gamer {
     private final Name name;
 
@@ -32,23 +34,21 @@ public class Gamer {
     public int getCardsNumberSum() {
         int sum = getSumExceptAce();
         List<Card> aces = getAces();
-
-        sum = getSumNotToBurst(sum, aces);
-        return sum;
+        return getSumNotToBurst(sum, aces);
     }
 
-	private int getSumExceptAce() {
-		return cards.stream()
-				.filter(card -> !card.isAce())
-				.mapToInt(Card::getNumber)
-				.sum();
-	}
+    private int getSumExceptAce() {
+        return cards.stream()
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::getNumber)
+                .sum();
+    }
 
-	private List<Card> getAces() {
-		return cards.stream()
-				.filter(Card::isAce)
-				.collect(Collectors.toList());
-	}
+    private List<Card> getAces() {
+        return cards.stream()
+                .filter(Card::isAce)
+                .collect(Collectors.toList());
+    }
 
     private int getSumNotToBurst(int sum, List<Card> aces) {
         for (Card ace : aces) {
@@ -59,7 +59,7 @@ public class Gamer {
 
     private int selectAceValue(int sum, Card ace) {
         validateAceCard(ace);
-        if (sum + ace.getNumber() > 21) {
+        if (ace.getNumber() + sum > POSSIBLE_MAX_VALUE) {
             return CardNumber.LOWER_ACE_VALUE;
         }
         return ace.getNumber();

@@ -11,6 +11,7 @@ import java.util.List;
 
 public class BlackJackGame {
 
+    public static final int POSSIBLE_MAX_VALUE = 21;
     private static final int INIT_DISTRIBUTION_COUNT = 2;
     private static final int ADDITIONAL_DISTRIBUTE_STANDARD = 16;
 
