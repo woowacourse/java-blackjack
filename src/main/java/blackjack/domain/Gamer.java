@@ -11,6 +11,8 @@ public abstract class Gamer {
 
     public Gamer(String name, Cards cards) {
         validate(name);
+        draw();
+        draw();
         this.name = name;
         this.cards = cards;
     }

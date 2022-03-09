@@ -11,8 +11,6 @@ public class Dealer extends Gamer {
     }
 
     public static Dealer init() {
-        dealer.draw();
-        dealer.draw();
         return dealer;
     }
 
