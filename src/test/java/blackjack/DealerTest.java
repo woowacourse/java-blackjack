@@ -49,4 +49,11 @@ public class DealerTest {
         Dealer dealer = new Dealer(new Cards(new Card("J다이아몬드"), new Card("4하트")));
         assertThat(dealer.judge(new Cards(new Card("8클로버"), new Card("6하트")))).isEqualTo(Result.DRAW);
     }
+
+    @Test
+    @DisplayName("둘 다 버스트인 경우 테스트")
+    void bothBust() {
+        Dealer dealer = new Dealer(new Cards(new Card("J다이아몬드"), new Card("K하트"), new Card("7클로버")));
+        assertThat(dealer.judge(new Cards(new Card("8클로버"), new Card("6하트"), new Card("K하트")))).isEqualTo(Result.WIN);
+    }
 }
