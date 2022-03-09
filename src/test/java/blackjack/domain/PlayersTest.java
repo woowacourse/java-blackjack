@@ -1,9 +1,15 @@
 package blackjack.domain;
 
+import static blackjack.domain.CardNumber.JACK;
+import static blackjack.domain.CardNumber.KING;
+import static blackjack.domain.CardNumber.QUEEN;
+import static blackjack.domain.CardPattern.SPADE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,4 +28,13 @@ class PlayersTest {
                 .hasMessage("이름 간에 중복이 있으면 안됩니다.");
     }
 
+    @Test
+    @DisplayName("현재 턴의 플레이어가 버스트될 경우 다음 플레이어로 턴을 넘긴다.")
+    void drawCurrentPlayerIsBust() {
+        final Player player
+                = new Player("user", true, Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
+        final Players players = new Players(Collections.singletonList(player));
+        players.drawCurrentPlayer(Card.of(SPADE, JACK));
+        assertTrue(players.isAllTurnEnd());
+    }
 }

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public class Players {
 
     private final List<Player> values;
+    private int currentTurnIndex;
 
     public Players(final List<Player> values) {
         validateDuplicationPlayers(values);
@@ -27,5 +28,21 @@ public class Players {
         return values.stream()
                 .map(PlayerInfo::playerToInfo)
                 .collect(Collectors.toList());
+    }
+
+    public void drawCurrentPlayer(final Card card) {
+        final Player currentPlayer = values.get(currentTurnIndex);
+        currentPlayer.draw(card);
+        checkCurrentPlayerCanDraw(currentPlayer);
+    }
+
+    private void checkCurrentPlayerCanDraw(final Player currentPlayer) {
+        if (!currentPlayer.canDraw()) {
+            currentTurnIndex++;
+        }
+    }
+
+    public boolean isAllTurnEnd() {
+        return values.size() <= currentTurnIndex;
     }
 }

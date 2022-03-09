@@ -4,6 +4,7 @@ import static blackjack.domain.GameOutcome.DRAW;
 import static blackjack.domain.GameOutcome.LOSE;
 import static blackjack.domain.GameOutcome.WIN;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ public class Cards {
 
     public Cards(final List<Card> cards) {
         Objects.requireNonNull(cards, "[Error] 카드에는 null이 들어올 수 없습니다.");
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public int calculateScore() {
