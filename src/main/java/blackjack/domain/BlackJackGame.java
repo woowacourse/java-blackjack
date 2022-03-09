@@ -29,6 +29,10 @@ public class BlackJackGame {
         return players.isAllTurnEnd();
     }
 
+    public boolean isDealerTurnEnd() {
+        return dealer.isEnd();
+    }
+
     public PlayerInfo drawCurrentPlayer(final String command) {
         final DrawCommand drawCommand = DrawCommand.from(command);
         if (drawCommand.isNo()) {
@@ -37,6 +41,10 @@ public class BlackJackGame {
             return currentPlayer;
         }
         return players.drawCurrentPlayer(cardDeck.provideCard());
+    }
+
+    public void drawDealer() {
+        dealer.draw(cardDeck.provideCard());
     }
 
     public PlayerInfo getInitDealerInfo() {

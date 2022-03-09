@@ -19,5 +19,10 @@ public class Application {
             final PlayerInfo currentPlayerInfo = blackJackGame.drawCurrentPlayer(command);
             OutputView.printPlayerCardInfo(currentPlayerInfo);
         }
+
+        while (!blackJackGame.isDealerTurnEnd()) {
+            blackJackGame.drawDealer();
+            OutputView.printDealerDraw();
+        }
     }
 }
