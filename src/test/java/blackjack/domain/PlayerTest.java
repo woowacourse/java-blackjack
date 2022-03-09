@@ -37,4 +37,25 @@ public class PlayerTest {
 
         assertThat(player.getTotalScore()).isEqualTo(20);
     }
+
+    @DisplayName("플레이어의 총 점수가 21점 이하인 경우 hit가 가능하다.")
+    @Test
+    void 플레이어_게임_지속_가능() {
+        String name = "mat";
+        List<Card> cards = List.of(Card.of(Denomination.ACE, Suit.CLOVER), Card.of(Denomination.KING, Suit.DIAMOND));
+        Player player = new Player(name, cards);
+
+        assertThat(player.isPlaying()).isTrue();
+    }
+
+    @DisplayName("플레이어의 총 점수가 21점을 초과하는 경우 hit가 불가능하다.")
+    @Test
+    void 플레이어_게임_지속_불가능() {
+        String name = "mat";
+        List<Card> cards = List.of(Card.of(Denomination.JACK, Suit.CLOVER), Card.of(Denomination.KING, Suit.DIAMOND),
+                Card.of(Denomination.KING, Suit.HEART));
+        Player player = new Player(name, cards);
+
+        assertThat(player.isPlaying()).isFalse();
+    }
 }

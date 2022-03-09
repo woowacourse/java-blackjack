@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Player {
 
+    private static final int PLAYING_STANDARD = 21;
+
     private final String name;
     private final Cards cards;
 
@@ -14,5 +16,9 @@ public class Player {
 
     public int getTotalScore() {
         return cards.calculateTotalScore();
+    }
+
+    public boolean isPlaying() {
+        return cards.calculateTotalScore() <= PLAYING_STANDARD;
     }
 }
