@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public enum DrawCommand {
     YES("y"),
@@ -14,6 +15,7 @@ public enum DrawCommand {
     }
 
     public static DrawCommand from(final String input) {
+        Objects.requireNonNull(input, "커맨드에는 null이 들어올 수 없습니다.");
         return Arrays.stream(values())
                 .filter(command -> command.value.equals(input))
                 .findAny()
