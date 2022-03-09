@@ -9,4 +9,13 @@ public class Card {
         this.shape = shape;
         this.number = number;
     }
+
+    public Shape getShape() {
+        return shape;
+    }
+
+    public Number getNumber() {
+        return number;
+    }
+
 }
