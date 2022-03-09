@@ -12,6 +12,10 @@ public class Player extends Gamer{
     }
 
     public int compareCardsSumTo(int sum) {
+        if (isBust()) {
+            return -1;
+        }
+
         return Integer.compare(this.getCardGroupSum(), sum);
     }
 }

@@ -21,4 +21,8 @@ public class Gamer {
     public int getCardGroupSum() {
         return cardGroup.getSum();
     }
+
+    public boolean isBust() {
+        return cardGroup.isBust();
+    }
 }

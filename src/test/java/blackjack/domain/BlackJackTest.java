@@ -61,11 +61,42 @@ class BlackJackTest {
                 .containsExactly(entry("페퍼", Match.WIN), entry("애쉬", Match.LOSE));
     }
 
+    @Test
+    @DisplayName("페퍼는 bust로 패배, 애쉬도 패배해야 한다.")
+    void getBustPlayerResult() {
+        GameResult gameResult = initializeBustGameResult();
+        PlayerResult playerResult = gameResult.getPlayerResult();
+        Map<String, Match> playerResults = playerResult.get();
+        assertThat(playerResults)
+                .containsExactly(entry("페퍼", Match.LOSE), entry("애쉬", Match.LOSE));
+    }
+
     private GameResult initializeGameResult() {
         Player pepper = new Player("페퍼");
         pepper.addCard(new Card(CardShape.HEART, CardNumber.THREE));
         pepper.addCard(new Card(CardShape.SPADE, CardNumber.EIGHT));
         pepper.addCard(new Card(CardShape.CLUB, CardNumber.Q));
+
+        Player ash = new Player("애쉬");
+        ash.addCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
+        ash.addCard(new Card(CardShape.SPADE, CardNumber.K));
+
+        PlayerGroup playerGroup = new PlayerGroup(Arrays.asList(pepper, ash));
+        BlackJack blackJack = new BlackJack(playerGroup);
+
+        Dealer dealer = blackJack.getDealer();
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
+        dealer.addCard(new Card(CardShape.CLUB, CardNumber.NINE));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+
+        return blackJack.getGameResult();
+    }
+
+    private GameResult initializeBustGameResult() {
+        Player pepper = new Player("페퍼");
+        pepper.addCard(new Card(CardShape.CLUB, CardNumber.K));
+        pepper.addCard(new Card(CardShape.SPADE, CardNumber.J));
+        pepper.addCard(new Card(CardShape.DIAMOND, CardNumber.J));
 
         Player ash = new Player("애쉬");
         ash.addCard(new Card(CardShape.CLUB, CardNumber.SEVEN));
