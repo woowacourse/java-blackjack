@@ -4,6 +4,9 @@
 - [ ] Player에게 카드를 준다.
 - [ ] 승패를 계산한다.
 
+## GamerResult
+- [ ] Gamer, Win/Draw/Lose
+ 
 ## Player <Interface>
 - [x] 카드를 받는다
 - [x] 카드를 오픈한다.
