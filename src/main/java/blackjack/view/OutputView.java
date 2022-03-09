@@ -3,9 +3,12 @@ package blackjack.view;
 import blackjack.domain.Card;
 import blackjack.domain.CardNumber;
 import blackjack.domain.CardPattern;
+import blackjack.domain.GameOutcome;
+import blackjack.dto.OutComeResult;
 import blackjack.dto.PlayerInfo;
 import blackjack.dto.PlayerResultInfo;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -54,5 +57,26 @@ public class OutputView {
     private static void printResultPlayerInfo(final PlayerResultInfo playerResultInfo) {
         System.out.printf("%s 카드: %s - 결과: %d\n", playerResultInfo.getName(),
                 joinPlayerCardInfos(playerResultInfo.getCards()), playerResultInfo.getScore());
+    }
+
+    public static void printAllOutcomeResult(final OutComeResult outComeResult) {
+        System.out.println("## 최종 승패");
+        System.out.printf("딜러: %s\n", printDealerResult(outComeResult.getDealerResult()));
+        printPlayerResults(outComeResult.getPlayerResults());
+    }
+
+    private static String printDealerResult(final Map<GameOutcome, Integer> dealerResult) {
+        return dealerResult.keySet().stream()
+                .filter(key -> dealerResult.get(key) > 0)
+                .map(key -> dealerResult.get(key) + key.getKoreanSymbol())
+                .collect(Collectors.joining(" "));
+    }
+
+    private static void printPlayerResults(final Map<String, GameOutcome> playerResult) {
+        playerResult.forEach(OutputView::printPlayerResult);
+    }
+
+    private static void printPlayerResult(final String playerName, final GameOutcome gameOutcome) {
+        System.out.printf("%s: %s\n", playerName, gameOutcome.getKoreanSymbol());
     }
 }

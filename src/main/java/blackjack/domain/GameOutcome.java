@@ -39,4 +39,8 @@ public enum GameOutcome {
         return Arrays.stream(values())
                 .collect(Collectors.toMap(value -> value, value -> 0));
     }
+
+    public String getKoreanSymbol() {
+        return koreanSymbol;
+    }
 }

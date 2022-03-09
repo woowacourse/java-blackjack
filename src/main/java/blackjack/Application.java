@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.domain.BlackJackGame;
+import blackjack.dto.OutComeResult;
 import blackjack.dto.PlayerInfo;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -26,6 +27,7 @@ public class Application {
         }
 
         OutputView.printResultPlayerInfos(blackJackGame.getPlayerResultInfos());
-
+        OutComeResult outComeResult = blackJackGame.calculateAllResults();
+        OutputView.printAllOutcomeResult(outComeResult);
     }
 }
