@@ -15,6 +15,7 @@ public class BlackJack {
         List<Player> players = Arrays.stream(names)
                 .map(n -> new Player(n, deck.initialDraw()))
                 .collect(Collectors.toList());
+
         Dealer dealer = new Dealer(deck.initialDraw());
 
         OutputView.printInitialCards(generateAllCurrentCardsDTO(players, dealer));
@@ -35,18 +36,27 @@ public class BlackJack {
 
         OutputView.printTotalScore(generateAllResultDTO(players, dealer));
 
+        List<PlayerResultDTO> playersResult = getPlayerResultDTOS(players, dealer);
+        DealerResultDTO dealerResult = getDealerResultDTO(dealer, playersResult);
+
+        OutputView.printResult(dealerResult, playersResult);
+
+    }
+
+    private DealerResultDTO getDealerResultDTO(Dealer dealer, List<PlayerResultDTO> playersResult) {
+        int loseCount = (int) playersResult.stream()
+                .filter(PlayerResultDTO::isWin)
+                .count();
+        int winCount = playersResult.size() - loseCount;
+        return new DealerResultDTO(dealer.getName(), winCount, loseCount);
+    }
+
+    private List<PlayerResultDTO> getPlayerResultDTOS(List<Player> players, Dealer dealer) {
         List<PlayerResultDTO> playersResult = new ArrayList<>();
         for (Player player : players) {
             playersResult.add(new PlayerResultDTO(player.getName(), player.isWin(dealer.getScore())));
         }
-
-        int loseCount = (int) playersResult.stream().filter(PlayerResultDTO::isWin).count();
-        int winCount = playersResult.size() - loseCount;
-
-        DealerResultDTO dealerResult = new DealerResultDTO(dealer.getName(), winCount, loseCount);
-
-        OutputView.printResult(dealerResult, playersResult);
-
+        return playersResult;
     }
 
     private List<CurrentCardsDTO> generateAllCurrentCardsDTO(List<Player> players, Dealer dealer) {
