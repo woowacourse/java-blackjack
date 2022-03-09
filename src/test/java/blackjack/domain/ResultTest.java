@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -91,6 +92,30 @@ public class ResultTest {
                 Arguments.of(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, SIX), new Card(HEART, TWO))))),
                 Arguments.of(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, FIVE), new Card(HEART, TWO)))))
         );
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트가 아니고 딜러가 버스트면 플레이어가 이긴다")
+    void dealerBust() {
+        // given
+        Dealer dealer = createDealer(SIX);
+        dealer.play(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, SIX)))));
+
+        Card heartTen = new Card(HEART, TEN);
+        Card spadeNine = new Card(SPADE, TEN);
+        List<Card> playerCards = List.of(heartTen, spadeNine);
+        Player player = new Player("Dealer", playerCards);
+        List<Player> players = List.of(player);
+
+        // when
+        Result result = new Result(dealer, players);
+        Map<Judgement, Integer> dealerResult = result.getDealerResult();
+        Map<String, Judgement> playersResult = result.getPlayersResult();
+        Map<Judgement, Integer> judgementMap = createJudgementMap(0, 0, 1);
+
+        // then
+        assertAll(() -> assertThat(dealerResult).isEqualTo(judgementMap),
+                () -> assertThat(playersResult.get(player.getName())).isEqualTo(WIN));
     }
 
     private static Dealer createDealer(Denomination denomination2) {
