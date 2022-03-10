@@ -40,8 +40,6 @@ public abstract class Participant {
         state = state.stay();
     }
 
-    public abstract boolean canDraw();
-
     public int calculateScore() {
         checkTurnOver();
         return state.cards().calculateScore();
@@ -52,4 +50,6 @@ public abstract class Participant {
             throw new IllegalStateException("턴이 종료되지 않아 카드의 합을 반환할 수 없습니다.");
         }
     }
+
+    public abstract boolean canDraw();
 }
