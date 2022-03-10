@@ -24,7 +24,8 @@ public class BlackJackApplication {
         }
         progressDealerAdditionalCard(deck, blackJackGame.getDealer());
         OutputView.printFinalResult(blackJackGame.getDealer(), blackJackGame.getGamers());
-        OutputView.printFinalResultBoard(blackJackGame.calculateResultBoard());
+        OutputView.printFinalResultBoard(blackJackGame.calculateDealerResultBoard(),
+                blackJackGame.calculateResultBoard());
     }
 
     private static BlackJackGame startGame(final Deck deck) {
