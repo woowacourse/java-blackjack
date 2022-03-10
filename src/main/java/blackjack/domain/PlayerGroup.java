@@ -46,9 +46,9 @@ public class PlayerGroup {
                 .count() != players.size();
     }
 
-    public void addTwoCards(Card firstCard, Card secondCard) {
+    public void addTwoCards(CardPack cardPack) {
         for (Player player : players) {
-            player.addTwoCards(firstCard, secondCard);
+            player.addTwoCards(cardPack.pickOne(), cardPack.pickOne());
         }
     }
 

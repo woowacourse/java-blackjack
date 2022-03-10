@@ -16,7 +16,7 @@ public class BlackJack {
     }
 
     public void divideCards() {
-        playerGroup.addTwoCards(cardPack.pickOne(), cardPack.pickOne());
+        playerGroup.addTwoCards(cardPack);
         dealer.addTwoCards(cardPack.pickOne(), cardPack.pickOne());
     }
 
