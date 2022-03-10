@@ -22,4 +22,12 @@ public class TableStatusDto {
 	public static TableStatusDto from(final Role role) {
 		return new TableStatusDto(role.getName(), role.getHand());
 	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public List<String> getCards() {
+		return cards;
+	}
 }

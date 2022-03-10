@@ -89,15 +89,12 @@ public class BlackJackService {
 	}
 
 	public FinalResultDto calculateFinalResult() {
-		List<Role> roles = new ArrayList<>();
-		roles.add(dealer);
 		for (Role player : players) {
 			Outcome outcome = judge(player);
 			player.recordCompeteResult(outcome);
 			dealer.recordCompeteResult(outcome.getOppositeOutcome());
-			roles.add(player);
 		}
-		return FinalResultDto.from(roles);
+		return FinalResultDto.from(dealer, players);
 	}
 
 	private Outcome judge(Role player) {
