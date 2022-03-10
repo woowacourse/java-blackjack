@@ -2,10 +2,8 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.BlackJackGame;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
-import blackjack.domain.Gamer;
 import blackjack.domain.Player;
 import blackjack.domain.Result;
 import java.util.EnumMap;
@@ -24,6 +22,7 @@ public class OutputView {
     private static final String PRINT_DEALER_NOT_RECEIVE_CARD = "\n딜러는 17이상이라 한장의 카드를 더 받지 못했습니다.\n";
     private static final String PRINT_FINAL_CARD_RESULT = "%s카드: %s - 결과: %d\n";
     private static final String PRINT_BLANK = " ";
+    private static final int COUNT_UNIT = 1;
 
     public static void printOpenCards(final Player dealer, final List<Player> gamers) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -86,27 +85,27 @@ public class OutputView {
                 player.calculateResult());
     }
 
-    public static void printFinalResultBoard(final Map<Player, Result> gamerResultBoard ) {
+    public static void printFinalResultBoard(final Map<Player, Result> gamerResultBoard) {
         System.out.println("\n## 최종 승패");
-        System.out.print(dealerToString(gamerResultBoard));
+        System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
+                joinDealerString(gamerResultBoard));
         gamerResultBoard.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
                 key.showName(),
                 value.getResult()));
     }
 
-    private static String dealerToString(final Map<Player, Result> gamerResultBoard) {
-        return String.format(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
-                calculateDealerResultBoard(gamerResultBoard).entrySet().stream()
-                        .map(board -> dealerResultToString(board.getKey(),
-                                board.getValue()))
-                        .collect(joining(PRINT_BLANK)));
+    private static String joinDealerString(final Map<Player, Result> gamerResultBoard) {
+        return calculateDealerResultBoard(gamerResultBoard).entrySet().stream()
+                .map(board -> dealerResultToString(board.getKey(),
+                        board.getValue()))
+                .collect(joining(PRINT_BLANK));
     }
 
     private static Map<Result, Integer> calculateDealerResultBoard(final Map<Player, Result> gamerResultBoard) {
         Map<Result, Integer> enumMap = new EnumMap<>(Result.class);
         for (Entry<Player, Result> gamerResultEntry : gamerResultBoard.entrySet()) {
             Result dealerResult = convertToDealerResult(gamerResultEntry.getValue());
-            enumMap.put(dealerResult, enumMap.getOrDefault(dealerResult, 0) + 1);
+            enumMap.put(dealerResult, enumMap.getOrDefault(dealerResult, 0) + COUNT_UNIT);
         }
         return enumMap;
     }

@@ -8,9 +8,7 @@ import blackjack.domain.Gamer;
 import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class BlackJackApplication {
