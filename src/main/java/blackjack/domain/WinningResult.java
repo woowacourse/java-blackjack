@@ -4,12 +4,14 @@ import java.util.Arrays;
 
 public enum WinningResult {
 
-    WIN(true),
-    LOSS(false);
+    WIN("승", true),
+    LOSS("패", false);
 
+    private final String name;
     private final boolean result;
 
-    WinningResult(boolean result) {
+    WinningResult(final String name, final boolean result) {
+        this.name = name;
         this.result = result;
     }
 
@@ -18,5 +20,9 @@ public enum WinningResult {
                 .filter(it -> it.result == result)
                 .findAny()
                 .get();
+    }
+
+    public String getName() {
+        return name;
     }
 }

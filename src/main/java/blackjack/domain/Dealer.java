@@ -3,6 +3,7 @@ package blackjack.domain;
 public class Dealer extends Participant {
 
     private Dealer() {
+        this.name = "딜러";
     }
 
     public static Dealer startWithTwoCards(final Deck deck) {

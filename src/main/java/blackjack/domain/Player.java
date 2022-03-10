@@ -2,8 +2,6 @@ package blackjack.domain;
 
 public class Player extends Participant {
 
-    private final String name;
-
     public Player(final String name) {
         validatePlayerName(name);
         this.name = name;
@@ -15,7 +13,4 @@ public class Player extends Participant {
         }
     }
 
-    public String getName() {
-        return this.name;
-    }
 }
