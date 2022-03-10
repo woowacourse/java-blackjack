@@ -7,6 +7,8 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
+import blackjack.dto.DealerDto;
+import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
@@ -24,12 +26,16 @@ public class Application {
                 .map(name -> new Player(name, deck.getInitCards()))
                 .collect(toList());
 
-        OutputView.printStartInfo(dealer, players);
+        List<PlayerDto> playersDto = players.stream()
+                .map(PlayerDto::from)
+                .collect(toList());
+
+        OutputView.printStartInfo(DealerDto.from(dealer), playersDto);
 
         players.forEach(player -> playing(deck, player));
         drawDealer(deck, dealer);
 
-        OutputView.printResultInfo(dealer, players);
+        OutputView.printResultInfo(DealerDto.from(dealer), playersDto);
 
         OutputView.printDealerGameResult(createDealerResult(players, dealer));
         OutputView.printPlayerGameResult(createPlayerResult(players, dealer));
@@ -46,7 +52,7 @@ public class Application {
     private static void drawCard(Deck deck, Player player, PlayCommand playCommand) {
         if (playCommand == PlayCommand.YES) {
             player.combine(deck.draw());
-            OutputView.printPlayerCardInfo(player);
+            OutputView.printPlayerCardInfo(PlayerDto.from(player));
         }
     }
 

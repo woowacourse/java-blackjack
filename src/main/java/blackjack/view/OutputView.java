@@ -2,10 +2,10 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
-import blackjack.domain.Player;
+import blackjack.dto.CardDto;
+import blackjack.dto.DealerDto;
+import blackjack.dto.PlayerDto;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -16,57 +16,58 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printStartInfo(Dealer dealer, List<Player> players) {
-        String names = players.stream()
-                .map(Player::getName)
-                .collect(joining(", "));
-        System.out.println("\n딜러와 " + names + "에게 2장씩 나누었습니다.");
-
-        System.out.println("딜러: " + cardInfo(dealer.getCards().get(0)));
-        for (Player player : players) {
-            printPlayerCardInfo(player);
-        }
+    public static void printStartInfo(DealerDto dealerDto, List<PlayerDto> players) {
+        System.out.println("\n딜러와 " + generateNames(players) + "에게 2장씩 나누었습니다.");
+        System.out.println("딜러: " + cardInfo(dealerDto.getCards().get(0)));
+        players.forEach(OutputView::printPlayerCardInfo);
         System.out.println();
     }
 
-    public static void printPlayerCardInfo(Player player) {
-        String cardsInfo = player.getCards().stream()
-                .map(card -> cardInfo(card))
+    private static String generateNames(List<PlayerDto> players) {
+        return players.stream()
+                .map(PlayerDto::getName)
                 .collect(joining(", "));
-
-        System.out.println(player.getName() + ": " + cardsInfo);
     }
 
-    private static String cardInfo(Card card) {
-        return card.getDenomination().getName() + card.getSuit().getName();
+    public static void printPlayerCardInfo(PlayerDto playerDto) {
+        String cardsInfo = playerDto.getCards()
+                .stream()
+                .map(OutputView::cardInfo)
+                .collect(joining(", "));
+
+        System.out.println(playerDto.getName() + ": " + cardsInfo);
+    }
+
+    private static String cardInfo(CardDto cardDto) {
+        return cardDto.getDenomination() + cardDto.getSuit();
     }
 
     public static void printDealerDrawableInfo() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printResultInfo(Dealer dealer, List<Player> players) {
+    public static void printResultInfo(DealerDto dealerDto, List<PlayerDto> players) {
         System.out.println();
-        createDealerResultInfo(dealer);
-        for (Player player : players) {
-            createPlayerResultInfo(player);
+        createDealerResultInfo(dealerDto);
+        for (PlayerDto playerDto : players) {
+            createPlayerResultInfo(playerDto);
         }
     }
 
-    private static void createPlayerResultInfo(Player player) {
-        String cardsInfo = player.getCards().stream()
+    private static void createPlayerResultInfo(PlayerDto playerDto) {
+        String cardsInfo = playerDto.getCards().stream()
                 .map(card -> cardInfo(card))
                 .collect(joining(", "));
 
-        System.out.println(player.getName() + ": " + cardsInfo + " - 결과: " + player.getTotalScore());
+        System.out.println(playerDto.getName() + ": " + cardsInfo + " - 결과: " + playerDto.getTotalScore());
     }
 
-    private static void createDealerResultInfo(Dealer dealer) {
-        String cardsInfo = dealer.getCards().stream()
+    private static void createDealerResultInfo(DealerDto dealerDto) {
+        String cardsInfo = dealerDto.getCards().stream()
                 .map(card -> cardInfo(card))
                 .collect(joining(", "));
 
-        System.out.println("딜러: " + cardsInfo + " - 결과: " + dealer.getTotalScore());
+        System.out.println("딜러: " + cardsInfo + " - 결과: " + dealerDto.getTotalScore());
     }
 
     public static void printDealerGameResult(Map<GameResult, Long> result) {
