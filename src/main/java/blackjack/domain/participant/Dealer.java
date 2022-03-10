@@ -7,9 +7,12 @@ import java.util.List;
 
 public class Dealer {
 
-    private final Name name = new Name("딜러");
+    private static final int DEALER_CARD_PIVOT = 17;
+    public static final String DEALER_NAME = "딜러";
+
+    private final Name name = new Name(DEALER_NAME);
     private final Hand cardHand = new Hand();
-    private Deck deck;
+    private final Deck deck;
 
     public Dealer() {
         this.deck = Deck.createFixedCards();
@@ -23,7 +26,7 @@ public class Dealer {
         return deck.draw();
     }
 
-    public void drawBaseCardHand() {
+    public void drawCardHandFirstTurn() {
         selfDraw();
         selfDraw();
     }
@@ -33,7 +36,7 @@ public class Dealer {
     }
 
     public boolean shouldReceive() {
-        return cardHand.getScore() < 17;
+        return cardHand.getScore() < DEALER_CARD_PIVOT;
     }
 
     public Card getOpenCard() {

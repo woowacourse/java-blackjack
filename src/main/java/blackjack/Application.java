@@ -29,11 +29,19 @@ public class Application {
         OutputView.printBlackjackGameResult(result);
     }
 
-    private static void takeMoreCardDealerTurn(Dealer dealer) {
-        while (dealer.shouldReceive()) {
-            OutputView.printDealerHandDrawMessage();
-            dealer.selfDraw();
+    private static List<Player> getPlayers() {
+        List<Player> players = new ArrayList<>();
+        String participantsNames = InputView.inputParticipantsNames();
+        for (String participantName : participantsNames.split(",")) {
+            players.add(new Player(participantName));
         }
+        return players;
+    }
+
+    private static void initiallySetCard(Dealer dealer, List<Player> players) {
+        dealer.drawCardHandFirstTurn();
+        dealer.drawCardToPlayers(players);
+        OutputView.showParticipantsHand(dealer, players);
     }
 
     private static void takeMoreCardPlayerTurn(Dealer dealer, List<Player> players) {
@@ -54,18 +62,10 @@ public class Application {
         }
     }
 
-    private static List<Player> getPlayers() {
-        List<Player> players = new ArrayList<>();
-        String participantsNames = InputView.inputParticipantsNames();
-        for (String participantName : participantsNames.split(",")) {
-            players.add(new Player(participantName));
+    private static void takeMoreCardDealerTurn(Dealer dealer) {
+        while (dealer.shouldReceive()) {
+            OutputView.printDealerHandDrawMessage();
+            dealer.selfDraw();
         }
-        return players;
-    }
-
-    private static void initiallySetCard(Dealer dealer, List<Player> players) {
-        dealer.drawBaseCardHand();
-        dealer.drawCardToPlayers(players);
-        OutputView.showParticipantsHand(dealer, players);
     }
 }

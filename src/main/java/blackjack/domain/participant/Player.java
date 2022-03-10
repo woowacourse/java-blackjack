@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class Player {
 
+
     private final Name name;
     private final Hand cardHand;
 
@@ -28,17 +29,9 @@ public class Player {
         cardHand.add(card);
     }
 
-    public Result compareMatchResult(int dealerCardScore) {
-        if (cardHand.getScore() < dealerCardScore || cardHand.isBust()) {
-            return Result.LOSE;
-        }
-        if (dealerCardScore == cardHand.getScore()) {
-            return Result.DRAW;
-        }
-        if (dealerCardScore < cardHand.getScore()) {
-            return Result.WIN;
-        }
-        throw new IllegalArgumentException("입력값이 잘못되었을거");
+    public Result compareMatchResult(Dealer dealer) {
+        return cardHand.compareMatchResult(dealer.getCardHand());
+
     }
 
     public String getName() {

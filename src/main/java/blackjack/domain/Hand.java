@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 public class Hand {
 
+    private static final String INVALID_INPUT = "[ERROR] 입력값이 잘못되었습니다!";
     private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int BLACKJACK_SYMBOL_SCORE = 21;
     private static final int ACE_UPPER_SCORE = 11;
@@ -73,5 +74,15 @@ public class Hand {
 
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_CARD_SIZE && getScore() == BLACKJACK_SYMBOL_SCORE;
+    }
+
+    public Result compareMatchResult(Hand opponentCardHand) {
+        if (getScore() < opponentCardHand.getScore() || opponentCardHand.isBust()) {
+            return Result.LOSE;
+        }
+        if (getScore() > opponentCardHand.getScore()) {
+            return Result.WIN;
+        }
+        return Result.DRAW;
     }
 }

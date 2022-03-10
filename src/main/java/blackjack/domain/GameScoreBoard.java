@@ -19,7 +19,7 @@ public class GameScoreBoard {
         }
 
         for (Player player : players) {
-            Result playerResult = player.compareMatchResult(dealer.getCardHand().getScore());
+            Result playerResult = player.compareMatchResult(dealer);
             Result dealerResult = playerResult.reverse();
             dealerResultMap.put(dealerResult, dealerResultMap.get(dealerResult) + 1);
             playerResultMap.put(player.getName(), playerResult.getName());
