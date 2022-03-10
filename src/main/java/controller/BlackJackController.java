@@ -22,14 +22,18 @@ public class BlackJackController {
         OutputView.printInit(initGameDto);
     }
 
-    public void hit() {
+    public void hitPlayers() {
         List<String> names = service.getPlayerNames();
         for (String name : names) {
-            boolean flag = true;
-            while (service.canReceiveCard(name) && flag) {
-                flag = InputView.inputHitResponse(name);
-                OutputView.printParticipatorHit(flag, service.tryToHit(flag, name));
-            }
+            hit(name);
         }
+    }
+
+    private void hit(String name) {
+        boolean decidedToHit;
+        do {
+            decidedToHit = service.canReceiveCard(name) && InputView.inputHitResponse(name);
+            OutputView.printParticipatorHit(decidedToHit, service.tryToHit(name));
+        } while (decidedToHit);
     }
 }

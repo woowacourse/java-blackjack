@@ -49,9 +49,9 @@ public class OutputView {
     }
 
     public static void printParticipatorHit(boolean flag, ParticipatorDto participatorDto) {
-        if (!flag && participatorDto.getCards().size() > 2) {
-            return;
-        }
+//        if (!flag && participatorDto.getCards().size() > 2) {
+//            return;
+//        }
         printParticipatorNameAndCard(participatorDto);
     }
 }
