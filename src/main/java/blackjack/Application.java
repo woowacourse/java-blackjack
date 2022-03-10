@@ -3,6 +3,7 @@ package blackjack;
 import static blackjack.view.InputView.requestPlayerNamesInput;
 import static blackjack.view.OutputView.printAllCardsAndScore;
 import static blackjack.view.OutputView.printDealerExtraCardInfo;
+import static blackjack.view.OutputView.printGameResult;
 import static blackjack.view.OutputView.printInitialParticipantsCards;
 
 import blackjack.controller.BlackjackController;
@@ -27,5 +28,7 @@ public class Application {
         }
 
         printAllCardsAndScore(blackjackGame);
+
+        printGameResult(blackjackController.finishGame(blackjackGame));
     }
 }

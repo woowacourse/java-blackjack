@@ -2,10 +2,13 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.ResultStatistics;
+import blackjack.domain.game.ResultType;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -63,6 +66,34 @@ public class OutputView {
         }
 
         print(builder.toString());
+    }
+
+    public static void printGameResult(List<ResultStatistics> results) {
+        print(NEW_LINE + "## 최종 승패");
+
+        for (ResultStatistics result : results) {
+            String name = result.getParticipantName();
+            List<ResultType> existingTypes = Arrays.stream(ResultType.values())
+                    .filter(type -> result.getCountOf(type).toInt() > 0)
+                    .collect(Collectors.toList());
+
+            if (existingTypes.size() == 1) {
+                int count = result.getCountOf(existingTypes.get(0)).toInt();
+
+                if (count == 1) {
+                    System.out.println(name + ": " + existingTypes.get(0).getDisplayName());
+                    continue;
+                }
+                System.out.println(name + ": " + count + existingTypes.get(0).getDisplayName());
+                continue;
+            }
+
+            String resultString = existingTypes.stream()
+                    .map(type -> result.getCountOf(type).toInt() + type.getDisplayName())
+                    .collect(Collectors.joining(" "));
+
+            System.out.println(name + ": " + resultString);
+        }
     }
 
     private static String getParticipantsCardCountInfo(BlackjackGame blackjackGame) {
