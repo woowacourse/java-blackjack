@@ -18,6 +18,7 @@ public class BlackJackController {
 		decidePlayersReceivingAdditionalCard(blackJack, blackJackDto);
 		decideDealerReceivingAdditionalCard(blackJack, blackJackDto);
 		finishGame(blackJack, blackJackDto);
+		InputView.terminate();
 	}
 
 	private void startGame(BlackJack blackJack, BlackJackDto blackJackDto) {
