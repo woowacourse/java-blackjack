@@ -24,6 +24,16 @@ public enum Result {
 			.orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하는 결과가 없습니다."));
 	}
 
+	public static Result convertToDealerResult(final Result result) {
+		if (result == Result.WIN) {
+			return Result.LOSE;
+		}
+		if (result == Result.LOSE) {
+			return Result.WIN;
+		}
+		return Result.DRAW;
+	}
+
 	public String getResult() {
 		return result;
 	}

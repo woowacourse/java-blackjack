@@ -24,8 +24,7 @@ public class BlackJackApplication {
 			progressGamerAdditionalCard(deck, gamer);
 		}
 		progressDealerAdditionalCard(deck, blackJackGame.getDealer());
-		OutputView.printFinalResult(blackJackGame);
-		OutputView.printFinalResultBoard(blackJackGame);
+		printFinalMessage(blackJackGame);
 	}
 
 	private static List<Gamer> createGamers() {
@@ -55,7 +54,7 @@ public class BlackJackApplication {
 	private static BlackJackGame startBlackJackGame(List<Gamer> gamers, Deck deck) {
 		BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), gamers);
 		blackJackGame.setStartCards(deck);
-		OutputView.printOpenCards(blackJackGame);
+		OutputView.printOpenCards(blackJackGame.getGamers(), blackJackGame.getDealer());
 		return blackJackGame;
 	}
 
@@ -85,5 +84,10 @@ public class BlackJackApplication {
 		if (receivable) {
 			dealer.receiveCard(deck.draw());
 		}
+	}
+
+	private static void printFinalMessage(BlackJackGame blackJackGame) {
+		OutputView.printFinalResult(blackJackGame.getDealer(), blackJackGame.getGamers());
+		OutputView.printFinalResultBoard(blackJackGame.calculateResultBoard());
 	}
 }

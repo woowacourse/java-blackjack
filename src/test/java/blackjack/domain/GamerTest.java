@@ -44,7 +44,7 @@ public class GamerTest {
 		List<Card> cards = gamer.openCards();
 		assertAll(
 			() -> assertThat(cards).contains(new Card(Suit.CLOVER, Denomination.JACK)
-				, new Card(Suit.DIAMOND, Denomination.ACE)),
+				, new Card(Suit.DIAMOND, Denomination.QUEEN)),
 			() -> assertThat(cards.size()).isEqualTo(2)
 		);
 	}
@@ -53,11 +53,11 @@ public class GamerTest {
 	@DisplayName("Gamer가 보유하는 카드의 점수를 계산한다.")
 	void calculateGamerPoint() {
 		Gamer gamer = initGamer();
-		assertThat(gamer.calculateResult()).isEqualTo(21);
+		assertThat(gamer.calculateResult()).isEqualTo(20);
 	}
 
 	@Test
-	@DisplayName("21이하 일 때 카드를 받을 수 있다.")
+	@DisplayName("21미만 일 때 카드를 받을 수 있다.")
 	void checkReceivableConditionTrue() {
 		Gamer gamer = initGamer();
 		assertTrue(gamer.isReceivable());
@@ -67,8 +67,7 @@ public class GamerTest {
 	@DisplayName("21이상 일 때 카드를 받을 수 없다.")
 	void checkReceivableConditionFalse() {
 		Gamer gamer = initGamer();
-		gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
-		gamer.receiveCard(new Card(Suit.HEART, Denomination.JACK));
+		gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.ACE));
 
 		assertFalse(gamer.isReceivable());
 	}
@@ -77,7 +76,7 @@ public class GamerTest {
 		Gamer gamer = new Gamer("judy");
 
 		gamer.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
-		gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.ACE));
+		gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.QUEEN));
 		return gamer;
 	}
 }

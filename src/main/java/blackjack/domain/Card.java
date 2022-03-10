@@ -33,11 +33,11 @@ public class Card {
 		return Objects.hash(suit, denomination);
 	}
 
-	public Suit getSuit() {
-		return suit;
-	}
-
 	public Denomination getDenomination() {
 		return denomination;
+	}
+
+	public String getName(){
+		return denomination.getName() + suit.getName();
 	}
 }
