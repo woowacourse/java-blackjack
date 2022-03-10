@@ -22,27 +22,28 @@ public class Cards {
     }
 
     public int calculateResult() {
-        if (hasAce()) {
-            return judgeAdvantageResult(calculateSum());
+        int aceAmount = countAceAmount();
+        if (aceAmount != 0) {
+            return judgeAdvantageResult(aceAmount);
         }
         return calculateSum();
     }
 
-    private boolean hasAce() {
-        return cards.stream()
-            .anyMatch(card -> card.getDenomination().equals(ACE_LETTER));
+    private int judgeAdvantageResult(int aceAmount) {
+        int result = calculateSum();
+
+        for (int aceCount = 1;
+            aceCount <= aceAmount && result + ACE_ADDITIONAL_VALUE <= BLACKJACK_MAX_VALUE_CRITERIA;
+            aceCount++) {
+            result += ACE_ADDITIONAL_VALUE;
+        }
+        return result;
     }
 
-    private int judgeAdvantageResult(int sumAsOne) {
-        int sumAsEleven = sumAsOne + ACE_ADDITIONAL_VALUE;
-
-        int gapByEleven = Math.abs(BLACKJACK_MAX_VALUE_CRITERIA - sumAsEleven);
-        int gapByOne = Math.abs(BLACKJACK_MAX_VALUE_CRITERIA - sumAsOne);
-        
-        if (gapByEleven < gapByOne) {
-            return sumAsEleven;
-        }
-        return sumAsOne;
+    private int countAceAmount() {
+        return (int) cards.stream()
+            .filter(card -> card.getDenomination().equals(ACE_LETTER))
+            .count();
     }
 
     public void addCard(Card card) {

@@ -16,4 +16,23 @@ class CardsTest {
 
         assertThat(cards.calculateSum()).isEqualTo(27);
     }
+
+    @Test
+    @DisplayName("List에 Ace가 들어있을 때, 가장 유리한 값으로 계산한다. ACE만 있는 경우")
+    void calculateResultTest() {
+        Cards cards = new Cards(List.of(new Card(Symbol.SPADE, Denomination.ACE),
+            new Card(Symbol.CLOVER, Denomination.ACE), new Card(Symbol.DIAMOND, Denomination.ACE)));
+
+        assertThat(cards.calculateResult()).isEqualTo(13);
+    }
+
+    @Test
+    @DisplayName("List에 Ace가 들어있을 때, 가장 유리한 값으로 계산한다. ACE 이외의 다른 점수가 포함된 경우")
+    void calculateResultTest2() {
+        Cards cards = new Cards(List.of(new Card(Symbol.SPADE, Denomination.FIVE),
+            new Card(Symbol.CLOVER, Denomination.ACE), new Card(Symbol.DIAMOND, Denomination.ACE),
+            new Card(Symbol.HEART, Denomination.ACE)));
+
+        assertThat(cards.calculateResult()).isEqualTo(18);
+    }
 }
