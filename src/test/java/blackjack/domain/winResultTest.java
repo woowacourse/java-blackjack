@@ -30,7 +30,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class ResultTest {
+public class winResultTest {
 
     @ParameterizedTest
     @MethodSource("provideResultForNotBust")
@@ -44,9 +44,9 @@ public class ResultTest {
         List<Player> players = List.of(player);
 
         // when
-        Result result = new Result(dealer, players);
-        Map<Judgement, Integer> dealerResult = result.getDealerResult();
-        Map<String, Judgement> playersResult = result.getPlayersResult();
+        winResult winResult = new winResult(dealer, players);
+        Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
+        Map<String, Judgement> playersResult = winResult.getPlayersResult();
 
         // then
         assertAll(() -> assertThat(dealerResult).isEqualTo(judgementMap),
@@ -77,9 +77,9 @@ public class ResultTest {
         List<Player> players = List.of(player);
 
         // when
-        Result result = new Result(dealer, players);
-        Map<Judgement, Integer> dealerResult = result.getDealerResult();
-        Map<String, Judgement> playersResult = result.getPlayersResult();
+        winResult winResult = new winResult(dealer, players);
+        Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
+        Map<String, Judgement> playersResult = winResult.getPlayersResult();
         Map<Judgement, Integer> judgementMap = createJudgementMap(1, 0, 0);
 
         // then
@@ -108,9 +108,9 @@ public class ResultTest {
         List<Player> players = List.of(player);
 
         // when
-        Result result = new Result(dealer, players);
-        Map<Judgement, Integer> dealerResult = result.getDealerResult();
-        Map<String, Judgement> playersResult = result.getPlayersResult();
+        winResult winResult = new winResult(dealer, players);
+        Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
+        Map<String, Judgement> playersResult = winResult.getPlayersResult();
         Map<Judgement, Integer> judgementMap = createJudgementMap(0, 0, 1);
 
         // then

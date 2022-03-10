@@ -6,6 +6,7 @@ import blackjack.domain.Player;
 import blackjack.domain.Rule;
 import blackjack.domain.card.BlackJackCardsGenerator;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.winResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -85,5 +86,6 @@ public class BlackJackApplication {
         OutputView.printParticipantCards(dealer, Rule.INSTANCE.calculateSum(dealer.getCards()));
         players.forEach(
                 player -> OutputView.printParticipantCards(player, Rule.INSTANCE.calculateSum(player.getCards())));
+        OutputView.printWinResult(new winResult(dealer, players));
     }
 }

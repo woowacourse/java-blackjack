@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Result {
+public class winResult {
 
     private final Map<Judgement, Integer> dealerResult;
     private final Map<String, Judgement> playersResult;
 
-    public Result(Dealer dealer, List<Player> players) {
+    public winResult(Dealer dealer, List<Player> players) {
         dealerResult = new EnumMap<>(Judgement.class);
         playersResult = new HashMap<>();
 
@@ -37,7 +37,7 @@ public class Result {
             playersResult.put(player.getName(), Judgement.LOSE);
             return;
         }
-        
+
         if (Rule.INSTANCE.isBust(dealer.getCards())) {
             dealerResult.merge(Judgement.LOSE, 1, Integer::sum);
             playersResult.put(player.getName(), Judgement.WIN);
