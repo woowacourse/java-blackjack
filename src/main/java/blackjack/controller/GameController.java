@@ -71,6 +71,6 @@ public class GameController {
         statistic.calculate(table);
 
         OutputView.printDealerResult(statistic.getDealerResult());
-        OutputView.printPlayerResult(table.getPlayers());
+        OutputView.printPlayerResult(statistic.getPlayersResult());
     }
 }

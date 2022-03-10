@@ -36,8 +36,8 @@ class StatisticTest {
 
         Statistic statistic = Statistic.of();
         statistic.calculate(table);
-        assertThat(player1.getResult().equals(Result.WIN) &&
-                player2.getResult().equals(Result.LOSE))
+        assertThat(statistic.getPlayersResult().get(player1).equals(Result.WIN) &&
+                statistic.getPlayersResult().get(player2).equals(Result.LOSE))
                 .isTrue();
 
         assertThat(statistic.getDealerResult())
@@ -60,8 +60,8 @@ class StatisticTest {
 
         Statistic statistic = Statistic.of();
         statistic.calculate(table);
-        assertThat(player1.getResult().equals(Result.LOSE) &&
-                player2.getResult().equals(Result.LOSE))
+        assertThat(statistic.getPlayersResult().get(player1).equals(Result.LOSE) &&
+                statistic.getPlayersResult().get(player2).equals(Result.LOSE))
                 .isTrue();
 
         assertThat(statistic.getDealerResult())
@@ -86,10 +86,10 @@ class StatisticTest {
 
         Statistic statistic = Statistic.of();
         statistic.calculate(table);
-        assertThat(player1.getResult()).isEqualTo(Result.LOSE);
-        assertThat(player2.getResult()).isEqualTo(Result.LOSE);
-        assertThat(player3.getResult()).isEqualTo(Result.DRAW);
-        assertThat(player4.getResult()).isEqualTo(Result.WIN);
+        assertThat(statistic.getPlayersResult().get(player1)).isEqualTo(Result.LOSE);
+        assertThat(statistic.getPlayersResult().get(player2)).isEqualTo(Result.LOSE);
+        assertThat(statistic.getPlayersResult().get(player3)).isEqualTo(Result.DRAW);
+        assertThat(statistic.getPlayersResult().get(player4)).isEqualTo(Result.WIN);
 
         assertThat(statistic.getDealerResult())
                 .isEqualTo(Map.of(

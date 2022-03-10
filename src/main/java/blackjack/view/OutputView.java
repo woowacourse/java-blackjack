@@ -53,15 +53,15 @@ public class OutputView {
         System.out.println(DEALER_CARD_ADDED_MESSAGE);
     }
 
-    public static void printDealerResult(final Map<Result, Integer> dealerResult) {
+    public static void printDealerResult(final Map<Result, Integer> result) {
         System.out.println(RESULT_FRONT_MESSAGE);
-        System.out.printf(DEALER_RESULT_MESSAGE, dealerResult.get(Result.WIN), dealerResult.get(Result.DRAW),
-                dealerResult.get(Result.LOSE));
+        System.out.printf(DEALER_RESULT_MESSAGE, result.get(Result.WIN), result.get(Result.DRAW),
+                result.get(Result.LOSE));
     }
 
-    public static void printPlayerResult(final Players players) {
-        for (Player player : players.get()) {
-            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(), player.getResult());
+    public static void printPlayerResult(final Map<Player, Result> result) {
+        for (Player player : result.keySet()) {
+            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(), result.get(player));
         }
     }
 }
