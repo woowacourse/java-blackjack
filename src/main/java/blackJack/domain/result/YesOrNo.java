@@ -9,6 +9,7 @@ public enum YesOrNo {
     ;
 
     private static final String ERROR_MESSAGE_YES_OR_NO = "y 또는 n을 입력해주세요.";
+
     private final String choice;
 
     YesOrNo(String choice) {

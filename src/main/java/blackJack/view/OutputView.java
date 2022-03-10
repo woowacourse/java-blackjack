@@ -15,9 +15,11 @@ import blackJack.domain.result.BlackJackGameResult;
 public class OutputView {
 
     private static final String NEWLINE = System.getProperty("line.separator");
-    private static final String OUTPUT_MESSAGE_WIN_OR_LOSE_INFO = "%s: %s".concat(NEWLINE);
+
     private static final String JOINING_DELIMITER_COMMA = ", ";
     private static final String JOINING_DELIMITER_SPACE = " ";
+    private static final int DEFAULT_DEALER_CARD_SIZE = 2;
+
     private static final String OUTPUT_MESSAGE_INIT_CARD_RESULT =
         NEWLINE.concat("%s와 %s에게 2장의 카드를 나누었습니다.").concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD =
@@ -26,9 +28,8 @@ public class OutputView {
         NEWLINE.concat("%s는 %d장의 카드를 더 받았습니다.").concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT =
         "%s 카드: %s - 결과: %d".concat(NEWLINE);
-
-    private static final int DEFAULT_DEALER_CARD_SIZE = 2;
     private static final String OUTPUT_MESSAGE_WIN_OR_LOSE = "## 최종 승패";
+    private static final String OUTPUT_MESSAGE_WIN_OR_LOSE_INFO = "%s: %s".concat(NEWLINE);
 
     public static void printErrorMessage(RuntimeException error) {
         System.out.println(error.getMessage());
@@ -97,7 +98,6 @@ public class OutputView {
         String winOrLoseInfo = getWinOrLoseInfo(winOrLoseIntegerMap);
 
         System.out.printf(OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, dealer.getName(), winOrLoseInfo);
-
         blackGameResult.getGameResult().forEach((key, value) -> System.out.printf(
             OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, key.getName(), value.getResult()));
     }

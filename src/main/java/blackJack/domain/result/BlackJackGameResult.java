@@ -32,8 +32,8 @@ public class BlackJackGameResult {
         for (WinOrLose value : gameResult.values()) {
             dealerGameScore.computeIfPresent(value, (k, v) -> v + 1);
         }
-
         swapResult(dealerGameScore);
+
         return dealerGameScore;
     }
 
@@ -43,6 +43,7 @@ public class BlackJackGameResult {
         for (WinOrLose value : WinOrLose.values()) {
             dealerGameScore.put(value, 0);
         }
+
         return dealerGameScore;
     }
 
