@@ -1,4 +1,6 @@
-package blackjack;
+package blackjack.view;
+
+import blackjack.domain.entry.Player;
 
 import java.text.MessageFormat;
 import java.util.Arrays;

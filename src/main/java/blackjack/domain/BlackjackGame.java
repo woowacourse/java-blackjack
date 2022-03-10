@@ -1,4 +1,11 @@
-package blackjack;
+package blackjack.domain;
+
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.HoldCards;
+import blackjack.domain.entry.Dealer;
+import blackjack.domain.entry.Participant;
+import blackjack.domain.entry.Player;
+import blackjack.domain.entry.Players;
 
 import java.util.List;
 import java.util.Map;

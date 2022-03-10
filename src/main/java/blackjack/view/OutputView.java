@@ -1,4 +1,10 @@
-package blackjack;
+package blackjack.view;
+
+import blackjack.domain.*;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.HoldCards;
+import blackjack.domain.entry.Participant;
+import blackjack.domain.entry.Player;
 
 import java.text.MessageFormat;
 import java.util.Collections;
