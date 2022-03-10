@@ -1,6 +1,14 @@
 package service;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
+
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Function;
 import model.Card;
 import model.Cards;
 import service.dto.InitGameDto;
@@ -12,6 +20,7 @@ import model.Dealer;
 import model.Participator;
 import model.Player;
 import model.PlayerName;
+import service.dto.ParticipatorDto;
 import util.CardConvertor;
 
 public class BlackJackService {
@@ -22,26 +31,27 @@ public class BlackJackService {
         cardDeck = new CardDeck();
         initParticipators(namesDto);
         drawTwoCardsAll();
-        return new InitGameDto(getParticpatorsNames(), getParticipatorsCards());
+        return new InitGameDto(getParticipatorDtos());
     }
 
-    private List<String> getParticpatorsNames() {
+    private List<ParticipatorDto> getParticipatorDtos() {
         return participators.stream()
-                .map(Participator::getPlayerName)
-                .map(PlayerName::getValue)
-                .collect(Collectors.toList());
+                .map(this::convertParticipatorToDto)
+                .collect(toList());
     }
 
-    private List<List<String>> getParticipatorsCards() {
-        return participators.stream()
-                .map(participator -> getCardsToDto(participator.getCards()))
-                .collect(Collectors.toList());
+    private ParticipatorDto convertParticipatorToDto(Participator participator) {
+        return new ParticipatorDto(getParticipatorNameString(participator), getParticipatorCardsString(participator));
     }
 
-    private List<String> getCardsToDto(List<Card> cards) {
-        return cards.stream()
+    private String getParticipatorNameString(Participator participator) {
+        return participator.getPlayerName().getValue();
+    }
+
+    private List<String> getParticipatorCardsString(Participator participator) {
+        return participator.getCards().stream()
                 .map(CardConvertor::getCardString)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     private void initParticipators(NamesDto namesDto) {

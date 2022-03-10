@@ -1,21 +1,17 @@
 package service.dto;
 
 import java.util.List;
+import java.util.Map;
+import model.Participator;
 
 public class InitGameDto {
-    private final List<String> names;
-    private final List<List<String>> cards;
+    private final List<ParticipatorDto> participatorDtos;
 
-    public InitGameDto(List<String> names, List<List<String>> cards) {
-        this.names = names;
-        this.cards = cards;
+    public InitGameDto(List<ParticipatorDto> participatorDtos) {
+        this.participatorDtos = participatorDtos;
     }
 
-    public List<String> getNames() {
-        return names;
-    }
-
-    public List<List<String>> getCards() {
-        return cards;
+    public List<ParticipatorDto> getParticipatorDtos() {
+        return participatorDtos;
     }
 }
