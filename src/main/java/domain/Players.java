@@ -40,6 +40,10 @@ public class Players {
 		return players.stream().map(Participant::showHand).collect(Collectors.toList());
 	}
 
+	public List<String> showHandsAndBestScores() {
+		return players.stream().map(Participant::showHandAndBestScore).collect(Collectors.toList());
+	}
+
 	public void addCardByName(String name, Card card) {
 		players.stream().filter(player -> player.compareName(name)).forEach(player -> player.addCard(card));
 	}

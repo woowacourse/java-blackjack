@@ -28,7 +28,8 @@ public class Controller {
 		Players players = new Players(names, initCardForPlayers);
 
 		//손패 출력
-		OutputView.printHands(names, dealer.showOneHand(), players.showHands());
+		OutputView.printInitMessage(names);
+		OutputView.printParticipantStatus(dealer.showOneHand(), players.showHands());
 
 		//initResult
 		if (players.isExistBlackJack() || dealer.isBlackJack()) {
@@ -64,6 +65,21 @@ public class Controller {
 				OutputView.printDealerDrawMessage();
 				dealer.addCard(deck.draw());
 			}
+		}
+
+		//최종 카드 & 베스트스코어 출력
+		OutputView.printParticipantStatus(dealer.showHandAndBestScore(), players.showHandsAndBestScores());
+
+		//최종결과 출력
+		Result finalResult = new Result(players.finalCompare(dealer));
+		OutputView.printResultTitle();
+		OutputView.printDealerResult(
+			finalResult.getDealerWinCount(),
+			finalResult.getDealerDrawCount(),
+			finalResult.getDealerLoseCount()
+		);
+		for (String name : names) {
+			OutputView.printPlayerResult(name, finalResult.getVersus(name).getResult());
 		}
 	}
 

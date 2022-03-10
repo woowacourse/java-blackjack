@@ -34,6 +34,10 @@ public class Participant {
 		return String.format(SHOW_HAND_FORMAT, name, joinedCards);
 	}
 
+	public String showHandAndBestScore() {
+		return String.join(" - 결과 : ", showHand(), String.valueOf(getBestScore()));
+	}
+
 	public void addCard(Card card) {
 		hand.add(card);
 	}

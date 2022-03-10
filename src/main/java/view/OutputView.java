@@ -5,11 +5,14 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-	public static void printHands(List<String> names, String dealerHand, List<String> playerHands) {
+	public static void printInitMessage(List<String> names) {
 		String namesForPrint = names.stream().collect(Collectors.joining(", "));
 		System.out.printf("\n딜러와 %s에게 2장의 나누었습니다.\n", namesForPrint);
-		System.out.println(dealerHand);
-		playerHands.stream().forEach(System.out::println);
+	}
+
+	public static void printParticipantStatus(String dealerStatus, List<String> playerStatuses) {
+		System.out.println(dealerStatus);
+		playerStatuses.stream().forEach(System.out::println);
 	}
 
 	public static void printHand(String hand) {
@@ -37,6 +40,6 @@ public class OutputView {
 	}
 
 	public static void printDealerDrawMessage() {
-		System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+		System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
 	}
 }
