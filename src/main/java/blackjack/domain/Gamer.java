@@ -3,9 +3,10 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Gamer {
+public abstract class Gamer {
 
     private static final int MAX_SCORE = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final Name name;
     private final Cards cards;
@@ -19,8 +20,17 @@ public class Gamer {
         cards.add(card);
     }
 
-    public boolean isValidRange() {
-        return getScore() < MAX_SCORE;
+    public boolean isBust() {
+        return getScore() > MAX_SCORE;
+    }
+
+    public boolean isBLACKJACK() {
+        if (cards.get().size() != BLACKJACK_CARD_COUNT || !cards.containsCardNumber(CardNumber.ACE)) {
+            return false;
+        }
+        return cards.containsCardNumber(CardNumber.JACK)
+                || cards.containsCardNumber(CardNumber.QUEEN)
+                || cards.containsCardNumber(CardNumber.KING);
     }
 
     public Name getName() {
@@ -34,6 +44,10 @@ public class Gamer {
     public int getScore() {
         return cards.getTotalScore();
     }
+
+    public abstract boolean isValidRange();
+
+    public abstract int compare(Gamer o);
 
     @Override
     public boolean equals(Object o) {

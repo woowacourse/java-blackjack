@@ -39,6 +39,11 @@ public class Cards {
                 .count();
     }
 
+    public boolean containsCardNumber(CardNumber number) {
+        return cards.stream()
+                .anyMatch(card -> card.getCardNumber() == number);
+    }
+
     private int getAceAdditionalValue(int sum) {
         if (sum + ACE_ADDITIONAL_VALUE <= MAX_SCORE) {
             return ACE_ADDITIONAL_VALUE;

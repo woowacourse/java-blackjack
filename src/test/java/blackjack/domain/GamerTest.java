@@ -11,7 +11,7 @@ public class GamerTest {
     @Test
     @DisplayName("hit 메서드는 입력받은 카드를 카드뭉치에 저장한다.")
     void hit_test() {
-        Gamer gamer = new Gamer(new Name("aki"));
+        Gamer gamer = new Player(new Name("aki"));
         gamer.hit(new Card(CardNumber.EIGHT, Type.CLOVER));
         gamer.hit(new Card(CardNumber.FIVE, Type.SPADE));
         gamer.hit(new Card(CardNumber.TEN, Type.SPADE));
@@ -25,7 +25,7 @@ public class GamerTest {
     @Test
     @DisplayName("Gamer 클래스가 가진 카드의 점수를 계산하여 반환한다.")
     void get_score() {
-        Gamer gamer = new Gamer(new Name("aki"));
+        Gamer gamer = new Player(new Name("aki"));
         gamer.hit(new Card(CardNumber.EIGHT, Type.CLOVER));
         gamer.hit(new Card(CardNumber.THREE, Type.SPADE));
 
@@ -35,7 +35,7 @@ public class GamerTest {
     @Test
     @DisplayName("Gamer 클래스가 가진 카드의 점수가 21 이상이면 더이상 hit할 수 없다.")
     void validate_range() {
-        Gamer gamer = new Gamer(new Name("aki"));
+        Gamer gamer = new Player(new Name("aki"));
         gamer.hit(new Card(CardNumber.EIGHT, Type.CLOVER));
         gamer.hit(new Card(CardNumber.FIVE, Type.SPADE));
         gamer.hit(new Card(CardNumber.TEN, Type.SPADE));
@@ -46,7 +46,7 @@ public class GamerTest {
     @Test
     @DisplayName("Ace 가진 카드의 총합이 21을 넘지 않으면 Ace는 11로 계산한다.")
     void ace_calculate_11() {
-        Gamer gamer = new Gamer(new Name("aki"));
+        Gamer gamer = new Player(new Name("aki"));
         gamer.hit(new Card(CardNumber.TEN, Type.CLOVER));
         gamer.hit(new Card(CardNumber.ACE, Type.SPADE));
 
@@ -56,7 +56,7 @@ public class GamerTest {
     @Test
     @DisplayName("Ace 가진 카드의 총합이 21을 넘으면 Ace는 1로 계산한다.")
     void ace_calculate_1() {
-        Gamer gamer = new Gamer(new Name("aki"));
+        Gamer gamer = new Player(new Name("aki"));
         gamer.hit(new Card(CardNumber.TEN, Type.CLOVER));
         gamer.hit(new Card(CardNumber.THREE, Type.HEART));
         gamer.hit(new Card(CardNumber.ACE, Type.SPADE));

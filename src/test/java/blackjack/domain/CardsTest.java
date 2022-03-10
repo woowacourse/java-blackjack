@@ -51,4 +51,17 @@ public class CardsTest {
 
         assertThat(hasAceCards.getTotalScore()).isEqualTo(14);
     }
+
+    @Test
+    @DisplayName("특정 CardNumber 보유 여부를 반환한다.")
+    void contains_card_number() {
+        List<Card> newCards = new ArrayList<>();
+        newCards.add(new Card(CardNumber.TEN, Type.CLOVER));
+        newCards.add(new Card(CardNumber.THREE, Type.HEART));
+        newCards.add(new Card(CardNumber.ACE, Type.SPADE));
+        Cards cards = new Cards(newCards);
+
+        assertThat(cards.containsCardNumber(CardNumber.TEN)).isTrue();
+        assertThat(cards.containsCardNumber(CardNumber.KING)).isFalse();
+    }
 }

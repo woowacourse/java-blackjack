@@ -11,8 +11,8 @@ public class GamersTest {
     @Test
     @DisplayName("Gamers 클래스는 Gamer들을 입력받으면 정상적으로 생성된다.")
     void create_gamers() {
-        Gamer aki = new Gamer(new Name("aki"));
-        Gamer alien = new Gamer(new Name("alien"));
+        Gamer aki = new Player(new Name("aki"));
+        Gamer alien = new Player(new Name("alien"));
         List<Gamer> gamers = List.of(aki, alien);
 
         assertThatCode(() -> new Gamers(gamers)).doesNotThrowAnyException();
@@ -21,7 +21,7 @@ public class GamersTest {
     @Test
     @DisplayName("initCards 메서드를 통해 모든 플레이어들이 처음에 2장의 카드를 받는다.")
     void init_cards_gamers() {
-        Gamer aki = new Gamer(new Name("aki"));
+        Gamer aki = new Player(new Name("aki"));
         Gamers gamers = new Gamers(List.of(aki));
         gamers.initCards(new FixDeck());
         Cards akiCards = aki.getCards();
