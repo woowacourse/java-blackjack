@@ -6,7 +6,7 @@ import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player extends Gamer {
+public class Player extends AbstractGamer {
 
     private WinDrawLose winDrawLose;
 

@@ -11,9 +11,11 @@ public class Players {
     private static final String PLAYER_NAME_DUPLICATE_ERROR_MESSAGE = "참가자 이름은 중복될 수 없습니다.";
 
     private final List<Player> players;
+    private int nowIndex;
 
     private Players(List<Player> players) {
         this.players = players;
+        this.nowIndex = 0;
     }
 
     public static Players fromNames(List<String> names) {
@@ -29,10 +31,21 @@ public class Players {
 
     private static void validate(List<String> names) {
         Set<String> nameSet = new HashSet<>(names);
-
         if (names.size() != nameSet.size()) {
             throw new IllegalArgumentException(PLAYER_NAME_DUPLICATE_ERROR_MESSAGE);
         }
+    }
+
+    public void next() {
+        nowIndex++;
+    }
+
+    public boolean hasNext() {
+        return nowIndex < players.size();
+    }
+
+    public Player getNowPlayer() {
+        return players.get(nowIndex);
     }
 
     public List<Player> getPlayers() {

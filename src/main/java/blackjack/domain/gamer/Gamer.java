@@ -4,54 +4,24 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
 
-public abstract class Gamer {
-    private static final String NAME_INPUT_ERROR_MESSAGE = "참가자의 이름으로 공백이나 빈 문자열은 입력할 수 없습니다.";
+public interface Gamer {
+    boolean isBust();
 
-    private final String name;
-    private final Cards cards;
+    boolean isBlackjack();
 
-    public Gamer(String name, Cards cards) {
-        validate(name);
-        this.name = name;
-        this.cards = cards;
-        hit();
-        hit();
-    }
+    void hit(Card card);
 
-    private void validate(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException(NAME_INPUT_ERROR_MESSAGE);
+    List<Card> getViewCard();
 
-        }
-    }
+    void win();
 
-    public boolean isBust() {
-        return cards.calculateScore() > 21;
-    }
+    void draw();
 
-    public boolean isBlackjack() {
-        return cards.calculateScore() == 21;
-    }
+    void lose();
 
-    public void hit() {
-        cards.add(Card.draw());
-    }
+    String getWinDrawLoseString();
 
-    public abstract List<Card> getViewCard();
+    String getName();
 
-    public abstract void win();
-
-    public abstract void draw();
-
-    public abstract void lose();
-
-    public abstract String getWinDrawLoseString();
-
-    public Cards getCards() {
-        return cards;
-    }
-
-    public String getName() {
-        return name;
-    }
+    Cards getCards();
 }

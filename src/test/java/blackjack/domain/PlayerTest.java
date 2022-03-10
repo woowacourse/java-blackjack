@@ -3,6 +3,9 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +36,18 @@ public class PlayerTest {
     void playerWinDrawLoseTest() {
         Player player = new Player("pobi");
         player.win();
-
         assertThat(player.getWinDrawLoseString()).isEqualTo("승");
+    }
+
+    @Test
+    @DisplayName("버스트 체크")
+    void checkBustTest() {
+        Deck deck = new Deck();
+        Gamer player = new Player("testPlayer");
+        while (player.getCards().calculateScore() <= 21) {
+            player.hit(deck.draw());
+        }
+
+        assertThat(player.isBust()).isTrue();
     }
 }

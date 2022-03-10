@@ -29,7 +29,7 @@ public class HitOrStand {
         }
     }
 
-    public boolean isValue() {
-        return value;
+    public boolean isStand() {
+        return !value;
     }
 }

@@ -23,6 +23,7 @@ public class InputView {
     }
 
     public static String inputHitOrStand(String name) {
+        System.out.println();
         System.out.printf(HIT_OR_STAND_MESSAGE, name);
         return scanner.nextLine();
     }

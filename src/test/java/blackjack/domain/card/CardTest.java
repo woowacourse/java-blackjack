@@ -13,11 +13,12 @@ public class CardTest {
     @Test
     @DisplayName("더 이상 뽑을 수 있는 카드가 없는 경우 확인")
     void noCardTest() {
+        Deck deck = new Deck();
         for (int i = 0; i < 52; i++) {
-            Card.draw();
+            deck.draw();
         }
 
-        assertThatThrownBy(Card::draw)
+        assertThatThrownBy(deck::draw)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("더 이상 뽑을 수 있는 카드가 없습니다.");
     }
@@ -25,9 +26,10 @@ public class CardTest {
     @Test
     @DisplayName("중복된 카드가 뽑히는지 확인")
     void duplicateCardTest() {
+        Deck deck = new Deck();
         Set<Card> cards = new HashSet<>();
         for (int i = 0; i < 52; i++) {
-            cards.add(Card.draw());
+            cards.add(deck.draw());
         }
 
         assertThat(cards.size()).isEqualTo(52);

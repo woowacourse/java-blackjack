@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
 import java.util.List;
@@ -22,7 +22,7 @@ public enum WinDrawLose {
         return name;
     }
 
-    public static void judgeResult(Dealer dealer, Players players) {
+    public static void judge(Gamer dealer, Players players) {
         playerBust(dealer, players);
         List<Player> playerList = extractNonBustPlayers(players);
         if (dealer.isBust()) {
@@ -32,7 +32,7 @@ public enum WinDrawLose {
         calculateWinDrawLose(dealer, playerList);
     }
 
-    private static void calculateWinDrawLose(Dealer dealer, List<Player> playerList) {
+    private static void calculateWinDrawLose(Gamer dealer, List<Player> playerList) {
         playerList.forEach(player -> {
             checkDealerWin(dealer, player);
             checkDraw(dealer, player);
@@ -40,21 +40,21 @@ public enum WinDrawLose {
         });
     }
 
-    private static void checkPlayerWin(Dealer dealer, Player player) {
+    private static void checkPlayerWin(Gamer dealer, Player player) {
         if (dealer.getCards().calculateScore() < player.getCards().calculateScore()) {
             dealer.lose();
             player.win();
         }
     }
 
-    private static void checkDraw(Dealer dealer, Player player) {
+    private static void checkDraw(Gamer dealer, Player player) {
         if (dealer.getCards().calculateScore() == player.getCards().calculateScore()) {
             dealer.draw();
             player.draw();
         }
     }
 
-    private static void checkDealerWin(Dealer dealer, Player player) {
+    private static void checkDealerWin(Gamer dealer, Player player) {
         if (dealer.getCards().calculateScore() > player.getCards().calculateScore()) {
             dealer.win();
             player.lose();
@@ -67,7 +67,7 @@ public enum WinDrawLose {
                 .collect(Collectors.toList());
     }
 
-    private static void playerBust(Dealer dealer, Players players) {
+    private static void playerBust(Gamer dealer, Players players) {
         players.getPlayers().stream()
                 .filter(Player::isBust)
                 .forEach(player -> {

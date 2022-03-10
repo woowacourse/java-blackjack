@@ -13,13 +13,12 @@ public class HitOrStandTest {
     @ParameterizedTest
     @DisplayName("올바른 입력값이 들어온 경우 확인")
     @CsvSource(value = {
-            "y, true",
-            "n, false"
+            "y, false",
+            "n, true"
     })
     void inputTest(String input, boolean value) {
         HitOrStand hitOrStand = HitOrStand.valueOf(input);
-
-        assertThat(hitOrStand.isValue()).isEqualTo(value);
+        assertThat(hitOrStand.isStand()).isEqualTo(value);
     }
 
     @ParameterizedTest

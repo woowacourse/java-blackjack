@@ -12,9 +12,9 @@ class CardsTest {
     @Test
     @DisplayName("카드 목록에 카드 추가 확인")
     void addCardTest() {
+        Deck deck = new Deck();
         Cards cards = new Cards(new ArrayList<>());
-
-        Card card = Card.draw();
+        Card card = deck.draw();
         cards.add(card);
         assertThat(cards.getCards().get(0) == card)
                 .isTrue();
