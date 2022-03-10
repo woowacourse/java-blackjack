@@ -25,9 +25,9 @@ public class PlayerTest {
     @BeforeEach
     void before() {
         player = new Player("woowahan");
-        aceSpade = new Card(CardNumber.ACE, CardShape.SPADE);
-        threeSpade = new Card(CardNumber.THREE, CardShape.SPADE);
-        queenSpade = new Card(CardNumber.QUEEN, CardShape.SPADE);
+        aceSpade = Card.of(CardNumber.ACE, CardShape.SPADE);
+        threeSpade = Card.of(CardNumber.THREE, CardShape.SPADE);
+        queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
     }
 
     @DisplayName("null 또는 빈 값을 입력했을 때 예외 발생을 확인한다.")

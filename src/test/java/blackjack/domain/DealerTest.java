@@ -23,9 +23,9 @@ public class DealerTest {
     void before() {
         dealer = new Dealer();
         player = new Player("pobi");
-        twoSpade = new Card(CardNumber.TWO, CardShape.SPADE);
-        threeSpade = new Card(CardNumber.THREE, CardShape.SPADE);
-        queenSpade = new Card(CardNumber.QUEEN, CardShape.SPADE);
+        twoSpade = Card.of(CardNumber.TWO, CardShape.SPADE);
+        threeSpade = Card.of(CardNumber.THREE, CardShape.SPADE);
+        queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
     }
 
     @DisplayName("딜러의 카드 총 합이 16이하일 경우 True 를 반환하는지 확인한다.")

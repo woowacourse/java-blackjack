@@ -17,9 +17,9 @@ class WinnerTest {
 
     @BeforeEach
     void init() {
-        twoSpade = new Card(CardNumber.TWO, CardShape.SPADE);
-        threeSpade = new Card(CardNumber.THREE, CardShape.SPADE);
-        queenSpade = new Card(CardNumber.QUEEN, CardShape.SPADE);
+        twoSpade = Card.of(CardNumber.TWO, CardShape.SPADE);
+        threeSpade = Card.of(CardNumber.THREE, CardShape.SPADE);
+        queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
     }
 
     @DisplayName("플레이어의 카드합이 21을 넘길 경우 승자에 포함되지 않는 것을 확인한다.")

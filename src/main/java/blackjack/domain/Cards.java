@@ -24,7 +24,7 @@ public class Cards {
 
     private void selectCardShape(final CardNumber cardNumber) {
         for (CardShape cardShape : CardShape.values()) {
-            cards.add(new Card(cardNumber, cardShape));
+            cards.add(Card.of(cardNumber, cardShape));
         }
     }
 

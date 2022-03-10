@@ -17,9 +17,9 @@ public class CardsTest {
 
     @BeforeEach
     void before() {
-        aceSpade = new Card(CardNumber.ACE, CardShape.SPADE);
-        threeSpade = new Card(CardNumber.THREE, CardShape.SPADE);
-        queenSpade = new Card(CardNumber.QUEEN, CardShape.SPADE);
+        aceSpade = Card.of(CardNumber.ACE, CardShape.SPADE);
+        threeSpade = Card.of(CardNumber.THREE, CardShape.SPADE);
+        queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
     }
 
     @DisplayName("52개의 생성된 카드 개수가 올바른지 확인한다.")
