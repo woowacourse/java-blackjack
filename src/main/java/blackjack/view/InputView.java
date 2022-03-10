@@ -30,7 +30,7 @@ public class InputView {
     }
 
 
-    public static String requestAnswer(String name) {
+    public static String requestAnswer(final String name) {
         System.out.printf(REQUEST_PLAYER_ANSWER_MESSAGE, name);
         return scanner.nextLine();
     }

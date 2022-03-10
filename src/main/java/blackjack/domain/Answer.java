@@ -13,7 +13,7 @@ public enum Answer {
         this.answer = answer;
     }
 
-    public static Answer of(String input) {
+    public static Answer of(final String input) {
         return Arrays.stream(values())
                 .filter(value -> value.getAnswer().equals(input))
                 .findFirst()
