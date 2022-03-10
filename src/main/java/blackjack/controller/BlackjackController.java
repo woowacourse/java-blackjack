@@ -20,6 +20,8 @@ public class BlackjackController {
         openInitCard(dealer, players);
 
         distributeCardToPlayers(players, cardMachine);
+//         TODO: 딜러 카드 분배
+//        distributeCardToDealer(dealer, cardMachine);
     }
 
     private Players createPlayers() {
@@ -51,21 +53,21 @@ public class BlackjackController {
 
     private void distributeCardToPlayers(final Players players, final CardMachine cardMachine) {
         for (Player player : players.getPlayers()) {
-            while (player.isReceived()) {
-                OutputView.printTakeCardInstruction(player.getName());
-                if (isReceived(player)) {
-                    player.receiveCard(cardMachine.giveCard());
-                    OutputView.printCard(player.getName(), player.getCards());
-                    OutputView.printNewLine();
-                    continue;
-                }
-                break;
-            }
+            distributeCardToPlayer(player, cardMachine);
+        }
+    }
+
+    private void distributeCardToPlayer(final Player player, final CardMachine cardMachine) {
+        while (player.isReceived() && isReceived(player)) {
+            player.receiveCard(cardMachine.giveCard());
+            OutputView.printCard(player.getName(), player.getCards());
+            OutputView.printNewLine();
         }
     }
 
     private boolean isReceived(final Player player) {
         try {
+            OutputView.printTakeCardInstruction(player.getName());
             String input = InputView.inputTakeCardAnswer();
             return player.answer(input);
         } catch (IllegalArgumentException exception) {
