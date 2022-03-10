@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 public class Blackjack {
 
     private static final int CARD_COUNT_OF_FIRST_DISTRIBUTE = 2;
+    private static final int MAX_NUMBER_OF_PLAYER = 7;
+    private static final String TOO_MANY_PLAYERS = "최대 "+MAX_NUMBER_OF_PLAYER+"명까지 플레이 가능합니다.";
+    private static final String NAME_DUPLICATED = "중복되는 이름은 허용되지 않습니다.";
 
     private final List<Player> players;
     private final Dealer dealer;
@@ -18,6 +21,7 @@ public class Blackjack {
     private final Queue<Player> playersWhoCanHit;
 
     public Blackjack(String[] names) {
+        validateNames(names);
         players = Arrays.stream(names)
                 .map(Player::new)
                 .collect(Collectors.toList());
@@ -84,6 +88,24 @@ public class Blackjack {
         List<PlayerResultDTO> totalPlayerResult = calculateTotalPlayerResult();
         DealerResultDTO dealerResult = calculateDealerResult(totalPlayerResult);
         return new TotalResultDTO(totalPlayerResult, dealerResult);
+    }
+
+    private void validateNames(String[] names) {
+        validateLength(names);
+        validateDuplication(names);
+    }
+
+    private void validateLength(String[] names) {
+        if (names.length > MAX_NUMBER_OF_PLAYER) {
+            throw new IllegalArgumentException(TOO_MANY_PLAYERS);
+        }
+    }
+
+    private void validateDuplication(String[] names) {
+        Set<String> set = new HashSet<>(Arrays.asList(names));
+        if (set.size() != names.length) {
+            throw new IllegalArgumentException(NAME_DUPLICATED);
+        }
     }
 
     private List<PlayerResultDTO> calculateTotalPlayerResult() {
