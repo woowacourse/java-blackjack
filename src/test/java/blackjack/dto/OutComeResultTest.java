@@ -3,8 +3,8 @@ package blackjack.dto;
 import static blackjack.domain.GameOutcome.DRAW;
 import static blackjack.domain.GameOutcome.LOSE;
 import static blackjack.domain.GameOutcome.WIN;
+import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
 
 import blackjack.domain.GameOutcome;
 import java.util.Map;
@@ -18,6 +18,7 @@ class OutComeResultTest {
     void getDealerResult() {
         final Map<String, GameOutcome> playerResults = Map.of("a", WIN, "b", WIN);
         final OutComeResult outComeResult = OutComeResult.from(playerResults);
-        assertThat(outComeResult.getDealerResult()).contains(entry(LOSE, 2), entry(WIN, 0), entry(DRAW, 0));
+        assertThat(outComeResult.getDealerResult())
+                .containsExactly(entry(WIN, 0), entry(DRAW, 0), (entry(LOSE, 2)));
     }
 }
