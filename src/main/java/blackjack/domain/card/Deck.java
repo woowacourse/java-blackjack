@@ -1,8 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardGenerator;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -15,14 +12,14 @@ public class Deck {
         this.cards = new LinkedList<>(cardGenerator.generate());
     }
 
-    public Queue<Card> getCards() {
-        return cards;
-    }
-
     public Card drawCard() {
         if (cards.isEmpty()) {
             throw new RuntimeException(ERROR_EMPTY_DECK);
         }
         return cards.poll();
+    }
+
+    public Queue<Card> getCards() {
+        return cards;
     }
 }

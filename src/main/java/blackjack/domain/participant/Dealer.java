@@ -21,12 +21,12 @@ public class Dealer {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public boolean checkUnderSumStandard() {
         return ScoreCalculator.cardSum(cards) <= MIN_SUM_STANDARD;
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     public int getCardSum() {
