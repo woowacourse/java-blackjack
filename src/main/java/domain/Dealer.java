@@ -10,7 +10,7 @@ public class Dealer extends Participant {
 	public static final String SHOW_ONE_HAND_FORMAT = "%s: %s";
 
 	public Dealer(List<Card> hand) {
-		super(DEALER_NAME, hand);
+		super(new Name(DEALER_NAME), hand);
 	}
 
 	public boolean isEnoughCard() {
@@ -18,6 +18,6 @@ public class Dealer extends Participant {
 	}
 
 	public String showOneHand() {
-		return String.format(SHOW_ONE_HAND_FORMAT, name, hand.get(FIRST_CARD_INDEX));
+		return String.format(SHOW_ONE_HAND_FORMAT, name.getName(), hand.get(FIRST_CARD_INDEX));
 	}
 }

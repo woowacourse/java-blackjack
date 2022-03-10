@@ -4,13 +4,13 @@ import java.util.Map;
 
 public class Result {
 
-	private final Map<String, Versus> playerResults;
+	private final Map<Name, Versus> playerResults;
 
-	public Result(Map<String, Versus> playerResults) {
+	public Result(Map<Name, Versus> playerResults) {
 		this.playerResults = playerResults;
 	}
 
-	public Versus getVersus(String name) {
+	public Versus getVersus(Name name) {
 		return playerResults.get(name);
 	}
 

@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -9,6 +10,7 @@ import domain.Card;
 import domain.Dealer;
 import domain.Deck;
 import domain.InitCards;
+import domain.Name;
 import domain.Players;
 import domain.Result;
 import view.InputView;
@@ -18,7 +20,8 @@ public class Controller {
 
 	public void run() {
 		String[] split = InputView.inputNames().split(",");
-		List<String> names = Arrays.stream(split).map(String::trim).collect(Collectors.toList());
+		List<Name> names = Arrays.stream(split).map(String::trim).map(Name::new).collect(Collectors.toList());
+		checkDuplicate(names);
 
 		Deck deck = new Deck();
 		Dealer dealer = new Dealer(new InitCards(deck).getIntiCards());
@@ -28,7 +31,7 @@ public class Controller {
 		Players players = new Players(names, initCardForPlayers);
 
 		//손패 출력
-		OutputView.printInitMessage(names);
+		OutputView.printInitMessage(names.stream().map(Name::getName).collect(Collectors.toList()));
 		OutputView.printParticipantStatus(dealer.showOneHand(), players.showHands());
 
 		//initResult
@@ -38,15 +41,15 @@ public class Controller {
 			OutputView.printResultTitle();
 			OutputView.printDealerResult(blackjackResult.getDealerWinCount(), blackjackResult.getDealerDrawCount(),
 				blackjackResult.getDealerLoseCount());
-			for (String name : names) {
-				OutputView.printPlayerResult(name, blackjackResult.getVersus(name).getResult());
+			for (Name name : names) {
+				OutputView.printPlayerResult(name.getName(), blackjackResult.getVersus(name).getResult());
 			}
 			return;
 		}
 
 		// 참가자들 draw
-		for (String name : names) {
-			while (askDraw(name)) {
+		for (Name name : names) {
+			while (askDraw(name.getName())) {
 				players.addCardByName(name, deck.draw());
 				OutputView.printHand(players.showHandByName(name));
 				if (players.isBlackJackByName(name)) {
@@ -79,8 +82,14 @@ public class Controller {
 			finalResult.getDealerDrawCount(),
 			finalResult.getDealerLoseCount()
 		);
-		for (String name : names) {
-			OutputView.printPlayerResult(name, finalResult.getVersus(name).getResult());
+		for (Name name : names) {
+			OutputView.printPlayerResult(name.getName(), finalResult.getVersus(name).getResult());
+		}
+	}
+
+	private void checkDuplicate(List<Name> names) {
+		if (new HashSet<>(names).size() != names.size()) {
+			throw new IllegalArgumentException("[Error] 이름은 중복일 수 없습니다.");
 		}
 	}
 

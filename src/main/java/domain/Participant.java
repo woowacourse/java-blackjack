@@ -5,33 +5,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Participant {
-
-	protected static final String BLANK_NAME_ERROR_MESSAGE = "[Error] 이름은 공백이거나 빈칸일 수 없습니다.";
 	protected static final String SHOW_HAND_FORMAT = "%s카드: %s";
 	protected static final int BLACK_JACK_NUMBER = 21;
 	protected static final String JOINING_DELIMITER = ", ";
 	protected static final int ACE_COUNT_LOWER_BOUND = 0;
 	protected static final int ADDITIONAL_SCORE_ACE = 10;
 
-	protected final String name;
+	protected final Name name;
 	protected List<Card> hand;
 
-	public Participant(String name, List<Card> hand) {
-		validateName(name);
+	public Participant(Name name, List<Card> hand) {
 		this.name = name;
 		this.hand = new ArrayList<>(hand);
-	}
-
-	protected void validateName(String name) {
-		if (name == null || name.isBlank()) {
-			throw new IllegalArgumentException(BLANK_NAME_ERROR_MESSAGE);
-		}
 	}
 
 	public String showHand() {
 		String joinedCards = String.join(JOINING_DELIMITER,
 			hand.stream().map(Card::toString).collect(Collectors.toList()));
-		return String.format(SHOW_HAND_FORMAT, name, joinedCards);
+		return String.format(SHOW_HAND_FORMAT, name.getName(), joinedCards);
 	}
 
 	public String showHandAndBestScore() {

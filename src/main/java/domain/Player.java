@@ -3,10 +3,10 @@ package domain;
 import java.util.List;
 
 public class Player extends Participant {
-	public Player(String name, List<Card> hand) {
+	public Player(Name name, List<Card> hand) {
 		super(name, hand);
 	}
-	
+
 	public Versus initCompare(boolean isDealerBlackJack) {
 		boolean isParticipantBlackJack = isBlackJack();
 		if (isDealerBlackJack && isParticipantBlackJack) {
@@ -39,7 +39,7 @@ public class Player extends Participant {
 		return Versus.LOSE;
 	}
 
-	public boolean compareName(String name) {
+	public boolean compareName(Name name) {
 		return this.name.equals(name);
 	}
 }
