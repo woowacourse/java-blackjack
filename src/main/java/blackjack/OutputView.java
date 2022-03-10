@@ -27,6 +27,12 @@ public class OutputView {
         cardResult.forEach((player, count) -> System.out.println(MessageFormat.format("{0} - 결과: {1}", getPlayerCard(player), count)));
     }
 
+    public static void printGameResult(Map<Outcome, List<Player>> gameResult) {
+        System.out.println("## 최종 승패");
+        gameResult.forEach((outcome, players) ->
+                players.forEach(player -> System.out.println(player.getName() + ": " + outcome.getValue())));
+    }
+
     private static String getPlayerCard(Player player) {
         return MessageFormat.format("{0}카드: {1}", player.getName(), concatCardName(player.getHoldCards()));
     }

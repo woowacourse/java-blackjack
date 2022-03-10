@@ -21,5 +21,6 @@ public class Application {
                 .collect(Collectors.toMap(player -> player, Player::countCards));
 
         OutputView.printCardResult(cardResult);
+        OutputView.printGameResult(blackjackGame.getGameResult());
     }
 }

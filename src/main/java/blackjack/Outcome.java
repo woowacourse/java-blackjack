@@ -1,9 +1,17 @@
 package blackjack;
 
 public enum Outcome {
-    WIN, LOSE, DRAW;
+    WIN("승"),
+    LOSE("패"),
+    DRAW("무");
 
     private static final int BLACK_JACK_NUMBER = 21;
+
+    private String value;
+
+    Outcome(String value) {
+        this.value = value;
+    }
 
     public static Outcome match(int dealerTotal, int playerTotal) {
         if (dealerTotal > BLACK_JACK_NUMBER && playerTotal > BLACK_JACK_NUMBER) {
@@ -22,5 +30,9 @@ public enum Outcome {
             return LOSE;
         }
         return DRAW;
+    }
+
+    public String getValue() {
+        return this.value;
     }
 }
