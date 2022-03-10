@@ -18,8 +18,16 @@ public class RentCompany {
 
     public String generateReport() {
         return cars.stream()
-                .map(car -> car.getName() + " : " + car.getChargeQuantity() + "리터")
-                .collect(Collectors.joining("\n"));
+                .map(this::generateReportEach)
+                .collect(Collectors.joining("\n", "", "\n"));
+    }
+
+    private String generateReportEach(Car car) {
+        return car.getName() + " : " + chargeQuantity(car) + "리터";
+    }
+
+    private int chargeQuantity(Car car) {
+        return Double.valueOf(car.getChargeQuantity()).intValue();
     }
 
     public void addCar(Car car) {
