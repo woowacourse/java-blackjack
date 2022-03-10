@@ -7,12 +7,22 @@ import java.util.List;
 
 public abstract class Player {
 
+    private static final String FIRST_RECEIVED_CARD_SIZE_EXCEPTION_MESSAGE = "처음 제공받는 카드는 2장이어야 합니다.";
+    private static final int FIRST_RECEIVED_CARD_SIZE = 2;
+
     private final String name;
     protected final Cards cards;
 
     public Player(String name, List<Card> cards) {
+        checkFirstReceivedCardsSize(cards.size());
         this.name = name;
         this.cards = new Cards(cards);
+    }
+
+    private void checkFirstReceivedCardsSize(int size) {
+        if (size != FIRST_RECEIVED_CARD_SIZE) {
+            throw new IllegalArgumentException(FIRST_RECEIVED_CARD_SIZE_EXCEPTION_MESSAGE);
+        }
     }
 
     public abstract boolean isPossibleToPickCard();

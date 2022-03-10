@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
@@ -14,10 +15,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
-
-    private List<Card> initializeCardsForUser() {
-        return new ArrayList<>(Arrays.asList(new Diamond(CardNumber.JACK), new Heart(CardNumber.KING)));
-    }
 
     @Test
     @DisplayName("유저의 정상 생성을 확인한다.")
@@ -53,9 +50,13 @@ public class PlayerTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    private List<Card> initializeCardsForUser() {
+        return new ArrayList<>(Arrays.asList(new Diamond(CardNumber.JACK), new Heart(CardNumber.KING)));
+    }
+
     @Test
     @DisplayName("딜러의 카드 총합이 16이하이면, true를 반환한다.")
-    void isPossibleToPickCard() {
+    void isPossibleToPickCardForDealer() {
         List<Card> cards = Arrays.asList(new Diamond(CardNumber.JACK), new Heart(CardNumber.SIX));
         final Player dealer = new Dealer(cards);
         final boolean expected = true;
@@ -67,7 +68,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("딜러의 카드 총합이 16을 초과하면, false를 반환한다.")
-    void isImpossibleToPickCard() {
+    void isImpossibleToPickCardForDealer() {
         List<Card> cards = Arrays.asList(new Diamond(CardNumber.JACK), new Heart(CardNumber.KING));
         final Player dealer = new Dealer(cards);
         final boolean expected = false;
@@ -75,5 +76,29 @@ public class PlayerTest {
         final boolean actual = dealer.isPossibleToPickCard();
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("유저가 처음 받은 카드가 2장이 아니라면, 예외를 발생한다.")
+    void checkFirstReceivedCardsSizeForUser() {
+        assertThatThrownBy(() -> new User("pobi", Arrays.asList(
+                new Diamond(CardNumber.JACK),
+                new Heart(CardNumber.KING),
+                new Heart(CardNumber.KING))
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("처음 제공받는 카드는 2장이어야 합니다.");
+    }
+
+    @Test
+    @DisplayName("딜러가 처음 받은 카드가 2장이 아니라면, 예외를 발생한다.")
+    void checkFirstReceivedCardsSizeForDealer() {
+        assertThatThrownBy(() -> new Dealer(Arrays.asList(
+                new Diamond(CardNumber.JACK),
+                new Heart(CardNumber.KING),
+                new Heart(CardNumber.KING))
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("처음 제공받는 카드는 2장이어야 합니다.");
     }
 }
