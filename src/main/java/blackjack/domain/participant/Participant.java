@@ -52,6 +52,10 @@ public abstract class Participant {
         return Rule.INSTANCE.isBust(cards);
     }
 
+    public boolean isBlackJack() {
+        return Rule.INSTANCE.isBlackJack(cards);
+    }
+
     public int calculateSum() {
         return Rule.INSTANCE.calculateSum(cards);
     }

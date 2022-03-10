@@ -39,10 +39,30 @@ public class winResult {
             updateResult(player, Judgement.WIN);
             return;
         }
-        judgeWithoutBust(player, dealer.calculateSum(), player.calculateSum());
+        if (dealer.isBlackJack() || player.isBlackJack()) {
+            judgeWithBlackJack(dealer, player);
+            return;
+        }
+        judgeWithoutBust(dealer, player);
     }
 
-    private void judgeWithoutBust(Player player, int dealerScore, int playerScore) {
+    private void judgeWithBlackJack(Dealer dealer, Player player) {
+        if (dealer.isBlackJack() && player.isBlackJack()) {
+            updateResult(player, Judgement.DRAW);
+            return;
+        }
+        if (dealer.isBlackJack()) {
+            updateResult(player, Judgement.LOSE);
+            return;
+        }
+        if (player.isBlackJack()) {
+            updateResult(player, Judgement.WIN);
+        }
+    }
+
+    private void judgeWithoutBust(Dealer dealer, Player player) {
+        int dealerScore = dealer.calculateSum();
+        int playerScore = player.calculateSum();
         if (dealerScore == playerScore) {
             updateResult(player, Judgement.DRAW);
             return;

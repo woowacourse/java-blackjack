@@ -3,6 +3,7 @@ package blackjack.domain;
 import static blackjack.domain.Judgement.DRAW;
 import static blackjack.domain.Judgement.LOSE;
 import static blackjack.domain.Judgement.WIN;
+import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.EIGHT;
 import static blackjack.domain.card.Denomination.FIVE;
 import static blackjack.domain.card.Denomination.NINE;
@@ -51,8 +52,10 @@ public class winResultTest {
         Map<String, Judgement> playersResult = winResult.getPlayersResult();
 
         // then
-        assertAll(() -> assertThat(dealerResult).isEqualTo(judgementMap),
-                () -> assertThat(playersResult.get(player.getName())).isEqualTo(playerJudgement));
+        assertAll(
+                () -> assertThat(dealerResult).isEqualTo(judgementMap),
+                () -> assertThat(playersResult.get(player.getName())).isEqualTo(playerJudgement)
+        );
     }
 
     private static Stream<Arguments> provideResultForNotBust() {
@@ -85,8 +88,10 @@ public class winResultTest {
         Map<Judgement, Integer> judgementMap = createJudgementMap(1, 0, 0);
 
         // then
-        assertAll(() -> assertThat(dealerResult).isEqualTo(judgementMap),
-                () -> assertThat(playersResult.get(player.getName())).isEqualTo(LOSE));
+        assertAll(
+                () -> assertThat(dealerResult).isEqualTo(judgementMap),
+                () -> assertThat(playersResult.get(player.getName())).isEqualTo(LOSE)
+        );
     }
 
     private static Stream<Arguments> provideForPlayerBust() {
@@ -116,8 +121,61 @@ public class winResultTest {
         Map<Judgement, Integer> judgementMap = createJudgementMap(0, 0, 1);
 
         // then
-        assertAll(() -> assertThat(dealerResult).isEqualTo(judgementMap),
-                () -> assertThat(playersResult.get(player.getName())).isEqualTo(WIN));
+        assertAll(
+                () -> assertThat(dealerResult).isEqualTo(judgementMap),
+                () -> assertThat(playersResult.get(player.getName())).isEqualTo(WIN)
+        );
+    }
+
+    @Test
+    @DisplayName("똑같이 21점이어도 블랙잭이 이긴다.")
+    void blackJackDoesNotDefeat() {
+        // given
+        Dealer dealer = createDealer(ACE);
+
+        Card heartTen = new Card(HEART, TEN);
+        Card spadeNine = new Card(SPADE, TEN);
+        List<Card> playerCards = List.of(heartTen, spadeNine);
+        Player player = new Player(new Name("pobi"), playerCards);
+        player.hit(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, ACE)))));
+        List<Player> players = List.of(player);
+
+        // when
+        winResult winResult = new winResult(dealer, players);
+        Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
+        Map<String, Judgement> playersResult = winResult.getPlayersResult();
+        Map<Judgement, Integer> judgementMap = createJudgementMap(1, 0, 0);
+
+        // then
+        assertAll(
+                () -> assertThat(dealerResult).isEqualTo(judgementMap),
+                () -> assertThat(playersResult.get(player.getName())).isEqualTo(LOSE)
+        );
+    }
+
+    @Test
+    @DisplayName("블랙잭 끼리는 비긴다")
+    void blackJackDrawWithBlackJack() {
+        // given
+        Dealer dealer = createDealer(ACE);
+
+        Card heartTen = new Card(HEART, TEN);
+        Card spadeNine = new Card(SPADE, ACE);
+        List<Card> playerCards = List.of(heartTen, spadeNine);
+        Player player = new Player(new Name("pobi"), playerCards);
+        List<Player> players = List.of(player);
+
+        // when
+        winResult winResult = new winResult(dealer, players);
+        Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
+        Map<String, Judgement> playersResult = winResult.getPlayersResult();
+        Map<Judgement, Integer> judgementMap = createJudgementMap(0, 1, 0);
+
+        // then
+        assertAll(
+                () -> assertThat(dealerResult).isEqualTo(judgementMap),
+                () -> assertThat(playersResult.get(player.getName())).isEqualTo(DRAW)
+        );
     }
 
     private static Dealer createDealer(Denomination denomination2) {

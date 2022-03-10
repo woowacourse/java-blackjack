@@ -81,11 +81,11 @@ public class BlackJackApplication {
     }
 
     private static void showStopReason(Player player) {
-        if (Rule.INSTANCE.isBlackJack(player.getCards())) {
+        if (player.isBlackJack()) {
             OutputView.printBlackJackMessage();
             return;
         }
-        if (Rule.INSTANCE.isBust(player.getCards())) {
+        if (player.isBust()) {
             OutputView.printBustMessage();
         }
     }
