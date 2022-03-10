@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -11,6 +12,13 @@ abstract public class Player {
     private final String name;
     private final Cards cards;
 
+    public Player(final String name) {
+        checkNameBlank(name);
+        checkNameSpecialCharacters(name);
+        this.name = name;
+        this.cards = new Cards(new ArrayList<>());
+    }
+
     public Player(final String name, final List<Card> cards) {
         checkNameBlank(name);
         checkInitialCardsSize(cards);
@@ -19,7 +27,7 @@ abstract public class Player {
         this.cards = new Cards(cards);
     }
 
-    private void checkNameSpecialCharacters(final String name) {
+    private void checkNameSpecialCharacters(String name) {
         if (!NON_SPECIAL_CHARACTERS.matcher(name).matches()) {
             throw new IllegalArgumentException("[ERROR] 이름에는 특수문자가 들어갈 수 없습니다.");
         }
@@ -43,6 +51,14 @@ abstract public class Player {
 
     public int getTotalScore() {
         return cards.getTotalScore();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Cards getCards() {
+        return cards;
     }
 
     abstract public boolean canAddCard();

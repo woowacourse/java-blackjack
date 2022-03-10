@@ -1,9 +1,10 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class Cards {
+public class Cards implements Iterable<Card> {
 
     private static final int TARGET_SCORE = 21;
     private static final int DIFFERENCE_IN_ACE_SCORE = 10;
@@ -41,5 +42,10 @@ public class Cards {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    @Override
+    public Iterator<Card> iterator() {
+        return cards.iterator();
     }
 }

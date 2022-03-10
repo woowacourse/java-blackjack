@@ -1,9 +1,10 @@
 package blackjack.domain;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Participants {
+public class Participants implements Iterable<Participant> {
 
     private final List<Participant> participants;
 
@@ -23,5 +24,10 @@ public class Participants {
         if (count != names.size()) {
             throw new IllegalArgumentException("[ERROR] 참가자의 이름은 중복될 수 없습니다.");
         }
+    }
+
+    @Override
+    public Iterator<Participant> iterator() {
+        return participants.iterator();
     }
 }
