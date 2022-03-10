@@ -59,7 +59,7 @@ public class BlackJackGame {
     }
 
     private void printAllResults() {
-        OutputView.printPlayerScoreResults(blackJackBoard.getPlayerScoreResults());
+        OutputView.printPlayerScoreResults(blackJackBoard.allPlayerScoreResults());
         OutputView.printAllOutcomeResult(blackJackBoard.calculateAllResults());
     }
 }
