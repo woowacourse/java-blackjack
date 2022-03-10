@@ -11,5 +11,8 @@ public class Application {
             // todo: 더 받을지 입력 받기
             OutputView.printPlayerCards(player);
         }
+        if (blackjackGame.isDealerReceiveOneMoreCard()) {
+            OutputView.printReceivingMoreCardOfDealer();
+        }
     }
 }
