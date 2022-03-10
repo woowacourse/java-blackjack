@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Name;
-import blackjack.domain.Rule;
 import blackjack.domain.card.Card;
 import java.util.List;
 
@@ -15,6 +14,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isHittable() {
-        return Rule.INSTANCE.calculateSum(getCards()) < HIT_STANDARD;
+        return calculateSum() < HIT_STANDARD;
     }
 }

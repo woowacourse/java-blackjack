@@ -2,7 +2,6 @@ package blackjack;
 
 import blackjack.domain.HitRequest;
 import blackjack.domain.Name;
-import blackjack.domain.Rule;
 import blackjack.domain.card.BlackJackCardsGenerator;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
@@ -53,10 +52,7 @@ public class BlackJackApplication {
     private static void alertStart(Dealer dealer, List<Player> players) {
         OutputView.printStartMessage(dealer, players);
         OutputView.printDealerFirstCard(dealer);
-        players.forEach(player -> {
-            int score = Rule.INSTANCE.calculateSum(player.getCards());
-            OutputView.printParticipantCards(player, score);
-        });
+        players.forEach(player -> OutputView.printParticipantCards(player, player.calculateSum()));
     }
 
     private static void proceedPlayersTurn(List<Player> players, CardDeck deck) {
@@ -66,7 +62,7 @@ public class BlackJackApplication {
     private static void proceedPlayer(Player player, CardDeck deck) {
         while (player.isHittable() && inputHitRequest(player) == HitRequest.YES) {
             player.hit(deck);
-            OutputView.printParticipantCards(player, Rule.INSTANCE.calculateSum(player.getCards()));
+            OutputView.printParticipantCards(player, player.calculateSum());
         }
         showStopReason(player);
     }
@@ -99,9 +95,9 @@ public class BlackJackApplication {
 
     private static void showResult(Dealer dealer, List<Player> players) {
         OutputView.printCardResultMessage();
-        OutputView.printParticipantCards(dealer, Rule.INSTANCE.calculateSum(dealer.getCards()));
+        OutputView.printParticipantCards(dealer, dealer.calculateSum());
         players.forEach(
-                player -> OutputView.printParticipantCards(player, Rule.INSTANCE.calculateSum(player.getCards())));
+                player -> OutputView.printParticipantCards(player, player.calculateSum()));
         OutputView.printWinResult(new winResult(dealer, players));
     }
 }
