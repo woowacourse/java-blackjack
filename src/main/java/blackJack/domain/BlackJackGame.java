@@ -49,7 +49,7 @@ public class BlackJackGame {
         players.forEach(player -> distributeCard(player, INITIAL_CARD_COUNT));
     }
 
-    private void distributeCard(Participant participant, int count) {
+    public void distributeCard(Participant participant, int count) {
         for (int i = 0; i < count; i++) {
             participant.receiveCard(deck.getCard());
         }
@@ -71,5 +71,9 @@ public class BlackJackGame {
         }
 
         return gameResult;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
