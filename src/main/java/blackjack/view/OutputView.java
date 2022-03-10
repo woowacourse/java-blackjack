@@ -52,4 +52,8 @@ public class OutputView {
     public static void printBlackJackMessage() {
         System.out.println("블랙잭입니다!!");
     }
+
+    public static void printDealerHitMessage() {
+        System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+    }
 }

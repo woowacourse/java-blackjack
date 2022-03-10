@@ -21,6 +21,7 @@ public class BlackJackApplication {
             List<Player> players = createPlayers(playerNames, deck);
             alertStart(dealer, players);
             proceedPlayersTurn(players, deck);
+            proceedDealer(dealer, deck);
         } catch (NullPointerException | IllegalArgumentException e) {
             OutputView.printFatalErrorMessage(e.getMessage());
         }
@@ -64,6 +65,13 @@ public class BlackJackApplication {
         }
         if (Rule.INSTANCE.isBust(player.getCards())) {
             OutputView.printBustMessage();
+        }
+    }
+
+    private static void proceedDealer(Dealer dealer, CardDeck deck) {
+        while (dealer.isHittable()) {
+            dealer.hit(deck);
+            OutputView.printDealerHitMessage();
         }
     }
 }
