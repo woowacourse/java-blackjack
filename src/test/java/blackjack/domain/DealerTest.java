@@ -69,7 +69,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(bustCards);
         Player player = new Player("sudal", normalCards);
 
-        GameResult gameResult = dealer.createResult(player.getTotalScore());
+        GameResult gameResult = dealer.calculateResult(player.getTotalScore());
 
         assertThat(gameResult).isEqualTo(LOSE);
     }
@@ -83,7 +83,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(bustValueByDealer);
         Player player = new Player("sudal", bustValueByPlayer);
 
-        GameResult gameResult = dealer.createResult(player.getTotalScore());
+        GameResult gameResult = dealer.calculateResult(player.getTotalScore());
 
         assertThat(gameResult).isEqualTo(WIN);
     }
@@ -97,7 +97,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(minValueCards);
         Player player = new Player("sudal", maxValueCards);
 
-        GameResult gameResult = dealer.createResult(player.getTotalScore());
+        GameResult gameResult = dealer.calculateResult(player.getTotalScore());
 
         assertThat(gameResult).isEqualTo(WIN);
     }
@@ -111,7 +111,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(minValueCards);
         Player player = new Player("sudal", maxValueCards);
 
-        GameResult gameResult = dealer.createResult(player.getTotalScore());
+        GameResult gameResult = dealer.calculateResult(player.getTotalScore());
 
         assertThat(gameResult).isEqualTo(LOSE);
     }
@@ -125,7 +125,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(maxValueCards);
         Player player = new Player("sudal", minValueCards);
 
-        GameResult gameResult = dealer.createResult(player.getTotalScore());
+        GameResult gameResult = dealer.calculateResult(player.getTotalScore());
 
         assertThat(gameResult).isEqualTo(WIN);
     }
@@ -139,7 +139,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(tieValueByDealer);
         Player player = new Player("sudal", tieValueByPlayer);
 
-        GameResult gameResult = dealer.createResult(player.getTotalScore());
+        GameResult gameResult = dealer.calculateResult(player.getTotalScore());
 
         assertThat(gameResult).isEqualTo(TIE);
     }

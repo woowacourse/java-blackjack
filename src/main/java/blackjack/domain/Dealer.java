@@ -29,7 +29,7 @@ public class Dealer {
         cards.combine(card);
     }
 
-    public GameResult createResult(int playerScore) {
+    public GameResult calculateResult(int playerScore) {
         if (playerScore > PLAYING_STANDARD) {
             return GameResult.WIN;
         }

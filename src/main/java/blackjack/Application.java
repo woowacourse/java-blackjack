@@ -70,12 +70,12 @@ public class Application {
     public static Map<String, GameResult> createPlayerResult(List<Player> players, Dealer dealer) {
         return players.stream()
                 .collect(toMap(player -> player.getName(),
-                        player -> player.createResult(dealer.getTotalScore())));
+                        player -> player.calculateResult(dealer.getTotalScore())));
     }
 
 
     public static Map<GameResult, Long> createDealerResult(List<Player> players, Dealer dealer) {
         return players.stream()
-                .collect(groupingBy(player -> dealer.createResult(player.getTotalScore()), counting()));
+                .collect(groupingBy(player -> dealer.calculateResult(player.getTotalScore()), counting()));
     }
 }

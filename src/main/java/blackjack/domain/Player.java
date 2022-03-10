@@ -26,7 +26,7 @@ public class Player {
         cards.combine(card);
     }
 
-    public GameResult createResult(int dealerScore) {
+    public GameResult calculateResult(int dealerScore) {
         if (getTotalScore() > PLAYING_STANDARD) {
             return GameResult.LOSE;
         }
