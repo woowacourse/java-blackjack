@@ -8,14 +8,16 @@ import java.util.List;
 public class GamerCardsDto {
     private final String name;
     private final List<CardDto> cards;
+    private final int sum;
 
-    public GamerCardsDto(String name, List<CardDto> cards) {
+    public GamerCardsDto(String name, List<CardDto> cards, int sum) {
         this.name = name;
         this.cards = cards;
+        this.sum = sum;
     }
 
     public static GamerCardsDto of(String name, CardGroup cards) {
-        return new GamerCardsDto(name, CardDto.of(cards));
+        return new GamerCardsDto(name, CardDto.of(cards), cards.getSum());
     }
 
     public static List<GamerCardsDto> of(List<Gamer> gamersCards) {
@@ -32,5 +34,9 @@ public class GamerCardsDto {
 
     public List<CardDto> getCards() {
         return cards;
+    }
+
+    public int getSum() {
+        return sum;
     }
 }

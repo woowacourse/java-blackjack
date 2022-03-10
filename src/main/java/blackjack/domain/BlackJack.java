@@ -66,6 +66,11 @@ public class BlackJack {
             dealer.addCard(cardPack.pickOne());
             addedCardsCount++;
         }
+
         return addedCardsCount;
+    }
+
+    public void openDealerCards() {
+        dealer.openAllCards();
     }
 }

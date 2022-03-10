@@ -73,4 +73,8 @@ public class Gamer {
     public String getName() {
         return this.name;
     }
+
+    public void openAllCards() {
+        cardGroup.open();
+    }
 }

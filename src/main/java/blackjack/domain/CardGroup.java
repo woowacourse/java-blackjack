@@ -40,4 +40,10 @@ public class CardGroup {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public void open() {
+        for (Card card : cards) {
+            card.open();
+        }
+    }
 }

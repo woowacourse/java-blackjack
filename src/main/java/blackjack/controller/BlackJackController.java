@@ -15,15 +15,17 @@ public class BlackJackController {
         BlackJack blackJack = new BlackJack(playerGroup);
         blackJack.divideCards();
 
-        List<GamerCardsDto> gamersCardsDto = GamerCardsDto.of(blackJack.getGamersCards());
-        OutputView.printGamersCards(gamersCardsDto);
+        OutputView.printGamersCards(GamerCardsDto.of(blackJack.getGamersCards()));
 
         List<Player> players = playerGroup.getPlayers();
         for (Player player : players) {
             requestCardAddition(blackJack, player);
         }
 
-        OutputView.printDealCardMessage(blackJack.addCardToDealer());
+        OutputView.printDealerCardMessage(blackJack.addCardToDealer());
+
+        blackJack.openDealerCards();
+        OutputView.printGamersCardAndSum(GamerCardsDto.of(blackJack.getGamersCards()));
     }
 
     private void requestCardAddition(BlackJack blackJack, Player player) {

@@ -44,23 +44,52 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
+    public static void printDealerCardMessage(int cardsCount) {
+        System.out.println();
+        if (printNonDealerCardMessage(cardsCount)) {
+            return;
+        }
+
+        printDealerAddCardMessage(cardsCount);
+    }
+
+    private static boolean printNonDealerCardMessage(int addedCardsCount) {
+        if (addedCardsCount == 0) {
+            System.out.println("딜러는 17이상이어서 카드를 받지 못했습니다.");
+            return true;
+        }
+        return false;
+    }
+
+    private static void printDealerAddCardMessage(int addedCardsCount) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < addedCardsCount; i++) {
+            stringBuilder.append("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            stringBuilder.append(System.lineSeparator());
+        }
+        System.out.print(stringBuilder);
+    }
+
+    public static void printGamersCardAndSum(List<GamerCardsDto> gamersCards) {
+        System.out.println();
+        for (GamerCardsDto gamerCards : gamersCards) {
+            printGamerCardAndSum(gamerCards);
+        }
+        System.out.println();
+    }
+
+    private static void printGamerCardAndSum(GamerCardsDto gamerCardsDto) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(gamerCardsDto.getName()).append(": ");
+        stringBuilder.append(String.join(", ", getGamerCards(gamerCardsDto)));
+        stringBuilder.append(" - 결과: ").append(gamerCardsDto.getSum());
+        System.out.println(stringBuilder);
+    }
+
     private static List<String> getGamerCards(GamerCardsDto gamerCardsDto) {
         return gamerCardsDto.getCards()
                 .stream()
                 .map(CardDto::getCard)
                 .collect(Collectors.toList());
-    }
-
-    public static void printDealCardMessage(int addedCardsCount) {
-        if (addedCardsCount == 0) {
-            System.out.println("딜러는 17이상이어서 카드를 받지 못했습니다.");
-            return;
-        }
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < addedCardsCount; i++) {
-            stringBuilder.append("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-        }
-        System.out.println(stringBuilder);
     }
 }

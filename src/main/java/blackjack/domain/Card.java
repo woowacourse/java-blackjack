@@ -25,4 +25,8 @@ public class Card {
     public boolean isOpen() {
         return isOpen;
     }
+
+    public void open() {
+        isOpen = true;
+    }
 }
