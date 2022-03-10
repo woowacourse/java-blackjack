@@ -22,4 +22,12 @@ public abstract class User {
     public List<Card> showCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public void drawCard(Deck deck) {
+        cards.add(deck.drawCard());
+    }
+
+    public abstract List<Card> showInitCards();
+
+    public abstract boolean isDrawable();
 }

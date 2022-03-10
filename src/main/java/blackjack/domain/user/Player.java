@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,14 +16,12 @@ public class Player extends User {
         this.name = name;
     }
 
-    public void drawCard(Deck deck) {
-        cards.add(deck.drawCard());
-    }
-
+    @Override
     public List<Card> showInitCards() {
         return Collections.unmodifiableList(cards.subList(0, INIT_COUNT));
     }
 
+    @Override
     public boolean isDrawable() {
         return cards.stream()
                 .mapToInt(Card::getPoint)
