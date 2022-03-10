@@ -4,15 +4,11 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.game.Score;
 
-public class Player {
+public class Player extends Participant {
     private static final int MAXIMUM_SCORE = 21;
 
-    private final String name;
-    private final CardBundle cardBundle;
-
     private Player(final String name, final CardBundle cardBundle) {
-        this.name = name;
-        this.cardBundle = cardBundle;
+        super(name, cardBundle);
     }
 
     public static Player of(final String name, final CardBundle cardBundle) {
@@ -26,18 +22,6 @@ public class Player {
     public boolean canReceive() {
         Score score = cardBundle.getScore();
         return score.toInt() <= MAXIMUM_SCORE;
-    }
-
-    public Score getCurrentScore() {
-        return cardBundle.getScore();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public CardBundle getCardBundle() {
-        return cardBundle;
     }
 
     @Override
