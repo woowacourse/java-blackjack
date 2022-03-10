@@ -10,6 +10,14 @@ public class Card {
         this.denomination = denomination;
     }
 
+    public Pattern getPattern() {
+        return pattern;
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
     public int getValue() {
         return denomination.getValue();
     }

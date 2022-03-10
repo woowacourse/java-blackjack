@@ -18,6 +18,7 @@ public class BlackJackApplication {
             Dealer dealer = new Dealer(deck.drawDouble());
             List<Name> playerNames = inputPlayerNames();
             List<Player> players = createPlayers(playerNames, deck);
+            alertStart(dealer, players);
         } catch (NullPointerException | IllegalArgumentException e) {
             OutputView.printFatalErrorMessage(e.getMessage());
         }
@@ -38,5 +39,11 @@ public class BlackJackApplication {
         return playerNames.stream()
                 .map(name -> new Player(name, deck.drawDouble()))
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    private static void alertStart(Dealer dealer, List<Player> players) {
+        OutputView.printStartMessage(dealer, players);
+        OutputView.printDealerFirstCard(dealer);
+        players.forEach(OutputView::printPlayerCards);
     }
 }

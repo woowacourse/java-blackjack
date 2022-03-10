@@ -52,4 +52,8 @@ public class Dealer {
     public List<Card> getCards() {
         return cards;
     }
+
+    public String getName() {
+        return name.getValue();
+    }
 }
