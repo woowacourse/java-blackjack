@@ -16,7 +16,7 @@ public enum Result {
         this.comparator = comparator;
     }
 
-    public static Result check(int userScore, int dealerScore) {
+    public static Result checkUserResult(int userScore, int dealerScore) {
         return Arrays.stream(values())
                 .filter(result -> result.comparator.compare(userScore, dealerScore))
                 .findAny()

@@ -35,7 +35,7 @@ public class User {
     }
 
     public Result checkResult(int otherScore) {
-        return Result.check(cardSum(cards), otherScore);
+        return Result.checkUserResult(cardSum(cards), otherScore);
     }
 
     public boolean checkBust() {
