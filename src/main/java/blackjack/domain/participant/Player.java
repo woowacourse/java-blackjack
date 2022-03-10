@@ -1,9 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import blackjack.domain.game.GameOutcome;
-import blackjack.domain.state.State;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,10 +23,6 @@ public class Player extends Participant {
 
     public boolean canDraw() {
         return !state.isFinished();
-    }
-
-    public GameOutcome fightResult(final Dealer dealer) {
-        return state.compare(State.create(new Cards(dealer.getCards())));
     }
 
     public List<Card> getCards() {
