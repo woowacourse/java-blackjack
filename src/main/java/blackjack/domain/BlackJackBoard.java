@@ -13,25 +13,25 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class BlackJackGame {
+public class BlackJackBoard {
 
     private final CardDeck cardDeck;
     private final Player dealer;
     private final Players players;
 
-    private BlackJackGame(final CardDeck cardDeck, final Player dealer, final Players players) {
+    private BlackJackBoard(final CardDeck cardDeck, final Player dealer, final Players players) {
         this.cardDeck = cardDeck;
         this.dealer = dealer;
         this.players = players;
     }
 
-    public static BlackJackGame createGame(final List<String> playerNames) {
+    public static BlackJackBoard createGame(final List<String> playerNames) {
         Objects.requireNonNull(playerNames, "blackjackgame은 null이 들어올 수 없습니다.");
         final List<String> copyNames = new ArrayList<>(playerNames);
         final CardDeck cardDeck = CardDeck.createNewCardDek();
         final Player dealer = Dealer.createNewDealer(cardDeck.provideFirstDrawCards());
         final List<Player> players = createPlayers(copyNames, cardDeck);
-        return new BlackJackGame(cardDeck, dealer, new Players(players));
+        return new BlackJackBoard(cardDeck, dealer, new Players(players));
     }
 
     private static List<Player> createPlayers(final List<String> playerNames, final CardDeck cardDeck) {
