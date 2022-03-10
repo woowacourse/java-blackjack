@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static blackjack.domain.CardsTestDataGenerator.*;
 import static blackjack.domain.Denomination.*;
+import static blackjack.domain.GameResult.*;
 import static blackjack.domain.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -56,5 +57,90 @@ public class DealerTest {
         Dealer dealer = new Dealer(cards.getValue());
 
         assertThat(dealer.getTotalScore()).isEqualTo(totalScore);
+    }
+
+
+    @DisplayName("딜러만 버스트 일 경우 패배한다.")
+    @Test
+    void 딜러_승패_여부_버스트_패() {
+        List<Card> bustCards = generateTotalScoreGraterThan21Cards();
+        List<Card> normalCards = generateTotalScoreNotMoreThan21Cards();
+
+        Dealer dealer = new Dealer(bustCards);
+        Player player = new Player("sudal", normalCards);
+
+        GameResult gameResult = dealer.createResult(player.getTotalScore());
+
+        assertThat(gameResult).isEqualTo(LOSE);
+    }
+
+    @DisplayName("딜러, 플레이어 모두 버스트일 경우 승리한다.")
+    @Test
+    void 딜러_승패_여부_둘다_버스트_승() {
+        List<Card> bustValueByDealer = generateTotalScoreGraterThan21Cards();
+        List<Card> bustValueByPlayer = generateTotalScoreGraterThan21Cards();
+
+        Dealer dealer = new Dealer(bustValueByDealer);
+        Player player = new Player("sudal", bustValueByPlayer);
+
+        GameResult gameResult = dealer.createResult(player.getTotalScore());
+
+        assertThat(gameResult).isEqualTo(WIN);
+    }
+
+    @DisplayName("플레이어만 버스트이면 승리한다.")
+    @Test
+    void 딜러_승패_여부_버스트_승() {
+        List<Card> minValueCards = generateTotalScoreNotMoreThan16Cards();
+        List<Card> maxValueCards = generateTotalScoreGraterThan21Cards();
+
+        Dealer dealer = new Dealer(minValueCards);
+        Player player = new Player("sudal", maxValueCards);
+
+        GameResult gameResult = dealer.createResult(player.getTotalScore());
+
+        assertThat(gameResult).isEqualTo(WIN);
+    }
+
+    @DisplayName("딜러보다 플레이어의 점수가 높으면 패배한다.")
+    @Test
+    void 딜러_승패_여부_점수_패() {
+        List<Card> minValueCards = generateTotalScoreNotMoreThan16Cards();
+        List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
+
+        Dealer dealer = new Dealer(minValueCards);
+        Player player = new Player("sudal", maxValueCards);
+
+        GameResult gameResult = dealer.createResult(player.getTotalScore());
+
+        assertThat(gameResult).isEqualTo(LOSE);
+    }
+
+    @DisplayName("딜러가 플레이어보다 점수가 높으면 승리한다.")
+    @Test
+    void 플레이어_승패_여부_점수_승() {
+        List<Card> minValueCards = generateTotalScoreNotMoreThan16Cards();
+        List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
+
+        Dealer dealer = new Dealer(maxValueCards);
+        Player player = new Player("sudal", minValueCards);
+
+        GameResult gameResult = dealer.createResult(player.getTotalScore());
+
+        assertThat(gameResult).isEqualTo(WIN);
+    }
+
+    @DisplayName("딜러와 플레이어 점수가 같으면 무.")
+    @Test
+    void 딜러_승패_여부_점수_무() {
+        List<Card> tieValueByPlayer = generateCards();
+        List<Card> tieValueByDealer = generateCards();
+
+        Dealer dealer = new Dealer(tieValueByDealer);
+        Player player = new Player("sudal", tieValueByPlayer);
+
+        GameResult gameResult = dealer.createResult(player.getTotalScore());
+
+        assertThat(gameResult).isEqualTo(TIE);
     }
 }

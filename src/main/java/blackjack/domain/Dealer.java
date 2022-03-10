@@ -1,9 +1,13 @@
 package blackjack.domain;
 
+
 import java.util.List;
 
 public class Dealer {
-    public static final int DRAWABLE_LIMIT_VALUE = 16;
+
+    private static final int DRAWABLE_LIMIT_VALUE = 16;
+    private static final int PLAYING_STANDARD = 21;
+
     private final Cards cards;
 
     public Dealer(List<Card> cards) {
@@ -20,6 +24,18 @@ public class Dealer {
 
     public void combine(Card card) {
         cards.combine(card);
+    }
+
+    public GameResult createResult(int playerScore) {
+        if (playerScore > PLAYING_STANDARD) {
+            return GameResult.WIN;
+        }
+
+        if (getTotalScore() > PLAYING_STANDARD) {
+            return GameResult.LOSE;
+        }
+
+        return GameResult.of(getTotalScore() - playerScore);
     }
 
     public List<Card> getCards() {
