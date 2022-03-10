@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.Optional;
 
 public class Score implements Comparable<Score> {
+    public static final int BLACKJACK = 21;
+    public static final int DEALER_EXTRA_CARD_LIMIT = 16;
+
     private final int value;
 
     // TODO: 음수 값에 대한 유효성 검증

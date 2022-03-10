@@ -7,7 +7,6 @@ import blackjack.domain.game.Score;
 public class Dealer extends Participant {
 
     private static final int MAXIMUM_CARDS_QUANTITY = 3;
-    private static final int MAXIMUM_SCORE = 16;
     private static final String DEALER_NAME = "딜러";
     private static final String INVALID_CARD_QUANTITY_EXCEPTION_MESSAGE = "딜러는 최대 3개의 카드만 지닐 수 있습니다.";
 
@@ -32,7 +31,7 @@ public class Dealer extends Participant {
 
     public boolean canReceive() {
         Score score = cardBundle.getScore();
-        return score.toInt() <= MAXIMUM_SCORE;
+        return score.toInt() <= Score.DEALER_EXTRA_CARD_LIMIT;
     }
 
     // TODO: handle NPE
