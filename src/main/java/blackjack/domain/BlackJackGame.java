@@ -4,29 +4,20 @@ import static java.util.stream.Collectors.toMap;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class BlackJackGame {
 
     private final Player dealer;
-    private final List<Player> gamers;
+    private final List<Gamer> gamers;
 
-    public BlackJackGame(final Player dealer, final List<Player> gamers) {
-        checkDuplicateName(gamers);
+    public BlackJackGame(final Player dealer, final List<Gamer> gamers) {
         this.dealer = dealer;
         this.gamers = gamers;
-    }
-
-    private void checkDuplicateName(final List<Player> gamers) {
-        Set<Player> tempSet = new HashSet<>(gamers);
-        if (gamers.size() != tempSet.size()) {
-            throw new IllegalArgumentException("[ERROR] 중복된 이름은 입력할 수 없습니다.");
-        }
     }
 
     public void handOutStartingCards(final Deck deck) {

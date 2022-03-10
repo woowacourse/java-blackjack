@@ -41,7 +41,7 @@ public class BlackJackApplication {
         return blackJackGame;
     }
 
-    private static List<Player> toGamers() {
+    private static List<Gamer> toGamers() {
         List<String> names = InputView.requestPlayerName();
         return names.stream()
                 .map(Gamer::new)
