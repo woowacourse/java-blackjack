@@ -70,10 +70,6 @@ public class BlackJackGame {
                 .orElseThrow(() -> new IllegalArgumentException("플레이어가 존재하지 않습니다."));
     }
 
-    public GameResult createResult(Dealer dealer, List<Player> players) {
-        return new GameResult(players, dealer);
-    }
-
     public Dealer getDealer() {
         return dealer;
     }

@@ -1,6 +1,5 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
@@ -33,8 +32,7 @@ class GameResultTest {
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.SEVEN));
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
 
-        BlackJackGame blackJackGame = new BlackJackGame(List.of("pobi", "json"));
-        GameResult gameResult = blackJackGame.createResult(dealer, List.of(pobi, jason));
+        GameResult gameResult = new GameResult(List.of(pobi, jason), dealer);
 
         Map<String, BlackJackResult> playerResults = gameResult.getPlayerResult();
 
@@ -63,8 +61,7 @@ class GameResultTest {
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.SEVEN));
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
 
-        BlackJackGame blackJackGame = new BlackJackGame(List.of("pobi", "json"));
-        GameResult gameResult = blackJackGame.createResult(dealer, List.of(pobi, jason));
+        GameResult gameResult = new GameResult(List.of(pobi, jason), dealer);
 
         Map<String, BlackJackResult> playerResults = gameResult.getPlayerResult();
 
@@ -74,8 +71,6 @@ class GameResultTest {
         assertThat(pobiResult).isEqualTo(BlackJackResult.LOSE);
         assertThat(jasonResult).isEqualTo(BlackJackResult.WIN);
     }
-
-
 
     @Test
     @DisplayName("딜러 게임 결과 확인")
@@ -94,8 +89,7 @@ class GameResultTest {
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.SEVEN));
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
 
-        BlackJackGame blackJackGame = new BlackJackGame(List.of("pobi", "json"));
-        GameResult gameResult = blackJackGame.createResult(dealer, List.of(pobi, jason));
+        GameResult gameResult = new GameResult(List.of(pobi, jason), dealer);
 
         Map<BlackJackResult, Integer> dealerResult = gameResult.getDealerResult();
         int winningCount = dealerResult.get(BlackJackResult.WIN);
