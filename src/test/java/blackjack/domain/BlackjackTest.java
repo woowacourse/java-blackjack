@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ public class BlackjackTest {
     @DisplayName("카드 한장 더 분배 테스트_딜러 hit")
     @Test
     void distributeOneMoreCardDealer() {
-        NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(10));
+        NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(12));
         blackjack.distributeAdditionalCardDealer(numberGenerator);
         assertThat(blackjack.getDealer().getMyCards().size()).isEqualTo(3);
     }
@@ -49,14 +50,13 @@ public class BlackjackTest {
     @DisplayName("카드 한장 더 분배 테스트_딜러 stay")
     @Test
     void distributeOneMoreCardDealer2() {
-        NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(10, 4));
+        NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(12, 9));
         blackjack.distributeAdditionalCardDealer(numberGenerator);
         assertThat(blackjack.getDealer().getMyCards().size()).isEqualTo(3);
     }
 
     @DisplayName("최종 승패 기능 테스트")
     @Test
-
     void result() {
        assertDoesNotThrow(() -> blackjack.result());
     }

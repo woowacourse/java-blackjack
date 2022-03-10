@@ -4,15 +4,16 @@ public class Dealer extends Player {
 
     private static final int CONDITION_HIT = 16;
     private static final String NAME = "딜러";
-    private Cards cards;
+
+    private Deck deck;
 
     public Dealer() {
         super(NAME);
-        cards = new Cards();
+        deck = Deck.generateDeck();
     }
 
     public Card handOutCard(NumberGenerator numberGenerator) {
-        return cards.pickCard(numberGenerator);
+        return deck.randomPick(numberGenerator);
     }
 
     public boolean isHit() {
