@@ -89,4 +89,40 @@ public class PlayerTest {
         // then
         assertThat(player.getCards().size()).isEqualTo(3);
     }
+
+    @Test
+    @DisplayName("플레이어의 카드의 총합이 21보다 작으면 hit이 가능하다.")
+    void hittable() {
+        // given
+        Name name = new Name("pobi");
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
+        Card card2 = new Card(Pattern.CLOVER, Denomination.TEN);
+        List<Card> cards = List.of(card1, card2);
+
+        Player player = new Player(name, cards);
+
+        // when
+        boolean actual = player.isHittable();
+
+        // then
+        assertThat(actual).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("플레이어의 카드의 총합이 21 이상이면 hit이 불가능하다.")
+    void notHittable() {
+        // given
+        Name name = new Name("pobi");
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
+        Card card2 = new Card(Pattern.CLOVER, Denomination.ACE);
+        List<Card> cards = List.of(card1, card2);
+
+        Player player = new Player(name, cards);
+
+        // when
+        boolean actual = player.isHittable();
+
+        // then
+        assertThat(actual).isEqualTo(false);
+    }
 }

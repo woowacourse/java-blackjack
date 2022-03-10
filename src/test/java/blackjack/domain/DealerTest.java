@@ -66,21 +66,55 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 보유 숫자가 17보다 작으면 반드시 카드를 뽑는다.")
-    void hitIfUnder17() {
+    @DisplayName("딜러가 카드 한 장을 더 받는 경우")
+    void addCard() {
         // given
-        Card card1 = new Card(Pattern.CLOVER, Denomination.TEN);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.FIVE);
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
+        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
         List<Card> cards = List.of(card1, card2);
 
-        CardDeck deck = new CardDeck(() -> new ArrayList<>(List.of(new Card(Pattern.CLOVER, Denomination.TWO))));
+        CardDeck deck = new CardDeck(() -> new ArrayList<>(List.of(new Card(Pattern.HEART, Denomination.THREE))));
+        Dealer dealer = new Dealer(cards);
+
+        // when
+        dealer.hit(deck);
+
+        // then
+        assertThat(dealer.getCards().size()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("딜러의 카드의 총합이 16 이하면 hit이 가능하다.")
+    void hittable() {
+        // given
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
+        Card card2 = new Card(Pattern.CLOVER, Denomination.SIX);
+        List<Card> cards = List.of(card1, card2);
 
         Dealer dealer = new Dealer(cards);
 
         // when
-        dealer.play(deck);
+        boolean actual = dealer.isHittable();
 
         // then
-        assertThat(dealer.getCardsSum()).isGreaterThanOrEqualTo(17);
+        assertThat(actual).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("딜러의 카드의 총합이 17 이상이면 hit이 불가능하다.")
+    void notHittable() {
+
+        // given
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
+        Card card2 = new Card(Pattern.CLOVER, Denomination.SEVEN);
+        List<Card> cards = List.of(card1, card2);
+
+        Dealer dealer = new Dealer(cards);
+
+        // when
+        boolean actual = dealer.isHittable();
+
+        // then
+        assertThat(actual).isEqualTo(false);
     }
 }

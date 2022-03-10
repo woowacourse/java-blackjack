@@ -67,7 +67,7 @@ public class ResultTest {
     void playerBust(CardDeck deck) {
         // given
         Dealer dealer = createDealer(SIX);
-        dealer.play(deck);
+        dealer.hit(deck);
 
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
@@ -99,7 +99,7 @@ public class ResultTest {
     void dealerBust() {
         // given
         Dealer dealer = createDealer(SIX);
-        dealer.play(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, SIX)))));
+        dealer.hit(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, SIX)))));
 
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
