@@ -1,9 +1,10 @@
 package blackjack.view;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -21,7 +22,7 @@ public class InputView {
 
         return Arrays.stream(scanner.nextLine().split(DELIMITER, SPLIT_LIMIT))
                 .map(InputView::removeBlank)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     private static String removeBlank(final String name) {

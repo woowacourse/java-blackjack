@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static java.util.stream.Collectors.toMap;
+
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Player;
 import java.util.HashSet;
@@ -7,7 +9,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
@@ -44,7 +45,7 @@ public class BlackJackGame {
     public Map<Player, Result> calculateResultBoard() {
         int dealerResult = dealer.calculateResult();
         return gamers.stream()
-                .collect(Collectors.toMap(gamer -> gamer,
+                .collect(toMap(gamer -> gamer,
                         gamer -> Result.findResult(dealerResult,
                                 gamer.calculateResult()),
                         (e1, e2) -> e1,

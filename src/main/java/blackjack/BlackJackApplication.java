@@ -1,5 +1,7 @@
 package blackjack;
 
+import static java.util.stream.Collectors.*;
+
 import blackjack.domain.Answer;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.Deck;
@@ -9,7 +11,6 @@ import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackJackApplication {
 
@@ -44,7 +45,7 @@ public class BlackJackApplication {
         List<String> names = InputView.requestPlayerName();
         return names.stream()
                 .map(Gamer::new)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     private static void progressGamerAdditionalCard(final Deck deck, final Player gamer) {
