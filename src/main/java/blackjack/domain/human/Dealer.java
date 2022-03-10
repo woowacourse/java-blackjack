@@ -1,11 +1,10 @@
 package blackjack.domain.human;
 
-import blackjack.domain.Card;
-import blackjack.domain.Cards;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 public class Dealer extends Human {
     private final Cards cards;
-    private final String name = "딜러";
 
     private Dealer() {
         this.cards = Cards.of();
@@ -22,7 +21,7 @@ public class Dealer extends Human {
 
     @Override
     public String getName() {
-        return name;
+        return "딜러";
     }
 
     @Override

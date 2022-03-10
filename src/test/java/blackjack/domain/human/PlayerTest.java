@@ -2,11 +2,9 @@ package blackjack.domain.human;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Card;
-import blackjack.domain.Denomination;
-import blackjack.domain.Name;
-import blackjack.domain.Symbol;
-import blackjack.domain.human.Player;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")

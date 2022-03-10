@@ -1,9 +1,8 @@
 package blackjack.domain.human;
 
-import blackjack.domain.Card;
-import blackjack.domain.Cards;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.GameResult;
-import blackjack.domain.Name;
 
 public class Player extends Human {
     private final Name name;

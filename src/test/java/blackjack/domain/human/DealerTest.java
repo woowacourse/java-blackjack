@@ -1,10 +1,9 @@
 package blackjack.domain.human;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-import blackjack.domain.Card;
-import blackjack.domain.Denomination;
-import blackjack.domain.Symbol;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")

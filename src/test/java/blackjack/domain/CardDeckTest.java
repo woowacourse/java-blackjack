@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.CardDeck;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -25,7 +26,7 @@ class CardDeckTest {
         for (int i = 0; i < 52; i++) {
             CardDeck.giveCard();
         }
-        assertThatThrownBy(() -> CardDeck.giveCard())
+        assertThatThrownBy(CardDeck::giveCard)
                 .isInstanceOf(Exception.class)
                 .hasMessage("덱에 남은 카드가 없습니다");
     }

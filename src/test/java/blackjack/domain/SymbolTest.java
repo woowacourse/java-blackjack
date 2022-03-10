@@ -2,9 +2,11 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Symbol;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+@SuppressWarnings("NonAsciiCharacters")
 class SymbolTest {
     @ParameterizedTest
     @CsvSource(value = {

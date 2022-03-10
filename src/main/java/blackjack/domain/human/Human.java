@@ -1,7 +1,7 @@
 package blackjack.domain.human;
 
-import blackjack.domain.Card;
-import blackjack.domain.Cards;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 public abstract class Human {
 
