@@ -13,6 +13,7 @@ import java.util.List;
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.domain.card.Symbol.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayersTest {
 
@@ -63,5 +64,31 @@ class PlayersTest {
         // then
         assertThat(firstTurn).isEqualTo(first);
         assertThat(players.getCurrentTurn()).isEqualTo(fourth);
+    }
+
+    @Test
+    @DisplayName("최대 가능 플레이어 수를 초과하면 예외를 발생시킨다")
+    void throwExceptionWhenOverMaxPlayerSize() {
+        Player first = new Player("1", Cards.of(List.of(new Card(CLOVER, JACK), new Card(CLOVER, TWO))));
+        Player second = new Player("2", Cards.of(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, THREE))));
+        Player third = new Player("3", Cards.of(List.of(new Card(SPADE, JACK), new Card(SPADE, FOUR))));
+        Player fourth = new Player("4", Cards.of(List.of(new Card(HEART, JACK), new Card(HEART, FIVE))));
+        Player fifth = new Player("5", Cards.of(List.of(new Card(HEART, JACK), new Card(HEART, FIVE))));
+        Player sixth = new Player("6", Cards.of(List.of(new Card(HEART, JACK), new Card(HEART, FIVE))));
+        Player seventh = new Player("7", Cards.of(List.of(new Card(HEART, JACK), new Card(HEART, FIVE))));
+        Player eighth = new Player("8", Cards.of(List.of(new Card(HEART, JACK), new Card(HEART, FIVE))));
+
+        assertThatThrownBy(() -> new Players(List.of(first, second, third, fourth, fifth, sixth, seventh, eighth)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("플레이어의 이름은 중복될 수 없다")
+    void throwExceptionWhenNameDuplicated() {
+        Player first = new Player("1", Cards.of(List.of(new Card(CLOVER, JACK), new Card(CLOVER, TWO))));
+        Player second = new Player("1", Cards.of(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, THREE))));
+
+        assertThatThrownBy(() -> new Players(List.of(first, second)))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

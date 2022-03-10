@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ class GameTest {
         List<Card> initialCards2 = List.of(new Card(SPADE, JACK), new Card(HEART, ACE));
         Player player2 = new Player(name2, Cards.of(initialCards2));
 
-        List<Player> players = List.of(player1, player2);
+        Players players = new Players(List.of(player1, player2));
         Game game = new Game(players, deck);
 
         // when
@@ -60,7 +61,7 @@ class GameTest {
         Player player2 = new Player(name2, Cards.of(initialCards2));
         player2.addCard(new Card(HEART, QUEEN));
 
-        List<Player> players = List.of(player1, player2);
+        Players players = new Players(List.of(player1, player2));
         Game game = new Game(players, deck);
 
         // when
@@ -82,7 +83,7 @@ class GameTest {
         List<Card> initialCards2 = List.of(new Card(SPADE, JACK), new Card(HEART, EIGHT));
         Player player2 = new Player(name2, Cards.of(initialCards2));
 
-        List<Player> players = List.of(player1, player2);
+        Players players = new Players(List.of(player1, player2));
         Game game = new Game(players, deck);
 
         assertThat(game.getCurrentHitablePlayerName()).isEqualTo(player2.getName());

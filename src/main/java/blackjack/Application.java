@@ -8,6 +8,7 @@ import blackjack.domain.dto.Status;
 import blackjack.domain.player.Command;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -18,13 +19,8 @@ import java.util.stream.Collectors;
 
 public class Application {
     public static void main(String[] args) {
-        String[] names = InputView.inputName();
         Deck deck = new Deck();
-        List<Player> players = Arrays.stream(names)
-                .map(n -> new Player(n, Cards.of(deck.initialDraw())))
-                .collect(Collectors.toList());
-
-        Game game = new Game(players, deck);
+        Game game = new Game(generatePlayers(deck), deck);
         printInitialStatus(game);
 
         while (game.isPossibleToPlay()) {
@@ -40,6 +36,20 @@ public class Application {
         }
 
         printTotalScore(game);
+    }
+
+    private static Players generatePlayers(Deck deck) {
+        try {
+            String[] names = InputView.inputName();
+            return new Players(Arrays.stream(names)
+                    .map(String::trim)
+                    .map(name -> new Player(name, Cards.of(deck.initialDraw())))
+                    .collect(Collectors.toList()));
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return generatePlayers(deck);
+        }
     }
 
     private static void printTotalScore(Game game) {

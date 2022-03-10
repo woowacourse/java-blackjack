@@ -15,8 +15,8 @@ public class Game {
     private final Deck deck;
     private final Dealer dealer;
 
-    public Game(List<Player> players, Deck deck) {
-        this.players = new Players(players);
+    public Game(Players players, Deck deck) {
+        this.players = players;
         this.deck = deck;
         dealer = new Dealer(Cards.of(deck.initialDraw()));
     }

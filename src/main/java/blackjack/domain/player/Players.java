@@ -1,15 +1,16 @@
 package blackjack.domain.player;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Players {
+
+    private static final int MAX_PLAYER_SIZE = 7;
+    public static final int MINIMUM_PLAYER_SIZE = 1;
 
     private final Queue<Player> players;
 
     public Players(List<Player> players) {
+        validatePlayerSizeAndDuplication(players);
         this.players = new LinkedList<>(players);
     }
 
@@ -35,5 +36,17 @@ public class Players {
 
     public List<Player> toList() {
         return new ArrayList<>(players);
+    }
+
+    private void validatePlayerSizeAndDuplication(List<Player> players) {
+        int inputPlayerSize = players.size();
+        long distinctPlayerSize = players.stream().distinct().count();
+        if ( distinctPlayerSize < MINIMUM_PLAYER_SIZE || distinctPlayerSize > MAX_PLAYER_SIZE) {
+            throw new IllegalArgumentException("[ERROR] 플레이어의 수는 " + MINIMUM_PLAYER_SIZE + " 이상, " +
+                    MAX_PLAYER_SIZE + " 이하여야 합니다");
+        }
+        if (inputPlayerSize != distinctPlayerSize) {
+            throw new IllegalArgumentException("[ERROR] 플레이어 이름은 중복될 수 없습니다");
+        }
     }
 }

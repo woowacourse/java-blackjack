@@ -12,8 +12,25 @@ import static blackjack.domain.card.Denomination.*;
 import static blackjack.domain.card.Symbol.CLOVER;
 import static blackjack.domain.card.Symbol.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
+
+    @Test
+    @DisplayName("이름은 공백일 수 없다")
+    void throwExceptionWhenNameLengthIsBlank() {
+        List<Card> initCards = List.of(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
+        assertThatThrownBy(() -> new Player(" ", Cards.of(initCards)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("이름은 6자를 초과할 수 없다")
+    void throwExceptionWhenNameLengthOverMaxLength() {
+        List<Card> initCards = List.of(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
+        assertThatThrownBy(() -> new Player("1234567", Cards.of(initCards)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 
     @Test
     @DisplayName("hit이 가능한 상태라면 참을 반환한다.")
