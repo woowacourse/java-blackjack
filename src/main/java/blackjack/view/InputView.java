@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.User;
+import blackjack.domain.participant.User;
 
 import java.util.Scanner;
 

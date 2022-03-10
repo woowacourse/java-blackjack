@@ -1,10 +1,14 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.result.Result;
+import blackjack.domain.result.ScoreCalculator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static blackjack.domain.ScoreCalculator.cardSum;
+import static blackjack.domain.result.ScoreCalculator.cardSum;
 
 public class User {
 

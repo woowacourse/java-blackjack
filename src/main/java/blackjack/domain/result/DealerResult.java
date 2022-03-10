@@ -1,4 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.result;
+
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.User;
+import blackjack.domain.participant.Users;
 
 import java.util.Collections;
 import java.util.EnumMap;
