@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +15,7 @@ public class Participant {
     private final List<Card> cards = new ArrayList<>();
     private int score = 0;
 
-    Participant(String name) {
+    public Participant(String name) {
         this.name = name;
     }
 

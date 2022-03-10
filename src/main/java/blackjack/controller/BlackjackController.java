@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Blackjack;
-import blackjack.domain.Player;
+import blackjack.domain.participant.Player;
 import blackjack.dto.CurrentCardsDTO;
 
 import static blackjack.view.InputView.inputNames;
