@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
-    private final int BLACKJACK = 21;
+    private static final int BLACKJACK = 21;
 
     private final List<Card> cards = new ArrayList<>();
 

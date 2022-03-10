@@ -5,8 +5,7 @@ import java.util.List;
 
 public class CardMachine {
 
-    private final int INIT_CARD_COUNT = 2;
-
+    private static final int INIT_CARD_COUNT = 2;
     private final Cards cards = new Cards();
 
     public CardMachine() {
