@@ -5,6 +5,7 @@ import static blackjack.domain.card.CardNumber.EIGHT;
 import static blackjack.domain.card.CardNumber.NINE;
 import static blackjack.domain.card.CardNumber.SEVEN;
 import static blackjack.domain.card.CardNumber.TEN;
+import static blackjack.domain.card.CardPattern.HEART;
 import static blackjack.domain.card.CardPattern.SPADE;
 import static blackjack.testutil.CardFixtureGenerator.createCards;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -95,5 +96,15 @@ class ParticipatingPlayerTest {
         assertThatThrownBy(() -> player.calculateResultScore())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("턴이 끝나지 않은 유저와 서로 승부하려하면 예외를 발생시킨다.")
+    void outcomeResultException() {
+        final Player player = ParticipatingPlayer.init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Player dealer = Dealer.init(createCards(Card.of(HEART, TEN), Card.of(HEART, SEVEN)));
+        assertThatThrownBy(() -> player.fightResult(dealer))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("턴이 종료되지 않아 비교할 수 없습니다.");
     }
 }

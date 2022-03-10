@@ -79,7 +79,14 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public GameOutcome fightResult(final Player player) {
+        validateFightGame(player);
         return cards.fightResult(new Cards(player.cards()));
+    }
+
+    private void validateFightGame(final Player player) {
+        if (this.canDraw() || player.canDraw()) {
+            throw new IllegalStateException("턴이 종료되지 않아 비교할 수 없습니다.");
+        }
     }
 
     @Override

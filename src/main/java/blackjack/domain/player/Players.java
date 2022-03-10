@@ -1,13 +1,15 @@
 package blackjack.domain.player;
 
+import blackjack.domain.GameOutcome;
 import blackjack.domain.card.Card;
+import blackjack.dto.OutComeResult;
 import blackjack.dto.PlayerInfo;
 import blackjack.dto.PlayerResultInfo;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Players {
 
@@ -83,7 +85,12 @@ public class Players {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public Stream<Player> players() {
-        return players.stream();
+    public OutComeResult outcomeResult(Player dealer) {
+        return OutComeResult.from(calculateOutcomeResultWithDealer(dealer));
+    }
+
+    private Map<String, GameOutcome> calculateOutcomeResultWithDealer(final Player dealer) {
+        return players.stream()
+                .collect(Collectors.toUnmodifiableMap(Player::getName, player -> player.fightResult(dealer)));
     }
 }
