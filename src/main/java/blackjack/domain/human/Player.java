@@ -3,17 +3,14 @@ package blackjack.domain.human;
 import static blackjack.util.Constants.BLACKJACK_NUMBER;
 
 import blackjack.domain.Result;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import java.util.Objects;
 
 public class Player extends Human {
-    private final Name name;
-    private final Cards cards;
     private Result result;
 
     private Player(String name) {
-        this.name = Name.of(name);
-        this.cards = Cards.of();
+        super(Cards.of(), name);
     }
 
     public static Player of(String name) {
@@ -56,18 +53,20 @@ public class Player extends Human {
     }
 
     @Override
-    public String getName() {
-        return name.get();
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return result == player.result;
     }
 
     @Override
-    public Cards getCards() {
-        return cards;
-    }
-
-    @Override
-    public void addCard(final Card card) {
-        cards.add(card);
+    public int hashCode() {
+        return Objects.hash(result);
     }
 
     @Override

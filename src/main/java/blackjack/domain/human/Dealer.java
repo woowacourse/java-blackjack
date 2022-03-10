@@ -1,16 +1,13 @@
 package blackjack.domain.human;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.Objects;
 
 public class Dealer extends Human {
-    private static final String DEALER_NAME = "딜러";
-    public static final int HIT_STANDARD_NUMBER = 16;
-    private final Cards cards;
+    private static final int HIT_STANDARD_NUMBER = 16;
 
     private Dealer() {
-        this.cards = Cards.of();
+        super(Cards.of(), "딜러");
     }
 
     public static Dealer of() {
@@ -20,21 +17,6 @@ public class Dealer extends Human {
     @Override
     public boolean isAbleToHit() {
         return cards.getPoint() <= HIT_STANDARD_NUMBER;
-    }
-
-    @Override
-    public String getName() {
-        return DEALER_NAME;
-    }
-
-    @Override
-    public void addCard(final Card card) {
-        cards.add(card);
-    }
-
-    @Override
-    public Cards getCards() {
-        return cards;
     }
 
     @Override
