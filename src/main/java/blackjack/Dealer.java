@@ -1,13 +1,15 @@
 package blackjack;
 
+import blackjack.cards.Cards;
+import blackjack.cards.ChangeableCards;
+import blackjack.cards.MixHandCards;
+
 public class Dealer {
 
-    private final MixHandCards mixHandCards;
-    private final SoftHandCards softHandCards;
+    private final ChangeableCards cards;
 
     public Dealer(Card... cards) {
-        this.mixHandCards = new MixHandCards(cards);
-        this.softHandCards = new SoftHandCards(cards);
+        this.cards = Cards.softHandCards(cards);
     }
 
     public Result judge(MixHandCards cards) {
@@ -22,7 +24,7 @@ public class Dealer {
     }
 
     private Score dealerScore() {
-        return mixHandCards.score();
+        return cards.toMixHand().score();
     }
 
     private Result compare(Score playerScore) {
@@ -36,6 +38,6 @@ public class Dealer {
     }
 
     public boolean isPossibleTakeCard() {
-        return softHandCards.score().lessThan(new Score(17));
+        return cards.score().lessThan(new Score(17));
     }
 }
