@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
-    public static final int BLACK_JACK_NUMBER = 21;
+    public static final int BLACK_JACK_TARGET_NUMBER = 21;
     private static final int BLACK_JACK_SIZE = 2;
 
     private final List<Card> cards;
@@ -44,10 +44,6 @@ public class Cards {
         return cards.size();
     }
 
-    public boolean isBust() {
-        return calculateScore() > BLACK_JACK_NUMBER;
-    }
-
     public List<Card> cards() {
         return List.copyOf(cards);
     }
@@ -70,6 +66,10 @@ public class Cards {
         return WIN;
     }
 
+    private boolean isBust() {
+        return calculateScore() > BLACK_JACK_TARGET_NUMBER;
+    }
+
     private GameOutcome blackJackGameFightResult(final Cards compareCards) {
         if (this.isBlackJack() && compareCards.isBlackJack()) {
             return DRAW;
@@ -80,6 +80,6 @@ public class Cards {
     }
 
     private boolean isBlackJack() {
-        return cards.size() == BLACK_JACK_SIZE && calculateScore() == BLACK_JACK_NUMBER;
+        return cards.size() == BLACK_JACK_SIZE && calculateScore() == BLACK_JACK_TARGET_NUMBER;
     }
 }

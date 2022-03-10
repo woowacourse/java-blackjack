@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Cards.BLACK_JACK_NUMBER;
+import static blackjack.domain.card.Cards.BLACK_JACK_TARGET_NUMBER;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +48,7 @@ public enum CardNumber {
     private static int calculateScore(final List<CardNumber> numbers, final int defaultScore, final int startScore) {
         return IntStream.range(0, calculateAceCount(numbers))
                 .map(aceCount -> decreaseByAceCount(startScore, aceCount))
-                .filter(CardNumber::isLowerThanBlackJack)
+                .filter(CardNumber::isLowerThanBlackJackTargetNumber)
                 .findFirst()
                 .orElse(defaultScore);
     }
@@ -69,8 +69,8 @@ public enum CardNumber {
         return startScore - aceCount * ACE_BONUS_VALUE;
     }
 
-    private static boolean isLowerThanBlackJack(final int sumCount) {
-        return sumCount <= BLACK_JACK_NUMBER;
+    private static boolean isLowerThanBlackJackTargetNumber(final int sumCount) {
+        return sumCount <= BLACK_JACK_TARGET_NUMBER;
     }
 
     public String getPrintValue() {
