@@ -11,9 +11,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class CardRankTest {
+
     private static final int RANK_LENGTH = 13;
 
-    @DisplayName("CardRank 인스턴스가 13개 생성된다.")
+    @DisplayName("애플리케이션 실행 시점에 CardRank 인스턴스가 13개 생성된다.")
     @Test
     void init() {
         int actual = CardRank.values().length;
@@ -21,7 +22,7 @@ public class CardRankTest {
         assertThat(actual).isEqualTo(RANK_LENGTH);
     }
 
-    @DisplayName("getDisplayName 은 카드 랭크의 이름을 반환한다.")
+    @DisplayName("getDisplayName 메서드는 카드 랭크의 이름을 반환한다.")
     @Test
     void getDisplayName() {
         List<CardRank> ranks = List.of(CardRank.values());
@@ -34,7 +35,7 @@ public class CardRankTest {
         }
     }
 
-    @DisplayName("ACE 는 기본값으로 11의 Score 를 지닌다.")
+    @DisplayName("ACE는 기본값으로 11의 Score를 지닌다.")
     @Test
     void getValue_Ace() {
         Score actual = CardRank.ACE.getValue();
@@ -43,7 +44,7 @@ public class CardRankTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("TWO ~ TEN 은 각각 대응되는 값의 Score 를 지닌다.")
+    @DisplayName("TWO부터 TEN까지는 각각 대응되는 값을 Score로 지닌다.")
     @ParameterizedTest(name = "[{index}] 랭크: {0}, 값: {1}")
     @CsvSource(value = {"TWO,2", "THREE,3", "FOUR,4", "FIVE,5", "SIX,6", "SEVEN,7", "EIGHT,8", "NINE,9", "TEN,10"})
     void getValue_TwoToTen(String rankName, int value) {
@@ -55,7 +56,7 @@ public class CardRankTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("JACK, QUEEN, KING 은 값으로 10의 Score 를 지닌다.")
+    @DisplayName("JACK, QUEEN, KING은 값으로 10의 Score를 지닌다.")
     @ParameterizedTest(name = "[{index}] 랭크: {0}, 값: 10")
     @ValueSource(strings = {"JACK", "QUEEN", "KING"})
     void getValue_JackQueenKing(String rankName) {

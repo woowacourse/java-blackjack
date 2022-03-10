@@ -24,7 +24,7 @@ public class BlackjackGameTest {
 
     private static final List<String> playerNames = List.of("hudi", "jeong");
 
-    @DisplayName("생성자는 1명 이상의 플레이어명을 가변 인자로 받아 게임을 생성한다.")
+    @DisplayName("생성자는 1명 이상의 플레이어명을 리스트로 받아 게임을 생성한다.")
     @Test
     void constructor_initsGameWithPlayerNames() {
         BlackjackGame blackjackGame = new BlackjackGame(new CardDeck(), playerNames);
@@ -36,7 +36,7 @@ public class BlackjackGameTest {
         assertThat(participants.get(1).getName()).isEqualTo("jeong");
     }
 
-    @DisplayName("생성자에 플레이어명이 입력되지 않으면 예외가 발생한다.")
+    @DisplayName("생성자 파라미터에 들어오는 플레이어명 리스트가 비어있으면 예외가 발생한다.")
     @Test
     void constructor_throwsExceptionOnNoPlayerNameInput() {
         assertThatThrownBy(() -> new BlackjackGame(new CardDeck(), List.of()))

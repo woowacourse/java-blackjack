@@ -16,7 +16,7 @@ public class ResultCountTest {
         assertThat(actual).isZero();
     }
 
-    @DisplayName("increment 를 통해 값을 1씩 증가시킬 수 있다.")
+    @DisplayName("increment 메서드를 통해 값을 1씩 증가시킬 수 있다.")
     @Test
     void increment() {
         ResultCount resultCount = new ResultCount();

@@ -20,11 +20,16 @@ public class CardStackGenerator {
 
         public Card pop() {
             Card newCard = cards.pollFirst();
-            if (newCard == null) {
-                throw new IllegalArgumentException("카드 스택이 비어있습니다!");
-            }
+
+            validateEmptyStack(newCard);
 
             return newCard;
+        }
+    }
+
+    private static void validateEmptyStack(Card newCard) {
+        if (newCard == null) {
+            throw new IllegalArgumentException("카드 스택이 비어있습니다!");
         }
     }
 }

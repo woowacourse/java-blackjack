@@ -7,7 +7,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardTest {
-    @DisplayName("정적 팩토리 메소드 of 로 새로운 카드를 생성한다.")
+
+    @DisplayName("정적 팩토리 메서드 of는 새로운 카드 인스턴스를 생성한다.")
     @Test
     void of_createNewCard() {
         Card card = Card.of(CardRank.ACE, CardSymbol.CLOVER);
@@ -15,7 +16,7 @@ public class CardTest {
         assertThat(card).isNotNull();
     }
 
-    @DisplayName("정적 팩토리 메소드 of 는 캐싱된 카드를 가져온다.")
+    @DisplayName("정적 팩토리 메소드 of는 캐싱된 카드 인스턴스를 가져온다.")
     @Test
     void of_getCache() {
         Card card = Card.of(CardRank.ACE, CardSymbol.CLOVER);
@@ -24,7 +25,7 @@ public class CardTest {
         assertThat(card).isEqualTo(sameCard);
     }
 
-    @DisplayName("getRankValue 는 카드 랭크에 담긴 값을 가져온다.")
+    @DisplayName("getRankValue 메서드는 카드 랭크에 담긴 값을 가져온다.")
     @Test
     void getRankValue() {
         Card card = Card.of(CardRank.FIVE, CardSymbol.CLOVER);
@@ -35,7 +36,7 @@ public class CardTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("getName 은 카드의 이름을 반환한다.")
+    @DisplayName("getName 메서드는 카드의 이름을 반환한다.")
     @Test
     void getName() {
         Card card = Card.of(CardRank.FIVE, CardSymbol.CLOVER);

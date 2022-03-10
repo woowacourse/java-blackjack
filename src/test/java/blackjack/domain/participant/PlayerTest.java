@@ -25,13 +25,7 @@ public class PlayerTest {
         player = Player.of("hudi", cardBundle);
     }
 
-    @DisplayName("Player 인스턴스가 생성된다.")
-    @Test
-    void of() {
-        assertThat(player).isNotNull();
-    }
-
-    @DisplayName("Card 를 전달받아 CardBundle 에 추가할 수 있다.")
+    @DisplayName("카드를 전달받아 cardBundle에 추가할 수 있다.")
     @Test
     void receiveCard() {
         player.receiveCard(CLOVER6);
@@ -41,7 +35,7 @@ public class PlayerTest {
         assertThat(actual).containsExactlyInAnyOrder(CLOVER4, CLOVER5, CLOVER6);
     }
 
-    @DisplayName("Score 가 21을 넘지 않으면 true 를 반환한다.")
+    @DisplayName("점수가 21을 넘지 않으면 true를 반환한다.")
     @Test
     void canReceive_returnTrueOnLessThan21() {
         boolean actual = player.canReceive();
@@ -49,7 +43,7 @@ public class PlayerTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("Score 가 21이면 true 를 반환한다.")
+    @DisplayName("점수가 21이면 true를 반환한다.")
     @Test
     void canReceive_returnTrueOn21() {
         player.receiveCard(CLOVER2);
@@ -60,7 +54,7 @@ public class PlayerTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("Score 가 21을 초과하면 false 를 반환한다.")
+    @DisplayName("점수가 21을 초과하면 false를 반환한다.")
     @Test
     void canReceive_returnFalseOnGreaterThan21() {
         player.receiveCard(CLOVER10);

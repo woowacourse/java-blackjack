@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class ScoreTest {
 
-    @DisplayName("정적 팩토리 메소드 valueOf 로 새로운 점수 인스턴스를 생성한다.")
+    @DisplayName("정적 팩토리 메소드 valueOf로 새로운 점수 인스턴스를 생성한다.")
     @Test
     void valueOf_createNewScore() {
         Score score = Score.valueOf(1);
@@ -16,7 +16,7 @@ public class ScoreTest {
         assertThat(score).isNotNull();
     }
 
-    @DisplayName("정적 팩토리 메소드 valueOf 는 캐싱된 점수 인스턴스를 가져온다.")
+    @DisplayName("정적 팩토리 메소드 valueOf는 캐싱된 점수 인스턴스를 가져온다.")
     @Test
     void valueOf_getCache() {
         Score score = Score.valueOf(10);
@@ -25,7 +25,7 @@ public class ScoreTest {
         assertThat(score).isEqualTo(sameScore);
     }
 
-    @DisplayName("인스턴스 메서드 add 는 다른 Score 인스턴스를 받아 더한 값의 Score 인스턴스를 반환한다.")
+    @DisplayName("add 메서드는 다른 Score 인스턴스를 받아 자신과 더한 값의 Score 인스턴스를 반환한다.")
     @Test
     void add() {
         Score score = Score.valueOf(10);
@@ -36,10 +36,10 @@ public class ScoreTest {
         assertThat(newScore.toInt()).isEqualTo(25);
     }
 
-    @DisplayName("compareTo 는 각 점수 인스턴스의 크기를 비교한다.")
+    @DisplayName("각 Score 인스턴스의 크기를 비교할 수 있다.")
     @Nested
     class CompareToTest {
-        @DisplayName("기준 인스턴스의 value 값이 비교 대상보다 더 클 경우 양수를 반환한다.")
+        @DisplayName("compareTo 메서드는 자신의 value 값이 비교 대상보다 더 클 경우 양수를 반환한다.")
         @Test
         void compareTo_returnPositiveIfBiggerThanTarget() {
             Score score = Score.valueOf(15);
@@ -50,7 +50,7 @@ public class ScoreTest {
             assertThat(actual).isPositive();
         }
 
-        @DisplayName("기준 인스턴스의 value 값이 비교 대상과 동일한 경우 0을 반환한다.")
+        @DisplayName("compareTo 메서드는 자신의 value 값이 비교 대상과 동일한 경우 0을 반환한다.")
         @Test
         void compareTo_returnZeroIfSameAsTarget() {
             Score score = Score.valueOf(10);
@@ -61,7 +61,7 @@ public class ScoreTest {
             assertThat(actual).isZero();
         }
 
-        @DisplayName("기준 인스턴스의 value 값이 비교 대상보다 더 작을 경우 음수를 반환한다.")
+        @DisplayName("compareTo 메서드는 자신의 value 값이 비교 대상보다 더 작을 경우 음수를 반환한다.")
         @Test
         void compareTo_returnNegativeIfSmallerThanTarget() {
             Score score = Score.valueOf(15);

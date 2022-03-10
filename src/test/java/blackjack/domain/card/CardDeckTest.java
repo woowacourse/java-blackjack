@@ -12,17 +12,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardDeckTest {
+
     private CardDeck cardDeck;
 
     @BeforeEach
     void setUp() {
         cardDeck = new CardDeck();
-    }
-
-    @DisplayName("CardDeck 인스턴스가 생성된다.")
-    @Test
-    void constructor() {
-        assertThat(cardDeck).isNotNull();
     }
 
     @DisplayName("pop 메서드는 서로 중복되지 않는 카드를 카드덱에서 뽑아온다.")

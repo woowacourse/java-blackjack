@@ -41,7 +41,7 @@ public class CardBundleTest {
                 .withMessage("중복된 카드는 존재할 수 없습니다.");
     }
 
-    @DisplayName("getScore 는 각 카드가 지닌 값들의 합을 합산하여 반환한다.")
+    @DisplayName("getScore 메서드는 각 카드가 지닌 값들의 합을 합산하여 반환한다.")
     @Test
     void getScore() {
         CardBundle cardBundle = CardBundle.of(CLOVER4, CLOVER5);

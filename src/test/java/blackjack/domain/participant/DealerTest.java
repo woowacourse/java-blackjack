@@ -25,7 +25,7 @@ public class DealerTest {
         dealer = Dealer.of(cardBundle);
     }
 
-    @DisplayName("Card 를 전달받아 CardBundle 에 추가할 수 있다.")
+    @DisplayName("카드를 전달받아 cardBundle에 추가할 수 있다.")
     @Test
     void receiveCard() {
         dealer.receiveCard(CLOVER6);
@@ -45,7 +45,7 @@ public class DealerTest {
                 .hasMessage("딜러는 최대 3장의 카드만 지닐 수 있습니다.");
     }
 
-    @DisplayName("Score 가 16을 넘지 않으면 true 를 반환한다.")
+    @DisplayName("점수가 16을 넘지 않으면 true를 반환한다.")
     @Test
     void canReceive_returnTrueOnLessThan16() {
         dealer.receiveCard(CLOVER6);
@@ -54,7 +54,7 @@ public class DealerTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("Score 가 16이면 true 를 반환한다.")
+    @DisplayName("점수가 16이면 true를 반환한다.")
     @Test
     void canReceive_returnTrueOn16() {
         dealer.receiveCard(CLOVER7);
@@ -64,7 +64,7 @@ public class DealerTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("Score 가 17 이상이면 false 를 반환한다.")
+    @DisplayName("점수가 17 이상이면 false를 반환한다.")
     @Test
     void canReceive_returnFalseOnGreaterThan16() {
         dealer.receiveCard(CLOVER8);

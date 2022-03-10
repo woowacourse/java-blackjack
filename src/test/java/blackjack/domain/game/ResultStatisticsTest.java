@@ -25,7 +25,7 @@ public class ResultStatisticsTest {
     @ParameterizedTest(name = "[{index}] {0}를 1씩 증가시킬 수 있다.")
     @ValueSource(strings = {"WIN", "LOSE", "DRAW"})
     void incrementCountOf(String key) {
-        ResultStatistics stats = ResultStatistics.of("hudi");
+        ResultStatistics stats = ResultStatistics.of(DEFAULT_PLAYER_NAME);
         for (int i = 0; i < 3; i++) {
             stats.incrementCountOf(ResultType.valueOf(key));
         }
