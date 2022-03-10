@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public abstract class AbstractPlayer implements Player {
 
+    private static final int FIRST_DRAW_CARD_SIZE = 2;
+
     private final String name;
     private final Cards cards;
     private boolean turnState;
@@ -23,7 +25,7 @@ public abstract class AbstractPlayer implements Player {
     }
 
     private void validateCardsSize(final Cards cards) {
-        if (cards.size() != 2) {
+        if (cards.size() != FIRST_DRAW_CARD_SIZE) {
             throw new IllegalArgumentException("카드의 크기는 2장이 들어와야 합니다.");
         }
     }

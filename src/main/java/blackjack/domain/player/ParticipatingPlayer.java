@@ -7,6 +7,8 @@ import java.util.List;
 
 public class ParticipatingPlayer extends AbstractPlayer {
 
+    private static final int INIT_CARD_SIZE = 2;
+
     private ParticipatingPlayer(final String name, final Cards cards, final boolean turnState) {
         super(name, cards, turnState);
     }
@@ -17,7 +19,7 @@ public class ParticipatingPlayer extends AbstractPlayer {
 
     @Override
     public List<Card> initCards() {
-        return List.copyOf(cards().subList(0, 2));
+        return List.copyOf(cards().subList(0, INIT_CARD_SIZE));
     }
 
     @Override

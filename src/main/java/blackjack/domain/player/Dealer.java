@@ -9,6 +9,7 @@ public class Dealer extends AbstractPlayer {
 
     private static final String NAME = "딜러";
     private static final int DEALER_LIMIT_SCORE = 17;
+    private static final int INIT_CARD_SIZE = 1;
 
     private Dealer(final String name, final Cards cards, final boolean turnState) {
         super(name, cards, turnState);
@@ -24,7 +25,7 @@ public class Dealer extends AbstractPlayer {
 
     @Override
     public List<Card> initCards() {
-        return List.copyOf(super.cards().subList(0, 1));
+        return List.copyOf(super.cards().subList(0, INIT_CARD_SIZE));
     }
 
     @Override
