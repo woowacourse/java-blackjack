@@ -12,19 +12,20 @@ public class Dealer extends Participant {
         super(NAME);
     }
 
-    public List<Integer> checkWinCount(Players players) {
+    public List<Integer> checkResult(Players players) {
         List<Result> playersResult = players.checkPlayersResult(this);
 
-        int winCount = (int) playersResult.stream()
-            .filter(result -> result == Result.LOSE)
-            .count();
-
-        int loseCount = (int) playersResult.stream()
-            .filter(result -> result == Result.WIN)
-            .count();
-
+        int winCount = countTargetResult(playersResult, Result.LOSE);
+        int loseCount = countTargetResult(playersResult, Result.WIN);
         int drawCount = players.getSize() - winCount - loseCount;
+
         return Arrays.asList(winCount, drawCount, loseCount);
+    }
+
+    private int countTargetResult(List<Result> playersResult, Result targetResult) {
+        return (int) playersResult.stream()
+            .filter(result -> result == targetResult)
+            .count();
     }
 
     @Override

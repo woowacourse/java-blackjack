@@ -64,7 +64,7 @@ public class BlackJackController {
     }
 
     private void showResult(Players players, Dealer dealer) {
-        outputView.showResult(dealer.checkWinCount(players), players.toNames(),
+        outputView.showResult(dealer.checkResult(players), players.toNames(),
             players.checkPlayersResult(dealer));
     }
 }
