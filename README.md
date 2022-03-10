@@ -49,8 +49,9 @@
     - [ ] 최종 승패 출력
   
 
-## 오후에 할일! (이브먼)저
+## 오후에 할일! (이브먼저)
 
-SoftHandCards 테스트 작성
 Card 테스트 추가
-Cards와 ChageableCards 적용
+
+// SoftHandCards 테스트 작성
+// Cards와 ChageableCards 적용
