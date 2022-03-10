@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.Statistic;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Human;
 import blackjack.domain.human.Player;
@@ -8,14 +9,22 @@ import blackjack.domain.human.Players;
 
 public class OutputView {
 
+    public static final String HAVE_CARD = "카드: ";
+    public static final String RESULT_PREFIX = " - 결과 : ";
+    public static final String DEALER_NO_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    public static final String TOTAL_RESULT_MASSAGE = "## 최종 승패";
+    public static final String DEALER_RESULT_PREFIX = "딜러: ";
+    public static final String COUNT_JOIN_DELIMITER = " ";
+    public static final String PLAYER_RESULT_DELIMITER = ": ";
+    public static final String INIT_CARD_MESSAGE = "%s와 %s에게 2장의 카드를 나누었습니다.";
+
     public static void printInitCardState(Players players, Dealer dealer) {
-        System.out.printf(System.lineSeparator() + "%s와 %s에게 2장의 카드를 나누었습니다."
-                + System.lineSeparator(),
+        System.out.printf(System.lineSeparator() + INIT_CARD_MESSAGE + System.lineSeparator(),
             dealer.getName(), players.getPlayerNames());
     }
 
     public static void printHumanCardState(Human human) {
-        String result = human.getName() + "카드: " + human.getCards().toString();
+        String result = human.getName() + HAVE_CARD + human.getCards().toString();
         System.out.println(result);
     }
 
@@ -38,35 +47,27 @@ public class OutputView {
 
     public static void printHumanCardPointState(Human human) {
         String result =
-            human.getName() + "카드: " + human.getCards().toString() + " - 결과 : " + human.getPoint();
+            human.getName() + HAVE_CARD + human.getCards().toString() + RESULT_PREFIX + human.getPoint();
         System.out.println(result);
     }
 
     public static void printDealerCardAdded() {
-        System.out.println(System.lineSeparator() + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(System.lineSeparator() + DEALER_NO_MORE_CARD_MESSAGE);
     }
 
-    public static void printResult(Players players) {
-        System.out.println(System.lineSeparator() + "## 최종 승패");
-        String dealerResult = "";
-        int win = 0;
-        int draw = 0;
-        int lose = 0;
-        for (Player player : players.getPlayers()) {
-            String playerStatus = player.getName() + ": ";
-            playerStatus += player.getResult().getResult();
-            dealerResult += playerStatus + System.lineSeparator();
-            if (player.getResult().equals(GameResult.WIN)) {
-                lose++;
-                continue;
-            }
-            if (player.getResult().equals(GameResult.LOSE)) {
-                win++;
-                continue;
-            }
-            draw++;
+    public static void printTotalResult(Statistic statistic) {
+        System.out.println(System.lineSeparator() + TOTAL_RESULT_MASSAGE);
+        StringBuilder dealerResult = new StringBuilder(DEALER_RESULT_PREFIX);
+        for (GameResult gameResult : GameResult.values()) {
+            dealerResult.append(
+                statistic.getCountByGameResult(gameResult) + gameResult.getResult() + COUNT_JOIN_DELIMITER);
         }
-        String start = "딜러: " + win + "승 " + draw + "무 " + lose + "패" + System.lineSeparator();
-        System.out.println(start + dealerResult);
+        System.out.println(dealerResult);
+    }
+
+    public static void printTotalResultByPlayer(Statistic statistic, Players players) {
+        for (Player player : players.getPlayers()) {
+            System.out.println(player.getName() + PLAYER_RESULT_DELIMITER + statistic.getGameResultByPlayer(player));
+        }
     }
 }

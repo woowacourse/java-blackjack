@@ -27,8 +27,8 @@ public class GameController {
 
         OutputView.printCardAndPoint(players, dealer);
 
-        Statistic.of(dealer, players).calculate();
-        printGameResult(players);
+        Statistic statistic = Statistic.of(dealer, players);
+        printGameResult(statistic, players);
     }
 
     private Dealer initDealer(CardDeck cardDeck) {
@@ -88,7 +88,8 @@ public class GameController {
         }
     }
 
-    private void printGameResult(Players players) {
-        OutputView.printResult(players);
+    private void printGameResult(Statistic statistic, Players players) {
+        OutputView.printTotalResult(statistic);
+        OutputView.printTotalResultByPlayer(statistic, players);
     }
 }
