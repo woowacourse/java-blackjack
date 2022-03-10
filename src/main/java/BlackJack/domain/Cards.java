@@ -19,4 +19,24 @@ public class Cards {
         deck.add(card);
     }
 
+    public int calculateScore() {
+        int score = deck.stream()
+                .mapToInt(card -> card.getNumber().getValue())
+                .sum();
+
+        return addAceScore(score);
+    }
+
+    private int addAceScore(int score) {
+        long countAce = deck.stream()
+                .filter(card -> card.getNumber().getDenomination().equals("A"))
+                .count();
+
+        for(int i = 0; i < countAce; i++){
+            if(score + EXTRA_SCORE <= BUST_LINE){
+                score += EXTRA_SCORE;
+            }
+        }
+        return score;
+    }
 }
