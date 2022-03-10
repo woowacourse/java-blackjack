@@ -23,6 +23,8 @@ public enum CardNumber {
     KING(10, "K"),
     ;
 
+    private static final int ACE_BONUS_VALUE = 10;
+
     private final int defaultValue;
     private final String printValue;
 
@@ -36,7 +38,7 @@ public enum CardNumber {
     }
 
     public static int calculateScore(final List<CardNumber> numbers) {
-        final int bonusMaxScore = calculateAceCount(numbers) * 10;
+        final int bonusMaxScore = calculateAceCount(numbers) * ACE_BONUS_VALUE;
         final int defaultScore = sumDefaultScore(numbers);
         final int startScore = defaultScore + bonusMaxScore;
 
@@ -64,7 +66,7 @@ public enum CardNumber {
     }
 
     private static int decreaseByAceCount(final int startScore, final int aceCount) {
-        return startScore - aceCount * 10;
+        return startScore - aceCount * ACE_BONUS_VALUE;
     }
 
     private static boolean isLowerThanBlackJack(final int sumCount) {
