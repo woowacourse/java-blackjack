@@ -43,4 +43,8 @@ public class Dealer extends Human {
     public List<String> getInitCard() {
         return cards.getDealerInitCard();
     }
+
+    public boolean isBurst() {
+        return cards.isOverBlackjack();
+    }
 }

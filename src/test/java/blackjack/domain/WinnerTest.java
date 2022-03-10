@@ -25,7 +25,7 @@ class WinnerTest {
 
     @DisplayName("플레이어의 카드합이 21을 넘길 경우 승자에 포함되지 않는 것을 확인한다.")
     @Test
-    void burst() {
+    void burst_player() {
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade));
         Dealer dealer = new Dealer();
         dealer.receiveInitCard(dealerCards);
@@ -89,5 +89,22 @@ class WinnerTest {
         winner.compare(dealer, player);
 
         assertThat(winner.contains(player)).isFalse();
+    }
+
+    @DisplayName("플레이어가 21을 초과하지 않았을 때 딜러가 21을 초과할 경우 승자를 확인한다.")
+    @Test
+    void burst_dealer() {
+        List<Card> dealerCards = new ArrayList<>(List.of(queenSpade, queenSpade, queenSpade));
+        Dealer dealer = new Dealer();
+        dealer.receiveInitCard(dealerCards);
+
+        List<Card> playerCards = new ArrayList<>(List.of(twoSpade, twoSpade, twoSpade));
+        Player player = new Player("pobi");
+        player.receiveInitCard(playerCards);
+
+        Winner winner = new Winner();
+        winner.compare(dealer, player);
+
+        assertThat(winner.contains(player)).isTrue();
     }
 }

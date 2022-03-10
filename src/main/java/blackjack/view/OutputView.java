@@ -38,7 +38,6 @@ public class OutputView {
     }
 
     public static void printTakeDealerCardsMessage(final String name, final int maximum) {
-        printNewLine();
         System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.", name, maximum);
         printNewLine();
     }
@@ -46,5 +45,26 @@ public class OutputView {
     public static void printResult(final String name, final List<String> cards, final int total) {
         printCard(name, cards);
         System.out.printf(" - 결과: %d", total);
+    }
+
+    public static void printWinnerTitle() {
+        System.out.println("## 최종 승패");
+    }
+
+    public static void printDealerScore(final String name, final int winPlayersCount, final int losePlayersCount) {
+        System.out.printf("%s: %d승 %d패", name, winPlayersCount, losePlayersCount);
+        printNewLine();
+    }
+
+    public static void printPlayerScore(final String name, final boolean result) {
+        System.out.printf("%s: %s", name, getResult(result));
+        printNewLine();
+    }
+
+    private static String getResult(final boolean result) {
+        if (result) {
+            return "승";
+        }
+        return "패";
     }
 }

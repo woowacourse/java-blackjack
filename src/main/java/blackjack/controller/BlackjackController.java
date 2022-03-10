@@ -1,9 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.CardMachine;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -23,6 +20,7 @@ public class BlackjackController {
         distributeCardToDealer(dealer, cardMachine);
 
         openResult(dealer, players);
+        win(dealer, players);
     }
 
     private Players createPlayers() {
@@ -64,6 +62,7 @@ public class BlackjackController {
             OutputView.printCard(player.getName(), player.getCards());
             OutputView.printNewLine();
         }
+        OutputView.printNewLine();
     }
 
     private boolean isReceived(final Player player) {
@@ -99,6 +98,29 @@ public class BlackjackController {
         for (Player player : players.getPlayers()) {
             OutputView.printResult(player.getName(), player.getCards(), player.getTotal());
             OutputView.printNewLine();
+        }
+        OutputView.printNewLine();
+    }
+
+    private void win(final Dealer dealer, final Players players) {
+        Winner winner = new Winner();
+        for (Player player : players.getPlayers()) {
+            winner.compare(dealer, player);
+        }
+        OutputView.printWinnerTitle();
+        winDealer(winner, players);
+        winPlayers(winner, players);
+    }
+
+    private void winDealer(final Winner winner, final Players players) {
+        int winPlayersCount = winner.winPlayersCount();
+        int losePlayersCount = players.getPlayerCount() - winner.winPlayersCount();
+        OutputView.printDealerScore(Dealer.getName(), losePlayersCount, winPlayersCount);
+    }
+
+    private void winPlayers(final Winner winner, final Players players) {
+        for (Player player : players.getPlayers()) {
+            OutputView.printPlayerScore(player.getName(), winner.contains(player));
         }
     }
 }

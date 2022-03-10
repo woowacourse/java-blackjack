@@ -11,9 +11,13 @@ public class Winner {
         if (player.isBurst()) {
             return;
         }
-        if (!(dealer.compare(player))) {
+        if (dealer.isBurst() || !(dealer.compare(player))) {
             winners.add(player);
         }
+    }
+
+    public int winPlayersCount() {
+        return winners.size();
     }
 
     public boolean contains(final Player player) {
