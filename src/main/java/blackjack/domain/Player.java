@@ -6,11 +6,11 @@ public class Player {
 
     private static final int PLAYING_STANDARD = 21;
 
-    private final String name;
+    private final Name name;
     private final Cards cards;
 
     public Player(String name, List<Card> cards) {
-        this.name = name;
+        this.name = new Name(name);
         this.cards = new Cards(cards);
     }
 
@@ -38,7 +38,7 @@ public class Player {
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     public List<Card> getCards() {
