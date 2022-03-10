@@ -12,12 +12,16 @@ public abstract class User {
     private static final int BLACKJACK_NUMBER = 21;
 
     protected final List<Card> cards;
-    protected final String name;
+    protected final Name name;
     protected int score = 0;
 
-    protected User(String name) {
-        cards = new ArrayList<>();
+    protected User(Name name) {
+        this.cards = new ArrayList<>();
         this.name = name;
+    }
+
+    protected User(String input) {
+        this(new Name(input));
     }
 
     public void drawInitCards(Deck deck) {
@@ -38,7 +42,7 @@ public abstract class User {
     public abstract boolean isDrawable();
 
     public String getName(){
-        return name;
+        return name.getName();
     }
 
     public void calculate(Rule rule) {
