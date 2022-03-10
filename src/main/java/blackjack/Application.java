@@ -5,12 +5,13 @@ import static java.util.stream.Collectors.*;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
+import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 public class Application {
 
@@ -30,6 +31,9 @@ public class Application {
         drawDealer(deck, dealer);
 
         OutputView.printResultInfo(dealer, players);
+
+        OutputView.printDealerGameResult(createDealerResult(players, dealer));
+        OutputView.printPlayerGameResult(createPlayerResult(players, dealer));
     }
 
     public static void playing(Deck deck, Player player) {
@@ -52,5 +56,17 @@ public class Application {
             OutputView.printDealerDrawableInfo();
             dealer.combine(deck.draw());
         }
+    }
+
+    public static Map<String, GameResult> createPlayerResult(List<Player> players, Dealer dealer) {
+        return players.stream()
+                .collect(toMap(player -> player.getName(),
+                        player -> player.createResult(dealer.getTotalScore())));
+    }
+
+
+    public static Map<GameResult, Long> createDealerResult(List<Player> players, Dealer dealer) {
+        return players.stream()
+                .collect(groupingBy(player -> dealer.createResult(player.getTotalScore()), counting()));
     }
 }
