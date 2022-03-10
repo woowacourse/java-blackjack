@@ -1,6 +1,11 @@
 package model;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toMap;
+
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import model.cardbehavior.EveryCardsBehavior;
 
@@ -62,5 +67,12 @@ public class Participators {
         }
         dealer.setBehavior(new EveryCardsBehavior());
         return dealer;
+    }
+
+    public Map<PlayerName, Result> matchAll() {
+        Dealer dealer = findDealer();
+        return participators.stream()
+                .filter(participator -> participator instanceof Player)
+                .collect(toMap(player -> player.getPlayerName(), player -> dealer.matchWith(player)));
     }
 }

@@ -1,14 +1,19 @@
 package service;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
-import dto.InitGameDto;
+import dto.AllParticipatorsDto;
 import dto.NamesDto;
 import dto.ParticipatorDto;
+import dto.TotalResultDto;
 import java.util.List;
+import java.util.Map;
 import model.CardDeck;
 import model.Participator;
 import model.Participators;
+import model.PlayerName;
+import model.Result;
 import util.CardConvertor;
 
 public class BlackJackService {
@@ -17,11 +22,11 @@ public class BlackJackService {
     private Participators participators;
     private CardDeck cardDeck;
 
-    public InitGameDto initGame(NamesDto namesDto) {
+    public AllParticipatorsDto initGame(NamesDto namesDto) {
         cardDeck = new CardDeck();
         initParticipators(namesDto);
         drawTwoCardsAll();
-        return new InitGameDto(getParticipatorDtos(), convertParticipatorToDto(participators.findDealer()));
+        return new AllParticipatorsDto(getParticipatorDtos(), convertParticipatorToDto(participators.findDealer()));
     }
 
     private List<ParticipatorDto> getParticipatorDtos() {
@@ -69,5 +74,21 @@ public class BlackJackService {
 
     public ParticipatorDto tryToHitForDealer() {
         return convertParticipatorToDto(participators.tryToHitForDealer(cardDeck));
+    }
+
+    public TotalResultDto match() {
+        Map<PlayerName, Result> playerMatchResults = participators.matchAll();
+        Map<String, String> playerMatchResultsDto = playerMatchResults.entrySet().stream()
+                .collect(toMap(entry -> entry.getKey().getValue(), entry -> entry.getValue().name()));
+        List<Result> playersResults = playerMatchResults.values().stream()
+                .collect(toList());
+        long playerWinCount = countPlayersResults(playersResults, Result.WIN);
+        long playerLoseCount = countPlayersResults(playersResults, Result.LOSE);
+        long playerDrawCount = countPlayersResults(playersResults, Result.DRAW);
+        return new TotalResultDto(playerWinCount, playerLoseCount, playerDrawCount, playerMatchResultsDto);
+    }
+
+    private long countPlayersResults(List<Result> playersResults, Result target) {
+        return playersResults.stream().filter(result -> result.equals(target)).count();
     }
 }

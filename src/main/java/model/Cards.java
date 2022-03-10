@@ -68,6 +68,9 @@ public class Cards {
         return Status.of(cards.size(), getSum());
     }
 
+    public boolean isBusted() {
+        return getStatus().isBusted();
+    }
     public List<Card> getValue() {
         return cards;
     }

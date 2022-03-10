@@ -1,7 +1,7 @@
 package controller;
 
 import java.util.List;
-import dto.InitGameDto;
+import dto.AllParticipatorsDto;
 import dto.NamesDto;
 import service.BlackJackService;
 import view.InputView;
@@ -18,8 +18,8 @@ public class BlackJackController {
     public void initGame() {
         List<String> names = InputView.inputPlayerNames();
         NamesDto namesDto = new NamesDto(names);
-        InitGameDto initGameDto = service.initGame(namesDto);
-        OutputView.printInit(initGameDto);
+        AllParticipatorsDto allParticipatorsDto = service.initGame(namesDto);
+        OutputView.printInit(allParticipatorsDto);
     }
 
     public void hitPlayers() {
@@ -39,5 +39,9 @@ public class BlackJackController {
 
     public void hitDealer() {
         OutputView.printHitDealer(service.tryToHitForDealer());
+    }
+
+    public void match() {
+        OutputView.printMatchResult(service.match());
     }
 }

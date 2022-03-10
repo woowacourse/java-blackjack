@@ -27,4 +27,12 @@ public class Dealer extends Participator {
     public boolean canReceiveCard() {
         return cards.canReceiveCardForDealer();
     }
+
+    public Result matchWith(Participator participator) {
+        Result result = this.cards.getResult(participator.cards);
+        if (result.equals(Result.DRAW) && this.cards.isBusted()) {
+            return Result.WIN;
+        }
+        return result;
+    }
 }

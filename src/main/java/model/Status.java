@@ -30,4 +30,8 @@ public enum Status {
     public boolean isStand() {
         return this.equals(STAND);
     }
+
+    public boolean isBusted() {
+        return this.equals(BUST);
+    }
 }

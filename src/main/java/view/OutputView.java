@@ -1,8 +1,9 @@
 package view;
 
+import dto.TotalResultDto;
 import java.util.List;
 import java.util.stream.Collectors;
-import dto.InitGameDto;
+import dto.AllParticipatorsDto;
 import dto.ParticipatorDto;
 
 public class OutputView {
@@ -12,9 +13,9 @@ public class OutputView {
     private static final String NAME_CARD_DELIMITER = ": ";
     private static final String DELIMITER = ", ";
 
-    public static void printInit(InitGameDto initGameDto) {
-        List<ParticipatorDto> playersDto = initGameDto.getPlayersDto();
-        ParticipatorDto dealerDto = initGameDto.getDealerDto();
+    public static void printInit(AllParticipatorsDto allParticipatorsDto) {
+        List<ParticipatorDto> playersDto = allParticipatorsDto.getPlayersDto();
+        ParticipatorDto dealerDto = allParticipatorsDto.getDealerDto();
         List<String> playerNames = getNames(playersDto);
         System.out.println(
                 dealerDto.getName() + CONNECTION_SURVEY + convertPlayerInLine(playerNames) + SUFFIX_INIT_MESSAGE);
@@ -63,5 +64,9 @@ public class OutputView {
 
     private static boolean isReceived(ParticipatorDto dealerDto) {
         return dealerDto.getCards().size() != 2;
+    }
+
+    public static void printMatchResult(TotalResultDto resultDto) {
+
     }
 }
