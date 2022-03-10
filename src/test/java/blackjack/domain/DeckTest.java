@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static blackjack.domain.Denomination.*;
+import static blackjack.domain.Suit.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,7 +32,7 @@ public class DeckTest {
     @DisplayName("카드덱에서 카드를 한장 뽑는다.")
     @Test
     void 카드_뽑기_정상() {
-        Card card = Card.of(Denomination.ACE, Suit.DIAMOND);
+        Card card = Card.of(ACE, DIAMOND);
         Deck deck = new Deck(Set.of(card));
 
         Card drawCard = deck.draw();
