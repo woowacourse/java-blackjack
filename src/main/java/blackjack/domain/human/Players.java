@@ -19,13 +19,13 @@ public class Players {
         return players.size();
     }
 
-    public void giveCard() {
+    public void giveCard(CardDeck cardDeck) {
         for (Player player : players) {
-            player.addCard(CardDeck.giveCard());
+            player.addCard(cardDeck.giveCard());
         }
     }
 
-    public List<Player> getPlayers(){
+    public List<Player> get() {
         return List.copyOf(players);
     }
 

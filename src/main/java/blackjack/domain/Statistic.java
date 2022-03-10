@@ -29,21 +29,21 @@ public class Statistic {
     }
 
     public void calculate(Players players) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.get()) {
             player.calculateResult(dealerPoint);
         }
         calculateDealerWinState(players);
     }
 
     private void calculateDealerWinState(Players players) {
-        dealerWinState.put(Result.LOSE,computeResultCount(players, Result.WIN));
-        dealerWinState.put(Result.DRAW,computeResultCount(players, Result.DRAW));
-        dealerWinState.put(Result.WIN,computeResultCount(players, Result.LOSE));
+        dealerWinState.put(Result.LOSE, computeResultCount(players, Result.WIN));
+        dealerWinState.put(Result.DRAW, computeResultCount(players, Result.DRAW));
+        dealerWinState.put(Result.WIN, computeResultCount(players, Result.LOSE));
     }
 
     private int computeResultCount(Players players, Result result) {
-        return (int) players.getPlayers().stream()
-                        .filter(player -> player.getResult().equals(result))
-                        .count();
+        return (int) players.get().stream()
+                .filter(player -> player.getResult().equals(result))
+                .count();
     }
 }

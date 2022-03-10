@@ -1,4 +1,5 @@
 package blackjack.domain.human;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;

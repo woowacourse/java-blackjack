@@ -6,9 +6,9 @@ import java.util.List;
 
 public class CardDeck {
     public static final String NO_CARD_EXCEPTION_MESSAGE = "덱에 남은 카드가 없습니다";
-    public static List<Card> cards;
+    public final List<Card> cards;
 
-    static {
+    {
         cards = new ArrayList<>();
         for (Denomination value : Denomination.values()) {
             for (Symbol symbol : Symbol.values()) {
@@ -18,14 +18,21 @@ public class CardDeck {
         Collections.shuffle(cards);
     }
 
-    public static Card giveCard() {
+    private CardDeck() {
+    }
+
+    public static CardDeck getInstance() {
+        return new CardDeck();
+    }
+
+    public Card giveCard() {
         if (cards.isEmpty()) {
             throw new ArrayIndexOutOfBoundsException(NO_CARD_EXCEPTION_MESSAGE);
         }
         return cards.remove(cards.size() - 1);
     }
 
-    public static List<Card> get() {
+    public List<Card> get() {
         return List.copyOf(cards);
     }
 }

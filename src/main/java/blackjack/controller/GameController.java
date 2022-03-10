@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Statistic;
+import blackjack.domain.Table;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Name;
@@ -12,56 +13,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
-
     public void run() {
-        Players players = getPlayers();
-        Dealer dealer = Dealer.of();
+        Table table = Table.of(getPlayers(), Dealer.of());
 
-        giveTwoCards(players, dealer);
-        OutputView.printInitCards(players, dealer);
+        table.initCard();
+        OutputView.printInitCards(table);
 
-        for (Player player : players.getPlayers()) {
-            questionOneMoreCard(player);
+        for (Player player : table.getPlayers().get()) {
+            questionOneMoreCard(player, table.getCardDeck());
         }
-        addCardToDealer(dealer);
+        addCardToDealer(table);
 
-        OutputView.printCardAndPoint(players, dealer);
-        Statistic.of(dealer).calculate(players);
-        printGameResult(players, dealer);
-    }
-
-    private void addCardToDealer(final Dealer dealer) {
-        if (dealer.isOneMoreCard()) {
-            dealer.addCard(CardDeck.giveCard());
-            OutputView.printDealerCardAdded();
-        }
+        OutputView.printCardAndPoint(table);
+        Statistic.of(table.getDealer()).calculate(table.getPlayers());
+        printGameResult(table);
     }
 
     private Players getPlayers() {
         List<Player> playerList = new ArrayList<>();
-        String[] names = InputView.inputPlayerName();
-        for (String name : names) {
+        for (String name : InputView.inputPlayerName()) {
             playerList.add(Player.of(Name.of(name)));
         }
         return Players.of(playerList);
     }
 
-
-    private void giveTwoCards(final Players players, final Dealer dealer) {
-        dealer.addCard(CardDeck.giveCard());
-        dealer.addCard(CardDeck.giveCard());
-        players.giveCard();
-        players.giveCard();
+    private void addCardToDealer(final Table table) {
+        if (table.getDealer().isOneMoreCard()) {
+            table.getDealer().addCard(table.getCardDeck().giveCard());
+            OutputView.printDealerCardAdded();
+        }
     }
 
-    private void printGameResult(final Players players, final Dealer dealer) {
-        Statistic statistic = Statistic.of(dealer);
-        statistic.calculate(players);
+    private void printGameResult(final Table table) {
+        Statistic statistic = Statistic.of(table.getDealer());
+        statistic.calculate(table.getPlayers());
         OutputView.printDealerResult(statistic.getDealerWinState());
-        OutputView.printPlayerResult(players);
+        OutputView.printPlayerResult(table.getPlayers());
     }
 
-    private void questionOneMoreCard(final Player player) {
+    private void questionOneMoreCard(final Player player, final CardDeck cardDeck) {
         boolean flag = true;
         while (player.isOneMoreCard()) {
             if (!InputView.inputOneMoreCard(player.getName())) {
@@ -70,7 +60,7 @@ public class GameController {
                 }
                 break;
             }
-            player.addCard(CardDeck.giveCard());
+            player.addCard(cardDeck.giveCard());
             OutputView.printHumanCardState(player);
             flag = false;
         }

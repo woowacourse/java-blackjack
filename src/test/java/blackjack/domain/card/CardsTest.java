@@ -3,16 +3,12 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Symbol;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class CardsTest {
     @Test
-    public void 카드모음_생성_테스트(){
+    public void 카드모음_생성_테스트() {
         Cards cards = Cards.of();
 
         Card card5 = Card.of(Denomination.of("5"), Symbol.of("스페이드"));

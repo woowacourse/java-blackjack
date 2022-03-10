@@ -7,11 +7,11 @@ public class Cards {
     public static final int BLACKJACK_NUMBER = 21;
     public static final int ACE_MINUS_NUMBER = 10;
     private final List<Card> cards;
-    
-    private Cards(){
+
+    private Cards() {
         this.cards = new ArrayList<>();
     }
-    
+
     public static Cards of() {
         return new Cards();
     }
@@ -35,7 +35,7 @@ public class Cards {
 
         while (point > BLACKJACK_NUMBER && aceCount > 0) {
             point -= ACE_MINUS_NUMBER;
-            aceCount --;
+            aceCount--;
         }
 
         return point;
@@ -49,6 +49,6 @@ public class Cards {
 
     @Override
     public String toString() {
-        return cards.toString().substring(1,cards.toString().length()-1);
+        return cards.toString().substring(1, cards.toString().length() - 1);
     }
 }

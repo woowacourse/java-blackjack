@@ -1,8 +1,8 @@
 package blackjack.domain.human;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.Result;
 
 public class Player extends Human {
     private final Name name;
@@ -39,12 +39,12 @@ public class Player extends Human {
         setResult(Result.WIN);
     }
 
-    private void setResult(Result result) {
-        this.result = result;
-    }
-
     public Result getResult() {
         return result;
+    }
+
+    private void setResult(Result result) {
+        this.result = result;
     }
 
     @Override
@@ -65,5 +65,14 @@ public class Player extends Human {
     @Override
     public void addCard(final Card card) {
         cards.add(card);
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name=" + name +
+                ", cards=" + cards +
+                ", result=" + result +
+                '}';
     }
 }

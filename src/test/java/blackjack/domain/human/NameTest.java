@@ -17,7 +17,7 @@ public class NameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"ja ck", "jac.k",""})
+    @ValueSource(strings = {"ja ck", "jac.k", ""})
     public void 참여자이름_객체_생성_실패(String input) {
         assertThatThrownBy(() -> Name.of(input))
                 .isInstanceOf(Exception.class)

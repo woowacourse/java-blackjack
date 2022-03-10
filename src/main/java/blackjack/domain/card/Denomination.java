@@ -20,7 +20,7 @@ public enum Denomination {
     private final String initial;
     private final int point;
 
-    Denomination(final String initial, final int point){
+    Denomination(final String initial, final int point) {
         this.initial = initial;
         this.point = point;
     }

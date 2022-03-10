@@ -10,11 +10,11 @@ public enum Symbol {
 
     private final String symbolName;
 
-    Symbol(final String symbolName){
+    Symbol(final String symbolName) {
         this.symbolName = symbolName;
     }
 
-    public static Symbol of(final String symbolNameInput){
+    public static Symbol of(final String symbolNameInput) {
         return Arrays.stream(Symbol.values())
                 .filter(value -> value.symbolName.equals(symbolNameInput))
                 .findAny()
