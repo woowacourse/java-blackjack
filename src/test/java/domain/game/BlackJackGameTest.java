@@ -50,10 +50,10 @@ public class BlackJackGameTest {
     @Test
     @DisplayName("플레이어들 가져오기")
     void find_players() {
-        List<Name> playerNames = blackJackGame.findPlayers().stream()
+        List<String> playerNames = blackJackGame.findPlayers().stream()
                 .map(Participant::getName)
                 .collect(Collectors.toUnmodifiableList());
 
-        assertThat(playerNames).contains(new Name("pobi"), new Name("jason"));
+        assertThat(playerNames).contains("pobi", "jason");
     }
 }

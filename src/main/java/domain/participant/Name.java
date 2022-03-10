@@ -3,7 +3,8 @@ package domain.participant;
 import java.util.Objects;
 
 public class Name {
-    private static final String EMPTY_NAME_ERROR = "[ERROR] 빈 값은 이름으로 등록할 수 없습니다.";
+
+    private static final String EMPTY_NAME_ERROR = "빈 값은 이름으로 등록할 수 없습니다.";
 
     private final String value;
 

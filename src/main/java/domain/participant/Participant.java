@@ -6,6 +6,7 @@ import domain.card.Cards;
 import java.util.Objects;
 
 public abstract class Participant {
+
     protected final Name name;
     protected final Cards cards;
 
@@ -14,14 +15,14 @@ public abstract class Participant {
         this.cards = cards;
     }
 
-    abstract boolean isFinished();
+    public abstract boolean isFinished();
 
     public void drawCard(Card card) {
         cards.add(card);
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getValue();
     }
 
     public Cards getCards() {
