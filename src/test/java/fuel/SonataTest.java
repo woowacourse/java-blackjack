@@ -22,4 +22,10 @@ public class SonataTest {
     void getDefaultCarName() {
         assertThat(new Sonata(10).getName()).isEqualTo("소나타");
     }
+
+    @Test
+    void getChargeQuantity() {
+        Sonata sonata = new Sonata(150);
+        assertThat(sonata.getChargeQuantity()).isEqualTo(15);
+    }
 }
