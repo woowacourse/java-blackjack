@@ -1,21 +1,16 @@
 package blackjack.domain;
 
-import blackjack.utils.Validator;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
 
-    public static final int MAXIMUM_PLAYER = 25;
-    public static final String MAXIMUM_PLAYER_MESSAGE = "플레이어 최대 인원은 " + MAXIMUM_PLAYER + "명 입니다.";
-    public static final String DUPLICATED_PLAYER_MESSAGE = "플레이어 이름은 중복될 수 없습니다.";
     public static final String DELIMITER = ",";
+    private static final int MAXIMUM_PLAYER = 25;
 
     private final List<Player> players = new ArrayList<>();
 
     public Players(final String input) {
-        Validator.validateNullOrEmpty(input);
         List<String> names = trimNames(input);
 
         validateNames(names);
@@ -53,13 +48,13 @@ public class Players {
     private void validateDuplicatedName(final List<String> totalNames) {
         Set<String> names = new HashSet<>(totalNames);
         if (names.size() != totalNames.size()) {
-            throw new IllegalArgumentException(DUPLICATED_PLAYER_MESSAGE);
+            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
 
     private void validateMaximumPlayer(final List<String> names) {
         if (names.size() >= MAXIMUM_PLAYER) {
-            throw new IllegalArgumentException(MAXIMUM_PLAYER_MESSAGE);
+            throw new IllegalArgumentException("플레이어 최대 인원은 " + MAXIMUM_PLAYER + "명 입니다.");
         }
     }
 

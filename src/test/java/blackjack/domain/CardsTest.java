@@ -11,14 +11,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardsTest {
 
-    private Card aceSpade;
-    private Card threeSpade;
     private Card queenSpade;
 
     @BeforeEach
     void before() {
-        aceSpade = Card.of(CardNumber.ACE, CardShape.SPADE);
-        threeSpade = Card.of(CardNumber.THREE, CardShape.SPADE);
         queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
     }
 
@@ -44,7 +40,7 @@ public class CardsTest {
     @Test
     void is_over_blackjack() {
         Cards cards = new Cards();
-        cards.add(new ArrayList<>(List.of(queenSpade, queenSpade, queenSpade)));
+        cards.add(List.of(queenSpade, queenSpade, queenSpade));
 
         assertThat(cards.isOverBlackjack()).isTrue();
     }
@@ -53,7 +49,7 @@ public class CardsTest {
     @Test
     void is_under_blackjack() {
         Cards cards = new Cards();
-        cards.add(new ArrayList<>(List.of(queenSpade, queenSpade)));
+        cards.add(List.of(queenSpade, queenSpade));
 
         assertThat(cards.isUnderBlackjack()).isTrue();
     }

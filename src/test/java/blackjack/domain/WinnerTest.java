@@ -11,12 +11,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class WinnerTest {
 
+    private Dealer dealer;
+    private Player player;
+    private Winner winner;
     private Card twoSpade;
     private Card threeSpade;
     private Card queenSpade;
 
     @BeforeEach
     void init() {
+        dealer = new Dealer();
+        player = new Player("pobi");
+        winner = new Winner();
         twoSpade = Card.of(CardNumber.TWO, CardShape.SPADE);
         threeSpade = Card.of(CardNumber.THREE, CardShape.SPADE);
         queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
@@ -25,15 +31,9 @@ class WinnerTest {
     @DisplayName("플레이어의 카드합이 21을 넘길 경우 승자에 포함되지 않는 것을 확인한다.")
     @Test
     void bust_player() {
-        List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade));
-        Dealer dealer = new Dealer();
-        dealer.receiveInitCards(dealerCards);
+        dealer.receiveInitCards(List.of(twoSpade, twoSpade));
+        player.receiveInitCards(List.of(queenSpade, queenSpade, twoSpade));
 
-        List<Card> playerCards = new ArrayList<>(List.of(queenSpade, queenSpade, twoSpade));
-        Player player = new Player("pobi");
-        player.receiveInitCards(playerCards);
-
-        Winner winner = new Winner();
         winner.compare(dealer, player);
 
         assertThat(winner.contains(player)).isFalse();
@@ -42,15 +42,9 @@ class WinnerTest {
     @DisplayName("플레이어의 값이 클 경우 비교하여 승자를 확인한다.")
     @Test
     void winner_player() {
-        List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade));
-        Dealer dealer = new Dealer();
-        dealer.receiveInitCards(dealerCards);
+        dealer.receiveInitCards(List.of(twoSpade, twoSpade));
+        player.receiveInitCards(List.of(twoSpade, threeSpade));
 
-        List<Card> playerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
-        Player player = new Player("pobi");
-        player.receiveInitCards(playerCards);
-
-        Winner winner = new Winner();
         winner.compare(dealer, player);
 
         assertThat(winner.contains(player)).isTrue();
@@ -59,15 +53,9 @@ class WinnerTest {
     @DisplayName("플레이어의 값이 적을 경우 비교하여 승자를 확인한다.")
     @Test
     void winner_dealer() {
-        List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
-        Dealer dealer = new Dealer();
-        dealer.receiveInitCards(dealerCards);
+        dealer.receiveInitCards(List.of(twoSpade, threeSpade));
+        player.receiveInitCards(List.of(twoSpade, twoSpade));
 
-        List<Card> playerCards = new ArrayList<>(List.of(twoSpade, twoSpade));
-        Player player = new Player("pobi");
-        player.receiveInitCards(playerCards);
-
-        Winner winner = new Winner();
         winner.compare(dealer, player);
 
         assertThat(winner.contains(player)).isFalse();
@@ -76,15 +64,9 @@ class WinnerTest {
     @DisplayName("딜러의 값과 플레이어의 값이 같을 경우 승자를 확인한다.")
     @Test
     void equals_score() {
-        List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade, twoSpade));
-        Dealer dealer = new Dealer();
-        dealer.receiveInitCards(dealerCards);
+        dealer.receiveInitCards(List.of(twoSpade, twoSpade));
+        player.receiveInitCards(List.of(twoSpade, twoSpade));
 
-        List<Card> playerCards = new ArrayList<>(List.of(twoSpade, twoSpade, twoSpade));
-        Player player = new Player("pobi");
-        player.receiveInitCards(playerCards);
-
-        Winner winner = new Winner();
         winner.compare(dealer, player);
 
         assertThat(winner.contains(player)).isFalse();
@@ -93,15 +75,9 @@ class WinnerTest {
     @DisplayName("플레이어가 21을 초과하지 않았을 때 딜러가 21을 초과할 경우 승자를 확인한다.")
     @Test
     void bust_dealer() {
-        List<Card> dealerCards = new ArrayList<>(List.of(queenSpade, queenSpade, queenSpade));
-        Dealer dealer = new Dealer();
-        dealer.receiveInitCards(dealerCards);
+        dealer.receiveInitCards(List.of(queenSpade, queenSpade, queenSpade));
+        player.receiveInitCards(List.of(twoSpade, twoSpade, twoSpade));
 
-        List<Card> playerCards = new ArrayList<>(List.of(twoSpade, twoSpade, twoSpade));
-        Player player = new Player("pobi");
-        player.receiveInitCards(playerCards);
-
-        Winner winner = new Winner();
         winner.compare(dealer, player);
 
         assertThat(winner.contains(player)).isTrue();

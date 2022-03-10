@@ -4,107 +4,67 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
 
-    private Card twoSpade;
-    private Card threeSpade;
-    private Card queenSpade;
-
-    private CardMachine cardMachine = new CardMachine();
     private Dealer dealer;
     private Player player;
+    private Card sixSpade;
+    private Card sevenSpade;
+    private Card queenSpade;
 
     @BeforeEach
     void before() {
         dealer = new Dealer();
         player = new Player("pobi");
-        twoSpade = Card.of(CardNumber.TWO, CardShape.SPADE);
-        threeSpade = Card.of(CardNumber.THREE, CardShape.SPADE);
+        sixSpade = Card.of(CardNumber.SIX, CardShape.SPADE);
+        sevenSpade = Card.of(CardNumber.SEVEN, CardShape.SPADE);
         queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
     }
 
-    @DisplayName("딜러의 카드 총 합이 16이하일 경우 True 를 반환하는지 확인한다.")
+    @DisplayName("딜러의 카드 총 합이 16 이하일 경우 True 를 반환하는지 확인한다.")
     @Test
-    void isGiven_true() {
-        List<Card> cards = new ArrayList<>(List.of(twoSpade, threeSpade));
+    void is_received_true() {
+        dealer.receiveInitCards(List.of(sixSpade, queenSpade));
 
-        Dealer dealer = new Dealer();
-        dealer.receiveInitCards(cards);
-
-        final boolean given = dealer.isReceived();
-        assertThat(given).isTrue();
+        assertThat(dealer.isReceived()).isTrue();
     }
 
-    @DisplayName("딜러의 카드 총 합이 17 이상일 경우 False 를 반환하는지 확인한다.")
+    @DisplayName("딜러의 카드 총 합이 16 초과일 경우 False 를 반환하는지 확인한다.")
     @Test
-    void isGiven_false() {
-        List<Card> cards = new ArrayList<>(List.of(twoSpade, threeSpade, queenSpade, threeSpade));
+    void is_received_false() {
+        dealer.receiveInitCards(List.of(sevenSpade, queenSpade));
 
-        Dealer dealer = new Dealer();
-        dealer.receiveInitCards(cards);
-
-        final boolean given = dealer.isReceived();
-        assertThat(given).isFalse();
+        assertThat(dealer.isReceived()).isFalse();
     }
 
     @DisplayName("딜러의 카드 총 합이 플레이어보다 큰 경우를 확인한다.")
     @Test
-    void compare_true() {
-        List<Card> playerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
-        List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, threeSpade, threeSpade));
-        player.receiveInitCards(playerCards);
-        dealer.receiveInitCards(dealerCards);
+    void is_lower_score_true() {
+        player.receiveInitCards(List.of(sixSpade, sixSpade));
+        dealer.receiveInitCards(List.of(sevenSpade, sevenSpade));
 
-        final boolean compare = dealer.isLowerScore(player);
-        assertThat(compare).isTrue();
+        assertThat(dealer.isLowerScore(player)).isFalse();
     }
 
     @DisplayName("딜러의 카드 총 합이 플레이어보다 같은 경우를 확인한다.")
     @Test
-    void compare_same() {
-        List<Card> playerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
-        List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
-        player.receiveInitCards(playerCards);
-        dealer.receiveInitCards(dealerCards);
+    void is_lower_score_same() {
+        player.receiveInitCards(List.of(sixSpade, sevenSpade));
+        dealer.receiveInitCards(List.of(sixSpade, sevenSpade));
 
-        final boolean compare = dealer.isLowerScore(player);
-        assertThat(compare).isTrue();
+        assertThat(dealer.isLowerScore(player)).isFalse();
     }
 
     @DisplayName("딜러의 카드 총 합이 플레이어보다 작은 경우를 확인한다.")
     @Test
-    void compare_false() {
-        List<Card> playerCards = new ArrayList<>(List.of(twoSpade, threeSpade, threeSpade));
-        List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
-        player.receiveInitCards(playerCards);
-        dealer.receiveInitCards(dealerCards);
+    void is_lower_score_false() {
+        player.receiveInitCards(List.of(sevenSpade, sevenSpade));
+        dealer.receiveInitCards(List.of(sixSpade, sixSpade));
 
-        final boolean compare = dealer.isLowerScore(player);
-        assertThat(compare).isFalse();
-    }
-
-    @DisplayName("딜러의 카드 총 합이 16 이하일 경우 카드를 더 받을 수 있는지 확인한다.")
-    @Test
-    void isReceived_true() {
-        List<Card> dealerCards = new ArrayList<>(List.of(threeSpade, threeSpade, queenSpade));
-        dealer.receiveInitCards(dealerCards);
-
-        final boolean received = dealer.isReceived();
-        assertThat(received).isTrue();
-    }
-
-    @DisplayName("딜러의 카드 총 합이 16 초과일 경우 카드를 받을 수 없는 것을 확인한다.")
-    @Test
-    void isReceived_false() {
-        List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade, threeSpade, queenSpade));
-        dealer.receiveInitCards(dealerCards);
-
-        final boolean received = dealer.isReceived();
-        assertThat(received).isFalse();
+        assertThat(dealer.isLowerScore(player)).isTrue();
     }
 }

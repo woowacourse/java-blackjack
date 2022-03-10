@@ -22,8 +22,7 @@ public class CardNumberTest {
     @DisplayName("ACE 가 1로 사용될 경우 합계를 확인한다.")
     @Test
     void total_ace_1() {
-        List<CardNumber> cardNumbers = new ArrayList<>(List.of(CardNumber.ACE, CardNumber.KING, CardNumber.QUEEN));
-        int total = CardNumber.getTotal(cardNumbers);
+        int total = CardNumber.getTotal(List.of(CardNumber.ACE, CardNumber.KING, CardNumber.QUEEN));
 
         assertThat(total).isEqualTo(21);
     }
@@ -31,8 +30,7 @@ public class CardNumberTest {
     @DisplayName("ACE 가 11로 사용될 경우 합계를 확인한다.")
     @Test
     void total_ace_11() {
-        List<CardNumber> cardNumbers = new ArrayList<>(List.of(CardNumber.ACE, CardNumber.QUEEN));
-        int total = CardNumber.getTotal(cardNumbers);
+        int total = CardNumber.getTotal(List.of(CardNumber.ACE, CardNumber.QUEEN));
 
         assertThat(total).isEqualTo(21);
     }
@@ -40,8 +38,7 @@ public class CardNumberTest {
     @DisplayName("ACE 가 2개일 경우 합계를 확인한다.")
     @Test
     void total_two_ace() {
-        List<CardNumber> cardNumbers = new ArrayList<>(List.of(CardNumber.ACE, CardNumber.ACE));
-        int total = CardNumber.getTotal(cardNumbers);
+        int total = CardNumber.getTotal(List.of(CardNumber.ACE, CardNumber.ACE));
 
         assertThat(total).isEqualTo(12);
     }
@@ -49,8 +46,7 @@ public class CardNumberTest {
     @DisplayName("나머지 카드 합계가 11 이며 ACE 가 있을 경우 합계를 확인한다.")
     @Test
     void total_11_and_ace() {
-        List<CardNumber> cardNumbers = new ArrayList<>(List.of(CardNumber.TWO, CardNumber.NINE, CardNumber.ACE));
-        int total = CardNumber.getTotal(cardNumbers);
+        int total = CardNumber.getTotal(List.of(CardNumber.TWO, CardNumber.NINE, CardNumber.ACE));
 
         assertThat(total).isEqualTo(12);
     }

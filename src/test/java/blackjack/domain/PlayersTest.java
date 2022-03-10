@@ -9,15 +9,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class PlayersTest {
 
-    @DisplayName("플레이어들의 이름에 null 또는 빈 값을 입력했을 때 예외 발생을 확인한다.")
-    @ParameterizedTest
-    @NullAndEmptySource
-    void null_or_empty_error(String input) {
-        assertThatThrownBy(() -> new Players(input))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("빈 값을 입력할 수 없습니다.");
-    }
-
     @DisplayName("중복된 이름을 입력했을 때 예외 발생을 확인한다.")
     @Test
     void duplicated_name_error() {

@@ -1,13 +1,11 @@
 package blackjack.domain;
 
-import blackjack.utils.Validator;
-
 import java.util.List;
 
 public class Player extends Human {
 
-    public static final String EQUALS_DEALER_NAME_MESSAGE = "딜러와 동일한 이름은 사용할 수 없습니다.";
-    public static final String RECEIVING_ANSWER_MESSAGE = "y, n 중에서 입력해주세요.";
+    private static final String EQUALS_DEALER_NAME_MESSAGE = "딜러와 동일한 이름은 사용할 수 없습니다.";
+    private static final String RECEIVING_ANSWER_MESSAGE = "y, n 중에서 입력해주세요.";
     private static final String RECEIVE_SYMBOL = "y";
     private static final String NOT_RECEIVE_SYMBOL = "n";
 
@@ -15,7 +13,6 @@ public class Player extends Human {
     private final Cards cards = new Cards();
 
     public Player(final String name) {
-        Validator.validateNullOrEmpty(name);
         validateEqualsDealerName(name);
         this.name = name;
     }
@@ -25,7 +22,6 @@ public class Player extends Human {
     }
 
     public boolean answer(final String answer) {
-        Validator.validateNullOrEmpty(answer);
         if (answer.equalsIgnoreCase(RECEIVE_SYMBOL)) {
             return true;
         }

@@ -1,10 +1,14 @@
 package blackjack.controller;
 
 import blackjack.domain.*;
+import blackjack.view.Enter;
+import blackjack.view.Enterable;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackjackController {
+
+    private static final Enterable enterable = new Enter();
 
     public void run() {
         OutputView.printPlayerNameInstruction();
@@ -19,7 +23,7 @@ public class BlackjackController {
 
     private Players createPlayers() {
         try {
-            return new Players(InputView.inputPlayerName());
+            return new Players(InputView.inputPlayerNames(enterable));
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
             return createPlayers();
@@ -34,7 +38,9 @@ public class BlackjackController {
     }
 
     private void distributeInitCards(final CardMachine cardMachine, final Dealer dealer, final Players players) {
+        OutputView.printNewLine();
         OutputView.printReceiveInitCards(Dealer.getName(), players.getNames());
+        OutputView.printNewLine();
         dealer.receiveInitCards(cardMachine.pickInitCards());
         for (Player player : players.getPlayers()) {
             player.receiveInitCards(cardMachine.pickInitCards());
@@ -44,8 +50,10 @@ public class BlackjackController {
 
     private void openInitCard(final Dealer dealer, final Players players) {
         OutputView.printCards(Dealer.getName(), dealer.showPartOfCards());
+        OutputView.printNewLine();
         for (Player player : players.getPlayers()) {
             OutputView.printCards(player.getName(), player.showCards());
+            OutputView.printNewLine();
         }
         OutputView.printNewLine();
     }
@@ -54,20 +62,22 @@ public class BlackjackController {
         for (Player player : players.getPlayers()) {
             distributeCardToPlayer(player, cardMachine);
         }
+        OutputView.printNewLine();
     }
 
     private void distributeCardToPlayer(final Player player, final CardMachine cardMachine) {
         while (player.isReceived() && isReceivingMoreCard(player)) {
             player.receiveCard(cardMachine.pickCard());
             OutputView.printCards(player.getName(), player.showCards());
+            OutputView.printNewLine();
         }
-        OutputView.printNewLine();
     }
 
     private boolean isReceivingMoreCard(final Player player) {
         try {
             OutputView.printReceiveMoreCard(player.getName());
-            String input = InputView.inputReceiveMoreCardAnswer();
+            OutputView.printNewLine();
+            String input = InputView.inputReceiveMoreCardAnswer(enterable);
             return player.answer(input);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
@@ -79,6 +89,7 @@ public class BlackjackController {
         while (dealer.isReceived()) {
             dealer.receiveCard(cardMachine.pickCard());
             OutputView.printReceiveDealerMoreCard(Dealer.getName(), Dealer.RECEIVED_MAXIMUM);
+            OutputView.printNewLine();
         }
         OutputView.printNewLine();
     }
@@ -118,11 +129,13 @@ public class BlackjackController {
         int numberOfLosers = players.numberOfPlayers() - winner.numberOfWinners();
 
         OutputView.printDealerResult(Dealer.getName(), numberOfLosers, numberOfWinners);
+        OutputView.printNewLine();
     }
 
     private void showPlayersResult(final Winner winner, final Players players) {
         for (Player player : players.getPlayers()) {
             OutputView.printPlayerResult(player.getName(), winner.contains(player));
+            OutputView.printNewLine();
         }
     }
 }
