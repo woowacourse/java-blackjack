@@ -67,5 +67,4 @@ public class Gamer {
 	public boolean hasAce() {
 		return this.cards.stream().anyMatch(Card::isAce);
 	}
-
 }

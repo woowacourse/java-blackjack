@@ -11,6 +11,14 @@ public class Card {
 		this.type = type;
 	}
 
+	public int getNumber() {
+		return number.getValue();
+	}
+
+	public String getType() {
+		return type.getValue();
+	}
+
 	public int getScore() {
 		return this.number.getValue();
 	}
