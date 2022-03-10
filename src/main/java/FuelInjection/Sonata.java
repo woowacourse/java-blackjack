@@ -1,6 +1,6 @@
 package FuelInjection;
 
-public class Sonata extends Car{
+public class Sonata extends Car {
 
     private String name;
     private double distance;

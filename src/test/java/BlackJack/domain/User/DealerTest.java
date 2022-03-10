@@ -1,12 +1,18 @@
-package BlackJack.domain;
+package BlackJack.domain.User;
 
+import BlackJack.domain.Card.Card;
+import BlackJack.domain.Card.Cards;
+import BlackJack.domain.Card.Number;
+import BlackJack.domain.Card.Shape;
+import BlackJack.domain.Result;
+import BlackJack.domain.User.Dealer;
+import BlackJack.domain.User.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class DealerTest {
 

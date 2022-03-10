@@ -1,11 +1,8 @@
-package BlackJack.domain;
-
-import java.util.Arrays;
-import java.util.List;
+package BlackJack.domain.Card;
 
 public enum Number {
     ACE("A", 1),
-    TWO("2",2),
+    TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
     FIVE("5", 5),
@@ -13,7 +10,7 @@ public enum Number {
     SEVEN("7", 7),
     EIGHT("8", 8),
     NINE("9", 9),
-    TEN("10",10),
+    TEN("10", 10),
     JACK("J", 10),
     QUEEN("Q", 10),
     KING("K", 10);
@@ -21,7 +18,7 @@ public enum Number {
     private String denomination;
     private int value;
 
-    Number(String denomination, int value){
+    Number(String denomination, int value) {
         this.denomination = denomination;
         this.value = value;
     }

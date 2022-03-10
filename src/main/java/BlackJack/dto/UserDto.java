@@ -1,6 +1,6 @@
 package BlackJack.dto;
 
-import BlackJack.domain.User;
+import BlackJack.domain.User.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class UserDto {
 
     private int score;
 
-    public UserDto(String name,List<CardDto> cards,int score) {
+    public UserDto(String name, List<CardDto> cards, int score) {
         this.name = name;
         this.cards = new ArrayList<>(cards);
         this.score = score;
@@ -32,11 +32,11 @@ public class UserDto {
         return score;
     }
 
-    public static UserDto from(User user){
+    public static UserDto from(User user) {
         List<CardDto> collect = user.getCards().getDeck().stream()
                 .map(CardDto::from)
                 .collect(Collectors.toList());
-        return new UserDto(user.getName(),collect, user.getScore());
+        return new UserDto(user.getName(), collect, user.getScore());
     }
 
 }

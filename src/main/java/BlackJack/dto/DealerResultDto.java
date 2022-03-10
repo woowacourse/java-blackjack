@@ -15,7 +15,7 @@ public class DealerResultDto {
     }
 
     public static DealerResultDto from(String name, int dealerLoseCount, int dealerDrawCount, int dealerWinCount) {
-        return new DealerResultDto(name,dealerLoseCount,dealerDrawCount, dealerWinCount);
+        return new DealerResultDto(name, dealerLoseCount, dealerDrawCount, dealerWinCount);
     }
 
     public String getName() {
@@ -30,7 +30,7 @@ public class DealerResultDto {
         return dealerLoseCount;
     }
 
-    public int getDealerWinCount(){
+    public int getDealerWinCount() {
         return dealerWinCount;
     }
 

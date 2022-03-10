@@ -1,9 +1,8 @@
-package BlackJack.domain;
+package BlackJack.domain.User;
 
-import BlackJack.dto.PlayerResultDto;
-
-import java.util.ArrayList;
-import java.util.List;
+import BlackJack.domain.Card.CardFactory;
+import BlackJack.domain.Card.Cards;
+import BlackJack.domain.Result;
 
 public class Dealer extends User {
 
@@ -21,15 +20,15 @@ public class Dealer extends User {
         cards.add(CardFactory.drawOneCard());
     }
 
-    public boolean checkScore(){
+    public boolean checkScore() {
         return cards.calculateScore() <= DEALER_ADD_CARD_LIMIT;
     }
 
-    public Result compare(Player player){
-        if( player.getScore() > 21 || (this.getScore() > player.getScore() && this.getScore() <= 21)){
+    public Result compare(Player player) {
+        if (player.getScore() > 21 || (this.getScore() > player.getScore() && this.getScore() <= 21)) {
             return Result.LOSE;
         }
-        if( this.getScore() > 21 || this.getScore() < player.getScore() && player.getScore() <= 21){
+        if (this.getScore() > 21 || this.getScore() < player.getScore() && player.getScore() <= 21) {
             dealerLoseCount++;
             return Result.WIN;
         }

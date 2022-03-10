@@ -1,21 +1,18 @@
-package BlackJack.domain;
+package BlackJack.domain.Card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import static BlackJack.domain.CardFactory.CARD_CACHE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class CardsTest {
 
     @Test
     @DisplayName("에이스가 포함된 경우의 점수를 계산한다. - 에이스가 11로 계산")
     void calculateScoreWhenAceIs11Test() {
-        Cards cards = new Cards(Arrays.asList(new Card(Shape.CLOVER,Number.TWO), new Card(Shape.CLOVER,Number.ACE)));
+        Cards cards = new Cards(Arrays.asList(new Card(Shape.CLOVER, Number.TWO), new Card(Shape.CLOVER,Number.ACE)));
         int actual = cards.calculateScore();
         int expected = 13;
         assertThat(actual).isEqualTo(expected);

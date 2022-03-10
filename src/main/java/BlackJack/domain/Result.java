@@ -7,7 +7,7 @@ public enum Result {
 
     private final String value;
 
-    Result (String value){
+    Result(String value) {
         this.value = value;
     }
 

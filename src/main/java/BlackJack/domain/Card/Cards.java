@@ -1,4 +1,4 @@
-package BlackJack.domain;
+package BlackJack.domain.Card;
 
 import java.util.List;
 
@@ -32,8 +32,8 @@ public class Cards {
                 .filter(card -> card.getNumber().getDenomination().equals("A"))
                 .count();
 
-        for(int i = 0; i < countAce; i++){
-            if(score + EXTRA_SCORE <= BUST_LINE){
+        for (int i = 0; i < countAce; i++) {
+            if (score + EXTRA_SCORE <= BUST_LINE) {
                 score += EXTRA_SCORE;
             }
         }

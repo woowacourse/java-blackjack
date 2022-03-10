@@ -13,7 +13,7 @@ public class PlayerResultDto {
     }
 
     public static PlayerResultDto from(String name, Result compare) {
-        return new PlayerResultDto(name,compare);
+        return new PlayerResultDto(name, compare);
     }
 
     public String getName() {

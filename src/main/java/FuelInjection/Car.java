@@ -18,7 +18,7 @@ public abstract class Car {
 
     /**
      * 주입해야할 연료량을 구한다.
-    */
+     */
     double getChargeQuantity() {
         return getTripDistance() / getDistancePerLiter();
     }

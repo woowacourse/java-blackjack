@@ -1,11 +1,13 @@
-package BlackJack.domain;
+package BlackJack.domain.User;
+
+import BlackJack.domain.Card.Cards;
 
 public abstract class User {
 
     protected String name;
     protected Cards cards;
 
-    public User(String name, Cards cards){
+    public User(String name, Cards cards) {
         this.name = name;
         this.cards = cards;
     }
@@ -20,7 +22,7 @@ public abstract class User {
 
     abstract public void addCard();
 
-    public int getScore(){
+    public int getScore() {
         return cards.calculateScore();
     }
 

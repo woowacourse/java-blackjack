@@ -1,13 +1,10 @@
-package BlackJack.domain;
+package BlackJack.domain.Card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static BlackJack.domain.CardFactory.CARD_CACHE;
+import static BlackJack.domain.Card.CardFactory.CARD_CACHE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class CardFactoryTest {
 

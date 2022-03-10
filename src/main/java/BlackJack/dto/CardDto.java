@@ -1,12 +1,12 @@
 package BlackJack.dto;
 
-import BlackJack.domain.Card;
+import BlackJack.domain.Card.Card;
 
 public class CardDto {
     private String shape;
     private String number;
 
-    private CardDto(String shape, String number){
+    private CardDto(String shape, String number) {
         this.shape = shape;
         this.number = number;
     }
@@ -15,7 +15,7 @@ public class CardDto {
         return number + shape;
     }
 
-    public static CardDto from(Card card){
+    public static CardDto from(Card card) {
         return new CardDto(card.getShape().getShapeName(), card.getNumber().getDenomination());
     }
 }
