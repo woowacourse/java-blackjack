@@ -20,16 +20,16 @@ public enum Denomination {
     private final String initial;
     private final int point;
 
-    Denomination(String initial, int point){
+    Denomination(String initial, int point) {
         this.initial = initial;
         this.point = point;
     }
 
     public static Denomination of(String initialInput) {
         return Arrays.stream(Denomination.values())
-                .filter(value -> value.initial.equals(initialInput))
-                .findAny()
-                .orElseThrow();
+            .filter(value -> value.initial.equals(initialInput))
+            .findAny()
+            .orElseThrow();
     }
 
     public String getInitial() {

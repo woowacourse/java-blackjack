@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
-    private final List<Player> players;
 
+    private final List<Player> players;
 
     private Players(List<Player> players) {
         this.players = players;
@@ -28,17 +28,17 @@ public class Players {
 
     public List<Player> getCardNeedPlayers() {
         return players.stream()
-                .filter(Player::isOneMoreCard)
-                .collect(Collectors.toList());
+            .filter(Player::isOneMoreCard)
+            .collect(Collectors.toList());
     }
 
     public String getPlayerNames() {
         return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.joining(", "));
+            .map(Player::getName)
+            .collect(Collectors.joining(", "));
     }
 
-    public List<Player> getPlayers(){
+    public List<Player> getPlayers() {
         return List.copyOf(players);
     }
 }

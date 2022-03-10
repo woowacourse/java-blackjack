@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public class Dealer extends Human {
+
     private final Cards cards;
 
     private Dealer() {

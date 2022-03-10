@@ -5,6 +5,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.GameResult;
 
 public class Player extends Human {
+
     private final Name name;
     private final Cards cards;
     private boolean isCardNeeded = true;
@@ -17,10 +18,6 @@ public class Player extends Human {
 
     public static Player of(Name name) {
         return new Player(name);
-    }
-
-    public void toNoCardNeeded() {
-        isCardNeeded = false;
     }
 
     public void setResult(GameResult gameResult) {

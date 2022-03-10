@@ -5,6 +5,7 @@ import java.util.List;
 import rentCompany.car.Car;
 
 public class RentCompany {
+
     private final List<Car> cars;
 
     private RentCompany() {
@@ -23,7 +24,8 @@ public class RentCompany {
         StringBuilder report = new StringBuilder();
         for (Car car : cars) {
             report.append(
-                    String.format("%s : %1.0f리터" + System.lineSeparator(), car.getName(), car.getChargeQuantity()));
+                String.format("%s : %1.0f리터" + System.lineSeparator(), car.getName(),
+                    car.getChargeQuantity()));
         }
         return report.toString();
     }

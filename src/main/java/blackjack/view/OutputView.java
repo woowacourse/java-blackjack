@@ -10,8 +10,8 @@ public class OutputView {
 
     public static void printInitCardState(Players players, Dealer dealer) {
         System.out.printf(System.lineSeparator() + "%s와 %s에게 2장의 카드를 나누었습니다."
-                        + System.lineSeparator(),
-                dealer.getName(), players.getPlayerNames());
+                + System.lineSeparator(),
+            dealer.getName(), players.getPlayerNames());
     }
 
     public static void printHumanCardState(Human human) {
@@ -37,7 +37,8 @@ public class OutputView {
     }
 
     public static void printHumanCardPointState(Human human) {
-        String result = human.getName() + "카드: " + human.getCards().toString() + " - 결과 : " + human.getPoint();
+        String result =
+            human.getName() + "카드: " + human.getCards().toString() + " - 결과 : " + human.getPoint();
         System.out.println(result);
     }
 

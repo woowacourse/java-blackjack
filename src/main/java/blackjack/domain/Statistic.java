@@ -5,6 +5,7 @@ import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
 
 public class Statistic {
+
     private final int dealerPoint;
     private final Players players;
 
@@ -14,7 +15,7 @@ public class Statistic {
     }
 
     public static Statistic of(Dealer dealer, Players players) {
-        return new Statistic(dealer,players);
+        return new Statistic(dealer, players);
     }
 
     public void calculate() {

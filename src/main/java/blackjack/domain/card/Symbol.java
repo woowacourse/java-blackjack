@@ -10,15 +10,15 @@ public enum Symbol {
 
     private final String symbolName;
 
-    Symbol(String symbolName){
+    Symbol(String symbolName) {
         this.symbolName = symbolName;
     }
 
-    public static Symbol of(String symbolNameInput){
+    public static Symbol of(String symbolNameInput) {
         return Arrays.stream(Symbol.values())
-                .filter(value -> value.symbolName.equals(symbolNameInput))
-                .findAny()
-                .orElseThrow();
+            .filter(value -> value.symbolName.equals(symbolNameInput))
+            .findAny()
+            .orElseThrow();
     }
 
     public String getSymbolName() {

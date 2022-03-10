@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 public class Card {
+
     private final Denomination denomination;
     private final Symbol symbol;
 

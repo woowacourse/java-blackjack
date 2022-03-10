@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
+
     public static final String NO_CARD_EXCEPTION_MESSAGE = "덱에 남은 카드가 없습니다";
     public static List<Card> cards;
 
