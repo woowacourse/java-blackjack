@@ -19,6 +19,7 @@ public class BlackJackController {
         hitCardByPlayers(players);
         hitCardByDealer(dealer);
         showFinalTurn(players, dealer);
+        showResult(players, dealer);
     }
 
     private Players createPlayers() {
@@ -55,5 +56,10 @@ public class BlackJackController {
 
     private void showFinalTurn(Players players, Dealer dealer) {
         outputView.showFinalTurnStatus(players, dealer);
+    }
+
+    private void showResult(Players players, Dealer dealer) {
+        outputView.showResult(dealer.checkWinCount(players), players.toNames(),
+            players.checkPlayersResult(dealer));
     }
 }

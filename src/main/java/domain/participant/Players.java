@@ -36,6 +36,16 @@ public class Players {
             .collect(Collectors.toList());
     }
 
+    public List<Result> checkPlayersResult(Dealer dealer) {
+        return players.stream()
+            .map(player -> player.isWin(dealer))
+            .collect(Collectors.toList());
+    }
+
+    public int getSize() {
+        return players.size();
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }

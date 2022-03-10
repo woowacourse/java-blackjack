@@ -8,6 +8,16 @@ public class Player extends Participant {
         super(name);
     }
 
+    public Result isWin(Dealer dealer) {
+        if (compareTo(dealer) > 0) {
+            return Result.WIN;
+        }
+        if (compareTo(dealer) < 0) {
+            return Result.LOSE;
+        }
+        return Result.DRAW;
+    }
+
     @Override
     public boolean canDrawCard() {
         return cards.calculateSum() < MAX_CARD_SUM;
