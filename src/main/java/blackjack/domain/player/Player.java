@@ -14,7 +14,6 @@ public class Player {
     private boolean stay = false;
     private final Cards cards;
 
-    // TODO: 2022/03/10 첫 드로우에 블랙잭인 경우 stay가 false인 버그 존재
     public Player(String name, Cards cards) {
         validateNameFormat(name);
         this.name = name;
@@ -57,6 +56,26 @@ public class Player {
         return cards.calculateScore();
     }
 
+    public Outcome compareScoreWith(Dealer dealer) {
+        if (dealer.isBust()) {
+            return Outcome.WIN;
+        }
+
+        if (!dealer.isBust() && isBust()) {
+            return Outcome.LOSE;
+        }
+
+        if (dealer.getScore() > getScore()) {
+            return Outcome.LOSE;
+        }
+
+        return Outcome.WIN;
+    }
+
+    private boolean isBust() {
+        return cards.isBust();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,25 +96,5 @@ public class Player {
                 ", stay=" + stay +
                 ", cards=" + cards +
                 '}';
-    }
-
-    public Outcome compareScoreWith(Dealer dealer) {
-        if (dealer.isBust()) {
-            return Outcome.WIN;
-        }
-
-        if (!dealer.isBust() && isBust()) {
-            return Outcome.LOSE;
-        }
-
-        if (dealer.getScore() > getScore()) {
-            return Outcome.LOSE;
-        }
-
-        return Outcome.WIN;
-    }
-
-    private boolean isBust() {
-        return cards.isBust();
     }
 }
