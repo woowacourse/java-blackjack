@@ -14,6 +14,13 @@ public class OutputView {
 		System.out.println("딜러: " + cardNumber + card.getType());
 	}
 
+	public void displayFirstDistribution(List<Player> players) {
+		List<String> collect = players.stream()
+			.map(Player::getName)
+			.collect(Collectors.toList());
+		System.out.println("딜러와 " + String.join(", ", collect) + "에게 2장의 카드를 나누었습니다.");
+	}
+
 	public void displayAllCard(String name, List<Card> cards) {
 		List<String> strings = generateAllCardStrings(cards);
 		System.out.println(name + "카드: " + String.join(", ", strings));

@@ -16,6 +16,9 @@ public class Gamer {
 	public void addCard(Card card) {
 		cards.add(card);
 		this.score += card.getScore();
+		if (hasAce()) {
+			calculateAceSum();
+		}
 		if (this.score > 21) {
 			this.score = -1;
 		}
@@ -23,6 +26,10 @@ public class Gamer {
 
 	public List<Card> getCards() {
 		return this.cards;
+	}
+
+	public int getScore() {
+		return score;
 	}
 
 	public boolean isBurst() {
