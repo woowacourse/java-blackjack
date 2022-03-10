@@ -87,4 +87,25 @@ public class RuleTest {
                 Arguments.of(List.of(DIAMOND_TEN, CLOVER_TEN, SPADE_ACE), false)
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("provideBlackJackTest")
+    @DisplayName("점수의 총합이 21이면서 2장이면 블랙잭이다.")
+    void blackJack(List<Card> cards, boolean expected) {
+        // when
+        boolean actual = Rule.INSTANCE.isBlackJack(cards);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideBlackJackTest() {
+        Card DIAMOND_TEN = new Card(Pattern.DIAMOND, Denomination.TEN);
+        Card CLOVER_TEN = new Card(Pattern.CLOVER, Denomination.TEN);
+        Card SPADE_ACE = new Card(Pattern.SPADE, Denomination.ACE);
+        return Stream.of(
+                Arguments.of(List.of(DIAMOND_TEN, SPADE_ACE), true),
+                Arguments.of(List.of(DIAMOND_TEN, CLOVER_TEN, SPADE_ACE), false)
+        );
+    }
 }
