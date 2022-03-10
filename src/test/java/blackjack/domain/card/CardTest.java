@@ -34,4 +34,15 @@ public class CardTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
+    @DisplayName("getName 은 카드의 이름을 반환한다.")
+    @Test
+    void getName() {
+        Card card = Card.of(CardRank.FIVE, CardSymbol.CLOVER);
+
+        String actual = card.getName();
+        String expected = "5클로버";
+
+        assertThat(actual).isEqualTo(expected);
+    }
 }
