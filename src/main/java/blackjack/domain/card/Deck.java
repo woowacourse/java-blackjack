@@ -1,6 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import blackjack.domain.strategy.CardStrategy;
+import blackjack.domain.card.strategy.CardStrategy;
 
 import java.util.HashSet;
 import java.util.List;
