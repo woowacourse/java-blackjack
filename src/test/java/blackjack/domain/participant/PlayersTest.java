@@ -1,11 +1,11 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.WinningResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.ManualCardStrategy;
+import blackjack.domain.result.WinningResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -84,7 +84,7 @@ public class PlayersTest {
         final Dealer dealer = Dealer.startWithTwoCards(deck);
         final Players players = Players.startWithTwoCards(names, deck);
 
-        final Map<String, WinningResult> actualWinningResults = players.judgeWinners(dealer);
+        final Map<String, WinningResult> actualWinningResults = players.judgeWinners(dealer).getPlayerResult();
         assertThat(actualWinningResults).isEqualTo(expectedWinningResults);
     }
 

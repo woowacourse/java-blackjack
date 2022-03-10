@@ -6,6 +6,8 @@ import blackjack.domain.card.strategy.RandomCardStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.result.MatchResult;
+import blackjack.dto.MatchResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -84,6 +86,8 @@ public class BlackjackApplication {
 
         outputView.printScores(participantDtos);
 
-        // TODO outputView.printWinningResults();
+        MatchResult result = players.judgeWinners(dealer);
+        outputView.printMatchResult(MatchResultDto.toDto(result));
     }
+
 }
