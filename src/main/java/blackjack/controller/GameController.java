@@ -13,17 +13,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
+
+    public static final int INIT_CARD_NUMBER = 2;
+
     public void run() {
         Table table = Table.of(getPlayers(), Dealer.of());
 
+        initGame(table);
+        startGame(table);
+        endGame(table);
+    }
+
+    private void initGame(final Table table) {
         table.initCard();
         OutputView.printInitCards(table);
+    }
 
+    private void startGame(final Table table) {
         for (Player player : table.getPlayers().get()) {
             questionOneMoreCard(player, table.getCardDeck());
         }
         addCardToDealer(table);
+    }
 
+    private void endGame(final Table table) {
         OutputView.printCardAndPoint(table);
         Statistic.of(table.getDealer()).calculate(table.getPlayers());
         printGameResult(table);
@@ -52,17 +65,15 @@ public class GameController {
     }
 
     private void questionOneMoreCard(final Player player, final CardDeck cardDeck) {
-        boolean flag = true;
-        while (player.isOneMoreCard()) {
-            if (!InputView.inputOneMoreCard(player.getName())) {
-                if (flag) {
-                    OutputView.printHumanCardState(player);
-                }
-                break;
-            }
-            player.addCard(cardDeck.giveCard());
-            OutputView.printHumanCardState(player);
-            flag = false;
+        if (!player.isOneMoreCard()) {
+            return;
         }
+        if (!InputView.inputOneMoreCard(player.getName()) && player.getCardSize() == INIT_CARD_NUMBER) {
+            OutputView.printHumanCardState(player);
+            return;
+        }
+        player.addCard(cardDeck.giveCard());
+        OutputView.printHumanCardState(player);
+        questionOneMoreCard(player,cardDeck);
     }
 }

@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public class Player extends Human {
+    private final int BLACKJACK_NUMBER = 21;
     private final Name name;
     private final Cards cards;
     private Result result;
@@ -20,36 +21,32 @@ public class Player extends Human {
 
     public void calculateResult(final int dealerPoint) {
         int point = getPoint();
-        if (dealerPoint > 21) {
-            if (point <= 21) {
-                setResult(Result.WIN);
+        if (dealerPoint > BLACKJACK_NUMBER) {
+            if (point <= BLACKJACK_NUMBER) {
+                this.result = Result.WIN;
                 return;
             }
-            setResult(Result.LOSE);
+            this.result = Result.LOSE;
             return;
         }
-        if (point > 21 || dealerPoint > point) {
-            setResult(Result.LOSE);
+        if (point > BLACKJACK_NUMBER || dealerPoint > point) {
+            this.result = Result.LOSE;
             return;
         }
         if (dealerPoint == point) {
-            setResult(Result.DRAW);
+            this.result = Result.DRAW;
             return;
         }
-        setResult(Result.WIN);
+        this.result = Result.WIN;
     }
 
     public Result getResult() {
         return result;
     }
 
-    private void setResult(Result result) {
-        this.result = result;
-    }
-
     @Override
     public boolean isOneMoreCard() {
-        return cards.getPoint() < 21;
+        return cards.getPoint() < BLACKJACK_NUMBER;
     }
 
     @Override

@@ -16,4 +16,8 @@ public abstract class Human {
     public int getPoint() {
         return getCards().getPoint();
     }
+
+    public int getCardSize() {
+        return getCards().size();
+    }
 }
