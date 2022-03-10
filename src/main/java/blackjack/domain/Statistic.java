@@ -1,13 +1,11 @@
 package blackjack.domain;
 
-import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Statistic {
-    private final int dealerPoint;
     private final Map<Result, Integer> dealerResult = new HashMap<>();
 
     {
@@ -16,23 +14,22 @@ public class Statistic {
         }
     }
 
-    private Statistic(Dealer dealer) {
-        this.dealerPoint = dealer.getPoint();
+    private Statistic() {
     }
 
-    public static Statistic of(Dealer dealer) {
-        return new Statistic(dealer);
+    public static Statistic of() {
+        return new Statistic();
     }
 
     public Map<Result, Integer> getDealerResult() {
         return dealerResult;
     }
 
-    public void calculate(Players players) {
-        for (Player player : players.get()) {
-            player.calculateResult(dealerPoint);
+    public void calculate(Table table) {
+        for (Player player : table.getPlayers().get()) {
+            player.calculateResult(table.getDealer().getPoint());
         }
-        calculateDealerResult(players);
+        calculateDealerResult(table.getPlayers());
     }
 
     private void calculateDealerResult(Players players) {

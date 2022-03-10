@@ -10,19 +10,19 @@ public class Table {
     private final Dealer dealer;
     private final CardDeck cardDeck;
 
-    private Table(Players players, Dealer dealer) {
+    private Table(Players players) {
         this.players = players;
-        this.dealer = dealer;
+        this.dealer = Dealer.of();
         this.cardDeck = CardDeck.getInstance();
     }
 
-    public static Table of(Players players, Dealer dealer) {
-        return new Table(players, dealer);
+    public static Table of(Players players) {
+        return new Table(players);
     }
 
     public void initCard() {
         for (int i = 0; i < Constants.INIT_CARD_NUMBER; i++) {
-            dealer.addCard(cardDeck.giveCard());
+            dealer.addCard(cardDeck.getCard());
             players.giveCard(cardDeck);
         }
     }

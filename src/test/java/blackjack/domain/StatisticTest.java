@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class StatisticTest {
-    private final Dealer dealer = Dealer.of();
     private final Player player1 = Player.of(Name.of("pobi"));
     private final Player player2 = Player.of(Name.of("jason"));
     private final Player player3 = Player.of(Name.of("bani"));
@@ -30,13 +29,15 @@ class StatisticTest {
 
     @Test
     void 딜러_21초과_플레이어승() {
-        addCardList(dealer, List.of("8", "10", "10"));
         addCardList(player1, List.of("A", "A", "A", "A", "A"));
         addCardList(player2, List.of("10", "10", "2"));
         Players players = Players.of(List.of(player1, player2));
 
-        Statistic statistic = Statistic.of(dealer);
-        statistic.calculate(players);
+        Table table = Table.of(players);
+        addCardList(table.getDealer(), List.of("8", "10", "10"));
+
+        Statistic statistic = Statistic.of();
+        statistic.calculate(table);
         assertThat(player1.getResult().equals(Result.WIN) &&
                 player2.getResult().equals(Result.LOSE))
                 .isTrue();
@@ -52,13 +53,15 @@ class StatisticTest {
 
     @Test
     void 딜러_21초과_딜러승() {
-        addCardList(dealer, List.of("10", "10", "10", "10"));
         addCardList(player1, List.of("10", "10", "10"));
         addCardList(player2, List.of("10", "10", "10"));
         Players players = Players.of(List.of(player1, player2));
 
-        Statistic statistic = Statistic.of(dealer);
-        statistic.calculate(players);
+        Table table = Table.of(players);
+        addCardList(table.getDealer(), List.of("10", "10", "10", "10"));
+
+        Statistic statistic = Statistic.of();
+        statistic.calculate(table);
         assertThat(player1.getResult().equals(Result.LOSE) &&
                 player2.getResult().equals(Result.LOSE))
                 .isTrue();
@@ -74,20 +77,21 @@ class StatisticTest {
 
     @Test
     void 딜러_21이하_딜러승() {
-        addCardList(dealer, List.of("10", "10"));
         addCardList(player1, List.of("10", "10", "10"));
         addCardList(player2, List.of("5", "A"));
         addCardList(player3, List.of("10", "10"));
         addCardList(player4, List.of("10", "10", "A"));
         Players players = Players.of(List.of(player1, player2, player3, player4));
 
-        Statistic statistic = Statistic.of(dealer);
-        statistic.calculate(players);
-        assertThat(player1.getResult().equals(Result.LOSE) &&
-                player2.getResult().equals(Result.LOSE) &&
-                player3.getResult().equals(Result.DRAW) &&
-                player4.getResult().equals(Result.WIN))
-                .isTrue();
+        Table table = Table.of(players);
+        addCardList(table.getDealer(), List.of("10", "10"));
+
+        Statistic statistic = Statistic.of();
+        statistic.calculate(table);
+        assertThat(player1.getResult()).isEqualTo(Result.LOSE);
+        assertThat(player2.getResult()).isEqualTo(Result.LOSE);
+        assertThat(player3.getResult()).isEqualTo(Result.DRAW);
+        assertThat(player4.getResult()).isEqualTo(Result.WIN);
 
         assertThat(statistic.getDealerResult())
                 .isEqualTo(Map.of(

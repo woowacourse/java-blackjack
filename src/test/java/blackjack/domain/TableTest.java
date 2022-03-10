@@ -15,12 +15,10 @@ class TableTest {
     private final Player player1 = Player.of(Name.of("pobi"));
     private final Players players = Players.of(List.of(player1));
     private Table table;
-    private Dealer dealer;
 
     @BeforeEach
     void 테이블생성() {
-        dealer = Dealer.of();
-        table = Table.of(players, dealer);
+        table = Table.of(players);
     }
 
     @Test
@@ -36,11 +34,4 @@ class TableTest {
     void 테이블_플레이어들_getPlayers() {
         assertThat(table.getPlayers()).isEqualTo(players);
     }
-
-    @Test
-    void 테이블_플레이어들_getDealer() {
-        assertThat(table.getDealer()).isEqualTo(dealer);
-    }
-
-
 }
