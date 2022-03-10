@@ -16,22 +16,13 @@ public class DeckTest {
 
 	@BeforeEach
 	void setUp() {
-		deck = Deck.initializeDeckBeforeGame();
-	}
-
-	@Test
-	@DisplayName("52장의 카드가 존재한다.")
-	void checkDeckCardsSize() {
-		assertThat(deck.size()).isEqualTo(52);
+		deck = Deck.initializeDeck();
 	}
 
 	@Test
 	@DisplayName("Deck에서 카드를 한 장 뽑는다.")
 	void drawCard() {
-		assertAll(
-			() -> assertThat(deck.draw()).isInstanceOf(Card.class),
-			() -> assertThat(deck.size()).isEqualTo(51)
-		);
+		assertThat(deck.draw()).isInstanceOf(Card.class);
 	}
 
 	@Test

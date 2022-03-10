@@ -12,19 +12,6 @@ import org.junit.jupiter.api.Test;
 public class BlackJackGameTest {
 
 	@Test
-	@DisplayName("BlackJackGame의 Player에게 최초 카드 두장을 준다.")
-	void initializeBlackJackGame() {
-		BlackJackGame blackJackGame = new BlackJackGame(new Dealer(),
-			List.of(new Gamer("judy"),
-				new Gamer("huni")));
-
-		Deck deck = Deck.initializeDeckBeforeGame();
-		blackJackGame.setStartCards(deck);
-
-		assertThat(deck.size()).isEqualTo(46);
-	}
-
-	@Test
 	@DisplayName("game의 승패를 계산한다.")
 	void calculateResult() {
 		// given

@@ -5,6 +5,7 @@ import static blackjack.domain.Player.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
@@ -17,7 +18,7 @@ public class BlackJackGame {
 		this.gamers = gamers;
 	}
 
-	public void setStartCards(final Deck deck) {
+	public void setInitialCards(final Deck deck) {
 		giveTwoCards(dealer, deck);
 
 		for (Gamer gamer : gamers) {

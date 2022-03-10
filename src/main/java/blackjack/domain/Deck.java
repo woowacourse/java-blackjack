@@ -13,7 +13,7 @@ public class Deck {
 		this.cards = cards;
 	}
 
-	public static Deck initializeDeckBeforeGame() {
+	public static Deck initializeDeck() {
 		Stack<Card> cards = new Stack<>();
 		for (Suit suit : Suit.values()) {
 			pushCard(cards, suit);
@@ -39,7 +39,7 @@ public class Deck {
 		}
 	}
 
-	public int size() {
+	private int size() {
 		return cards.size();
 	}
 }

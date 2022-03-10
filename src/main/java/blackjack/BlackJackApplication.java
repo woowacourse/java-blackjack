@@ -17,14 +17,20 @@ import java.util.stream.Collectors;
 public class BlackJackApplication {
 
 	public static void main(String[] args) {
-		List<Gamer> gamers = createGamers();
-		Deck deck = Deck.initializeDeckBeforeGame();
-		BlackJackGame blackJackGame = startBlackJackGame(gamers, deck);
+		Deck deck = Deck.initializeDeck();
+		BlackJackGame blackJackGame = initBlackJackGame(deck);
 		for (Gamer gamer : blackJackGame.getGamers()) {
 			progressGamerAdditionalCard(deck, gamer);
 		}
 		progressDealerAdditionalCard(deck, blackJackGame.getDealer());
 		printFinalMessage(blackJackGame);
+	}
+
+	private static BlackJackGame initBlackJackGame(Deck deck) {
+		BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), createGamers());
+		blackJackGame.setInitialCards(deck);
+		OutputView.printOpenCards(blackJackGame.getGamers(), blackJackGame.getDealer());
+		return blackJackGame;
 	}
 
 	private static List<Gamer> createGamers() {
@@ -49,13 +55,6 @@ public class BlackJackApplication {
 		if (names.size() != removalDuplicateNames.size()) {
 			throw new IllegalArgumentException("[ERROR] 중복된 이름은 입력할 수 없습니다.");
 		}
-	}
-
-	private static BlackJackGame startBlackJackGame(List<Gamer> gamers, Deck deck) {
-		BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), gamers);
-		blackJackGame.setStartCards(deck);
-		OutputView.printOpenCards(blackJackGame.getGamers(), blackJackGame.getDealer());
-		return blackJackGame;
 	}
 
 	private static void progressGamerAdditionalCard(Deck deck, Gamer gamer) {
