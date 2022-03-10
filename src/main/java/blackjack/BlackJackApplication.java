@@ -70,8 +70,7 @@ public class BlackJackApplication {
 
 	private static boolean isAnswerYes(final String name) {
 		try {
-			String answer = InputView.requestAnswer(name);
-			return Answer.YES == Answer.of(answer);
+			return Answer.isYes(InputView.requestAnswer(name));
 		} catch (IllegalArgumentException e) {
 			OutputView.printErrorMessage(e.getMessage());
 			return isAnswerYes(name);
