@@ -39,7 +39,6 @@ public class InputView {
         }
         String[] names = separate(input);
         Set<String> nameSet = new HashSet<>(Arrays.asList(names));
-        System.out.println(nameSet);
         if (nameSet.size() != names.length) {
             throw new IllegalArgumentException(NULL_NAMES_DUPLICATED_ERROR_MESSAGE);
         }

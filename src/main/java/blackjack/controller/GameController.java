@@ -19,64 +19,66 @@ public class GameController {
         // 카드 2장 지급
         giveTwoCards(players, dealer);
         // 지급 받은 카드 목록 출력
-        printInitCards(players, dealer);
-
-        // 딜러 카드 추가
-        addCardToDealer(dealer);
+        OutputView.printInitCards(players, dealer);
 
         // 카드 받을지 물어보는 기능
         for (Player player : players.getCardNeedPlayers()) {
             questionOneMoreCard(player);
         }
 
+        // 딜러 카드 추가
+        addCardToDealer(dealer);
+
         // 포인트 계산
-        OutputView.printHumanCardPointState(dealer);
-        for(Player player : players.getPlayers()){
-            OutputView.printHumanCardPointState(player);
-        }
+        OutputView.printCardAndPoint(players, dealer);
 
         calculateStatistic(dealer, players);
 
-
+        printGameResult(players);
     }
-    private void calculateStatistic(Dealer dealer, Players players){
+
+    private void calculateStatistic(Dealer dealer, Players players) {
         int dealerPoint = dealer.getPoint();
         // 초과
         if (dealerPoint > 21) {
-            int playerWinCount =0;
+            int playerWinCount = 0;
             for (Player player : players.getPlayers()) {
                 int point = player.getPoint();
-                if (point <= 21){
+                if (point <= 21) {
                     // 플레이어 승리
                     player.setResult(GameResult.WIN);
                     playerWinCount++;
+                    continue;
                 }
                 // 플레이어 패배
                 player.setResult(GameResult.LOSE);
             }
-            if(playerWinCount == 0){
+            if (playerWinCount == 0) {
                 // 플레이어 패배
                 for (Player player : players.getPlayers()) {
                     player.setResult(GameResult.LOSE);
                 }
             }
         }
-        if(dealerPoint <= 21) {
+        if (dealerPoint <= 21) {
             for (Player player : players.getPlayers()) {
                 int point = player.getPoint();
-                if(point > 21 || dealerPoint > point){
+                if (point > 21 || dealerPoint > point) {
                     // 플레이어 패배
                     player.setResult(GameResult.LOSE);
+                    continue;
                 }
-                if(dealerPoint == point){
+                if (dealerPoint == point) {
                     // 무승부
                     player.setResult(GameResult.DRAW);
+                    continue;
                 }
                 // 플레이어 승리
                 player.setResult(GameResult.WIN);
             }
         }
     }
+
     private void addCardToDealer(Dealer dealer) {
         if (dealer.isOneMoreCard()) {
             dealer.addCard(CardDeck.giveCard());
@@ -105,19 +107,11 @@ public class GameController {
         OutputView.printResult(players);
     }
 
-    private void printInitCards(Players players, Dealer dealer) {
-        OutputView.printInitCardState(players, dealer);
-        OutputView.printHumanCardState(dealer);
-        for(Player player : players.getPlayers()){
-            OutputView.printHumanCardState(player);
-        }
-    }
-
     public void questionOneMoreCard(Player player) {
         boolean flag = true;
         while (player.isOneMoreCard()) {
             if (!InputView.inputOneMoreCard(player.getName())) {
-                if(flag){
+                if (flag) {
                     OutputView.printHumanCardState(player);
                 }
                 break;
