@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BlackJackGameTest {
     @Test
@@ -44,5 +45,14 @@ class BlackJackGameTest {
         Dealer dealer = blackJackGame.getDealer();
         int cardNumberSum = dealer.getCardsNumberSum();
         assertThat(cardNumberSum).isGreaterThan(16);
+    }
+
+    @Test
+    @DisplayName("중복된 이름 입력 시, 에러가 발생한다.")
+    void validateDuplicationNames() {
+        assertThatThrownBy(() -> {
+            new BlackJackGame(List.of("name", "name"));
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("중복된 이름이 존재합니다.");
     }
 }

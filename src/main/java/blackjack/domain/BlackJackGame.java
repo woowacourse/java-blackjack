@@ -22,11 +22,21 @@ public class BlackJackGame {
     private final Dealer dealer;
 
     public BlackJackGame(List<String> names) {
+        validateDuplicationNames(names);
         this.cardFactory = new CardFactory(Card.getCards());
         this.dealer = new Dealer();
         this.players = names.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
+    }
+
+    private void validateDuplicationNames(List<String> names) {
+        int count = (int) names.stream()
+                .distinct()
+                .count();
+        if (count != names.size()) {
+            throw new IllegalArgumentException("중복된 이름이 존재합니다.");
+        }
     }
 
     public void distributeFirstCards() {

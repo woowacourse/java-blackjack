@@ -17,6 +17,7 @@ public class BlackJackController {
 
     public BlackJackController(List<String> names) {
         blackJackGame = new BlackJackGame(names);
+        blackJackGame.distributeFirstCards();
     }
 
     public GamerDto getDealerDto() {
