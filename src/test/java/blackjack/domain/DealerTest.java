@@ -18,7 +18,7 @@ public class DealerTest {
 
         @ParameterizedTest
         @CsvSource(value = {"SIX|true", "SEVEN|false"}, delimiter = '|')
-        @DisplayName("패의 합이 21이 넘는지 유무를 알려준다.")
+        @DisplayName("패의 합이 17이 넘는지 유무를 알려준다.")
         void returnFalse(CardNumber cardNumber, boolean expected) {
             Dealer dealer = new Dealer();
             MockDeck mockDeck = new MockDeck(

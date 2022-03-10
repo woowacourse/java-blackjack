@@ -27,10 +27,13 @@ public class BlackjackApplication {
         printInitGameMessage(playerDtos, dealerDto);
         printOpenCard(playerDtos, dealerDto);
 
-        takeTurnsDraw(players, deck);
+        takeTurnsPlayers(players, deck);
+        takeTurnDealer(dealer, deck);
+
+        printPlayersResult(toDto(players), toDto(dealer));
     }
 
-    private static void takeTurnsDraw(Players players, Deck deck) {
+    private static void takeTurnsPlayers(Players players, Deck deck) {
         for (Player player : players.getValue()) {
             takeTurn(player, deck);
         }
@@ -41,6 +44,13 @@ public class BlackjackApplication {
         while (selection == Selection.YES && !player.isBust()) {
             selection = requestSelection(player);
             draw(player, deck, selection);
+        }
+    }
+
+    private static void takeTurnDealer(Dealer dealer, Deck deck) {
+        while (dealer.isDrawable()) {
+            printDealerDrawMessage();
+            dealer.drawCard(deck);
         }
     }
 
@@ -61,10 +71,10 @@ public class BlackjackApplication {
     }
 
     private static void drawCardTwice(Players players, Dealer dealer, Deck deck) {
-        players.drawAll(deck);
-        players.drawAll(deck);
-        dealer.drawCard(deck);
-        dealer.drawCard(deck);
+        for (int i = 0; i < 2; i++) {
+            players.drawAll(deck);
+            dealer.drawCard(deck);
+        }
     }
 
     private static PlayerDto toDto(Player player) {

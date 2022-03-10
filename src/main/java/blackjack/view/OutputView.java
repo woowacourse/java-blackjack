@@ -8,7 +8,6 @@ import blackjack.dto.PlayerDto;
 
 public class OutputView {
 
-
     public static void printInitGameMessage(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
         System.out.printf("%s와 %s에게 2장을 나누었습니다.", dealerDto.getName(),
             playerDtos.stream().map(PlayerDto::getName).collect(Collectors.joining(", ")));
@@ -25,13 +24,35 @@ public class OutputView {
         }
     }
 
+    public static void printPlayersResult(List<PlayerDto> playerDtos, PlayerDto dealerDto) {
+        System.out.println();
+        printPlayerResult(dealerDto);
+
+        for (PlayerDto playerDto : playerDtos) {
+            printPlayerResult(playerDto);
+        }
+    }
+
+    private static void printPlayerResult(PlayerDto dealerDto) {
+        System.out.printf("%s: %s - 결과: %d%n",
+            dealerDto.getName(),
+            dealerDto.getCards()
+                .stream()
+                .map(cardDto -> cardDto.getCardNumber() + cardDto.getCardPattern())
+                .collect(Collectors.joining(", ")),
+            dealerDto.getTotalNumber());
+    }
+
     public static void printPlayerCards(PlayerDto playerDto) {
-        System.out.printf("%s: %s", playerDto.getName(),
+        System.out.printf("%s: %s%n", playerDto.getName(),
             playerDto.getCards()
                 .stream()
                 .map(cardDto -> cardDto.getCardNumber() + cardDto.getCardPattern())
                 .collect(Collectors.joining(", ")));
-        System.out.println();
+    }
+
+    public static void printDealerDrawMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
 }
