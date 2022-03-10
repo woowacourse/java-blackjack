@@ -64,9 +64,9 @@ public class BlackjackTest {
     void distributeOneMoreCardPlayer() {
         NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(10));
         Player player = blackjack.getPlayers().get(0);
-        blackjack.distributeAdditionalCardPlayer(numberGenerator, player, false);
+        blackjack.distributeAdditionalCardPlayer(numberGenerator, player);
 
-        assertThat(player.getMyCards().size()).isEqualTo(2);
+        assertThat(player.getMyCards().size()).isEqualTo(3);
     }
 
     @DisplayName("최종 승패 기능 테스트")

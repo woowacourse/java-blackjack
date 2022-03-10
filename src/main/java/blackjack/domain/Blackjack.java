@@ -2,24 +2,24 @@ package blackjack.domain;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Blackjack {
-	private final List<Player> players;
+	private final PlayerRepository playerRepository = new PlayerRepository();
 	private final Dealer dealer;
 
 	public Blackjack(List<String> playerNames) {
-		this.players = playerNames.stream()
-			.map(Player::new)
-			.collect(Collectors.toList());
+		playerRepository.addAll(playerNames);
 		this.dealer = new Dealer();
 	}
 
 	public void distributeInitialCards(NumberGenerator numberGenerator) {
 		for (int i = 0; i < 2; ++i) {
 			dealer.addCard(dealer.handOutCard(numberGenerator));
+
+			List<Player> players = playerRepository.findAll();
 			players.forEach(player -> player
 				.addCard(dealer.handOutCard(numberGenerator)));
+			playerRepository.saveAll(players);
 		}
 	}
 
@@ -29,14 +29,27 @@ public class Blackjack {
 		}
 	}
 
-	public void distributeAdditionalCardPlayer(NumberGenerator numberGenerator, Player player, boolean flag) {
-		if (flag) {
-			player.addCard(dealer.handOutCard(numberGenerator));
-		}
+	public boolean isDistributeMore() {
+		return !playerRepository.isEnd();
+	}
+
+	public Player getPlayer() {
+		Player player = playerRepository.getPlayer();
+		playerRepository.next();
+		return player;
+	}
+
+	public Player findPlayer(Player player) {
+		return playerRepository.findPlayer(player);
+	}
+
+	public void distributeAdditionalCardPlayer(NumberGenerator numberGenerator, Player player) {
+		player.addCard(dealer.handOutCard(numberGenerator));
+		playerRepository.save(player);
 	}
 
 	public List<Player> getPlayers() {
-		return players;
+		return playerRepository.findAll();
 	}
 
 	public Dealer getDealer() {
@@ -44,6 +57,6 @@ public class Blackjack {
 	}
 
 	public Map<Player, Integer> result() {
-		return ScoreBoard.calculateResult(dealer, players);
+		return ScoreBoard.calculateResult(dealer, playerRepository.findAll());
 	}
 }

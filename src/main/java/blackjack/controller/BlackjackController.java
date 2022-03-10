@@ -18,11 +18,12 @@ public class BlackjackController {
 
         OutputView.printInitStatus(blackjack.getDealer(), blackjack.getPlayers());
 
-        List<Player> people = blackjack.getPlayers();
-        for (Player person : people) {
-            while (InputView.askAdditionalCard(person)) {
-                blackjack.distributeAdditionalCardPlayer(RandomNumberGenerator.getInstance(), person, true);
-                OutputView.printCards(person);
+        while(blackjack.isDistributeMore()) {
+            Player player = blackjack.getPlayer();
+
+            while (InputView.askAdditionalCard(player)) {
+                blackjack.distributeAdditionalCardPlayer(RandomNumberGenerator.getInstance(), player);
+                OutputView.printCards(blackjack.findPlayer(player));
             }
         }
 
