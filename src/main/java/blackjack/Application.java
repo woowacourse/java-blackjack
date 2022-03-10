@@ -23,28 +23,10 @@ public class Application {
         Game game = new Game(generatePlayers(deck), deck);
         printInitialStatus(game);
 
-        while (game.isPossibleToPlay()) {
-            String name = game.getCurrentHitablePlayerName();
-            Command command = inputCommand(name);
-            game.playTurn(command);
-            printStatus(game);
-        }
-
-        while (game.doesNeedToDraw()) {
-            game.doDealerDraw();
-            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-        }
+        executePlayerTurn(game);
+        executeDealerTurn(game);
 
         printTotalScore(game);
-    }
-
-    private static Command inputCommand(String name) {
-        try {
-            return InputView.requestHitOrStay(name);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return inputCommand(name);
-        }
     }
 
     private static Players generatePlayers(Deck deck) {
@@ -58,6 +40,31 @@ public class Application {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return generatePlayers(deck);
+        }
+    }
+
+    private static void executePlayerTurn(Game game) {
+        while (game.isPossibleToPlay()) {
+            String name = game.getCurrentHitablePlayerName();
+            Command command = inputCommand(name);
+            game.playTurn(command);
+            printStatus(game);
+        }
+    }
+
+    private static void executeDealerTurn(Game game) {
+        while (game.doesNeedToDraw()) {
+            game.doDealerDraw();
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
+    }
+
+    private static Command inputCommand(String name) {
+        try {
+            return InputView.requestHitOrStay(name);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputCommand(name);
         }
     }
 
