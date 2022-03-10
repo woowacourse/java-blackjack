@@ -14,7 +14,7 @@ public class InputView {
 	private static final String CHOICE_NO = "n";
 	private static final String ERROR_MESSAGE_ILLEGAL_CHOICE_FORMAT = "[ERROR] y 또는 n 으로 입력해야 합니다.";
 
-	public static void terminate() {
+	public void terminate() {
 		scanner.close();
 	}
 
