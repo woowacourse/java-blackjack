@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 
 public enum Result {
 
-    WIN("승", ((player, dealer) -> (dealer.isBust() && !player.isBust())
-            || dealer.getScore() < player.getScore())),
-    TIE("무", ((player, dealer) -> player.getScore() == dealer.getScore())),
-    LOSS("패", ((player, dealer) -> player.isBust() || dealer.getScore() > player.getScore()));
+    WIN("승", (player, dealer) -> (dealer.isBust() && !player.isBust()) || player.isWinTo(dealer)),
+    TIE("무", (player, dealer) -> player.isWinTo(dealer) && dealer.isWinTo(player)),
+    LOSS("패", (player, dealer) -> player.isBust() || dealer.isWinTo(player));
+
 
     private final String name;
     private final BiPredicate<Player, Dealer> biPredicate;
