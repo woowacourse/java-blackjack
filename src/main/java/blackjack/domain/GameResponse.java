@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-
 public class GameResponse {
 
     private final String name;

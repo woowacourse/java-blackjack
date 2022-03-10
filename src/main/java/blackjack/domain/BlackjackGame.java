@@ -49,7 +49,7 @@ public class BlackjackGame {
         int playerPoint = guest.getDeck().sumPoints();
         int dealerPoint = dealer.getDeck().sumPoints();
 
-        Match result = Match.compare(playerPoint, dealerPoint);
+        Match result = Match.findWinner(playerPoint, dealerPoint);
         Match dealerResult = result.getDealerResult();
         results.addResult(dealer, dealerResult);
         results.addResult(guest, result);

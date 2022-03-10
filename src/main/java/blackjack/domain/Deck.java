@@ -7,17 +7,32 @@ public class Deck {
 
     private final Set<Card> cards = new LinkedHashSet<>();
 
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
     public int sumPoints() {
         int sumWithoutAce = cards.stream()
                 .filter(this::excludeAce)
                 .mapToInt(this::getCardPoint)
                 .sum();
 
-        int aceCount = (int) cards.stream().filter(card -> !excludeAce(card)).count();
-        if (aceCount > 0) {
-            if (sumWithoutAce + aceCount + 10 <= 21) {
-                return sumWithoutAce + aceCount + 10;
-            }
+        int aceCount = countAces();
+        if (aceCount == 0) {
+            return sumWithoutAce;
+        }
+        return calculateAcePoint(sumWithoutAce, aceCount);
+    }
+
+    private int countAces() {
+        return (int) cards.stream()
+                .filter(card -> !excludeAce(card))
+                .count();
+    }
+
+    private int calculateAcePoint(int sumWithoutAce, int aceCount) {
+        if (sumWithoutAce + aceCount + 10 <= 21) {
+            return sumWithoutAce + aceCount + 10;
         }
         return sumWithoutAce + aceCount;
     }
@@ -30,18 +45,18 @@ public class Deck {
         return card.getRank().getPoint();
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
-    }
-
     public Set<Card> getCards() {
         return cards;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Deck deck = (Deck) o;
 

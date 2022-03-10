@@ -3,7 +3,6 @@ package blackjack.domain;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.regex.Matcher;
 
 public enum Match {
     WIN("승", "패", Match::winPlayerCondition),
@@ -21,10 +20,11 @@ public enum Match {
         this.expression = expression;
     }
 
-    public static Match compare(int playerPoint, int dealerPoint) {
+    public static Match findWinner(int playerPoint, int dealerPoint) {
         return Arrays.stream(Match.values())
                 .filter(match -> match.expression.apply(playerPoint, dealerPoint))
-                .findFirst().orElse(LOSE);
+                .findFirst()
+                .orElse(LOSE);
     }
 
     public String getResult() {
