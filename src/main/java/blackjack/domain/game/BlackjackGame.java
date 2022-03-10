@@ -50,6 +50,10 @@ public class BlackjackGame {
         return cardDeck.pop();
     }
 
+    public Dealer getDealer() {
+        return dealer;
+    }
+
     public List<Player> getParticipants() {
         return participants;
     }

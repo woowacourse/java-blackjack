@@ -41,6 +41,14 @@ public class Dealer {
         return cardBundle;
     }
 
+    // TODO: handle NPE
+    public Card getOpenCard() {
+        return cardBundle.getCards()
+                .stream()
+                .findFirst()
+                .get();
+    }
+
     @Override
     public String toString() {
         return "Dealer{" +
