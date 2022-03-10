@@ -2,7 +2,6 @@ package blackjack.dto;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import java.util.ArrayList;
 import java.util.Collections;

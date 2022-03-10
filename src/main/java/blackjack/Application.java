@@ -26,19 +26,23 @@ public class Application {
                 .map(name -> new Player(name, deck.getInitCards()))
                 .collect(toList());
 
-        List<PlayerDto> playersDto = players.stream()
-                .map(PlayerDto::from)
-                .collect(toList());
+        List<PlayerDto> playersDto = toPlayersDto(players);
 
         OutputView.printStartInfo(DealerDto.from(dealer), playersDto);
 
         players.forEach(player -> playing(deck, player));
         drawDealer(deck, dealer);
 
-        OutputView.printResultInfo(DealerDto.from(dealer), playersDto);
+        OutputView.printResultInfo(DealerDto.from(dealer), toPlayersDto(players));
 
         OutputView.printDealerGameResult(createDealerResult(players, dealer));
         OutputView.printPlayerGameResult(createPlayerResult(players, dealer));
+    }
+
+    private static List<PlayerDto> toPlayersDto(List<Player> players) {
+        return players.stream()
+                .map(PlayerDto::from)
+                .collect(toList());
     }
 
     public static void playing(Deck deck, Player player) {

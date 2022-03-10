@@ -18,7 +18,8 @@ public class OutputView {
 
     public static void printStartInfo(DealerDto dealerDto, List<PlayerDto> players) {
         System.out.println("\n딜러와 " + generateNames(players) + "에게 2장씩 나누었습니다.");
-        System.out.println("딜러: " + cardInfo(dealerDto.getCards().get(0)));
+        printDealerCardInfo(dealerDto);
+
         players.forEach(OutputView::printPlayerCardInfo);
         System.out.println();
     }
@@ -29,17 +30,13 @@ public class OutputView {
                 .collect(joining(", "));
     }
 
-    public static void printPlayerCardInfo(PlayerDto playerDto) {
-        String cardsInfo = playerDto.getCards()
-                .stream()
-                .map(OutputView::cardInfo)
-                .collect(joining(", "));
-
-        System.out.println(playerDto.getName() + ": " + cardsInfo);
+    private static void printDealerCardInfo(DealerDto dealerDto) {
+        System.out.println(dealerDto.getName() + " 카드: " + cardInfo(dealerDto.getCards().get(0)));
     }
 
-    private static String cardInfo(CardDto cardDto) {
-        return cardDto.getDenomination() + cardDto.getSuit();
+    public static void printPlayerCardInfo(PlayerDto playerDto) {
+        String cardsInfo = generateCardsInfo(playerDto.getCards());
+        System.out.println(playerDto.getName() + " 카드: " + cardsInfo);
     }
 
     public static void printDealerDrawableInfo() {
@@ -48,26 +45,28 @@ public class OutputView {
 
     public static void printResultInfo(DealerDto dealerDto, List<PlayerDto> players) {
         System.out.println();
-        createDealerResultInfo(dealerDto);
-        for (PlayerDto playerDto : players) {
-            createPlayerResultInfo(playerDto);
-        }
+        printDealerResultInfo(dealerDto);
+        players.forEach(OutputView::printPlayerResultInfo);
     }
 
-    private static void createPlayerResultInfo(PlayerDto playerDto) {
-        String cardsInfo = playerDto.getCards().stream()
-                .map(card -> cardInfo(card))
-                .collect(joining(", "));
+    private static void printDealerResultInfo(DealerDto dealerDto) {
+        String cardsInfo = generateCardsInfo(dealerDto.getCards());
+        System.out.println("딜러: " + cardsInfo + " - 결과: " + dealerDto.getTotalScore());
+    }
 
+    private static void printPlayerResultInfo(PlayerDto playerDto) {
+        String cardsInfo = generateCardsInfo(playerDto.getCards());
         System.out.println(playerDto.getName() + ": " + cardsInfo + " - 결과: " + playerDto.getTotalScore());
     }
 
-    private static void createDealerResultInfo(DealerDto dealerDto) {
-        String cardsInfo = dealerDto.getCards().stream()
-                .map(card -> cardInfo(card))
+    private static String generateCardsInfo(List<CardDto> cards) {
+        return cards.stream()
+                .map(OutputView::cardInfo)
                 .collect(joining(", "));
+    }
 
-        System.out.println("딜러: " + cardsInfo + " - 결과: " + dealerDto.getTotalScore());
+    private static String cardInfo(CardDto cardDto) {
+        return cardDto.getDenomination() + cardDto.getSuit();
     }
 
     public static void printDealerGameResult(Map<GameResult, Long> result) {
