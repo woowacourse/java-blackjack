@@ -16,7 +16,7 @@ import java.util.Map.Entry;
 public class OutputView {
 
     private static final String PRINT_OPEN_CARD_PREFIX_MESSAGE = "\n%s와 ";
-    private static final String PRINT_OPEN_CARD_SUFFIX_MESSAGE = "에게 2장의 카드를 나누었습니다.\n";
+    private static final String PRINT_OPEN_CARD_SUFFIX_MESSAGE = "%s에게 2장의 카드를 나누었습니다.\n";
     private static final String PRINT_JOINING_DELIMITER = ", ";
     private static final String PRINT_DEFAULT_FORMAT_MESSAGE = "%s: %s\n";
     private static final String PRINT_SHOW_CARD_FORMAT_MESSAGE = "%s카드: %s\n";
@@ -28,17 +28,15 @@ public class OutputView {
     public static void printOpenCards(final BlackJackGame blackJackGame) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(String.format(PRINT_OPEN_CARD_PREFIX_MESSAGE, Dealer.DEALER_NAME))
-                .append(joinNames(blackJackGame))
-                .append(PRINT_OPEN_CARD_SUFFIX_MESSAGE);
-
-        List<Card> cards = blackJackGame.getDealer().openCards();
-        stringBuilder.append(String.format(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME, joinCards(cards)));
+                .append(String.format(PRINT_OPEN_CARD_SUFFIX_MESSAGE, joinNames(blackJackGame)))
+                .append(String.format(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
+                        joinCards(blackJackGame.getDealer().openCards())));
         appendGamerFormat(blackJackGame.getGamers(), stringBuilder);
 
         System.out.println(stringBuilder);
     }
 
-    private static String joinNames(BlackJackGame blackJackGame) {
+    private static String joinNames(final BlackJackGame blackJackGame) {
         return blackJackGame.getGamers().stream()
                 .map(Gamer::getName)
                 .collect(joining(PRINT_JOINING_DELIMITER));
@@ -46,7 +44,7 @@ public class OutputView {
 
     private static String joinCards(final List<Card> cards) {
         return cards.stream()
-                .map(OutputView::printCard)
+                .map(OutputView::cardToString)
                 .collect(joining(PRINT_JOINING_DELIMITER));
     }
 
@@ -58,12 +56,8 @@ public class OutputView {
         }
     }
 
-    private static String printCard(final Card card) {
+    private static String cardToString(final Card card) {
         return card.getDenomination().getName() + card.getSuit().getName();
-    }
-
-    public static void printErrorMessage(final String message) {
-        System.out.println(message);
     }
 
     public static void printGamerCards(Gamer gamer) {
@@ -138,5 +132,9 @@ public class OutputView {
 
     private static String dealerResultToString(Result result, int value) {
         return value + result.getResult();
+    }
+
+    public static void printErrorMessage(final String message) {
+        System.out.println(message);
     }
 }
