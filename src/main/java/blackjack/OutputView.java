@@ -7,11 +7,15 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String NAME_DELIMITER = ", ";
 
-    public static void printPlayerCards(List<Player> players) {
+    public static void printPlayersDefaultCard(List<Player> players) {
         System.out.println(MessageFormat.format("딜러와 {0}에게 2장의 카드를 나누었습니다.", concatPlayerName(players)));
         for (Player player : players) {
-            System.out.println(MessageFormat.format("{0}카드: {1}", player.getName(), concatCardName(player.getHoldCards())));
+            printPlayerCards(player);
         }
+    }
+
+    public static void printPlayerCards(Player player) {
+        System.out.println(MessageFormat.format("{0}카드: {1}", player.getName(), concatCardName(player.getHoldCards())));
     }
 
     private static String concatPlayerName(List<Player> players) {
