@@ -28,7 +28,7 @@ public class Dealer implements Player {
     }
 
     @Override
-    public int calculateScore() {
+    public int calculateFinalScore() {
         final int scoreByAceOne = cards.calculateScoreByAceOne();
         final int scoreByAceEleven = cards.calculateScoreByAceEleven();
 
@@ -39,8 +39,8 @@ public class Dealer implements Player {
     }
 
     public void compete(final Participant participant) {
-        final int dealerScore = calculateScore();
-        final int participantScore = participant.calculateScore();
+        final int dealerScore = calculateFinalScore();
+        final int participantScore = participant.calculateFinalScore();
 
         if (isDealerWin(dealerScore, participantScore)) {
             winCount += 1;

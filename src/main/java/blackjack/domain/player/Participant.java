@@ -30,7 +30,7 @@ public class Participant implements Player {
     }
 
     @Override
-    public int calculateScore() {
+    public int calculateFinalScore() {
         final int scoreByAceOne = cards.calculateScoreByAceOne();
         final int scoreByAceEleven = cards.calculateScoreByAceEleven();
 
@@ -40,12 +40,12 @@ public class Participant implements Player {
         return scoreByAceOne;
     }
 
-    public void win(){
+    public void win() {
         this.winState = true;
     }
 
     public boolean isOverMaxScore() {
-        return calculateScore() > MAX_SCORE;
+        return cards.calculateScoreByAceOne() > MAX_SCORE;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Participant implements Player {
         return cards.getCards();
     }
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 

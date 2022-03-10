@@ -58,7 +58,7 @@ class ParticipantTest {
             participant.addCard(card);
         }
 
-        assertThat(participant.calculateScore())
+        assertThat(participant.calculateFinalScore())
                 .isEqualTo(score);
     }
 

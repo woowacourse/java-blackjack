@@ -39,15 +39,14 @@ public class Cards {
     }
 
     public int calculateScoreByAceEleven() {
-        changeAceEleven(cards);
-
+        if (isContainsAce()) {
+            return calculateScoreByAceOne() + (Score.ACE_ELEVEN.getAmount() - Score.ACE.getAmount());
+        }
         return calculateScoreByAceOne();
     }
 
-    private void changeAceEleven(List<Card> cards) {
-        cards.stream()
-                .filter(card -> card.getScore() == Score.ACE)
-                .findFirst().ifPresent(Card::changeAceToEleven);
+    private boolean isContainsAce() {
+        return cards.stream().anyMatch(card -> card.getScore() == Score.ACE);
     }
 
     public List<Card> getCards() {

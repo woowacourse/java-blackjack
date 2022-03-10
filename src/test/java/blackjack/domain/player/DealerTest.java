@@ -64,7 +64,7 @@ class DealerTest {
             dealer.addCard(addCard);
         }
 
-        assertThat(dealer.calculateScore()).isEqualTo(score);
+        assertThat(dealer.calculateFinalScore()).isEqualTo(score);
     }
 
     private static Stream<Arguments> dealerList() {
@@ -105,11 +105,20 @@ class DealerTest {
                 new Card(Type.SPADE, Score.TEN),
                 new Card(Type.HEART, Score.TEN)), "zero");
         participant.addCard(new Card(Type.HEART, Score.THREE));
+        Participant participant2 = new Participant(List.of(
+                new Card(Type.SPADE, Score.SIX),
+                new Card(Type.HEART, Score.SIX)), "zero");
+        participant.addCard(new Card(Type.HEART, Score.TWO));
         Dealer dealer = new Dealer(List.of(
                 new Card(Type.SPADE, Score.TEN),
                 new Card(Type.HEART, Score.TEN)
         ));
         dealer.addCard(new Card(Type.DIAMOND, Score.TWO));
+        Dealer dealer2 = new Dealer(List.of(
+                new Card(Type.SPADE, Score.ACE),
+                new Card(Type.HEART, Score.FOUR)
+        ));
+        dealer2.addCard(new Card(Type.DIAMOND, Score.KING));
         return Stream.of(
                 Arguments.of(
                         new Participant(List.of(
@@ -163,7 +172,8 @@ class DealerTest {
                                 new Card(Type.HEART, Score.TEN)
                         ), "zero"),
                         dealer, true),
-                Arguments.of(participant, dealer, false)
+                Arguments.of(participant, dealer, false),
+                Arguments.of(participant2, dealer2, false)
         );
     }
 }

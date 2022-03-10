@@ -10,7 +10,7 @@ public interface Player {
 
     void addCard(final Card card);
 
-    int calculateScore();
+    int calculateFinalScore();
 
     List<Card> getCards();
 }

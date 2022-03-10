@@ -1,3 +1,5 @@
+package blackjack;
+
 import blackjack.controller.BlackjackController;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
