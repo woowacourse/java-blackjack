@@ -35,4 +35,18 @@ public class PlayerTest {
         player.addCard(new Card("10다이아몬드", 10));
         assertThat(player.isBurst()).isFalse();
     }
+
+    @DisplayName("이름 같은지 확인하는 테스트_같음")
+    @Test
+    void isSameNameTest() {
+        Player player = new Player("pobi");
+        assertThat(player.isSameName("pobi")).isEqualTo(true);
+    }
+
+    @DisplayName("이름 같은지 확인하는 테스트_다름")
+    @Test
+    void isSameNameTest2() {
+        Player player = new Player("pobi");
+        assertThat(player.isSameName("jason")).isEqualTo(false);
+    }
 }

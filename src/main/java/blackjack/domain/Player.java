@@ -34,4 +34,8 @@ public class Player {
     public boolean isBurst() {
         return score() > MAX_SCORE;
     }
+
+    public boolean isSameName(String name) {
+        return this.name.equals(name);
+    }
 }
