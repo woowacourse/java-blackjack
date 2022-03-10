@@ -15,7 +15,7 @@ public class Gamer {
 
 	public void addCard(Card card) {
 		cards.add(card);
-		this.score += card.getScore();
+		this.score += card.getNumber();
 		if (hasAce()) {
 			calculateAceSum();
 		}
@@ -67,7 +67,7 @@ public class Gamer {
 	private int calculateNotAceCardScore() {
 		return cards.stream()
 			.filter(card -> !card.isAce())
-			.mapToInt(Card::getScore)
+			.mapToInt(Card::getNumber)
 			.sum();
 	}
 

@@ -19,10 +19,6 @@ public class Card {
 		return type.getValue();
 	}
 
-	public int getScore() {
-		return this.number.getValue();
-	}
-
 	public boolean isAce() {
 		return number == Number.ACE;
 	}
