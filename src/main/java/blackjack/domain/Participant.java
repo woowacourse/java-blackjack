@@ -13,21 +13,13 @@ public class Participant {
     private final List<Card> cards = new ArrayList<>();
     private int score = 0;
 
-    Participant(String name, List<Card> cards) {
+    Participant(String name) {
         this.name = name;
-        this.cards.addAll(cards);
-        for (Card card : cards) {
-            addScore(card);
-        }
-    }
-
-    private void addScore(Card card) {
-        score += card.getValue();
     }
 
     public void addCard(Card card) {
         cards.add(card);
-        addScore(card);
+        score += card.getValue();
     }
 
     public void endTurn() {

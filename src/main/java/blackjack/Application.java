@@ -1,9 +1,9 @@
 package blackjack;
 
-import blackjack.domain.BlackJack;
+import blackjack.controller.BlackjackController;
 
 public class Application {
     public static void main(String[] args) {
-        new BlackJack().run();
+        new BlackjackController().run();
     }
 }

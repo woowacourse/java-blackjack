@@ -1,14 +1,12 @@
 package blackjack.domain;
 
-import java.util.List;
-
 public class Dealer extends Participant {
 
+    public static final String NAME_OF_DEALER = "딜러";
     public static final int BOUND_FOR_ADDITIONAL_CARD = 16;
 
-    public Dealer(List<Card> cards) {
-        super("딜러", cards);
-        endTurn();
+    public Dealer() {
+        super(NAME_OF_DEALER);
     }
 
     public boolean needMoreCard() {

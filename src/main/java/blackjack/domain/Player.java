@@ -1,15 +1,13 @@
 package blackjack.domain;
 
-import java.util.List;
-
 public class Player extends Participant {
 
-    public Player(String name, List<Card> cards) {
-        super(name, cards);
+    public Player(String name) {
+        super(name);
     }
 
-    public boolean canHit() {
-        return getScore() < GOAL_SCORE;
+    public boolean isBust() {
+        return getScore() >= GOAL_SCORE;
     }
 
     public boolean isWin(int score) {
