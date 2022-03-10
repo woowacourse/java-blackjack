@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.WinningResult;
 import blackjack.domain.card.Card;
+import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantDto;
 
 import java.util.ArrayList;
@@ -19,27 +20,28 @@ public class OutputView {
         printMessage("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public void printMessageOfPlayerStatuses(List<ParticipantDto> participantDtos) {
-        printMessageOfPlayerNames(participantDtos);
-        printListOfDistributedCards(participantDtos);
+    public void printMessageOfPlayerStatuses(ParticipantDto dealerDto, List<ParticipantDto> playerDtos) {
+        printMessageOfPlayerNames(playerDtos);
+        printListOfDistributedCards(dealerDto, playerDtos);
     }
 
-    private void printMessageOfPlayerNames(final List<ParticipantDto> participantDtos) {
-        final String combinedPlayerNames = participantDtos.stream()
+    private void printMessageOfPlayerNames(final List<ParticipantDto> playerDtos) {
+        final String combinedPlayerNames = playerDtos.stream()
                 .map(ParticipantDto::getName)
                 .collect(Collectors.joining(", "));
-        printMessage("딜러와" + combinedPlayerNames + "에게 2장의 카드를 나누었습니다.");
+        printMessage("딜러와 " + combinedPlayerNames + " 에게 2장의 카드를 나누었습니다.");
     }
 
 
-    private void printListOfDistributedCards(final List<ParticipantDto> participantDtos) {
-        for (ParticipantDto participantDto : participantDtos) {
+    private void printListOfDistributedCards(final ParticipantDto dealerDto, final List<ParticipantDto> playerDtos) {
+        printDistributedCards(dealerDto);
+        for (final ParticipantDto participantDto : playerDtos) {
             printDistributedCards(participantDto);
         }
     }
 
-    private void printScores(final List<ParticipantDto> participantDtos) {
-        for (ParticipantDto participantDto : participantDtos) {
+    public void printScores(final List<ParticipantDto> participantDtos) {
+        for (final ParticipantDto participantDto : participantDtos) {
             final String playerName = participantDto.getName();
             final String cardDetails = makeStringOfDistributedCards(participantDto);
             final int score = participantDto.getScore();
@@ -48,18 +50,18 @@ public class OutputView {
         }
     }
 
-    public void printDistributedCards(ParticipantDto participantDto) {
+    public void printDistributedCards(final ParticipantDto participantDto) {
         final String playerName = participantDto.getName();
         final String cardDetails = makeStringOfDistributedCards(participantDto);
         System.out.println(playerName + ": " + cardDetails);
     }
 
-    public void printMessageOfRequestContinuable(final String playerName) {
-        printMessage(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public void printMessageOfRequestContinuable(final Player player) {
+        printMessage(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
     public void printMessageOfDealerDrawCard() {
-        printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        printMessage("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
     public void printWinningResults(final Map<String, WinningResult> winningResults) {
@@ -75,8 +77,8 @@ public class OutputView {
 
     private String makeStringOfDistributedCards(final ParticipantDto participantDto) {
         final List<String> playerCardDetails = new ArrayList<>();
-        for (Card card : participantDto.getCards()) {
-            playerCardDetails.add(card.getNumber() + card.getPattern());
+        for (final Card card : participantDto.getCards()) {
+            playerCardDetails.add(card.getCardName());
         }
         return String.join(", ", playerCardDetails);
     }

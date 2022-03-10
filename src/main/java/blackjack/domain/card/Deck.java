@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class Deck {
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     private Deck(final List<Card> cards) {
         validateDuplicateCard(cards);
@@ -35,5 +35,12 @@ public class Deck {
         if (cards.size() == 0) {
             throw new IllegalArgumentException("더 이상 뽑을 수 있는 카드가 없습니다.");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Deck size = " + cards.size() + '{' +
+                "cards=" + cards +
+                '}';
     }
 }
