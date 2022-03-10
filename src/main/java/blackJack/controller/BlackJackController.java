@@ -1,6 +1,7 @@
 package blackJack.controller;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import blackJack.domain.BlackJackGame;
@@ -35,6 +36,7 @@ public class BlackJackController {
                 .collect(Collectors.toUnmodifiableList());
             return new Participants(new Dealer(), players);
         } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e);
             return getParticipants();
         }
     }
@@ -58,6 +60,7 @@ public class BlackJackController {
             String choice = InputView.inputOneMoreCard(player.getName());
             return YesOrNo.YES == YesOrNo.find(choice);
         } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e);
             return getOneMoreCard(player);
         }
     }

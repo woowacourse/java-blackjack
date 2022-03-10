@@ -29,6 +29,10 @@ public class OutputView {
     private static final int DEFAULT_DEALER_CARD_SIZE = 2;
     private static final String OUTPUT_MESSAGE_WIN_OR_LOSE = "## 최종 승패";
 
+    public static void printErrorMessage(RuntimeException error) {
+        System.out.println(error.getMessage());
+    }
+
     public static void printInitCardResult(Dealer dealer, List<Player> players) {
         printInitCardMessage(dealer, players);
         printInitHoldCardMessage(dealer, players);
