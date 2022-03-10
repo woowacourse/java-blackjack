@@ -5,8 +5,8 @@ import static blackjack.domain.player.Player.*;
 import java.util.List;
 
 import blackjack.domain.Answer;
-import blackjack.domain.Deck;
-import blackjack.domain.Gamers;
+import blackjack.domain.card.Deck;
+import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;

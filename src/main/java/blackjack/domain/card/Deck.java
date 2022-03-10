@@ -1,9 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.Collections;
 import java.util.Stack;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.pattern.Denomination;
 import blackjack.domain.card.pattern.Suit;
 

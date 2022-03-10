@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -7,8 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import blackjack.domain.player.Gamer;
-import blackjack.domain.player.Player;
+import blackjack.domain.GameResult;
 
 public class Gamers {
 
