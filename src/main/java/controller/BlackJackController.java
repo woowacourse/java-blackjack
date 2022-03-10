@@ -24,7 +24,12 @@ public class BlackJackController {
 
     private Players createPlayers() {
         String playerNames = inputView.inputPlayerName();
-        return Players.of(playerNames);
+        try {
+            return Players.of(playerNames);
+        } catch (IllegalArgumentException exception) {
+            outputView.printError(exception.getMessage());
+            return createPlayers();
+        }
     }
 
     private void initialTurn(Players players, Dealer dealer) {

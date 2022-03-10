@@ -87,4 +87,8 @@ public class OutputView {
             System.out.println(toNames.get(idx) + DELIMITER + playerResult.get(idx).getMessage());
         }
     }
+
+    public void printError(String errorMessage) {
+        System.out.println(errorMessage);
+    }
 }
