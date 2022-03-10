@@ -17,8 +17,18 @@ public class InputView {
         return scanner.nextLine().split(", |,");
     }
 
-    public static String inputMoreCard(User user) {
+    public static boolean inputMoreCard(User user) {
         System.out.printf(INPUT_MORE_CARD_FORMAT, user.getName());
-        return scanner.nextLine();
+        return isContinue(scanner.nextLine());
+    }
+
+    private static boolean isContinue(String userInput) {
+        if (userInput.equals("y")) {
+            return true;
+        }
+        if (userInput.equals("n")) {
+            return false;
+        }
+        throw new IllegalArgumentException("[ERROR] y 또는 n만 입력 가능합니다.");
     }
 }

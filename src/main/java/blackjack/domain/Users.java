@@ -18,4 +18,10 @@ public class Users {
     public List<User> getUsers() {
         return Collections.unmodifiableList(users);
     }
+
+    public List<String> getUserNames() { // user객체 안으로 이동
+        return users.stream()
+                .map(User::getName)
+                .collect(Collectors.toList());
+    }
 }

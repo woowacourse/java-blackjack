@@ -4,7 +4,6 @@ import blackjack.domain.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.lang.System.lineSeparator;
 
@@ -15,7 +14,7 @@ public class OutputView {
     public static final String SUM_PREFIX = " - 결과: ";
 
     public static void printInitDistribute(Users users, Dealer dealer) {
-        System.out.printf(lineSeparator() + INIT_DISTRIBUTE_FORMAT, String.join(", ", toUserName(users)));
+        System.out.printf(lineSeparator() + INIT_DISTRIBUTE_FORMAT, String.join(", ", users.getUserNames()));
         printDealerData(dealer, 1);
         System.out.print(lineSeparator());
         for (User user : users.getUsers()) {
@@ -25,19 +24,20 @@ public class OutputView {
         System.out.print(lineSeparator());
     }
 
-    public static void printUserData(User user) {
-        System.out.printf("%s: %s", user.getName(), getHoldingCards(user.getCards()));
+    private static void printDealerData(Dealer dealer, int index) {
+        System.out.printf(lineSeparator() + "딜러: %s",
+                getHoldingCards(dealer.getCards().subList(index, dealer.getCards().size())));
     }
 
-    private static void printDealerData(Dealer dealer, int index) {
-        System.out.printf(lineSeparator() + "딜러: %s", getHoldingCards(dealer.getCards().subList(index, dealer.getCards().size())));
+    public static void printUserData(User user) {
+        System.out.printf("%s: %s", user.getName(), getHoldingCards(user.getCards()));
     }
 
     public static void printDealerDraw() {
         System.out.println(lineSeparator() + MORE_DEALER_DRAW_CARD);
     }
 
-    public static void printFinalResult(Users users, Dealer dealer) {
+    public static void printFinalCard(Users users, Dealer dealer) {
         printDealerData(dealer, 0);
         System.out.print(SUM_PREFIX + dealer.getCardSum() + lineSeparator());
         for (User user : users.getUsers()) {
@@ -57,12 +57,6 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    private static List<String> toUserName(Users users) {
-        return users.getUsers().stream()
-                .map(User::getName)
-                .collect(Collectors.toList());
-    }
-
     public static void printLineSeparator() {
         System.out.print(lineSeparator());
     }
@@ -77,5 +71,13 @@ public class OutputView {
     public static void printUserResult(User user, Result result) {
         System.out.printf("%s: %s", user.getName(), result.getName());
         System.out.print(lineSeparator());
+    }
+
+    public static void printFinalScore(DealerResult result, Users users, int dealerSum) {
+        printDealerResult(result.getCount());
+
+        for (User user : users.getUsers()) {
+            printUserResult(user, user.checkResult(dealerSum));
+        }
     }
 }
