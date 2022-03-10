@@ -16,9 +16,7 @@ public class InputView {
 
     public static List<String> scanPlayerNames() {
         System.out.println(INPUT_PLAYER_NAMES);
-        List<String> playerNames = getPlayerNames();
-        validateDuplicateNames(playerNames);
-        return playerNames;
+        return getPlayerNames();
     }
 
     private static List<String> getPlayerNames() {
