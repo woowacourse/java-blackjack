@@ -24,13 +24,8 @@ public class Player extends Human {
         return name;
     }
 
-    private void validateEqualsDealerName(final String name) {
-        if (name.equals(Dealer.getName())) {
-            throw new IllegalArgumentException(EQUALS_DEALER_NAME_MESSAGE);
-        }
-    }
-
     public boolean answer(final String receivedFlag) {
+        Validator.validateNullOrEmpty(receivedFlag);
         if (receivedFlag.equalsIgnoreCase(GIVEN_SYMBOL)) {
             return true;
         }
@@ -38,6 +33,12 @@ public class Player extends Human {
             return false;
         }
         throw new IllegalArgumentException(RECEIVED_FLAG_MESSAGE);
+    }
+
+    private void validateEqualsDealerName(final String name) {
+        if (name.equals(Dealer.getName())) {
+            throw new IllegalArgumentException(EQUALS_DEALER_NAME_MESSAGE);
+        }
     }
 
     @Override

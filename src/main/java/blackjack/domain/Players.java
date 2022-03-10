@@ -10,6 +10,7 @@ public class Players {
     public static final int MAXIMUM_PLAYER = 25;
     public static final String MAXIMUM_PLAYER_MESSAGE = "플레이어 최대 인원은 " + MAXIMUM_PLAYER + "명 입니다.";
     public static final String DUPLICATED_PLAYER_MESSAGE = "플레이어 이름은 중복될 수 없습니다.";
+    public static final String DELIMITER = ",";
 
     private final List<Player> players = new ArrayList<>();
 
@@ -39,7 +40,7 @@ public class Players {
     }
 
     private List<String> trimNames(String input) {
-        return Arrays.stream(input.split(",", -1))
+        return Arrays.stream(input.split(DELIMITER, -1))
                 .map(String::trim)
                 .collect(Collectors.toList());
     }

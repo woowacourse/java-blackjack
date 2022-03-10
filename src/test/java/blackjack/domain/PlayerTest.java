@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
@@ -27,6 +28,15 @@ public class PlayerTest {
         aceSpade = new Card(CardNumber.ACE, CardShape.SPADE);
         threeSpade = new Card(CardNumber.THREE, CardShape.SPADE);
         queenSpade = new Card(CardNumber.QUEEN, CardShape.SPADE);
+    }
+
+    @DisplayName("null 또는 빈 값을 입력했을 때 예외 발생을 확인한다.")
+    @ParameterizedTest
+    @NullAndEmptySource
+    void isGiven_null_or_empty_exception(String input) {
+        assertThatThrownBy(() -> player.answer(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("빈 값을 입력할 수 없습니다.");
     }
 
     @DisplayName("y, Y를 입력 받았을 때 True 를 반환하는지 확인한다.")

@@ -14,7 +14,6 @@ public class InputView {
     }
 
     public static String inputTakeCardAnswer() {
-        // TODO: validate
         return userInput();
     }
 

@@ -13,7 +13,7 @@ public class Dealer extends Human {
         return name;
     }
 
-    public boolean compare(Player player) {
+    public boolean compare(final Player player) {
         return getTotal() >= player.getTotal();
     }
 
@@ -48,8 +48,6 @@ public class Dealer extends Human {
 
     @Override
     public boolean isReceived() {
-        int total = cards.calculateTotal();
-
-        return total <= RECEIVED_MAXIMUM;
+        return cards.calculateTotal() <= RECEIVED_MAXIMUM;
     }
 }
