@@ -1,12 +1,12 @@
-package view;
+package blackjack.view;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import domain.Card;
-import domain.Player;
-import domain.ResultType;
+import blackjack.domain.Card;
+import blackjack.domain.Player;
+import blackjack.domain.ResultType;
 
 public class OutputView {
 	public void displayOneCard(Card card) {

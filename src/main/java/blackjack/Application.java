@@ -1,10 +1,8 @@
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+package blackjack;
 
-import controller.BlackJackGameController;
-import view.InputView;
-import view.OutputView;
+import blackjack.controller.BlackJackGameController;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public class Application {
 	public static void main(String[] args) {
