@@ -1,7 +1,6 @@
 package blackjack.domain.human;
 
 import blackjack.domain.CardDeck;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

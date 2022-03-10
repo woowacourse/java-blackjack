@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.CardDeck;
+import blackjack.domain.GameResult;
 import blackjack.domain.Name;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Player;
@@ -34,8 +35,48 @@ public class GameController {
             OutputView.printHumanCardPointState(player);
         }
 
-    }
+        calculateStatistic(dealer, players);
 
+
+    }
+    private void calculateStatistic(Dealer dealer, Players players){
+        int dealerPoint = dealer.getPoint();
+        // 초과
+        if (dealerPoint > 21) {
+            int playerWinCount =0;
+            for (Player player : players.getPlayers()) {
+                int point = player.getPoint();
+                if (point <= 21){
+                    // 플레이어 승리
+                    player.setResult(GameResult.WIN);
+                    playerWinCount++;
+                }
+                // 플레이어 패배
+                player.setResult(GameResult.LOSE);
+            }
+            if(playerWinCount == 0){
+                // 플레이어 패배
+                for (Player player : players.getPlayers()) {
+                    player.setResult(GameResult.LOSE);
+                }
+            }
+        }
+        if(dealerPoint <= 21) {
+            for (Player player : players.getPlayers()) {
+                int point = player.getPoint();
+                if(point > 21 || dealerPoint > point){
+                    // 플레이어 패배
+                    player.setResult(GameResult.LOSE);
+                }
+                if(dealerPoint == point){
+                    // 무승부
+                    player.setResult(GameResult.DRAW);
+                }
+                // 플레이어 승리
+                player.setResult(GameResult.WIN);
+            }
+        }
+    }
     private void addCardToDealer(Dealer dealer) {
         if (dealer.isOneMoreCard()) {
             dealer.addCard(CardDeck.giveCard());
@@ -60,7 +101,11 @@ public class GameController {
         players.giveCard();
     }
 
-    public void printInitCards(Players players, Dealer dealer) {
+    private void printGameResult(Players players) {
+        OutputView.printResult(players);
+    }
+
+    private void printInitCards(Players players, Dealer dealer) {
         OutputView.printInitCardState(players, dealer);
         OutputView.printHumanCardState(dealer);
         for(Player player : players.getPlayers()){

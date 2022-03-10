@@ -2,12 +2,14 @@ package blackjack.domain.human;
 
 import blackjack.domain.Card;
 import blackjack.domain.Cards;
+import blackjack.domain.GameResult;
 import blackjack.domain.Name;
 
 public class Player extends Human {
     private final Name name;
     private final Cards cards;
     private boolean isCardNeeded = true;
+    private GameResult gameResult;
 
     private Player(Name name) {
         this.name = name;
@@ -20,6 +22,14 @@ public class Player extends Human {
 
     public void toNoCardNeeded() {
         isCardNeeded = false;
+    }
+
+    public void setResult(GameResult gameResult) {
+        this.gameResult = gameResult;
+    }
+
+    public GameResult getResult() {
+        return gameResult;
     }
 
     @Override
