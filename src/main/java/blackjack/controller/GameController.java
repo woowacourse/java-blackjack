@@ -33,6 +33,7 @@ public class GameController {
         // 17점 이상이면 추가로 받을 수 없다.
         if (dealer.isOneMoreCard()) {
             dealer.addCard(CardDeck.giveCard());
+            OutputView.printDealerCardAdded();
         }
 
 
