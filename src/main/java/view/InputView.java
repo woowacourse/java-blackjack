@@ -44,7 +44,7 @@ public class InputView {
     public static Command inputWantDraw(String name) {
         System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n"
                 , name, Command.HIT.getValue(), Command.STAY.getValue());
-        String input = scanner.nextLine().toLowerCase();
+        String input = scanner.nextLine().toLowerCase().trim();
         return Command.findCommand(input);
     }
 }
