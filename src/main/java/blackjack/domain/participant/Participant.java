@@ -10,6 +10,8 @@ import java.util.Objects;
 
 public abstract class Participant {
 
+    private static final int INITIAL_CARDS_SIZE = 2;
+
     private final Name name;
     private final List<Card> cards;
 
@@ -33,7 +35,7 @@ public abstract class Participant {
     }
 
     private void validateSize(List<Card> cards) {
-        if (cards.size() != 2) {
+        if (cards.size() != INITIAL_CARDS_SIZE) {
             throw new IllegalArgumentException("[ERROR] 카드를 두 장 받고 시작해야 합니다.");
         }
     }
