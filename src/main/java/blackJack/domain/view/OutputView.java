@@ -19,7 +19,7 @@ public class OutputView {
 
     public static void printInitCardResult(Dealer dealer, List<Player> players) {
         printInitCardMessage(dealer, players);
-        printHoldCardMessage(dealer, players);
+        printInitHoldCardMessage(dealer, players);
         System.out.println();
     }
 
@@ -30,16 +30,20 @@ public class OutputView {
         System.out.printf(OUTPUT_MESSAGE_INIT_CARD_RESULT, dealer.getName(), playerNames);
     }
 
-    private static void printHoldCardMessage(Dealer dealer, List<Player> players) {
+    private static void printInitHoldCardMessage(Dealer dealer, List<Player> players) {
         Card firstDealerCard = dealer.getCards().get(0);
         String dealerCardInfo = firstDealerCard.getDenominationName() + firstDealerCard.getSymbolName();
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, dealer.getName(), dealerCardInfo);
 
         for (Player player : players) {
-            String playerCardsInfo = player.getCards().stream()
-                .map(card -> card.getDenominationName() + card.getSymbolName())
-                .collect(Collectors.joining(JOINING_DELIMITER));
-            System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, player.getName(), playerCardsInfo);
+            printNowHoldCardInfo(player);
         }
+    }
+
+    public static void printNowHoldCardInfo(Player player) {
+        String playerCardsInfo = player.getCards().stream()
+            .map(card -> card.getDenominationName() + card.getSymbolName())
+            .collect(Collectors.joining(JOINING_DELIMITER));
+        System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, player.getName(), playerCardsInfo);
     }
 }

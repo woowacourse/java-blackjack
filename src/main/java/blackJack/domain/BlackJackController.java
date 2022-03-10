@@ -15,6 +15,7 @@ public class BlackJackController {
         BlackJackGame blackJackGame = initBlackJackGame();
         blackJackGame.firstCardDispensing();
         OutputView.printInitCardResult(blackJackGame.getDealer(), blackJackGame.getPlayers());
+        doPlayerGame(blackJackGame);
     }
 
     private BlackJackGame initBlackJackGame() {
@@ -39,6 +40,7 @@ public class BlackJackController {
     private void doEachPlayerTurn(BlackJackGame blackJackGame, Player player) {
         while (blackJackGame.hasNextTurn(player) || getOneMoreCard(player)) {
             blackJackGame.distributeCard(player, 1);
+            OutputView.printNowHoldCardInfo(player);
         }
     }
 
