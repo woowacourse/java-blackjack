@@ -10,6 +10,10 @@ public abstract class Card {
 
     public abstract String getCardPattern();
 
+    public String getCardNumberType() {
+        return cardNumber.getType();
+    }
+
     public int getCardNumber() {
         return cardNumber.getValue();
     }

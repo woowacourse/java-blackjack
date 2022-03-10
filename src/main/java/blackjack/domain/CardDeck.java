@@ -1,7 +1,9 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class CardDeck {
@@ -10,6 +12,13 @@ public class CardDeck {
 
     public CardDeck(LinkedList<Card> cardDeck) {
         this.cardDeck = cardDeck;
+    }
+
+    public List<Card> drawInitialCard() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(drawCard());
+        cards.add(drawCard());
+        return cards;
     }
 
     public Card drawCard() {
