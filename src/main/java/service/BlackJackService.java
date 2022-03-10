@@ -47,7 +47,9 @@ public class BlackJackService {
     }
 
     private void drawTwoCardsAll() {
-        participators.receiveTwoCards(cardDeck);
+        for (int i = 0 ; i < INIT_CARD_COUNT; i++) {
+            participators.receiveCards(cardDeck);
+        }
     }
 
     public List<String> getPlayerNames() {

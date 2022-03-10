@@ -1,6 +1,5 @@
 package model;
 
-import dto.ParticipatorDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +12,7 @@ public class Participators {
         this.participators = participators;
     }
 
-    public void receiveTwoCards(CardDeck cardDeck) {
+    public void receiveCards(CardDeck cardDeck) {
         for (Participator participator : participators) {
             participator.receiveCard(cardDeck.drawCard());
         }
