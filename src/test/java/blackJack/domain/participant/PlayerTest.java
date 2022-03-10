@@ -19,7 +19,7 @@ class PlayerTest {
         assertThat(new Player("rookie")).isNotNull();
     }
 
-    @ParameterizedTest(name = "Player 이름 공백인 경우 검증 테스트")
+    @ParameterizedTest(name = "플레이어의 이름 공백인 경우 검증 테스트")
     @ValueSource(strings = {" ", ""})
     void checkPlayerName(String value) {
         assertThatThrownBy(() -> new Player(value))
@@ -28,7 +28,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("Player 이름이 '딜러'인 경우 검증 테스트")
+    @DisplayName("플레이어의 이름이 '딜러'인 경우 검증 테스트")
     void checkProhibitName() {
         assertThatThrownBy(() -> new Player("딜러"))
             .isInstanceOf(IllegalArgumentException.class)
@@ -57,18 +57,18 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("Player 카드 합계 계산 테스트")
+    @DisplayName("플레이어의 카드 합계 계산 테스트")
     void calculateScore() {
         Player player = new Player("rookie");
         player.receiveCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
+
         assertThat(player.getScore()).isEqualTo(8);
     }
 
     @Test
-    @DisplayName("Player 카드에 Ace가 11로 되는 경우 합계 계산 테스트")
+    @DisplayName("플레이어의 카드에 Ace가 11로 되는 경우 합계 계산 테스트")
     void calculateScoreWithAceEleven() {
         Player player = new Player("rookie");
-
         player.receiveCard(new Card(Symbol.CLOVER, Denomination.ACE));
         player.receiveCard(new Card(Symbol.CLOVER, Denomination.JACK));
 
@@ -76,10 +76,9 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("Player 카드에 Ace가 1로 되는 경우 합계 계산 테스트")
+    @DisplayName("플레이어의 카드에 Ace가 1로 되는 경우 합계 계산 테스트")
     void calculateScoreWithAceOne() {
         Player player = new Player("rookie");
-
         player.receiveCard(new Card(Symbol.CLOVER, Denomination.ACE));
         player.receiveCard(new Card(Symbol.CLOVER, Denomination.JACK));
         player.receiveCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
@@ -88,10 +87,9 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("Player 카드에 Ace가 여러개인 경우 계산 테스트")
+    @DisplayName("플레이어의 카드에 Ace가 여러개인 경우 계산 테스트")
     void calculateScoreWithAceCountThree() {
         Player player = new Player("rookie");
-
         player.receiveCard(new Card(Symbol.CLOVER, Denomination.ACE));
         player.receiveCard(new Card(Symbol.HEART, Denomination.ACE));
         player.receiveCard(new Card(Symbol.DIAMOND, Denomination.ACE));

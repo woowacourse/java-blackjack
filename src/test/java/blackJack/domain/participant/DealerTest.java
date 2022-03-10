@@ -18,10 +18,11 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("Dealer 카드 합계 계산 테스트")
+    @DisplayName("딜러의 카드 합계 계산 테스트")
     void calculateScore() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
+
         assertThat(dealer.getScore()).isEqualTo(8);
     }
 

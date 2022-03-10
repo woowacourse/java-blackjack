@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class ParticipantsTest {
 
     @Test
-    @DisplayName("Player들의 이름이 중복된 경우 테스트")
+    @DisplayName("플레이어의 이름이 중복된 경우 테스트")
     void checkDuplicatePlayerName() {
         List<Player> players = List.of(new Player("rookie"), new Player("rookie"));
 
@@ -20,7 +20,7 @@ public class ParticipantsTest {
     }
 
     @Test
-    @DisplayName("Player의 수가 1-7명이 아닌 경우 테스트")
+    @DisplayName("플레이어의 수가 1-7명이 아닌 경우 테스트")
     void checkPlayerCount() {
         List<Player> players = List.of(
             new Player("k1"), new Player("k2"), new Player("k3"), new Player("k4"),
