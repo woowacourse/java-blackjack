@@ -54,4 +54,8 @@ public class Card {
     public String getPatternName() {
         return pattern.getName();
     }
+
+    public boolean isAce() {
+        return this.number == CardNumber.ACE;
+    }
 }

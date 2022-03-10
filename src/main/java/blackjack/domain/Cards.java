@@ -16,7 +16,23 @@ public class Cards {
     }
 
     public int getTotalNumber() {
-        return cards.stream().mapToInt(Card::getNumberValue).sum();
+        boolean containAce = cards.stream()
+            .anyMatch(Card::isAce);
+
+        int sum = cards.stream()
+            .mapToInt(Card::getNumberValue)
+            .sum();
+
+        return optimizeTotalNumber(containAce, sum);
+    }
+
+    private int optimizeTotalNumber(boolean containAce, int totalNumber) {
+        int totalNumberInAce11 = totalNumber + 10;
+
+        if (containAce && totalNumberInAce11 <= Player.BLACKJACK_NUMBER) {
+            return totalNumberInAce11;
+        }
+        return totalNumber;
     }
 
     public void add(Card card) {

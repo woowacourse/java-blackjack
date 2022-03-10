@@ -6,6 +6,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class CardsTest {
 
@@ -20,6 +22,19 @@ public class CardsTest {
                 List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK), Card.of(CardPattern.HEART, CardNumber.EIGHT)));
 
             Assertions.assertThat(cards.getTotalNumber()).isEqualTo(18);
+        }
+
+        @ParameterizedTest
+        @CsvSource(value = {"TWO|THREE|FIVE|21", "TEN|FIVE|FIVE|21", "ACE|ACE|EIGHT|21", "TEN|TEN|ACE|22"},
+            delimiter = '|')
+        @DisplayName("ACE가 포함된 경우 21 넘지 않는 최대한 가까운 총합을 반환한다.")
+        void returnTotalNumberWithAce(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3,
+            int expected) {
+            Cards cards = new Cards(
+                List.of(Card.of(CardPattern.CLOVER, CardNumber.ACE), Card.of(CardPattern.HEART, cardNumber1),
+                    Card.of(CardPattern.SPADE, cardNumber2), Card.of(CardPattern.DIAMOND, cardNumber3)));
+
+            Assertions.assertThat(cards.getTotalNumber()).isEqualTo(expected);
         }
     }
 

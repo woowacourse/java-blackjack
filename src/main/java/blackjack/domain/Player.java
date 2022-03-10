@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Player {
 
-    private static final int BLACKJACK_NUMBER = 21;
+    public static final int BLACKJACK_NUMBER = 21;
 
     private final Cards cards = new Cards();
     private final Name name;

@@ -48,4 +48,18 @@ public class CardTest {
             assertThat(card.getPatternName()).isEqualTo(expected);
         }
     }
+
+    @Nested
+    @DisplayName("isAce는")
+    class IsAce {
+
+        @ParameterizedTest
+        @CsvSource(value = {"ACE|true", "TWO|false"}, delimiter = '|')
+        @DisplayName("ACE인지 여부를 알려준다.")
+        void returnBoolean(CardNumber cardNumber, boolean expected) {
+            Card card = Card.of(CardPattern.DIAMOND, cardNumber);
+
+            assertThat(card.isAce()).isEqualTo(expected);
+        }
+    }
 }
