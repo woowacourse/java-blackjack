@@ -1,20 +1,19 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
+import blackjack.domain.card.Card;
 import java.util.List;
 
-public class Dealer {
+public class Dealer extends Participant {
 
     private static final int DEALER_CARD_PIVOT = 17;
     public static final String DEALER_NAME = "딜러";
 
-    private final Name name = new Name(DEALER_NAME);
-    private final Hand cardHand = new Hand();
     private final Deck deck;
 
     public Dealer() {
+        super.name = new Name(DEALER_NAME);
         this.deck = Deck.createFixedCards();
     }
 
@@ -42,7 +41,7 @@ public class Dealer {
     public Card getOpenCard() {
         return cardHand.getCards().get(0);
     }
-    
+
     public void drawCardToPlayers(List<Player> players) {
         for (Player player : players) {
             giveCard(player);
@@ -52,21 +51,5 @@ public class Dealer {
 
     public void giveCard(Player player) {
         player.receiveCard(drawCard());
-    }
-
-    public String getName() {
-        return name.getName();
-    }
-
-    public List<Card> getCards() {
-        return cardHand.getCards();
-    }
-
-    public Hand getCardHand() {
-        return cardHand;
-    }
-
-    public int getScore() {
-        return cardHand.getScore();
     }
 }

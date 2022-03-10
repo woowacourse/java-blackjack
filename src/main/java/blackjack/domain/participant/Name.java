@@ -4,12 +4,12 @@ public class Name {
 
     static final String EMPTY_NAME_EXCEPTION_MESSAGE = "[ERROR] 이름에 빈값을 입력할 수 없습니다.";
 
-    private final String name;
+    private final String value;
 
-    public Name(String name) {
-        name = name.trim();
-        validateName(name);
-        this.name = name;
+    public Name(String value) {
+        value = value.trim();
+        validateName(value);
+        this.value = value;
     }
 
     private void validateName(String name) {
@@ -18,7 +18,7 @@ public class Name {
         }
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 }

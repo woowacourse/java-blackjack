@@ -21,7 +21,7 @@ public class NameTest {
     void equalsName() {
         Name name = new Name("승팡");
 
-        assertThat(name.getName()).isEqualTo("승팡");
+        assertThat(name.getValue()).isEqualTo("승팡");
     }
 
     @Test
