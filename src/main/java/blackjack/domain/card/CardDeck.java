@@ -5,13 +5,22 @@ import java.util.List;
 
 public class CardDeck {
 
-    private final List<Card> cards;
+    private List<Card> cards;
+    private final CardsGenerator generator;
 
     public CardDeck(CardsGenerator generator) {
+        this.generator = generator;
+        initCards();
+    }
+
+    private void initCards() {
         cards = generator.generate();
     }
 
     public Card draw() {
+        if (isEmpty()) {
+            initCards();
+        }
         Card card = cards.get(0);
         cards.remove(0);
         return card;
