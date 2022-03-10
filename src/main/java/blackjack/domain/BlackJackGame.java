@@ -46,7 +46,7 @@ public class BlackJackGame {
         return dealer;
     }
 
-    public List<Player> getGamers() {
+    public List<Gamer> getGamers() {
         return List.copyOf(gamers);
     }
 }

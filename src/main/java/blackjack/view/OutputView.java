@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.joining;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
 import java.util.EnumMap;
 import java.util.List;
@@ -24,7 +25,7 @@ public class OutputView {
     private static final String PRINT_BLANK = " ";
     private static final int COUNT_UNIT = 1;
 
-    public static void printOpenCards(final Player dealer, final List<Player> gamers) {
+    public static void printOpenCards(final Player dealer, final List<Gamer> gamers) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(String.format(PRINT_OPEN_CARD_PREFIX_MESSAGE, Dealer.DEALER_NAME))
                 .append(String.format(PRINT_OPEN_CARD_SUFFIX_MESSAGE, joinNames(gamers)))
@@ -35,7 +36,7 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    private static String joinNames(final List<Player> gamers) {
+    private static String joinNames(final List<Gamer> gamers) {
         return gamers.stream()
                 .map(Player::getName)
                 .collect(joining(PRINT_JOINING_DELIMITER));
@@ -47,7 +48,7 @@ public class OutputView {
                 .collect(joining(PRINT_JOINING_DELIMITER));
     }
 
-    private static void appendGamerFormat(final List<Player> gamers, final StringBuilder stringBuilder) {
+    private static void appendGamerFormat(final List<Gamer> gamers, final StringBuilder stringBuilder) {
         for (Player gamer : gamers) {
             stringBuilder.append(String.format(PRINT_SHOW_CARD_FORMAT_MESSAGE,
                     gamer.getName(),
@@ -73,7 +74,7 @@ public class OutputView {
         System.out.println(PRINT_DEALER_NOT_RECEIVE_CARD);
     }
 
-    public static void printFinalResult(final Player dealer, final List<Player> gamers) {
+    public static void printFinalResult(final Player dealer, final List<Gamer> gamers) {
         printPlayerCardsResult(dealer);
         gamers.forEach(OutputView::printPlayerCardsResult);
     }
