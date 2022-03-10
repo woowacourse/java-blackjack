@@ -14,7 +14,6 @@ public class OutputView {
 
         for (Status dto : dtos) {
             printStatus(dto);
-            System.out.println();
         }
 
         System.out.println();
@@ -26,32 +25,25 @@ public class OutputView {
                 dtos.subList(1, dtos.size()).stream()
                         .map(Status::getName)
                         .collect(Collectors.joining(", ")) +
-                "에게 2장을 나누었습니다.\n";
+                "에게 2장을 나누었습니다.";
     }
 
     public static void printTotalScore(List<Status> dtos) {
         System.out.println();
-        for (Status dto : dtos) {
-            printStatus(dto);
-            System.out.print("- 결과: " + dto.getScore() + "\n");
+        for (Status status : dtos) {
+            System.out.print(makeStatusString(status) + " - 결과: " + status.getScore() + "\n");
         }
     }
 
     public static void printStatus(Status status) {
-        StringBuilder result = new StringBuilder();
+        System.out.println(makeStatusString(status));
+    }
 
-        String name = status.getName();
-        List<CardDto> cardDtos = status.getCardDtos();
-
-
-        result.append(name);
-        result.append("카드: ");
-
-        result.append(cardDtos.stream()
-                .map(c -> (c.getDenomination() + c.getSymbol()))
-                .collect(Collectors.joining(", ")));
-
-        System.out.println(result);
+    private static String makeStatusString(Status status) {
+        return status.getName() + "카드: " +
+                status.getCardDtos().stream()
+                        .map(cardDto -> (cardDto.getDenomination() + cardDto.getSymbol()))
+                        .collect(Collectors.joining(", "));
     }
 
     public static void printDealerAdded(String name) {
