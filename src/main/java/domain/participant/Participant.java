@@ -12,7 +12,7 @@ import utils.ExceptionMessages;
 
 public class Participant implements Comparable<Participant> {
 
-    private static final int MAX_SCORE = 21;
+    protected static final int MAX_SCORE = 21;
 
     protected final Cards cards;
     protected final Name name;
