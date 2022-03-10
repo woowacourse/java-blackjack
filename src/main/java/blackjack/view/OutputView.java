@@ -19,7 +19,7 @@ public class OutputView {
         System.out.println(result);
     }
 
-    public static void printInitCards(Players players, Dealer dealer) {
+    public static void printInitGameState(Players players, Dealer dealer) {
         OutputView.printInitCardState(players, dealer);
         OutputView.printHumanCardState(dealer);
         for (Player player : players.getPlayers()) {
