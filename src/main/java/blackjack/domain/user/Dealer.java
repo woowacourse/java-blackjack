@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 public class Dealer extends Gamer {
 	public boolean hasHigherScore(Gamer gamer) {

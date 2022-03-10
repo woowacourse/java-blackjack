@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.Card;
-import blackjack.domain.Player;
-import blackjack.domain.ResultType;
+import blackjack.domain.card.Card;
+import blackjack.domain.user.Player;
+import blackjack.domain.result.ResultType;
 
 public class OutputView {
 	public void displayOneCard(Card card) {

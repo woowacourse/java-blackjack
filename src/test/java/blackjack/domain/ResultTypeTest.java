@@ -4,6 +4,13 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Number;
+import blackjack.domain.card.Type;
+import blackjack.domain.result.ResultType;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+
 class ResultTypeTest {
 
 	@Test

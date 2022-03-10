@@ -4,6 +4,14 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Number;
+import blackjack.domain.card.Type;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Gamer;
+import blackjack.domain.user.Player;
+
 class GamerTest {
 	@Test
 	void distribute_card() {
@@ -38,7 +46,7 @@ class GamerTest {
 		gamer.addCard(new Card(Number.ACE, Type.SPADE));
 		gamer.addCard(new Card(Number.NINE, Type.SPADE));
 		// when
-		gamer.calculateAceSum();
+		gamer.calculateOptimalScoreWithAce();
 		// then
 		assertThat(gamer).extracting("score").isEqualTo(21);
 	}

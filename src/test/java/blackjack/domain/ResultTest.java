@@ -8,6 +8,14 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Number;
+import blackjack.domain.card.Type;
+import blackjack.domain.result.Result;
+import blackjack.domain.result.ResultType;
+import blackjack.domain.user.Dealer;
+import blackjack.domain.user.Player;
+
 public class ResultTest {
 	Dealer dealer;
 	Player player1;

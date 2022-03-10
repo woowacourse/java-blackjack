@@ -1,8 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
+import blackjack.domain.card.Deck;
 
 public class Players {
 	private final List<Player> players;

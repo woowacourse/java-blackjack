@@ -1,29 +1,32 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+
 public class Gamer {
 	private final List<Card> cards = new ArrayList<>();
 	protected Score score = Score.from(0);
-
-	public void addTwoCards(Deck deck) {
-		addCard(deck.distributeCard());
-		addCard(deck.distributeCard());
-	}
 
 	public void addCard(Card card) {
 		cards.add(card);
 		score = this.score.addBy(card.getScore());
 
 		if (hasAce()) {
-			calculateAceSum();
+			this.score = Score.from(calculateOptimalScoreWithAce());
 		}
 
 		if (this.score.isBiggerThan(21)) {
 			score = this.score.setToMinusOne();
 		}
+	}
+
+	public void addTwoCards(Deck deck) {
+		addCard(deck.distributeCard());
+		addCard(deck.distributeCard());
 	}
 
 	public List<Card> getCards() {
@@ -38,12 +41,12 @@ public class Gamer {
 		return this.score.isSmallerThan(0);
 	}
 
-	public void calculateAceSum() {
+	public int calculateOptimalScoreWithAce() {
 		final int theNumberOfAce = countAceCard();
 		final int scoreWithoutAce = calculateNotAceCardScore();
 		List<Integer> possible = getPossibleAceScores(theNumberOfAce);
 		final int optimalScore = generateOptimalScore(scoreWithoutAce, possible);
-		this.score = Score.from(optimalScore);
+		return optimalScore;
 	}
 
 	private int generateOptimalScore(final int scoreWithoutAce, final List<Integer> possible) {
