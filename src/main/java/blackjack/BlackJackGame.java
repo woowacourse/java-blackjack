@@ -15,19 +15,14 @@ import blackjack.view.OutputView;
 
 public class BlackJackGame {
 
-	private final Deck deck;
-
-	public BlackJackGame(final Deck deck) {
-		this.deck = deck;
-	}
-
 	public void run() {
 		Player dealer = new Dealer();
 		Gamers gamers = setGamers();
+		Deck deck = Deck.initializeDeck();
 
-		startAllPlayer(dealer, gamers.getGamers());
+		startAllPlayer(dealer, gamers.getGamers(), deck);
 		OutputView.printOpenCards(gamers.getGamers(), dealer);
-		drawAdditionalCards(dealer, gamers);
+		drawAdditionalCards(dealer, gamers, deck);
 
 		printFinalMessage(dealer, gamers);
 	}
@@ -41,20 +36,20 @@ public class BlackJackGame {
 		}
 	}
 
-	private void startAllPlayer(final Player dealer, final List<Gamer> gamers) {
-		setInitialCards(dealer);
+	private void startAllPlayer(final Player dealer, final List<Gamer> gamers, final Deck deck) {
+		setInitialCards(dealer, deck);
 		for (Gamer gamer : gamers) {
-			setInitialCards(gamer);
+			setInitialCards(gamer, deck);
 		}
 	}
 
-	private void setInitialCards(final Player player) {
+	private void setInitialCards(final Player player, final Deck deck) {
 		for (int i = 0; i < PLAYER_SETTING_CARD_SIZE; i++) {
 			player.receiveCard(deck.draw());
 		}
 	}
 
-	private void drawAdditionalCards(final Player dealer, final Gamers gamers) {
+	private void drawAdditionalCards(final Player dealer, final Gamers gamers, final Deck deck) {
 		for (Gamer gamer : gamers.getGamers()) {
 			progressGamerAdditionalCard(deck, gamer);
 		}
