@@ -15,6 +15,10 @@ public abstract class Player {
         this.cards = cards;
     }
 
+    public String name() {
+        return name;
+    }
+
     public List<Card> openCards() {
         return openCards;
     }

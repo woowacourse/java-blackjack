@@ -46,4 +46,12 @@ public class Card {
     public String toString() {
         return rank.hard() + "-" + suit;
     }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
 }
