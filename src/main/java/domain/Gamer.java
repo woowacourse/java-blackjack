@@ -8,9 +8,17 @@ public class Gamer {
 	private final List<Card> cards = new ArrayList<>();
 	protected int score = 0;
 
+	public void addTwoCards(Deck deck) {
+		addCard(deck.distributeCard());
+		addCard(deck.distributeCard());
+	}
+
 	public void addCard(Card card) {
 		cards.add(card);
 		this.score += card.getScore();
+		if (this.score > 21) {
+			this.score = -1;
+		}
 	}
 
 	public List<Card> getCards() {
@@ -18,10 +26,10 @@ public class Gamer {
 	}
 
 	public boolean isBurst() {
-		return this.score > 21;
+		return this.score < 0;
 	}
 
-	public int calculateAceSum() {
+	public void calculateAceSum() {
 		int aceCnt = countAceCard();
 		int notAceScore = calculateNotAceCardScore();
 		List<Integer> possible = getPossibleAceScores(aceCnt);
@@ -32,7 +40,7 @@ public class Gamer {
 		for (int possibleScore : collect) {
 			res = Math.max(res, possibleScore + notAceScore);
 		}
-		return res;
+		this.score = res;
 	}
 
 	private List<Integer> getPossibleAceScores(int aceCnt) {
@@ -54,6 +62,10 @@ public class Gamer {
 			.filter(card -> !card.isAce())
 			.mapToInt(Card::getScore)
 			.sum();
+	}
+
+	public boolean hasAce() {
+		return this.cards.stream().anyMatch(Card::isAce);
 	}
 
 }

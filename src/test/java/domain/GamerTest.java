@@ -37,8 +37,8 @@ class GamerTest {
 		gamer.addCard(new Card(Number.ACE, Type.SPADE));
 		gamer.addCard(new Card(Number.NINE, Type.SPADE));
 		// when
-		int optimal = gamer.calculateAceSum();
+		gamer.calculateAceSum();
 		// then
-		assertThat(optimal).isEqualTo(21);
+		assertThat(gamer).extracting("score").isEqualTo(21);
 	}
 }

@@ -3,10 +3,10 @@ package domain;
 import java.util.Objects;
 
 public class Player extends Gamer {
-	private final String name;
+	private final Name name;
 
 	public Player(String name) {
-		this.name = name;
+		this.name = new Name(name);
 	}
 
 	@Override

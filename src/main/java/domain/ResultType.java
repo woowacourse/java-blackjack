@@ -6,6 +6,7 @@ public enum ResultType {
 	DRAW;
 
 	public static ResultType generateResultType(Player player, Dealer dealer) {
+
 		if (dealer.isEqaul(player)) {
 			return DRAW;
 		}

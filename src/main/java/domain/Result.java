@@ -8,7 +8,7 @@ public class Result {
 
 	public Map<Player, ResultType> getResult(List<Player> players, Dealer dealer) {
 		final Map<Player, ResultType> gameResult = new HashMap<>();
-		players.stream()
+		players.stream() // filter -> ifBurst()
 			.forEach(player -> gameResult.put(player, ResultType.generateResultType(player, dealer)));
 		return gameResult;
 	}
