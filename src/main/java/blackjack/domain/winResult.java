@@ -31,16 +31,15 @@ public class winResult {
     }
 
     private void judge(Dealer dealer, Player player) {
-        if (Rule.INSTANCE.isBust(player.getCards())) {
+        if (player.isBust()) {
             updateResult(player, Judgement.LOSE);
             return;
         }
-        if (Rule.INSTANCE.isBust(dealer.getCards())) {
+        if (dealer.isBust()) {
             updateResult(player, Judgement.WIN);
             return;
         }
-        judgeWithoutBust(player, Rule.INSTANCE.calculateSum(dealer.getCards()),
-                Rule.INSTANCE.calculateSum(player.getCards()));
+        judgeWithoutBust(player, dealer.calculateSum(), player.calculateSum());
     }
 
     private void judgeWithoutBust(Player player, int dealerScore, int playerScore) {
