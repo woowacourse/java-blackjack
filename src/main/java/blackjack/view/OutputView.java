@@ -74,9 +74,9 @@ public class OutputView {
         System.out.println(PRINT_DEALER_NOT_RECEIVE_CARD);
     }
 
-    public static void printFinalResult(final BlackJackGame blackJackGame) {
-        printPlayerCardsResult(blackJackGame.getDealer());
-        blackJackGame.getGamers().forEach(OutputView::printPlayerCardsResult);
+    public static void printFinalResult(final Player dealer, final List<Player> gamers) {
+        printPlayerCardsResult(dealer);
+        gamers.forEach(OutputView::printPlayerCardsResult);
     }
 
     private static void printPlayerCardsResult(final Player player) {
@@ -86,10 +86,8 @@ public class OutputView {
                 player.calculateResult());
     }
 
-    public static void printFinalResultBoard(final BlackJackGame blackJackGame) {
+    public static void printFinalResultBoard(final Map<Player, Result> gamerResultBoard ) {
         System.out.println("\n## 최종 승패");
-        Map<Player, Result> gamerResultBoard = blackJackGame.calculateResultBoard();
-
         System.out.print(dealerToString(gamerResultBoard));
         gamerResultBoard.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
                 key.showName(),

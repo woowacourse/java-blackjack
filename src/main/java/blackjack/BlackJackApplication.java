@@ -23,8 +23,8 @@ public class BlackJackApplication {
             progressGamerAdditionalCard(deck, gamer);
         }
         progressDealerAdditionalCard(deck, blackJackGame.getDealer());
-        OutputView.printFinalResult(blackJackGame);
-        OutputView.printFinalResultBoard(blackJackGame);
+        OutputView.printFinalResult(blackJackGame.getDealer(), blackJackGame.getGamers());
+        OutputView.printFinalResultBoard(blackJackGame.calculateResultBoard());
     }
 
     private static List<Player> createGamers() {
