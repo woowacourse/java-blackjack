@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.CardNumber.A;
 import static blackjack.domain.card.CardNumber.SEVEN;
 import static blackjack.domain.card.CardNumber.SIX;
 import static blackjack.domain.card.CardNumber.TEN;
@@ -17,16 +16,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
-
-    @Test
-    @DisplayName("딜러의 카드가 17이상일 때 카드를 추가하면 예외가 발생해야 한다.")
-    void drawExceptionByLimitDealerScore() {
-        final Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN))));
-        assertThatThrownBy(() -> dealer.draw(Card.of(SPADE, A)))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("딜러 카드가 이미 17이상입니다.");
-    }
-
     @Nested
     @DisplayName("딜러가 카드 한 장을 더 받을 수 있는지 확인할 수 있다.")
     class IsEnd {
