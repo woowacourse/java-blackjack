@@ -8,18 +8,24 @@ import java.util.Scanner;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
+    public static final String INPUT_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    public static final String ERROR_DUPLICATE_NAME = "[ERROR] 이름은 중복될 수 없습니다.";
 
     private InputView() {
     }
 
     public static List<String> scanPlayerNames() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        final List<String> playerNames = getPlayerNames();
+        System.out.println(INPUT_PLAYER_NAMES);
+        List<String> playerNames = getPlayerNames();
         validateDuplicateNames(playerNames);
         return playerNames;
     }
 
     private static List<String> getPlayerNames() {
+        return ExceptionHandler.process(InputView::scanRawPlayerNames, InputView::validateDuplicateNames);
+    }
+
+    private static List<String> scanRawPlayerNames() {
         return Arrays.stream(SCANNER.nextLine()
                         .split(",", -1))
                 .map(String::trim)
@@ -27,15 +33,13 @@ public class InputView {
     }
 
     public static void validateDuplicateNames(List<String> names) {
-        if (isDuplicate(names)) {
-            throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
-        }
-    }
-
-    private static boolean isDuplicate(final List<String> names) {
-        return names.size() != names.stream()
+        boolean isDuplicate = names.size() != names.stream()
                 .distinct()
                 .count();
+
+        if (isDuplicate) {
+            throw new IllegalArgumentException(ERROR_DUPLICATE_NAME);
+        }
     }
 
     public static boolean scanHitOrStay(final String name) {
