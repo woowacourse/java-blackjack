@@ -1,8 +1,15 @@
 package rentcompany;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RentCompany {
 
-    private RentCompany() {}
+    private List<Car> cars;
+
+    private RentCompany() {
+        cars = new ArrayList<>();
+    }
 
     public static RentCompany create() {
         return new RentCompany();
@@ -12,6 +19,7 @@ public class RentCompany {
         return null;
     }
 
-    public void addCar(Car sonata) {
+    public void addCar(Car car) {
+        cars.add(car);
     }
 }
