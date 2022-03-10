@@ -127,17 +127,22 @@ class ParticipantTest {
     @ParameterizedTest
     @MethodSource("provideForIsHigherThanTest")
     @DisplayName("두 참여자의 카드 합계를 비교한다.")
-    void isHigherThanTest(final List<Card> initializedCards) {
+    void isHigherThanTest(final List<Card> initializedCards, final int drawCount1, final int drawCount2) {
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
+
         final Participant participant1 = new Participant();
-        participant1.drawCard(deck);
-        participant1.drawCard(deck);
         final Participant participant2 = new Participant();
-        participant2.drawCard(deck);
-        participant2.drawCard(deck);
+        drawCards(participant1, deck, drawCount1);
+        drawCards(participant2, deck, drawCount2);
 
         assertThat(participant1.isHigherThan(participant2)).isTrue();
+    }
+
+    private void drawCards(final Participant participant, final Deck deck, final int drawCount) {
+        for (int i = 0; i < drawCount; i++) {
+            participant.drawCard(deck);
+        }
     }
 
     private static Stream<Arguments> provideForIsHigherThanTest() {
@@ -148,7 +153,7 @@ class ParticipantTest {
                                 new Card(CardPattern.DIAMOND, CardNumber.TEN),
                                 new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
                                 new Card(CardPattern.DIAMOND, CardNumber.NINE)
-                        )
+                        ), 2, 2
                 ),
                 Arguments.of(
                         List.of(
@@ -156,7 +161,44 @@ class ParticipantTest {
                                 new Card(CardPattern.SPADE, CardNumber.EIGHT),
                                 new Card(CardPattern.SPADE, CardNumber.NINE),
                                 new Card(CardPattern.HEART, CardNumber.EIGHT)
-                        )
+                        ), 2, 2
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardPattern.SPADE, CardNumber.ACE),
+                                new Card(CardPattern.SPADE, CardNumber.TEN),
+                                new Card(CardPattern.SPADE, CardNumber.THREE),
+                                new Card(CardPattern.SPADE, CardNumber.EIGHT),
+                                new Card(CardPattern.HEART, CardNumber.NINE)
+                        ), 2, 3
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardPattern.SPADE, CardNumber.ACE),
+                                new Card(CardPattern.SPADE, CardNumber.TEN),
+                                new Card(CardPattern.SPADE, CardNumber.KING),
+                                new Card(CardPattern.SPADE, CardNumber.THREE),
+                                new Card(CardPattern.SPADE, CardNumber.EIGHT),
+                                new Card(CardPattern.HEART, CardNumber.NINE)
+                        ), 3, 3
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardPattern.SPADE, CardNumber.ACE),
+                                new Card(CardPattern.DIAMOND, CardNumber.ACE),
+                                new Card(CardPattern.HEART, CardNumber.ACE),
+                                new Card(CardPattern.SPADE, CardNumber.TWO),
+                                new Card(CardPattern.SPADE, CardNumber.TEN)
+                        ), 3, 2
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardPattern.SPADE, CardNumber.FOUR),
+                                new Card(CardPattern.SPADE, CardNumber.TEN),
+                                new Card(CardPattern.SPADE, CardNumber.ACE),
+                                new Card(CardPattern.DIAMOND, CardNumber.ACE),
+                                new Card(CardPattern.HEART, CardNumber.ACE)
+                        ), 2, 3
                 )
         );
     }
