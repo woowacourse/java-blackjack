@@ -5,12 +5,15 @@ import java.util.List;
 
 public class Dealer {
 
+    private static final String DEALER_NAME = "딜러";
     private static final int DRAWABLE_LIMIT_VALUE = 16;
     private static final int PLAYING_STANDARD = 21;
 
+    private final Name name;
     private final Cards cards;
 
     public Dealer(List<Card> cards) {
+        this.name = new Name(DEALER_NAME);
         this.cards = new Cards(cards);
     }
 
@@ -36,6 +39,10 @@ public class Dealer {
         }
 
         return GameResult.of(getTotalScore() - playerScore);
+    }
+
+    public String getName() {
+        return name.getValue();
     }
 
     public List<Card> getCards() {
