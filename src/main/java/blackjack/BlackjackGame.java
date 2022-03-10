@@ -21,11 +21,8 @@ public class BlackjackGame {
                 .collect(Collectors.toList());
     }
 
-    public Player receiveOneMoreCard(Player player, String answer) {
-        if (answer.equals("y")) {
-            player.putCard(deck.draw());
-        }
-        return player;
+    public void receiveOneMoreCard(Player player) {
+        player.putCard(deck.draw());
     }
     
     public boolean isDealerReceiveOneMoreCard() {
