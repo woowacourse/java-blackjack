@@ -17,7 +17,7 @@ public class Gamer implements Player {
 		cards = new Cards();
 	}
 
-	private void checkEmptyName(String name) {
+	private void checkEmptyName(final String name) {
 		if (name.isBlank()) {
 			throw new IllegalArgumentException("[ERROR] Gamer의 이름은 공백일 수 없습니다.");
 		}

@@ -1,5 +1,10 @@
 package blackjack;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import blackjack.domain.Answer;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Dealer;
@@ -8,11 +13,6 @@ import blackjack.domain.Gamer;
 import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class BlackJackApplication {
 
@@ -26,7 +26,7 @@ public class BlackJackApplication {
 		printFinalMessage(blackJackGame);
 	}
 
-	private static BlackJackGame initBlackJackGame(Deck deck) {
+	private static BlackJackGame initBlackJackGame(final Deck deck) {
 		BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), createGamers());
 		blackJackGame.setInitialCards(deck);
 		OutputView.printOpenCards(blackJackGame.getGamers(), blackJackGame.getDealer());
@@ -57,27 +57,28 @@ public class BlackJackApplication {
 		}
 	}
 
-	private static void progressGamerAdditionalCard(Deck deck, Gamer gamer) {
+	private static void progressGamerAdditionalCard(final Deck deck, final Gamer gamer) {
 		while (isReceivable(gamer)) {
 			gamer.receiveCard(deck.draw());
 			OutputView.printGamerCards(gamer);
 		}
 	}
 
-	private static boolean isReceivable(Gamer gamer) {
+	private static boolean isReceivable(final Gamer gamer) {
 		return gamer.isReceivable() && isAnswerYes(gamer.getName());
 	}
 
-	private static boolean isAnswerYes(String name) {
+	private static boolean isAnswerYes(final String name) {
 		try {
-			return Answer.YES == Answer.of(InputView.requestAnswer(name));
+			String answer = InputView.requestAnswer(name);
+			return Answer.YES == Answer.of(answer);
 		} catch (IllegalArgumentException e) {
 			OutputView.printErrorMessage(e.getMessage());
 			return isAnswerYes(name);
 		}
 	}
 
-	private static void progressDealerAdditionalCard(Deck deck, Player dealer) {
+	private static void progressDealerAdditionalCard(final Deck deck, final Player dealer) {
 		boolean receivable = dealer.isReceivable();
 		OutputView.printDealerReceive(receivable);
 		if (receivable) {
@@ -85,7 +86,7 @@ public class BlackJackApplication {
 		}
 	}
 
-	private static void printFinalMessage(BlackJackGame blackJackGame) {
+	private static void printFinalMessage(final BlackJackGame blackJackGame) {
 		OutputView.printFinalResult(blackJackGame.getDealer(), blackJackGame.getGamers());
 		OutputView.printFinalResultBoard(blackJackGame.calculateResultBoard());
 	}

@@ -27,7 +27,7 @@ public class InputView {
 		return name.replaceAll(INPUT_BLANK, INPUT_NOT_BLANK);
 	}
 
-	public static String requestAnswer(String name) {
+	public static String requestAnswer(final String name) {
 		System.out.printf(REQUEST_PLAYER_ANSWER_MESSAGE, name);
 		return scanner.nextLine();
 	}

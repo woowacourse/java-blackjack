@@ -37,7 +37,7 @@ public class Card {
 		return denomination;
 	}
 
-	public String getName(){
+	public String getName() {
 		return denomination.getName() + suit.getName();
 	}
 }

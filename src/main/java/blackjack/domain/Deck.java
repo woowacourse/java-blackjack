@@ -22,7 +22,7 @@ public class Deck {
 		return new Deck(cards);
 	}
 
-	private static void pushCard(Stack<Card> cards, final Suit suit) {
+	private static void pushCard(final Stack<Card> cards, final Suit suit) {
 		for (Denomination denomination : Denomination.values()) {
 			cards.push(new Card(suit, denomination));
 		}

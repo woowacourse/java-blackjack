@@ -9,11 +9,11 @@ public enum Answer {
 
 	private final String answer;
 
-	Answer(String answer) {
+	Answer(final String answer) {
 		this.answer = answer;
 	}
 
-	public static Answer of(String input) {
+	public static Answer of(final String input) {
 		return Arrays.stream(values())
 			.filter(value -> value.getAnswer().equals(input))
 			.findFirst()
