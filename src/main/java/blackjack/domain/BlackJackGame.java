@@ -1,13 +1,10 @@
 package blackjack.domain;
 
-import static java.util.stream.Collectors.toMap;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 

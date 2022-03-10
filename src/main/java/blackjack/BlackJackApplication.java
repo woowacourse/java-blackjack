@@ -1,6 +1,6 @@
 package blackjack;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.Answer;
 import blackjack.domain.BlackJackGame;
