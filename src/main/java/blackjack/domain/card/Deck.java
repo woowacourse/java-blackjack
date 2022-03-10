@@ -14,15 +14,18 @@ public class Deck {
     }
 
     private static Stack<Card> init() {
-        Stack<Card> deck = new Stack<>();
-        List<Card> cards = new ArrayList<>();
-
-        Type.getTypeValues()
-                .forEach(type -> makeCardByScore(cards, type));
+        List<Card> cards = makeCards();
         Collections.shuffle(cards);
-
+        Stack<Card> deck = new Stack<>();
         deck.addAll(cards);
         return deck;
+    }
+
+    private static List<Card> makeCards() {
+        List<Card> cards = new ArrayList<>();
+        Type.getTypeValues()
+                .forEach(type -> makeCardByScore(cards, type));
+        return cards;
     }
 
     private static void makeCardByScore(final List<Card> cards, final Type type) {
