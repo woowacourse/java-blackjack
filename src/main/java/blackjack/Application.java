@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.DrawCommand;
 import blackjack.dto.PlayerCards;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -22,7 +23,8 @@ public class Application {
 
     private static void runPlayerTurn(final BlackJackGame blackJackGame) {
         while (!blackJackGame.isPlayersTurnEnd()) {
-            final String command = InputView.inputDrawCommand(blackJackGame.getCurrentTurnPlayerCards());
+            final DrawCommand command = DrawCommand
+                    .from(InputView.inputDrawCommand(blackJackGame.getCurrentTurnPlayerCards()));
             final PlayerCards currentPlayerCards = blackJackGame.drawCurrentPlayer(command);
             OutputView.printPlayerCards(currentPlayerCards);
         }

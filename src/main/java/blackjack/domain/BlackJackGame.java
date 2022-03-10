@@ -44,9 +44,8 @@ public class BlackJackGame {
         return players.isAllTurnEnd();
     }
 
-    public PlayerCards drawCurrentPlayer(final String command) {
-        final DrawCommand drawCommand = DrawCommand.from(command);
-        if (drawCommand.isNo()) {
+    public PlayerCards drawCurrentPlayer(final DrawCommand command) {
+        if (command.isNo()) {
             final PlayerCards currentPlayer = players.getCurrentTurnPlayerCards();
             players.turnToNextPlayer();
             return currentPlayer;
@@ -68,6 +67,10 @@ public class BlackJackGame {
 
     public List<PlayerCards> getPlayersFirstCards() {
         return players.getPlayerFirstCards();
+    }
+
+    public String getCurrentTurnPlayerName() {
+        return players.getCurrentTurnPlayerName();
     }
 
     public PlayerCards getCurrentTurnPlayerCards() {
