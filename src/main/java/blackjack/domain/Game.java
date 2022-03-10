@@ -35,7 +35,7 @@ public class Game {
         return cardFactory.getRemainAmount();
     }
 
-    public void drawCard(Status status) {
+    public void drawPlayerCard(Status status) {
         final Optional<Player> optionalPlayer = findHitPlayer();
 
         if (status == Status.HIT) {
@@ -49,5 +49,13 @@ public class Game {
         return players.stream()
                 .filter(Player::isHit)
                 .findFirst();
+    }
+
+    public void drawDealerCard() {
+        dealer.drawCards(cardFactory);
+    }
+
+    public int getDealerScore() {
+        return dealer.getScore();
     }
 }

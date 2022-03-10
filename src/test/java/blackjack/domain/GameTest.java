@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
-import blackjack.domain.participant.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,10 +49,24 @@ public class GameTest {
         Game game = new Game(CardFactory.createNoShuffle(), List.of(name));
 
         // when
-        game.drawCard(status);
+        game.drawPlayerCard(status);
         final int actual = game.getRemainAmount();
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+    
+    @Test
+    @DisplayName("딜러의 턴을 진행한다")
+    void drawDealerCard() {
+        // give
+        Game game = new Game(CardFactory.createNoShuffle(), List.of("pobi"));
+
+        // when
+        game.drawDealerCard();
+        int actual = game.getDealerScore();
+
+        // then
+        assertThat(actual).isEqualTo(20);
     }
 }
