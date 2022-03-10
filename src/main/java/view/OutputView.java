@@ -4,8 +4,8 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.game.GameResult;
 import domain.game.MatchResult;
-import domain.player.Dealer;
-import domain.player.Player;
+import domain.participant.Dealer;
+import domain.participant.Player;
 
 import java.util.List;
 import java.util.Map;

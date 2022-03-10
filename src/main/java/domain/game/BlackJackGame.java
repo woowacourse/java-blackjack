@@ -3,16 +3,15 @@ package domain.game;
 import domain.card.Card;
 import domain.card.CardDistributor;
 import domain.card.Cards;
-import domain.player.Dealer;
-import domain.player.Name;
-import domain.player.Player;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
-    // TODO players + dealer 합칠 방법 생각해보기
     private final List<Player> players;
     private final Dealer dealer;
     private final CardDistributor cardDistributor;
@@ -20,7 +19,7 @@ public class BlackJackGame {
     public BlackJackGame(List<Name> names) {
         this.cardDistributor = new CardDistributor();
         this.players = initializePlayers(new ArrayList<>(names));
-        this.dealer = new Dealer(drawInitialCards());
+        this.dealer = new Dealer(new Name("딜러"), drawInitialCards());
     }
 
     private List<Player> initializePlayers(List<Name> names) {

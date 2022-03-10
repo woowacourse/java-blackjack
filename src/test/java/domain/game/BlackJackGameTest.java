@@ -1,7 +1,7 @@
 package domain.game;
 
-import domain.player.Name;
-import domain.player.Player;
+import domain.participant.Name;
+import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

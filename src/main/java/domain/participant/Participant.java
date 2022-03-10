@@ -1,25 +1,21 @@
-package domain.player;
+package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
 
 import java.util.Objects;
 
-public class Player implements Participant {
-    private final Name name;
-    private final Cards cards;
+public abstract class Participant {
+    protected final Name name;
+    protected final Cards cards;
 
-    public Player(Name name, Cards cards) {
+    public Participant(Name name, Cards cards) {
         this.name = name;
         this.cards = cards;
     }
 
-    @Override
-    public boolean isFinished() {
-        return cards.isBust() || cards.isBlackJack();
-    }
+    abstract boolean isFinished();
 
-    @Override
     public void drawCard(Card card) {
         cards.add(card);
     }
@@ -36,20 +32,12 @@ public class Player implements Participant {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
-        return name.equals(player.name);
+        Participant that = (Participant) o;
+        return name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "name=" + name +
-                ", cards=" + cards +
-                '}';
     }
 }

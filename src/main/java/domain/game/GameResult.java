@@ -1,7 +1,7 @@
 package domain.game;
 
-import domain.player.Dealer;
-import domain.player.Player;
+import domain.participant.Dealer;
+import domain.participant.Player;
 
 import java.util.*;
 

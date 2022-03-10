@@ -1,4 +1,4 @@
-package domain.player;
+package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
@@ -16,20 +16,20 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DealerTest {
+public class PlayerTest {
+
     @ParameterizedTest(name = "{0}")
     @MethodSource("provideParameters")
     @DisplayName("턴 강제 종료 여부")
-    void Dealer(String comment, Cards cards, boolean expect) {
-        Dealer dealer = new Dealer(cards);
-        assertThat(dealer.isFinished()).isEqualTo(expect);
+    void player(String comment,Cards cards, boolean expect) {
+        Player player = new Player(new Name("name"), cards);
+        assertThat(player.isFinished()).isEqualTo(expect);
     }
 
     private static Stream<Arguments> provideParameters() {
         return Stream.of(
                 Arguments.arguments("합계 22인 경우 true", new Cards(getCardList(Denomination.TWO, Denomination.QUEEN, Denomination.KING)), true),
-                Arguments.arguments("합계 17인 경우 true", new Cards(getCardList(Denomination.SEVEN, Denomination.QUEEN)), true),
-                Arguments.arguments("합계 15인 경우 false", new Cards(getCardList(Denomination.QUEEN, Denomination.FIVE)), false)
+                Arguments.arguments("합계 20인 경우 false", new Cards(getCardList(Denomination.QUEEN, Denomination.KING)), false)
         );
     }
 
@@ -43,8 +43,8 @@ public class DealerTest {
 
     @Test
     void drawCard() {
-        Dealer dealer = new Dealer(new Cards(getCardList(Denomination.QUEEN)));
-        dealer.drawCard(new Card(Denomination.ACE, Suit.CLOVER));
-        assertThat(dealer.getCards().getValue().size()).isEqualTo(2);
+        Player player = new Player(new Name("name"), new Cards(getCardList(Denomination.QUEEN)));
+        player.drawCard(new Card(Denomination.ACE, Suit.CLOVER));
+        assertThat(player.getCards().getValue().size()).isEqualTo(2);
     }
 }
