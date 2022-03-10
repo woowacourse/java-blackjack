@@ -34,11 +34,15 @@ public class Dealer {
     public Card getOpenCard() {
         return cardHand.getCards().get(0);
     }
-
+    
     public void drawCardToPlayers(List<Player> players) {
         for (Player player : players) {
-            player.receiveCard(drawCard());
-            player.receiveCard(drawCard());
+            giveCard(player);
+            giveCard(player);
         }
+    }
+
+    public void giveCard(Player player) {
+        player.receiveCard(drawCard());
     }
 }

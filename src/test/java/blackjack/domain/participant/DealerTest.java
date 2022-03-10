@@ -93,4 +93,19 @@ public class DealerTest {
                 () -> assertThat(p2.getCards().size()).isEqualTo(2)
         );
     }
+
+    @Test
+    @DisplayName("플레이어에게 카드 한장을 정상적으로 주는지 확인")
+    void giveCard() {
+        List<Card> cards = new ArrayList<>();
+        Card excepted = new Card(Denomination.JACK, Suit.DIAMOND);
+        cards.add(excepted);
+        cards.add(new Card(Denomination.ACE, Suit.DIAMOND));
+
+        Dealer dealer = new Dealer(new Deck(cards));
+        Player player = new Player("승팡");
+
+        dealer.giveCard(player);
+        assertThat(player.getCards()).containsExactly(excepted);
+    }
 }
