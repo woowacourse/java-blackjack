@@ -5,6 +5,7 @@ import blackjack.domain.DrawCommand;
 import blackjack.dto.PlayerCards;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
 
 public class BlackJackGame {
 
@@ -12,7 +13,21 @@ public class BlackJackGame {
         throw new AssertionError();
     }
 
-    public static void runPlayerTurn(final BlackJackBoard blackJackBoard) {
+    public static BlackJackBoard createBlackJackBoard() {
+        final List<String> playerNames = InputView.inputPlayerNames();
+        return BlackJackBoard.createGame(playerNames);
+    }
+
+    public static void printFirstDrawCard(final BlackJackBoard blackJackBoard) {
+        OutputView.showPlayersFirstCards(blackJackBoard.getDealerFirstCard(), blackJackBoard.getPlayersFirstCards());
+    }
+
+    public static void runAllPlayerTurn(final BlackJackBoard blackJackBoard) {
+        runPlayerTurn(blackJackBoard);
+        runDealerTurn(blackJackBoard);
+    }
+
+    private static void runPlayerTurn(final BlackJackBoard blackJackBoard) {
         if (blackJackBoard.isPlayersTurnEnd()) {
             return;
         }
@@ -26,12 +41,17 @@ public class BlackJackGame {
         return DrawCommand.from(InputView.inputDrawCommand(blackJackBoard.getCurrentTurnPlayerName()));
     }
 
-    public static void runDealerTurn(final BlackJackBoard blackJackBoard) {
+    private static void runDealerTurn(final BlackJackBoard blackJackBoard) {
         if (blackJackBoard.isDealerTurnEnd()) {
             return;
         }
         blackJackBoard.drawDealer();
         OutputView.printDealerDraw();
         runDealerTurn(blackJackBoard);
+    }
+
+    public static void printAllResults(final BlackJackBoard blackJackBoard) {
+        OutputView.printPlayerScoreResults(blackJackBoard.getPlayerScoreResults());
+        OutputView.printAllOutcomeResult(blackJackBoard.calculateAllResults());
     }
 }
