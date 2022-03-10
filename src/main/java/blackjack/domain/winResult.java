@@ -18,7 +18,7 @@ public class winResult {
         playersResult = new HashMap<>();
 
         initDealerResult();
-        calculateResult(dealer, players);
+        calculateResult(dealer, List.copyOf(players));
     }
 
     private void initDealerResult() {
@@ -61,10 +61,10 @@ public class winResult {
     }
 
     public Map<Judgement, Integer> getDealerResult() {
-        return dealerResult;
+        return Map.copyOf(dealerResult);
     }
 
     public Map<String, Judgement> getPlayersResult() {
-        return playersResult;
+        return Map.copyOf(playersResult);
     }
 }
