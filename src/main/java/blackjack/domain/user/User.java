@@ -9,9 +9,11 @@ import java.util.List;
 public abstract class User {
 
     protected final List<Card> cards;
+    protected final String name;
 
-    protected User() {
+    protected User(String name) {
         cards = new ArrayList<>();
+        this.name = name;
     }
 
     public void drawInitCards(Deck deck) {
@@ -30,4 +32,8 @@ public abstract class User {
     public abstract List<Card> showInitCards();
 
     public abstract boolean isDrawable();
+
+    public String getName(){
+        return name;
+    }
 }

@@ -10,7 +10,7 @@ public class Dealer extends User {
     private static final int DRAW_THRESHOLD = 17;
 
     public Dealer() {
-        super();
+        super("딜러");
     }
 
     @Override

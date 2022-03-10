@@ -9,11 +9,8 @@ public class Player extends User {
     private static final int BLACKJACK_NUMBER = 21;
     private static final int INIT_COUNT = 2;
 
-    private final String name;
-
     public Player(String name) {
-        super();
-        this.name = name;
+        super(name);
     }
 
     @Override
