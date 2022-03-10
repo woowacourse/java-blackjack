@@ -33,12 +33,12 @@ public class Player extends Human {
     }
 
     @Override
-    public void addCard(Card card) {
-        cards.add(card);
+    public Cards getCards() {
+        return cards;
     }
 
     @Override
-    public Cards getCards() {
-        return cards;
+    public void addCard(Card card) {
+        cards.add(card);
     }
 }

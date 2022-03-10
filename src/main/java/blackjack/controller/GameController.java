@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
-    public GameController() {
-
-    }
 
     public void run() {
         String[] names = InputView.inputPlayerName();
@@ -30,7 +27,30 @@ public class GameController {
         players.giveCard();
 
         // 카드 받을지 물어보는 기능
-        boolean moreCard = InputView.inputOneMoreCard("jack");
-        System.out.println(moreCard);
+        for (Player player : players.getCardNeedPlayers()) {
+            questionOneMoreCard(player);
+            System.out.println(player.getCards().size());
+        }
+
+        // 플레이어 마다 물어봐야함.
     }
+
+    public void questionOneMoreCard(Player player) {
+        while (player.isOneMoreCard()) {
+            if (!InputView.inputOneMoreCard(player.getName())) {
+                break;
+            }
+            player.addCard(CardDeck.giveCard());
+        }
+    }
+
+//    public void questionOneMoreCard(Player player) {
+//        while (player.isOneMoreCard()) {
+//            if (InputView.inputOneMoreCard(player.getName())) {
+//                player.addCard(CardDeck.giveCard());
+//                continue;
+//            }
+//            player.toNoCardNeeded();
+//        }
+//    }
 }
