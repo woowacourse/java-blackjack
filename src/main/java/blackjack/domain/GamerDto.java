@@ -7,6 +7,7 @@ import blackjack.domain.gamer.Name;
 import java.util.List;
 
 public class GamerDto {
+    public static final int FIRST_INDEX = 0;
     private final Name name;
     private final List<Card> cards;
 
@@ -21,5 +22,13 @@ public class GamerDto {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public int getCardSize() {
+        return cards.size();
+    }
+
+    public Card getFirstCard() {
+        return cards.get(FIRST_INDEX);
     }
 }

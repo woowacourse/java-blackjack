@@ -48,6 +48,10 @@ public class Card {
         return cardNumber.getValue();
     }
 
+    public String getShape() {
+        return cardShape.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

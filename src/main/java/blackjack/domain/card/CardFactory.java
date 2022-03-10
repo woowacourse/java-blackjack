@@ -12,7 +12,7 @@ public class CardFactory {
 
 	public CardFactory(List<Card> deck) {
 		this.deck = new LinkedList<>(deck);
-		Collections.shuffle(deck);
+		Collections.shuffle(this.deck);
 	}
 
 	public Card draw() {
