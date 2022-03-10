@@ -9,6 +9,10 @@ public class Player extends Gamer {
 		this.name = new Name(name);
 	}
 
+	public String getName() {
+		return this.name.getName();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

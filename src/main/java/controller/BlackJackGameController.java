@@ -26,7 +26,7 @@ public class BlackJackGameController {
 		players.addCardToAllPlayers(deck);
 		for (Player player : players.getPlayers()) {
 			while (true) {
-				String decision = inputView.inputYesOrNo();
+				String decision = inputView.inputYesOrNo(player.getName());
 				if (decision.equals("N") || decision.equals("n")) {
 					break;
 				}
