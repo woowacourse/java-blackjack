@@ -62,7 +62,7 @@ public class Player extends Human {
     }
 
     @Override
-    public boolean isBurst() {
+    public boolean isBust() {
         return cards.isOverBlackjack();
     }
 

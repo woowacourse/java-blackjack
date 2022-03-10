@@ -42,7 +42,7 @@ public class Dealer extends Human {
     }
 
     @Override
-    public boolean isBurst() {
+    public boolean isBust() {
         return cards.isOverBlackjack();
     }
 

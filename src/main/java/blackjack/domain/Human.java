@@ -12,7 +12,7 @@ public abstract class Human {
 
     abstract void receiveCard(Card card);
 
-    abstract boolean isBurst();
+    abstract boolean isBust();
 
     abstract boolean isReceived();
 }
