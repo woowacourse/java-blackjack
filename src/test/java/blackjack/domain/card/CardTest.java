@@ -21,7 +21,7 @@ public class CardTest {
         assertThat(card).isNotNull();
     }
 
-    @DisplayName("카드의 이름을 얻을 수 있다.")
+    @DisplayName("카드의 심볼을 얻을 수 있다.")
     @Test
     public void testGetCardName() {
         //given
@@ -32,10 +32,10 @@ public class CardTest {
         Card card = new Card(suit, denomination);
 
         //then
-        assertThat(card.getName()).isEqualTo("8스페이드");
+        assertThat(card.getSymbol()).isEqualTo("8");
     }
 
-    @DisplayName("카드의 이름을 얻을 수 있다.")
+    @DisplayName("카드의 번호를 얻을 수 있다.")
     @Test
     public void testGetCardWithSymbol() {
         //given
@@ -46,6 +46,6 @@ public class CardTest {
         Card card = new Card(suit, denomination);
 
         //then
-        assertThat(card.getName()).isEqualTo("A스페이드");
+        assertThat(card.getSuitName()).isEqualTo("스페이드");
     }
 }
