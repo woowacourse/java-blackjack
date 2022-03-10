@@ -27,19 +27,22 @@ public class Controller {
 			.collect(Collectors.toList());
 		Players players = new Players(names, initCardForPlayers);
 
+		//손패 출력
 		OutputView.printHands(names, dealer.showOneHand(), players.showHands());
 
+		//initResult
 		if (players.isExistBlackJack() || dealer.isBlackJack()) {
-			Result initResult = new Result(players.initCompare(dealer.isBlackJack()));
+			Result blackjackResult = new Result(players.initCompare(dealer.isBlackJack()));
 			OutputView.printResultTitle();
-			OutputView.printDealerResult(initResult.getDealerWinCount(), initResult.getDealerDrawCount(),
-				initResult.getDealerLoseCount());
+			OutputView.printDealerResult(blackjackResult.getDealerWinCount(), blackjackResult.getDealerDrawCount(),
+				blackjackResult.getDealerLoseCount());
 			for (String name : names) {
-				OutputView.printPlayerResult(name, initResult.getVersus(name).getResult());
+				OutputView.printPlayerResult(name, blackjackResult.getVersus(name).getResult());
 			}
 			return;
 		}
 
+		// 참가자들 draw
 		for (String name : names) {
 			while (askDraw(name)) {
 				players.addCardByName(name, deck.draw());
@@ -48,10 +51,18 @@ public class Controller {
 					OutputView.printBlackJackMessage();
 					break;
 				}
-				if (players.isBurstByName(name)) {
-					OutputView.printBurstMessage();
+				if (players.isBustByName(name)) {
+					OutputView.printBustMessage();
 					break;
 				}
+			}
+		}
+
+		//딜러 draw
+		if (!players.isAllBust()) {
+			while (!dealer.isEnoughCard()) {
+				OutputView.printDealerDrawMessage();
+				dealer.addCard(deck.draw());
 			}
 		}
 	}

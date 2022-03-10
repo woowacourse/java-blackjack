@@ -38,7 +38,7 @@ public class Participant {
 		hand.add(card);
 	}
 
-	public boolean isBurst() {
+	public boolean isBust() {
 		return getMinScore() > BLACK_JACK_NUMBER;
 	}
 
@@ -73,10 +73,10 @@ public class Participant {
 	}
 
 	public Versus finalCompare(Participant other) {
-		if (isBurst()) {
+		if (isBust()) {
 			return Versus.LOSE;
 		}
-		if (other.isBurst()) {
+		if (other.isBust()) {
 			return Versus.WIN;
 		}
 		return whoIsHigh(other.getBestScore());

@@ -50,15 +50,23 @@ public class Players {
 			.map(Participant::showHand).findFirst().orElseThrow();
 	}
 
-	public boolean isBurstByName(String name) {
+	public boolean isBustByName(String name) {
 		return players.stream()
 			.filter(player -> player.compareName(name))
-			.map((Participant::isBurst)).findFirst().orElseThrow();
+			.map((Participant::isBust)).findFirst().orElseThrow();
 	}
 
 	public boolean isBlackJackByName(String name) {
 		return players.stream()
 			.filter(player -> player.compareName(name))
 			.map((Participant::isBlackJack)).findFirst().orElseThrow();
+	}
+
+	public boolean isAllBust() {
+		long count = players.stream()
+			.filter(Participant::isBust)
+			.count();
+
+		return count == players.size();
 	}
 }

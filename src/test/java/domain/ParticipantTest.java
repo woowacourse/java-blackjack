@@ -58,7 +58,7 @@ public class ParticipantTest {
 	void isBurst(Rank rank) {
 		Card card = new Card(rank, Suit.HEART);
 		Participant participant = new Participant("pobi", new ArrayList<>(List.of(card, card1, card1)));
-		assertThat(participant.isBurst()).isTrue();
+		assertThat(participant.isBust()).isTrue();
 	}
 
 	@ParameterizedTest(name = "손패가 블랙잭인지 확인하는 기능 - case : {0}, {1}, {2}")

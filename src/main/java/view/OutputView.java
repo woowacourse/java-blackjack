@@ -16,8 +16,8 @@ public class OutputView {
 		System.out.println(hand);
 	}
 
-	public static void printBurstMessage() {
-		System.out.println("Burst!!!");
+	public static void printBustMessage() {
+		System.out.println("Bust!!!");
 	}
 
 	public static void printBlackJackMessage() {
@@ -34,5 +34,9 @@ public class OutputView {
 
 	public static void printPlayerResult(String name, String result) {
 		System.out.printf("%s: %s\n", name, result);
+	}
+
+	public static void printDealerDrawMessage() {
+		System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 }
