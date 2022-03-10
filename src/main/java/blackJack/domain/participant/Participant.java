@@ -44,7 +44,7 @@ public abstract class Participant {
         int countAce = countAce();
 
         while (score > BLACK_JACK && countAce > 0) {
-            score -= Denomination.A.getScore() - OTHER_SCORE_OF_ACE_DENOMINATION;
+            score -= Denomination.ACE.getScore() - OTHER_SCORE_OF_ACE_DENOMINATION;
             countAce--;
         }
         return score;
@@ -52,7 +52,7 @@ public abstract class Participant {
 
     private int countAce() {
         return (int)cards.stream()
-            .filter(card -> card.getDenomination() == Denomination.A)
+            .filter(card -> card.getDenomination() == Denomination.ACE)
             .count();
     }
 

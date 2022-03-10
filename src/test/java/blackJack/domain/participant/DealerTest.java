@@ -30,7 +30,7 @@ public class DealerTest {
     void hasFalseDealerNextTurn() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Symbol.SPADE, Denomination.SEVEN));
-        dealer.receiveCard(new Card(Symbol.HEART, Denomination.J));
+        dealer.receiveCard(new Card(Symbol.HEART, Denomination.JACK));
 
         assertThat(dealer.hasNextTurn()).isFalse();
     }
@@ -40,7 +40,7 @@ public class DealerTest {
     void hasTrueDealerNextTurn() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Symbol.SPADE, Denomination.SIX));
-        dealer.receiveCard(new Card(Symbol.HEART, Denomination.J));
+        dealer.receiveCard(new Card(Symbol.HEART, Denomination.JACK));
 
         assertThat(dealer.hasNextTurn()).isTrue();
     }

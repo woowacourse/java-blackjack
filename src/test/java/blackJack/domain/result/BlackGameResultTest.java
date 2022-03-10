@@ -25,8 +25,8 @@ class BlackGameResultTest {
         Dealer dealer = new Dealer();
 
         player1.receiveCard(new Card(Symbol.SPADE, Denomination.EIGHT));
-        player2.receiveCard(new Card(Symbol.SPADE, Denomination.J));
-        player3.receiveCard(new Card(Symbol.SPADE, Denomination.A));
+        player2.receiveCard(new Card(Symbol.SPADE, Denomination.JACK));
+        player3.receiveCard(new Card(Symbol.SPADE, Denomination.ACE));
         dealer.receiveCard(new Card(Symbol.SPADE, Denomination.NINE));
 
         BlackJackGameResult blackJackGameResult =
