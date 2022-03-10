@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,9 +25,7 @@ public class Deck {
 
     public Card draw() {
         Collections.shuffle(cards);
-        Card card = cards.get(cards.size() - 1);
-        cards.remove(card);
-        return card;
+        return cards.remove(cards.size() - 1);
     }
 
     public List<Card> initialDraw() {

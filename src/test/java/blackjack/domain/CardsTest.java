@@ -1,10 +1,12 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static blackjack.domain.Denomination.*;
-import static blackjack.domain.Symbol.*;
+import static blackjack.domain.card.Denomination.*;
+import static blackjack.domain.card.Symbol.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CardsTest {
@@ -16,7 +18,7 @@ class CardsTest {
         cards.add(new Card(DIAMOND, SIX));
         cards.add(new Card(DIAMOND, SEVEN));
 
-        assertThat(cards.getScore()).isEqualTo(13);
+        assertThat(cards.calculateScore()).isEqualTo(13);
     }
 
     @Test
@@ -25,7 +27,7 @@ class CardsTest {
         Cards cards = new Cards();
         cards.add(new Card(DIAMOND, ACE));
 
-        assertThat(cards.getScore()).isEqualTo(11);
+        assertThat(cards.calculateScore()).isEqualTo(11);
     }
 
     @Test
@@ -37,7 +39,7 @@ class CardsTest {
         cards.add(new Card(HEART, ACE));
         cards.add(new Card(CLOVER, ACE));
 
-        assertThat(cards.getScore()).isEqualTo(14);
+        assertThat(cards.calculateScore()).isEqualTo(14);
     }
 
     @Test
@@ -48,7 +50,7 @@ class CardsTest {
         cards.add(new Card(SPADE, NINE));
         cards.add(new Card(HEART, TWO));
 
-        assertThat(cards.getScore()).isEqualTo(12);
+        assertThat(cards.calculateScore()).isEqualTo(12);
     }
 
     @Test

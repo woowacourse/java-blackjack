@@ -1,6 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 public class Card {
+
+    public static final int ADDITIONAL_ACE_VALUE = 10;
 
     private final Symbol symbol;
     private final Denomination denomination;

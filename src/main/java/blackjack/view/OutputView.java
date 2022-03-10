@@ -1,71 +1,57 @@
 package blackjack.view;
 
-import blackjack.domain.*;
+import blackjack.domain.dto.CardDto;
+import blackjack.domain.dto.Status;
+import blackjack.domain.player.Dealer;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void printInitialCards(List<CurrentCardsDTO> dtos) {
+    public static void printInitialStatus(List<Status> dtos) {
         System.out.println(makeInitialDrawTitleString(dtos));
 
-        for (CurrentCardsDTO dto : dtos) {
-            printNameAndCard(dto.getName(), dto.getCards());
+        for (Status dto : dtos) {
+            printStatus(dto);
             System.out.println();
         }
 
         System.out.println();
     }
 
-    private static String makeInitialDrawTitleString(List<CurrentCardsDTO> dtos) {
-        StringBuilder sb = new StringBuilder("\n");
-        sb.append(dtos.get(0).getName())
-                .append("와 ")
-                .append(dtos.subList(1, dtos.size()).stream()
-                        .map(CurrentCardsDTO::getName)
-                        .collect(Collectors.joining(", ")))
-                .append("에게 2장을 나누었습니다.\n");
-        return sb.toString();
+    private static String makeInitialDrawTitleString(List<Status> dtos) {
+        return "\n" + dtos.get(0).getName() +
+                "와 " +
+                dtos.subList(1, dtos.size()).stream()
+                        .map(Status::getName)
+                        .collect(Collectors.joining(", ")) +
+                "에게 2장을 나누었습니다.\n";
     }
 
-    public static void printCurrentStatus(CurrentCardsDTO dto) {
-        printNameAndCard(dto.getName(), dto.getCards());
+    public static void printTotalScore(List<Status> dtos) {
         System.out.println();
-    }
-
-    public static void printTotalScore(List<TotalScoreDTO> totalScoreDTOs) {
-        System.out.println();
-        for (TotalScoreDTO dto : totalScoreDTOs) {
-            printNameAndCard(dto.getName(), dto.getCards());
+        for (Status dto : dtos) {
+            printStatus(dto);
             System.out.print("- 결과: " + dto.getScore() + "\n");
         }
     }
 
-    public static void printResult(DealerResultDTO dealerResult, List<PlayerResultDTO> playersResult) {
-        System.out.println("\n## 최종 승패");
-        System.out.println(dealerResult.getName() + ": " + dealerResult.getWinCount() + "승 " + dealerResult.getLoseCount() + "패");
-        for (PlayerResultDTO playerResult : playersResult) {
-            System.out.print(playerResult.getName() + ": ");
-            if (playerResult.isWin()) {
-                System.out.print("승\n");
-                continue;
-            }
-            System.out.print("패\n");
-        }
-    }
-
-    public static void printNameAndCard(String name, List<Card> cards) {
+    public static void printStatus(Status status) {
         StringBuilder result = new StringBuilder();
+
+        String name = status.getName();
+        List<CardDto> cardDtos = status.getCardDtos();
+
 
         result.append(name);
         result.append("카드: ");
 
-        result.append(cards.stream()
-                .map(c -> (c.getDenominationName() + c.getSymbolName()))
+        result.append(cardDtos.stream()
+                .map(c -> (c.getDenomination() + c.getSymbol()))
                 .collect(Collectors.joining(", ")));
 
-        System.out.print(result);
+        System.out.println(result);
     }
 
     public static void printDealerAdded(String name) {
