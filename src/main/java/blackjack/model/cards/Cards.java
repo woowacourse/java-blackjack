@@ -4,7 +4,7 @@ import blackjack.model.Card;
 import blackjack.model.Score;
 import java.util.stream.Stream;
 
-public interface Cards {
+public interface Cards extends Iterable<Card> {
 
     Score score();
 

@@ -2,6 +2,7 @@ package blackjack.model.cards;
 
 import blackjack.model.Card;
 import blackjack.model.Score;
+import java.util.Iterator;
 import java.util.stream.Stream;
 
 public abstract class ChangeableCards implements Cards {
@@ -30,5 +31,10 @@ public abstract class ChangeableCards implements Cards {
     @Override
     public final void take(Card card) {
         cards.take(card);
+    }
+
+    @Override
+    public Iterator<Card> iterator() {
+        return cards.iterator();
     }
 }

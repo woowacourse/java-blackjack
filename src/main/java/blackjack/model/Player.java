@@ -1,5 +1,6 @@
 package blackjack.model;
 
+import blackjack.model.cards.Cards;
 import blackjack.model.cards.ChangeableCards;
 import java.util.List;
 
@@ -23,6 +24,10 @@ public abstract class Player {
         return openCards;
     }
 
+    public Cards cards() {
+        return cards;
+    }
+
     public void take(Card card) {
         if (!isHittable()) {
             throw new IllegalStateException("카드를 더 이상 발급 받을 수 없습니다.");
@@ -34,5 +39,5 @@ public abstract class Player {
         return cards.score();
     }
 
-    abstract boolean isHittable();
+    public abstract boolean isHittable();
 }

@@ -20,18 +20,32 @@ public class Application {
             OutputView.printOpenCard(dealer, gamers);
 
             for (Player gamer : gamers) {
-                String option = InputView.chooseOptions(gamer.name());
-                if (option.equals("y")) {
-                    gamer.take(cardGenerator.generate());
-                    OutputView.printCard(gamer);
-                }
+                takeCard(gamer, cardGenerator);
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
 
 
+    }
+
+    private static void takeCard(Player gamer, CardGenerator cardGenerator) {
+        while (true) {
+            if (gamer.isHittable()) {
+                String option = InputView.chooseOptions(gamer.name());
+
+                if (option.equals("y")) {
+                    gamer.take(cardGenerator.generate());
+                    OutputView.printCard(gamer);
+                } else {
+                    return;
+                }
+            } else {
+                return;
+            }
+        }
     }
 
     private static List<String> names() {

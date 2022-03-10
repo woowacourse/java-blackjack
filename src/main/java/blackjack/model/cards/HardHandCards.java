@@ -2,6 +2,7 @@ package blackjack.model.cards;
 
 import blackjack.model.Card;
 import blackjack.model.Score;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -28,6 +29,11 @@ final class HardHandCards implements Cards {
     @Override
     public void take(Card card) {
         cards.add(card);
+    }
+
+    @Override
+    public Iterator<Card> iterator() {
+        return cards.iterator();
     }
 
     private int hardHandScore() {
