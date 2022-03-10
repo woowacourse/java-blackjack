@@ -8,8 +8,9 @@ import domain.card.Card;
 
 public class Participant {
 	protected static final String SHOW_HAND_FORMAT = "%s카드: %s";
-	protected static final int BLACK_JACK_NUMBER = 21;
 	protected static final String JOINING_DELIMITER = ", ";
+	protected static final String SHOW_HAND_AND_BEST_SCORE_DELIMITER = " - 결과 : ";
+	protected static final int BLACK_JACK_NUMBER = 21;
 	protected static final int ACE_COUNT_LOWER_BOUND = 0;
 	protected static final int ADDITIONAL_SCORE_ACE = 10;
 
@@ -21,18 +22,20 @@ public class Participant {
 		this.hand = new ArrayList<>(hand);
 	}
 
+	public void addCard(Card card) {
+		hand.add(card);
+	}
+
 	public String showHand() {
-		String joinedCards = String.join(JOINING_DELIMITER,
-			hand.stream().map(Card::toString).collect(Collectors.toList()));
+		String joinedCards = String.join(
+			JOINING_DELIMITER,
+			hand.stream().map(Card::toString).collect(Collectors.toList())
+		);
 		return String.format(SHOW_HAND_FORMAT, name.getName(), joinedCards);
 	}
 
 	public String showHandAndBestScore() {
-		return String.join(" - 결과 : ", showHand(), String.valueOf(getBestScore()));
-	}
-
-	public void addCard(Card card) {
-		hand.add(card);
+		return String.join(SHOW_HAND_AND_BEST_SCORE_DELIMITER, showHand(), String.valueOf(getBestScore()));
 	}
 
 	public boolean isBust() {

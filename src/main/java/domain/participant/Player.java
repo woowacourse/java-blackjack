@@ -6,6 +6,7 @@ import domain.card.Card;
 import domain.result.Versus;
 
 public class Player extends Participant {
+	
 	public Player(Name name, List<Card> hand) {
 		super(name, hand);
 	}
@@ -28,18 +29,18 @@ public class Player extends Participant {
 		if (other.isBust()) {
 			return Versus.WIN;
 		}
-		return whoIsHigh(other.getBestScore());
+		return judgeVersus(other.getBestScore());
 	}
 
-	private Versus whoIsHigh(int otherScore) {
+	private Versus judgeVersus(int otherScore) {
 		int myScore = getBestScore();
 		if (myScore > otherScore) {
 			return Versus.WIN;
 		}
-		if (myScore == otherScore) {
-			return Versus.DRAW;
+		if (myScore < otherScore) {
+			return Versus.LOSE;
 		}
-		return Versus.LOSE;
+		return Versus.DRAW;
 	}
 
 	public boolean compareName(Name name) {

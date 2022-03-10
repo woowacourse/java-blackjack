@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Name {
 
-	protected static final String BLANK_NAME_ERROR_MESSAGE = "[Error] 이름은 공백이거나 빈칸일 수 없습니다.";
+	private static final String BLANK_NAME_ERROR_MESSAGE = "[Error] 이름은 공백이거나 빈칸일 수 없습니다.";
 
 	private final String name;
 

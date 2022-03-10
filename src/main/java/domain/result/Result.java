@@ -9,7 +9,7 @@ public class Result {
 	private final Map<Name, Versus> playerResults;
 
 	public Result(Map<Name, Versus> playerResults) {
-		this.playerResults = playerResults;
+		this.playerResults = Map.copyOf(playerResults);
 	}
 
 	public Versus getVersus(Name name) {
