@@ -24,7 +24,7 @@ public class RentCompany {
         return cars.size();
     }
 
-    public String report() {
+    public String generateReport() {
         return cars.stream()
                 .map(Car::reportCarInfo)
                 .collect(Collectors.joining("\n"));
