@@ -12,24 +12,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlayerTest {
 
     @Test
-    @DisplayName("bust라면 참을 반환한다")
-    void isBustWhenTrue() {
+    @DisplayName("hit이 가능하다면 참을 반환한다")
+    void canHitWhenTrue() {
         Player player = new Player("pobi");
         player.addCard(new Card(Symbol.HEART, Denomination.KING));
-        player.addCard(new Card(Symbol.CLOVER, Denomination.QUEEN));
-        player.addCard(new Card(Symbol.SPADE, Denomination.ACE));
 
-        assertThat(player.isBust()).isTrue();
+        assertThat(player.canHit()).isTrue();
     }
 
     @Test
-    @DisplayName("bust가 아니라면 거짓을 반환한다")
-    void isBustWhenFalse() {
+    @DisplayName("hit이 불가능하다면 거짓을 반환한다")
+    void canHitWhenFalse() {
         Player player = new Player("pobi");
         player.addCard(new Card(Symbol.HEART, Denomination.KING));
         player.addCard(new Card(Symbol.CLOVER, Denomination.QUEEN));
+        player.addCard(new Card(Symbol.SPADE,Denomination.ACE));
 
-        assertThat(player.isBust()).isFalse();
+        assertThat(player.canHit()).isFalse();
     }
 
     @Test

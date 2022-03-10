@@ -72,6 +72,11 @@ public class Blackjack {
         return allCurrentCardsDTOs;
     }
 
+    public void endGame() {
+        dealer.endTurn();
+        players.forEach(Participant::endTurn);
+    }
+
     public List<TotalScoreDTO> generateAllResultDTO() {
         List<TotalScoreDTO> addResultDTOs = new ArrayList<>();
         addResultDTOs.add(new TotalScoreDTO(dealer));
@@ -82,8 +87,6 @@ public class Blackjack {
     }
 
     public TotalResultDTO calculateTotalResult() {
-        dealer.endTurn();
-        players.forEach(Participant::endTurn);
         List<PlayerResultDTO> totalPlayerResult = calculateTotalPlayerResult();
         DealerResultDTO dealerResult = calculateDealerResult(totalPlayerResult);
         return new TotalResultDTO(totalPlayerResult, dealerResult);

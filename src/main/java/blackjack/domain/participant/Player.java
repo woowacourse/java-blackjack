@@ -6,8 +6,8 @@ public class Player extends Participant {
         super(name);
     }
 
-    public boolean isBust() {
-        return getScore() >= GOAL_SCORE;
+    public boolean canHit(){
+        return getScore() < GOAL_SCORE;
     }
 
     public boolean isWin(int score) {

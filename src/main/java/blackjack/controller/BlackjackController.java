@@ -24,6 +24,7 @@ public class BlackjackController {
         firstDistribute(blackjack);
         hitOrStayForAllPlayers(blackjack);
         addCardForDealerIfNeed(blackjack);
+        blackjack.endGame();
         printTotalScore(blackjack.generateAllResultDTO());
         printTotalResult(blackjack.calculateTotalResult());
     }
@@ -42,7 +43,7 @@ public class BlackjackController {
     }
 
     private void hitOrStay(Blackjack blackjack, Player player) {
-        while (!player.isBust() && requestHitOrStay(player.getName())) {
+        while (player.canHit() && requestHitOrStay(player.getName())) {
             blackjack.hit(player);
             printCurrentStatus(new CurrentCardsDTO(player));
         }
