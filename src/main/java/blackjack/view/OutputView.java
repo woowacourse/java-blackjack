@@ -32,13 +32,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printParticipantCards(Participant participant) {
+    public static void printParticipantCards(Participant participant, int score) {
         String cardsInfo = participant.getCards()
                 .stream()
                 .map(OutputView::createCardInfoString)
                 .collect(Collectors.joining(", "));
 
-        System.out.printf("%s카드: %s", participant.getName(), cardsInfo);
+        System.out.printf("%s카드: %s - 합계: %d", participant.getName(), cardsInfo, score);
         System.out.println();
     }
 
