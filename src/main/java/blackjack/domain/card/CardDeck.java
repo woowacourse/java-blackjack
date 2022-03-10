@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardDeck {
@@ -14,6 +15,10 @@ public class CardDeck {
         Card card = cards.get(0);
         cards.remove(0);
         return card;
+    }
+
+    public List<Card> drawDouble() {
+        return new ArrayList<>(List.of(draw(), draw()));
     }
 
     public boolean isEmpty() {
