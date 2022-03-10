@@ -5,9 +5,15 @@ import java.util.function.BiPredicate;
 
 public enum Result {
 
-    WIN("승", (dealerResult, gamerResult) -> dealerResult < gamerResult && gamerResult <= Gamer.LIMIT_GAMER_TOTAL_POINT),
-    DRAW("무", (dealerResult, gamerResult) -> dealerResult == gamerResult),
-    LOSE("패", (dealerResult, gamerResult) -> dealerResult > gamerResult || gamerResult > Gamer.LIMIT_GAMER_TOTAL_POINT);
+    WIN("승", (dealerResult, gamerResult) -> (dealerResult > Gamer.LIMIT_GAMER_TOTAL_POINT &&
+            gamerResult <= Gamer.LIMIT_GAMER_TOTAL_POINT)
+            || (dealerResult < gamerResult &&
+            gamerResult <= Gamer.LIMIT_GAMER_TOTAL_POINT)),
+    DRAW("무", (dealerResult, gamerResult) -> dealerResult <= Gamer.LIMIT_GAMER_TOTAL_POINT &&
+            gamerResult <= Gamer.LIMIT_GAMER_TOTAL_POINT &&
+            dealerResult == gamerResult),
+    LOSE("패", (dealerResult, gamerResult) -> dealerResult > gamerResult ||
+            gamerResult > Gamer.LIMIT_GAMER_TOTAL_POINT);
 
     private final String result;
     private final BiPredicate<Integer, Integer> predicate;

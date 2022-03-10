@@ -21,15 +21,39 @@ public class ResultTest {
     }
 
     @Test
-    @DisplayName("21이 넘어 패배한 경우를 계산한다.")
+    @DisplayName("딜러가 기준보다 높고, 게이머가 기준보다 낮아 승리한 경우를 계산한다.")
+    void findWinningResultDealerOverStandard() {
+        Player dealer = new Dealer();
+        receiveCardOverStandard(dealer);
+
+        Gamer judy = new Gamer("judy");
+        receiveCardBelowStandard(judy);
+
+        assertThat(Result.findResult(dealer.calculateResult()
+                , judy.calculateResult())).isEqualTo(Result.WIN);
+    }
+
+    @Test
+    @DisplayName("게이머만 21이 넘어 패배한 경우를 계산한다.")
     void findLosingResultOverStandard() {
         Player dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.FIVE));
 
         Gamer judy = new Gamer("judy");
-        judy.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
-        judy.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
-        judy.receiveCard(new Card(Suit.SPADE, Denomination.TWO));
+        receiveCardOverStandard(judy);
+
+        assertThat(Result.findResult(dealer.calculateResult()
+                , judy.calculateResult())).isEqualTo(Result.LOSE);
+    }
+
+    @Test
+    @DisplayName("딜러와 게이머 모두 21이 넘어 게이머가 패배한 경우를 계산한다.")
+    void findLosingResultDealerAndGamerOverStandard() {
+        Player dealer = new Dealer();
+        receiveCardOverStandard(dealer);
+
+        Gamer judy = new Gamer("judy");
+        receiveCardOverStandard(judy);
 
         assertThat(Result.findResult(dealer.calculateResult()
                 , judy.calculateResult())).isEqualTo(Result.LOSE);
@@ -59,6 +83,18 @@ public class ResultTest {
 
         assertThat(Result.findResult(dealer.calculateResult()
                 , judy.calculateResult())).isEqualTo(Result.DRAW);
+    }
+
+    private void receiveCardOverStandard(final Player player) {
+        player.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
+        player.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
+        player.receiveCard(new Card(Suit.SPADE, Denomination.TWO));
+    }
+
+    private void receiveCardBelowStandard(final Player player) {
+        player.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
+        player.receiveCard(new Card(Suit.DIAMOND, Denomination.NINE));
+        player.receiveCard(new Card(Suit.SPADE, Denomination.TWO));
     }
 
 }
