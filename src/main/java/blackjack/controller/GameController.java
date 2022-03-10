@@ -16,28 +16,21 @@ public class GameController {
     public void run() {
         Players players = getPlayers();
         Dealer dealer = Dealer.of();
-        // 카드 2장 지급
+
         giveTwoCards(players, dealer);
-        // 지급 받은 카드 목록 출력
         OutputView.printInitCards(players, dealer);
 
-        // 카드 받을지 물어보는 기능
-        for (Player player : players.getCardNeedPlayers()) {
+        for (Player player : players.getPlayers()) {
             questionOneMoreCard(player);
         }
-
-        // 딜러 카드 추가
         addCardToDealer(dealer);
 
-        // 포인트 계산
         OutputView.printCardAndPoint(players, dealer);
         Statistic.of(dealer, players).calculate();
-
-        //게임 승패 출력
         printGameResult(players);
     }
 
-    private void addCardToDealer(Dealer dealer) {
+    private void addCardToDealer(final Dealer dealer) {
         if (dealer.isOneMoreCard()) {
             dealer.addCard(CardDeck.giveCard());
             OutputView.printDealerCardAdded();
@@ -54,18 +47,18 @@ public class GameController {
     }
 
 
-    private void giveTwoCards(Players players, Dealer dealer) {
+    private void giveTwoCards(final Players players, final Dealer dealer) {
         dealer.addCard(CardDeck.giveCard());
         dealer.addCard(CardDeck.giveCard());
         players.giveCard();
         players.giveCard();
     }
 
-    private void printGameResult(Players players) {
+    private void printGameResult(final Players players) {
         OutputView.printResult(players);
     }
 
-    public void questionOneMoreCard(Player player) {
+    private void questionOneMoreCard(final Player player) {
         boolean flag = true;
         while (player.isOneMoreCard()) {
             if (!InputView.inputOneMoreCard(player.getName())) {

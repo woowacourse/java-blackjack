@@ -7,12 +7,11 @@ import java.util.stream.Collectors;
 public class Players {
     private final List<Player> players;
 
-
-    private Players(List<Player> players) {
+    private Players(final List<Player> players) {
         this.players = players;
     }
 
-    public static Players of(List<Player> players) {
+    public static Players of(final List<Player> players) {
         return new Players(players);
     }
 
@@ -26,19 +25,13 @@ public class Players {
         }
     }
 
-    public List<Player> getCardNeedPlayers() {
-        return players.stream()
-                .filter(Player::isOneMoreCard)
-                .collect(Collectors.toList());
+    public List<Player> getPlayers(){
+        return List.copyOf(players);
     }
 
     public String getPlayerNames() {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
-    }
-
-    public List<Player> getPlayers(){
-        return List.copyOf(players);
     }
 }

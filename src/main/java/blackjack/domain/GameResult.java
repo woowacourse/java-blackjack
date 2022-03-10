@@ -5,13 +5,13 @@ public enum GameResult {
     DRAW("무"),
     LOSE("패");
 
-    private final String result;
+    private final String resultText;
 
-    GameResult(String result) {
-        this.result = result;
+    GameResult(final String resultText) {
+        this.resultText = resultText;
     }
 
-    public String getResult() {
-        return this.result;
+    public String getText() {
+        return this.resultText;
     }
 }

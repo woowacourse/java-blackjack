@@ -15,7 +15,7 @@ public class Cards {
     }
 
 
-    public void add(Card card) {
+    public void add(final Card card) {
         cards.add(card);
     }
 

@@ -20,12 +20,12 @@ public enum Denomination {
     private final String initial;
     private final int point;
 
-    Denomination(String initial, int point){
+    Denomination(final String initial, final int point){
         this.initial = initial;
         this.point = point;
     }
 
-    public static Denomination of(String initialInput) {
+    public static Denomination of(final String initialInput) {
         return Arrays.stream(Denomination.values())
                 .filter(value -> value.initial.equals(initialInput))
                 .findAny()

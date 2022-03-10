@@ -20,20 +20,20 @@ public class InputView {
         return separate(input);
     }
 
-    public static boolean inputOneMoreCard(String name) {
+    public static boolean inputOneMoreCard(final String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator(), name);
         String input = SCANNER.nextLine();
         validateAnswer(input);
         return input.equals("y");
     }
 
-    private static void validateAnswer(String input) {
+    private static void validateAnswer(final String input) {
         if (!input.equals("y") && !input.equals("n")) {
             throw new IllegalArgumentException(NULL_ANSWER_YN_ERROR_MESSAGE);
         }
     }
 
-    private static void validateNames(String input) {
+    private static void validateNames(final String input) {
         if (input == null || input.isEmpty()) {
             throw new IllegalArgumentException(NULL_NAMES_ERROR_MESSAGE);
         }
@@ -44,7 +44,7 @@ public class InputView {
         }
     }
 
-    private static String[] separate(String input) {
+    private static String[] separate(final String input) {
         return input.split(NAME_SEPARATE_REGEX);
     }
 }

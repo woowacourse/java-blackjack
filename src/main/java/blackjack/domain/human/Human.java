@@ -7,7 +7,7 @@ public abstract class Human {
 
     public abstract String getName();
 
-    public abstract void addCard(Card card);
+    public abstract void addCard(final Card card);
 
     public abstract Cards getCards();
 
