@@ -16,7 +16,7 @@ public class Stay extends Finished {
     public GameOutcome compare(final State another) {
         if (another instanceof BlackJack) {
             return LOSE;
-        } else if(another instanceof Bust) {
+        } else if (another instanceof Bust) {
             return WIN;
         }
         return cards.isHigherThan(another.cards());
