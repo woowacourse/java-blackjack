@@ -10,27 +10,28 @@ public class UserDto {
 
     private final String userName;
     private final List<String> cardNames;
-    private final List<String> initCardNames;
 
-    private UserDto(String userName, List<String> cardNames, List<String> initCardNames) {
+    public UserDto(String userName, List<String> cardNames) {
         this.userName = userName;
         this.cardNames = cardNames;
-        this.initCardNames = initCardNames;
     }
 
-    public static UserDto from(User user) {
-        String name = user.getName();
-        List<Card> cards = user.showCards();
+    public static UserDto fromInit(User user) {
+        return toDto(user, user.showInitCards());
+    }
 
-        List<String> cardNames = cards.stream()
+    public static UserDto fromEvery(User user) {
+        return toDto(user, user.showCards());
+    }
+
+    private static UserDto toDto(User user, List<Card> cards) {
+        return new UserDto(user.getName(), toNames(cards));
+    }
+
+    private static List<String> toNames(List<Card> cards) {
+        return cards.stream()
                 .map(card -> card.getSymbol() + card.getSuitName())
                 .collect(toList());
-
-        List<String> initCardNames = user.showInitCards().stream()
-                .map(card -> card.getSymbol() + card.getSuitName())
-                .collect(toList());
-
-        return new UserDto(name, cardNames, initCardNames);
     }
 
     public String getUserName() {
@@ -39,9 +40,5 @@ public class UserDto {
 
     public String getCardNames() {
         return String.join(", ", cardNames);
-    }
-
-    public String getInitCardNames() {
-        return String.join(", ", initCardNames);
     }
 }
