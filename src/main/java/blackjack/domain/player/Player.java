@@ -43,4 +43,8 @@ public abstract class Player {
     public List<Card> getCards() {
         return cards.getCards();
     }
+
+    public int getTotalScore() {
+        return cards.calculateScore();
+    }
 }

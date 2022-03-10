@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.CardDeck;
+import blackjack.domain.GameResult;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
@@ -26,6 +27,13 @@ public class GameController {
         ResultView.printDealerCard(dealer);
         ResultView.printUsersCards(users);
         askReceiveCardToUsers(users);
+        if (dealer.isPossibleToPickCard()) {
+            dealer.pickCard(cardDeck.drawCard());
+            ResultView.printDealerReceiveCard();
+        }
+        ResultView.printTotalCardResult(dealer, users);
+
+        GameResult gameResult = GameResult.createPlayerGameResult(dealer, users);
     }
 
     private void askReceiveCardToUsers(List<Player> players) {
