@@ -10,6 +10,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
 import java.util.List;
+import java.util.Objects;
 
 public class Application {
 
@@ -25,37 +26,31 @@ public class Application {
         OutputView.printStartInfo(dealer, players);
         System.out.println();
 
-        for (Player player : players) {
-            playing(deck, player);
-        }
-
-        playing(deck, dealer);
+        players.forEach(player -> playing(deck, player));
+        drawDealer(deck, dealer);
 
         OutputView.printResultInfo(dealer, players);
     }
 
     public static void playing(Deck deck, Player player) {
-        while (player.isPlaying()) {
-            PlayCommand playCommand = InputView.getPlayCommand(player);
-
-            if (playCommand == PlayCommand.YES) {
-                player.combine(deck.draw());
-                OutputView.printPlayerCardInfo(player);
-            }
-
-            if (playCommand == PlayCommand.NO) {
-                OutputView.printPlayerCardInfo(player);
-                break;
-            }
+        PlayCommand playCommand = PlayCommand.YES;
+        while (player.isPlaying() && playCommand == PlayCommand.YES) {
+            playCommand = InputView.getPlayCommand(player);
+            drawCard(deck, player, playCommand);
         }
     }
 
-    public static void playing(Deck deck, Dealer dealer) {
+    private static void drawCard(Deck deck, Player player, PlayCommand playCommand) {
+        if (playCommand == PlayCommand.YES) {
+            player.combine(deck.draw());
+            OutputView.printPlayerCardInfo(player);
+        }
+    }
+
+    public static void drawDealer(Deck deck, Dealer dealer) {
         while (dealer.isDrawable()) {
             OutputView.printDealerDrawableInfo();
             dealer.combine(deck.draw());
         }
-
-        System.out.println("\n딜러는 17이상이라 카드를 더 이상 받지 않습니다.");
     }
 }
