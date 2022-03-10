@@ -4,7 +4,7 @@ import blackjack.domain.game.Score;
 
 public enum CardRank {
 
-    ACE("A", Score.valueOf(1)),
+    ACE("A", Score.valueOf(11)),
     TWO("2", Score.valueOf(2)),
     THREE("3", Score.valueOf(3)),
     FOUR("4", Score.valueOf(4)),

@@ -34,15 +34,14 @@ public class CardRankTest {
         }
     }
 
-    @DisplayName("ACE 는 기본적으로 값으로 1의 Score 를 지닌다.")
+    @DisplayName("ACE 는 기본값으로 11의 Score 를 지닌다.")
     @Test
     void getValue_Ace() {
         Score actual = CardRank.ACE.getValue();
-        Score expected = Score.valueOf(1);
+        Score expected = Score.valueOf(11);
 
         assertThat(actual).isEqualTo(expected);
     }
-
 
     @DisplayName("TWO ~ TEN 은 각각 대응되는 값의 Score 를 지닌다.")
     @ParameterizedTest(name = "[{index}] 랭크: {0}, 값: {1}")
