@@ -41,7 +41,7 @@ class StatisticTest {
                 player2.getResult().equals(Result.LOSE))
                 .isTrue();
 
-        assertThat(statistic.getDealerWinState())
+        assertThat(statistic.getDealerResult())
                 .isEqualTo(Map.of(
                                 Result.LOSE, 1,
                                 Result.WIN, 1,
@@ -63,7 +63,7 @@ class StatisticTest {
                 player2.getResult().equals(Result.LOSE))
                 .isTrue();
 
-        assertThat(statistic.getDealerWinState())
+        assertThat(statistic.getDealerResult())
                 .isEqualTo(Map.of(
                                 Result.LOSE, 0,
                                 Result.WIN, 2,
@@ -89,7 +89,7 @@ class StatisticTest {
                 player4.getResult().equals(Result.WIN))
                 .isTrue();
 
-        assertThat(statistic.getDealerWinState())
+        assertThat(statistic.getDealerResult())
                 .isEqualTo(Map.of(
                                 Result.LOSE, 1,
                                 Result.WIN, 2,

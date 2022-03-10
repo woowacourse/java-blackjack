@@ -23,22 +23,27 @@ public class Player extends Human {
     public void calculateResult(final int dealerPoint) {
         int point = getPoint();
         if (dealerPoint > BLACKJACK_NUMBER) {
-            if (point <= BLACKJACK_NUMBER) {
-                this.result = Result.WIN;
-                return;
-            }
-            this.result = Result.LOSE;
+            this.result = getResultIfDealerBurst(point);
             return;
         }
+        this.result = getResultIfDealerNotBurst(dealerPoint, point);
+    }
+
+    private Result getResultIfDealerBurst(final int point) {
+        if (point <= BLACKJACK_NUMBER) {
+            return Result.WIN;
+        }
+        return Result.LOSE;
+    }
+
+    private Result getResultIfDealerNotBurst(final int dealerPoint, final int point) {
         if (point > BLACKJACK_NUMBER || dealerPoint > point) {
-            this.result = Result.LOSE;
-            return;
+            return Result.LOSE;
         }
         if (dealerPoint == point) {
-            this.result = Result.DRAW;
-            return;
+            return Result.DRAW;
         }
-        this.result = Result.WIN;
+        return Result.WIN;
     }
 
     public Result getResult() {
@@ -46,7 +51,7 @@ public class Player extends Human {
     }
 
     @Override
-    public boolean isOneMoreCard() {
+    public boolean isHit() {
         return cards.getPoint() < BLACKJACK_NUMBER;
     }
 
