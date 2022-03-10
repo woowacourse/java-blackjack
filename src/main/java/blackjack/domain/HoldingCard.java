@@ -22,19 +22,15 @@ public class HoldingCard {
 
     public int calculateTotal() {
         int sum = sum();
-        for (int i = 0; i < countAce(); i++) {
-            if (sum <= 21) {
-                break;
-            }
-            sum -= 10;
+        if (hasAce() && sum <= 11) {
+            sum += 10;
         }
         return sum;
     }
 
-    private int countAce() {
-        return (int) holdingCard.stream()
-                .filter(card -> card.getCardNumber() == CardNumber.ACE)
-                .count();
+    private boolean hasAce() {
+        return holdingCard.stream()
+                .anyMatch(card -> card.getCardNumber() == CardNumber.ACE);
     }
 
     private int sum() {
