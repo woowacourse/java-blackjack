@@ -1,7 +1,7 @@
 package view;
 
+import domain.participant.Command;
 import domain.participant.Name;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -11,8 +11,6 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final String NAME_DELIMITER = ",";
-    private static final String YES = "y";
-    private static final String NO = "n";
 
     private InputView() {
 
@@ -43,20 +41,10 @@ public class InputView {
         }
     }
 
-    public static boolean inputWantDraw(String name) {
-        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name, YES, NO);
+    public static Command inputWantDraw(String name) {
+        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n"
+                , name, Command.HIT.getValue(), Command.STAY.getValue());
         String input = scanner.nextLine().toLowerCase();
-        return toBoolean(input);
-    }
-
-    private static boolean toBoolean(String input) {
-        validateWantDraw(input);
-        return YES.equals(input);
-    }
-
-    private static void validateWantDraw(String input) {
-        if (!YES.equals(input) && !NO.equals(input)) {
-            throw new IllegalArgumentException(String.format("%s 또는 %s을 입력해주세요.", YES, NO));
-        }
+        return Command.findCommand(input);
     }
 }

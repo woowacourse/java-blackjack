@@ -2,12 +2,12 @@ package controller;
 
 import domain.game.BlackJackGame;
 import domain.game.GameResult;
+import domain.participant.Command;
 import domain.participant.Name;
 import domain.participant.Participant;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
-
-import java.util.List;
 
 public class BlackJackController {
 
@@ -42,35 +42,29 @@ public class BlackJackController {
     }
 
     private void playPlayerTurn(BlackJackGame blackJackGame, Participant player) {
-        boolean draw = true;
+        Command command = Command.HIT;
 
-        while (draw && !player.isFinished()) {
-            draw = wantDraw(player);
-            drawPlayerCard(blackJackGame, player, draw);
+        while (command != Command.STAY && !player.isFinished()) {
+            command = inputCommand(player);
+            blackJackGame.drawCardByCommand(player, command);
             OutputView.printCards(player);
         }
     }
 
-    private void drawPlayerCard(BlackJackGame blackJackGame, Participant player, boolean draw) {
-        if (draw) {
-            blackJackGame.drawPlayerCard(player);
-        }
-    }
-
-    private boolean wantDraw(Participant player) {
+    private Command inputCommand(Participant player) {
         try {
             return InputView.inputWantDraw(player.getName());
 
         } catch (IllegalArgumentException e) {
             OutputView.printException(e);
-            return wantDraw(player);
+            return inputCommand(player);
         }
     }
 
     private void playDealerTurn(BlackJackGame blackJackGame, Participant dealer) {
         while (!dealer.isFinished()) {
             OutputView.printDealerDrawInfo();
-            blackJackGame.drawPlayerCard(dealer);
+            blackJackGame.drawCard(dealer);
         }
     }
 

@@ -3,11 +3,11 @@ package domain.game;
 import domain.card.Card;
 import domain.card.CardDistributor;
 import domain.card.Cards;
+import domain.participant.Command;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +38,13 @@ public class BlackJackGame {
         return new Cards(cards);
     }
 
-    public void drawPlayerCard(Participant participant) {
+    public void drawCardByCommand(Participant participant, Command command) {
+        if (command == Command.HIT) {
+            drawCard(participant);
+        }
+    }
+
+    public void drawCard(Participant participant) {
         int index = participants.indexOf(participant);
         Participant nowParticipant = participants.get(index);
         nowParticipant.drawCard(cardDistributor.distribute());

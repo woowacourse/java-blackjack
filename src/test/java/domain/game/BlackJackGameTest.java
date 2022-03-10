@@ -1,17 +1,17 @@
 package domain.game;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import domain.participant.Command;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class BlackJackGameTest {
     private BlackJackGame blackJackGame;
@@ -35,7 +35,7 @@ public class BlackJackGameTest {
     @DisplayName("플레이어 카드 추가")
     void player_card_add() {
         Participant player = blackJackGame.findPlayers().get(0);
-        blackJackGame.drawPlayerCard(player);
+        blackJackGame.drawCardByCommand(player, Command.HIT);
 
         assertThat(blackJackGame.findPlayers().get(0).getCards().getValue().size())
                 .isEqualTo(3);
