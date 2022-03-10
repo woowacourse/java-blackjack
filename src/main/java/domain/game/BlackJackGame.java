@@ -5,6 +5,7 @@ import domain.card.CardDistributor;
 import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.participant.Name;
+import domain.participant.Participant;
 import domain.participant.Player;
 
 import java.util.ArrayList;
@@ -12,14 +13,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
-    private final List<Player> players;
-    private final Dealer dealer;
-    private final CardDistributor cardDistributor;
+
+    private static final String DEALER_NAME = "딜러";
+
+    private final List<Participant> participants = new ArrayList<>();
+    private final CardDistributor cardDistributor = new CardDistributor();
 
     public BlackJackGame(List<Name> names) {
-        this.cardDistributor = new CardDistributor();
-        this.players = initializePlayers(new ArrayList<>(names));
-        this.dealer = new Dealer(new Name("딜러"), drawInitialCards());
+        this.participants.add(new Dealer(new Name(DEALER_NAME), drawInitialCards()));
+        this.participants.addAll(initializePlayers(new ArrayList<>(names)));
     }
 
     private List<Player> initializePlayers(List<Name> names) {
@@ -35,17 +37,22 @@ public class BlackJackGame {
         return new Cards(cards);
     }
 
-    public void drawPlayerCard(Player player) {
-        int index = players.indexOf(player);
-        Player nowPlayer = players.get(index);
-        nowPlayer.drawCard(cardDistributor.distribute());
+    public void drawPlayerCard(Participant participant) {
+        int index = participants.indexOf(participant);
+        Participant nowParticipant = participants.get(index);
+        nowParticipant.drawCard(cardDistributor.distribute());
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public List<Participant> getPlayers() {
+        return participants.stream()
+                .filter(participant -> participant instanceof Player)
+                .collect(Collectors.toUnmodifiableList());
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public Participant getDealer() {
+        return participants.stream()
+                .filter(participant -> participant instanceof Dealer)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 딜러가 존재하지 않습니다."));
     }
 }
