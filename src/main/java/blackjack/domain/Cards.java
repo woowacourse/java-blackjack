@@ -15,10 +15,6 @@ public class Cards {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
-    }
-
     public int calculateTotalPoint() {
         int point = sumDenominationPoint();
 
@@ -39,5 +35,9 @@ public class Cards {
         return cards.stream()
                 .mapToInt(card -> card.getDenomination().getPoint())
                 .sum();
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }
