@@ -10,41 +10,44 @@ import static blackjack.view.OutputView.*;
 
 public class BlackjackController {
 
-    private final Blackjack blackjack;
-
-    public BlackjackController() {
-        blackjack = new Blackjack(inputNames());
+    public void run() {
+        try {
+            play();
+        } catch (IllegalArgumentException e) {
+            printErrorMessage(e.getMessage());
+        }
     }
 
-    public void run() {
-        init();
-        hitOrStayForAllPlayers();
-        addCardForDealerIfNeed();
+    public void play() {
+        Blackjack blackjack = new Blackjack(inputNames());
+        firstDistribute(blackjack);
+        hitOrStayForAllPlayers(blackjack);
+        addCardForDealerIfNeed(blackjack);
         printTotalScore(blackjack.generateAllResultDTO());
         printTotalResult(blackjack.calculateTotalResult());
     }
 
-    private void init() {
+    private void firstDistribute(Blackjack blackjack) {
         blackjack.firstDistribute();
         printFirstDistribute(blackjack.generateAllCurrentCardsDTO());
     }
 
-    private void hitOrStayForAllPlayers() {
+    private void hitOrStayForAllPlayers(Blackjack blackjack) {
         Player player = blackjack.getPlayerWhoCanHit();
         while (player != null) {
-            hitOrStay(player);
+            hitOrStay(blackjack, player);
             player = blackjack.getPlayerWhoCanHit();
         }
     }
 
-    private void hitOrStay(Player player) {
+    private void hitOrStay(Blackjack blackjack, Player player) {
         while (!player.isBust() && requestHitOrStay(player.getName())) {
             blackjack.hit(player);
             printCurrentStatus(new CurrentCardsDTO(player));
         }
     }
 
-    private void addCardForDealerIfNeed() {
+    private void addCardForDealerIfNeed(Blackjack blackjack) {
         blackjack.addCardForDealerIfNeed();
         if (blackjack.didDealerAdded()) {
             printDealerAdded(blackjack.getDealerName());

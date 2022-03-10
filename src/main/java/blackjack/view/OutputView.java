@@ -9,6 +9,12 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
+    public static final String START_ERROR = "[ERROR] ";
+
+    public static void printErrorMessage(String message) {
+        System.out.println(START_ERROR + message);
+    }
+
     public static void printFirstDistribute(List<CurrentCardsDTO> currentCardsDTOs) {
         System.out.println(makeFirstDistributeTitleString(currentCardsDTOs));
 
