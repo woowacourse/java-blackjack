@@ -72,4 +72,55 @@ class BlackJackGameTest {
             WinOrLose.LOSE, WinOrLose.WIN
         );
     }
+
+    @Test
+    @DisplayName("플레이어의 카드 추가 분배가 불가능한 경우 테스트")
+    void hasFalsePlayerNextTurn() {
+        Player player = new Player("kei");
+        player.receiveCard(new Card(Symbol.SPADE, Denomination.J));
+        player.receiveCard(new Card(Symbol.HEART, Denomination.J));
+        player.receiveCard(new Card(Symbol.SPADE, Denomination.TWO));
+
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), List.of(player));
+
+        assertThat(blackJackGame.hasNextTurn(player)).isFalse();
+    }
+
+    @Test
+    @DisplayName("플레이어의 카드 추가 분배가 가능한 경우 테스트")
+    void hasTruePlayerNextTurn() {
+        Player player = new Player("kei");
+        player.receiveCard(new Card(Symbol.SPADE, Denomination.J));
+        player.receiveCard(new Card(Symbol.HEART, Denomination.J));
+
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), List.of(player));
+
+        assertThat(blackJackGame.hasNextTurn(player)).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러의 카드 추가 분배가 불가능한 경우 테스트")
+    void hasFalseDealerNextTurn() {
+        Player player = new Player("kei");
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.SEVEN));
+        dealer.receiveCard(new Card(Symbol.HEART, Denomination.J));
+
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), List.of(player));
+
+        assertThat(blackJackGame.hasNextTurn(dealer)).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러의 카드 추가 분배가 가능한 경우 테스트")
+    void hasTrueDealerNextTurn() {
+        Player player = new Player("kei");
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.SIX));
+        dealer.receiveCard(new Card(Symbol.HEART, Denomination.J));
+
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), List.of(player));
+
+        assertThat(blackJackGame.hasNextTurn(dealer)).isTrue();
+    }
 }

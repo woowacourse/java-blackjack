@@ -17,6 +17,8 @@ public class BlackJackGame {
     private static final int MINIMUM_COUNT = 1;
     private static final int MAXIMUM_COUNT = 7;
     private static final int INITIAL_CARD_COUNT = 2;
+    private static final int BLACK_JACK = 21;
+    private static final int DEALER_MAXIMUM_RECEIVE_CARD_SCORE = 16;
 
     private final Deck deck;
     private final Dealer dealer;
@@ -53,11 +55,18 @@ public class BlackJackGame {
         }
     }
 
+    public boolean hasNextTurn(Participant participant) {
+        if (participant instanceof Dealer) {
+            return participant.getScore() <= DEALER_MAXIMUM_RECEIVE_CARD_SCORE;
+        }
+        return participant.getScore() <= BLACK_JACK;
+    }
+
     public Map<Player, WinOrLose> calculateGameResult() {
         final Map<Player, WinOrLose> gameResult = new LinkedHashMap<>();
 
         for (Player player : players) {
-            WinOrLose winOrLose = WinOrLose.calculateWinOrLose(player.calculateScore(), dealer.calculateScore());
+            WinOrLose winOrLose = WinOrLose.calculateWinOrLose(player.getScore(), dealer.getScore());
             gameResult.put(player, winOrLose);
         }
 
