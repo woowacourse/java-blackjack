@@ -1,4 +1,4 @@
-package blackjack.domain.fixture;
+package blackjack.fixture;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;

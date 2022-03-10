@@ -1,11 +1,11 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.fixture.CardRepository.CLOVER10;
-import static blackjack.domain.fixture.CardRepository.CLOVER2;
-import static blackjack.domain.fixture.CardRepository.CLOVER4;
-import static blackjack.domain.fixture.CardRepository.CLOVER5;
-import static blackjack.domain.fixture.CardRepository.CLOVER6;
-import static blackjack.domain.fixture.CardRepository.CLOVER_KING;
+import static blackjack.fixture.CardRepository.CLOVER10;
+import static blackjack.fixture.CardRepository.CLOVER2;
+import static blackjack.fixture.CardRepository.CLOVER4;
+import static blackjack.fixture.CardRepository.CLOVER5;
+import static blackjack.fixture.CardRepository.CLOVER6;
+import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;

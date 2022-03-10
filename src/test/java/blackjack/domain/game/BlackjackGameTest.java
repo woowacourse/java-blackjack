@@ -1,20 +1,20 @@
 package blackjack.domain.game;
 
-import static blackjack.domain.fixture.CardRepository.CLOVER10;
-import static blackjack.domain.fixture.CardRepository.CLOVER2;
-import static blackjack.domain.fixture.CardRepository.CLOVER3;
-import static blackjack.domain.fixture.CardRepository.CLOVER4;
-import static blackjack.domain.fixture.CardRepository.CLOVER5;
-import static blackjack.domain.fixture.CardRepository.CLOVER6;
-import static blackjack.domain.fixture.CardRepository.CLOVER7;
-import static blackjack.domain.fixture.CardRepository.CLOVER_KING;
+import static blackjack.fixture.CardRepository.CLOVER10;
+import static blackjack.fixture.CardRepository.CLOVER2;
+import static blackjack.fixture.CardRepository.CLOVER3;
+import static blackjack.fixture.CardRepository.CLOVER4;
+import static blackjack.fixture.CardRepository.CLOVER5;
+import static blackjack.fixture.CardRepository.CLOVER6;
+import static blackjack.fixture.CardRepository.CLOVER7;
+import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardStack;
-import blackjack.domain.fixture.CardStackGenerator;
+import blackjack.fixture.CardStackGenerator;
 import blackjack.domain.participant.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
