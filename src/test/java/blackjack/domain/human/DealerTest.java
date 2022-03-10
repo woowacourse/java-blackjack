@@ -24,5 +24,17 @@ class DealerTest {
                 .isEqualTo(11);
     }
 
+    @Test
+    public void 딜러_히트가능() {
+        Dealer dealer = Dealer.of();
 
+        Card card5 = Card.of(Denomination.of("5"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.of("6"), Suit.SPADE);
+
+        dealer.addCard(card5);
+        dealer.addCard(card6);
+
+        assertThat(dealer.isAbleToHit())
+                .isTrue();
+    }
 }

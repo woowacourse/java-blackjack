@@ -4,7 +4,6 @@ import blackjack.domain.Result;
 import blackjack.domain.Table;
 import blackjack.domain.human.Human;
 import blackjack.domain.human.Player;
-import blackjack.domain.human.Players;
 import java.util.Map;
 
 public class OutputView {
@@ -18,10 +17,6 @@ public class OutputView {
     private static final String PLAYER_RESULT_MESSAGE = "%s: %s" + System.lineSeparator();
     private static final String RESULT_FRONT_MESSAGE = System.lineSeparator() + "## 최종 승패";
 
-    public static void printHumanHand(final Human human) {
-        System.out.printf(HUMAN_CARD_STATE_MESSAGE + System.lineSeparator(), human.getName(), human.getCards());
-    }
-
     public static void printInitCards(final Table table) {
         OutputView.printInitCardState(table);
         OutputView.printHumanHand(table.getDealer());
@@ -29,6 +24,10 @@ public class OutputView {
             OutputView.printHumanHand(player);
         }
         System.out.println();
+    }
+
+    public static void printHumanHand(final Human human) {
+        System.out.printf(HUMAN_CARD_STATE_MESSAGE + System.lineSeparator(), human.getName(), human.getCards());
     }
 
     private static void printInitCardState(final Table table) {

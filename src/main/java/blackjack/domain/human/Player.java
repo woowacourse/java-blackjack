@@ -3,6 +3,7 @@ package blackjack.domain.human;
 import static blackjack.util.Constants.BLACKJACK_NUMBER;
 
 import blackjack.domain.card.Cards;
+import blackjack.util.Constants;
 
 public class Player extends Human {
 
@@ -12,6 +13,10 @@ public class Player extends Human {
 
     public static Player of(String name) {
         return new Player(name);
+    }
+
+    public boolean isTwoCard() {
+        return getCards().size() == Constants.INIT_CARD_NUMBER;
     }
 
     @Override

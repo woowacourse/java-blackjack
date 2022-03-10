@@ -2,8 +2,6 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.human.Dealer;
-import blackjack.domain.human.Name;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
 import java.util.List;
