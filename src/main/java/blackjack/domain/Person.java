@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
+    private static final int MAX_SCORE = 21;
     private String name;
     private List<Card> myCards;
 
@@ -28,5 +29,9 @@ public class Person {
         return myCards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
+    }
+    
+    public boolean isBurst() {
+        return score() > MAX_SCORE;
     }
 }

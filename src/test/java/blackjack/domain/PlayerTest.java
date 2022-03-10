@@ -17,4 +17,22 @@ public class PlayerTest {
         int playerCardSize = player.getMyCards().size();
         assertThat(playerCardSize).isEqualTo(1);
     }
+
+    @DisplayName("버스트 테스트_버스트")
+    @Test
+    void burst() {
+        Player player = new Player("pobi");
+        player.addCard(new Card("10다이아몬드", 10));
+        player.addCard(new Card("10다이아몬드", 10));
+        player.addCard(new Card("10다이아몬드", 10));
+        assertThat(player.isBurst()).isTrue();
+    }
+
+    @DisplayName("버스트 테스트_버스트아님")
+    @Test
+    void burst2() {
+        Player player = new Player("pobi");
+        player.addCard(new Card("10다이아몬드", 10));
+        assertThat(player.isBurst()).isFalse();
+    }
 }
