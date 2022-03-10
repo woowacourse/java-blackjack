@@ -13,4 +13,8 @@ public abstract class Card {
     public int getCardNumber() {
         return cardNumber.getValue();
     }
+
+    public boolean isAceCard() {
+        return cardNumber == CardNumber.ACE;
+    }
 }

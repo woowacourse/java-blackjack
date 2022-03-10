@@ -51,7 +51,7 @@ public class CardTest {
     void createSpecialQueenCard() {
         final Card card = new Diamond(CardNumber.ACE);
         final String expectedPattern = "다이아몬드";
-        final int expectedNumber = 1;
+        final int expectedNumber = 11;
 
         final String actualPattern = card.getCardPattern();
         final int actualNumber = card.getCardNumber();

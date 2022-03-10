@@ -16,6 +16,21 @@ public class Cards {
     }
 
     public int calculateScore() {
+        int totalScore = getTotalScore();
+        int countOfAce = getCountOfAce();
+        while (countOfAce-- > 0 && totalScore > 21) {
+            totalScore -= 10;
+        }
+        return totalScore;
+    }
+
+    private int getCountOfAce() {
+        return (int) cards.stream()
+                .filter(Card::isAceCard)
+                .count();
+    }
+
+    private int getTotalScore() {
         return cards.stream()
                 .mapToInt(Card::getCardNumber)
                 .sum();
