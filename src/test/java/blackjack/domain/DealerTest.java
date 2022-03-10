@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.CardMachine;
-import blackjack.domain.Dealer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

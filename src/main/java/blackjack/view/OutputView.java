@@ -36,4 +36,8 @@ public class OutputView {
     public static void printTakeCardInstruction(final String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", name);
     }
+
+    public static void printTakeDealerCardsMessage(final String name, final int maximum) {
+        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.", name, maximum);
+    }
 }

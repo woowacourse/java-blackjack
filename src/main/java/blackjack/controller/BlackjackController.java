@@ -20,8 +20,7 @@ public class BlackjackController {
         openInitCard(dealer, players);
 
         distributeCardToPlayers(players, cardMachine);
-//         TODO: 딜러 카드 분배
-//        distributeCardToDealer(dealer, cardMachine);
+        distributeCardToDealer(dealer, cardMachine);
     }
 
     private Players createPlayers() {
@@ -73,6 +72,13 @@ public class BlackjackController {
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
             return isReceived(player);
+        }
+    }
+
+    private void distributeCardToDealer(final Dealer dealer, final CardMachine cardMachine) {
+        while (dealer.isReceived()) {
+            dealer.receiveCard(cardMachine.giveCard());
+            OutputView.printTakeDealerCardsMessage(Dealer.getName(), Dealer.RECEIVED_MAXIMUM);
         }
     }
 }
