@@ -14,7 +14,7 @@ public enum Command {
 
     public static Command findCommand(String value) {
         return Arrays.stream(Command.values())
-                .filter(command -> command.getValue().equals(value))
+                .filter(command -> command.value.equals(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바른 명령어를 입력해야합니다."));
     }
