@@ -20,6 +20,8 @@ public abstract class ChangeableCards implements Cards {
         return new MixHandCards(cards);
     }
 
+    public final ChangeableCards toSoftHand() { return new SoftHandCards(cards); }
+
     @Override
     public final Stream<Card> stream() {
         return cards.stream();

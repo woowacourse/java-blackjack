@@ -104,6 +104,7 @@ public class DealerTest {
     @DisplayName("딜러 카드 한장 공개")
     void openCard() {
         Dealer dealer = new Dealer(new Card(JACK, DIAMOND), new Card(QUEEN, HEART));
-        assertThat(dealer.openCard()).isEqualTo(new Card(JACK, DIAMOND));
+        assertThat(dealer.openCards()).hasSize(1);
+        assertThat(dealer.openCards()).contains(new Card(JACK, DIAMOND));
     }
 }
