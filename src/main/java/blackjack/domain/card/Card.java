@@ -13,6 +13,10 @@ public class Card {
         return new Card(denomination, suit);
     }
 
+    public boolean isAce() {
+        return denomination.equals(Denomination.ACE);
+    }
+
     public Denomination getDenomination() {
         return denomination;
     }

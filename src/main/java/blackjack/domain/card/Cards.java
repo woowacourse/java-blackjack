@@ -26,25 +26,26 @@ public class Cards {
     }
 
     public int getPoint() {
-        int point = 0;
-        for (Card card : cards) {
-            point += card.getDenomination().getPoint();
-        }
-        return applyAcePoint(point);
+        return applyAcePoint(getRawPoint(), getAceCount());
     }
 
-    private int applyAcePoint(int point) {
-        int aceCount = getAceCount();
-        while (point > Constants.BLACKJACK_NUMBER && aceCount > 0) {
+    private int applyAcePoint(int point, int aceCount) {
+        if (point > Constants.BLACKJACK_NUMBER && aceCount > 0) {
             point -= ACE_MINUS_NUMBER;
-            aceCount--;
+            return applyAcePoint(point, aceCount - 1);
         }
         return point;
     }
 
+    private int getRawPoint() {
+        return cards.stream()
+                .mapToInt(card -> card.getDenomination().getPoint())
+                .sum();
+    }
+
     private int getAceCount() {
         return (int) cards.stream()
-                .filter(card -> card.getDenomination().equals(Denomination.ACE))
+                .filter(Card::isAce)
                 .count();
     }
 

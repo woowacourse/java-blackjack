@@ -10,7 +10,7 @@ public class CardDeck {
     private CardDeck() {
         this.cards = new Stack<>();
         for (Denomination value : Denomination.values()) {
-            pushCards(value);
+            addCards(value);
         }
         Collections.shuffle(cards);
     }
@@ -19,24 +19,24 @@ public class CardDeck {
         return new CardDeck();
     }
 
+    public int size() {
+        return cards.size();
+    }
+
     public Card draw() {
         validateSize();
         return cards.pop();
     }
 
-    public int size() {
-        return cards.size();
+    private void addCards(Denomination value) {
+        for (Suit suit : Suit.values()) {
+            cards.push(Card.of(value, suit));
+        }
     }
 
     private void validateSize() {
         if (cards.isEmpty()) {
             throw new ArrayIndexOutOfBoundsException(NO_CARD_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private void pushCards(Denomination value) {
-        for (Suit suit : Suit.values()) {
-            cards.push(Card.of(value, suit));
         }
     }
 }

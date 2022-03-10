@@ -20,8 +20,8 @@ class PlayerTest {
     public void 참여자에_카드_추가() {
         Player player = Player.of("test");
 
-        Card card5 = Card.of(Denomination.of("5"), Suit.of("스페이드"));
-        Card card6 = Card.of(Denomination.of("6"), Suit.of("하트"));
+        Card card5 = Card.of(Denomination.of("5"), Suit.SPADE);
+        Card card6 = Card.of(Denomination.of("6"), Suit.SPADE);
         player.addCard(card5);
         player.addCard(card6);
 

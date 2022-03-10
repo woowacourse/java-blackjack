@@ -15,8 +15,7 @@ class SuitTest {
             "CLOVER,클로버"
     })
     void 테스트(Suit expectedSuit, String inputSymbolName) {
-        Suit suit = Suit.of(inputSymbolName);
-        assertThat(suit)
-                .isEqualTo(expectedSuit);
+        assertThat(expectedSuit.getName())
+                .isEqualTo(inputSymbolName);
     }
 }
