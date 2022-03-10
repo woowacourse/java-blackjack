@@ -24,4 +24,24 @@ public class DealerTest {
         dealer.receiveCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
         assertThat(dealer.getScore()).isEqualTo(8);
     }
+
+    @Test
+    @DisplayName("딜러의 카드 추가 분배가 불가능한 경우 테스트")
+    void hasFalseDealerNextTurn() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.SEVEN));
+        dealer.receiveCard(new Card(Symbol.HEART, Denomination.J));
+
+        assertThat(dealer.hasNextTurn()).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러의 카드 추가 분배가 가능한 경우 테스트")
+    void hasTrueDealerNextTurn() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.SIX));
+        dealer.receiveCard(new Card(Symbol.HEART, Denomination.J));
+
+        assertThat(dealer.hasNextTurn()).isTrue();
+    }
 }

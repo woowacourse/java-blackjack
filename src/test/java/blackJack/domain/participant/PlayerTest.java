@@ -36,6 +36,27 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("플레이어의 카드 추가 분배가 불가능한 경우 테스트")
+    void hasFalsePlayerNextTurn() {
+        Player player = new Player("kei");
+        player.receiveCard(new Card(Symbol.SPADE, Denomination.J));
+        player.receiveCard(new Card(Symbol.HEART, Denomination.J));
+        player.receiveCard(new Card(Symbol.SPADE, Denomination.TWO));
+
+        assertThat(player.hasNextTurn()).isFalse();
+    }
+
+    @Test
+    @DisplayName("플레이어의 카드 추가 분배가 가능한 경우 테스트")
+    void hasTruePlayerNextTurn() {
+        Player player = new Player("kei");
+        player.receiveCard(new Card(Symbol.SPADE, Denomination.J));
+        player.receiveCard(new Card(Symbol.HEART, Denomination.J));
+
+        assertThat(player.hasNextTurn()).isTrue();
+    }
+
+    @Test
     @DisplayName("Player 카드 합계 계산 테스트")
     void calculateScore() {
         Player player = new Player("rookie");

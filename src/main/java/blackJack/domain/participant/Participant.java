@@ -30,6 +30,8 @@ public abstract class Participant {
         }
     }
 
+    abstract boolean hasNextTurn();
+
     public void receiveCard(Card card) {
         if (cards.contains(card)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD);

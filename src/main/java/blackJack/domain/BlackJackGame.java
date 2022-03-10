@@ -1,52 +1,28 @@
 package blackJack.domain;
 
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import blackJack.domain.card.Deck;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
+import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
 
 public class BlackJackGame {
 
-    private static final String ERROR_MESSAGE_DUPLICATE_PLAYER_NAME = "플레이어의 이름은 중복될 수 없습니다.";
-    private static final String ERROR_MESSAGE_PLAYER_COUNT = "플레이어의 인원수는 1명 이상 7명 이하여야 합니다.";
-    private static final int MINIMUM_COUNT = 1;
-    private static final int MAXIMUM_COUNT = 7;
     private static final int INITIAL_CARD_COUNT = 2;
-    private static final int BLACK_JACK = 21;
-    private static final int DEALER_MAXIMUM_RECEIVE_CARD_SCORE = 16;
 
     private final Deck deck;
-    private final Dealer dealer;
-    private final List<Player> players;
+    private final Participants participants;
 
-    public BlackJackGame(Dealer dealer, List<Player> players) {
-        validateDuplicatePlayerName(players);
-        validatePlayerCount(players);
+    public BlackJackGame(Participants participants) {
         this.deck = new Deck();
-        this.dealer = dealer;
-        this.players = players;
-    }
-
-    private void validateDuplicatePlayerName(List<Player> players) {
-        if (players.size() != new HashSet<>(players).size()) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_DUPLICATE_PLAYER_NAME);
-        }
-    }
-
-    private void validatePlayerCount(List<Player> players) {
-        if (players.size() < MINIMUM_COUNT || players.size() > MAXIMUM_COUNT) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_PLAYER_COUNT);
-        }
+        this.participants = participants;
     }
 
     public void firstCardDispensing() {
-        distributeCard(dealer, INITIAL_CARD_COUNT);
-        players.forEach(player -> distributeCard(player, INITIAL_CARD_COUNT));
+        distributeCard(participants.getDealer(), INITIAL_CARD_COUNT);
+        participants.getPlayers().forEach(player -> distributeCard(player, INITIAL_CARD_COUNT));
     }
 
     public void distributeCard(Participant participant, int count) {
@@ -55,18 +31,11 @@ public class BlackJackGame {
         }
     }
 
-    public boolean hasNextTurn(Participant participant) {
-        if (participant instanceof Dealer) {
-            return participant.getScore() <= DEALER_MAXIMUM_RECEIVE_CARD_SCORE;
-        }
-        return participant.getScore() <= BLACK_JACK;
-    }
-
     public Dealer getDealer() {
-        return dealer;
+        return participants.getDealer();
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return participants.getPlayers();
     }
 }

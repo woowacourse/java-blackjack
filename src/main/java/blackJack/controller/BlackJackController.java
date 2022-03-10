@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import blackJack.domain.BlackJackGame;
 import blackJack.domain.participant.Dealer;
+import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
 import blackJack.domain.result.BlackJackGameResult;
 import blackJack.domain.result.YesOrNo;
@@ -14,7 +15,8 @@ import blackJack.view.OutputView;
 public class BlackJackController {
 
     public void run() {
-        BlackJackGame blackJackGame = initBlackJackGame();
+        Participants participants = getParticipants();
+        BlackJackGame blackJackGame = new BlackJackGame(participants);
         blackJackGame.firstCardDispensing();
         OutputView.printInitCardResult(blackJackGame.getDealer(), blackJackGame.getPlayers());
         doPlayerGame(blackJackGame);
@@ -25,15 +27,15 @@ public class BlackJackController {
             BlackJackGameResult.ofGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers()));
     }
 
-    private BlackJackGame initBlackJackGame() {
+    private Participants getParticipants() {
         try {
             List<String> playerNames = InputView.inputPlayerNames();
             List<Player> players = playerNames.stream()
                 .map(Player::new)
                 .collect(Collectors.toUnmodifiableList());
-            return new BlackJackGame(new Dealer(), players);
+            return new Participants(new Dealer(), players);
         } catch (IllegalArgumentException e) {
-            return initBlackJackGame();
+            return getParticipants();
         }
     }
 
@@ -45,7 +47,7 @@ public class BlackJackController {
     }
 
     private void doEachPlayerTurn(BlackJackGame blackJackGame, Player player) {
-        while (blackJackGame.hasNextTurn(player) && getOneMoreCard(player)) {
+        while (player.hasNextTurn() && getOneMoreCard(player)) {
             blackJackGame.distributeCard(player, 1);
             OutputView.printNowHoldCardInfo(player);
         }
@@ -62,7 +64,7 @@ public class BlackJackController {
 
     private void doDealerGame(BlackJackGame blackJackGame) {
         Dealer dealer = blackJackGame.getDealer();
-        while (blackJackGame.hasNextTurn(dealer)) {
+        while (dealer.hasNextTurn()) {
             blackJackGame.distributeCard(dealer, 1);
         }
     }
