@@ -13,4 +13,10 @@ public class Player extends Gamer{
         int dealerPoint = dealer.getCardsNumberSum();
         return BlackJackResult.of(playerPoint, dealerPoint);
     }
+
+    public boolean isSameName(String name) {
+        return this.getName()
+                .getValue()
+                .equals(name);
+    }
 }

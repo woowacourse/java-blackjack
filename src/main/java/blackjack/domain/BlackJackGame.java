@@ -4,11 +4,10 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.GameResult;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,14 +36,29 @@ public class BlackJackGame {
         }
     }
 
-    public void distributeCard(Gamer gamer) {
-        gamer.addCard(cardFactory.draw());
-    }
-
     public void distributeAdditionalToDealer(Dealer dealer) {
         while (!dealer.isOverThan(ADDITIONAL_DISTRIBUTE_STANDARD)) {
             distributeCard(dealer);
         }
+    }
+
+    private void distributeCard(Gamer gamer) {
+        gamer.addCard(cardFactory.draw());
+    }
+
+    public void distributeCardToPlayer(String name) {
+        findPlayerByName(name).addCard(cardFactory.draw());
+    }
+
+    public GamerDto findPlayerDtoByName(String name) {
+        return new GamerDto(findPlayerByName(name));
+    }
+
+    private Player findPlayerByName(String name) {
+        return players.stream()
+                .filter(player -> player.isSameName(name))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("플레이어가 존재하지 않습니다."));
     }
 
     public GameResult createResult(Dealer dealer, List<Player> players) {
@@ -58,6 +72,13 @@ public class BlackJackGame {
     public List<GamerDto> getPlayerDtos() {
         return players.stream()
                 .map(GamerDto::new)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .map(Name::getValue)
                 .collect(Collectors.toUnmodifiableList());
     }
 }

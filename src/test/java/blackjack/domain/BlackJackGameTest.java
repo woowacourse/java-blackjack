@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackJackGameTest {
@@ -33,11 +32,11 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어에게 1장 배분한다.")
     void distributeCard() {
-        Gamer gamer = new Gamer("name");
         BlackJackGame blackJackGame = new BlackJackGame(List.of("name"));
-        blackJackGame.distributeCard(gamer);
+        blackJackGame.distributeCardToPlayer("name");
 
-        assertThat(gamer.getCards().size()).isEqualTo(1);
+        GamerDto player = blackJackGame.getPlayerDtos().get(0);
+        assertThat(player.getCards().size()).isEqualTo(1);
     }
 
     @Test

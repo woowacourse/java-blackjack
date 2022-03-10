@@ -12,7 +12,6 @@ public class OutputView {
         printGamers(dealer, players, builder);
         printCards(dealer, players, builder);
         System.out.println(builder);
-
     }
 
     private static void printGamers(GamerDto dealer, List<GamerDto> players, StringBuilder builder) {
@@ -29,15 +28,22 @@ public class OutputView {
         builder.append(dealer.getName()+": " + dealerFirstCardName + "\n");
 
         for (GamerDto player : players) {
-            builder.append(player.getName() + "카드: ");
-            printPlayerCards(builder, player);
+            String playerCard = appendPlayerCard(player);
+            builder.append(playerCard);
         }
     }
 
-    private static void printPlayerCards(StringBuilder builder, GamerDto player) {
+    public static void printPlayerCard(GamerDto player) {
+        System.out.print(appendPlayerCard(player));
+    }
+
+    private static String appendPlayerCard(GamerDto player) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(player.getName() + "카드: ");
         String cardNames = player.getCards().stream()
                 .map(card -> card.getNumber() + card.getShape())
                 .collect(Collectors.joining(", "));
         builder.append(cardNames + "\n");
+        return builder.toString();
     }
 }
