@@ -4,19 +4,12 @@ import java.util.Objects;
 
 public class Player extends Person{
 
-    private String name;
-
-    private Player() {
-
-    }
-
     public Player(String name) {
-        this.name = name;
+        super(name);
     }
 
     public static Player copy(Player original) {
-        Player copy = new Player();
-        copy.name = original.name;
+        Player copy = new Player(original.name);
         copy.myCards = original.getMyCards();
         return copy;
     }
@@ -36,9 +29,5 @@ public class Player extends Person{
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public String getName() {
-        return name;
     }
 }

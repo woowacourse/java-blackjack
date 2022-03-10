@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
+    protected String name;
     protected List<Card> myCards;
 
-    public Person() {
+    public Person(String name) {
+        this.name = name;
         this.myCards = new ArrayList<>();
     }
 
@@ -14,13 +16,17 @@ public class Person {
         myCards.add(card);
     }
 
-    public List<Card> getMyCards() {
-        return myCards;
-    }
-
     public int score() {
         return myCards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
+    }
+
+    public List<Card> getMyCards() {
+        return myCards;
+    }
+
+    public String getName() {
+        return name;
     }
 }
