@@ -18,12 +18,8 @@ public class BlackJackApplication {
         try {
             CardDeck deck = new CardDeck(new BlackJackCardsGenerator());
             Dealer dealer = new Dealer(deck.drawDouble());
-            List<Name> playerNames = inputPlayerNames();
-            List<Player> players = createPlayers(playerNames, deck);
-            alertStart(dealer, players);
-            proceedPlayersTurn(players, deck);
-            proceedDealer(dealer, deck);
-            showResult(dealer, players);
+            List<Player> players = createPlayers(inputPlayerNames(), deck);
+            play(deck, dealer, players);
         } catch (NullPointerException | IllegalArgumentException e) {
             OutputView.printFatalErrorMessage(e.getMessage());
         }
@@ -46,6 +42,13 @@ public class BlackJackApplication {
                 .collect(Collectors.toUnmodifiableList());
     }
 
+    private static void play(CardDeck deck, Dealer dealer, List<Player> players) {
+        alertStart(dealer, players);
+        proceedPlayersTurn(players, deck);
+        proceedDealer(dealer, deck);
+        showResult(dealer, players);
+    }
+
     private static void alertStart(Dealer dealer, List<Player> players) {
         OutputView.printStartMessage(dealer, players);
         OutputView.printDealerFirstCard(dealer);
@@ -62,9 +65,12 @@ public class BlackJackApplication {
     private static void proceedPlayer(Player player, CardDeck deck) {
         while (player.isHittable() && InputView.inputHitRequest(player.getName()).equals("y")) {
             player.hit(deck);
-            int score = Rule.INSTANCE.calculateSum(player.getCards());
-            OutputView.printParticipantCards(player, score);
+            OutputView.printParticipantCards(player, Rule.INSTANCE.calculateSum(player.getCards()));
         }
+        showStopReason(player);
+    }
+
+    private static void showStopReason(Player player) {
         if (Rule.INSTANCE.isBlackJack(player.getCards())) {
             OutputView.printBlackJackMessage();
             return;
