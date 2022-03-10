@@ -41,10 +41,12 @@ public class BlackjackController {
 
     private void openInitCard(Dealer dealer, Players players) {
         OutputView.printCard(Dealer.getName(), dealer.getInitCard());
+        OutputView.printNewLine();
         for (Player player : players.getPlayers()) {
             OutputView.printCard(player.getName(), player.getCards());
             OutputView.printNewLine();
         }
+        OutputView.printNewLine();
     }
 
     private void distributeCardToPlayers(final Players players, final CardMachine cardMachine) {
@@ -63,7 +65,12 @@ public class BlackjackController {
     }
 
     private boolean isReceived(final Player player) {
-        String input = InputView.inputTakeCardAnswer();
-        return player.answer(input);
+        try {
+            String input = InputView.inputTakeCardAnswer();
+            return player.answer(input);
+        } catch (IllegalArgumentException exception) {
+            OutputView.printExceptionMessage(exception.getMessage());
+            return isReceived(player);
+        }
     }
 }
