@@ -1,6 +1,7 @@
 package blackjack;
 
 import static blackjack.view.InputView.requestPlayerNamesInput;
+import static blackjack.view.OutputView.printDealerExtraCardInfo;
 import static blackjack.view.OutputView.printInitialParticipantsCards;
 
 import blackjack.controller.BlackjackController;
@@ -18,6 +19,10 @@ public class Application {
         List<Player> players = blackjackGame.getParticipants();
         for (Player player : players) {
             blackjackController.givePlayerCards(player, blackjackGame);
+        }
+
+        if (blackjackGame.giveCardToDealer()) {
+            printDealerExtraCardInfo();
         }
     }
 }

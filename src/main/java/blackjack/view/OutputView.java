@@ -18,6 +18,7 @@ public class OutputView {
     private static final String DEALER_INITIAL_CARD_FORMAT = "딜러: %s" + NEW_LINE;
     private static final String PLAYER_CARDS_FORMAT = "%s카드: %s" + NEW_LINE;
     private static final String PLAYER_BUST_MESSAGE = "21을 초과하여 패배하였습니다!";
+    private static final String DEALER_EXTRA_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     // TODO: DTO 로 변경
     public static void printInitialParticipantsCards(BlackjackGame blackjackGame) {
@@ -31,7 +32,7 @@ public class OutputView {
             builder.append(getParticipantCardsInfo(player));
         }
 
-        System.out.println(builder);
+        print(builder.toString());
     }
 
     public static void printPlayerCardsInfo(Player player) {
@@ -39,7 +40,11 @@ public class OutputView {
     }
 
     public static void printPlayerBustInfo() {
-        System.out.println(PLAYER_BUST_MESSAGE);
+        print(PLAYER_BUST_MESSAGE);
+    }
+
+    public static void printDealerExtraCardInfo() {
+        print(DEALER_EXTRA_CARD_MESSAGE);
     }
 
     private static String getParticipantsCardCountInfo(BlackjackGame blackjackGame) {
@@ -61,5 +66,9 @@ public class OutputView {
         return collection.stream()
                 .map(function)
                 .collect(Collectors.joining(JOIN_DELIMITER));
+    }
+
+    private static void print(String text) {
+        System.out.println(text);
     }
 }
