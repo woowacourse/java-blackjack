@@ -5,6 +5,7 @@ import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 
 public class CardDeck {
@@ -14,7 +15,8 @@ public class CardDeck {
     private final Queue<Card> cards;
 
     private CardDeck(final Queue<Card> cards) {
-        this.cards = cards;
+        Objects.requireNonNull(cards, "cards는 null이 들어올 수 없습니다.");
+        this.cards = new ArrayDeque<>(cards);
     }
 
     public static CardDeck init() {
