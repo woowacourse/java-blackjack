@@ -11,15 +11,20 @@ public class Player {
     private final Name name;
     private final List<Card> cards;
 
-    public Player(String name, List<Card> cards) {
+    public Player(Name name, List<Card> cards) {
         cards = new ArrayList<>(cards);
-        validate(cards);
+        validateCards(cards);
+        validateName(name);
 
-        this.name = new Name(name);
+        this.name = name;
         this.cards = cards;
     }
 
-    private void validate(List<Card> cards) {
+    private void validateName(Name name) {
+        Objects.requireNonNull(name, "[ERROR] 이름은 null일 수 없습니다.");
+    }
+
+    private void validateCards(List<Card> cards) {
         Objects.requireNonNull(cards, "[ERROR] 카드는 null일 수 없습니다.");
         validateSize(cards);
         validateDistinct(cards);

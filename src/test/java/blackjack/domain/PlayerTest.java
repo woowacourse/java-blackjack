@@ -18,7 +18,7 @@ public class PlayerTest {
     @DisplayName("플레이어는 생성될 때 두 장의 카드를 받는다.")
     void startWithDraw() {
         // given
-        String name = "ohzzi";
+        Name name = new Name("pobi");
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
         List<Card> cards = List.of(card1, card2);
@@ -34,7 +34,7 @@ public class PlayerTest {
     @DisplayName("플레이어를 생성할 때 카드는 null일 수 없다.")
     void cardsNotNull() {
         // given
-        String name = "ohzzi";
+        Name name = new Name("pobi");
 
         // then
         assertThatThrownBy(() -> new Player(name, null))
@@ -45,7 +45,7 @@ public class PlayerTest {
     @DisplayName("플레이어를 생성할 때 카드가 두 장이 아니면 예외가 발생한다.")
     void cardsSizeNotTwo() {
         // given
-        String name = "ohzzi";
+        Name name = new Name("pobi");
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
         Card card3 = new Card(Pattern.HEART, Denomination.THREE);
@@ -61,7 +61,7 @@ public class PlayerTest {
     @DisplayName("플레이어를 생성할 때 카드가 중복되면 예외가 발생한다.")
     void duplicatedCards() {
         // given
-        String name = "ohzzi";
+        Name name = new Name("pobi");
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         List<Card> cards = List.of(card1, card1);
 
@@ -75,7 +75,7 @@ public class PlayerTest {
     @DisplayName("플레이어가 카드 한 장을 더 받는 경우")
     void addCard() {
         // given
-        String name = "ohzzi";
+        Name name = new Name("pobi");
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
         List<Card> cards = List.of(card1, card2);

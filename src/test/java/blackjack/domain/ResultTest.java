@@ -40,7 +40,7 @@ public class ResultTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, NINE);
         List<Card> playerCards = List.of(heartTen, spadeNine);
-        Player player = new Player("Dealer", playerCards);
+        Player player = new Player(new Name("pobi"), playerCards);
         List<Player> players = List.of(player);
 
         // when
@@ -72,7 +72,7 @@ public class ResultTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
         List<Card> playerCards = List.of(heartTen, spadeNine);
-        Player player = new Player("Dealer", playerCards);
+        Player player = new Player(new Name("pobi"), playerCards);
         player.hit(deck);
         List<Player> players = List.of(player);
 
@@ -104,7 +104,7 @@ public class ResultTest {
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
         List<Card> playerCards = List.of(heartTen, spadeNine);
-        Player player = new Player("Dealer", playerCards);
+        Player player = new Player(new Name("pobi"), playerCards);
         List<Player> players = List.of(player);
 
         // when
