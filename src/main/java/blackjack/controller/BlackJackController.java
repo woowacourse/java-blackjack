@@ -109,10 +109,7 @@ public class BlackJackController {
     }
 
     private void printCardAndScore(Player dealer, List<Player> gamblers) {
-        System.out.println();
-        outputView.printCardAndScore(PlayerDto.from(dealer));
-        gamblers.stream()
-            .map(PlayerDto::from)
-            .forEach(outputView::printCardAndScore);
+        outputView.printNewLine();
+        outputView.printCardAndScore(PlayersDto.from(concatPlayers(dealer, gamblers)));
     }
 }

@@ -51,9 +51,11 @@ public class OutputView {
         System.out.println(dealer.getName() + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printCardAndScore(PlayerDto playerDto) {
-        System.out.println(playerDto.getName() + "카드: " + getCardNames(playerDto.getPlayingCards()) + " - 결과: "
-            + playerDto.getScore());
+    public void printCardAndScore(PlayersDto playersDto) {
+        playersDto.getValue()
+            .forEach(playerDto -> System.out.println(
+                playerDto.getName() + "카드: " + getCardNames(playerDto.getPlayingCards()) + " - 결과: "
+                    + playerDto.getScore()));
     }
 
     public void printBurst(final PlayerDto playerDto) {
