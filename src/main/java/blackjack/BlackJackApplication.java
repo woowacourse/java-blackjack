@@ -47,7 +47,7 @@ public class BlackJackApplication {
     private static void alertStart(Dealer dealer, List<Player> players) {
         OutputView.printStartMessage(dealer, players);
         OutputView.printDealerFirstCard(dealer);
-        players.forEach(OutputView::printPlayerCards);
+        players.forEach(OutputView::printParticipantCards);
     }
 
     private static void proceedPlayersTurn(List<Player> players, CardDeck deck) {
@@ -57,7 +57,7 @@ public class BlackJackApplication {
     private static void proceedPlayer(Player player, CardDeck deck) {
         while (player.isHittable() && InputView.inputHitRequest(player.getName()).equals("y")) {
             player.hit(deck);
-            OutputView.printPlayerCards(player);
+            OutputView.printParticipantCards(player);
         }
         if (Rule.INSTANCE.isBlackJack(player.getCards())) {
             OutputView.printBlackJackMessage();

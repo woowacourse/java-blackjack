@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Dealer;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.card.Card;
 import java.util.List;
@@ -31,13 +32,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printPlayerCards(Player player) {
-        String playerCardsInfo = player.getCards()
+    public static void printParticipantCards(Participant participant) {
+        String cardsInfo = participant.getCards()
                 .stream()
                 .map(OutputView::createCardInfoString)
                 .collect(Collectors.joining(", "));
 
-        System.out.printf("%s카드: %s", player.getName(), playerCardsInfo);
+        System.out.printf("%s카드: %s", participant.getName(), cardsInfo);
         System.out.println();
     }
 
