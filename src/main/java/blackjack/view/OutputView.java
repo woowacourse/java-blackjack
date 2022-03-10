@@ -25,12 +25,32 @@ public class OutputView {
     private static void printCards(GamerDto dealer, List<GamerDto> players, StringBuilder builder) {
         Card firstCard = dealer.getFirstCard();
         String dealerFirstCardName = firstCard.getNumber() + firstCard.getShape();
-        builder.append(dealer.getName()+": " + dealerFirstCardName + "\n");
+        builder.append(dealer.getName() + "카드: " + dealerFirstCardName + "\n");
 
         for (GamerDto player : players) {
             String playerCard = appendPlayerCard(player);
             builder.append(playerCard);
         }
+    }
+
+    private static String getCardNames(GamerDto dealer) {
+        return dealer.getCards().stream()
+                .map(card -> card.getNumber() + card.getShape())
+                .collect(Collectors.joining(", "));
+    }
+
+    public static void printFinalCards(GamerDto dealer, List<GamerDto> players) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(dealer.getName() + "카드: ");
+        builder.append(getCardNames(dealer));
+        builder.append("- 결과: " + dealer.getCardNumberSum() + "\n");
+
+        for (GamerDto player : players) {
+            builder.append(player.getName() + "카드: ");
+            builder.append(getCardNames(player));
+            builder.append("- 결과: " + player.getCardNumberSum() + "\n");
+        }
+        System.out.println(builder);
     }
 
     public static void printPlayerCard(GamerDto player) {
@@ -40,10 +60,16 @@ public class OutputView {
     private static String appendPlayerCard(GamerDto player) {
         StringBuilder builder = new StringBuilder();
         builder.append(player.getName() + "카드: ");
-        String cardNames = player.getCards().stream()
-                .map(card -> card.getNumber() + card.getShape())
-                .collect(Collectors.joining(", "));
-        builder.append(cardNames + "\n");
+        builder.append(getCardNames(player) + "\n");
         return builder.toString();
+    }
+
+    public static void printAdditionalDrawDealer(int count) {
+        System.out.println();
+        if (count != 0) {
+            System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n", count);
+            return;
+        }
+        System.out.println("딜러는 17이상이라 카드를 더 받지 않았습니다.\n");
     }
 }

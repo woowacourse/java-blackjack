@@ -42,11 +42,10 @@ class BlackJackGameTest {
     @Test
     @DisplayName("딜러의 점수가 17이상일 때 까지 카드를 1장씩 받는다.")
     void dealerDistribution() {
-        Dealer dealer = new Dealer();
         BlackJackGame blackJackGame = new BlackJackGame(List.of("name"));
-        dealer.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
-
-        blackJackGame.distributeAdditionalToDealer(dealer);
-        assertThat(dealer.isOverThan(16)).isTrue();
+        blackJackGame.distributeAdditionalToDealer();
+        GamerDto dealerDto = blackJackGame.getDealerDto();
+        int cardNumberSum = dealerDto.getCardNumberSum();
+        assertThat(cardNumberSum).isGreaterThan(16);
     }
 }

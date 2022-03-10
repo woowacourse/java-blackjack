@@ -20,6 +20,9 @@ public class BlackJackController {
         for (String playerName : playerNames) {
             drawAdditionalCard(blackJackGame, playerName);
         }
+        OutputView.printAdditionalDrawDealer(blackJackGame.distributeAdditionalToDealer());
+        OutputView.printFinalCards(blackJackGame.getDealerDto(), blackJackGame.getPlayerDtos());
+
     }
 
     private void drawAdditionalCard(BlackJackGame blackJackGame, String playerName) {

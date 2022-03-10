@@ -6,7 +6,6 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.result.BlackJackResult;
 import blackjack.domain.result.GameResult;
 
 import java.util.List;
@@ -37,10 +36,13 @@ public class BlackJackGame {
         }
     }
 
-    public void distributeAdditionalToDealer(Dealer dealer) {
+    public int distributeAdditionalToDealer() {
+        int count = 0;
         while (!dealer.isOverThan(ADDITIONAL_DISTRIBUTE_STANDARD)) {
             distributeCard(dealer);
+            count++;
         }
+        return count;
     }
 
     private void distributeCard(Gamer gamer) {
