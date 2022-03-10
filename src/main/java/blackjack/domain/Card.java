@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,6 +35,10 @@ public class Card {
         for (CardShape cardShape : CardShape.values()) {
             TOTAL_CARD_CACHE.add(new Card(cardNumber, cardShape));
         }
+    }
+
+    public static List<Card> getTotalCard() {
+        return Collections.unmodifiableList(TOTAL_CARD_CACHE);
     }
 
     public CardNumber getCardNumber() {

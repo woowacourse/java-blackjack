@@ -20,6 +20,7 @@ public enum CardNumber {
     ;
 
     public static final int ACE_MAXIMUM = 11;
+
     private final String name;
     private final int number;
 

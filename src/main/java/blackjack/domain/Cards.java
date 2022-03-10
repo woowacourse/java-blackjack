@@ -16,16 +16,8 @@ public class Cards {
     }
 
     public void generate() {
-        for (CardNumber cardNumber : CardNumber.values()) {
-            selectCardShape(cardNumber);
-        }
+        cards.addAll(Card.getTotalCard());
         Collections.shuffle(cards);
-    }
-
-    private void selectCardShape(final CardNumber cardNumber) {
-        for (CardShape cardShape : CardShape.values()) {
-            cards.add(Card.of(cardNumber, cardShape));
-        }
     }
 
     public Card giveCard() {
