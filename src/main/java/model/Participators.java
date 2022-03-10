@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import model.cardbehavior.EveryCardsBehavior;
 
 public class Participators {
     private final List<Participator> participators;
@@ -59,6 +60,7 @@ public class Participators {
         if (dealer.canReceiveCard()) {
             dealer.receiveCard(cardDeck.drawCard());
         }
+        dealer.setBehavior(new EveryCardsBehavior());
         return dealer;
     }
 }
