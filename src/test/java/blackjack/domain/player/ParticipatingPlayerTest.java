@@ -23,7 +23,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class PlayerTest {
+class ParticipatingPlayerTest {
 
     private static List<Card> createCards(Card firstCard, Card... remainCard) {
         final List<Card> cards = new ArrayList<>();
