@@ -9,6 +9,7 @@ public class Dealer implements Player {
 
     public static final String DEALER_NAME = "딜러";
 
+    private static final int DEALER_OPEN_CARD_NUMBER = 1;
     private static final int DEALER_RECEIVE_STANDARD = 16;
 
     private final String name;
@@ -26,7 +27,7 @@ public class Dealer implements Player {
 
     @Override
     public List<Card> openCards() {
-        return new ArrayList<>(cards.getCards().subList(0, 1));
+        return new ArrayList<>(cards.getCards().subList(0, DEALER_OPEN_CARD_NUMBER));
     }
 
     @Override
