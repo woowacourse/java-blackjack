@@ -22,11 +22,11 @@ public class Deck {
         }
     }
 
-    public static Card handOut(){
-        return CACHE.pop();
-    }
-
     public static List<Card> handOutInitialTurn(){
         return Arrays.asList(handOut(), handOut());
+    }
+
+    public static Card handOut(){
+        return CACHE.pop();
     }
 }
