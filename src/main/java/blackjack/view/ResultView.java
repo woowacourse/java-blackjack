@@ -6,6 +6,12 @@ import java.util.stream.Collectors;
 
 public class ResultView {
 
+    public static void printUsersCards(List<Player> users) {
+        for (Player user : users) {
+            printUserCards(user);
+        }
+    }
+
     public static void printUserCards(Player user) {
         System.out.print(user.getName() + "카드: ");
         List<String> userCards = user.getCards().stream()

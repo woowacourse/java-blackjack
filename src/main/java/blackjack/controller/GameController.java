@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.CardDeck;
-import blackjack.domain.CardDeckGenerator;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
@@ -12,16 +11,43 @@ import java.util.stream.Collectors;
 
 public class GameController {
 
+    private CardDeck cardDeck;
+
+    public GameController(CardDeck cardDeck) {
+        this.cardDeck = cardDeck;
+    }
+
     public void run() {
-        List<String> users = InputView.inputUsers();
-        CardDeck cardDeck = CardDeckGenerator.createCardDeckByCardNumber();
+        List<String> usersName = InputView.inputUsers();
         Player dealer = new Dealer(cardDeck.drawInitialCard());
-        List<Player> players = users.stream()
+        List<Player> users = usersName.stream()
                 .map(user -> new User(user, cardDeck.drawInitialCard()))
                 .collect(Collectors.toList());
         ResultView.printDealerCard(dealer);
-        for (Player player : players) {
-            ResultView.printUserCards(player);
+        ResultView.printUsersCards(users);
+        askReceiveCardToUsers(users);
+    }
+
+    private void askReceiveCardToUsers(List<Player> players) {
+        for (Player user : players) {
+            askReceiveCard(user);
+        }
+    }
+
+    private void askReceiveCard(Player user) {
+        if (user.isPossibleToPickCard()) {
+            Boolean pick = InputView.inputDrawCardAnswer(user);
+            drawCard(user, pick);
+        }
+    }
+
+    private void drawCard(Player user, Boolean pick) {
+        if (pick) {
+            user.pickCard(cardDeck.drawCard());
+            ResultView.printUserCards(user);
+            askReceiveCard(user);
+        } else if (!pick) {
+            ResultView.printUserCards(user);
         }
     }
 }
