@@ -10,10 +10,10 @@ import java.util.List;
 
 public class BlackjackController {
 
-    private void controlAdditionalCardForPlayer(Blackjack blackjack, Person person) {
-        while (InputView.askAdditionalCard(person)) {
-            blackjack.distributeAdditionalCardPlayer(new RandomNumberGenerator(), person);
-            OutputView.printCards(person);
+    private void controlAdditionalCardForPlayer(Blackjack blackjack, Player player) {
+        while (InputView.askAdditionalCard(player)) {
+            blackjack.distributeAdditionalCardPlayer(new RandomNumberGenerator(), player);
+            OutputView.printCards(player);
         }
     }
 
@@ -24,9 +24,9 @@ public class BlackjackController {
 
         OutputView.printInitStatus(blackjack.getDealer(), blackjack.getPlayers());
 
-        List<Player> people = blackjack.getPlayers();
-        for (Player person : people) {
-            controlAdditionalCardForPlayer(blackjack, person);
+        List<Player> players = blackjack.getPlayers();
+        for (Player player : players) {
+            controlAdditionalCardForPlayer(blackjack, player);
         }
 
         blackjack.distributeAdditionalCardDealer(new RandomNumberGenerator());
