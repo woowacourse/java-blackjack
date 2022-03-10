@@ -82,7 +82,7 @@ public class BlackJackGame {
         final List<PlayerResultInfo> resultInfos =
                 new ArrayList<>(Collections.singletonList(PlayerResultInfo.from(dealer)));
         resultInfos.addAll(players.getResultPlayerInfo());
-        return List.copyOf(resultInfos);
+        return resultInfos;
     }
 
     public OutComeResult calculateAllResults() {
