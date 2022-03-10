@@ -48,6 +48,9 @@ public class BlackJackController {
                 do {
                     dealer.giveCard(player);
                     OutputView.showPlayerHand(player);
+                    if (player.isBust()) {
+                        break;
+                    }
                     takeCardAnswer = InputView.inputOneMoreCard(player);
                 } while (takeCardAnswer.equalsIgnoreCase("Y"));
             }

@@ -31,7 +31,6 @@ public class Player {
 
     public Result compareMatchResult(Dealer dealer) {
         return cardHand.compareMatchResult(dealer.getCardHand());
-
     }
 
     public String getName() {
@@ -44,6 +43,10 @@ public class Player {
 
     public Hand getCardHand() {
         return cardHand;
+    }
+
+    public boolean isBust() {
+        return cardHand.isBust();
     }
 
     @Override

@@ -3,6 +3,7 @@ package blackjack.view;
 import static java.lang.System.out;
 import static java.util.stream.Collectors.joining;
 
+import blackjack.domain.Card;
 import blackjack.domain.GameScoreBoard;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -17,7 +18,7 @@ public class OutputView {
     public static void showParticipantsHand(Dealer dealer, List<Player> players) {
         out.printf(NEWLINE + "딜러와 %s에게 2장의 카드를 나누었습니다." + NEWLINE, getPlayerNames(players));
         out.printf("%s: %s" + NEWLINE, dealer.getName(),
-                dealer.getOpenCard().getDenomination() + dealer.getOpenCard().getSuit());
+                cardDisplayContents(dealer.getOpenCard()));
         for (Player player : players) {
             printPlayerHand(player);
         }
@@ -34,12 +35,12 @@ public class OutputView {
     }
 
     private static void printPlayerHand(Player player) {
-        out.printf("%s: 카드: %s" + NEWLINE, player.getName(), getCards(player));
+        out.printf("%s카드: %s" + NEWLINE, player.getName(), getCards(player));
     }
 
     private static String getCards(Player player) {
         return player.getCards().stream()
-                .map(card -> card.getDenomination() + card.getSuit())
+                .map(card -> cardDisplayContents(card))
                 .collect(joining(", "));
     }
 
@@ -49,12 +50,17 @@ public class OutputView {
 
     public static void printParticipantScore(Dealer dealer, List<Player> players) {
         out.printf("%s 카드: %s - 결과: %d" + NEWLINE, dealer.getName(), dealer.getCards().stream()
-                .map(card -> card.getDenomination()+card.getSuit())
+                .map(card -> cardDisplayContents(card))
                 .collect(Collectors.joining(", ")), dealer.getCardHand().getScore());
 
         for (Player player : players) {
-            out.printf("%s카드: %s - 결과: %d" + NEWLINE, player.getName(), getCards(player), player.getCardHand().getScore());
+            out.printf("%s카드: %s - 결과: %d" + NEWLINE, player.getName(), getCards(player),
+                    player.getCardHand().getScore());
         }
+    }
+
+    private static String cardDisplayContents(Card card) {
+        return card.getDenomination() + card.getSuit();
     }
 
     public static void printBlackjackGameResult(GameScoreBoard result) {
