@@ -10,10 +10,12 @@ public class UserDto {
 
     private final String userName;
     private final List<String> cardNames;
+    private final List<String> initCardNames;
 
-    private UserDto(String userName, List<String> cardNames) {
+    private UserDto(String userName, List<String> cardNames, List<String> initCardNames) {
         this.userName = userName;
         this.cardNames = cardNames;
+        this.initCardNames = initCardNames;
     }
 
     public static UserDto from(User user) {
@@ -24,7 +26,11 @@ public class UserDto {
                 .map(card -> card.getSymbol() + card.getSuitName())
                 .collect(toList());
 
-        return new UserDto(name, cardNames);
+        List<String> initCardNames = user.showInitCards().stream()
+                .map(card -> card.getSymbol() + card.getSuitName())
+                .collect(toList());
+
+        return new UserDto(name, cardNames, initCardNames);
     }
 
     public String getUserName() {
@@ -33,5 +39,9 @@ public class UserDto {
 
     public String getCardNames() {
         return String.join(", ", cardNames);
+    }
+
+    public String getInitCardNames() {
+        return String.join(", ", initCardNames);
     }
 }
