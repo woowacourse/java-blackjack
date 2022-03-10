@@ -69,7 +69,27 @@ public class OutputView {
     }
 
     public static void printMatchResult(TotalResultDto resultDto) {
+        System.out.println("## 최종 승패");
 
+        System.out.println(convertDealerMatchCountInLine(resultDto));
+        for (Entry<String, String > entry : resultDto.getPlayersMatchResult().entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+
+    private static String convertDealerMatchCountInLine(TotalResultDto resultDto) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("딜러: ");
+        if (resultDto.getPlayerLoseCount() != 0) {
+            sb.append(resultDto.getPlayerLoseCount()).append("승 ");
+        }
+        if (resultDto.getPlayerWinCount() != 0) {
+            sb.append(resultDto.getPlayerWinCount()).append("패 ");
+        }
+        if (resultDto.getPlayerDrawCount() != 0) {
+            sb.append(resultDto.getPlayerDrawCount()).append("무");
+        }
+        return sb.toString();
     }
 
     public static void printResult(Map<ParticipatorDto, Integer> result) {

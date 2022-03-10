@@ -17,6 +17,7 @@ import model.Participators;
 import model.PlayerName;
 import model.Result;
 import util.CardConvertor;
+import util.ResultConvertor;
 
 public class BlackJackService {
     private static final int INIT_CARD_COUNT = 2;
@@ -81,7 +82,7 @@ public class BlackJackService {
     public TotalResultDto match() {
         Map<PlayerName, Result> playerMatchResults = participators.matchAll();
         Map<String, String> playerMatchResultsDto = playerMatchResults.entrySet().stream()
-                .collect(toMap(entry -> entry.getKey().getValue(), entry -> entry.getValue().name()));
+                .collect(toMap(entry -> entry.getKey().getValue(), entry -> ResultConvertor.convert(entry.getValue())));
         List<Result> playersResults = playerMatchResults.values().stream()
                 .collect(toList());
         long playerWinCount = countPlayersResults(playersResults, Result.WIN);

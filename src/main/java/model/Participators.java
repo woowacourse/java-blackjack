@@ -71,7 +71,8 @@ public class Participators {
         Dealer dealer = findDealer();
         return participators.stream()
                 .filter(participator -> participator instanceof Player)
-                .collect(toMap(player -> player.getPlayerName(), player -> dealer.matchWith(player)));
+                .map(participator -> (Player) participator)
+                .collect(toMap(player -> player.getPlayerName(), player -> player.matchWith(dealer)));
     }
 
     public List<Participator> findAll() {
