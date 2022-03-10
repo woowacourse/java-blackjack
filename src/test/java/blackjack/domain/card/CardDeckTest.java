@@ -29,18 +29,18 @@ public class CardDeckTest {
     @Test
     void distributeTwoCards() {
         CardDeck cardDeck = CardDeck.initShuffled();
-        List<Card> cards = cardDeck.distribute(2);
+        Cards cards = cardDeck.distribute(2);
 
-        assertThat(cards.size()).isEqualTo(2);
+        assertThat(cards.getSize()).isEqualTo(2);
     }
 
     @DisplayName("1장 분배 테스트")
     @Test
     void distributeOneCard() {
         CardDeck cardDeck = CardDeck.initShuffled();
-        List<Card> cards = cardDeck.distribute(1);
+        Cards cards = cardDeck.distribute(1);
 
-        assertThat(cards.size()).isEqualTo(1);
+        assertThat(cards.getSize()).isEqualTo(1);
     }
 
     @DisplayName("53장 분배 실패 테스트")

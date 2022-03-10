@@ -16,9 +16,9 @@ public class Cards {
         this.cardHand = new ArrayList<>(cardHand);
     }
 
-    public void receive(Card card) {
-        validateDuplicate(card);
-        cardHand.add(card);
+    public Cards concat(Cards cards) {
+        cardHand.addAll(cards.getCards());
+        return new Cards(cardHand);
     }
 
     private void validateDuplicate(List<Card> cards) {
@@ -28,13 +28,11 @@ public class Cards {
         }
     }
 
-    private void validateDuplicate(Card card) {
-        if (cardHand.contains(card)) {
-            throw new IllegalArgumentException(DUPLICATE_EXCEPTION_MESSAGE);
-        }
+    public List<Card> getCards() {
+        return cardHand;
     }
 
-    public List<Card> getCards() {
-        return new ArrayList<>(cardHand);
+    public int getSize() {
+        return cardHand.size();
     }
 }

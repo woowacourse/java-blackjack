@@ -15,7 +15,8 @@ class PlayerTest {
     @DisplayName("플레이어 생성자 테스트")
     @Test
     void create() {
-        Player player = new Player(new Name("Pobi"), new Cards(List.of(Card.from(Number.ACE, Kind.SPADE))));
+        Player player = Player.of("Pobi");
+        player.receive(new Cards(List.of(Card.from(Number.ACE, Kind.SPADE))));
 
         assertThat(player).isNotNull();
     }
@@ -23,9 +24,9 @@ class PlayerTest {
     @DisplayName("Ace를 1로 판단했을 시 베스트 점수 계산 테스트")
     @Test
     void calculateBestScore_ConsideringAceIsOne_IsBest() {
-        Player player = new Player(new Name("Pobi"),
-                new Cards(List.of(Card.from(Number.ACE, Kind.SPADE),
-                        Card.from(Number.KING, Kind.SPADE))));
+        Player player = Player.of("Pobi");
+        player.receive(new Cards(List.of(Card.from(Number.ACE, Kind.SPADE),
+                Card.from(Number.KING, Kind.SPADE))));
 
         assertThat(player.calculateBestScore()).isEqualTo(21);
     }
@@ -33,8 +34,8 @@ class PlayerTest {
     @DisplayName("Ace를 11로 판단했을 시 베스트 점수 계산 테스트")
     @Test
     void calculateBestScore_ConsideringAceIsEleven_IsBest() {
-        Player player = new Player(new Name("Pobi"),
-                new Cards(List.of(Card.from(Number.ACE, Kind.SPADE),
+        Player player = Player.of("Pobi");
+        player.receive(new Cards(List.of(Card.from(Number.ACE, Kind.SPADE),
                         Card.from(Number.FIVE, Kind.SPADE),
                         Card.from(Number.SEVEN, Kind.SPADE),
                         Card.from(Number.EIGHT, Kind.SPADE))));
@@ -45,8 +46,8 @@ class PlayerTest {
     @DisplayName("Ace만 있을 시 베스트 점수 계산 테스트")
     @Test
     void calculateBestScore_FourAces_IsBest() {
-        Player player = new Player(new Name("Pobi"),
-                new Cards(List.of(Card.from(Number.ACE, Kind.SPADE),
+        Player player = Player.of("Pobi");
+        player.receive(new Cards(List.of(Card.from(Number.ACE, Kind.SPADE),
                         Card.from(Number.ACE, Kind.DIAMOND),
                         Card.from(Number.ACE, Kind.CLOVER),
                         Card.from(Number.ACE, Kind.HEART))));
@@ -57,8 +58,8 @@ class PlayerTest {
     @DisplayName("플레이어 카드 추가 수령 가능 여부 테스트")
     @Test
     void isReceivable_BestScore21_IsTrue() {
-        Player player = new Player(new Name("Pobi"),
-                new Cards(List.of(Card.from(Number.ACE, Kind.SPADE),
+        Player player = Player.of("Pobi");
+        player.receive(new Cards(List.of(Card.from(Number.ACE, Kind.SPADE),
                         Card.from(Number.KING, Kind.SPADE))));
 
         assertThat(player.isReceivable()).isTrue();
@@ -67,8 +68,8 @@ class PlayerTest {
     @DisplayName("플레이어 카드 추가 수령 실패 여부 테스트")
     @Test
     void isReceivable_BestScore22_IsFalse() {
-        Player player = new Player(new Name("Pobi"),
-                new Cards(List.of(Card.from(Number.TEN, Kind.SPADE),
+        Player player = Player.of("Pobi");
+        player.receive(new Cards(List.of(Card.from(Number.TEN, Kind.SPADE),
                         Card.from(Number.TWO, Kind.SPADE),
                         Card.from(Number.TEN, Kind.HEART))));
 

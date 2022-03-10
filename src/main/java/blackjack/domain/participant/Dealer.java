@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Number;
 import java.util.List;
 
@@ -10,10 +9,6 @@ public class Dealer extends Participant {
     public static final int MAX_ACE_NUMBER = 11;
     public static final int MAX_RECEIVABLE_SCORE = 17;
     public static final int BUST_THRESHOLD = 21;
-
-    public Dealer(Cards cards) {
-        super(cards);
-    }
 
     @Override
     public boolean isReceivable() {

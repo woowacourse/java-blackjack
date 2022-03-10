@@ -33,7 +33,7 @@ class CardsTest {
     void receive() {
         List<Card> cardHand = List.of(Card.from(Number.ACE, Kind.HEART), Card.from(Number.TWO, Kind.HEART));
         Cards cards = new Cards(cardHand);
-        cards.receive(Card.from(Number.JACK, Kind.SPADE));
+        cards.concat(new Cards(List.of(Card.from(Number.JACK, Kind.SPADE))));
 
         assertThat(cards.getCards().size()).isEqualTo(3);
     }
@@ -43,8 +43,9 @@ class CardsTest {
     void receiveDuplicate() {
         List<Card> cardHand = List.of(Card.from(Number.ACE, Kind.HEART), Card.from(Number.TWO, Kind.HEART));
         Cards cards = new Cards(cardHand);
+        Cards additional = new Cards(List.of(Card.from(Number.ACE, Kind.HEART)));
 
-        assertThatThrownBy(() -> cards.receive(Card.from(Number.ACE, Kind.HEART)))
+        assertThatThrownBy(() -> cards.concat(additional))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("카드 패에 중복된 카드가 존재할 수 없습니다.");
     }

@@ -29,13 +29,13 @@ public class CardDeck {
         return cardDeck.size();
     }
 
-    public List<Card> distribute(int count) {
+    public Cards distribute(int count) {
         validateCapacity(count);
         List<Card> distribution = new LinkedList<>();
         for (int i = 0; i < count; i++) {
             distribution.add(cardDeck.pop());
         }
-        return distribution;
+        return new Cards(distribution);
     }
 
     private void validateCapacity(int count) {

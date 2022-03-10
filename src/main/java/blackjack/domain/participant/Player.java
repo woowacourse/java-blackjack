@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Number;
 import java.util.List;
 
@@ -12,9 +11,12 @@ public class Player extends Participant {
 
     private final Name name;
 
-    public Player(Name name, Cards cards) {
-        super(cards);
+    private Player(Name name) {
         this.name = name;
+    }
+
+    public static Player of(String name) {
+        return new Player(new Name(name));
     }
 
     @Override
