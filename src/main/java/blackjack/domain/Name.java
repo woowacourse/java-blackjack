@@ -7,7 +7,15 @@ public class Name {
     private final String name;
 
     public Name(String name) {
+        validateEmptyName(name);
+
         this.name = name;
+    }
+
+    private void validateEmptyName(String name) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("이름으로 공백을 입력할 수 없습니다.");
+        }
     }
 
     public String get() {

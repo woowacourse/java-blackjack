@@ -30,4 +30,23 @@ public class GamersTest {
         assertThat(cards.get(0)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
         assertThat(cards.get(1)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
     }
+
+    @Test
+    @DisplayName("게이머의 이름이 중복되면 에러를 출력한다.")
+    void duplicate_name_error() {
+        Gamer aki1 = new Player(new Name("aki"));
+        Gamer aki2 = new Player(new Name("aki"));
+
+        assertThatThrownBy(() -> new Gamers(List.of(aki1, aki2)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("게이머의 이름이 딜러면 에러를 출력한다.")
+    void same_dealer_name_error() {
+        Gamer dealerPlayer = new Player(new Name("딜러"));
+
+        assertThatThrownBy(() -> new Gamers(List.of(dealerPlayer)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
