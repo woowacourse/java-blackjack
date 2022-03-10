@@ -14,42 +14,47 @@ public class BlackjackController {
 
     public void run() {
         List<String> inputPlayerNames = InputView.inputPlayerNames();
-
         Dealer dealer = new Dealer(CardFactory.drawTwoCards());
         List<Player> players = joinGame(inputPlayerNames);
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToListDto(dealer, players));
+
+        OutputView.printTotalResult(playGame(dealer, players));
+
+        List<PlayerResultDto> resultDtos = calculatePlayerResult(dealer, players);
+        DealerResultDto dealerDto = calculateDealerResult(dealer, players);
+        OutputView.printFinalResult(resultDtos, dealerDto);
+    }
+
+    private DealerResultDto calculateDealerResult(Dealer dealer, List<Player> players) {
+        int dealerLoseCount = dealer.getDealerLoseCount();
+        int dealerDrawCount = dealer.getDealerDrawCount();
+        DealerResultDto dealerDto = DealerResultDto.from(
+                dealer.getName(),
+                dealerLoseCount,
+                dealerDrawCount,
+                players.size() - (dealerLoseCount + dealerDrawCount));
+        return dealerDto;
+    }
+
+    private List<PlayerResultDto> calculatePlayerResult(Dealer dealer, List<Player> players) {
+        List<PlayerResultDto> resultPlayerDtos = new ArrayList<>();
+        for (Player player : players) {
+            Result compare = dealer.compare(player);
+            resultPlayerDtos.add(PlayerResultDto.from(player.getName(), compare));
+        }
+        return resultPlayerDtos;
+    }
+
+    private List<UserDto> playGame(Dealer dealer, List<Player> players) {
         for (Player player : players) {
             addCard(player);
         }
-
         while (dealer.checkScore()) {
             OutputView.printAddDealerCard();
             dealer.addCard();
         }
-
-        List<UserDto> userDtos = convertToListDto(dealer, players);
-
-        OutputView.printTotalResult(userDtos);
-
-        int dealerLoseCount = 0;
-        int dealerDrawCount = 0;
-        List<PlayerResultDto> resultDtos = new ArrayList<>();
-        for (Player player : players) {
-            Result compare = dealer.compare(player);
-
-            if (compare == Result.WIN) {
-                dealerLoseCount++;
-            }
-            if( compare == Result.DRAW) {
-                dealerDrawCount++;
-            }
-            resultDtos.add(PlayerResultDto.from(player.getName(), compare));
-        }
-
-        DealerResultDto dealerDto = DealerResultDto.from(dealer.getName(), dealerLoseCount, dealerDrawCount,
-                players.size() - (dealerLoseCount + dealerDrawCount));
-        OutputView.printFinalResult(resultDtos, dealerDto);
+        return convertToListDto(dealer, players);
 
     }
 

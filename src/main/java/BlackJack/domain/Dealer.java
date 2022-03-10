@@ -18,14 +18,17 @@ public class Dealer extends User {
     }
 
     public Result compare(Player player){
-        //TODO: 테스트 코드 작성
-        //TODO: INPUTVIEW 유효성 검사
-        if(this.getScore() < player.getScore() && player.getScore() <= 21){
-            return Result.WIN;
-        }
-        if(this.getScore() > player.getScore() || player.getScore() > 21){
             return Result.LOSE;
         }
         return Result.DRAW;
     }
+
+    public int getDealerLoseCount() {
+        return dealerLoseCount;
+    }
+
+    public int getDealerDrawCount() {
+        return dealerDrawCount;
+    }
+
 }
