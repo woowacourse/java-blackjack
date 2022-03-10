@@ -38,7 +38,7 @@ public class BlackJackController {
     }
 
     private void doEachPlayerTurn(BlackJackGame blackJackGame, Player player) {
-        while (blackJackGame.hasNextTurn(player) || getOneMoreCard(player)) {
+        while (blackJackGame.hasNextTurn(player) && getOneMoreCard(player)) {
             blackJackGame.distributeCard(player, 1);
             OutputView.printNowHoldCardInfo(player);
         }
