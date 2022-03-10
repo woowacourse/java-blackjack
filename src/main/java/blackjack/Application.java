@@ -15,42 +15,43 @@ public class Application {
         List<Player> players = getPlayers();
 
         initiallySetCard(dealer, players);
+        OutputView.showParticipantsHand(dealer, players);
 
-        // 플레이어의 카드 더받냐 안받냐 + 버스트 미구현
         takeMoreCardPlayerTurn(dealer, players);
-        //딜러가 더 받냐 안받냐
         takeMoreCardDealerTurn(dealer);
-
-        // 참가자들의 카드 스코어 결과
         OutputView.printParticipantResult(dealer, players);
 
-        // 최종 승패 1. 승패 구하는 로직이 없다
         GameScoreBoard result = new GameScoreBoard(dealer, players);
         OutputView.printBlackjackGameResult(result);
+    }
+
+    private static void initiallySetCard(Dealer dealer, List<Player> players) {
+        dealer.drawBaseCardHand();
+        dealer.drawCardToPlayers(players);
+    }
+
+    private static void takeMoreCardPlayerTurn(Dealer dealer, List<Player> players) {
+        for (Player player : players) {
+            playerTurn(dealer, player);
+        }
+    }
+
+    private static void playerTurn(Dealer dealer, Player player) {
+        while (!player.isBust() && InputView.inputOneMoreCard(player)) {
+            dealer.giveCard(player);
+            OutputView.showPlayerHand(player);
+        }
+        if (player.isBust()) {
+            OutputView.printBustMessage();
+            return;
+        }
+        OutputView.showPlayerHand(player);
     }
 
     private static void takeMoreCardDealerTurn(Dealer dealer) {
         while (dealer.shouldReceive()) {
             OutputView.printDealerHandDrawMessage();
             dealer.selfDraw();
-        }
-    }
-
-    private static void takeMoreCardPlayerTurn(Dealer dealer, List<Player> players) {
-        for (Player player : players) {
-            String takeCardAnswer = InputView.inputOneMoreCard(player);
-
-            if (takeCardAnswer.equalsIgnoreCase("Y")) {
-                do {
-                    dealer.giveCard(player);
-                    OutputView.showPlayerHand(player);
-                    takeCardAnswer = InputView.inputOneMoreCard(player);
-                } while (takeCardAnswer.equalsIgnoreCase("Y"));
-            }
-
-            if (takeCardAnswer.equalsIgnoreCase("N")) {
-                OutputView.showPlayerHand(player);
-            }
         }
     }
 
@@ -61,11 +62,5 @@ public class Application {
             players.add(new Player(participantName));
         }
         return players;
-    }
-
-    private static void initiallySetCard(Dealer dealer, List<Player> players) {
-        dealer.drawBaseCardHand();
-        dealer.drawCardToPlayers(players);
-        OutputView.showParticipantsHand(dealer, players);
     }
 }

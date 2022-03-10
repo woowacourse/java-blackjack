@@ -82,4 +82,8 @@ public class OutputView {
             out.printf("%s: %s" + NEWLINE, player, playerResult.get(player));
         }
     }
+
+    public static void printBustMessage() {
+        out.println("카드의 합이 21이 넘으므로 패배하였습니다.");
+    }
 }

@@ -1,8 +1,10 @@
 package blackjack.view;
 
+import static java.lang.System.in;
 import static java.lang.System.out;
 
 import blackjack.domain.participant.Player;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class InputView {
@@ -19,8 +21,21 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static String inputOneMoreCard(Player player) {
+    public static boolean inputOneMoreCard(Player player) {
         out.printf(NEWLINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEWLINE, player.getName());
-        return SCANNER.nextLine();
+        try {
+            String input = SCANNER.nextLine().toLowerCase(Locale.ROOT);
+            return validateCardOption(input);
+        } catch (IllegalArgumentException e) {
+            out.println(e.getMessage());
+            return inputOneMoreCard(player);
+        }
+    }
+
+    private static boolean validateCardOption(String input) {
+        if ("y".equals(input) || "n".equals(input)) {
+            return "y".equals(input);
+        }
+        throw new IllegalArgumentException("[ERROR] y 또는 n을 입력하셔야합니다.");
     }
 }
