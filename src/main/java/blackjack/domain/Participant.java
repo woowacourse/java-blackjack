@@ -5,14 +5,11 @@ import java.util.List;
 
 public class Participant {
 
+    protected String name;
     protected List<Card> cards = new ArrayList<>();
 
     public void drawCard(final Deck deck) {
         cards.add(deck.drawCard());
-    }
-
-    public List<Card> getCards() {
-        return List.copyOf(cards);
     }
 
     protected int calculateScore() {
@@ -30,4 +27,17 @@ public class Participant {
         final int otherScore = other.calculateScore();
         return thisScore > otherScore;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
+    }
+
+    public int getScore() {
+        return calculateScore();
+    }
+
 }

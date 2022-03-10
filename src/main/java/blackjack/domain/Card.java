@@ -12,6 +12,10 @@ public class Card {
         this.number = number;
     }
 
+    public String getPattern() {
+        return pattern.getPattern();
+    }
+
     public int getNumber() {
         return number.getNumber();
     }

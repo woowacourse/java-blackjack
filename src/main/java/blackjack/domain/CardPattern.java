@@ -13,4 +13,7 @@ public enum CardPattern {
         this.patternName = patternName;
     }
 
+    public String getPattern() {
+        return patternName;
+    }
 }
