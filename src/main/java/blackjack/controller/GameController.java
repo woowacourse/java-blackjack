@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.Statistic;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardDeckGenerator;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Name;
 import blackjack.domain.human.Player;
@@ -14,20 +15,33 @@ import java.util.List;
 public class GameController {
 
     public void run() {
-        Dealer dealer = Dealer.of();
-        Players players = generatePlayers();
-
-        initGame(players, dealer);
+        CardDeck cardDeck = CardDeckGenerator.generate();
+        Dealer dealer = initDealer(cardDeck);
+        Players players = initPlayers(cardDeck);
         OutputView.printInitGameState(players, dealer);
 
-        askPlayersOneMoreCard(players);
-        addDealerOneMoreCard(dealer);
+        askPlayersOneMoreCard(players, cardDeck);
+        addDealerOneMoreCard(dealer, cardDeck);
 
         OutputView.printCardAndPoint(players, dealer);
         Statistic.of(dealer, players).calculate();
 
         //게임 승패 출력
         printGameResult(players);
+    }
+
+    private Dealer initDealer(CardDeck cardDeck) {
+        Dealer dealer = Dealer.of();
+        dealer.addCard(cardDeck.giveCard());
+        dealer.addCard(cardDeck.giveCard());
+        return dealer;
+    }
+
+    private Players initPlayers(CardDeck cardDeck) {
+        Players players = generatePlayers();
+        players.giveCard(cardDeck);
+        players.giveCard(cardDeck);
+        return players;
     }
 
     private Players generatePlayers() {
@@ -39,28 +53,21 @@ public class GameController {
         return Players.of(playerList);
     }
 
-    private void initGame(Players players, Dealer dealer) {
-        dealer.addCard(CardDeck.giveCard());
-        dealer.addCard(CardDeck.giveCard());
-        players.giveCard();
-        players.giveCard();
-    }
-
-    private void askPlayersOneMoreCard(Players players) {
+    private void askPlayersOneMoreCard(Players players, CardDeck cardDeck) {
         for (Player player : players.getCardNeedPlayers()) {
-            askOneMoreCardByPlayer(player);
+            askOneMoreCardByPlayer(player, cardDeck);
         }
     }
 
-    private void addDealerOneMoreCard(Dealer dealer) {
+    private void addDealerOneMoreCard(Dealer dealer, CardDeck cardDeck) {
         if (dealer.isOneMoreCard()) {
-            dealer.addCard(CardDeck.giveCard());
+            dealer.addCard(cardDeck.giveCard());
             OutputView.printDealerCardAdded();
         }
     }
 
     // indent 수정 및 CardDeck 관련 수정 필요
-    private void askOneMoreCardByPlayer(Player player) {
+    private void askOneMoreCardByPlayer(Player player, CardDeck cardDeck) {
         boolean isFirstQuestion = true;
         while (player.isOneMoreCard()) {
             if (!InputView.inputOneMoreCard(player.getName())) {
@@ -69,7 +76,7 @@ public class GameController {
                 }
                 break;
             }
-            player.addCard(CardDeck.giveCard());
+            player.addCard(cardDeck.giveCard());
             OutputView.printHumanCardState(player);
             isFirstQuestion = false;
         }

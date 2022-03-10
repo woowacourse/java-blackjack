@@ -1,32 +1,30 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
 
-    public static final String NO_CARD_EXCEPTION_MESSAGE = "덱에 남은 카드가 없습니다";
-    public static List<Card> cards;
+    private static final String NO_CARD_ERROR_MESSAGE = "[ERROR] 남은 카드가 존재하지 않습니다.";
+    private static final int LAST_INDEX = 1;
 
-    static {
-        cards = new ArrayList<>();
-        for (Denomination value : Denomination.values()) {
-            for (Symbol symbol : Symbol.values()) {
-                cards.add(Card.of(value, symbol));
-            }
-        }
-        Collections.shuffle(cards);
+    public List<Card> cards;
+
+    private CardDeck(List<Card> cards) {
+        this.cards = cards;
     }
 
-    public static Card giveCard() {
+    public static CardDeck generate(List<Card> cards) {
+        return new CardDeck(cards);
+    }
+
+    public Card giveCard() {
         if (cards.isEmpty()) {
-            throw new ArrayIndexOutOfBoundsException(NO_CARD_EXCEPTION_MESSAGE);
+            throw new ArrayIndexOutOfBoundsException(NO_CARD_ERROR_MESSAGE);
         }
-        return cards.remove(cards.size() - 1);
+        return cards.remove(cards.size() - LAST_INDEX);
     }
 
-    public static List<Card> get() {
-        return List.copyOf(cards);
+    public int size() {
+        return cards.size();
     }
 }
