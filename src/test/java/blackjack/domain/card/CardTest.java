@@ -1,8 +1,7 @@
 package blackjack.domain.card;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,5 +33,19 @@ public class CardTest {
 
         //then
         assertThat(card.getName()).isEqualTo("8스페이드");
+    }
+
+    @DisplayName("카드의 이름을 얻을 수 있다.")
+    @Test
+    public void testGetCardWithSymbol() {
+        //given
+        Suit suit = Suit.SPADE;
+        Denomination denomination = Denomination.ACE;
+
+        //when
+        Card card = new Card(suit, denomination);
+
+        //then
+        assertThat(card.getName()).isEqualTo("A스페이드");
     }
 }

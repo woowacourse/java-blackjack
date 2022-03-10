@@ -14,7 +14,7 @@ public class Card {
     }
 
     public String getName() {
-        return denomination.getPoint() + suit.getName();
+        return denomination.getSymbol() + suit.getName();
     }
 
     public int getPoint() {
