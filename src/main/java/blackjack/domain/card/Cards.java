@@ -17,8 +17,10 @@ public class Cards {
     }
 
     public int calculateTotalPoint() {
-        int point = sumDenominationPoint();
+        return calculateAceInCards(sumDenominationPoint());
+    }
 
+    private int calculateAceInCards(int point) {
         for (Card card : cards) {
             point = calculateAceAsSmallerStandard(point, card);
         }
