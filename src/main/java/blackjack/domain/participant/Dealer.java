@@ -5,17 +5,18 @@ import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import java.util.List;
 
-public class Dealer {
+public class Dealer extends Participant {
 
-    private final Name name = new Name("딜러");
-    private final Hand cardHand = new Hand();
-    private Deck deck;
+    private static final String DEALER_NAME = "딜러";
+
+    private final Deck deck;
 
     public Dealer() {
-        this.deck = Deck.createFixedCards();
+        this(Deck.createShuffledCards());
     }
 
     public Dealer(Deck deck) {
+        super(new Name(DEALER_NAME), new Hand());
         this.deck = deck;
     }
 
@@ -49,17 +50,5 @@ public class Dealer {
 
     public void giveCard(Player player) {
         player.receiveCard(drawCard());
-    }
-
-    public String getName() {
-        return name.getName();
-    }
-
-    public List<Card> getCards() {
-        return cardHand.getCards();
-    }
-
-    public Hand getCardHand() {
-        return cardHand;
     }
 }

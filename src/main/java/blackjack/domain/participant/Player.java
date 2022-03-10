@@ -3,13 +3,9 @@ package blackjack.domain.participant;
 import blackjack.domain.Card;
 import blackjack.domain.Hand;
 import blackjack.domain.Result;
-import java.util.List;
 import java.util.Objects;
 
-public class Player {
-
-    private final Name name;
-    private final Hand cardHand;
+public class Player extends Participant {
 
     public Player(String name) {
         this(new Name(name));
@@ -18,10 +14,9 @@ public class Player {
     public Player(Name name) {
         this(name, new Hand());
     }
-
+    
     public Player(Name name, Hand cardHand) {
-        this.name = name;
-        this.cardHand = cardHand;
+        super(name, cardHand);
     }
 
     public void receiveCard(Card card) {
@@ -38,19 +33,7 @@ public class Player {
         if (dealerCardScore < cardHand.getScore()) {
             return Result.WIN;
         }
-        throw new IllegalArgumentException("입력값이 잘못되었을거");
-    }
-
-    public String getName() {
-        return name.getName();
-    }
-
-    public List<Card> getCards() {
-        return cardHand.getCards();
-    }
-
-    public Hand getCardHand() {
-        return cardHand;
+        throw new IllegalArgumentException("[ERROR] 입력 값이 올바르지 않습니다.");
     }
 
     @Override
