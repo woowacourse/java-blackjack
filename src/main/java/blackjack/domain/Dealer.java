@@ -18,12 +18,6 @@ public class Dealer extends Person{
     }
 
     public int isWin(Player player) {
-        if (this.score() > player.score()) {
-            return 1;
-        }
-        if (this.score() < player.score()) {
-            return -1;
-        }
-        return 0;
+        return Integer.compare(this.score(), player.score());
     }
 }
