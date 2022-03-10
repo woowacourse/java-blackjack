@@ -1,9 +1,11 @@
 package blackjack.controller;
 
 import blackjack.domain.Blackjack;
+import blackjack.domain.Player;
+import blackjack.dto.CurrentCardsDTO;
 
 import static blackjack.view.InputView.inputNames;
-import static blackjack.view.InputView.requestHitOrNot;
+import static blackjack.view.InputView.requestHitOrStay;
 import static blackjack.view.OutputView.*;
 
 public class BlackjackController {
@@ -28,17 +30,17 @@ public class BlackjackController {
     }
 
     private void hitOrStayForAllPlayers() {
-        String name = blackjack.nameOfNotBustPlayer();
-        while (name != null) {
-            hit(name);
-            name = blackjack.nameOfNotBustPlayer();
+        Player player = blackjack.getPlayerWhoCanHit();
+        while (player != null) {
+            hitOrStay(player);
+            player = blackjack.getPlayerWhoCanHit();
         }
     }
 
-    private void hit(String name) {
-        while (blackjack.isNotBust(name) && requestHitOrNot(name)) {
-            blackjack.hitByName(name);
-            printCurrentStatus(blackjack.generateCurrentCardsDTOByName(name));
+    private void hitOrStay(Player player) {
+        while (!player.isBust() && requestHitOrStay(player.getName())) {
+            blackjack.hit(player);
+            printCurrentStatus(new CurrentCardsDTO(player));
         }
     }
 

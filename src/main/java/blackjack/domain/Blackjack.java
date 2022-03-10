@@ -2,9 +2,7 @@ package blackjack.domain;
 
 import blackjack.dto.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Blackjack {
@@ -14,6 +12,7 @@ public class Blackjack {
     private final List<Player> players;
     private final Dealer dealer;
     private final Deck deck;
+    private final Queue<Player> playersWhoCanHit;
 
     public Blackjack(String[] names) {
         players = Arrays.stream(names)
@@ -21,6 +20,7 @@ public class Blackjack {
                 .collect(Collectors.toList());
         dealer = new Dealer();
         deck = new Deck();
+        playersWhoCanHit = new LinkedList<>();
     }
 
     public void firstDistribute() {
@@ -28,6 +28,18 @@ public class Blackjack {
             players.forEach(player -> player.addCard(deck.draw()));
             dealer.addCard(deck.draw());
         }
+        playersWhoCanHit.addAll(players);
+    }
+
+    public Player getPlayerWhoCanHit() {
+        if (playersWhoCanHit.isEmpty()) {
+            return null;
+        }
+        return playersWhoCanHit.poll();
+    }
+
+    public void hit(Player player) {
+        player.addCard(deck.draw());
     }
 
     public void addCardForDealerIfNeed() {
@@ -56,10 +68,6 @@ public class Blackjack {
         return allCurrentCardsDTOs;
     }
 
-    public CurrentCardsDTO generateCurrentCardsDTOByName(String name) {
-        return new CurrentCardsDTO(findPlayerByName(name));
-    }
-
     public List<TotalScoreDTO> generateAllResultDTO() {
         List<TotalScoreDTO> addResultDTOs = new ArrayList<>();
         addResultDTOs.add(new TotalScoreDTO(dealer));
@@ -69,33 +77,10 @@ public class Blackjack {
         return addResultDTOs;
     }
 
-    public String nameOfNotBustPlayer() {
-        return players.stream()
-                .filter(p -> !p.isBust())
-                .findFirst()
-                .map(Player::getName)
-                .orElse(null);
-    }
-
-    public void hitByName(String name) {
-        findPlayerByName(name).addCard(deck.draw());
-    }
-
-    public boolean isNotBust(String name) {
-        return !findPlayerByName(name).isBust();
-    }
-
     public TotalResultDTO calculateTotalResult() {
         List<PlayerResultDTO> totalPlayerResult = calculateTotalPlayerResult();
         DealerResultDTO dealerResult = calculateDealerResult(totalPlayerResult);
         return new TotalResultDTO(totalPlayerResult, dealerResult);
-    }
-
-    private Player findPlayerByName(String name) {
-        return players.stream()
-                .filter(p -> p.getName().equals(name))
-                .findFirst()
-                .get();
     }
 
     private List<PlayerResultDTO> calculateTotalPlayerResult() {

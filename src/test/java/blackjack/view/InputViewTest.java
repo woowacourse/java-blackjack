@@ -9,7 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import static blackjack.view.InputView.inputNames;
-import static blackjack.view.InputView.requestHitOrNot;
+import static blackjack.view.InputView.requestHitOrStay;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class InputViewTest {
@@ -46,7 +46,7 @@ public class InputViewTest {
     @DisplayName("빈 입력으로 hitOrNot을 입력한 경우 에러 발생")
     void inputEmptyHitOrNot(){
         setInput("\n");
-        assertThatThrownBy(() -> requestHitOrNot("pobi"))
+        assertThatThrownBy(() -> requestHitOrStay("pobi"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("입력은 빈 입력일 수 없습니다.");
     }
@@ -56,7 +56,7 @@ public class InputViewTest {
     @DisplayName("허용되지 않다 문자로 hitOrNot을 입력한 경우 에러 발생")
     void inputWrongHitOrNot(String input){
         setInput(input);
-        assertThatThrownBy(() -> requestHitOrNot("pobi"))
+        assertThatThrownBy(() -> requestHitOrStay("pobi"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("혹은")
                 .hasMessageContaining("만 입력 가능합니다.");
