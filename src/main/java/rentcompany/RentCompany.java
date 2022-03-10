@@ -2,6 +2,7 @@ package rentcompany;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RentCompany {
 
@@ -16,7 +17,9 @@ public class RentCompany {
     }
 
     public String generateReport() {
-        return null;
+        return cars.stream()
+                .map(car -> car.getName() + " : " + car.getChargeQuantity() + "리터")
+                .collect(Collectors.joining("\n"));
     }
 
     public void addCar(Car car) {
