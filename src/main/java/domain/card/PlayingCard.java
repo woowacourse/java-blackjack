@@ -1,6 +1,8 @@
 package domain.card;
 
 public class PlayingCard {
+    private static final String ACE_NUMBERS = "(1,11)";
+    
     private final Suit suit;
     private final Denomination denomination;
 
@@ -22,7 +24,15 @@ public class PlayingCard {
     }
 
     public String getCardName() {
+        if (isAce()) {
+            return ACE_NUMBERS + this.suit.getName();
+        }
+
         return this.denomination.getScore() + this.suit.getName();
+    }
+
+    public boolean isAce() {
+        return denomination.isAce();
     }
 
     @Override
