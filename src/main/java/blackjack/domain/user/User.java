@@ -1,5 +1,6 @@
 package blackjack.domain.user;
 
+import blackjack.domain.Rule;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import java.util.ArrayList;
@@ -8,8 +9,11 @@ import java.util.List;
 
 public abstract class User {
 
+    private static final int BLACKJACK_NUMBER = 21;
+
     protected final List<Card> cards;
     protected final String name;
+    protected int score = 0;
 
     protected User(String name) {
         cards = new ArrayList<>();
@@ -35,5 +39,24 @@ public abstract class User {
 
     public String getName(){
         return name;
+    }
+
+    public void calculate(Rule rule) {
+        score = rule.sumPoint(cards);
+        validateNegative(score);
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    private void validateNegative(int score) {
+        if (score < 0) {
+            throw new RuntimeException("점수 계산에 문제가 있습니다.");
+        }
+    }
+
+    public boolean isBust() {
+        return score > BLACKJACK_NUMBER;
     }
 }
