@@ -47,11 +47,11 @@ public class Card {
         return rank.hard() + "-" + suit;
     }
 
-    public Rank getRank() {
+    public Rank rank() {
         return rank;
     }
 
-    public Suit getSuit() {
+    public Suit suit() {
         return suit;
     }
 }
