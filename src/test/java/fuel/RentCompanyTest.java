@@ -11,4 +11,12 @@ public class RentCompanyTest {
         RentCompany company = RentCompany.create();
         assertThat(company).isInstanceOf(RentCompany.class);
     }
+
+    @Test
+    void addCarToCompany() {
+        RentCompany company = RentCompany.create();
+        company.addCar(new Sonata(150));
+
+        assertThat(company.size()).isEqualTo(1);
+    }
 }
