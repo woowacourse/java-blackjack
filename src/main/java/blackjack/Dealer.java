@@ -11,26 +11,30 @@ public class Dealer {
         this.cards = Cards.softHandCards(cards);
     }
 
-    public Result judge(Cards cards) {
+    public void take(Card card) {
+
+    }
+
+    public Result match(Cards cards) {
         Score playerScore = cards.score();
         if (playerScore.isBust()) {
             return Result.WIN;
         }
-        if (dealerScore().isBust()) {
+        if (score().isBust()) {
             return Result.LOSS;
         }
         return compare(playerScore);
     }
 
-    private Score dealerScore() {
+    public Score score() {
         return cards.toMixHand().score();
     }
 
     private Result compare(Score playerScore) {
-        if (dealerScore().lessThan(playerScore)) {
+        if (score().lessThan(playerScore)) {
             return Result.LOSS;
         }
-        if (dealerScore().moreThan(playerScore)) {
+        if (score().moreThan(playerScore)) {
             return Result.WIN;
         }
         return Result.DRAW;
