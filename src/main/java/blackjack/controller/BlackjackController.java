@@ -13,21 +13,26 @@ public class BlackjackController {
 
     public void run() {
         try {
-            play();
+            Blackjack blackjack = new Blackjack(inputNames());
+            play(blackjack);
+            generateAndPrintResult(blackjack);
         } catch (IllegalArgumentException e) {
             printErrorMessage(e.getMessage());
         }
     }
 
-    public void play() {
-        Blackjack blackjack = new Blackjack(inputNames());
+    private void play(Blackjack blackjack) {
         firstDistribute(blackjack);
         hitOrStayForAllPlayers(blackjack);
         addCardForDealerIfNeed(blackjack);
         blackjack.endGame();
+    }
+
+    private void generateAndPrintResult(Blackjack blackjack) {
         printTotalScore(blackjack.generateAllResultDTO());
         printTotalResult(blackjack.calculateTotalResult());
     }
+
 
     private void firstDistribute(Blackjack blackjack) {
         blackjack.firstDistribute();
