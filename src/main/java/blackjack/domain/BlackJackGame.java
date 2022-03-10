@@ -83,7 +83,7 @@ public class BlackJackGame {
     }
 
     public OutComeResult calculateAllResults() {
-        final Map<String, GameOutcome> playerResults = players.getPlayers().stream()
+        final Map<String, GameOutcome> playerResults = players.players()
                 .collect(Collectors.toUnmodifiableMap(Player::getName, player -> player.fightResult(dealer)));
         return OutComeResult.from(playerResults);
     }
