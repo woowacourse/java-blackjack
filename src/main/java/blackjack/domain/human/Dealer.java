@@ -5,7 +5,7 @@ import blackjack.domain.card.Cards;
 import java.util.Objects;
 
 public class Dealer extends Human {
-    public static final String DEALER_NAME = "딜러";
+    private static final String DEALER_NAME = "딜러";
     private final Cards cards;
 
     private Dealer() {

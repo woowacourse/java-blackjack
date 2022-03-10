@@ -5,9 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardDeck {
-    public static final String NO_CARD_EXCEPTION_MESSAGE = "덱에 남은 카드가 없습니다";
-    public final List<Card> cards;
-
+    private static final String NO_CARD_EXCEPTION_MESSAGE = "덱에 남은 카드가 없습니다";
+    private final List<Card> cards;
     {
         cards = new ArrayList<>();
         for (Denomination value : Denomination.values()) {

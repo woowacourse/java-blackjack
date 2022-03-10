@@ -1,11 +1,12 @@
 package blackjack.domain.human;
 
+import static blackjack.util.Constants.BLACKJACK_NUMBER;
+
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public class Player extends Human {
-    private final int BLACKJACK_NUMBER = 21;
     private final Name name;
     private final Cards cards;
     private Result result;

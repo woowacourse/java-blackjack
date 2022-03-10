@@ -7,15 +7,13 @@ import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Name;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
+import blackjack.util.Constants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
-
-    public static final int INIT_CARD_NUMBER = 2;
-
     public void run() {
         Table table = Table.of(getPlayers(), Dealer.of());
 
@@ -68,12 +66,12 @@ public class GameController {
         if (!player.isOneMoreCard()) {
             return;
         }
-        if (!InputView.inputOneMoreCard(player.getName()) && player.getCardSize() == INIT_CARD_NUMBER) {
+        if (!InputView.inputOneMoreCard(player.getName()) && player.getCardSize() == Constants.INIT_CARD_NUMBER) {
             OutputView.printHumanCardState(player);
             return;
         }
         player.addCard(cardDeck.giveCard());
         OutputView.printHumanCardState(player);
-        questionOneMoreCard(player,cardDeck);
+        questionOneMoreCard(player, cardDeck);
     }
 }
