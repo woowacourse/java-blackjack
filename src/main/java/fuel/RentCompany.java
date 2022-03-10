@@ -2,6 +2,7 @@ package fuel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RentCompany {
 
@@ -21,5 +22,11 @@ public class RentCompany {
 
     public int size() {
         return cars.size();
+    }
+
+    public String report() {
+        return cars.stream()
+                .map(Car::reportCarInfo)
+                .collect(Collectors.joining("\n"));
     }
 }

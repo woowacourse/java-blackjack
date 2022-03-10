@@ -3,7 +3,7 @@ package fuel;
 public class Sonata extends Car{
 
     private final static int distancePerLiter = 10;
-    private static final String NAME = "소나타";
+    private static final String NAME = "Sonata";
 
     private final double distance;
 
