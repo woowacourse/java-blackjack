@@ -16,7 +16,7 @@ public class BlackJackController {
 
         initiallySetCard(dealer, players);
 
-        takeMoreCardPlayerTurn(dealer, players);
+        takeMoreCardPlayerTurnForAllPlayers(dealer, players);
         takeMoreCardDealerTurn(dealer);
 
         OutputView.printParticipantScore(dealer, players);
@@ -40,25 +40,23 @@ public class BlackJackController {
         OutputView.showParticipantsHand(dealer, players);
     }
 
-    private static void takeMoreCardPlayerTurn(Dealer dealer, List<Player> players) {
+    private static void takeMoreCardPlayerTurnForAllPlayers(Dealer dealer, List<Player> players) {
         for (Player player : players) {
-            String takeCardAnswer = InputView.inputOneMoreCard(player);
-
-            if (takeCardAnswer.equalsIgnoreCase("Y")) {
-                do {
-                    dealer.giveCard(player);
-                    OutputView.showPlayerHand(player);
-                    if (player.isBust()) {
-                        break;
-                    }
-                    takeCardAnswer = InputView.inputOneMoreCard(player);
-                } while (takeCardAnswer.equalsIgnoreCase("Y"));
-            }
-
-            if (takeCardAnswer.equalsIgnoreCase("N")) {
-                OutputView.showPlayerHand(player);
-            }
+            takeMoreCardPlayerTurnForPlayer(dealer, player);
         }
+    }
+
+    private static void takeMoreCardPlayerTurnForPlayer(Dealer dealer, Player player) {
+        String takeCardAnswer = "";
+        do {
+            takeCardAnswer = InputView.inputOneMoreCard(player);
+            dealer.giveCard(player);
+            OutputView.showPlayerHand(player);
+        } while (isGoingTakeMoreCard(takeCardAnswer, player));
+    }
+
+    private static boolean isGoingTakeMoreCard(String takeCardAnswer, Player player) {
+        return takeCardAnswer.equalsIgnoreCase("Y") && !player.isBust();
     }
 
     private static void takeMoreCardDealerTurn(Dealer dealer) {

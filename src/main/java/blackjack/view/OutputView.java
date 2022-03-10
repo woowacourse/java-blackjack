@@ -3,14 +3,13 @@ package blackjack.view;
 import static java.lang.System.out;
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.Card;
+import blackjack.domain.card.Card;
 import blackjack.domain.GameScoreBoard;
 import blackjack.domain.Result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -46,7 +45,7 @@ public class OutputView {
     }
 
     public static void printDealerHandDrawMessage() {
-        out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        out.println("딜러는 16이하라 한장의 카드를 더 받았습니다." + NEWLINE);
     }
 
     public static void printParticipantScore(Dealer dealer, List<Player> players) {

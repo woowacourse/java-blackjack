@@ -1,7 +1,9 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Hand {
 
@@ -24,19 +26,23 @@ public class Hand {
 
     public int getScore() {
         if (hasAce()) {
-            return getSumIncludingOnlyAce();
+            return getSumIncludingAce();
         }
 
         return getSumExcludingAce();
     }
 
-    private int getSumIncludingOnlyAce() {
+    private int getSumIncludingAce() {
         int countOfAce = getNumberOfAce();
-        int sumOfNoAce = getSumExcludingAce() + (countOfAce * ACE_UPPER_SCORE);
+        int sumExcludingAce = getSumExcludingAce();
+
+        if (sumExcludingAce > BLACKJACK_SYMBOL_SCORE) {
+            return sumExcludingAce + countOfAce;
+        }
 
         List<Integer> sums = new ArrayList<>();
         for (int aceCount = countOfAce - 1; aceCount >= 0; aceCount--) {
-            sums.add(sumOfNoAce - (aceCount * ACE_SCORE_DIFFERENCE));
+            sums.add(sumExcludingAce - (aceCount * ACE_SCORE_DIFFERENCE));
         }
 
         return findLargestSumIn21(sums);
