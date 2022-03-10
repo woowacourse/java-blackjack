@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.card.CardDeck;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,5 +21,11 @@ public class Gamblers {
 
     public List<Gambler> getGamblers() {
         return gamblers;
+    }
+
+    public void addCardForEach(CardDeck cardDeck) {
+        gamblers.forEach(
+                gambler -> gambler.addCard(cardDeck.getCard())
+        );
     }
 }
