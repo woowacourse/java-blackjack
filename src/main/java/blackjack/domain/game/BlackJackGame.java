@@ -34,7 +34,7 @@ public class BlackJackGame {
 
     private static List<Player> provideInitCardsToPlayers(final List<String> playerNames, final CardDeck cardDeck) {
         return playerNames.stream()
-                .map(name -> new Player(name, cardDeck.provideInitCards()))
+                .map(name -> Player.newInstance(name, cardDeck.provideInitCards()))
                 .collect(Collectors.toList());
     }
 
@@ -53,7 +53,7 @@ public class BlackJackGame {
     }
 
     public boolean isDealerTurnEnd() {
-        return dealer.isEnd();
+        return !dealer.canDraw();
     }
 
     public void drawDealer() {

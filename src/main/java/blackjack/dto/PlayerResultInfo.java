@@ -18,11 +18,11 @@ public class PlayerResultInfo {
     }
 
     public static PlayerResultInfo from(final Player player) {
-        return new PlayerResultInfo(player.getName(), player.getCards(), player.calculateResultScore());
+        return new PlayerResultInfo(player.getName(), player.getCards(), player.calculateScore());
     }
 
     public static PlayerResultInfo from(final Dealer dealer) {
-        return new PlayerResultInfo(dealer.getName(), dealer.getCards(), dealer.calculateResultScore());
+        return new PlayerResultInfo(dealer.getName(), dealer.getCards(), dealer.calculateScore());
     }
 
     public String getName() {

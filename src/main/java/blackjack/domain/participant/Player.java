@@ -7,49 +7,25 @@ import blackjack.domain.state.State;
 import java.util.List;
 import java.util.Objects;
 
-public class Player {
+public class Player extends Participant {
+    private Player(final String name, final List<Card> cards) {
+        super(name, cards);
+    }
 
-    private final String name;
-    private State state;
-
-    private Player(final String name, final State state) {
-        Objects.requireNonNull(name, "플레이어의 이름은 null이 들어올 수 없습니다.");
+    public static Player newInstance(final String name, final List<Card> cards) {
+        Objects.requireNonNull(name, "이름에는 null이 들어올 수 없습니다.");
         validateEmptyName(name);
-        this.name = name;
-        this.state = state;
+        return new Player(name, cards);
     }
 
-    public Player(final String name, final List<Card> cards) {
-        this(name, State.create(new Cards(cards)));
-    }
-
-    private void validateEmptyName(final String name) {
+    private static void validateEmptyName(final String name) {
         if (name.isBlank()) {
-            throw new IllegalArgumentException("플레이어의 이름은 공백이 들어올 수 없습니다.");
+            throw new IllegalArgumentException("이름에는 공백이 들어올 수 없습니다.");
         }
     }
 
     public boolean canDraw() {
         return !state.isFinished();
-    }
-
-    public void draw(final Card card) {
-        state = state.draw(card);
-    }
-
-    public void stay() {
-        state = state.stay();
-    }
-
-    public int calculateResultScore() {
-        checkTurnIsOver();
-        return state.cards().calculateScore();
-    }
-
-    private void checkTurnIsOver() {
-        if (canDraw()) {
-            throw new IllegalStateException("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
-        }
     }
 
     public GameOutcome fightResult(final Dealer dealer) {
@@ -58,9 +34,5 @@ public class Player {
 
     public List<Card> getCards() {
         return List.copyOf(state.cards().values());
-    }
-
-    public String getName() {
-        return name;
     }
 }
