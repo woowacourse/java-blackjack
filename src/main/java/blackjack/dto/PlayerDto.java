@@ -5,25 +5,25 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.List;
 
-public class PlayerInfo {
+public class PlayerDto {
 
     private final String name;
     private final List<Card> cards;
 
-    private PlayerInfo(final String name, final List<Card> cards) {
+    private PlayerDto(final String name, final List<Card> cards) {
         this.name = name;
         this.cards = cards;
     }
 
-    public static PlayerInfo dealerToInitInfo(final Dealer dealer) {
-        return new PlayerInfo(
+    public static PlayerDto dealerToInitInfo(final Dealer dealer) {
+        return new PlayerDto(
                 dealer.getName(),
                 dealer.initCards()
         );
     }
 
-    public static PlayerInfo playerToInfo(final Player player) {
-        return new PlayerInfo(
+    public static PlayerDto playerToInfo(final Player player) {
+        return new PlayerDto(
                 player.getName(),
                 player.getCards()
         );

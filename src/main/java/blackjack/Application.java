@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.domain.game.BlackJackGame;
-import blackjack.dto.PlayerInfo;
+import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -31,8 +31,8 @@ public class Application {
     private static void runPlayerTurn(final BlackJackGame blackJackGame) {
         while (!blackJackGame.isPlayersTurnEnd()) {
             final String command = InputView.inputDrawCommand(blackJackGame.getCurrentTurnPlayerInfo());
-            final PlayerInfo currentPlayerInfo = blackJackGame.drawCurrentPlayer(command);
-            OutputView.printPlayerCardInfo(currentPlayerInfo);
+            final PlayerDto currentPlayerDto = blackJackGame.drawCurrentPlayer(command);
+            OutputView.printPlayerCardInfo(currentPlayerDto);
         }
     }
 }

@@ -5,8 +5,8 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.dto.OutComeResult;
-import blackjack.dto.PlayerInfo;
-import blackjack.dto.PlayerResultInfo;
+import blackjack.dto.PlayerDto;
+import blackjack.dto.PlayerFinalResultDto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,10 +42,10 @@ public class BlackJackGame {
         return players.isAllTurnEnd();
     }
 
-    public PlayerInfo drawCurrentPlayer(final String command) {
+    public PlayerDto drawCurrentPlayer(final String command) {
         final DrawCommand drawCommand = DrawCommand.from(command);
         if (drawCommand.isNo()) {
-            final PlayerInfo currentPlayer = players.getCurrentTurnPlayerInfo();
+            final PlayerDto currentPlayer = players.getCurrentTurnPlayerInfo();
             players.turnToNextPlayer();
             return currentPlayer;
         }
@@ -66,21 +66,21 @@ public class BlackJackGame {
         }
     }
 
-    public PlayerInfo getInitDealerInfo() {
-        return PlayerInfo.dealerToInitInfo(dealer);
+    public PlayerDto getInitDealerInfo() {
+        return PlayerDto.dealerToInitInfo(dealer);
     }
 
-    public List<PlayerInfo> getInitPlayerInfo() {
+    public List<PlayerDto> getInitPlayerInfo() {
         return players.getInitPlayerInfo();
     }
 
-    public PlayerInfo getCurrentTurnPlayerInfo() {
+    public PlayerDto getCurrentTurnPlayerInfo() {
         return players.getCurrentTurnPlayerInfo();
     }
 
-    public List<PlayerResultInfo> getPlayerResultInfos() {
-        final List<PlayerResultInfo> resultInfos =
-                new ArrayList<>(Collections.singletonList(PlayerResultInfo.from(dealer)));
+    public List<PlayerFinalResultDto> getPlayerResultInfos() {
+        final List<PlayerFinalResultDto> resultInfos =
+                new ArrayList<>(Collections.singletonList(PlayerFinalResultDto.from(dealer)));
         resultInfos.addAll(players.getResultPlayerInfo());
         return resultInfos;
     }

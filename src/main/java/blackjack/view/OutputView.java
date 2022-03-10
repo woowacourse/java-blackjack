@@ -5,8 +5,8 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.game.GameOutcome;
 import blackjack.dto.OutComeResult;
-import blackjack.dto.PlayerInfo;
-import blackjack.dto.PlayerResultInfo;
+import blackjack.dto.PlayerDto;
+import blackjack.dto.PlayerFinalResultDto;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,16 +32,16 @@ public class OutputView {
         throw new UnsupportedOperationException();
     }
 
-    public static void showGameInitInfo(final PlayerInfo dealerInfo, final List<PlayerInfo> playerInfos) {
-        System.out.printf(PROVIDE_INIT_CARD_TO_PLAYER_MESSAGE, dealerInfo.getName(), joinPlayerNames(playerInfos));
+    public static void showGameInitInfo(final PlayerDto dealerInfo, final List<PlayerDto> playerDtos) {
+        System.out.printf(PROVIDE_INIT_CARD_TO_PLAYER_MESSAGE, dealerInfo.getName(), joinPlayerNames(playerDtos));
         System.out.printf(PROVIDED_CARD_TO_DEALER_INFO_MESSAGE,
                 dealerInfo.getName(), joinPlayerCardInfos(dealerInfo.getCards()));
-        playerInfos.forEach(OutputView::printPlayerCardInfo);
+        playerDtos.forEach(OutputView::printPlayerCardInfo);
     }
 
-    private static String joinPlayerNames(final List<PlayerInfo> playerInfos) {
-        return playerInfos.stream()
-                .map(PlayerInfo::getName)
+    private static String joinPlayerNames(final List<PlayerDto> playerDtos) {
+        return playerDtos.stream()
+                .map(PlayerDto::getName)
                 .collect(Collectors.joining(PLAYER_NAME_DELIMITER));
     }
 
@@ -55,22 +55,22 @@ public class OutputView {
         return number.getPrintValue() + pattern.getName();
     }
 
-    public static void printPlayerCardInfo(final PlayerInfo playerInfo) {
+    public static void printPlayerCardInfo(final PlayerDto playerDto) {
         System.out.printf(PROVIDED_CARD_TO_PLAYER_INFO_MESSAGE,
-                playerInfo.getName(), joinPlayerCardInfos(playerInfo.getCards()));
+                playerDto.getName(), joinPlayerCardInfos(playerDto.getCards()));
     }
 
     public static void printDealerDraw() {
         System.out.println(PROVIDE_CARD_TO_DEALER_MESSAGE);
     }
 
-    public static void printResultPlayerInfos(final List<PlayerResultInfo> playerResultInfos) {
-        playerResultInfos.forEach(OutputView::printResultPlayerInfo);
+    public static void printResultPlayerInfos(final List<PlayerFinalResultDto> playerFinalResultDtos) {
+        playerFinalResultDtos.forEach(OutputView::printResultPlayerInfo);
     }
 
-    private static void printResultPlayerInfo(final PlayerResultInfo playerResultInfo) {
-        System.out.printf(PLAYER_CARD_RESULT_AND_SCORE_MESSAGE, playerResultInfo.getName(),
-                joinPlayerCardInfos(playerResultInfo.getCards()), playerResultInfo.getScore());
+    private static void printResultPlayerInfo(final PlayerFinalResultDto playerFinalResultDto) {
+        System.out.printf(PLAYER_CARD_RESULT_AND_SCORE_MESSAGE, playerFinalResultDto.getName(),
+                joinPlayerCardInfos(playerFinalResultDto.getCards()), playerFinalResultDto.getScore());
     }
 
     public static void printAllOutcomeResult(final OutComeResult outComeResult) {
