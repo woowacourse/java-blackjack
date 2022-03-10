@@ -36,4 +36,8 @@ public class BlackJackController {
             OutputView.printParticipatorHit(decidedToHit, service.tryToHit(decidedToHit, name));
         } while (decidedToHit);
     }
+
+    public void hitDealer() {
+        OutputView.printHitDealer(service.tryToHitForDealer());
+    }
 }

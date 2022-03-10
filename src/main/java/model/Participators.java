@@ -53,4 +53,12 @@ public class Participators {
         Participator participator = findName(name);
         return participator.canReceiveCard();
     }
+
+    public Participator tryToHitForDealer(CardDeck cardDeck) {
+        Dealer dealer = findDealer();
+        if (dealer.canReceiveCard()) {
+            dealer.receiveCard(cardDeck.drawCard());
+        }
+        return dealer;
+    }
 }

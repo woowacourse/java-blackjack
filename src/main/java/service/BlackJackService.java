@@ -66,4 +66,8 @@ public class BlackJackService {
     public boolean canReceiveCard(String name) {
         return participators.canReceiveCard(name);
     }
+
+    public ParticipatorDto tryToHitForDealer() {
+        return convertParticipatorToDto(participators.tryToHitForDealer(cardDeck));
+    }
 }

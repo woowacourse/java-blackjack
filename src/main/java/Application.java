@@ -7,5 +7,6 @@ public class Application {
         BlackJackController controller = new BlackJackController(new BlackJackService());
         controller.initGame();
         controller.hitPlayers();
+        controller.hitDealer();
     }
 }

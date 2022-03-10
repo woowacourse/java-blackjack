@@ -54,4 +54,14 @@ public class OutputView {
         }
         printParticipatorNameAndCard(participatorDto);
     }
+
+    public static void printHitDealer(ParticipatorDto dealerDto) {
+        if (isReceived(dealerDto)) {
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
+    }
+
+    private static boolean isReceived(ParticipatorDto dealerDto) {
+        return dealerDto.getCards().size() != 2;
+    }
 }
