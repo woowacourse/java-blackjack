@@ -28,11 +28,6 @@ public class Dealer extends AbstractPlayer {
     }
 
     @Override
-    public boolean isEnd() {
-        return super.calculateScore() >= DEALER_LIMIT_SCORE;
-    }
-
-    @Override
     public List<Card> cards() {
         validateEndTurn();
         return super.cards();
@@ -42,5 +37,10 @@ public class Dealer extends AbstractPlayer {
         if (!isEnd()) {
             throw new IllegalStateException("딜러는 턴이 종료되지 않을 때 모든 카드를 반환할 수 없습니다.");
         }
+    }
+
+    @Override
+    boolean isEnd() {
+        return super.calculateScore() >= DEALER_LIMIT_SCORE;
     }
 }

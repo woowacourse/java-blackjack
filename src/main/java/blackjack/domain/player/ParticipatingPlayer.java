@@ -15,12 +15,12 @@ public class ParticipatingPlayer extends AbstractPlayer {
     }
 
     @Override
-    public boolean isEnd() {
-        return super.calculateScore() >= Cards.BLACK_JACK_TARGET_NUMBER;
+    public List<Card> initCards() {
+        return List.copyOf(cards().subList(0, 2));
     }
 
     @Override
-    public List<Card> initCards() {
-        return List.copyOf(cards().subList(0, 2));
+    boolean isEnd() {
+        return super.calculateScore() > Cards.BLACK_JACK_TARGET_NUMBER;
     }
 }

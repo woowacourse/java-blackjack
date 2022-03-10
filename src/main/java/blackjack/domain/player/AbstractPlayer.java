@@ -90,5 +90,5 @@ public abstract class AbstractPlayer implements Player {
         return name;
     }
 
-    public abstract boolean isEnd();
+    abstract boolean isEnd();
 }
