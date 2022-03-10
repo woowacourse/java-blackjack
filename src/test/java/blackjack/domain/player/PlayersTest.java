@@ -87,4 +87,16 @@ class PlayersTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("모든 턴이 종료되었습니다.");
     }
+
+    @Test
+    @DisplayName("모든 턴이 종료되었을 때 현재 플레이어 이름 반환하려하면 예외가 발생한다.")
+    void getCurrentTurnPlayerNameExceptionByEndAllTurn() {
+        final Player player = ParticipatingPlayer.init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Players players = new Players(Collections.singletonList(player));
+        players.turnToNextPlayer();
+
+        assertThatThrownBy(() -> players.getCurrentTurnPlayerName())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("모든 턴이 종료되었습니다.");
+    }
 }

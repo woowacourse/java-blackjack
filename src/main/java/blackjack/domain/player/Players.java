@@ -75,6 +75,11 @@ public class Players {
         return players.get(currentTurnIndex);
     }
 
+    public String getCurrentTurnPlayerName() {
+        validateAllTurnEnd();
+        return players.get(currentTurnIndex).getName();
+    }
+
     public PlayerCards getCurrentTurnPlayerCards() {
         return PlayerCards.toPlayerCards(currentTurnPlayer());
     }

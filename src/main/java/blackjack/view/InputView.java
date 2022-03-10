@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.dto.PlayerCards;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -28,8 +27,8 @@ public class InputView {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public static String inputDrawCommand(final PlayerCards playerCards) {
-        System.out.printf(INPUT_DRAW_COMMAND_MESSAGE, playerCards.getName());
+    public static String inputDrawCommand(final String playerName) {
+        System.out.printf(INPUT_DRAW_COMMAND_MESSAGE, playerName);
         return scanner.nextLine();
     }
 }

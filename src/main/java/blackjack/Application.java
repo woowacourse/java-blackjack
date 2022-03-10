@@ -23,9 +23,9 @@ public class Application {
 
     private static void runPlayerTurn(final BlackJackGame blackJackGame) {
         while (!blackJackGame.isPlayersTurnEnd()) {
-            final DrawCommand command = DrawCommand
-                    .from(InputView.inputDrawCommand(blackJackGame.getCurrentTurnPlayerCards()));
-            final PlayerCards currentPlayerCards = blackJackGame.drawCurrentPlayer(command);
+            final DrawCommand drawCommand = DrawCommand
+                    .from(InputView.inputDrawCommand(blackJackGame.getCurrentTurnPlayerName()));
+            final PlayerCards currentPlayerCards = blackJackGame.drawCurrentPlayer(drawCommand);
             OutputView.printPlayerCards(currentPlayerCards);
         }
     }
