@@ -5,7 +5,6 @@ import blackjack.domain.GameResponse;
 import blackjack.domain.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,39 +13,53 @@ import java.util.stream.Collectors;
 public class BlackjackController {
 
     public void playGame() {
-
-        List<String> playerNames = InputView.inputPlayerNames();
-
-        BlackjackGame blackjackGame = new BlackjackGame(playerNames);
+        BlackjackGame blackjackGame = new BlackjackGame(InputView.inputPlayerNames());
         List<Player> players = blackjackGame.initGames();
 
         OutputView.announceStartGame(players.stream().map(Player::getName).collect(Collectors.toList()));
         OutputView.announcePresentCards(toResponse(players));
 
-        for (Player player : players) {
-            if (player.getName().equals("딜러")) {
-                continue;
-            }
-            while (!player.isOverLimit(21)) {
-                if (InputView.requestMoreCard(player.getName()).equals("y")) {
-                    blackjackGame.addCard(player);
-                    List<GameResponse> gameResponses = new ArrayList<>();
-                    GameResponse gameResponse = new GameResponse(player.getName(), player.getDeck());
-                    gameResponses.add(gameResponse);
-                    OutputView.announcePresentCards(gameResponses);
-                    continue;
-                }
-                break;
-            }
-        }
-        Player dealer = players.get(0);
-        announceDealerCanGetMoreCard(blackjackGame, dealer);
+        turnPlayers(blackjackGame, players);
+        turnDealer(blackjackGame, players);
 
+        printResult(blackjackGame, players);
+    }
+
+    private void printResult(BlackjackGame blackjackGame, List<Player> players) {
         OutputView.announceResultCards(toResponse(players));
-
         Map<Player, String> results = blackjackGame.calculateResult(players);
         OutputView.announceResultWinner(results);
+    }
 
+    private void turnDealer(BlackjackGame blackjackGame, List<Player> players) {
+        Player dealer = players.get(0);
+        announceDealerCanGetMoreCard(blackjackGame, dealer);
+    }
+
+    private void turnPlayers(BlackjackGame blackjackGame, List<Player> players) {
+        for (Player player : players) {
+            turnEachPlayerIfGuest(blackjackGame, player);
+        }
+    }
+
+    private void turnEachPlayerIfGuest(BlackjackGame blackjackGame, Player player) {
+        if (player.getName().equals("딜러")) {
+            return;
+        }
+        while (checkGetMoreCard(player)) {
+            blackjackGame.addCard(player);
+            List<GameResponse> gameResponses = new ArrayList<>();
+            GameResponse gameResponse = new GameResponse(player.getName(), player.getDeck());
+            gameResponses.add(gameResponse);
+            OutputView.announcePresentCards(gameResponses);
+        }
+    }
+
+    private boolean checkGetMoreCard(Player player) {
+        if (player.isOverLimit(21)) {
+            return false;
+        }
+        return InputView.requestMoreCard(player.getName()).equals("y");
     }
 
     private void announceDealerCanGetMoreCard(BlackjackGame blackjackGame, Player dealer) {
