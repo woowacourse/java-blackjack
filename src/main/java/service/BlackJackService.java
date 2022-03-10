@@ -1,25 +1,16 @@
 package service;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.function.Function;
-import model.Card;
-import model.Cards;
-import service.dto.InitGameDto;
-import service.dto.NamesDto;
 import java.util.List;
-import java.util.stream.Collectors;
 import model.CardDeck;
 import model.Dealer;
 import model.Participator;
 import model.Player;
 import model.PlayerName;
+import service.dto.InitGameDto;
+import service.dto.NamesDto;
 import service.dto.ParticipatorDto;
 import util.CardConvertor;
 
@@ -64,9 +55,13 @@ public class BlackJackService {
 
     private void drawTwoCardsAll() {
         for (Participator participator : participators) {
-            for (int i = 0 ; i < 2 ; i++) {
-                participator.receiveCard(cardDeck.drawCard());
-            }
+            getCards(participator);
+        }
+    }
+
+    private void getCards(Participator participator) {
+        for (int i = 0; i < 2; i++) {
+            participator.receiveCard(cardDeck.drawCard());
         }
     }
 }
