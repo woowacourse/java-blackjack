@@ -40,4 +40,8 @@ public class Dealer {
     public int getScore() {
         return cards.calculateScore();
     }
+
+    public boolean isBust() {
+        return cards.isBust();
+    }
 }

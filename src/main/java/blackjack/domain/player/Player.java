@@ -78,4 +78,24 @@ public class Player {
                 ", cards=" + cards +
                 '}';
     }
+
+    public Outcome compareScoreWith(Dealer dealer) {
+        if (dealer.isBust()) {
+            return Outcome.WIN;
+        }
+
+        if (!dealer.isBust() && isBust()) {
+            return Outcome.LOSE;
+        }
+
+        if (dealer.getScore() > getScore()) {
+            return Outcome.LOSE;
+        }
+
+        return Outcome.WIN;
+    }
+
+    private boolean isBust() {
+        return cards.isBust();
+    }
 }

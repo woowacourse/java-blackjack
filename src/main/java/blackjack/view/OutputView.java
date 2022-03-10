@@ -1,11 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.dto.CardDto;
 import blackjack.domain.dto.Status;
-import blackjack.domain.player.Dealer;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 public class OutputView {
 
@@ -46,8 +48,23 @@ public class OutputView {
                         .collect(Collectors.joining(", "));
     }
 
-    public static void printDealerAdded(String name) {
-        System.out.println("\n" + name + "는 " + Dealer.BOUND_FOR_ADDITIONAL_CARD
-                + "이하라 한장의 카드를 더 받았습니다.");
+    public static void printResult(Map<String, String> playerResults, List<String> dealerResult) {
+        System.out.println("## 최종 승패");
+        System.out.println(makeDealerResultString(dealerResult));
+
+        playerResults.forEach(
+                (name, result) -> System.out.println(name + ": " + result)
+        );
+    }
+
+    private static String makeDealerResultString(List<String> dealerResult) {
+        Map<String, Long> countMap = dealerResult.stream()
+                .collect(groupingBy(Function.identity(), Collectors.counting()));
+        return "딜러 : " + countMap.getOrDefault("승", 0L) + "승 " +
+                countMap.getOrDefault("패", 0L);
+    }
+
+    public static void printDealerHitMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 }

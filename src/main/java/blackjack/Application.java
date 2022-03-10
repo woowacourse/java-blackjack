@@ -27,6 +27,11 @@ public class Application {
         executeDealerTurn(game);
 
         printTotalScore(game);
+        printResult(game);
+    }
+
+    private static void printResult(Game game) {
+        OutputView.printResult(game.getPlayerResults(), game.getDealerResult());
     }
 
     private static Players generatePlayers(Deck deck) {
@@ -54,7 +59,7 @@ public class Application {
     private static void executeDealerTurn(Game game) {
         while (game.doesDealerNeedToDraw()) {
             game.doDealerDraw();
-            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            OutputView.printDealerHitMessage();
         }
     }
 

@@ -49,4 +49,13 @@ public class Players {
             throw new IllegalArgumentException("[ERROR] 플레이어 이름은 중복될 수 없습니다");
         }
     }
+
+    public Map<String, Outcome> calculateResult(Dealer dealer) {
+        Map<String, Outcome> result = new HashMap<>();
+        for (Player player : players) {
+            Outcome outcome = player.compareScoreWith(dealer);
+            result.put(player.getName(), outcome);
+        }
+        return result;
+    }
 }
