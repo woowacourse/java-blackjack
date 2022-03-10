@@ -6,6 +6,8 @@ import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
 import blackjack.view.InputView;
+import blackjack.view.OutputView;
+import java.awt.desktop.AboutEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,21 +28,27 @@ public class GameController {
         players.giveCard();
         players.giveCard();
 
+        // 딜러 카드추가
+
+
         // 카드 받을지 물어보는 기능
         for (Player player : players.getCardNeedPlayers()) {
             questionOneMoreCard(player);
-            System.out.println(player.getCards().size());
         }
-
-        // 플레이어 마다 물어봐야함.
     }
 
     public void questionOneMoreCard(Player player) {
+        boolean flag = true;
         while (player.isOneMoreCard()) {
             if (!InputView.inputOneMoreCard(player.getName())) {
+                if(flag){
+                    OutputView.printPlayerCardState(player);
+                }
                 break;
             }
             player.addCard(CardDeck.giveCard());
+            OutputView.printPlayerCardState(player);
+            flag = false;
         }
     }
 

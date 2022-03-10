@@ -30,4 +30,9 @@ public class Cards {
         }
         return point;
     }
+
+    @Override
+    public String toString() {
+        return cards.toString().substring(1,cards.toString().length()-1);
+    }
 }

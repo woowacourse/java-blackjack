@@ -22,6 +22,11 @@ public class Player extends Human {
         isCardNeeded = false;
     }
 
+//    @Override
+//    public String toString() {
+//        return name + ": " + cards.toString();
+//    }
+
     @Override
     public boolean isOneMoreCard() {
         return cards.getPoint() < 21 && isCardNeeded;

@@ -16,4 +16,9 @@ public class Card {
     public Denomination getDenomination() {
         return denomination;
     }
+
+    @Override
+    public String toString() {
+        return denomination.getInitial() + symbol.getSymbolName();
+    }
 }
