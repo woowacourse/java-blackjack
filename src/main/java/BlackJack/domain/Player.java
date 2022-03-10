@@ -1,8 +1,8 @@
 package BlackJack.domain;
 
 public class Player extends User{
-    public Player(String name) {
-        super(name);
+    public Player(String name, Cards cards) {
+        super(name,cards);
     }
 
     @Override

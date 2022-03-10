@@ -5,9 +5,9 @@ public abstract class User {
     protected String name;
     protected Cards cards;
 
-    public User(String name){
+    public User(String name, Cards cards){
         this.name = name;
-        this.cards = CardFactory.drawTwoCards();
+        this.cards = cards;
     }
 
     public String getName() {

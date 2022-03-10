@@ -12,6 +12,7 @@ public class OutputView {
     private static final String CARD_FORMAT = "%s카드: %s";
     private static final String DEALER = "딜러";
     private static final String DELIMITER = ", ";
+    private static final String ADD_DEALER_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     public static void printDrawMessage(List<String> userNames){
         System.out.printf(DRAW_MESSAGE, userNames.stream().collect(Collectors.joining(DELIMITER)));
@@ -30,5 +31,9 @@ public class OutputView {
     public static void printPlayerCard(UserDto userDto) {
         String cards = userDto.getCards().stream().collect(Collectors.joining(DELIMITER));
         System.out.println(String.format(CARD_FORMAT, userDto.getName(), cards));
+    }
+
+    public static void printAddDealerCard() {
+        System.out.println(ADD_DEALER_CARD_MESSAGE);
     }
 }

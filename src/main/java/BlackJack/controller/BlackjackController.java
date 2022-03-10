@@ -1,5 +1,6 @@
 package BlackJack.controller;
 
+import BlackJack.domain.CardFactory;
 import BlackJack.domain.Dealer;
 import BlackJack.domain.Player;
 import BlackJack.dto.UserDto;
@@ -14,7 +15,7 @@ public class BlackjackController {
     public void run() {
         List<String> inputPlayerNames = InputView.inputPlayerNames();
 
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer(CardFactory.drawTwoCards());
         List<Player> players = joinGame(inputPlayerNames);
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToDto(dealer, players));
@@ -22,12 +23,16 @@ public class BlackjackController {
             addCard(player);
         }
 
+        while (dealer.checkScore()){
+            OutputView.printAddDealerCard();
+            dealer.addCard();
+        }
     }
 
     public List<Player> joinGame(List<String> inputPlayerNames) {
         List<Player> players = new ArrayList<>();
         for (String name : inputPlayerNames) {
-            players.add(new Player(name));
+            players.add(new Player(name, CardFactory.drawTwoCards()));
         }
         return players;
     }
