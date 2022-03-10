@@ -1,6 +1,8 @@
 package BlackJack.controller;
 
 import BlackJack.domain.*;
+import BlackJack.dto.DealerResultDto;
+import BlackJack.dto.PlayerResultDto;
 import BlackJack.dto.UserDto;
 import BlackJack.view.InputView;
 import BlackJack.view.OutputView;
@@ -30,15 +32,24 @@ public class BlackjackController {
 
         OutputView.printTotalResult(userDtos);
 
+        int dealerLoseCount = 0;
+        int dealerDrawCount = 0;
+        List<PlayerResultDto> resultDtos = new ArrayList<>();
+        for (Player player : players) {
+            Result compare = dealer.compare(player);
 
-//   int dealerLoseCount = 0;
-//        for (Player player : players) {
-//            int compare = dealer.compare(player);
-//            if(compare == 1){ // 딜러가 졌다면
-//                 ResultDto.from(UserDto.from(player),"승")
-//            }
-//
-//        }
+            if (compare == Result.WIN) {
+                dealerLoseCount++;
+            }
+            if( compare == Result.DRAW) {
+                dealerDrawCount++;
+            }
+            resultDtos.add(PlayerResultDto.from(player.getName(), compare));
+        }
+
+        DealerResultDto dealerDto = DealerResultDto.from(dealer.getName(), dealerLoseCount, dealerDrawCount,
+                players.size() - (dealerLoseCount + dealerDrawCount));
+        OutputView.printFinalResult(resultDtos, dealerDto);
 
     }
 
