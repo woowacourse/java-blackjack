@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.dto.*;
 
@@ -12,7 +13,7 @@ public class Blackjack {
 
     private static final int CARD_COUNT_OF_FIRST_DISTRIBUTE = 2;
     private static final int MAX_NUMBER_OF_PLAYER = 7;
-    private static final String TOO_MANY_PLAYERS = "최대 "+MAX_NUMBER_OF_PLAYER+"명까지 플레이 가능합니다.";
+    private static final String TOO_MANY_PLAYERS = "최대 " + MAX_NUMBER_OF_PLAYER + "명까지 플레이 가능합니다.";
     private static final String NAME_DUPLICATED = "중복되는 이름은 허용되지 않습니다.";
 
     private final List<Player> players;
@@ -81,6 +82,8 @@ public class Blackjack {
     }
 
     public TotalResultDTO calculateTotalResult() {
+        dealer.endTurn();
+        players.forEach(Participant::endTurn);
         List<PlayerResultDTO> totalPlayerResult = calculateTotalPlayerResult();
         DealerResultDTO dealerResult = calculateDealerResult(totalPlayerResult);
         return new TotalResultDTO(totalPlayerResult, dealerResult);
