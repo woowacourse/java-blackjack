@@ -49,12 +49,12 @@ class DealerTest {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.DIAMOND, CardNumber.ACE),
+                                new Card(CardPattern.DIAMOND, CardNumber.TWO),
                                 new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
                                 new Card(CardPattern.DIAMOND, CardNumber.KING)
                         ),
                         List.of(
-                                new Card(CardPattern.DIAMOND, CardNumber.ACE),
+                                new Card(CardPattern.DIAMOND, CardNumber.TWO),
                                 new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
                                 new Card(CardPattern.DIAMOND, CardNumber.KING)
                         )
@@ -142,6 +142,4 @@ class DealerTest {
                 )
         );
     }
-
-
 }

@@ -16,6 +16,25 @@ public class Participant {
     }
 
     protected int calculateScore() {
+        int totalSum = calculateWithoutAce();
+
+        if (hasAceCard()) {
+            totalSum += 10;
+        }
+
+        if (totalSum > 21) {
+            totalSum -= 10;
+        }
+
+        return totalSum;
+    }
+
+    private boolean hasAceCard() {
+        return cards.stream()
+                .anyMatch(card -> card.getNumber() == 1);
+    }
+
+    protected int calculateWithoutAce() {
         return cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
@@ -42,5 +61,4 @@ public class Participant {
     public int getScore() {
         return calculateScore();
     }
-
 }
