@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.cards;
 
 import static blackjack.Rank.ACE;
 import static blackjack.Rank.JACK;
@@ -13,9 +13,14 @@ import static blackjack.Suit.HEART;
 import static blackjack.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.Card;
+import blackjack.Dealer;
+import blackjack.Score;
 import blackjack.cards.Cards;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -57,5 +62,13 @@ public class CardsTest {
                 Arguments.of(Cards.softHandCards(new Card(ACE, DIAMOND), new Card(ACE, SPADE),
                         new Card(NINE, CLOVER)), 31)
         );
+    }
+
+    @Test
+    @DisplayName("카드 발급")
+    void takeCards() {
+        Cards cards = new HardHandCards(new Card(JACK, DIAMOND), new Card(THREE, CLOVER));
+        cards.take(new Card(ACE, HEART));
+        assertThat(cards.score()).isEqualTo(new Score(14));
     }
 }

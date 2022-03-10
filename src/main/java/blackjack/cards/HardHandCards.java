@@ -2,6 +2,7 @@ package blackjack.cards;
 
 import blackjack.Card;
 import blackjack.Score;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -10,7 +11,7 @@ final class HardHandCards implements Cards {
     private final List<Card> cards;
 
     HardHandCards(Card... cards) {
-        this.cards = List.of(cards);
+        this.cards = new ArrayList<>(List.of(cards));
     }
 
     @Override
@@ -21,6 +22,11 @@ final class HardHandCards implements Cards {
     @Override
     public Stream<Card> stream() {
         return cards.stream();
+    }
+
+    @Override
+    public void take(Card card) {
+        cards.add(card);
     }
 
     private int hardHandScore() {

@@ -10,6 +10,8 @@ public interface Cards {
 
     Stream<Card> stream();
 
+    void take(Card card);
+
     static ChangeableCards mixHandCards(Card... cards) {
         return new MixHandCards(new HardHandCards(cards));
     }

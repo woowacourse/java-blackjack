@@ -24,4 +24,9 @@ public abstract class ChangeableCards implements Cards {
     public final Stream<Card> stream() {
         return cards.stream();
     }
+
+    @Override
+    public final void take(Card card) {
+        cards.take(card);
+    }
 }
