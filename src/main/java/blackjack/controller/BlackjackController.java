@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Blackjack;
+import blackjack.domain.NumberGenerator;
 import blackjack.domain.Person;
 import blackjack.domain.Player;
 import blackjack.domain.RandomNumberGenerator;
@@ -13,19 +14,19 @@ public class BlackjackController {
     public void run() {
         List<String> playerNames = InputView.getPlayerNames();
         Blackjack blackjack = new Blackjack(playerNames);
-        blackjack.distributeInitialCards(new RandomNumberGenerator());
+        blackjack.distributeInitialCards(RandomNumberGenerator.getInstance());
 
         OutputView.printInitStatus(blackjack.getDealer(), blackjack.getPlayers());
 
         List<Player> people = blackjack.getPlayers();
         for (Player person : people) {
             while (InputView.askAdditionalCard(person)) {
-                blackjack.distributeAdditionalCardPlayer(new RandomNumberGenerator(), person, true);
+                blackjack.distributeAdditionalCardPlayer(RandomNumberGenerator.getInstance(), person, true);
                 OutputView.printCards(person);
             }
         }
 
-        blackjack.distributeAdditionalCardDealer(new RandomNumberGenerator());
+        blackjack.distributeAdditionalCardDealer(RandomNumberGenerator.getInstance());
         OutputView.printDealerAdditionalCard();
 
         OutputView.printCardsAndResult(blackjack.getDealer(), blackjack.getPlayers());
