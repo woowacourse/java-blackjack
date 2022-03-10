@@ -1,20 +1,36 @@
 package domain.card;
 
+import static java.util.Collections.shuffle;
+import static java.util.stream.Collectors.toList;
+
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CardDeck {
+    private static final List<PlayingCard> originalPlayingCards;
+
     private final Stack<PlayingCard> playingCards;
 
-    private CardDeck() {
-        Stack<PlayingCard> playingCards = Arrays.stream(Suit.values())
-                .flatMap(suit -> Arrays.stream(Denomination.values())
-                        .map(denomination -> PlayingCard.of(suit, denomination)))
-                .collect(Collectors.toCollection(Stack::new));
+    static {
+        originalPlayingCards = List.copyOf(
+                Arrays.stream(Suit.values())
+                        .flatMap(CardDeck::getPlayingCardStream)
+                        .collect(toList())
+        );
+    }
 
-        Collections.shuffle(playingCards);
+    private static Stream<PlayingCard> getPlayingCardStream(Suit suit) {
+        return Arrays.stream(Denomination.values())
+                .map(denomination -> PlayingCard.of(suit, denomination));
+    }
+
+    private CardDeck() {
+        Stack<PlayingCard> playingCards = new Stack<>();
+        playingCards.addAll(originalPlayingCards);
+        shuffle(playingCards);
+
         this.playingCards = playingCards;
     }
 

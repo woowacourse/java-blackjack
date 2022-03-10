@@ -6,12 +6,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardDeckTest {
-
     @Test
     @DisplayName("카드덱 생성 테스트")
-    void deck_create() {
-        assertThatCode(
-                CardDeck::getInstance
-        ).doesNotThrowAnyException();
+    void createCardDeck() {
+        assertThatCode(CardDeck::getInstance)
+                .doesNotThrowAnyException();
     }
 }

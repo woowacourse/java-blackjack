@@ -17,4 +17,8 @@ public class Gamblers {
             throw new IllegalArgumentException(ERROR_NULL_OR_EMPTY_GAMBLERS);
         }
     }
+
+    public List<Gambler> getGamblers() {
+        return gamblers;
+    }
 }
