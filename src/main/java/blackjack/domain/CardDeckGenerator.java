@@ -1,5 +1,11 @@
-package blackjack.domain.card;
+package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Clover;
+import blackjack.domain.card.Diamond;
+import blackjack.domain.card.Heart;
+import blackjack.domain.card.Spade;
 import java.util.Collections;
 import java.util.LinkedList;
 

@@ -25,13 +25,13 @@ public class Cards {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public int calculateScore() {
         return cards.stream()
                 .mapToInt(Card::getCardNumber)
                 .sum();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
