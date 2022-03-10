@@ -7,15 +7,16 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayersTest {
+public class ParticipantsTest {
 
     @Test
-    @DisplayName("플레이어들을 생성한다")
-    void createPlayers() {
-        List<Player> playerList = List.of(new Player("앤지"), new Player("마루"));
-        Players players = new Players(playerList);
+    @DisplayName("참가자들은 딜러와 플레이어들로 구성된다.")
+    void createParticipants() {
 
-        assertThat(players.getPlayers().size()).isEqualTo(2);
+        Participants participants = new Participants(
+            List.of(new Player("마루"), new Player("엔젤앤지")));
+
+        assertThat(participants.getParticipants().size()).isEqualTo(3);
     }
 
     @Test
@@ -23,7 +24,7 @@ public class PlayersTest {
     void createPlayersNumberException() {
         List<Player> playerList = List.of();
 
-        assertThatThrownBy(() -> new Players(playerList))
+        assertThatThrownBy(() -> new Participants(playerList))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -34,7 +35,8 @@ public class PlayersTest {
             new Player("4"), new Player("5"), new Player("6"),
             new Player("7"), new Player("8"), new Player("9"));
 
-        assertThatThrownBy(() -> new Players(playerList))
+        assertThatThrownBy(() -> new Participants(playerList))
             .isInstanceOf(IllegalArgumentException.class);
     }
+
 }
