@@ -28,6 +28,14 @@ class PlayersTest {
     }
 
     @Test
+    @DisplayName("null으로 생성하려는 경우 예외를 발생시킨다.")
+    void createExceptionByNull() {
+        assertThatThrownBy(() -> new Players(null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("players는 null로 생성할 수 없습니다.");
+    }
+
+    @Test
     @DisplayName("중복된 이름들로 생성 시 예외를 발생시킨다.")
     void createExceptionByDuplication() {
         final Player firstplayer = ParticipatingPlayer

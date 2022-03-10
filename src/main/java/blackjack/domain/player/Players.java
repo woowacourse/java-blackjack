@@ -3,7 +3,9 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.dto.PlayerInfo;
 import blackjack.dto.PlayerResultInfo;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -12,8 +14,9 @@ public class Players {
     private int currentTurnIndex;
 
     public Players(final List<Player> players) {
-        validateDuplicationPlayers(players);
-        this.players = players;
+        Objects.requireNonNull(players, "players는 null로 생성할 수 없습니다.");
+        this.players = new ArrayList<>(players);
+        validateDuplicationPlayers(this.players);
     }
 
     private void validateDuplicationPlayers(final List<Player> players) {
