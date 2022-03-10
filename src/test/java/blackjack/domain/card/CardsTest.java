@@ -32,10 +32,11 @@ class CardsTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private List<Card> createFirstReceivedCard(CardNumber firstCardNumber, CardNumber secondCardNumber) {
+    private List<Card> createFirstReceivedCard(CardNumber... cardNumbers) {
         List<Card> cards = new ArrayList<>();
-        cards.add(new Diamond(firstCardNumber));
-        cards.add(new Heart(secondCardNumber));
+        for (CardNumber cardNumber : cardNumbers) {
+            cards.add(new Diamond(cardNumber));
+        }
         return cards;
     }
 }
