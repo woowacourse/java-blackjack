@@ -19,7 +19,7 @@ class CardDeckTest {
     void provideInitCardsException() {
         final CardDeck cardDeck = CardDeck.init();
         pollCards(cardDeck, 51);
-        assertThatThrownBy(() -> cardDeck.provideInitCards())
+        assertThatThrownBy(cardDeck::provideInitCards)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("남은 카드가 2장 미만입니다.");
     }
@@ -36,7 +36,7 @@ class CardDeckTest {
     void provideException() {
         final CardDeck cardDeck = CardDeck.init();
         pollCards(cardDeck, 52);
-        assertThatThrownBy(() -> cardDeck.provideCard())
+        assertThatThrownBy(cardDeck::provideCard)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("남은 카드가 없습니다.");
     }

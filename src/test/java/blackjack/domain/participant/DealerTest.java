@@ -54,7 +54,7 @@ class DealerTest {
         final Dealer dealer = new Dealer(
                 new ArrayList<>(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, SIX))));
 
-        assertThatThrownBy(() -> dealer.getCards())
+        assertThatThrownBy(dealer::getCards)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("딜러는 턴이 종료되지 않을 때 모든 카드를 반환할 수 없습니다.");
     }
@@ -65,7 +65,7 @@ class DealerTest {
         final Dealer dealer = new Dealer(
                 new ArrayList<>(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, TWO))));
 
-        assertThatThrownBy(() -> dealer.calculateResultScore())
+        assertThatThrownBy(dealer::calculateResultScore)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
     }
