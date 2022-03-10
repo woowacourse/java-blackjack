@@ -2,8 +2,7 @@ package blackjack;
 
 import java.util.regex.Pattern;
 
-public class Entry {
-    private static final String ERROR_NULL = "[ERROR] 입력된 이름이 없습니다.";
+public class Entry extends Player {
     private static final String ERROR_BLANK = "[ERROR] 이름은 공백일 수 없습니다.";
     private static final String ERROR_MAX_LENGTH = "[ERROR] 이름은 15자 이하로 입력해주세요.";
     private static final String ERROR_CONTAINS_NUMBER = "[ERROR] 이름에 숫자는 포함될 수 없습니다.";
@@ -14,27 +13,16 @@ public class Entry {
 
     private static final int MAX_LENGTH = 15;
 
-    private final String name;
-    private final Deck deck;
-
     private Entry(String name, Deck deck) {
+        super(name, deck);
         validate(name);
-        this.name = name.trim();
-        this.deck = deck;
     }
 
     private void validate(String name) {
-        checkNull(name);
         checkBlank(name);
         checkLength(name);
         checkNumberIn(name);
         checkSignIn(name);
-    }
-
-    private void checkNull(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException(ERROR_NULL);
-        }
     }
 
     private void checkBlank(String name) {
@@ -61,23 +49,14 @@ public class Entry {
         }
     }
 
-    public static class Builder {
-        private static final String ERROR_DECK_IS_NULL = "[ERROR] deck()을 먼저 호출해서 Deck을 초기화해주세요.";
-
-        private final String name;
-
-        private Deck deck;
+    public static class Builder extends Player.Builder {
 
         public Builder(String name) {
-            this.name = name;
+            super(name);
         }
 
-        public Builder deck(TrumpCard card1, TrumpCard card2) {
-            this.deck = new Deck(card1, card2);
-            return this;
-        }
-
-        public Entry build() {
+        @Override
+        public Entry build()  {
             if (deck == null) {
                 throw new RuntimeException(ERROR_DECK_IS_NULL);
             }
