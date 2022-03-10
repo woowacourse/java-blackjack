@@ -16,7 +16,7 @@ public class OutputView {
     private static final String JOIN_DELIMITER = ", ";
     private static final String INITIAL_CARD_DISTRIBUTION_MESSAGE = NEW_LINE + "딜러와 %s에게 2장의 나누었습니다." + NEW_LINE;
     private static final String DEALER_INITIAL_CARD_FORMAT = "딜러: %s" + NEW_LINE;
-    private static final String PLAYER_INITIAL_CARD_FORMAT = "%s카드: %s" + NEW_LINE;
+    private static final String PLAYER_CARDS_FORMAT = "%s카드: %s" + NEW_LINE;
 
     // TODO: DTO 로 변경
     public static void printInitialParticipantsCards(BlackjackGame blackjackGame) {
@@ -30,7 +30,11 @@ public class OutputView {
             builder.append(getParticipantCardsInfo(player));
         }
 
-        System.out.print(builder);
+        System.out.println(builder);
+    }
+
+    public static void printPlayerCardsInfo(Player player) {
+        System.out.print(getParticipantCardsInfo(player));
     }
 
     private static String getParticipantsCardCountInfo(BlackjackGame blackjackGame) {
@@ -45,7 +49,7 @@ public class OutputView {
 
     private static String getParticipantCardsInfo(Player player) {
         String playerCards = mapAndJoinString(player.getCardBundle().getCards(), Card::getName);
-        return String.format(PLAYER_INITIAL_CARD_FORMAT, player.getName(), playerCards);
+        return String.format(PLAYER_CARDS_FORMAT, player.getName(), playerCards);
     }
 
     private static <T> String mapAndJoinString(Collection<T> collection, Function<T, String> function) {
