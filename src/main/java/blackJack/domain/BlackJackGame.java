@@ -62,17 +62,6 @@ public class BlackJackGame {
         return participant.getScore() <= BLACK_JACK;
     }
 
-    public Map<Player, WinOrLose> calculateGameResult() {
-        final Map<Player, WinOrLose> gameResult = new LinkedHashMap<>();
-
-        for (Player player : players) {
-            WinOrLose winOrLose = WinOrLose.calculateWinOrLose(player.getScore(), dealer.getScore());
-            gameResult.put(player, winOrLose);
-        }
-
-        return gameResult;
-    }
-
     public Dealer getDealer() {
         return dealer;
     }

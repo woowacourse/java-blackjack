@@ -56,24 +56,6 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("게임의 결과를 계산해주는 기능 테스트")
-    void calculateGameResult() {
-        Player player1 = new Player("kei");
-        Player player2 = new Player("rookie");
-        Dealer dealer = new Dealer();
-
-        player1.receiveCard(new Card(Symbol.SPADE, Denomination.EIGHT));
-        player2.receiveCard(new Card(Symbol.SPADE, Denomination.J));
-        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.NINE));
-
-        BlackJackGame blackJackGame = new BlackJackGame(dealer, List.of(player1, player2));
-
-        assertThat(blackJackGame.calculateGameResult().values()).containsExactly(
-            WinOrLose.LOSE, WinOrLose.WIN
-        );
-    }
-
-    @Test
     @DisplayName("플레이어의 카드 추가 분배가 불가능한 경우 테스트")
     void hasFalsePlayerNextTurn() {
         Player player = new Player("kei");
