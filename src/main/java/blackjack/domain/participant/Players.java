@@ -1,9 +1,11 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.GameOutcome;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayerFinalResultDto;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -79,7 +81,8 @@ public class Players {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public List<Player> getValues() {
-        return List.copyOf(values);
+    public Map<String, GameOutcome> calculateAllResults(final Dealer dealer) {
+        return values.stream()
+                .collect(Collectors.toUnmodifiableMap(Player::getName, dealer::judgeOutcomeOfPlayer));
     }
 }
