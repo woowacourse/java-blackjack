@@ -1,8 +1,11 @@
 package controller;
 
-import service.dto.InitGameDto;
-import service.dto.NamesDto;
+import java.util.List;
+import dto.InitGameDto;
+import dto.NamesDto;
 import service.BlackJackService;
+import view.InputView;
+import view.OutputView;
 
 public class BlackJackController {
 
@@ -11,7 +14,10 @@ public class BlackJackController {
         this.service = service;
     }
 
-    public InitGameDto initGame(NamesDto namesDto) {
-        return service.initGame(namesDto);
+    public void initGame() {
+        List<String> names = InputView.inputPlayerNames();
+        NamesDto namesDto = new NamesDto(names);
+        InitGameDto initGameDto = service.initGame(namesDto);
+        OutputView.printInit(initGameDto);
     }
 }

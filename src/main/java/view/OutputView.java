@@ -2,8 +2,8 @@ package view;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import service.dto.InitGameDto;
-import service.dto.ParticipatorDto;
+import dto.InitGameDto;
+import dto.ParticipatorDto;
 
 public class OutputView {
     public static void printInit(InitGameDto initGameDto) {
