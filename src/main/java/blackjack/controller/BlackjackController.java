@@ -32,13 +32,36 @@ public class BlackjackController {
     }
 
     public List<ResultStatistics> finishGame(BlackjackGame game) {
-        List<ResultStatistics> results = new ArrayList<>();
-
         Dealer dealer = game.getDealer();
         List<Player> players = game.getParticipants();
 
         ResultStatistics dealerResult = ResultStatistics.of(dealer.getName());
         Score dealerScore = dealer.getCurrentScore();
+
+        if (dealerScore.toInt() > Score.BLACKJACK) {
+            return getResultsOnDealerBust(players, dealerResult);
+        }
+
+        List<ResultStatistics> results = getResults(players, dealerResult, dealerScore);
+        results.add(0, dealerResult);
+
+        return results;
+    }
+
+    private List<ResultStatistics> getResultsOnDealerBust(List<Player> players, ResultStatistics dealerResult) {
+        List<ResultStatistics> results = new ArrayList<>();
+        for (Player player : players) {
+            ResultStatistics playerResult = ResultStatistics.of(player.getName());
+            dealerResult.incrementCountOf(ResultType.LOSE);
+            playerResult.incrementCountOf(ResultType.WIN);
+            results.add(playerResult);
+        }
+        results.add(0, dealerResult);
+        return results;
+    }
+
+    private List<ResultStatistics> getResults(List<Player> players, ResultStatistics dealerResult, Score dealerScore) {
+        List<ResultStatistics> results = new ArrayList<>();
 
         for (Player player : players) {
             ResultStatistics playerResult = ResultStatistics.of(player.getName());
@@ -60,9 +83,6 @@ public class BlackjackController {
             }
             results.add(playerResult);
         }
-
-        results.add(0, dealerResult);
-
         return results;
     }
 }
