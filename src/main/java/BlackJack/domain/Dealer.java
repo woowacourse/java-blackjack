@@ -17,10 +17,13 @@ public class Dealer extends User {
         return cards.calculateScore() <= DEALER_ADD_CARD_LIMIT;
     }
 
-    public int compare(Player player){
-        if(this.getScore() < player.getScore()){
-            return 1;
+    public Result compare(Player player){
+        if(this.getScore() < player.getScore() && player.getScore() <= 21){
+            return Result.WIN;
         }
-        return 0;
+        if(this.getScore() > player.getScore() || player.getScore() > 21){
+            return Result.LOSE;
+        }
+        return Result.DRAW;
     }
 }
