@@ -4,10 +4,10 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
-import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.GameResult;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,11 +53,7 @@ public class BlackJackGame {
         findPlayerByName(name).addCard(cardFactory.draw());
     }
 
-    public GamerDto findPlayerDtoByName(String name) {
-        return new GamerDto(findPlayerByName(name));
-    }
-
-    private Player findPlayerByName(String name) {
+    public Player findPlayerByName(String name) {
         return players.stream()
                 .filter(player -> player.isSameName(name))
                 .findAny()
@@ -68,21 +64,12 @@ public class BlackJackGame {
         return new GameResult(players, dealer);
     }
 
-    public GamerDto getDealerDto() {
-        return new GamerDto(dealer);
+    public Dealer getDealer() {
+        return dealer;
     }
 
-    public List<GamerDto> getPlayerDtos() {
-        return players.stream()
-                .map(GamerDto::new)
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::getName)
-                .map(Name::getValue)
-                .collect(Collectors.toUnmodifiableList());
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
     public boolean isBurst(String name) {

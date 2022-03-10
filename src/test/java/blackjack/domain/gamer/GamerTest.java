@@ -32,14 +32,14 @@ class GamerTest {
     @CsvSource(value = {"14:true", "16:false"}, delimiter = ':')
     @DisplayName("보유 카드 번호 합이 특정 숫자를 넘었는지 확인")
     void checkCardsNumberSum(int input, boolean result) {
-        Gamer gamer = new Gamer("name");
+        Dealer dealer = new Dealer();
         Card card1 = Card.getInstance(CardShape.SPADE, CardNumber.TEN);
         Card card2 = Card.getInstance(CardShape.SPADE, CardNumber.FIVE);
 
-        gamer.addCard(card1);
-        gamer.addCard(card2);
+        dealer.addCard(card1);
+        dealer.addCard(card2);
 
-        assertThat(gamer.isOverThan(input)).isEqualTo(result);
+        assertThat(dealer.isOverThan(input)).isEqualTo(result);
     }
 
     @Test

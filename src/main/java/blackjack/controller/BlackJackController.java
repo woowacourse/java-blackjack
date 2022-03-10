@@ -1,44 +1,55 @@
 package blackjack.controller;
 
+import blackjack.controller.dto.GameResultDto;
+import blackjack.controller.dto.GamerDto;
 import blackjack.domain.Answer;
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.GamerDto;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
 import blackjack.domain.result.GameResult;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
 
-    public void run() {
-        List<String> names = InputView.getNames();
-        BlackJackGame blackJackGame = new BlackJackGame(names);
-        blackJackGame.distributeFirstCards();
-        OutputView.printFirstCards(blackJackGame.getDealerDto(), blackJackGame.getPlayerDtos());
+    private final BlackJackGame blackJackGame;
 
-        List<String> playerNames = blackJackGame.getPlayerNames();
-        for (String playerName : playerNames) {
-            drawAdditionalCard(blackJackGame, playerName);
-        }
-        OutputView.printAdditionalDrawDealer(blackJackGame.distributeAdditionalToDealer());
-        OutputView.printFinalCards(blackJackGame.getDealerDto(), blackJackGame.getPlayerDtos());
+    public BlackJackController(List<String> names) {
+        blackJackGame = new BlackJackGame(names);
+    }
 
+    public GamerDto getDealerDto() {
+        Dealer dealer = blackJackGame.getDealer();
+        return new GamerDto(dealer);
+    }
+
+    public List<GamerDto> getPlayerDtos() {
+        List<Player> players = blackJackGame.getPlayers();
+        return players.stream()
+                .map((GamerDto::new))
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public boolean isDrawPossible(String name, String answer) {
+        return !blackJackGame.isBurst(name) && Answer.from(answer).isYes();
+    }
+
+    public void requestPlayerDrawCard(String name) {
+        blackJackGame.distributeCardToPlayer(name);
+    }
+
+    public GamerDto findPlayerByName(String name) {
+        Player player = blackJackGame.findPlayerByName(name);
+        return new GamerDto(player);
+    }
+
+    public int getDealerAdditionalCardCount() {
+        return blackJackGame.distributeAdditionalToDealer();
+    }
+
+    public GameResultDto getGamerResult() {
         GameResult result = blackJackGame.createResult();
-        OutputView.printFinalResult(result.getDealerResult(), result.getPlayerResult());
-
-    }
-
-    private void drawAdditionalCard(BlackJackGame blackJackGame, String playerName) {
-        while (!blackJackGame.isBurst(playerName)
-                && Answer.from(InputView.getAnswerOfAdditionalDraw(playerName)).isYes()) {
-            blackJackGame.distributeCardToPlayer(playerName);
-            GamerDto playerDtoByName = blackJackGame.findPlayerDtoByName(playerName);
-            OutputView.printPlayerCard(playerDtoByName);
-        }
-    }
-
-    public static void main(String[] args) {
-        new BlackJackController().run();
+        return new GameResultDto(result);
     }
 }

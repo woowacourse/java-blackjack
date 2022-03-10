@@ -27,10 +27,6 @@ public class Gamer {
         return new ArrayList<>(cards);
     }
 
-    public boolean isOverThan(int number) {
-        return getCardsNumberSum() > number;
-    }
-
     public int getCardsNumberSum() {
         int sum = getSumExceptAce();
         List<Card> aces = getAces();

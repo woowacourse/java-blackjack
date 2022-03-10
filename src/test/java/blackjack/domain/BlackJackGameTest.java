@@ -1,10 +1,7 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,8 +17,8 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(Arrays.asList("a", "b"));
         blackJackGame.distributeFirstCards();
 
-        GamerDto dealerDto = blackJackGame.getDealerDto();
-        List<GamerDto> playerDtos = blackJackGame.getPlayerDtos();
+        Dealer dealerDto = blackJackGame.getDealer();
+        List<Player> playerDtos = blackJackGame.getPlayers();
 
         assertThat(dealerDto.getCards().size()).isEqualTo(2);
         assertThat(playerDtos)
@@ -35,7 +32,7 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(List.of("name"));
         blackJackGame.distributeCardToPlayer("name");
 
-        GamerDto player = blackJackGame.getPlayerDtos().get(0);
+        Player player = blackJackGame.getPlayers().get(0);
         assertThat(player.getCards().size()).isEqualTo(1);
     }
 
@@ -44,8 +41,8 @@ class BlackJackGameTest {
     void dealerDistribution() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of("name"));
         blackJackGame.distributeAdditionalToDealer();
-        GamerDto dealerDto = blackJackGame.getDealerDto();
-        int cardNumberSum = dealerDto.getCardNumberSum();
+        Dealer dealer = blackJackGame.getDealer();
+        int cardNumberSum = dealer.getCardsNumberSum();
         assertThat(cardNumberSum).isGreaterThan(16);
     }
 }

@@ -1,6 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.GamerDto;
+import blackjack.controller.dto.GameResultDto;
+import blackjack.controller.dto.GamerDto;
 import blackjack.domain.card.Card;
 import blackjack.domain.result.BlackJackResult;
 
@@ -81,10 +82,10 @@ public class OutputView {
         System.out.println(builder);
     }
 
-    public static void printFinalResult(Map<BlackJackResult, Integer> dealerResult, Map<String, BlackJackResult> playerResult) {
+    public static void printFinalResult(GameResultDto gameResultDto) {
         System.out.println("## 최종 승패");
-        printFinalDealerResult(dealerResult);
-        printFinalPlayerResult(playerResult);
+        printFinalDealerResult(gameResultDto.getDealerResult());
+        printFinalPlayerResult(gameResultDto.getPlayerResults());
     }
 
     private static void printFinalDealerResult(Map<BlackJackResult, Integer> dealerResult) {
