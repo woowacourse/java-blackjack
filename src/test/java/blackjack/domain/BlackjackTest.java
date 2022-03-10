@@ -59,16 +59,6 @@ public class BlackjackTest {
         assertThat(blackjack.getDealer().getMyCards().size()).isEqualTo(3);
     }
 
-    @DisplayName("카드 한장 더 분배 테스트_플레이어")
-    @Test
-    void distributeOneMoreCardPlayer() {
-        NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(10));
-        Player player = blackjack.getPlayers().get(0);
-        blackjack.distributeAdditionalCardPlayer(numberGenerator, player, false);
-
-        assertThat(player.getMyCards().size()).isEqualTo(2);
-    }
-
     @DisplayName("최종 승패 기능 테스트")
     @Test
 

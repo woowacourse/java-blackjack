@@ -29,10 +29,8 @@ public class Blackjack {
         }
     }
 
-    public void distributeAdditionalCardPlayer(NumberGenerator numberGenerator, Player player, boolean flag) {
-        if (flag) {
-            player.addCard(dealer.handOutCard(numberGenerator));
-        }
+    public void distributeAdditionalCardPlayer(NumberGenerator numberGenerator, Player player) {
+        player.addCard(dealer.handOutCard(numberGenerator));
     }
 
     public List<Player> getPlayers() {

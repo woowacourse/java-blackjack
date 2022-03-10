@@ -20,7 +20,7 @@ public class BlackjackController {
         List<Player> people = blackjack.getPlayers();
         for (Player person : people) {
             while (InputView.askAdditionalCard(person)) {
-                blackjack.distributeAdditionalCardPlayer(new RandomNumberGenerator(), person, true);
+                blackjack.distributeAdditionalCardPlayer(new RandomNumberGenerator(), person);
                 OutputView.printCards(person);
             }
         }
