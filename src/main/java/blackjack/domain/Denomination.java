@@ -17,12 +17,31 @@ public enum Denomination {
     KING(10, "K"),
     ;
 
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int BONUS_ACE_SCORE = 11;
+
     private final int score;
     private final String name;
 
     Denomination(int score, String name) {
         this.score = score;
         this.name = name;
+    }
+
+    public static int addScore(Denomination denomination, int score) {
+        if (denomination == ACE) {
+            return calculateAceScore(score);
+        }
+
+        return denomination.score + score;
+    }
+
+    private static int calculateAceScore(int score) {
+        if ((score + BONUS_ACE_SCORE) > BLACKJACK_SCORE) {
+            return score + ACE.score;
+        }
+
+        return score + BONUS_ACE_SCORE;
     }
 
     public int getScore() {

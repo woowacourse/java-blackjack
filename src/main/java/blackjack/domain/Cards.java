@@ -13,9 +13,12 @@ public class Cards {
     }
 
     public int calculateTotalScore() {
-        return value.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+        int totalScore = 0;
+        for (Card card : value) {
+            totalScore = Denomination.addScore(card.getDenomination(), totalScore);
+        }
+
+        return totalScore;
     }
 
     public void combine(Card card) {

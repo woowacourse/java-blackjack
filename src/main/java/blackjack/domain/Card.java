@@ -45,10 +45,6 @@ public class Card {
         return this.denomination == denomination && this.suit == suit;
     }
 
-    public int getScore() {
-        return denomination.getScore();
-    }
-
     public Denomination getDenomination() {
         return denomination;
     }
