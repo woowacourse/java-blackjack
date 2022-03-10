@@ -1,8 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.WinningResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.WinningResult;
+import blackjack.dto.MatchResultDto;
 import blackjack.dto.ParticipantDto;
 
 import java.util.ArrayList;
@@ -45,15 +46,14 @@ public class OutputView {
             final String playerName = participantDto.getName();
             final String cardDetails = makeStringOfDistributedCards(participantDto);
             final int score = participantDto.getScore();
-            System.out.println(playerName + ": " + cardDetails + " - 결과: " + score);
-
+            printMessage(playerName + ": " + cardDetails + " - 결과: " + score);
         }
     }
 
     public void printDistributedCards(final ParticipantDto participantDto) {
         final String playerName = participantDto.getName();
         final String cardDetails = makeStringOfDistributedCards(participantDto);
-        System.out.println(playerName + ": " + cardDetails);
+        printMessage(playerName + ": " + cardDetails);
     }
 
     public void printMessageOfRequestContinuable(final Player player) {
@@ -64,14 +64,19 @@ public class OutputView {
         printMessage("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public void printWinningResults(final Map<String, WinningResult> winningResults) {
+    public void printMatchResult(final MatchResultDto resultDto) {
         printMessage("## 최종 승패");
 
-        // TODO 딜러 승패 출력
-        // TODO WinningResult 도메인 만들기
+        final Map<WinningResult, Integer> dealerResult = resultDto.getDealerResult();
 
-        for (Map.Entry<String, WinningResult> entry : winningResults.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue().getName());
+        final String dealerResultString = dealerResult.entrySet().stream()
+                .map(entry -> entry.getValue() + entry.getKey().getName())
+                .collect(Collectors.joining(" "));
+        printMessage("딜러: " + dealerResultString);
+
+        final Map<String, WinningResult> playerResult = resultDto.getPlayerResult();
+        for (Map.Entry<String, WinningResult> entry : playerResult.entrySet()) {
+            printMessage(entry.getKey() + ": " + entry.getValue().getName());
         }
     }
 

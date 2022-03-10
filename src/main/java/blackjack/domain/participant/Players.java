@@ -1,7 +1,8 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.WinningResult;
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.MatchResult;
+import blackjack.domain.result.WinningResult;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,14 +31,14 @@ public class Players {
         return players;
     }
 
-    public Map<String, WinningResult> judgeWinners(Dealer dealer) {
+    public MatchResult judgeWinners(Dealer dealer) {
         final Map<String, WinningResult> winningResults = new HashMap<>();
         for (Player player : players) {
             final String playerName = player.getName();
             final WinningResult winningResult = dealer.judgeWinner(player);
             winningResults.put(playerName, winningResult);
         }
-        return winningResults;
+        return new MatchResult(winningResults);
     }
 
     private void distributeCards(Deck deck) {

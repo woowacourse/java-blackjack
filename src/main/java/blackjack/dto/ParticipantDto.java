@@ -13,7 +13,7 @@ public class ParticipantDto {
     private final List<Card> cards;
     private final int score;
 
-    public ParticipantDto(final String name, final List<Card> cards, final int score) {
+    private ParticipantDto(final String name, final List<Card> cards, final int score) {
         this.name = name;
         this.cards = new ArrayList<>(cards);
         this.score = score;
