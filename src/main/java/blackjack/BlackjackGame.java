@@ -1,6 +1,5 @@
 package blackjack;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,5 +28,8 @@ public class BlackjackGame {
         if (dealer.shouldHaveMoreCard()) {
             dealer.putCard(deck.draw());
         }
+
+        Map<Outcome, List<Player>> gameResult = players.stream()
+                .collect(Collectors.groupingBy(player -> player.isWin(dealer.countCards())));
     }
 }
