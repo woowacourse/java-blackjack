@@ -1,39 +1,29 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
 
 public class Deck {
-    private List<Card> cards = new ArrayList<>();
+    public static final String NO_MORE_CARDS = "더이상 뽑을 수 있는 카드가 없습니다.";
+    private Stack<Card> cards = new Stack<>();
 
     public Deck() {
         for (Symbol symbol : Symbol.values()) {
-            addDenomination(symbol);
+            addCardWithDenomination(symbol);
         }
-    }
-
-    private void addDenomination(Symbol symbol) {
-        for (Denomination denomination : Denomination.values()) {
-            cards.add(new Card(symbol, denomination));
-        }
-    }
-
-    public int size() {
-        return cards.size();
+        Collections.shuffle(cards);
     }
 
     public Card draw() {
-        Collections.shuffle(cards);
-        Card card = cards.get(cards.size() - 1);
-        cards.remove(card);
-        return card;
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException(NO_MORE_CARDS);
+        }
+        return cards.pop();
     }
 
-    public List<Card> initialDraw() {
-        Collections.shuffle(cards);
-        List<Card> result = cards.subList(0, 2);
-        cards = cards.subList(2, size());
-        return result;
+    private void addCardWithDenomination(Symbol symbol) {
+        for (Denomination denomination : Denomination.values()) {
+            cards.add(new Card(symbol, denomination));
+        }
     }
 }
