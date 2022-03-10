@@ -5,6 +5,7 @@ import domain.card.Cards;
 import domain.game.GameResult;
 import domain.game.MatchResult;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 
 import java.util.List;
@@ -61,9 +62,9 @@ public class OutputView {
     }
 
     public static void printGameResult(GameResult gameResult) {
-        Map<Player, MatchResult> map = gameResult.getGameResult();
+        Map<Participant, MatchResult> map = gameResult.getGameResult();
         System.out.printf("딜러: %d승 %d패%n", gameResult.getDealerWinCount(), gameResult.getDealerLoseCount());
-        for (Player player : map.keySet()) {
+        for (Participant player : map.keySet()) {
             System.out.printf("%s: %s%n", player.getName(), gameResult.getMatchResult(player).getValue());
         }
     }

@@ -1,20 +1,19 @@
 package domain.game;
 
-import domain.participant.Dealer;
-import domain.participant.Player;
+import domain.participant.Participant;
 
 import java.util.*;
 
 public class GameResult {
 
-    private final Map<Player, MatchResult> gameResult = new LinkedHashMap<>();
+    private final Map<Participant, MatchResult> gameResult = new LinkedHashMap<>();
 
-    public GameResult(List<Player> players, Dealer dealer) {
+    public GameResult(List<Participant> players, Participant dealer) {
         initialGameResult(new ArrayList<>(players), dealer);
     }
 
-    private void initialGameResult(List<Player> players, Dealer dealer) {
-        for (Player player : players) {
+    private void initialGameResult(List<Participant> players, Participant dealer) {
+        for (Participant player : players) {
             if (playerWinCondition(player, dealer)) {
                 gameResult.put(player, MatchResult.WIN);
                 continue;
@@ -23,12 +22,12 @@ public class GameResult {
         }
     }
 
-    private boolean playerWinCondition(Player player, Dealer dealer) {
+    private boolean playerWinCondition(Participant player, Participant dealer) {
         return !player.getCards().isBust()
                 && (dealer.getCards().isBust() || dealer.getCards().sum() < player.getCards().sum());
     }
 
-    public MatchResult getMatchResult(Player player) {
+    public MatchResult getMatchResult(Participant player) {
         return gameResult.get(player);
     }
 
@@ -42,7 +41,7 @@ public class GameResult {
         return gameResult.size() - getDealerWinCount();
     }
 
-    public Map<Player, MatchResult> getGameResult() {
+    public Map<Participant, MatchResult> getGameResult() {
         return Collections.unmodifiableMap(gameResult);
     }
 

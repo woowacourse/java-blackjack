@@ -43,13 +43,17 @@ public class BlackJackGame {
         nowParticipant.drawCard(cardDistributor.distribute());
     }
 
-    public List<Participant> getPlayers() {
+    public GameResult createGameResult() {
+        return new GameResult(findPlayers(), findDealer());
+    }
+
+    public List<Participant> findPlayers() {
         return participants.stream()
                 .filter(participant -> participant instanceof Player)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public Participant getDealer() {
+    public Participant findDealer() {
         return participants.stream()
                 .filter(participant -> participant instanceof Dealer)
                 .findFirst()

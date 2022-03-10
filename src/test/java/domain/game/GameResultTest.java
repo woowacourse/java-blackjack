@@ -6,6 +6,7 @@ import domain.card.Denomination;
 import domain.card.Suit;
 import domain.participant.Dealer;
 import domain.participant.Name;
+import domain.participant.Participant;
 import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,8 +48,7 @@ class GameResultTest {
         Player player2 = new Player(new Name("abc2"), new Cards(getCardList(Denomination.EIGHT, Denomination.NINE)));    // 17
         Player player3 = new Player(new Name("abc3"), new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
         Dealer dealer = new Dealer(new Name("딜러"), new Cards(getCardList(Denomination.QUEEN, Denomination.NINE)));                  // 19
-
-        List<Player> players = Arrays.asList(player1, player2, player3);
+        List<Participant> players = Arrays.asList(player1, player2, player3);
         GameResult gameResult = new GameResult(players, dealer);
 
         assertThat(gameResult.getDealerWinCount()).isEqualTo(1);
@@ -62,7 +62,7 @@ class GameResultTest {
         Player player3 = new Player(new Name("abc3"), new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
         Dealer dealer = new Dealer(new Name("딜러"), new Cards(getCardList(Denomination.QUEEN, Denomination.NINE)));                  // 19
 
-        List<Player> players = Arrays.asList(player1, player2, player3);
+        List<Participant> players = Arrays.asList(player1, player2, player3);
         GameResult gameResult = new GameResult(players, dealer);
 
         assertThat(gameResult.getDealerLoseCount()).isEqualTo(2);
