@@ -2,7 +2,9 @@ package blackjack.controller;
 
 import blackjack.domain.BlackJackMachine;
 import blackjack.domain.CardDeck;
+import blackjack.domain.Choice;
 import blackjack.domain.Dealer;
+import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -18,6 +20,17 @@ public class BlackJackController {
         blackJackMachine.giveInitialCards(dealer, participants);
 
         OutputView.printInitialCards(dealer, participants);
+        for (Participant participant : participants) {
+            askAndGiveCardToParticipant(blackJackMachine, participant);
+        }
+    }
 
+    private void askAndGiveCardToParticipant(BlackJackMachine blackJackMachine, Participant participant) {
+        Choice choice;
+        do {
+            choice = InputView.getChoice(participant);
+            blackJackMachine.giveCardToParticipant(participant, choice);
+            OutputView.printParticipantCards(participant);
+        } while (choice == Choice.YES && participant.canAddCard());
     }
 }

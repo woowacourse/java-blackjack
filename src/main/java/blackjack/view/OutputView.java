@@ -35,7 +35,7 @@ public class OutputView {
         }
     }
 
-    private static void printParticipantCards(final Participant participant) {
+    public static void printParticipantCards(final Participant participant) {
         List<String> cards = new ArrayList<>();
         for (Card card : participant.getCards()) {
             cards.add(card.toString());
