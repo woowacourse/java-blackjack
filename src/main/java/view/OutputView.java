@@ -17,7 +17,10 @@ public class OutputView {
     private static final String DEALER_HIT_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String CARDS_SCORE_MESSAGE = " - 결과: ";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
-    private static final String DEALER_MESSAGE = "딜러: ";
+    private static final String DEALER_MESSAGE = "딜러: %d승 %d무 %d패";
+    private static final String WIN_MESSAGE = "승";
+    private static final String DRAW_MESSAGE = "무";
+    private static final String LOSE_MESSAGE = "패";
 
     private static final OutputView OUTPUT_VIEW = new OutputView();
 
@@ -75,17 +78,33 @@ public class OutputView {
         System.out.println(DEALER_HIT_CARD_MESSAGE);
     }
 
-    public void showResult(List<Integer> dealerResult, List<String> toNames,
+    public void showResult(List<Integer> dealerResult, List<String> playerNames,
         List<Result> playerResult) {
         System.out.println(FINAL_RESULT_MESSAGE);
-        System.out.println(
-            DEALER_MESSAGE + dealerResult.get(0) + Result.WIN.getMessage() + dealerResult.get(1)
-                + Result.DRAW.getMessage() + dealerResult.get(2)
-                + Result.LOSE.getMessage());
+        showDealerResult(dealerResult);
+        showPlayersResult(playerNames, playerResult);
+    }
 
-        for (int idx = 0; idx < toNames.size(); idx++) {
-            System.out.println(toNames.get(idx) + DELIMITER + playerResult.get(idx).getMessage());
+    private void showDealerResult(List<Integer> dealerResult) {
+        System.out.printf(DEALER_MESSAGE, dealerResult.get(0), dealerResult.get(1),
+            dealerResult.get(2));
+        System.out.print(System.lineSeparator());
+    }
+
+    private void showPlayersResult(List<String> playerNames, List<Result> playerResult) {
+        for (int idx = 0; idx < playerNames.size(); idx++) {
+            System.out.println(playerNames.get(idx) + DELIMITER + showPlayerResult(playerResult.get(idx)));
         }
+    }
+
+    private String showPlayerResult(Result playerResult) {
+        if (playerResult == Result.WIN) {
+            return WIN_MESSAGE;
+        }
+        if (playerResult == Result.LOSE) {
+            return LOSE_MESSAGE;
+        }
+        return DRAW_MESSAGE;
     }
 
     public void printError(String errorMessage) {
