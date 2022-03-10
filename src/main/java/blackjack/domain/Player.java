@@ -44,11 +44,11 @@ public class Player {
             }
             return Score.WIN;
         }
+        if (this.isBust() || this.getTotalNumber() < player.getTotalNumber()) {
+            return Score.LOSE;
+        }
         if (this.getTotalNumber() > player.getTotalNumber()) {
             return Score.WIN;
-        }
-        if (this.getTotalNumber() < player.getTotalNumber()) {
-            return Score.LOSE;
         }
         return Score.DRAW;
     }
