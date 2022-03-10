@@ -50,4 +50,8 @@ public class Score {
     public boolean moreThan(Score other) {
         return getValue() > other.getValue();
     }
+
+    public Score plus(Score score) {
+        return new Score(value + score.getValue());
+    }
 }

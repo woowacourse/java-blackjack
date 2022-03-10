@@ -25,19 +25,17 @@ final class MixHandCards extends ChangeableCards {
 
     private List<Score> possibleScores() {
         return softHands().stream()
-                .map(Score::new)
                 .collect(toUnmodifiableList());
     }
 
-    private List<Integer> softHands() {
+    private List<Score> softHands() {
         return IntStream.rangeClosed(1, numberOfAce())
-                .map(value -> diffSoftAndHard(Rank.ACE) * value + hardHandScore().getValue())
-                .boxed()
+                .mapToObj(value -> hardHandScore().plus(new Score(diffSoftAndHard() * value)))
                 .collect(toList());
     }
 
-    private int diffSoftAndHard(Rank rank) {
-        return rank.soft() - rank.hard();
+    private int diffSoftAndHard() {
+        return Rank.ACE.soft() - Rank.ACE.hard();
     }
 
     private int numberOfAce() {
