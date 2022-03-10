@@ -2,13 +2,11 @@ package blackjack;
 
 import static blackjack.Rank.*;
 import static blackjack.Suit.*;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.cards.Cards;
 import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -77,7 +75,7 @@ public class DealerTest {
     @DisplayName("카드 발급 가능 여부 확인 테스트")
     void possibleTakeCard(List<Card> cards, boolean expect) {
         Dealer dealer = new Dealer(cards.toArray(Card[]::new));
-        assertThat(dealer.isPossibleTakeCard()).isEqualTo(expect);
+        assertThat(dealer.isHit()).isEqualTo(expect);
     }
 
     private static Stream<Arguments> provideCardsForDealer() {
@@ -90,7 +88,6 @@ public class DealerTest {
     }
 
     @Test
-    @Disabled
     @DisplayName("딜러 카드 발급")
     void takeCards() {
         Dealer dealer = new Dealer(new Card(JACK, DIAMOND), new Card(THREE, CLOVER));

@@ -12,7 +12,7 @@ public class Dealer {
     }
 
     public void take(Card card) {
-
+        cards.take(card);
     }
 
     public Result match(Cards cards) {
@@ -40,7 +40,7 @@ public class Dealer {
         return Result.DRAW;
     }
 
-    public boolean isPossibleTakeCard() {
+    public boolean isHit() {
         return cards.score().lessThan(new Score(17));
     }
 }
