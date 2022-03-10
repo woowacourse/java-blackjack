@@ -22,10 +22,12 @@ import org.junit.jupiter.api.Test;
 
 public class BlackjackGameTest {
 
+    private static final List<String> playerNames = List.of("hudi", "jeong");
+
     @DisplayName("생성자는 1명 이상의 플레이어명을 가변 인자로 받아 게임을 생성한다.")
     @Test
     void constructor_initsGameWithPlayerNames() {
-        BlackjackGame blackjackGame = new BlackjackGame(new CardDeck(), "hudi", "jeong");
+        BlackjackGame blackjackGame = new BlackjackGame(new CardDeck(), playerNames);
 
         List<Player> participants = blackjackGame.getParticipants();
 
@@ -37,7 +39,7 @@ public class BlackjackGameTest {
     @DisplayName("생성자에 플레이어명이 입력되지 않으면 예외가 발생한다.")
     @Test
     void constructor_throwsExceptionOnNoPlayerNameInput() {
-        assertThatThrownBy(() -> new BlackjackGame(new CardDeck()))
+        assertThatThrownBy(() -> new BlackjackGame(new CardDeck(), List.of()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어가 없는 게임은 존재할 수 없습니다.");
     }
@@ -46,8 +48,8 @@ public class BlackjackGameTest {
     @Test
     void giveCardToDealer_returnTrueIfDealerReceivedExtraCard() {
         CardStack cards = CardStackGenerator.ofReverse(
-                CLOVER6, CLOVER10, CLOVER2, CLOVER3, CLOVER4, CLOVER5);
-        BlackjackGame blackjackGame = new BlackjackGame(cards, "hudi", "jeong");
+                CLOVER6, CLOVER10, CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER_KING);
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
 
         boolean actual = blackjackGame.giveCardToDealer();
 
@@ -58,8 +60,8 @@ public class BlackjackGameTest {
     @Test
     void giveCardToDealer_returnFalseIfDealerDidNotReceiveExtraCard() {
         CardStack cards = CardStackGenerator.ofReverse(
-                CLOVER7, CLOVER10, CLOVER2, CLOVER3, CLOVER4, CLOVER5);
-        BlackjackGame blackjackGame = new BlackjackGame(cards, "hudi", "jeong");
+                CLOVER7, CLOVER10, CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER_KING);
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
 
         boolean actual = blackjackGame.giveCardToDealer();
 
@@ -71,7 +73,7 @@ public class BlackjackGameTest {
     void popCard_returnPoppedCard() {
         CardStack cards = CardStackGenerator.ofReverse(
                 CLOVER6, CLOVER10, CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER_KING);
-        BlackjackGame blackjackGame = new BlackjackGame(cards, "hudi", "jeong");
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
 
         Card actual = blackjackGame.popCard();
 

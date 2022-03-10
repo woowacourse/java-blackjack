@@ -6,7 +6,6 @@ import blackjack.domain.card.CardStack;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +17,7 @@ public class BlackjackGame {
     private final Dealer dealer;
     private final List<Player> participants = new ArrayList<>();
 
-    public BlackjackGame(CardStack cardDeck, String... playerNames) {
+    public BlackjackGame(CardStack cardDeck, List<String> playerNames) {
         validatePlayerNames(playerNames);
 
         this.cardDeck = cardDeck;
@@ -26,14 +25,14 @@ public class BlackjackGame {
         participants.addAll(initializePlayers(playerNames));
     }
 
-    private List<Player> initializePlayers(String[] playerNames) {
-        return Arrays.stream(playerNames)
+    private List<Player> initializePlayers(List<String> playerNames) {
+        return playerNames.stream()
                 .map(name -> new Player(name, initializeCardBundle()))
                 .collect(Collectors.toList());
     }
 
-    private void validatePlayerNames(String[] playerNames) {
-        if (playerNames.length == 0) {
+    private void validatePlayerNames(List<String> playerNames) {
+        if (playerNames.size() == 0) {
             throw new IllegalArgumentException(NO_PLAYER_EXCEPTION_MESSAGE);
         }
     }
