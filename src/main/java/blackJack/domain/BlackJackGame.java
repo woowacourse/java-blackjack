@@ -31,6 +31,10 @@ public class BlackJackGame {
         }
     }
 
+    public Participants getParticipants() {
+        return participants;
+    }
+
     public Dealer getDealer() {
         return participants.getDealer();
     }

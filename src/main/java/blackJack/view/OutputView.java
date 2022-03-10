@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import blackJack.domain.participant.Participants;
 import blackJack.domain.result.WinOrLose;
 import blackJack.domain.card.Card;
 import blackJack.domain.participant.Dealer;
@@ -33,7 +34,10 @@ public class OutputView {
         System.out.println(error.getMessage());
     }
 
-    public static void printInitCardResult(Dealer dealer, List<Player> players) {
+    public static void printInitCardResult(Participants participants) {
+        Dealer dealer = participants.getDealer();
+        List<Player> players = participants.getPlayers();
+
         printInitCardMessage(dealer, players);
         printInitHoldCardMessage(dealer, players);
         System.out.println();
@@ -69,7 +73,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameResult(Dealer dealer, List<Player> players) {
+    public static void printGameResult(Participants participants) {
+        Dealer dealer = participants.getDealer();
+        List<Player> players = participants.getPlayers();
+
         printParticipantGameResult(dealer);
         for (Player player : players) {
             printParticipantGameResult(player);

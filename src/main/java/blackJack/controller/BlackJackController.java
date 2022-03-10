@@ -1,7 +1,6 @@
 package blackJack.controller;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import blackJack.domain.BlackJackGame;
@@ -16,14 +15,13 @@ import blackJack.view.OutputView;
 public class BlackJackController {
 
     public void run() {
-        Participants participants = getParticipants();
-        BlackJackGame blackJackGame = new BlackJackGame(participants);
+        BlackJackGame blackJackGame = new BlackJackGame(getParticipants());
         blackJackGame.firstCardDispensing();
-        OutputView.printInitCardResult(blackJackGame.getDealer(), blackJackGame.getPlayers());
+        OutputView.printInitCardResult(blackJackGame.getParticipants());
         doPlayerGame(blackJackGame);
         doDealerGame(blackJackGame);
         OutputView.printDealerReceiveCardCount(blackJackGame.getDealer());
-        OutputView.printGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers());
+        OutputView.printGameResult(blackJackGame.getParticipants());
         OutputView.printWinOrLoseResult(blackJackGame.getDealer(),
             BlackJackGameResult.ofGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers()));
     }
