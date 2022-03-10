@@ -1,8 +1,9 @@
 package blackjack.controller;
 
-import blackjack.domain.CardDeck;
+import blackjack.domain.Statistic;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.GameResult;
-import blackjack.domain.Name;
+import blackjack.domain.human.Name;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
@@ -31,52 +32,10 @@ public class GameController {
 
         // 포인트 계산
         OutputView.printCardAndPoint(players, dealer);
+        Statistic.of(dealer,players).calculate();
 
-        calculateStatistic(dealer, players);
-
+        //게임 승패 출력
         printGameResult(players);
-    }
-
-    private void calculateStatistic(Dealer dealer, Players players) {
-        int dealerPoint = dealer.getPoint();
-        // 초과
-        if (dealerPoint > 21) {
-            int playerWinCount = 0;
-            for (Player player : players.getPlayers()) {
-                int point = player.getPoint();
-                if (point <= 21) {
-                    // 플레이어 승리
-                    player.setResult(GameResult.WIN);
-                    playerWinCount++;
-                    continue;
-                }
-                // 플레이어 패배
-                player.setResult(GameResult.LOSE);
-            }
-            if (playerWinCount == 0) {
-                // 플레이어 패배
-                for (Player player : players.getPlayers()) {
-                    player.setResult(GameResult.LOSE);
-                }
-            }
-        }
-        if (dealerPoint <= 21) {
-            for (Player player : players.getPlayers()) {
-                int point = player.getPoint();
-                if (point > 21 || dealerPoint > point) {
-                    // 플레이어 패배
-                    player.setResult(GameResult.LOSE);
-                    continue;
-                }
-                if (dealerPoint == point) {
-                    // 무승부
-                    player.setResult(GameResult.DRAW);
-                    continue;
-                }
-                // 플레이어 승리
-                player.setResult(GameResult.WIN);
-            }
-        }
     }
 
     private void addCardToDealer(Dealer dealer) {
@@ -121,14 +80,4 @@ public class GameController {
             flag = false;
         }
     }
-
-//    public void questionOneMoreCard(Player player) {
-//        while (player.isOneMoreCard()) {
-//            if (InputView.inputOneMoreCard(player.getName())) {
-//                player.addCard(CardDeck.giveCard());
-//                continue;
-//            }
-//            player.toNoCardNeeded();
-//        }
-//    }
 }
