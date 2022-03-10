@@ -34,6 +34,7 @@ public class GameController {
         ResultView.printTotalCardResult(dealer, users);
 
         GameResult gameResult = GameResult.createPlayerGameResult(dealer, users);
+        ResultView.printGameResult(gameResult);
     }
 
     private void askReceiveCardToUsers(List<Player> players) {

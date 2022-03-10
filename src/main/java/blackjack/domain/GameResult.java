@@ -9,16 +9,16 @@ import java.util.Map;
 public class GameResult {
 
     private final Map<String, Result> userResult;
-    private final Map<Result, Integer> dealerResult;
+    private final HashMap<Result, Integer> dealerResult;
 
-    private GameResult(Map<String, Result> userResult, Map<Result, Integer> dealerResult) {
+    private GameResult(Map<String, Result> userResult, HashMap<Result, Integer> dealerResult) {
         this.userResult = userResult;
         this.dealerResult = dealerResult;
     }
 
     public static GameResult createPlayerGameResult(Player dealer, List<Player> users) {
         Map<String, Result> userResult = new HashMap<>();
-        Map<Result, Integer> dealerResult = initializeDealerResultCount();
+        HashMap<Result, Integer> dealerResult = initializeDealerResultCount();
         for (Player user : users) {
             userResult.put(user.getName(), user.findResult(dealer));
             dealerResult.compute(dealer.findResult(user), (result, count) -> count + 1);
@@ -26,11 +26,11 @@ public class GameResult {
         return new GameResult(userResult, dealerResult);
     }
 
-    private static Map<Result, Integer> initializeDealerResultCount() {
+    private static HashMap<Result, Integer> initializeDealerResultCount() {
         return new HashMap<>(Map.ofEntries(
                 Map.entry(Result.WIN, 0),
-                Map.entry(Result.LOSE, 0),
-                Map.entry(Result.DRAW, 0)
+                Map.entry(Result.DRAW, 0),
+                Map.entry(Result.LOSE, 0)
         ));
     }
 

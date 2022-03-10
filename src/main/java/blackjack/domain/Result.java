@@ -2,9 +2,15 @@ package blackjack.domain;
 
 public enum Result {
 
-    WIN,
-    LOSE,
-    DRAW;
+    WIN("승"),
+    DRAW("무"),
+    LOSE("패");
+
+    private final String result;
+
+    Result(String result) {
+        this.result = result;
+    }
 
     public static Result findResult(int myScore, int otherScore) {
         if (myScore > 21 && otherScore > 21) {
@@ -27,5 +33,9 @@ public enum Result {
             return LOSE;
         }
         return DRAW;
+    }
+
+    public String getResult() {
+        return result;
     }
 }

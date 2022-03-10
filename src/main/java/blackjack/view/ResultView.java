@@ -1,6 +1,9 @@
 package blackjack.view;
 
+import blackjack.domain.GameResult;
+import blackjack.domain.Result;
 import blackjack.domain.player.Player;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -47,6 +50,27 @@ public class ResultView {
         System.out.println(makeUserCardsToString(dealer) + " - 결과: " + dealer.getTotalScore());
         for (Player user : users) {
             System.out.println(makeUserCardsToString(user) + " - 결과: " + user.getTotalScore());
+        }
+    }
+
+    public static void printGameResult(GameResult gameResult) {
+        System.out.println();
+        System.out.println("##최종 승패");
+        printDealerGameResult(gameResult.getDealerResult());
+        printUsersGameResult(gameResult.getUserResult());
+    }
+
+    private static void printDealerGameResult(Map<Result, Integer> dealerResult) {
+        System.out.print("딜러: ");
+        for (Result result : Result.values()) {
+            System.out.print(dealerResult.get(result) + result.getResult() + " ");
+        }
+        System.out.println();
+    }
+
+    private static void printUsersGameResult(Map<String, Result> userResult) {
+        for (String userName : userResult.keySet()) {
+            System.out.println(userName + ": " + userResult.get(userName).getResult());
         }
     }
 }
