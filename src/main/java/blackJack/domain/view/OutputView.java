@@ -16,6 +16,9 @@ public class OutputView {
         NEWLINE.concat("%s와 %s에게 2장의 카드를 나누었습니다.").concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD =
         "%s 카드: %s".concat(NEWLINE);
+    private static final String OUTPUT_MESSAGE_DEALER_RECEIVE_CARD_COUNT =
+        NEWLINE.concat("%s는 %d장의 카드를 더 받았습니다.").concat(NEWLINE);
+    private static final int DEFAULT_DEALER_CARD_SIZE = 2;
 
     public static void printInitCardResult(Dealer dealer, List<Player> players) {
         printInitCardMessage(dealer, players);
@@ -45,5 +48,11 @@ public class OutputView {
             .map(card -> card.getDenominationName() + card.getSymbolName())
             .collect(Collectors.joining(JOINING_DELIMITER));
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, player.getName(), playerCardsInfo);
+    }
+
+    public static void printDealerReceiveCardCount(Dealer dealer) {
+        System.out.printf(OUTPUT_MESSAGE_DEALER_RECEIVE_CARD_COUNT,
+            dealer.getName(), dealer.getCards().size() - DEFAULT_DEALER_CARD_SIZE);
+        System.out.println();
     }
 }

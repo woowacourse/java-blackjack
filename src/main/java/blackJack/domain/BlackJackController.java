@@ -16,6 +16,8 @@ public class BlackJackController {
         blackJackGame.firstCardDispensing();
         OutputView.printInitCardResult(blackJackGame.getDealer(), blackJackGame.getPlayers());
         doPlayerGame(blackJackGame);
+        doDealerGame(blackJackGame);
+        OutputView.printDealerReceiveCardCount(blackJackGame.getDealer());
     }
 
     private BlackJackGame initBlackJackGame() {
@@ -50,6 +52,13 @@ public class BlackJackController {
             return YesOrNo.YES == YesOrNo.find(choice);
         } catch (IllegalArgumentException e) {
             return getOneMoreCard(player);
+        }
+    }
+
+    private void doDealerGame(BlackJackGame blackJackGame){
+        Dealer dealer = blackJackGame.getDealer();
+        while(blackJackGame.hasNextTurn(dealer)){
+            blackJackGame.distributeCard(dealer, 1);
         }
     }
 }
