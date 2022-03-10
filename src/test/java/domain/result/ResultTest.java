@@ -1,4 +1,4 @@
-package domain;
+package domain.result;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
@@ -8,6 +8,13 @@ import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Players;
 
 public class ResultTest {
 	Card card_A = new Card(Rank.RANK_A, Suit.CLOVER);

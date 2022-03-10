@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
@@ -13,6 +13,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 
 public class ParticipantTest {
 

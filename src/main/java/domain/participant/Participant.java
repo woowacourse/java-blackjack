@@ -1,8 +1,10 @@
-package domain;
+package domain.participant;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import domain.card.Card;
 
 public class Participant {
 	protected static final String SHOW_HAND_FORMAT = "%s카드: %s";

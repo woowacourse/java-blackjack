@@ -1,6 +1,8 @@
-package domain;
+package domain.result;
 
 import java.util.Map;
+
+import domain.participant.Name;
 
 public class Result {
 

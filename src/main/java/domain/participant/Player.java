@@ -1,6 +1,9 @@
-package domain;
+package domain.participant;
 
 import java.util.List;
+
+import domain.card.Card;
+import domain.result.Versus;
 
 public class Player extends Participant {
 	public Player(Name name, List<Card> hand) {

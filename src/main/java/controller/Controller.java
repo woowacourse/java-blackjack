@@ -8,13 +8,13 @@ import java.util.stream.IntStream;
 
 import org.jetbrains.annotations.NotNull;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Deck;
-import domain.InitCards;
-import domain.Name;
-import domain.Players;
-import domain.Result;
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.InitCards;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Players;
+import domain.result.Result;
 import view.InputView;
 import view.OutputView;
 

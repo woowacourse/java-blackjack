@@ -1,6 +1,8 @@
-package domain;
+package domain.participant;
 
 import java.util.List;
+
+import domain.card.Card;
 
 public class Dealer extends Participant {
 
