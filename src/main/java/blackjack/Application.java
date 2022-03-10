@@ -1,7 +1,11 @@
 package blackjack;
 
+import java.util.List;
+
 public class Application {
     public static void main(String[] args) {
-        System.out.println(InputView.inputNames());
+        BlackjackGame blackjackGame = new BlackjackGame(InputView.inputNames());
+        List<Player> players = blackjackGame.getPlayers();
+        OutputView.printPlayerCards(players);
     }
 }

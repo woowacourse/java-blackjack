@@ -51,4 +51,8 @@ public class Card {
     public Number getNumber() {
         return this.number;
     }
+
+    public Suit getSuit() {
+        return suit;
+    }
 }

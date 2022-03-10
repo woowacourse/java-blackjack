@@ -20,4 +20,12 @@ public class Player {
     public Outcome isWin(int dealerTotal) {
         return Outcome.match(dealerTotal, countCards());
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public HoldCards getHoldCards() {
+        return holdCards;
+    }
 }

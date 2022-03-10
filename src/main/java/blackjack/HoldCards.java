@@ -22,4 +22,8 @@ public class HoldCards {
                 .map(Card::getNumber)
                 .collect(Collectors.toList()));
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }

@@ -40,4 +40,8 @@ public class BlackjackGame {
         return players.stream()
                 .collect(Collectors.groupingBy(player -> player.isWin(dealer.countCards())));
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

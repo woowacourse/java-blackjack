@@ -4,25 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Number {
-    ACE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7),
-    EIGHT(8),
-    NINE(9),
-    TEN(10),
-    JACK(10),
-    QUEEN(10),
-    KING(10),
-    HIDDEN_ACE(11);
+    ACE(1, "A"),
+    TWO(2, "2"),
+    THREE(3, "3"),
+    FOUR(4, "4"),
+    FIVE(5, "5"),
+    SIX(6, "6"),
+    SEVEN(7, "7"),
+    EIGHT(8, "8"),
+    NINE(9, "9"),
+    TEN(10, "10"),
+    JACK(10, "J"),
+    QUEEN(10, "Q"),
+    KING(10, "K"),
+    HIDDEN_ACE(11, "NONE");
 
     private final int value;
+    private final String name;
 
-    Number(int value) {
+    Number(int value, String name) {
         this.value = value;
+        this.name = name;
     }
 
     public static int sum(List<Number> numbers) {
@@ -47,4 +49,7 @@ public enum Number {
         return numbers.size() - 1 == index;
     }
 
+    public String getName() {
+        return name;
+    }
 }
