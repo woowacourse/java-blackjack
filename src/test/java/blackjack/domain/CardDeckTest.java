@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import static blackjack.testutil.CardFixtureGenerator.pollCards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -8,12 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardDeckTest {
-
-    private void pollCards(final CardDeck cardDeck, final int pollCount) {
-        for (int i = 0; i < pollCount; i++) {
-            cardDeck.provideCard();
-        }
-    }
 
     @Test
     @DisplayName("초기 카드 2장 제공시, 남은 카드가 2장 보다 적으면 예외를 발생시킨다.")

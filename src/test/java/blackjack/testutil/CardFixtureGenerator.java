@@ -1,5 +1,6 @@
 package blackjack.testutil;
 
+import blackjack.domain.CardDeck;
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,5 +15,11 @@ public class CardFixtureGenerator {
         cards.addAll(Arrays.stream(remainCard)
                 .collect(Collectors.toList()));
         return cards;
+    }
+
+    public static void pollCards(final CardDeck cardDeck, final int pollCount) {
+        for (int i = 0; i < pollCount; i++) {
+            cardDeck.provideCard();
+        }
     }
 }
