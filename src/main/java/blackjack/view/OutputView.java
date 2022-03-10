@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.model.Card;
 import blackjack.model.Dealer;
+import blackjack.model.Gamer;
 import blackjack.model.Player;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,36 +10,48 @@ import java.util.stream.Collectors;
 public class OutputView {
     private OutputView() {}
 
-    public static void printOpenCard(Dealer dealer, List<Player> gamers) {
+    public static void printOpenCard(Dealer dealer, List<Gamer> gamers) {
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.name(), gamerNames(gamers));
-        System.out.printf("%s: %s%n", dealer.name(), openCards(dealer));
+        System.out.printf("%s: %s%n", dealer.name(), openCards(dealer.openCards()));
         for (Player gamer : gamers) {
-            System.out.printf("%s카드: %s%n", gamer.name(), openCards(gamer));
+            System.out.printf("%s카드: %s%n", gamer.name(), openCards(gamer.openCards()));
         }
     }
 
-    public static void printCard(Player player) {
-        System.out.printf("%s: %s%n", player.name(), cards(player));
-    }
-
-    private static String gamerNames(List<Player> gamers) {
+    private static String gamerNames(List<Gamer> gamers) {
         return gamers.stream()
             .map(Player::name)
             .collect(Collectors.joining(", "));
     }
 
-    private static String cards(Player player) {
-        return player.cards().stream().map(card -> card(card)).collect(Collectors.joining(", "));
+    private static String openCards(List<Card> openCard) {
+        return openCard.stream()
+            .map(OutputView::cardText)
+            .collect(Collectors.joining(", "));
     }
 
-    private static String openCards(Player player) {
-        return player.openCards().stream().map(card -> card(card)).collect(Collectors.joining(", "));
-    }
-
-    private static String card(Card card) {
+    private static String cardText(Card card) {
         return card.rank().symbol() + card.suit().symbol();
     }
 
+    public static void printCard(Player player) {
+        System.out.printf("%s: %s%n", player.name(), takenCards(player));
+    }
+
+    private static String takenCards(Player player) {
+        return player.cards().stream()
+            .map(OutputView::cardText)
+            .collect(Collectors.joining(", "));
+    }
+
     public static void printDealerTakeCardMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printTotalScore(Dealer dealer, List<Gamer> gamers) {
+        System.out.printf("%s 카드: %s - 결과: %d%n", dealer.name(), takenCards(dealer), dealer.score().getValue());
+        for (Player player : gamers) {
+            System.out.printf("%s 카드: %s - 결과: %d%n", player.name(), takenCards(player), player.score().getValue());
+        }
     }
 }
