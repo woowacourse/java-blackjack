@@ -11,7 +11,7 @@ class NameTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"", " "})
-    @DisplayName("이름은 null이거나 빈 문자열일 수 없다.")
+    @DisplayName("이름은 빈 문자열일 수 없다.")
     void notNullAndEmpty(String input) {
         // then
         assertThatThrownBy(() -> new Name(input)).isInstanceOf(IllegalArgumentException.class)
