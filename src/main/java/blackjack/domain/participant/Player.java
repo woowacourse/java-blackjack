@@ -3,26 +3,24 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.game.GameOutcome;
+import blackjack.domain.state.State;
 import java.util.List;
 import java.util.Objects;
 
 public class Player {
 
-    private final Cards owningCards;
     private final String name;
-    private boolean turnState;
+    private State state;
 
-    private Player(final String name, final boolean turnState, final Cards owningCards) {
+    private Player(final String name, final State state) {
         Objects.requireNonNull(name, "플레이어의 이름은 null이 들어올 수 없습니다.");
-        Objects.requireNonNull(owningCards, "보유 카드에는 null이 들어올 수 없습니다.");
         validateEmptyName(name);
-        this.owningCards = owningCards;
         this.name = name;
-        this.turnState = turnState;
+        this.state = state;
     }
 
-    public Player(final String name, final boolean turnState, final List<Card> owningCards) {
-        this(name, turnState, new Cards(owningCards));
+    public Player(final String name, final List<Card> cards) {
+        this(name, State.create(new Cards(cards)));
     }
 
     private void validateEmptyName(final String name) {
@@ -32,48 +30,34 @@ public class Player {
     }
 
     public boolean canDraw() {
-        return turnState;
+        return !state.isFinished();
     }
 
     public void draw(final Card card) {
-        validateEndTurn();
-        owningCards.addCard(card);
-        checkBust();
+        state = state.draw(card);
     }
 
-    private void validateEndTurn() {
-        if (!canDraw()) {
-            throw new IllegalStateException("턴이 종료되었으면 카드를 받을 수 없습니다.");
-        }
-    }
-
-    private void checkBust() {
-        if (owningCards.isBust()) {
-            endTurn();
-        }
-    }
-
-    public void endTurn() {
-        turnState = false;
+    public void stay() {
+        state = state.stay();
     }
 
     public int calculateResultScore() {
-        validateCanCalculateResultScore();
-        return owningCards.calculateScore();
+        checkTurnIsOver();
+        return state.cards().calculateScore();
     }
 
-    private void validateCanCalculateResultScore() {
+    private void checkTurnIsOver() {
         if (canDraw()) {
             throw new IllegalStateException("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
         }
     }
 
     public GameOutcome fightResult(final Dealer dealer) {
-        return owningCards.fightResult(new Cards(dealer.getCards()));
+        return state.compare(State.create(new Cards(dealer.getCards())));
     }
 
     public List<Card> getCards() {
-        return List.copyOf(owningCards.cards());
+        return List.copyOf(state.cards().values());
     }
 
     public String getName() {

@@ -37,7 +37,7 @@ public class Players {
 
     public void turnToNextPlayer() {
         validateAllTurnEnd();
-        currentTurnPlayer().endTurn();
+        currentTurnPlayer().stay();
         currentTurnIndex++;
     }
 
@@ -58,15 +58,15 @@ public class Players {
         return PlayerInfo.playerToInfo(currentPlayer);
     }
 
+    private Player currentTurnPlayer() {
+        validateAllTurnEnd();
+        return values.get(currentTurnIndex);
+    }
+
     private void checkCanTurnNext(final Player currentPlayer) {
         if (!currentPlayer.canDraw()) {
             currentTurnIndex++;
         }
-    }
-
-    private Player currentTurnPlayer() {
-        validateAllTurnEnd();
-        return values.get(currentTurnIndex);
     }
 
     public PlayerInfo getCurrentTurnPlayerInfo() {

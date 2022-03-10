@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.card.CardNumber.A;
 import static blackjack.domain.card.CardNumber.FIVE;
 import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardNumber.TEN;
@@ -26,7 +27,7 @@ public class PlayerTest {
     @NullSource
     @DisplayName("플레이어의 이름에 null이 들어올 경우 예외가 발생해야 한다.")
     void createExceptionByNull(String input) {
-        assertThatThrownBy(() -> new Player(input, true, new ArrayList<>()))
+        assertThatThrownBy(() -> new Player(input, new ArrayList<>()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("플레이어의 이름은 null이 들어올 수 없습니다.");
     }
@@ -35,7 +36,7 @@ public class PlayerTest {
     @ValueSource(strings = {"", " "})
     @DisplayName("플레이어의 이름에 공백이 들어올 경우 예외가 발생해야 한다.")
     void createExceptionByEmpty(String input) {
-        assertThatThrownBy(() -> new Player(input, true, new ArrayList<>()))
+        assertThatThrownBy(() -> new Player(input, new ArrayList<>()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 이름은 공백이 들어올 수 없습니다.");
     }
@@ -47,41 +48,32 @@ public class PlayerTest {
         @Test
         @DisplayName("가능한 경우 true를 반환한다.")
         void canDraw() {
-            final Player player = new Player("user", true, new ArrayList<>());
+            final Player player = new Player("user", Arrays.asList(Card.of(SPADE, FIVE), Card.of(SPADE, KING)));
             assertTrue(player.canDraw());
         }
 
         @Test
         @DisplayName("불가능한 경우 false를 반환한다.")
         void cannotDraw() {
-            final Player player = new Player("user", false, new ArrayList<>());
+            final Player player = new Player("user", Arrays.asList(Card.of(SPADE, A), Card.of(SPADE, KING)));
             assertFalse(player.canDraw());
         }
     }
 
     @Test
-    @DisplayName("드로우가 불가능한데, 카드를 받으려 하면 예외를 발생시킨다.")
-    void drawException() {
-        final Player player = new Player("user", false, new ArrayList<>());
-        assertThatThrownBy(() -> player.draw(Card.cards().get(0)))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("턴이 종료되었으면 카드를 받을 수 없습니다.");
-    }
-
-    @Test
     @DisplayName("카드를 받을 수 있다.")
     void draw() {
-        final Player player = new Player("user", true, new ArrayList<>());
+        final Player player = new Player("user", new ArrayList<>());
         final Card card = Card.cards().get(0);
         player.draw(card);
         assertThat(player.getCards()).containsExactly(card);
     }
 
     @Test
-    @DisplayName("카드를 받은 후, 버스타가 되면 종료 상태가 된다.")
+    @DisplayName("카드를 받은 후, 버스트가 되면 종료 상태가 된다.")
     void drawBust() {
         final List<Card> cards = new ArrayList<>(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, KING)));
-        final Player player = new Player("user", true, cards);
+        final Player player = new Player("user", cards);
         player.draw(Card.of(SPADE, FIVE));
         assertFalse(player.canDraw());
     }
@@ -89,15 +81,15 @@ public class PlayerTest {
     @Test
     @DisplayName("턴을 종료할 수 있다.")
     void endTurn() {
-        final Player player = new Player("user", false, new ArrayList<>());
-        player.endTurn();
+        final Player player = new Player("user", new ArrayList<>());
+        player.stay();
         assertFalse(player.canDraw());
     }
 
     @Test
     @DisplayName("턴이 종료되지 않은 경우에 카드의 합을 계산하려하면 예외를 발생시킨다.")
     void calculateResultScoreExceptionByNotEndTurn() {
-        final Player player = new Player("user", true, new ArrayList<>());
+        final Player player = new Player("user", new ArrayList<>());
         assertThatThrownBy(player::calculateResultScore)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");

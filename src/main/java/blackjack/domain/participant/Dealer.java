@@ -51,7 +51,7 @@ public class Dealer {
 
     public List<Card> getCards() {
         validateEndTurn();
-        return cards.cards();
+        return cards.values();
     }
 
     private void validateEndTurn() {
