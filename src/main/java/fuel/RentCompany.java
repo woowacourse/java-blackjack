@@ -26,7 +26,7 @@ public class RentCompany {
 
     public String generateReport() {
         return cars.stream()
-                .map(Car::reportCarInfo)
+                .map(Car::getCarReport)
                 .collect(Collectors.joining("\n"));
     }
 }
