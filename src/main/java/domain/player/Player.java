@@ -1,5 +1,7 @@
 package domain.player;
 
+import static java.util.Collections.unmodifiableList;
+
 import domain.card.PlayingCard;
 import domain.card.PlayingCards;
 import java.util.List;
@@ -31,7 +33,7 @@ public abstract class Player {
     }
 
     public List<PlayingCard> getCards() {
-        return playingCards.getPlayingCards();
+        return unmodifiableList(playingCards.getPlayingCards());
     }
 
     @Override
