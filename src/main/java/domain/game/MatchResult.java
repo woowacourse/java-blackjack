@@ -3,6 +3,7 @@ package domain.game;
 public enum MatchResult {
 
     WIN("승"),
+    PUSH("무"),
     LOSE("패");
 
     private final String value;

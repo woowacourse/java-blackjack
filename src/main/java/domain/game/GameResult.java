@@ -1,8 +1,11 @@
 package domain.game;
 
 import domain.participant.Participant;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GameResult {
 
@@ -14,31 +17,27 @@ public class GameResult {
 
     private void initialGameResult(List<Participant> players, Participant dealer) {
         for (Participant player : players) {
-            if (playerWinCondition(player, dealer)) {
-                gameResult.put(player, MatchResult.WIN);
-                continue;
-            }
-            gameResult.put(player, MatchResult.LOSE);
+            gameResult.put(player, player.playResult(dealer));
         }
-    }
-
-    private boolean playerWinCondition(Participant player, Participant dealer) {
-        return !player.getCards().isBust()
-                && (dealer.getCards().isBust() || dealer.getCards().sum() < player.getCards().sum());
     }
 
     public MatchResult getMatchResult(Participant player) {
         return gameResult.get(player);
     }
 
-    public long getDealerWinCount() {
-        return gameResult.entrySet().stream()
-                .filter(entry -> entry.getValue() == MatchResult.LOSE)
-                .count();
+    public long calculateDealerMatchResultCount(MatchResult matchResult) {
+        long matchCount = getMatchResultCount(matchResult);
+
+        if (matchResult == MatchResult.PUSH) {
+            return matchCount;
+        }
+        return gameResult.size() - matchCount;
     }
 
-    public long getDealerLoseCount() {
-        return gameResult.size() - getDealerWinCount();
+    private long getMatchResultCount(MatchResult matchResult) {
+        return gameResult.entrySet().stream()
+                .filter(entry -> entry.getValue() == matchResult)
+                .count();
     }
 
     public Map<Participant, MatchResult> getGameResult() {

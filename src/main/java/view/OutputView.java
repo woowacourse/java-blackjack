@@ -7,8 +7,6 @@ import domain.game.GameResult;
 import domain.game.MatchResult;
 import domain.participant.Dealer;
 import domain.participant.Participant;
-
-import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,13 +31,13 @@ public class OutputView {
 
     private static String getPlayerNames(List<Participant> players) {
         return players.stream()
-                .map(player -> player.getName())
+                .map(Participant::getName)
                 .collect(Collectors.joining(JOIN_DELIMITER));
     }
 
     private static String getCardNames(Cards cards) {
         return cards.getValue().stream()
-                .map(card -> getCardName(card))
+                .map(OutputView::getCardName)
                 .collect(Collectors.joining(JOIN_DELIMITER));
     }
 
@@ -63,16 +61,20 @@ public class OutputView {
         }
     }
 
-    private static PrintStream printCardResult(Participant participant) {
-        return System.out.printf("%s 카드: %s - 결과: %d%n",
+    private static void printCardResult(Participant participant) {
+        System.out.printf("%s 카드: %s - 결과: %d%n",
                 participant.getName(), getCardNames(participant.getCards()), participant.getCards().sum());
     }
 
     public static void printGameResult(GameResult gameResult) {
         Map<Participant, MatchResult> map = gameResult.getGameResult();
 
-        System.out.printf("%n%s: %d승 %d패%n",
-                BlackJackGame.DEALER_NAME, gameResult.getDealerWinCount(), gameResult.getDealerLoseCount());
+        System.out.printf("%n%s: %d승 %d무 %d패%n"
+                , BlackJackGame.DEALER_NAME
+                , gameResult.calculateDealerMatchResultCount(MatchResult.WIN)
+                , gameResult.calculateDealerMatchResultCount(MatchResult.PUSH)
+                , gameResult.calculateDealerMatchResultCount(MatchResult.LOSE)
+        );
 
         for (Participant player : map.keySet()) {
             System.out.printf("%s: %s%n", player.getName(), gameResult.getMatchResult(player).getValue());
