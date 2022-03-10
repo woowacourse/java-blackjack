@@ -23,8 +23,8 @@ public class ResultTest {
 		Gamer judy = new Gamer("judy");
 		judy.receiveCard(new Card(Suit.CLOVER, Denomination.SIX));
 
-		assertThat(Result.findResult(dealer.calculateResult()
-			, judy.calculateResult())).isEqualTo(Result.WIN);
+		assertThat(GameResult.findResult(dealer.calculateResult()
+			, judy.calculateResult())).isEqualTo(GameResult.WIN);
 	}
 
 	@Test
@@ -38,8 +38,8 @@ public class ResultTest {
 		judy.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
 		judy.receiveCard(new Card(Suit.SPADE, Denomination.TWO));
 
-		assertThat(Result.findResult(dealer.calculateResult()
-			, judy.calculateResult())).isEqualTo(Result.LOSE);
+		assertThat(GameResult.findResult(dealer.calculateResult()
+			, judy.calculateResult())).isEqualTo(GameResult.LOSE);
 	}
 
 	@Test
@@ -51,8 +51,8 @@ public class ResultTest {
 		Gamer judy = new Gamer("judy");
 		judy.receiveCard(new Card(Suit.CLOVER, Denomination.FOUR));
 
-		assertThat(Result.findResult(dealer.calculateResult()
-			, judy.calculateResult())).isEqualTo(Result.LOSE);
+		assertThat(GameResult.findResult(dealer.calculateResult()
+			, judy.calculateResult())).isEqualTo(GameResult.LOSE);
 	}
 
 	@Test
@@ -64,8 +64,8 @@ public class ResultTest {
 		Gamer judy = new Gamer("judy");
 		judy.receiveCard(new Card(Suit.CLOVER, Denomination.FIVE));
 
-		assertThat(Result.findResult(dealer.calculateResult()
-			, judy.calculateResult())).isEqualTo(Result.DRAW);
+		assertThat(GameResult.findResult(dealer.calculateResult()
+			, judy.calculateResult())).isEqualTo(GameResult.DRAW);
 	}
 
 }

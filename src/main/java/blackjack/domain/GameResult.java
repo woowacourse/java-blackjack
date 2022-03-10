@@ -5,7 +5,7 @@ import java.util.function.BiPredicate;
 
 import blackjack.domain.player.Gamer;
 
-public enum Result {
+public enum GameResult {
 
 	WIN("승", (dealerResult, gamerResult) -> dealerResult < gamerResult && gamerResult <= Gamer.LIMIT_GAMER_TOTAL_POINT),
 	DRAW("무", (dealerResult, gamerResult) -> dealerResult == gamerResult),
@@ -14,26 +14,26 @@ public enum Result {
 	private final String result;
 	private final BiPredicate<Integer, Integer> predicate;
 
-	Result(final String result, final BiPredicate<Integer, Integer> predicate) {
+	GameResult(final String result, final BiPredicate<Integer, Integer> predicate) {
 		this.result = result;
 		this.predicate = predicate;
 	}
 
-	public static Result findResult(final int dealerResult, final int gamerResult) {
+	public static GameResult findResult(final int dealerResult, final int gamerResult) {
 		return Arrays.stream(values())
 			.filter((result) -> result.predicate.test(dealerResult, gamerResult))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하는 결과가 없습니다."));
 	}
 
-	public static Result convertToDealerResult(final Result result) {
-		if (result == Result.WIN) {
-			return Result.LOSE;
+	public static GameResult convertToDealerResult(final GameResult gameResult) {
+		if (gameResult == GameResult.WIN) {
+			return GameResult.LOSE;
 		}
-		if (result == Result.LOSE) {
-			return Result.WIN;
+		if (gameResult == GameResult.LOSE) {
+			return GameResult.WIN;
 		}
-		return Result.DRAW;
+		return GameResult.DRAW;
 	}
 
 	public String getResult() {

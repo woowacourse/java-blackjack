@@ -53,11 +53,11 @@ public class BlackJackGame {
 		}
 	}
 
-	public Map<Gamer, Result> calculateResultBoard() {
+	public Map<Gamer, GameResult> calculateResultBoard() {
 		int dealerResult = dealer.calculateResult();
 		return gamers.stream()
 			.collect(Collectors.toMap(gamer -> gamer,
-				gamer -> Result.findResult(dealerResult, gamer.calculateResult()),
+				gamer -> GameResult.findResult(dealerResult, gamer.calculateResult()),
 				(e1, e2) -> e1, LinkedHashMap::new));
 	}
 

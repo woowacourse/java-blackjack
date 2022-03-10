@@ -6,7 +6,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import blackjack.domain.Result;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
@@ -99,7 +99,7 @@ public class OutputView {
 			gamer.calculateResult());
 	}
 
-	public static void printFinalResultBoard(final Map<Gamer, Result> gamerResultBoard) {
+	public static void printFinalResultBoard(final Map<Gamer, GameResult> gamerResultBoard) {
 		System.out.println(FINAL_RESULT_MESSAGE);
 
 		System.out.print(dealerPointToString(gamerResultBoard));
@@ -108,7 +108,7 @@ public class OutputView {
 			value.getResult()));
 	}
 
-	private static String dealerPointToString(final Map<Gamer, Result> gamerResultBoard) {
+	private static String dealerPointToString(final Map<Gamer, GameResult> gamerResultBoard) {
 		return String.format(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
 			calculateDealerResultBoard(gamerResultBoard).entrySet().stream()
 				.map(board -> dealerResultToString(board.getKey(),
@@ -116,17 +116,17 @@ public class OutputView {
 				.collect(joining(PRINT_BLANK)));
 	}
 
-	private static Map<Result, Integer> calculateDealerResultBoard(final Map<Gamer, Result> gamerResultBoard) {
-		Map<Result, Integer> enumMap = new EnumMap<>(Result.class);
-		for (Result result : gamerResultBoard.values()) {
-			Result dealerResult = Result.convertToDealerResult(result);
-			enumMap.put(dealerResult, enumMap.getOrDefault(dealerResult, 0) + 1);
+	private static Map<GameResult, Integer> calculateDealerResultBoard(final Map<Gamer, GameResult> gamerResultBoard) {
+		Map<GameResult, Integer> enumMap = new EnumMap<>(GameResult.class);
+		for (GameResult gameResult : gamerResultBoard.values()) {
+			GameResult dealerGameResult = GameResult.convertToDealerResult(gameResult);
+			enumMap.put(dealerGameResult, enumMap.getOrDefault(dealerGameResult, 0) + 1);
 		}
 		return enumMap;
 	}
 
-	private static String dealerResultToString(final Result result, final int value) {
-		return value + result.getResult();
+	private static String dealerResultToString(final GameResult gameResult, final int value) {
+		return value + gameResult.getResult();
 	}
 
 }
