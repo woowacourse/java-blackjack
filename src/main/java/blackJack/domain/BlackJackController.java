@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Player;
+import blackJack.domain.result.BlackJackGameResult;
 import blackJack.domain.result.YesOrNo;
 import blackJack.domain.view.InputView;
 import blackJack.domain.view.OutputView;
@@ -19,6 +20,8 @@ public class BlackJackController {
         doDealerGame(blackJackGame);
         OutputView.printDealerReceiveCardCount(blackJackGame.getDealer());
         OutputView.printGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers());
+        OutputView.printWinOrLoseResult(blackJackGame.getDealer(),
+            BlackJackGameResult.ofGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers()));
     }
 
     private BlackJackGame initBlackJackGame() {
@@ -56,9 +59,9 @@ public class BlackJackController {
         }
     }
 
-    private void doDealerGame(BlackJackGame blackJackGame){
+    private void doDealerGame(BlackJackGame blackJackGame) {
         Dealer dealer = blackJackGame.getDealer();
-        while(blackJackGame.hasNextTurn(dealer)){
+        while (blackJackGame.hasNextTurn(dealer)) {
             blackJackGame.distributeCard(dealer, 1);
         }
     }

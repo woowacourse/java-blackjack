@@ -33,4 +33,8 @@ public enum WinOrLose {
     private static boolean overScore(int score) {
         return score > BLACK_JACK;
     }
+
+    public String getResult() {
+        return result;
+    }
 }
