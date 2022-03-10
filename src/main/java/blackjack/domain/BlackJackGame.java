@@ -89,4 +89,8 @@ public class BlackJackGame {
         Player player = findPlayerByName(name);
         return player.getCardsNumberSum() > POSSIBLE_MAX_VALUE;
     }
+
+    public GameResult createResult() {
+        return new GameResult(players, dealer);
+    }
 }

@@ -36,10 +36,10 @@ class GameResultTest {
         BlackJackGame blackJackGame = new BlackJackGame(List.of("pobi", "json"));
         GameResult gameResult = blackJackGame.createResult(dealer, List.of(pobi, jason));
 
-        Map<Name, BlackJackResult> playerResults = gameResult.getPlayerResult();
+        Map<String, BlackJackResult> playerResults = gameResult.getPlayerResult();
 
-        BlackJackResult pobiResult = playerResults.get(new Name("pobi"));
-        BlackJackResult jasonResult = playerResults.get(new Name("jason"));
+        BlackJackResult pobiResult = playerResults.get("pobi");
+        BlackJackResult jasonResult = playerResults.get("jason");
 
         assertThat(pobiResult).isEqualTo(BlackJackResult.WIN);
         assertThat(jasonResult).isEqualTo(BlackJackResult.LOSE);
@@ -66,10 +66,10 @@ class GameResultTest {
         BlackJackGame blackJackGame = new BlackJackGame(List.of("pobi", "json"));
         GameResult gameResult = blackJackGame.createResult(dealer, List.of(pobi, jason));
 
-        Map<Name, BlackJackResult> playerResults = gameResult.getPlayerResult();
+        Map<String, BlackJackResult> playerResults = gameResult.getPlayerResult();
 
-        BlackJackResult pobiResult = playerResults.get(new Name("pobi"));
-        BlackJackResult jasonResult = playerResults.get(new Name("jason"));
+        BlackJackResult pobiResult = playerResults.get("pobi");
+        BlackJackResult jasonResult = playerResults.get("jason");
 
         assertThat(pobiResult).isEqualTo(BlackJackResult.LOSE);
         assertThat(jasonResult).isEqualTo(BlackJackResult.WIN);

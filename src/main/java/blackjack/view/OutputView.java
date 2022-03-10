@@ -2,8 +2,10 @@ package blackjack.view;
 
 import blackjack.domain.GamerDto;
 import blackjack.domain.card.Card;
+import blackjack.domain.result.BlackJackResult;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -71,5 +73,22 @@ public class OutputView {
             return;
         }
         System.out.println("딜러는 17이상이라 카드를 더 받지 않았습니다.\n");
+    }
+
+    public static void printFinalResult(Map<BlackJackResult, Integer> dealerResult, Map<String, BlackJackResult> playerResult) {
+        System.out.println("## 최종 승패");
+        StringBuilder builder = new StringBuilder("딜러: ");
+        for (BlackJackResult dealer : dealerResult.keySet()) {
+            if (dealerResult.get(dealer) > 0) {
+                builder.append(dealerResult.get(dealer) + dealer.getValue());
+            }
+        }
+        builder.append("\n");
+
+        for (String name : playerResult.keySet()) {
+            builder.append(name+": ");
+            builder.append(playerResult.get(name).getValue() + "\n");
+        }
+        System.out.println(builder);
     }
 }
