@@ -77,10 +77,6 @@ public class BlackJackBoard {
         return players.getCurrentTurnPlayerName();
     }
 
-    public PlayerCards getCurrentTurnPlayerCards() {
-        return players.getCurrentTurnPlayerCards();
-    }
-
     public List<PlayerScoreResult> getPlayerScoreResults() {
         final List<PlayerScoreResult> results = new ArrayList<>(Collections.singletonList(PlayerScoreResult.from(dealer)));
         results.addAll(players.getPlayerScoreResults());
