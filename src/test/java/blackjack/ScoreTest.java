@@ -1,5 +1,6 @@
 package blackjack;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
@@ -31,5 +32,13 @@ public class ScoreTest {
         Score score1 = new Score(input1);
         Score score2 = new Score(input2);
         assertThat(score1.moreThan(score2)).isEqualTo(expect);
+    }
+
+    @Test
+    @DisplayName("plus 테스트")
+    void plus() {
+        Score score1 = new Score(20);
+        Score score2 = new Score(22);
+        assertThat(score1.plus(score2)).isEqualTo(new Score(42));
     }
 }
