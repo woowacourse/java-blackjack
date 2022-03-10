@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Status;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 public abstract class Participant {

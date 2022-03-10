@@ -5,7 +5,6 @@ import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +37,7 @@ public class Game {
         return cardFactory.getRemainAmount();
     }
 
-    public void drawPlayerCard(Player player ,Status status) {
+    public void drawPlayerCard(Player player, Status status) {
         if (status == Status.HIT) {
             player.hit(cardFactory);
             return;
