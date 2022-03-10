@@ -6,16 +6,13 @@ import static blackjack.domain.card.CardNumber.NINE;
 import static blackjack.domain.card.CardNumber.SEVEN;
 import static blackjack.domain.card.CardNumber.TEN;
 import static blackjack.domain.card.CardPattern.SPADE;
+import static blackjack.testutil.CardFixtureGenerator.createCards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.card.Card;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,14 +21,6 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class ParticipatingPlayerTest {
-
-    private static List<Card> createCards(Card firstCard, Card... remainCard) {
-        final List<Card> cards = new ArrayList<>();
-        cards.add(firstCard);
-        cards.addAll(Arrays.stream(remainCard)
-                .collect(Collectors.toList()));
-        return cards;
-    }
 
     @ParameterizedTest
     @NullSource

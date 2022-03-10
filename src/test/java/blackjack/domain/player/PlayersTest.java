@@ -5,27 +5,18 @@ import static blackjack.domain.card.CardNumber.JACK;
 import static blackjack.domain.card.CardNumber.SEVEN;
 import static blackjack.domain.card.CardNumber.TEN;
 import static blackjack.domain.card.CardPattern.SPADE;
+import static blackjack.testutil.CardFixtureGenerator.createCards;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.card.Card;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
-
-    private static List<Card> createCards(Card firstCard, Card... remainCard) {
-        final List<Card> cards = new ArrayList<>();
-        cards.add(firstCard);
-        cards.addAll(Arrays.stream(remainCard)
-                .collect(Collectors.toList()));
-        return cards;
-    }
 
     @Test
     @DisplayName("null으로 생성하려는 경우 예외를 발생시킨다.")

@@ -6,28 +6,18 @@ import static blackjack.domain.card.CardNumber.SIX;
 import static blackjack.domain.card.CardNumber.TEN;
 import static blackjack.domain.card.CardNumber.TWO;
 import static blackjack.domain.card.CardPattern.SPADE;
+import static blackjack.testutil.CardFixtureGenerator.createCards;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.card.Card;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
-
-    private static List<Card> createCards(Card firstCard, Card... remainCard) {
-        final List<Card> cards = new ArrayList<>();
-        cards.add(firstCard);
-        cards.addAll(Arrays.stream(remainCard)
-                .collect(Collectors.toList()));
-        return cards;
-    }
 
     @Test
     @DisplayName("딜러의 카드가 17이상일 때 카드를 추가하면 예외가 발생해야 한다.")
