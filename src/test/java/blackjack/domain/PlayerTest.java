@@ -49,4 +49,24 @@ public class PlayerTest {
         Player player = new Player("pobi");
         assertThat(player.isSameName("jason")).isEqualTo(false);
     }
+
+    @DisplayName("카드 보유 확인 기능 테스트_있음")
+    @Test
+    void containCardTest() {
+        Player player = new Player("pobi");
+        Card card = new Card("3다이아몬드", 3);
+        player.addCard(card);
+
+        assertThat(player.containCard(card)).isTrue();
+    }
+
+    @DisplayName("카드 보유 확인 기능 테스트_없음")
+    @Test
+    void containCardTest2() {
+        Player player = new Player("pobi");
+        Card card = new Card("3다이아몬드", 3);
+        player.addCard(card);
+
+        assertThat(player.containCard(new Card("2다이아몬드", 2))).isFalse();
+    }
 }

@@ -38,4 +38,8 @@ public class Player {
     public boolean isSameName(String name) {
         return this.name.equals(name);
     }
+
+    public boolean containCard(Card card) {
+        return myCards.contains(card);
+    }
 }
