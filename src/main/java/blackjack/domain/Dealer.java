@@ -42,5 +42,9 @@ public class Dealer implements Player {
         return calculateResult() <= DEALER_RECEIVE_STANDARD;
     }
 
+    @Override
+    public String showName() {
+        return name;
+    }
 
 }

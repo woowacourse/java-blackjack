@@ -13,4 +13,6 @@ public interface Player {
     int calculateResult();
 
     boolean isReceivable();
+
+    String showName();
 }

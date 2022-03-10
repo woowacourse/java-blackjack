@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 public class BlackJackApplication {
 
     public static void main(String[] args) {
-        List<Gamer> gamers = createGamers();
+        List<Player> gamers = createGamers();
         Deck deck = Deck.init();
         BlackJackGame blackJackGame = startBlackJackGame(gamers, deck);
-        for (Gamer gamer : blackJackGame.getGamers()) {
+        for (Player gamer : blackJackGame.getGamers()) {
             progressGamerAdditionalCard(deck, gamer);
         }
         progressDealerAdditionalCard(deck, blackJackGame.getDealer());
@@ -27,7 +27,7 @@ public class BlackJackApplication {
         OutputView.printFinalResultBoard(blackJackGame);
     }
 
-    private static List<Gamer> createGamers() {
+    private static List<Player> createGamers() {
         try {
             return toGamerList();
         } catch (IllegalArgumentException e) {
@@ -36,10 +36,12 @@ public class BlackJackApplication {
         }
     }
 
-    private static List<Gamer> toGamerList() {
+    private static List<Player> toGamerList() {
         List<String> names = InputView.requestPlayerName();
         checkDuplicateName(names);
-        return names.stream().map(Gamer::new).collect(Collectors.toList());
+        return names.stream()
+                .map(Gamer::new)
+                .collect(Collectors.toList());
     }
 
     private static void checkDuplicateName(final List<String> names) {
@@ -49,22 +51,22 @@ public class BlackJackApplication {
         }
     }
 
-    private static BlackJackGame startBlackJackGame(List<Gamer> gamers, Deck deck) {
+    private static BlackJackGame startBlackJackGame(List<Player> gamers, Deck deck) {
         BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), gamers);
         blackJackGame.giveFirstCards(deck);
         OutputView.printOpenCards(blackJackGame);
         return blackJackGame;
     }
 
-    private static void progressGamerAdditionalCard(Deck deck, Gamer gamer) {
+    private static void progressGamerAdditionalCard(Deck deck, Player gamer) {
         while (isReceivable(gamer)) {
             gamer.receiveCard(deck.draw());
             OutputView.printGamerCards(gamer);
         }
     }
 
-    private static boolean isReceivable(Gamer gamer) {
-        return gamer.isReceivable() && isAnswerYes(gamer.getName());
+    private static boolean isReceivable(Player gamer) {
+        return gamer.isReceivable() && isAnswerYes(gamer.showName());
     }
 
     private static boolean isAnswerYes(String name) {

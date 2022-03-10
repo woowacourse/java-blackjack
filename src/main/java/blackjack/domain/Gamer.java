@@ -54,7 +54,8 @@ public class Gamer implements Player {
         return calculateResult() <= LIMIT_GAMER_TOTAL_POINT;
     }
 
-    public String getName() {
+    @Override
+    public String showName() {
         return name;
     }
 

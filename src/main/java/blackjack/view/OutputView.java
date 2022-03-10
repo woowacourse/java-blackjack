@@ -38,7 +38,7 @@ public class OutputView {
 
     private static String joinNames(final BlackJackGame blackJackGame) {
         return blackJackGame.getGamers().stream()
-                .map(Gamer::getName)
+                .map(Player::showName)
                 .collect(joining(PRINT_JOINING_DELIMITER));
     }
 
@@ -48,10 +48,10 @@ public class OutputView {
                 .collect(joining(PRINT_JOINING_DELIMITER));
     }
 
-    private static void appendGamerFormat(final List<Gamer> gamers, final StringBuilder stringBuilder) {
-        for (Gamer gamer : gamers) {
+    private static void appendGamerFormat(final List<Player> gamers, final StringBuilder stringBuilder) {
+        for (Player gamer : gamers) {
             stringBuilder.append(String.format(PRINT_SHOW_CARD_FORMAT_MESSAGE,
-                    gamer.getName(),
+                    gamer.showName(),
                     joinCards(gamer.openCards())));
         }
     }
@@ -60,9 +60,9 @@ public class OutputView {
         return card.getDenomination().getName() + card.getSuit().getName();
     }
 
-    public static void printGamerCards(Gamer gamer) {
+    public static void printGamerCards(Player gamer) {
         System.out.printf(PRINT_SHOW_CARD_FORMAT_MESSAGE,
-                gamer.getName(),
+                gamer.showName(),
                 joinCards(gamer.showCards()));
     }
 
@@ -75,35 +75,28 @@ public class OutputView {
     }
 
     public static void printFinalResult(BlackJackGame blackJackGame) {
-        printDealerCardsResult(blackJackGame.getDealer());
-        blackJackGame.getGamers().forEach(OutputView::printGamerCardsResult);
+        printPlayerCardsResult(blackJackGame.getDealer());
+        blackJackGame.getGamers().forEach(OutputView::printPlayerCardsResult);
     }
 
-    private static void printDealerCardsResult(Player dealer) {
+    private static void printPlayerCardsResult(Player player) {
         System.out.printf(PRINT_FINAL_CARD_RESULT,
-                Dealer.DEALER_NAME,
-                joinCards(dealer.showCards()),
-                dealer.calculateResult());
-    }
-
-    private static void printGamerCardsResult(Gamer gamer) {
-        System.out.printf(PRINT_FINAL_CARD_RESULT,
-                gamer.getName(),
-                joinCards(gamer.showCards()),
-                gamer.calculateResult());
+                player.showName(),
+                joinCards(player.showCards()),
+                player.calculateResult());
     }
 
     public static void printFinalResultBoard(final BlackJackGame blackJackGame) {
         System.out.println("\n## 최종 승패");
-        Map<Gamer, Result> gamerResultBoard = blackJackGame.calculateResultBoard();
+        Map<Player, Result> gamerResultBoard = blackJackGame.calculateResultBoard();
 
         System.out.print(dealerToString(gamerResultBoard));
         gamerResultBoard.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
-                key.getName(),
+                key.showName(),
                 value.getResult()));
     }
 
-    private static String dealerToString(Map<Gamer, Result> gamerResultBoard) {
+    private static String dealerToString(Map<Player, Result> gamerResultBoard) {
         return String.format(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
                 calculateDealerResultBoard(gamerResultBoard).entrySet().stream()
                         .map(board -> dealerResultToString(board.getKey(),
@@ -111,9 +104,9 @@ public class OutputView {
                         .collect(joining(PRINT_BLANK)));
     }
 
-    private static Map<Result, Integer> calculateDealerResultBoard(final Map<Gamer, Result> gamerResultBoard) {
+    private static Map<Result, Integer> calculateDealerResultBoard(final Map<Player, Result> gamerResultBoard) {
         Map<Result, Integer> enumMap = new EnumMap<>(Result.class);
-        for (Entry<Gamer, Result> gamerResultEntry : gamerResultBoard.entrySet()) {
+        for (Entry<Player, Result> gamerResultEntry : gamerResultBoard.entrySet()) {
             Result dealerResult = convertToDealerResult(gamerResultEntry.getValue());
             enumMap.put(dealerResult, enumMap.getOrDefault(dealerResult, 0) + 1);
         }
