@@ -45,7 +45,7 @@ class BlackJackTest {
     void getDealerResult() {
         GameResult gameResult = initializeGameResult();
         DealerResult dealerResult = gameResult.getDealerResult();
-        Map<Match, Integer> dealerResults = dealerResult.get();
+        Map<Match, Integer> dealerResults = dealerResult.getMatchResult();
 
         assertThat(dealerResults)
                 .containsExactly(entry(Match.WIN, 1), entry(Match.LOSE, 1), entry(Match.DRAW, 0));

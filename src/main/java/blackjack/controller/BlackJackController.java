@@ -1,9 +1,12 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJack;
+import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.domain.PlayerGroup;
+import blackjack.dto.DealerResultDto;
 import blackjack.dto.GamerCardsDto;
+import blackjack.dto.PlayerResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -26,6 +29,10 @@ public class BlackJackController {
 
         blackJack.openDealerCards();
         OutputView.printGamersCardAndSum(GamerCardsDto.of(blackJack.getGamersCards()));
+
+        GameResult gameResult = blackJack.getGameResult();
+        OutputView.printGameResult(DealerResultDto.of(gameResult.getDealerResult()),
+                PlayerResultDto.of(gameResult.getPlayerResult()));
     }
 
     private void requestCardAddition(BlackJack blackJack, Player player) {

@@ -35,13 +35,13 @@ public class BlackJack {
         PlayerResult playerResult = new PlayerResult(playerResults);
 
         Collection<Match> playerMatches = playerResults.values();
-        Map<Match, Integer> dealerMatches = initializeMatchResults(playerMatches);
-        DealerResult dealerResult = new DealerResult(dealerMatches);
+        Map<Match, Integer> dealerMatches = initializeDealerResults(playerMatches);
+        DealerResult dealerResult = new DealerResult(dealer.getName(), dealerMatches);
 
         return new GameResult(dealerResult, playerResult);
     }
 
-    private Map<Match, Integer> initializeMatchResults(Collection<Match> matches) {
+    private Map<Match, Integer> initializeDealerResults(Collection<Match> matches) {
         Map<Match, Integer> matchResults = new EnumMap<>(Match.class);
         for (Match match : Match.values()) {
             matchResults.put(match, countMatch(matches, match));
@@ -50,7 +50,7 @@ public class BlackJack {
     }
 
     private int countMatch(Collection<Match> matches, Match type) {
-        return (int) matches.stream().filter(value -> value == type).count();
+        return (int) matches.stream().filter(value -> value == type.getOpposite()).count();
     }
 
     public List<Gamer> getGamersCards() {

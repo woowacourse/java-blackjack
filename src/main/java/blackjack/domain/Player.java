@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Player extends Gamer{
 
+    private static final int BLACKJACK_NUMBER = 21;
+
     public Player(String name) {
         super(name);
     }
@@ -22,6 +24,14 @@ public class Player extends Gamer{
             return -1;
         }
 
+        if (isDealerBust(sum)) {
+            return 1;
+        }
+
         return Integer.compare(this.getCardGroupSum(), sum);
+    }
+
+    private boolean isDealerBust(int sum) {
+        return sum > BLACKJACK_NUMBER;
     }
 }

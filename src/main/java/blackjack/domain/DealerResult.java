@@ -3,13 +3,19 @@ package blackjack.domain;
 import java.util.Map;
 
 public class DealerResult {
-    private final Map<Match, Integer> dealerMatches;
+    private final String name;
+    private final Map<Match, Integer> matchResult;
 
-    public DealerResult(Map<Match, Integer> dealerMatches) {
-        this.dealerMatches = dealerMatches;
+    public DealerResult(String name, Map<Match, Integer> matchResult) {
+        this.name = name;
+        this.matchResult = matchResult;
     }
 
-    public Map<Match, Integer> get() {
-        return dealerMatches;
+    public String getName() {
+        return name;
+    }
+
+    public Map<Match, Integer> getMatchResult() {
+        return matchResult;
     }
 }
