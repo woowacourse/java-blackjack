@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class CardDeck implements CardStack {
+
     private final LinkedList<Card> cards = new LinkedList<>();
 
     public CardDeck() {

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class Score implements Comparable<Score> {
+
     public static final int SMALL_ACE_VALUE = 1;
     public static final int DEALER_EXTRA_CARD_LIMIT = 16;
     public static final int BLACKJACK = 21;

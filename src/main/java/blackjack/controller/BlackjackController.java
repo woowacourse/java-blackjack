@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
+
     public BlackjackGame initializeGame(List<String> playerNames) {
         return new BlackjackGame(new CardDeck(), playerNames);
     }
@@ -93,4 +94,3 @@ public class BlackjackController {
         return results;
     }
 }
-

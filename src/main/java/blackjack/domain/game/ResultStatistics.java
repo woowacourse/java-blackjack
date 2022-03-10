@@ -5,6 +5,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class ResultStatistics {
+
     private final String participantName;
     private final Map<ResultType, ResultCount> stats = new EnumMap<>(ResultType.class);
 

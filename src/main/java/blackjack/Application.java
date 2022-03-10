@@ -12,6 +12,7 @@ import blackjack.domain.participant.Player;
 import java.util.List;
 
 public class Application {
+
     private static final BlackjackController blackjackController = new BlackjackController();
 
     public static void main(String[] args) {

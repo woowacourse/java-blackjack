@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class CardBundle {
+
     private static final String NO_DUPLICATE_CARD_EXCEPTION_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
 
     private final Set<Card> cards;

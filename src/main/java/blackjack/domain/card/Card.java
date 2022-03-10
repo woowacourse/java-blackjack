@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Card {
+
     private final CardRank rank;
     private final CardSymbol symbol;
 
