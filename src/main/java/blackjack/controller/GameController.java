@@ -7,39 +7,57 @@ import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.awt.desktop.AboutEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
 
     public void run() {
-        String[] names = InputView.inputPlayerName();
-        System.out.println(names[0] + names[1]);
-        List<Player> playerList = new ArrayList<>();
-        for (String name : names) {
-            playerList.add(Player.of(Name.of(name)));
-        }
-        Players players = Players.of(playerList);
-        // 카드 2장 지급
+        Players players = getPlayers();
         Dealer dealer = Dealer.of();
-        dealer.addCard(CardDeck.giveCard());
-        dealer.addCard(CardDeck.giveCard());
-        players.giveCard();
-        players.giveCard();
+        // 카드 2장 지급
+        giveTwoCards(players, dealer);
+        // 지급 받은 카드 목록 출력
+        printInitCards(players, dealer);
 
         // 딜러 카드 추가
-        // 딜러는 처음에 받은 2장의 합계가 16이하이면 반드시 1장의 카드를 추가로 받아야 하고,
-        // 17점 이상이면 추가로 받을 수 없다.
-        if (dealer.isOneMoreCard()) {
-            dealer.addCard(CardDeck.giveCard());
-            OutputView.printDealerCardAdded();
-        }
-
+        addCardToDealer(dealer);
 
         // 카드 받을지 물어보는 기능
         for (Player player : players.getCardNeedPlayers()) {
             questionOneMoreCard(player);
+        }
+    }
+
+    private void addCardToDealer(Dealer dealer) {
+        if (dealer.isOneMoreCard()) {
+            dealer.addCard(CardDeck.giveCard());
+            OutputView.printDealerCardAdded();
+        }
+    }
+
+    private Players getPlayers() {
+        List<Player> playerList = new ArrayList<>();
+        String[] names = InputView.inputPlayerName();
+        for (String name : names) {
+            playerList.add(Player.of(Name.of(name)));
+        }
+        return Players.of(playerList);
+    }
+
+
+    private void giveTwoCards(Players players, Dealer dealer) {
+        dealer.addCard(CardDeck.giveCard());
+        dealer.addCard(CardDeck.giveCard());
+        players.giveCard();
+        players.giveCard();
+    }
+
+    public void printInitCards(Players players, Dealer dealer) {
+        OutputView.printInitCardState(players, dealer);
+        OutputView.printHumanCardState(dealer);
+        for(Player player : players.getPlayers()){
+            OutputView.printHumanCardState(player);
         }
     }
 
@@ -48,12 +66,12 @@ public class GameController {
         while (player.isOneMoreCard()) {
             if (!InputView.inputOneMoreCard(player.getName())) {
                 if(flag){
-                    OutputView.printPlayerCardState(player);
+                    OutputView.printHumanCardState(player);
                 }
                 break;
             }
             player.addCard(CardDeck.giveCard());
-            OutputView.printPlayerCardState(player);
+            OutputView.printHumanCardState(player);
             flag = false;
         }
     }

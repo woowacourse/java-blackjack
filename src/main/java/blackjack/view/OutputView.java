@@ -1,10 +1,17 @@
 package blackjack.view;
 
-import blackjack.domain.human.Player;
+import blackjack.domain.human.Dealer;
+import blackjack.domain.human.Human;
+import blackjack.domain.human.Players;
 
 public class OutputView {
-    public static void printPlayerCardState(Player player) {
-        String result = player.getName() + "카드: " + player.getCards().toString();
+
+    public static void printInitCardState(Players players, Dealer dealer) {
+        System.out.printf("%s와 %s에게 2장의 나누었습니다." + System.lineSeparator(), dealer.getName(), players.getPlayerNames());
+    }
+
+    public static void printHumanCardState(Human human) {
+        String result = human.getName() + "카드: " + human.getCards().toString();
         System.out.println(result);
     }
 

@@ -1,6 +1,7 @@
 package blackjack.domain.human;
 
 import blackjack.domain.CardDeck;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,5 +31,15 @@ public class Players {
         return players.stream()
                 .filter(Player::isOneMoreCard)
                 .collect(Collectors.toList());
+    }
+
+    public String getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.joining(", "));
+    }
+
+    public List<Player> getPlayers(){
+        return List.copyOf(players);
     }
 }
