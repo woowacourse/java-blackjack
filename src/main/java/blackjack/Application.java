@@ -25,7 +25,7 @@ public class Application {
 
         while (game.isPossibleToPlay()) {
             String name = game.getCurrentHitablePlayerName();
-            Command command = InputView.requestHitOrStay(name);
+            Command command = inputCommand(name);
             game.playTurn(command);
             printStatus(game);
         }
@@ -36,6 +36,15 @@ public class Application {
         }
 
         printTotalScore(game);
+    }
+
+    private static Command inputCommand(String name) {
+        try {
+            return InputView.requestHitOrStay(name);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputCommand(name);
+        }
     }
 
     private static Players generatePlayers(Deck deck) {
