@@ -44,8 +44,12 @@ public class Card {
         return new LinkedList<>(cards);
     }
 
-    public int getNumber() {
+    public int getValue() {
         return cardNumber.getValue();
+    }
+
+    public String getName() {
+        return cardNumber.getName();
     }
 
     public String getShape() {

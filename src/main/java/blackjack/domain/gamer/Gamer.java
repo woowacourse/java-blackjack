@@ -40,7 +40,7 @@ public class Gamer {
     private int getSumExceptAce() {
         return cards.stream()
                 .filter(card -> !card.isAce())
-                .mapToInt(Card::getNumber)
+                .mapToInt(Card::getValue)
                 .sum();
     }
 
@@ -59,10 +59,10 @@ public class Gamer {
 
     private int selectAceValue(int sum, Card ace) {
         validateAceCard(ace);
-        if (ace.getNumber() + sum > POSSIBLE_MAX_VALUE) {
+        if (ace.getValue() + sum > POSSIBLE_MAX_VALUE) {
             return CardNumber.LOWER_ACE_VALUE;
         }
-        return ace.getNumber();
+        return ace.getValue();
     }
 
     private void validateAceCard(Card ace) {
