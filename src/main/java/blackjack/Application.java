@@ -22,17 +22,17 @@ public class Application {
         OutputView.printGameResult(blackjackGame.getGameResult());
     }
 
+    private static void hit(BlackjackGame blackjackGame, Player player) {
+        String command;
+        do {
+            command = InputView.inputCommand(player);
+            blackjackGame.receiveOneMoreCard(player);
+            OutputView.printPlayerCards(player);
+        } while (blackjackGame.isHit(player, command));
+    }
+
     private static Map<Player, Integer> getCardResult(List<Player> players) {
         return players.stream()
                 .collect(Collectors.toMap(player -> player, Player::countCards));
-    }
-
-    private static void hit(BlackjackGame blackjackGame, Player player) {
-        String command = InputView.inputCommand(player);
-        while (Command.find(command) == Command.YES) {
-            blackjackGame.receiveOneMoreCard(player);
-            OutputView.printPlayerCards(player);
-            command = InputView.inputCommand(player);
-        }
     }
 }

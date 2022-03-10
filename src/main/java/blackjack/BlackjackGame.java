@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
+    private static final int BLACKJACK_NUMBER = 21;
+
     private final Deck deck;
     private final Dealer dealer;
     private final List<Player> players;
@@ -31,6 +33,10 @@ public class BlackjackGame {
             return true;
         }
         return false;
+    }
+
+    public boolean isHit(Player player, String command) {
+        return Command.find(command) == Command.YES && player.countCards() < BLACKJACK_NUMBER;
     }
     
     public Map<Outcome, List<Player>> getGameResult() {
