@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static BlackJack.utils.ExeptionMessage.INPUT_IS_BLANK;
-import static BlackJack.utils.ExeptionMessage.INPUT_IS_NULL;
+import static BlackJack.utils.ExeptionMessage.*;
 
 public class InputView {
 
@@ -33,7 +32,15 @@ public class InputView {
 
     public static boolean askOneMoreCard(UserDto player) {
         System.out.printf(ONE_MORE_CARD_MESSAGE,player.getName());
-        return "y".equals(input());
+        String input = input();
+        validateYesOrNo(input);
+        return "y".equals(input);
+    }
+
+    private static void validateYesOrNo(String input) {
+        if(!input.equals("y") && !input.equals("n") ){
+            throw new IllegalArgumentException(INPUT_IS_WRONG_FORMAT);
+        }
     }
 
     private static void validateNull(String input){
