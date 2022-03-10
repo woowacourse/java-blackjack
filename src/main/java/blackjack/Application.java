@@ -25,7 +25,6 @@ public class Application {
                 .collect(toList());
 
         OutputView.printStartInfo(dealer, players);
-        System.out.println();
 
         players.forEach(player -> playing(deck, player));
         drawDealer(deck, dealer);

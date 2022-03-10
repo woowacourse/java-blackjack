@@ -26,6 +26,7 @@ public class OutputView {
         for (Player player : players) {
             printPlayerCardInfo(player);
         }
+        System.out.println();
     }
 
     public static void printPlayerCardInfo(Player player) {
