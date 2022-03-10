@@ -1,6 +1,11 @@
 package blackjack.controller;
 
-import blackjack.domain.*;
+import blackjack.domain.CardGenerator;
+import blackjack.domain.Deck;
+import blackjack.domain.Dealer;
+import blackjack.domain.User;
+import blackjack.domain.Users;
+import blackjack.domain.DealerResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -12,11 +17,7 @@ public class BlackJackController {
         Deck deck = new Deck(new CardGenerator());
         initDistribute(deck, users, dealer);
 
-        for (User user : users.getUsers()) {
-            playEachUser(user, deck);
-        }
-
-        playDealer(dealer, deck);
+        playGame(users, dealer, deck);
         OutputView.printFinalCard(users, dealer);
         calculateResult(users, dealer);
     }
@@ -35,18 +36,25 @@ public class BlackJackController {
         }
     }
 
-    private void playEachUser(User user, Deck deck) {
-        while (!user.checkBust() && InputView.inputMoreCard(user)) {
-            user.receiveCard(deck.drawCard());
-            OutputView.printUserData(user);
-            OutputView.printLineSeparator();
+    private void playGame(Users users, Dealer dealer, Deck deck) {
+        for (User user : users.getUsers()) {
+            playEachUser(user, deck);
         }
+
+        playDealer(dealer, deck);
     }
 
     private void playDealer(Dealer dealer, Deck deck) {
         while (dealer.checkUnderSumStandard()) {
             OutputView.printDealerDraw();
             dealer.receiveCard(deck.drawCard());
+        }
+    }
+
+    private void playEachUser(User user, Deck deck) {
+        while (!user.checkBust() && InputView.inputMoreCard(user)) {
+            user.receiveCard(deck.drawCard());
+            OutputView.printUserData(user);
         }
     }
 

@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.view.OutputView;
-
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;

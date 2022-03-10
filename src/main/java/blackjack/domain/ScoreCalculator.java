@@ -1,8 +1,11 @@
 package blackjack.domain;
 
+import blackjack.domain.Card;
+import blackjack.domain.CardNumber;
+
 import java.util.List;
 
-public class PointCalculator {
+public class ScoreCalculator {
 
     private static final int BUST_STANDARD = 21;
     private static final int ACE_DIFFERENCE = 10;

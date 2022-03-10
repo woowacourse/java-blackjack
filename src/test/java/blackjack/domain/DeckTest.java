@@ -24,7 +24,7 @@ public class DeckTest {
 
         assertThatThrownBy(() -> {
             for (int i = 0; i < 53; i++) {
-                 deck.drawCard();
+                deck.drawCard();
             }
         }).isInstanceOf(RuntimeException.class)
                 .hasMessageContaining("[ERROR] 더이상 뽑을 카드가 없습니다.");

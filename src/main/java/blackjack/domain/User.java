@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static blackjack.domain.PointCalculator.cardSum;
+import static blackjack.domain.ScoreCalculator.cardSum;
 
 public class User {
 
@@ -39,7 +39,7 @@ public class User {
     }
 
     public int getCardSum() {
-        return PointCalculator.cardSum(cards);
+        return ScoreCalculator.cardSum(cards);
     }
 
     public String getName() {

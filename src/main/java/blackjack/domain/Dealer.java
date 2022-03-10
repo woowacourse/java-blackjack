@@ -23,10 +23,10 @@ public class Dealer {
     }
 
     public boolean checkUnderSumStandard() {
-        return PointCalculator.cardSum(cards) <= MIN_SUM_STANDARD;
+        return ScoreCalculator.cardSum(cards) <= MIN_SUM_STANDARD;
     }
 
     public int getCardSum() {
-        return PointCalculator.cardSum(cards);
+        return ScoreCalculator.cardSum(cards);
     }
 }
