@@ -61,7 +61,7 @@ public class OutputView {
 
     public static void printPlayerResult(final Players players) {
         for (Player player : players.get()) {
-            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(), player.getResult());
+            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(), player.getResult().getText());
         }
     }
 }
