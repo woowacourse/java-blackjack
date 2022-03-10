@@ -9,18 +9,18 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class CardTest {
 
     @ParameterizedTest
-    @CsvSource({"8다이아몬드,8", "J하트,10", "A클로버,1", "K스페이스,10", "Q하트,10", "5다이아몬드,5", "4하트,4"})
+    @CsvSource({"EIGHT,DIAMOND,8", "JACK,HEART,10", "ACE,CLOVER,1", "KING,SPADE,10", "QUEEN,HEART,10", "FIVE,DIAMOND,5", "FOUR,HEART,4"})
     @DisplayName("카드 rank 정보 반환 테스트")
-    void get_rank(String input, int expect) {
-        Card card = new Card(input);
-        assertThat(card.getRank()).isEqualTo(expect);
+    void get_rank(String rank, String suit, int expect) {
+        Card card = new Card(Rank.valueOf(rank), Suit.valueOf(suit));
+        assertThat(card.hardRank()).isEqualTo(expect);
     }
 
     @ParameterizedTest
-    @CsvSource({"A다이아몬드,true", "5하트,false"})
+    @CsvSource({"ACE,DIAMOND,true", "FIVE,HEART,false"})
     @DisplayName("ACE인지 판별하는 테스트")
-    void is_ace(String input, boolean expect) {
-        Card card = new Card(input);
+    void is_ace(String rank, String suit, boolean expect) {
+        Card card = new Card(Rank.valueOf(rank), Suit.valueOf(suit));
         assertThat(card.isAce()).isEqualTo(expect);
     }
 }

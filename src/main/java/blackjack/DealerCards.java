@@ -24,6 +24,6 @@ public class DealerCards {
         if (card.isAce()) {
             return 11;
         }
-        return card.getRank();
+        return card.hardRank();
     }
 }

@@ -1,5 +1,7 @@
 package blackjack;
 
+import static blackjack.Rank.*;
+import static blackjack.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
@@ -22,14 +24,14 @@ public class DealerTest {
 
     private static Stream<Arguments> provideDealerWinningCaseCards() {
         return Stream.of(
-            Arguments.of(List.of(new Card("8다이아몬드"), new Card("J하트")),
-                new Cards(new Card("7클로버"), new Card("8하트"))),
-            Arguments.of(List.of(new Card("8다이아몬드"), new Card("J하트")),
-                new Cards(new Card("J하트"), new Card("Q하트"), new Card("4다이아몬드"))),
-            Arguments.of(List.of(new Card("A다이아몬드"), new Card("5하트")),
-                new Cards(new Card("7클로버"), new Card("6하트"))),
-            Arguments.of(List.of(new Card("A다이아몬드"), new Card("J하트"), new Card("Q클로버")),
-                new Cards(new Card("Q클로버"), new Card("J하트")))
+            Arguments.of(List.of(new Card(EIGHT, DIAMOND), new Card(JACK, HEART)),
+                new Cards(new Card(SEVEN, CLOVER), new Card(EIGHT, HEART))),
+            Arguments.of(List.of(new Card(EIGHT, DIAMOND), new Card(JACK, HEART)),
+                new Cards(new Card(JACK, HEART), new Card(QUEEN, HEART), new Card(FOUR, DIAMOND))),
+            Arguments.of(List.of(new Card(ACE, DIAMOND), new Card(FIVE, HEART)),
+                new Cards(new Card(SEVEN, CLOVER), new Card(SIX, HEART))),
+            Arguments.of(List.of(new Card(ACE, DIAMOND), new Card(JACK, HEART), new Card(QUEEN, CLOVER)),
+                new Cards(new Card(QUEEN, CLOVER), new Card(JACK, HEART)))
         );
     }
 
@@ -43,26 +45,26 @@ public class DealerTest {
 
     private static Stream<Arguments> provideDealerLosingCaseCards() {
         return Stream.of(
-            Arguments.of(List.of(new Card("7클로버"), new Card("8하트")),
-                new Cards(new Card("Q클로버"), new Card("J하트"))),
-            Arguments.of(List.of(new Card("J하트"), new Card("Q하트"), new Card("4다이아몬드")),
-                new Cards(new Card("Q클로버"), new Card("J하트")))
+            Arguments.of(List.of(new Card(SEVEN, CLOVER), new Card(EIGHT, HEART)),
+                new Cards(new Card(QUEEN, CLOVER), new Card(JACK, HEART))),
+            Arguments.of(List.of(new Card(JACK, HEART), new Card(QUEEN, HEART), new Card(FOUR, DIAMOND)),
+                new Cards(new Card(QUEEN, CLOVER), new Card(JACK, HEART)))
         );
     }
 
     @Test
     @DisplayName("비기는 경우 판별 테스트")
     void dealerIsDraw() {
-        Dealer dealer = new Dealer(new Card("J다이아몬드"), new Card("4하트"));
-        assertThat(dealer.judge(new Cards(new Card("8클로버"), new Card("6하트"))))
+        Dealer dealer = new Dealer(new Card(JACK, DIAMOND), new Card(FOUR, HEART));
+        assertThat(dealer.judge(new Cards(new Card(EIGHT, CLOVER), new Card(SIX, HEART))))
             .isEqualTo(Result.DRAW);
     }
 
     @Test
     @DisplayName("둘 다 버스트인 경우 테스트")
     void bothBust() {
-        Dealer dealer = new Dealer(new Card("J다이아몬드"), new Card("K하트"), new Card("7클로버"));
-        assertThat(dealer.judge(new Cards(new Card("8클로버"), new Card("6하트"), new Card("K하트"))))
+        Dealer dealer = new Dealer(new Card(JACK, DIAMOND), new Card(KING, HEART), new Card(SEVEN, CLOVER));
+        assertThat(dealer.judge(new Cards(new Card(EIGHT, CLOVER), new Card(SIX, HEART), new Card(KING, HEART))))
             .isEqualTo(Result.WIN);
     }
 
@@ -76,10 +78,10 @@ public class DealerTest {
 
     private static Stream<Arguments> provideCardsForDealer() {
         return Stream.of(
-            Arguments.of(List.of(new Card("J다이아몬드"), new Card("6클로버")), true),
-            Arguments.of(List.of(new Card("J다이아몬드"), new Card("7클로버")), false),
-            Arguments.of(List.of(new Card("A다이아몬드"), new Card("6클로버")), false),
-            Arguments.of(List.of(new Card("A다이아몬드"), new Card("A클로버")), false)
+            Arguments.of(List.of(new Card(JACK, DIAMOND), new Card(SIX, CLOVER)), true),
+            Arguments.of(List.of(new Card(JACK, DIAMOND), new Card(SEVEN, CLOVER)), false),
+            Arguments.of(List.of(new Card(ACE, DIAMOND), new Card(SIX, CLOVER)), false),
+            Arguments.of(List.of(new Card(ACE, DIAMOND), new Card(ACE, CLOVER)), false)
         );
     }
 }

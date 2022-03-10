@@ -32,7 +32,7 @@ public class Cards {
 
     private int hardHand() {
         return cards.stream()
-            .mapToInt(Card::getRank)
+            .mapToInt(Card::hardRank)
             .sum();
     }
 
