@@ -47,7 +47,7 @@ public class OutputView {
         out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printParticipantResult(Dealer dealer, List<Player> players) {
+    public static void printParticipantScore(Dealer dealer, List<Player> players) {
         out.printf("%s 카드: %s - 결과: %d" + NEWLINE, dealer.getName(), dealer.getCards().stream()
                 .map(card -> card.getDenomination()+card.getSuit())
                 .collect(Collectors.joining(", ")), dealer.getCardHand().getScore());
@@ -57,12 +57,6 @@ public class OutputView {
         }
     }
 
-    /**
-     * ## 최종 승패
-     * 딜러: 1승 1패
-     * pobi: 승
-     * jason: 패
-     */
     public static void printBlackjackGameResult(GameScoreBoard result) {
         out.println(NEWLINE + "## 최종 승패");
         printDealerGameResult(result);

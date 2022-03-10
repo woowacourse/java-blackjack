@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.controller;
 
 import blackjack.domain.GameScoreBoard;
 import blackjack.domain.participant.Dealer;
@@ -8,23 +8,19 @@ import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Application {
+public class BlackJackController {
 
-    public static void main(final String... args) {
+    public void run() {
         Dealer dealer = new Dealer();
         List<Player> players = getPlayers();
 
         initiallySetCard(dealer, players);
 
-        // 플레이어의 카드 더받냐 안받냐 + 버스트 미구현
         takeMoreCardPlayerTurn(dealer, players);
-        //딜러가 더 받냐 안받냐
         takeMoreCardDealerTurn(dealer);
 
-        // 참가자들의 카드 스코어 결과
-        OutputView.printParticipantResult(dealer, players);
+        OutputView.printParticipantScore(dealer, players);
 
-        // 최종 승패 1. 승패 구하는 로직이 없다
         GameScoreBoard result = new GameScoreBoard(dealer, players);
         OutputView.printBlackjackGameResult(result);
     }
