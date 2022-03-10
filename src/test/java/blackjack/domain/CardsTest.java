@@ -17,7 +17,7 @@ public class CardsTest {
         @DisplayName("가지고 있는 카드의 총합을 반환한다.")
         void returnTotalNumber() {
             Cards cards = new Cards(
-                List.of(Card.of(CardPattern.CLOVER, CardNumber.J), Card.of(CardPattern.HEART, CardNumber.EIGHT)));
+                List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK), Card.of(CardPattern.HEART, CardNumber.EIGHT)));
 
             Assertions.assertThat(cards.getTotalNumber()).isEqualTo(18);
         }
@@ -31,7 +31,7 @@ public class CardsTest {
         @DisplayName("카드를 추가한다.")
         void addCard() {
             Cards cards = new Cards(
-                List.of(Card.of(CardPattern.CLOVER, CardNumber.J), Card.of(CardPattern.HEART, CardNumber.EIGHT)));
+                List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK), Card.of(CardPattern.HEART, CardNumber.EIGHT)));
             cards.add(Card.of(CardPattern.CLOVER, CardNumber.FOUR));
 
             Assertions.assertThat(cards.getTotalNumber()).isEqualTo(22);

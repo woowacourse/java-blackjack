@@ -43,11 +43,15 @@ public class Card {
         return this.pattern.equals(pattern) && this.number.equals(number);
     }
 
-    public int getNumber() {
+    public int getNumberValue() {
         return number.getValue();
     }
 
-    public String getPattern() {
+    public String getNumberName() {
+        return number.getName();
+    }
+
+    public String getPatternName() {
         return pattern.getName();
     }
 }

@@ -17,8 +17,8 @@ public class CardTest {
         @Test
         @DisplayName("캐싱된 카드를 반환한다.")
         void returnCachedCard() {
-            Card card1 = Card.of(CardPattern.DIAMOND, CardNumber.J);
-            Card card2 = Card.of(CardPattern.DIAMOND, CardNumber.J);
+            Card card1 = Card.of(CardPattern.DIAMOND, CardNumber.JACK);
+            Card card2 = Card.of(CardPattern.DIAMOND, CardNumber.JACK);
             assertThat(card1).isSameAs(card2);
         }
     }
@@ -28,11 +28,11 @@ public class CardTest {
     class GetNumber {
 
         @ParameterizedTest()
-        @CsvSource(value = {"ACE|1", "TWO|2", "TEN|10", "Q|10", "J|10", "K|10"}, delimiter = '|')
+        @CsvSource(value = {"ACE|1", "TWO|2", "TEN|10", "QUEEN|10", "JACK|10", "KING|10"}, delimiter = '|')
         @DisplayName("Number를 반환한다.")
-        void returnNumber(CardNumber cardNumber, int input) {
+        void returnNumber(CardNumber cardNumber, int expected) {
             Card card = Card.of(CardPattern.DIAMOND, cardNumber);
-            assertThat(card.getNumber()).isEqualTo(input);
+            assertThat(card.getNumberValue()).isEqualTo(expected);
         }
     }
 
@@ -45,7 +45,7 @@ public class CardTest {
         @DisplayName("Pattern을 반환한다.")
         void returnPattern(CardPattern cardPattern, String expected) {
             Card card = Card.of(cardPattern, CardNumber.ACE);
-            assertThat(card.getPattern()).isEqualTo(expected);
+            assertThat(card.getPatternName()).isEqualTo(expected);
         }
     }
 }

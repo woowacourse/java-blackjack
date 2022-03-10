@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public class Player {
 
     private static final int BLACKJACK_NUMBER = 21;
@@ -25,5 +27,13 @@ public class Player {
 
     public int getTotalNumber() {
         return cards.getTotalNumber();
+    }
+
+    public String getName() {
+        return name.getValue();
+    }
+
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 }

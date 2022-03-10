@@ -21,7 +21,7 @@ public class PlayerTest {
         @DisplayName("Card를 자신의 패에 추가한다.")
         void addCard() {
             Player player = new Player(new Name("roma"));
-            player.drawCard(new MockDeck(List.of(Card.of(CardPattern.CLOVER, CardNumber.J))));
+            player.drawCard(new MockDeck(List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK))));
             Assertions.assertThat(player.getTotalNumber()).isEqualTo(10);
         }
     }
@@ -35,8 +35,8 @@ public class PlayerTest {
         @DisplayName("패의 합이 21이 넘는지 유무를 알려준다.")
         void returnFalse(CardNumber cardNumber, boolean expected) {
             Player player = new Player(new Name("roma"));
-            MockDeck mockDeck = new MockDeck(List.of(Card.of(CardPattern.CLOVER, CardNumber.J)
-                , Card.of(CardPattern.CLOVER, CardNumber.K), Card.of(CardPattern.CLOVER, cardNumber)));
+            MockDeck mockDeck = new MockDeck(List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK)
+                , Card.of(CardPattern.CLOVER, CardNumber.KING), Card.of(CardPattern.CLOVER, cardNumber)));
             player.drawCard(mockDeck);
             player.drawCard(mockDeck);
             player.drawCard(mockDeck);

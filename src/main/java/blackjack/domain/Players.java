@@ -13,9 +13,19 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
+    public void drawAll(Drawable drawable) {
+        for (Player player : players) {
+            player.drawCard(drawable);
+        }
+    }
+
     private void validateCapacity(List<Player> players) {
         if (players.size() > CAPACITY) {
             throw new IllegalArgumentException("인원수는 8명을 넘을 수 없습니다.");
         }
+    }
+
+    public List<Player> getValue() {
+        return List.copyOf(players);
     }
 }

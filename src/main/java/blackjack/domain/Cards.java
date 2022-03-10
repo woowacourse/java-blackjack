@@ -16,10 +16,14 @@ public class Cards {
     }
 
     public int getTotalNumber() {
-        return cards.stream().mapToInt(Card::getNumber).sum();
+        return cards.stream().mapToInt(Card::getNumberValue).sum();
     }
 
     public void add(Card card) {
         cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }
