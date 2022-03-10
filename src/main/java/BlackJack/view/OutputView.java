@@ -1,5 +1,6 @@
 package BlackJack.view;
 
+import BlackJack.domain.Player;
 import BlackJack.dto.UserDto;
 
 import java.util.ArrayList;
@@ -22,8 +23,12 @@ public class OutputView {
                 System.out.println(String.format(CARD_FORMAT, userDto.getName(), userDto.getCards().get(0)));
                 continue;
             }
-            String cards = userDto.getCards().stream().collect(Collectors.joining(DELIMITER));
-            System.out.println(String.format(CARD_FORMAT, userDto.getName(), cards));
+            printPlayerCard(userDto);
         }
+    }
+
+    public static void printPlayerCard(UserDto userDto) {
+        String cards = userDto.getCards().stream().collect(Collectors.joining(DELIMITER));
+        System.out.println(String.format(CARD_FORMAT, userDto.getName(), cards));
     }
 }
