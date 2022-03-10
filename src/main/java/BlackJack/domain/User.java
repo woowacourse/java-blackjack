@@ -1,11 +1,9 @@
 package BlackJack.domain;
 
-import java.util.List;
-
 public abstract class User {
 
     protected String name;
-    protected List<Card> cards;
+    protected Cards cards;
 
     public User(String name){
         this.name = name;
@@ -16,7 +14,7 @@ public abstract class User {
         return name;
     }
 
-    public List<Card> getCards() {
+    public Cards getCards() {
         return cards;
     }
 

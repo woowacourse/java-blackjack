@@ -1,7 +1,6 @@
 package BlackJack.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,10 +18,10 @@ public class CardFactory {
 
     }
 
-    public static List<Card> drawTwoCards() {
+    public static Cards drawTwoCards() {
         List<Card> cards = CARD_CACHE.subList(0, 2);
         CARD_CACHE = new ArrayList<>(CARD_CACHE.subList(2, CARD_CACHE.size()));
-        return cards;
+        return new Cards(cards);
     }
 
     public static Card drawOneCard() {

@@ -21,6 +21,7 @@ public class BlackjackController {
         for(Player player : players){
             addCard(player);
         }
+
     }
 
     public List<Player> joinGame(List<String> inputPlayerNames) {
@@ -41,12 +42,10 @@ public class BlackjackController {
     }
 
     public void addCard(Player player) {
-
         while(InputView.askOneMoreCard(UserDto.from(player))){
             player.addCard();
             OutputView.printPlayerCard(UserDto.from(player));
         }
-
     }
 
 }
