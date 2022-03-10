@@ -8,14 +8,14 @@ import java.util.Objects;
 
 public class Player {
 
-    private final String name;
+    private final Name name;
     private final List<Card> cards;
 
     public Player(String name, List<Card> cards) {
         cards = new ArrayList<>(cards);
         validate(cards);
 
-        this.name = name;
+        this.name = new Name(name);
         this.cards = cards;
     }
 
@@ -46,6 +46,6 @@ public class Player {
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 }

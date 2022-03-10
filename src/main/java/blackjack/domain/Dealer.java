@@ -8,14 +8,14 @@ import java.util.Objects;
 
 public class Dealer {
 
-    private final String name;
+    private final Name name;
     private final List<Card> cards;
 
-    public Dealer(String name, List<Card> cards) {
+    public Dealer(List<Card> cards) {
         cards = new ArrayList<>(cards);
         validate(cards);
 
-        this.name = name;
+        this.name = new Name("딜러");
         this.cards = cards;
     }
 

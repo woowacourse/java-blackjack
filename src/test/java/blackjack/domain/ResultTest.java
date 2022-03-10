@@ -122,7 +122,7 @@ public class ResultTest {
         Card card1 = new Card(DIAMOND, TEN);
         Card card2 = new Card(CLOVER, denomination2);
         List<Card> dealerCards = List.of(card1, card2);
-        return new Dealer("Dealer", dealerCards);
+        return new Dealer(dealerCards);
     }
 
     private static Map<Judgement, Integer> createJudgementMap(int win, int draw, int lose) {
