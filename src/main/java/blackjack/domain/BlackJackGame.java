@@ -6,6 +6,7 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.result.BlackJackResult;
 import blackjack.domain.result.GameResult;
 
 import java.util.List;
@@ -80,5 +81,10 @@ public class BlackJackGame {
                 .map(Player::getName)
                 .map(Name::getValue)
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public boolean isBurst(String name) {
+        Player player = findPlayerByName(name);
+        return player.getCardsNumberSum() > POSSIBLE_MAX_VALUE;
     }
 }

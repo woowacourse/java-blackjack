@@ -18,10 +18,16 @@ public class BlackJackController {
 
         List<String> playerNames = blackJackGame.getPlayerNames();
         for (String playerName : playerNames) {
-            while(Answer.from(InputView.getAnswerOfAdditionalDraw(playerName)).isYes()) {
-                blackJackGame.distributeCardToPlayer(playerName);
-                OutputView.printPlayerCard(blackJackGame.findPlayerDtoByName(playerName));
-            }
+            drawAdditionalCard(blackJackGame, playerName);
+        }
+    }
+
+    private void drawAdditionalCard(BlackJackGame blackJackGame, String playerName) {
+        while (!blackJackGame.isBurst(playerName)
+                && Answer.from(InputView.getAnswerOfAdditionalDraw(playerName)).isYes()) {
+            blackJackGame.distributeCardToPlayer(playerName);
+            GamerDto playerDtoByName = blackJackGame.findPlayerDtoByName(playerName);
+            OutputView.printPlayerCard(playerDtoByName);
         }
     }
 
