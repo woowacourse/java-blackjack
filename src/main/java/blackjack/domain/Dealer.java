@@ -13,18 +13,27 @@ public class Dealer extends Human {
         return name;
     }
 
+    public boolean compare(Player player) {
+        return getTotal() >= player.getTotal();
+    }
+
+    public List<String> getInitCard() {
+        return cards.getDealerInitCard();
+    }
+
+    @Override
     public List<String> getCards() {
         return cards.getAllCards();
     }
 
-    public void receiveInitCard(final List<Card> initCards) {
-        cards.add(initCards);
+    @Override
+    public int getTotal() {
+        return cards.calculateTotal();
     }
 
-    public boolean isReceived() {
-        int total = cards.calculateTotal();
-
-        return total <= RECEIVED_MAXIMUM;
+    @Override
+    public void receiveInitCard(final List<Card> initCards) {
+        cards.add(initCards);
     }
 
     @Override
@@ -32,19 +41,15 @@ public class Dealer extends Human {
         cards.add(card);
     }
 
-    public boolean compare(Player player) {
-        return getTotal() >= player.getTotal();
-    }
-
-    public int getTotal() {
-        return cards.calculateTotal();
-    }
-
-    public List<String> getInitCard() {
-        return cards.getDealerInitCard();
-    }
-
+    @Override
     public boolean isBurst() {
         return cards.isOverBlackjack();
+    }
+
+    @Override
+    public boolean isReceived() {
+        int total = cards.calculateTotal();
+
+        return total <= RECEIVED_MAXIMUM;
     }
 }

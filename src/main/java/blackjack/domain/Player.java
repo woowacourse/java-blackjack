@@ -24,18 +24,10 @@ public class Player extends Human {
         return name;
     }
 
-    public List<String> getCards() {
-        return cards.getAllCards();
-    }
-
     private void validateEqualsDealerName(final String name) {
         if (name.equals(Dealer.getName())) {
             throw new IllegalArgumentException(EQUALS_DEALER_NAME_MESSAGE);
         }
-    }
-
-    public void receiveInitCard(final List<Card> initCards) {
-        cards.add(initCards);
     }
 
     public boolean answer(final String receivedFlag) {
@@ -49,18 +41,31 @@ public class Player extends Human {
     }
 
     @Override
-    public void receiveCard(final Card card) {
-        cards.add(card);
+    public List<String> getCards() {
+        return cards.getAllCards();
     }
 
+    @Override
     public int getTotal() {
         return cards.calculateTotal();
     }
 
+    @Override
+    public void receiveInitCard(final List<Card> initCards) {
+        cards.add(initCards);
+    }
+
+    @Override
+    public void receiveCard(final Card card) {
+        cards.add(card);
+    }
+
+    @Override
     public boolean isBurst() {
         return cards.isOverBlackjack();
     }
 
+    @Override
     public boolean isReceived() {
         return cards.isUnderBlackjack();
     }
