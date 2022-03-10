@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackApplication {
+
     private static final ConsoleReader reader = new ConsoleReader();
     private static final InputView inputView = new InputView(reader);
     private static final OutputView outputView = new OutputView();
@@ -46,9 +47,9 @@ public class BlackjackApplication {
         return Players.startWithTwoCards(playerNames, deck);
     }
 
-    private void printParticipantsStatuses(Dealer dealer, Players players) {
+    private void printParticipantsStatuses(final Dealer dealer, final Players players) {
         final ParticipantDto dealerDto = ParticipantDto.toDtoOfDealer(dealer);
-        List<ParticipantDto> playerDtos = players.getStatuses().stream()
+        final List<ParticipantDto> playerDtos = players.getStatuses().stream()
                 .map(ParticipantDto::toDto)
                 .collect(Collectors.toList());
 

@@ -24,7 +24,7 @@ public class InputViewTest {
     void parsePlayerNamesTest(final String inputLine, final List<String> expectedPlayerNames) {
         customReader.initTest(inputLine);
 
-        List<String> actualPlayerNames = inputView.requestPlayerNames();
+        final List<String> actualPlayerNames = inputView.requestPlayerNames();
 
         assertThat(actualPlayerNames).isEqualTo(expectedPlayerNames);
     }

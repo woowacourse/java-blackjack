@@ -10,12 +10,13 @@ public class MatchResultDto {
     private final Map<WinningResult, Integer> dealerResult;
     private final Map<String, WinningResult> playerResult;
 
-    private MatchResultDto(Map<WinningResult, Integer> dealerResult, Map<String, WinningResult> playerResult) {
+    private MatchResultDto(final Map<WinningResult, Integer> dealerResult,
+                           final Map<String, WinningResult> playerResult) {
         this.dealerResult = dealerResult;
         this.playerResult = playerResult;
     }
 
-    public static MatchResultDto toDto(MatchResult result) {
+    public static MatchResultDto toDto(final MatchResult result) {
         return new MatchResultDto(result.getDealerResult(), result.getPlayerResult());
     }
 
