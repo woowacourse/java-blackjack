@@ -50,7 +50,7 @@ public class GameController {
             return;
         }
         if (isHit) {
-            player.addCard(cardDeck.getCard());
+            player.addCard(cardDeck.draw());
             OutputView.printHumanHand(player);
             questAddCard(player, cardDeck);
         }
@@ -59,7 +59,7 @@ public class GameController {
     private void addCardToDealer(final Table table) {
         Dealer dealer = table.getDealer();
         if (dealer.isAbleToHit()) {
-            dealer.addCard(table.getCardDeck().getCard());
+            dealer.addCard(table.getCardDeck().draw());
             OutputView.printDealerHit();
         }
     }

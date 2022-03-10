@@ -22,7 +22,7 @@ public class Table {
 
     public void initCard() {
         for (int i = 0; i < Constants.INIT_CARD_NUMBER; i++) {
-            dealer.addCard(cardDeck.getCard());
+            dealer.addCard(cardDeck.draw());
             players.giveCard(cardDeck);
         }
     }

@@ -22,7 +22,7 @@ public class Players {
 
     public void giveCard(CardDeck cardDeck) {
         for (Player player : players) {
-            player.addCard(cardDeck.getCard());
+            player.addCard(cardDeck.draw());
         }
     }
 
