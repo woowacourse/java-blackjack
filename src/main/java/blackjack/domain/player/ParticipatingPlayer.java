@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ParticipatingPlayer extends AbstractPlayer {
@@ -11,7 +12,7 @@ public class ParticipatingPlayer extends AbstractPlayer {
     }
 
     public static ParticipatingPlayer init(final String name, final List<Card> cards) {
-        return new ParticipatingPlayer(name, new Cards(cards), true);
+        return new ParticipatingPlayer(name, new Cards(new ArrayList<>(cards)), true);
     }
 
     @Override
