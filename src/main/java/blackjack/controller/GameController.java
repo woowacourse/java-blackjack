@@ -14,6 +14,8 @@ import java.util.List;
 
 public class GameController {
 
+    private static final int FIRST_QUESTION_FLAG = 2;
+
     public void run() {
         CardDeck cardDeck = CardDeckGenerator.generate();
         Dealer dealer = initDealer(cardDeck);
@@ -24,9 +26,8 @@ public class GameController {
         addDealerOneMoreCard(dealer, cardDeck);
 
         OutputView.printCardAndPoint(players, dealer);
-        Statistic.of(dealer, players).calculate();
 
-        //게임 승패 출력
+        Statistic.of(dealer, players).calculate();
         printGameResult(players);
     }
 
@@ -66,19 +67,24 @@ public class GameController {
         }
     }
 
-    // indent 수정 및 CardDeck 관련 수정 필요
     private void askOneMoreCardByPlayer(Player player, CardDeck cardDeck) {
-        boolean isFirstQuestion = true;
-        while (player.isOneMoreCard()) {
-            if (!InputView.inputOneMoreCard(player.getName())) {
-                if (isFirstQuestion) {
-                    OutputView.printHumanCardState(player);
-                }
-                break;
-            }
+        if (player.isOneMoreCard()) {
+            askNeedCardPlayer(player, cardDeck);
+            checkFirstQuestion(player);
+        }
+    }
+
+    private void askNeedCardPlayer(Player player, CardDeck cardDeck) {
+        if (InputView.inputOneMoreCard(player.getName())) {
             player.addCard(cardDeck.giveCard());
             OutputView.printHumanCardState(player);
-            isFirstQuestion = false;
+            askOneMoreCardByPlayer(player, cardDeck);
+        }
+    }
+
+    private void checkFirstQuestion(Player player) {
+        if (player.getCards().size() <= FIRST_QUESTION_FLAG) {
+            OutputView.printHumanCardState(player);
         }
     }
 
