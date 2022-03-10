@@ -20,7 +20,7 @@ public class SonataTest {
 
     @Test
     void getDefaultCarName() {
-        assertThat(new Sonata(10).getName()).isEqualTo("소나타");
+        assertThat(new Sonata(10).getName()).isEqualTo("Sonata");
     }
 
     @Test
