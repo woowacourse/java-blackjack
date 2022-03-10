@@ -28,11 +28,11 @@ public class BlackJackGame {
     public static BlackJackGame init(final List<String> playerNames) {
         final CardDeck cardDeck = CardDeck.init();
         final Dealer dealer = new Dealer(cardDeck.provideInitCards());
-        final List<Player> players = provideInitCardsToPlayers(playerNames, cardDeck);
+        final List<Player> players = initPlayers(playerNames, cardDeck);
         return new BlackJackGame(cardDeck, dealer, new Players(players));
     }
 
-    private static List<Player> provideInitCardsToPlayers(final List<String> playerNames, final CardDeck cardDeck) {
+    private static List<Player> initPlayers(final List<String> playerNames, final CardDeck cardDeck) {
         return playerNames.stream()
                 .map(name -> Player.newInstance(name, cardDeck.provideInitCards()))
                 .collect(Collectors.toList());
