@@ -51,7 +51,7 @@ public class Player extends Human {
     }
 
     @Override
-    public boolean isHit() {
+    public boolean isAbleToHit() {
         return cards.getPoint() < BLACKJACK_NUMBER;
     }
 

@@ -2,6 +2,7 @@ package blackjack.domain.human;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.util.Constants;
 
 public abstract class Human {
 
@@ -11,13 +12,13 @@ public abstract class Human {
 
     public abstract Cards getCards();
 
-    public abstract boolean isHit();
+    public abstract boolean isAbleToHit();
 
     public int getPoint() {
         return getCards().getPoint();
     }
 
-    public int getCardSize() {
-        return getCards().size();
+    public boolean isTwoCard() {
+        return getCards().size() == Constants.INIT_CARD_NUMBER;
     }
 }

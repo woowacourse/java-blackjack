@@ -4,10 +4,8 @@ import blackjack.domain.Statistic;
 import blackjack.domain.Table;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.human.Dealer;
-import blackjack.domain.human.Name;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
-import blackjack.util.Constants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -43,11 +41,11 @@ public class GameController {
     }
 
     private void questAddCard(final Player player, final CardDeck cardDeck) {
-        if (!player.isHit()) {
+        if (!player.isAbleToHit()) {
             return;
         }
         boolean isHit = InputView.inputOneMoreCard(player.getName());
-        if (!isHit && player.getCardSize() == Constants.INIT_CARD_NUMBER) {
+        if (!isHit && player.isTwoCard()) {
             OutputView.printHumanHand(player);
             return;
         }
@@ -60,21 +58,18 @@ public class GameController {
 
     private void addCardToDealer(final Table table) {
         Dealer dealer = table.getDealer();
-        if (dealer.isHit()) {
+        if (dealer.isAbleToHit()) {
             dealer.addCard(table.getCardDeck().getCard());
-            OutputView.printDealerCardAdded();
+            OutputView.printDealerHit();
         }
     }
 
     private void endGame(final Table table) {
-        OutputView.printCardAndPoint(table);
-        Statistic.of().calculate(table);
-        printGameResult(table);
-    }
+        OutputView.printHandAndPoint(table);
 
-    private void printGameResult(final Table table) {
         Statistic statistic = Statistic.of();
         statistic.calculate(table);
+
         OutputView.printDealerResult(statistic.getDealerResult());
         OutputView.printPlayerResult(table.getPlayers());
     }

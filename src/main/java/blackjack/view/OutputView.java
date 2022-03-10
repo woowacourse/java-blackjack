@@ -36,7 +36,7 @@ public class OutputView {
                 table.getDealer().getName(), table.getPlayers().getPlayerNames());
     }
 
-    public static void printCardAndPoint(final Table table) {
+    public static void printHandAndPoint(final Table table) {
         System.out.println();
         OutputView.printHumanCardPointState(table.getDealer());
         for (Player player : table.getPlayers().get()) {
@@ -49,7 +49,7 @@ public class OutputView {
                 human.getName(), human.getCards(), human.getPoint());
     }
 
-    public static void printDealerCardAdded() {
+    public static void printDealerHit() {
         System.out.println(DEALER_CARD_ADDED_MESSAGE);
     }
 

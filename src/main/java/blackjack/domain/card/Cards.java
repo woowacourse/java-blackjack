@@ -30,14 +30,15 @@ public class Cards {
         for (Card card : cards) {
             point += card.getDenomination().getPoint();
         }
+        return applyAcePoint(point);
+    }
 
+    private int applyAcePoint(int point) {
         int aceCount = getAceCount();
-
         while (point > Constants.BLACKJACK_NUMBER && aceCount > 0) {
             point -= ACE_MINUS_NUMBER;
             aceCount--;
         }
-
         return point;
     }
 

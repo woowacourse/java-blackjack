@@ -18,7 +18,7 @@ public class Dealer extends Human {
     }
 
     @Override
-    public boolean isHit() {
+    public boolean isAbleToHit() {
         return cards.getPoint() <= HIT_STANDARD_NUMBER;
     }
 
