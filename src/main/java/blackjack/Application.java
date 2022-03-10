@@ -59,7 +59,7 @@ public class Application {
         List<Player> players = new ArrayList<>();
         String participantsNames = InputView.inputParticipantsNames();
         for (String participantName : participantsNames.split(",")) {
-            players.add(new Player(participantName));
+            players.add(new Player(participantName.trim()));
         }
         return players;
     }
