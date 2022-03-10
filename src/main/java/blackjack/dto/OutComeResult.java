@@ -22,7 +22,6 @@ public class OutComeResult {
         return new OutComeResult(playerResults, dealerResult);
     }
 
-
     public Map<String, GameOutcome> getPlayerResults() {
         return playerResults;
     }
