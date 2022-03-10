@@ -18,4 +18,8 @@ public class Player {
     public void putCard(Card card) {
         holdCards.addCard(card);
     }
+
+    public Outcome isWin(int dealerTotal) {
+        return Outcome.match(dealerTotal, countCards());
+    }
 }
