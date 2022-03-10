@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
@@ -52,8 +53,8 @@ public class Game {
                 .findFirst();
     }
 
-    public void drawDealerCard() {
-        dealer.drawCards(cardFactory);
+    public CardCount drawDealerCard() {
+        return dealer.drawCards(cardFactory);
     }
 
     public int getDealerScore() {
