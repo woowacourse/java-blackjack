@@ -56,8 +56,8 @@ public class BlackJackService {
         return participators.getPlayerNames();
     }
 
-    public ParticipatorDto tryToHit(String name) {
-        if (canReceiveCard(name)) {
+    public ParticipatorDto tryToHit(boolean canHit, String name) {
+        if (canHit) {
             participators.receiveCardTo(name, cardDeck);
         }
         return convertParticipatorToDto(participators.findName(name));

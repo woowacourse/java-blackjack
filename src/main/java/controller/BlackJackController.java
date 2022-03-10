@@ -33,7 +33,7 @@ public class BlackJackController {
         boolean decidedToHit;
         do {
             decidedToHit = service.canReceiveCard(name) && InputView.inputHitResponse(name);
-            OutputView.printParticipatorHit(decidedToHit, service.tryToHit(name));
+            OutputView.printParticipatorHit(decidedToHit, service.tryToHit(decidedToHit, name));
         } while (decidedToHit);
     }
 }

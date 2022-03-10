@@ -43,8 +43,8 @@ public class Participators {
 
     }
 
-    public Participator findDealer() {
-        return participators.stream()
+    public Dealer findDealer() {
+        return (Dealer) participators.stream()
                 .filter(participator -> participator instanceof Dealer).findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
