@@ -7,8 +7,8 @@ import java.util.stream.Stream;
 
 public class InputView {
 
-    private static final String REQUEST_PLAYER_NAMES_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
-    private static final String REQUEST_MORE_PLAYER_CARD_INPUT_TEXT = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    private static final String REQUEST_PLAYER_NAMES_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)";
+    private static final String REQUEST_MORE_PLAYER_CARD_INPUT_TEXT = "는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)";
     private static final String INVALID_MORE_PLAYER_CARD_INPUT_EXCEPTION_MESSAGE = "y 혹은 n만 입력이 가능합니다.";
 
     private static final String NAME_INPUT_DELIMITER = ",";
