@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import static BlackJack.utils.ExeptionMessage.INPUT_IS_BLANK;
+import static BlackJack.utils.ExeptionMessage.INPUT_IS_NULL;
+
 public class InputView {
 
     private static final String ONE_MORE_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
@@ -15,7 +18,10 @@ public class InputView {
 
     private static String input(){
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+        String input = scanner.nextLine();
+        validateNull(input);
+        validateEmpty(input);
+        return input;
     }
 
     public static List<String> inputPlayerNames(){
@@ -29,4 +35,16 @@ public class InputView {
         System.out.printf(ONE_MORE_CARD_MESSAGE,player.getName());
         return "y".equals(input());
     }
+
+    private static void validateNull(String input){
+        if(input == null){
+            throw new IllegalArgumentException(INPUT_IS_NULL);
+        }
+    }
+    private static void validateEmpty(String input){
+        if(input.isBlank()){
+            throw new IllegalArgumentException(INPUT_IS_BLANK);
+        }
+    }
+
 }
