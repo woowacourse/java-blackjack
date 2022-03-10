@@ -1,7 +1,7 @@
 package blackjack.domain.entry;
 
-import blackjack.domain.card.HoldCards;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.HoldCards;
 
 import java.util.Collections;
 import java.util.List;

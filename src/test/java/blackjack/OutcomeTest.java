@@ -47,6 +47,6 @@ class OutcomeTest {
     @DisplayName("플레이어와 딜러 모두 21이 넘는 경우 무승부를 반환한다.")
     void playerIsDrawByDealerAndPlayerOver21() {
         Outcome match = Outcome.match(22, 22);
-        assertThat(match).isEqualTo(Outcome.DRAW);
+        assertThat(match).isEqualTo(Outcome.LOSE);
     }
 }

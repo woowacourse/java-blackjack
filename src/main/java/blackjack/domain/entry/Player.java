@@ -1,8 +1,8 @@
 package blackjack.domain.entry;
 
-import blackjack.domain.card.HoldCards;
 import blackjack.domain.Outcome;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.HoldCards;
 
 import java.util.List;
 

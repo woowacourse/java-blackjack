@@ -31,7 +31,7 @@ public class BlackjackGame {
     public void receiveOneMoreCard(Player player) {
         player.putCard(deck.draw());
     }
-    
+
     public boolean isDealerReceiveOneMoreCard() {
         return players.shouldDealerHit(deck);
     }
@@ -39,7 +39,7 @@ public class BlackjackGame {
     public boolean isHit(Player player, String command) {
         return Command.find(command) == Command.YES && player.countCards() < BLACKJACK_NUMBER;
     }
-    
+
     public Map<Outcome, List<Player>> getGameResult() {
         return players.getGameResult();
     }

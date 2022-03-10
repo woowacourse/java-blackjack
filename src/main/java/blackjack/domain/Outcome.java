@@ -15,7 +15,7 @@ public enum Outcome {
 
     public static Outcome match(int dealerTotal, int playerTotal) {
         if (dealerTotal > BLACK_JACK_NUMBER && playerTotal > BLACK_JACK_NUMBER) {
-            return DRAW;
+            return LOSE;
         }
         if (dealerTotal > BLACK_JACK_NUMBER) {
             return WIN;
