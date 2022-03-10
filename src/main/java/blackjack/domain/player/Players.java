@@ -3,8 +3,8 @@ package blackjack.domain.player;
 import blackjack.domain.GameOutcome;
 import blackjack.domain.card.Card;
 import blackjack.dto.OutComeResult;
-import blackjack.dto.PlayerInfo;
-import blackjack.dto.PlayerResultInfo;
+import blackjack.dto.PlayerCards;
+import blackjack.dto.PlayerScoreResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,9 +35,9 @@ public class Players {
                 .count();
     }
 
-    public List<PlayerInfo> getInitPlayerInfo() {
+    public List<PlayerCards> getPlayerFirstCards() {
         return players.stream()
-                .map(PlayerInfo::toPlayerInitInfo)
+                .map(PlayerCards::toPlayerFirstCards)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -57,11 +57,11 @@ public class Players {
         return players.size() <= currentTurnIndex;
     }
 
-    public PlayerInfo drawCurrentPlayer(final Card card) {
+    public PlayerCards drawCurrentPlayer(final Card card) {
         final Player currentPlayer = currentTurnPlayer();
         currentPlayer.draw(card);
         checkCanTurnNext(currentPlayer);
-        return PlayerInfo.toPlayerInfo(currentPlayer);
+        return PlayerCards.toPlayerCards(currentPlayer);
     }
 
     private void checkCanTurnNext(final Player currentPlayer) {
@@ -75,13 +75,13 @@ public class Players {
         return players.get(currentTurnIndex);
     }
 
-    public PlayerInfo getCurrentTurnPlayerInfo() {
-        return PlayerInfo.toPlayerInfo(currentTurnPlayer());
+    public PlayerCards getCurrentTurnPlayerCards() {
+        return PlayerCards.toPlayerCards(currentTurnPlayer());
     }
 
-    public List<PlayerResultInfo> getResultPlayerInfo() {
+    public List<PlayerScoreResult> getPlayerScoreResults() {
         return players.stream()
-                .map(PlayerResultInfo::from)
+                .map(PlayerScoreResult::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 

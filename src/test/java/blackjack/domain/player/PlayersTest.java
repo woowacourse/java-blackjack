@@ -78,12 +78,12 @@ class PlayersTest {
 
     @Test
     @DisplayName("모든 턴이 종료되었을 때 현재 플레이어 정보를 반환하려하면 예외가 발생한다.")
-    void getCurrentTurnPlayerInfoExceptionByEndAllTurn() {
+    void getCurrentTurnPlayerCardExceptionByEndAllTurn() {
         final Player player = ParticipatingPlayer.init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Players players = new Players(Collections.singletonList(player));
         players.turnToNextPlayer();
 
-        assertThatThrownBy(() -> players.getCurrentTurnPlayerInfo())
+        assertThatThrownBy(() -> players.getCurrentTurnPlayerCards())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("모든 턴이 종료되었습니다.");
     }

@@ -5,8 +5,8 @@ import blackjack.domain.player.ParticipatingPlayer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.dto.OutComeResult;
-import blackjack.dto.PlayerInfo;
-import blackjack.dto.PlayerResultInfo;
+import blackjack.dto.PlayerCards;
+import blackjack.dto.PlayerScoreResult;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,10 +44,10 @@ public class BlackJackGame {
         return players.isAllTurnEnd();
     }
 
-    public PlayerInfo drawCurrentPlayer(final String command) {
+    public PlayerCards drawCurrentPlayer(final String command) {
         final DrawCommand drawCommand = DrawCommand.from(command);
         if (drawCommand.isNo()) {
-            final PlayerInfo currentPlayer = players.getCurrentTurnPlayerInfo();
+            final PlayerCards currentPlayer = players.getCurrentTurnPlayerCards();
             players.turnToNextPlayer();
             return currentPlayer;
         }
@@ -62,23 +62,22 @@ public class BlackJackGame {
         dealer.draw(cardDeck.provideCard());
     }
 
-    public PlayerInfo getInitDealerInfo() {
-        return PlayerInfo.toPlayerInitInfo(dealer);
+    public PlayerCards getDealerFirstCard() {
+        return PlayerCards.toPlayerFirstCards(dealer);
     }
 
-    public List<PlayerInfo> getInitPlayerInfo() {
-        return players.getInitPlayerInfo();
+    public List<PlayerCards> getPlayersFirstCards() {
+        return players.getPlayerFirstCards();
     }
 
-    public PlayerInfo getCurrentTurnPlayerInfo() {
-        return players.getCurrentTurnPlayerInfo();
+    public PlayerCards getCurrentTurnPlayerCards() {
+        return players.getCurrentTurnPlayerCards();
     }
 
-    public List<PlayerResultInfo> getPlayerResultInfos() {
-        final List<PlayerResultInfo> resultInfos =
-                new ArrayList<>(Collections.singletonList(PlayerResultInfo.from(dealer)));
-        resultInfos.addAll(players.getResultPlayerInfo());
-        return List.copyOf(resultInfos);
+    public List<PlayerScoreResult> getPlayerScoreResults() {
+        final List<PlayerScoreResult> results = new ArrayList<>(Collections.singletonList(PlayerScoreResult.from(dealer)));
+        results.addAll(players.getPlayerScoreResults());
+        return List.copyOf(results);
     }
 
     public OutComeResult calculateAllResults() {
