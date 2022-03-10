@@ -34,7 +34,7 @@ public class CardDeck {
         this.playingCards = playingCards;
     }
 
-    public static CardDeck getInstance() {
+    public static CardDeck newInstance() {
         return new CardDeck();
     }
 
