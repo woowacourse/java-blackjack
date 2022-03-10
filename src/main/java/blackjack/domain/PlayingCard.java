@@ -48,4 +48,8 @@ public class PlayingCard {
         result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
         return result;
     }
+
+    public int getScore() {
+        return denomination.getScore();
+    }
 }

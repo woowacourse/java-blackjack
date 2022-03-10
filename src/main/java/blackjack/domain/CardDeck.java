@@ -26,7 +26,15 @@ public class CardDeck {
         return playingCards.pop();
     }
 
-    public void drawTo(final Player player) {
-        player.addCard(playingCards.pop());
+    public void drawTo(Player player) {
+        player.getCard(playingCards.pop());
+    }
+
+    public PlayingCard pop() {
+        return playingCards.pop();
+    }
+
+    public PlayingCard justPeek() {
+        return playingCards.peek();
     }
 }

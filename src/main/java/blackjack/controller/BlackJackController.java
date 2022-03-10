@@ -28,8 +28,9 @@ public class BlackJackController {
         spreadCards(gamblers, dealer, cardDeck);
         printSpreadCards(dealer, gamblers);
 
-        hitOrStay(gamblers, cardDeck);
-        addCardForDealer(dealer, cardDeck);
+        playGameForGambler(gamblers, cardDeck);
+        playGameForDealer(dealer, cardDeck);
+
         printCardAndScore(dealer, gamblers);
         outputView.printResult(BlackJackResult.of(dealer, gamblers));
     }
@@ -71,35 +72,38 @@ public class BlackJackController {
             ).collect(Collectors.toList());
     }
 
-    private void hitOrStay(final List<Player> gamblers, CardDeck cardDeck) {
-        System.out.println();
+    private void playGameForGambler(final List<Player> gamblers, CardDeck cardDeck) {
+        outputView.printNewLine();
         for (Player gambler : gamblers) {
             playGame(gambler, cardDeck);
         }
     }
 
     private void playGame(Player gambler, CardDeck cardDeck) {
-        boolean isHit = inputView.scanHitOrStay(gambler.getName());
+        PlayerDto currentGamblerDto = PlayerDto.from(gambler);
+        boolean isHit = inputView.scanHitOrStay(currentGamblerDto);
 
         if (!isHit) {
-            outputView.printCards(PlayerDto.from(gambler));
+            outputView.printCards(currentGamblerDto);
             return;
         }
 
-        do {
-            gambler.addCard(cardDeck.getCard());
-            final PlayerDto playerDto = PlayerDto.from(gambler);
-            outputView.printCards(playerDto);
-            if (gambler.isNotFinished()) {
-                outputView.printBurst(playerDto);
+        while(isHit) {
+            if (gambler.isFinished(cardDeck)){
+                outputView.printBurst(currentGamblerDto);
                 break;
             }
-        } while (inputView.scanHitOrStay(gambler.getName()));
+
+            gambler.addCard(cardDeck);
+            currentGamblerDto = PlayerDto.from(gambler);
+            outputView.printCards(currentGamblerDto);
+            isHit = inputView.scanHitOrStay(currentGamblerDto);
+        }
     }
 
-    private void addCardForDealer(Player dealer, CardDeck cardDeck) {
-        while (dealer.isNotFinished()) {
-            dealer.addCard(cardDeck.getCard());
+    private void playGameForDealer(Player dealer, CardDeck cardDeck) {
+        while (!dealer.isFinished(cardDeck)) {
+            dealer.addCard(cardDeck);
             outputView.printDealerAddCard(dealer);
         }
     }

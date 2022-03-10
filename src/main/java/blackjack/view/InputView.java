@@ -2,6 +2,7 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.PlayerDto;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -35,8 +36,8 @@ public class InputView {
             .count();
     }
 
-    public boolean scanHitOrStay(final String name) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
+    public boolean scanHitOrStay(final PlayerDto playerDto) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerDto.getName());
         final String hitOrStay = SCANNER.nextLine();
         return isHit(hitOrStay);
     }

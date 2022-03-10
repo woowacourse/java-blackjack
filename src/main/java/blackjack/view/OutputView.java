@@ -57,6 +57,7 @@ public class OutputView {
     }
 
     public void printBurst(final PlayerDto playerDto) {
+        printCards(playerDto);
         System.out.println(playerDto.getName() + "님 버스트로 패배하였습니다.");
     }
 
@@ -70,5 +71,9 @@ public class OutputView {
 
         playerResult.entrySet()
             .forEach(entry -> System.out.println(entry.getKey() + ": " + (entry.getValue() ? "승" : "패")));
+    }
+
+    public void printNewLine() {
+        System.out.println();
     }
 }

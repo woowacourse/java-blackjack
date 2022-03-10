@@ -5,10 +5,18 @@ import java.util.Collections;
 import java.util.List;
 
 public class PlayingCards {
-    private final List<PlayingCard> playingCards = new ArrayList<>();
+    private final List<PlayingCard> playingCards;
+
+    public PlayingCards() {
+        playingCards = new ArrayList<>();
+    }
 
     public void addCard(PlayingCard playingCard) {
         playingCards.add(playingCard);
+    }
+
+    public int getResultWithPeekCard(final PlayingCard peekedCard) {
+        return getResult() + peekedCard.getScore();
     }
 
     public List<PlayingCard> getPlayingCards() {
@@ -20,4 +28,6 @@ public class PlayingCards {
             .mapToInt(playingCard -> playingCard.getDenomination().getScore())
             .sum();
     }
+
+
 }
