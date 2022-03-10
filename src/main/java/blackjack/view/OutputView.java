@@ -49,12 +49,14 @@ public class OutputView {
         return card.getDenomination().getName() + card.getPattern().getName();
     }
 
-    public static void printBustMessage() {
-        System.out.println("카드의 합이 21을 넘겼습니다.");
+    public static void printBlackJackMessage(String name) {
+        System.out.printf("%s는 블랙잭입니다!!", name);
+        System.out.println();
     }
 
-    public static void printBlackJackMessage() {
-        System.out.println("블랙잭입니다!!");
+    public static void printBustMessage(String name) {
+        System.out.printf("%s의 카드의 합이 21을 넘었습니다.", name);
+        System.out.println();
     }
 
     public static void printDealerHitMessage() {
