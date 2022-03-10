@@ -3,8 +3,9 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public class winResult {
 
     public winResult(Dealer dealer, List<Player> players) {
         dealerResult = new EnumMap<>(Judgement.class);
-        playersResult = new HashMap<>();
+        playersResult = new LinkedHashMap<>();
 
         initDealerResult();
         calculateResult(dealer, List.copyOf(players));
@@ -80,10 +81,10 @@ public class winResult {
     }
 
     public Map<Judgement, Integer> getDealerResult() {
-        return Map.copyOf(dealerResult);
+        return Collections.unmodifiableMap(dealerResult);
     }
 
     public Map<String, Judgement> getPlayersResult() {
-        return Map.copyOf(playersResult);
+        return Collections.unmodifiableMap(playersResult);
     }
 }

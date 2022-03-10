@@ -82,11 +82,11 @@ public class BlackJackApplication {
 
     private static void showStopReason(Player player) {
         if (player.isBlackJack()) {
-            OutputView.printBlackJackMessage();
+            OutputView.printBlackJackMessage(player.getName());
             return;
         }
         if (player.isBust()) {
-            OutputView.printBustMessage();
+            OutputView.printBustMessage(player.getName());
         }
     }
 
