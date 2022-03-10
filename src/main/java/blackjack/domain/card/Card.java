@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Card {
 
+    public static final int START_CARD_COUNT = 2;
+
     private final Suit suit;
     private final Denomination denomination;
 

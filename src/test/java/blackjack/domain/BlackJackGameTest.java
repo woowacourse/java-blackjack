@@ -25,7 +25,7 @@ public class BlackJackGameTest {
                         new Gamer("huni")));
 
         Deck deck = Deck.init();
-        blackJackGame.giveFirstCards(deck);
+        blackJackGame.handOutStartingCards(deck);
 
         assertThat(deck.size()).isEqualTo(46);
     }

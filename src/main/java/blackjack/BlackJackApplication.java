@@ -37,7 +37,7 @@ public class BlackJackApplication {
 
     private static BlackJackGame initBlackJackGame(final Deck deck) {
         BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), toGamers());
-        blackJackGame.giveFirstCards(deck);
+        blackJackGame.handOutStartingCards(deck);
         return blackJackGame;
     }
 
