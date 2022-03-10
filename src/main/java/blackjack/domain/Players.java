@@ -2,8 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.function.Supplier;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -23,8 +22,8 @@ public class Players {
     }
 
     public void addCardToPlayers(Map<String, Card> cardForPlayers) {
-        for (String name : cardForPlayers.keySet()) {
-            convertToPlayer(name).addCard(cardForPlayers.get(name));
+        for (Entry<String, Card> entry : cardForPlayers.entrySet()) {
+            convertToPlayer(entry.getKey()).addCard(entry.getValue());
         }
     }
 
