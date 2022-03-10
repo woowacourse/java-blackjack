@@ -6,6 +6,7 @@ import blackjack.domain.GameResult;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerDto;
 import blackjack.dto.PlayerDto;
+import blackjack.dto.PlayerResultDto;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -78,10 +79,9 @@ public class OutputView {
         System.out.printf("\n## 최종 승패\n딜러: %s\n", resultInfo);
     }
 
-    public static void printPlayerGameResult(Map<String, GameResult> results) {
-        String resultInfo = results.keySet()
-                .stream()
-                .map(name -> name + ": " + results.get(name).getValue())
+    public static void printPlayerGameResult(List<PlayerResultDto> playerResults) {
+        String resultInfo = playerResults.stream()
+                .map(playerResult -> playerResult.getName() + ": " + playerResult.getGameResult())
                 .collect(Collectors.joining("\n"));
 
         System.out.println(resultInfo);

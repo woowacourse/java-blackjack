@@ -9,6 +9,7 @@ import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.dto.DealerDto;
 import blackjack.dto.PlayerDto;
+import blackjack.dto.PlayerResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
@@ -67,15 +68,15 @@ public class Application {
         }
     }
 
-    public static Map<String, GameResult> createPlayerResult(List<Player> players, Dealer dealer) {
+    public static List<PlayerResultDto> createPlayerResult(List<Player> players, Dealer dealer) {
         return players.stream()
-                .collect(toMap(player -> player.getName(),
-                        player -> player.calculateResult(dealer.getTotalScore())));
+                .map(player -> PlayerResultDto.of(player, dealer))
+                .collect(toList());
     }
 
 
     public static Map<GameResult, Long> createDealerResult(List<Player> players, Dealer dealer) {
         return players.stream()
-                .collect(groupingBy(player -> dealer.calculateResult(player.getTotalScore()), counting()));
+                .collect(groupingBy(player -> dealer.decideResult(player.getTotalScore()), counting()));
     }
 }
