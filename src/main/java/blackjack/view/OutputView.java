@@ -51,7 +51,16 @@ public class OutputView {
                 .collect(Collectors.toList());
     }
 
-    public static void printDealCardMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    public static void printDealCardMessage(int addedCardsCount) {
+        if (addedCardsCount == 0) {
+            System.out.println("딜러는 17이상이어서 카드를 받지 못했습니다.");
+            return;
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < addedCardsCount; i++) {
+            stringBuilder.append("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
+        System.out.println(stringBuilder);
     }
 }

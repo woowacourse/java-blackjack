@@ -60,11 +60,12 @@ public class BlackJack {
         return gamers;
     }
 
-    public boolean isDealerAddable() {
-        return dealer.isAddable();
-    }
-
-    public void addCardToDealer() {
-        dealer.addCard(cardPack.pickOne());
+    public int addCardToDealer() {
+        int addedCardsCount = 0;
+        while (dealer.isAddable()) {
+            dealer.addCard(cardPack.pickOne());
+            addedCardsCount++;
+        }
+        return addedCardsCount;
     }
 }
