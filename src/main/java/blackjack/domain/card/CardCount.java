@@ -27,7 +27,7 @@ public enum CardCount {
     }
 
     public boolean isDraw() {
-        return value == 0;
+        return value != 0;
     }
 
     public String getName() {

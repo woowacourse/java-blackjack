@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     public static void printInitResult(List<String> names) {
-        System.out.printf("딜러와 %s에게 2장의 나누었습니다." + System.lineSeparator(),
+        System.out.printf("딜러와 %s에게 2장의 카드를 나누어주었습니다." + System.lineSeparator(),
                 String.join(", ", names));
     }
 
@@ -21,8 +21,8 @@ public class OutputView {
     }
 
     public static void printPlayerCards(ParticipantVo vo) {
-        List<String> list = vo.getCards().entrySet().stream()
-                .map(it -> it.getKey().getName() + it.getValue().getName())
+        List<String> list = vo.getCards().stream()
+                .map(card -> card.getNumber().getName() + card.getSymbol().getName())
                 .collect(Collectors.toList());
 
         System.out.println(vo.getName() + "카드: " + String.join(", ", list));
@@ -38,8 +38,8 @@ public class OutputView {
     }
 
     public static void printParticipantCards(ParticipantVo vo) {
-        List<String> list = vo.getCards().entrySet().stream()
-                .map(it -> it.getKey().getName() + it.getValue().getName())
+        List<String> list = vo.getCards().stream()
+                .map(card -> card.getNumber().getName() + card.getSymbol().getName())
                 .collect(Collectors.toList());
 
         System.out.println(vo.getName() + "카드: " + String.join(", ", list)
@@ -51,7 +51,7 @@ public class OutputView {
 
         final StringBuilder builder = new StringBuilder();
         Arrays.stream(Record.values())
-                .filter(it -> record.get(it) != 0)
+                .filter(it -> record.getOrDefault(it, 0) != 0)
                 .forEach(it -> builder.append(record.get(it)).append(it.getName()));
 
         System.out.println("딜러: " + builder);

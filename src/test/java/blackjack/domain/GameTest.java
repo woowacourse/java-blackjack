@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
+import blackjack.domain.participant.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,9 +48,10 @@ public class GameTest {
         // give
         final String name = "pobi";
         Game game = new Game(CardFactory.createNoShuffle(), List.of(name));
+        final List<Player> players = game.getPlayers();
 
         // when
-        game.drawPlayerCard(status);
+        game.drawPlayerCard(players.get(0), status);
         final int actual = game.getRemainAmount();
 
         // then

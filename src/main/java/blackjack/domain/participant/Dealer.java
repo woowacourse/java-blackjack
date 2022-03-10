@@ -29,7 +29,7 @@ public class Dealer extends Participant {
     }
 
     public Card openCard() {
-        return super.cards.findFirst();
+        return cards.findFirst();
     }
 
     public String getName() {

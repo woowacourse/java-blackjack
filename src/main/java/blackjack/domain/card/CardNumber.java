@@ -36,6 +36,7 @@ public enum CardNumber {
     public String toString() {
         return "CardNumber{" +
                 "value=" + value +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

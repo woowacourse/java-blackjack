@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
@@ -37,17 +38,15 @@ public class Game {
         return cardFactory.getRemainAmount();
     }
 
-    public void drawPlayerCard(Status status) {
-        final Optional<Player> optionalPlayer = findHitPlayer();
-
+    public void drawPlayerCard(Player player ,Status status) {
         if (status == Status.HIT) {
-            optionalPlayer.ifPresent(player -> player.hit(cardFactory));
+            player.hit(cardFactory);
             return;
         }
-        optionalPlayer.ifPresent(Player::stay);
+        player.stay();
     }
 
-    private Optional<Player> findHitPlayer() {
+    public Optional<Player> findHitPlayer() {
         return players.stream()
                 .filter(Player::isHit)
                 .findFirst();
@@ -61,7 +60,11 @@ public class Game {
         return dealer.getScore();
     }
 
-    public Participant getDealer() {
+    public Card openCard() {
+        return dealer.openCard();
+    }
+
+    public Dealer getDealer() {
         return dealer;
     }
 
