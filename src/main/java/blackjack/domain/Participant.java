@@ -4,6 +4,10 @@ import java.util.List;
 
 public class Participant extends Player {
 
+    public Participant(final String name) {
+        super(name);
+    }
+
     public Participant(final String name, final List<Card> cards) {
         super(name, cards);
     }
