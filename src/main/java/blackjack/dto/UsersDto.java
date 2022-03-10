@@ -3,10 +3,9 @@ package blackjack.dto;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.user.Users;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class UsersDto {
 
@@ -31,15 +30,11 @@ public class UsersDto {
                 .collect(Collectors.joining(", "));
     }
 
-    public Map<String, String> getUserAndCards() {
-        Map<String, String> userCards = new LinkedHashMap<>(
-                Map.of(dealerDto.getUserName(), dealerDto.getCardNames())
-        );
-
-        for (UserDto dto : playersDto) {
-            userCards.put(dto.getUserName(), dto.getCardNames());
-        }
-
-        return userCards;
+    public List<UserDto> getAllUserDto() {
+        return Stream.concat(
+                Stream.of(dealerDto),
+                        playersDto.stream()
+                )
+                .collect(toList());
     }
 }
