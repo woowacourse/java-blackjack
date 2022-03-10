@@ -23,6 +23,10 @@ public class HoldCards {
                 .collect(Collectors.toList()));
     }
 
+    public Card getFirstCard() {
+        return cards.get(0);
+    }
+
     public List<Card> getCards() {
         return cards;
     }

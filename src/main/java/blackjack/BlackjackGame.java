@@ -8,13 +8,11 @@ public class BlackjackGame {
     private static final int BLACKJACK_NUMBER = 21;
 
     private final Deck deck;
-    private final Dealer dealer;
-    private final List<Player> players;
+    private final Players players;
 
     public BlackjackGame(List<String> names) {
         this.deck = Deck.create();
-        this.dealer = new Dealer(new HoldCards(deck.draw(), deck.draw()));
-        this.players = toPlayers(names);
+        this.players = new Players(new Dealer(new HoldCards(deck.draw(), deck.draw())), toPlayers(names));
     }
 
     private List<Player> toPlayers(List<String> names) {
@@ -28,11 +26,7 @@ public class BlackjackGame {
     }
     
     public boolean isDealerReceiveOneMoreCard() {
-        if (dealer.shouldHaveMoreCard()) {
-            dealer.putCard(deck.draw());
-            return true;
-        }
-        return false;
+        return players.shouldDealerHit(deck);
     }
 
     public boolean isHit(Player player, String command) {
@@ -40,11 +34,14 @@ public class BlackjackGame {
     }
     
     public Map<Outcome, List<Player>> getGameResult() {
-        return players.stream()
-                .collect(Collectors.groupingBy(player -> player.isWin(dealer.countCards())));
+        return players.getGameResult();
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return players.getPlayers();
+    }
+
+    public List<Participant> getParticipant() {
+        return players.getParticipant();
     }
 }

@@ -8,7 +8,8 @@ public class Application {
     public static void main(String[] args) {
         BlackjackGame blackjackGame = new BlackjackGame(InputView.inputNames());
         List<Player> players = blackjackGame.getPlayers();
-        OutputView.printPlayersDefaultCard(players);
+        List<Participant> participants = blackjackGame.getParticipant();
+        OutputView.printPlayersDefaultCard(participants);
 
         for (Player player : players) {
             hit(blackjackGame, player);
