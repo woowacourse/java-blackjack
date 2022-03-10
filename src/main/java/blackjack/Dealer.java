@@ -23,10 +23,12 @@ public class Dealer extends Player {
         }
     }
 
+    @Override
     public boolean isBust() {
         return this.deck.isBust();
     }
 
+    @Override
     public void hit(TrumpCard card) {
         if (canHit()) {
             this.deck.add(card);

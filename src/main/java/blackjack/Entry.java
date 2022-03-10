@@ -64,10 +64,12 @@ public class Entry extends Player {
         }
     }
 
+    @Override
     public boolean isBust() {
          return this.deck.isBust();
     }
 
+    @Override
     public void hit(TrumpCard card) {
         this.deck.add(card);
     }

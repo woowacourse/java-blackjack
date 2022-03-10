@@ -1,6 +1,6 @@
 package blackjack;
 
-public abstract class Player {
+public abstract class Player implements PlayerInterface {
     private static final String ERROR_NULL = "[ERROR] 입력된 이름이 없습니다.";
 
     protected final String name;
