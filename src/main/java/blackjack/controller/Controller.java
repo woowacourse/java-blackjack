@@ -4,6 +4,7 @@ import static blackjack.domain.participant.Participant.INITIAL_CARD_HAND;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
@@ -13,7 +14,7 @@ public class Controller {
 
     public void run() {
         CardDeck cardDeck = CardDeck.initShuffled();
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new Name("딜러"));
         Players players = Players.of(InputView.requestPlayerNames());
 
         dealer.receive(cardDeck.distribute(INITIAL_CARD_HAND));
@@ -22,7 +23,7 @@ public class Controller {
         OutputView.printInitCardHandStatus(dealer, players);
 
         playBlackJack(cardDeck, dealer, players);
-
+        OutputView.printFinalStatus(dealer, players);
     }
 
     private void playBlackJack(CardDeck cardDeck, Dealer dealer, Players players) {

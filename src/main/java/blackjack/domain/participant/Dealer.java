@@ -10,6 +10,10 @@ public class Dealer extends Participant {
     public static final int MAX_RECEIVABLE_SCORE = 17;
     public static final int BUST_THRESHOLD = 21;
 
+    public Dealer(Name name) {
+        super(name);
+    }
+
     @Override
     public boolean isReceivable() {
         return calculateBestScore() < MAX_RECEIVABLE_SCORE;

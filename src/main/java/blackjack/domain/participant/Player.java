@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Number;
 import java.util.List;
 
@@ -10,10 +9,8 @@ public class Player extends Participant {
     public static final int ACE_ADDITIONAL_NUMBER = 10;
     public static final int BEST_SCORE = 21;
 
-    private final Name name;
-
     private Player(Name name) {
-        this.name = name;
+        super(name);
     }
 
     public static Player of(String name) {
@@ -46,13 +43,5 @@ public class Player extends Participant {
             sum += ACE_ADDITIONAL_NUMBER;
         }
         return sum;
-    }
-
-    public Name getName() {
-        return name;
-    }
-
-    public Cards getCards() {
-        return cards;
     }
 }
