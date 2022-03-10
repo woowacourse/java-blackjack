@@ -6,6 +6,7 @@ import java.util.List;
 public class Cards {
     private static final int BLACK_JACK_SCORE = 21;
     private static final int SCORE_GAP_PER_ACE = 10;
+    private static final int DEALER_CRITERIA_HIT_SCORE = 16;
 
     private final List<Card> cards;
 
@@ -45,18 +46,22 @@ public class Cards {
     }
 
     public boolean canReceiveCardForDealer() {
-        return getSum() <= 16;
+        return getSum() <= DEALER_CRITERIA_HIT_SCORE;
     }
 
-    public Card getFirstCard(int index) {
-        return cards.get(index);
+    public Card getFirstCard() {
+        return cards.get(0);
     }
 
     public Result getResult(Cards other) {
-        if (this.getStatus() == Status.STAND && other.getStatus() == Status.STAND) {
+        if (isBothStand(this, other)) {
             return Result.of(this.getSum(), other.getSum());
         }
         return Result.of(this.getStatus(), other.getStatus());
+    }
+
+    private boolean isBothStand(Cards from, Cards to) {
+        return from.getStatus().isStand() && to.getStatus().isStand();
     }
 
     private Status getStatus() {

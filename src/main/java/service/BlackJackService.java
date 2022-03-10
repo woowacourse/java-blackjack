@@ -55,9 +55,13 @@ public class BlackJackService {
 
     private void drawTwoCardsAll() {
         for (Participator participator : participators) {
-            for (int i = 0; i < 2; i++) {
-                participator.receiveCard(cardDeck.drawCard());
-            }
+            getCards(participator);
+        }
+    }
+
+    private void getCards(Participator participator) {
+        for (int i = 0; i < 2; i++) {
+            participator.receiveCard(cardDeck.drawCard());
         }
     }
 }

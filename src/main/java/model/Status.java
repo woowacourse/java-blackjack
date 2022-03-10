@@ -6,8 +6,7 @@ import java.util.function.BiPredicate;
 public enum Status {
     BLACKJACK(3, (cardCount, cardSum) -> cardCount == 2 && cardSum == 21),
     STAND(2, (cardCount, cardSum) -> (cardCount > 2 && cardSum <= 21) || (cardCount == 2 && cardSum < 21)),
-    BUST(1, (cardCount, cardSum) -> cardSum > 21)
-    ;
+    BUST(1, (cardCount, cardSum) -> cardSum > 21);
 
     private final BiPredicate<Integer, Integer> predicate;
     private final int power;
@@ -24,7 +23,11 @@ public enum Status {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public static int getPowerGap(Status from, Status to) {
-        return from.power - to.power;
+    public static Result getResultOf(Status from, Status to) {
+        return Result.of(from.power, to.power);
+    }
+
+    public boolean isStand() {
+        return this.equals(STAND);
     }
 }

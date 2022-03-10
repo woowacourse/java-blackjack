@@ -19,7 +19,7 @@ public class DealerTest {
         dealer.receiveCard(firstCard);
         dealer.receiveCard(secondCard);
 
-        assertThat(dealer.getCards()).containsOnly(secondCard);
+        assertThat(dealer.getCards()).containsOnly(firstCard);
     }
 
     @ParameterizedTest

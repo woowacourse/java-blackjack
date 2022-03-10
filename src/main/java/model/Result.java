@@ -22,7 +22,6 @@ public enum Result {
     }
 
     public static Result of(Status from, Status to) {
-        int powerGap = Status.getPowerGap(from, to);
-        return Result.of(powerGap, 0);
+        return Status.getResultOf(from, to);
     }
 }
