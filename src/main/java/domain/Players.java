@@ -8,40 +8,40 @@ import java.util.stream.IntStream;
 
 public class Players {
 
-	private final List<Participant> players;
+	private final List<Player> players;
 
 	public Players(List<String> names, List<List<Card>> initCards) {
 		this.players = IntStream.range(0, names.size())
-			.mapToObj(i -> new Participant(names.get(i), initCards.get(i)))
+			.mapToObj(i -> new Player(names.get(i), initCards.get(i)))
 			.collect(Collectors.toList());
 	}
 
 	public List<Integer> getBestScores() {
-		return players.stream().map(Participant::getBestScore).collect(Collectors.toList());
+		return players.stream().map(Player::getBestScore).collect(Collectors.toList());
 	}
 
 	public boolean isExistBlackJack() {
-		return players.stream().filter(Participant::isBlackJack).count() != 0;
+		return players.stream().filter(Player::isBlackJack).count() != 0;
 	}
 
 	public Map<String, Versus> initCompare(boolean isBlackJack) {
 		Map<String, Versus> map = new LinkedHashMap<>();
-		players.stream().forEach(participant -> map.put(participant.name, participant.initCompare(isBlackJack)));
+		players.stream().forEach(player -> map.put(player.name, player.initCompare(isBlackJack)));
 		return map;
 	}
 
 	public Map<String, Versus> finalCompare(Participant other) {
 		Map<String, Versus> map = new LinkedHashMap<>();
-		players.stream().forEach(participant -> map.put(participant.name, participant.finalCompare(other)));
+		players.stream().forEach(player -> map.put(player.name, player.finalCompare(other)));
 		return map;
 	}
 
 	public List<String> showHands() {
-		return players.stream().map(Participant::showHand).collect(Collectors.toList());
+		return players.stream().map(Player::showHand).collect(Collectors.toList());
 	}
 
 	public List<String> showHandsAndBestScores() {
-		return players.stream().map(Participant::showHandAndBestScore).collect(Collectors.toList());
+		return players.stream().map(Player::showHandAndBestScore).collect(Collectors.toList());
 	}
 
 	public void addCardByName(String name, Card card) {
@@ -51,24 +51,24 @@ public class Players {
 	public String showHandByName(String name) {
 		return players.stream()
 			.filter(player -> player.compareName(name))
-			.map(Participant::showHand).findFirst().orElseThrow();
+			.map(Player::showHand).findFirst().orElseThrow();
 	}
 
 	public boolean isBustByName(String name) {
 		return players.stream()
 			.filter(player -> player.compareName(name))
-			.map((Participant::isBust)).findFirst().orElseThrow();
+			.map((Player::isBust)).findFirst().orElseThrow();
 	}
 
 	public boolean isBlackJackByName(String name) {
 		return players.stream()
 			.filter(player -> player.compareName(name))
-			.map((Participant::isBlackJack)).findFirst().orElseThrow();
+			.map((Player::isBlackJack)).findFirst().orElseThrow();
 	}
 
 	public boolean isAllBust() {
 		long count = players.stream()
-			.filter(Participant::isBust)
+			.filter(Player::isBust)
 			.count();
 
 		return count == players.size();
