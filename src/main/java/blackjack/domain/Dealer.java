@@ -4,10 +4,13 @@ import java.util.function.Supplier;
 
 public class Dealer extends Role {
 
+	public static final int CAN_NOT_DRAW_STANDARD = 17;
+	public static final int CAN_DRAW_STANDARD = 16;
+
 	private final Supplier<Boolean> drawable;
 
-	public Dealer(String name, Hand hand, Supplier<Boolean> drawable) {
-		super(name, hand);
+	public Dealer(Hand hand, Supplier<Boolean> drawable) {
+		super("딜러", hand);
 		this.drawable = drawable;
 	}
 
@@ -16,7 +19,7 @@ public class Dealer extends Role {
 		if (hand.calculateOptimalScore() >= 21) {
 			return false;
 		}
-		if (hand.calculateOptimalScore() < 17) {
+		if (hand.calculateOptimalScore() <= CAN_DRAW_STANDARD) {
 			return true;
 		}
 		if (!hand.hasAce()) {
