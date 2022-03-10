@@ -3,12 +3,20 @@ package blackjack;
 import java.util.Objects;
 
 public class TrumpCard {
-    private final TrumpSymbol symbol;
     private final TrumpNumber number;
+    private final TrumpSymbol symbol;
 
-    public TrumpCard(TrumpSymbol symbol, TrumpNumber number) {
-        this.symbol = symbol;
+    public TrumpCard(TrumpNumber number, TrumpSymbol symbol) {
         this.number = number;
+        this.symbol = symbol;
+    }
+
+    public int sumNumberTo(int value) {
+        return number.sumTo(value);
+    }
+
+    public boolean isNumber(TrumpNumber trumpNumber) {
+        return this.number == trumpNumber;
     }
 
     @Override
@@ -20,11 +28,11 @@ public class TrumpCard {
             return false;
         }
         TrumpCard trumpCard = (TrumpCard) o;
-        return symbol == trumpCard.symbol && number == trumpCard.number;
+        return number == trumpCard.number && symbol == trumpCard.symbol;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(symbol, number);
+        return Objects.hash(number, symbol);
     }
 }

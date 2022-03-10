@@ -23,7 +23,7 @@ public class TrumpCardPack {
 
     private List<TrumpCard> createCardsOfSymbol(TrumpSymbol trumpSymbol) {
         return Arrays.stream(TrumpNumber.values())
-                .map(trumpNumber -> new TrumpCard(trumpSymbol, trumpNumber))
+                .map(trumpNumber -> new TrumpCard(trumpNumber, trumpSymbol))
                 .collect(Collectors.toList());
     }
 
