@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Card;
 import blackjack.domain.ParticipantDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,8 +14,6 @@ public class OutputView {
     }
 
     public static void printInitialCardStatus(List<ParticipantDto> participantsDto) {
-        System.out.println(participantsDto);
-
         System.out.println(participantsDto.stream()
                 .map(ParticipantDto::getName)
                 .collect(Collectors.joining(", ")) + "에게 2장을 나누었습니다.");
@@ -27,7 +26,7 @@ public class OutputView {
     private static void printEachParticipantCard(ParticipantDto participantDto) {
         System.out.println(participantDto.getName() + "카드" + ": " +
                 participantDto.getCards().getHoldingCard().stream()
-                        .map(card -> card.getCardNumber().getCardNumberName() + card.getSymbolName())
+                        .map(Card::toString)
                         .collect(Collectors.joining(", ")));
     }
 }

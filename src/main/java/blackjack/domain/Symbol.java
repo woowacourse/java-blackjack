@@ -13,7 +13,8 @@ public enum Symbol {
         this.symbolName = symbolName;
     }
 
-    public String getSymbolName() {
+    @Override
+    public String toString() {
         return symbolName;
     }
 }

@@ -31,4 +31,9 @@ public enum CardNumber {
     public String getCardNumberName() {
         return cardNumberName;
     }
+
+    @Override
+    public String toString() {
+        return cardNumberName;
+    }
 }

@@ -30,7 +30,7 @@ public class HoldingCard {
 
     private boolean hasAce() {
         return holdingCard.stream()
-                .anyMatch(card -> card.getCardNumber() == CardNumber.ACE);
+                .anyMatch(card -> card.getCardNumberValue() == CardNumber.ACE.getCardNumberValue());
     }
 
     private int sum() {

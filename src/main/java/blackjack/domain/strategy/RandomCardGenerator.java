@@ -24,7 +24,7 @@ public class RandomCardGenerator implements CardGenerator{
 
     private List<Card> createSymbolCards(Symbol symbol) {
         return Arrays.stream(CardNumber.values())
-                .map(cardNumber -> new Card(symbol, cardNumber))
+                .map(cardNumber -> new Card(cardNumber, symbol))
                 .collect(Collectors.toList());
     }
 }
