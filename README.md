@@ -1,27 +1,34 @@
 # java-blackjack
 
+## 블랙잭 용어 정리
+- 버스트: 숫자 카드의 합이 21 초과
+- 블랙잭: 숫자 카드 합이 21
+- 푸시: 딜러와 플레이어 카드 동점 (=비김)
+- 스테이: 카드를 그만 받겠다
+- 힛: 카드를 한장 더 받겠다
+
 ## 구현할 기능 목록
 
-- [ ] 참여할 사람의 이름 입력
+- [x] 참여할 사람의 이름 입력
     - 쉼표 기준으로 분리
     - (e) 빈 값, 공백 불가
     - (e) 중복 불가
-- [ ] 카드 분배
+- [x] 카드 분배
     - 딜러, 참가자에게 카드 2장씩 분배
     - 딜러의 카드 1장 출력
     - 참가자의 카드 2장 출력
     - 참가자의 카드 합이 21이면 게임 종료
-- [ ] 참가자 카드 추가 분배
+- [x] 참가자 카드 추가 분배
     - 카드 합이 21 이상인 참가자는 턴 종료
     - 참가자 별로 한장의 카드 추가 여부를 입력 받기 (y/n)
     - 참가자가 카드 추가 여부 입력
         - y를 선택한 경우 카드 추가 분배
         - n를 선택한 경우 해당 참가자의 턴 종료
     - 참가자의 카드 목록 출력
-- [ ] 딜러 카드 추가 분배
+- [x] 딜러 카드 추가 분배
     - 16 이하면 1장 추가 분배
     - 17 이상이면 턴 종료
-- [ ] 결과 출력
+- [x] 결과 출력
     - 카드 목록 및 총합 출력 (ex: 딜러 카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20)
     - 최종 승패 계산
     - 최종 승패 출력
@@ -38,27 +45,3 @@
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
-
-
-// BlackJackGame(List<Player> players, Dealer dealer)
-// blackJackGame.distributeCard() - 각자 카드 2장씩
-
-// for (Player player : players)
-// player.canDraw() - y입력되면 true, n 입력되면 false
-// player.drawCard(Card){값추가}
-// player.getter() ->  view에서 보여주기
-// Dealer.drawCard()
-
-//  승패결과 BlackJackResult
-
-/* 보고계시나요~~~`~~`` 정리되셨나여 hrd 퇴실
-for(Player player: players) {
-    if(!player.isBurst() && InputView.wantDraw()) {
-        player.drawCard(CardDistributor.distribute());
-    }
-}
-
-if(!dealer.isBurst()) {
-    dealer.drawCard(CardDistributor.distribute());
-}
-*/
