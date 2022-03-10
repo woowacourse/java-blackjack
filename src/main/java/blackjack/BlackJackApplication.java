@@ -18,7 +18,7 @@ public class BlackJackApplication {
 
 	public static void main(String[] args) {
 		List<Gamer> gamers = createGamers();
-		Deck deck = Deck.init();
+		Deck deck = Deck.initializeDeckBeforeGame();
 		BlackJackGame blackJackGame = startBlackJackGame(gamers, deck);
 		for (Gamer gamer : blackJackGame.getGamers()) {
 			progressGamerAdditionalCard(deck, gamer);
@@ -30,29 +30,31 @@ public class BlackJackApplication {
 
 	private static List<Gamer> createGamers() {
 		try {
-			return toGamerList();
-		} catch (IllegalArgumentException e) {
-			OutputView.printErrorMessage(e.getMessage());
+			return inputGamers();
+		} catch (IllegalArgumentException exception) {
+			OutputView.printErrorMessage(exception.getMessage());
 			return createGamers();
 		}
 	}
 
-	private static List<Gamer> toGamerList() {
+	private static List<Gamer> inputGamers() {
 		List<String> names = InputView.requestPlayerName();
 		checkDuplicateName(names);
-		return names.stream().map(Gamer::new).collect(Collectors.toList());
+		return names.stream()
+			.map(Gamer::new)
+			.collect(Collectors.toList());
 	}
 
 	private static void checkDuplicateName(final List<String> names) {
-		Set<String> tempSet = new HashSet<>(names);
-		if (names.size() != tempSet.size()) {
+		Set<String> removalDuplicateNames = new HashSet<>(names);
+		if (names.size() != removalDuplicateNames.size()) {
 			throw new IllegalArgumentException("[ERROR] 중복된 이름은 입력할 수 없습니다.");
 		}
 	}
 
 	private static BlackJackGame startBlackJackGame(List<Gamer> gamers, Deck deck) {
 		BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), gamers);
-		blackJackGame.giveFirstCards(deck);
+		blackJackGame.setStartCards(deck);
 		OutputView.printOpenCards(blackJackGame);
 		return blackJackGame;
 	}

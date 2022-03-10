@@ -16,7 +16,7 @@ public class DeckTest {
 
 	@BeforeEach
 	void setUp() {
-		deck = Deck.init();
+		deck = Deck.initializeDeckBeforeGame();
 	}
 
 	@Test

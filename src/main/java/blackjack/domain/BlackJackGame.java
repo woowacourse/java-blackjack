@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static blackjack.domain.Player.*;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +17,7 @@ public class BlackJackGame {
 		this.gamers = gamers;
 	}
 
-	public void giveFirstCards(final Deck deck) {
+	public void setStartCards(final Deck deck) {
 		giveTwoCards(dealer, deck);
 
 		for (Gamer gamer : gamers) {
@@ -24,7 +26,7 @@ public class BlackJackGame {
 	}
 
 	private void giveTwoCards(final Player player, final Deck deck) {
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < PLAYER_ALREADY_CARD_SIZE; i++) {
 			player.receiveCard(deck.draw());
 		}
 	}

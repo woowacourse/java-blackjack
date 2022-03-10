@@ -18,8 +18,8 @@ public class BlackJackGameTest {
 			List.of(new Gamer("judy"),
 				new Gamer("huni")));
 
-		Deck deck = Deck.init();
-		blackJackGame.giveFirstCards(deck);
+		Deck deck = Deck.initializeDeckBeforeGame();
+		blackJackGame.setStartCards(deck);
 
 		assertThat(deck.size()).isEqualTo(46);
 	}

@@ -12,7 +12,7 @@ public enum Result {
 	private final String result;
 	private final BiPredicate<Integer, Integer> predicate;
 
-	private Result(String result, BiPredicate<Integer, Integer> predicate) {
+	Result(String result, BiPredicate<Integer, Integer> predicate) {
 		this.result = result;
 		this.predicate = predicate;
 	}

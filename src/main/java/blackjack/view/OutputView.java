@@ -25,6 +25,7 @@ public class OutputView {
 	private static final String PRINT_DEALER_NOT_RECEIVE_CARD = "\n딜러는 17이상이라 한장의 카드를 더 받지 못했습니다.\n";
 	private static final String PRINT_FINAL_CARD_RESULT = "%s카드: %s - 결과: %d\n";
 	private static final String PRINT_BLANK = " ";
+	public static final String FINAL_RESULT_MESSAGE = "\n## 최종 승패";
 
 	public static void printOpenCards(final BlackJackGame blackJackGame) {
 		StringBuilder stringBuilder = new StringBuilder();
@@ -101,7 +102,7 @@ public class OutputView {
 	}
 
 	public static void printFinalResultBoard(final BlackJackGame blackJackGame) {
-		System.out.println("\n## 최종 승패");
+		System.out.println(FINAL_RESULT_MESSAGE);
 		Map<Gamer, Result> gamerResultBoard = blackJackGame.calculateResultBoard();
 
 		System.out.print(dealerToString(gamerResultBoard));

@@ -9,7 +9,7 @@ public enum Answer {
 
 	private final String answer;
 
-	private Answer(String answer) {
+	Answer(String answer) {
 		this.answer = answer;
 	}
 

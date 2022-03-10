@@ -28,16 +28,16 @@ public class Cards {
 		return point;
 	}
 
+	private int sumDenominationPoint() {
+		return cards.stream()
+			.mapToInt(card -> card.getDenomination().getPoint())
+			.sum();
+	}
+
 	private int calculateAceAsSmallerStandard(int point, final Card card) {
 		if (card.isAce() && point > Gamer.LIMIT_GAMER_TOTAL_POINT) {
 			point -= Denomination.adjustAce();
 		}
 		return point;
-	}
-
-	private int sumDenominationPoint() {
-		return cards.stream()
-			.mapToInt(card -> card.getDenomination().getPoint())
-			.sum();
 	}
 }

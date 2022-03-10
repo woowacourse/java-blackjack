@@ -36,7 +36,7 @@ public class Gamer implements Player {
 
 	@Override
 	public List<Card> openCards() {
-		return new ArrayList<>(cards.getCards().subList(0, 2));
+		return new ArrayList<>(cards.getCards().subList(0, PLAYER_ALREADY_CARD_SIZE));
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class Gamer implements Player {
 
 	@Override
 	public boolean isReceivable() {
-		return calculateResult() <= LIMIT_GAMER_TOTAL_POINT;
+		return calculateResult() < LIMIT_GAMER_TOTAL_POINT;
 	}
 
 	public String getName() {

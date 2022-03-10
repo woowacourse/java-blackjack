@@ -11,7 +11,7 @@ public class Deck {
 		this.cards = cards;
 	}
 
-	public static Deck init() {
+	public static Deck initializeDeckBeforeGame() {
 		Stack<Card> cards = new Stack<>();
 		for (Suit suit : Suit.values()) {
 			pushCard(cards, suit);
