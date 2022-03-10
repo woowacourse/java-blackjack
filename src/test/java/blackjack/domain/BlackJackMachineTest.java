@@ -13,10 +13,10 @@ public class BlackJackMachineTest {
     @DisplayName("참가자가 카드를 더 뽑는다고 하면 카드를 준다.")
     void giveCardToParticipantYes() {
         Participant participant = new Participant("배카라",
-                List.of(new Card(Denomination.THREE, Suit.SPADE), new Card(Denomination.ACE, Suit.HEART)));
+                List.of(new Card(Denomination.THREE, Suit.SPADE), new Card(Denomination.TWO, Suit.HEART)));
         int totalScore = participant.getTotalScore();
         blackJackMachine.giveCardToParticipant(participant, Choice.YES);
-        Assertions.assertThat(participant.getTotalScore()).isGreaterThanOrEqualTo(totalScore);
+        Assertions.assertThat(participant.getTotalScore()).isGreaterThan(totalScore);
     }
 
     @Test
