@@ -13,7 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class DealerTest {
+public class PlayerTest {
 
     @ParameterizedTest
     @MethodSource("provideDealerWinningCaseCards")
@@ -70,8 +70,8 @@ public class DealerTest {
 
     @ParameterizedTest
     @MethodSource("provideCardsForDealer")
-    @DisplayName("카드 발급 가능 여부 확인 테스트")
-    void possibleTakeCard(Dealer dealer, boolean expect) {
+    @DisplayName("딜러 카드 발급 가능 여부 확인 테스트")
+    void dealerPossibleTakeCard(Dealer dealer, boolean expect) {
         assertThat(dealer.isHittable()).isEqualTo(expect);
     }
 
@@ -87,9 +87,29 @@ public class DealerTest {
     @Test
     @DisplayName("딜러 카드 발급")
     void takeCards() {
-        Dealer dealer = new Dealer(new Card(JACK, DIAMOND), new Card(THREE, CLOVER));
+        Player dealer = new Dealer(new Card(JACK, DIAMOND), new Card(THREE, CLOVER));
         dealer.take(new Card(ACE, HEART));
         assertThat(dealer.score()).isEqualTo(new Score(14));
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePlayers")
+    @DisplayName("플레이어 점수 반환 테스트")
+    void gamerScore(Player player, int expect) {
+        assertThat(player.score().getValue()).isEqualTo(expect);
+    }
+
+    protected static Stream<Arguments> providePlayers() {
+        return Stream.of(
+            Arguments.of(new Gamer("player", new Card(ACE, SPADE), new Card(JACK, HEART)), 21),
+            Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(JACK, DIAMOND),
+                new Card(KING, CLOVER)), 21),
+            Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(ACE, SPADE),
+                new Card(NINE, CLOVER)), 21),
+            Arguments.of(new Gamer("player", new Card(QUEEN, CLOVER), new Card(JACK, HEART),
+                new Card(KING, DIAMOND)), 30),
+            Arguments.of(new Gamer("player", new Card(THREE, DIAMOND), new Card(TWO, DIAMOND)), 5)
+        );
     }
 
     @Test
@@ -101,10 +121,48 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러 카드 한장 공개")
-    void openCard() {
+    @DisplayName("딜러 카드 공개")
+    void dealerOpenCard() {
         Dealer dealer = new Dealer(new Card(JACK, DIAMOND), new Card(QUEEN, HEART));
         assertThat(dealer.openCards()).hasSize(1);
         assertThat(dealer.openCards()).contains(new Card(JACK, DIAMOND));
+    }
+
+    @Test
+    @DisplayName("게이머 첫 2장 카드 공개")
+    void gamerOpenCards() {
+        Gamer gamer = new Gamer("pobi", new Card(QUEEN, CLOVER), new Card(FIVE, HEART));
+        assertThat(gamer.openCards()).hasSize(2);
+        assertThat(gamer.openCards()).contains(new Card(QUEEN, CLOVER), new Card(FIVE, HEART));
+    }
+
+    @Test
+    @DisplayName("게이머 20이하일 경우 카드 발급 가능")
+    void gamerCardTake() {
+        Gamer gamer = new Gamer("pobi", new Card(QUEEN, CLOVER), new Card(KING, SPADE));
+        assertThat(gamer.isHittable()).isTrue();
+    }
+
+    @Test
+    @DisplayName("게이머 21이상일 경우 카드 발급 불가능")
+    void gamerCardCantTake() {
+        Gamer gamer = new Gamer("pobi", new Card(QUEEN, CLOVER), new Card(ACE, SPADE));
+        assertThat(gamer.isHittable()).isFalse();
+    }
+
+    @Test
+    @DisplayName("게이머 카드 발급")
+    void gamerTakeCards() {
+        Gamer dealer = new Gamer("gamer", new Card(JACK, DIAMOND), new Card(QUEEN, CLOVER));
+        dealer.take(new Card(ACE, HEART));
+        assertThat(dealer.score()).isEqualTo(new Score(21));
+    }
+
+    @Test
+    @DisplayName("게이머 카드 발급 실패")
+    void gamerTakeInvalidCard() {
+        Gamer dealer = new Gamer("gamer", new Card(JACK, DIAMOND), new Card(ACE, HEART));
+        assertThatThrownBy(() -> dealer.take(new Card(FOUR, HEART)))
+            .isInstanceOf(IllegalStateException.class);
     }
 }
