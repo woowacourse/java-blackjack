@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -7,6 +7,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Players {
+
+    private static final String PLAYER_NAME_DUPLICATE_ERROR_MESSAGE =  "참가자 이름은 중복될 수 없습니다.";
 
     private final List<Player> players;
 
@@ -29,7 +31,7 @@ public class Players {
         Set<String> nameSet = new HashSet<>(names);
 
         if (names.size() != nameSet.size()) {
-            throw new IllegalArgumentException("참가자 이름은 중복될 수 없습니다.");
+            throw new IllegalArgumentException(PLAYER_NAME_DUPLICATE_ERROR_MESSAGE);
         }
     }
 

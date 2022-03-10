@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.dto;
 
 public class WinDrawLoseDto {
     private final String name;

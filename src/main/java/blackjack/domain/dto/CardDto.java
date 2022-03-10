@@ -1,6 +1,4 @@
-package blackjack.domain;
-
-import java.util.Map;
+package blackjack.domain.dto;
 
 public class CardDto {
 

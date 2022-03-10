@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.Players;
+import blackjack.domain.gamer.Players;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

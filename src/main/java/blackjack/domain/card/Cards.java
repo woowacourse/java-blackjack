@@ -2,9 +2,10 @@ package blackjack.domain.card;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class Cards {
+    public static final int ACE_GAP = 10;
+    public static final int BLACK_JACK_SCORE = 21;
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
@@ -17,8 +18,8 @@ public class Cards {
 
     public int calculateScore() {
         int oneAceScore = calculateOneAceScore();
-        if (hasAce() && oneAceScore + 10 <= 21) {
-            return oneAceScore + 10;
+        if (hasAce() && oneAceScore + ACE_GAP <= BLACK_JACK_SCORE) {
+            return oneAceScore + ACE_GAP;
         }
         return oneAceScore;
     }

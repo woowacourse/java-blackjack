@@ -1,8 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.dto;
 
-import java.util.Collections;
+import blackjack.domain.dto.CardDto;
 import java.util.List;
-import java.util.Map;
 
 public class HitResultDto {
 
