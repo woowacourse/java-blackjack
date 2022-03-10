@@ -1,10 +1,7 @@
 package BlackJack.view;
 
-import BlackJack.domain.Player;
-import BlackJack.dto.ResultDto;
 import BlackJack.dto.UserDto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

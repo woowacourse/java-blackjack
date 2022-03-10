@@ -1,7 +1,6 @@
 package BlackJack.controller;
 
 import BlackJack.domain.*;
-import BlackJack.dto.ResultDto;
 import BlackJack.dto.UserDto;
 import BlackJack.view.InputView;
 import BlackJack.view.OutputView;
@@ -27,13 +26,6 @@ public class BlackjackController {
             dealer.addCard();
         }
 
-        List<ResultDto> resultDtos = new ArrayList<>();
-//        resultDtos.add(ResultDto.from(UserDto.from(dealer), dealer.getScore()));
-//
-//        for (Player player : players) {
-//
-//            resultDtos.add(ResultDto.from(UserDto.from(player), player.getScore()));
-//        }
         List<UserDto> userDtos = convertToListDto(dealer, players);
 
         OutputView.printTotalResult(userDtos);
