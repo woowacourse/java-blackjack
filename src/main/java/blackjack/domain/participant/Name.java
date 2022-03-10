@@ -7,8 +7,8 @@ public class Name {
     private final String value;
 
     public Name(String value) {
-        value = value.trim();
         validateName(value);
+        value = value.trim();
         this.value = value;
     }
 

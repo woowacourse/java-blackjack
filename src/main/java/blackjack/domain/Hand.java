@@ -41,8 +41,8 @@ public class Hand {
         }
 
         List<Integer> sums = new ArrayList<>();
-        for (int aceCount = countOfAce - 1; aceCount >= 0; aceCount--) {
-            sums.add(sumExcludingAce - (aceCount * ACE_SCORE_DIFFERENCE));
+        for (int aceCount = countOfAce; aceCount >= 0; aceCount--) {
+            sums.add(sumExcludingAce + (countOfAce * ACE_UPPER_SCORE) - (aceCount * ACE_SCORE_DIFFERENCE));
         }
 
         return findLargestSumIn21(sums);
