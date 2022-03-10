@@ -52,7 +52,11 @@ public enum CardNumber {
 
     private static int getAceCount(final List<CardNumber> cardNumbers) {
         return (int) cardNumbers.stream()
-                .filter(cardNumber -> cardNumber.name.equals(ACE.name))
+                .filter(CardNumber::isEqualAce)
                 .count();
+    }
+
+    private static boolean isEqualAce(CardNumber cardNumber) {
+        return cardNumber.equals(ACE);
     }
 }
