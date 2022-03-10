@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.concurrent.RecursiveTask;
 
 public class Hand {
 
@@ -33,27 +33,17 @@ public class Hand {
     }
 
     private int getSumIncludingAce() {
-        int countOfAce = getNumberOfAce();
+        int countAce = getNumberOfAce();
         int sumExcludingAce = getSumExcludingAce();
 
-        if (sumExcludingAce > BLACKJACK_SYMBOL_SCORE) {
-            return sumExcludingAce + countOfAce;
+        for (int i = 0; i < countAce; i++) {
+            int sum = sumExcludingAce + (countAce * ACE_UPPER_SCORE) - i * ACE_SCORE_DIFFERENCE;
+            if (sum <= BLACKJACK_SYMBOL_SCORE) {
+                return sum;
+            }
         }
 
-        List<Integer> sums = new ArrayList<>();
-        for (int aceCount = countOfAce; aceCount >= 0; aceCount--) {
-            sums.add(sumExcludingAce + (countOfAce * ACE_UPPER_SCORE) - (aceCount * ACE_SCORE_DIFFERENCE));
-        }
-
-        return findLargestSumIn21(sums);
-    }
-
-    private int findLargestSumIn21(List<Integer> sums) {
-        return sums.stream()
-                .filter(summation -> summation <= BLACKJACK_SYMBOL_SCORE)
-                .mapToInt(value -> value)
-                .max()
-                .getAsInt();
+        return sumExcludingAce + countAce;
     }
 
     private int getSumExcludingAce() {

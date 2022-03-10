@@ -8,7 +8,7 @@ import java.util.List;
 public class Dealer extends Participant {
 
     private static final int DEALER_CARD_PIVOT = 17;
-    public static final String DEALER_NAME = "딜러";
+    private static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
 
