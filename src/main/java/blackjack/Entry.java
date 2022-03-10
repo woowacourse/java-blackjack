@@ -56,11 +56,19 @@ public class Entry extends Player {
         }
 
         @Override
-        public Entry build()  {
+        public Entry build() {
             if (deck == null) {
                 throw new RuntimeException(ERROR_DECK_IS_NULL);
             }
             return new Entry(this.name, this.deck);
         }
+    }
+
+    public boolean isBust() {
+         return this.deck.isBust();
+    }
+
+    public void hit(TrumpCard card) {
+        this.deck.add(card);
     }
 }

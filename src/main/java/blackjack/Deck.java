@@ -59,4 +59,12 @@ public class Deck {
     public void add(TrumpCard card) {
         this.cards.add(card);
     }
+
+    public boolean isBust() {
+        return sumScore() > SCORE_LIMIT;
+    }
+
+    public boolean isScoreLessThan(int otherScore) {
+        return sumScore() < otherScore;
+    }
 }

@@ -15,7 +15,6 @@ public class DeckTest {
         Deck deck = new Deck(card1, card2);
 
         assertThat(deck.sumScore()).isEqualTo(17);
-
     }
 
     @DisplayName("9클로버, J하트 점수의 합은 19이다")

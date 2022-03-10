@@ -1,6 +1,7 @@
 package blackjack;
 
 public class Dealer extends Player {
+    private static final int SCORE_HIT_CRITERIA = 17;
 
     protected Dealer(String name, Deck deck) {
         super(name, deck);
@@ -14,11 +15,25 @@ public class Dealer extends Player {
         }
 
         @Override
-        public Dealer build()  {
+        public Dealer build() {
             if (deck == null) {
                 throw new RuntimeException(ERROR_DECK_IS_NULL);
             }
             return new Dealer(this.name, this.deck);
         }
+    }
+
+    public boolean isBust() {
+        return this.deck.isBust();
+    }
+
+    public void hit(TrumpCard card) {
+        if (canHit()) {
+            this.deck.add(card);
+        }
+    }
+
+    private boolean canHit() {
+        return this.deck.isScoreLessThan(SCORE_HIT_CRITERIA);
     }
 }
