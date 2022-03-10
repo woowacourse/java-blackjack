@@ -26,4 +26,13 @@ public class PlayerTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("참가자의 이름으로 공백이나 빈 문자열은 입력할 수 없습니다.");
     }
+    
+    @Test
+    @DisplayName("참가자의 승무패 결과 확인")
+    void playerWinDrawLoseTest() {
+        Player player = new Player("pobi");
+        player.win();
+
+        assertThat(player.getWinDrawLoseString()).isEqualTo("승");
+    }
 }

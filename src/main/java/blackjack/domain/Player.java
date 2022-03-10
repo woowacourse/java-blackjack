@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Player extends Gamer {
 
+    private WinDrawLose winDrawLose;
+
     public Player(String name) {
         super(name, new Cards(new ArrayList<>()));
     }
@@ -18,21 +20,21 @@ public class Player extends Gamer {
 
     @Override
     public void win() {
-
+        winDrawLose = WinDrawLose.WIN;
     }
 
     @Override
     public void draw() {
-
+        winDrawLose = WinDrawLose.DRAW;
     }
 
     @Override
     public void lose() {
-
+        winDrawLose = WinDrawLose.LOSE;
     }
 
     @Override
     public String getWinDrawLoseString() {
-        return null;
+        return winDrawLose.getName();
     }
 }

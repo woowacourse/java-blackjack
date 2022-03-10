@@ -34,4 +34,15 @@ public class DealerTest {
         }
         assertThat(dealer.getCards().getCards().size()).isEqualTo(cardSize);
     }
+
+    @Test
+    @DisplayName("딜러의 승패 결과 확인")
+    void dealerWinDrawLoseTest() {
+        Dealer dealer = Dealer.init();
+        dealer.win();
+        dealer.win();
+        dealer.lose();
+
+        assertThat(dealer.getWinDrawLoseString()).isEqualTo("2승 1패");
+    }
 }
