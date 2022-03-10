@@ -13,7 +13,7 @@ public interface Player {
 
     int calculateResult();
 
-    boolean isReceivable();
+    boolean isSatisfyReceiveCondition();
 
     String getName();
 }

@@ -49,23 +49,23 @@ public class BlackJackApplication {
     }
 
     private static void progressGamerAdditionalCard(final Deck deck, final Gamer gamer) {
-        while (gamer.isHit(createAnswer(gamer.getName())) && gamer.isReceivable()) {
+        while (gamer.isSatisfyReceiveCondition() && gamer.isHit(toAnswer(gamer.getName()))) {
             gamer.receiveCard(deck.draw());
             OutputView.printGamerCards(gamer);
         }
     }
 
-    private static Answer createAnswer(final String name) {
+    private static Answer toAnswer(final String name) {
         try {
             return Answer.of(InputView.requestAnswer(name));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            return createAnswer(name);
+            return toAnswer(name);
         }
     }
 
     private static void progressDealerAdditionalCard(final Deck deck, final Player dealer) {
-        boolean receivable = dealer.isReceivable();
+        boolean receivable = dealer.isSatisfyReceiveCondition();
         OutputView.printDealerReceive(receivable);
         if (receivable) {
             dealer.receiveCard(deck.draw());

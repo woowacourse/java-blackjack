@@ -50,7 +50,7 @@ public class DealerTest {
         Dealer dealer = initDealer();
         dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.ACE));
 
-        assertTrue(dealer.isReceivable());
+        assertTrue(dealer.isSatisfyReceiveCondition());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class DealerTest {
         dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.FIVE));
 
-        assertFalse(dealer.isReceivable());
+        assertFalse(dealer.isSatisfyReceiveCondition());
     }
 
     private Dealer initDealer() {

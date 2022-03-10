@@ -41,7 +41,7 @@ public class Dealer implements Player {
     }
 
     @Override
-    public boolean isReceivable() {
+    public boolean isSatisfyReceiveCondition() {
         return calculateResult() <= DEALER_RECEIVE_STANDARD;
     }
 
