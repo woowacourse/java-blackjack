@@ -15,7 +15,7 @@ public enum WinningResult {
         this.result = result;
     }
 
-    public static WinningResult valueOf(boolean result) {
+    public static WinningResult valueOf(final boolean result) {
         return Arrays.stream(WinningResult.values())
                 .filter(it -> it.result == result)
                 .findAny()

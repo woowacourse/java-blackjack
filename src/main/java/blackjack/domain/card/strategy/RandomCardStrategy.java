@@ -13,13 +13,13 @@ public class RandomCardStrategy implements CardStrategy {
 
     public RandomCardStrategy() {
         final List<Card> cards = new ArrayList<>();
-        for (CardPattern cardPattern : CardPattern.values()) {
+        for (final CardPattern cardPattern : CardPattern.values()) {
             cards.addAll(createCardsPerPattern(cardPattern));
         }
         this.cards = cards;
     }
 
-    private List<Card> createCardsPerPattern(CardPattern cardPattern) {
+    private List<Card> createCardsPerPattern(final CardPattern cardPattern) {
         return Arrays.stream(CardNumber.values())
                 .map(cardNumber -> new Card(cardPattern, cardNumber))
                 .collect(Collectors.toList());

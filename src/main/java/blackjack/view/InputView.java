@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 public class InputView {
 
+    private final String COMMA_UNIT = ",";
+
     private final Reader reader;
 
     public InputView(final Reader reader) {
@@ -15,15 +17,15 @@ public class InputView {
     }
 
     public List<String> requestPlayerNames() {
-        String input = reader.readLine();
-
-        return Arrays.stream(input.split(",", -1))
+        final String input = reader.readLine();
+        final int limitForSplitAllElement = -1;
+        return Arrays.stream(input.split(COMMA_UNIT, limitForSplitAllElement))
                 .map(String::trim)
                 .collect(Collectors.toUnmodifiableList());
     }
 
     public boolean requestContinuable() {
-        String input = reader.readLine();
+        final String input = reader.readLine();
         return Choice.from(input).getContinuable();
     }
 }

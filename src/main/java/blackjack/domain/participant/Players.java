@@ -33,7 +33,7 @@ public class Players {
 
     public MatchResult judgeWinners(Dealer dealer) {
         final Map<String, WinningResult> winningResults = new HashMap<>();
-        for (Player player : players) {
+        for (final Player player : players) {
             final String playerName = player.getName();
             final WinningResult winningResult = dealer.judgeWinner(player);
             winningResults.put(playerName, winningResult);
@@ -42,7 +42,7 @@ public class Players {
     }
 
     private void distributeCards(Deck deck) {
-        for (Player player : players) {
+        for (final Player player : players) {
             player.drawCard(deck);
             player.drawCard(deck);
         }
@@ -66,7 +66,7 @@ public class Players {
         return players.get(index);
     }
 
-    public void drawCard(final int turnIndex,final  Deck deck) {
+    public void drawCard(final int turnIndex, final Deck deck) {
         players.get(turnIndex).drawCard(deck);
     }
 }

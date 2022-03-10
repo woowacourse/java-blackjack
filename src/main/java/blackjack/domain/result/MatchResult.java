@@ -5,6 +5,8 @@ import java.util.Map;
 
 public class MatchResult {
 
+    public static final int INCREASING_COUNT = 1;
+
     private final Map<WinningResult, Integer> dealerResult;
     private final Map<String, WinningResult> playerResult;
 
@@ -16,9 +18,9 @@ public class MatchResult {
 
     private Map<WinningResult, Integer> calculateDealerResult(final Map<String, WinningResult> playerResult) {
         final Map<WinningResult, Integer> collectResult = new EnumMap<>(WinningResult.class);
-        
-        for (WinningResult result : playerResult.values()) {
-            collectResult.merge(result, 1, Integer::sum);
+
+        for (final WinningResult result : playerResult.values()) {
+            collectResult.merge(result, INCREASING_COUNT, Integer::sum);
         }
 
         final Map<WinningResult, Integer> dealerResult = new EnumMap<>(WinningResult.class);

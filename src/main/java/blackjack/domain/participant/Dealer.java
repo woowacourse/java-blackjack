@@ -5,8 +5,11 @@ import blackjack.domain.result.WinningResult;
 
 public class Dealer extends Participant {
 
+    public static final String DEALER_NAME = "딜러";
+    public static final int DEALER_MIN_SCORE = 17;
+
     private Dealer() {
-        this.name = "딜러";
+        this.name = DEALER_NAME;
     }
 
     public static Dealer startWithTwoCards(final Deck deck) {
@@ -16,14 +19,14 @@ public class Dealer extends Participant {
         return dealer;
     }
 
-    public void continueDraw(Deck deck) {
+    public void continueDraw(final Deck deck) {
         while (isPossibleToDrawCard()) {
             drawCard(deck);
         }
     }
 
     private boolean isPossibleToDrawCard() {
-        return calculateScore() < 17;
+        return calculateScore() < DEALER_MIN_SCORE;
     }
 
     public WinningResult judgeWinner(final Player player) {
@@ -36,4 +39,5 @@ public class Dealer extends Participant {
 
         return WinningResult.valueOf(player.isHigherThan(this));
     }
+
 }

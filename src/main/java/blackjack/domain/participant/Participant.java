@@ -8,6 +8,10 @@ import java.util.List;
 
 public class Participant {
 
+    private static final int BLACKJACK_NUMBER = 21;
+    private static final int ACE_NUMBER = 1;
+    private static final int ADD_ALTERNATIVE_ACE_VALUE = 10;
+
     protected String name;
     protected List<Card> cards = new ArrayList<>();
 
@@ -22,8 +26,8 @@ public class Participant {
             totalSum += 10;
         }
 
-        if (totalSum > 21) {
-            totalSum -= 10;
+        if (totalSum > BLACKJACK_NUMBER) {
+            totalSum -= ADD_ALTERNATIVE_ACE_VALUE;
         }
 
         return totalSum;
@@ -31,7 +35,7 @@ public class Participant {
 
     private boolean hasAceCard() {
         return cards.stream()
-                .anyMatch(card -> card.getNumber() == 1);
+                .anyMatch(card -> card.getNumber() == ACE_NUMBER);
     }
 
     protected int calculateWithoutAce() {
@@ -41,10 +45,10 @@ public class Participant {
     }
 
     public boolean isBurst() {
-        return calculateScore() > 21;
+        return calculateScore() > BLACKJACK_NUMBER;
     }
 
-    public boolean isHigherThan(Participant other) {
+    public boolean isHigherThan(final Participant other) {
         final int thisScore = this.calculateScore();
         final int otherScore = other.calculateScore();
         return thisScore > otherScore;
