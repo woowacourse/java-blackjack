@@ -22,6 +22,14 @@ public class GameController {
         endGame(table);
     }
 
+    private Players getPlayers() {
+        List<Player> playerList = new ArrayList<>();
+        for (String name : InputView.inputPlayerName()) {
+            playerList.add(Player.of(Name.of(name)));
+        }
+        return Players.of(playerList);
+    }
+
     private void initGame(final Table table) {
         table.initCard();
         OutputView.printInitCards(table);
@@ -34,18 +42,20 @@ public class GameController {
         addCardToDealer(table);
     }
 
-    private void endGame(final Table table) {
-        OutputView.printCardAndPoint(table);
-        Statistic.of(table.getDealer()).calculate(table.getPlayers());
-        printGameResult(table);
-    }
-
-    private Players getPlayers() {
-        List<Player> playerList = new ArrayList<>();
-        for (String name : InputView.inputPlayerName()) {
-            playerList.add(Player.of(Name.of(name)));
+    private void questionOneMoreCard(final Player player, final CardDeck cardDeck) {
+        if (!player.isOneMoreCard()) {
+            return;
         }
-        return Players.of(playerList);
+        boolean isAddCard = InputView.inputOneMoreCard(player.getName());
+        if (!isAddCard && player.getCardSize() == Constants.INIT_CARD_NUMBER) {
+            OutputView.printHumanCardState(player);
+            return;
+        }
+        if (isAddCard) {
+            player.addCard(cardDeck.giveCard());
+            OutputView.printHumanCardState(player);
+            questionOneMoreCard(player, cardDeck);
+        }
     }
 
     private void addCardToDealer(final Table table) {
@@ -55,23 +65,16 @@ public class GameController {
         }
     }
 
+    private void endGame(final Table table) {
+        OutputView.printCardAndPoint(table);
+        Statistic.of(table.getDealer()).calculate(table.getPlayers());
+        printGameResult(table);
+    }
+
     private void printGameResult(final Table table) {
         Statistic statistic = Statistic.of(table.getDealer());
         statistic.calculate(table.getPlayers());
         OutputView.printDealerResult(statistic.getDealerWinState());
         OutputView.printPlayerResult(table.getPlayers());
-    }
-
-    private void questionOneMoreCard(final Player player, final CardDeck cardDeck) {
-        if (!player.isOneMoreCard()) {
-            return;
-        }
-        if (!InputView.inputOneMoreCard(player.getName()) && player.getCardSize() == Constants.INIT_CARD_NUMBER) {
-            OutputView.printHumanCardState(player);
-            return;
-        }
-        player.addCard(cardDeck.giveCard());
-        OutputView.printHumanCardState(player);
-        questionOneMoreCard(player, cardDeck);
     }
 }
