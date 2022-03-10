@@ -25,7 +25,7 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printCardResult(Map<Player, Integer> cardResult) {
+    public static void printCardResult(Map<Participant, Integer> cardResult) {
         cardResult.forEach((player, count) -> System.out.println(MessageFormat.format("{0} - 결과: {1}", getPlayerCard(player), count)));
     }
 

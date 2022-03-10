@@ -19,7 +19,7 @@ public class Application {
             OutputView.printReceivingMoreCardOfDealer();
         }
 
-        OutputView.printCardResult(getCardResult(players));
+        OutputView.printCardResult(getCardResult(participants));
         OutputView.printGameResult(blackjackGame.getGameResult());
     }
 
@@ -32,8 +32,8 @@ public class Application {
         } while (blackjackGame.isHit(player, command));
     }
 
-    private static Map<Player, Integer> getCardResult(List<Player> players) {
-        return players.stream()
-                .collect(Collectors.toMap(player -> player, Player::countCards));
+    private static Map<Participant, Integer> getCardResult(List<Participant> participants) {
+        return participants.stream()
+                .collect(Collectors.toMap(participant -> participant, Participant::countCards));
     }
 }
