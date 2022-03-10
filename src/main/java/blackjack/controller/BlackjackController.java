@@ -67,6 +67,13 @@ public class BlackjackController {
             ResultStatistics playerResult = ResultStatistics.of(player.getName());
             Score playerScore = player.getCurrentScore();
 
+            if (playerScore.toInt() > Score.BLACKJACK) {
+                dealerResult.incrementCountOf(ResultType.WIN);
+                playerResult.incrementCountOf(ResultType.LOSE);
+                results.add(playerResult);
+                continue;
+            }
+
             int compareResult = dealerScore.compareTo(playerScore);
 
             if (compareResult > 0) {
