@@ -15,10 +15,12 @@ public class Entry {
     private static final int MAX_LENGTH = 15;
 
     private final String name;
+    private final Deck deck;
 
-    private Entry(String name) {
+    private Entry(String name, Deck deck) {
         validate(name);
         this.name = name.trim();
+        this.deck = deck;
     }
 
     private void validate(String name) {
@@ -59,7 +61,27 @@ public class Entry {
         }
     }
 
-    public static Entry from(String name) {
-        return new Entry(name);
+    public static class Builder {
+        private static final String ERROR_DECK_IS_NULL = "[ERROR] deck()을 먼저 호출해서 Deck을 초기화해주세요.";
+
+        private final String name;
+
+        private Deck deck;
+
+        public Builder(String name) {
+            this.name = name;
+        }
+
+        public Builder deck(TrumpCard card1, TrumpCard card2) {
+            this.deck = new Deck(card1, card2);
+            return this;
+        }
+
+        public Entry build() {
+            if (deck == null) {
+                throw new RuntimeException(ERROR_DECK_IS_NULL);
+            }
+            return new Entry(this.name, this.deck);
+        }
     }
 }
