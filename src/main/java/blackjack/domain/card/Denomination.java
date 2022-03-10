@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 public enum Denomination {
     ACE(1),
@@ -29,5 +29,4 @@ public enum Denomination {
     public int getScore() {
         return score;
     }
-
 }

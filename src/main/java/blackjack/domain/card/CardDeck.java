@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,9 +10,9 @@ public class CardDeck {
 
     private CardDeck() {
         Stack<PlayingCard> playingCards = Arrays.stream(Suit.values())
-            .flatMap(suit -> Arrays.stream(Denomination.values())
-                .map(denomination -> PlayingCard.of(suit, denomination)))
-            .collect(Collectors.toCollection(Stack::new));
+                .flatMap(suit -> Arrays.stream(Denomination.values())
+                        .map(denomination -> PlayingCard.of(suit, denomination)))
+                .collect(Collectors.toCollection(Stack::new));
 
         Collections.shuffle(playingCards);
         this.playingCards = playingCards;

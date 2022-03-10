@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card.PlayingCard;
 import java.util.List;
 
 public class PlayerDto {
@@ -25,7 +26,7 @@ public class PlayerDto {
 
     public int getScore() {
         return playingCards.stream()
-            .mapToInt(playingCard -> playingCard.getDenomination().getScore())
-            .sum();
+                .mapToInt(playingCard -> playingCard.getDenomination().getScore())
+                .sum();
     }
 }

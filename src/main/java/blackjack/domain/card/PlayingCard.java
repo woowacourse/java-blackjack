@@ -1,10 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 public class PlayingCard {
     private final Suit suit;
     private final Denomination denomination;
 
-    private PlayingCard(final Suit suit, final Denomination denomination) {
+    private PlayingCard(Suit suit, Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
     }
@@ -47,5 +47,13 @@ public class PlayingCard {
         int result = suit != null ? suit.hashCode() : 0;
         result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayingCard{" +
+                "suit=" + suit +
+                ", denomination=" + denomination +
+                '}';
     }
 }

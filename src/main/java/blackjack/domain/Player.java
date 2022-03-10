@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.card.PlayingCard;
+import blackjack.domain.card.PlayingCards;
 import java.util.List;
 
 public abstract class Player {
@@ -35,8 +37,8 @@ public abstract class Player {
     @Override
     public String toString() {
         return "Player{" +
-            "name='" + name + '\'' +
-            ", playingCards=" + playingCards +
-            '}';
+                "name='" + name + '\'' +
+                ", playingCards=" + playingCards +
+                '}';
     }
 }

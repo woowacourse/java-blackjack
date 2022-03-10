@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.joining;
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.Dealer;
 import blackjack.domain.PlayerDto;
-import blackjack.domain.PlayingCard;
+import blackjack.domain.card.PlayingCard;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +24,8 @@ public class OutputView {
 
     public String getCardNames(List<PlayingCard> playingCards) {
         return playingCards.stream()
-            .map(PlayingCard::getCardName)
-            .collect(joining(", "));
+                .map(PlayingCard::getCardName)
+                .collect(joining(", "));
     }
 
     public void printAfterSpread(String dealerName, String playerNames) {
@@ -43,7 +43,8 @@ public class OutputView {
     }
 
     public void printCardAndScore(PlayerDto playerDto) {
-        System.out.println(playerDto.getName() + "카드: " + getCardNames(playerDto.getPlayingCards()) + " - 결과: " + playerDto.getScore());
+        System.out.println(playerDto.getName() + "카드: " + getCardNames(playerDto.getPlayingCards()) + " - 결과: "
+                + playerDto.getScore());
     }
 
     public void printBurst(final PlayerDto playerDto) {
@@ -59,7 +60,7 @@ public class OutputView {
         final Map<String, Boolean> playerResult = blackJackResult.getPlayerResult();
 
         playerResult.entrySet()
-            .stream()
-            .forEachOrdered(entry -> System.out.println(entry.getKey() + ": " + (entry.getValue() ? "승" : "패")));
+                .stream()
+                .forEachOrdered(entry -> System.out.println(entry.getKey() + ": " + (entry.getValue() ? "승" : "패")));
     }
 }

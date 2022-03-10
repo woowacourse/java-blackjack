@@ -4,10 +4,10 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.BlackJackResult;
-import blackjack.domain.CardDeck;
 import blackjack.domain.Dealer;
 import blackjack.domain.Gambler;
 import blackjack.domain.PlayerDto;
+import blackjack.domain.card.CardDeck;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -31,8 +31,8 @@ public class BlackJackController {
         final List<String> playerNames = inputView.scanPlayerNames();
 
         return playerNames.stream()
-            .map(Gambler::new)
-            .collect(toList());
+                .map(Gambler::new)
+                .collect(toList());
     }
 
     private CardDeck setupCards() {
@@ -41,11 +41,11 @@ public class BlackJackController {
 
     public void spreadCards(List<Gambler> gamblers, Dealer dealer, CardDeck cardDeck) {
         gamblers
-            .forEach(player -> player.addCard(cardDeck.getCard()));
+                .forEach(player -> player.addCard(cardDeck.getCard()));
         dealer.addCard(cardDeck.getCard());
 
         gamblers
-            .forEach(player -> player.addCard(cardDeck.getCard()));
+                .forEach(player -> player.addCard(cardDeck.getCard()));
         dealer.addCard(cardDeck.getCard());
 
         printCards(dealer, gamblers);
@@ -57,7 +57,7 @@ public class BlackJackController {
         outputView.printSingleCardForDealer(PlayerDto.from(dealer));
 
         gamblers
-            .forEach(gambler -> outputView.printCards(PlayerDto.from(gambler)));
+                .forEach(gambler -> outputView.printCards(PlayerDto.from(gambler)));
     }
 
     private void hitOrStay(final List<Gambler> gamblers, CardDeck cardDeck) {
@@ -79,7 +79,7 @@ public class BlackJackController {
             gambler.addCard(cardDeck.getCard());
             final PlayerDto playerDto = PlayerDto.from(gambler);
             outputView.printCards(playerDto);
-            if (gambler.isBurst()){
+            if (gambler.isBurst()) {
                 outputView.printBurst(playerDto);
                 break;
             }
@@ -97,7 +97,7 @@ public class BlackJackController {
         System.out.println();
         outputView.printCardAndScore(PlayerDto.from(dealer));
         gamblers.stream()
-            .map(PlayerDto::from)
-            .forEach(outputView::printCardAndScore);
+                .map(PlayerDto::from)
+                .forEach(outputView::printCardAndScore);
     }
 }
