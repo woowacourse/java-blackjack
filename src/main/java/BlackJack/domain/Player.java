@@ -6,7 +6,7 @@ public class Player extends User{
     }
 
     @Override
-    void addCard() {
+    public void addCard() {
         cards.add(CardFactory.drawOneCard());
     }
 

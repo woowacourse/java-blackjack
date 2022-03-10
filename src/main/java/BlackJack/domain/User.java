@@ -20,6 +20,6 @@ public abstract class User {
         return cards;
     }
 
-    abstract void addCard();
+    abstract public void addCard();
 
 }

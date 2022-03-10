@@ -18,7 +18,9 @@ public class BlackjackController {
         List<Player> players = joinGame(inputPlayerNames);
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToDto(dealer, players));
-
+        for(Player player : players){
+            addCard(player);
+        }
     }
 
     public List<Player> joinGame(List<String> inputPlayerNames) {
@@ -38,8 +40,13 @@ public class BlackjackController {
         return userDtos;
     }
 
-//    public void addCard() {
-//      game.addcard
-//    }
+    public void addCard(Player player) {
+
+        while(InputView.askOneMoreCard(UserDto.from(player))){
+            player.addCard();
+            OutputView.printPlayerCard(UserDto.from(player));
+        }
+
+    }
 
 }
