@@ -22,6 +22,15 @@ public class BlackJackController {
         for (Player player : players) {
             requestCardAddition(blackJack, player);
         }
+
+        addDealerCards(blackJack);
+    }
+
+    private void addDealerCards(BlackJack blackJack) {
+        while (blackJack.isDealerAddable()) {
+            blackJack.addCardToDealer();
+            OutputView.printDealCardMessage();
+        }
     }
 
     private void requestCardAddition(BlackJack blackJack, Player player) {

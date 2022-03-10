@@ -50,4 +50,8 @@ public class OutputView {
                 .map(CardDto::getCard)
                 .collect(Collectors.toList());
     }
+
+    public static void printDealCardMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
 }

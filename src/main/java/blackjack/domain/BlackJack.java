@@ -59,4 +59,12 @@ public class BlackJack {
         playerGroup.addAllTo(gamers);
         return gamers;
     }
+
+    public boolean isDealerAddable() {
+        return dealer.isAddable();
+    }
+
+    public void addCardToDealer() {
+        dealer.addCard(cardPack.pickOne());
+    }
 }

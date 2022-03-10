@@ -22,4 +22,9 @@ public class Dealer extends Gamer {
         firstCard.close();
         super.addTwoCards(firstCard, secondCard);
     }
+
+    @Override
+    public boolean isAddable() {
+        return getCardGroupSum() <= DEALER_STAND_CONDITION;
+    }
 }
