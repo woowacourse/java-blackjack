@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.Card;
 import blackjack.domain.Deck;
@@ -25,7 +26,7 @@ public class DealerTest {
     @DisplayName("딜러가 카드를 정상적으로 주는지 확인")
     void drawCard() {
         Dealer dealer = new Dealer();
-        Card card = dealer.drawCards();
+        Card card = dealer.drawCard();
         assertThat(card).isNotNull();
     }
 
@@ -57,5 +58,39 @@ public class DealerTest {
         dealer.selfDraw();
 
         Assertions.assertThat(dealer.shouldReceive()).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러는 자신의 카드 한장을 정상적으로 오픈 하는지 확인")
+    void openDealerCard() {
+        List<Card> cards = new ArrayList<>();
+        Card excepted = new Card(Denomination.JACK, Suit.DIAMOND);
+        cards.add(excepted);
+        cards.add(new Card(Denomination.ACE, Suit.DIAMOND));
+
+        Deck deck = new Deck(cards);
+        Dealer dealer = new Dealer(deck);
+        dealer.selfDraw();
+        dealer.selfDraw();
+
+        assertThat(dealer.getOpenCard()).isEqualTo(excepted);
+    }
+
+    @Test
+    @DisplayName("플레이어들에게 2장씩 기본 카드 세팅을 해주는 확인")
+    void drawCardToPlayers() {
+        List<Player> players = new ArrayList<>();
+        Player p1 = new Player("승팡");
+        Player p2 = new Player("필즈");
+        players.add(p1);
+        players.add(p2);
+
+        Dealer dealer = new Dealer();
+
+        dealer.drawCardToPlayers(players);
+        assertAll(
+                () -> assertThat(p1.getCards().size()).isEqualTo(2),
+                () -> assertThat(p2.getCards().size()).isEqualTo(2)
+        );
     }
 }
