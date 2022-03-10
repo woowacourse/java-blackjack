@@ -1,78 +1,26 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static blackjack.domain.Denomination.*;
-import static blackjack.domain.Symbol.*;
+import static blackjack.domain.card.Denomination.*;
+import static blackjack.domain.card.Symbol.CLOVER;
+import static blackjack.domain.card.Symbol.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
-
-    @Test
-    @DisplayName("hit 가능하다면 참을 반환한다")
-    void canHitWhenTrue() {
-        Player player = new Player("pobi", List.of(
-                new Card(HEART, KING),
-                new Card(CLOVER, QUEEN)
-        ));
-
-        assertThat(player.canHit()).isTrue();
-    }
-
-    @Test
-    @DisplayName("hit 가능하지않다면 거짓을 반환한다")
-    void canHitWhenFalse() {
-        Player player = new Player("pobi", List.of(
-                new Card(HEART, KING),
-                new Card(CLOVER, QUEEN)
-        ));
-
-        player.addCard(new Card(SPADE, ACE));
-
-        assertThat(player.canHit()).isFalse();
-    }
-
-    @Test
-    @DisplayName("승패 여부를 판단한다 : 총점이 21 이하인 경우")
-    void testWinOrLose() {
-        Player player = new Player("pobi",List.of(
-                new Card(SPADE, FIVE),
-                new Card(DIAMOND, TWO)
-        ));
-        assertThat(player.isWin(16)).isFalse();
-        assertThat(player.isWin(6)).isTrue();
-    }
-
-    @Test
-    @DisplayName("승패 여부를 판단한다 : 플레이어의 총점이 21 초과인 경우")
-    void testWinOrLose2() {
-        Player player = new Player("pobi",List.of(
-                new Card(SPADE, KING),
-                new Card(SPADE, QUEEN),
-                new Card(DIAMOND, TWO)
-        ));
-        assertThat(player.isWin(1)).isFalse();
-    }
-
-    @Test
-    @DisplayName("승패 여부를 판단한다 : 딜러의 총점이 21 초과인 경우")
-    void testWinOrLose3() {
-        Player player = new Player("pobi",List.of(
-                new Card(SPADE, ACE),
-                new Card(SPADE, ACE)
-        ));
-        assertThat(player.isWin(22)).isTrue();
-    }
 
     @Test
     @DisplayName("hit이 가능한 상태라면 참을 반환한다.")
     void testIsAbleToHit1() {
         // given
         List<Card> initCards = List.of(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
-        Player player = new Player("pobi", initCards);
+        Player player = new Player("pobi", Cards.of(initCards));
 
         // when
         boolean actual = player.isAbleToHit();
@@ -86,7 +34,7 @@ class PlayerTest {
     void testIsAbleToHit2() {
         // given
         List<Card> initCards = List.of(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
-        Player player = new Player("pobi", initCards);
+        Player player = new Player("pobi", Cards.of(initCards));
         player.addCard(new Card(DIAMOND, SIX));
 
         // when
@@ -101,7 +49,7 @@ class PlayerTest {
     void testIsAbleToHit3() {
         // given
         List<Card> initCards = List.of(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
-        Player player = new Player("pobi", initCards);
+        Player player = new Player("pobi", Cards.of(initCards));
         player.addCard(new Card(DIAMOND, SEVEN));
 
         // when
@@ -116,7 +64,7 @@ class PlayerTest {
     void testIsAbleToHit4() {
         // given
         List<Card> initCards = List.of(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
-        Player player = new Player("pobi", initCards);
+        Player player = new Player("pobi", Cards.of(initCards));
 
         // when
         player.stay();

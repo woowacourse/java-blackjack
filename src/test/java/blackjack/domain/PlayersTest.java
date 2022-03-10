@@ -1,15 +1,18 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static blackjack.domain.Denomination.*;
-import static blackjack.domain.Symbol.*;
-import static blackjack.domain.Symbol.HEART;
-import static org.assertj.core.api.Assertions.*;
+import static blackjack.domain.card.Denomination.*;
+import static blackjack.domain.card.Symbol.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayersTest {
 
@@ -20,8 +23,8 @@ class PlayersTest {
     @BeforeEach
     void setUp() {
 
-        first = new Player("pobi", List.of(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT)));
-        second = new Player("jason", List.of(new Card(SPADE, JACK), new Card(HEART, ACE)));
+        first = new Player("pobi", Cards.of(List.of(new Card(CLOVER, JACK), new Card(DIAMOND, EIGHT))));
+        second = new Player("jason", Cards.of(List.of(new Card(SPADE, JACK), new Card(HEART, ACE))));
         players = new Players(List.of(first, second));
     }
 
@@ -36,5 +39,29 @@ class PlayersTest {
     void testPassTurnToNext() {
         players.passTurnToNext();
         assertThat(players.getCurrentTurn()).isEqualTo(second);
+    }
+
+    @Test
+    @DisplayName("hit이 가능한 플레이어가 나타날 때까지 turn을 넘긴다")
+    void testPassTurnUntilHitable() {
+        // given
+        Player first = new Player("1", Cards.of(List.of(new Card(CLOVER, JACK), new Card(CLOVER, TWO))));
+        Player second = new Player("2", Cards.of(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, THREE))));
+        Player third = new Player("3", Cards.of(List.of(new Card(SPADE, JACK), new Card(SPADE, FOUR))));
+        Player fourth = new Player("4", Cards.of(List.of(new Card(HEART, JACK), new Card(HEART, FIVE))));
+        Players players = new Players(List.of(first, second, third, fourth));
+
+        first.stay();
+        second.stay();
+        third.stay();
+
+        Player firstTurn = players.getCurrentTurn();
+
+        // when
+        players.passTurnUntilHitable();
+
+        // then
+        assertThat(firstTurn).isEqualTo(first);
+        assertThat(players.getCurrentTurn()).isEqualTo(fourth);
     }
 }
