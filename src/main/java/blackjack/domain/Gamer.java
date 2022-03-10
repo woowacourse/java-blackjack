@@ -39,17 +39,22 @@ public class Gamer {
 	}
 
 	public void calculateAceSum() {
-		int aceCnt = countAceCard();
-		int notAceScore = calculateNotAceCardScore();
-		List<Integer> possible = getPossibleAceScores(aceCnt);
-		int res = notAceScore;
+		final int theNumberOfAce = countAceCard();
+		final int scoreWithoutAce = calculateNotAceCardScore();
+		List<Integer> possible = getPossibleAceScores(theNumberOfAce);
+		final int optimalScore = generateOptimalScore(scoreWithoutAce, possible);
+		this.score = Score.from(optimalScore);
+	}
+
+	private int generateOptimalScore(final int scoreWithoutAce, final List<Integer> possible) {
+		int optimalScore = scoreWithoutAce;
 		List<Integer> collect = possible.stream()
-			.filter(each -> each + notAceScore <= 21)
+			.filter(each -> each + scoreWithoutAce <= 21)
 			.collect(Collectors.toList());
 		for (int possibleScore : collect) {
-			res = Math.max(res, possibleScore + notAceScore);
+			optimalScore = Math.max(optimalScore, possibleScore + scoreWithoutAce);
 		}
-		this.score = Score.from(res);
+		return optimalScore;
 	}
 
 	private List<Integer> getPossibleAceScores(int aceCnt) {
