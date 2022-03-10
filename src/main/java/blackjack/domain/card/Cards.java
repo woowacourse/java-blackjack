@@ -36,7 +36,7 @@ public class Cards {
 
 	private int sumDenominationPoint() {
 		return cards.stream()
-			.mapToInt(card -> card.getDenomination().getPoint())
+			.mapToInt(Card::denominationPoint)
 			.sum();
 	}
 
@@ -46,4 +46,5 @@ public class Cards {
 		}
 		return point;
 	}
+
 }

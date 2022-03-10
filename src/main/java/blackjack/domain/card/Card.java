@@ -36,8 +36,8 @@ public class Card {
 		return Objects.hash(suit, denomination);
 	}
 
-	public Denomination getDenomination() {
-		return denomination;
+	public int denominationPoint() {
+		return denomination.getPoint();
 	}
 
 	public String getName() {
