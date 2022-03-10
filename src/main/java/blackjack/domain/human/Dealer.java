@@ -5,6 +5,9 @@ import blackjack.domain.card.Cards;
 
 public class Dealer extends Human {
 
+    private static final int AVAILABLE_POINT_FOR_ADD_CARD = 16;
+    private static final String NAME = "딜러";
+    
     private final Cards cards;
 
     private Dealer() {
@@ -17,12 +20,12 @@ public class Dealer extends Human {
 
     @Override
     public boolean isOneMoreCard() {
-        return cards.getPoint() <= 16;
+        return cards.getPoint() <= AVAILABLE_POINT_FOR_ADD_CARD;
     }
 
     @Override
     public String getName() {
-        return "딜러";
+        return NAME;
     }
 
     @Override

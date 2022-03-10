@@ -10,7 +10,7 @@ public class Cards {
     private final int DIFFERENCE_POINT_OF_ACE = 10;
     private final int MINIMUM_ACE_AMOUNT = 1;
     private final String JOIN_DELIMITER = ", ";
-    
+
     private final List<Card> cards;
 
     private Cards() {
