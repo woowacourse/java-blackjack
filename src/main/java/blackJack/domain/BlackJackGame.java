@@ -73,6 +73,10 @@ public class BlackJackGame {
         return gameResult;
     }
 
+    public Dealer getDealer() {
+        return dealer;
+    }
+
     public List<Player> getPlayers() {
         return players;
     }

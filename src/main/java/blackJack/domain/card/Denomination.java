@@ -26,4 +26,8 @@ public enum Denomination {
     public int getScore() {
         return score;
     }
+
+    public String getDenomination() {
+        return denomination;
+    }
 }

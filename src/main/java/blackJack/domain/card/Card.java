@@ -12,12 +12,20 @@ public class Card {
         this.denomination = denomination;
     }
 
-    public int getScore() {
-        return denomination.getScore();
+    public String getSymbolName() {
+        return symbol.getName();
     }
 
     public Denomination getDenomination() {
         return denomination;
+    }
+
+    public int getScore() {
+        return denomination.getScore();
+    }
+
+    public String getDenominationName() {
+        return denomination.getDenomination();
     }
 
     @Override

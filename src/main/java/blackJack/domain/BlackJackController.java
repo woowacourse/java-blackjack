@@ -3,20 +3,29 @@ package blackJack.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Player;
 import blackJack.domain.result.YesOrNo;
 import blackJack.domain.view.InputView;
+import blackJack.domain.view.OutputView;
 
 public class BlackJackController {
 
-    private List<Player> getPlayerNames() {
+    public void run() {
+        BlackJackGame blackJackGame = initBlackJackGame();
+        blackJackGame.firstCardDispensing();
+        OutputView.printInitCardResult(blackJackGame.getDealer(), blackJackGame.getPlayers());
+    }
+
+    private BlackJackGame initBlackJackGame() {
         try {
             List<String> playerNames = InputView.inputPlayerNames();
-            return playerNames.stream()
+            List<Player> players = playerNames.stream()
                 .map(Player::new)
                 .collect(Collectors.toUnmodifiableList());
+            return new BlackJackGame(new Dealer(), players);
         } catch (IllegalArgumentException e) {
-            return getPlayerNames();
+            return initBlackJackGame();
         }
     }
 
