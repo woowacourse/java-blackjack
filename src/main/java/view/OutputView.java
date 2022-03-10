@@ -6,12 +6,20 @@ import dto.InitGameDto;
 import dto.ParticipatorDto;
 
 public class OutputView {
+
+    private static final String CONNECTION_SURVEY = "와 ";
+    private static final String SUFFIX_INIT_MESSAGE = "에게 2장을 나누었습니다.";
+    private static final String NAME_CARD_DELIMITER = ": ";
+    private static final String DELIMITER = ", ";
+
     public static void printInit(InitGameDto initGameDto) {
-        List<ParticipatorDto> participatorDtos = initGameDto.getParticipatorDtos();
-        List<String> names = getNames(participatorDtos);
-        System.out.println(names.get(0)+ "와 " +  convertPlayerInLine(names) + "에게 2장을 나누었습니다.");
-        for (int i = 0; i < participatorDtos.size(); i++) {
-            printParticipatorNameAndCard(participatorDtos.get(i));
+        List<ParticipatorDto> playersDto = initGameDto.getPlayersDto();
+        ParticipatorDto dealerDto = initGameDto.getDealerDto();
+        List<String> playerNames = getNames(playersDto);
+        System.out.println(dealerDto.getName() + CONNECTION_SURVEY +  convertPlayerInLine(playerNames) + SUFFIX_INIT_MESSAGE);
+        printParticipatorNameAndCard(dealerDto);
+        for (int i = 0; i < playersDto.size(); i++) {
+            printParticipatorNameAndCard(playersDto.get(i));
         }
     }
 
@@ -22,19 +30,19 @@ public class OutputView {
     }
 
     private static void printParticipatorNameAndCard(ParticipatorDto participatorDto) {
-        System.out.println(participatorDto.getName()+ ": " + convertCardsInLine(participatorDto.getCards()));
+        System.out.println(participatorDto.getName()+ NAME_CARD_DELIMITER + convertCardsInLine(participatorDto.getCards()));
     }
 
     private static String convertCardsInLine(List<String> cards) {
-        return String.join(", ", cards);
+        return String.join(DELIMITER, cards);
     }
 
     private static String convertPlayerInLine(List<String> names) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 1 ; i < names.size(); i++) {
-            sb.append(names.get(i)).append(", ");
+        for (int i = 0; i < names.size(); i++) {
+            sb.append(names.get(i)).append(DELIMITER);
         }
-        sb.deleteCharAt(sb.lastIndexOf(","));
+        sb.deleteCharAt(sb.lastIndexOf(DELIMITER));
         return sb.toString();
     }
 }

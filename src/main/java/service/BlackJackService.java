@@ -15,14 +15,17 @@ import dto.ParticipatorDto;
 import util.CardConvertor;
 
 public class BlackJackService {
+    private static final int INIT_CARD_COUNT = 2;
+
     private List<Participator> participators;
+    private Participator dealer;
     private CardDeck cardDeck;
 
     public InitGameDto initGame(NamesDto namesDto) {
         cardDeck = new CardDeck();
         initParticipators(namesDto);
         drawTwoCardsAll();
-        return new InitGameDto(getParticipatorDtos());
+        return new InitGameDto(getParticipatorDtos(), convertParticipatorToDto(dealer));
     }
 
     private List<ParticipatorDto> getParticipatorDtos() {
@@ -47,20 +50,21 @@ public class BlackJackService {
 
     private void initParticipators(NamesDto namesDto) {
         participators = new ArrayList<>();
-        participators.add(new Dealer());
         for (String name : namesDto.getNames()) {
             participators.add(new Player(new PlayerName(name)));
         }
+        dealer = new Dealer();
     }
 
     private void drawTwoCardsAll() {
         for (Participator participator : participators) {
             getCards(participator);
         }
+        getCards(dealer);
     }
 
     private void getCards(Participator participator) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < INIT_CARD_COUNT; i++) {
             participator.receiveCard(cardDeck.drawCard());
         }
     }
