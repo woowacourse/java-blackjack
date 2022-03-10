@@ -8,6 +8,7 @@ import java.util.List;
 public class Dealer implements Player {
 
     private static final int ADD_CARD_CONDITION = 16;
+    private static final String DEALER_NAME = "딜러";
 
     private final Cards cards;
 
@@ -57,6 +58,11 @@ public class Dealer implements Player {
     @Override
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    @Override
+    public String getName() {
+        return DEALER_NAME;
     }
 
     public Card getCardOne() {

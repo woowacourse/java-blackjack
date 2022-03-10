@@ -13,4 +13,6 @@ public interface Player {
     int calculateFinalScore();
 
     List<Card> getCards();
+
+    String getName();
 }

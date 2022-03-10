@@ -50,7 +50,7 @@ public class BlackjackController {
     private void decideOneMoreCard(Participant participant, Deck deck) {
         while (isNotOverMaxScore(participant) && oneMoreCard(participant)) {
             participant.addCard(deck.draw());
-            OutputView.printParticipantCards(participant);
+            OutputView.printPlayerCardInfo(participant);
         }
     }
 
@@ -79,7 +79,7 @@ public class BlackjackController {
     }
 
     public void announcePlayersFinishInfo(Players players) {
-        OutputView.printFinishDealerInfo(players.getDealer());
+        OutputView.printPlayerFinalInfo(players.getDealer());
         OutputView.printFinishParticipantInfo(players.getParticipants());
     }
 

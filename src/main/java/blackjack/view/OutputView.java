@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
+import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
 import java.util.List;
@@ -13,14 +14,14 @@ public class OutputView {
     private static final int INIT_DISTRIBUTE_SIZE = 2;
     private static final int ADD_CARD_CONDITION = 16;
     private static final String DELIMITER = ", ";
-    private static final String BASIC_DISTRIBUTE = "딜러와 %s에게 " + INIT_DISTRIBUTE_SIZE + "을 나누어주었습니다.";
 
     public static void printPlayersInitCardInfo(final Players players) {
         final List<Participant> participants = players.getParticipants();
         final Dealer dealer = players.getDealer();
 
+        final String basicDistribute = "딜러와 %s에게 " + INIT_DISTRIBUTE_SIZE + "을 나누어주었습니다.";
         System.out.println();
-        System.out.printf((BASIC_DISTRIBUTE) + "%n", String.join(DELIMITER, extractNames(participants)));
+        System.out.printf((basicDistribute) + "%n", String.join(DELIMITER, extractNames(participants)));
         printInitDealerInfo(dealer);
         printParticipantsInfo(participants);
     }
@@ -37,13 +38,18 @@ public class OutputView {
     }
 
     private static void printParticipantsInfo(final List<Participant> participants) {
-        participants.forEach(OutputView::printParticipantCards);
+        participants.forEach(
+                participant -> System.out.println(makePlayerCardInfo(participant))
+        );
         System.out.println();
     }
 
-    public static void printParticipantCards(final Participant participant) {
-        System.out.print(participant.getName() + "카드: ");
-        System.out.println(String.join(DELIMITER, convertToText(participant.getCards())));
+    public static void printPlayerCardInfo(final Player player) {
+        System.out.println(makePlayerCardInfo(player));
+    }
+
+    private static String makePlayerCardInfo(final Player player) {
+        return player.getName() + "카드: " + String.join(DELIMITER, convertToText(player.getCards()));
     }
 
     private static List<String> convertToText(final List<Card> cards) {
@@ -66,18 +72,12 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printFinishDealerInfo(Dealer dealer) {
-        System.out.print("딜러 카드: ");
-        System.out.print(String.join(DELIMITER, convertToText(dealer.getCards())));
-        System.out.println(" - 결과:" + dealer.calculateFinalScore());
+    public static void printPlayerFinalInfo(Player player) {
+        System.out.println(makePlayerCardInfo(player) + " - 결과:" + player.calculateFinalScore());
     }
 
     public static void printFinishParticipantInfo(List<Participant> participants) {
-        participants.forEach(participant -> {
-            System.out.print(participant.getName() + "카드: ");
-            System.out.print(String.join(DELIMITER, convertToText(participant.getCards())));
-            System.out.println(" - 결과:" + participant.calculateFinalScore());
-        });
+        participants.forEach(OutputView::printPlayerFinalInfo);
         System.out.println();
     }
 
@@ -88,7 +88,7 @@ public class OutputView {
     }
 
     private static void printDealerResult(Dealer dealer) {
-        System.out.printf("딜러: %d승 %d패%n", dealer.getWinCount(), dealer.getLoseCount());
+        System.out.printf(dealer.getName() + ": %d승 %d패%n", dealer.getWinCount(), dealer.getLoseCount());
     }
 
     private static void printParticipantsResult(List<Participant> participants) {
