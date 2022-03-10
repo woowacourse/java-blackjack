@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class PlayersTest {
+
     @ParameterizedTest
     @MethodSource("participantListBySuccess")
     @DisplayName("참가자는 2~8명 사이이다. (성공)")
@@ -82,9 +83,9 @@ class PlayersTest {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(deck.initDistributeCard());
         Assertions.assertThatThrownBy(() -> new Players(List.of(
-                new Participant(deck.initDistributeCard(), "pobi"),
-                new Participant(deck.initDistributeCard(), "pobi")
-        ), dealer))
+                        new Participant(deck.initDistributeCard(), "pobi"),
+                        new Participant(deck.initDistributeCard(), "pobi")
+                ), dealer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참가자 이름은 중복될 수 없습니다.");
     }
