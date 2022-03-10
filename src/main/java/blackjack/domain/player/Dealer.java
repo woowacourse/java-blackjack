@@ -45,7 +45,7 @@ public class Dealer implements Player {
     }
 
     @Override
-    public String showName() {
+    public String getName() {
         return name;
     }
 

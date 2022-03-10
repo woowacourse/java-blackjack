@@ -58,7 +58,7 @@ public class Gamer implements Player {
     }
 
     @Override
-    public String showName() {
+    public String getName() {
         return name;
     }
 

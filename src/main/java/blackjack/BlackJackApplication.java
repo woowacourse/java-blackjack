@@ -55,7 +55,7 @@ public class BlackJackApplication {
     }
 
     private static boolean isReceivable(final Player gamer) {
-        return gamer.isReceivable() && isAnswerYes(gamer.showName());
+        return gamer.isReceivable() && isAnswerYes(gamer.getName());
     }
 
     private static boolean isAnswerYes(final String name) {

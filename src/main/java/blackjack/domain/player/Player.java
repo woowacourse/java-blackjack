@@ -15,5 +15,5 @@ public interface Player {
 
     boolean isReceivable();
 
-    String showName();
+    String getName();
 }

@@ -37,7 +37,7 @@ public class OutputView {
 
     private static String joinNames(final List<Player> gamers) {
         return gamers.stream()
-                .map(Player::showName)
+                .map(Player::getName)
                 .collect(joining(PRINT_JOINING_DELIMITER));
     }
 
@@ -50,7 +50,7 @@ public class OutputView {
     private static void appendGamerFormat(final List<Player> gamers, final StringBuilder stringBuilder) {
         for (Player gamer : gamers) {
             stringBuilder.append(String.format(PRINT_SHOW_CARD_FORMAT_MESSAGE,
-                    gamer.showName(),
+                    gamer.getName(),
                     joinCards(gamer.openCards())));
         }
     }
@@ -61,7 +61,7 @@ public class OutputView {
 
     public static void printGamerCards(final Player gamer) {
         System.out.printf(PRINT_SHOW_CARD_FORMAT_MESSAGE,
-                gamer.showName(),
+                gamer.getName(),
                 joinCards(gamer.showCards()));
     }
 
@@ -80,7 +80,7 @@ public class OutputView {
 
     private static void printPlayerCardsResult(final Player player) {
         System.out.printf(PRINT_FINAL_CARD_RESULT,
-                player.showName(),
+                player.getName(),
                 joinCards(player.showCards()),
                 player.calculateResult());
     }
@@ -90,7 +90,7 @@ public class OutputView {
         System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
                 joinDealerString(gamerResultBoard));
         gamerResultBoard.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
-                key.showName(),
+                key.getName(),
                 value.getResult()));
     }
 
