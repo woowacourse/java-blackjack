@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Gamblers {
-    public static final String ERROR_NULL_OR_EMPTY_GAMBLERS = "[ERROR] 겜블러 목록을 확인해주세요";
+    private static final String ERROR_NULL_OR_EMPTY_GAMBLERS = "[ERROR] 겜블러 목록을 확인해주세요";
+
     private final List<Gambler> gamblers;
 
     public Gamblers(List<Gambler> gamblers) {

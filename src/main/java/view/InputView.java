@@ -8,8 +8,8 @@ import java.util.Scanner;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
-    public static final String INPUT_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
-    public static final String ERROR_DUPLICATE_NAME = "[ERROR] 이름은 중복될 수 없습니다.";
+    private static final String INPUT_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String ERROR_DUPLICATE_NAME = "[ERROR] 이름은 중복될 수 없습니다.";
 
     private InputView() {
     }
