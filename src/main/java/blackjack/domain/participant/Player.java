@@ -43,4 +43,8 @@ public class Player extends Participant {
     public void stay() {
         status = Status.STAY;
     }
+
+    public String getName() {
+        return name;
+    }
 }
