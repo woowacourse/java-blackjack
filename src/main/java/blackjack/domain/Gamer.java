@@ -58,6 +58,14 @@ public class Gamer {
         return cardGroup.getSum();
     }
 
+    public int getMaxCardGroupSum() {
+        return cardGroup.getMaxSum();
+    }
+
+    public int getCardGroupScore() {
+        return cardGroup.getScore();
+    }
+
     public boolean isBust() {
         return cardGroup.isBust();
     }

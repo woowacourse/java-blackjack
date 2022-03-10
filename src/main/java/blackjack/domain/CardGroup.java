@@ -24,6 +24,26 @@ public class CardGroup {
                 .sum();
     }
 
+    public int getMaxSum() {
+        return getSum() + countA() * 10;
+    }
+
+    public int getScore() {
+        int maxSum = getMaxSum();
+        int aCount = countA();
+        while (maxSum > BLACKJACK_NUMBER && aCount > 0) {
+            maxSum -= 10;
+            aCount--;
+        }
+        return maxSum;
+    }
+
+    private int countA() {
+        return (int) cards.stream()
+                .filter(Card::isA)
+                .count();
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }

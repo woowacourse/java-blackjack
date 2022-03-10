@@ -17,7 +17,7 @@ public class GamerCardsDto {
     }
 
     public static GamerCardsDto of(String name, CardGroup cards) {
-        return new GamerCardsDto(name, CardDto.of(cards), cards.getSum());
+        return new GamerCardsDto(name, CardDto.of(cards), cards.getScore());
     }
 
     public static List<GamerCardsDto> of(List<Gamer> gamersCards) {

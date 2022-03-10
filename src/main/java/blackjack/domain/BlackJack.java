@@ -31,7 +31,7 @@ public class BlackJack {
     }
 
     public GameResult getGameResult() {
-        Map<String, Match> playerResults = playerGroup.getPlayerResult(dealer.getCardGroupSum());
+        Map<String, Match> playerResults = playerGroup.getPlayerResult(dealer.getMaxCardGroupSum());
         PlayerResult playerResult = new PlayerResult(playerResults);
 
         Collection<Match> playerMatches = playerResults.values();

@@ -31,4 +31,8 @@ public enum CardNumber {
     public int getNumber() {
         return number;
     }
+
+    public boolean isA() {
+        return this.equals(A);
+    }
 }

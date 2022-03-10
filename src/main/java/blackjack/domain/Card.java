@@ -29,4 +29,8 @@ public class Card {
     public void open() {
         isOpen = true;
     }
+
+    public boolean isA() {
+        return number.isA();
+    }
 }
