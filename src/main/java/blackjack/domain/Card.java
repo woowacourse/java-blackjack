@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class Card {
 
-    private static final List<Card> CARDS_CACHE = createCards();
+    private static final List<Card> BASIC_CARDS = createCards();
 
     private final CardPattern pattern;
     private final CardNumber number;
@@ -17,7 +17,7 @@ public class Card {
     }
 
     public static Card of(final CardPattern pattern, final CardNumber number) {
-        return CARDS_CACHE.stream()
+        return BASIC_CARDS.stream()
                 .filter(card -> isEqualCard(pattern, number, card))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."));
@@ -42,7 +42,7 @@ public class Card {
     }
 
     public static List<Card> cards() {
-        return new ArrayList<>(CARDS_CACHE);
+        return new ArrayList<>(BASIC_CARDS);
     }
 
     public CardPattern getPattern() {
