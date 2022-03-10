@@ -15,10 +15,12 @@ public class BlackjackController {
         Deck deck = new Deck();
 
         Participants participants = createParticipants();
-        handOutAndPrintInitialCards(participants,deck);
+        handOutAndPrintInitialCards(participants, deck);
         handOutMoreCards(participants, deck);
+        OutputView.printCardsAndPoint(participants);
+
     }
-    
+
     private Participants createParticipants() {
         List<String> playerNames = InputView.inputPlayerName();
         return new Participants(playerNames.stream()
@@ -44,13 +46,13 @@ public class BlackjackController {
             while (answer.equals("y")) {
                 player.receiveCard(deck.pickCard());
                 cardPrintFlag = true;
-                OutputView.printCards(player);
+                OutputView.printPlayerCardInformation(player);
                 answer = InputView.inputPlayerHit(player.getName());
 
             }
 
             if (!cardPrintFlag) {
-                OutputView.printCards(player);
+                OutputView.printPlayerCardInformation(player);
             }
         }
     }
@@ -61,7 +63,6 @@ public class BlackjackController {
             dealer.receiveCard(deck.pickCard());
         }
     }
-
 
 
 }
