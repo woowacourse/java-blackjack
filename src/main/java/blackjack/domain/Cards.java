@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
     private final List<Card> cards;
@@ -28,7 +29,21 @@ public class Cards {
         for (Card card : cards) {
             point += card.getDenomination().getPoint();
         }
+
+        int aceCount = getAceCount();
+
+        while (point > 21 && aceCount >= 1) {
+            point -= 10;
+            aceCount --;
+        }
+
         return point;
+    }
+
+    private int getAceCount() {
+        return (int) cards.stream()
+                .filter(card -> card.getDenomination().equals(Denomination.ACE))
+                .count();
     }
 
     @Override

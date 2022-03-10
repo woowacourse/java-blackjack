@@ -15,6 +15,11 @@ public class OutputView {
         System.out.println(result);
     }
 
+    public static void printHumanCardPointState(Human human) {
+        String result = human.getName() + "카드: " + human.getCards().toString() +" - 결과 : "+human.getPoint();
+        System.out.println(result);
+    }
+
     public static void printDealerCardAdded() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }

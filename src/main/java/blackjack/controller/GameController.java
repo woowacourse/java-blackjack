@@ -27,6 +27,13 @@ public class GameController {
         for (Player player : players.getCardNeedPlayers()) {
             questionOneMoreCard(player);
         }
+
+        // 포인트 계산
+        OutputView.printHumanCardPointState(dealer);
+        for(Player player : players.getPlayers()){
+            OutputView.printHumanCardPointState(player);
+        }
+
     }
 
     private void addCardToDealer(Dealer dealer) {
