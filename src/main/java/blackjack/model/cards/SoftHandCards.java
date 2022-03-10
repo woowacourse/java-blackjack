@@ -1,7 +1,7 @@
-package blackjack.cards;
+package blackjack.model.cards;
 
-import blackjack.Card;
-import blackjack.Score;
+import blackjack.model.Card;
+import blackjack.model.Score;
 
 final class SoftHandCards extends ChangeableCards {
 

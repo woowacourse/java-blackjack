@@ -1,24 +1,21 @@
-package blackjack.cards;
+package blackjack.model.cards;
 
-import static blackjack.Rank.ACE;
-import static blackjack.Rank.JACK;
-import static blackjack.Rank.KING;
-import static blackjack.Rank.NINE;
-import static blackjack.Rank.QUEEN;
-import static blackjack.Rank.THREE;
-import static blackjack.Rank.TWO;
-import static blackjack.Suit.CLOVER;
-import static blackjack.Suit.DIAMOND;
-import static blackjack.Suit.HEART;
-import static blackjack.Suit.SPADE;
+import static blackjack.model.Rank.ACE;
+import static blackjack.model.Rank.JACK;
+import static blackjack.model.Rank.KING;
+import static blackjack.model.Rank.NINE;
+import static blackjack.model.Rank.QUEEN;
+import static blackjack.model.Rank.THREE;
+import static blackjack.model.Rank.TWO;
+import static blackjack.model.Suit.CLOVER;
+import static blackjack.model.Suit.DIAMOND;
+import static blackjack.model.Suit.HEART;
+import static blackjack.model.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.Card;
-import blackjack.Dealer;
-import blackjack.Score;
-import blackjack.cards.Cards;
+import blackjack.model.Card;
+import blackjack.model.Score;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

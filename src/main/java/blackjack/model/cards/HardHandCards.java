@@ -1,8 +1,7 @@
-package blackjack.cards;
+package blackjack.model.cards;
 
-import blackjack.Card;
-import blackjack.Score;
-import java.util.ArrayList;
+import blackjack.model.Card;
+import blackjack.model.Score;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

@@ -1,11 +1,11 @@
-package blackjack.cards;
+package blackjack.model.cards;
 
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
-import blackjack.Card;
-import blackjack.Rank;
-import blackjack.Score;
+import blackjack.model.Card;
+import blackjack.model.Rank;
+import blackjack.model.Score;
 import java.util.List;
 import java.util.stream.IntStream;
 

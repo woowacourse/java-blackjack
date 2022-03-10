@@ -1,11 +1,17 @@
-package blackjack;
+package blackjack.model;
 
-import static blackjack.Rank.*;
-import static blackjack.Suit.*;
+import static blackjack.model.Rank.*;
+import static blackjack.model.Suit.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.cards.Cards;
+import blackjack.model.Card;
+import blackjack.model.Dealer;
+import blackjack.model.Gamer;
+import blackjack.model.Player;
+import blackjack.model.Result;
+import blackjack.model.Score;
+import blackjack.model.cards.Cards;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

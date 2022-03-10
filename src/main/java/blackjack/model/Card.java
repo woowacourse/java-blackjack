@@ -1,6 +1,6 @@
-package blackjack;
+package blackjack.model;
 
-import static blackjack.Rank.ACE;
+import static blackjack.model.Rank.ACE;
 
 import java.util.Objects;
 

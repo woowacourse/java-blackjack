@@ -1,6 +1,6 @@
-package blackjack;
+package blackjack.model;
 
-import blackjack.cards.ChangeableCards;
+import blackjack.model.cards.ChangeableCards;
 import java.util.List;
 
 public abstract class Player {
