@@ -40,9 +40,9 @@ public class InputView {
         }
     }
 
-    public static boolean scanHitOrStay(final String name) {
+    public static boolean scanHitOrStay(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
-        final String hitOrStay = SCANNER.nextLine();
+        String hitOrStay = SCANNER.nextLine().trim();
         return isHit(hitOrStay);
     }
 

@@ -22,7 +22,7 @@ public class OutputView {
     }
 
     public static void printCards(final PlayerDto playerDto) {
-        System.out.println(playerDto.getName() + ": " + getCardNames(playerDto.getPlayingCards()));
+        System.out.println(playerDto.getName() + ": " + playerDto.getJoinedCardNames());
     }
 
     public static String getCardNames(List<PlayingCard> playingCards) {
@@ -31,13 +31,13 @@ public class OutputView {
                 .collect(joining(", "));
     }
 
-    public static void printAfterSpread(String dealerName, String playerNames) {
+    public static void printSpreadAnnouncement(String dealerName, String playerNames) {
         System.out.println();
         System.out.println(dealerName + "와 " + playerNames + "에게 2장을 나누었습니다.");
     }
 
-    public static void printSingleCardForDealer(PlayerDto dealer) {
-        System.out.println(dealer.getName() + ": " + dealer.getPlayingCards().get(0).getCardName());
+    public static void printSingleCardForDealer(PlayerDto dealerDto) {
+        System.out.println(dealerDto.getName() + ": " + dealerDto.getFirstCardName());
     }
 
     public static void printDealerAddCard(Dealer dealer) {
@@ -46,7 +46,7 @@ public class OutputView {
     }
 
     public static void printCardAndScore(PlayerDto playerDto) {
-        System.out.println(playerDto.getName() + "카드: " + getCardNames(playerDto.getPlayingCards()) + " - 결과: "
+        System.out.println(playerDto.getName() + "카드: " + playerDto.getJoinedCardNames() + " - 결과: "
                 + playerDto.getScore());
     }
 
@@ -63,5 +63,11 @@ public class OutputView {
         final Map<String, Boolean> playerResult = blackJackResult.getPlayerResult();
 
         playerResult.forEach((key, value) -> System.out.println(key + ": " + (value ? "승" : "패")));
+    }
+
+    public static void printTwoCardsForGamblers(List<PlayerDto> playerDtos) {
+        playerDtos.forEach(
+                playerDto -> System.out.println(playerDto.getName() + ": " + playerDto.getJoinedCardNames())
+        );
     }
 }
