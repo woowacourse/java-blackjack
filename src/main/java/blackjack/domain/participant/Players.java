@@ -5,7 +5,9 @@ import static blackjack.domain.participant.Participant.INITIAL_CARD_HAND;
 import blackjack.domain.card.CardDeck;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -26,6 +28,14 @@ public class Players {
         for (Player player : players) {
             player.receive(cardDeck.distribute(INITIAL_CARD_HAND));
         }
+    }
+
+    public Map<Player, Boolean> judgeResult(int score) {
+        Map<Player, Boolean> result = new HashMap<>();
+        for (Player player : players) {
+            result.put(player, player.isWinner(score));
+        }
+        return result;
     }
 
     public List<Player> getPlayers() {

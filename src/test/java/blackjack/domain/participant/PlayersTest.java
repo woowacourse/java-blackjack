@@ -15,5 +15,4 @@ public class PlayersTest {
 
         assertThat(players).isNotNull();
     }
-
 }

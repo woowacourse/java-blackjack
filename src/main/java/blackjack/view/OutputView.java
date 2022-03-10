@@ -6,6 +6,8 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -49,4 +51,23 @@ public class OutputView {
             System.out.println(showCardHandStatus(readPlayer) + " 결과 - " + readPlayer.calculateBestScore());
         }
     }
+
+    public static void printFinalResult(Dealer dealer, Players players) {
+        System.out.println();
+        System.out.println("## 최종 승패");
+        Map<Player, Boolean> resultCounter = players.judgeResult(dealer.calculateBestScore());
+        System.out.println(dealer.getName().getValue() + ": " +
+                resultCounter.values().stream().filter(Predicate.not(Boolean::booleanValue)).count() + "승" +
+                resultCounter.values().stream().filter(Boolean::booleanValue).count() + "패");
+        resultCounter.forEach((player, result)
+                -> System.out.println(player.getName().getValue() + ": " + isWin(result)));
+    }
+
+    private static String isWin(boolean result) {
+        if (result) {
+            return "승";
+        }
+        return "패";
+    }
+
 }

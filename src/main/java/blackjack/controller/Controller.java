@@ -23,12 +23,13 @@ public class Controller {
         OutputView.printInitCardHandStatus(dealer, players);
 
         playBlackJack(cardDeck, dealer, players);
-        OutputView.printFinalStatus(dealer, players);
     }
 
     private void playBlackJack(CardDeck cardDeck, Dealer dealer, Players players) {
         playPlayersTurn(cardDeck, players);
         playDealerTurn(cardDeck, dealer);
+        OutputView.printFinalStatus(dealer, players);
+        OutputView.printFinalResult(dealer, players);
     }
 
     private void playPlayersTurn(CardDeck cardDeck, Players players) {

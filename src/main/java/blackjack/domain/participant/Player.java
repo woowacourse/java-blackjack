@@ -44,4 +44,16 @@ public class Player extends Participant {
         }
         return sum;
     }
+
+    public boolean isWinner(int score) {
+        return !isBusted(calculateBestScore()) && (isBusted(score) || isCloserToBestScore(score));
+    }
+
+    private boolean isBusted(int score) {
+        return score > BEST_SCORE;
+    }
+
+    private boolean isCloserToBestScore(int score) {
+        return calculateBestScore() <= BEST_SCORE && calculateBestScore() > score;
+    }
 }
