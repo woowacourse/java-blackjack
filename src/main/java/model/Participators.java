@@ -48,4 +48,9 @@ public class Participators {
                 .filter(participator -> participator instanceof Dealer).findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
+
+    public boolean canReceiveCard(String name) {
+        Participator participator = findName(name);
+        return participator.canReceiveCard();
+    }
 }

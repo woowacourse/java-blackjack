@@ -47,7 +47,7 @@ public class BlackJackService {
     }
 
     private void drawTwoCardsAll() {
-        for (int i = 0 ; i < INIT_CARD_COUNT; i++) {
+        for (int i = 0; i < INIT_CARD_COUNT; i++) {
             participators.receiveCards(cardDeck);
         }
     }
@@ -56,8 +56,14 @@ public class BlackJackService {
         return participators.getPlayerNames();
     }
 
-    public ParticipatorDto tryToHit(String name) {
-        participators.receiveCardTo(name, cardDeck);
+    public ParticipatorDto tryToHit(boolean flag, String name) {
+        if (flag) {
+            participators.receiveCardTo(name, cardDeck);
+        }
         return convertParticipatorToDto(participators.findName(name));
+    }
+
+    public boolean canReceiveCard(String name) {
+        return participators.canReceiveCard(name);
     }
 }

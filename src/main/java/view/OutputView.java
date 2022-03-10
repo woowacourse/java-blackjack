@@ -16,7 +16,8 @@ public class OutputView {
         List<ParticipatorDto> playersDto = initGameDto.getPlayersDto();
         ParticipatorDto dealerDto = initGameDto.getDealerDto();
         List<String> playerNames = getNames(playersDto);
-        System.out.println(dealerDto.getName() + CONNECTION_SURVEY +  convertPlayerInLine(playerNames) + SUFFIX_INIT_MESSAGE);
+        System.out.println(
+                dealerDto.getName() + CONNECTION_SURVEY + convertPlayerInLine(playerNames) + SUFFIX_INIT_MESSAGE);
         printParticipatorNameAndCard(dealerDto);
         for (int i = 0; i < playersDto.size(); i++) {
             printParticipatorNameAndCard(playersDto.get(i));
@@ -30,7 +31,8 @@ public class OutputView {
     }
 
     private static void printParticipatorNameAndCard(ParticipatorDto participatorDto) {
-        System.out.println(participatorDto.getName()+ NAME_CARD_DELIMITER + convertCardsInLine(participatorDto.getCards()));
+        System.out.println(
+                participatorDto.getName() + NAME_CARD_DELIMITER + convertCardsInLine(participatorDto.getCards()));
     }
 
     private static String convertCardsInLine(List<String> cards) {
@@ -46,7 +48,10 @@ public class OutputView {
         return sb.toString();
     }
 
-    public static void printParticipatorHit(ParticipatorDto participatorDto) {
+    public static void printParticipatorHit(boolean flag, ParticipatorDto participatorDto) {
+        if (!flag && participatorDto.getCards().size() > 2) {
+            return;
+        }
         printParticipatorNameAndCard(participatorDto);
     }
 }

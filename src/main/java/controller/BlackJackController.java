@@ -25,8 +25,10 @@ public class BlackJackController {
     public void hit() {
         List<String> names = service.getPlayerNames();
         for (String name : names) {
-            while(InputView.inputHitResponse(name)) {
-                OutputView.printParticipatorHit(service.tryToHit(name));
+            boolean flag = true;
+            while (service.canReceiveCard(name) && flag) {
+                flag = InputView.inputHitResponse(name);
+                OutputView.printParticipatorHit(flag, service.tryToHit(flag, name));
             }
         }
     }
