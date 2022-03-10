@@ -14,7 +14,7 @@ public class Dealer {
     }
 
     public void take(Card card) {
-        if (!isHit()) {
+        if (!isHittable()) {
             throw new IllegalStateException("카드를 더 이상 발급 받을 수 없습니다.");
         }
 
@@ -50,7 +50,7 @@ public class Dealer {
         return Result.DRAW;
     }
 
-    public boolean isHit() {
+    public boolean isHittable() {
         return cards.score().lessThan(new Score(17));
     }
 }

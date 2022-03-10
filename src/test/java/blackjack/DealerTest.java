@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.cards.Cards;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -73,7 +72,7 @@ public class DealerTest {
     @MethodSource("provideCardsForDealer")
     @DisplayName("카드 발급 가능 여부 확인 테스트")
     void possibleTakeCard(Dealer dealer, boolean expect) {
-        assertThat(dealer.isHit()).isEqualTo(expect);
+        assertThat(dealer.isHittable()).isEqualTo(expect);
     }
 
     private static Stream<Arguments> provideCardsForDealer() {
