@@ -1,6 +1,8 @@
 package blackjack;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Application {
     public static void main(String[] args) {
@@ -14,5 +16,10 @@ public class Application {
         if (blackjackGame.isDealerReceiveOneMoreCard()) {
             OutputView.printReceivingMoreCardOfDealer();
         }
+
+        Map<Player, Integer> cardResult = players.stream()
+                .collect(Collectors.toMap(player -> player, Player::countCards));
+
+        OutputView.printCardResult(cardResult);
     }
 }
