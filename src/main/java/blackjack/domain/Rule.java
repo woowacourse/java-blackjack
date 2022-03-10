@@ -9,12 +9,14 @@ public enum Rule {
 
     INSTANCE;
 
+    public static final int BLACKJACK = 21;
+
     public int calculateSum(List<Card> cards) {
         int aceCount = calculateAceCount(cards);
         int sum = calculateMinimumSum(cards);
         return IntStream.rangeClosed(0, aceCount)
                 .map(i -> sum + (aceCount - i) * 10)
-                .filter(i -> i <= 21)
+                .filter(i -> i <= BLACKJACK)
                 .findFirst()
                 .orElse(sum);
     }
@@ -32,6 +34,10 @@ public enum Rule {
     }
 
     public boolean isBust(List<Card> cards) {
-        return calculateSum(cards) > 21;
+        return calculateSum(cards) > BLACKJACK;
+    }
+
+    public boolean isBlackJack(List<Card> cards) {
+        return calculateSum(cards) == BLACKJACK;
     }
 }

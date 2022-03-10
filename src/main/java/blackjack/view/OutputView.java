@@ -37,11 +37,19 @@ public class OutputView {
                 .map(OutputView::createCardInfoString)
                 .collect(Collectors.joining(", "));
 
-        System.out.printf("%s: %s", player.getName(), playerCardsInfo);
+        System.out.printf("%s카드: %s", player.getName(), playerCardsInfo);
         System.out.println();
     }
 
     private static String createCardInfoString(Card card) {
         return card.getDenomination().getName() + card.getPattern().getName();
+    }
+
+    public static void printBustMessage() {
+        System.out.println("카드의 합이 21을 넘겼습니다.");
+    }
+
+    public static void printBlackJackMessage() {
+        System.out.println("블랙잭입니다!!");
     }
 }

@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.domain.Dealer;
 import blackjack.domain.Name;
 import blackjack.domain.Player;
+import blackjack.domain.Rule;
 import blackjack.domain.card.BlackJackCardsGenerator;
 import blackjack.domain.card.CardDeck;
 import blackjack.view.InputView;
@@ -19,6 +20,7 @@ public class BlackJackApplication {
             List<Name> playerNames = inputPlayerNames();
             List<Player> players = createPlayers(playerNames, deck);
             alertStart(dealer, players);
+            proceedPlayersTurn(players, deck);
         } catch (NullPointerException | IllegalArgumentException e) {
             OutputView.printFatalErrorMessage(e.getMessage());
         }
@@ -45,5 +47,23 @@ public class BlackJackApplication {
         OutputView.printStartMessage(dealer, players);
         OutputView.printDealerFirstCard(dealer);
         players.forEach(OutputView::printPlayerCards);
+    }
+
+    private static void proceedPlayersTurn(List<Player> players, CardDeck deck) {
+        players.forEach(player -> proceedPlayer(player, deck));
+    }
+
+    private static void proceedPlayer(Player player, CardDeck deck) {
+        while (player.isHittable() && InputView.inputHitRequest(player.getName()).equals("y")) {
+            player.hit(deck);
+            OutputView.printPlayerCards(player);
+        }
+        if (Rule.INSTANCE.isBlackJack(player.getCards())) {
+            OutputView.printBlackJackMessage();
+            return;
+        }
+        if (Rule.INSTANCE.isBust(player.getCards())) {
+            OutputView.printBustMessage();
+        }
     }
 }
