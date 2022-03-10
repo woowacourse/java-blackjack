@@ -33,6 +33,7 @@ public class Controller {
 
 		//initResult
 		if (players.isExistBlackJack() || dealer.isBlackJack()) {
+			OutputView.printBlackJackResultTitle();
 			Result blackjackResult = new Result(players.initCompare(dealer.isBlackJack()));
 			OutputView.printResultTitle();
 			OutputView.printDealerResult(blackjackResult.getDealerWinCount(), blackjackResult.getDealerDrawCount(),

@@ -20,11 +20,11 @@ public class OutputView {
 	}
 
 	public static void printBustMessage() {
-		System.out.println("Bust!!!");
+		System.out.println("[ Bust!!! ]");
 	}
 
 	public static void printBlackJackMessage() {
-		System.out.println("Black Jack!!!");
+		System.out.println("[ Black Jack!!! ]");
 	}
 
 	public static void printResultTitle() {
@@ -41,5 +41,9 @@ public class OutputView {
 
 	public static void printDealerDrawMessage() {
 		System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+	}
+
+	public static void printBlackJackResultTitle() {
+		System.out.println("[ BLACK JACK ]");
 	}
 }
