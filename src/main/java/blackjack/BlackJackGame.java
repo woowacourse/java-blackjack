@@ -32,5 +32,6 @@ public class BlackJackGame {
         }
         blackJackBoard.drawDealer();
         OutputView.printDealerDraw();
+        runDealerTurn(blackJackBoard);
     }
 }
