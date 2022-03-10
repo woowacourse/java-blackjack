@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.Answer;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.GamerDto;
+import blackjack.domain.result.GameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -22,6 +23,9 @@ public class BlackJackController {
         }
         OutputView.printAdditionalDrawDealer(blackJackGame.distributeAdditionalToDealer());
         OutputView.printFinalCards(blackJackGame.getDealerDto(), blackJackGame.getPlayerDtos());
+
+        GameResult result = blackJackGame.createResult();
+        OutputView.printFinalResult(result.getDealerResult(), result.getPlayerResult());
 
     }
 

@@ -5,13 +5,15 @@ import java.util.function.BiPredicate;
 
 public enum BlackJackResult {
 
-    WIN((player, dealer) -> (player <= 21 && player > dealer) || (player <= 21 && dealer > 21)),
-    LOSE((player, dealer) -> (player > 21) || (dealer <= 21 && player < dealer)),
-    DRAW((player, dealer) -> (player <= 21 && dealer <= 21 && player.equals(dealer)));
+    WIN("승", (player, dealer) -> (player <= 21 && player > dealer) || (player <= 21 && dealer > 21)),
+    LOSE("패", (player, dealer) -> (player > 21) || (dealer <= 21 && player < dealer)),
+    DRAW("무", (player, dealer) -> (player <= 21 && dealer <= 21 && player.equals(dealer)));
 
+    private final String value;
     private final BiPredicate<Integer, Integer> predicate;
 
-    BlackJackResult(BiPredicate<Integer, Integer> predicate) {
+    BlackJackResult(String value, BiPredicate<Integer, Integer> predicate) {
+        this.value = value;
         this.predicate = predicate;
     }
 
@@ -30,5 +32,9 @@ public enum BlackJackResult {
             return WIN;
         }
         return DRAW;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

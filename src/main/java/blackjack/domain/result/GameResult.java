@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class GameResult {
 
-    private final Map<Name, BlackJackResult> playerResults = new HashMap<>();
+    private final Map<String, BlackJackResult> playerResults = new HashMap<>();
     private final Map<BlackJackResult, Integer> dealerResult = new HashMap<>();
 
     public GameResult(List<Player> players, Dealer dealer) {
@@ -22,7 +22,7 @@ public class GameResult {
     private void addResults(List<Player> players, Dealer dealer) {
         for (Player player : players) {
             BlackJackResult result = player.match(dealer);
-            playerResults.put(player.getName(), result);
+            playerResults.put(player.getName().getValue(), result);
             dealerResult.merge(result.getReverse(), 1, Integer::sum);
         }
     }
@@ -33,7 +33,7 @@ public class GameResult {
         }
     }
 
-    public Map<Name, BlackJackResult> getPlayerResult() {
+    public Map<String, BlackJackResult> getPlayerResult() {
         return Collections.unmodifiableMap(playerResults);
     }
 

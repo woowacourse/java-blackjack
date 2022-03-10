@@ -15,13 +15,7 @@ public class GamerDto {
     public GamerDto(Gamer gamer) {
         this.name = gamer.getName();
         this.cards = List.copyOf(gamer.getCards());
-        this.cardNumberSum = sumOfCards();
-    }
-
-    private int sumOfCards() {
-        return cards.stream()
-                .mapToInt(Card::getNumber)
-                .sum();
+        this.cardNumberSum = gamer.getCardsNumberSum();
     }
 
     public String getName() {
