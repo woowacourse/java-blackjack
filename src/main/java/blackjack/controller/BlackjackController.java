@@ -64,11 +64,11 @@ public class BlackjackController {
 
     private void announceDealerCanGetMoreCard(BlackjackGame blackjackGame, Player dealer) {
         if (!dealer.isOverLimit(16)) {
-            OutputView.announceDealerGetMoreCard();
+            OutputView.announceGetMoreCard(16);
             blackjackGame.addCard(dealer);
             return;
         }
-        OutputView.announceDealerStopMoreCard();
+        OutputView.announceGetMoreCard(17);
     }
 
     private List<GameResponse> toResponse(List<Player> players) {
