@@ -3,64 +3,47 @@ package blackjack.domain;
 import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Statistic {
     private final int dealerPoint;
-    private final Players players;
+    private final Map<GameResult, Integer> dealerWinState = new HashMap<>();
 
-    private Statistic(Dealer dealer, Players players) {
+    {
+        for (GameResult value : GameResult.values()) {
+            dealerWinState.put(value, 0);
+        }
+    }
+
+    private Statistic(Dealer dealer) {
         this.dealerPoint = dealer.getPoint();
-        this.players = players;
     }
 
-    public static Statistic of(Dealer dealer, Players players) {
-        return new Statistic(dealer,players);
+    public static Statistic of(Dealer dealer) {
+        return new Statistic(dealer);
     }
 
-    public void calculate() {
-        if (dealerPoint > 21) {
-            calculateIfDealerBurst();
-            return;
-        }
-        calculateIfDealerNotBurst();
+    public Map<GameResult, Integer> getDealerWinState() {
+        return dealerWinState;
     }
 
-    private void calculateIfDealerBurst() {
-        int playerWinCount = 0;
+    public void calculate(Players players) {
         for (Player player : players.getPlayers()) {
-            int point = player.getPoint();
-            if (point <= 21) {
-                // 플레이어 승리
-                player.setResult(GameResult.WIN);
-                playerWinCount++;
-                continue;
-            }
-            // 플레이어 패배
-            player.setResult(GameResult.LOSE);
+            player.calculateResult(dealerPoint);
         }
-        if (playerWinCount == 0) {
-            // 플레이어 패배
-            for (Player player : players.getPlayers()) {
-                player.setResult(GameResult.LOSE);
-            }
-        }
+        calculateDealerWinState(players);
     }
 
-    private void calculateIfDealerNotBurst() {
-        for (Player player : players.getPlayers()) {
-            int point = player.getPoint();
-            if (point > 21 || dealerPoint > point) {
-                // 플레이어 패배
-                player.setResult(GameResult.LOSE);
-                continue;
-            }
-            if (dealerPoint == point) {
-                // 무승부
-                player.setResult(GameResult.DRAW);
-                continue;
-            }
-            // 플레이어 승리
-            player.setResult(GameResult.WIN);
-        }
+    private void calculateDealerWinState(Players players) {
+        dealerWinState.put(GameResult.LOSE,computeResultCount(players,GameResult.WIN));
+        dealerWinState.put(GameResult.DRAW,computeResultCount(players,GameResult.DRAW));
+        dealerWinState.put(GameResult.WIN,computeResultCount(players,GameResult.LOSE));
+    }
+
+    private int computeResultCount(Players players, GameResult result) {
+        return (int) players.getPlayers().stream()
+                        .filter(player -> player.getResult().equals(result))
+                        .count();
     }
 }

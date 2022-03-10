@@ -18,7 +18,28 @@ public class Player extends Human {
         return new Player(name);
     }
 
-    public void setResult(GameResult gameResult) {
+    public void calculateResult(final int dealerPoint) {
+        int point = getPoint();
+        if (dealerPoint > 21) {
+            if (point <= 21) {
+                setResult(GameResult.WIN);
+                return;
+            }
+            setResult(GameResult.LOSE);
+            return;
+        }
+        if (point > 21 || dealerPoint > point) {
+            setResult(GameResult.LOSE);
+            return;
+        }
+        if (dealerPoint == point) {
+            setResult(GameResult.DRAW);
+            return;
+        }
+        setResult(GameResult.WIN);
+    }
+
+    private void setResult(GameResult gameResult) {
         this.gameResult = gameResult;
     }
 

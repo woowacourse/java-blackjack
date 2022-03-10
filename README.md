@@ -61,7 +61,7 @@
 
 ## TODO
 - [x] final 적용
-- [ ] statistic indent
+- [x] statistic indent 줄이기 & test코드 수정
 - [ ] 상수화
 - [ ] 컨트롤러 정리
 - [ ] 테스트코드 리팩토링

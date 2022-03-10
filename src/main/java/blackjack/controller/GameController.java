@@ -26,7 +26,7 @@ public class GameController {
         addCardToDealer(dealer);
 
         OutputView.printCardAndPoint(players, dealer);
-        Statistic.of(dealer, players).calculate();
+        Statistic.of(dealer).calculate(players);
         printGameResult(players);
     }
 
