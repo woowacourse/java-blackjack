@@ -1,6 +1,7 @@
 package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.HashSet;
@@ -23,6 +24,6 @@ public class CardGeneratorTest {
         }
 
         assertThat(set).hasSize(52);
+        assertThatThrownBy(cardGenerator::generate).isInstanceOf(IllegalStateException.class);
     }
-
 }
