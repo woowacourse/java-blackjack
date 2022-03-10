@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import blackjack.domain.game.Score;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 public class CardBundle {
     private static final String NO_DUPLICATE_CARD_EXCEPTION_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
@@ -34,9 +35,26 @@ public class CardBundle {
     }
 
     public Score getScore() {
+        Score defaultScore = calculateScoreBy(Card::getRankValue);
+        if (defaultScore.toInt() <= Score.BLACKJACK) {
+            return defaultScore;
+        }
+
+        return calculateScoreBy(this::getMinimumScore);
+    }
+
+    private Score calculateScoreBy(Function<Card, Score> function) {
         return cards.stream()
-                .map(Card::getRankValue)
+                .map(function)
                 .reduce(Score.valueOf(0), Score::add);
+    }
+
+    private Score getMinimumScore(Card card) {
+        if (card.isAce()) {
+            return Score.valueOf(Score.SMALL_ACE_VALUE);
+        }
+
+        return card.getRankValue();
     }
 
     @Override

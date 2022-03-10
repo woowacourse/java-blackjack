@@ -17,6 +17,10 @@ public class Card {
         return CardCache.getCache(rank, symbol);
     }
 
+    public boolean isAce() {
+        return rank == CardRank.ACE;
+    }
+
     public Score getRankValue() {
         return rank.getValue();
     }
