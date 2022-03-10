@@ -21,13 +21,17 @@ public class OutputView {
             dealerOpenCard.getCardPattern());
         System.out.println();
         for (PlayerDto playerDto : playerDtos) {
-            System.out.printf("%s: %s", playerDto.getName(),
-                playerDto.getCards()
-                    .stream()
-                    .map(cardDto -> cardDto.getCardNumber() + cardDto.getCardPattern())
-                    .collect(Collectors.joining(", ")));
-            System.out.println();
+            printPlayerCards(playerDto);
         }
+    }
+
+    public static void printPlayerCards(PlayerDto playerDto) {
+        System.out.printf("%s: %s", playerDto.getName(),
+            playerDto.getCards()
+                .stream()
+                .map(cardDto -> cardDto.getCardNumber() + cardDto.getCardPattern())
+                .collect(Collectors.joining(", ")));
+        System.out.println();
     }
 
 }
