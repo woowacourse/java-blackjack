@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
@@ -26,9 +27,11 @@ public class BlackJackGame {
     }
 
     public static BlackJackGame init(final List<String> playerNames) {
+        Objects.requireNonNull(playerNames, "blackjackgame은 null이 들어올 수 없습니다.");
+        final List<String> copyNames = new ArrayList<>(playerNames);
         final CardDeck cardDeck = CardDeck.init();
         final Player dealer = Dealer.init(cardDeck.provideInitCards());
-        final List<Player> players = provideInitCardsToPlayers(playerNames, cardDeck);
+        final List<Player> players = provideInitCardsToPlayers(copyNames, cardDeck);
         return new BlackJackGame(cardDeck, dealer, new Players(players));
     }
 
