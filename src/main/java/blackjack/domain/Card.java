@@ -16,4 +16,8 @@ public class Card {
     public CardNumber getCardNumber() {
         return cardNumber;
     }
+
+    public String getSymbolName() {
+        return symbol.getSymbolName();
+    }
 }

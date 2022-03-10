@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.strategy.RandomCardGenerator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +12,7 @@ public class BlackJackGame {
 
     public BlackJackGame(List<String> playersNames) {
         this.cardDeck = new CardDeck(new RandomCardGenerator());
-        this.dealer = new Dealer(cardDeck.drawTwoCards());
+        this.dealer = new Dealer(List.of(cardDeck.drawCard()));
         validateEmptyNames(playersNames);
         this.players = createPlayers(playersNames);
     }
@@ -22,12 +23,22 @@ public class BlackJackGame {
         }
     }
 
-
     private List<Participant> createPlayers(List<String> playersNames) {
         return playersNames.stream()
                 .map(playerName -> new Player(playerName.trim(), cardDeck.drawTwoCards()))
                 .collect(Collectors.toList());
     }
 
+    public List<ParticipantDto> getParticipantsDto() {
+        List<ParticipantDto> participantDtos = new ArrayList<>();
+        participantDtos.add(ParticipantDto.of(dealer));
+        for (Participant player : players) {
+            participantDtos.add(ParticipantDto.of(player));
+        }
+        return participantDtos;
+    }
 
+    public List<Participant> getPlayers() {
+        return players;
+    }
 }

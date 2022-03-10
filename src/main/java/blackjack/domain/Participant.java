@@ -6,6 +6,11 @@ public abstract class Participant {
     private String name;
     private HoldingCard holdingCard;
 
+    public Participant(String name, HoldingCard holdingCard) {
+        this.name = name;
+        this.holdingCard = holdingCard;
+    }
+
     void receiveCard(Card card){
         holdingCard.add(card);
     };
@@ -14,5 +19,13 @@ public abstract class Participant {
         return holdingCard.getHoldingCard();
     };
 
-    abstract boolean isFinished();
+    public String getName() {
+        return name;
+    }
+
+    public HoldingCard getHoldingCard() {
+        return holdingCard;
+    }
+
+    public abstract boolean isFinished();
 }

@@ -3,14 +3,12 @@ package blackjack.domain;
 import java.util.List;
 
 public class Player extends Participant {
-    private final String name;
-    private final HoldingCard holdingCard;
 
     public Player(String name, List<Card> cards) {
+        super(name, new HoldingCard(cards));
         validateEmptyName(name);
-        this.name = name;
-        this.holdingCard = new HoldingCard(cards);
     }
+
 
     private void validateEmptyName(String name) {
         if (name.isEmpty()) {
@@ -19,6 +17,6 @@ public class Player extends Participant {
     }
 
     public boolean isFinished() {
-        return holdingCard.isBust();
+        return super.getHoldingCard().isBust();
     }
 }
