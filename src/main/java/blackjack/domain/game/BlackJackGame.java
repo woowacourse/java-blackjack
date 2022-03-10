@@ -60,6 +60,12 @@ public class BlackJackGame {
         dealer.draw(cardDeck.provideCard());
     }
 
+    public void stayDealer() {
+        if (!dealer.isBust()) {
+            dealer.stay();
+        }
+    }
+
     public PlayerInfo getInitDealerInfo() {
         return PlayerInfo.dealerToInitInfo(dealer);
     }

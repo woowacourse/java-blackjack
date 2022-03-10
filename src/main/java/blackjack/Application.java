@@ -25,6 +25,7 @@ public class Application {
             blackJackGame.drawDealer();
             OutputView.printDealerDraw();
         }
+        blackJackGame.stayDealer();
     }
 
     private static void runPlayerTurn(final BlackJackGame blackJackGame) {
