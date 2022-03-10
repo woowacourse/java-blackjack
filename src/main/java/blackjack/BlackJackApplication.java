@@ -7,6 +7,7 @@ import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
+import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -41,11 +42,11 @@ public class BlackJackApplication {
         return blackJackGame;
     }
 
-    private static List<Gamer> toGamers() {
+    private static Gamers toGamers() {
         List<String> names = InputView.requestPlayerName();
-        return names.stream()
+        return new Gamers(names.stream()
                 .map(Gamer::new)
-                .collect(toList());
+                .collect(toList()));
     }
 
     private static void progressGamerAdditionalCard(final Deck deck, final Gamer gamer) {

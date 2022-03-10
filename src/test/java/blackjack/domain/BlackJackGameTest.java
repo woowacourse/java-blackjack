@@ -9,6 +9,7 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
+import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,8 @@ public class BlackJackGameTest {
     @DisplayName("BlackJackGame의 Player에게 최초 카드 두장을 준다.")
     void initializeBlackJackGame() {
         BlackJackGame blackJackGame = new BlackJackGame(new Dealer(),
-                List.of(new Gamer("judy"),
-                        new Gamer("huni")));
+                new Gamers(List.of(new Gamer("judy"),
+                        new Gamer("huni"))));
 
         Deck deck = Deck.init();
         blackJackGame.handOutStartingCards(deck);
@@ -43,7 +44,7 @@ public class BlackJackGameTest {
         Gamer huni = new Gamer("huni");
         huni.receiveCard(new Card(Suit.DIAMOND, Denomination.FOUR));
 
-        BlackJackGame blackJackGame = new BlackJackGame(dealer, List.of(judy, huni));
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, new Gamers(List.of(judy, huni)));
 
         //when
         Map<Player, Result> gameResult = blackJackGame.calculateResultBoard();
