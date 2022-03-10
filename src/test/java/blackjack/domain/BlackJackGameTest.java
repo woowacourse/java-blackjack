@@ -56,4 +56,29 @@ public class BlackJackGameTest {
         );
     }
 
+    @Test
+    @DisplayName("dealer의 승패를 계산한다.")
+    void calculateDealerResult() {
+        // given
+        Player dealer = new Dealer();
+        dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.FIVE));
+
+        Gamer judy = new Gamer("judy");
+        judy.receiveCard(new Card(Suit.CLOVER, Denomination.SIX));
+
+        Gamer huni = new Gamer("huni");
+        huni.receiveCard(new Card(Suit.DIAMOND, Denomination.FOUR));
+
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, new Gamers(List.of(judy, huni)));
+
+        //when
+        Map<Result, Integer> dealerResult = blackJackGame.calculateDealerResultBoard();
+
+        //then
+        assertAll(
+                () -> assertThat(dealerResult.get(Result.WIN)).isEqualTo(1),
+                () -> assertThat(dealerResult.get(Result.LOSE)).isEqualTo(1)
+        );
+    }
+
 }
