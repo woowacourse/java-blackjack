@@ -2,6 +2,11 @@ package domain.player;
 
 public class Dealer extends Player {
     private static final int MORE_CARD_CRITERIA = 16;
+    public static final String DEFAULT_DEALER_NAME = "딜러";
+
+    public Dealer() {
+        super(DEFAULT_DEALER_NAME);
+    }
 
     public Dealer(final String name) {
         super(name);
