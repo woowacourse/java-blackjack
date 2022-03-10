@@ -8,10 +8,10 @@ import java.util.Map;
 
 public class Statistic {
     private final int dealerPoint;
-    private final Map<GameResult, Integer> dealerWinState = new HashMap<>();
+    private final Map<Result, Integer> dealerWinState = new HashMap<>();
 
     {
-        for (GameResult value : GameResult.values()) {
+        for (Result value : Result.values()) {
             dealerWinState.put(value, 0);
         }
     }
@@ -24,7 +24,7 @@ public class Statistic {
         return new Statistic(dealer);
     }
 
-    public Map<GameResult, Integer> getDealerWinState() {
+    public Map<Result, Integer> getDealerWinState() {
         return dealerWinState;
     }
 
@@ -36,12 +36,12 @@ public class Statistic {
     }
 
     private void calculateDealerWinState(Players players) {
-        dealerWinState.put(GameResult.LOSE,computeResultCount(players,GameResult.WIN));
-        dealerWinState.put(GameResult.DRAW,computeResultCount(players,GameResult.DRAW));
-        dealerWinState.put(GameResult.WIN,computeResultCount(players,GameResult.LOSE));
+        dealerWinState.put(Result.LOSE,computeResultCount(players, Result.WIN));
+        dealerWinState.put(Result.DRAW,computeResultCount(players, Result.DRAW));
+        dealerWinState.put(Result.WIN,computeResultCount(players, Result.LOSE));
     }
 
-    private int computeResultCount(Players players, GameResult result) {
+    private int computeResultCount(Players players, Result result) {
         return (int) players.getPlayers().stream()
                         .filter(player -> player.getResult().equals(result))
                         .count();

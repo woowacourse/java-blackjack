@@ -2,12 +2,12 @@ package blackjack.domain.human;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.GameResult;
+import blackjack.domain.Result;
 
 public class Player extends Human {
     private final Name name;
     private final Cards cards;
-    private GameResult gameResult;
+    private Result result;
 
     private Player(Name name) {
         this.name = name;
@@ -22,29 +22,29 @@ public class Player extends Human {
         int point = getPoint();
         if (dealerPoint > 21) {
             if (point <= 21) {
-                setResult(GameResult.WIN);
+                setResult(Result.WIN);
                 return;
             }
-            setResult(GameResult.LOSE);
+            setResult(Result.LOSE);
             return;
         }
         if (point > 21 || dealerPoint > point) {
-            setResult(GameResult.LOSE);
+            setResult(Result.LOSE);
             return;
         }
         if (dealerPoint == point) {
-            setResult(GameResult.DRAW);
+            setResult(Result.DRAW);
             return;
         }
-        setResult(GameResult.WIN);
+        setResult(Result.WIN);
     }
 
-    private void setResult(GameResult gameResult) {
-        this.gameResult = gameResult;
+    private void setResult(Result result) {
+        this.result = result;
     }
 
-    public GameResult getResult() {
-        return gameResult;
+    public Result getResult() {
+        return result;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Player extends Human {
 
     @Override
     public String getName() {
-        return name.getName();
+        return name.get();
     }
 
     @Override

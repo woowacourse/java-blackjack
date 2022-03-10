@@ -3,7 +3,6 @@ package blackjack.domain.human;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import blackjack.domain.human.Name;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -13,7 +12,7 @@ public class NameTest {
 
     @Test
     public void 참여자이름_객체_생성_통과() {
-        assertThat(Name.of("jack").getName())
+        assertThat(Name.of("jack").get())
                 .isEqualTo("jack");
     }
 

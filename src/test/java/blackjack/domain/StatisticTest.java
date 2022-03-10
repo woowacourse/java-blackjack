@@ -37,15 +37,15 @@ class StatisticTest {
 
         Statistic statistic = Statistic.of(dealer);
         statistic.calculate(players);
-        assertThat(player1.getResult().equals(GameResult.WIN) &&
-                player2.getResult().equals(GameResult.LOSE))
+        assertThat(player1.getResult().equals(Result.WIN) &&
+                player2.getResult().equals(Result.LOSE))
                 .isTrue();
 
         assertThat(statistic.getDealerWinState())
                 .isEqualTo(Map.of(
-                                GameResult.LOSE, 1,
-                                GameResult.WIN, 1,
-                                GameResult.DRAW, 0
+                                Result.LOSE, 1,
+                                Result.WIN, 1,
+                                Result.DRAW, 0
                         )
                 );
     }
@@ -59,15 +59,15 @@ class StatisticTest {
 
         Statistic statistic = Statistic.of(dealer);
         statistic.calculate(players);
-        assertThat(player1.getResult().equals(GameResult.LOSE) &&
-                player2.getResult().equals(GameResult.LOSE))
+        assertThat(player1.getResult().equals(Result.LOSE) &&
+                player2.getResult().equals(Result.LOSE))
                 .isTrue();
 
         assertThat(statistic.getDealerWinState())
                 .isEqualTo(Map.of(
-                                GameResult.LOSE, 0,
-                                GameResult.WIN, 2,
-                                GameResult.DRAW, 0
+                                Result.LOSE, 0,
+                                Result.WIN, 2,
+                                Result.DRAW, 0
                         )
                 );
     }
@@ -83,17 +83,17 @@ class StatisticTest {
 
         Statistic statistic = Statistic.of(dealer);
         statistic.calculate(players);
-        assertThat(player1.getResult().equals(GameResult.LOSE) &&
-                player2.getResult().equals(GameResult.LOSE) &&
-                player3.getResult().equals(GameResult.DRAW) &&
-                player4.getResult().equals(GameResult.WIN))
+        assertThat(player1.getResult().equals(Result.LOSE) &&
+                player2.getResult().equals(Result.LOSE) &&
+                player3.getResult().equals(Result.DRAW) &&
+                player4.getResult().equals(Result.WIN))
                 .isTrue();
 
         assertThat(statistic.getDealerWinState())
                 .isEqualTo(Map.of(
-                                GameResult.LOSE, 1,
-                                GameResult.WIN, 2,
-                                GameResult.DRAW, 1
+                                Result.LOSE, 1,
+                                Result.WIN, 2,
+                                Result.DRAW, 1
                         )
                 );
     }

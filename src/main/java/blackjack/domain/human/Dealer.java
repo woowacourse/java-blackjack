@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 public class Dealer extends Human {
+    public static final String DEALER_NAME = "딜러";
     private final Cards cards;
 
     private Dealer() {
@@ -21,7 +22,7 @@ public class Dealer extends Human {
 
     @Override
     public String getName() {
-        return "딜러";
+        return DEALER_NAME;
     }
 
     @Override

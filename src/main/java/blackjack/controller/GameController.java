@@ -27,7 +27,7 @@ public class GameController {
 
         OutputView.printCardAndPoint(players, dealer);
         Statistic.of(dealer).calculate(players);
-        printGameResult(players);
+        printGameResult(players, dealer);
     }
 
     private void addCardToDealer(final Dealer dealer) {
@@ -54,8 +54,11 @@ public class GameController {
         players.giveCard();
     }
 
-    private void printGameResult(final Players players) {
-        OutputView.printResult(players);
+    private void printGameResult(final Players players, final Dealer dealer) {
+        Statistic statistic = Statistic.of(dealer);
+        statistic.calculate(players);
+        OutputView.printDealerResult(statistic.getDealerWinState());
+        OutputView.printPlayerResult(players);
     }
 
     private void questionOneMoreCard(final Player player) {

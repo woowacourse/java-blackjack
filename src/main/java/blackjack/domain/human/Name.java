@@ -23,7 +23,7 @@ public class Name {
         return new Name(name);
     }
 
-    public String getName() {
+    public String get() {
         return name;
     }
 }

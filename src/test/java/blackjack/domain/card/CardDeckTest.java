@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class CardDeckTest {
-
     @Test
     public void 카드덱_생성_테스트() {
         assertThat(CardDeck.get().size())
@@ -16,14 +15,14 @@ class CardDeckTest {
     }
 
     @Test
-    public void 카드주가_테스트() {
+    void 카드주가_테스트() {
         CardDeck.giveCard();
         assertThat(CardDeck.get().size()).isEqualTo(51);
     }
 
     @Test
-    public void 카드주가_테스트_error() {
-        for (int i = 0; i < 52; i++) {
+    void 카드주가_테스트_error() {
+        for (int i = 0; i < 51; i++) {
             CardDeck.giveCard();
         }
         assertThatThrownBy(CardDeck::giveCard)

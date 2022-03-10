@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+    public static final int BLACKJACK_NUMBER = 21;
+    public static final int ACE_MINUS_NUMBER = 10;
     private final List<Card> cards;
     
     private Cards(){
@@ -31,8 +33,8 @@ public class Cards {
 
         int aceCount = getAceCount();
 
-        while (point > 21 && aceCount >= 1) {
-            point -= 10;
+        while (point > BLACKJACK_NUMBER && aceCount > 0) {
+            point -= ACE_MINUS_NUMBER;
             aceCount --;
         }
 
