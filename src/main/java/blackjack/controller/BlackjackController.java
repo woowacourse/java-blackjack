@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Blackjack;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.CurrentCardsDTO;
 
@@ -50,7 +51,7 @@ public class BlackjackController {
     private void addCardForDealerIfNeed(Blackjack blackjack) {
         blackjack.addCardForDealerIfNeed();
         if (blackjack.didDealerAdded()) {
-            printDealerAdded(blackjack.getDealerName());
+            printDealerAdded(Dealer.NAME_OF_DEALER);
         }
     }
 }

@@ -59,10 +59,6 @@ public class Blackjack {
         return dealer.getCards().size() > CARD_COUNT_OF_FIRST_DISTRIBUTE;
     }
 
-    public String getDealerName() {
-        return dealer.getName();
-    }
-
     public List<CurrentCardsDTO> generateAllCurrentCardsDTO() {
         List<CurrentCardsDTO> allCurrentCardsDTOs = new ArrayList<>();
 
