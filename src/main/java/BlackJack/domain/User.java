@@ -20,4 +20,8 @@ public abstract class User {
 
     abstract public void addCard();
 
+    public int getScore(){
+        return cards.calculateScore();
+    }
+
 }

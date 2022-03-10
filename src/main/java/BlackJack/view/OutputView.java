@@ -1,6 +1,7 @@
 package BlackJack.view;
 
 import BlackJack.domain.Player;
+import BlackJack.dto.ResultDto;
 import BlackJack.dto.UserDto;
 
 import java.util.ArrayList;
@@ -13,8 +14,9 @@ public class OutputView {
     private static final String DEALER = "딜러";
     private static final String DELIMITER = ", ";
     private static final String ADD_DEALER_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    public static final String SCORE_FORMAT = " - 결과: %d";
 
-    public static void printDrawMessage(List<String> userNames){
+    public static void printDrawMessage(List<String> userNames) {
         System.out.printf(DRAW_MESSAGE, userNames.stream().collect(Collectors.joining(DELIMITER)));
     }
 
@@ -35,5 +37,12 @@ public class OutputView {
 
     public static void printAddDealerCard() {
         System.out.println(ADD_DEALER_CARD_MESSAGE);
+    }
+
+    public static void printTotalResult(List<UserDto> userDtos) {
+        for (UserDto userDto : userDtos) {
+            String cards = userDto.getCards().stream().collect(Collectors.joining(DELIMITER));
+            System.out.println(String.format(CARD_FORMAT + SCORE_FORMAT, userDto.getName(), cards, userDto.getScore()));
+        }
     }
 }

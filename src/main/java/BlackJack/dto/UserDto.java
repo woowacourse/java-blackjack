@@ -10,9 +10,12 @@ public class UserDto {
     private String name;
     private List<CardDto> cards;
 
-    public UserDto(String name,List<CardDto> cards) {
+    private int score;
+
+    public UserDto(String name,List<CardDto> cards,int score) {
         this.name = name;
         this.cards = new ArrayList<>(cards);
+        this.score = score;
     }
 
     public String getName() {
@@ -25,11 +28,15 @@ public class UserDto {
                 .collect(Collectors.toUnmodifiableList());
     }
 
+    public int getScore() {
+        return score;
+    }
+
     public static UserDto from(User user){
         List<CardDto> collect = user.getCards().getDeck().stream()
                 .map(CardDto::from)
                 .collect(Collectors.toList());
-        return new UserDto(user.getName(),collect);
+        return new UserDto(user.getName(),collect, user.getScore());
     }
 
 }

@@ -16,4 +16,11 @@ public class Dealer extends User {
     public boolean checkScore(){
         return cards.calculateScore() <= DEALER_ADD_CARD_LIMIT;
     }
+
+    public int compare(Player player){
+        if(this.getScore() < player.getScore()){
+            return 1;
+        }
+        return 0;
+    }
 }
