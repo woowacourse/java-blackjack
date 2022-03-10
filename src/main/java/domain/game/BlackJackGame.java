@@ -16,6 +16,7 @@ public class BlackJackGame {
 
     public static final String DEALER_NAME = "딜러";
     private static final String NOT_EXIST_DEALER_ERROR = "딜러가 존재하지 않습니다.";
+    private static final int INIT_CARD_COUNT = 2;
 
     private final List<Participant> participants = new ArrayList<>();
     private final CardDistributor cardDistributor = new CardDistributor();
@@ -33,8 +34,9 @@ public class BlackJackGame {
 
     private Cards drawInitialCards() {
         List<Card> cards = new ArrayList<>();
-        cards.add(cardDistributor.distribute());
-        cards.add(cardDistributor.distribute());
+        for (int i = 0; i < INIT_CARD_COUNT; i++) {
+            cards.add(cardDistributor.distribute());
+        }
         return new Cards(cards);
     }
 
