@@ -70,7 +70,7 @@ class DealerTest {
         Player player = new Player("test", playerCards);
         Dealer dealer = new Dealer(dealerCards);
         Result actual = dealer.compare(player);
-        Result expected = Result.LOSE;
+        Result expected = Result.WIN;
         assertThat(actual).isEqualTo(expected);
     }
 
