@@ -39,6 +39,14 @@ public abstract class Gamer {
 
     public abstract List<Card> getViewCard();
 
+    public abstract void win();
+
+    public abstract void draw();
+
+    public abstract void lose();
+
+    public abstract String getWinDrawLoseString();
+
     public  Cards getCards() {
         return cards;
     }

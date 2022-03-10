@@ -15,4 +15,24 @@ public class Player extends Gamer {
     public List<Card> getViewCard() {
         return getCards().getCards();
     }
+
+    @Override
+    public void win() {
+
+    }
+
+    @Override
+    public void draw() {
+
+    }
+
+    @Override
+    public void lose() {
+
+    }
+
+    @Override
+    public String getWinDrawLoseString() {
+        return null;
+    }
 }
