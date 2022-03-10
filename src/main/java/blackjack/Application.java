@@ -24,7 +24,11 @@ public class Application {
     }
 
     private static void hit(BlackjackGame blackjackGame, Player player) {
-        String command;
+        String command = InputView.inputCommand(player);
+        if (Command.find(command) == Command.NO) {
+            return;
+        }
+
         do {
             command = InputView.inputCommand(player);
             blackjackGame.receiveOneMoreCard(player);
