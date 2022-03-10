@@ -17,7 +17,7 @@ public class BlackJackResult {
         this.dealerResult = unmodifiableMap(dealerResult);
     }
 
-    public static BlackJackResult of(Dealer dealer, List<Gambler> gamblers) {
+    public static BlackJackResult of(Player dealer, List<Player> gamblers) {
         Map<String, Boolean> playerResult = new HashMap<>();
         Map<Boolean, Integer> dealerResult = new HashMap<>();
 
@@ -25,10 +25,10 @@ public class BlackJackResult {
             .map(gambler -> Map.entry(gambler.getName(), gambler.getResult() > dealer.getResult()))
             .collect(Collectors.toList());
 
-        collect.stream()
+        collect
             .forEach(entry -> playerResult.put(entry.getKey(), entry.getValue()));
 
-        gamblers.stream()
+        gamblers
             .forEach(gambler -> {
                 if (gambler.getResult() > dealer.getResult()) {
                     dealerResult.merge(Boolean.FALSE, 1, Integer::sum);

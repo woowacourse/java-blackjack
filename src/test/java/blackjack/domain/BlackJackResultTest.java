@@ -6,8 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackResultTest {
-    private List<Gambler> gamblers;
-    private Dealer dealer;
+    private List<Player> gamblers;
+    private Player dealer;
 
     @BeforeEach
     void setup() {
