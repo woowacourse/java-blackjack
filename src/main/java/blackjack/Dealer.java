@@ -6,13 +6,23 @@ import blackjack.cards.ChangeableCards;
 public class Dealer {
 
     private final ChangeableCards cards;
+    private final Card openCard;
 
-    public Dealer(Card... cards) {
-        this.cards = Cards.softHandCards(cards);
+    public Dealer(Card card1, Card card2, Card... cards) {
+        this.openCard = card1;
+        this.cards = Cards.softHandCards(card1, card2, cards);
     }
 
     public void take(Card card) {
+        if (!isHit()) {
+            throw new IllegalStateException("카드를 더 이상 발급 받을 수 없습니다.");
+        }
+
         cards.take(card);
+    }
+
+    public Card openCard() {
+        return openCard;
     }
 
     public Result match(Cards cards) {

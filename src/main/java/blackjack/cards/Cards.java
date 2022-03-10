@@ -12,11 +12,11 @@ public interface Cards {
 
     void take(Card card);
 
-    static ChangeableCards mixHandCards(Card... cards) {
-        return new MixHandCards(new HardHandCards(cards));
+    static ChangeableCards mixHandCards(Card card1, Card card2, Card... cards) {
+        return new MixHandCards(new HardHandCards(card1, card2, cards));
     }
 
-    static ChangeableCards softHandCards(Card... cards) {
-        return new SoftHandCards(new HardHandCards(cards));
+    static ChangeableCards softHandCards(Card card1, Card card2, Card... cards) {
+        return new SoftHandCards(new HardHandCards(card1, card2, cards));
     }
 }
