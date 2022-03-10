@@ -44,7 +44,7 @@ public class Game {
         return players.getCurrentTurn().getName();
     }
 
-    public boolean doesNeedToDraw() {
+    public boolean doesDealerNeedToDraw() {
         return dealer.doesNeedToDraw();
     }
 
