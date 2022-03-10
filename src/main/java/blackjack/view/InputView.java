@@ -18,7 +18,7 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
-        throw new UnsupportedOperationException();
+        throw new AssertionError();
     }
 
     public static List<String> inputPlayerNames() {

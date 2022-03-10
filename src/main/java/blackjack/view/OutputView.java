@@ -29,7 +29,7 @@ public class OutputView {
     private static final String CARD_INFO_DELIMITER = ", ";
 
     private OutputView() {
-        throw new UnsupportedOperationException();
+        throw new AssertionError();
     }
 
     public static void showGameInitInfo(final PlayerInfo dealerInfo, final List<PlayerInfo> playerInfos) {
