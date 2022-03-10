@@ -22,13 +22,13 @@ public class Players {
 		return players;
 	}
 
-	public void addCardToAllPlayers(Deck deck) {
+	public void addCardToAllPlayers(Deck deck, int times) {
 		players.stream()
-			.forEach(player -> player.addTwoCards(deck));
+			.forEach(player -> player.addCards(deck, times));
 	}
 
 	private void validateDuplicateName(List<String> playerNames) {
-		if (new HashSet<String>(playerNames).size() != playerNames.size()) {
+		if (new HashSet<>(playerNames).size() != playerNames.size()) {
 			throw new IllegalArgumentException("이름에 중복이 있으면 안됩니다.");
 		}
 	}

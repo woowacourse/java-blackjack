@@ -8,9 +8,10 @@ public class Gamer {
 	private final List<Card> cards = new ArrayList<>();
 	protected int score = 0;
 
-	public void addTwoCards(Deck deck) {
-		addCard(deck.distributeCard());
-		addCard(deck.distributeCard());
+	public void addCards(Deck deck, int times) {
+		for (int i = 0; i < times; i++) {
+			addCard(deck.distributeCard());
+		}
 	}
 
 	public void addCard(Card card) {

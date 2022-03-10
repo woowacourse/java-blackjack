@@ -89,8 +89,8 @@ public class BlackJackGameController {
 	}
 
 	private void initializeCard(Players players, Dealer dealer, Deck deck) {
-		dealer.addTwoCards(deck);
-		players.addCardToAllPlayers(deck);
+		dealer.addCards(deck, 2);
+		players.addCardToAllPlayers(deck, 2);
 		outputView.displayFirstDistribution(players.getPlayers());
 		outputView.displayOneCard(dealer.getCards().get(0));
 		for (Player player : players.getPlayers()){
