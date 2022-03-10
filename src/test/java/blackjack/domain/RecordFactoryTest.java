@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -17,7 +18,7 @@ class RecordFactoryTest {
         final RecordFactory factory = new RecordFactory(dealerScore);
 
         // when
-        Record actual = factory.getRecord(score);
+        Record actual = factory.getPlayerRecord(score);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -32,9 +33,27 @@ class RecordFactoryTest {
         final RecordFactory factory = new RecordFactory(dealerScore);
 
         // when
-        Record actual = factory.getRecord(score);
+        Record actual = factory.getPlayerRecord(score);
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"19:18:WIN", "19:20:LOSS", "19:22:WIN", "19:19:PUSH",
+            "22:18:LOSS", "22:20:LOSS", "22:22:WIN"}, delimiter = ':')
+    @DisplayName("딜러의 전적을 반환한다.")
+    void getDealerRecord(int dealerScore, int playerScore, Record expected) {
+        // give
+        final RecordFactory factory = new RecordFactory(dealerScore);
+
+        factory.getPlayerRecord(playerScore);
+
+        // when
+        final Map<Record, Integer> record = factory.getDealerRecord();
+        final int actual = record.get(expected);
+
+        // then
+        assertThat(actual).isEqualTo(1);
     }
 }
