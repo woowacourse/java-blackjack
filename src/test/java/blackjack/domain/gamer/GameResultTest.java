@@ -33,7 +33,7 @@ class GameResultTest {
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.SEVEN));
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
 
-        BlackJackGame blackJackGame = new BlackJackGame();
+        BlackJackGame blackJackGame = new BlackJackGame(List.of("pobi", "json"));
         GameResult gameResult = blackJackGame.createResult(dealer, List.of(pobi, jason));
 
         Map<Name, BlackJackResult> playerResults = gameResult.getPlayerResult();
@@ -63,7 +63,7 @@ class GameResultTest {
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.SEVEN));
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
 
-        BlackJackGame blackJackGame = new BlackJackGame();
+        BlackJackGame blackJackGame = new BlackJackGame(List.of("pobi", "json"));
         GameResult gameResult = blackJackGame.createResult(dealer, List.of(pobi, jason));
 
         Map<Name, BlackJackResult> playerResults = gameResult.getPlayerResult();
@@ -94,7 +94,7 @@ class GameResultTest {
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.SEVEN));
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
 
-        BlackJackGame blackJackGame = new BlackJackGame();
+        BlackJackGame blackJackGame = new BlackJackGame(List.of("pobi", "json"));
         GameResult gameResult = blackJackGame.createResult(dealer, List.of(pobi, jason));
 
         Map<BlackJackResult, Integer> dealerResult = gameResult.getDealerResult();

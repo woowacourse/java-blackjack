@@ -7,7 +7,10 @@ import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.GameResult;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
@@ -16,12 +19,18 @@ public class BlackJackGame {
     private static final int ADDITIONAL_DISTRIBUTE_STANDARD = 16;
 
     private final CardFactory cardFactory;
+    private final List<Player> players;
+    private final Dealer dealer;
 
-    public BlackJackGame() {
+    public BlackJackGame(List<String> names) {
         this.cardFactory = new CardFactory(Card.getCards());
+        this.dealer = new Dealer();
+        this.players = names.stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
     }
 
-    public void initDistribution(Dealer dealer, List<Player> players) {
+    public void distributeFirstCards() {
         for (int i = 0; i < INIT_DISTRIBUTION_COUNT; i++) {
             distributeCard(dealer);
             players.forEach(this::distributeCard);
@@ -40,5 +49,15 @@ public class BlackJackGame {
 
     public GameResult createResult(Dealer dealer, List<Player> players) {
         return new GameResult(players, dealer);
+    }
+
+    public GamerDto getDealerDto() {
+        return new GamerDto(dealer);
+    }
+
+    public List<GamerDto> getPlayerDtos() {
+        return players.stream()
+                .map(GamerDto::new)
+                .collect(Collectors.toUnmodifiableList());
     }
 }
