@@ -6,6 +6,7 @@ import blackjack.domain.Choice;
 import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
+import blackjack.domain.Results;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -33,6 +34,9 @@ public class BlackJackController {
         for (Participant participant : participants) {
             OutputView.printTotalScore(participant, participant.getTotalScore());
         }
+
+        Results results = new Results(dealer, participants);
+        OutputView.printResults(results);
     }
 
     private void askAndGiveCardToParticipant(BlackJackMachine blackJackMachine, Participant participant) {

@@ -21,14 +21,24 @@ public enum Result {
         this.condition = condition;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     public static Result decide(final int dealerScore, final int participantScore) {
         return Arrays.stream(Result.values())
                 .filter(result -> result.condition.test(dealerScore, participantScore))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 승패를 가릴 수 없는 경우입니다."));
+    }
+
+    public Result getOpposite() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

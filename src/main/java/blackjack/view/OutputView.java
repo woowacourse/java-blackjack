@@ -5,8 +5,11 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
+import blackjack.domain.Result;
+import blackjack.domain.Results;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -55,5 +58,35 @@ public class OutputView {
             cards.add(card.toString());
         }
         System.out.println(player.getName() + "카드: " + String.join(DELIMITER, cards) + " - 결과: " + totalScore);
+    }
+
+    public static void printResults(Results results) {
+        System.out.println("## 최종 승패");
+
+        Map<Participant, Result> values = results.getValues();
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("딜러: ")
+                .append(getCountResultMessage(countResult(values, Result.LOSE), Result.WIN))
+                .append(getCountResultMessage(countResult(values, Result.DRAW), Result.DRAW))
+                .append(getCountResultMessage(countResult(values, Result.WIN), Result.LOSE));
+        System.out.println(stringBuilder);
+
+        values.keySet()
+                .forEach(participant -> System.out.println(
+                        participant.getName() + ": " + values.get(participant).getName()));
+    }
+
+    private static int countResult(Map<Participant, Result> values, Result result) {
+        return (int) values.values().stream()
+                .filter(value -> value == result)
+                .count();
+    }
+
+    private static String getCountResultMessage(int count, Result result) {
+        if (count <= 0) {
+            return "";
+        }
+        return count + result.getName() + " ";
     }
 }
