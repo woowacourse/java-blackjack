@@ -29,33 +29,33 @@ public class winResult {
     }
 
     private void judge(Dealer dealer, Player player) {
-        int dealerScore = Rule.INSTANCE.calculateSum(dealer.getCards());
-        int playerScore = Rule.INSTANCE.calculateSum(player.getCards());
-
         if (Rule.INSTANCE.isBust(player.getCards())) {
-            dealerResult.merge(Judgement.WIN, 1, Integer::sum);
-            playersResult.put(player.getName(), Judgement.LOSE);
+            updateResult(player, Judgement.LOSE);
             return;
         }
-
         if (Rule.INSTANCE.isBust(dealer.getCards())) {
-            dealerResult.merge(Judgement.LOSE, 1, Integer::sum);
-            playersResult.put(player.getName(), Judgement.WIN);
+            updateResult(player, Judgement.WIN);
             return;
         }
+        judgeWithoutBust(player, Rule.INSTANCE.calculateSum(dealer.getCards()),
+                Rule.INSTANCE.calculateSum(player.getCards()));
+    }
 
+    private void judgeWithoutBust(Player player, int dealerScore, int playerScore) {
         if (dealerScore == playerScore) {
-            dealerResult.merge(Judgement.DRAW, 1, Integer::sum);
-            playersResult.put(player.getName(), Judgement.DRAW);
+            updateResult(player, Judgement.DRAW);
             return;
         }
         if (dealerScore > playerScore) {
-            dealerResult.merge(Judgement.WIN, 1, Integer::sum);
-            playersResult.put(player.getName(), Judgement.LOSE);
+            updateResult(player, Judgement.LOSE);
             return;
         }
-        dealerResult.merge(Judgement.LOSE, 1, Integer::sum);
-        playersResult.put(player.getName(), Judgement.WIN);
+        updateResult(player, Judgement.WIN);
+    }
+
+    private void updateResult(Player player, Judgement playerJudgement) {
+        dealerResult.merge(playerJudgement.getOpposite(), 1, Integer::sum);
+        playersResult.put(player.getName(), playerJudgement);
     }
 
     public Map<Judgement, Integer> getDealerResult() {
