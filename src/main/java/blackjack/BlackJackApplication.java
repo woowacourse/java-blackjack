@@ -1,10 +1,10 @@
 package blackjack;
 
-import blackjack.domain.BlackJackRun;
+import blackjack.domain.BlackJackRunner;
 
 public class BlackJackApplication {
 
     public static void main(String[] args) {
-        BlackJackRun.run();
+        BlackJackRunner.run();
     }
 }

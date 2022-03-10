@@ -11,7 +11,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-public class BlackJackRun {
+public class BlackJackRunner {
 
     private static final Deck deck;
     private static final BlackJackGame blackJackGame;
