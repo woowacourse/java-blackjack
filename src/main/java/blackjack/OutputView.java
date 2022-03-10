@@ -1,7 +1,6 @@
 package blackjack;
 
 import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +10,7 @@ public class OutputView {
     private static final String NAME_DELIMITER = ", ";
 
     public static void printPlayersDefaultCard(List<Participant> participants) {
-        System.out.println(MessageFormat.format("딜러와 {0}에게 2장의 카드를 나누었습니다.", concatPlayerName(participants)));
+        System.out.println(MessageFormat.format("{0}에게 2장의 카드를 나누었습니다.", concatPlayerName(participants)));
         for (Participant participant : participants) {
             System.out.println(MessageFormat.format("{0}카드: {1}", participant.getName(), participant.openCard().stream()
                     .map(OutputView::toCardName)
