@@ -4,6 +4,7 @@ import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
+import blackjack.domain.Player;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class OutputView {
         for (Participant participant : participants) {
             names.add(participant.getName());
         }
-        System.out.println(dealer.getName() + String.join(DELIMITER, names) + "에게 2장의 나누었습니다.");
+        System.out.println(dealer.getName() + "와 " + String.join(DELIMITER, names) + "에게 2장의 나누었습니다.");
     }
 
     private static void printDealerCard(final Dealer dealer) {
@@ -32,19 +33,27 @@ public class OutputView {
 
     private static void printParticipantsCards(final Participants participants) {
         for (Participant participant : participants) {
-            printParticipantCards(participant);
+            printPlayerCards(participant);
         }
     }
 
-    public static void printParticipantCards(final Participant participant) {
+    public static void printPlayerCards(final Player player) {
         List<String> cards = new ArrayList<>();
-        for (Card card : participant.getCards()) {
+        for (Card card : player.getCards()) {
             cards.add(card.toString());
         }
-        System.out.println(participant.getName() + "카드: " + String.join(DELIMITER, cards));
+        System.out.println(player.getName() + "카드: " + String.join(DELIMITER, cards));
     }
 
-    public static void printDealerGetCardMessage(Dealer dealer) {
+    public static void printDealerGetCardMessage(final Dealer dealer) {
         System.out.println(dealer.getName() + "는 " + DEALER_BOUNDARY_SCORE + "이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printTotalScore(final Player player, final int totalScore) {
+        List<String> cards = new ArrayList<>();
+        for (Card card : player.getCards()) {
+            cards.add(card.toString());
+        }
+        System.out.println(player.getName() + "카드: " + String.join(DELIMITER, cards) + " - 결과: " + totalScore);
     }
 }

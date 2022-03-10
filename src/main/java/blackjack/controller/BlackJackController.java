@@ -28,6 +28,11 @@ public class BlackJackController {
             blackJackMachine.giveCardToDealer(dealer);
             OutputView.printDealerGetCardMessage(dealer);
         }
+
+        OutputView.printTotalScore(dealer, dealer.getTotalScore());
+        for (Participant participant : participants) {
+            OutputView.printTotalScore(participant, participant.getTotalScore());
+        }
     }
 
     private void askAndGiveCardToParticipant(BlackJackMachine blackJackMachine, Participant participant) {
@@ -35,7 +40,7 @@ public class BlackJackController {
         do {
             choice = InputView.getChoice(participant);
             blackJackMachine.giveCardToParticipant(participant, choice);
-            OutputView.printParticipantCards(participant);
+            OutputView.printPlayerCards(participant);
         } while (choice == Choice.YES && participant.canAddCard());
     }
 }
