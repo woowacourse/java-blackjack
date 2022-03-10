@@ -1,10 +1,12 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 abstract public class Player {
 
     private static final int INITIAL_CARD_SIZE = 2;
+    private static final Pattern NON_SPECIAL_CHARACTERS = Pattern.compile("^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣\\s]*$");
 
     private final String name;
     private final Cards cards;
@@ -12,8 +14,15 @@ abstract public class Player {
     public Player(final String name, final List<Card> cards) {
         checkNameBlank(name);
         checkInitialCardsSize(cards);
+        checkNameSpecialCharacters(name);
         this.name = name;
         this.cards = new Cards(cards);
+    }
+
+    private void checkNameSpecialCharacters(final String name) {
+        if (!NON_SPECIAL_CHARACTERS.matcher(name).matches()) {
+            throw new IllegalArgumentException("[ERROR] 이름에는 특수문자가 들어갈 수 없습니다.");
+        }
     }
 
     private void checkNameBlank(final String name) {

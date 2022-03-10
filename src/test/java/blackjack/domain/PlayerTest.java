@@ -13,7 +13,7 @@ public class PlayerTest {
     @ParameterizedTest(name = "[{index}] name \"{0}\"")
     @ValueSource(strings = {"", " "})
     @DisplayName("플레이어 이름이 공백일 경우 예외를 발생시킨다.")
-    void test(String name) {
+    void checkNameBlank(String name) {
         CardDeck cardDeck = new CardDeck();
         List<Card> cards = Arrays.asList(cardDeck.getCard(1), cardDeck.getCard(2));
         Assertions.assertThatThrownBy(() -> new Player(name, cards) {
@@ -28,8 +28,8 @@ public class PlayerTest {
 
     @ParameterizedTest(name = "[{index}] 카드 size {0}")
     @ValueSource(ints = {1, 3, 4})
-    @DisplayName("플레이어 이름이 공백일 경우 예외를 발생시킨다.")
-    void test(int size) {
+    @DisplayName("가장 처음에 받은 카드가 2장이 아닐 경우 예외를 발생시킨다.")
+    void checkInitialCardsSize(int size) {
         CardDeck cardDeck = new CardDeck();
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < size; i++) {
@@ -44,5 +44,21 @@ public class PlayerTest {
                 })
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 가장 처음에는 카드를 2장씩 나눠줘야 합니다.");
+    }
+
+    @ParameterizedTest(name = "[{index}] name {0}")
+    @ValueSource(strings = {"13!", "123@", "#asd", "$wqe", "qwer%$"})
+    @DisplayName("플레이어 이름에 특수문자가 들어갈 경우 예외를 발생시킨다.")
+    void checkNameSpecialCharacters(String name) {
+        CardDeck cardDeck = new CardDeck();
+        List<Card> cards = Arrays.asList(cardDeck.getCard(1), cardDeck.getCard(2));
+        Assertions.assertThatThrownBy(() -> new Player(name, cards) {
+                    @Override
+                    public boolean canAddCard() {
+                        return false;
+                    }
+                })
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 이름에는 특수문자가 들어갈 수 없습니다.");
     }
 }
