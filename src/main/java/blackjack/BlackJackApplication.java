@@ -36,12 +36,12 @@ public class BlackJackApplication {
     }
 
     private static BlackJackGame initBlackJackGame(final Deck deck) {
-        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), toGamerList());
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), toGamers());
         blackJackGame.giveFirstCards(deck);
         return blackJackGame;
     }
 
-    private static List<Player> toGamerList() {
+    private static List<Player> toGamers() {
         List<String> names = InputView.requestPlayerName();
         return names.stream()
                 .map(Gamer::new)
