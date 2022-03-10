@@ -17,7 +17,7 @@ public class Dealer extends Participant {
 
     @Override
     public int calculateBestScore() {
-        List<Card> cards = this.cards.getCards();
+        List<Card> cards = this.cards.getCardHand();
 
         int sum = cards.stream()
                 .map(Card::getNumber)
@@ -46,5 +46,9 @@ public class Dealer extends Participant {
             sum -= 10;
         }
         return sum;
+    }
+
+    public String showOneCard() {
+        return cards.getCardHand().get(0).toString();
     }
 }

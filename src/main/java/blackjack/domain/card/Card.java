@@ -24,8 +24,9 @@ public class Card {
         return number;
     }
 
-    public Kind getKind() {
-        return kind;
+    @Override
+    public String toString() {
+        return number.getName() + kind.getSymbol();
     }
 
     @Override

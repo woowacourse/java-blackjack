@@ -35,7 +35,7 @@ class CardsTest {
         Cards cards = new Cards(cardHand);
         cards.concat(new Cards(List.of(Card.from(Number.JACK, Kind.SPADE))));
 
-        assertThat(cards.getCards().size()).isEqualTo(3);
+        assertThat(cards.getCardHand().size()).isEqualTo(3);
     }
 
     @DisplayName("중복 카드 추가 테스트")

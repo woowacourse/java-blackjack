@@ -11,7 +11,7 @@ public class PlayersTest {
     @DisplayName("플레이어들 객체 생성자 테스트")
     @Test
     void create() {
-        Players players = new Players(List.of("pobi"));
+        Players players = Players.of(List.of("pobi"));
 
         assertThat(players).isNotNull();
     }

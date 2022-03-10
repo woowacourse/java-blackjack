@@ -15,4 +15,8 @@ public class Name {
             throw new IllegalArgumentException(BLANK_NAME_EXCEPTION_MESSAGE);
         }
     }
+
+    public String getValue() {
+        return value;
+    }
 }

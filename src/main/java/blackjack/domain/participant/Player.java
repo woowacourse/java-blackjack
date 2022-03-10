@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Number;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class Player extends Participant {
 
     @Override
     public int calculateBestScore() {
-        List<Card> cards = this.cards.getCards();
+        List<Card> cards = this.cards.getCardHand();
 
         int sum = cards.stream()
                 .map(Card::getNumber)
@@ -45,5 +46,13 @@ public class Player extends Participant {
             sum += ACE_ADDITIONAL_NUMBER;
         }
         return sum;
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public Cards getCards() {
+        return cards;
     }
 }

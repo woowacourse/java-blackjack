@@ -17,7 +17,7 @@ public class Cards {
     }
 
     public Cards concat(Cards cards) {
-        cardHand.addAll(cards.getCards());
+        cardHand.addAll(cards.getCardHand());
         return new Cards(cardHand);
     }
 
@@ -28,7 +28,7 @@ public class Cards {
         }
     }
 
-    public List<Card> getCards() {
+    public List<Card> getCardHand() {
         return cardHand;
     }
 
