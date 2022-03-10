@@ -23,6 +23,11 @@ public class BlackJackController {
         for (Participant participant : participants) {
             askAndGiveCardToParticipant(blackJackMachine, participant);
         }
+
+        while (dealer.canAddCard()) {
+            blackJackMachine.giveCardToDealer(dealer);
+            OutputView.printDealerGetCardMessage(dealer);
+        }
     }
 
     private void askAndGiveCardToParticipant(BlackJackMachine blackJackMachine, Participant participant) {

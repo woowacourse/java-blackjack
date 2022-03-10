@@ -10,6 +10,7 @@ import java.util.List;
 public class OutputView {
 
     private static final String DELIMITER = ", ";
+    private static final int DEALER_BOUNDARY_SCORE = 16;
 
     public static void printInitialCards(final Dealer dealer, final Participants participants) {
         printDealMessage(dealer, participants);
@@ -41,5 +42,9 @@ public class OutputView {
             cards.add(card.toString());
         }
         System.out.println(participant.getName() + "카드: " + String.join(DELIMITER, cards));
+    }
+
+    public static void printDealerGetCardMessage(Dealer dealer) {
+        System.out.println(dealer.getName() + "는 " + DEALER_BOUNDARY_SCORE + "이하라 한장의 카드를 더 받았습니다.");
     }
 }
