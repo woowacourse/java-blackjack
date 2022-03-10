@@ -16,6 +16,6 @@ public class MockDeck implements Drawable {
 
     @Override
     public Card draw() {
-        return cards.remove(cards.size() - 1);
+        return cards.remove(0);
     }
 }

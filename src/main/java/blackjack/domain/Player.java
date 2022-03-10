@@ -36,4 +36,20 @@ public class Player {
     public List<Card> getCards() {
         return cards.getCards();
     }
+
+    public Score compete(Player player) {
+        if (player.isBust()) {
+            if (this.isBust()) {
+                return Score.DRAW;
+            }
+            return Score.WIN;
+        }
+        if (this.getTotalNumber() > player.getTotalNumber()) {
+            return Score.WIN;
+        }
+        if (this.getTotalNumber() < player.getTotalNumber()) {
+            return Score.LOSE;
+        }
+        return Score.DRAW;
+    }
 }

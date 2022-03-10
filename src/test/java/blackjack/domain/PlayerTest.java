@@ -44,4 +44,39 @@ public class PlayerTest {
             Assertions.assertThat(player.isBust()).isEqualTo(expected);
         }
     }
+
+    @Nested
+    @DisplayName("Compete는")
+    class Compete {
+
+        @ParameterizedTest
+        @CsvSource(value = {"FOUR|LOSE", "FIVE|DRAW", "SIX|WIN"}, delimiter = '|')
+        @DisplayName("딜러와 점수를 비교하여 승부 결과를 반환한다.")
+        void returnFalse(CardNumber cardNumber, Score expected) {
+            Player player = new Player("player");
+            Dealer dealer = new Dealer();
+            MockDeck mockDeck = new MockDeck(List.of(Card.of(CardPattern.DIAMOND, cardNumber),
+                Card.of(CardPattern.DIAMOND, CardNumber.FIVE)));
+            player.drawCard(mockDeck);
+            dealer.drawCard(mockDeck);
+            Assertions.assertThat(player.compete(dealer)).isEqualTo(expected);
+        }
+
+        @ParameterizedTest
+        @CsvSource(value = {"TEN|DRAW", "ACE|WIN"}, delimiter = '|')
+        @DisplayName("딜러가 버스트일 때 승부 결과를 반환한다.")
+        void returnResult(CardNumber cardNumber, Score expected) {
+            Player player = new Player("player");
+            Dealer dealer = new Dealer();
+            player.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TEN));
+            player.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TEN));
+            player.drawCard(() -> Card.of(CardPattern.DIAMOND, cardNumber));
+
+            dealer.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TEN));
+            dealer.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TEN));
+            dealer.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TWO));
+
+            Assertions.assertThat(player.compete(dealer)).isEqualTo(expected);
+        }
+    }
 }
