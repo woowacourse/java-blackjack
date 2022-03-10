@@ -2,7 +2,6 @@ package blackjack;
 
 import blackjack.cards.Cards;
 import blackjack.cards.ChangeableCards;
-import blackjack.cards.MixHandCards;
 
 public class Dealer {
 
@@ -12,7 +11,7 @@ public class Dealer {
         this.cards = Cards.softHandCards(cards);
     }
 
-    public Result judge(MixHandCards cards) {
+    public Result judge(Cards cards) {
         Score playerScore = cards.score();
         if (playerScore.isBust()) {
             return Result.WIN;

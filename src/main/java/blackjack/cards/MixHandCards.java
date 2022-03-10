@@ -10,13 +10,9 @@ import blackjack.Score;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class MixHandCards extends ChangeableCards {
+final class MixHandCards extends ChangeableCards {
 
-    public MixHandCards(Card... cards) {
-        super(cards);
-    }
-
-    public MixHandCards(HardHandCards cards) {
+    MixHandCards(HardHandCards cards) {
         super(cards);
     }
 

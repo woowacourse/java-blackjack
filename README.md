@@ -50,8 +50,3 @@
   
 
 ## 오후에 할일! (이브먼저)
-
-Card 테스트 추가
-
-// SoftHandCards 테스트 작성
-// Cards와 ChageableCards 적용

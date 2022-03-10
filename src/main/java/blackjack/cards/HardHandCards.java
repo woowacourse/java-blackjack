@@ -5,11 +5,11 @@ import blackjack.Score;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class HardHandCards implements Cards {
+final class HardHandCards implements Cards {
 
     private final List<Card> cards;
 
-    public HardHandCards(Card... cards) {
+    HardHandCards(Card... cards) {
         this.cards = List.of(cards);
     }
 

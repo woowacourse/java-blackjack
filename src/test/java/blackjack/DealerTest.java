@@ -4,7 +4,7 @@ import static blackjack.Rank.*;
 import static blackjack.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.cards.MixHandCards;
+import blackjack.cards.Cards;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +18,7 @@ public class DealerTest {
     @ParameterizedTest
     @MethodSource("provideDealerWinningCaseCards")
     @DisplayName("딜러가 이기는 경우 판별 테스트")
-    void dealerIsWinner(List<Card> cards, MixHandCards playerCards) {
+    void dealerIsWinner(List<Card> cards, Cards playerCards) {
         Dealer dealer = new Dealer(cards.toArray(Card[]::new));
         assertThat(dealer.judge(playerCards)).isEqualTo(Result.WIN);
     }
@@ -26,20 +26,21 @@ public class DealerTest {
     private static Stream<Arguments> provideDealerWinningCaseCards() {
         return Stream.of(
             Arguments.of(List.of(new Card(EIGHT, DIAMOND), new Card(JACK, HEART)),
-                new MixHandCards(new Card(SEVEN, CLOVER), new Card(EIGHT, HEART))),
+                Cards.mixHandCards(new Card(SEVEN, CLOVER), new Card(EIGHT, HEART))),
             Arguments.of(List.of(new Card(EIGHT, DIAMOND), new Card(JACK, HEART)),
-                new MixHandCards(new Card(JACK, HEART), new Card(QUEEN, HEART), new Card(FOUR, DIAMOND))),
+                Cards.mixHandCards(new Card(JACK, HEART), new Card(QUEEN, HEART),
+                    new Card(FOUR, DIAMOND))),
             Arguments.of(List.of(new Card(ACE, DIAMOND), new Card(FIVE, HEART)),
-                new MixHandCards(new Card(SEVEN, CLOVER), new Card(SIX, HEART))),
+                Cards.mixHandCards(new Card(SEVEN, CLOVER), new Card(SIX, HEART))),
             Arguments.of(List.of(new Card(ACE, DIAMOND), new Card(JACK, HEART), new Card(QUEEN, CLOVER)),
-                new MixHandCards(new Card(QUEEN, CLOVER), new Card(JACK, HEART)))
+                Cards.mixHandCards(new Card(QUEEN, CLOVER), new Card(JACK, HEART)))
         );
     }
 
     @ParameterizedTest
     @MethodSource("provideDealerLosingCaseCards")
     @DisplayName("딜러가 지는 경우 판별 테스트")
-    void dealerIsLoser(List<Card> dealerCards, MixHandCards playerCards) {
+    void dealerIsLoser(List<Card> dealerCards, Cards playerCards) {
         Dealer dealer = new Dealer(dealerCards.toArray(Card[]::new));
         assertThat(dealer.judge(playerCards)).isEqualTo(Result.LOSS);
     }
@@ -47,9 +48,9 @@ public class DealerTest {
     private static Stream<Arguments> provideDealerLosingCaseCards() {
         return Stream.of(
             Arguments.of(List.of(new Card(SEVEN, CLOVER), new Card(EIGHT, HEART)),
-                new MixHandCards(new Card(QUEEN, CLOVER), new Card(JACK, HEART))),
+                Cards.mixHandCards(new Card(QUEEN, CLOVER), new Card(JACK, HEART))),
             Arguments.of(List.of(new Card(JACK, HEART), new Card(QUEEN, HEART), new Card(FOUR, DIAMOND)),
-                new MixHandCards(new Card(QUEEN, CLOVER), new Card(JACK, HEART)))
+                Cards.mixHandCards(new Card(QUEEN, CLOVER), new Card(JACK, HEART)))
         );
     }
 
@@ -57,7 +58,7 @@ public class DealerTest {
     @DisplayName("비기는 경우 판별 테스트")
     void dealerIsDraw() {
         Dealer dealer = new Dealer(new Card(JACK, DIAMOND), new Card(FOUR, HEART));
-        assertThat(dealer.judge(new MixHandCards(new Card(EIGHT, CLOVER), new Card(SIX, HEART))))
+        assertThat(dealer.judge(Cards.mixHandCards(new Card(EIGHT, CLOVER), new Card(SIX, HEART))))
             .isEqualTo(Result.DRAW);
     }
 
@@ -65,7 +66,7 @@ public class DealerTest {
     @DisplayName("둘 다 버스트인 경우 테스트")
     void bothBust() {
         Dealer dealer = new Dealer(new Card(JACK, DIAMOND), new Card(KING, HEART), new Card(SEVEN, CLOVER));
-        assertThat(dealer.judge(new MixHandCards(new Card(EIGHT, CLOVER), new Card(SIX, HEART), new Card(KING, HEART))))
+        assertThat(dealer.judge(Cards.mixHandCards(new Card(EIGHT, CLOVER), new Card(SIX, HEART), new Card(KING, HEART))))
             .isEqualTo(Result.WIN);
     }
 
