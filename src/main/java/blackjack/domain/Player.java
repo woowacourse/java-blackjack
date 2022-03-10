@@ -3,7 +3,6 @@ package blackjack.domain;
 import java.util.List;
 
 public abstract class Player {
-    private static final int BURST_CRITERIA = 21;
 
     private final String name;
     private final PlayingCards playingCards = new PlayingCards();
@@ -20,12 +19,10 @@ public abstract class Player {
         playingCards.addCard(playingCard);
     }
 
+    public abstract boolean isNotFinished();
+
     public int getResult() {
         return playingCards.getResult();
-    }
-
-    public boolean isBurst() {
-        return getResult() > BURST_CRITERIA;
     }
 
     public List<PlayingCard> getCards() {

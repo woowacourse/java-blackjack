@@ -79,7 +79,7 @@ public class BlackJackController {
             gambler.addCard(cardDeck.getCard());
             final PlayerDto playerDto = PlayerDto.from(gambler);
             outputView.printCards(playerDto);
-            if (gambler.isBurst()){
+            if (gambler.isNotFinished()){
                 outputView.printBurst(playerDto);
                 break;
             }
@@ -87,7 +87,7 @@ public class BlackJackController {
     }
 
     private void addCardForDealer(Dealer dealer, CardDeck cardDeck) {
-        while (dealer.isUnderSixteen()) {
+        while (dealer.isNotFinished()) {
             dealer.addCard(cardDeck.getCard());
             outputView.printDealerAddCard(dealer);
         }

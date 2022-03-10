@@ -61,7 +61,7 @@ class PlayerTest {
         rich.addCard(PlayingCard.of(Suit.SPADES, Denomination.FIVE));
 
         // when
-        boolean actual = rich.isUnderSixteen();
+        boolean actual = rich.isNotFinished();
 
         // then
         assertThat(actual).isTrue();
@@ -76,7 +76,7 @@ class PlayerTest {
         rich.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
 
         // when
-        boolean actual = rich.isUnderSixteen();
+        boolean actual = rich.isNotFinished();
 
         // then
         assertThat(actual).isFalse();
@@ -87,7 +87,7 @@ class PlayerTest {
     void is_burst() {
         // given
         final Dealer rich = new Dealer("rich");
-        final Player dolbum = new Gambler("dolbum");
+        final Gambler dolbum = new Gambler("dolbum");
         rich.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
         rich.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
         rich.addCard(PlayingCard.of(Suit.CLUBS, Denomination.KING));
@@ -97,8 +97,8 @@ class PlayerTest {
         dolbum.addCard(PlayingCard.of(Suit.CLUBS, Denomination.KING));
 
         // when
-        boolean isBurstForDealer = rich.isBurst();
-        boolean isBurstForGambler = rich.isBurst();
+        boolean isBurstForDealer = !rich.isNotFinished();
+        boolean isBurstForGambler = !rich.isNotFinished();
 
         // then
         assertAll(

@@ -1,13 +1,17 @@
 package blackjack.domain;
 
 public class Dealer extends Player {
-    private static final int MORE_CARD_CRITERIA = 16;
+    private static final int GET_CARD_UPPER_BOUND = 16;
 
     public Dealer(final String name) {
         super(name);
     }
 
-    public boolean isUnderSixteen() {
-        return super.getResult() <= MORE_CARD_CRITERIA;
+
+    @Override
+    public boolean isNotFinished() {
+        return getResult() <= GET_CARD_UPPER_BOUND;
     }
+
+
 }
