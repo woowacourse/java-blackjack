@@ -2,13 +2,26 @@ package blackjack;
 
 public class Card {
     private final String cardInfo;
+    private final Rank rank;
+    private final Suit suit;
+
+    public Card(Rank rank, Suit suit) {
+        cardInfo = null;
+        this.rank = rank;
+        this.suit = suit;
+    }
 
     public Card(String card) {
         this.cardInfo = card;
+        this.rank = null;
+        this.suit = null;
     }
 
     public int getRank() {
-        return number(cardInfo.substring(0, 1));
+        if (rank == null) {
+            return number(cardInfo.substring(0, 1));
+        }
+        return rank.hard();
     }
 
     private int number(String value) {

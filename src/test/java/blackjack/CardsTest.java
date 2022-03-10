@@ -1,5 +1,7 @@
 package blackjack;
 
+import static blackjack.Rank.*;
+import static blackjack.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Stream;
@@ -13,13 +15,13 @@ public class CardsTest {
 
     @Test
     void 카드_합_계산() {
-        Cards cards = new Cards(new Card("3다이아몬드"), new Card("2다이아몬드"));
+        Cards cards = new Cards(new Card(THREE, DIAMOND), new Card(TWO, DIAMOND));
         assertThat(cards.score()).isEqualTo(new Score(5));
     }
 
     @Test
     void J_Q_K_카드_점수_계산() {
-        Cards cards = new Cards(new Card("Q클로버"), new Card("J하트"), new Card("K다이아몬드"));
+        Cards cards = new Cards(new Card(QUEEN, CLOVER), new Card(JACK, HEART), new Card(KING, DIAMOND));
         assertThat(cards.score()).isEqualTo(new Score(30));
     }
 
@@ -31,9 +33,9 @@ public class CardsTest {
 
     protected static Stream<Arguments> provideAceData() {
         return Stream.of(
-                Arguments.of(new Cards(new Card("A스페이스"), new Card("J하트"))),
-                Arguments.of(new Cards(new Card("A다이아몬드"), new Card("J다이아몬드"), new Card("K클로버"))),
-                Arguments.of(new Cards(new Card("A다이아몬드"), new Card("A스페이드"), new Card("9클로버")))
+                Arguments.of(new Cards(new Card(ACE, SPADE), new Card(JACK, HEART))),
+                Arguments.of(new Cards(new Card(ACE, DIAMOND), new Card(JACK, DIAMOND), new Card(KING, CLOVER))),
+                Arguments.of(new Cards(new Card(ACE, DIAMOND), new Card(ACE, SPADE), new Card(NINE, CLOVER)))
         );
     }
 }
