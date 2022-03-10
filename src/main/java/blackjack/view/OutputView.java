@@ -1,10 +1,11 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
-import blackjack.domain.Deck;
 import blackjack.domain.GameResponse;
+import blackjack.domain.Match;
+import blackjack.domain.MatchResult;
 import blackjack.domain.Player;
-
+import blackjack.domain.Results;
 import java.util.List;
 import java.util.Map;
 
@@ -23,14 +24,14 @@ public class OutputView {
                     sb.append(card.getRank().getValue()).append(card.getSuit().getName()).append(", ");
                     break;
                 }
-                sb.deleteCharAt(sb.length()-2);
+                sb.deleteCharAt(sb.length() - 2);
                 System.out.println(sb);
                 continue;
             }
             for (Card card : gameResponse.getDeck().getCards()) {
                 sb.append(card.getRank().getValue()).append(card.getSuit().getName()).append(", ");
             }
-            sb.deleteCharAt(sb.length()-2);
+            sb.deleteCharAt(sb.length() - 2);
             System.out.println(sb);
         }
     }
@@ -51,16 +52,26 @@ public class OutputView {
             for (Card card : gameResponse.getDeck().getCards()) {
                 sb.append(card.getRank().getValue()).append(card.getSuit().getName()).append(", ");
             }
-            sb.deleteCharAt(sb.length()-2);
+            sb.deleteCharAt(sb.length() - 2);
 
             sb.append(" - 결과: " + gameResponse.getDeck().sumPoints());
             System.out.println(sb);
         }
     }
 
-    public static void announceResultWinner(Map<Player, String> results) {
-        for (Player player : results.keySet()) {
-            System.out.println(player.getName() + ": " + results.get(player));
+    public static void announceResultWinner(Results results) {
+        for (Player player : results.getPlayers()) {
+            MatchResult result = results.getResult(player);
+            String matchResult = toMatchResultFormat(result.getMatch());
+            System.out.println(player.getName() + ": " + matchResult);
         }
+    }
+
+    private static String toMatchResultFormat(Map<Match, Integer> matchResult) {
+        StringBuilder sb = new StringBuilder();
+        for (Match match : matchResult.keySet()) {
+            sb.append(matchResult.get(match)).append(match.getResult());
+        }
+        return sb.toString();
     }
 }

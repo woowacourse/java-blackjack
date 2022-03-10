@@ -1,9 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
 
@@ -31,40 +29,29 @@ public class BlackjackGame {
         player.addCard(cards.assignCard());
     }
 
-    public Map<Player, String> calculateResult(List<Player> players) {
-        int dealerPoint = 0;
-
-        int dealerWin = 0;
-        int dealerLose = 0;
-        int dealerDraw = 0;
-        Map<Player, String> results = new LinkedHashMap<>();
+    public Results calculateResult(List<Player> players) {
+        Results results = new Results();
+        Player dealer = players.stream().filter(player -> player.getName().equals("딜러")).findFirst().orElseThrow();
         for (Player player : players) {
-            int playerPoint = player.getDeck().sumPoints();
-            if (player.getName().equals("딜러")) {
-                dealerPoint = playerPoint;
-                results.put(player, "");
-                continue;
-            }
-            if (playerPoint > 21) {
-                dealerWin++;
-                results.put(player, "패");
-                continue;
-            }
-            if (playerPoint > dealerPoint) {
-                results.put(player, "승");
-                dealerLose++;
-                continue;
-            }
-            if (playerPoint == dealerPoint) {
-                results.put(player, "무");
-                dealerDraw++;
-                continue;
-            }
-            results.put(player, "패");
-            dealerWin++;
+            scoreResultIfGuest(dealer, player, results);
         }
-        Player dealer = players.get(0);
-        results.put(dealer, dealerWin + "승 " + dealerDraw + "무 " + dealerLose + "패");
         return results;
+    }
+
+    private void scoreResultIfGuest(Player dealer, Player player, Results results) {
+        if (player.getName().equals("딜러")) {
+            return;
+        }
+        scorePlayers(dealer, player, results);
+    }
+
+    private void scorePlayers(Player dealer, Player guest, Results results) {
+        int playerPoint = guest.getDeck().sumPoints();
+        int dealerPoint = dealer.getDeck().sumPoints();
+
+        Match result = Match.compare(playerPoint, dealerPoint);
+        Match dealerResult = result.getDealerResult();
+        results.addResult(dealer, dealerResult);
+        results.addResult(guest, result);
     }
 }

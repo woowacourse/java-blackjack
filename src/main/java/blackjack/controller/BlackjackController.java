@@ -3,11 +3,11 @@ package blackjack.controller;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.GameResponse;
 import blackjack.domain.Player;
+import blackjack.domain.Results;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
@@ -27,7 +27,7 @@ public class BlackjackController {
 
     private void printResult(BlackjackGame blackjackGame, List<Player> players) {
         OutputView.announceResultCards(toResponse(players));
-        Map<Player, String> results = blackjackGame.calculateResult(players);
+        Results results = blackjackGame.calculateResult(players);
         OutputView.announceResultWinner(results);
     }
 
