@@ -53,4 +53,25 @@ class PlayerTest {
 
         assertThat(player.calculateBestScore()).isEqualTo(14);
     }
+
+    @DisplayName("플레이어 카드 추가 수령 가능 여부 테스트")
+    @Test
+    void isReceivable_BestScore21_IsTrue() {
+        Player player = new Player(new Name("Pobi"),
+                new Cards(List.of(Card.from(Number.ACE, Kind.SPADE),
+                        Card.from(Number.KING, Kind.SPADE))));
+
+        assertThat(player.isReceivable()).isTrue();
+    }
+
+    @DisplayName("플레이어 카드 추가 수령 실패 여부 테스트")
+    @Test
+    void isReceivable_BestScore22_IsFalse() {
+        Player player = new Player(new Name("Pobi"),
+                new Cards(List.of(Card.from(Number.TEN, Kind.SPADE),
+                        Card.from(Number.TWO, Kind.SPADE),
+                        Card.from(Number.TEN, Kind.HEART))));
+
+        assertThat(player.isReceivable()).isFalse();
+    }
 }
