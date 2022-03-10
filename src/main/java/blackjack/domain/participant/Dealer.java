@@ -8,14 +8,15 @@ public class Dealer extends Participant {
 
     private static final int MAXIMUM_CARDS_QUANTITY = 3;
     private static final String DEALER_NAME = "딜러";
-    private static final String INVALID_CARD_QUANTITY_EXCEPTION_MESSAGE = "딜러는 최대 3개의 카드만 지닐 수 있습니다.";
+    private static final String INVALID_CARD_QUANTITY_EXCEPTION_MESSAGE = "딜러는 최대 3장의 카드만 지닐 수 있습니다.";
+    private static final String EMPTY_CARD_BUNDLE_EXCEPTION_MESSAGE = "딜러는 카드를 최소 2장의 카드를 지니고 있어야 합니다.";
 
-    private Dealer(final String name, final CardBundle cardBundle) {
-        super(name, cardBundle);
+    private Dealer(final CardBundle cardBundle) {
+        super(DEALER_NAME, cardBundle);
     }
 
     public static Dealer of(final CardBundle cardBundle) {
-        return new Dealer(DEALER_NAME, cardBundle);
+        return new Dealer(cardBundle);
     }
 
     public void receiveCard(Card card) {
@@ -34,12 +35,11 @@ public class Dealer extends Participant {
         return score.toInt() <= Score.DEALER_EXTRA_CARD_LIMIT;
     }
 
-    // TODO: handle NPE
     public Card getOpenCard() {
         return cardBundle.getCards()
                 .stream()
                 .findFirst()
-                .get();
+                .orElseThrow(() -> new IllegalArgumentException(EMPTY_CARD_BUNDLE_EXCEPTION_MESSAGE));
     }
 
     @Override

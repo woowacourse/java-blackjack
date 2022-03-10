@@ -25,12 +25,6 @@ public class DealerTest {
         dealer = Dealer.of(cardBundle);
     }
 
-    @DisplayName("Dealer 인스턴스가 생성된다.")
-    @Test
-    void of() {
-        assertThat(dealer).isNotNull();
-    }
-
     @DisplayName("Card 를 전달받아 CardBundle 에 추가할 수 있다.")
     @Test
     void receiveCard() {
@@ -48,7 +42,7 @@ public class DealerTest {
 
         assertThatThrownBy(() -> dealer.receiveCard(CLOVER7))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("딜러는 최대 3개의 카드만 지닐 수 있습니다.");
+                .hasMessage("딜러는 최대 3장의 카드만 지닐 수 있습니다.");
     }
 
     @DisplayName("Score 가 16을 넘지 않으면 true 를 반환한다.")
