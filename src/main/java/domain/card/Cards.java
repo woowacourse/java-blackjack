@@ -6,19 +6,13 @@ import java.util.List;
 public class Cards {
 
     private static final String ACE_LETTER = "A";
-    public static final int ACE_ADDITIONAL_VALUE = 10;
-    public static final int BLACKJACK_MAX_VALUE_CRITERIA = 21;
+    private static final int ACE_ADDITIONAL_VALUE = 10;
+    private static final int BLACKJACK_MAX_VALUE_CRITERIA = 21;
 
     private final List<Card> cards;
 
-    public Cards(List<Card> init) {
-        cards = init;
-    }
-
-    public int calculateSum() {
-        return cards.stream()
-            .mapToInt(Card::getScore)
-            .sum();
+    public Cards(List<Card> initialCards) {
+        cards = new ArrayList<>(initialCards);
     }
 
     public int calculateResult() {
@@ -38,6 +32,12 @@ public class Cards {
             result += ACE_ADDITIONAL_VALUE;
         }
         return result;
+    }
+
+    public int calculateSum() {
+        return cards.stream()
+            .mapToInt(Card::getScore)
+            .sum();
     }
 
     private int countAceAmount() {
