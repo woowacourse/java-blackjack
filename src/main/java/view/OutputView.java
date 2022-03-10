@@ -70,4 +70,8 @@ public class OutputView {
                 playerDto -> System.out.println(playerDto.getName() + ": " + playerDto.getJoinedCardNames())
         );
     }
+
+    public static void printLineSeparator() {
+        System.out.println();
+    }
 }
