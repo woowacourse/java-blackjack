@@ -51,6 +51,10 @@ public class Cards {
         return calculateTotal() > BLACKJACK;
     }
 
+    public boolean isUnderBlackjack() {
+        return calculateTotal() < BLACKJACK;
+    }
+
     public List<String> getDealerInitCard() {
         return List.of(cards.get(0).getName());
     }

@@ -11,7 +11,11 @@ public class InputView {
 
     public static String inputPlayerName() {
         return userInput();
+    }
 
+    public static String inputTakeCardAnswer() {
+        // TODO: validate
+        return userInput();
     }
 
     private static String userInput() {

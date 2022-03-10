@@ -38,7 +38,7 @@ public class Player extends Human {
         cards.add(initCards);
     }
 
-    public boolean isReceived(final String receivedFlag) {
+    public boolean answer(final String receivedFlag) {
         if (receivedFlag.equalsIgnoreCase(GIVEN_SYMBOL)) {
             return true;
         }
@@ -59,5 +59,9 @@ public class Player extends Human {
 
     public boolean isBurst() {
         return cards.isOverBlackjack();
+    }
+
+    public boolean isReceived() {
+        return cards.isUnderBlackjack();
     }
 }

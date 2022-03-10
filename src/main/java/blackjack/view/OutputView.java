@@ -17,6 +17,10 @@ public class OutputView {
         System.out.println(ERROR_PREFIX + message);
     }
 
+    public static void printNewLine() {
+        System.out.println();
+    }
+
     public static void printPlayerNameInstruction() {
         System.out.println(PLAYER_NAME_MESSAGE);
     }
@@ -25,11 +29,11 @@ public class OutputView {
         System.out.printf(GIVE_INIT_CARD_MESSAGE, dealerName, String.join(DELIMITER, playerNames));
     }
 
-    public static void printInitCard(final String name, final List<String> cards) {
+    public static void printCard(final String name, final List<String> cards) {
         System.out.printf(CARD_FORMAT, name, String.join(DELIMITER, cards));
     }
 
-    public static void printNewLine() {
-        System.out.println();
+    public static void printTakeCardInstruction(final String name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", name);
     }
 }

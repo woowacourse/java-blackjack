@@ -18,6 +18,8 @@ public class BlackjackController {
 
         noticeInitCard(cardMachine, dealer, players);
         openInitCard(dealer, players);
+
+        distributeCardToPlayers(players, cardMachine);
     }
 
     private Players createPlayers() {
@@ -38,11 +40,30 @@ public class BlackjackController {
     }
 
     private void openInitCard(Dealer dealer, Players players) {
-        OutputView.printInitCard(Dealer.getName(), dealer.getInitCard());
-        OutputView.printNewLine();
+        OutputView.printCard(Dealer.getName(), dealer.getInitCard());
         for (Player player : players.getPlayers()) {
-            OutputView.printInitCard(player.getName(), player.getCards());
+            OutputView.printCard(player.getName(), player.getCards());
             OutputView.printNewLine();
         }
+    }
+
+    private void distributeCardToPlayers(final Players players, final CardMachine cardMachine) {
+        for (Player player : players.getPlayers()) {
+            while (player.isReceived()) {
+                OutputView.printTakeCardInstruction(player.getName());
+                if (isReceived(player)) {
+                    player.receiveCard(cardMachine.giveCard());
+                    OutputView.printCard(player.getName(), player.getCards());
+                    OutputView.printNewLine();
+                    continue;
+                }
+                break;
+            }
+        }
+    }
+
+    private boolean isReceived(final Player player) {
+        String input = InputView.inputTakeCardAnswer();
+        return player.answer(input);
     }
 }

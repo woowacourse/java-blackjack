@@ -57,4 +57,5 @@ public class Players {
             throw new IllegalArgumentException(MAXIMUM_PLAYER_MESSAGE);
         }
     }
+
 }

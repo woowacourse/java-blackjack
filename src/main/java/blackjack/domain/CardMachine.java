@@ -20,4 +20,8 @@ public class CardMachine {
         }
         return givenCards;
     }
+
+    public Card giveCard() {
+        return cards.giveCard();
+    }
 }
