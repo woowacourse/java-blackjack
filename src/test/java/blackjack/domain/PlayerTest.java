@@ -1,6 +1,7 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +27,7 @@ public class PlayerTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("참가자의 이름으로 공백이나 빈 문자열은 입력할 수 없습니다.");
     }
-    
+
     @Test
     @DisplayName("참가자의 승무패 결과 확인")
     void playerWinDrawLoseTest() {

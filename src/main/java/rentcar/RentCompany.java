@@ -25,8 +25,9 @@ public class RentCompany {
     public String generateReport() {
         StringBuilder stringBuilder = new StringBuilder();
         abstractCars.forEach(
-                abstractCar -> stringBuilder.append(abstractCar.getName()).append(COLON).append((int) abstractCar.getChargeQuantity())
-                .append(FUEL_UNIT).append(NEWLINE));
+                abstractCar -> stringBuilder.append(abstractCar.getName()).append(COLON)
+                        .append((int) abstractCar.getChargeQuantity())
+                        .append(FUEL_UNIT).append(NEWLINE));
         return stringBuilder.toString();
     }
 }

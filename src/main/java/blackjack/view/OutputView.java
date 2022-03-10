@@ -38,11 +38,14 @@ public class OutputView {
     }
 
     public static void printHitResult(List<HitResultDto> hitResultDtos) {
-        hitResultDtos.forEach(hitResultDto -> System.out.printf(HIT_RESULT_MESSAGE, hitResultDto.getName(), printCard(hitResultDto.getCards()), hitResultDto.getScore()));
+        hitResultDtos.forEach(hitResultDto -> System.out.printf(HIT_RESULT_MESSAGE, hitResultDto.getName(),
+                printCard(hitResultDto.getCards()), hitResultDto.getScore()));
     }
 
     public static void printResult(List<WinDrawLoseDto> winDrawLoseDtos) {
         System.out.println(TOTAL_RESULT_MESSAGE);
-        winDrawLoseDtos.forEach(winDrawLoseDto -> System.out.printf(WIN_DRAW_LOSE_STATUS_MESSAGE, winDrawLoseDto.getName(), winDrawLoseDto.getWinDrawLoseString()));
+        winDrawLoseDtos.forEach(
+                winDrawLoseDto -> System.out.printf(WIN_DRAW_LOSE_STATUS_MESSAGE, winDrawLoseDto.getName(),
+                        winDrawLoseDto.getWinDrawLoseString()));
     }
 }

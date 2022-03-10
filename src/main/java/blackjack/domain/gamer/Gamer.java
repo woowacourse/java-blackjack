@@ -35,7 +35,7 @@ public abstract class Gamer {
 
     public void hit() {
         cards.add(Card.draw());
-    };
+    }
 
     public abstract List<Card> getViewCard();
 
@@ -47,7 +47,7 @@ public abstract class Gamer {
 
     public abstract String getWinDrawLoseString();
 
-    public  Cards getCards() {
+    public Cards getCards() {
         return cards;
     }
 

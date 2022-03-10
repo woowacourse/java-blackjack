@@ -3,7 +3,6 @@ package blackjack.domain.gamer;
 import blackjack.domain.WinDrawLose;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.gamer.Gamer;
 import java.util.ArrayList;
 import java.util.List;
 

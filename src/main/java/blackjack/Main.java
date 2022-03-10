@@ -1,14 +1,14 @@
 package blackjack;
 
+import blackjack.domain.HitOrStand;
+import blackjack.domain.WinDrawLose;
 import blackjack.domain.dto.CardDto;
+import blackjack.domain.dto.HitResultDto;
+import blackjack.domain.dto.WinDrawLoseDto;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
-import blackjack.domain.HitOrStand;
-import blackjack.domain.dto.HitResultDto;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
-import blackjack.domain.WinDrawLose;
-import blackjack.domain.dto.WinDrawLoseDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -40,9 +40,11 @@ public class Main {
 
     private static List<HitResultDto> makeHitResultDto(List<Player> playerList, Dealer dealer) {
         List<HitResultDto> hitResultDtos = new ArrayList<>();
-        hitResultDtos.add(new HitResultDto(dealer.getName(), toListCardDto(dealer), dealer.getCards().calculateScore()));
+        hitResultDtos.add(
+                new HitResultDto(dealer.getName(), toListCardDto(dealer), dealer.getCards().calculateScore()));
         for (Player player : playerList) {
-            hitResultDtos.add(new HitResultDto(player.getName(), toListCardDto(player), player.getCards().calculateScore()));
+            hitResultDtos.add(
+                    new HitResultDto(player.getName(), toListCardDto(player), player.getCards().calculateScore()));
         }
         return hitResultDtos;
     }
