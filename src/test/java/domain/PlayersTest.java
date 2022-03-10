@@ -21,7 +21,7 @@ public class PlayersTest {
 		List<Card> cards1 = new ArrayList<>(Arrays.asList(card1, card4));
 		List<Card> cards2 = new ArrayList<>(Arrays.asList(card2, card3));
 		List<List<Card>> initCards = new ArrayList<>(Arrays.asList(cards1, cards2));
-		List<String> names = Arrays.asList("pobi", "jason");
+		List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"));
 		Players players = new Players(names, initCards);
 		assertThat(players.getBestScores()).isEqualTo(List.of(20, 16));
 	}
