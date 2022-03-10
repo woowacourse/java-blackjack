@@ -5,6 +5,8 @@ import java.util.Stack;
 
 public class Deck {
 
+	private static final int EMPTY_DECK_SIZE = 0;
+
 	private final Stack<Card> cards;
 
 	private Deck(final Stack<Card> cards) {
@@ -32,7 +34,7 @@ public class Deck {
 	}
 
 	private void checkCardSize() {
-		if (size() == 0) {
+		if (size() == EMPTY_DECK_SIZE) {
 			throw new IllegalStateException("[ERROR] 더이상 카드를 뽑을 수 없습니다.");
 		}
 	}
