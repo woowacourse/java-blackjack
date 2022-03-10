@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
-    private static final String DEALER_NAME = "딜러";
+    public static final String DEALER_NAME = "딜러";
+    private static final String NOT_EXIST_DEALER_ERROR = "딜러가 존재하지 않습니다.";
 
     private final List<Participant> participants = new ArrayList<>();
     private final CardDistributor cardDistributor = new CardDistributor();
@@ -57,6 +58,14 @@ public class BlackJackGame {
         return participants.stream()
                 .filter(participant -> participant instanceof Dealer)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 딜러가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_DEALER_ERROR));
+    }
+
+    @Override
+    public String toString() {
+        return "BlackJackGame{" +
+                "participants=" + participants +
+                ", cardDistributor=" + cardDistributor +
+                '}';
     }
 }

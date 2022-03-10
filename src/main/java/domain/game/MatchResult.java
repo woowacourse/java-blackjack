@@ -1,6 +1,7 @@
 package domain.game;
 
 public enum MatchResult {
+
     WIN("승"),
     LOSE("패");
 

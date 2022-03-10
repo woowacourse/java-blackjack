@@ -8,6 +8,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class InputView {
+
     private static final Scanner scanner = new Scanner(System.in);
     private static final String NAME_DELIMITER = ",";
     private static final String YES = "y";
@@ -38,12 +39,12 @@ public class InputView {
                 .count();
 
         if (distinctCount != names.size()) {
-            throw new IllegalArgumentException("[ERROR] 중복 이름은 불가능합니다.");
+            throw new IllegalArgumentException("중복 이름은 불가능합니다.");
         }
     }
 
     public static boolean inputWantDraw(String name) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name, YES, NO);
+        System.out.printf("%n%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name, YES, NO);
         String input = scanner.nextLine().toLowerCase();
         return toBoolean(input);
     }
@@ -55,7 +56,7 @@ public class InputView {
 
     private static void validateWantDraw(String input) {
         if (!YES.equals(input) && !NO.equals(input)) {
-            throw new IllegalArgumentException(String.format("[ERROR] %s 또는 %s을 입력해주세요.", YES, NO));
+            throw new IllegalArgumentException(String.format("%s 또는 %s을 입력해주세요.", YES, NO));
         }
     }
 }

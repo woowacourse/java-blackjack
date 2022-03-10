@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
+
     private static final int ACE_ADDITIONAL_VALUE = 10;
     private static final int BLACKJACK_COUNT = 21;
 
@@ -31,20 +32,24 @@ public class Cards {
                 .mapToInt(Card::toInt)
                 .sum();
 
-        if (hasAce() && !exceedBust(sum)) {
+        if (canAddAddtionalValue(sum)) {
             sum += ACE_ADDITIONAL_VALUE;
         }
 
         return sum;
     }
 
-    private boolean exceedBust(int sum) {
-        return sum + ACE_ADDITIONAL_VALUE > BLACKJACK_COUNT;
+    private boolean canAddAddtionalValue(int sum) {
+        return hasAce() && !exceedBust(sum);
     }
 
     private boolean hasAce() {
         return value.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    private boolean exceedBust(int sum) {
+        return sum + ACE_ADDITIONAL_VALUE > BLACKJACK_COUNT;
     }
 
     public List<Card> getValue() {

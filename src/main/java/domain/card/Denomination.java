@@ -1,6 +1,7 @@
 package domain.card;
 
 public enum Denomination {
+
     ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),

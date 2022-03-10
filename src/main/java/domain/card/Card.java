@@ -3,6 +3,7 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
+
     private final Denomination denomination;
     private final Suit suit;
 
