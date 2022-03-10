@@ -1,6 +1,8 @@
 package blackjack.view;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -30,7 +32,7 @@ public class InputView {
         System.out.printf(MORE_CARD_INPUT_MESSAGE, name);
         String input = SCANNER.nextLine();
         validateAnswer(input);
-        return input.equals("y");
+        return input.equalsIgnoreCase(YES_INPUT);
     }
 
     private static void validateNames(final String input) {
@@ -38,13 +40,13 @@ public class InputView {
             throw new IllegalArgumentException(NULL_NAMES_ERROR_MESSAGE);
         }
         String[] names = separate(input);
-        if (Set.of(Arrays.asList(names)).size() != names.length) {
+        if (new HashSet<>(Arrays.asList(names)).size() != names.length) {
             throw new IllegalArgumentException(NULL_NAMES_DUPLICATED_ERROR_MESSAGE);
         }
     }
 
     private static void validateAnswer(final String input) {
-        if (!input.equals(YES_INPUT) && !input.equals(NO_INPUT)) {
+        if (!input.equalsIgnoreCase(YES_INPUT) && !input.equalsIgnoreCase(NO_INPUT)) {
             throw new IllegalArgumentException(NULL_ANSWER_YN_ERROR_MESSAGE);
         }
     }
