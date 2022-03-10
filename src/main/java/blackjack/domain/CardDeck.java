@@ -20,7 +20,7 @@ public class CardDeck {
     }
 
     public static CardDeck init() {
-        List<Card> cards = Card.cards();
+        List<Card> cards = Card.createNewCards();
         Collections.shuffle(cards);
         return new CardDeck(new ArrayDeque<>(cards));
     }
