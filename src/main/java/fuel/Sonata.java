@@ -1,6 +1,6 @@
 package fuel;
 
-public class Sonata {
+public class Sonata extends Car{
 
     private final static int distancePerLiter = 10;
     private static final String NAME = "소나타";
@@ -11,20 +11,18 @@ public class Sonata {
         this.distance = distance;
     }
 
-
+    @Override
     public double getDistancePerLiter() {
         return distancePerLiter;
     }
 
+    @Override
     public double getTripDistance() {
         return distance;
     }
 
+    @Override
     public String getName() {
         return NAME;
-    }
-
-    public double getChargeQuantity() {
-        return getTripDistance() / getDistancePerLiter();
     }
 }
