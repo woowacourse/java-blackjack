@@ -16,6 +16,8 @@ public enum Denomination {
     JACK(10, "J"),
     ACE(11, "A");
 
+    private static final int ACE_ADJUST_UNIT = 1;
+
     private final int point;
     private final String name;
 
@@ -24,8 +26,8 @@ public enum Denomination {
         this.name = name;
     }
 
-    public static int adjustAce() {
-        return 10;
+    public static int adjustAce(final int point) {
+        return point - (ACE.getPoint() - ACE_ADJUST_UNIT);
     }
 
     public int getPoint() {
