@@ -28,7 +28,12 @@ public class GameController {
         players.giveCard();
         players.giveCard();
 
-        // 딜러 카드추가
+        // 딜러 카드 추가
+        // 딜러는 처음에 받은 2장의 합계가 16이하이면 반드시 1장의 카드를 추가로 받아야 하고,
+        // 17점 이상이면 추가로 받을 수 없다.
+        if (dealer.isOneMoreCard()) {
+            dealer.addCard(CardDeck.giveCard());
+        }
 
 
         // 카드 받을지 물어보는 기능
