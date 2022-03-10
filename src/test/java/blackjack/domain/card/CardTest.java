@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardTest {
+class CardTest {
 
     @Test
     @DisplayName("카드 52장을 반환할 수 있다.")
