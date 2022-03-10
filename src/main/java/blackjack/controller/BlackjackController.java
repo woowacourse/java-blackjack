@@ -1,24 +1,27 @@
 package blackjack.controller;
 
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
+import blackjack.domain.WinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
 
     public void run() {
         Deck deck = new Deck();
-
         Participants participants = createParticipants();
+
         handOutAndPrintInitialCards(participants, deck);
         handOutMoreCards(participants, deck);
-        OutputView.printCardsAndPoint(participants);
 
+        printResult(participants);
     }
 
     private Participants createParticipants() {
@@ -62,6 +65,19 @@ public class BlackjackController {
             OutputView.printDealerHitMessage();
             dealer.receiveCard(deck.pickCard());
         }
+    }
+
+    private void printResult(Participants participants) {
+
+        OutputView.printCardsAndPoint(participants);
+
+        BlackjackGame blackjackGame = new BlackjackGame(participants);
+        blackjackGame.calculatePlayerResult();
+
+        Map<WinningResult, Integer> dealerResult =  blackjackGame.getDealerResult();
+        Map<Player, WinningResult> playerResult = blackjackGame.getPlayerResult();
+
+        OutputView.printResult(dealerResult,playerResult);
     }
 
 
