@@ -1,34 +1,23 @@
 package blackjack.domain.result;
 
 import java.util.Arrays;
-
-import static blackjack.domain.BlackJackGame.POSSIBLE_MAX_VALUE;
+import java.util.function.BiPredicate;
 
 public enum BlackJackResult {
 
-    WIN(ResultValue.WIN),
-    LOSE(ResultValue.LOSE),
-    DRAW(ResultValue.DRAW);
+    WIN((player, dealer) -> (player <= 21 && player > dealer) || (player <= 21 && dealer > 21)),
+    LOSE((player, dealer) -> (player > 21) || (dealer <= 21 && player < dealer)),
+    DRAW((player, dealer) -> (player <= 21 && dealer <= 21 && player.equals(dealer)));
 
-    private final int value;
+    private final BiPredicate<Integer, Integer> predicate;
 
-    BlackJackResult(int value) {
-        this.value = value;
+    BlackJackResult(BiPredicate<Integer, Integer> predicate) {
+        this.predicate = predicate;
     }
 
     public static BlackJackResult of(Integer point, Integer otherPoint) {
-        if (point > POSSIBLE_MAX_VALUE) {
-            return LOSE;
-        }
-        if (otherPoint > POSSIBLE_MAX_VALUE) {
-            return WIN;
-        }
-        return BlackJackResult.valueOf(point.compareTo(otherPoint));
-    }
-
-    private static BlackJackResult valueOf(int value) {
-        return Arrays.stream(BlackJackResult.values())
-                .filter(result -> result.value == value)
+        return Arrays.stream(values())
+                .filter(result -> result.predicate.test(point, otherPoint))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("옯바른 결과를 찾을 수 없습니다."));
     }
@@ -41,11 +30,5 @@ public enum BlackJackResult {
             return WIN;
         }
         return DRAW;
-    }
-
-    private static class ResultValue {
-        private static final int WIN = 1;
-        private static final int LOSE = -1;
-        private static final int DRAW = 0;
     }
 }
