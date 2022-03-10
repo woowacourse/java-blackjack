@@ -1,5 +1,6 @@
 package service;
 
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
@@ -7,6 +8,7 @@ import dto.AllParticipatorsDto;
 import dto.NamesDto;
 import dto.ParticipatorDto;
 import dto.TotalResultDto;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import model.CardDeck;
@@ -90,5 +92,10 @@ public class BlackJackService {
 
     private long countPlayersResults(List<Result> playersResults, Result target) {
         return playersResults.stream().filter(result -> result.equals(target)).count();
+    }
+
+    public Map<ParticipatorDto, Integer> getResult() {
+        return participators.findAll().stream()
+        .collect(toMap(this::convertParticipatorToDto, Participator::getSum, (x, y) -> y, LinkedHashMap::new));
     }
 }

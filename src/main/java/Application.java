@@ -8,5 +8,7 @@ public class Application {
         controller.initGame();
         controller.hitPlayers();
         controller.hitDealer();
+        controller.getResult();
+        controller.match();
     }
 }

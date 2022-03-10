@@ -1,9 +1,7 @@
 package model;
 
-import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toMap;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,7 +12,7 @@ public class Participators {
 
     public Participators(List<String> playerNames) {
         List<Participator> participators = playerNames.stream().map(Player::new).collect(Collectors.toList());
-        participators.add(new Dealer());
+        participators.add(0, new Dealer());
         this.participators = participators;
     }
 
@@ -74,5 +72,9 @@ public class Participators {
         return participators.stream()
                 .filter(participator -> participator instanceof Player)
                 .collect(toMap(player -> player.getPlayerName(), player -> dealer.matchWith(player)));
+    }
+
+    public List<Participator> findAll() {
+        return participators;
     }
 }

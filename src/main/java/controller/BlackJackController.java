@@ -44,4 +44,8 @@ public class BlackJackController {
     public void match() {
         OutputView.printMatchResult(service.match());
     }
+
+    public void getResult() {
+        OutputView.printResult(service.getResult());
+    }
 }

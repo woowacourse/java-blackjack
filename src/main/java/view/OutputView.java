@@ -2,6 +2,8 @@ package view;
 
 import dto.TotalResultDto;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import dto.AllParticipatorsDto;
 import dto.ParticipatorDto;
@@ -68,5 +70,21 @@ public class OutputView {
 
     public static void printMatchResult(TotalResultDto resultDto) {
 
+    }
+
+    public static void printResult(Map<ParticipatorDto, Integer> result) {
+        for (Entry<ParticipatorDto, Integer> entry : result.entrySet()) {
+            printResult(entry.getKey(), entry.getValue());
+        }
+    }
+
+    private static void printResult(ParticipatorDto key, int value) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(key.getName())
+                .append(" 카드: ")
+                .append(convertCardsInLine(key.getCards()))
+                .append(" - 결과: ")
+                .append(value);
+        System.out.println(sb);
     }
 }

@@ -31,4 +31,8 @@ public abstract class Participator {
     public boolean isSameName(String otherName) {
         return playerName.isSameName(otherName);
     }
+
+    public int getSum() {
+        return cards.getSum();
+    }
 }
