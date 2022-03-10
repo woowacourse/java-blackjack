@@ -9,13 +9,13 @@ public class Dealer extends AbstractPlayer {
 
     private static final String NAME = "딜러";
     private static final int DEALER_LIMIT_SCORE = 17;
-    private static final int INIT_CARD_SIZE = 1;
+    private static final int FIRST_DRAW_CARD_SIZE = 1;
 
     private Dealer(final String name, final Cards cards, final boolean turnState) {
         super(name, cards, turnState);
     }
 
-    public static Dealer init(final List<Card> cards) {
+    public static Dealer createNewDealer(final List<Card> cards) {
         final Cards ownCards = new Cards(new ArrayList<>(cards));
         if (ownCards.calculateScore() >= DEALER_LIMIT_SCORE) {
             return new Dealer(NAME, ownCards, false);
@@ -24,8 +24,8 @@ public class Dealer extends AbstractPlayer {
     }
 
     @Override
-    public List<Card> initCards() {
-        return List.copyOf(super.cards().subList(0, INIT_CARD_SIZE));
+    public List<Card> firstDrawCard() {
+        return List.copyOf(super.cards().subList(0, FIRST_DRAW_CARD_SIZE));
     }
 
     @Override

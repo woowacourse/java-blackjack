@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface Player {
 
-    List<Card> initCards();
+    List<Card> firstDrawCard();
 
     void draw(final Card card);
 

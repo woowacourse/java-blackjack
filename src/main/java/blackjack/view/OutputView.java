@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String PROVIDE_INIT_CARD_TO_PLAYER_MESSAGE = "%s와 %s에게 2장의 나누었습니다.\n";
+    private static final String PROVIDE_FIRST_DRAW_CARD_TO_PLAYER_MESSAGE = "%s와 %s에게 2장의 나누었습니다.\n";
     private static final String PROVIDED_CARD_TO_DEALER_CARD_MESSAGE = "%s: %s\n";
     private static final String PROVIDED_CARD_TO_PLAYER_CARD_MESSAGE = "%s카드: %s\n";
 
@@ -33,7 +33,7 @@ public class OutputView {
     }
 
     public static void showPlayersFirstCards(final PlayerCards dealerCards, final List<PlayerCards> playerCards) {
-        System.out.printf(PROVIDE_INIT_CARD_TO_PLAYER_MESSAGE, dealerCards.getName(), joinPlayerNames(playerCards));
+        System.out.printf(PROVIDE_FIRST_DRAW_CARD_TO_PLAYER_MESSAGE, dealerCards.getName(), joinPlayerNames(playerCards));
         System.out.printf(PROVIDED_CARD_TO_DEALER_CARD_MESSAGE,
                 dealerCards.getName(), joinPlayerCards(dealerCards.getCards()));
         playerCards.forEach(OutputView::printPlayerCards);

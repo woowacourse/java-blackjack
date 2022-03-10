@@ -11,7 +11,7 @@ public class Application {
 
     public static void main(final String[] args) {
         final List<String> playerNames = InputView.inputPlayerNames();
-        final BlackJackGame blackJackGame = BlackJackGame.init(playerNames);
+        final BlackJackGame blackJackGame = BlackJackGame.createGame(playerNames);
         OutputView.showPlayersFirstCards(blackJackGame.getDealerFirstCard(), blackJackGame.getPlayersFirstCards());
 
         runPlayerTurn(blackJackGame);

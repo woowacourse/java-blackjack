@@ -27,7 +27,7 @@ class ParticipatingPlayerTest {
     @NullSource
     @DisplayName("플레이어의 이름에 null이 들어올 경우 예외가 발생해야 한다.")
     void createExceptionByNull(String input) {
-        assertThatThrownBy(() -> ParticipatingPlayer.init(input, createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN))))
+        assertThatThrownBy(() -> ParticipatingPlayer.createNewPlayer(input, createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN))))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("플레이어의 이름은 null이 들어올 수 없습니다.");
     }
@@ -36,7 +36,7 @@ class ParticipatingPlayerTest {
     @ValueSource(strings = {"", " "})
     @DisplayName("플레이어의 이름에 공백이 들어올 경우 예외가 발생해야 한다.")
     void createExceptionByEmpty(String input) {
-        assertThatThrownBy(() -> ParticipatingPlayer.init(input, createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN))))
+        assertThatThrownBy(() -> ParticipatingPlayer.createNewPlayer(input, createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 이름은 공백이 들어올 수 없습니다.");
     }
@@ -48,14 +48,14 @@ class ParticipatingPlayerTest {
         @Test
         @DisplayName("가능한 경우 true를 반환한다.")
         void canDraw() {
-            final Player player = ParticipatingPlayer.init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+            final Player player = ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
             assertTrue(player.canDraw());
         }
 
         @Test
         @DisplayName("불가능한 경우 false를 반환한다.")
         void cannotDraw() {
-            final Player player = ParticipatingPlayer.init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+            final Player player = ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
             player.draw(Card.of(SPADE, EIGHT));
             assertFalse(player.canDraw());
         }
@@ -64,7 +64,7 @@ class ParticipatingPlayerTest {
     @Test
     @DisplayName("드로우가 불가능한데, 카드를 받으려 하면 예외를 발생시킨다.")
     void drawException() {
-        final Player player = ParticipatingPlayer.init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Player player = ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         player.draw(Card.of(SPADE, EIGHT));
         assertThatThrownBy(() -> player.draw(Card.of(SPADE, NINE)))
                 .isInstanceOf(IllegalStateException.class)
@@ -74,7 +74,7 @@ class ParticipatingPlayerTest {
     @Test
     @DisplayName("카드를 받을 수 있다.")
     void draw() {
-        final Player player = ParticipatingPlayer.init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Player player = ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Card card = Card.of(SPADE, A);
         player.draw(card);
         assertThat(player.cards()).contains(card);
@@ -84,7 +84,7 @@ class ParticipatingPlayerTest {
     @DisplayName("턴을 종료할 수 있다.")
     void endTurn() {
         final Player player = ParticipatingPlayer
-                .init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+                .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         player.endTurn();
         assertFalse(player.canDraw());
     }
@@ -92,7 +92,7 @@ class ParticipatingPlayerTest {
     @Test
     @DisplayName("턴이 종료되지 않은 경우에 카드의 합을 계산하려하면 예외를 발생시킨다.")
     void calculateResultScoreExceptionByNotEndTurn() {
-        final Player player = ParticipatingPlayer.init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Player player = ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         assertThatThrownBy(() -> player.calculateResultScore())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
@@ -101,8 +101,8 @@ class ParticipatingPlayerTest {
     @Test
     @DisplayName("턴이 끝나지 않은 유저와 서로 승부하려하면 예외를 발생시킨다.")
     void outcomeResultException() {
-        final Player player = ParticipatingPlayer.init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
-        final Player dealer = Dealer.init(createCards(Card.of(HEART, TEN), Card.of(HEART, SEVEN)));
+        final Player player = ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Player dealer = Dealer.createNewDealer(createCards(Card.of(HEART, TEN), Card.of(HEART, SEVEN)));
         assertThatThrownBy(() -> player.fightResult(dealer))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("턴이 종료되지 않아 비교할 수 없습니다.");

@@ -12,25 +12,25 @@ class CardDeckTest {
 
     @Test
     @DisplayName("초기 카드 2장 제공시, 남은 카드가 2장 보다 적으면 예외를 발생시킨다.")
-    void provideInitCardsException() {
-        final CardDeck cardDeck = CardDeck.init();
+    void provideFirstDrawCardsException() {
+        final CardDeck cardDeck = CardDeck.createNewCardDek();
         pollCards(cardDeck, 51);
-        assertThatThrownBy(() -> cardDeck.provideInitCards())
+        assertThatThrownBy(() -> cardDeck.provideFirstDrawCards())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("남은 카드가 2장 미만입니다.");
     }
 
     @Test
     @DisplayName("초기 카드 2장을 반환할 수 있다.")
-    void provideInitCards() {
-        final CardDeck cardDeck = CardDeck.init();
-        assertThat(cardDeck.provideInitCards()).hasSize(2);
+    void provideFirstDrawCards() {
+        final CardDeck cardDeck = CardDeck.createNewCardDek();
+        assertThat(cardDeck.provideFirstDrawCards()).hasSize(2);
     }
 
     @Test
     @DisplayName("카드 1장 제공시, 남은 카드가 없으면 예외를 발생시킨다.")
     void provideException() {
-        final CardDeck cardDeck = CardDeck.init();
+        final CardDeck cardDeck = CardDeck.createNewCardDek();
         pollCards(cardDeck, 52);
         assertThatThrownBy(() -> cardDeck.provideCard())
                 .isInstanceOf(IllegalStateException.class)
@@ -40,7 +40,7 @@ class CardDeckTest {
     @Test
     @DisplayName("카드 1장을 반환할 수 있다.")
     void provideCard() {
-        final CardDeck cardDeck = CardDeck.init();
+        final CardDeck cardDeck = CardDeck.createNewCardDek();
         assertThat(cardDeck.provideCard()).isInstanceOf(Card.class);
     }
 }

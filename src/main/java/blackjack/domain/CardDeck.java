@@ -10,7 +10,7 @@ import java.util.Queue;
 
 public class CardDeck {
 
-    private static final int INIT_PROVIDING_CARD_SIZE = 2;
+    private static final int FIRST_DRAW_CARD_SIZE = 2;
 
     private final Queue<Card> cards;
 
@@ -19,19 +19,19 @@ public class CardDeck {
         this.cards = new ArrayDeque<>(cards);
     }
 
-    public static CardDeck init() {
+    public static CardDeck createNewCardDek() {
         List<Card> cards = Card.createNewCards();
         Collections.shuffle(cards);
         return new CardDeck(new ArrayDeque<>(cards));
     }
 
-    public List<Card> provideInitCards() {
+    public List<Card> provideFirstDrawCards() {
         validateEnoughDeckSize();
         return Arrays.asList(cards.poll(), cards.poll());
     }
 
     private void validateEnoughDeckSize() {
-        if (cards.size() < INIT_PROVIDING_CARD_SIZE) {
+        if (cards.size() < FIRST_DRAW_CARD_SIZE) {
             throw new IllegalStateException("남은 카드가 2장 미만입니다.");
         }
     }

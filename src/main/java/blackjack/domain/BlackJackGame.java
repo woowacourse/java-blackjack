@@ -25,11 +25,11 @@ public class BlackJackGame {
         this.players = players;
     }
 
-    public static BlackJackGame init(final List<String> playerNames) {
+    public static BlackJackGame createGame(final List<String> playerNames) {
         Objects.requireNonNull(playerNames, "blackjackgame은 null이 들어올 수 없습니다.");
         final List<String> copyNames = new ArrayList<>(playerNames);
-        final CardDeck cardDeck = CardDeck.init();
-        final Player dealer = Dealer.init(cardDeck.provideInitCards());
+        final CardDeck cardDeck = CardDeck.createNewCardDek();
+        final Player dealer = Dealer.createNewDealer(cardDeck.provideFirstDrawCards());
         final List<Player> players = createPlayers(copyNames, cardDeck);
         return new BlackJackGame(cardDeck, dealer, new Players(players));
     }
@@ -41,7 +41,7 @@ public class BlackJackGame {
     }
 
     private static ParticipatingPlayer createPlayer(final CardDeck cardDeck, final String name) {
-        return ParticipatingPlayer.init(name, cardDeck.provideInitCards());
+        return ParticipatingPlayer.createNewPlayer(name, cardDeck.provideFirstDrawCards());
     }
 
     public boolean isPlayersTurnEnd() {

@@ -30,9 +30,9 @@ class PlayersTest {
     @DisplayName("중복된 이름들로 생성 시 예외를 발생시킨다.")
     void createExceptionByDuplication() {
         final Player firstplayer = ParticipatingPlayer
-                .init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+                .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Player secondplayer = ParticipatingPlayer
-                .init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+                .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final List<Player> players = Arrays.asList(firstplayer, secondplayer);
 
         assertThatThrownBy(() -> new Players(players))
@@ -44,7 +44,7 @@ class PlayersTest {
     @DisplayName("현재 턴의 플레이어가 버스트될 경우 다음 플레이어로 턴을 넘긴다.")
     void drawCurrentPlayerIsBust() {
         final Player player = ParticipatingPlayer
-                .init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+                .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Players players = new Players(Collections.singletonList(player));
         players.drawCurrentPlayer(Card.of(SPADE, JACK));
         assertTrue(players.isAllTurnEnd());
@@ -54,7 +54,7 @@ class PlayersTest {
     @DisplayName("모든 플레이어의 턴이 종료되었는데 드로우하려고하면 예외가 발생해야 한다.")
     void drawCurrentPlayerExceptionByEndAllTurn() {
         final Player player =
-                ParticipatingPlayer.init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+                ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Players players = new Players(Collections.singletonList(player));
         players.drawCurrentPlayer(Card.of(SPADE, JACK));
 
@@ -67,7 +67,7 @@ class PlayersTest {
     @DisplayName("모든 턴이 종료되었을 때 턴 증가를 할 수 없다.")
     void turnToNextPlayerExceptionByEndAllTurn() {
         final Player player =
-                ParticipatingPlayer.init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+                ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Players players = new Players(Collections.singletonList(player));
         players.turnToNextPlayer();
 
@@ -79,7 +79,7 @@ class PlayersTest {
     @Test
     @DisplayName("모든 턴이 종료되었을 때 현재 플레이어 정보를 반환하려하면 예외가 발생한다.")
     void getCurrentTurnPlayerCardExceptionByEndAllTurn() {
-        final Player player = ParticipatingPlayer.init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Player player = ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Players players = new Players(Collections.singletonList(player));
         players.turnToNextPlayer();
 
@@ -91,7 +91,7 @@ class PlayersTest {
     @Test
     @DisplayName("모든 턴이 종료되었을 때 현재 플레이어 이름 반환하려하면 예외가 발생한다.")
     void getCurrentTurnPlayerNameExceptionByEndAllTurn() {
-        final Player player = ParticipatingPlayer.init("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Player player = ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Players players = new Players(Collections.singletonList(player));
         players.turnToNextPlayer();
 

@@ -17,7 +17,7 @@ public class PlayerCards {
     public static PlayerCards toPlayerFirstCards(final Player player) {
         return new PlayerCards(
                 player.getName(),
-                player.initCards()
+                player.firstDrawCard()
         );
     }
 
