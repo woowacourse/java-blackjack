@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 public class CardTest {
     @Test
     void create() {
+        // then
         assertThatNoException().isThrownBy(() -> new Card(Denomination.ACE, Suit.CLOVER));
     }
 }
