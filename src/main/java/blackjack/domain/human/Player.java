@@ -13,7 +13,7 @@ public class Player extends Human {
 
     private Player(Name name) {
         this.name = name;
-        this.cards = Cards.of();
+        this.cards = Cards.create();
     }
 
     public static Player of(Name name) {

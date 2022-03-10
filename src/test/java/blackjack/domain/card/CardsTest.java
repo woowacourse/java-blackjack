@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class CardsTest {
     @Test
     public void 카드모음_생성_테스트(){
-        Cards cards = Cards.of();
+        Cards cards = Cards.create();
 
         Card card5 = Card.of(Denomination.of("5"), Symbol.of("스페이드"));
         Card card6 = Card.of(Denomination.of("6"), Symbol.of("하트"));

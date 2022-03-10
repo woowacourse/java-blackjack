@@ -8,7 +8,7 @@ public class Dealer extends Human {
     private final Cards cards;
 
     private Dealer() {
-        this.cards = Cards.of();
+        this.cards = Cards.create();
     }
 
     public static Dealer of() {
