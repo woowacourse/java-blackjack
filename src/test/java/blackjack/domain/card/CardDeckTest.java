@@ -2,7 +2,6 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,15 +22,15 @@ public class CardDeckTest {
     }
 
     @Test
-    @DisplayName("뽑은 카드는 카드 뭉치에서 제거된다.")
-    void removeCard() {
+    @DisplayName("두 장의 카드를 한번에 뽑을 수 있다.")
+    void drawDouble() {
         // given
-        CardDeck deck = new CardDeck(() -> new ArrayList<>(List.of(new Card(Pattern.CLOVER, Denomination.THREE))));
+        CardDeck deck = new CardDeck(new BlackJackCardsGenerator());
 
         // when
-        deck.draw();
+        List<Card> cards = deck.drawDouble();
 
         // then
-        assertThat(deck.isEmpty()).isTrue();
+        assertThat(cards.size()).isEqualTo(2);
     }
 }
