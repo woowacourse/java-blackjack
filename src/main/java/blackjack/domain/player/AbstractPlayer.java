@@ -43,7 +43,7 @@ public abstract class AbstractPlayer implements Player {
     }
 
     private void validateCanCalculateResultScore() {
-        if (!isEnd()) {
+        if (turnState) {
             throw new IllegalStateException("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
         }
     }
@@ -54,7 +54,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public void draw(final Card card) {
-        if (isEnd()) {
+        if (!turnState) {
             throw new IllegalStateException("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
         }
         cards.addCard(card);
