@@ -107,13 +107,13 @@ public class OutputView {
     }
 
     private static String getParticipantCardsInfo(Player player) {
-        String playerCards = getCardsInfo(player.getCardBundle().getCards());
+        String playerCards = getCardsInfo(player.getCards());
         return String.format(PLAYER_CARDS_FORMAT, player.getName(), playerCards);
     }
 
     private static String getParticipantCardsAndScore(Participant participant) {
         String participantName = participant.getName();
-        String cards = getCardsInfo(participant.getCardBundle().getCards());
+        String cards = getCardsInfo(participant.getCards());
         int score = participant.getCurrentScore().toInt();
 
         return String.format(PARTICIPANT_CARDS_AND_SCORE_FORMAT, participantName, cards, score);

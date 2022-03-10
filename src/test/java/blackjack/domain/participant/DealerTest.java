@@ -30,7 +30,7 @@ public class DealerTest {
     void receiveCard() {
         dealer.receiveCard(CLOVER6);
 
-        Set<Card> actual = dealer.getCardBundle().getCards();
+        Set<Card> actual = dealer.getCards();
 
         assertThat(actual).containsExactlyInAnyOrder(CLOVER4, CLOVER5, CLOVER6);
     }

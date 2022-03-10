@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.game.Score;
+import java.util.Set;
 
 public abstract class Participant {
 
@@ -26,7 +27,7 @@ public abstract class Participant {
         return name;
     }
 
-    public CardBundle getCardBundle() {
-        return cardBundle;
+    public Set<Card> getCards() {
+        return cardBundle.getCards();
     }
 }

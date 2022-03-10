@@ -30,7 +30,7 @@ public class PlayerTest {
     void receiveCard() {
         player.receiveCard(CLOVER6);
 
-        Set<Card> actual = player.getCardBundle().getCards();
+        Set<Card> actual = player.getCards();
 
         assertThat(actual).containsExactlyInAnyOrder(CLOVER4, CLOVER5, CLOVER6);
     }
