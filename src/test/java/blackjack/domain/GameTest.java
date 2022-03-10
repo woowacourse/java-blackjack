@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -56,7 +55,7 @@ public class GameTest {
         // then
         assertThat(actual).isEqualTo(expected);
     }
-    
+
     @Test
     @DisplayName("딜러의 턴을 진행한다")
     void drawDealerCard() {

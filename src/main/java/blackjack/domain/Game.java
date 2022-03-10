@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.List;
 import java.util.Optional;
@@ -57,5 +58,13 @@ public class Game {
 
     public int getDealerScore() {
         return dealer.getScore();
+    }
+
+    public Participant getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

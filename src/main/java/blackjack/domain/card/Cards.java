@@ -48,6 +48,10 @@ public class Cards {
                 .orElseThrow(() -> new IllegalStateException("카드가 한 장도 없습니다."));
     }
 
+    public Set<Card> getValue() {
+        return value;
+    }
+
     @Override
     public String toString() {
         return "Cards{" +

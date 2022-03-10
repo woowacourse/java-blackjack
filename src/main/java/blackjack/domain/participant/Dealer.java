@@ -26,4 +26,8 @@ public class Dealer extends Participant {
     public Card openCard() {
         return super.cards.findFirst();
     }
+
+    public String getName() {
+        return "딜러";
+    }
 }

@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Status;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 
 public abstract class Participant {
@@ -41,5 +42,11 @@ public abstract class Participant {
         if (cards.getStatus() == Status.BUST) {
             status = Status.BUST;
         }
+    }
+
+    public abstract String getName();
+
+    public Cards getCards() {
+        return cards;
     }
 }
