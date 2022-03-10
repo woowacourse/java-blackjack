@@ -1,11 +1,11 @@
 package blackjack;
 
-import blackjack.domain.Dealer;
 import blackjack.domain.Name;
-import blackjack.domain.Player;
 import blackjack.domain.Rule;
 import blackjack.domain.card.BlackJackCardsGenerator;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.domain.winResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
