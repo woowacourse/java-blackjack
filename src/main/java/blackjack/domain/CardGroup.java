@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardGroup {
@@ -14,13 +15,9 @@ public class CardGroup {
 
     public int getSum() {
         return cards.stream()
-                .map(Card::getNumber)
+                .map(Card::getCardNumber)
                 .mapToInt(CardNumber::getNumber)
                 .sum();
-    }
-
-    public int getSize() {
-        return cards.size();
     }
 
     public void addCard(Card card) {
@@ -30,5 +27,13 @@ public class CardGroup {
     public void addTwoCards(Card firstCard, Card secondCard) {
         cards.add(firstCard);
         cards.add(secondCard);
+    }
+
+    public int getSize() {
+        return cards.size();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

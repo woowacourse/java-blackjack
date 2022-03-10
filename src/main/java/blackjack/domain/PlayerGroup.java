@@ -60,4 +60,8 @@ public class PlayerGroup {
         }
         return result;
     }
+
+    public void addAllTo(List<Gamer> gamers) {
+        gamers.addAll(players);
+    }
 }

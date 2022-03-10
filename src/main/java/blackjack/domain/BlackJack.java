@@ -1,7 +1,9 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 public class BlackJack {
@@ -49,5 +51,12 @@ public class BlackJack {
 
     private int countMatch(Collection<Match> matches, Match type) {
         return (int) matches.stream().filter(value -> value == type).count();
+    }
+
+    public List<Gamer> getGamersCards() {
+        List<Gamer> gamers = new ArrayList<>();
+        gamers.add(dealer);
+        playerGroup.addAllTo(gamers);
+        return gamers;
     }
 }
