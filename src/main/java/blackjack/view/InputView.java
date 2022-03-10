@@ -16,11 +16,6 @@ public class InputView {
     public static String inputHitRequest(String playerName) {
         System.out.printf("%s는(은) 한 장의 카드를 더 받으시겠습니까? (예는 y, 아니오는 n)", playerName);
         System.out.println();
-        String input = scanner.nextLine();
-        if (input.equals("y") || input.equals("n")) {
-            return input;
-        }
-        System.out.println("[ERROR] y 또는 n를 입력해 주세요.");
-        return inputHitRequest(playerName);
+        return scanner.nextLine().toLowerCase();
     }
 }

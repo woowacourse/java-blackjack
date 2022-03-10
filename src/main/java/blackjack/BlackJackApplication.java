@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.HitRequest;
 import blackjack.domain.Name;
 import blackjack.domain.Rule;
 import blackjack.domain.card.BlackJackCardsGenerator;
@@ -63,11 +64,20 @@ public class BlackJackApplication {
     }
 
     private static void proceedPlayer(Player player, CardDeck deck) {
-        while (player.isHittable() && InputView.inputHitRequest(player.getName()).equals("y")) {
+        while (player.isHittable() && inputHitRequest(player) == HitRequest.YES) {
             player.hit(deck);
             OutputView.printParticipantCards(player, Rule.INSTANCE.calculateSum(player.getCards()));
         }
         showStopReason(player);
+    }
+
+    private static HitRequest inputHitRequest(Player player) {
+        try {
+            return HitRequest.find(InputView.inputHitRequest(player.getName()));
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return inputHitRequest(player);
+        }
     }
 
     private static void showStopReason(Player player) {
