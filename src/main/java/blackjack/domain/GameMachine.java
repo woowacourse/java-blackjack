@@ -15,14 +15,13 @@ public class GameMachine {
     private final Deck deck;
     private final Players players;
 
-    public GameMachine(List<String> names) {
+    public GameMachine(final List<String> names) {
         validationNames(names);
         this.deck = new Deck();
-
         this.players = new Players(createParticipants(names), createDealer());
     }
 
-    private void validationNames(List<String> names) {
+    private void validationNames(final List<String> names) {
         if (names == null || names.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 참여자의 이름을 입력해주세요.");
         }
@@ -42,15 +41,15 @@ public class GameMachine {
         return deck.draw();
     }
 
-    public Players getPlayers() {
-        return this.players;
-    }
-
     public boolean isDealerGetCard() {
         if (((Dealer) players.getDealer()).acceptableCard()) {
             players.addDealerCard(deck.draw());
             return true;
         }
         return false;
+    }
+
+    public Players getPlayers() {
+        return this.players;
     }
 }

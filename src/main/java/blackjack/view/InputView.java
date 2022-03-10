@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 
 public class InputView {
 
+    private static final String YES = "y";
+    private static final String NO = "n";
+    private static final String DELIMITER = ",";
     private static final Scanner scanner = new Scanner(System.in);
 
     private InputView() {
@@ -28,21 +31,21 @@ public class InputView {
     }
 
     private static List<String> convertNameInput(final String nameInput) {
-        return Arrays.stream(nameInput.split(","))
+        return Arrays.stream(nameInput.split(DELIMITER))
                 .map(String::trim)
                 .collect(Collectors.toList());
     }
 
     public static String inputSelectMoreCard(final String name) {
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name, YES, NO);
         return scanner.nextLine();
     }
 
     public static boolean oneMoreCard(final Player participant) {
         final String input = InputView.inputSelectMoreCard(participant.getName());
-        if (!input.equals("y") && !input.equals("n")) {
-            throw new IllegalArgumentException("[ERROR] y 또는 n으로 입력하세요.");
+        if (!input.equals(YES) && !input.equals(NO)) {
+            throw new IllegalArgumentException(String.format("[ERROR] %s 또는 %s으로 입력하세요.", YES, NO));
         }
-        return input.equals("y");
+        return input.equals(YES);
     }
 }

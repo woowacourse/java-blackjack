@@ -10,11 +10,10 @@ import blackjack.view.OutputView;
 
 public class BlackjackController {
 
-    public void play(GameMachine gameMachine) {
+    public void play(final GameMachine gameMachine) {
         OutputView.printPlayersInitCardInfo(gameMachine.getPlayers());
         decideMoreCard(gameMachine);
         announcePlayersFinishInfo(gameMachine.getPlayers());
-
         competeWithDealer(gameMachine.getPlayers());
         OutputView.printResult(gameMachine.getPlayers());
     }
@@ -23,7 +22,6 @@ public class BlackjackController {
         for (Player participant : gameMachine.getPlayers().getParticipants()) {
             decideParticipantOneMoreCard(participant, gameMachine);
         }
-
         decideOneMoreCard(gameMachine);
     }
 
@@ -41,7 +39,7 @@ public class BlackjackController {
         return !((Participant) participant).isOverMaxScore();
     }
 
-    private void decideOneMoreCard(GameMachine gameMachine) {
+    private void decideOneMoreCard(final GameMachine gameMachine) {
         if (gameMachine.isDealerGetCard()) {
             OutputView.printDealerAcceptCard();
             return;
@@ -58,5 +56,4 @@ public class BlackjackController {
         OutputView.printPlayerFinalInfo(players.getDealer());
         OutputView.printFinishParticipantInfo(players.getParticipants());
     }
-
 }

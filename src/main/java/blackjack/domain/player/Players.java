@@ -45,7 +45,7 @@ public class Players {
                 .collect(Collectors.toSet());
     }
 
-    public void addDealerCard(Card card) {
+    public void addDealerCard(final Card card) {
         this.dealer.addCard(card);
     }
 
