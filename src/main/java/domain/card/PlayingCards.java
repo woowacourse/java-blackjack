@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package domain.card;
 
 import static java.util.Collections.unmodifiableList;
 

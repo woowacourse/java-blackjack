@@ -1,5 +1,7 @@
-package blackjack.domain;
+package domain;
 
+import domain.player.Dealer;
+import domain.player.Gambler;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +24,6 @@ public class BlackJackResultTest {
         BlackJackResult blackJackResult = BlackJackResult.of(dealer, gamblers);
 
         // when
-
 
         // then
     }

@@ -1,11 +1,11 @@
-package blackjack.domain;
+package domain.player;
 
-import blackjack.domain.card.PlayingCard;
-import blackjack.domain.card.PlayingCards;
+import domain.card.PlayingCard;
+import domain.card.PlayingCards;
 import java.util.List;
 
 public abstract class Player {
-    private static final int BURST_CRITERIA = 21;
+    private static final int BUST_CRITERIA = 21;
 
     private final String name;
     private final PlayingCards playingCards = new PlayingCards();
@@ -26,8 +26,8 @@ public abstract class Player {
         return playingCards.getResult();
     }
 
-    public boolean isBurst() {
-        return getResult() > BURST_CRITERIA;
+    public boolean isBust() {
+        return getResult() > BUST_CRITERIA;
     }
 
     public List<PlayingCard> getCards() {

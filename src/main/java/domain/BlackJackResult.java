@@ -1,7 +1,9 @@
-package blackjack.domain;
+package domain;
 
 import static java.util.Collections.unmodifiableMap;
 
+import domain.player.Dealer;
+import domain.player.Gambler;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,22 +24,20 @@ public class BlackJackResult {
         Map<Boolean, Integer> dealerResult = new HashMap<>();
 
         final List<Entry<String, Boolean>> collect = gamblers.stream()
-            .map(gambler -> Map.entry(gambler.getName(), gambler.getResult() > dealer.getResult()))
-            .collect(Collectors.toList());
+                .map(gambler -> Map.entry(gambler.getName(), gambler.getResult() > dealer.getResult()))
+                .collect(Collectors.toList());
 
-        collect.stream()
-            .forEach(entry -> playerResult.put(entry.getKey(), entry.getValue()));
+        collect.forEach(entry ->
+                playerResult.put(entry.getKey(), entry.getValue()));
 
-        gamblers.stream()
-            .forEach(gambler -> {
-                if (gambler.getResult() > dealer.getResult()) {
-                    dealerResult.merge(Boolean.FALSE, 1, Integer::sum);
-                }
-                if (gambler.getResult() < dealer.getResult()) {
-                    dealerResult.merge(Boolean.TRUE, 1, Integer::sum);
-                }
-            });
-
+        gamblers.forEach(gambler -> {
+            if (gambler.getResult() > dealer.getResult()) {
+                dealerResult.merge(Boolean.FALSE, 1, Integer::sum);
+            }
+            if (gambler.getResult() < dealer.getResult()) {
+                dealerResult.merge(Boolean.TRUE, 1, Integer::sum);
+            }
+        });
 
         return new BlackJackResult(playerResult, dealerResult);
     }

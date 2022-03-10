@@ -1,8 +1,7 @@
-package blackjack.domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.card.CardDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +11,7 @@ public class CardDeckTest {
     @DisplayName("카드덱 생성 테스트")
     void deck_create() {
         assertThatCode(
-            CardDeck::getInstance
+                CardDeck::getInstance
         ).doesNotThrowAnyException();
     }
 }

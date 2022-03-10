@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package domain.card;
 
 public class PlayingCard {
     private final Suit suit;
