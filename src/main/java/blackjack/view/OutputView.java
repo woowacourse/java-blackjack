@@ -1,19 +1,16 @@
 package blackjack.view;
 
-import static blackjack.domain.Result.*;
-import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.*;
 
-import blackjack.domain.BlackJackGame;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Gamer;
 import blackjack.domain.Player;
 import blackjack.domain.Result;
-
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class OutputView {
 
@@ -26,7 +23,7 @@ public class OutputView {
 	private static final String PRINT_DEALER_NOT_RECEIVE_CARD = "\n딜러는 17이상이라 한장의 카드를 더 받지 못했습니다.\n";
 	private static final String PRINT_FINAL_CARD_RESULT = "%s카드: %s - 결과: %d\n";
 	private static final String PRINT_BLANK = " ";
-	public static final String FINAL_RESULT_MESSAGE = "\n## 최종 승패";
+	private static final String FINAL_RESULT_MESSAGE = "\n## 최종 승패";
 
 	public static void printErrorMessage(final String message) {
 		System.out.println(message);
