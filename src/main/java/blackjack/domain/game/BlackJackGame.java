@@ -26,7 +26,7 @@ public class BlackJackGame {
     }
 
     public static BlackJackGame init(final List<String> playerNames) {
-        final CardDeck cardDeck = CardDeck.init();
+        final CardDeck cardDeck = CardDeck.generate();
         final Dealer dealer = new Dealer(cardDeck.provideInitCards());
         final List<Player> players = initPlayers(playerNames, cardDeck);
         return new BlackJackGame(cardDeck, dealer, new Players(players));
@@ -38,7 +38,7 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    public boolean isPlayersTurnEnd() {
+    public boolean isAllPlayersEnd() {
         return players.isAllTurnEnd();
     }
 
@@ -85,7 +85,7 @@ public class BlackJackGame {
         return resultInfos;
     }
 
-    public OutComeResult calculateAllResults() {
+    public OutComeResult getWinningResult() {
         final Map<String, GameOutcome> playerResults = players.calculateAllResults(dealer);
         return OutComeResult.from(playerResults);
     }

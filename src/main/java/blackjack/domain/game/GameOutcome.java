@@ -26,7 +26,7 @@ public enum GameOutcome {
         return DRAW;
     }
 
-    public static Map<GameOutcome, Integer> createInitMap() {
+    public static Map<GameOutcome, Integer> createResultFormat() {
         return Arrays.stream(values())
                 .collect(Collectors.toMap(value -> value, value -> 0));
     }

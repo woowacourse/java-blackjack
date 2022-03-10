@@ -15,7 +15,7 @@ public class OutComeResult {
     }
 
     public static OutComeResult from(final Map<String, GameOutcome> playerResults) {
-        final Map<GameOutcome, Integer> dealerResult = GameOutcome.createInitMap();
+        final Map<GameOutcome, Integer> dealerResult = GameOutcome.createResultFormat();
         for (final GameOutcome gameOutcome : playerResults.values()) {
             dealerResult.merge(gameOutcome.reverse(), 1, Integer::sum);
         }

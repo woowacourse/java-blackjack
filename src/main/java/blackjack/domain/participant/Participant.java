@@ -42,7 +42,7 @@ public abstract class Participant {
 
     public int calculateScore() {
         checkTurnOver();
-        return state.cards().calculateScore();
+        return state.cards().getScore();
     }
 
     private void checkTurnOver() {

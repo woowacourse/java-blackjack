@@ -21,11 +21,11 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canDraw() {
-        return state.cards().calculateScore() < DEALER_LIMIT_SCORE;
+        return state.cards().getScore() < DEALER_LIMIT_SCORE;
     }
 
     public boolean isBust() {
-        return state.cards().calculateScore() > BLACK_JACK_NUMBER;
+        return state.cards().getScore() > BLACK_JACK_NUMBER;
     }
 
     public List<Card> getCards() {

@@ -17,7 +17,7 @@ public class Application {
         runDealerTurn(blackJackGame);
 
         OutputView.printResultPlayerInfos(blackJackGame.getPlayerResultInfos());
-        OutputView.printAllOutcomeResult(blackJackGame.calculateAllResults());
+        OutputView.printAllOutcomeResult(blackJackGame.getWinningResult());
     }
 
     private static void runDealerTurn(final BlackJackGame blackJackGame) {
@@ -29,7 +29,7 @@ public class Application {
     }
 
     private static void runPlayerTurn(final BlackJackGame blackJackGame) {
-        while (!blackJackGame.isPlayersTurnEnd()) {
+        while (!blackJackGame.isAllPlayersEnd()) {
             final String command = InputView.inputDrawCommand(blackJackGame.getCurrentTurnPlayerInfo());
             final PlayerDto currentPlayerDto = blackJackGame.drawCurrentPlayer(command);
             OutputView.printPlayerCardInfo(currentPlayerDto);

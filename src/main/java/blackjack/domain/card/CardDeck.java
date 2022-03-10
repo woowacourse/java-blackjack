@@ -16,7 +16,7 @@ public class CardDeck {
         this.cards = cards;
     }
 
-    public static CardDeck init() {
+    public static CardDeck generate() {
         List<Card> cards = Card.cards();
         Collections.shuffle(cards);
         return new CardDeck(new ArrayDeque<>(cards));

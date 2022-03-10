@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class Card {
 
-    private static final List<Card> BASIC_CARDS = createCards();
+    private static final List<Card> BASIC_CARDS = createBasicCards();
 
     private final CardPattern pattern;
     private final CardNumber number;
@@ -27,8 +27,8 @@ public class Card {
         return card.pattern == pattern && card.number == number;
     }
 
-    private static List<Card> createCards() {
-        final List<CardPattern> patterns = CardPattern.cardPatterns();
+    private static List<Card> createBasicCards() {
+        final List<CardPattern> patterns = CardPattern.allPatterns();
         return patterns.stream()
                 .map(Card::createPatternCards)
                 .flatMap(List::stream)
@@ -36,7 +36,7 @@ public class Card {
     }
 
     private static List<Card> createPatternCards(final CardPattern pattern) {
-        return CardNumber.cardNumbers().stream()
+        return CardNumber.allNumbers().stream()
                 .map(number -> new Card(pattern, number))
                 .collect(Collectors.toList());
     }

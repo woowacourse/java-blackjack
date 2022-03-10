@@ -31,12 +31,12 @@ public enum CardNumber {
         this.printValue = printValue;
     }
 
-    public static List<CardNumber> cardNumbers() {
+    public static List<CardNumber> allNumbers() {
         return Arrays.asList(values());
     }
 
     public static int calculateScore(final List<CardNumber> numbers) {
-        final int bonusMaxScore = calculateAceCount(numbers) * 10;
+        final int bonusMaxScore = countAce(numbers) * 10;
         final int defaultScore = sumDefaultScore(numbers);
         final int startScore = defaultScore + bonusMaxScore;
 
@@ -44,14 +44,14 @@ public enum CardNumber {
     }
 
     private static int calculateScore(final List<CardNumber> numbers, final int defaultScore, final int startScore) {
-        return IntStream.range(0, calculateAceCount(numbers))
+        return IntStream.range(0, countAce(numbers))
                 .map(aceCount -> decreaseByAceCount(startScore, aceCount))
                 .filter(CardNumber::isLowerThanBlackJack)
                 .findFirst()
                 .orElse(defaultScore);
     }
 
-    private static int calculateAceCount(final List<CardNumber> numbers) {
+    private static int countAce(final List<CardNumber> numbers) {
         return (int) numbers.stream()
                 .filter(number -> number == A)
                 .count();

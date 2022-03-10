@@ -11,7 +11,7 @@ class CardPatternTest {
     @Test
     @DisplayName("카드 문양을 4개 반환할 수 있다.")
     void patterns() {
-        final List<CardPattern> cardPatterns = CardPattern.cardPatterns();
+        final List<CardPattern> cardPatterns = CardPattern.allPatterns();
         final int distinctCount = (int) cardPatterns.stream()
                 .distinct()
                 .count();

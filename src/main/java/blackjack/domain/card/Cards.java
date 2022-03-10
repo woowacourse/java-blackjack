@@ -18,19 +18,19 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
-    public int calculateScore() {
+    public int getScore() {
         final List<CardNumber> cardNumbers = cards.stream()
                 .map(Card::getNumber)
                 .collect(Collectors.toUnmodifiableList());
         return CardNumber.calculateScore(cardNumbers);
     }
 
-    public void addCard(final Card card) {
+    public void add(final Card card) {
         cards.add(card);
     }
 
     public boolean isBust() {
-        return calculateScore() > BLACK_JACK_NUMBER;
+        return getScore() > BLACK_JACK_NUMBER;
     }
 
     public List<Card> values() {
@@ -42,10 +42,10 @@ public class Cards {
     }
 
     public GameOutcome isHigherThan(final Cards another) {
-        return GameOutcome.calculateOutcome(this.calculateScore(), another.calculateScore());
+        return GameOutcome.calculateOutcome(this.getScore(), another.getScore());
     }
 
     public boolean isBlackJack() {
-        return cards.size() == BLACK_JACK_SIZE && calculateScore() == BLACK_JACK_NUMBER;
+        return cards.size() == BLACK_JACK_SIZE && getScore() == BLACK_JACK_NUMBER;
     }
 }

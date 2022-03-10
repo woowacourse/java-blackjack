@@ -33,7 +33,7 @@ class CardsTest {
     @DisplayName("카드의 합의 반환한다.")
     void calculateScore() {
         final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, TWO), Card.of(SPADE, THREE), Card.of(SPADE, TEN)));
-        assertThat(cards.calculateScore()).isEqualTo(15);
+        assertThat(cards.getScore()).isEqualTo(15);
     }
 
     @ParameterizedTest

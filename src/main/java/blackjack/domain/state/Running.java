@@ -12,7 +12,7 @@ public class Running extends Created {
 
     @Override
     public State draw(final Card card) {
-        cards.addCard(card);
+        cards.add(card);
         if (cards.isBust()) {
             return new Bust(cards);
         }

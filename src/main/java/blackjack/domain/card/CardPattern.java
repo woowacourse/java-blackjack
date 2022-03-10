@@ -17,7 +17,7 @@ public enum CardPattern {
         this.name = name;
     }
 
-    public static List<CardPattern> cardPatterns() {
+    public static List<CardPattern> allPatterns() {
         return Arrays.asList(values());
     }
 
