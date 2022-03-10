@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 public class BlackJackApplication {
 
     public static void main(String[] args) {
-        List<Player> gamers = createGamers();
         Deck deck = Deck.init();
-        BlackJackGame blackJackGame = startBlackJackGame(gamers, deck);
+        BlackJackGame blackJackGame = startGame(deck);
+        OutputView.printOpenCards(blackJackGame.getDealer(), blackJackGame.getGamers());
         for (Player gamer : blackJackGame.getGamers()) {
             progressGamerAdditionalCard(deck, gamer);
         }
@@ -27,49 +27,40 @@ public class BlackJackApplication {
         OutputView.printFinalResultBoard(blackJackGame.calculateResultBoard());
     }
 
-    private static List<Player> createGamers() {
+    private static BlackJackGame startGame(final Deck deck) {
         try {
-            return toGamerList();
+            return initBlackJackGame(deck);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            return createGamers();
+            return startGame(deck);
         }
+    }
+
+    private static BlackJackGame initBlackJackGame(final Deck deck) {
+        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), toGamerList());
+        blackJackGame.giveFirstCards(deck);
+        return blackJackGame;
     }
 
     private static List<Player> toGamerList() {
         List<String> names = InputView.requestPlayerName();
-        checkDuplicateName(names);
         return names.stream()
                 .map(Gamer::new)
                 .collect(Collectors.toList());
     }
 
-    private static void checkDuplicateName(final List<String> names) {
-        Set<String> tempSet = new HashSet<>(names);
-        if (names.size() != tempSet.size()) {
-            throw new IllegalArgumentException("[ERROR] 중복된 이름은 입력할 수 없습니다.");
-        }
-    }
-
-    private static BlackJackGame startBlackJackGame(final List<Player> gamers, final Deck deck) {
-        BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), gamers);
-        blackJackGame.giveFirstCards(deck);
-        OutputView.printOpenCards(blackJackGame.getDealer(), blackJackGame.getGamers());
-        return blackJackGame;
-    }
-
-    private static void progressGamerAdditionalCard(Deck deck, Player gamer) {
+    private static void progressGamerAdditionalCard(final Deck deck, final Player gamer) {
         while (isReceivable(gamer)) {
             gamer.receiveCard(deck.draw());
             OutputView.printGamerCards(gamer);
         }
     }
 
-    private static boolean isReceivable(Player gamer) {
+    private static boolean isReceivable(final Player gamer) {
         return gamer.isReceivable() && isAnswerYes(gamer.showName());
     }
 
-    private static boolean isAnswerYes(String name) {
+    private static boolean isAnswerYes(final String name) {
         try {
             return Answer.YES == Answer.of(InputView.requestAnswer(name));
         } catch (IllegalArgumentException e) {
@@ -78,7 +69,7 @@ public class BlackJackApplication {
         }
     }
 
-    private static void progressDealerAdditionalCard(Deck deck, Player dealer) {
+    private static void progressDealerAdditionalCard(final Deck deck, final Player dealer) {
         boolean receivable = dealer.isReceivable();
         OutputView.printDealerReceive(receivable);
         if (receivable) {

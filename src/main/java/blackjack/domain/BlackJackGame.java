@@ -1,8 +1,10 @@
 package blackjack.domain;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
@@ -11,8 +13,16 @@ public class BlackJackGame {
     private final List<Player> gamers;
 
     public BlackJackGame(final Player dealer, final List<Player> gamers) {
+        checkDuplicateName(gamers);
         this.dealer = dealer;
         this.gamers = gamers;
+    }
+
+    private void checkDuplicateName(final List<Player> gamers) {
+        Set<Player> tempSet = new HashSet<>(gamers);
+        if (gamers.size() != tempSet.size()) {
+            throw new IllegalArgumentException("[ERROR] 중복된 이름은 입력할 수 없습니다.");
+        }
     }
 
     public void giveFirstCards(final Deck deck) {
