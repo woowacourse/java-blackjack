@@ -3,11 +3,13 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Number;
+import java.util.List;
 
 public class Dealer extends Participant {
 
     public static final int MAX_ACE_NUMBER = 11;
     public static final int MAX_RECEIVABLE_SCORE = 17;
+    public static final int BUST_THRESHOLD = 21;
 
     public Dealer(Cards cards) {
         super(cards);
@@ -20,7 +22,9 @@ public class Dealer extends Participant {
 
     @Override
     public int calculateBestScore() {
-        return this.cards.getCards().stream()
+        List<Card> cards = this.cards.getCards();
+
+        int sum = cards.stream()
                 .map(Card::getNumber)
                 .map(number -> {
                     if (number.getScore() == Number.ACE.getScore()) {
@@ -29,5 +33,23 @@ public class Dealer extends Participant {
                     return number.getScore();
                 })
                 .reduce(0, Integer::sum);
+
+        return adjustBustedScore(cards, sum);
+    }
+
+    private int adjustBustedScore(List<Card> cards, int sum) {
+        if (sum > BUST_THRESHOLD) {
+            for (Card card : cards) {
+                sum = getLowest(sum, card);
+            }
+        }
+        return sum;
+    }
+
+    private int getLowest(int sum, Card card) {
+        if (card.isAce()) {
+            sum -= 10;
+        }
+        return sum;
     }
 }
