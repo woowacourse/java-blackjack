@@ -17,4 +17,9 @@ public class SonataTest {
         Sonata sonata = new Sonata(150);
         assertThat(sonata.getDistancePerLiter()).isEqualTo(10);
     }
+
+    @Test
+    void getDefaultCarName() {
+        assertThat(new Sonata(10).getName()).isEqualTo("소나타");
+    }
 }
