@@ -78,7 +78,7 @@ public class PlayerTest {
     void is_received_true() {
         List<Card> cards = new ArrayList<>(List.of(queenSpade, queenSpade));
 
-        player.receiveInitCard(cards);
+        player.receiveInitCards(cards);
 
         assertThat(player.isReceived()).isTrue();
     }
@@ -88,7 +88,7 @@ public class PlayerTest {
     void is_received_false() {
         List<Card> cards = new ArrayList<>(List.of(aceSpade, queenSpade, queenSpade));
 
-        player.receiveInitCard(cards);
+        player.receiveInitCards(cards);
 
         assertThat(player.isReceived()).isFalse();
     }

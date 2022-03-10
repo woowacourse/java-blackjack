@@ -7,9 +7,9 @@ import java.util.List;
 public class Player extends Human {
 
     public static final String EQUALS_DEALER_NAME_MESSAGE = "딜러와 동일한 이름은 사용할 수 없습니다.";
-    public static final String RECEIVED_FLAG_MESSAGE = "y, n 중에서 입력해주세요.";
-    private static final String GIVEN_SYMBOL = "y";
-    private static final String NOT_GIVEN_SYMBOL = "n";
+    public static final String RECEIVING_ANSWER_MESSAGE = "y, n 중에서 입력해주세요.";
+    private static final String RECEIVE_SYMBOL = "y";
+    private static final String NOT_RECEIVE_SYMBOL = "n";
 
     private final String name;
     private final Cards cards = new Cards();
@@ -24,15 +24,15 @@ public class Player extends Human {
         return name;
     }
 
-    public boolean answer(final String receivedFlag) {
-        Validator.validateNullOrEmpty(receivedFlag);
-        if (receivedFlag.equalsIgnoreCase(GIVEN_SYMBOL)) {
+    public boolean answer(final String answer) {
+        Validator.validateNullOrEmpty(answer);
+        if (answer.equalsIgnoreCase(RECEIVE_SYMBOL)) {
             return true;
         }
-        if (receivedFlag.equalsIgnoreCase(NOT_GIVEN_SYMBOL)) {
+        if (answer.equalsIgnoreCase(NOT_RECEIVE_SYMBOL)) {
             return false;
         }
-        throw new IllegalArgumentException(RECEIVED_FLAG_MESSAGE);
+        throw new IllegalArgumentException(RECEIVING_ANSWER_MESSAGE);
     }
 
     private void validateEqualsDealerName(final String name) {
@@ -42,17 +42,17 @@ public class Player extends Human {
     }
 
     @Override
-    public List<String> getCards() {
+    public List<String> showCards() {
         return cards.getAllCards();
     }
 
     @Override
-    public int getTotal() {
+    public int showSumOfCards() {
         return cards.calculateTotal();
     }
 
     @Override
-    public void receiveInitCard(final List<Card> initCards) {
+    public void receiveInitCards(final List<Card> initCards) {
         cards.add(initCards);
     }
 
@@ -62,7 +62,7 @@ public class Player extends Human {
     }
 
     @Override
-    public boolean isBurst() {
+    public boolean isBust() {
         return cards.isOverBlackjack();
     }
 

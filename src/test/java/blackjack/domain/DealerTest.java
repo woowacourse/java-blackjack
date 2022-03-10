@@ -34,7 +34,7 @@ public class DealerTest {
         List<Card> cards = new ArrayList<>(List.of(twoSpade, threeSpade));
 
         Dealer dealer = new Dealer();
-        dealer.receiveInitCard(cards);
+        dealer.receiveInitCards(cards);
 
         final boolean given = dealer.isReceived();
         assertThat(given).isTrue();
@@ -46,7 +46,7 @@ public class DealerTest {
         List<Card> cards = new ArrayList<>(List.of(twoSpade, threeSpade, queenSpade, threeSpade));
 
         Dealer dealer = new Dealer();
-        dealer.receiveInitCard(cards);
+        dealer.receiveInitCards(cards);
 
         final boolean given = dealer.isReceived();
         assertThat(given).isFalse();
@@ -57,10 +57,10 @@ public class DealerTest {
     void compare_true() {
         List<Card> playerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, threeSpade, threeSpade));
-        player.receiveInitCard(playerCards);
-        dealer.receiveInitCard(dealerCards);
+        player.receiveInitCards(playerCards);
+        dealer.receiveInitCards(dealerCards);
 
-        final boolean compare = dealer.compare(player);
+        final boolean compare = dealer.isLowerScore(player);
         assertThat(compare).isTrue();
     }
 
@@ -69,10 +69,10 @@ public class DealerTest {
     void compare_same() {
         List<Card> playerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
-        player.receiveInitCard(playerCards);
-        dealer.receiveInitCard(dealerCards);
+        player.receiveInitCards(playerCards);
+        dealer.receiveInitCards(dealerCards);
 
-        final boolean compare = dealer.compare(player);
+        final boolean compare = dealer.isLowerScore(player);
         assertThat(compare).isTrue();
     }
 
@@ -81,10 +81,10 @@ public class DealerTest {
     void compare_false() {
         List<Card> playerCards = new ArrayList<>(List.of(twoSpade, threeSpade, threeSpade));
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
-        player.receiveInitCard(playerCards);
-        dealer.receiveInitCard(dealerCards);
+        player.receiveInitCards(playerCards);
+        dealer.receiveInitCards(dealerCards);
 
-        final boolean compare = dealer.compare(player);
+        final boolean compare = dealer.isLowerScore(player);
         assertThat(compare).isFalse();
     }
 
@@ -92,7 +92,7 @@ public class DealerTest {
     @Test
     void isReceived_true() {
         List<Card> dealerCards = new ArrayList<>(List.of(threeSpade, threeSpade, queenSpade));
-        dealer.receiveInitCard(dealerCards);
+        dealer.receiveInitCards(dealerCards);
 
         final boolean received = dealer.isReceived();
         assertThat(received).isTrue();
@@ -102,7 +102,7 @@ public class DealerTest {
     @Test
     void isReceived_false() {
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade, threeSpade, queenSpade));
-        dealer.receiveInitCard(dealerCards);
+        dealer.receiveInitCards(dealerCards);
 
         final boolean received = dealer.isReceived();
         assertThat(received).isFalse();

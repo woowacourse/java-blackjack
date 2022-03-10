@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CardMachine {
 
-    private final int INIT_CARD_COUNT = 2;
+    private static final int INIT_CARD_COUNT = 2;
 
     private final Cards cards = new Cards();
 
@@ -13,7 +13,7 @@ public class CardMachine {
         cards.generate();
     }
 
-    public List<Card> giveInitCard() {
+    public List<Card> pickInitCards() {
         List<Card> givenCards = new ArrayList<>();
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
             givenCards.add(cards.giveCard());
@@ -21,7 +21,7 @@ public class CardMachine {
         return givenCards;
     }
 
-    public Card giveCard() {
+    public Card pickCard() {
         return cards.giveCard();
     }
 }

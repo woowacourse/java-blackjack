@@ -8,15 +8,15 @@ public class Winner {
     private final List<Player> winners = new ArrayList<>();
 
     public void compare(final Dealer dealer, final Player player) {
-        if (player.isBurst()) {
+        if (player.isBust()) {
             return;
         }
-        if (dealer.isBurst() || !(dealer.compare(player))) {
+        if (dealer.isBust() || dealer.isLowerScore(player)) {
             winners.add(player);
         }
     }
 
-    public int winPlayersCount() {
+    public int numberOfWinners() {
         return winners.size();
     }
 

@@ -35,7 +35,7 @@ public class Players {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public int getPlayerCount() {
+    public int numberOfPlayers() {
         return players.size();
     }
 

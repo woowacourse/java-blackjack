@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
-    private final int BLACKJACK = 21;
+    private static final int BLACKJACK = 21;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -35,7 +35,7 @@ public class Cards {
     public int calculateTotal() {
         List<CardNumber> cardNumbers = cards.stream()
                 .map(Card::getCardNumber)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
         return CardNumber.getTotal(cardNumbers);
     }
 
@@ -47,13 +47,13 @@ public class Cards {
         return calculateTotal() < BLACKJACK;
     }
 
-    public List<String> getDealerInitCard() {
+    public List<String> getPartOfDealerCard() {
         return List.of(cards.get(0).getName());
     }
 
     public List<String> getAllCards() {
         return cards.stream()
                 .map(Card::getName)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
     }
 }

@@ -13,7 +13,7 @@ public class InputView {
         return userInput();
     }
 
-    public static String inputTakeCardAnswer() {
+    public static String inputReceiveMoreCardAnswer() {
         return userInput();
     }
 

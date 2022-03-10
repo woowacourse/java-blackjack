@@ -24,47 +24,48 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void printReceiveInitCardMessage(final String dealerName, final List<String> playerNames) {
+    public static void printReceiveInitCards(final String dealerName, final List<String> playerNames) {
         printNewLine();
         System.out.printf("%s와 %s에게 2장씩 나누었습니다.", dealerName, String.join(DELIMITER, playerNames));
         printNewLine();
     }
 
-    public static void printCard(final String name, final List<String> cards) {
+    public static void printCards(final String name, final List<String> cards) {
         System.out.printf("%s카드: %s", name, String.join(DELIMITER, cards));
+        printNewLine();
     }
 
-    public static void printTakeCardInstruction(final String name) {
+    public static void printReceiveMoreCard(final String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
         printNewLine();
     }
 
-    public static void printTakeDealerCardsMessage(final String name, final int maximum) {
-        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.", name, maximum);
+    public static void printReceiveDealerMoreCard(final String name, final int receivedMaximum) {
+        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.", name, receivedMaximum);
         printNewLine();
     }
 
-    public static void printResult(final String name, final List<String> cards, final int total) {
-        printCard(name, cards);
+    public static void printScore(final String name, final List<String> cards, final int total) {
+        printCards(name, cards);
         System.out.printf(" - 결과: %d", total);
     }
 
-    public static void printWinnerTitle() {
+    public static void printResultTitle() {
         System.out.println("## 최종 승패");
     }
 
-    public static void printDealerScore(final String name, final int winPlayersCount, final int losePlayersCount) {
-        System.out.printf("%s: %d%s %d%s", name, winPlayersCount, WIN, losePlayersCount, LOSE);
+    public static void printDealerResult(final String name, final int countOfWinning, final int countOfLosing) {
+        System.out.printf("%s: %d%s %d%s", name, countOfWinning, WIN, countOfLosing, LOSE);
         printNewLine();
     }
 
-    public static void printPlayerScore(final String name, final boolean result) {
-        System.out.printf("%s: %s", name, getResult(result));
+    public static void printPlayerResult(final String name, final boolean isWinning) {
+        System.out.printf("%s: %s", name, getResult(isWinning));
         printNewLine();
     }
 
-    private static String getResult(final boolean result) {
-        if (result) {
+    private static String getResult(final boolean isWinning) {
+        if (isWinning) {
             return WIN;
         }
         return LOSE;

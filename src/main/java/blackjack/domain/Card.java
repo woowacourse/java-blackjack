@@ -18,7 +18,13 @@ public class Card {
         }
     }
 
-    public Card(final CardNumber cardNumber, final CardShape cardShape) {
+    private static void insertCardCache(final CardNumber cardNumber) {
+        for (CardShape cardShape : CardShape.values()) {
+            TOTAL_CARD_CACHE.add(new Card(cardNumber, cardShape));
+        }
+    }
+
+    private Card(final CardNumber cardNumber, final CardShape cardShape) {
         this.cardNumber = cardNumber;
         this.cardShape = cardShape;
     }
@@ -29,12 +35,6 @@ public class Card {
                 .filter(card -> card.equals(newCard))
                 .findAny()
                 .orElse(newCard);
-    }
-
-    private static void insertCardCache(final CardNumber cardNumber) {
-        for (CardShape cardShape : CardShape.values()) {
-            TOTAL_CARD_CACHE.add(new Card(cardNumber, cardShape));
-        }
     }
 
     public static List<Card> getTotalCard() {

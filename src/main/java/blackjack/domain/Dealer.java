@@ -13,26 +13,26 @@ public class Dealer extends Human {
         return name;
     }
 
-    public boolean compare(final Player player) {
-        return getTotal() >= player.getTotal();
+    public boolean isLowerScore(final Player player) {
+        return showSumOfCards() < player.showSumOfCards();
     }
 
-    public List<String> getInitCard() {
-        return cards.getDealerInitCard();
+    public List<String> showPartOfCards() {
+        return cards.getPartOfDealerCard();
     }
 
     @Override
-    public List<String> getCards() {
+    public List<String> showCards() {
         return cards.getAllCards();
     }
 
     @Override
-    public int getTotal() {
+    public int showSumOfCards() {
         return cards.calculateTotal();
     }
 
     @Override
-    public void receiveInitCard(final List<Card> initCards) {
+    public void receiveInitCards(final List<Card> initCards) {
         cards.add(initCards);
     }
 
@@ -42,7 +42,7 @@ public class Dealer extends Human {
     }
 
     @Override
-    public boolean isBurst() {
+    public boolean isBust() {
         return cards.isOverBlackjack();
     }
 

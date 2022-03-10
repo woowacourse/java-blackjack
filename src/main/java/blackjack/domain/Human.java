@@ -4,15 +4,15 @@ import java.util.List;
 
 public abstract class Human {
 
-    abstract List<String> getCards();
+    abstract List<String> showCards();
 
-    abstract int getTotal();
+    abstract int showSumOfCards();
 
-    abstract void receiveInitCard(List<Card> initCards);
+    abstract void receiveInitCards(List<Card> initCards);
 
     abstract void receiveCard(Card card);
 
-    abstract boolean isBurst();
+    abstract boolean isBust();
 
     abstract boolean isReceived();
 }
