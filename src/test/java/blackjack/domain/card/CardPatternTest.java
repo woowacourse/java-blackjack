@@ -17,5 +17,4 @@ class CardPatternTest {
                 .count();
         assertThat(distinctCount).isEqualTo(4);
     }
-
 }
