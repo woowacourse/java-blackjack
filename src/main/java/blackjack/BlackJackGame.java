@@ -9,48 +9,56 @@ import java.util.List;
 
 public class BlackJackGame {
 
-    private BlackJackGame() {
-        throw new AssertionError();
+    private final BlackJackBoard blackJackBoard;
+
+    public BlackJackGame() {
+        this.blackJackBoard = createBlackJackBoard();
     }
 
-    public static BlackJackBoard createBlackJackBoard() {
+    public void run() {
+        printFirstDrawCard();
+        runAllPlayerTurn();
+        printAllResults();
+    }
+
+    private BlackJackBoard createBlackJackBoard() {
         final List<String> playerNames = InputView.inputPlayerNames();
         return BlackJackBoard.createGame(playerNames);
     }
 
-    public static void printFirstDrawCard(final BlackJackBoard blackJackBoard) {
+    private void printFirstDrawCard() {
         OutputView.showPlayersFirstCards(blackJackBoard.getDealerFirstCard(), blackJackBoard.getPlayersFirstCards());
     }
 
-    public static void runAllPlayerTurn(final BlackJackBoard blackJackBoard) {
-        runPlayerTurn(blackJackBoard);
-        runDealerTurn(blackJackBoard);
+    private void runAllPlayerTurn() {
+        runPlayerTurn();
+        runDealerTurn();
     }
 
-    private static void runPlayerTurn(final BlackJackBoard blackJackBoard) {
+    private void runPlayerTurn() {
         if (blackJackBoard.isPlayersTurnEnd()) {
             return;
         }
-        final DrawCommand drawCommand = inputDrawCommand(blackJackBoard);
+        final DrawCommand drawCommand = inputDrawCommand();
         final PlayerCards currentPlayerCards = blackJackBoard.drawCurrentPlayer(drawCommand);
         OutputView.printPlayerCards(currentPlayerCards);
-        runPlayerTurn(blackJackBoard);
+        runPlayerTurn();
     }
 
-    private static DrawCommand inputDrawCommand(final BlackJackBoard blackJackBoard) {
+    private DrawCommand inputDrawCommand() {
         return DrawCommand.from(InputView.inputDrawCommand(blackJackBoard.getCurrentTurnPlayerName()));
     }
 
-    private static void runDealerTurn(final BlackJackBoard blackJackBoard) {
+    private void runDealerTurn() {
         if (blackJackBoard.isDealerTurnEnd()) {
             return;
         }
         blackJackBoard.drawDealer();
         OutputView.printDealerDraw();
-        runDealerTurn(blackJackBoard);
+        runDealerTurn();
     }
 
-    public static void printAllResults(final BlackJackBoard blackJackBoard) {
+    private void printAllResults() {
         OutputView.printPlayerScoreResults(blackJackBoard.getPlayerScoreResults());
         OutputView.printAllOutcomeResult(blackJackBoard.calculateAllResults());
     }
