@@ -7,8 +7,10 @@ import java.util.stream.Collectors;
 public class HoldCards {
     private final List<Card> cards;
 
-    public HoldCards() {
+    public HoldCards(Card card1, Card card2) {
         this.cards = new ArrayList<>();
+        this.cards.add(card1);
+        this.cards.add(card2);
     }
 
     public void addCard(Card card) {

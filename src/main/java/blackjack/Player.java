@@ -4,11 +4,9 @@ public class Player {
     private final String name;
     private final HoldCards holdCards;
 
-    public Player(String name, Card card1, Card card2) {
+    public Player(String name, HoldCards holdCards) {
         this.name = name;
-        holdCards = new HoldCards();
-        holdCards.addCard(card1);
-        holdCards.addCard(card2);
+        this.holdCards = holdCards;
     }
 
     public int countCards() {
