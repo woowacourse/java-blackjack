@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CardFactory {
 
-    private static List<Card> CARD_CACHE = new ArrayList<>();
+    static List<Card> CARD_CACHE = new ArrayList<>();
 
     static {
         for (Shape shape : Shape.values()) {

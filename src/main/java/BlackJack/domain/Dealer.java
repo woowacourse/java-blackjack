@@ -7,6 +7,6 @@ public class Dealer extends User{
 
     @Override
     void addCard() {
-               cards.add(CardFactory.drawOneCard());
+        cards.add(CardFactory.drawOneCard());
     }
 }
