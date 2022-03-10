@@ -16,7 +16,7 @@ public class Cards {
         cards = new ArrayList<>(initialCards);
     }
 
-    public int calculateResult() {
+    public int calculateScore() {
         int aceAmount = countAceAmount();
         if (aceAmount != 0) {
             return judgeAdvantageResult(aceAmount);

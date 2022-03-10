@@ -23,7 +23,7 @@ class CardsTest {
         Cards cards = new Cards(List.of(new Card(Symbol.SPADE, Denomination.ACE),
             new Card(Symbol.CLOVER, Denomination.ACE), new Card(Symbol.DIAMOND, Denomination.ACE)));
 
-        assertThat(cards.calculateResult()).isEqualTo(13);
+        assertThat(cards.calculateScore()).isEqualTo(13);
     }
 
     @Test
@@ -33,6 +33,6 @@ class CardsTest {
             new Card(Symbol.CLOVER, Denomination.ACE), new Card(Symbol.DIAMOND, Denomination.ACE),
             new Card(Symbol.HEART, Denomination.ACE)));
 
-        assertThat(cards.calculateResult()).isEqualTo(18);
+        assertThat(cards.calculateScore()).isEqualTo(18);
     }
 }
