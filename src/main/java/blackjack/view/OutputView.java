@@ -38,4 +38,7 @@ public class OutputView {
     private static String card(Card card) {
         return card.rank().symbol() + card.suit().symbol();
     }
+
+    public static void printDealerTakeCardMessage() {
+    }
 }

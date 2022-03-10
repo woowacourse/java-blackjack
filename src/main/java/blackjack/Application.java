@@ -23,29 +23,32 @@ public class Application {
                 takeCard(gamer, cardGenerator);
             }
 
+            takeDealerCard(dealer, cardGenerator);
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
+    }
 
+    private static void takeDealerCard(Dealer dealer, CardGenerator cardGenerator) {
+        while (dealer.isHittable()) {
+            dealer.take(cardGenerator.generate());
+            OutputView.printDealerTakeCardMessage();
+        }
 
     }
 
     private static void takeCard(Player gamer, CardGenerator cardGenerator) {
-        while (true) {
-            if (gamer.isHittable()) {
-                String option = InputView.chooseOptions(gamer.name());
-
-                if (option.equals("y")) {
-                    gamer.take(cardGenerator.generate());
-                    OutputView.printCard(gamer);
-                } else {
-                    return;
-                }
-            } else {
-                return;
-            }
+        while (gamer.isHittable() && isKeepTakeCard(gamer)) {
+            gamer.take(cardGenerator.generate());
+            OutputView.printCard(gamer);
         }
+    }
+
+    private static boolean isKeepTakeCard(Player gamer) {
+        String option = InputView.chooseOptions(gamer.name());
+        return option.equals("y");
     }
 
     private static List<String> names() {
