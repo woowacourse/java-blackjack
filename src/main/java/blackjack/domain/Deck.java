@@ -10,9 +10,10 @@ import java.util.stream.Collectors;
 public class Deck {
 
     static final String EMPTY_CARD_EXCEPTION_MESSAGE = "[ERROR] 52장의 카드가 모두 소진되었습니다.";
+
     private final LinkedList<Card> cards;
 
-    private Deck(List<Card> cards) {
+    public Deck(List<Card> cards) {
         this.cards = new LinkedList<>(cards);
     }
 

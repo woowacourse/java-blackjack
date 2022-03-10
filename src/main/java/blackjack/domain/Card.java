@@ -27,6 +27,14 @@ public class Card {
         return denomination.getValue();
     }
 
+    public String getDenomination() {
+        return denomination.getName();
+    }
+
+    public String getSuit() {
+        return suit.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

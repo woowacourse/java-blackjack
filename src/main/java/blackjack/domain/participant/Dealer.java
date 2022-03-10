@@ -23,6 +23,11 @@ public class Dealer {
         return deck.draw();
     }
 
+    public void drawBaseCardHand() {
+        selfDraw();
+        selfDraw();
+    }
+
     public void selfDraw() {
         cardHand.add(drawCard());
     }
@@ -44,5 +49,17 @@ public class Dealer {
 
     public void giveCard(Player player) {
         player.receiveCard(drawCard());
+    }
+
+    public String getName() {
+        return name.getName();
+    }
+
+    public List<Card> getCards() {
+        return cardHand.getCards();
+    }
+
+    public Hand getCardHand() {
+        return cardHand;
     }
 }
