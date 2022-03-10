@@ -32,10 +32,15 @@ public class OutputView {
     private static void printGamerCardsBody(List<GamerCardsDto> gamersCardsDto) {
         StringBuilder stringBuilder = new StringBuilder();
         for (GamerCardsDto gamerCardsDto : gamersCardsDto) {
-            stringBuilder.append(gamerCardsDto.getName()).append(": ");
-            stringBuilder.append(String.join(", ", getGamerCards(gamerCardsDto)))
-                        .append(System.lineSeparator());
+            printGamerCard(gamerCardsDto);
         }
+        System.out.println(stringBuilder);
+    }
+
+    public static void printGamerCard(GamerCardsDto gamerCardsDto) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(gamerCardsDto.getName()).append(": ");
+        stringBuilder.append(String.join(", ", getGamerCards(gamerCardsDto)));
         System.out.println(stringBuilder);
     }
 

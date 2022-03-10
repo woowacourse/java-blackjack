@@ -26,7 +26,7 @@ public class BlackJack {
         return dealer;
     }
 
-    public void addCard(Player player) {
+    public void addCardTo(Player player) {
         player.addCard(cardPack.pickOne());
     }
 

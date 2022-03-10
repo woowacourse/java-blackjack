@@ -62,6 +62,10 @@ public class Gamer {
         return cardGroup.isBust();
     }
 
+    public boolean isAddable() {
+        return cardGroup.isAddable();
+    }
+
     public CardGroup getCardGroup() {
         return cardGroup;
     }

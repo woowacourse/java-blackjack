@@ -13,6 +13,10 @@ public class CardGroup {
         return getSum() > BLACKJACK_NUMBER;
     }
 
+    public boolean isAddable() {
+        return getSum() < BLACKJACK_NUMBER;
+    }
+
     public int getSum() {
         return cards.stream()
                 .map(Card::getCardNumber)

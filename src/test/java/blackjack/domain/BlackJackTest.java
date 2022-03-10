@@ -35,7 +35,7 @@ class BlackJackTest {
         PlayerGroup playerGroup = new PlayerGroup(List.of(pepper));
         BlackJack blackJack = new BlackJack(playerGroup);
         int pepperCardsSize = pepper.getCardsSize();
-        blackJack.addCard(pepper);
+        blackJack.addCardTo(pepper);
 
         assertThat(pepper.getCardsSize()).isEqualTo(pepperCardsSize + 1);
     }
