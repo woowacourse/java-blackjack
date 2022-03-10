@@ -5,8 +5,8 @@ import java.util.Arrays;
 public enum Record {
 
     WIN("승", "패"),
-    LOSS("패", "승"),
-    PUSH("무", "무");
+    PUSH("무", "무"),
+    LOSS("패", "승");
 
     private final String name;
     private final String opposite;
