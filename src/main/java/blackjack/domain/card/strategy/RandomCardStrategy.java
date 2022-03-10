@@ -1,8 +1,8 @@
-package blackjack.domain.strategy;
+package blackjack.domain.card.strategy;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardNumber;
-import blackjack.domain.CardPattern;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardPattern;
 
 import java.util.*;
 import java.util.stream.Collectors;
