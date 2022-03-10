@@ -31,8 +31,7 @@ public class Application {
 
     private static Players generatePlayers(Deck deck) {
         try {
-            String[] names = InputView.inputName();
-            return new Players(Arrays.stream(names)
+            return new Players(Arrays.stream(InputView.inputName())
                     .map(String::trim)
                     .map(name -> new Player(name, Cards.of(deck.initialDraw())))
                     .collect(Collectors.toList()));

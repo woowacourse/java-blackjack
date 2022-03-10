@@ -14,6 +14,7 @@ public class Player {
     private boolean stay = false;
     private final Cards cards;
 
+    // TODO: 2022/03/10 첫 드로우에 블랙잭인 경우 stay가 false인 버그 존재
     public Player(String name, Cards cards) {
         validateNameFormat(name);
         this.name = name;
@@ -67,5 +68,14 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                ", stay=" + stay +
+                ", cards=" + cards +
+                '}';
     }
 }

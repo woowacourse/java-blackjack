@@ -27,4 +27,12 @@ public class Card {
     public String getSymbolName() {
         return symbol.getName();
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "symbol=" + symbol +
+                ", denomination=" + denomination +
+                '}';
+    }
 }
