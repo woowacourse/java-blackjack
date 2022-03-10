@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import static blackjack.domain.participant.Participant.INITIAL_CARD_HAND;
+
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -14,19 +16,33 @@ public class Controller {
         Dealer dealer = new Dealer();
         Players players = Players.of(InputView.requestPlayerNames());
 
-        dealer.receive(cardDeck.distribute(2));
+        dealer.receive(cardDeck.distribute(INITIAL_CARD_HAND));
         players.receive(cardDeck);
 
-        OutputView.printCardHandStatus(dealer, players);
+        OutputView.printInitCardHandStatus(dealer, players);
 
-        playBlackJack(cardDeck, players);
+        playBlackJack(cardDeck, dealer, players);
+
     }
 
-    private void playBlackJack(CardDeck cardDeck, Players players) {
+    private void playBlackJack(CardDeck cardDeck, Dealer dealer, Players players) {
+        playPlayersTurn(cardDeck, players);
+        playDealerTurn(cardDeck, dealer);
+    }
+
+    private void playPlayersTurn(CardDeck cardDeck, Players players) {
         for (Player player : players.getPlayers()) {
             while (isPlayable(player)) {
                 player.receive(cardDeck.distribute(1));
+                OutputView.printCardHandStatus(player);
             }
+        }
+    }
+
+    private void playDealerTurn(CardDeck cardDeck, Dealer dealer) {
+        while (dealer.isReceivable()) {
+            OutputView.printDealerStatus();
+            dealer.receive(cardDeck.distribute(1));
         }
     }
 

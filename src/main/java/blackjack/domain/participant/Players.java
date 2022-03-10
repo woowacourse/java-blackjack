@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.participant.Participant.INITIAL_CARD_HAND;
+
 import blackjack.domain.card.CardDeck;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +24,7 @@ public class Players {
 
     public void receive(CardDeck cardDeck) {
         for (Player player : players) {
-            player.receive(cardDeck.distribute(2));
+            player.receive(cardDeck.distribute(INITIAL_CARD_HAND));
         }
     }
 
