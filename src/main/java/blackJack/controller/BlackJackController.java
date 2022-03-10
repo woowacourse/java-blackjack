@@ -14,13 +14,15 @@ import blackJack.view.OutputView;
 
 public class BlackJackController {
 
+    private static final int ADDITIONAL_CARD_COUNT = 1;
+
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(getParticipants());
         blackJackGame.firstCardDispensing();
         OutputView.printInitCardResult(blackJackGame.getParticipants());
+
         doPlayerGame(blackJackGame);
         doDealerGame(blackJackGame);
-        OutputView.printDealerReceiveCardCount(blackJackGame.getDealer());
         OutputView.printGameResult(blackJackGame.getParticipants());
         OutputView.printWinOrLoseResult(blackJackGame.getDealer(),
             BlackJackGameResult.ofGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers()));
@@ -48,7 +50,7 @@ public class BlackJackController {
 
     private void doEachPlayerTurn(BlackJackGame blackJackGame, Player player) {
         while (player.hasNextTurn() && getOneMoreCard(player)) {
-            blackJackGame.distributeCard(player, 1);
+            blackJackGame.distributeCard(player, ADDITIONAL_CARD_COUNT);
             OutputView.printNowHoldCardInfo(player);
         }
     }
@@ -66,7 +68,8 @@ public class BlackJackController {
     private void doDealerGame(BlackJackGame blackJackGame) {
         Dealer dealer = blackJackGame.getDealer();
         while (dealer.hasNextTurn()) {
-            blackJackGame.distributeCard(dealer, 1);
+            blackJackGame.distributeCard(dealer, ADDITIONAL_CARD_COUNT);
         }
+        OutputView.printDealerReceiveCardCount(blackJackGame.getDealer());
     }
 }
