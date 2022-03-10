@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.BlackJackDto;
+import blackjack.domain.dto.BlackJackDto;
 import blackjack.domain.Participant;
 
 public class ResultView {
@@ -10,6 +10,7 @@ public class ResultView {
 	private static final String MESSAGE_DEALER_RECEIVE = "딜러는 17이상이라 카드를 더 받지 않았습니다.";
 	private static final String NAME_DELIMITER = ", ";
 	private static final String MESSAGE_HAND_OUT_CARD = "%n딜러와 %s 에게 2장의 카드를 나누었습니다.%n";
+	private static final String MESSAGE_SCORE_OVER_21 = "가진 카드의 합이 21 이상이 되어 더 이상 카드를 받을 수 없습니다.";
 
 	public static void showStartingStatus(BlackJackDto blackJackDto) {
 		String[] playerNames = blackJackDto.getPlayers().stream()
