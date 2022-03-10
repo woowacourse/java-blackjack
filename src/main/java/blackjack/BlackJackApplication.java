@@ -22,6 +22,7 @@ public class BlackJackApplication {
             alertStart(dealer, players);
             proceedPlayersTurn(players, deck);
             proceedDealer(dealer, deck);
+            showResult(dealer, players);
         } catch (NullPointerException | IllegalArgumentException e) {
             OutputView.printFatalErrorMessage(e.getMessage());
         }
@@ -77,5 +78,12 @@ public class BlackJackApplication {
             dealer.hit(deck);
             OutputView.printDealerHitMessage();
         }
+    }
+
+    private static void showResult(Dealer dealer, List<Player> players) {
+        OutputView.printCardResultMessage();
+        OutputView.printParticipantCards(dealer, Rule.INSTANCE.calculateSum(dealer.getCards()));
+        players.forEach(
+                player -> OutputView.printParticipantCards(player, Rule.INSTANCE.calculateSum(player.getCards())));
     }
 }

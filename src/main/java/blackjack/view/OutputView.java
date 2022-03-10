@@ -57,4 +57,9 @@ public class OutputView {
     public static void printDealerHitMessage() {
         System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
     }
+
+    public static void printCardResultMessage() {
+        System.out.println();
+        System.out.println("## 최종 카드");
+    }
 }
