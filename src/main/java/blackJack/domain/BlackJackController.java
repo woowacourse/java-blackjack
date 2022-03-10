@@ -18,6 +18,7 @@ public class BlackJackController {
         doPlayerGame(blackJackGame);
         doDealerGame(blackJackGame);
         OutputView.printDealerReceiveCardCount(blackJackGame.getDealer());
+        OutputView.printGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers());
     }
 
     private BlackJackGame initBlackJackGame() {

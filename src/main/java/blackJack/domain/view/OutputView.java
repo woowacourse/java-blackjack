@@ -18,6 +18,9 @@ public class OutputView {
         "%s 카드: %s".concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_DEALER_RECEIVE_CARD_COUNT =
         NEWLINE.concat("%s는 %d장의 카드를 더 받았습니다.").concat(NEWLINE);
+    private static final String OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT =
+        "%s 카드: %s - 결과: %d".concat(NEWLINE);
+
     private static final int DEFAULT_DEALER_CARD_SIZE = 2;
 
     public static void printInitCardResult(Dealer dealer, List<Player> players) {
@@ -54,5 +57,19 @@ public class OutputView {
         System.out.printf(OUTPUT_MESSAGE_DEALER_RECEIVE_CARD_COUNT,
             dealer.getName(), dealer.getCards().size() - DEFAULT_DEALER_CARD_SIZE);
         System.out.println();
+    }
+
+    public static void printGameResult(Dealer dealer, List<Player> players) {
+        printParticipantGameResult(dealer);
+        for (Player player : players) {
+            printParticipantGameResult(player);
+        }
+    }
+
+    private static void printParticipantGameResult(Participant participant) {
+        String playerCardsInfo = participant.getCards().stream()
+            .map(card -> card.getDenominationName() + card.getSymbolName())
+            .collect(Collectors.joining(JOINING_DELIMITER));
+        System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT, participant.getName(), playerCardsInfo, participant.getScore());
     }
 }
