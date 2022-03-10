@@ -8,19 +8,26 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class MixHandCards {
+public class Cards {
 
     private final List<Card> cards;
 
-    public MixHandCards(Card... cards) {
+    public Cards(Card... cards) {
         this.cards = List.of(cards);
     }
 
-    public Score score() {
+    public Score mixHandScore() {
         return possibleScores().stream()
             .filter(not(Score::isBust))
             .reduce(this::bestScore)
-            .orElse(new Score(hardHand()));
+            .orElse(Score.hardHandScore(cards));
+    }
+
+    public Score softHandScore() {
+        int score = cards.stream()
+                .mapToInt(Card::softRank)
+                .sum();
+        return new Score(score);
     }
 
     private List<Score> possibleScores() {

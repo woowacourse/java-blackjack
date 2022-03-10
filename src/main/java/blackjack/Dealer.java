@@ -2,16 +2,16 @@ package blackjack;
 
 public class Dealer {
 
-    private final MixHandCards cards;
+    private final Cards cards;
     private final SoftHandCards dealerCards;
 
     public Dealer(Card... cards) {
-        this.cards = new MixHandCards(cards);
+        this.cards = new Cards(cards);
         this.dealerCards = new SoftHandCards(cards);
     }
 
-    public Result judge(MixHandCards cards) {
-        Score playerScore = cards.score();
+    public Result judge(Cards cards) {
+        Score playerScore = cards.mixHandScore();
         if (playerScore.isBust()) {
             return Result.WIN;
         }
@@ -22,7 +22,7 @@ public class Dealer {
     }
 
     private Score dealerScore() {
-        return cards.score();
+        return cards.mixHandScore();
     }
 
     private Result compare(Score playerScore) {
@@ -36,6 +36,6 @@ public class Dealer {
     }
 
     public boolean isPossibleTakeCard() {
-        return dealerCards.score().lessThan(new Score(17));
+        return cards.softHandScore().lessThan(new Score(17));
     }
 }

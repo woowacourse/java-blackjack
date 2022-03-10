@@ -1,5 +1,6 @@
 package blackjack;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Score {
@@ -48,5 +49,11 @@ public class Score {
 
     public boolean moreThan(Score other) {
         return getValue() > other.getValue();
+    }
+
+    public static Score hardHandScore(List<Card> cards) {
+        return new Score(cards.stream()
+                .mapToInt(Card::hardRank)
+                .sum());
     }
 }
