@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.CardDto;
 import blackjack.domain.HitResultDto;
+import blackjack.domain.WinDrawLoseDto;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -33,5 +34,10 @@ public class OutputView {
 
     public static void printHitResult(List<HitResultDto> hitResultDtos) {
         hitResultDtos.forEach(hitResultDto -> System.out.println(hitResultDto.getName() + ": " + printCard(hitResultDto.getCards()) + "- 결과: " + hitResultDto.getScore()));
+    }
+
+    public static void printResult(List<WinDrawLoseDto> winDrawLoseDtos) {
+        System.out.println("## 최종 승패");
+        winDrawLoseDtos.forEach(winDrawLoseDto -> System.out.println(winDrawLoseDto.getName() + ": " + winDrawLoseDto.getWinDrawLoseString()));
     }
 }

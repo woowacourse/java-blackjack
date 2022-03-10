@@ -7,6 +7,8 @@ import blackjack.domain.HitOrStand;
 import blackjack.domain.HitResultDto;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.domain.WinDrawLose;
+import blackjack.domain.WinDrawLoseDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -44,10 +46,13 @@ public class Main {
 
         OutputView.printHitResult(hitResultDtos);
 
-        if (dealer.isBust()) {
-            // todo: 딜러 버스트니까 버스트 아닌 참가자는 다 승리처리
-
+        WinDrawLose.judgeResult(dealer, players);
+        List<WinDrawLoseDto> winDrawLoseDtos = new ArrayList<>();
+        winDrawLoseDtos.add(new WinDrawLoseDto(dealer.getName(), dealer.getWinDrawLoseString()));
+        for (Player player : playerList) {
+            winDrawLoseDtos.add(new WinDrawLoseDto(player.getName(), player.getWinDrawLoseString()));
         }
+        OutputView.printResult(winDrawLoseDtos);
     }
 
     private static void playerHit(Player player) {
