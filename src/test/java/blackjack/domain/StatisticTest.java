@@ -16,10 +16,10 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class StatisticTest {
-    private final Player player1 = Player.of(Name.of("pobi"));
-    private final Player player2 = Player.of(Name.of("jason"));
-    private final Player player3 = Player.of(Name.of("bani"));
-    private final Player player4 = Player.of(Name.of("hunch"));
+    private final Player player1 = Player.of("pobi");
+    private final Player player2 = Player.of("jason");
+    private final Player player3 = Player.of("bani");
+    private final Player player4 = Player.of("hunch");
 
     void addCardList(Human human, List<String> cards) {
         for (String card : cards) {

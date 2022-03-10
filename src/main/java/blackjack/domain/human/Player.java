@@ -11,12 +11,12 @@ public class Player extends Human {
     private final Cards cards;
     private Result result;
 
-    private Player(Name name) {
-        this.name = name;
+    private Player(String name) {
+        this.name = Name.of(name);
         this.cards = Cards.of();
     }
 
-    public static Player of(Name name) {
+    public static Player of(String name) {
         return new Player(name);
     }
 

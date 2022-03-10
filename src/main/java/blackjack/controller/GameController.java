@@ -15,7 +15,7 @@ import java.util.List;
 
 public class GameController {
     public void run() {
-        Table table = Table.of(getPlayers(), Dealer.of());
+        Table table = Table.of(getPlayers());
 
         initGame(table);
         startGame(table);
@@ -23,11 +23,11 @@ public class GameController {
     }
 
     private Players getPlayers() {
-        List<Player> playerList = new ArrayList<>();
-        for (String name : InputView.inputPlayerName()) {
-            playerList.add(Player.of(Name.of(name)));
+        List<Player> rawPlayers = new ArrayList<>();
+        for (String name : InputView.inputPlayerNames()) {
+            rawPlayers.add(Player.of(name));
         }
-        return Players.of(playerList);
+        return Players.of(rawPlayers);
     }
 
     private void initGame(final Table table) {

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class TableTest {
-    private final Player player1 = Player.of(Name.of("pobi"));
+    private final Player player1 = Player.of("pobi");
     private final Players players = Players.of(List.of(player1));
     private Table table;
 

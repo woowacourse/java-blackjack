@@ -12,13 +12,13 @@ class PlayerTest {
 
     @Test
     public void 참여자생성() {
-        Player player = Player.of(Name.of("test"));
+        Player player = Player.of("test");
         assertThat(player.getName()).isEqualTo("test");
     }
 
     @Test
     public void 참여자에_카드_추가() {
-        Player player = Player.of(Name.of("test"));
+        Player player = Player.of("test");
 
         Card card5 = Card.of(Denomination.of("5"), Symbol.of("스페이드"));
         Card card6 = Card.of(Denomination.of("6"), Symbol.of("하트"));
