@@ -26,16 +26,17 @@ public class OutputView {
     private OutputView() {}
 
     public static void printOpenCard(Dealer dealer, List<Player> gamers) {
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.", dealer.name(), gamerNames(gamers));
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.name(), gamerNames(gamers));
 
-        System.out.printf("%s: %s", dealer.name(), cards(dealer));
+        printCard(dealer);
 
         for (Player gamer : gamers) {
-            System.out.printf("%s");
-            for (Card card : gamer.openCards()) {
-
-            }
+            System.out.printf("%s카드: %s%n", gamer.name(), cards(gamer));
         }
+    }
+
+    public static void printCard(Player player) {
+        System.out.printf("%s: %s%n", player.name(), cards(player));
     }
 
     private static String gamerNames(List<Player> gamers) {

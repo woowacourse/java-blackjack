@@ -20,20 +20,15 @@ public class InputView {
         return text;
     }
 
-    public static String chooseOptions(String message, String... options) {
-        System.out.println(message);
+    public static String chooseOptions(String name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
         String value = SCANNER.nextLine();
 
-        if (isValidOption(value, options)) {
+        if (value.matches("(y|n)")) {
             return value;
         }
 
-        return chooseOptions(message, options);
-    }
-
-    private static boolean isValidOption(String value, String[] options) {
-        return Stream.of(options)
-            .anyMatch(option -> option.equals(value));
+        return chooseOptions(name);
     }
 
 

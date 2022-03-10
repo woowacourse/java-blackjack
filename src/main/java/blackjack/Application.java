@@ -19,6 +19,14 @@ public class Application {
             List<Player> gamers = createGamer(names, cardGenerator);
             OutputView.printOpenCard(dealer, gamers);
 
+            for (Player gamer : gamers) {
+                String option = InputView.chooseOptions(gamer.name());
+                if (option.equals("y")) {
+                    gamer.take(cardGenerator.generate());
+                    OutputView.printCard(gamer);
+                }
+            }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
