@@ -3,11 +3,6 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import blackjack.domain.Blackjack;
-import blackjack.domain.IntendedNumberGenerator;
-import blackjack.domain.NumberGenerator;
-import blackjack.domain.Person;
-import blackjack.domain.Player;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,7 +26,7 @@ public class BlackjackTest {
     @DisplayName("플레이어, 딜러 카드 두장 분배 테스트")
     @Test
     void distributeInit() {
-        Person dealer = blackjack.getDealer();
+        Player dealer = blackjack.getDealer();
         List<Player> players = blackjack.getPlayers();
 
         Set<Integer> checker = new HashSet<>();
