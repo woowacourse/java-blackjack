@@ -8,12 +8,11 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-// 최적화된 점수를 계산
-public class Cards {
+public class MixHandCards {
 
     private final List<Card> cards;
 
-    public Cards(Card... cards) {
+    public MixHandCards(Card... cards) {
         this.cards = List.of(cards);
     }
 
@@ -38,9 +37,13 @@ public class Cards {
 
     private List<Integer> softHands() {
         return IntStream.rangeClosed(1, numberOfAce())
-            .map(value -> 10 * value + hardHand())
+            .map(value -> diffSoftAndHard(Rank.ACE) * value + hardHand())
             .boxed()
             .collect(toList());
+    }
+
+    private int diffSoftAndHard(Rank rank) {
+        return rank.soft() - rank.hard();
     }
 
     private int numberOfAce() {

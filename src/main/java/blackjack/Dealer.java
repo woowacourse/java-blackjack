@@ -2,15 +2,15 @@ package blackjack;
 
 public class Dealer {
 
-    private final Cards cards;
-    private final DealerCards dealerCards;
+    private final MixHandCards cards;
+    private final SoftHandCards dealerCards;
 
     public Dealer(Card... cards) {
-        this.cards = new Cards(cards);
-        this.dealerCards = new DealerCards(cards);
+        this.cards = new MixHandCards(cards);
+        this.dealerCards = new SoftHandCards(cards);
     }
 
-    public Result judge(Cards cards) {
+    public Result judge(MixHandCards cards) {
         Score playerScore = cards.score();
         if (playerScore.isBust()) {
             return Result.WIN;

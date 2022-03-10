@@ -1,5 +1,7 @@
 package blackjack;
 
+import static blackjack.Rank.ACE;
+
 public class Card {
     private final Rank rank;
     private final Suit suit;
@@ -13,8 +15,12 @@ public class Card {
         return rank.hard();
     }
 
+    public int softRank() {
+        return rank.soft();
+    }
+
     public boolean isAce() {
-        return hardRank() == 1;
+        return rank == ACE;
     }
 
     @Override
