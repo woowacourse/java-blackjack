@@ -24,7 +24,7 @@ public class Players {
         return new Players(players);
     }
 
-    public void initialTurn() {
+    public void runInitialTurn() {
         for (Player player : players) {
             player.hitInitialTurn();
         }
@@ -36,7 +36,7 @@ public class Players {
             .collect(Collectors.toList());
     }
 
-    public List<Result> checkPlayersResult(Dealer dealer) {
+    public List<Result> checkResults(Dealer dealer) {
         return players.stream()
             .map(player -> player.isWin(dealer))
             .collect(Collectors.toList());

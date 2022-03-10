@@ -14,12 +14,12 @@ public class OutputView {
     private static final String PARTICIPANTS_INITIAL_HAND_OUT_MESSAGE =
         "%s와 %s에게 2장의 카드를 나누었습니다." + System.lineSeparator();
     private static final String DELIMITER = ": ";
-    public static final String DEALER_HIT_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    public static final String CARDS_SCORE_MESSAGE = " - 결과: ";
+    private static final String DEALER_HIT_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String CARDS_SCORE_MESSAGE = " - 결과: ";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
+    private static final String DEALER_MESSAGE = "딜러: ";
 
     private static final OutputView OUTPUT_VIEW = new OutputView();
-    public static final String DEALER_MESSAGE = "딜러: ";
 
     private OutputView() {
     }
@@ -52,10 +52,10 @@ public class OutputView {
 
     public void showFinalTurnStatus(Players players, Dealer dealer) {
         System.out.println(makeCardStatus(dealer.getName(), dealer.getCards()) + CARDS_SCORE_MESSAGE
-            + dealer.calculateResult());
+            + dealer.calculateScore());
         for (Player player : players.getPlayers()) {
             System.out.println(makeCardStatus(player.getName(),
-                player.getCards()) + CARDS_SCORE_MESSAGE + player.calculateResult());
+                player.getCards()) + CARDS_SCORE_MESSAGE + player.calculateScore());
         }
     }
 

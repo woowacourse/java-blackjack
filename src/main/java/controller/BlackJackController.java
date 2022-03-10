@@ -33,7 +33,7 @@ public class BlackJackController {
     }
 
     private void initialTurn(Players players, Dealer dealer) {
-        players.initialTurn();
+        players.runInitialTurn();
         dealer.hitInitialTurn();
         outputView.showInitialTurnStatus(players, dealer);
     }
@@ -65,6 +65,6 @@ public class BlackJackController {
 
     private void showResult(Players players, Dealer dealer) {
         outputView.showResult(dealer.checkResult(players), players.toNames(),
-            players.checkPlayersResult(dealer));
+            players.checkResults(dealer));
     }
 }

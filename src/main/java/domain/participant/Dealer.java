@@ -13,7 +13,7 @@ public class Dealer extends Participant {
     }
 
     public List<Integer> checkResult(Players players) {
-        List<Result> playersResult = players.checkPlayersResult(this);
+        List<Result> playersResult = players.checkResults(this);
 
         int winCount = countTargetResult(playersResult, Result.LOSE);
         int loseCount = countTargetResult(playersResult, Result.WIN);

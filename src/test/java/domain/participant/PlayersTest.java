@@ -33,7 +33,7 @@ class PlayersTest {
     void initialTurnTest(){
         Players players = Players.of("runa, kun");
 
-        players.initialTurn();
+        players.runInitialTurn();
         int actual = (int)players.getPlayers().stream()
             .filter(participant -> participant.getCards().size() == 2)
             .count();
