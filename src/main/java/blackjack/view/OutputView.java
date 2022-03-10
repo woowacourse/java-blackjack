@@ -17,6 +17,7 @@ public class OutputView {
     private static final String INITIAL_CARD_DISTRIBUTION_MESSAGE = NEW_LINE + "딜러와 %s에게 2장의 나누었습니다." + NEW_LINE;
     private static final String DEALER_INITIAL_CARD_FORMAT = "딜러: %s" + NEW_LINE;
     private static final String PLAYER_CARDS_FORMAT = "%s카드: %s" + NEW_LINE;
+    private static final String PLAYER_BUST_MESSAGE = "21을 초과하여 패배하였습니다!";
 
     // TODO: DTO 로 변경
     public static void printInitialParticipantsCards(BlackjackGame blackjackGame) {
@@ -35,6 +36,10 @@ public class OutputView {
 
     public static void printPlayerCardsInfo(Player player) {
         System.out.print(getParticipantCardsInfo(player));
+    }
+
+    public static void printPlayerBustInfo() {
+        System.out.println(PLAYER_BUST_MESSAGE);
     }
 
     private static String getParticipantsCardCountInfo(BlackjackGame blackjackGame) {

@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import static blackjack.view.InputView.requestMorePlayerCardInput;
+import static blackjack.view.OutputView.printPlayerBustInfo;
 import static blackjack.view.OutputView.printPlayerCardsInfo;
 
 import blackjack.domain.card.CardDeck;
@@ -21,5 +22,7 @@ public class BlackjackController {
             player.receiveCard(game.popCard());
             printPlayerCardsInfo(player);
         }
+
+        printPlayerBustInfo();
     }
 }
