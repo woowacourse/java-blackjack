@@ -6,8 +6,8 @@ import java.util.function.BiFunction;
 
 public enum Match {
     WIN("승", "패", Match::winPlayerCondition),
-    DRAW("무", "무", Objects::equals),
     LOSE("패", "승", Match::losePlayerCondition),
+    DRAW("무", "무", Objects::equals),
     ;
 
     private final String result;
@@ -54,6 +54,9 @@ public enum Match {
 
     private static boolean losePlayerCondition(Integer playerPoint, Integer dealerPoint) {
         if (playerPoint < dealerPoint && dealerPoint <= 21) {
+            return true;
+        }
+        if (playerPoint > 21) {
             return true;
         }
         return false;
