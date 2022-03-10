@@ -18,6 +18,10 @@ public class Participators {
         }
     }
 
+    public void receiveCardTo(String name, CardDeck cardDeck) {
+        findName(name).receiveCard(cardDeck.drawCard());
+    }
+
     public Participator findName(String name) {
         return participators.stream()
                 .filter(participator -> participator.isSameName(name))

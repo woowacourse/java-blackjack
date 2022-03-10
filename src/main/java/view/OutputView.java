@@ -45,4 +45,8 @@ public class OutputView {
         sb.deleteCharAt(sb.lastIndexOf(DELIMITER));
         return sb.toString();
     }
+
+    public static void printParticipatorHit(ParticipatorDto participatorDto) {
+        printParticipatorNameAndCard(participatorDto);
+    }
 }

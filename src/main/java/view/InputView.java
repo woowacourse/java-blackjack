@@ -21,11 +21,15 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String inputHitResponse(final String name) {
+    public static boolean inputHitResponse(final String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        String response = SCANNER.nextLine();
-        checkYesOrNo(response);
-        return response;
+        String option = SCANNER.nextLine();
+        checkYesOrNo(option);
+        return convertOptionToBoolean(option);
+    }
+
+    private static boolean convertOptionToBoolean(String option) {
+        return option.equalsIgnoreCase("y");
     }
 
     private static void checkYesOrNo(String response) {
