@@ -8,7 +8,7 @@ public class Application {
 
     public static void main(String[] args) {
         BlackjackController blackjackController = new BlackjackController();
-        GameMachine gameMachine = new GameMachine(InputView.inputNames());
+        GameMachine gameMachine = new GameMachine(InputView.responseNames());
         blackjackController.play(gameMachine);
     }
 }

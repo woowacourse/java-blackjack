@@ -47,13 +47,13 @@ public class BlackjackController {
         OutputView.printDealerDenyCard();
     }
 
-    private void competeWithDealer(final Players players) {
-        players.getParticipants().forEach(player ->
-                ((Dealer) players.getDealer()).compete((Participant) player));
-    }
-
     private void announcePlayersFinishInfo(final Players players) {
         OutputView.printPlayerFinalInfo(players.getDealer());
         OutputView.printFinishParticipantInfo(players.getParticipants());
+    }
+
+    private void competeWithDealer(final Players players) {
+        players.getParticipants().forEach(player ->
+                ((Dealer) players.getDealer()).compete((Participant) player));
     }
 }

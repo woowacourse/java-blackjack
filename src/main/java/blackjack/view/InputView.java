@@ -17,7 +17,7 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<String> inputNames() {
+    public static List<String> responseNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String names = scanner.nextLine();
         validateName(names);
@@ -36,13 +36,13 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static String inputSelectMoreCard(final String name) {
+    public static String responseReceiveMoreCard(final String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name, YES, NO);
         return scanner.nextLine();
     }
 
     public static boolean oneMoreCard(final Player participant) {
-        final String input = InputView.inputSelectMoreCard(participant.getName());
+        final String input = InputView.responseReceiveMoreCard(participant.getName());
         if (!input.equals(YES) && !input.equals(NO)) {
             throw new IllegalArgumentException(String.format("[ERROR] %s 또는 %s으로 입력하세요.", YES, NO));
         }
