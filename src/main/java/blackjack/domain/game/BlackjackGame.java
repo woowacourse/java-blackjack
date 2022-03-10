@@ -21,13 +21,13 @@ public class BlackjackGame {
         validatePlayerNames(playerNames);
 
         this.cardDeck = cardDeck;
-        this.dealer = new Dealer(initializeCardBundle());
+        this.dealer = Dealer.of(initializeCardBundle());
         participants.addAll(initializePlayers(playerNames));
     }
 
     private List<Player> initializePlayers(List<String> playerNames) {
         return playerNames.stream()
-                .map(name -> new Player(name, initializeCardBundle()))
+                .map(name -> Player.of(name, initializeCardBundle()))
                 .collect(Collectors.toList());
     }
 

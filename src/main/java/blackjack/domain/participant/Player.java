@@ -10,9 +10,13 @@ public class Player {
     private final String name;
     private final CardBundle cardBundle;
 
-    public Player(String name, CardBundle cardBundle) {
+    private Player(final String name, final CardBundle cardBundle) {
         this.name = name;
         this.cardBundle = cardBundle;
+    }
+
+    public static Player of(final String name, final CardBundle cardBundle) {
+        return new Player(name, cardBundle);
     }
 
     public void receiveCard(Card card) {
@@ -22,6 +26,10 @@ public class Player {
     public boolean canReceive() {
         Score score = cardBundle.getScore();
         return score.toInt() <= MAXIMUM_SCORE;
+    }
+
+    public Score getCurrentScore() {
+        return cardBundle.getScore();
     }
 
     public String getName() {

@@ -17,21 +17,19 @@ import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 
-
     private Dealer dealer;
 
     @BeforeEach
     void setUp() {
         CardBundle cardBundle = CardBundle.of(CLOVER4, CLOVER5);
-        dealer = new Dealer(cardBundle);
+        dealer = Dealer.of(cardBundle);
     }
 
     @DisplayName("Dealer 인스턴스가 생성된다.")
     @Test
-    void constructor() {
+    void of() {
         assertThat(dealer).isNotNull();
     }
-
 
     @DisplayName("Card 를 전달받아 CardBundle 에 추가할 수 있다.")
     @Test

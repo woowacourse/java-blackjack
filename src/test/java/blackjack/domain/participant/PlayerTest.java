@@ -22,12 +22,12 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         CardBundle cardBundle = CardBundle.of(CLOVER4, CLOVER5);
-        player = new Player("hudi", cardBundle);
+        player = Player.of("hudi", cardBundle);
     }
 
     @DisplayName("Player 인스턴스가 생성된다.")
     @Test
-    void constructor() {
+    void of() {
         assertThat(player).isNotNull();
     }
 
