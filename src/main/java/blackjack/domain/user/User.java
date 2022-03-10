@@ -1,13 +1,13 @@
 package blackjack.domain.user;
 
-import blackjack.domain.Rule;
+import java.util.ArrayList;
+import java.util.List;
+
+import blackjack.domain.behavior.CardShowBehavior;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import blackjack.domain.strategy.HitStrategy;
 
 public abstract class User {
 
@@ -30,24 +30,21 @@ public abstract class User {
         cards.add(deck.drawCard());
     }
 
-    public List<Card> showCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public void drawCard(Deck deck) {
         cards.add(deck.drawCard());
+        this.score = Score.addUpPointToScore(cards);
     }
 
-    public abstract List<Card> showInitCards();
+    public List<Card> showCards() {
+        return List.copyOf(cards);
+    }
 
-    public abstract boolean isDrawable();
-
-    public String getName(){
+    public String getName() {
         return name.getName();
     }
 
-    public void calculate(Rule rule) {
-        // score = rule.sumPoint(cards);
+    public Score getScore() {
+        return score;
     }
 
     public boolean isBust() {
@@ -57,4 +54,13 @@ public abstract class User {
     public boolean isWinTo(User other) {
         return this.score.isGreaterThan(other.score);
     }
+
+    public abstract List<Card> showInitCards();
+
+    public void hitOrStay(Deck deck, HitStrategy hitStrategy) {
+        if (hitStrategy.isHit()) {
+            drawCard(deck);
+        }
+    }
+
 }

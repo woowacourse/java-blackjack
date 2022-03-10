@@ -1,11 +1,12 @@
 package blackjack.domain.user;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
-import blackjack.domain.Rule;
-import blackjack.domain.card.Deck;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
+import blackjack.domain.card.Deck;
 
 public class Users {
 
@@ -19,13 +20,12 @@ public class Users {
 
     public static Users from(List<String> inputNames) {
         List<Player> players = inputNames.stream()
-                .map(Player::new)
-                .collect(toList());
-
+            .map(Player::new)
+            .collect(toList());
         return new Users(players);
     }
 
-    public void setInitCardsPerPlayer(Deck deck) {
+    public void drawInitCards(Deck deck) {
         for (Player player : players) {
             player.drawInitCards(deck);
         }
@@ -40,10 +40,9 @@ public class Users {
         return dealer;
     }
 
-    public void calculateAllUser(Rule rule) {
-        for (Player player : players) {
-            player.calculate(rule);
-        }
-        dealer.calculate(rule);
+    public Optional<Player> findPlayersToHit() {
+        return players.stream()
+            .filter(player -> !player.isBust())
+            .findAny();
     }
 }

@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Score;
+
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,7 +54,7 @@ public class PlayerTest {
             player.drawCard(deck);
         }
         //then
-        assertThat(player.isDrawable()).isFalse();
+        assertThat(player.isBust()).isTrue();
     }
 
     @DisplayName("플레어어가 보여주는 초기 카드는 2장이다.")
