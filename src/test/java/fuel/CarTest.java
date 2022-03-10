@@ -96,5 +96,4 @@ public class CarTest {
             assertThat(actual).isEqualTo(expected);
         }
     }
-
 }

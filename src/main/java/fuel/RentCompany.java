@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RentCompany {
+
     private static final String CAR_FUEL_REPORT_FORMAT = "%s : %d리터%n";
 
     private final List<Car> cars;

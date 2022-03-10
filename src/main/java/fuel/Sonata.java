@@ -1,19 +1,8 @@
 package fuel;
 
-public class Sonata implements Car {
-    private final String name = "Sonata";
-    private final int fuelEfficiency = 10;
-    private final int distance;
+public class Sonata extends Car {
 
     public Sonata(int distance) {
-        this.distance = distance;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getFuelNeeded() {
-        return distance / fuelEfficiency;
+        super("Sonata", 10, distance);
     }
 }

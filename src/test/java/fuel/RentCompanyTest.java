@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class RentCompanyTest {
+
     private static final String NEWLINE = System.lineSeparator();
 
     @DisplayName("create 팩토리 메소드로 RentCompany 인스턴스를 생성할 수 있다.")
