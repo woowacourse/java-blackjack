@@ -65,4 +65,8 @@ public class Dealer {
     public Hand getCardHand() {
         return cardHand;
     }
+
+    public int getScore() {
+        return cardHand.getScore();
+    }
 }

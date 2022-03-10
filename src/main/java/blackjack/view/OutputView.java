@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.Card;
 import blackjack.domain.GameScoreBoard;
+import blackjack.domain.Result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.List;
@@ -49,9 +50,11 @@ public class OutputView {
     }
 
     public static void printParticipantScore(Dealer dealer, List<Player> players) {
-        out.printf("%s 카드: %s - 결과: %d" + NEWLINE, dealer.getName(), dealer.getCards().stream()
+        String dealerCardDisplayContents = dealer.getCards().stream()
                 .map(card -> cardDisplayContents(card))
-                .collect(Collectors.joining(", ")), dealer.getCardHand().getScore());
+                .collect(joining(", "));
+
+        out.printf("%s 카드: %s - 결과: %d" + NEWLINE, dealer.getName(), dealerCardDisplayContents, dealer.getScore());
 
         for (Player player : players) {
             out.printf("%s카드: %s - 결과: %d" + NEWLINE, player.getName(), getCards(player),
@@ -70,9 +73,10 @@ public class OutputView {
     }
 
     private static void printDealerGameResult(GameScoreBoard result) {
-        int winCount = result.getDealerWinCount();
-        int loseCount = result.getDealerLoseCount();
-        int drawCount = result.getDrawCount();
+        int winCount = result.getResultCount(Result.WIN);
+        int loseCount = result.getResultCount(Result.LOSE);
+        int drawCount = result.getResultCount(Result.DRAW);
+
         out.printf("딜러: %d승 %d패 %d무" + NEWLINE, winCount, loseCount, drawCount);
     }
 

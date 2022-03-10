@@ -2,7 +2,7 @@ package blackjack.domain;
 
 public enum Denomination {
 
-    ACE("A", 1),
+    ACE("A", 1, 11),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -17,18 +17,18 @@ public enum Denomination {
     KING("K", 10);
 
     private final String name;
-    private final int value;
+    private final int[] scores;
 
-    Denomination(String name, int value) {
+    Denomination(String name, int... scores) {
         this.name = name;
-        this.value = value;
+        this.scores = scores;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getValue() {
-        return value;
+    public int getScore() {
+        return scores[0];
     }
 }

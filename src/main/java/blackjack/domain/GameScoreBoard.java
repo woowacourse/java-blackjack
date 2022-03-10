@@ -26,16 +26,8 @@ public class GameScoreBoard {
         }
     }
 
-    public int getDealerWinCount() {
-        return dealerResultMap.get(Result.WIN);
-    }
-
-    public int getDealerLoseCount() {
-        return dealerResultMap.get(Result.LOSE);
-    }
-
-    public int getDrawCount() {
-        return dealerResultMap.get(Result.DRAW);
+    public int getResultCount(Result result) {
+        return dealerResultMap.get(result);
     }
 
     public Map<String, String> getPlayerResultMap() {

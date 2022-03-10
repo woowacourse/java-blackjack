@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class Hand {
 
@@ -32,7 +31,7 @@ public class Hand {
     }
 
     private int getSumIncludingOnlyAce() {
-        int countOfAce = findCountOfAce();
+        int countOfAce = getNumberOfAce();
         int sumOfNoAce = getSumExcludingAce() + (countOfAce * ACE_UPPER_SCORE);
 
         List<Integer> sums = new ArrayList<>();
@@ -40,12 +39,12 @@ public class Hand {
             sums.add(sumOfNoAce - (aceCount * ACE_SCORE_DIFFERENCE));
         }
 
-        return findLargestSum(sums, summation -> summation <= BLACKJACK_SYMBOL_SCORE);
+        return findLargestSumIn21(sums);
     }
 
-    private int findLargestSum(List<Integer> sums, Predicate<Integer> condition) {
+    private int findLargestSumIn21(List<Integer> sums) {
         return sums.stream()
-                .filter(condition)
+                .filter(summation -> summation <= BLACKJACK_SYMBOL_SCORE)
                 .mapToInt(value -> value)
                 .max()
                 .getAsInt();
@@ -59,10 +58,10 @@ public class Hand {
     }
 
     private boolean hasAce() {
-        return findCountOfAce() > 0;
+        return getNumberOfAce() > 0;
     }
 
-    private int findCountOfAce() {
+    private int getNumberOfAce() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();

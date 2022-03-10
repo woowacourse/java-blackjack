@@ -24,7 +24,7 @@ public class Card {
     }
 
     public int getScore() {
-        return denomination.getValue();
+        return denomination.getScore();
     }
 
     public String getDenomination() {
