@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 public class DealerTest {
 	@Test
 	void dealer_score_higher_than_player_score() {
-	    //given
-	    Dealer dealer = new Dealer();
-	    Player player = new Player("pobi");
-	    //when
-	    dealer.addCard(new Card(Number.NINE, Type.CLOVER));
+		//given
+		Dealer dealer = new Dealer();
+		Player player = new Player("pobi");
+		//when
+		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
 		player.addCard(new Card(Number.FIVE, Type.CLOVER));
-	    //then
-		assertThat(dealer.isHigher(player)).isTrue();
+		//then
+		assertThat(dealer.hasHigherScore(player)).isTrue();
 	}
 
 	@Test
@@ -26,7 +26,7 @@ public class DealerTest {
 		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
 		player.addCard(new Card(Number.TEN, Type.CLOVER));
 		//then
-		assertThat(dealer.isHigher(player)).isFalse();
+		assertThat(dealer.hasHigherScore(player)).isFalse();
 	}
 
 	@Test
@@ -38,6 +38,6 @@ public class DealerTest {
 		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
 		player.addCard(new Card(Number.NINE, Type.HEART));
 		//then
-		assertThat(dealer.isEqaul(player)).isTrue();
+		assertThat(dealer.hasEqualScore(player)).isTrue();
 	}
 }

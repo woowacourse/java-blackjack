@@ -13,6 +13,7 @@ class GamerTest {
 		//when
 		gamer.addCard(deck.distributeCard());
 		//then
+		System.out.println(gamer);
 		assertThat(gamer.getCards().size()).isEqualTo(1);
 	}
 
@@ -20,12 +21,12 @@ class GamerTest {
 	void isBurst() {
 		//given
 		Gamer gamer = new Dealer();
-		Deck deck = new Deck();
 		//when
 		gamer.addCard(new Card(Number.TEN, Type.CLOVER));
 		gamer.addCard(new Card(Number.TEN, Type.HEART));
 		gamer.addCard(new Card(Number.TWO, Type.SPADE));
 		//then
+		System.out.println(gamer.isBurst());
 		assertThat(gamer.isBurst()).isTrue();
 	}
 

@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class Gamer {
 	private final List<Card> cards = new ArrayList<>();
-	protected int score = 0;
+	protected Score score = Score.from(0);
 
 	public void addTwoCards(Deck deck) {
 		addCard(deck.distributeCard());
@@ -15,12 +15,14 @@ public class Gamer {
 
 	public void addCard(Card card) {
 		cards.add(card);
-		this.score += card.getScore();
+		score = this.score.addBy(card.getScore());
+
 		if (hasAce()) {
 			calculateAceSum();
 		}
-		if (this.score > 21) {
-			this.score = -1;
+
+		if (this.score.isBiggerThan(21)) {
+			score = this.score.setToMinusOne();
 		}
 	}
 
@@ -29,11 +31,11 @@ public class Gamer {
 	}
 
 	public int getScore() {
-		return score;
+		return this.score.getScore();
 	}
 
 	public boolean isBurst() {
-		return this.score < 0;
+		return this.score.isSmallerThan(0);
 	}
 
 	public void calculateAceSum() {
@@ -47,7 +49,7 @@ public class Gamer {
 		for (int possibleScore : collect) {
 			res = Math.max(res, possibleScore + notAceScore);
 		}
-		this.score = res;
+		this.score = Score.from(res);
 	}
 
 	private List<Integer> getPossibleAceScores(int aceCnt) {
