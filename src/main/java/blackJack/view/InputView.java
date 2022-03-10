@@ -1,4 +1,4 @@
-package blackJack.domain.view;
+package blackJack.view;
 
 import java.util.Arrays;
 import java.util.List;

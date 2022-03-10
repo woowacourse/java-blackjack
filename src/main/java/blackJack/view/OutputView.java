@@ -1,10 +1,10 @@
-package blackJack.domain.view;
+package blackJack.view;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackJack.domain.WinOrLose;
+import blackJack.domain.result.WinOrLose;
 import blackJack.domain.card.Card;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;

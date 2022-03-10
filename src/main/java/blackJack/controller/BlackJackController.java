@@ -1,14 +1,15 @@
-package blackJack.domain;
+package blackJack.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackJack.domain.BlackJackGame;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Player;
 import blackJack.domain.result.BlackJackGameResult;
 import blackJack.domain.result.YesOrNo;
-import blackJack.domain.view.InputView;
-import blackJack.domain.view.OutputView;
+import blackJack.view.InputView;
+import blackJack.view.OutputView;
 
 public class BlackJackController {
 

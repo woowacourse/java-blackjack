@@ -1,4 +1,4 @@
-package blackJack.domain;
+package blackJack.domain.result;
 
 import static org.assertj.core.api.Assertions.*;
 

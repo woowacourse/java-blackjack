@@ -1,4 +1,6 @@
-package blackJack.domain;
+package blackJack;
+
+import blackJack.controller.BlackJackController;
 
 public class Application {
 

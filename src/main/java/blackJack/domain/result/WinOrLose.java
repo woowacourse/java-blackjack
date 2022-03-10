@@ -1,4 +1,4 @@
-package blackJack.domain;
+package blackJack.domain.result;
 
 public enum WinOrLose {
     WIN("승"), DRAW("무"), LOSE("패");
