@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.Answer;
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Gamer;
 import blackjack.domain.Player;
@@ -27,33 +26,13 @@ public class BlackJackApplication {
 	}
 
 	private static BlackJackGame initBlackJackGame(final Deck deck) {
-		BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), createGamers());
-		blackJackGame.setInitialCards(deck);
-		OutputView.printOpenCards(blackJackGame.getGamers(), blackJackGame.getDealer());
-		return blackJackGame;
-	}
-
-	private static List<Gamer> createGamers() {
 		try {
-			return inputGamers();
-		} catch (IllegalArgumentException exception) {
+			BlackJackGame blackJackGame = BlackJackGame.initializeSetting(InputView.requestPlayerName(), deck);
+			OutputView.printOpenCards(blackJackGame.getGamers(), blackJackGame.getDealer());
+			return blackJackGame;
+		}catch (IllegalArgumentException exception){
 			OutputView.printErrorMessage(exception.getMessage());
-			return createGamers();
-		}
-	}
-
-	private static List<Gamer> inputGamers() {
-		List<String> names = InputView.requestPlayerName();
-		checkDuplicateName(names);
-		return names.stream()
-			.map(Gamer::new)
-			.collect(Collectors.toList());
-	}
-
-	private static void checkDuplicateName(final List<String> names) {
-		Set<String> removalDuplicateNames = new HashSet<>(names);
-		if (names.size() != removalDuplicateNames.size()) {
-			throw new IllegalArgumentException("[ERROR] 중복된 이름은 입력할 수 없습니다.");
+			return initBlackJackGame(deck);
 		}
 	}
 

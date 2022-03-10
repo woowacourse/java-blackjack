@@ -21,7 +21,10 @@ public class Cards {
 
 	public int calculateTotalPoint() {
 		int point = sumDenominationPoint();
+		return calculateAcePoint(point);
+	}
 
+	private int calculateAcePoint(int point) {
 		for (Card card : cards) {
 			point = calculateAceAsSmallerStandard(point, card);
 		}
@@ -36,7 +39,7 @@ public class Cards {
 
 	private int calculateAceAsSmallerStandard(int point, final Card card) {
 		if (card.isAce() && point > Gamer.LIMIT_GAMER_TOTAL_POINT) {
-			point -= Denomination.adjustAce();
+			point -= Denomination.ACE_INTERVAL;
 		}
 		return point;
 	}

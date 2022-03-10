@@ -16,7 +16,7 @@ public enum Denomination {
 	JACK(10, "J"),
 	ACE(11, "A");
 
-	private static final int ACE_INTERVAL = 10;
+	public static final int ACE_INTERVAL = 10;
 
 	private final int point;
 	private final String name;
@@ -24,10 +24,6 @@ public enum Denomination {
 	Denomination(final int point, final String name) {
 		this.point = point;
 		this.name = name;
-	}
-
-	public static int adjustAce() {
-		return ACE_INTERVAL;
 	}
 
 	public int getPoint() {
