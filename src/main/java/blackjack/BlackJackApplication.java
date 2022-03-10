@@ -18,7 +18,7 @@ public class BlackJackApplication {
         Deck deck = Deck.init();
         BlackJackGame blackJackGame = startGame(deck);
         OutputView.printOpenCards(blackJackGame.getDealer(), blackJackGame.getGamers());
-        for (Player gamer : blackJackGame.getGamers()) {
+        for (Gamer gamer : blackJackGame.getGamers()) {
             progressGamerAdditionalCard(deck, gamer);
         }
         progressDealerAdditionalCard(deck, blackJackGame.getDealer());
@@ -48,23 +48,19 @@ public class BlackJackApplication {
                 .collect(toList());
     }
 
-    private static void progressGamerAdditionalCard(final Deck deck, final Player gamer) {
-        while (isReceivable(gamer)) {
+    private static void progressGamerAdditionalCard(final Deck deck, final Gamer gamer) {
+        while (gamer.isHit(createAnswer(gamer.getName())) && gamer.isReceivable()) {
             gamer.receiveCard(deck.draw());
             OutputView.printGamerCards(gamer);
         }
     }
 
-    private static boolean isReceivable(final Player gamer) {
-        return gamer.isReceivable() && isAnswerYes(gamer.getName());
-    }
-
-    private static boolean isAnswerYes(final String name) {
+    private static Answer createAnswer(final String name) {
         try {
-            return Answer.YES == Answer.of(InputView.requestAnswer(name));
+            return Answer.of(InputView.requestAnswer(name));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            return isAnswerYes(name);
+            return createAnswer(name);
         }
     }
 

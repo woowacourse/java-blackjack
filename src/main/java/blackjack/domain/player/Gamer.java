@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.Answer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
@@ -57,6 +58,10 @@ public class Gamer implements Player {
     @Override
     public boolean isReceivable() {
         return calculateResult() <= LIMIT_GAMER_TOTAL_POINT;
+    }
+
+    public boolean isHit(final Answer answer) {
+        return answer == Answer.YES;
     }
 
     @Override

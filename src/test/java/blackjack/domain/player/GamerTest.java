@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import blackjack.domain.Answer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
@@ -73,6 +74,13 @@ public class GamerTest {
         gamer.receiveCard(new Card(Suit.HEART, Denomination.JACK));
 
         assertFalse(gamer.isReceivable());
+    }
+
+    @Test
+    @DisplayName("gamer가 hit한다는 응답을 받는다")
+    void checkGamerAnswerHit() {
+        Gamer gamer = new Gamer("judy");
+        assertTrue(gamer.isHit(Answer.YES));
     }
 
     private Gamer initGamer() {
