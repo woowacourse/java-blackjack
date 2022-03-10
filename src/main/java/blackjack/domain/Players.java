@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -10,10 +9,12 @@ import java.util.Map;
 public class Players {
 
     private static final int CAPACITY = 8;
+
     private final List<Player> players;
 
     public Players(List<Player> players) {
         validateCapacity(players);
+
         this.players = new ArrayList<>(players);
     }
 
@@ -33,28 +34,18 @@ public class Players {
         return List.copyOf(players);
     }
 
-    public Map<Player, Map<Score, Integer>> compete(Dealer dealer) {
-        Map<Player, Map<Score, Integer>> scoreStructure = initScoreStructure(dealer);
+    public ScoreResult compete(Dealer dealer) {
+        Map<Score, Integer> dealerResult = new EnumMap<>(Score.class);
+        for (Score value : Score.values()) {
+            dealerResult.put(value, 0);
+        }
+        Map<String, Score> playerResults = new HashMap<>();
 
         for (Player player : players) {
             Score score = player.compete(dealer);
-            scoreStructure.get(player).merge(score, 1, Integer::sum);
-            scoreStructure.get(dealer).merge(Score.inverse(score), 1, Integer::sum);
+            playerResults.put(player.getName(), score);
+            dealerResult.merge(Score.inverse(score), 1, Integer::sum);
         }
-        return scoreStructure;
-    }
-
-    private Map<Player, Map<Score, Integer>> initScoreStructure(Dealer dealer) {
-        Map<Player, Map<Score, Integer>> map = new HashMap<>();
-
-        List<Player> players = new ArrayList<>(this.players);
-        players.add(dealer);
-
-        for (Player player : players) {
-            map.put(player, new EnumMap<Score, Integer>(Score.class));
-            Arrays.stream(Score.values())
-                .forEach(score -> map.get(player).put(score, 0));
-        }
-        return map;
+        return new ScoreResult(dealerResult, playerResults);
     }
 }

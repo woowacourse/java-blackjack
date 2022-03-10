@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import java.util.List;
-import java.util.Map;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -47,14 +46,14 @@ public class PlayersTest {
             players.drawAll(mockDeck);
             Dealer dealer = new Dealer();
             dealer.drawCard(mockDeck);
-            Map<Player, Map<Score, Integer>> result = players.compete(dealer);
+            ScoreResult result = players.compete(dealer);
 
-            Assertions.assertThat(result.get(roma).get(Score.LOSE)).isEqualTo(1);
-            Assertions.assertThat(result.get(tonic).get(Score.DRAW)).isEqualTo(1);
-            Assertions.assertThat(result.get(pobi).get(Score.WIN)).isEqualTo(1);
-            Assertions.assertThat(result.get(dealer).get(Score.LOSE)).isEqualTo(1);
-            Assertions.assertThat(result.get(dealer).get(Score.DRAW)).isEqualTo(1);
-            Assertions.assertThat(result.get(dealer).get(Score.WIN)).isEqualTo(1);
+            Assertions.assertThat(result.getPlayerScore(roma)).isEqualTo(Score.LOSE);
+            Assertions.assertThat(result.getPlayerScore(tonic)).isEqualTo(Score.DRAW);
+            Assertions.assertThat(result.getPlayerScore(pobi)).isEqualTo(Score.WIN);
+            Assertions.assertThat(result.getDealerScoreCount(Score.LOSE)).isEqualTo(1);
+            Assertions.assertThat(result.getDealerScoreCount(Score.DRAW)).isEqualTo(1);
+            Assertions.assertThat(result.getDealerScoreCount(Score.WIN)).isEqualTo(1);
         }
     }
 

@@ -6,6 +6,7 @@ import java.util.List;
 public class Deck implements Drawable {
 
     private static final int TOP_CARD_INDEX = 0;
+
     private final List<Card> deck;
 
     public Deck() {

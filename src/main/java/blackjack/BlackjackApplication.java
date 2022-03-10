@@ -10,6 +10,7 @@ import blackjack.domain.Deck;
 import blackjack.domain.Name;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.domain.ScoreResult;
 import blackjack.domain.Selection;
 import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
@@ -31,6 +32,9 @@ public class BlackjackApplication {
         takeTurnDealer(dealer, deck);
 
         printPlayersResult(toDto(players), toDto(dealer));
+        ScoreResult result = players.compete(dealer);
+
+        printResult(result);
     }
 
     private static void takeTurnsPlayers(Players players, Deck deck) {
