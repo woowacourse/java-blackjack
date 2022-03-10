@@ -6,11 +6,11 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Gamer;
-import blackjack.domain.Player;
 import blackjack.domain.Result;
+import blackjack.domain.card.Card;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gamer;
+import blackjack.domain.player.Player;
 
 public class OutputView {
 

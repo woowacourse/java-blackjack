@@ -1,14 +1,16 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+
 public class Dealer implements Player {
 
 	public static final String DEALER_NAME = "딜러";
-
 	private static final int DEALER_RECEIVE_STANDARD = 16;
-	public static final int DEALER_OPEN_CARD_SIZE = 1;
+	private static final int DEALER_OPEN_CARD_SIZE = 1;
 
 	private final String name = DEALER_NAME;
 	private final Cards cards;

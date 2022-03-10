@@ -3,6 +3,10 @@ package blackjack.domain;
 import java.util.Collections;
 import java.util.Stack;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.pattern.Denomination;
+import blackjack.domain.card.pattern.Suit;
+
 public class Deck {
 
 	private static final int EMPTY_DECK_SIZE = 0;

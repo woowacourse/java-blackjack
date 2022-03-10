@@ -1,14 +1,17 @@
 package blackjack.domain;
 
-import static blackjack.domain.Player.*;
+import static blackjack.domain.player.Player.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Gamer;
+import blackjack.domain.player.Player;
 
 public class BlackJackGame {
 
@@ -45,7 +48,7 @@ public class BlackJackGame {
 	}
 
 	private static void setInitialCards(final Player player, final Deck deck) {
-		for (int i = 0; i < PLAYER_ALREADY_CARD_SIZE; i++) {
+		for (int i = 0; i < PLAYER_SETTING_CARD_SIZE; i++) {
 			player.receiveCard(deck.draw());
 		}
 	}

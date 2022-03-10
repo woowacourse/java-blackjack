@@ -8,6 +8,11 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.pattern.Denomination;
+import blackjack.domain.card.pattern.Suit;
+import blackjack.domain.player.Gamer;
+
 public class GamerTest {
 
 	@Test

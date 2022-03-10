@@ -6,6 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.pattern.Denomination;
+import blackjack.domain.card.pattern.Suit;
+
 public class CardTest {
 
 	@Test

@@ -1,15 +1,10 @@
 package blackjack;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import blackjack.domain.Answer;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Deck;
-import blackjack.domain.Gamer;
-import blackjack.domain.Player;
+import blackjack.domain.player.Gamer;
+import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -30,7 +25,7 @@ public class BlackJackApplication {
 			BlackJackGame blackJackGame = BlackJackGame.initializeSetting(InputView.requestPlayerName(), deck);
 			OutputView.printOpenCards(blackJackGame.getGamers(), blackJackGame.getDealer());
 			return blackJackGame;
-		}catch (IllegalArgumentException exception){
+		} catch (IllegalArgumentException exception) {
 			OutputView.printErrorMessage(exception.getMessage());
 			return initBlackJackGame(deck);
 		}

@@ -1,10 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import java.util.List;
 
+import blackjack.domain.card.Card;
+
 public interface Player {
 
-	int PLAYER_ALREADY_CARD_SIZE = 2;
+	int PLAYER_SETTING_CARD_SIZE = 2;
 
 	void receiveCard(final Card card);
 

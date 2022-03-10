@@ -3,6 +3,8 @@ package blackjack.domain;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
+import blackjack.domain.player.Gamer;
+
 public enum Result {
 
 	WIN("승", (dealerResult, gamerResult) -> dealerResult < gamerResult && gamerResult <= Gamer.LIMIT_GAMER_TOTAL_POINT),
