@@ -51,10 +51,10 @@ public class BlackJackApplication {
         }
     }
 
-    private static BlackJackGame startBlackJackGame(List<Player> gamers, Deck deck) {
+    private static BlackJackGame startBlackJackGame(final List<Player> gamers, final Deck deck) {
         BlackJackGame blackJackGame = new BlackJackGame(new Dealer(), gamers);
         blackJackGame.giveFirstCards(deck);
-        OutputView.printOpenCards(blackJackGame);
+        OutputView.printOpenCards(blackJackGame.getDealer(), blackJackGame.getGamers());
         return blackJackGame;
     }
 

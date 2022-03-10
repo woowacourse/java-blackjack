@@ -25,19 +25,19 @@ public class OutputView {
     private static final String PRINT_FINAL_CARD_RESULT = "%s카드: %s - 결과: %d\n";
     private static final String PRINT_BLANK = " ";
 
-    public static void printOpenCards(final BlackJackGame blackJackGame) {
+    public static void printOpenCards(final Player dealer, final List<Player> gamers) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(String.format(PRINT_OPEN_CARD_PREFIX_MESSAGE, Dealer.DEALER_NAME))
-                .append(String.format(PRINT_OPEN_CARD_SUFFIX_MESSAGE, joinNames(blackJackGame)))
+                .append(String.format(PRINT_OPEN_CARD_SUFFIX_MESSAGE, joinNames(gamers)))
                 .append(String.format(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
-                        joinCards(blackJackGame.getDealer().openCards())));
-        appendGamerFormat(blackJackGame.getGamers(), stringBuilder);
+                        joinCards(dealer.openCards())));
+        appendGamerFormat(gamers, stringBuilder);
 
         System.out.println(stringBuilder);
     }
 
-    private static String joinNames(final BlackJackGame blackJackGame) {
-        return blackJackGame.getGamers().stream()
+    private static String joinNames(final List<Player> gamers) {
+        return gamers.stream()
                 .map(Player::showName)
                 .collect(joining(PRINT_JOINING_DELIMITER));
     }
@@ -60,7 +60,7 @@ public class OutputView {
         return card.getDenomination().getName() + card.getSuit().getName();
     }
 
-    public static void printGamerCards(Player gamer) {
+    public static void printGamerCards(final Player gamer) {
         System.out.printf(PRINT_SHOW_CARD_FORMAT_MESSAGE,
                 gamer.showName(),
                 joinCards(gamer.showCards()));
@@ -74,12 +74,12 @@ public class OutputView {
         System.out.println(PRINT_DEALER_NOT_RECEIVE_CARD);
     }
 
-    public static void printFinalResult(BlackJackGame blackJackGame) {
+    public static void printFinalResult(final BlackJackGame blackJackGame) {
         printPlayerCardsResult(blackJackGame.getDealer());
         blackJackGame.getGamers().forEach(OutputView::printPlayerCardsResult);
     }
 
-    private static void printPlayerCardsResult(Player player) {
+    private static void printPlayerCardsResult(final Player player) {
         System.out.printf(PRINT_FINAL_CARD_RESULT,
                 player.showName(),
                 joinCards(player.showCards()),
@@ -96,7 +96,7 @@ public class OutputView {
                 value.getResult()));
     }
 
-    private static String dealerToString(Map<Player, Result> gamerResultBoard) {
+    private static String dealerToString(final Map<Player, Result> gamerResultBoard) {
         return String.format(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
                 calculateDealerResultBoard(gamerResultBoard).entrySet().stream()
                         .map(board -> dealerResultToString(board.getKey(),
@@ -113,7 +113,7 @@ public class OutputView {
         return enumMap;
     }
 
-    private static Result convertToDealerResult(Result result) {
+    private static Result convertToDealerResult(final Result result) {
         if (result == Result.WIN) {
             return Result.LOSE;
         }
@@ -123,7 +123,7 @@ public class OutputView {
         return Result.DRAW;
     }
 
-    private static String dealerResultToString(Result result, int value) {
+    private static String dealerResultToString(final Result result, final int value) {
         return value + result.getResult();
     }
 
