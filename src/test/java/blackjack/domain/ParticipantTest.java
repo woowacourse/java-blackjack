@@ -14,7 +14,9 @@ public class ParticipantTest {
     @MethodSource("parameters1")
     @DisplayName("카드를 추가할 수 있는 지 확인한다.")
     void canAddCard(List<Card> cards) {
-        Participant participant = new Participant("배카라", cards);
+        Participant participant = new Participant("배카라");
+        cards.forEach(participant::addCard);
+
         Assertions.assertThat(participant.canAddCard()).isTrue();
     }
 
@@ -33,8 +35,10 @@ public class ParticipantTest {
     @MethodSource("parameters2")
     @DisplayName("21점을 초과할 경우 카드를 추가하지 못한다.")
     void cantAddCard(List<Card> cards, Card card) {
-        Participant participant = new Participant("배카라", cards);
+        Participant participant = new Participant("배카라");
+        cards.forEach(participant::addCard);
         participant.addCard(card);
+
         Assertions.assertThat(participant.canAddCard()).isFalse();
     }
 
