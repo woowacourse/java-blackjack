@@ -13,6 +13,10 @@ public class Dealer extends Human {
         return name;
     }
 
+    public List<String> getCards() {
+        return cards.getAllCards();
+    }
+
     public void receiveInitCard(final List<Card> initCards) {
         cards.add(initCards);
     }

@@ -38,6 +38,13 @@ public class OutputView {
     }
 
     public static void printTakeDealerCardsMessage(final String name, final int maximum) {
+        printNewLine();
         System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.", name, maximum);
+        printNewLine();
+    }
+
+    public static void printResult(final String name, final List<String> cards, final int total) {
+        printCard(name, cards);
+        System.out.printf(" - 결과: %d", total);
     }
 }

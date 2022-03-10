@@ -21,6 +21,8 @@ public class BlackjackController {
 
         distributeCardToPlayers(players, cardMachine);
         distributeCardToDealer(dealer, cardMachine);
+
+        openResult(dealer, players);
     }
 
     private Players createPlayers() {
@@ -79,6 +81,24 @@ public class BlackjackController {
         while (dealer.isReceived()) {
             dealer.receiveCard(cardMachine.giveCard());
             OutputView.printTakeDealerCardsMessage(Dealer.getName(), Dealer.RECEIVED_MAXIMUM);
+        }
+        OutputView.printNewLine();
+    }
+
+    private void openResult(final Dealer dealer, final Players players) {
+        openDealerResult(dealer);
+        openPlayersResult(players);
+    }
+
+    private void openDealerResult(final Dealer dealer) {
+        OutputView.printResult(Dealer.getName(), dealer.getCards(), dealer.getTotal());
+        OutputView.printNewLine();
+    }
+
+    private void openPlayersResult(final Players players) {
+        for (Player player : players.getPlayers()) {
+            OutputView.printResult(player.getName(), player.getCards(), player.getTotal());
+            OutputView.printNewLine();
         }
     }
 }
