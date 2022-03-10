@@ -2,10 +2,10 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import blackjack.domain.Result;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;

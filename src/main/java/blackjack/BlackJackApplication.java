@@ -2,8 +2,8 @@ package blackjack;
 
 import blackjack.domain.Answer;
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.player.Dealer;
 import blackjack.domain.card.Deck;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
