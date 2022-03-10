@@ -30,14 +30,18 @@ public class BlackJackGame {
         final List<String> copyNames = new ArrayList<>(playerNames);
         final CardDeck cardDeck = CardDeck.init();
         final Player dealer = Dealer.init(cardDeck.provideInitCards());
-        final List<Player> players = provideInitCardsToPlayers(copyNames, cardDeck);
+        final List<Player> players = createPlayers(copyNames, cardDeck);
         return new BlackJackGame(cardDeck, dealer, new Players(players));
     }
 
-    private static List<Player> provideInitCardsToPlayers(final List<String> playerNames, final CardDeck cardDeck) {
+    private static List<Player> createPlayers(final List<String> playerNames, final CardDeck cardDeck) {
         return playerNames.stream()
-                .map(name -> ParticipatingPlayer.init(name, cardDeck.provideInitCards()))
+                .map(name -> createPlayer(cardDeck, name))
                 .collect(Collectors.toList());
+    }
+
+    private static ParticipatingPlayer createPlayer(final CardDeck cardDeck, final String name) {
+        return ParticipatingPlayer.init(name, cardDeck.provideInitCards());
     }
 
     public boolean isPlayersTurnEnd() {
