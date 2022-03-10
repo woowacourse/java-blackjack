@@ -63,11 +63,11 @@ public class BlackJack {
         players.forEach(player -> result.put(player, isWin(player)));
     }
 
-    private boolean isWin(Participant player) {
-		if (player.getScore() > 21) {
+	private boolean isWin(Participant player) {
+		if (player.isOverMaxScore()) {
 			return false;
 		}
-		if (dealer.getScore() > 21) {
+		if (dealer.isOverMaxScore()) {
 			return true;
 		}
         return dealer.getScore() < player.getScore();

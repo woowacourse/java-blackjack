@@ -8,8 +8,6 @@ import blackjack.view.ResultView;
 
 public class BlackJackController {
 
-	private static final int MAX_SCORE = 21;
-
 	public void run() {
 		BlackJack blackJack = BlackJack.createFrom(InputView.askPlayerNameInput());
 		BlackJackDto blackJackDto = BlackJackDto.from(blackJack);
@@ -32,8 +30,9 @@ public class BlackJackController {
 		}
 	}
 
-	private void decidePlayerReceivingAdditionalCard(BlackJack blackJack, BlackJackDto blackJackDto, Participant player) {
-		while (InputView.askAdditionalCardInput(player.getName()) || player.getScore() < MAX_SCORE) {
+	private void decidePlayerReceivingAdditionalCard(BlackJack blackJack, BlackJackDto blackJackDto,
+		Participant player) {
+		while (InputView.askAdditionalCardInput(player.getName()) || !player.isOverMaxScore()) {
 			blackJack.handOutCardTo(player);
 			ResultView.showEachPlayerCurrentStatus(blackJackDto, player);
 		}

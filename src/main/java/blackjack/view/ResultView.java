@@ -26,7 +26,7 @@ public class ResultView {
 
 	public static void showEachPlayerCurrentStatus(BlackJackDto blackJackDto, Participant participant) {
 		System.out.println(getEachPlayerStatus(blackJackDto, participant));
-		if(participant.getScore()>=21){
+		if (participant.isOverMaxScore()) {
 			System.out.println(MESSAGE_SCORE_OVER_21);
 		}
 	}
