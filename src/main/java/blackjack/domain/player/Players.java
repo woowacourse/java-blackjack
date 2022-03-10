@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 
 public class Players {
 
-    private final List<Player> values;
+    private final List<Player> players;
     private int currentTurnIndex;
 
-    public Players(final List<Player> values) {
-        validateDuplicationPlayers(values);
-        this.values = values;
+    public Players(final List<Player> players) {
+        validateDuplicationPlayers(players);
+        this.players = players;
     }
 
     private void validateDuplicationPlayers(final List<Player> players) {
@@ -30,7 +30,7 @@ public class Players {
     }
 
     public List<PlayerInfo> getInitPlayerInfo() {
-        return values.stream()
+        return players.stream()
                 .map(PlayerInfo::toPlayerInitInfo)
                 .collect(Collectors.toUnmodifiableList());
     }
@@ -48,7 +48,7 @@ public class Players {
     }
 
     public boolean isAllTurnEnd() {
-        return values.size() <= currentTurnIndex;
+        return players.size() <= currentTurnIndex;
     }
 
     public PlayerInfo drawCurrentPlayer(final Card card) {
@@ -66,7 +66,7 @@ public class Players {
 
     private Player currentTurnPlayer() {
         validateAllTurnEnd();
-        return values.get(currentTurnIndex);
+        return players.get(currentTurnIndex);
     }
 
     public PlayerInfo getCurrentTurnPlayerInfo() {
@@ -74,12 +74,12 @@ public class Players {
     }
 
     public List<PlayerResultInfo> getResultPlayerInfo() {
-        return values.stream()
+        return players.stream()
                 .map(PlayerResultInfo::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public List<Player> getValues() {
-        return List.copyOf(values);
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
     }
 }
