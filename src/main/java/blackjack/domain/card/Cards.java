@@ -13,7 +13,7 @@ public class Cards {
         addCards(cards);
     }
 
-    private void validateInitCards(List<Card> cards) {
+    private void validateInitCards(final List<Card> cards) {
         if (cards == null || cards.size() != Deck.INIT_DISTRIBUTE_SIZE) {
             throw new IllegalArgumentException("[ERROR] 잘못 배분된 카드입니다.");
         }
@@ -40,7 +40,7 @@ public class Cards {
 
     public int calculateScoreByAceEleven() {
         if (isContainsAce()) {
-            return calculateScoreByAceOne() + (Score.ACE_ELEVEN.getAmount() - Score.ACE.getAmount());
+            return calculateScoreByAceOne() + Score.getDifferenceAcesScore();
         }
         return calculateScoreByAceOne();
     }

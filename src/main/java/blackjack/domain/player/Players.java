@@ -1,50 +1,59 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card.Card;
+
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Players {
 
-    private final Dealer dealer;
-    private final List<Participant> participants;
+    private static final int MIN_SIZE = 2;
+    private static final int MAX_SIZE = 8;
 
-    public Players(final List<Participant> participants, final Dealer dealer) {
+    private final Player dealer;
+    private final List<Player> participants;
+
+    public Players(final List<Player> participants, final Player dealer) {
         validateParticipants(participants);
         this.participants = participants;
         this.dealer = dealer;
     }
 
-    private void validateParticipants(final List<Participant> participants) {
+    private void validateParticipants(final List<Player> participants) {
         validateSize(participants);
         validateDuplicated(participants);
     }
 
-    private void validateSize(final List<Participant> participants) {
-        if (participants == null || participants.size() < 2 || participants.size() > 8) {
+    private void validateSize(final List<Player> participants) {
+        if (participants == null || participants.size() < MIN_SIZE || participants.size() > MAX_SIZE) {
             throw new IllegalArgumentException("[ERROR] 참가자 정보가 잘못 입력되었습니다.");
         }
     }
 
-    private void validateDuplicated(final List<Participant> participants) {
-        Set<String> names = extractNames(participants);
+    private void validateDuplicated(final List<Player> participants) {
+        final Set<String> names = extractNames(participants);
 
         if (names.size() != participants.size()) {
             throw new IllegalArgumentException("[ERROR] 참가자 이름은 중복될 수 없습니다.");
         }
     }
 
-    public Set<String> extractNames(final List<Participant> participants) {
+    public Set<String> extractNames(final List<Player> participants) {
         return participants.stream()
-                .map(Participant::getName)
+                .map(Player::getName)
                 .collect(Collectors.toSet());
     }
 
-    public Dealer getDealer() {
+    public void addDealerCard(Card card) {
+        this.dealer.addCard(card);
+    }
+
+    public Player getDealer() {
         return dealer;
     }
 
-    public List<Participant> getParticipants() {
+    public List<Player> getParticipants() {
         return participants;
     }
 }

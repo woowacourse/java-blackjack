@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Card {
 
-    private Type type;
-    private Score score;
+    private final Type type;
+    private final Score score;
 
     public Card(final Type type, final Score score) {
         this.type = type;
@@ -31,11 +31,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(type, score);
-    }
-
-    public void changeAceToEleven() {
-        if (this.score == Score.ACE) {
-            this.score = Score.ACE_ELEVEN;
-        }
     }
 }

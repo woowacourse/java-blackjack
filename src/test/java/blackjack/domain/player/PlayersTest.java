@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -18,13 +17,13 @@ class PlayersTest {
     @ParameterizedTest
     @MethodSource("participantListBySuccess")
     @DisplayName("참가자는 2~8명 사이이다. (성공)")
-    void checkParticipantNumberBySuccess(List<Participant> participants) {
+    void checkParticipantNumberBySuccess(List<Player> participants) {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(deck.initDistributeCard());
         assertDoesNotThrow(() -> new Players(participants, dealer));
     }
 
-    private static Stream<List<Participant>> participantListBySuccess() {
+    private static Stream<List<Player>> participantListBySuccess() {
         Deck deck = new Deck();
         return Stream.of(
                 List.of(
@@ -47,7 +46,7 @@ class PlayersTest {
     @ParameterizedTest
     @MethodSource("participantListByFail")
     @DisplayName("참가자는 2~8명 사이이다. (실패)")
-    void checkParticipantNumber(List<Participant> participants) {
+    void checkParticipantNumber(List<Player> participants) {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(deck.initDistributeCard());
 
@@ -56,7 +55,7 @@ class PlayersTest {
                 .hasMessage("[ERROR] 참가자 정보가 잘못 입력되었습니다.");
     }
 
-    private static Stream<List<Participant>> participantListByFail() {
+    private static Stream<List<Player>> participantListByFail() {
         Deck deck = new Deck();
         return Stream.of(
                 null,

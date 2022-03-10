@@ -1,18 +1,48 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 import java.util.List;
 
-public interface Player {
+public abstract class Player {
 
-    int MAX_SCORE = 21;
+    protected static final int MAX_SCORE = 21;
 
-    void addCard(final Card card);
+    private final Cards cards;
+    private final String name;
 
-    int calculateFinalScore();
+    Player(final List<Card> cards, final String name) {
+        this.cards = new Cards(cards);
+        this.name = name;
+    }
 
-    List<Card> getCards();
+    public int calculateFinalScore() {
+        final int score = getScoreByAceEleven();
 
-    String getName();
+        if (score <= MAX_SCORE) {
+            return score;
+        }
+        return getScoreByAceOne();
+    }
+
+    public void addCard(final Card card) {
+        cards.addCard(card);
+    }
+
+    public List<Card> getCards() {
+        return this.cards.getCards();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    protected int getScoreByAceOne() {
+        return cards.calculateScoreByAceOne();
+    }
+
+    protected int getScoreByAceEleven() {
+        return cards.calculateScoreByAceEleven();
+    }
 }

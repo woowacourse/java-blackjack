@@ -45,5 +45,4 @@ public class Deck {
     public boolean containCard(final Card card) {
         return deck.contains(card);
     }
-
 }

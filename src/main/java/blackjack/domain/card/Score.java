@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum Score {
+
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -28,17 +29,21 @@ public enum Score {
         this.amount = amount;
     }
 
+    public static List<Score> getScoreValues() {
+        return Arrays.stream(Score.values())
+                .filter(score -> score != Score.ACE_ELEVEN)
+                .collect(Collectors.toList());
+    }
+
+    public static int getDifferenceAcesScore() {
+        return Score.ACE_ELEVEN.getAmount() - Score.ACE.getAmount();
+    }
+
     public String getSymbol() {
         return this.symbol;
     }
 
     public int getAmount() {
         return this.amount;
-    }
-
-    public static List<Score> getScoreValues() {
-        return Arrays.stream(Score.values())
-                .filter(score -> score != Score.ACE_ELEVEN)
-                .collect(Collectors.toList());
     }
 }

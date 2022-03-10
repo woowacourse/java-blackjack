@@ -1,21 +1,16 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
 
 import java.util.List;
 
-public class Participant implements Player {
-
-    private final String name;
-    private final Cards cards;
+public class Participant extends Player {
 
     private boolean winState = false;
 
     public Participant(final List<Card> cards, final String name) {
+        super(cards, name);
         validateEmpty(name);
-        this.cards = new Cards(cards);
-        this.name = name;
     }
 
     private void validateEmpty(final String name) {
@@ -24,37 +19,12 @@ public class Participant implements Player {
         }
     }
 
-    @Override
-    public void addCard(final Card card) {
-        cards.addCard(card);
-    }
-
-    @Override
-    public int calculateFinalScore() {
-        final int scoreByAceOne = cards.calculateScoreByAceOne();
-        final int scoreByAceEleven = cards.calculateScoreByAceEleven();
-
-        if (scoreByAceEleven <= MAX_SCORE) {
-            return scoreByAceEleven;
-        }
-        return scoreByAceOne;
-    }
-
     public void win() {
         this.winState = true;
     }
 
     public boolean isOverMaxScore() {
-        return cards.calculateScoreByAceOne() > MAX_SCORE;
-    }
-
-    @Override
-    public List<Card> getCards() {
-        return cards.getCards();
-    }
-
-    public String getName() {
-        return this.name;
+        return getScoreByAceOne() > MAX_SCORE;
     }
 
     public boolean getWinState() {

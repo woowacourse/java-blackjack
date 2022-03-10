@@ -16,8 +16,8 @@ public class OutputView {
     private static final String DELIMITER = ", ";
 
     public static void printPlayersInitCardInfo(final Players players) {
-        final List<Participant> participants = players.getParticipants();
-        final Dealer dealer = players.getDealer();
+        final List<Player> participants = players.getParticipants();
+        final Player dealer = players.getDealer();
 
         final String basicDistribute = "딜러와 %s에게 " + INIT_DISTRIBUTE_SIZE + "을 나누어주었습니다.";
         System.out.println();
@@ -26,18 +26,18 @@ public class OutputView {
         printParticipantsInfo(participants);
     }
 
-    private static List<String> extractNames(final List<Participant> participants) {
+    private static List<String> extractNames(final List<Player> participants) {
         return participants.stream()
-                .map(Participant::getName)
+                .map(Player::getName)
                 .collect(Collectors.toList());
     }
 
-    private static void printInitDealerInfo(final Dealer dealer) {
-        Card dealerCard = dealer.getCardOne();
+    private static void printInitDealerInfo(final Player dealer) {
+        Card dealerCard = ((Dealer) dealer).getCardFirstOne();
         System.out.println("딜러: " + dealerCard.getScore().getSymbol() + dealerCard.getType().getName());
     }
 
-    private static void printParticipantsInfo(final List<Participant> participants) {
+    private static void printParticipantsInfo(final List<Player> participants) {
         participants.forEach(
                 participant -> System.out.println(makePlayerCardInfo(participant))
         );
@@ -72,32 +72,32 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printPlayerFinalInfo(Player player) {
+    public static void printPlayerFinalInfo(final Player player) {
         System.out.println(makePlayerCardInfo(player) + " - 결과:" + player.calculateFinalScore());
     }
 
-    public static void printFinishParticipantInfo(List<Participant> participants) {
+    public static void printFinishParticipantInfo(final List<Player> participants) {
         participants.forEach(OutputView::printPlayerFinalInfo);
         System.out.println();
     }
 
-    public static void printResult(Players players) {
+    public static void printResult(final Players players) {
         System.out.println("## 최종 승패");
         printDealerResult(players.getDealer());
         printParticipantsResult(players.getParticipants());
     }
 
-    private static void printDealerResult(Dealer dealer) {
-        System.out.printf(dealer.getName() + ": %d승 %d패%n", dealer.getWinCount(), dealer.getLoseCount());
+    private static void printDealerResult(final Player dealer) {
+        System.out.printf(dealer.getName() + ": %d승 %d패%n", ((Dealer) dealer).getWinCount(), ((Dealer) dealer).getLoseCount());
     }
 
-    private static void printParticipantsResult(List<Participant> participants) {
+    private static void printParticipantsResult(final List<Player> participants) {
         participants.forEach(OutputView::printParticipantResult);
     }
 
-    private static void printParticipantResult(Participant participant) {
+    private static void printParticipantResult(final Player participant) {
         System.out.print(participant.getName() + ": ");
-        if (participant.getWinState()) {
+        if (((Participant) participant).getWinState()) {
             System.out.println("승");
             return;
         }
