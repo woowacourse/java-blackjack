@@ -26,10 +26,21 @@ public class Participants {
         }
     }
 
+    public void handOutInitialCards(Deck deck) {
+        for (Participant participant : getParticipants()) {
+            List<Card> cards = List.of(deck.pickCard(), deck.pickCard());
+            participant.receiveInitCards(cards);
+        }
+    }
+
     public List<Participant> getParticipants() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(players);
         return Collections.unmodifiableList(participants);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }
