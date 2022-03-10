@@ -3,15 +3,13 @@ package blackjack.domain;
 import java.util.Arrays;
 
 public enum HitRequest {
-    YES("y", true),
-    NO("n", false);
+    YES("y"),
+    NO("n");
 
     private final String name;
-    private final boolean value;
 
-    HitRequest(String name, boolean value) {
+    HitRequest(String name) {
         this.name = name;
-        this.value = value;
     }
 
     public static HitRequest find(String requestName) {
@@ -23,9 +21,5 @@ public enum HitRequest {
 
     public String getName() {
         return name;
-    }
-
-    public boolean isValue() {
-        return value;
     }
 }
