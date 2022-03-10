@@ -20,4 +20,17 @@ public class InputView {
                 .map(token -> token.trim())
                 .collect(Collectors.toList());
     }
+
+    public static String inputHitResponse(final String name) {
+        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        String response = SCANNER.nextLine();
+        checkYesOrNo(response);
+        return response;
+    }
+
+    private static void checkYesOrNo(String response) {
+        if (!(response.equalsIgnoreCase("y") || response.equalsIgnoreCase("n"))) {
+            throw new IllegalArgumentException("Y 또는 N을 입력해주세요.");
+        }
+    }
 }

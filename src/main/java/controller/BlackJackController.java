@@ -10,6 +10,7 @@ import view.OutputView;
 public class BlackJackController {
 
     private final BlackJackService service;
+
     public BlackJackController(BlackJackService service) {
         this.service = service;
     }
@@ -19,5 +20,12 @@ public class BlackJackController {
         NamesDto namesDto = new NamesDto(names);
         InitGameDto initGameDto = service.initGame(namesDto);
         OutputView.printInit(initGameDto);
+    }
+
+    public void hit() {
+        List<String> names = service.getPlayerNames();
+        for (String name : names) {
+            String response = InputView.inputHitResponse(name);
+        }
     }
 }

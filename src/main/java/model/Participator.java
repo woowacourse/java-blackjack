@@ -27,4 +27,8 @@ public abstract class Participator {
     public PlayerName getPlayerName() {
         return playerName;
     }
+
+    public boolean isSameName(String otherName) {
+        return playerName.isSameName(otherName);
+    }
 }

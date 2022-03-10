@@ -2,36 +2,30 @@ package service;
 
 import static java.util.stream.Collectors.toList;
 
-import java.util.ArrayList;
-import java.util.List;
-import model.CardDeck;
-import model.Dealer;
-import model.Participator;
-import model.Player;
-import model.PlayerName;
 import dto.InitGameDto;
 import dto.NamesDto;
 import dto.ParticipatorDto;
+import java.util.List;
+import model.CardDeck;
+import model.Participator;
+import model.Participators;
 import util.CardConvertor;
 
 public class BlackJackService {
     private static final int INIT_CARD_COUNT = 2;
 
-    private List<Participator> participators;
-    private Participator dealer;
+    private Participators participators;
     private CardDeck cardDeck;
 
     public InitGameDto initGame(NamesDto namesDto) {
         cardDeck = new CardDeck();
         initParticipators(namesDto);
         drawTwoCardsAll();
-        return new InitGameDto(getParticipatorDtos(), convertParticipatorToDto(dealer));
+        return new InitGameDto(getParticipatorDtos(), convertParticipatorToDto(participators.findDealer()));
     }
 
     private List<ParticipatorDto> getParticipatorDtos() {
-        return participators.stream()
-                .map(this::convertParticipatorToDto)
-                .collect(toList());
+        return participators.findPlayers().stream().map(this::convertParticipatorToDto).collect(toList());
     }
 
     private ParticipatorDto convertParticipatorToDto(Participator participator) {
@@ -49,23 +43,19 @@ public class BlackJackService {
     }
 
     private void initParticipators(NamesDto namesDto) {
-        participators = new ArrayList<>();
-        for (String name : namesDto.getNames()) {
-            participators.add(new Player(new PlayerName(name)));
-        }
-        dealer = new Dealer();
+        participators = new Participators(namesDto.getNames());
     }
 
     private void drawTwoCardsAll() {
-        for (Participator participator : participators) {
-            getCards(participator);
-        }
-        getCards(dealer);
+        participators.receiveTwoCards(cardDeck);
     }
 
-    private void getCards(Participator participator) {
-        for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            participator.receiveCard(cardDeck.drawCard());
-        }
+    public List<String> getPlayerNames() {
+        return participators.getPlayerNames();
+    }
+
+    public ParticipatorDto tryToHit(String response, String name) {
+        Participator player = participators.findName(name);
+        return null;
     }
 }
