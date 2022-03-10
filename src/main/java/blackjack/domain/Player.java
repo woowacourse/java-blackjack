@@ -4,13 +4,13 @@ import java.util.List;
 
 public interface Player {
 
-    void receiveCard(final Card card);
+	void receiveCard(final Card card);
 
-    List<Card> openCards();
+	List<Card> openCards();
 
-    List<Card> showCards();
+	List<Card> showCards();
 
-    int calculateResult();
+	int calculateResult();
 
-    boolean isReceivable();
+	boolean isReceivable();
 }
