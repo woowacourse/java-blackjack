@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.GameOutcome;
+import blackjack.domain.game.GameOutcome;
 import java.util.Map;
 
 public class OutComeResult {

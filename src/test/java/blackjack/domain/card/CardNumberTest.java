@@ -1,9 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import static blackjack.domain.CardNumber.A;
-import static blackjack.domain.CardNumber.SEVEN;
-import static blackjack.domain.CardNumber.TEN;
-import static blackjack.domain.CardNumber.THREE;
+import static blackjack.domain.card.CardNumber.A;
+import static blackjack.domain.card.CardNumber.SEVEN;
+import static blackjack.domain.card.CardNumber.TEN;
+import static blackjack.domain.card.CardNumber.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;

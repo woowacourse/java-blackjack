@@ -1,8 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
-import static blackjack.domain.GameOutcome.DRAW;
-import static blackjack.domain.GameOutcome.LOSE;
-import static blackjack.domain.GameOutcome.WIN;
+import static blackjack.domain.game.GameOutcome.DRAW;
+import static blackjack.domain.game.GameOutcome.LOSE;
+import static blackjack.domain.game.GameOutcome.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;

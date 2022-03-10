@@ -1,6 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import static blackjack.domain.Cards.BLACK_JACK_NUMBER;
+import static blackjack.domain.card.Cards.BLACK_JACK_NUMBER;
 
 import java.util.Arrays;
 import java.util.List;

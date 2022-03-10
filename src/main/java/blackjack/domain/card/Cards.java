@@ -1,9 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import static blackjack.domain.GameOutcome.DRAW;
-import static blackjack.domain.GameOutcome.LOSE;
-import static blackjack.domain.GameOutcome.WIN;
+import static blackjack.domain.game.GameOutcome.DRAW;
+import static blackjack.domain.game.GameOutcome.LOSE;
+import static blackjack.domain.game.GameOutcome.WIN;
 
+import blackjack.domain.game.GameOutcome;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

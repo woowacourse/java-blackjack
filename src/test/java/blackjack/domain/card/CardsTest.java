@@ -1,18 +1,18 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import static blackjack.domain.CardNumber.A;
-import static blackjack.domain.CardNumber.FIVE;
-import static blackjack.domain.CardNumber.JACK;
-import static blackjack.domain.CardNumber.KING;
-import static blackjack.domain.CardNumber.QUEEN;
-import static blackjack.domain.CardNumber.TEN;
-import static blackjack.domain.CardNumber.THREE;
-import static blackjack.domain.CardNumber.TWO;
-import static blackjack.domain.CardPattern.HEART;
-import static blackjack.domain.CardPattern.SPADE;
-import static blackjack.domain.GameOutcome.DRAW;
-import static blackjack.domain.GameOutcome.LOSE;
-import static blackjack.domain.GameOutcome.WIN;
+import static blackjack.domain.card.CardNumber.A;
+import static blackjack.domain.card.CardNumber.FIVE;
+import static blackjack.domain.card.CardNumber.JACK;
+import static blackjack.domain.card.CardNumber.KING;
+import static blackjack.domain.card.CardNumber.QUEEN;
+import static blackjack.domain.card.CardNumber.TEN;
+import static blackjack.domain.card.CardNumber.THREE;
+import static blackjack.domain.card.CardNumber.TWO;
+import static blackjack.domain.card.CardPattern.HEART;
+import static blackjack.domain.card.CardPattern.SPADE;
+import static blackjack.domain.game.GameOutcome.DRAW;
+import static blackjack.domain.game.GameOutcome.LOSE;
+import static blackjack.domain.game.GameOutcome.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

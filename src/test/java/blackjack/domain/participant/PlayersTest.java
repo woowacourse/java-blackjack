@@ -1,13 +1,14 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-import static blackjack.domain.CardNumber.A;
-import static blackjack.domain.CardNumber.JACK;
-import static blackjack.domain.CardNumber.KING;
-import static blackjack.domain.CardNumber.QUEEN;
-import static blackjack.domain.CardPattern.SPADE;
+import static blackjack.domain.card.CardNumber.A;
+import static blackjack.domain.card.CardNumber.JACK;
+import static blackjack.domain.card.CardNumber.KING;
+import static blackjack.domain.card.CardNumber.QUEEN;
+import static blackjack.domain.card.CardPattern.SPADE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
