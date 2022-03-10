@@ -1,8 +1,11 @@
 package blackjack;
 
+import static blackjack.Rank.*;
+import static blackjack.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -23,4 +26,12 @@ public class CardTest {
         Card card = new Card(rank, suit);
         assertThat(card.isAce()).isEqualTo(expect);
     }
+
+    @Test
+    @DisplayName("Softhand Rank 반환 테스트")
+    void getSoftRank() {
+        Card card = new Card(ACE, DIAMOND);
+        assertThat(card.softRank()).isEqualTo(11);
+    }
+
 }
