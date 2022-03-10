@@ -1,39 +1,26 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import java.util.ArrayList;
-import java.util.Collections;
+import blackjack.domain.card.Cards;
 import java.util.List;
 
-public class Player {
+public abstract class Player {
 
     private final String name;
-    private final List<Card> cards;
+    protected final Cards cards;
 
-    public Player(String name) {
+    public Player(String name, List<Card> cards) {
         this.name = name;
-        this.cards = new ArrayList<>();
+        this.cards = new Cards(cards);
     }
 
     public void pickCard(Card card) {
-        cards.add(card);
+        cards.addCard(card);
     }
 
-    public boolean isPossibleToPickCard() {
-        return calculateScore() <= 21;
-    }
-
-    public int calculateScore() {
-        return cards.stream()
-                .mapToInt(Card::getCardNumber)
-                .sum();
-    }
+    public abstract boolean isPossibleToPickCard();
 
     public String getName() {
         return name;
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
     }
 }
