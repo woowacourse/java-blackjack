@@ -24,6 +24,10 @@ public enum CardNumber {
         this.number = number;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getNumber() {
         return number;
     }
