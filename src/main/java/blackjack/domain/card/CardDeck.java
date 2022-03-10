@@ -10,8 +10,8 @@ public class CardDeck {
     {
         cards = new ArrayList<>();
         for (Denomination value : Denomination.values()) {
-            for (Symbol symbol : Symbol.values()) {
-                cards.add(Card.of(value, symbol));
+            for (Suit suit : Suit.values()) {
+                cards.add(Card.of(value, suit));
             }
         }
         Collections.shuffle(cards);
@@ -24,7 +24,7 @@ public class CardDeck {
         return new CardDeck();
     }
 
-    public Card giveCard() {
+    public Card getCard() {
         if (cards.isEmpty()) {
             throw new ArrayIndexOutOfBoundsException(NO_CARD_EXCEPTION_MESSAGE);
         }

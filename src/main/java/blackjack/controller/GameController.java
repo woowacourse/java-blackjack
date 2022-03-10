@@ -37,43 +37,44 @@ public class GameController {
 
     private void startGame(final Table table) {
         for (Player player : table.getPlayers().get()) {
-            questionOneMoreCard(player, table.getCardDeck());
+            questAddCard(player, table.getCardDeck());
         }
         addCardToDealer(table);
     }
 
-    private void questionOneMoreCard(final Player player, final CardDeck cardDeck) {
-        if (!player.isOneMoreCard()) {
+    private void questAddCard(final Player player, final CardDeck cardDeck) {
+        if (!player.isHit()) {
             return;
         }
-        boolean isAddCard = InputView.inputOneMoreCard(player.getName());
-        if (!isAddCard && player.getCardSize() == Constants.INIT_CARD_NUMBER) {
-            OutputView.printHumanCardState(player);
+        boolean isHit = InputView.inputOneMoreCard(player.getName());
+        if (!isHit && player.getCardSize() == Constants.INIT_CARD_NUMBER) {
+            OutputView.printHumanHand(player);
             return;
         }
-        if (isAddCard) {
-            player.addCard(cardDeck.giveCard());
-            OutputView.printHumanCardState(player);
-            questionOneMoreCard(player, cardDeck);
+        if (isHit) {
+            player.addCard(cardDeck.getCard());
+            OutputView.printHumanHand(player);
+            questAddCard(player, cardDeck);
         }
     }
 
     private void addCardToDealer(final Table table) {
-        if (table.getDealer().isOneMoreCard()) {
-            table.getDealer().addCard(table.getCardDeck().giveCard());
+        Dealer dealer = table.getDealer();
+        if (dealer.isHit()) {
+            dealer.addCard(table.getCardDeck().getCard());
             OutputView.printDealerCardAdded();
         }
     }
 
     private void endGame(final Table table) {
         OutputView.printCardAndPoint(table);
-        Statistic.of(table.getDealer()).calculate(table.getPlayers());
+        Statistic.of().calculate(table);
         printGameResult(table);
     }
 
     private void printGameResult(final Table table) {
-        Statistic statistic = Statistic.of(table.getDealer());
-        statistic.calculate(table.getPlayers());
+        Statistic statistic = Statistic.of();
+        statistic.calculate(table);
         OutputView.printDealerResult(statistic.getDealerResult());
         OutputView.printPlayerResult(table.getPlayers());
     }

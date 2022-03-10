@@ -11,7 +11,8 @@ public enum Result {
         this.resultText = resultText;
     }
 
-    public String getText() {
-        return this.resultText;
+    @Override
+    public String toString() {
+        return resultText;
     }
 }

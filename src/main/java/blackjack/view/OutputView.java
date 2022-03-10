@@ -18,15 +18,15 @@ public class OutputView {
     private static final String PLAYER_RESULT_MESSAGE = "%s: %s" + System.lineSeparator();
     private static final String RESULT_FRONT_MESSAGE = System.lineSeparator() + "## 최종 승패";
 
-    public static void printHumanCardState(final Human human) {
+    public static void printHumanHand(final Human human) {
         System.out.printf(HUMAN_CARD_STATE_MESSAGE + System.lineSeparator(), human.getName(), human.getCards());
     }
 
     public static void printInitCards(final Table table) {
         OutputView.printInitCardState(table);
-        OutputView.printHumanCardState(table.getDealer());
+        OutputView.printHumanHand(table.getDealer());
         for (Player player : table.getPlayers().get()) {
-            OutputView.printHumanCardState(player);
+            OutputView.printHumanHand(player);
         }
         System.out.println();
     }
@@ -61,7 +61,7 @@ public class OutputView {
 
     public static void printPlayerResult(final Players players) {
         for (Player player : players.get()) {
-            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(), player.getResult().getText());
+            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(), player.getResult());
         }
     }
 }

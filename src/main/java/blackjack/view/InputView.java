@@ -2,9 +2,7 @@ package blackjack.view;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Scanner;
-import java.util.Set;
 
 public class InputView {
     private static final String NULL_NAMES_ERROR_MESSAGE = "이름에 공백을 입력할 수 없습니다.";
@@ -21,7 +19,7 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static String[] inputPlayerName() {
+    public static String[] inputPlayerNames() {
         System.out.println(NAME_INPUT_MESSAGE);
         String input = SCANNER.nextLine();
         validateNames(input);

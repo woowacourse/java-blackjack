@@ -4,10 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Symbol;
-import blackjack.domain.human.Dealer;
+import blackjack.domain.card.Suit;
 import blackjack.domain.human.Human;
-import blackjack.domain.human.Name;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
 import java.util.List;
@@ -23,7 +21,7 @@ class StatisticTest {
 
     void addCardList(Human human, List<String> cards) {
         for (String card : cards) {
-            human.addCard(Card.of(Denomination.of(card), Symbol.CLOVER));
+            human.addCard(Card.of(Denomination.of(card), Suit.CLOVER));
         }
     }
 

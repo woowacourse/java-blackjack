@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Dealer extends Human {
     private static final String DEALER_NAME = "딜러";
+    public static final int HIT_STANDARD_NUMBER = 16;
     private final Cards cards;
 
     private Dealer() {
@@ -17,8 +18,8 @@ public class Dealer extends Human {
     }
 
     @Override
-    public boolean isOneMoreCard() {
-        return cards.getPoint() <= 16;
+    public boolean isHit() {
+        return cards.getPoint() <= HIT_STANDARD_NUMBER;
     }
 
     @Override
