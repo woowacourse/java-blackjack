@@ -3,9 +3,11 @@ package blackjack.domain;
 public class Dealer extends Person{
 
     private static final int CONDITION_HIT = 16;
+    private static final String NAME = "딜러";
     private Cards cards;
 
     public Dealer() {
+        super(NAME);
         cards = new Cards();
     }
 
