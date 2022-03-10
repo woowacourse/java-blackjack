@@ -2,9 +2,8 @@ package blackjack.controller;
 
 import blackjack.domain.Statistic;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.GameResult;
-import blackjack.domain.human.Name;
 import blackjack.domain.human.Dealer;
+import blackjack.domain.human.Name;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
 import blackjack.view.InputView;
@@ -32,7 +31,7 @@ public class GameController {
 
         // 포인트 계산
         OutputView.printCardAndPoint(players, dealer);
-        Statistic.of(dealer,players).calculate();
+        Statistic.of(dealer, players).calculate();
 
         //게임 승패 출력
         printGameResult(players);

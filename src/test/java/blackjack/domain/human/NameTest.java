@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.human;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
