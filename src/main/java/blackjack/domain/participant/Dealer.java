@@ -6,9 +6,7 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    public static final int MAX_ACE_NUMBER = 11;
     public static final int MAX_RECEIVABLE_SCORE = 17;
-    public static final int BUST_THRESHOLD = 21;
 
     public Dealer(Name name) {
         super(name);
@@ -27,7 +25,7 @@ public class Dealer extends Participant {
                 .map(Card::getNumber)
                 .map(number -> {
                     if (number.getScore() == Number.ACE.getScore()) {
-                        return MAX_ACE_NUMBER;
+                        return number.getScore() + ACE_ADDITIONAL_NUMBER;
                     }
                     return number.getScore();
                 })
@@ -47,12 +45,8 @@ public class Dealer extends Participant {
 
     private int getLowest(int sum, Card card) {
         if (card.isAce()) {
-            sum -= 10;
+            sum -= ACE_ADDITIONAL_NUMBER;
         }
         return sum;
-    }
-
-    public String showOneCard() {
-        return cards.getCardHand().get(0).toString();
     }
 }

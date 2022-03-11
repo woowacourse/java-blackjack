@@ -6,9 +6,6 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    public static final int ACE_ADDITIONAL_NUMBER = 10;
-    public static final int BEST_SCORE = 21;
-
     private Player(Name name) {
         super(name);
     }
@@ -19,7 +16,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isReceivable() {
-        return calculateBestScore() <= BEST_SCORE;
+        return calculateBestScore() <= BUST_THRESHOLD;
     }
 
     @Override
@@ -39,7 +36,7 @@ public class Player extends Participant {
     }
 
     private int getBest(int sum, Card card) {
-        if (card.isAce() && sum + ACE_ADDITIONAL_NUMBER <= BEST_SCORE) {
+        if (card.isAce() && sum + ACE_ADDITIONAL_NUMBER <= BUST_THRESHOLD) {
             sum += ACE_ADDITIONAL_NUMBER;
         }
         return sum;
@@ -50,10 +47,10 @@ public class Player extends Participant {
     }
 
     private boolean isBusted(int score) {
-        return score > BEST_SCORE;
+        return score > BUST_THRESHOLD;
     }
 
     private boolean isCloserToBestScore(int score) {
-        return calculateBestScore() <= BEST_SCORE && calculateBestScore() > score;
+        return calculateBestScore() <= BUST_THRESHOLD && calculateBestScore() > score;
     }
 }

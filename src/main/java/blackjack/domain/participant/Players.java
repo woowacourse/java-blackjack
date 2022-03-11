@@ -20,8 +20,8 @@ public class Players {
 
     public static Players of(List<String> playerNames) {
         return new Players(new ArrayList<>(playerNames.stream()
-                        .map(Player::of)
-                        .collect(Collectors.toList())));
+                .map(Player::of)
+                .collect(Collectors.toList())));
     }
 
     public void receive(CardDeck cardDeck) {

@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import static blackjack.domain.participant.Participant.ADDITIONAL_CARD_COUNT;
 import static blackjack.domain.participant.Participant.INITIAL_CARD_HAND;
 
 import blackjack.domain.card.CardDeck;
@@ -34,17 +35,21 @@ public class Controller {
 
     private void playPlayersTurn(CardDeck cardDeck, Players players) {
         for (Player player : players.getPlayers()) {
-            while (isPlayable(player)) {
-                player.receive(cardDeck.distribute(1));
-                OutputView.printCardHandStatus(player);
-            }
+            playPlayerTurn(cardDeck, player);
+        }
+    }
+
+    private void playPlayerTurn(CardDeck cardDeck, Player player) {
+        while (isPlayable(player)) {
+            player.receive(cardDeck.distribute(ADDITIONAL_CARD_COUNT));
+            OutputView.printCardHandStatus(player);
         }
     }
 
     private void playDealerTurn(CardDeck cardDeck, Dealer dealer) {
         while (dealer.isReceivable()) {
             OutputView.printDealerStatus();
-            dealer.receive(cardDeck.distribute(1));
+            dealer.receive(cardDeck.distribute(ADDITIONAL_CARD_COUNT));
         }
     }
 
