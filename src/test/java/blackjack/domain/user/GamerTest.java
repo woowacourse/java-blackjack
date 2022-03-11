@@ -37,7 +37,7 @@ class GamerTest {
 		gamer.addCard(new Card(Number.TEN, Type.HEART));
 		gamer.addCard(new Card(Number.TWO, Type.SPADE));
 		//then
-		System.out.println(gamer.isBurst());
+		// System.out.println(gamer.getScore());
 		assertThat(gamer.isBurst()).isTrue();
 	}
 
@@ -50,7 +50,6 @@ class GamerTest {
 		gamer.addCard(new Card(Number.ACE, Type.SPADE));
 		gamer.addCard(new Card(Number.NINE, Type.SPADE));
 		// when
-		gamer.calculateOptimalScoreWithAce();
 		// then
 		assertThat(gamer).extracting("score").isEqualTo(21);
 	}

@@ -2,14 +2,14 @@ package blackjack.domain.user;
 
 public class Dealer extends Gamer {
 	public boolean hasHigherScore(Gamer gamer) {
-		return this.score.isBiggerThan(gamer.score.getScore());
+		return this.cards.hasHigherScore(gamer.cards);
 	}
 
 	public boolean hasEqualScore(Gamer gamer) {
-		return this.score.equals(gamer.score);
+		return this.cards.isEqualScoreWith(gamer.cards);
 	}
 
 	public boolean isHit() {
-		return this.score.isSmallerThan(17);
+		return this.cards.isHit();
 	}
 }
