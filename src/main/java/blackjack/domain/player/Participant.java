@@ -31,7 +31,7 @@ public class Participant extends Player {
     }
 
     public boolean isOverMaxScore() {
-        return getScoreByAceOne() > MAX_SCORE;
+        return cards.calculateScoreByAceOne() > MAX_SCORE;
     }
 
     public Result getWinState() {

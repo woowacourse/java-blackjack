@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int MAX_SCORE = 21;
+
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
@@ -34,10 +36,12 @@ public class Cards {
         }
     }
 
-    public int calculateScoreByAceOne() {
-        return cards.stream()
-                .mapToInt(card -> card.getScore().getAmount())
-                .sum();
+    public int calculateFinalScore() {
+        final int score = calculateScoreByAceEleven();
+        if (score <= MAX_SCORE) {
+            return score;
+        }
+        return calculateScoreByAceOne();
     }
 
     public int calculateScoreByAceEleven() {
@@ -45,6 +49,12 @@ public class Cards {
             return calculateScoreByAceOne() + Score.getDifferenceAcesScore();
         }
         return calculateScoreByAceOne();
+    }
+
+    public int calculateScoreByAceOne() {
+        return cards.stream()
+                .mapToInt(card -> card.getScore().getAmount())
+                .sum();
     }
 
     private boolean isContainsAce() {

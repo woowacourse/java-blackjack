@@ -40,7 +40,7 @@ public class Dealer extends Player {
     }
 
     public boolean acceptableCard() {
-        return getScoreByAceEleven() <= ADD_CARD_CONDITION;
+        return cards.calculateScoreByAceEleven() <= ADD_CARD_CONDITION;
     }
 
     public Card getCardFirstOne() {

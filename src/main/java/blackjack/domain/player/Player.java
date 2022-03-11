@@ -9,7 +9,7 @@ public abstract class Player {
 
     protected static final int MAX_SCORE = 21;
 
-    private final Cards cards;
+    protected final Cards cards;
     private final String name;
 
     Player(final List<Card> cards, final String name) {
@@ -18,19 +18,7 @@ public abstract class Player {
     }
 
     public int calculateFinalScore() {
-        final int score = getScoreByAceEleven();
-        if (score <= MAX_SCORE) {
-            return score;
-        }
-        return getScoreByAceOne();
-    }
-
-    protected int getScoreByAceEleven() {
-        return cards.calculateScoreByAceEleven();
-    }
-
-    protected int getScoreByAceOne() {
-        return cards.calculateScoreByAceOne();
+        return cards.calculateFinalScore();
     }
 
     public void addCard(final Card card) {
