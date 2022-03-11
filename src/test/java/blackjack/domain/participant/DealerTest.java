@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
-import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Status;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +39,7 @@ class DealerTest {
         // give
         final Dealer dealer = new Dealer();
         final CardFactory cardFactory = CardFactory.createNoShuffle();
-        dealer.init(cardFactory);
+        dealer.prepareGame(cardFactory);
 
         // when
         dealer.drawCards(cardFactory);
@@ -56,10 +55,10 @@ class DealerTest {
         // give
         final Dealer dealer = new Dealer();
         final CardFactory cardFactory = CardFactory.createNoShuffle();
-        dealer.init(cardFactory);
+        dealer.prepareGame(cardFactory);
 
         // when
-        final Card actual = dealer.openCard();
+        final Card actual = dealer.openFirstCard();
 
         // then
         assertThat(actual.getNumber()).isEqualTo(KING);

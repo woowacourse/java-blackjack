@@ -36,7 +36,7 @@ public class GameController {
     private void init(final Game game) {
         game.init();
 
-        OutputView.printInitResult(game.getNames());
+        OutputView.printInitResult(game.getPlayerNames());
         OutputView.printDealerFirstCard(game.openCard());
         game.getPlayers().stream()
                 .map(ParticipantVo::new)

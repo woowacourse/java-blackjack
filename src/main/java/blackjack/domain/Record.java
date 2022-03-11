@@ -9,20 +9,20 @@ public enum Record {
     LOSS("패", "승");
 
     private final String name;
-    private final String opposite;
+    private final String oppositeName;
 
-    Record(String name, String opposite) {
+    Record(String name, String oppositeName) {
         this.name = name;
-        this.opposite = opposite;
+        this.oppositeName = oppositeName;
     }
 
     public String getName() {
         return name;
     }
 
-    public Record getOpposite() {
+    public Record getOppositeName() {
         return Arrays.stream(Record.values())
-                .filter(record -> record.name.equals(opposite))
+                .filter(record -> record.name.equals(oppositeName))
                 .findFirst()
                 .orElseThrow();
     }

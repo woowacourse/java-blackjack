@@ -2,6 +2,8 @@ package blackjack.domain;
 
 public class Name {
 
+    private static final int LENGTH_UPPER_BOUND = 100;
+    
     private final String value;
 
     public Name(final String value) {
@@ -21,8 +23,8 @@ public class Name {
     }
 
     private void validateLength(String value) {
-        if (value.length() > 100) {
-            throw new IllegalArgumentException("길이는 100자를 초과할 수 없습니다.");
+        if (value.length() > LENGTH_UPPER_BOUND) {
+            throw new IllegalArgumentException("길이는 " + LENGTH_UPPER_BOUND + "자를 초과할 수 없습니다.");
         }
     }
     

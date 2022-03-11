@@ -35,11 +35,11 @@ public class CardFactory {
 
     private static List<Card> createAllCards() {
         return Arrays.stream(CardSymbol.values())
-                .flatMap(symbol -> createSymbolCards(symbol).stream())
+                .flatMap(symbol -> createCardsBySymbol(symbol).stream())
                 .collect(Collectors.toList());
     }
 
-    private static List<Card> createSymbolCards(CardSymbol symbol) {
+    private static List<Card> createCardsBySymbol(CardSymbol symbol) {
         return Arrays.stream(CardNumber.values())
                 .map(cardNumber -> new Card(symbol, cardNumber))
                 .collect(Collectors.toList());

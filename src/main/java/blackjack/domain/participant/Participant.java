@@ -15,7 +15,7 @@ public abstract class Participant {
         this.status = Status.HIT;
     }
 
-    public void init(CardFactory cardFactory) {
+    public void prepareGame(CardFactory cardFactory) {
         cards.add(cardFactory.drawCard());
         cards.add(cardFactory.drawCard());
     }
@@ -25,7 +25,7 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        return cards.sum();
+        return cards.sumValue();
     }
 
     public void hit(CardFactory cardFactory) {

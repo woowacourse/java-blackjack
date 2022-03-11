@@ -81,7 +81,7 @@ class PlayerTest {
         final Player player = new Player("pobi");
 
         // when
-        player.init(CardFactory.createNoShuffle());
+        player.prepareGame(CardFactory.createNoShuffle());
         final int actual = player.getScore();
 
         // then

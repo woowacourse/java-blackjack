@@ -7,27 +7,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Set;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class CardsTest {
-
-    @Test
-    @DisplayName("여러장의 카드가 주어지면 객체를 생성한다.")
-    void createCards() {
-        // given
-        final Cards cards = new Cards(Set.of(new Card(DIAMOND, ACE),
-                new Card(DIAMOND, TEN)));
-
-        // when
-        int actual = cards.getSize();
-
-        // then
-        assertThat(actual).isEqualTo(2);
-    }
 
     @ParameterizedTest
     @MethodSource("provideCards")
@@ -37,7 +22,7 @@ class CardsTest {
         final Cards cards = new Cards(value);
 
         // when
-        int actual = cards.sum();
+        int actual = cards.sumValue();
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -49,20 +34,6 @@ class CardsTest {
                 Arguments.of(Set.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE)), 5),
                 Arguments.of(Set.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, JACK)), 20)
         );
-    }
-
-    @Test
-    @DisplayName("카드를 추가한다.")
-    void add() {
-        // give
-        final Cards cards = new Cards(Set.of(new Card(DIAMOND, ACE)));
-
-        // when
-        cards.add(new Card(DIAMOND, TEN));
-        int actual = cards.getSize();
-
-        // then
-        assertThat(actual).isEqualTo(2);
     }
 
     @ParameterizedTest
@@ -85,7 +56,7 @@ class CardsTest {
     @DisplayName("BUST이고 ACE를 포함하면 ACE의 값을 1로 바꾼다.")
     void changeAceValue(Cards cards, int expected) {
         // when
-        final int actual = cards.sum();
+        final int actual = cards.sumValue();
 
         // then
         assertThat(actual).isEqualTo(expected);

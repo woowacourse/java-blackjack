@@ -7,7 +7,7 @@ public class Player extends Participant {
 
     private final Name name;
 
-    public Player(String name) {
+    public Player(final String name) {
         this.name = new Name(name);
     }
 
@@ -16,6 +16,7 @@ public class Player extends Participant {
         updateStatus();
     }
 
+    @Override
     public String getName() {
         return name.getValue();
     }

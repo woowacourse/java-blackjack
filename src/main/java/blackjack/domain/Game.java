@@ -42,12 +42,18 @@ public class Game {
     }
 
     public void init() {
-        dealer.init(cardFactory);
-        players.forEach(player -> player.init(cardFactory));
+        dealer.prepareGame(cardFactory);
+        players.forEach(player -> player.prepareGame(cardFactory));
     }
 
     public int getRemainAmount() {
         return cardFactory.getRemainAmount();
+    }
+
+    public Optional<Player> findHitPlayer() {
+        return players.stream()
+                .filter(Player::isHit)
+                .findFirst();
     }
 
     public void progressPlayerTurn(Player player, Status status) {
@@ -56,12 +62,6 @@ public class Game {
             return;
         }
         player.stay();
-    }
-
-    public Optional<Player> findHitPlayer() {
-        return players.stream()
-                .filter(Player::isHit)
-                .findFirst();
     }
 
     public CardCount progressDealerTurn() {
@@ -73,7 +73,7 @@ public class Game {
     }
 
     public Card openCard() {
-        return dealer.openCard();
+        return dealer.openFirstCard();
     }
 
     public RecordFactory getRecordFactory() {
@@ -92,7 +92,7 @@ public class Game {
         return list;
     }
 
-    public List<String> getNames() {
+    public List<String> getPlayerNames() {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.toList());

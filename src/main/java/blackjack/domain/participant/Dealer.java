@@ -9,10 +9,7 @@ import java.util.List;
 public class Dealer extends Participant {
 
     private static final int SCORE_LOWER_BOUND = 17;
-
-    public Dealer() {
-        super();
-    }
+    private static final String NAME = "딜러";
 
     void init(List<Card> rawCards) {
         for (Card rawCard : rawCards) {
@@ -21,20 +18,20 @@ public class Dealer extends Participant {
     }
 
     public CardCount drawCards(CardFactory cardFactory) {
-        int count = 0;
+        int drawCount = 0;
         while (getStatus() == Status.HIT && getScore() < SCORE_LOWER_BOUND) {
             hit(cardFactory);
-            count++;
+            drawCount++;
         }
 
-        return CardCount.of(count);
+        return CardCount.of(drawCount);
     }
 
-    public Card openCard() {
+    public Card openFirstCard() {
         return getCards().findFirst();
     }
 
     public String getName() {
-        return "딜러";
+        return NAME;
     }
 }

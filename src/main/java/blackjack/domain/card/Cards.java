@@ -6,6 +6,7 @@ import java.util.Set;
 public class Cards {
 
     private static final int MAX_SCORE = 21;
+    private static final int UPGRADE_AMOUNT = 10;
 
     private final Set<Card> value;
 
@@ -17,32 +18,30 @@ public class Cards {
         value.add(card);
     }
 
-    public int getSize() {
-        return value.size();
-    }
-
     public Status getStatus() {
-        if (sum() > MAX_SCORE) {
+        if (sumValue() > MAX_SCORE) {
             return Status.BUST;
         }
 
         return Status.HIT;
     }
 
-    public int sum() {
-        int sum = value.stream()
+    public int sumValue() {
+        int totalValue = value.stream()
                 .mapToInt(Card::getNumberValue)
                 .sum();
 
-        if (sum <= 11 && hasAce()) {
-            sum += 10;
+        if (canUpgradeAce(totalValue)) {
+            totalValue += UPGRADE_AMOUNT;
         }
-        return sum;
+        return totalValue;
     }
 
-    private boolean hasAce() {
-        return value.stream()
+    private boolean canUpgradeAce(final int totalValue) {
+        final boolean hasAce = value.stream()
                 .anyMatch(Card::isAce);
+
+        return totalValue <= 11 && hasAce;
     }
 
     public Card findFirst() {
