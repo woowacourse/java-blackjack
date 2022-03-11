@@ -6,13 +6,13 @@ import blackjack.domain.game.Score;
 
 public class Dealer extends Participant {
 
+    public static final String UNIQUE_NAME = "딜러";
     private static final int MAXIMUM_CARDS_QUANTITY = 3;
-    private static final String DEALER_NAME = "딜러";
     private static final String INVALID_CARD_QUANTITY_EXCEPTION_MESSAGE = "딜러는 최대 3장의 카드만 지닐 수 있습니다.";
     private static final String EMPTY_CARD_BUNDLE_EXCEPTION_MESSAGE = "딜러는 카드를 최소 2장의 카드를 지니고 있어야 합니다.";
 
     private Dealer(final CardBundle cardBundle) {
-        super(DEALER_NAME, cardBundle);
+        super(UNIQUE_NAME, cardBundle);
     }
 
     public static Dealer of(final CardBundle cardBundle) {

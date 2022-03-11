@@ -29,7 +29,7 @@ public class BlackjackGameTest {
     void constructor_initsGameWithPlayerNames() {
         BlackjackGame blackjackGame = new BlackjackGame(new CardDeck(), playerNames);
 
-        List<Player> participants = blackjackGame.getParticipants();
+        List<Player> participants = blackjackGame.getPlayers();
 
         assertThat(participants.size()).isEqualTo(2);
         assertThat(participants.get(0).getName()).isEqualTo("hudi");

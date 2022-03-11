@@ -4,9 +4,10 @@ import blackjack.domain.card.Card;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.ResultStatistics;
 import blackjack.domain.game.ResultType;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.dto.InitialDistributionDto;
+import blackjack.dto.ParticipantCardsDto;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,26 +22,32 @@ public class OutputView {
 
     private static final String JOIN_DELIMITER = ", ";
     private static final String INITIAL_CARD_DISTRIBUTION_MESSAGE = NEW_LINE + "딜러와 %s에게 2장의 카드를 나누었습니다." + NEW_LINE;
-    private static final String DEALER_INITIAL_CARD_FORMAT = "딜러: %s" + NEW_LINE;
     private static final String PLAYER_CARDS_FORMAT = "%s 카드: %s";
     private static final String PARTICIPANT_CARDS_AND_SCORE_FORMAT = NEW_LINE + "%s 카드: %s - 결과: %d";
     private static final String PLAYER_BUST_MESSAGE = "버스트! 21을 초과하였습니다!";
     private static final String DEALER_EXTRA_CARD_MESSAGE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
-    // TODO: DTO 로 변경
-    public static void printInitialParticipantsCards(BlackjackGame blackjackGame) {
+    public static void printInitialParticipantsCards(InitialDistributionDto dto) {
         StringBuilder builder = new StringBuilder();
+        List<ParticipantCardsDto> participantInfos = dto.getParticipantsInfo();
 
-        builder.append(getParticipantsCardCountInfo(blackjackGame))
-                .append(getDealerCardInfo(blackjackGame.getDealer()));
-
-        List<Player> players = blackjackGame.getParticipants();
-        for (Player player : players) {
-            builder.append(getParticipantCardsInfo(player))
+        builder.append(getParticipantsCardCountInfo(dto.getPlayerNames()));
+        for (ParticipantCardsDto participantInfo : participantInfos) {
+            builder.append(getParticipantCardsInfo(participantInfo))
                     .append(NEW_LINE);
         }
 
         print(builder.toString());
+    }
+
+    private static String getParticipantsCardCountInfo(List<String> playerNames) {
+        String joinedPlayerNames = String.join(JOIN_DELIMITER, playerNames);
+        return String.format(INITIAL_CARD_DISTRIBUTION_MESSAGE, joinedPlayerNames);
+    }
+
+    private static String getParticipantCardsInfo(ParticipantCardsDto dto) {
+        String cards = getCardsInfo(dto.getCards());
+        return String.format(PLAYER_CARDS_FORMAT, dto.getName(), cards);
     }
 
     public static void printPlayerCardsInfo(Player player) {
@@ -58,7 +65,7 @@ public class OutputView {
     // TODO: DTO 로 변경
     public static void printAllCardsAndScore(BlackjackGame blackjackGame) {
         List<Participant> participants = new ArrayList<>(List.of(blackjackGame.getDealer()));
-        participants.addAll(blackjackGame.getParticipants());
+        participants.addAll(blackjackGame.getPlayers());
 
         StringBuilder builder = new StringBuilder();
         for (Participant participant : participants) {
@@ -96,19 +103,9 @@ public class OutputView {
         }
     }
 
-    private static String getParticipantsCardCountInfo(BlackjackGame blackjackGame) {
-        String playerNames = mapAndJoinString(blackjackGame.getParticipants(), Player::getName);
-        return String.format(INITIAL_CARD_DISTRIBUTION_MESSAGE, playerNames);
-    }
-
-    private static String getDealerCardInfo(Dealer dealer) {
-        Card dealerCard = dealer.getOpenCard();
-        return String.format(DEALER_INITIAL_CARD_FORMAT, dealerCard.getName());
-    }
-
-    private static String getParticipantCardsInfo(Player player) {
-        String playerCards = getCardsInfo(player.getCards());
-        return String.format(PLAYER_CARDS_FORMAT, player.getName(), playerCards);
+    private static String getParticipantCardsInfo(Participant participant) {
+        String playerCards = getCardsInfo(participant.getCards());
+        return String.format(PLAYER_CARDS_FORMAT, participant.getName(), playerCards);
     }
 
     private static String getParticipantCardsAndScore(Participant participant) {

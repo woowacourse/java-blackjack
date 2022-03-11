@@ -15,14 +15,14 @@ public class BlackjackGame {
 
     private final CardStack cardDeck;
     private final Dealer dealer;
-    private final List<Player> participants = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
 
     public BlackjackGame(CardStack cardDeck, List<String> playerNames) {
         validatePlayerNames(playerNames);
 
         this.cardDeck = cardDeck;
         this.dealer = Dealer.of(initializeCardBundle());
-        participants.addAll(initializePlayers(playerNames));
+        players.addAll(initializePlayers(playerNames));
     }
 
     private List<Player> initializePlayers(List<String> playerNames) {
@@ -54,8 +54,8 @@ public class BlackjackGame {
         return dealer;
     }
 
-    public List<Player> getParticipants() {
-        return participants;
+    public List<Player> getPlayers() {
+        return players;
     }
 
     private CardBundle initializeCardBundle() {
@@ -67,7 +67,7 @@ public class BlackjackGame {
         return "BlackjackGame{" +
                 "cardDeck=" + cardDeck +
                 ", dealer=" + dealer +
-                ", participants=" + participants +
+                ", players=" + players +
                 '}';
     }
 }

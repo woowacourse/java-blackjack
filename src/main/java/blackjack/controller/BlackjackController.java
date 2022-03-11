@@ -11,6 +11,7 @@ import blackjack.domain.game.ResultType;
 import blackjack.domain.game.Score;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.InitialDistributionDto;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,13 @@ public class BlackjackController {
 
     public BlackjackGame initializeGame(List<String> playerNames) {
         return new BlackjackGame(new CardDeck(), playerNames);
+    }
+
+    public InitialDistributionDto getInitialDistribution(BlackjackGame game) {
+        Dealer dealer = game.getDealer();
+        List<Player> players = game.getPlayers();
+
+        return InitialDistributionDto.of(dealer, players);
     }
 
     public void givePlayerCards(Player player, BlackjackGame game) {
@@ -34,7 +42,7 @@ public class BlackjackController {
 
     public List<ResultStatistics> finishGame(BlackjackGame game) {
         Dealer dealer = game.getDealer();
-        List<Player> players = game.getParticipants();
+        List<Player> players = game.getPlayers();
 
         ResultStatistics dealerResult = ResultStatistics.of(dealer.getName());
         Score dealerScore = dealer.getCurrentScore();

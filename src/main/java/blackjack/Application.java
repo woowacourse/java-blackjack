@@ -17,9 +17,9 @@ public class Application {
 
     public static void main(String[] args) {
         BlackjackGame blackjackGame = blackjackController.initializeGame(requestPlayerNamesInput());
-        printInitialParticipantsCards(blackjackGame);
+        printInitialParticipantsCards(blackjackController.getInitialDistribution(blackjackGame));
 
-        List<Player> players = blackjackGame.getParticipants();
+        List<Player> players = blackjackGame.getPlayers();
         for (Player player : players) {
             blackjackController.givePlayerCards(player, blackjackGame);
         }
