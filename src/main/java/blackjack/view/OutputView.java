@@ -18,13 +18,10 @@ public class OutputView {
     }
 
     private static void printGamers(GamerDto dealer, List<GamerDto> players) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(dealer.getName() + "와 ");
         String names = players.stream()
                 .map(GamerDto::getName)
                 .collect(Collectors.joining(", "));
-        builder.append(names + "에게 " + dealer.getCardSize() + "장을 나누었습니다.");
-        System.out.println(builder);
+        System.out.printf("%s와 %s에게 %d장을 나누었습니다.\n", dealer.getName(), names, dealer.getCardSize());
     }
 
     private static void printDealerFirstCard(GamerDto dealer) {
@@ -56,7 +53,7 @@ public class OutputView {
             System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n\n", count);
             return;
         }
-        System.out.println("딜러는 17이상이라 카드를 더 받지 않았습니다.\n\n");
+        System.out.println("딜러는 17이상이라 카드를 더 받지 않았습니다.\n");
     }
 
     public static void printFinalCards(GamerDto dealer, List<GamerDto> players) {
@@ -65,21 +62,15 @@ public class OutputView {
     }
 
     private static void printDealerFinalCards(GamerDto dealer) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(dealer.getName() + "카드: ");
-        builder.append(getCardNames(dealer));
-        builder.append("- 결과: " + dealer.getCardNumberSum() );
-        System.out.println(builder);
+        System.out.printf("%s카드: %s- 결과: %d\n",
+                dealer.getName(), getCardNames(dealer), dealer.getCardNumberSum());
     }
 
     private static void printPlayerFinalCards(List<GamerDto> players) {
-        StringBuilder builder = new StringBuilder();
         for (GamerDto player : players) {
-            builder.append(player.getName() + "카드: ");
-            builder.append(getCardNames(player));
-            builder.append("- 결과: " + player.getCardNumberSum() + "\n");
+            System.out.printf("%s카드: %s- 결과: %d\n",
+                    player.getName(), getCardNames(player), player.getCardNumberSum());
         }
-        System.out.println(builder);
     }
 
     public static void printFinalResult(GameResultDto gameResultDto) {
@@ -98,16 +89,13 @@ public class OutputView {
 
     private static void getDealerSingleResult(Map<BlackJackResult, Integer> dealerResult, BlackJackResult dealer) {
         if (dealerResult.get(dealer) > 0) {
-            System.out.print(dealerResult.get(dealer) + dealer.getValue()+ " ");
+            System.out.print(dealerResult.get(dealer) + dealer.getValue() + " ");
         }
     }
 
     private static void printFinalPlayerResult(Map<String, BlackJackResult> playerResult) {
-        StringBuilder builder = new StringBuilder();
         for (String name : playerResult.keySet()) {
-            builder.append(name+": ");
-            builder.append(playerResult.get(name).getValue() + "\n");
+            System.out.printf("%s: %s\n", name, playerResult.get(name).getValue());
         }
-        System.out.print(builder);
     }
 }
