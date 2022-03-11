@@ -1,6 +1,5 @@
 package blackjack.domain.card.strategy;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -16,11 +15,10 @@ public class RandomCardStrategy implements CardStrategy {
     private final List<Card> cards;
 
     public RandomCardStrategy() {
-        final List<Card> cards = new ArrayList<>();
-        for (final CardPattern cardPattern : CardPattern.values()) {
-            cards.addAll(createCardsPerPattern(cardPattern));
-        }
-        this.cards = cards;
+        this.cards = Arrays.stream(CardPattern.values())
+                .map(this::createCardsPerPattern)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
     }
 
     private List<Card> createCardsPerPattern(final CardPattern cardPattern) {
