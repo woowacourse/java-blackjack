@@ -25,8 +25,8 @@
     - 카드 목록 및 총합 출력 (ex: 딜러 카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20)
     - 최종 승패 계산
     - 최종 승패 출력
-        - 딜러 n승 n패 출력
-        - 참가자 승/패 결과만 출력
+        - 딜러 n승 n무 n패 출력
+        - 참가자 승/패/무 결과만 출력
 
 ## 기능 요구 사항
 
@@ -40,25 +40,3 @@
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
 
-// BlackJackGame(List<Player> players, Dealer dealer)
-// blackJackGame.distributeCard() - 각자 카드 2장씩
-
-// for (Player player : players)
-// player.canDraw() - y입력되면 true, n 입력되면 false
-// player.drawCard(Card){값추가}
-// player.getter() ->  view에서 보여주기
-// Dealer.drawCard()
-
-//  승패결과 BlackJackResult
-
-/* 보고계시나요~~~`~~`` 정리되셨나여 hrd 퇴실
-for(Player player: players) {
-    if(!player.isBurst() && InputView.wantDraw()) {
-        player.drawCard(CardDistributor.distribute());
-    }
-}
-
-if(!dealer.isBurst()) {
-    dealer.drawCard(CardDistributor.distribute());
-}
-*/
