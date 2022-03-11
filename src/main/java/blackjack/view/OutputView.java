@@ -13,14 +13,17 @@ public class OutputView {
     private static final String TOTAL_RESULT_MESSAGE = "## 최종 승패";
     private static final String WIN_DRAW_LOSE_STATUS_MESSAGE = "%s: %s";
     private static final String HIT_RESULT_MESSAGE = "%s: %s - 결과: %d";
+    private static final String CARD_JOINING_DELIMITER = ", ";
+    private static final String STATUS_DELIMITER = ": ";
 
     public static void printInitCard(Map<String, List<CardDto>> cardStatus) {
-        cardStatus.forEach((key, value) -> System.out.println(key + ": " + joinCardString(value)));
+        cardStatus.forEach((key, value) -> System.out.println(key + STATUS_DELIMITER + joinCardString(value)));
     }
 
-    public static void printPresentStatus(String name, List<CardDto> cardDtos, int score, boolean isBust) {
+    public static void printPresentStatus(String name, List<CardDto> cards, int score, boolean isBust) {
         System.out.println();
-        StringBuilder messageBuilder = new StringBuilder(String.format(WIN_DRAW_LOSE_STATUS_MESSAGE, name, joinCardString(cardDtos)));
+        StringBuilder messageBuilder = new StringBuilder(
+                String.format(WIN_DRAW_LOSE_STATUS_MESSAGE, name, joinCardString(cards)));
         if (isBust) {
             messageBuilder.append(String.format(PLAYER_BUST_MESSAGE, name, score));
         }
@@ -33,16 +36,16 @@ public class OutputView {
                 joinCardString(hitResult.getCards()), hitResult.getScore()));
     }
 
-    private static String joinCardString(List<CardDto> cardDtos) {
-        return cardDtos.stream()
+    private static String joinCardString(List<CardDto> cards) {
+        return cards.stream()
                 .map(card -> card.getDenomination() + card.getSuit())
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(CARD_JOINING_DELIMITER));
     }
 
-    public static void printResult(List<WinDrawLoseDto> winDrawLoseDtos) {
+    public static void printResult(List<WinDrawLoseDto> winDrawLoseResults) {
         System.out.println();
         System.out.println(TOTAL_RESULT_MESSAGE);
-        winDrawLoseDtos.forEach(
+        winDrawLoseResults.forEach(
                 winDrawLoseDto -> System.out.printf(WIN_DRAW_LOSE_STATUS_MESSAGE + "\n", winDrawLoseDto.getName(),
                         winDrawLoseDto.getWinDrawLoseString()));
     }
