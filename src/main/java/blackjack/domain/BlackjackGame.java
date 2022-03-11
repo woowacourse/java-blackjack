@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.Dealer;
@@ -18,7 +19,7 @@ public class BlackjackGame {
     private final Players players;
 
     public BlackjackGame(List<String> names) {
-        this.deck = Deck.create();
+        this.deck = Deck.of(Card.createDeck());
         this.players = new Players(new Dealer(new HoldCards(deck.draw(), deck.draw())), toPlayers(names));
     }
 
