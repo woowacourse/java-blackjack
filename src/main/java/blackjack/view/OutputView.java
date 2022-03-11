@@ -10,30 +10,35 @@ import blackjack.dto.PlayersDto;
 import java.util.List;
 
 public class OutputView {
-    private static final String INITIAL_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.%n";
-
-    public void print(List<String> playerNames) {
-        final String joinNames = String.join(", ", playerNames);
-
-        System.out.printf(INITIAL_MESSAGE, joinNames);
-    }
+    private static final String WITH_DEALER_NAME = "딜러와 ";
+    private static final String COMMA_DELIMITER = ", ";
+    private static final String SEPARATE_TWO_CARD = "에게 2장을 나누었습니다.";
+    private static final String COLON_DELIMITER = ": ";
+    private static final String UNDER_SIXTEEN_INSTRUCTION = "는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String SUFFIX_CARD = "카드: ";
+    private static final String SUFFIX_RESULT = " - 결과: ";
+    private static final String BURST_INSTRUCTION = "님 버스트로 패배하였습니다.";
+    private static final String FINAL_RESULT_INSTRUCTION = "## 최종 승패";
+    private static final String DEALER_NAME = "딜러";
+    private static final String BLANK_DELIMITER = " ";
+    private static final String NEWLINE_DELIMITER = "\n";
 
     public String getCardNames(List<PlayingCard> playingCards) {
         return playingCards.stream()
             .map(PlayingCard::getCardName)
-            .collect(joining(", "));
+            .collect(joining(COMMA_DELIMITER));
     }
 
-    public void printSpreadInstruction(PlayersDto PlayerDtos) {
+    public void printSpreadInstruction(PlayersDto PlayersDto) {
         System.out.println();
-        System.out.println("딜러와 " + PlayerDtos.getValue()
+        System.out.println(WITH_DEALER_NAME + PlayersDto.getValue()
             .stream()
             .map(PlayerDto::getName)
-            .collect(joining(", ")) + "에게 2장을 나누었습니다.");
+            .collect(joining(COMMA_DELIMITER)) + SEPARATE_TWO_CARD);
     }
 
     public void printSingleCardForDealer(PlayerDto dealer) {
-        System.out.println(dealer.getName() + ": " + dealer.getPlayingCards().get(0).getCardName());
+        System.out.println(dealer.getName() + COLON_DELIMITER + dealer.getPlayingCards().get(0).getCardName());
     }
 
     public void printCardsForGambler(final PlayersDto players) {
@@ -42,24 +47,24 @@ public class OutputView {
     }
 
     public void printCards(final PlayerDto playerDto) {
-        System.out.println(playerDto.getName() + ": " + getCardNames(playerDto.getPlayingCards()));
+        System.out.println(playerDto.getName() + COLON_DELIMITER + getCardNames(playerDto.getPlayingCards()));
     }
 
     public void printDealerAddCard(Player dealer) {
         System.out.println();
-        System.out.println(dealer.getName() + "는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(dealer.getName() + UNDER_SIXTEEN_INSTRUCTION);
     }
 
     public void printCardAndScore(PlayersDto playersDto) {
         playersDto.getValue()
             .forEach(playerDto -> System.out.println(
-                playerDto.getName() + "카드: " + getCardNames(playerDto.getPlayingCards()) + " - 결과: "
+                playerDto.getName() + SUFFIX_CARD + getCardNames(playerDto.getPlayingCards()) + SUFFIX_RESULT
                     + playerDto.getScore()));
     }
 
     public void printBurst(final PlayerDto playerDto) {
         printCards(playerDto);
-        System.out.println(playerDto.getName() + "님 버스트로 패배하였습니다.");
+        System.out.println(playerDto.getName() + BURST_INSTRUCTION);
     }
 
     public void printNewLine() {
@@ -68,9 +73,10 @@ public class OutputView {
 
     public void printResult(final BlackJackResultDto blackJackResultDto) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: " + String.join(" ", blackJackResultDto.getDealerResult()));
-        System.out.println(String.join("\n", blackJackResultDto.getGamblerResult()));
+        System.out.println(FINAL_RESULT_INSTRUCTION);
+        System.out.println(
+            DEALER_NAME + COLON_DELIMITER + String.join(BLANK_DELIMITER, blackJackResultDto.getDealerResult()));
+        System.out.println(String.join(NEWLINE_DELIMITER, blackJackResultDto.getGamblerResult()));
     }
 
 }

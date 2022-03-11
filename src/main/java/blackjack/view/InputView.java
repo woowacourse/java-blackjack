@@ -10,9 +10,10 @@ import java.util.Scanner;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
+    private static final String SCAN_PLAYER_NAMES_INSTRUCTION = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
 
     public List<String> scanPlayerNames() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+        System.out.println(SCAN_PLAYER_NAMES_INSTRUCTION);
         final List<String> playerNames = getPlayerNames();
         validate(playerNames);
         return playerNames;

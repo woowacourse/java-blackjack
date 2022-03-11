@@ -19,25 +19,25 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class BlackJackController {
+
     private static final int DEFAULT_SPREAD_COUNT_START_INDEX = 0;
     private static final int DEFAULT_SPREAD_COUNT_END_INDEX = 2;
+
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
     public void start() {
-        final List<Player> gamblers = setupGamblers();
+        final List<Player> gamblers = getGambler();
         final Player dealer = new Dealer();
         final CardDeck cardDeck = new CardDeck();
 
         spreadCards(gamblers, dealer, cardDeck);
-
         playGame(gamblers, dealer, cardDeck);
-
         processResult(dealer, gamblers);
     }
 
 
-    public List<Player> setupGamblers() {
+    public List<Player> getGambler() {
         final List<String> playerNames = inputView.scanPlayerNames();
 
         return playerNames.stream()

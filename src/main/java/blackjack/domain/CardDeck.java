@@ -9,13 +9,16 @@ public class CardDeck {
     private final Stack<PlayingCard> playingCards;
 
     public CardDeck() {
-        Stack<PlayingCard> playingCards = Arrays.stream(Suit.values())
+        Stack<PlayingCard> playingCards = createPlayingCards();
+        Collections.shuffle(playingCards);
+        this.playingCards = playingCards;
+    }
+
+    private Stack<PlayingCard> createPlayingCards() {
+        return Arrays.stream(Suit.values())
             .flatMap(suit -> Arrays.stream(Denomination.values())
                 .map(denomination -> PlayingCard.of(suit, denomination)))
             .collect(Collectors.toCollection(Stack::new));
-
-        Collections.shuffle(playingCards);
-        this.playingCards = playingCards;
     }
 
     public PlayingCard getCard() {
