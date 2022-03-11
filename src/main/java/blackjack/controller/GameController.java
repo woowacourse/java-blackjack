@@ -20,17 +20,7 @@ public class GameController {
         progressPlayerTurns(game);
         progressDealerTurn(game);
 
-        OutputView.printParticipantCards(new ParticipantVo(game.getDealer()));
-        for (Player player : game.getPlayers()) {
-            OutputView.printParticipantCards(new ParticipantVo(player));
-        }
-
-        final RecordFactory recordFactory = game.getRecordFactory();
-
-        OutputView.printDealerRecord(recordFactory.getDealerRecord());
-        game.getPlayers()
-                .forEach(it ->
-                        OutputView.printPlayerRecord(it.getName(), recordFactory.getPlayerRecord(it.getName())));
+        endGame(game);
     }
 
     private Game createGame() {
@@ -77,4 +67,16 @@ public class GameController {
         final CardCount cardCount = game.drawDealerCard();
         OutputView.printDealerDrawCardCount(cardCount);
     }
+
+    private void endGame(final Game game) {
+        OutputView.printParticipantCards(new ParticipantVo(game.getDealer()));
+        game.getPlayers().stream()
+                .map(ParticipantVo::new)
+                .forEach(OutputView::printParticipantCards);
+
+
+        final RecordFactory factory = game.getRecordFactory();
+        OutputView.printRecord(factory.getDealerRecord(), factory.getAllPlayerRecord());
+    }
+
 }

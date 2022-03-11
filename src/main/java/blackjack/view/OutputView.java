@@ -3,6 +3,8 @@ package blackjack.view;
 import blackjack.domain.Record;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardCount;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.vo.ParticipantVo;
 import java.util.Arrays;
 import java.util.List;
@@ -47,7 +49,12 @@ public class OutputView {
                 + " - 결과: " + vo.getScore());
     }
 
-    public static void printDealerRecord(Map<Record, Integer> record) {
+    public static void printRecord(final Map<Record, Integer> dealerRecord, final Map<String, Record> playerRecords) {
+        printDealerRecord(dealerRecord);
+        playerRecords.forEach(OutputView::printPlayerRecord);
+    }
+
+    private static void printDealerRecord(Map<Record, Integer> record) {
         System.out.println(System.lineSeparator() + "## 최종 승패");
 
         final StringBuilder builder = new StringBuilder();
@@ -58,8 +65,8 @@ public class OutputView {
         System.out.println("딜러: " + builder);
     }
 
-    public static void printPlayerRecord(String name, Record record) {
-        System.out.println(name + ": " + record.getName());
+    private static void printPlayerRecord(String playerName, Record record) {
+        System.out.println(playerName + ": " + record.getName());
     }
 
     public static void printError(final String message) {

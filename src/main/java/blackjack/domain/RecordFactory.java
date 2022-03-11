@@ -39,6 +39,10 @@ public class RecordFactory {
         return playerRecord.get(name);
     }
 
+    public Map<String, Record> getAllPlayerRecord() {
+        return playerRecord;
+    }
+
     Record getPlayerRecord(int score) {
         return compareScore(score);
     }
