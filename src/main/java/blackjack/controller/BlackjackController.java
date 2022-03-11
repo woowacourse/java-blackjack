@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 public class BlackjackController {
 
+    private static final String DEALER = "딜러";
+
     public void playGame() {
         BlackjackGame blackjackGame = new BlackjackGame(InputView.inputPlayerNames());
         List<Player> players = blackjackGame.initGames();
@@ -43,7 +45,7 @@ public class BlackjackController {
     }
 
     private void turnEachPlayerIfGuest(BlackjackGame blackjackGame, Player player) {
-        if (player.getName().equals("딜러")) {
+        if (player.isDealer(DEALER)) {
             return;
         }
         while (checkGetMoreCard(player)) {

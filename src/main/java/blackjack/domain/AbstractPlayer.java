@@ -16,6 +16,11 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
+    public boolean isDealer(String name) {
+        return getName().equals(name);
+    }
+
+    @Override
     public String getName() {
         return name;
     }

@@ -10,6 +10,10 @@ public class GameResponse {
         this.deck = deck;
     }
 
+    public boolean isDealer(String name) {
+        return getName().equals(name);
+    }
+
     public String getName() {
         return name;
     }

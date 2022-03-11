@@ -5,6 +5,8 @@ import java.util.List;
 
 public class BlackjackGame {
 
+    private static final String DEALER = "딜러";
+
     private final Cards cards;
     private final List<Player> blackjackPlayers;
 
@@ -31,7 +33,7 @@ public class BlackjackGame {
 
     public Results calculateResult(List<Player> players) {
         Results results = new Results();
-        Player dealer = players.stream().filter(player -> player.getName().equals("딜러")).findFirst().orElseThrow();
+        Player dealer = players.stream().filter(player -> player.isDealer(DEALER)).findFirst().orElseThrow();
         for (Player player : players) {
             scoreResultIfGuest(dealer, player, results);
         }
@@ -39,7 +41,7 @@ public class BlackjackGame {
     }
 
     private void scoreResultIfGuest(Player dealer, Player player, Results results) {
-        if (player.getName().equals("딜러")) {
+        if (player.isDealer(DEALER)) {
             return;
         }
         scorePlayers(dealer, player, results);

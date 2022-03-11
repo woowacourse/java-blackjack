@@ -42,7 +42,7 @@ public class OutputView {
     }
 
     private static void separatePlayerForPresentCards(GameResponse gameResponse, StringBuilder sb) {
-        if (gameResponse.getName().equals(DEALER)) {
+        if (gameResponse.isDealer(DEALER)) {
             announcePresentDealerCards(gameResponse, sb);
             return;
         }

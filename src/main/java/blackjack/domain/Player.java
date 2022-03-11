@@ -6,6 +6,8 @@ public interface Player {
 
     boolean isOverLimit(int limit);
 
+    boolean isDealer(String name);
+
     String getName();
 
     Deck getDeck();
