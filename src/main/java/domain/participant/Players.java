@@ -65,7 +65,7 @@ public class Players {
     }
 
     public Map<Name, Versus> getResultAtDealerBlackJack(Dealer dealer) {
-        if (!dealer.isScore21()) {
+        if (!dealer.isBlackJack) {
             throw new IllegalStateException(NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE);
         }
         Map<Name, Versus> map = new LinkedHashMap<>();

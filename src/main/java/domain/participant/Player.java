@@ -12,7 +12,7 @@ public class Player extends Participant {
     }
 
     public Versus compareAtDealerBlackJack() {
-        if (isScore21()) {
+        if (this.isBlackJack) {
             return Versus.DRAW;
         }
         return Versus.LOSE;

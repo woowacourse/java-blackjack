@@ -26,18 +26,15 @@ public class Controller {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = new Players(names, generateInitCardsForPlayers(names, deck));
+
         printInitHands(names, dealer, players);
 
         if (dealer.isBlackJack) {
-            printBlackJackResult(names, dealer, players);
+            printDealerBlackJackResult(names, dealer, players);
             return;
         }
 
-        for (Name name : names) {
-            if (players.isScore21ByName(name)) {
-                OutputView.printPlayerBlackJackMessage(name.getName());
-            }
-        }
+        printBlackJackPlayer(names, players);
 
         drawForPlayers(names, deck, players);
         drawForDealer(deck, dealer, players);
@@ -74,7 +71,7 @@ public class Controller {
         OutputView.printParticipantStatus(dealer.showOneHand(), players.showHands());
     }
 
-    private void printBlackJackResult(List<Name> names, Dealer dealer, Players players) {
+    private void printDealerBlackJackResult(List<Name> names, Dealer dealer, Players players) {
         OutputView.printDealerBlackJackMessage();
         Result blackjackResult = new Result(players.getResultAtDealerBlackJack(dealer));
         OutputView.printResultTitle();
@@ -85,6 +82,14 @@ public class Controller {
         );
         for (Name name : names) {
             OutputView.printPlayerResult(name.getName(), blackjackResult.getVersusOfPlayer(name).getResult());
+        }
+    }
+
+    private void printBlackJackPlayer(List<Name> names, Players players) {
+        for (Name name : names) {
+            if (players.isScore21ByName(name)) {
+                OutputView.printPlayerBlackJackMessage(name.getName());
+            }
         }
     }
 
@@ -102,7 +107,7 @@ public class Controller {
         while (isKeepDraw && inputAskDraw(name.getName())) {
             players.addCardByName(name, deck.draw());
             OutputView.printHand(players.showHandByName(name));
-            isKeepDraw = checkBlackJackOrBust(players, name);
+            isKeepDraw = checkScore21OrBust(players, name);
         }
     }
 
@@ -121,7 +126,7 @@ public class Controller {
         }
     }
 
-    private boolean checkBlackJackOrBust(Players players, Name name) {
+    private boolean checkScore21OrBust(Players players, Name name) {
         if (players.isScore21ByName(name)) {
             OutputView.printBlackJackMessage();
             return false;
