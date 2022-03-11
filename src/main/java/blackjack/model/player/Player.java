@@ -10,7 +10,7 @@ public class Player {
     public static final Score HIT_BOUNDARY = new Score(21);
     public static final int OPEN_CARD_COUNT = 2;
 
-    protected final ScoreCards cards;
+    private final ScoreCards cards;
     private final Name name;
 
     public Player(Name name, Card card1, Card card2, Card... cards) {
