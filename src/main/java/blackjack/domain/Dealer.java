@@ -2,7 +2,7 @@ package blackjack.domain;
 
 public class Dealer extends AbstractPlayer implements Player {
 
-    private static final String DEALER_NAME = "딜러";
+    public static final String DEALER_NAME = "딜러";
     public static final int DEALER_LIMIT_POINT = 16;
 
     public Dealer() {
@@ -17,8 +17,12 @@ public class Dealer extends AbstractPlayer implements Player {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Dealer dealer = (Dealer) o;
 
