@@ -27,7 +27,7 @@ public enum MatchRecord {
                 .orElseThrow(() -> new IllegalArgumentException("결과를 찾을 수 없습니다."));
     }
 
-    public MatchRecord reverseResult() {
+    public MatchRecord reverseRecord() {
         if (this == MatchRecord.LOSS) {
             return MatchRecord.WIN;
         }

@@ -29,7 +29,7 @@ public class MatchRecordDto {
 
     private static Map<blackjack.domain.MatchRecord, Long> addUpDealerRecord(Map<Player, blackjack.domain.MatchRecord> playerMatchRecords) {
         return playerMatchRecords.values().stream()
-            .map(blackjack.domain.MatchRecord::reverseResult)
+            .map(blackjack.domain.MatchRecord::reverseRecord)
             .collect(Collectors.groupingBy(
                 Function.identity(),
                 TreeMap::new,
