@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.card.HoldingCard.*;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldingCard;
 
@@ -32,7 +34,7 @@ public abstract class Participant {
 
     public int calculateScore() {
         int score = holdingCard.calculateTotal();
-        if (score > 21) {
+        if (score > BLACK_JACK_SCORE) {
             return 0;
         }
         return score;

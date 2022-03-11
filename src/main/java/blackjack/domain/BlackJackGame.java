@@ -27,21 +27,8 @@ public class BlackJackGame {
                 .collect(Collectors.toList());
     }
 
-    public List<ParticipantDto> getParticipantsDto() {
-        List<ParticipantDto> participantDtos = new ArrayList<>();
-        participantDtos.add(ParticipantDto.of(dealer));
-        for (Participant player : players.getParticipants()) {
-            participantDtos.add(ParticipantDto.of(player));
-        }
-        return participantDtos;
-    }
-
     public boolean isAllPlayerFinished() {
         return players.isFinished();
-    }
-
-    public String getCurrentPlayerName() {
-        return players.getCurrentPlayer().getName();
     }
 
     public HoldingCard drawCurrentPlayer(DrawCommand drawCommand) {
@@ -61,7 +48,19 @@ public class BlackJackGame {
             dealer.receiveCard(CardDeck.drawCard());
             System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         }
-        System.out.println();
+    }
+
+    public String getCurrentPlayerName() {
+        return players.getCurrentPlayer().getName();
+    }
+
+    public List<ParticipantDto> getParticipantsDto() {
+        List<ParticipantDto> participantDtos = new ArrayList<>();
+        participantDtos.add(ParticipantDto.of(dealer));
+        for (Participant player : players.getParticipants()) {
+            participantDtos.add(ParticipantDto.of(player));
+        }
+        return participantDtos;
     }
 
     public Map<GameResult, Integer> getDealerResult() {

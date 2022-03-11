@@ -11,7 +11,6 @@ public class Player extends Participant {
         validateEmptyName(name);
     }
 
-
     private void validateEmptyName(String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 빈 이름이 있습니다.");

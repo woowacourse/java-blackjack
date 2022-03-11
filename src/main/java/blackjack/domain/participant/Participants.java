@@ -22,16 +22,8 @@ public class Participants {
         }
     }
 
-    public List<Participant> getParticipants() {
-        return participants;
-    }
-
     public boolean isFinished() {
         return nowTurnIndex >= participants.size();
-    }
-
-    public Participant getCurrentPlayer() {
-        return participants.get(nowTurnIndex);
     }
 
     public void skipTurn() {
@@ -54,6 +46,14 @@ public class Participants {
             playersGameResult.put(participant.getName(), result);
         }
         return playersGameResult;
+    }
+
+    public Participant getCurrentPlayer() {
+        return participants.get(nowTurnIndex);
+    }
+
+    public List<Participant> getParticipants() {
+        return participants;
     }
 
 }

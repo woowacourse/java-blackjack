@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HoldingCard {
-    private static final int BLACK_JACK_SCORE = 21;
+    public static final int BLACK_JACK_SCORE = 21;
     private final List<Card> holdingCard;
 
     public HoldingCard(List<Card> cards) {
