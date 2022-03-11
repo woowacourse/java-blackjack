@@ -60,4 +60,8 @@ public class OutputView {
     public static void printPlayerRecord(String name, Record record) {
         System.out.println(name + ": " + record.getName());
     }
+
+    public static void printError(final String message) {
+        System.out.println("[ERROR]: " + message);
+    }
 }
