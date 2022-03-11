@@ -1,11 +1,7 @@
-package blackjack.fuel;
+package fuel;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import fuel.Avante;
-import fuel.K5;
-import fuel.RentCompany;
-import fuel.Sonata;
 import org.junit.jupiter.api.Test;
 
 public class RentCompanyTest {
