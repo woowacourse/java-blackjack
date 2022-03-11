@@ -29,7 +29,9 @@ public class BlackJackController {
 		return new GamerDto(dealer);
 	}
 
-	public void askHitOrStay(List<String> names, UnaryOperator<String> operator, Consumer<GamerDto> consumer) {
+	public void askHitOrStay(List<String> names,
+							UnaryOperator<String> operator,
+							Consumer<GamerDto> consumer) {
 		for (String name : names) {
 			hitOrStay(operator, consumer, name);
 		}
