@@ -32,7 +32,7 @@ public class CardFactory {
 
         return new CardFactory(deck);
     }
-    // 모든 카드 만들기
+
     private static List<Card> createAllCards() {
         return Arrays.stream(CardSymbol.values())
                 .flatMap(symbol -> createSymbolCards(symbol).stream())
