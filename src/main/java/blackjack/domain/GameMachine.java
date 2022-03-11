@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.dto.ParticipantDto;
+import blackjack.dto.ScoreResultDto;
 import java.util.List;
 import java.util.Map;
 

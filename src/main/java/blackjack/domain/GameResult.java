@@ -1,8 +1,5 @@
 package blackjack.domain;
 
-import java.util.EnumMap;
-import java.util.Map;
-
 public enum GameResult {
     WIN("승"),
     DRAW("무"),

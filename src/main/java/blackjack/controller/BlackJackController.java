@@ -1,10 +1,10 @@
-package blackjack.domain.controller;
+package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.DrawCommand;
 import blackjack.domain.GameMachine;
-import blackjack.domain.HoldingCard;
-import blackjack.domain.ScoreResultDto;
+import blackjack.domain.card.HoldingCard;
+import blackjack.dto.ScoreResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 

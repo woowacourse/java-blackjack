@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.dto;
+
+import blackjack.domain.participant.Participant;
+import blackjack.domain.card.HoldingCard;
 
 public class ParticipantDto {
     private final String name;
