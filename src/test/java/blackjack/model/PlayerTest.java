@@ -1,9 +1,23 @@
 package blackjack.model;
 
-import static blackjack.model.Rank.*;
-import static blackjack.model.Suit.*;
-import static org.assertj.core.api.Assertions.*;
+import static blackjack.model.Rank.ACE;
+import static blackjack.model.Rank.EIGHT;
+import static blackjack.model.Rank.FIVE;
+import static blackjack.model.Rank.FOUR;
+import static blackjack.model.Rank.JACK;
+import static blackjack.model.Rank.KING;
+import static blackjack.model.Rank.NINE;
+import static blackjack.model.Rank.QUEEN;
+import static blackjack.model.Rank.SEVEN;
+import static blackjack.model.Rank.SIX;
+import static blackjack.model.Rank.THREE;
+import static blackjack.model.Rank.TWO;
+import static blackjack.model.Suit.CLOVER;
+import static blackjack.model.Suit.DIAMOND;
+import static blackjack.model.Suit.HEART;
+import static blackjack.model.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Gamer;
@@ -17,25 +31,56 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class PlayerTest {
 
+    private static Stream<Arguments> provideDealerWinningCaseCards() {
+        return Stream.of(
+                Arguments.of(new Dealer(new Card(EIGHT, DIAMOND), new Card(JACK, HEART)),
+                        new Cards(new Card(SEVEN, CLOVER), new Card(EIGHT, HEART))),
+                Arguments.of(new Dealer(new Card(EIGHT, DIAMOND), new Card(JACK, HEART)),
+                        new Cards(new Card(JACK, HEART), new Card(QUEEN, HEART),
+                                new Card(FOUR, DIAMOND))),
+                Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(FIVE, HEART)),
+                        new Cards(new Card(SEVEN, CLOVER), new Card(SIX, HEART))),
+                Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(JACK, HEART), new Card(QUEEN, CLOVER)),
+                        new Cards(new Card(QUEEN, CLOVER), new Card(JACK, HEART)))
+        );
+    }
+
+    private static Stream<Arguments> provideDealerLosingCaseCards() {
+        return Stream.of(
+                Arguments.of(new Dealer(new Card(SEVEN, CLOVER), new Card(EIGHT, HEART)),
+                        new Cards(new Card(QUEEN, CLOVER), new Card(JACK, HEART))),
+                Arguments.of(new Dealer(new Card(JACK, HEART), new Card(QUEEN, HEART), new Card(FOUR, DIAMOND)),
+                        new Cards(new Card(QUEEN, CLOVER), new Card(JACK, HEART)))
+        );
+    }
+
+    private static Stream<Arguments> provideCardsForDealer() {
+        return Stream.of(
+                Arguments.of(new Dealer(new Card(JACK, DIAMOND), new Card(SIX, CLOVER)), true),
+                Arguments.of(new Dealer(new Card(JACK, DIAMOND), new Card(SEVEN, CLOVER)), false),
+                Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(SIX, CLOVER)), false),
+                Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(ACE, CLOVER)), false)
+        );
+    }
+
+    protected static Stream<Arguments> providePlayers() {
+        return Stream.of(
+                Arguments.of(new Gamer("player", new Card(ACE, SPADE), new Card(JACK, HEART)), 21),
+                Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(JACK, DIAMOND),
+                        new Card(KING, CLOVER)), 21),
+                Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(ACE, SPADE),
+                        new Card(NINE, CLOVER)), 21),
+                Arguments.of(new Gamer("player", new Card(QUEEN, CLOVER), new Card(JACK, HEART),
+                        new Card(KING, DIAMOND)), 30),
+                Arguments.of(new Gamer("player", new Card(THREE, DIAMOND), new Card(TWO, DIAMOND)), 5)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("provideDealerWinningCaseCards")
     @DisplayName("딜러가 이기는 경우 판별 테스트")
     void dealerIsWinner(Dealer dealer, Cards playerCards) {
         assertThat(dealer.match(playerCards)).isEqualTo(Result.WIN);
-    }
-
-    private static Stream<Arguments> provideDealerWinningCaseCards() {
-        return Stream.of(
-            Arguments.of(new Dealer(new Card(EIGHT, DIAMOND), new Card(JACK, HEART)),
-                new Cards(new Card(SEVEN, CLOVER), new Card(EIGHT, HEART))),
-            Arguments.of(new Dealer(new Card(EIGHT, DIAMOND), new Card(JACK, HEART)),
-                new Cards(new Card(JACK, HEART), new Card(QUEEN, HEART),
-                    new Card(FOUR, DIAMOND))),
-            Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(FIVE, HEART)),
-                new Cards(new Card(SEVEN, CLOVER), new Card(SIX, HEART))),
-            Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(JACK, HEART), new Card(QUEEN, CLOVER)),
-                new Cards(new Card(QUEEN, CLOVER), new Card(JACK, HEART)))
-        );
     }
 
     @ParameterizedTest
@@ -45,21 +90,12 @@ public class PlayerTest {
         assertThat(dealer.match(playerCards)).isEqualTo(Result.LOSE);
     }
 
-    private static Stream<Arguments> provideDealerLosingCaseCards() {
-        return Stream.of(
-            Arguments.of(new Dealer(new Card(SEVEN, CLOVER), new Card(EIGHT, HEART)),
-                new Cards(new Card(QUEEN, CLOVER), new Card(JACK, HEART))),
-            Arguments.of(new Dealer(new Card(JACK, HEART), new Card(QUEEN, HEART), new Card(FOUR, DIAMOND)),
-                new Cards(new Card(QUEEN, CLOVER), new Card(JACK, HEART)))
-        );
-    }
-
     @Test
     @DisplayName("비기는 경우 판별 테스트")
     void dealerIsDraw() {
         Dealer dealer = new Dealer(new Card(JACK, DIAMOND), new Card(FOUR, HEART));
         assertThat(dealer.match(new Cards(new Card(EIGHT, CLOVER), new Card(SIX, HEART))))
-            .isEqualTo(Result.DRAW);
+                .isEqualTo(Result.DRAW);
     }
 
     @Test
@@ -67,7 +103,7 @@ public class PlayerTest {
     void bothBust() {
         Dealer dealer = new Dealer(new Card(JACK, DIAMOND), new Card(KING, HEART), new Card(SEVEN, CLOVER));
         assertThat(dealer.match(new Cards(new Card(EIGHT, CLOVER), new Card(SIX, HEART), new Card(KING, HEART))))
-            .isEqualTo(Result.WIN);
+                .isEqualTo(Result.WIN);
     }
 
     @ParameterizedTest
@@ -75,15 +111,6 @@ public class PlayerTest {
     @DisplayName("딜러 카드 발급 가능 여부 확인 테스트")
     void dealerPossibleTakeCard(Dealer dealer, boolean expect) {
         assertThat(dealer.isHittable()).isEqualTo(expect);
-    }
-
-    private static Stream<Arguments> provideCardsForDealer() {
-        return Stream.of(
-            Arguments.of(new Dealer(new Card(JACK, DIAMOND), new Card(SIX, CLOVER)), true),
-            Arguments.of(new Dealer(new Card(JACK, DIAMOND), new Card(SEVEN, CLOVER)), false),
-            Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(SIX, CLOVER)), false),
-            Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(ACE, CLOVER)), false)
-        );
     }
 
     @Test
@@ -101,25 +128,12 @@ public class PlayerTest {
         assertThat(player.score().getValue()).isEqualTo(expect);
     }
 
-    protected static Stream<Arguments> providePlayers() {
-        return Stream.of(
-            Arguments.of(new Gamer("player", new Card(ACE, SPADE), new Card(JACK, HEART)), 21),
-            Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(JACK, DIAMOND),
-                new Card(KING, CLOVER)), 21),
-            Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(ACE, SPADE),
-                new Card(NINE, CLOVER)), 21),
-            Arguments.of(new Gamer("player", new Card(QUEEN, CLOVER), new Card(JACK, HEART),
-                new Card(KING, DIAMOND)), 30),
-            Arguments.of(new Gamer("player", new Card(THREE, DIAMOND), new Card(TWO, DIAMOND)), 5)
-        );
-    }
-
     @Test
     @DisplayName("딜러 카드 발급 실패")
     void takeInvalidCard() {
         Dealer dealer = new Dealer(new Card(JACK, DIAMOND), new Card(SEVEN, HEART));
         assertThatThrownBy(() -> dealer.take(new Card(FOUR, HEART)))
-            .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
@@ -165,6 +179,6 @@ public class PlayerTest {
     void gamerTakeInvalidCard() {
         Gamer dealer = new Gamer("gamer", new Card(JACK, DIAMOND), new Card(ACE, HEART));
         assertThatThrownBy(() -> dealer.take(new Card(FOUR, HEART)))
-            .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalStateException.class);
     }
 }

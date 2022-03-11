@@ -3,7 +3,6 @@ package blackjack.model.player;
 import blackjack.model.Card;
 import blackjack.model.Cards;
 import blackjack.model.Score;
-import java.util.Collections;
 import java.util.List;
 
 public class Gamer extends Player {
