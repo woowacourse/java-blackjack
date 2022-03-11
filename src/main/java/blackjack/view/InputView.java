@@ -16,7 +16,6 @@ public class InputView {
     private static final String PLAYER_HIT_ANSWER_ERROR_MESSAGE = "[ERROR] 유효하지않은 입력입니다. 입력은 (예는 y, 아니오는 n)로만 입력해 주세요.";
     private static final String PLAYER_HIT_ANSWER_NULL_ERROR_MESSAGE = "[ERROR] 유효하지않은 입력입니다. 입력에 null이 올 수 없습니다.";
 
-
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> inputPlayerName() {
@@ -26,11 +25,14 @@ public class InputView {
         return playerNames;
     }
 
-    public static String inputPlayerHit(String playerName) {
+    public static boolean inputPlayerHit(String playerName) {
         System.out.printf(INPUT_PLAYER_HIT_ASK_MESSAGE, playerName);
         String hitAnswer = scanner.nextLine();
         validateHitAnswer(hitAnswer);
-        return hitAnswer;
+        if (hitAnswer.equals(HIT_ANSWER_YES)) {
+            return true;
+        }
+        return false;
     }
 
     private static void validatePlayerNames(List<String> playerNames) {

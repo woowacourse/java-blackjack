@@ -1,16 +1,17 @@
 package blackjack.controller;
 
-import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
-import blackjack.domain.game.WinningResult;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import blackjack.domain.card.Deck;
+import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.WinningResult;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public class BlackjackController {
 
@@ -19,7 +20,7 @@ public class BlackjackController {
         Participants participants = createParticipants();
 
         handOutAndPrintInitialCards(participants, deck);
-        handOutMoreCards(participants, deck);
+        isHandOut(participants, deck);
 
         printResult(participants);
     }
@@ -36,28 +37,35 @@ public class BlackjackController {
         OutputView.printInitialCardInformation(participants);
     }
 
-    private void handOutMoreCards(Participants participants, Deck deck) {
+    private void isHandOut(Participants participants, Deck deck) {
         handOutMoreCardsToPlayers(participants.getPlayers(), deck);
         handOutMoreCardsToDealer(participants.getDealer(), deck);
     }
 
     private void handOutMoreCardsToPlayers(List<Player> players, Deck deck) {
         for (Player player : players) {
-            boolean cardPrintFlag = false;
-            String answer = InputView.inputPlayerHit(player.getName());
-
-            while (answer.equals("y")) {
-                player.receiveCard(deck.pickCard());
-                cardPrintFlag = true;
-                OutputView.printPlayerCardInformation(player);
-                answer = InputView.inputPlayerHit(player.getName());
-
-            }
-
-            if (!cardPrintFlag) {
-                OutputView.printPlayerCardInformation(player);
-            }
+            handOutMoreCardsToPlayer(deck, player);
         }
+    }
+
+    private void handOutMoreCardsToPlayer(Deck deck, Player player) {
+        boolean printCheck = false;
+        while (isHandOut(player, deck)) {
+            OutputView.printPlayerCardInformation(player);
+            printCheck = true;
+        }
+        if (!printCheck) {
+            OutputView.printPlayerCardInformation(player);
+        }
+    }
+
+    private boolean isHandOut(Player player, Deck deck) {
+        boolean isHit = InputView.inputPlayerHit(player.getName());
+        if (isHit) {
+            player.receiveCard(deck.pickCard());
+            return true;
+        }
+        return false;
     }
 
     private void handOutMoreCardsToDealer(Dealer dealer, Deck deck) {
@@ -68,18 +76,16 @@ public class BlackjackController {
     }
 
     private void printResult(Participants participants) {
-
         OutputView.printCardsAndPoint(participants);
 
         BlackjackGame blackjackGame = new BlackjackGame(participants);
         blackjackGame.calculatePlayerResult();
 
-        Map<WinningResult, Integer> dealerResult =  blackjackGame.getDealerResult();
+        Map<WinningResult, Integer> dealerResult = blackjackGame.getDealerResult();
         Map<Player, WinningResult> playerResult = blackjackGame.getPlayerResult();
 
-        OutputView.printResult(dealerResult,playerResult);
+        OutputView.printResult(dealerResult, playerResult);
     }
-
 
 }
 
