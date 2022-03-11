@@ -4,13 +4,15 @@ import java.util.Scanner;
 
 public class InputView {
 
-    public static final String DELIMITER = ",";
+    private static final String DELIMITER = ",";
     private static final String REGEX = "^[a-zA-Z]+$";
-    public static final String HIT = "y";
-    public static final String STAY = "n";
+    private static final String HIT = "y";
+    private static final String STAY = "n";
     private static final String MUST_NOT_EMPTY = "입력은 빈 입력일 수 없습니다.";
     private static final String WRONG_FORM = "입력형식에 맞춰 입력해주세요.";
     private static final String WRONG_HIT_OR_STAY = HIT + " 혹은 " + STAY + "만 입력 가능합니다.";
+
+    private InputView(){}
 
     public static String[] inputNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉽표 기준으로 분리)");

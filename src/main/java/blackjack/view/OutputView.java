@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static final String START_ERROR = "[ERROR] ";
+    private static final String START_ERROR = "[ERROR] ";
+
+    private OutputView(){}
 
     public static void printErrorMessage(String message) {
         System.out.println(START_ERROR + message);
