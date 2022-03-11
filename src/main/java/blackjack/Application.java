@@ -2,34 +2,23 @@ package blackjack;
 
 import static blackjack.view.InputView.requestPlayerNamesInput;
 import static blackjack.view.OutputView.printAllCardsAndScore;
-import static blackjack.view.OutputView.printDealerExtraCardInfo;
 import static blackjack.view.OutputView.printGameResult;
 import static blackjack.view.OutputView.printInitialParticipantsCards;
 
 import blackjack.controller.BlackjackController;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.participant.Player;
-import java.util.List;
 
 public class Application {
 
     private static final BlackjackController blackjackController = new BlackjackController();
 
     public static void main(String[] args) {
-        BlackjackGame blackjackGame = blackjackController.initializeGame(requestPlayerNamesInput());
-        printInitialParticipantsCards(blackjackController.getInitialDistribution(blackjackGame));
+        BlackjackGame game = blackjackController.initializeGame(requestPlayerNamesInput());
+        printInitialParticipantsCards(blackjackController.getInitialDistribution(game));
 
-        List<Player> players = blackjackGame.getPlayers();
-        for (Player player : players) {
-            blackjackController.givePlayerCards(player, blackjackGame);
-        }
+        blackjackController.distributeAllCards(game);
 
-        if (blackjackGame.giveCardToDealer()) {
-            printDealerExtraCardInfo();
-        }
-
-        printAllCardsAndScore(blackjackGame);
-
-        printGameResult(blackjackController.finishGame(blackjackGame));
+        printAllCardsAndScore(game);
+        printGameResult(blackjackController.getGameResult(game));
     }
 }

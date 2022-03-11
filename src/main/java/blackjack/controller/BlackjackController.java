@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import static blackjack.view.InputView.requestMoreCardInput;
+import static blackjack.view.OutputView.printDealerExtraCardInfo;
 import static blackjack.view.OutputView.printPlayerBustInfo;
 import static blackjack.view.OutputView.printPlayerCardsInfo;
 
@@ -28,7 +29,16 @@ public class BlackjackController {
         return InitialDistributionDto.of(dealer, players);
     }
 
-    public void givePlayerCards(Player player, BlackjackGame game) {
+    public void distributeAllCards(BlackjackGame game) {
+        List<Player> players = game.getPlayers();
+        for (Player player : players) {
+            drawAllPlayerCards(player, game);
+        }
+
+        drawDealerCard(game);
+    }
+
+    private void drawAllPlayerCards(Player player, BlackjackGame game) {
         while (player.canReceive()) {
             if (!requestMoreCardInput(player.getName())) {
                 return;
@@ -36,11 +46,16 @@ public class BlackjackController {
             player.receiveCard(game.popCard());
             printPlayerCardsInfo(player);
         }
-
         printPlayerBustInfo();
     }
 
-    public List<ResultStatistics> finishGame(BlackjackGame game) {
+    private void drawDealerCard(BlackjackGame game) {
+        if (game.giveCardToDealer()) {
+            printDealerExtraCardInfo();
+        }
+    }
+
+    public List<ResultStatistics> getGameResult(BlackjackGame game) {
         Dealer dealer = game.getDealer();
         List<Player> players = game.getPlayers();
 
