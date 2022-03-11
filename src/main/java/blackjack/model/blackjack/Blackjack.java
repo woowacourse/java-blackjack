@@ -20,6 +20,12 @@ public class Blackjack {
     private Dealer dealer;
     private List<Player> players;
 
+    public Blackjack(CardDispenser cardDispenser, List<Name> names) {
+        this.cardDispenser = cardDispenser;
+        this.dealer = createDealer();
+        this.players = createPlayers(cardDispenser, names.toArray(Name[]::new));
+    }
+
     public Blackjack(CardDispenser cardDispenser, Name... names) {
         this.cardDispenser = cardDispenser;
         this.dealer = createDealer();

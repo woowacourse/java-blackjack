@@ -1,34 +1,37 @@
 package blackjack.view;
 
-import blackjack.model.player.Name;
-import blackjack.model.card.Card;
-import blackjack.model.player.Dealer;
-import blackjack.model.player.Player;
+import blackjack.model.blackjack.Record;
 import blackjack.model.blackjack.Result;
+import blackjack.model.blackjack.Score;
+import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
+import blackjack.model.player.Name;
+import blackjack.model.player.Player;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
     private OutputView() {}
 
-    public static void printOpenCard(Dealer dealer, List<Player> gamers) {
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.name(), gamerNames(gamers));
-        System.out.printf("%s: %s%n", dealer.name(), openCards(dealer.openCards()));
-        for (Player gamer : gamers) {
-            System.out.printf("%s카드: %s%n", gamer.name(), openCards(gamer.openCards()));
-        }
+    public static void printOpenCardMessage(Name dealerName, List<Name> playerNames) {
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealerName.value(), formattedPlayerNames(playerNames));
     }
 
-    private static String gamerNames(List<Player> gamers) {
-        return gamers.stream()
-            .map(Player::name)
+    private static String formattedPlayerNames(List<Name> names) {
+        return names.stream()
             .map(Name::value)
             .collect(Collectors.joining(", "));
     }
 
-    private static String openCards(Cards openCard) {
+    public static void printOpenCard(Name name, Cards cards) {
+        System.out.printf("%s: %s%n", name.value(), formattedCardsText(cards));
+    }
+
+    public static void printCards(Name name, Cards cards) {
+        System.out.printf("%s: %s%n", name.value(), formattedCardsText(cards));
+    }
+
+    private static String formattedCardsText(Cards openCard) {
         return openCard.stream()
             .map(OutputView::cardText)
             .collect(Collectors.joining(", "));
@@ -52,22 +55,26 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printTotalScore(Dealer dealer, List<Player> gamers) {
-        System.out.printf("%s 카드: %s - 결과: %d%n", dealer.name(), takenCards(dealer), dealer.score().getValue());
-        for (Player player : gamers) {
-            System.out.printf("%s 카드: %s - 결과: %d%n", player.name(), takenCards(player), player.score().getValue());
-        }
+    public static void printTotalScore(Name name, Cards cards, Score score) {
+        System.out.printf("%s 카드: %s - 결과: %d%n", name.value(), formattedCardsText(cards), score.getValue());
     }
 
-    public static void printDealerRecord(Map<Result, Integer> result) {
+    public static void printDealerRecord(Record record) {
         System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d무 %d패%n",
-                result.getOrDefault(Result.WIN, 0),
-                result.getOrDefault(Result.DRAW, 0),
-                result.getOrDefault(Result.LOSS, 0));
+        System.out.printf("딜러: %d승 %d무 %d패%n", record.countBy(Result.WIN),
+            record.countBy(Result.DRAW), record.countBy(Result.LOSS));
     }
 
-    public static void printGamerRecord(String name, String result) {
-        System.out.printf("%s: %s%n", name, result);
+    public static void printPlayerRecord(Record record) {
+        System.out.printf("%s: %s%n", record.name().value(), result(record));
+    }
+
+    private static String result(Record record) {
+        if (record.countBy(Result.WIN) == 1) {
+            return Result.WIN.symbol();
+        } else if (record.countBy(Result.DRAW) == 1) {
+            return Result.DRAW.symbol();
+        }
+        return Result.LOSS.symbol();
     }
 }

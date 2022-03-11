@@ -50,7 +50,7 @@ public class Player {
     }
 
     public final boolean isSameName(Name name) {
-        return name.equals(name);
+        return this.name.equals(name);
     }
 
     public boolean isHittable() {
