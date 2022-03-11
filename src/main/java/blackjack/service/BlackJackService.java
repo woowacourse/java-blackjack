@@ -20,6 +20,9 @@ import blackjack.dto.TableStatusDto;
 
 public class BlackJackService {
 
+	public static final int BUST = 0;
+	public static int OPTIMIZED_WINNING_NUMBER = 21;
+
 	private List<Role> players;
 	private Role dealer;
 	private Deck deck;

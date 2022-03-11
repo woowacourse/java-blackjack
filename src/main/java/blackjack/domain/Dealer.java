@@ -2,21 +2,25 @@ package blackjack.domain;
 
 import java.util.function.Supplier;
 
+import blackjack.service.BlackJackService;
+
 public class Dealer extends Role {
 
 	public static final int CAN_NOT_DRAW_STANDARD = 17;
 	public static final int CAN_DRAW_STANDARD = 16;
 
+	private static final String DEALER_NAME = "딜러";
+
 	private final Supplier<Boolean> drawable;
 
 	public Dealer(Hand hand, Supplier<Boolean> drawable) {
-		super("딜러", hand);
+		super(DEALER_NAME, hand);
 		this.drawable = drawable;
 	}
 
 	@Override
 	public boolean canDraw() {
-		if (hand.calculateOptimalScore() >= 21) {
+		if (hand.calculateOptimalScore() >= BlackJackService.OPTIMIZED_WINNING_NUMBER) {
 			return false;
 		}
 		if (hand.calculateOptimalScore() <= CAN_DRAW_STANDARD) {

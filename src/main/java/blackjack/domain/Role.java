@@ -5,6 +5,8 @@ import java.util.Map;
 
 public abstract class Role {
 
+	private static final int COMPETE_COUNT = 1;
+
 	protected final String name;
 	protected final Hand hand;
 	protected final Map<Outcome, Integer> competeResult;
@@ -26,7 +28,7 @@ public abstract class Role {
 	public abstract boolean canDraw();
 
 	public void recordCompeteResult(Outcome outcome) {
-		competeResult.merge(outcome, 1, Integer::sum);
+		competeResult.merge(outcome, COMPETE_COUNT, Integer::sum);
 	}
 
 	public String getName() {

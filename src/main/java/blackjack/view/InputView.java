@@ -9,14 +9,15 @@ import blackjack.dto.PlayerTurnDto;
 
 public class InputView {
 
-	private final static Scanner scanner = new Scanner(System.in);
-	private final static String PLAYER_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
-	private final static String DRAW_ONE_MORE_CARD = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+	private static final Scanner scanner = new Scanner(System.in);
+	private static final String PLAYER_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+	private static final String DRAW_ONE_MORE_CARD = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+	private static final String NAME_DISTRIBUTOR = ",";
 
 	public static List<String> requestPlayerName() {
 		final String rawNames = inputData(InputValidator::validatePlayerName,
 			() -> System.out.println(PLAYER_NAME));
-		return Arrays.asList(rawNames.split(","));
+		return Arrays.asList(rawNames.split(NAME_DISTRIBUTOR));
 	}
 
 	public static String drawOneMoreCard(final PlayerTurnDto player) {
