@@ -29,7 +29,7 @@ public class BlackJackApplication {
     }
 
     private static void drawCardToPlayer(BlackJackController controller, String name) {
-        while (controller.isDrawPossible(name, InputView.getAnswerOfAdditionalDraw(name))) {
+        while (controller.isDrawPossible(name, InputView::getAnswerOfAdditionalDraw)) {
             controller.requestPlayerDrawCard(name);
             GamerDto playerDtoByName = controller.findPlayerByName(name);
             OutputView.printPlayerCard(playerDtoByName);
