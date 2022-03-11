@@ -5,35 +5,36 @@ import java.util.Map;
 
 public class MatchResult {
 
-    public static final int INCREASING_COUNT = 1;
+    private final Map<String, MatchStatus> playerResult;
+    private final Map<MatchStatus, Integer> dealerResult;
 
-    private final Map<WinningResult, Integer> dealerResult;
-    private final Map<String, WinningResult> playerResult;
-
-
-    public MatchResult(final Map<String, WinningResult> playerResult) {
+    public MatchResult(final Map<String, MatchStatus> playerResult) {
         this.dealerResult = calculateDealerResult(playerResult);
         this.playerResult = playerResult;
     }
 
-    private Map<WinningResult, Integer> calculateDealerResult(final Map<String, WinningResult> playerResult) {
-        final Map<WinningResult, Integer> collectResult = new EnumMap<>(WinningResult.class);
+    private Map<MatchStatus, Integer> calculateDealerResult(final Map<String, MatchStatus> playerResult) {
+        final Map<MatchStatus, Integer> playerMatchStatusCounts = new EnumMap<>(MatchStatus.class);
 
-        for (final WinningResult result : playerResult.values()) {
-            collectResult.merge(result, INCREASING_COUNT, Integer::sum);
+        for (final MatchStatus result : playerResult.values()) {
+            playerMatchStatusCounts.merge(result, 1, Integer::sum);
         }
 
-        final Map<WinningResult, Integer> dealerResult = new EnumMap<>(WinningResult.class);
-        dealerResult.put(WinningResult.WIN, collectResult.getOrDefault(WinningResult.LOSS, 0));
-        dealerResult.put(WinningResult.LOSS, collectResult.getOrDefault(WinningResult.WIN, 0));
-        return dealerResult;
+        return reverseMatchStatusCounts(playerMatchStatusCounts);
     }
 
-    public Map<WinningResult, Integer> getDealerResult() {
+    private Map<MatchStatus, Integer> reverseMatchStatusCounts(final Map<MatchStatus, Integer> targetMatchStatusCounts) {
+        final Map<MatchStatus, Integer> matchStatusCounts = new EnumMap<>(MatchStatus.class);
+        matchStatusCounts.put(MatchStatus.WIN, targetMatchStatusCounts.getOrDefault(MatchStatus.LOSS, 0));
+        matchStatusCounts.put(MatchStatus.LOSS, targetMatchStatusCounts.getOrDefault(MatchStatus.WIN, 0));
+        return matchStatusCounts;
+    }
+
+    public Map<MatchStatus, Integer> getDealerResult() {
         return Map.copyOf(dealerResult);
     }
 
-    public Map<String, WinningResult> getPlayerResult() {
+    public Map<String, MatchStatus> getPlayerResult() {
         return Map.copyOf(playerResult);
     }
 }

@@ -15,11 +15,11 @@ class MatchResultTest {
     @ParameterizedTest
     @MethodSource("provideForMatchResult")
     @DisplayName("플레이어의 승패에 따른 딜러 승패 계산")
-    void calculateCountOfWinningResult(final Map<String, WinningResult> winningResults,
-                                       final Map<WinningResult, Integer> dealerCountOfWinningResult) {
-        final MatchResult matchResult = new MatchResult(winningResults);
+    void calculateCountOfWinningResult(final Map<String, MatchStatus> winningStatuses,
+                                       final Map<MatchStatus, Integer> dealerCountOfWinningResult) {
+        final MatchResult matchResult = new MatchResult(winningStatuses);
 
-        Map<WinningResult, Integer> count = matchResult.getDealerResult();
+        Map<MatchStatus, Integer> count = matchResult.getDealerResult();
         assertThat(count).isEqualTo(dealerCountOfWinningResult);
     }
 
@@ -27,13 +27,13 @@ class MatchResultTest {
         return Stream.of(
                 Arguments.of(
                         Map.of(
-                                "sun", WinningResult.WIN,
-                                "if", WinningResult.WIN,
-                                "pobi", WinningResult.LOSS
+                                "sun", MatchStatus.WIN,
+                                "if", MatchStatus.WIN,
+                                "pobi", MatchStatus.LOSS
                         ),
                         Map.of(
-                                WinningResult.WIN, 1,
-                                WinningResult.LOSS, 2
+                                MatchStatus.WIN, 1,
+                                MatchStatus.LOSS, 2
                         )
                 )
         );

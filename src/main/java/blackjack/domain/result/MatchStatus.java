@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import java.util.Arrays;
 
-public enum WinningResult {
+public enum MatchStatus {
 
     WIN("승", true),
     LOSS("패", false);
@@ -10,16 +10,16 @@ public enum WinningResult {
     private final String name;
     private final boolean result;
 
-    WinningResult(final String name, final boolean result) {
+    MatchStatus(final String name, final boolean result) {
         this.name = name;
         this.result = result;
     }
 
-    public static WinningResult valueOf(final boolean result) {
-        return Arrays.stream(WinningResult.values())
+    public static MatchStatus valueOf(final boolean result) {
+        return Arrays.stream(MatchStatus.values())
                 .filter(it -> it.result == result)
                 .findAny()
-                .get();
+                .orElseThrow(() -> new IllegalArgumentException("승패를 구분지을 수 없습니다."));
     }
 
     public String getName() {

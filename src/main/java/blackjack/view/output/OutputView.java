@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.result.WinningResult;
+import blackjack.domain.result.MatchStatus;
 import blackjack.dto.MatchResultDto;
 import blackjack.dto.ParticipantDto;
 
@@ -51,15 +51,15 @@ public class OutputView {
     public void printMatchResult(final MatchResultDto resultDto) {
         printMessage("## 최종 승패");
 
-        final Map<WinningResult, Integer> dealerResult = resultDto.getDealerResult();
+        final Map<MatchStatus, Integer> dealerResult = resultDto.getDealerResult();
 
         final String dealerResultString = dealerResult.entrySet().stream()
                 .map(entry -> entry.getValue() + entry.getKey().getName())
                 .collect(Collectors.joining(" "));
         printMessage("딜러: " + dealerResultString);
 
-        final Map<String, WinningResult> playerResult = resultDto.getPlayerResult();
-        for (Map.Entry<String, WinningResult> entry : playerResult.entrySet()) {
+        final Map<String, MatchStatus> playerResult = resultDto.getPlayerResult();
+        for (Map.Entry<String, MatchStatus> entry : playerResult.entrySet()) {
             printMessage(entry.getKey() + ": " + entry.getValue().getName());
         }
     }

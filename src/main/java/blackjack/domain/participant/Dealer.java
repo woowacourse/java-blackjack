@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.WinningResult;
+import blackjack.domain.result.MatchStatus;
 
 public class Dealer extends Participant {
 
@@ -24,15 +24,15 @@ public class Dealer extends Participant {
         return calculateScore() < DEALER_MIN_SCORE;
     }
 
-    public WinningResult judgeWinner(final Player player) {
+    public MatchStatus judgeWinner(final Player player) {
         if (player.isBurst()) {
-            return WinningResult.LOSS;
+            return MatchStatus.LOSS;
         }
         if (this.isBurst()) {
-            return WinningResult.WIN;
+            return MatchStatus.WIN;
         }
 
-        return WinningResult.valueOf(player.isHigherThan(this));
+        return MatchStatus.valueOf(player.isHigherThan(this));
     }
 
 }

@@ -19,7 +19,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.ManualCardStrategy;
-import blackjack.domain.result.WinningResult;
+import blackjack.domain.result.MatchStatus;
 
 public class PlayersTest {
 
@@ -81,15 +81,15 @@ public class PlayersTest {
     @DisplayName("각 플레이어는 딜러와의 승패를 계산한다.")
     void compareCardSum(final List<String> names,
                         final List<Card> initializedCards,
-                        final Map<String, WinningResult> expectedWinningResults) {
+                        final Map<String, MatchStatus> expectedWinningStatuses) {
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
 
         final Dealer dealer = Dealer.startWithTwoCards(deck);
         final Players players = Players.startWithTwoCards(names, deck);
 
-        final Map<String, WinningResult> actualWinningResults = players.judgeWinners(dealer).getPlayerResult();
-        assertThat(actualWinningResults).isEqualTo(expectedWinningResults);
+        final Map<String, MatchStatus> actualWinningStatuses = players.judgeWinners(dealer).getPlayerResult();
+        assertThat(actualWinningStatuses).isEqualTo(expectedWinningStatuses);
     }
 
     private static Stream<Arguments> provideForCompareCardTotalTest() {
@@ -102,7 +102,7 @@ public class PlayersTest {
                                 new Card(CardNumber.EIGHT, CardPattern.DIAMOND),
                                 new Card(CardNumber.NINE, CardPattern.DIAMOND)
                         ),
-                        Map.of("sun", WinningResult.LOSS)
+                        Map.of("sun", MatchStatus.LOSS)
                 ),
                 Arguments.of(
                         List.of("sun", "if"),
@@ -115,8 +115,8 @@ public class PlayersTest {
                                 new Card(CardNumber.TWO, CardPattern.SPADE)
                         ),
                         Map.of(
-                                "sun", WinningResult.WIN,
-                                "if", WinningResult.LOSS
+                                "sun", MatchStatus.WIN,
+                                "if", MatchStatus.LOSS
                         )
                 )
         );

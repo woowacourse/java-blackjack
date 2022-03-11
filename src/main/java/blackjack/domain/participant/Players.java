@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.MatchResult;
-import blackjack.domain.result.WinningResult;
+import blackjack.domain.result.MatchStatus;
 
 public class Players {
 
@@ -36,13 +36,13 @@ public class Players {
     }
 
     public MatchResult judgeWinners(Dealer dealer) {
-        final Map<String, WinningResult> winningResults = new HashMap<>();
+        final Map<String, MatchStatus> matchStatuses = new HashMap<>();
         for (final Player player : players) {
             final String playerName = player.getParticipantName();
-            final WinningResult winningResult = dealer.judgeWinner(player);
-            winningResults.put(playerName, winningResult);
+            final MatchStatus matchStatus = dealer.judgeWinner(player);
+            matchStatuses.put(playerName, matchStatus);
         }
-        return new MatchResult(winningResults);
+        return new MatchResult(matchStatuses);
     }
 
     private void distributeCards(Deck deck) {

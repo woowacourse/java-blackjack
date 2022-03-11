@@ -3,15 +3,15 @@ package blackjack.dto;
 import java.util.Map;
 
 import blackjack.domain.result.MatchResult;
-import blackjack.domain.result.WinningResult;
+import blackjack.domain.result.MatchStatus;
 
 public class MatchResultDto {
 
-    private final Map<WinningResult, Integer> dealerResult;
-    private final Map<String, WinningResult> playerResult;
+    private final Map<MatchStatus, Integer> dealerResult;
+    private final Map<String, MatchStatus> playerResult;
 
-    private MatchResultDto(final Map<WinningResult, Integer> dealerResult,
-                           final Map<String, WinningResult> playerResult) {
+    private MatchResultDto(final Map<MatchStatus, Integer> dealerResult,
+                           final Map<String, MatchStatus> playerResult) {
         this.dealerResult = dealerResult;
         this.playerResult = playerResult;
     }
@@ -20,11 +20,11 @@ public class MatchResultDto {
         return new MatchResultDto(result.getDealerResult(), result.getPlayerResult());
     }
 
-    public Map<WinningResult, Integer> getDealerResult() {
+    public Map<MatchStatus, Integer> getDealerResult() {
         return dealerResult;
     }
 
-    public Map<String, WinningResult> getPlayerResult() {
+    public Map<String, MatchStatus> getPlayerResult() {
         return playerResult;
     }
 }
