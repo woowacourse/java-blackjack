@@ -9,6 +9,9 @@ import java.util.stream.Stream;
 
 public final class Cards {
 
+    public static final int SOFT_HAND_ACE = 11;
+    public static final int HARD_HAND_ACE = 1;
+
     private final List<Card> cards;
 
     public Cards(Card card1, Card card2, Card... cards) {
@@ -16,23 +19,19 @@ public final class Cards {
                 .collect(Collectors.toList());
     }
 
+    public List<Card> getEachCard() {
+        return cards;
+    }
+
     public void takeCard(Card card) {
         cards.add(card);
     }
 
     public Score softHandScore() {
-        int score = stream()
+        int score = cards.stream()
                 .mapToInt(Card::softRank)
                 .sum();
         return new Score(score);
-    }
-
-    public List<Card> getEachCard() {
-        return cards;
-    }
-
-    public Stream<Card> stream() {
-        return cards.stream();
     }
 
     public Score bestScore() {
@@ -42,7 +41,7 @@ public final class Cards {
     }
 
     private Score hardHandScore() {
-        int score = stream()
+        int score = cards.stream()
                 .mapToInt(Card::hardRank)
                 .sum();
         return new Score(score);
@@ -60,6 +59,6 @@ public final class Cards {
     }
 
     private Score diffSoftAndHardOfAce() {
-        return new Score(Rank.ACE.getSoft() - Rank.ACE.getHard());
+        return new Score(SOFT_HAND_ACE - HARD_HAND_ACE);
     }
 }

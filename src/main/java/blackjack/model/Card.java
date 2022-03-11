@@ -22,11 +22,14 @@ public class Card {
     }
 
     public int hardRank() {
-        return rank.getHard();
+        return rank.getRank();
     }
 
     public int softRank() {
-        return rank.getSoft();
+        if (rank == ACE) {
+            return 11;
+        }
+        return rank.getRank();
     }
 
     public boolean isAce() {
@@ -52,6 +55,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return rank.getHard() + "-" + suit;
+        return rank.getRank() + "-" + suit;
     }
 }
