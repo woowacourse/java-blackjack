@@ -11,10 +11,16 @@ import java.util.stream.Collectors;
 
 public enum Result {
 
-    WIN("승", ((player, dealer) -> (dealer.isBust() && !player.isBust())
-            || dealer.getScore() < player.getScore())),
-    TIE("무", ((player, dealer) -> player.getScore() == dealer.getScore())),
-    LOSS("패", ((player, dealer) -> player.isBust() || dealer.getScore() > player.getScore()));
+    WIN("승", (
+            (player, dealer) -> (dealer.isBust() && !player.isBust())
+            || ((!player.isBust()) && (dealer.getScore() < player.getScore())))
+    ),
+    TIE("무", (
+            (player, dealer) -> player.getScore() == dealer.getScore())
+    ),
+    LOSS("패", (
+            (player, dealer) -> player.isBust() || dealer.getScore() > player.getScore())
+    );
 
     private final String name;
     private final BiPredicate<Player, Dealer> biPredicate;
@@ -40,13 +46,13 @@ public enum Result {
     }
 
     public Result reverseResult() {
-        if (this == Result.LOSS) {
-            return Result.WIN;
+        if (this == LOSS) {
+            return WIN;
         }
-        if (this == Result.WIN) {
-            return Result.LOSS;
+        if (this == WIN) {
+            return LOSS;
         }
-        return Result.TIE;
+        return TIE;
     }
 
     public String getName() {
