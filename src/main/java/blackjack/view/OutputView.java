@@ -99,30 +99,22 @@ public class OutputView {
 			gamer.calculateResult());
 	}
 
-	public static void printFinalResultBoard(final Map<Gamer, GameResult> gamerResultBoard) {
+	public static void printFinalResultBoard(final Map<Gamer, GameResult> gamerResultBoard,
+		Map<GameResult, Integer> dealerResultBoard) {
 		System.out.println(FINAL_RESULT_MESSAGE);
 
-		System.out.print(dealerPointToString(gamerResultBoard));
+		System.out.print(dealerPointToString(dealerResultBoard));
 		gamerResultBoard.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
 			key.getName(),
 			value.getResult()));
 	}
 
-	private static String dealerPointToString(final Map<Gamer, GameResult> gamerResultBoard) {
+	private static String dealerPointToString(final Map<GameResult, Integer> gamerResultBoard) {
 		return String.format(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
-			calculateDealerResultBoard(gamerResultBoard).entrySet().stream()
+			gamerResultBoard.entrySet().stream()
 				.map(board -> dealerResultToString(board.getKey(),
 					board.getValue()))
 				.collect(joining(PRINT_BLANK)));
-	}
-
-	private static Map<GameResult, Integer> calculateDealerResultBoard(final Map<Gamer, GameResult> gamerResultBoard) {
-		Map<GameResult, Integer> enumMap = new EnumMap<>(GameResult.class);
-		for (GameResult gameResult : gamerResultBoard.values()) {
-			GameResult dealerGameResult = GameResult.convertToDealerResult(gameResult);
-			enumMap.put(dealerGameResult, enumMap.getOrDefault(dealerGameResult, 0) + 1);
-		}
-		return enumMap;
 	}
 
 	private static String dealerResultToString(final GameResult gameResult, final int value) {

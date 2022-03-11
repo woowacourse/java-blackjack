@@ -3,8 +3,10 @@ package blackjack;
 import static blackjack.domain.player.Player.*;
 
 import java.util.List;
+import java.util.Map;
 
 import blackjack.domain.Answer;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Dealer;
@@ -16,7 +18,7 @@ import blackjack.view.OutputView;
 public class BlackJackGame {
 
 	public void run() {
-		Player dealer = new Dealer();
+		Dealer dealer = new Dealer();
 		Gamers gamers = setGamers();
 		Deck deck = Deck.initializeDeck();
 
@@ -84,8 +86,10 @@ public class BlackJackGame {
 		}
 	}
 
-	private static void printFinalMessage(final Player dealer, final Gamers gamers) {
+	private static void printFinalMessage(final Dealer dealer, final Gamers gamers) {
 		OutputView.printFinalResult(dealer, gamers.getGamers());
-		OutputView.printFinalResultBoard(gamers.calculateFinalResultBoard(dealer));
+		Map<Gamer, GameResult> gamerResultBoard = gamers.calculateFinalResultBoard(dealer);
+		OutputView.printFinalResultBoard(gamerResultBoard,dealer.calculateFinalResultBoard(gamerResultBoard));
 	}
+
 }
