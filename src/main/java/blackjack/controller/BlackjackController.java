@@ -23,7 +23,7 @@ public class BlackjackController {
         for (Player participant : gameMachine.getPlayers().getParticipants()) {
             decideParticipantOneMoreCard(participant, gameMachine);
         }
-        decideOneMoreCard(gameMachine);
+        decideDealerMoreCard(gameMachine);
     }
 
     private void decideParticipantOneMoreCard(final Player player, final GameMachine gameMachine) {
@@ -41,7 +41,7 @@ public class BlackjackController {
         return !participant.isOverMaxScore();
     }
 
-    private void decideOneMoreCard(final GameMachine gameMachine) {
+    private void decideDealerMoreCard(final GameMachine gameMachine) {
         if (gameMachine.isDealerGetCard()) {
             OutputView.printDealerAcceptCard();
             return;
