@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int BLACK_JACK_SCORE = 21;
+    public static final int BLACK_JACK_SCORE = 21;
     private static final int FIRST_RECEIVED_CARD_SIZE = 2;
     private static final int NUMBER_TO_USE_ACE_CARD_WITH_ONE = 10;
 

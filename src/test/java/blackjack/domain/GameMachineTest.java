@@ -35,7 +35,7 @@ public class GameMachineTest {
                 new Card(CardPattern.HEART, CardNumber.SIX))));
         final boolean expected = true;
 
-        final boolean actual = gameMachine.checkDealerReceiveCard(dealer);
+        final boolean actual = gameMachine.checkPlayerReceiveCard(dealer);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -46,7 +46,7 @@ public class GameMachineTest {
                 new Card(CardPattern.HEART, CardNumber.SEVEN))));
         final boolean expected = false;
 
-        final boolean actual = gameMachine.checkDealerReceiveCard(dealer);
+        final boolean actual = gameMachine.checkPlayerReceiveCard(dealer);
         assertThat(actual).isEqualTo(expected);
     }
 

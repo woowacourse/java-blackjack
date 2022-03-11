@@ -25,21 +25,21 @@ public class GameMachine {
                 .collect(Collectors.toList());
     }
 
-    public Boolean checkDealerReceiveCard(Player dealer) {
-        if (dealer.isPossibleToPickCard()) {
-            dealer.pickCard(cardDeck.drawCard());
+    public Boolean checkPlayerReceiveCard(Player player) {
+        if (player.isPossibleToPickCard()) {
+            drawCardToPlayer(player);
             return true;
         }
         return false;
     }
 
-    public void drawCardToUser(Player user) {
-        user.pickCard(cardDeck.drawCard());
+    public void drawCardToPlayer(Player player) {
+        player.pickCard(cardDeck.drawCard());
     }
 
-    public Boolean haveBlackJack(List<Player> users, Player dealer) {
+    public Boolean haveBlackJack(List<Player> users, Player player) {
         List<Player> players = new ArrayList(users);
-        players.add(dealer);
+        players.add(player);
         return players.stream()
                 .anyMatch(Player::isBlackJack);
     }

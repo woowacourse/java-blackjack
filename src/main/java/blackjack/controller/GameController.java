@@ -12,19 +12,25 @@ public class GameController {
 
     public void run() {
         GameMachine gameMachine = new GameMachine(CardDeckGenerator.createCardDeckByCardNumber());
+
         Player dealer = gameMachine.createDealer();
         List<Player> users = gameMachine.createUsers(InputView.inputUsers());
         ResultView.printDealerAndUserCards(users, dealer);
 
-        if (!gameMachine.haveBlackJack(users, dealer)) {
-            askReceiveCardToUsers(gameMachine, users);
-            receiveDealerCard(gameMachine, dealer);
-        }
+        checkPlayerHaveBlackJack(gameMachine, dealer, users);
         ResultView.printTotalCardResult(dealer, users);
         
         GameResult gameResult = GameResult.createPlayerGameResult(dealer, users);
         ResultView.printGameResult(gameResult);
     }
+
+    private void checkPlayerHaveBlackJack(GameMachine gameMachine, Player dealer, List<Player> users) {
+        if (!gameMachine.haveBlackJack(users, dealer)) {
+            askReceiveCardToUsers(gameMachine, users);
+            receivePlayerCard(gameMachine, dealer);
+        }
+    }
+
 
     private void askReceiveCardToUsers(GameMachine gameMachine, List<Player> players) {
         for (Player user : players) {
@@ -34,23 +40,23 @@ public class GameController {
 
     private void askReceiveCard(GameMachine gameMachine, Player user) {
         if (user.isPossibleToPickCard()) {
-            Boolean getCard = InputView.inputDrawCardAnswer(user);
-            drawCard(gameMachine, user, getCard);
+            Boolean willDrawCard = InputView.inputDrawCardAnswer(user);
+            drawCard(gameMachine, user, willDrawCard);
         }
     }
 
-    private void drawCard(GameMachine gameMachine, Player user, Boolean getCard) {
-        if (getCard) {
-            gameMachine.drawCardToUser(user);
+    private void drawCard(GameMachine gameMachine, Player user, Boolean drawCard) {
+        if (drawCard) {
+            gameMachine.drawCardToPlayer(user);
             ResultView.printUserCards(user);
             askReceiveCard(gameMachine, user);
-        } else if (!getCard) {
-            ResultView.printUserCards(user);
+            return ;
         }
+        ResultView.printUserCards(user);
     }
 
-    private void receiveDealerCard(GameMachine gameMachine, Player dealer) {
-        if (gameMachine.checkDealerReceiveCard(dealer)) {
+    private void receivePlayerCard(GameMachine gameMachine, Player dealer) {
+        if (gameMachine.checkPlayerReceiveCard(dealer)) {
             ResultView.printDealerReceiveCard();
         }
     }
