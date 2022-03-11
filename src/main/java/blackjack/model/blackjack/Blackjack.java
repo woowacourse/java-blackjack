@@ -38,6 +38,10 @@ public class Blackjack {
         participants.takeCardByName(Dealer.dealerName(), cardDispenser.issue());
     }
 
+    public void playerTakeCard(Name name) {
+        participants.takeCardByName(name, cardDispenser.issue());
+    }
+
     public Records records() {
         return new Records(recordsMap());
     }

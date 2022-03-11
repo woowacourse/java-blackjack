@@ -8,7 +8,6 @@ import blackjack.model.card.Card;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Name;
 import blackjack.model.player.Player;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -45,8 +44,14 @@ public class Participants {
     }
 
     public void takeCardByName(Name name, Card card) {
+        Player player = findByName(name);
+        player.take(card);
+    }
+
+    private Player findByName(Name name) {
         if (name.equals(Dealer.dealerName())) {
-            dealer.take(card);
+            return dealer;
         }
+        return players.stream().filter(player -> player.name().equals(name)).findFirst().orElseThrow(IllegalArgumentException::new);
     }
 }

@@ -53,37 +53,28 @@ public class BlackjackTest {
         Records records = blackjack.records();
 
         Record dealerRecord = records.recordByName(Dealer.dealerName());
-        assertThat(dealerRecord.countBy(Result.WIN)).isEqualTo(1);
-        assertThat(dealerRecord.countBy(Result.DRAW)).isEqualTo(0);
-        assertThat(dealerRecord.countBy(Result.LOSS)).isEqualTo(0);
+        assertRecord(dealerRecord, 1, 0, 0);
 
-        Record playerRecord = records.recordByName(pobi);
-        assertThat(playerRecord.countBy(Result.WIN)).isEqualTo(0);
-        assertThat(playerRecord.countBy(Result.DRAW)).isEqualTo(0);
-        assertThat(playerRecord.countBy(Result.LOSS)).isEqualTo(1);
+        Record pobiRecord = records.recordByName(pobi);
+        assertRecord(pobiRecord, 0, 0, 1);
     }
 
     @Test
     void blackjackWithTwoPlayer() {
         Name pobi = new Name("pobi");
         Name crong = new Name("crong");
-        Blackjack blackjack = new Blackjack(new CardDispenserStub(JACK, QUEEN, TWO, THREE, ACE, JACK), pobi, crong);
+        Blackjack blackjack = new Blackjack(
+            new CardDispenserStub(JACK, QUEEN, TWO, THREE, ACE, JACK), pobi, crong);
         Records records = blackjack.records();
 
         Record dealerRecord = records.recordByName(Dealer.dealerName());
-        assertThat(dealerRecord.countBy(Result.WIN)).isEqualTo(1);
-        assertThat(dealerRecord.countBy(Result.DRAW)).isEqualTo(0);
-        assertThat(dealerRecord.countBy(Result.LOSS)).isEqualTo(1);
+        assertRecord(dealerRecord, 1, 0, 1);
 
         Record pobiRecord = records.recordByName(pobi);
-        assertThat(pobiRecord.countBy(Result.WIN)).isEqualTo(0);
-        assertThat(pobiRecord.countBy(Result.DRAW)).isEqualTo(0);
-        assertThat(pobiRecord.countBy(Result.LOSS)).isEqualTo(1);
+        assertRecord(pobiRecord, 0, 0, 1);
 
         Record crongRecord = records.recordByName(crong);
-        assertThat(crongRecord.countBy(Result.WIN)).isEqualTo(1);
-        assertThat(crongRecord.countBy(Result.DRAW)).isEqualTo(0);
-        assertThat(crongRecord.countBy(Result.LOSS)).isEqualTo(0);
+        assertRecord(crongRecord, 1, 0, 0);
     }
 
     @Test
@@ -91,23 +82,65 @@ public class BlackjackTest {
         Name pobi1 = new Name("pobi");
         Name pobi2 = new Name("pobi");
 
-        Blackjack blackjack = new Blackjack(new CardDispenserStub(JACK, QUEEN, TWO, THREE, ACE, JACK), pobi1, pobi2);
+        Blackjack blackjack = new Blackjack(
+            new CardDispenserStub(JACK, QUEEN, TWO, THREE, ACE, JACK), pobi1, pobi2);
         Records records = blackjack.records();
 
         Record dealerRecord = records.recordByName(Dealer.dealerName());
-        assertThat(dealerRecord.countBy(Result.WIN)).isEqualTo(1);
-        assertThat(dealerRecord.countBy(Result.DRAW)).isEqualTo(0);
-        assertThat(dealerRecord.countBy(Result.LOSS)).isEqualTo(1);
+        assertRecord(dealerRecord, 1, 0, 1);
 
         Record pobiRecord = records.recordByName(pobi1);
-        assertThat(pobiRecord.countBy(Result.WIN)).isEqualTo(0);
-        assertThat(pobiRecord.countBy(Result.DRAW)).isEqualTo(0);
-        assertThat(pobiRecord.countBy(Result.LOSS)).isEqualTo(1);
+        assertRecord(pobiRecord, 0, 0, 1);
 
         Record crongRecord = records.recordByName(pobi2);
-        assertThat(crongRecord.countBy(Result.WIN)).isEqualTo(1);
-        assertThat(crongRecord.countBy(Result.DRAW)).isEqualTo(0);
-        assertThat(crongRecord.countBy(Result.LOSS)).isEqualTo(0);
+        assertRecord(crongRecord, 1, 0, 0);
+    }
+
+    @Test
+    void blackjackWithDealerTakeCard() {
+        Name pobi = new Name("pobi");
+        Blackjack blackjack = new Blackjack(new CardDispenserStub(TWO, THREE, JACK, FOUR, TEN),
+            pobi);
+        blackjack.dealerTakeCard();
+        Records records = blackjack.records();
+
+        Record dealerRecord = records.recordByName(Dealer.dealerName());
+        assertRecord(dealerRecord, 1, 0, 0);
+
+        Record playerRecord = records.recordByName(pobi);
+        assertRecord(playerRecord, 0, 0, 1);
+    }
+
+    @Test
+    void blackjackWithPlayerTakeCard() {
+        Name pobi = new Name("pobi");
+        Blackjack blackjack = new Blackjack(new CardDispenserStub(JACK, FOUR, THREE, TWO, TEN),
+            pobi);
+        blackjack.playerTakeCard(pobi);
+        Records records = blackjack.records();
+
+        Record dealerRecord = records.recordByName(Dealer.dealerName());
+        assertRecord(dealerRecord, 0, 0, 1);
+
+        Record playerRecord = records.recordByName(pobi);
+        assertRecord(playerRecord, 1, 0, 0);
+    }
+
+    private static void assertRecord(Record record, int win, int draw, int loss) {
+        assertThat(record.countBy(Result.WIN))
+            .withFailMessage(failMessage(Result.WIN, win, record.countBy(Result.WIN)))
+            .isEqualTo(win);
+        assertThat(record.countBy(Result.LOSS))
+            .withFailMessage(failMessage(Result.LOSS, loss, record.countBy(Result.LOSS)))
+            .isEqualTo(loss);
+        assertThat(record.countBy(Result.DRAW))
+            .withFailMessage(failMessage(Result.DRAW, draw, record.countBy(Result.DRAW)))
+            .isEqualTo(draw);
+
+    }
+
+    private static String failMessage(Result result, int actual, int expect) {
+        return String.format("%s : Actual[%d] Expect[%d]", result, actual, expect);
     }
 
 }
