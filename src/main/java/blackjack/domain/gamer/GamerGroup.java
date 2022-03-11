@@ -1,5 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.result.Match;
+import blackjack.domain.result.PlayerResult;
+import blackjack.domain.card.CardPack;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;

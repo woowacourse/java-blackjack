@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
+import blackjack.domain.result.Match;
+import blackjack.domain.card.CardPack;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;

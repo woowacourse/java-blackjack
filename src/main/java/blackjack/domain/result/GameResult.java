@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 public class GameResult {
     private final DealerResult dealerResult;

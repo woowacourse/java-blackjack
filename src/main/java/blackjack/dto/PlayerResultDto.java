@@ -1,7 +1,7 @@
 package blackjack.dto;
 
-import blackjack.domain.Match;
-import blackjack.domain.PlayerResult;
+import blackjack.domain.result.Match;
+import blackjack.domain.result.PlayerResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;

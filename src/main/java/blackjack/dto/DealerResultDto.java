@@ -1,7 +1,7 @@
 package blackjack.dto;
 
-import blackjack.domain.DealerResult;
-import blackjack.domain.Match;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.Match;
 import java.util.Map;
 
 public class DealerResultDto {
