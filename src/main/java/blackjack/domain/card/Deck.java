@@ -12,11 +12,19 @@ public class Deck {
 
 	public Deck() {
 		cards = new ArrayList<>();
-		Stream.of(Number.values())
-			.forEach(number -> Stream.of(Type.values())
-				.forEach(type -> cards.add(new Card(number, type)))
-			);
+		setUpCards();
 		Collections.shuffle(cards);
+	}
+
+	private void setUpCards() {
+		Stream.of(Number.values())
+			.forEach(number -> setUpCardTypeByNumber(number)
+			);
+	}
+
+	private void setUpCardTypeByNumber(Number number) {
+		Stream.of(Type.values())
+			.forEach(type -> cards.add(new Card(number, type)));
 	}
 
 	public Card distributeCard() {
