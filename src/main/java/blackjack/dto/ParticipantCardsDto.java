@@ -34,7 +34,7 @@ public class ParticipantCardsDto {
     }
 
     public boolean isPlayer() {
-        return Objects.equals(name, Dealer.UNIQUE_NAME);
+        return !Objects.equals(name, Dealer.UNIQUE_NAME);
     }
 
     public String getName() {
