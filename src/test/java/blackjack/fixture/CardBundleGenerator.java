@@ -1,5 +1,10 @@
 package blackjack.fixture;
 
+import static blackjack.fixture.CardRepository.CLOVER2;
+import static blackjack.fixture.CardRepository.CLOVER10;
+import static blackjack.fixture.CardRepository.CLOVER4;
+import static blackjack.fixture.CardRepository.CLOVER5;
+import static blackjack.fixture.CardRepository.CLOVER6;
 import static blackjack.fixture.CardRepository.CLOVER_ACE;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
 
@@ -19,7 +24,25 @@ public class CardBundleGenerator {
         return cardBundle;
     }
 
-    public static CardBundle ofBlackjack() {
-        return CardBundle.of(CLOVER_ACE, CLOVER_KING);
+    public static CardBundle getCardBundleOfTen() {
+        return generateCardBundleOf(CLOVER4, CLOVER6);
+    }
+
+    public static CardBundle getCardBundleOfFifteen() {
+        return generateCardBundleOf(CLOVER5, CLOVER10);
+    }
+
+    public static CardBundle getCardBundleOfTwenty() {
+        return generateCardBundleOf(CLOVER10, CLOVER_KING);
+    }
+
+    public static CardBundle getCardBundleOfBlackjack() {
+        return generateCardBundleOf(CLOVER_ACE, CLOVER_KING);
+    }
+
+    public static CardBundle getCardBundleOfBust() {
+        CardBundle cards =  generateCardBundleOf(CLOVER10, CLOVER_KING);
+        cards.add(CLOVER2);
+        return cards;
     }
 }
