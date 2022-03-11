@@ -34,9 +34,7 @@ public class Application {
         drawDealer(deck, dealer);
 
         OutputView.printResultInfo(DealerDto.from(dealer), toPlayersDto(players));
-
-        OutputView.printDealerGameResult(DealerResultsDto.of(players, dealer));
-        OutputView.printPlayerGameResult(createPlayerResult(players, dealer));
+        OutputView.printGameResult(DealerResultsDto.of(players, dealer), createPlayerResult(players, dealer));
     }
 
     private static List<PlayerDto> toPlayersDto(List<Player> players) {

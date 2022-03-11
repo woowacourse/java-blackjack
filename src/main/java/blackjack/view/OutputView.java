@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.*;
 
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerDto;
@@ -8,7 +8,6 @@ import blackjack.dto.DealerResultsDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayerResultDto;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -68,21 +67,23 @@ public class OutputView {
         return cardDto.getDenomination() + cardDto.getSuit();
     }
 
-    public static void printDealerGameResult(DealerResultsDto dealerResults) {
-        String resultInfo = dealerResults.getValue()
-                .stream()
-                .map(dealerResult -> dealerResult.getCount() + dealerResult.getGameResult())
-                .collect(Collectors.joining(" "));
-
-        System.out.printf("\n## 최종 승패\n딜러: %s\n", resultInfo);
+    public static void printGameResult(DealerResultsDto dealerResults, List<PlayerResultDto> playerResults) {
+        System.out.println("\n## 최종 승패");
+        System.out.println("딜러: " + generateDealerGameResult(dealerResults));
+        System.out.println(generatePlayerGameResult(playerResults));
     }
 
-    public static void printPlayerGameResult(List<PlayerResultDto> playerResults) {
-        String resultInfo = playerResults.stream()
-                .map(playerResult -> playerResult.getName() + ": " + playerResult.getGameResult())
-                .collect(Collectors.joining("\n"));
+    private static String generateDealerGameResult(DealerResultsDto dealerResults) {
+        return dealerResults.getValue()
+                .stream()
+                .map(dealerResult -> dealerResult.getCount() + dealerResult.getGameResult())
+                .collect(joining(" "));
+    }
 
-        System.out.println(resultInfo);
+    private static String generatePlayerGameResult(List<PlayerResultDto> playerResults) {
+        return playerResults.stream()
+                .map(playerResult -> playerResult.getName() + ": " + playerResult.getGameResult())
+                .collect(joining("\n"));
     }
 }
 
