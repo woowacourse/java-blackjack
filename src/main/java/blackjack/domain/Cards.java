@@ -1,24 +1,14 @@
 package blackjack.domain;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class Cards {
 
     private static final int BLACKJACK = 21;
 
-    private final Stack<Card> cards = new Stack<>();
-
-    public void generate() {
-        cards.addAll(Card.getTotalCard());
-        Collections.shuffle(cards);
-    }
-
-    public Card pick() {
-        return cards.pop();
-    }
+    private final List<Card> cards = new ArrayList<>();
 
     public void add(final List<Card> initCards) {
         cards.addAll(initCards);
@@ -44,7 +34,8 @@ public class Cards {
     }
 
     public List<Card> getPartOfDealerCard() {
-        return List.of(cards.firstElement());
+        // TODO: 방식 수정
+        return List.of(cards.get(0));
     }
 
     public List<Card> getAllCards() {

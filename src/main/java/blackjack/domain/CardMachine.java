@@ -7,21 +7,17 @@ public class CardMachine {
 
     public static final int INIT_CARD_COUNT = 2;
 
-    private final Cards cards = new Cards();
-
-    public CardMachine() {
-        cards.generate();
-    }
+    private final CardDeck cardDeck = new CardDeck();
 
     public List<Card> pickInitCards() {
-        List<Card> cards = new ArrayList<>();
+        List<Card> initCards = new ArrayList<>();
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            cards.add(this.cards.pick());
+            initCards.add(cardDeck.pick());
         }
-        return cards;
+        return initCards;
     }
 
     public Card pickCard() {
-        return cards.pick();
+        return cardDeck.pick();
     }
 }

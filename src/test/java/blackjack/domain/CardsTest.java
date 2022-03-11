@@ -22,9 +22,9 @@ public class CardsTest {
     @Test
     void calculate_total() {
         Cards cards = new Cards();
-        cards.generate();
+        cards.add(List.of(queenSpade, queenSpade));
 
-        assertThat(cards.calculateTotal()).isEqualTo(340);
+        assertThat(cards.calculateTotal()).isEqualTo(20);
     }
 
     @DisplayName("카드들의 총합이 21을 초과하는지 확인한다.")
