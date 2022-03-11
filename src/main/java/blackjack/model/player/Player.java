@@ -8,12 +8,10 @@ import java.util.List;
 public abstract class Player {
 
     protected final Cards cards;
-    private final List<Card> openCards;
     private final String name;
 
-    public Player(String name, List<Card> openCards, Cards cards) {
+    public Player(String name, Cards cards) {
         this.name = name;
-        this.openCards = openCards;
         this.cards = cards;
     }
 
@@ -25,9 +23,7 @@ public abstract class Player {
         return cards;
     }
 
-    public List<Card> openCards() {
-        return openCards;
-    }
+    public abstract List<Card> openCards();
 
     public void take(Card card) {
         if (!isHittable()) {
