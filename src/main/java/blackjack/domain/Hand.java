@@ -3,11 +3,9 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.RecursiveTask;
 
 public class Hand {
 
-    private static final String INVALID_INPUT = "[ERROR] 입력값이 잘못되었습니다!";
     private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int BLACKJACK_SYMBOL_SCORE = 21;
     private static final int ACE_UPPER_SCORE = 11;
@@ -29,12 +27,12 @@ public class Hand {
             return getSumIncludingAce();
         }
 
-        return getSumExcludingAce();
+        return getCardScoreSum();
     }
 
     private int getSumIncludingAce() {
         int countAce = getNumberOfAce();
-        int sumExcludingAce = getSumExcludingAce();
+        int sumExcludingAce = getCardScoreSum();
 
         for (int i = 0; i < countAce; i++) {
             int sum = sumExcludingAce + (countAce * ACE_UPPER_SCORE) - i * ACE_SCORE_DIFFERENCE;
@@ -46,9 +44,8 @@ public class Hand {
         return sumExcludingAce + countAce;
     }
 
-    private int getSumExcludingAce() {
+    private int getCardScoreSum() {
         return cards.stream()
-                .filter(card -> !card.isAce())
                 .mapToInt(Card::getScore)
                 .sum();
     }
@@ -71,13 +68,7 @@ public class Hand {
         return cards.size() == BLACKJACK_CARD_SIZE && getScore() == BLACKJACK_SYMBOL_SCORE;
     }
 
-    public Result compareMatchResult(Hand opponentCardHand) {
-        if (getScore() < opponentCardHand.getScore() || opponentCardHand.isBust()) {
-            return Result.LOSE;
-        }
-        if (getScore() > opponentCardHand.getScore()) {
-            return Result.WIN;
-        }
-        return Result.DRAW;
+    public MatchResult compareMatchResult(Hand opponentCardHand) {
+        return MatchResult.get(this, opponentCardHand);
     }
 }

@@ -1,11 +1,10 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
-import blackjack.domain.Result;
+import blackjack.domain.MatchResult;
 import blackjack.domain.card.Card;
 import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 public class Dealer extends Participant {
 
@@ -13,7 +12,7 @@ public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
-    private final Map<Result, Integer> resultScores = new EnumMap(Result.class);
+    private final EnumMap<MatchResult, Integer> resultScores = new EnumMap(MatchResult.class);
 
     public Dealer() {
         this(Deck.createFixedCards());
@@ -26,8 +25,8 @@ public class Dealer extends Participant {
     }
 
     private void initResultScores() {
-        for (Result result : Result.values()) {
-            resultScores.put(result, 0);
+        for (MatchResult matchResult : MatchResult.values()) {
+            resultScores.put(matchResult, 0);
         }
     }
 
@@ -63,12 +62,12 @@ public class Dealer extends Participant {
         player.receiveCard(drawCard());
     }
 
-    public Map<Result, Integer> getResultScores() {
+    public EnumMap<MatchResult, Integer> getResultScores() {
         return resultScores;
     }
 
     public void decideMatchResult(Player player) {
-        Result result = cardHand.compareMatchResult(player.getCardHand());
-        resultScores.put(result, resultScores.get(result) + 1);
+        MatchResult matchResult = cardHand.compareMatchResult(player.getCardHand());
+        resultScores.put(matchResult, resultScores.get(matchResult) + 1);
     }
 }

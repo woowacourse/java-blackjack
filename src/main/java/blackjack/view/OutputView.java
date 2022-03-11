@@ -4,7 +4,7 @@ import static java.lang.System.out;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.Result;
+import blackjack.domain.MatchResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.List;
@@ -73,7 +73,7 @@ public class OutputView {
     }
 
     private static void printDealerResult(Dealer dealer) {
-        Map<Result, Integer> resultScores = dealer.getResultScores();
+        Map<MatchResult, Integer> resultScores = dealer.getResultScores();
         String dealerScoreString = resultScores.entrySet().stream()
                 .filter(entry -> entry.getValue() != 0)
                 .map(entry -> entry.getValue() + entry.getKey().getName() + " ")

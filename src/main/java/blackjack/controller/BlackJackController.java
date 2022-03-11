@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.service.GameScoreDecider;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -66,7 +65,7 @@ public class BlackJackController {
         }
     }
 
-    private void decideGameScore(Dealer dealer, List<Player> players) {
+    void decideGameScore(Dealer dealer, List<Player> players) {
         for (Player player : players) {
             player.decideMatchResult(dealer);
             dealer.decideMatchResult(player);

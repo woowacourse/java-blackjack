@@ -26,6 +26,10 @@ public class Participant {
         return cardHand.getCards();
     }
 
+    public void receiveCard(Card card) {
+        cardHand.add(card);
+    }
+
     public boolean isBust() {
         return cardHand.isBust();
     }

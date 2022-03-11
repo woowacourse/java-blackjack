@@ -1,26 +1,20 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Result;
-import blackjack.domain.card.Card;
-import java.util.Map;
+import blackjack.domain.MatchResult;
 
 public class Player extends Participant {
 
-    private Result result;
+    private MatchResult matchResult;
 
     public Player(String name) {
         this.name = new Name(name);
     }
 
-    public void receiveCard(Card card) {
-        cardHand.add(card);
-    }
-
     public void decideMatchResult(Dealer dealer) {
-        result =  cardHand.compareMatchResult(dealer.getCardHand());
+        matchResult =  cardHand.compareMatchResult(dealer.getCardHand());
     }
 
-    public Result getResult() {
-        return result;
+    public MatchResult getResult() {
+        return matchResult;
     }
 }
