@@ -12,7 +12,7 @@ public class Player extends AbstractGamer {
     }
 
     @Override
-    public int compare(Gamer dealer) {
+    public int compareWinning(Gamer dealer) {
         if (isBust()) {
             return LOSE;
         }

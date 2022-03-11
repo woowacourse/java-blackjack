@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Name {
 
+    private static final String BLANK_NAME_ERROR_MESSAGE = "이름으로 공백을 입력할 수 없습니다.";
     private final String name;
 
     public Name(String name) {
@@ -14,7 +15,7 @@ public class Name {
 
     private void validateEmptyName(String name) {
         if (name.isBlank()) {
-            throw new IllegalArgumentException("이름으로 공백을 입력할 수 없습니다.");
+            throw new IllegalArgumentException(BLANK_NAME_ERROR_MESSAGE);
         }
     }
 

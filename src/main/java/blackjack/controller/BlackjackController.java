@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class BlackjackController {
 
-    private static final String STAY_ANSWER = "n";
+    private static final String HIT_ANSWER = "y";
 
     public void run() {
         List<String> names = InputView.requestNames();
@@ -45,7 +45,7 @@ public class BlackjackController {
                 .map(Name::new)
                 .map(Player::new)
                 .collect(Collectors.toList()));
-        gamers.initCards(deck);
+        gamers.dealCards(deck);
         return gamers;
     }
 
@@ -60,16 +60,17 @@ public class BlackjackController {
     }
 
     private void takePlayerCards(Gamer gamer, Deck deck) {
-        if (!gamer.isValidRange()) {
-            return;
+        if (canHit(gamer)) {
+            gamer.hit(deck.pick());
+            ResultView.printGamerCard(gamer);
+            takePlayerCards(gamer, deck);
         }
-        String answer = InputView.requestHitOrStay(gamer.getName());
-        if (answer.equals(STAY_ANSWER)) {
-            return;
-        }
-        gamer.hit(deck.pick());
-        ResultView.printGamerCard(gamer);
-        takePlayerCards(gamer, deck);
+    }
+
+    private boolean canHit(Gamer gamer) {
+        String hitOrStayAnswer = InputView.requestHitOrStay(gamer.getName());
+        return gamer.isValidRange()
+                && hitOrStayAnswer.equals(HIT_ANSWER);
     }
 
     private void takeDealerCards(Gamer gamer, Deck deck) {
@@ -87,11 +88,13 @@ public class BlackjackController {
     private Results calculateOutcomeResults(Gamer dealer, Gamers players) {
         OutcomeResults dealerResult = new OutcomeResults();
         Map<Gamer, OutcomeResults> results = new LinkedHashMap<>();
+
         for (Gamer player : players.get()) {
             results.put(player, new OutcomeResults());
             results.get(player).increase(Outcome.compare(player, dealer));
             dealerResult.increase(Outcome.compare(dealer, player));
         }
+
         return new Results(dealerResult, results);
     }
 }

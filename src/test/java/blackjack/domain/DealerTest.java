@@ -84,7 +84,7 @@ public class DealerTest {
         player.hit(new Card(CardNumber.TEN, Type.SPADE));
         player.hit(new Card(CardNumber.TEN, Type.DIAMOND));
 
-        assertThat(dealer.compare(player)).isPositive();
+        assertThat(dealer.compareWinning(player)).isPositive();
     }
 
     @Test
@@ -99,7 +99,7 @@ public class DealerTest {
         player.hit(new Card(CardNumber.TEN, Type.CLOVER));
         player.hit(new Card(CardNumber.TEN, Type.SPADE));
 
-        assertThat(dealer.compare(player)).isNegative();
+        assertThat(dealer.compareWinning(player)).isNegative();
     }
 
     @Test
@@ -113,7 +113,7 @@ public class DealerTest {
         player.hit(new Card(CardNumber.ACE, Type.CLOVER));
         player.hit(new Card(CardNumber.TEN, Type.DIAMOND));
 
-        assertThat(dealer.compare(player)).isPositive();
+        assertThat(dealer.compareWinning(player)).isPositive();
     }
 
     @Test
@@ -127,7 +127,7 @@ public class DealerTest {
         player.hit(new Card(CardNumber.ACE, Type.CLOVER));
         player.hit(new Card(CardNumber.JACK, Type.DIAMOND));
 
-        assertThat(dealer.compare(player)).isNegative();
+        assertThat(dealer.compareWinning(player)).isNegative();
     }
 
     @Test
@@ -141,7 +141,7 @@ public class DealerTest {
         player.hit(new Card(CardNumber.ACE, Type.CLOVER));
         player.hit(new Card(CardNumber.JACK, Type.DIAMOND));
 
-        assertThat(dealer.compare(player)).isZero();
+        assertThat(dealer.compareWinning(player)).isZero();
     }
 
     @Test
@@ -156,6 +156,6 @@ public class DealerTest {
         player.hit(new Card(CardNumber.SEVEN, Type.CLOVER));
         player.hit(new Card(CardNumber.TEN, Type.DIAMOND));
 
-        assertThat(dealer.compare(player)).isPositive();
+        assertThat(dealer.compareWinning(player)).isPositive();
     }
 }

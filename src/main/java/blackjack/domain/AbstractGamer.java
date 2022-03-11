@@ -59,7 +59,7 @@ public abstract class AbstractGamer implements Gamer {
     public abstract boolean isValidRange();
 
     @Override
-    public abstract int compare(Gamer o);
+    public abstract int compareWinning(Gamer o);
 
     @Override
     public boolean equals(Object o) {
@@ -69,8 +69,8 @@ public abstract class AbstractGamer implements Gamer {
         if (!(o instanceof AbstractGamer)) {
             return false;
         }
-        AbstractGamer abstractGamer = (AbstractGamer) o;
-        return Objects.equals(name, abstractGamer.name) && Objects.equals(cards, abstractGamer.cards);
+        AbstractGamer that = (AbstractGamer) o;
+        return Objects.equals(name, that.name) && Objects.equals(cards, that.cards);
     }
 
     @Override
@@ -80,7 +80,7 @@ public abstract class AbstractGamer implements Gamer {
 
     @Override
     public String toString() {
-        return "Gamer{" +
+        return "AbstractGamer{" +
                 "name=" + name +
                 ", cards=" + cards +
                 '}';

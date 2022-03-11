@@ -3,7 +3,6 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -87,7 +86,7 @@ public class PlayerTest {
         player.hit(new Card(CardNumber.TEN, Type.SPADE));
         player.hit(new Card(CardNumber.TEN, Type.DIAMOND));
 
-        assertThat(player.compare(dealer)).isNegative();
+        assertThat(player.compareWinning(dealer)).isNegative();
     }
 
     @Test
@@ -102,7 +101,7 @@ public class PlayerTest {
         player.hit(new Card(CardNumber.TEN, Type.CLOVER));
         player.hit(new Card(CardNumber.TEN, Type.SPADE));
 
-        assertThat(player.compare(dealer)).isPositive();
+        assertThat(player.compareWinning(dealer)).isPositive();
     }
 
     @Test
@@ -116,7 +115,7 @@ public class PlayerTest {
         player.hit(new Card(CardNumber.ACE, Type.CLOVER));
         player.hit(new Card(CardNumber.TEN, Type.DIAMOND));
 
-        assertThat(player.compare(dealer)).isNegative();
+        assertThat(player.compareWinning(dealer)).isNegative();
     }
 
     @Test
@@ -130,7 +129,7 @@ public class PlayerTest {
         player.hit(new Card(CardNumber.ACE, Type.CLOVER));
         player.hit(new Card(CardNumber.JACK, Type.DIAMOND));
 
-        assertThat(player.compare(dealer)).isPositive();
+        assertThat(player.compareWinning(dealer)).isPositive();
     }
 
     @Test
@@ -144,7 +143,7 @@ public class PlayerTest {
         player.hit(new Card(CardNumber.ACE, Type.CLOVER));
         player.hit(new Card(CardNumber.JACK, Type.DIAMOND));
 
-        assertThat(player.compare(dealer)).isZero();
+        assertThat(player.compareWinning(dealer)).isZero();
     }
 
     @Test
@@ -159,6 +158,6 @@ public class PlayerTest {
         player.hit(new Card(CardNumber.SEVEN, Type.CLOVER));
         player.hit(new Card(CardNumber.TEN, Type.DIAMOND));
 
-        assertThat(player.compare(dealer)).isNegative();
+        assertThat(player.compareWinning(dealer)).isNegative();
     }
 }

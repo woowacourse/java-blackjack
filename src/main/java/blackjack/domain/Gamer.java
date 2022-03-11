@@ -16,5 +16,5 @@ public interface Gamer {
 
     boolean isValidRange();
 
-    int compare(Gamer o);
+    int compareWinning(Gamer o);
 }

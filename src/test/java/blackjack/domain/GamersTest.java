@@ -23,7 +23,7 @@ public class GamersTest {
     void init_cards_gamers() {
         Gamer aki = new Player(new Name("aki"));
         Gamers gamers = new Gamers(List.of(aki));
-        gamers.initCards(new FixDeck());
+        gamers.dealCards(new FixDeck());
         Cards akiCards = aki.getCards();
         List<Card> cards = akiCards.get();
 

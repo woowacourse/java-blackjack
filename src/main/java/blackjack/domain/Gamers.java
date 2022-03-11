@@ -47,7 +47,7 @@ public class Gamers {
         }
     }
 
-    public void initCards(Deck deck) {
+    public void dealCards(Deck deck) {
         for (Gamer gamer : gamers) {
             gamer.hit(deck.pick());
             gamer.hit(deck.pick());
