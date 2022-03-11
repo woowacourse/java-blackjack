@@ -7,6 +7,7 @@ import blackjack.domain.CardDeck;
 import blackjack.domain.Dealer;
 import blackjack.domain.Gambler;
 import blackjack.domain.Player;
+import blackjack.dto.BlackJackResultDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayersDto;
 import blackjack.view.InputView;
@@ -17,23 +18,23 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class BlackJackController {
+    private static final int DEFAULT_SPREAD_COUNT_END_INDEX = 2;
+    private static final int DEFAULT_SPREAD_COUNT_START_INDEX = 0;
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
     public void start() {
-        List<Player> gamblers = setupGamblers();
-        Player dealer = new Dealer("딜러");
-        final CardDeck cardDeck = setupCards();
+        final List<Player> gamblers = setupGamblers();
+        final Player dealer = new Dealer("딜러");
+        final CardDeck cardDeck = new CardDeck();
 
         spreadCards(gamblers, dealer, cardDeck);
-        printSpreadCards(dealer, gamblers);
 
-        playGameForGambler(gamblers, cardDeck);
-        playGameForDealer(dealer, cardDeck);
+        playGame(gamblers, dealer, cardDeck);
 
-        printCardAndScore(dealer, gamblers);
-        outputView.printResult(BlackJackResult.of(dealer, gamblers));
+        processResult(dealer, gamblers);
     }
+
 
     public List<Player> setupGamblers() {
         final List<String> playerNames = inputView.scanPlayerNames();
@@ -43,13 +44,10 @@ public class BlackJackController {
             .collect(toList());
     }
 
-    private CardDeck setupCards() {
-        return CardDeck.getInstance();
-    }
-
     public void spreadCards(List<Player> gamblers, Player dealer, CardDeck cardDeck) {
-        IntStream.range(0, 2)
+        IntStream.range(DEFAULT_SPREAD_COUNT_START_INDEX, DEFAULT_SPREAD_COUNT_END_INDEX)
             .forEach(i -> spreadCard(gamblers, dealer, cardDeck));
+        printSpreadCards(dealer, gamblers);
     }
 
     private void spreadCard(final List<Player> gamblers, final Player dealer, final CardDeck cardDeck) {
@@ -67,9 +65,14 @@ public class BlackJackController {
 
     private List<Player> concatPlayers(final Player dealer, final List<Player> gamblers) {
         return Stream.concat(
-                gamblers.stream(),
-                Stream.of(dealer)
-            ).collect(Collectors.toList());
+            Stream.of(dealer),
+            gamblers.stream()
+        ).collect(Collectors.toList());
+    }
+
+    private void playGame(final List<Player> gamblers, final Player dealer, final CardDeck cardDeck) {
+        playGameForGambler(gamblers, cardDeck);
+        playGameForDealer(dealer, cardDeck);
     }
 
     private void playGameForGambler(final List<Player> gamblers, CardDeck cardDeck) {
@@ -88,12 +91,11 @@ public class BlackJackController {
             return;
         }
 
-        while(isHit) {
-            if (gambler.isFinished(cardDeck)){
+        while (isHit) {
+            if (gambler.isFinished(cardDeck)) {
                 outputView.printBurst(currentGamblerDto);
                 break;
             }
-
             gambler.addCard(cardDeck);
             currentGamblerDto = PlayerDto.from(gambler);
             outputView.printCards(currentGamblerDto);
@@ -108,8 +110,10 @@ public class BlackJackController {
         }
     }
 
-    private void printCardAndScore(Player dealer, List<Player> gamblers) {
+    private void processResult(Player dealer, List<Player> gamblers) {
         outputView.printNewLine();
         outputView.printCardAndScore(PlayersDto.from(concatPlayers(dealer, gamblers)));
+        final BlackJackResult result = BlackJackResult.of(dealer, gamblers);
+        outputView.printResult(BlackJackResultDto.from(result));
     }
 }

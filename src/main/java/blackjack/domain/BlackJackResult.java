@@ -1,52 +1,45 @@
 package blackjack.domain;
 
-import static java.util.Collections.unmodifiableMap;
-
-import java.util.HashMap;
+import blackjack.dto.PlayerDto;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class BlackJackResult {
-    private final Map<String, Boolean> playerResult;
-    private final Map<Boolean, Integer> dealerResult;
+    private final Map<GameResult, Integer> dealerResult;
+    private final LinkedHashMap<Player, GameResult> gamblerResult;
 
-    private BlackJackResult(Map<String, Boolean> playerResult, Map<Boolean, Integer> dealerResult) {
-        this.playerResult = unmodifiableMap(playerResult);
-        this.dealerResult = unmodifiableMap(dealerResult);
+    private BlackJackResult(final Map<GameResult, Integer> dealerResult, final LinkedHashMap<Player, GameResult> gamblerResult) {
+        this.dealerResult = dealerResult;
+        this.gamblerResult = gamblerResult;
     }
 
     public static BlackJackResult of(Player dealer, List<Player> gamblers) {
-        Map<String, Boolean> playerResult = new HashMap<>();
-        Map<Boolean, Integer> dealerResult = new HashMap<>();
+        final LinkedHashMap<Player, GameResult> gamblerResult = new LinkedHashMap<>();
+        final Map<GameResult, Integer> dealerResult = gamblers.stream()
+            .collect(Collectors.groupingBy(
+                gambler -> {
+                    final GameResult currentDealderResult = dealer.compare(gambler);
+                    gamblerResult.put(gambler, currentDealderResult.reverse());
+                    return dealer.compare(gambler);
+                },
+                Collectors.summingInt(count -> 1)
+            ));
+        return new BlackJackResult(dealerResult, gamblerResult);
+    }
 
-        final List<Entry<String, Boolean>> collect = gamblers.stream()
-            .map(gambler -> Map.entry(gambler.getName(), gambler.getResult() > dealer.getResult()))
+    public List<String> getDealerResult() {
+        return dealerResult.entrySet()
+            .stream()
+            .map(it -> it.getValue() + it.getKey().getResult())
             .collect(Collectors.toList());
-
-        collect
-            .forEach(entry -> playerResult.put(entry.getKey(), entry.getValue()));
-
-        gamblers
-            .forEach(gambler -> {
-                if (gambler.getResult() > dealer.getResult()) {
-                    dealerResult.merge(Boolean.FALSE, 1, Integer::sum);
-                }
-                if (gambler.getResult() < dealer.getResult()) {
-                    dealerResult.merge(Boolean.TRUE, 1, Integer::sum);
-                }
-            });
-
-
-        return new BlackJackResult(playerResult, dealerResult);
     }
 
-    public Map<String, Boolean> getPlayerResult() {
-        return playerResult;
-    }
-
-    public Map<Boolean, Integer> getDealerResult() {
-        return dealerResult;
+    public List<String> getGamblerResult() {
+        return gamblerResult.entrySet()
+            .stream()
+            .map(it -> PlayerDto.from(it.getKey()).getName() + ": " + it.getValue().getResult())
+            .collect(Collectors.toList());
     }
 }
