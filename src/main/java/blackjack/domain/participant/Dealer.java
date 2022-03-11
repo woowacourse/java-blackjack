@@ -12,7 +12,7 @@ public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
-    private final EnumMap<MatchResult, Integer> resultScores = new EnumMap(MatchResult.class);
+    private final EnumMap<MatchResult, Integer> matchResultScores = new EnumMap(MatchResult.class);
 
     public Dealer() {
         this(Deck.createFixedCards());
@@ -26,7 +26,7 @@ public class Dealer extends Participant {
 
     private void initResultScores() {
         for (MatchResult matchResult : MatchResult.values()) {
-            resultScores.put(matchResult, 0);
+            matchResultScores.put(matchResult, 0);
         }
     }
 
@@ -62,12 +62,16 @@ public class Dealer extends Participant {
         player.receiveCard(drawCard());
     }
 
-    public EnumMap<MatchResult, Integer> getResultScores() {
-        return resultScores;
+    public EnumMap<MatchResult, Integer> getMatchResultScores() {
+        return matchResultScores;
+    }
+
+    public Integer getMatchResultScore(MatchResult matchResult) {
+        return matchResultScores.get(matchResult);
     }
 
     public void decideMatchResult(Player player) {
         MatchResult matchResult = cardHand.compareMatchResult(player.getCardHand());
-        resultScores.put(matchResult, resultScores.get(matchResult) + 1);
+        matchResultScores.put(matchResult, matchResultScores.get(matchResult) + 1);
     }
 }

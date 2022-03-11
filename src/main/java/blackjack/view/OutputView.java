@@ -73,7 +73,7 @@ public class OutputView {
     }
 
     private static void printDealerResult(Dealer dealer) {
-        Map<MatchResult, Integer> resultScores = dealer.getResultScores();
+        Map<MatchResult, Integer> resultScores = dealer.getMatchResultScores();
         String dealerScoreString = resultScores.entrySet().stream()
                 .filter(entry -> entry.getValue() != 0)
                 .map(entry -> entry.getValue() + entry.getKey().getName() + " ")

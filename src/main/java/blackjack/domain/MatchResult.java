@@ -5,9 +5,6 @@ import java.util.function.BiPredicate;
 
 public enum MatchResult {
 
-    /**
-     * Criteria for judging victory
-     */
     WIN("승", (self, other) -> winCondition(self, other)),
     LOSE("패", (self, other) -> loseCondition(self, other)),
     DRAW("무", (self, other) -> drawCondition(self, other));
