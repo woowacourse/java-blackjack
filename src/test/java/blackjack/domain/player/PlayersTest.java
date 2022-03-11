@@ -88,4 +88,26 @@ class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참가자 이름은 중복될 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("참여자가 딜러로 변환되면 예외를 발생한다.")
+    void downCastingPlayerToDealer() {
+        Deck deck = new Deck();
+        Player participant = new Participant(deck.initDistributeCard(), "corinne");
+        Assertions.assertThatThrownBy(() -> Player.changeToDealer(participant))
+                .isInstanceOf(ClassCastException.class)
+                .hasMessage("[ERROR] Player가 딜러가 아닙니다.");
+
+    }
+
+    @Test
+    @DisplayName("참여자가 딜러로 변환되면 예외를 발생한다.")
+    void downCastingPlayerToParticipant() {
+        Deck deck = new Deck();
+        Player dealer = new Dealer(deck.initDistributeCard());
+        Assertions.assertThatThrownBy(() -> Player.changeToParticipant(dealer))
+                .isInstanceOf(ClassCastException.class)
+                .hasMessage("[ERROR] Player가 참여자가 아닙니다.");
+
+    }
 }

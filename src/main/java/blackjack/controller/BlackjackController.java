@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.GameMachine;
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -10,7 +9,8 @@ import blackjack.view.OutputView;
 
 public class BlackjackController {
 
-    public void play(final GameMachine gameMachine) {
+    public void play() {
+        final GameMachine gameMachine = new GameMachine(InputView.responseNames());
         OutputView.printPlayersInitCardInfo(gameMachine.getPlayers());
         decideMoreCard(gameMachine);
         announcePlayersFinishInfo(gameMachine.getPlayers());
@@ -25,18 +25,19 @@ public class BlackjackController {
         decideOneMoreCard(gameMachine);
     }
 
-    private void decideParticipantOneMoreCard(final Player participant, final GameMachine gameMachine) {
-        while (isNotOverMaxScore(participant) && InputView.oneMoreCard(participant)) {
-            participant.addCard(gameMachine.playDraw());
-            OutputView.printPlayerCardInfo(participant);
+    private void decideParticipantOneMoreCard(final Player player, final GameMachine gameMachine) {
+        while (isNotOverMaxScore(player) && InputView.oneMoreCard(player)) {
+            gameMachine.giveCard(player);
+            OutputView.printPlayerCardInfo(player);
         }
     }
 
-    private boolean isNotOverMaxScore(final Player participant) {
-        if (((Participant) participant).isOverMaxScore()) {
-            OutputView.printParticipantOverMaxScore(participant.getName());
+    private boolean isNotOverMaxScore(final Player player) {
+        Participant participant = Player.changeToParticipant(player);
+        if (participant.isOverMaxScore()) {
+            OutputView.printParticipantOverMaxScore(player.getName());
         }
-        return !((Participant) participant).isOverMaxScore();
+        return !participant.isOverMaxScore();
     }
 
     private void decideOneMoreCard(final GameMachine gameMachine) {
@@ -53,7 +54,8 @@ public class BlackjackController {
     }
 
     private void competeWithDealer(final Players players) {
-        players.getParticipants().forEach(player ->
-                ((Dealer) players.getDealer()).compete((Participant) player));
+        players.getParticipants()
+                .forEach(player -> (Player.changeToDealer(players.getDealer()))
+                        .compete((Participant) player));
     }
 }

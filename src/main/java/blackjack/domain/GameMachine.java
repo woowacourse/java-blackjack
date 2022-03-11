@@ -37,16 +37,16 @@ public class GameMachine {
         return new Dealer(deck.initDistributeCard());
     }
 
-    public Card playDraw() {
-        return deck.draw();
-    }
-
     public boolean isDealerGetCard() {
-        if (((Dealer) players.getDealer()).acceptableCard()) {
+        if (Player.changeToDealer(players.getDealer()).acceptableCard()) {
             players.addDealerCard(deck.draw());
             return true;
         }
         return false;
+    }
+
+    public void giveCard(Player player) {
+        player.addCard(deck.draw());
     }
 
     public Players getPlayers() {
