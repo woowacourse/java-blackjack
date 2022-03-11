@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import java.util.LinkedHashSet;
 
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Status;
 
@@ -16,9 +16,9 @@ public abstract class Participant {
         this.status = Status.HIT;
     }
 
-    public void init(CardFactory cardFactory) {
-        cards.add(cardFactory.drawCard());
-        cards.add(cardFactory.drawCard());
+    public void init(CardDeck cardDeck) {
+        cards.add(cardDeck.drawCard());
+        cards.add(cardDeck.drawCard());
     }
 
     public Status getStatus() {
@@ -33,8 +33,8 @@ public abstract class Participant {
         return cards.sum();
     }
 
-    public void hit(CardFactory cardFactory) {
-        cards.add(cardFactory.drawCard());
+    public void hit(CardDeck cardDeck) {
+        cards.add(cardDeck.drawCard());
         updateStatus();
     }
 

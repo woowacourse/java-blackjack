@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Status;
 
@@ -79,7 +79,7 @@ class PlayerTest {
         final Player player = new Player("pobi");
 
         // when
-        player.init(CardFactory.createNoShuffle());
+        player.init(CardDeck.createNoShuffle());
         final int actual = player.getScore();
 
         // then

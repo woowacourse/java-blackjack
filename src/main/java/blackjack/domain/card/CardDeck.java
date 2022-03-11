@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -7,53 +9,46 @@ import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-public class CardFactory {
+public class CardDeck {
 
     private final Stack<Card> deck;
 
-    private CardFactory(Stack<Card> deck) {
+    private CardDeck(Stack<Card> deck) {
         this.deck = deck;
     }
 
-    public static CardFactory create() {
+    public static CardDeck create() {
         final List<Card> list = getCards();
         Collections.shuffle(list);
 
         final Stack<Card> deck = new Stack<>();
         deck.addAll(list);
 
-        return new CardFactory(deck);
+        return new CardDeck(deck);
     }
 
-    public static CardFactory createNoShuffle() {
+    public static CardDeck createNoShuffle() {
         final List<Card> list = getCards();
 
         final Stack<Card> deck = new Stack<>();
         deck.addAll(list);
 
-        return new CardFactory(deck);
+        return new CardDeck(deck);
     }
 
     private static List<Card> getCards() {
-        final List<Card> list = new ArrayList<>();
-        for (CardSymbol symbol : CardSymbol.values()) {
-            list.addAll(createSymbolCards(symbol));
-        }
-
-        return list;
+        return Arrays.stream(CardSymbol.values())
+            .flatMap(symbol -> createSymbolCards(symbol).stream())
+            .collect(toList());
     }
 
     private static List<Card> createSymbolCards(CardSymbol symbol) {
         return Arrays.stream(CardNumber.values())
             .map(cardNumber -> new Card(symbol, cardNumber))
-            .collect(Collectors.toList());
+            .collect(toUnmodifiableList());
     }
 
     public Card drawCard() {
         return deck.pop();
-    }
-
-    public int getRemainAmount() {
-        return deck.size();
     }
 }

@@ -5,29 +5,28 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardFactoryTest {
+public class CardDeckTest {
 
     @Test
     @DisplayName("객체가 생성되면 52장의 카드를 갖는다.")
     void initDeck() {
-        // give
-        final CardFactory cardFactory = CardFactory.create();
+        final CardDeck cardDeck = CardDeck.create();
 
-        // when
-        final int actual = cardFactory.getRemainAmount();
-
-        // then
-        assertThat(actual).isEqualTo(52);
+        assertThatCode(() -> {
+            for (int i = 0; i < 52; i++) {
+                cardDeck.drawCard();
+            }
+        }).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("카드를 한 장 만들어서 반환한다.")
     void createCard() {
         // give
-        final CardFactory cardFactory = CardFactory.createNoShuffle();
+        final CardDeck cardDeck = CardDeck.createNoShuffle();
 
         // when
-        final Card card = cardFactory.drawCard();
+        final Card card = cardDeck.drawCard();
 
         // then
         assertThat(card).isInstanceOf(Card.class);

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Status;
 
 class DealerTest {
@@ -20,12 +20,12 @@ class DealerTest {
     void drawCards_BUST() {
         // give
         final Dealer dealer = new Dealer();
-        final CardFactory cardFactory = CardFactory.createNoShuffle();
+        final CardDeck cardDeck = CardDeck.createNoShuffle();
         List<Card> cards = List.of(new Card(DIAMOND, QUEEN), new Card(CLUB, FIVE));
         dealer.init(cards);
 
         // when
-        dealer.drawCards(cardFactory);
+        dealer.drawCards(cardDeck);
         final Status actual = dealer.getStatus();
 
         // then
@@ -37,11 +37,11 @@ class DealerTest {
     void drawCards_NOT_BUST() {
         // give
         final Dealer dealer = new Dealer();
-        final CardFactory cardFactory = CardFactory.createNoShuffle();
-        dealer.init(cardFactory);
+        final CardDeck cardDeck = CardDeck.createNoShuffle();
+        dealer.init(cardDeck);
 
         // when
-        dealer.drawCards(cardFactory);
+        dealer.drawCards(cardDeck);
         final Status actual = dealer.getStatus();
 
         // then
@@ -53,8 +53,8 @@ class DealerTest {
     void openCard() {
         // give
         final Dealer dealer = new Dealer();
-        final CardFactory cardFactory = CardFactory.createNoShuffle();
-        dealer.init(cardFactory);
+        final CardDeck cardDeck = CardDeck.createNoShuffle();
+        dealer.init(cardDeck);
 
         // when
         final Card actual = dealer.openCard();

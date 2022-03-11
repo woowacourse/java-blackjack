@@ -9,7 +9,7 @@ import blackjack.domain.Game;
 import blackjack.domain.Record;
 import blackjack.domain.RecordFactory;
 import blackjack.domain.card.CardCount;
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
@@ -30,7 +30,7 @@ public class GameController {
 
     private Game initPlay() {
         final List<String> names = InputView.requestPlayerNames();
-        final Game game = new Game(CardFactory.create(), names);
+        final Game game = new Game(CardDeck.create(), names);
 
         game.init();
 

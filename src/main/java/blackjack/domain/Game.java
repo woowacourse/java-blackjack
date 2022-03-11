@@ -6,19 +6,19 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardCount;
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public class Game {
 
-    private final CardFactory cardFactory;
+    private final CardDeck cardDeck;
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Game(CardFactory cardFactory, List<String> playerNames) {
-        this.cardFactory = cardFactory;
+    public Game(CardDeck cardDeck, List<String> playerNames) {
+        this.cardDeck = cardDeck;
         this.dealer = new Dealer();
         this.players = playerNames.stream()
             .map(Player::new)
@@ -26,8 +26,8 @@ public class Game {
     }
 
     public void init() {
-        dealer.init(cardFactory);
-        players.forEach(player -> player.init(cardFactory));
+        dealer.init(cardDeck);
+        players.forEach(player -> player.init(cardDeck));
     }
 
     public Card openCard() {
@@ -42,14 +42,14 @@ public class Game {
 
     public void drawPlayerCard(Player player, Status status) {
         if (status == Status.HIT) {
-            player.hit(cardFactory);
+            player.hit(cardDeck);
             return;
         }
         player.stay();
     }
 
     public CardCount drawDealerCard() {
-        return dealer.drawCards(cardFactory);
+        return dealer.drawCards(cardDeck);
     }
 
     public int getDealerScore() {
