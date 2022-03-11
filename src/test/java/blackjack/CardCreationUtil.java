@@ -2,6 +2,7 @@ package blackjack;
 
 import static blackjack.domain.card.Suit.HEART;
 
+import blackjack.domain.Hand;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import java.util.Arrays;
@@ -17,5 +18,11 @@ public class CardCreationUtil {
         return Arrays.stream(denominations)
                 .map(denomination -> new Card(denomination, HEART))
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    public static Hand createHand(Denomination... denominations) {
+        Hand hand = new Hand();
+        hand.add(createCardList(denominations).toArray(new Card[0]));
+        return hand;
     }
 }
