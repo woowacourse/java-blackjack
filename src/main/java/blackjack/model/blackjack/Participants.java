@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 import blackjack.model.card.Card;
+import blackjack.model.cards.Cards;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Name;
 import blackjack.model.player.Player;
@@ -53,5 +54,15 @@ public class Participants {
             return dealer;
         }
         return players.stream().filter(player -> player.name().equals(name)).findFirst().orElseThrow(IllegalArgumentException::new);
+    }
+
+    public boolean isHittableByName(Name name) {
+        Player player = findByName(name);
+        return player.isHittable();
+    }
+
+    public Cards takenCardsByName(Name name) {
+        Player player = findByName(name);
+        return player.cards();
     }
 }

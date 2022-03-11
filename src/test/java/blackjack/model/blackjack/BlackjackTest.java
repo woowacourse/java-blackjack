@@ -4,13 +4,18 @@ import static blackjack.model.card.Suit.CLOVER;
 import static blackjack.model.card.Suit.DIAMOND;
 import static blackjack.model.card.Suit.HEART;
 import static blackjack.model.card.Suit.SPADE;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Name;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class BlackjackTest {
 
@@ -125,6 +130,58 @@ public class BlackjackTest {
         Record playerRecord = records.recordByName(pobi);
         assertRecord(playerRecord, 1, 0, 0);
     }
+
+    @ParameterizedTest
+    @MethodSource("provideCardDispenserForDealer")
+    void dealerIsHittable(CardDispenser dispenser, boolean expect) {
+        Blackjack blackjack = new Blackjack(dispenser);
+        assertThat(blackjack.isDealerHittable()).isEqualTo(expect);
+    }
+
+    private static Stream<Arguments> provideCardDispenserForDealer() {
+        return Stream.of(
+            Arguments.of(new CardDispenserStub(JACK, SEVEN), false),
+            Arguments.of(new CardDispenserStub(JACK, SIX), true)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideCardDispenserForPlayer")
+    void playerIsHittable(CardDispenser cardDispenser, boolean expect) {
+        Name pobi = new Name("pobi");
+        Blackjack blackjack = new Blackjack(cardDispenser, pobi);
+        assertThat(blackjack.isPlayerHittable(pobi)).isEqualTo(expect);
+    }
+
+    private static Stream<Arguments> provideCardDispenserForPlayer() {
+        return Stream.of(
+            Arguments.of(new CardDispenserStub(ACE, TWO, JACK, JACK), true),
+            Arguments.of(new CardDispenserStub(ACE, TWO, JACK, ACE), false)
+        );
+    }
+
+    @Test
+    void dealerTakenCards() {
+        Blackjack blackjack = new Blackjack(new CardDispenserStub(ACE, JACK));
+        assertThat(blackjack.dealerCards()).hasSize(2);
+        assertThat(blackjack.dealerCards()).contains(ACE, JACK);
+    }
+
+    @Test
+    void takeCardAndDealerTakenCards() {
+        Blackjack blackjack = new Blackjack(new CardDispenserStub(ACE, FIVE, QUEEN));
+        blackjack.dealerTakeCard();
+        assertThat(blackjack.dealerCards()).hasSize(3);
+        assertThat(blackjack.dealerCards()).contains(ACE, FIVE, QUEEN);
+    }
+
+    @Test
+    void dealerTakeCardFail() {
+        Blackjack blackjack = new Blackjack(new CardDispenserStub(ACE, SIX, QUEEN));
+        assertThatThrownBy(() -> blackjack.dealerTakeCard())
+            .isInstanceOf(IllegalStateException.class);
+    }
+
 
     private static void assertRecord(Record record, int win, int draw, int loss) {
         assertThat(record.countBy(Result.WIN))
