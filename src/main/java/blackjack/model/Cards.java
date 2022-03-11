@@ -1,9 +1,6 @@
 package blackjack.model;
 
-import static java.util.function.Predicate.not;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -12,8 +9,16 @@ public final class Cards {
     private final List<Card> cards;
 
     Cards(Card card1, Card card2, Card... cards) {
-        this.cards = Stream.concat(Stream.concat(Stream.of(card1), Stream.of(card2)), List.of(cards).stream())
+        this.cards = concat(concat(card1, card2), cards)
             .collect(Collectors.toList());
+    }
+
+    private Stream<Card> concat(Card card1, Card card2) {
+        return Stream.concat(Stream.of(card1), Stream.of(card2));
+    }
+
+    private Stream<Card> concat(Stream<Card> cards1, Card[] cards2) {
+        return Stream.concat(cards1, List.of(cards2).stream());
     }
 
     public Score maxScore() {
@@ -32,28 +37,22 @@ public final class Cards {
     }
 
     public Score bestScore() {
-        return softHandScore()
-                .filter(not(Score::isBust))
-                .orElse(hardHandScore());
-    }
-
-    private Optional<Score> softHandScore() {
-        if (hasAce()) {
-            return Optional.of(hardHandScore().plus(increaseScore()));
+        if (hasAce() && !softHandScore().isBust()) {
+            return softHandScore();
         }
-        return Optional.empty();
+        return hardHandScore();
     }
 
     private boolean hasAce() {
         return stream().anyMatch(Card::isAce);
     }
 
-    private Score increaseScore() {
-        return new Score(diffSoftAndHardOfAce());
+    private Score softHandScore() {
+        return hardHandScore().plus(increaseScore());
     }
 
-    private int diffSoftAndHardOfAce() {
-        return Rank.ACE.soft() - Rank.ACE.hard();
+    private Score increaseScore() {
+        return new Score(Rank.ACE.soft() - Rank.ACE.hard());
     }
 
     private Score hardHandScore() {
