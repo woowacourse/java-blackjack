@@ -67,4 +67,8 @@ public class Entries {
                 .map(Entry::getDeckToString)
                 .collect(Collectors.toList());
     }
+
+    public void hitCurrentEntry(TrumpCard card) {
+        this.entries.get(currentIndex).hit(card);
+    }
 }

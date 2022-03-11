@@ -19,7 +19,9 @@ public class Application {
 
         do {
             game.toNextEntry();
-            inputView.askForHit(game.getCurrentEntryName());
+            if (inputView.askForHit(game.getCurrentEntryName())) {
+                game.hitCurrentEntry();
+            }
         } while (game.hasNextEntry());
     }
 }

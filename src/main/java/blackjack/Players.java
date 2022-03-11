@@ -52,4 +52,8 @@ public class Players {
     public String getCurrentEntryName() {
         return this.entries.getCurrentEntryName();
     }
+
+    public void hitCurrentEntry(TrumpCard card) {
+        this.entries.hitCurrentEntry(card);
+    }
 }

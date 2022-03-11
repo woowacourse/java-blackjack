@@ -38,4 +38,8 @@ public class Game {
     public String getCurrentEntryName() {
         return this.players.getCurrentEntryName();
     }
+
+    public void hitCurrentEntry() {
+        this.players.hitCurrentEntry(trumpCardPack.draw());
+    }
 }
