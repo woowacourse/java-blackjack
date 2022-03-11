@@ -6,31 +6,15 @@ import blackjack.domain.card.HoldCards;
 
 import java.util.List;
 
-public class Player implements Participant {
+public class Player extends Participant {
     private final String name;
-    private final HoldCards holdCards;
 
     public Player(String name, HoldCards holdCards) {
+        super(holdCards);
         this.name = name;
-        this.holdCards = holdCards;
     }
 
-    @Override
-    public int countCards() {
-        return holdCards.countBestNumber();
-    }
-
-    @Override
-    public void putCard(Card card) {
-        holdCards.addCard(card);
-    }
-
-    @Override
-    public List<Card> openCard() {
-        return holdCards.getCards();
-    }
-
-    public Outcome isWin(int dealerTotal) {
+    public Outcome match(int dealerTotal) {
         return Outcome.match(dealerTotal, countCards());
     }
 
@@ -40,7 +24,8 @@ public class Player implements Participant {
     }
 
     @Override
-    public HoldCards getHoldCards() {
-        return holdCards;
+    public List<Card> openCard() {
+        HoldCards holdCards = getHoldCards();
+        return List.copyOf(holdCards.getCards());
     }
 }

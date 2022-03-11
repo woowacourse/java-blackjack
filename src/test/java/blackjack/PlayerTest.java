@@ -24,7 +24,7 @@ public class PlayerTest {
     @DisplayName("기본 카드가 주어진 후 한장의 카드를 더 추가한다.")
     void putCard() {
         Player player = new Player("jason", new HoldCards(Card.valueOf(Suit.SPADE, Number.NINE), Card.valueOf(Suit.SPADE, Number.ACE)));
-        player.putCard(Card.valueOf(Suit.SPADE, Number.ACE));
+        player.putCard(Card.valueOf(Suit.HEART, Number.ACE));
 
         assertThat(player.countCards()).isEqualTo(21);
     }
@@ -34,7 +34,7 @@ public class PlayerTest {
     void playerIsLoseByOver21() {
         Player player = new Player("jason", new HoldCards(Card.valueOf(Suit.SPADE, Number.KING), Card.valueOf(Suit.SPADE, Number.ACE)));
 
-        assertThat(player.isWin(20)).isEqualTo(Outcome.WIN);
+        assertThat(player.match(20)).isEqualTo(Outcome.WIN);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class PlayerTest {
     void playerIsWinByDealerOver21() {
         Player player = new Player("jason", new HoldCards(Card.valueOf(Suit.SPADE, Number.NINE), Card.valueOf(Suit.SPADE, Number.ACE)));
 
-        assertThat(player.isWin(21)).isEqualTo(Outcome.LOSE);
+        assertThat(player.match(21)).isEqualTo(Outcome.LOSE);
     }
 
     @Test
@@ -50,6 +50,6 @@ public class PlayerTest {
     void playerIsDrawByDealerAndPlayerOver21() {
         Player player = new Player("jason", new HoldCards(Card.valueOf(Suit.SPADE, Number.KING), Card.valueOf(Suit.SPADE, Number.ACE)));
 
-        assertThat(player.isWin(21)).isEqualTo(Outcome.DRAW);
+        assertThat(player.match(21)).isEqualTo(Outcome.DRAW);
     }
 }

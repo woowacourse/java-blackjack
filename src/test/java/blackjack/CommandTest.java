@@ -13,7 +13,7 @@ public class CommandTest {
     void findYes() {
         String input = "y";
 
-        assertThat(Command.find(input)).isEqualTo(Command.YES);
+        assertThat(Command.find(input)).isEqualTo(Command.HIT);
     }
 
     @Test
@@ -21,7 +21,7 @@ public class CommandTest {
     void findNo() {
         String input = "n";
 
-        assertThat(Command.find(input)).isEqualTo(Command.NO);
+        assertThat(Command.find(input)).isEqualTo(Command.STAY);
     }
 
     @Test

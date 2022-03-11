@@ -5,14 +5,26 @@ import blackjack.domain.card.HoldCards;
 
 import java.util.List;
 
-public interface Participant {
-    int countCards();
+public abstract class Participant {
+    private final HoldCards holdCards;
 
-    void putCard(Card card);
+    protected Participant(HoldCards holdCards) {
+        this.holdCards = holdCards;
+    }
 
-    List<Card> openCard();
+    public abstract String getName();
 
-    String getName();
+    public abstract List<Card> openCard();
 
-    HoldCards getHoldCards();
+    public int countCards() {
+        return holdCards.countBestNumber();
+    }
+
+    public void putCard(Card card) {
+        holdCards.addCard(card);
+    }
+
+    public HoldCards getHoldCards() {
+        return holdCards;
+    }
 }

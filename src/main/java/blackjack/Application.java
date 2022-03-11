@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.BlackjackGame;
+import blackjack.domain.Blackjack;
 import blackjack.domain.Command;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
@@ -13,34 +13,45 @@ import java.util.stream.Collectors;
 
 public class Application {
     public static void main(String[] args) {
-        BlackjackGame blackjackGame = new BlackjackGame(InputView.inputNames());
-        List<Player> players = blackjackGame.getPlayers();
-        List<Participant> participants = blackjackGame.getParticipant();
+        Blackjack blackjack = new Blackjack(InputView.inputNames());
+        List<Participant> participants = blackjack.getParticipant();
         OutputView.printPlayersDefaultCard(participants);
 
-        for (Player player : players) {
-            hit(blackjackGame, player);
-        }
-
-        if (blackjackGame.isDealerReceiveOneMoreCard()) {
-            OutputView.printReceivingMoreCardOfDealer();
-        }
+        hit(blackjack);
 
         OutputView.printCardResult(getCardResult(participants));
-        OutputView.printGameResult(blackjackGame.getGameResult());
+        OutputView.printGameResult(blackjack.getGameResult());
     }
 
-    private static void hit(BlackjackGame blackjackGame, Player player) {
-        String command = InputView.inputCommand(player);
-        if (Command.find(command) == Command.NO) {
+    private static void hit(Blackjack blackjack) {
+        List<Player> players = blackjack.getPlayers();
+        for (Player player : players) {
+            hitPlayer(blackjack, player);
+        }
+        hitDealer(blackjack);
+    }
+
+    private static void hitPlayer(Blackjack blackjack, Player player) {
+        Command command = Command.find(InputView.inputCommand(player));
+        if (command == Command.STAY) {
+            OutputView.printPlayerCards(player);
             return;
         }
+        moreHit(blackjack, player, command);
+    }
 
-        do {
-            command = InputView.inputCommand(player);
-            blackjackGame.receiveOneMoreCard(player);
+    private static void moreHit(Blackjack blackjack, Player player, Command command) {
+        while (blackjack.canHit(player, command)) {
+            blackjack.receiveOneMoreCard(player);
             OutputView.printPlayerCards(player);
-        } while (blackjackGame.isHit(player, command));
+            command = Command.find(InputView.inputCommand(player));
+        }
+    }
+
+    private static void hitDealer(Blackjack blackjack) {
+        if (blackjack.isDealerReceiveOneMoreCard()) {
+            OutputView.printReceivingMoreCardOfDealer();
+        }
     }
 
     private static Map<Participant, Integer> getCardResult(List<Participant> participants) {

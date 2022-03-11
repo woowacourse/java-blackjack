@@ -12,21 +12,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BlackjackGame {
+public class Blackjack {
     private static final int BLACKJACK_NUMBER = 21;
 
     private final Deck deck;
     private final Players players;
 
-    public BlackjackGame(List<String> names) {
+    public Blackjack(List<String> names) {
         this.deck = Deck.of(Card.createDeck());
-        this.players = new Players(new Dealer(new HoldCards(deck.draw(), deck.draw())), toPlayers(names));
-    }
-
-    private List<Player> toPlayers(List<String> names) {
-        return names.stream()
-                .map(name -> new Player(name, new HoldCards(deck.draw(), deck.draw())))
-                .collect(Collectors.toList());
+        this.players = new Players(createDealer(), toPlayers(names));
     }
 
     public void receiveOneMoreCard(Player player) {
@@ -34,11 +28,11 @@ public class BlackjackGame {
     }
 
     public boolean isDealerReceiveOneMoreCard() {
-        return players.shouldDealerHit(deck);
+        return players.isDealerHit(deck);
     }
 
-    public boolean isHit(Player player, String command) {
-        return Command.find(command) == Command.YES && player.countCards() < BLACKJACK_NUMBER;
+    public boolean canHit(Player player, Command command) {
+        return command == Command.HIT && player.countCards() < BLACKJACK_NUMBER;
     }
 
     public Map<Outcome, List<Player>> getGameResult() {
@@ -51,5 +45,15 @@ public class BlackjackGame {
 
     public List<Participant> getParticipant() {
         return players.getParticipant();
+    }
+
+    private Dealer createDealer() {
+        return new Dealer(new HoldCards(deck.draw(), deck.draw()));
+    }
+
+    private List<Player> toPlayers(List<String> names) {
+        return names.stream()
+                .map(name -> new Player(name, new HoldCards(deck.draw(), deck.draw())))
+                .collect(Collectors.toList());
     }
 }

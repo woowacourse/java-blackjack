@@ -3,8 +3,8 @@ package blackjack.domain;
 import java.util.Arrays;
 
 public enum Command {
-    YES("y"),
-    NO("n");
+    HIT("y"),
+    STAY("n");
 
     private String value;
 
