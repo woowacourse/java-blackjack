@@ -6,6 +6,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Symbol;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,4 +53,11 @@ class DealerTest {
         assertThat(dealer.canDrawCard()).isTrue();
     }
 
+    @Test
+    @DisplayName("딜러의 결과값을 받는다.")
+    void checkResultTest() {
+        List<Result> playerResult = Arrays.asList(Result.WIN,Result.LOSE, Result.WIN, Result.DRAW);
+
+        assertThat(dealer.checkResult(playerResult)).containsExactly(1,1,2);
+    }
 }

@@ -12,12 +12,11 @@ public class Dealer extends Participant {
         super(NAME);
     }
 
-    public List<Integer> checkResult(Players players) {
-        List<Result> playersResult = players.checkResults(this);
+    public List<Integer> checkResult(List<Result> playersResult) {
 
         int winCount = countTargetResult(playersResult, Result.LOSE);
         int loseCount = countTargetResult(playersResult, Result.WIN);
-        int drawCount = players.getSize() - winCount - loseCount;
+        int drawCount = playersResult.size() - winCount - loseCount;
 
         return Arrays.asList(winCount, drawCount, loseCount);
     }

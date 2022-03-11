@@ -4,6 +4,8 @@ import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.participant.Result;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
 
@@ -64,7 +66,9 @@ public class BlackJackController {
     }
 
     private void showResult(Players players, Dealer dealer) {
-        outputView.showResult(dealer.checkResult(players), players.toNames(),
+        List<Result> playersResult = players.checkResults(dealer);
+        
+        outputView.showResult(dealer.checkResult(playersResult), players.toNames(),
             players.checkResults(dealer));
     }
 }
