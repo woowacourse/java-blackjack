@@ -21,5 +21,4 @@ public class Stay extends Finished {
         }
         return cards.isHigherThan(another.cards());
     }
-
 }
