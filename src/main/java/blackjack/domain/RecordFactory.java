@@ -26,12 +26,6 @@ public class RecordFactory {
         this.playerRecord = toMap(players);
     }
 
-    RecordFactory(final int dealerScore) {
-        this.dealerScore = dealerScore;
-        this.dealerRecord = new HashMap<>();
-        this.playerRecord = new HashMap<>();
-    }
-
     private Map<String, Record> toMap(final List<Player> players) {
         return players.stream()
                 .collect(Collectors.toMap(

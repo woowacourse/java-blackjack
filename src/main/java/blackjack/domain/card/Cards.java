@@ -45,7 +45,7 @@ public class Cards {
         final boolean hasAce = value.stream()
                 .anyMatch(Card::isAce);
 
-        return totalValue <= 11 && hasAce;
+        return totalValue + UPGRADE_AMOUNT <= MAX_SCORE && hasAce;
     }
 
     public Card findFirst() {

@@ -14,28 +14,19 @@ public class CardFactory {
         this.deck = deck;
     }
 
+    public static CardFactory createBy(final List<Card> cards) {
+        final Stack<Card> deck = new Stack<>();
+        deck.addAll(cards);
+
+        return new CardFactory(deck);
+    }
+
     public static CardFactory create() {
         final List<Card> list = createAllCards();
         Collections.shuffle(list);
 
         final Stack<Card> deck = new Stack<>();
         deck.addAll(list);
-
-        return new CardFactory(deck);
-    }
-
-    public static CardFactory createNoShuffle() {
-        final List<Card> list = createAllCards();
-
-        final Stack<Card> deck = new Stack<>();
-        deck.addAll(list);
-
-        return new CardFactory(deck);
-    }
-
-    public static CardFactory createBy(final List<Card> cards) {
-        final Stack<Card> deck = new Stack<>();
-        deck.addAll(cards);
 
         return new CardFactory(deck);
     }
@@ -55,7 +46,6 @@ public class CardFactory {
     public Card drawCard() {
         return deck.pop();
     }
-
 
     public int getRemainAmount() {
         return deck.size();

@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +16,7 @@ class RecordFactoryTest {
     void getRecord_dealerNotBust(int score, Record expected) {
         // give
         final int dealerScore = 19;
-        final RecordFactory factory = new RecordFactory(dealerScore);
+        final RecordFactory factory = new RecordFactory(dealerScore, new ArrayList<>());
 
         // when
         Record actual = factory.getPlayerRecord(score);
@@ -30,7 +31,7 @@ class RecordFactoryTest {
     void getRecord_dealerBust(int score, Record expected) {
         // give
         final int dealerScore = 22;
-        final RecordFactory factory = new RecordFactory(dealerScore);
+        final RecordFactory factory = new RecordFactory(dealerScore, new ArrayList<>());
 
         // when
         Record actual = factory.getPlayerRecord(score);
@@ -45,7 +46,7 @@ class RecordFactoryTest {
     @DisplayName("딜러의 전적을 반환한다.")
     void getDealerRecord(int dealerScore, int playerScore, Record expected) {
         // give
-        final RecordFactory factory = new RecordFactory(dealerScore);
+        final RecordFactory factory = new RecordFactory(dealerScore, new ArrayList<>());
 
         factory.getPlayerRecord(playerScore);
 
