@@ -28,15 +28,15 @@ public class NameTest {
     @DisplayName("이름에 빈값을 입력하면 예외를 던진다.")
     void validateEmptyName() {
         assertThatThrownBy(() -> new Name(""))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(EMPTY_NAME_EXCEPTION_MESSAGE);
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(EMPTY_NAME_EXCEPTION_MESSAGE);
     }
 
     @Test
     @DisplayName("이름에 null을 입력하면 예외를 던진다.")
     void validateNullName() {
         assertThatThrownBy(() -> new Name(null))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(EMPTY_NAME_EXCEPTION_MESSAGE);
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining(EMPTY_NAME_EXCEPTION_MESSAGE);
     }
 }

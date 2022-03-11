@@ -10,7 +10,7 @@ class RentCompanyTest {
 
     @Test
     void report() throws Exception {
-        RentCompany company = RentCompany.create(); // factory method를 사용해 생성
+        RentCompany company = RentCompany.create();
         company.addCar(new Sonata(150));
         company.addCar(new K5(260));
         company.addCar(new Sonata(120));
@@ -28,8 +28,8 @@ class RentCompanyTest {
     }
 
     @Test
-    void report2() throws Exception {
-        RentCompany company = RentCompany.create(); // factory method를 사용해 생성
+    void report_otherCase() throws Exception {
+        RentCompany company = RentCompany.create();
         company.addCar(new Sonata(100));
         company.addCar(new K5(130));
         company.addCar(new Avante(150));

@@ -56,7 +56,7 @@ public class Dealer extends Participant {
     public Card getOpenCard() {
         return cardHand.getCards().get(0);
     }
-    
+
     public void drawCardToPlayers(List<Player> players) {
         for (Player player : players) {
             giveCard(player);

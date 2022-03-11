@@ -27,8 +27,8 @@ class CardTest {
     @DisplayName("카드를 생설할때 null 일 경우 예외 발생")
     void throwExceptionByNull() {
         assertThatThrownBy(() -> new Card(null, null))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessageContaining("null");
+            .isInstanceOf(NullPointerException.class)
+            .hasMessageContaining("null");
     }
 
     @ParameterizedTest
@@ -49,10 +49,10 @@ class CardTest {
 
     private static Stream<Arguments> equalsCardTestCase() {
         return Stream.of(
-                Arguments.of(Denomination.ACE, Suit.CLOVER),
-                Arguments.of(Denomination.KING, Suit.DIAMOND),
-                Arguments.of(Denomination.ACE, Suit.HEART),
-                Arguments.of(Denomination.KING, Suit.SPADE)
+            Arguments.of(Denomination.ACE, Suit.CLOVER),
+            Arguments.of(Denomination.KING, Suit.DIAMOND),
+            Arguments.of(Denomination.ACE, Suit.HEART),
+            Arguments.of(Denomination.KING, Suit.SPADE)
         );
     }
 
@@ -64,9 +64,9 @@ class CardTest {
         Card card3 = new Card(Denomination.THREE, Suit.CLOVER);
 
         assertAll(
-                () -> assertThat(card1).isNotEqualTo(card2),
-                () -> assertThat(card2).isNotEqualTo(card3),
-                () -> assertThat(card3).isNotEqualTo(card2)
+            () -> assertThat(card1).isNotEqualTo(card2),
+            () -> assertThat(card2).isNotEqualTo(card3),
+            () -> assertThat(card3).isNotEqualTo(card2)
         );
     }
 

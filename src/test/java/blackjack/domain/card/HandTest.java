@@ -96,13 +96,16 @@ class HandTest {
 
     private static Stream<Arguments> hasAceCardHandScoreTestCase() {
         return Stream.of(
-                Arguments.of(createHand(aceCard, new Card(Denomination.TEN, Suit.SPADE)), 21),
-                Arguments.of(createHand(aceCard, new Card(Denomination.KING, Suit.SPADE)), 21),
-                Arguments.of(createHand(aceCard, new Card(Denomination.JACK, Suit.DIAMOND)), 21),
-                Arguments.of(createHand(aceCard, new Card(Denomination.QUEEN, Suit.CLOVER)), 21),
-                Arguments.of(createHand(aceCard, aceCard, new Card(Denomination.NINE, Suit.CLOVER)), 21),
-                Arguments.of(createHand(aceCard, aceCard, aceCard, new Card(Denomination.EIGHT, Suit.CLOVER)), 21),
-                Arguments.of(createHand(aceCard, new Card(Denomination.SEVEN, Suit.HEART)), 18)
+            Arguments.of(createHand(aceCard, new Card(Denomination.TEN, Suit.SPADE)), 21),
+            Arguments.of(createHand(aceCard, new Card(Denomination.KING, Suit.SPADE)), 21),
+            Arguments.of(createHand(aceCard, new Card(Denomination.JACK, Suit.DIAMOND)), 21),
+            Arguments.of(createHand(aceCard, new Card(Denomination.QUEEN, Suit.CLOVER)), 21),
+            Arguments.of(createHand(aceCard, aceCard, new Card(Denomination.NINE, Suit.CLOVER)),
+                21),
+            Arguments.of(
+                createHand(aceCard, aceCard, aceCard, new Card(Denomination.EIGHT, Suit.CLOVER)),
+                21),
+            Arguments.of(createHand(aceCard, new Card(Denomination.SEVEN, Suit.HEART)), 18)
         );
     }
 

@@ -14,7 +14,7 @@ public class Player extends Participant {
     public Player(Name name) {
         this(name, new Hand());
     }
-    
+
     public Player(Name name, Hand cardHand) {
         super(name, cardHand);
     }

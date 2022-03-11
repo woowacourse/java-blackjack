@@ -97,8 +97,8 @@ class DealerTest {
 
         dealer.drawCardToPlayers(players);
         assertAll(
-                () -> assertThat(p1.getCards().size()).isEqualTo(2),
-                () -> assertThat(p2.getCards().size()).isEqualTo(2)
+            () -> assertThat(p1.getCards().size()).isEqualTo(2),
+            () -> assertThat(p2.getCards().size()).isEqualTo(2)
         );
     }
 
