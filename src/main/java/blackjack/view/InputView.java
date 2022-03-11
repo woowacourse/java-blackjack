@@ -2,8 +2,10 @@ package blackjack.view;
 
 import blackjack.domain.Player;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
 	private static final String NAME_DELIMITER = ",";
@@ -18,8 +20,11 @@ public class InputView {
 
 	public static List<String> getPlayerNames() {
 		System.out.println(INPUT_NAMES);
-		return List.of(scanner.nextLine()
-			.split(NAME_DELIMITER));
+
+		return Arrays.stream(scanner.nextLine()
+			.split(NAME_DELIMITER))
+			.map(String::trim)
+			.collect(Collectors.toList());
 	}
 
 	public static boolean askAdditionalCard(Player person) {
