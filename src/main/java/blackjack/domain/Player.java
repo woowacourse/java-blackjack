@@ -15,11 +15,18 @@ public class Player extends Participant {
         this.name = name;
     }
 
+    public boolean isDraw(Dealer dealer) {
+        return getScore() == dealer.getScore();
+    }
+
+    public boolean isWin(Dealer dealer) {
+        return getScore() > dealer.getScore();
+    }
+
     private void validateName(String name) {
         checkNullAndEmpty(name);
         checkBlank(name);
         checkNameDealer(name);
-
     }
 
     private void checkNameDealer(String name) {

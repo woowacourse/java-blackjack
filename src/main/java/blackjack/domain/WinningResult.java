@@ -13,11 +13,11 @@ public enum WinningResult {
     }
 
     public static WinningResult of(Player player, Dealer dealer) {
-        if (dealer.isBust() && player.isBust() || dealer.getScore() == player.getScore()) {
+        if (dealer.isBust() && player.isBust() || player.isDraw(dealer)) {
             return DRAW;
         }
         if (dealer.isBust() && !player.isBust() ||
-            !dealer.isBust() && !player.isBust() && (player.getScore() > dealer.getScore())) {
+            !dealer.isBust() && !player.isBust() && player.isWin(dealer)) {
             return WIN;
         }
         return LOSE;
