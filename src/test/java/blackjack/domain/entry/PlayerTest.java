@@ -1,11 +1,10 @@
-package blackjack;
+package blackjack.domain.entry;
 
-import blackjack.domain.*;
+import blackjack.domain.PlayerOutcome;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
 import blackjack.domain.card.Number;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Suit;
-import blackjack.domain.entry.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +18,7 @@ public class PlayerTest {
 
         assertThat(player.countCards()).isEqualTo(21);
     }
-    
+
     @Test
     @DisplayName("기본 카드가 주어진 후 한장의 카드를 더 추가한다.")
     void putCard() {

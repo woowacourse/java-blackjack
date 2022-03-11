@@ -1,10 +1,9 @@
-package blackjack;
+package blackjack.domain.entry;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
 import blackjack.domain.card.Number;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Suit;
-import blackjack.domain.entry.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

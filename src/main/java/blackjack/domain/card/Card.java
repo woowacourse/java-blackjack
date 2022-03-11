@@ -51,7 +51,7 @@ public class Card {
         if (!(o instanceof Card)) {
             return false;
         }
-        Card card = (Card)o;
+        Card card = (Card) o;
         return suit == card.suit && number == card.number;
     }
 
