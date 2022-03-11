@@ -55,6 +55,11 @@ public class OutputView {
         printMessage(Delimiter.COLON.joinWith(List.of(playerName, distributedCards)));
     }
 
+    public void printDistributedCards(final String playerName, final List<String> cardNames) {
+        final String distributedCards = Delimiter.COMMA.joinWith(cardNames);
+        printMessage(Delimiter.COLON.joinWith(List.of(playerName, distributedCards)));
+    }
+
     public void printMessageOfRequestContinuable(final String playerName) {
         printMessage(String.format(MESSAGE_FORMAT_OF_REQUEST_CONTINUABLE, playerName));
     }

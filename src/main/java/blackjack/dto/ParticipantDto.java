@@ -11,7 +11,7 @@ public class ParticipantDto {
     private final List<String> cardNames;
     private final int score;
 
-    private ParticipantDto(final String name, final List<String> cardNames, final int score) {
+    public ParticipantDto(final String name, final List<String> cardNames, final int score) {
         this.name = name;
         this.cardNames = new ArrayList<>(cardNames);
         this.score = score;

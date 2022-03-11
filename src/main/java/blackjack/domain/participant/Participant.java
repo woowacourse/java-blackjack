@@ -7,8 +7,8 @@ import blackjack.domain.card.Deck;
 
 public abstract class Participant {
 
+    protected Cards cards = new Cards();
     protected String name;
-    protected Cards cards;
 
     protected void drawTwoCard(final Deck deck) {
         drawCard(deck);
@@ -22,7 +22,7 @@ public abstract class Participant {
     public void drawCards(final Deck deck, final CardDrawCallback callback) {
         while (isPossibleToDrawCard() && callback.isContinuable(getParticipantName())) {
             drawCard(deck);
-            callback.onUpdate(this);
+            callback.onUpdate(name, cards.getCardNames());
         }
     }
 

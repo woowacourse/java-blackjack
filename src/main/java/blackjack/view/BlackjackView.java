@@ -33,8 +33,8 @@ public class BlackjackView {
         return inputView.requestContinuable();
     }
 
-    public void printDistributedCards(final ParticipantDto participantDto) {
-        outputView.printDistributedCards(participantDto);
+    public void printDistributedCards(final String playerName, final List<String> cardNames) {
+        outputView.printDistributedCards(playerName, cardNames);
     }
 
     public void printMessageOfDealerDrawCard() {

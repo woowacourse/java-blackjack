@@ -28,7 +28,7 @@ class DealerTest {
         }
 
         @Override
-        public void onUpdate(Participant participant) {
+        public void onUpdate(final String participantName, final List<String> cardNames) {
         }
     };
 
