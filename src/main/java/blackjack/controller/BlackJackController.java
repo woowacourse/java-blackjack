@@ -12,12 +12,10 @@ public class BlackJackController {
     public void run() {
         Dealer dealer = new Dealer();
         List<Player> players = getPlayers();
-
         initiallySetCard(dealer, players);
 
         takeMoreCardPlayerTurnForAllPlayers(dealer, players);
         takeMoreCardDealerTurn(dealer);
-
         OutputView.printParticipantScore(dealer, players);
 
         decideGameScore(dealer, players);
@@ -34,6 +32,7 @@ public class BlackJackController {
     }
 
     private static void initiallySetCard(Dealer dealer, List<Player> players) {
+        dealer.shuffleCards();
         dealer.drawCardHandFirstTurn();
         dealer.drawCardToPlayers(players);
         OutputView.showParticipantsHand(dealer, players);

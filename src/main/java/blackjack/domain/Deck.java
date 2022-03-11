@@ -27,6 +27,10 @@ public class Deck {
         return new Deck(cards);
     }
 
+    public void shuffleCards() {
+        Collections.shuffle(cards);
+    }
+
     public Card draw() {
         try {
             return cards.pop();

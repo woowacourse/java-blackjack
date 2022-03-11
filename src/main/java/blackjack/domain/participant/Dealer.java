@@ -7,8 +7,8 @@ import java.util.EnumMap;
 import java.util.List;
 
 public class Dealer extends Participant {
-
     private static final int DEALER_CARD_PIVOT = 17;
+
     private static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
@@ -22,6 +22,10 @@ public class Dealer extends Participant {
         this.deck = deck;
         super.name = new Name(DEALER_NAME);
         initResultScores();
+    }
+
+    public void shuffleCards() {
+        deck.shuffleCards();
     }
 
     private void initResultScores() {
