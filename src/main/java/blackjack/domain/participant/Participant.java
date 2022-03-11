@@ -57,12 +57,6 @@ public abstract class Participant {
         return calculateScore() > BLACKJACK_NUMBER;
     }
 
-    public boolean isHigherThan(final Participant other) {
-        final int thisScore = this.calculateScore();
-        final int otherScore = other.calculateScore();
-        return thisScore > otherScore;
-    }
-
     public String getParticipantName() {
         return name;
     }

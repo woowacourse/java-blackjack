@@ -32,7 +32,10 @@ public class Dealer extends Participant {
             return MatchStatus.WIN;
         }
 
-        return MatchStatus.valueOf(player.isHigherThan(this));
+        return MatchStatus.valueOf(this.isLowerThan(player));
     }
 
+    public boolean isLowerThan(final Player player) {
+        return this.calculateScore() < player.calculateScore();
+    }
 }
