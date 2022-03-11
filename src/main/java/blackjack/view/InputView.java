@@ -36,13 +36,8 @@ public class InputView {
             .count();
     }
 
-    public boolean scanHitOrStay(final PlayerDto playerDto) {
+    public String scanHitOrStay(final PlayerDto playerDto) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerDto.getName());
-        final String hitOrStay = SCANNER.nextLine();
-        return isHit(hitOrStay);
-    }
-
-    private boolean isHit(final String hitOrStay) {
-        return "y".equalsIgnoreCase(hitOrStay);
+        return SCANNER.nextLine();
     }
 }

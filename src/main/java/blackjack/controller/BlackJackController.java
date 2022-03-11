@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.BlackJackCommand;
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.CardDeck;
 import blackjack.domain.Dealer;
@@ -84,14 +85,18 @@ public class BlackJackController {
 
     private void playGame(Player gambler, CardDeck cardDeck) {
         PlayerDto currentGamblerDto = PlayerDto.from(gambler);
-        boolean isHit = inputView.scanHitOrStay(currentGamblerDto);
-
-        if (!isHit) {
-            outputView.printCards(currentGamblerDto);
+        BlackJackCommand hitOrStay = BlackJackCommand.from(inputView.scanHitOrStay(currentGamblerDto));
+        if (isStay(currentGamblerDto, hitOrStay)) {
             return;
         }
+        hitWhileNotBurst(gambler, cardDeck, currentGamblerDto, hitOrStay);
+    }
 
-        while (isHit) {
+    private void hitWhileNotBurst(final Player gambler,
+                                  final CardDeck cardDeck,
+                                  PlayerDto currentGamblerDto,
+                                  BlackJackCommand hitOrStay) {
+        while (hitOrStay.equals(BlackJackCommand.YES)) {
             if (gambler.isFinished(cardDeck)) {
                 outputView.printBurst(currentGamblerDto);
                 break;
@@ -99,8 +104,16 @@ public class BlackJackController {
             gambler.addCard(cardDeck);
             currentGamblerDto = PlayerDto.from(gambler);
             outputView.printCards(currentGamblerDto);
-            isHit = inputView.scanHitOrStay(currentGamblerDto);
+            hitOrStay = BlackJackCommand.from(inputView.scanHitOrStay(currentGamblerDto));
         }
+    }
+
+    private boolean isStay(final PlayerDto currentGamblerDto, final BlackJackCommand hitOrStay) {
+        if (hitOrStay.equals(BlackJackCommand.NO)) {
+            outputView.printCards(currentGamblerDto);
+            return true;
+        }
+        return false;
     }
 
     private void playGameForDealer(Player dealer, CardDeck cardDeck) {
