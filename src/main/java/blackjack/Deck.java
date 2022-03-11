@@ -3,6 +3,7 @@ package blackjack;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Deck {
     private static final int SCORE_LIMIT = 21;
@@ -71,5 +72,15 @@ public class Deck {
 
     public boolean isScoreLessThan(int otherScore) {
         return sumScore() < otherScore;
+    }
+
+    public String getFirstCardToString() {
+        return this.cards.toString();
+    }
+
+    public List<String> getCardsToString() {
+        return this.cards.stream()
+                .map(TrumpCard::toString)
+                .collect(Collectors.toList());
     }
 }

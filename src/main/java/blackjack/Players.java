@@ -1,5 +1,8 @@
 package blackjack;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -22,5 +25,21 @@ public class Players {
 
     public List<String> getEntryNames() {
         return this.entries.getNames();
+    }
+
+    public List<String> getNames() {
+        List<String> names = new ArrayList<>();
+        names.add(this.dealer.getName());
+        names.addAll(getEntryNames());
+        return names;
+    }
+
+    public List<List<String>> getCardsToString() {
+        List<String> dealerCardToString = new ArrayList<>();
+        dealerCardToString.add(this.dealer.getFirstDeckToString());
+        List<List<String>> cardsToString = new ArrayList<>();
+        cardsToString.add(dealerCardToString);
+        cardsToString.addAll(this.entries.getDecksToString());
+        return cardsToString;
     }
 }

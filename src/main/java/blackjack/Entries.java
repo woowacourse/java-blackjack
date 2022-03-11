@@ -61,4 +61,10 @@ public class Entries {
                 .map(Entry::getName)
                 .collect(Collectors.toList());
     }
+
+    public List<List<String>> getDecksToString() {
+        return this.entries.stream()
+                .map(Entry::getDeckToString)
+                .collect(Collectors.toList());
+    }
 }

@@ -1,5 +1,6 @@
 package blackjack;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class Entry extends Player {
@@ -47,6 +48,10 @@ public class Entry extends Player {
         if (Pattern.matches(REGEX_NAME_CONTAINS_SIGN, name)) {
             throw new IllegalArgumentException(ERROR_CONTAINS_SIGN);
         }
+    }
+
+    public List<String> getDeckToString() {
+        return this.deck.getCardsToString();
     }
 
     @Override

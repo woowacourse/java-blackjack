@@ -25,4 +25,8 @@ public enum TrumpNumber {
     public int sumTo(int otherValue){
         return this.value + otherValue;
     }
+
+    public int getValue() {
+        return this.value;
+    }
 }

@@ -35,4 +35,9 @@ public class TrumpCard {
     public int hashCode() {
         return Objects.hash(number, symbol);
     }
+
+    @Override
+    public String toString() {
+        return this.number.getValue() + this.symbol.getValue();
+    }
 }

@@ -23,4 +23,8 @@ public class Dealer extends Player {
     private boolean canHit() {
         return this.deck.isScoreLessThan(SCORE_HIT_CRITERIA);
     }
+
+    public String getFirstDeckToString() {
+        return this.deck.getFirstCardToString();
+    }
 }

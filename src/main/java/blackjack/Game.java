@@ -18,4 +18,12 @@ public class Game {
     public List<String> getEntryNames() {
         return this.players.getEntryNames();
     }
+
+    public List<String> getNames() {
+        return this.players.getNames();
+    }
+
+    public List<List<String>> getDecksToString() {
+        return this.players.getCardsToString();
+    }
 }
