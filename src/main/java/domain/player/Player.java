@@ -2,9 +2,9 @@ package domain.player;
 
 import static java.util.Collections.unmodifiableList;
 
-import domain.ScoreUtil;
 import domain.card.PlayingCard;
 import domain.card.PlayingCards;
+import domain.util.ScoreUtil;
 import java.util.List;
 
 public abstract class Player {
