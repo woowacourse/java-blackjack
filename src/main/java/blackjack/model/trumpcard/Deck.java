@@ -9,7 +9,6 @@ public class Deck {
     private static final int SCORE_LIMIT = 21;
     private static final int SCORE_ACE_ADVANTAGE = 10;
     private static final int SCORE_ADVANTAGE_CRITERIA = SCORE_LIMIT - SCORE_ACE_ADVANTAGE;
-    private static final int FIRST_SIZE = 2;
 
     private final List<TrumpCard> cards;
 
@@ -75,17 +74,13 @@ public class Deck {
         return sumScore() < otherScore;
     }
 
-    public String getFirstCardToString() {
-        return this.cards.toString();
-    }
-
     public List<String> getCardsToString() {
         return this.cards.stream()
                 .map(TrumpCard::toString)
                 .collect(Collectors.toList());
     }
 
-    public int countAddedCards() {
-        return this.cards.size() - FIRST_SIZE;
+    public int getSize() {
+        return this.cards.size();
     }
 }

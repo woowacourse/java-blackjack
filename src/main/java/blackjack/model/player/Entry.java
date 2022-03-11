@@ -60,9 +60,4 @@ public class Entry extends Player {
     public void hit(TrumpCard card) {
         this.deck.add(card);
     }
-
-    @Override
-    public List<String> getDeckToString() {
-        return this.deck.getCardsToString();
-    }
 }

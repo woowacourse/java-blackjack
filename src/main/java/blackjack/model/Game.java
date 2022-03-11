@@ -2,11 +2,14 @@ package blackjack.model;
 
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Entry;
+import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import blackjack.model.trumpcard.TrumpCardPack;
 import java.util.List;
 
 public class Game {
+    private static final int FIRST_DECK_SIZE = 2;
+
     private final Players players;
     private final TrumpCardPack trumpCardPack;
 
@@ -16,7 +19,13 @@ public class Game {
     }
 
     public void start() {
-        this.players.giveFirstCards(trumpCardPack);
+        for (int i = 0; i < FIRST_DECK_SIZE; i++) {
+            this.players.operateToEach(this::giveCardTo);
+        }
+    }
+
+    public void giveCardTo(Player player) {
+        player.addCard(trumpCardPack.draw());
     }
 
     public boolean hasNextEntry() {
@@ -28,7 +37,7 @@ public class Game {
     }
 
     public void hitCurrentEntry() {
-        this.players.hitCurrentEntry(trumpCardPack.draw());
+        this.players.addToCurrentEntry(trumpCardPack.draw());
     }
 
     public boolean isCurrentEntryBust() {
@@ -42,7 +51,7 @@ public class Game {
     }
 
     public int countCardsAddedToDealer() {
-        return this.players.countCardsAddedToDealer();
+        return this.players.getDealerDeckSize() - FIRST_DECK_SIZE;
     }
 
     public List<Entry> getEntries() {

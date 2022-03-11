@@ -1,10 +1,9 @@
 package blackjack.model.player;
 
-import blackjack.model.Result;
 import blackjack.model.Results;
 import blackjack.model.trumpcard.TrumpCard;
-import blackjack.model.trumpcard.TrumpCardPack;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Players {
     private final Entries entries;
@@ -19,9 +18,9 @@ public class Players {
         return new Players(Entries.from(names), new Dealer());
     }
 
-    public void giveFirstCards(TrumpCardPack trumpCardPack) {
-        this.entries.giveFirstCards(trumpCardPack);
-        this.dealer.addCard(trumpCardPack.draw());
+    public void operateToEach(Consumer<Player> consumer) {
+        consumer.accept(dealer);
+        this.entries.operateToEach(consumer);
     }
 
     public boolean hasNextEntry() {
@@ -32,8 +31,8 @@ public class Players {
         this.entries.toNextEntry();
     }
 
-    public void hitCurrentEntry(TrumpCard card) {
-        this.entries.hitCurrentEntry(card);
+    public void addToCurrentEntry(TrumpCard card) {
+        this.entries.addToCurrentEntry(card);
     }
 
     public boolean isCurrentEntryBust() {
@@ -42,10 +41,6 @@ public class Players {
 
     public void hitDealer(TrumpCard card) {
         this.dealer.hit(card);
-    }
-
-    public int countCardsAddedToDealer() {
-        return this.dealer.countAddedCards();
     }
 
     public boolean canDealerHit() {
@@ -58,6 +53,10 @@ public class Players {
 
     public Dealer getDealer() {
         return this.dealer;
+    }
+
+    public int getDealerDeckSize() {
+        return this.dealer.getDeckSize();
     }
 
     public Entry getCurrentEntry() {

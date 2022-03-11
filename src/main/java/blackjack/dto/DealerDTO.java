@@ -12,12 +12,12 @@ public class DealerDTO extends PlayerDTO {
     }
 
     public static DealerDTO from(Game game) {
-        return from(game.getDealer());
+        return from(game.getDealer(), game.countCardsAddedToDealer());
     }
 
-    private static DealerDTO from(Dealer dealer) {
+    private static DealerDTO from(Dealer dealer, int addedCount) {
         return new DealerDTO(
-                dealer.getName(), DeckDTO.from(dealer), dealer.countAddedCards(), dealer.getScore());
+                dealer.getName(), DeckDTO.from(dealer), addedCount, dealer.getScore());
     }
 
     public int getAddedCount() {

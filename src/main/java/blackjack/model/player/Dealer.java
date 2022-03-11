@@ -2,7 +2,6 @@ package blackjack.model.player;
 
 import blackjack.model.Result;
 import blackjack.model.trumpcard.TrumpCard;
-import java.util.List;
 
 public class Dealer extends Player {
     private static final String NAME = "딜러";
@@ -14,10 +13,6 @@ public class Dealer extends Player {
 
     public boolean canHit() {
         return this.deck.isScoreLessThan(SCORE_HIT_CRITERIA);
-    }
-
-    public int countAddedCards() {
-        return this.deck.countAddedCards();
     }
 
     public Result compareWith(Entry entry) {
@@ -34,6 +29,10 @@ public class Dealer extends Player {
         return entry.getScore() < this.getScore();
     }
 
+    public int getDeckSize() {
+        return this.deck.getSize();
+    }
+
     @Override
     public boolean isBust() {
         return this.deck.isBust();
@@ -44,10 +43,5 @@ public class Dealer extends Player {
         if (canHit()) {
             this.deck.add(card);
         }
-    }
-
-    @Override
-    public List<String> getDeckToString() {
-        return List.of(this.deck.getFirstCardToString());
     }
 }
