@@ -31,10 +31,10 @@ public class OutputView {
         System.out.println(messageBuilder);
     }
 
-    public static void printHitResult(List<HitResultDto> hitResultDtos) {
+    public static void printHitResult(Map<String, HitResultDto> hitResults) {
         System.out.println();
-        hitResultDtos.forEach(hitResultDto -> System.out.printf(HIT_RESULT_MESSAGE + "\n", hitResultDto.getName(),
-                joinCardString(hitResultDto.getCards()), hitResultDto.getScore()));
+        hitResults.forEach((playerName, hitResult) -> System.out.printf(HIT_RESULT_MESSAGE + "\n", playerName,
+                joinCardString(hitResult.getCards()), hitResult.getScore()));
     }
 
     private static String joinCardString(List<CardDto> cardDtos) {

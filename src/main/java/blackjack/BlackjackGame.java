@@ -16,7 +16,7 @@ public class BlackjackGame {
             playerHit(blackjackRound, players);
         }
         blackjackRound.dealerHit();
-        OutputView.printHitResult(blackjackRound.getHitResult());
+        OutputView.printHitResult(blackjackRound.getHitResults());
         OutputView.printResult(blackjackRound.judgeWinDrawLose());
     }
 

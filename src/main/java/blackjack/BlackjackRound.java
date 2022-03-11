@@ -71,15 +71,17 @@ public class BlackjackRound {
         }
     }
 
-    public List<HitResultDto> getHitResult() {
-        List<HitResultDto> hitResultDtos = new ArrayList<>();
-        hitResultDtos.add(
-                new HitResultDto(dealer.getName(), toListCardDto(dealer), dealer.getCards().calculateScore()));
+    public Map<String, HitResultDto> getHitResults() {
+        Map<String, HitResultDto> hitResult = new LinkedHashMap<>();
+        putHitResult(hitResult, dealer);
         for (Player player : players.getPlayers()) {
-            hitResultDtos.add(
-                    new HitResultDto(player.getName(), toListCardDto(player), player.getCards().calculateScore()));
+            putHitResult(hitResult, player);
         }
-        return hitResultDtos;
+        return hitResult;
+    }
+
+    private void putHitResult(Map<String, HitResultDto> hitResult, Gamer gamer) {
+        hitResult.put(gamer.getName(), new HitResultDto(toListCardDto(gamer), gamer.getCards().calculateScore()));
     }
 
     public List<WinDrawLoseDto> judgeWinDrawLose() {
