@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.game.ResultType;
 import blackjack.domain.game.Score;
 
 public abstract class Participant {
@@ -28,5 +29,18 @@ public abstract class Participant {
 
     public CardBundle getCardBundle() {
         return cardBundle;
+    }
+
+    public ResultType compareWith(Participant other) {
+        int playerScore = getCurrentScore().toInt();
+        int otherScore = other.getCurrentScore().toInt();
+
+        if (playerScore > otherScore) {
+            return ResultType.WIN;
+        }
+        if (playerScore < otherScore) {
+            return ResultType.LOSE;
+        }
+        return ResultType.DRAW;
     }
 }

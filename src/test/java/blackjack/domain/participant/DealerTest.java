@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.fixture.CardRepository.CLOVER2;
+import static blackjack.domain.fixture.CardRepository.CLOVER3;
 import static blackjack.domain.fixture.CardRepository.CLOVER4;
 import static blackjack.domain.fixture.CardRepository.CLOVER5;
 import static blackjack.domain.fixture.CardRepository.CLOVER6;
@@ -10,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.game.ResultType;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -78,5 +81,49 @@ public class DealerTest {
         boolean actual = dealer.canReceive();
 
         assertThat(actual).isFalse();
+    }
+
+    // TODO: Nested 사용하여 정리
+
+    @DisplayName("compareWith 메소드는 딜러 자신보다 패가 나쁜 Participant 를 전달받으면 ResultType.WIN 를 반환한다.")
+    @Test
+    void compareWith_returnsResultTypeWin() {
+        // given
+        Player winPlayer = Player.of("hudi", CardBundle.of(CLOVER2, CLOVER3));
+
+        // when
+        ResultType actual = dealer.compareWith(winPlayer);
+        ResultType expected = ResultType.WIN;
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("compareWith 메소드는 딜러 자신보다 패가 좋은 Participant 를 전달받으면 ResultType.LOSE 를 반환한다.")
+    @Test
+    void compareWith_returnsResultTypeLose() {
+        // given
+        Player winPlayer = Player.of("hudi", CardBundle.of(CLOVER5, CLOVER6));
+
+        // when
+        ResultType actual = dealer.compareWith(winPlayer);
+        ResultType expected = ResultType.LOSE;
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("compareWith 메소드는 딜러 자신과 대등한 패를 가진 Participant 를 전달받으면 ResultType.DRAW 를 반환한다.")
+    @Test
+    void compareWith_returnsResultTypeDraw() {
+        // given
+        Player winPlayer = Player.of("hudi", CardBundle.of(CLOVER3, CLOVER6));
+
+        // when
+        ResultType actual = dealer.compareWith(winPlayer);
+        ResultType expected = ResultType.DRAW;
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 }
