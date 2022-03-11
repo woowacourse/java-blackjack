@@ -84,7 +84,7 @@ public class GameController {
     private List<Status> createDealerStatus(Dealer dealer) {
         List<Status> result = new ArrayList<>();
         result.add(new Status(dealer.getName(),
-                dealer.getCards().stream().map(CardDto::of).collect(Collectors.toList()),
+                dealer.getCardsToList().stream().map(CardDto::of).collect(Collectors.toList()),
                 dealer.getScore()
         ));
         return result;
@@ -93,7 +93,7 @@ public class GameController {
     private void addPlayerStatus(List<Player> players, List<Status> result) {
         for (Player player : players) {
             result.add(new Status(player.getName(),
-                    player.getCards().stream().map(CardDto::of).collect(Collectors.toList()),
+                    player.getCardsToList().stream().map(CardDto::of).collect(Collectors.toList()),
                     player.getScore()
             ));
         }
@@ -104,7 +104,7 @@ public class GameController {
         OutputView.printStatus(
                 new Status(
                         player.getName(),
-                        player.getCards().stream().map(CardDto::of).collect(Collectors.toList()),
+                        player.getCardsToList().stream().map(CardDto::of).collect(Collectors.toList()),
                         player.getScore()));
     }
 
@@ -113,7 +113,7 @@ public class GameController {
         List<Player> players = game.getPlayersToList();
 
         List<Status> result = new ArrayList<>();
-        result.add(new Status(dealer.getName(), List.of(CardDto.of(dealer.getCards().get(0))), dealer.getScore()));
+        result.add(new Status(dealer.getName(), List.of(CardDto.of(dealer.getCardsToList().get(0))), dealer.getScore()));
 
         addPlayerStatus(players, result);
 
