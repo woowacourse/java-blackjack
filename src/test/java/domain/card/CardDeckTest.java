@@ -9,7 +9,7 @@ public class CardDeckTest {
     @Test
     @DisplayName("카드덱 생성 테스트")
     void createCardDeck() {
-        assertThatCode(CardDeck::getInstance)
+        assertThatCode(CardDeck::newInstance)
                 .doesNotThrowAnyException();
     }
 }
