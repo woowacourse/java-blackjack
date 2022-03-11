@@ -54,7 +54,7 @@ public class PlayersTest {
     @DisplayName("모든 플레이어 손패와 베스트 스코어 반환")
     void showHandsAndBestScores() {
         assertThat(players.showStatuses()).isEqualTo(
-                List.of("jason카드: K클로버, Q클로버, 2클로버 - 결과 : 22"));
+                List.of("pobi카드: A클로버, Q클로버 - 결과 : 21", "jason카드: K클로버, Q클로버, 2클로버 - 결과 : 22"));
     }
 
     @Test
