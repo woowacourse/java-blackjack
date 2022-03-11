@@ -9,7 +9,7 @@ public class PlayersDTO {
     private final DealerDTO dealer;
     private final List<EntryDTO> entries;
 
-    public PlayersDTO(DealerDTO dealer, List<EntryDTO> entries) {
+    private PlayersDTO(DealerDTO dealer, List<EntryDTO> entries) {
         this.dealer = dealer;
         this.entries = entries;
     }

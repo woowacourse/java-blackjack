@@ -56,4 +56,8 @@ public class Game {
     public Entry getCurrentEntry() {
         return this.players.getCurrentEntry();
     }
+
+    public Results getResults() {
+        return this.players.getResults();
+    }
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EntryDTO extends PlayerDTO {
-
     private EntryDTO(String name, DeckDTO deck, int score) {
         super(name, deck, score);
     }
@@ -21,7 +20,7 @@ public class EntryDTO extends PlayerDTO {
         return from(game.getCurrentEntry());
     }
 
-    private static EntryDTO from(Entry entry) {
+    public static EntryDTO from(Entry entry) {
         return new EntryDTO(entry.getName(), DeckDTO.from(entry), entry.getScore());
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.model.player;
 
+import blackjack.model.Result;
 import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
 
@@ -19,7 +20,11 @@ public class Dealer extends Player {
         return this.deck.countAddedCards();
     }
 
-    public boolean isWinning(Entry entry) {
+    public Result compareWith(Entry entry) {
+        return new Result(entry, !isWinTo(entry));
+    }
+
+    private boolean isWinTo(Entry entry) {
         if (entry.isBust()) {
             return true;
         }

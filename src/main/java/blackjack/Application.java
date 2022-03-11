@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.dto.DealerDTO;
 import blackjack.dto.EntryDTO;
 import blackjack.dto.PlayersDTO;
+import blackjack.dto.ResultsDTO;
 import blackjack.model.Game;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
@@ -33,6 +34,7 @@ public class Application {
         }
 
         resultView.printScores(PlayersDTO.from(game));
+        resultView.printResults(ResultsDTO.from(game.getResults()), DealerDTO.from(game));
     }
 
     private static void playTurn(InputView inputView, Game game, ResultView resultView) {

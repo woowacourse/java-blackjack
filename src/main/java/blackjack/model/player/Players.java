@@ -1,5 +1,7 @@
 package blackjack.model.player;
 
+import blackjack.model.Result;
+import blackjack.model.Results;
 import blackjack.model.trumpcard.TrumpCard;
 import blackjack.model.trumpcard.TrumpCardPack;
 import java.util.List;
@@ -60,5 +62,9 @@ public class Players {
 
     public Entry getCurrentEntry() {
         return this.entries.getCurrentEntry();
+    }
+
+    public Results getResults() {
+        return this.entries.compareAllWith(dealer);
     }
 }
