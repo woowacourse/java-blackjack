@@ -11,6 +11,7 @@ import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.Outcome;
 import blackjack.domain.Player;
+import blackjack.domain.RedrawChoice;
 import blackjack.domain.Role;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
@@ -68,8 +69,8 @@ public class BlackJackService {
 		return PlayerTurnDto.from(currentPlayer);
 	}
 
-	public PlayerStatusDto drawPlayer(final String answer) {
-		if (answer.equals("n")) {
+	public PlayerStatusDto drawPlayer(final RedrawChoice answer) {
+		if (answer == RedrawChoice.NO) {
 			PlayerStatusDto status = PlayerStatusDto.from(false, hasNextPlayer(), currentPlayer);
 			nextPlayer();
 			return status;
