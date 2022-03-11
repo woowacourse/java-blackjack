@@ -41,6 +41,7 @@ public class CardDeckTest {
         }
 
         assertThatThrownBy(() -> cardDeck.pop())
-                .isInstanceOf(NoSuchElementException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드가 모두 소진되었습니다!");
     }
 }
