@@ -1,99 +1,11 @@
 package blackjack;
 
-import blackjack.model.CardGenerator;
-import blackjack.model.player.Dealer;
-import blackjack.model.player.Gamer;
-import blackjack.model.player.Player;
-import blackjack.model.Result;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import blackjack.controller.BlackjackController;
 
 public class Application {
 
     public static void main(String[] args) {
-        try {
-            run();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private static void run() {
-        CardGenerator cardGenerator = new CardGenerator();
-        Dealer dealer = createDealer(cardGenerator);
-        List<Gamer> gamers = createGamers(names(), cardGenerator);
-        OutputView.printOpenCard(dealer, gamers);
-        takeCards(cardGenerator, dealer, gamers);
-        OutputView.printTotalScore(dealer, gamers);
-        printRecord(dealer, gamers);
-    }
-
-    private static Dealer createDealer(CardGenerator cardGenerator) {
-        return new Dealer(cardGenerator.generate(), cardGenerator.generate());
-    }
-
-    private static List<String> names() {
-        String namesText = InputView.inputNames();
-        return List.of(namesText.split(","));
-    }
-
-    private static List<Gamer> createGamers(List<String> names, CardGenerator cardGenerator) {
-        return names.stream()
-                .map(name -> createEachGamer(name, cardGenerator))
-                .collect(Collectors.toList());
-    }
-
-    private static Gamer createEachGamer(String name, CardGenerator cardGenerator) {
-        return new Gamer(name, cardGenerator.generate(), cardGenerator.generate());
-    }
-
-    private static void takeCards(CardGenerator cardGenerator, Dealer dealer, List<Gamer> gamers) {
-        for (Gamer gamer : gamers) {
-            takeGamerCard(gamer, cardGenerator);
-        }
-        takeDealerCard(dealer, cardGenerator);
-    }
-
-    private static void takeGamerCard(Gamer gamer, CardGenerator cardGenerator) {
-        while (gamer.isHittable() && isKeepTakeCard(gamer)) {
-            gamer.take(cardGenerator.generate());
-            OutputView.printCard(gamer);
-        }
-    }
-
-    private static void takeDealerCard(Dealer dealer, CardGenerator cardGenerator) {
-        while (dealer.isHittable()) {
-            dealer.take(cardGenerator.generate());
-            OutputView.printDealerTakeCardMessage();
-        }
-    }
-
-    private static boolean isKeepTakeCard(Player gamer) {
-        String option = InputView.chooseOptions(gamer.name());
-        return option.equals("y");
-    }
-
-    private static void printRecord(Dealer dealer, List<Gamer> gamers) {
-        printDealerRecord(dealer, gamers);
-        printGamerRecords(dealer, gamers);
-    }
-
-    private static void printDealerRecord(Dealer dealer, List<Gamer> gamers) {
-        Map<Result, Integer> result = new HashMap<>();
-        for (Gamer gamer : gamers) {
-            result.merge(dealer.match(gamer.cards()), 1, Integer::sum);
-        }
-        OutputView.printDealerRecord(result);
-    }
-
-    private static void printGamerRecords(Dealer dealer, List<Gamer> gamers) {
-        for (Gamer gamer : gamers) {
-            Result result = dealer.match(gamer.cards());
-            OutputView.printGamerRecord(gamer.name(), result.reverse().symbol());
-        }
+        BlackjackController blackjackController = new BlackjackController();
+        blackjackController.play();
     }
 }
