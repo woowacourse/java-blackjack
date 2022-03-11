@@ -1,13 +1,12 @@
 package blackjack.domain;
 
-import static blackjack.domain.Record.*;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class RecordFactory {
 
     public static final int BUST_SCORE = 21;
+
     private final int dealerScore;
     private final boolean isDealerBust;
     private final Map<Record, Integer> dealerRecord;
@@ -26,27 +25,7 @@ public class RecordFactory {
     }
 
     private Record createRecord(int score) {
-        if (isDealerBust) {
-            return getRecordWhenDealerBust(score);
-        }
-
-        if (score > BUST_SCORE || score < dealerScore) {
-            return LOSS;
-        }
-
-        if (dealerScore == score) {
-            return PUSH;
-        }
-
-        return WIN;
-    }
-
-    private Record getRecordWhenDealerBust(int score) {
-        if (score > BUST_SCORE) {
-            return LOSS;
-        }
-
-        return WIN;
+        return Record.of(isDealerBust, dealerScore, score);
     }
 
     private void updateDealerRecord(Record record) {
