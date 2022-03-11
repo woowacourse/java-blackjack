@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Name;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BlackJackReferee;
 
@@ -80,6 +81,13 @@ public class BlackJackGame {
 
     public BlackJackReferee createResult() {
         return new BlackJackReferee(players, dealer);
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+            .map(Player::getName)
+            .map((Name::getValue))
+            .collect(Collectors.toList());
     }
 
     public Dealer getDealer() {

@@ -1,5 +1,11 @@
 package blackjack.controller;
 
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
+
 import blackjack.controller.dto.GameResultDto;
 import blackjack.controller.dto.GamerDto;
 import blackjack.domain.Answer;
@@ -7,20 +13,13 @@ import blackjack.domain.BlackJackGame;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BlackJackReferee;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
-
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.UnaryOperator;
-import java.util.stream.Collectors;
 
 public class BlackJackController {
 
 	private final BlackJackGame blackJackGame;
 
-	public BlackJackController(List<String> names) {
-		blackJackGame = new BlackJackGame(names);
+	public BlackJackController(Supplier<List<String>> supplier) {
+		blackJackGame = new BlackJackGame(supplier.get());
 		blackJackGame.distributeFirstCards();
 	}
 
@@ -29,8 +28,8 @@ public class BlackJackController {
 		return new GamerDto(dealer);
 	}
 
-	public void askHitOrStay(List<String> names, UnaryOperator<String> operator, Consumer<GamerDto> consumer) {
-		for (String name : names) {
+	public void askHitOrStay(UnaryOperator<String> operator, Consumer<GamerDto> consumer) {
+		for (String name : blackJackGame.getPlayerNames()) {
 			hitOrStay(operator, consumer, name);
 		}
 	}
