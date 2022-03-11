@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.strategy;
 
 public interface NumberGenerator {
 

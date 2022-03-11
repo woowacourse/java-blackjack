@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.List;
 
 import blackjack.domain.dto.ResultDto;
+import blackjack.domain.strategy.NumberGenerator;
 
 public class Blackjack {
 	private static final int NUMBER_OF_INIT_CARD = 2;

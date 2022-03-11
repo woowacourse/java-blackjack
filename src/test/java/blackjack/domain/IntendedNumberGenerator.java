@@ -3,6 +3,8 @@ package blackjack.domain;
 import java.util.List;
 import java.util.Objects;
 
+import blackjack.domain.strategy.NumberGenerator;
+
 public class IntendedNumberGenerator implements NumberGenerator {
 
 	private static final String INTENDED_NUMBER_GENERATOR_OUT_OF_BOUND_EXCEPTION = "[ERROR] 숫자 생성기 인덱스 초과";

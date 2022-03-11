@@ -3,6 +3,8 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import blackjack.domain.strategy.NumberGenerator;
+
 public class Cards {
 	private static final int ONE = 1;
 	private static final int TWO = 2;
