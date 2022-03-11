@@ -22,6 +22,7 @@ public class OutputView {
 			.collect(Collectors.joining(", "));
 
 		final String message = dealerStatus.getRoleName() + "와 " + playerNames + "에게 2장의 카드를 나누었습니다.";
+		System.out.println(message);
 	}
 
 	private static void printHand(TableStatusDto dealerStatus, List<TableStatusDto> playersStatus) {

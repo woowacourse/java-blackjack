@@ -17,4 +17,16 @@ public class PlayerStatusDto {
 	public static PlayerStatusDto from(boolean draw, boolean hasNextPlayer, Role player) {
 		return new PlayerStatusDto(draw, hasNextPlayer, TableStatusDto.from(player));
 	}
+
+	public boolean isDraw() {
+		return draw;
+	}
+
+	public boolean isHasNextPlayer() {
+		return hasNextPlayer;
+	}
+
+	public TableStatusDto getTableStatusDto() {
+		return tableStatusDto;
+	}
 }

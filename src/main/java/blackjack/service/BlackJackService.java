@@ -66,10 +66,16 @@ public class BlackJackService {
 
 	public PlayerStatusDto drawPlayer(final String answer) {
 		if (answer.equals("n")) {
-			return PlayerStatusDto.from(false, hasNextPlayer(), currentPlayer);
+			PlayerStatusDto status = PlayerStatusDto.from(false, hasNextPlayer(), currentPlayer);
+			nextPlayer();
+			return status;
 		}
 		currentPlayer.draw(deck.draw());
-		return PlayerStatusDto.from(currentPlayer.canDraw(), hasNextPlayer(), currentPlayer);
+		PlayerStatusDto status = PlayerStatusDto.from(currentPlayer.canDraw(), hasNextPlayer(), currentPlayer);
+		if (!currentPlayer.canDraw()) {
+			nextPlayer();
+		}
+		return status;
 	}
 
 	private boolean hasNextPlayer() {
@@ -77,7 +83,9 @@ public class BlackJackService {
 	}
 
 	private void nextPlayer() {
-		currentPlayer = it.next();
+		if (hasNextPlayer()) {
+			currentPlayer = it.next();
+		}
 	}
 
 	public DealerTurnDto drawDealer() {

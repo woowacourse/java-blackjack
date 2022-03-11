@@ -14,4 +14,7 @@ public class PlayerTurnDto {
 		return new PlayerTurnDto(player.getName());
 	}
 
+	public String getName() {
+		return name;
+	}
 }
