@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class Cards {
+public class Cards {
 
     private final List<Card> cards;
 
-    Cards(Card card1, Card card2, Card... cards) {
+    public Cards(Card card1, Card card2, Card... cards) {
         this.cards = concat(concat(card1, card2), cards)
             .collect(Collectors.toList());
     }

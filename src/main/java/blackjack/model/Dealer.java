@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Dealer extends Player {
 
+    public static final Score HIT_BOUNDARY = new Score(17);
+
     public Dealer(Card card1, Card card2, Card... cards) {
         super("딜러", List.of(card1), new Cards(card1, card2, cards));
     }
@@ -11,8 +13,7 @@ public class Dealer extends Player {
     public Result match(Gamer gamer) {
         if (gamer.isBust()) {
             return Result.WIN;
-        }
-        if (isBust()) {
+        } else if (isBust()) {
             return Result.LOSS;
         }
         return compare(score(), gamer.score());
@@ -21,14 +22,13 @@ public class Dealer extends Player {
     private Result compare(Score dealerScore, Score playerScore) {
         if (dealerScore.lessThan(playerScore)) {
             return Result.LOSS;
-        }
-        if (dealerScore.moreThan(playerScore)) {
+        } else if (dealerScore.moreThan(playerScore)) {
             return Result.WIN;
         }
         return Result.DRAW;
     }
 
     public boolean isHittable() {
-        return cards.maxScore().lessThan(new Score(17));
+        return cards.maxScore().lessThan(HIT_BOUNDARY);
     }
 }

@@ -25,6 +25,14 @@ public class Card {
         return rank == ACE;
     }
 
+    public Rank rank() {
+        return rank;
+    }
+
+    public Suit suit() {
+        return suit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -45,13 +53,5 @@ public class Card {
     @Override
     public String toString() {
         return rank.hard() + "-" + suit;
-    }
-
-    public Rank rank() {
-        return rank;
-    }
-
-    public Suit suit() {
-        return suit;
     }
 }
