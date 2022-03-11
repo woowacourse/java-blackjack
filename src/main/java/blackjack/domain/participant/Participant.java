@@ -38,7 +38,7 @@ public abstract class Participant {
 
     public void hit(Card card) {
         cards.add(card);
-        playStatus = updateStatus(cards.getStatus());
+        playStatus = cards.getStatus();
     }
 
     public abstract String getName();

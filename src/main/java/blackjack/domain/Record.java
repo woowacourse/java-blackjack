@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.RecordFactory.*;
+import static blackjack.domain.card.PlayStatus.*;
 
 import java.util.Arrays;
 
