@@ -4,8 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardStack;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.GameParticipants;
 import blackjack.domain.participant.Player;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,15 +14,16 @@ public class BlackjackGame {
     private static final String NO_PLAYER_EXCEPTION_MESSAGE = "플레이어가 없는 게임은 존재할 수 없습니다.";
 
     private final CardStack cardDeck;
-    private final Dealer dealer;
-    private final List<Player> players = new ArrayList<>();
+    private final GameParticipants participants;
 
     public BlackjackGame(CardStack cardDeck, List<String> playerNames) {
         validatePlayerNames(playerNames);
-
         this.cardDeck = cardDeck;
-        this.dealer = Dealer.of(initializeCardBundle());
-        players.addAll(initializePlayers(playerNames));
+        this.participants = GameParticipants.of(initializeDealer(), initializePlayers(playerNames));
+    }
+
+    private Dealer initializeDealer() {
+        return Dealer.of(initializeCardBundle());
     }
 
     private List<Player> initializePlayers(List<String> playerNames) {
@@ -38,6 +39,8 @@ public class BlackjackGame {
     }
 
     public boolean giveCardToDealer() {
+        Dealer dealer = getDealer();
+
         if (!dealer.canReceive()) {
             return false;
         }
@@ -51,11 +54,11 @@ public class BlackjackGame {
     }
 
     public Dealer getDealer() {
-        return dealer;
+        return participants.getDealer();
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return participants.getPlayers();
     }
 
     private CardBundle initializeCardBundle() {
@@ -66,8 +69,7 @@ public class BlackjackGame {
     public String toString() {
         return "BlackjackGame{" +
                 "cardDeck=" + cardDeck +
-                ", dealer=" + dealer +
-                ", players=" + players +
+                ", participants=" + participants +
                 '}';
     }
 }
