@@ -4,9 +4,10 @@ import blackjack.domain.BlackJackMachine;
 import blackjack.domain.CardDeck;
 import blackjack.domain.Choice;
 import blackjack.domain.Dealer;
+import blackjack.domain.DealerResult;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
-import blackjack.domain.Results;
+import blackjack.domain.ParticipantResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -35,8 +36,10 @@ public class BlackJackController {
             OutputView.printTotalScore(participant, participant.getTotalScore());
         }
 
-        Results results = new Results(dealer, participants);
-        OutputView.printResults(results);
+        ParticipantResult results = new ParticipantResult(dealer, participants);
+        DealerResult dealerResult = new DealerResult(results.getDealerResult());
+
+        OutputView.printResults(dealer, dealerResult, results);
     }
 
     private void askAndGiveCardToParticipant(BlackJackMachine blackJackMachine, Participant participant) {

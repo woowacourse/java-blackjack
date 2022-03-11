@@ -2,18 +2,22 @@ package blackjack.view;
 
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
+import blackjack.domain.DealerResult;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.domain.Result;
-import blackjack.domain.Results;
+import blackjack.domain.ParticipantResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String DELIMITER = ", ";
+    private static final String CARD_DELIMITER = ", ";
+    private static final String RESULT_DELIMITER = " ";
+    private static final String COLON_AND_BLANK = ": ";
     private static final int DEALER_BOUNDARY_SCORE = 16;
 
     public static void printInitialCards(final Dealer dealer, final Participants participants) {
@@ -23,15 +27,15 @@ public class OutputView {
     }
 
     private static void printDealMessage(final Dealer dealer, final Participants participants) {
-        List<String> names = new ArrayList<>();
+        final List<String> names = new ArrayList<>();
         for (Participant participant : participants) {
             names.add(participant.getName());
         }
-        System.out.println(dealer.getName() + "와 " + String.join(DELIMITER, names) + "에게 2장의 나누었습니다.");
+        System.out.println(dealer.getName() + "와 " + String.join(CARD_DELIMITER, names) + "에게 2장의 나누었습니다.");
     }
 
     private static void printDealerCard(final Dealer dealer) {
-        System.out.println(dealer.getName() + ": " + dealer.getCards().iterator().next());
+        System.out.println(dealer.getName() + COLON_AND_BLANK + dealer.getCards().iterator().next());
     }
 
     private static void printParticipantsCards(final Participants participants) {
@@ -41,11 +45,11 @@ public class OutputView {
     }
 
     public static void printPlayerCards(final Player player) {
-        List<String> cards = new ArrayList<>();
+        final List<String> cards = new ArrayList<>();
         for (Card card : player.getCards()) {
             cards.add(card.toString());
         }
-        System.out.println(player.getName() + "카드: " + String.join(DELIMITER, cards));
+        System.out.println(player.getName() + "카드: " + String.join(CARD_DELIMITER, cards));
     }
 
     public static void printDealerGetCardMessage(final Dealer dealer) {
@@ -53,40 +57,36 @@ public class OutputView {
     }
 
     public static void printTotalScore(final Player player, final int totalScore) {
-        List<String> cards = new ArrayList<>();
+        final List<String> cards = new ArrayList<>();
         for (Card card : player.getCards()) {
             cards.add(card.toString());
         }
-        System.out.println(player.getName() + "카드: " + String.join(DELIMITER, cards) + " - 결과: " + totalScore);
+        System.out.println(player.getName() + "카드: " + String.join(CARD_DELIMITER, cards) + " - 결과: " + totalScore);
     }
 
-    public static void printResults(Results results) {
+    public static void printResults(final Dealer dealer, final DealerResult dealerResult, final ParticipantResult results) {
         System.out.println("## 최종 승패");
+        printDealerResult(dealer, dealerResult);
+        printParticipantsResult(results);
+    }
 
-        Map<Participant, Result> values = results.getValues();
+    private static void printDealerResult(final Dealer dealer, final DealerResult result) {
+        final Map<Result, Integer> dealerResult = result.getResult();
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("딜러: ")
-                .append(getCountResultMessage(countResult(values, Result.LOSE), Result.WIN))
-                .append(getCountResultMessage(countResult(values, Result.DRAW), Result.DRAW))
-                .append(getCountResultMessage(countResult(values, Result.WIN), Result.LOSE));
-        System.out.println(stringBuilder);
+        final String dealerResultString = dealerResult.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() > 0)
+                .map(entry -> entry.getValue() + entry.getKey().getName())
+                .collect(Collectors.joining(RESULT_DELIMITER));
 
-        values.keySet()
+        System.out.println(dealer.getName() + COLON_AND_BLANK + dealerResultString);
+    }
+
+    private static void printParticipantsResult(final ParticipantResult results) {
+        final Map<Participant, Result> participantsResult = results.getParticipantResult();
+
+        participantsResult.keySet()
                 .forEach(participant -> System.out.println(
-                        participant.getName() + ": " + values.get(participant).getName()));
-    }
-
-    private static int countResult(Map<Participant, Result> values, Result result) {
-        return (int) values.values().stream()
-                .filter(value -> value == result)
-                .count();
-    }
-
-    private static String getCountResultMessage(int count, Result result) {
-        if (count <= 0) {
-            return "";
-        }
-        return count + result.getName() + " ";
+                        participant.getName() + COLON_AND_BLANK + participantsResult.get(participant).getName()));
     }
 }

@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class ResultsTest {
+public class ParticipantResultTest {
 
     @ParameterizedTest(name = "[{index}] 딜러 : {0}, {1}, 참가자 : {2}, {3} -> {4}")
     @MethodSource("parameters1")
@@ -26,10 +26,10 @@ public class ResultsTest {
             participant.addCard(card4);
         }
 
-        Results results = new Results(dealer, participants);
+        ParticipantResult results = new ParticipantResult(dealer, participants);
 
         for (Participant participant : participants) {
-            assertThat(results.getValues()).contains(entry(participant, expected));
+            assertThat(results.getParticipantResult()).contains(entry(participant, expected));
         }
     }
 
@@ -99,10 +99,10 @@ public class ResultsTest {
             participant.addCard(card5);
         }
 
-        Results results = new Results(dealer, participants);
+        ParticipantResult results = new ParticipantResult(dealer, participants);
 
         for (Participant participant : participants) {
-            assertThat(results.getValues()).contains(entry(participant, expected));
+            assertThat(results.getParticipantResult()).contains(entry(participant, expected));
         }
     }
 
@@ -141,10 +141,10 @@ public class ResultsTest {
             participant.addCard(card6);
         }
 
-        Results results = new Results(dealer, participants);
+        ParticipantResult results = new ParticipantResult(dealer, participants);
 
         for (Participant participant : participants) {
-            assertThat(results.getValues()).contains(entry(participant, expected));
+            assertThat(results.getParticipantResult()).contains(entry(participant, expected));
         }
     }
 
