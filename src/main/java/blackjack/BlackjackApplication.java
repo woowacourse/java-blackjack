@@ -10,7 +10,6 @@ import blackjack.domain.Deck;
 import blackjack.domain.Name;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.domain.ScoreResult;
 import blackjack.domain.Selection;
 import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
@@ -21,19 +20,15 @@ public class BlackjackApplication {
         Players players = requestPlayers();
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
-        drawCardTwice(players, dealer, deck);
-        List<PlayerDto> playerDtos = toDto(players);
-        PlayerDto dealerDto = toDto(dealer);
 
-        printInitGameMessage(playerDtos, dealerDto);
-        printOpenCard(playerDtos, dealerDto);
+        drawCardTwice(players, dealer, deck);
+        printPlayersCard(toDto(players), toDto(dealer));
 
         takeTurnsPlayers(players, deck);
         takeTurnDealer(dealer, deck);
 
         printPlayersResult(toDto(players), toDto(dealer));
-        ScoreResult scoreResult = players.compete(dealer);
-        printScoreResult(scoreResult);
+        printScoreResult(players.compete(dealer));
     }
 
     private static void takeTurnsPlayers(Players players, Deck deck) {
@@ -60,8 +55,8 @@ public class BlackjackApplication {
     private static Selection requestSelection(Player player) {
         try {
             return Selection.from(InputView.requestDrawCommand(toDto(player)));
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        } catch (IllegalArgumentException exception) {
+            printException(exception);
             return requestSelection(player);
         }
     }
@@ -101,8 +96,8 @@ public class BlackjackApplication {
                 .map(Player::new)
                 .collect(Collectors.toList());
             return new Players(players);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        } catch (IllegalArgumentException exception) {
+            printException(exception);
             return requestPlayers();
         }
     }
