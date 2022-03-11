@@ -27,25 +27,26 @@ public class Hand {
             return getSumIncludingAce();
         }
 
-        return getCardScoreSum();
+        return getCardScoreSumWithOutAce();
     }
 
     private int getSumIncludingAce() {
-        int countAce = getNumberOfAce();
-        int sumExcludingAce = getCardScoreSum();
+        int aceCount = getNumberOfAce();
+        int sumExcludingAce = getCardScoreSumWithOutAce();
 
-        for (int i = 0; i < countAce; i++) {
-            int sum = sumExcludingAce + (countAce * ACE_UPPER_SCORE) - i * ACE_SCORE_DIFFERENCE;
+        for (int i = 0; i < aceCount; i++) {
+            int sum = sumExcludingAce + (aceCount * ACE_UPPER_SCORE) - i * ACE_SCORE_DIFFERENCE;
             if (sum <= BLACKJACK_SYMBOL_SCORE) {
                 return sum;
             }
         }
 
-        return sumExcludingAce + countAce;
+        return sumExcludingAce + aceCount;
     }
 
-    private int getCardScoreSum() {
+    private int getCardScoreSumWithOutAce() {
         return cards.stream()
+                .filter(card -> !card.isAce())
                 .mapToInt(Card::getScore)
                 .sum();
     }

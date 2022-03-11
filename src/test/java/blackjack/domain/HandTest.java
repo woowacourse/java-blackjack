@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static blackjack.domain.card.Denomination.*;
+import static blackjack.domain.card.Suit.*;
 import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Card;
@@ -14,12 +16,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class HandTest {
 
-    public static final Card aceCard = new Card(Denomination.ACE, Suit.CLOVER);
+    private static final Card aceCard = new Card(Denomination.ACE, Suit.CLOVER);
 
     @Test
     @DisplayName("카드를 가져와서 나의 패(Hand)를 만든다")
     void make_hand() {
-        Card card = new Card(Denomination.TWO, Suit.SPADE);
+        Card card = new Card(Denomination.TWO, SPADE);
         Card card2 = new Card(Denomination.JACK, Suit.DIAMOND);
 
         Hand hand = new Hand();
@@ -31,7 +33,7 @@ class HandTest {
     @Test
     @DisplayName("카드팩의 합계를 구한다")
     void sum_hand() {
-        Card card = new Card(Denomination.TWO, Suit.SPADE);
+        Card card = new Card(Denomination.TWO, SPADE);
         Card card2 = new Card(Denomination.JACK, Suit.DIAMOND);
 
         Hand hand = new Hand();
@@ -43,7 +45,7 @@ class HandTest {
     @Test
     @DisplayName("카드팩의 합계를 구한다")
     void sum_hand_other_case() {
-        Card card = new Card(Denomination.FOUR, Suit.SPADE);
+        Card card = new Card(Denomination.FOUR, SPADE);
         Card card2 = new Card(Denomination.JACK, Suit.DIAMOND);
 
         Hand hand = new Hand();
@@ -55,9 +57,9 @@ class HandTest {
     @Test
     @DisplayName("21점이 넘을 경우 버스트 이다.")
     void isBust() {
-        Card card1 = new Card(Denomination.KING, Suit.SPADE);
-        Card card2 = new Card(Denomination.JACK, Suit.SPADE);
-        Card card3 = new Card(Denomination.TWO, Suit.SPADE);
+        Card card1 = new Card(Denomination.KING, SPADE);
+        Card card2 = new Card(Denomination.JACK, SPADE);
+        Card card3 = new Card(Denomination.TWO, SPADE);
 
         Hand hand = new Hand();
         hand.add(card1, card2, card3);
@@ -68,9 +70,9 @@ class HandTest {
     @Test
     @DisplayName("21점이 넘지 않을 경우 버스트가 아니다.")
     void isNotBust() {
-        Card card1 = new Card(Denomination.KING, Suit.SPADE);
-        Card card2 = new Card(Denomination.EIGHT, Suit.SPADE);
-        Card card3 = new Card(Denomination.TWO, Suit.SPADE);
+        Card card1 = new Card(Denomination.KING, SPADE);
+        Card card2 = new Card(Denomination.EIGHT, SPADE);
+        Card card3 = new Card(Denomination.TWO, SPADE);
 
         Hand hand = new Hand();
         hand.add(card1, card2, card3);
@@ -81,8 +83,8 @@ class HandTest {
     @Test
     @DisplayName("카드 2장이고 21점이면 블랙잭이다.")
     void isBlackjack() {
-        Card card1 = new Card(Denomination.ACE, Suit.SPADE);
-        Card card2 = new Card(Denomination.TEN, Suit.CLOVER);
+        Card card1 = new Card(Denomination.ACE, SPADE);
+        Card card2 = new Card(TEN, Suit.CLOVER);
 
         Hand hand = new Hand();
         hand.add(card1, card2);
@@ -99,13 +101,16 @@ class HandTest {
 
     private static Stream<Arguments> hasAceCardHandScoreTestCase() {
         return Stream.of(
-                Arguments.of(createHand(aceCard, new Card(Denomination.TEN, Suit.SPADE)), 21),
-                Arguments.of(createHand(aceCard, new Card(Denomination.KING, Suit.SPADE)), 21),
-                Arguments.of(createHand(aceCard, new Card(Denomination.JACK, Suit.DIAMOND)), 21),
-                Arguments.of(createHand(aceCard, new Card(Denomination.QUEEN, Suit.CLOVER)), 21),
-                Arguments.of(createHand(aceCard, aceCard, new Card(Denomination.NINE, Suit.CLOVER)), 21),
-                Arguments.of(createHand(aceCard, aceCard, aceCard, new Card(Denomination.EIGHT, Suit.CLOVER)), 21),
-                Arguments.of(createHand(aceCard, new Card(Denomination.SEVEN, Suit.HEART)), 18)
+                Arguments.of(createHand(aceCard, aceCard), 12),
+                Arguments.of(createHand(aceCard, aceCard, aceCard), 13),
+                Arguments.of(createHand(aceCard, aceCard, aceCard, aceCard), 14),
+                Arguments.of(createHand(aceCard, aceCard, new Card(TWO, HEART)), 14),
+                Arguments.of(createHand(aceCard, new Card(SEVEN, HEART), new Card(KING, HEART)), 18),
+                Arguments.of(createHand(aceCard, new Card(THREE, HEART), new Card(FIVE, HEART)), 19),
+                Arguments.of(createHand(aceCard, new Card(FOUR, HEART), new Card(FIVE, HEART)), 20),
+                Arguments.of(createHand(aceCard, new Card(TEN, SPADE)), 21),
+                Arguments.of(createHand(aceCard, aceCard, new Card(NINE, CLOVER)), 21),
+                Arguments.of(createHand(aceCard, aceCard, aceCard, new Card(EIGHT, CLOVER)), 21)
         );
     }
 
