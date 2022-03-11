@@ -20,6 +20,7 @@ public class OutputView {
     private static final String PARTICIPANT_WINNING_RESULT_MESSAGE = "\n## 최종 승패";
     private static final String DEALER_DIRECTION = "딜러:";
     private static final String RESULT_DELIMITER = ": ";
+    private static final String PLAYER_HIT_IMPOSSIBLE_MESSAGE = "가진 카드의 합이 21을 초과하여 카드를 더 받을 수 없습니다.";
 
 
     public static void printInitialCardInformation(Participants participants) {
@@ -69,6 +70,10 @@ public class OutputView {
     public static void printDealerHitMessage() {
         System.out.println();
         System.out.print(DEALER_HIT_MESSAGE);
+    }
+
+    public static void printPlayerHitImpossibleMessage() {
+        System.out.println(PLAYER_HIT_IMPOSSIBLE_MESSAGE);
     }
 
     public static void printCardsAndPoint(Participants participants) {

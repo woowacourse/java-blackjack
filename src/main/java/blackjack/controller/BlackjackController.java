@@ -19,6 +19,7 @@ public class BlackjackController {
         Participants participants = createParticipants();
 
         handOutAndPrintInitialCards(participants, deck);
+
         handOutMoreCards(participants, deck);
 
         printResult(participants);
@@ -43,22 +44,41 @@ public class BlackjackController {
 
     private void handOutMoreCardsToPlayers(List<Player> players, Deck deck) {
         for (Player player : players) {
-            boolean cardPrintFlag = false;
-            String answer = InputView.inputPlayerHit(player.getName());
-
-            while (answer.equals("y")) {
-                player.receiveCard(deck.pickCard());
-                cardPrintFlag = true;
-                OutputView.printPlayerCardInformation(player);
-                answer = InputView.inputPlayerHit(player.getName());
-
-            }
-
-            if (!cardPrintFlag) {
-                OutputView.printPlayerCardInformation(player);
-            }
+            handOutMoreCardsToPlayer(player, deck);
         }
     }
+
+    private void handOutMoreCardsToPlayer(Player player, Deck deck) {
+        boolean cardPrintFlag = isPlayerWantMoreCards(player, deck);
+
+        if (!cardPrintFlag) {
+            OutputView.printPlayerCardInformation(player);
+        }
+
+    }
+
+    private boolean isPlayerWantMoreCards(Player player, Deck deck) {
+        boolean cardPrintFlag = false;
+        while (isPlayerHit(player) && !isBust(player)) {
+            player.receiveCard(deck.pickCard());
+            OutputView.printPlayerCardInformation(player);
+            cardPrintFlag = true;
+        }
+        return cardPrintFlag;
+    }
+
+    private boolean isBust(Player player) {
+        if (player.isBust()) {
+            OutputView.printPlayerHitImpossibleMessage();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isPlayerHit(Player player) {
+        return InputView.inputPlayerHit(player.getName()).equals("y");
+    }
+
 
     private void handOutMoreCardsToDealer(Dealer dealer, Deck deck) {
         while (dealer.checkHitRule()) {
@@ -74,10 +94,10 @@ public class BlackjackController {
         BlackjackGame blackjackGame = new BlackjackGame(participants);
         blackjackGame.calculatePlayerResult();
 
-        Map<WinningResult, Integer> dealerResult =  blackjackGame.getDealerResult();
+        Map<WinningResult, Integer> dealerResult = blackjackGame.getDealerResult();
         Map<Player, WinningResult> playerResult = blackjackGame.getPlayerResult();
 
-        OutputView.printResult(dealerResult,playerResult);
+        OutputView.printResult(dealerResult, playerResult);
     }
 
 
