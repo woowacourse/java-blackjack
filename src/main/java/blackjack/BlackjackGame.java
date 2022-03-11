@@ -6,7 +6,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.dto.CardDto;
 import blackjack.domain.dto.HitResultDto;
 import blackjack.domain.dto.WinDrawLoseDto;
-import blackjack.domain.gamer.CasinoCustomer;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
@@ -22,8 +21,9 @@ public class BlackjackGame {
 
     public void run() {
         Player dealer = new Dealer();
-        Players players = Players.fromNames(InputView.inputPlayerName());
         Deck deck = new Deck();
+        Players players = Players.fromNames(InputView.inputPlayerName());
+        initHit(dealer, players, deck);
         OutputView.printInitCard(getCardStatus(dealer, players));
         playersHit(players, deck);
         dealerHit(dealer, deck);
@@ -31,25 +31,33 @@ public class BlackjackGame {
         OutputView.printResult(judgeWinDrawLose(dealer, players));
     }
 
-    private void playersHit(Players players, Deck deck) {
-        while (players.hasNext()) {
-            playerHit(players, deck);
+    private void initHit(Player dealer, Players players, Deck deck) {
+        dealer.hit(deck.draw());
+        dealer.hit(deck.draw());
+        for (Player player : players.getPlayers()) {
+            player.hit(deck.draw());
+            player.hit(deck.draw());
         }
     }
 
     private Map<String, List<CardDto>> getCardStatus(Player dealer, Players players) {
         Map<String, List<CardDto>> cardStatus = new LinkedHashMap<>();
         addCardDto(cardStatus, dealer);
-        List<CasinoCustomer> playerList = players.getPlayers();
-        for (CasinoCustomer player : playerList) {
+        List<Player> playerList = players.getPlayers();
+        for (Player player : playerList) {
             addCardDto(cardStatus, player);
         }
-
         return cardStatus;
     }
 
     private void addCardDto(Map<String, List<CardDto>> cardStatus, Player player) {
         cardStatus.put(player.getName(), toListCardDto(player));
+    }
+
+    private void playersHit(Players players, Deck deck) {
+        while (players.hasNext()) {
+            playerHit(players, deck);
+        }
     }
 
     private void playerHit(Players players, Deck deck) {
@@ -62,14 +70,14 @@ public class BlackjackGame {
     }
 
     private void hitAndOutputResult(Players players, Deck deck) {
-        CasinoCustomer nowTurnPlayer = players.getNowPlayer();
+        Player nowTurnPlayer = players.getNowPlayer();
         nowTurnPlayer.hit(deck.draw());
-        if (nowTurnPlayer.isBust() || nowTurnPlayer.isBlackjack()) {
+        if (nowTurnPlayer.isBust()) {
             players.next();
         }
         OutputView.printPresentStatus(nowTurnPlayer.getName(), toListCardDto(nowTurnPlayer),
                 nowTurnPlayer.getCards().calculateScore(),
-                nowTurnPlayer.isBust(), nowTurnPlayer.isBlackjack());
+                nowTurnPlayer.isBust());
     }
 
     private List<CardDto> toListCardDto(Player player) {
@@ -90,7 +98,7 @@ public class BlackjackGame {
     private Map<String, HitResultDto> getHitResults(Player dealer, Players players) {
         Map<String, HitResultDto> hitResult = new LinkedHashMap<>();
         putHitResult(hitResult, dealer);
-        for (CasinoCustomer player : players.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             putHitResult(hitResult, player);
         }
         return hitResult;
@@ -108,7 +116,7 @@ public class BlackjackGame {
     private List<WinDrawLoseDto> makeWinDrawLoseDto(Player dealer, Players players) {
         List<WinDrawLoseDto> winDrawLoseDtos = new ArrayList<>();
         winDrawLoseDtos.add(new WinDrawLoseDto(dealer.getName(), dealer.getWinDrawLoseString()));
-        for (CasinoCustomer player : players.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             winDrawLoseDtos.add(new WinDrawLoseDto(player.getName(), player.getWinDrawLoseString()));
         }
         return winDrawLoseDtos;

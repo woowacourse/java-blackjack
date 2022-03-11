@@ -10,10 +10,10 @@ public class Players {
 
     private static final String PLAYER_NAME_DUPLICATE_ERROR_MESSAGE = "참가자 이름은 중복될 수 없습니다.";
 
-    private final List<CasinoCustomer> players;
+    private final List<Player> players;
     private int nowIndex;
 
-    private Players(List<CasinoCustomer> players) {
+    private Players(List<Player> players) {
         this.players = players;
         this.nowIndex = 0;
     }
@@ -23,17 +23,17 @@ public class Players {
         return new Players(toPlayers(names));
     }
 
-    private static List<CasinoCustomer> toPlayers(List<String> names) {
-        return names.stream()
-                .map(CasinoCustomer::new)
-                .collect(Collectors.toList());
-    }
-
     private static void validate(List<String> names) {
         Set<String> nameSet = new HashSet<>(names);
         if (names.size() != nameSet.size()) {
             throw new IllegalArgumentException(PLAYER_NAME_DUPLICATE_ERROR_MESSAGE);
         }
+    }
+
+    private static List<Player> toPlayers(List<String> names) {
+        return names.stream()
+                .map(CasinoCustomer::new)
+                .collect(Collectors.toList());
     }
 
     public void next() {
@@ -44,11 +44,11 @@ public class Players {
         return nowIndex < players.size();
     }
 
-    public CasinoCustomer getNowPlayer() {
+    public Player getNowPlayer() {
         return players.get(nowIndex);
     }
 
-    public List<CasinoCustomer> getPlayers() {
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 }
