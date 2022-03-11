@@ -37,6 +37,10 @@ public abstract class Player {
         return name;
     }
 
+    public Cards getCards() {
+        return cards;
+    }
+
     public abstract List<Card> openFirstCards();
 
     public abstract boolean isPossibleToReceiveCard();
