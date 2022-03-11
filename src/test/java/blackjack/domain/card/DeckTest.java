@@ -5,11 +5,39 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class DeckTest {
+
+    @Test
+    @DisplayName("초기에 전달받는 카드는 2장이다.")
+    void returnDistributeCards() {
+        List<Card> cards = new Deck().makeDistributeCard();
+
+        assertThat(cards.size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("초기에 전달받는 카드는 중복일 수 없다.")
+    void notRedundantCards() {
+        List<Card> cards = new Deck().makeDistributeCard();
+
+        assertThat(new HashSet<>(cards).size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("카드의 타입은 스페이드, 하트, 다이아몬드, 클로버이다.")
+    void checkKindOfType() {
+        Card card = new Deck().draw();
+
+        assertThat(Type.getTypeValues().contains(card.getType()))
+                .isEqualTo(true);
+    }
 
     @Test
     @DisplayName("덱에서 카드를 한 장 반환한다.")

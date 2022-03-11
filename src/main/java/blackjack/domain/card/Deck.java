@@ -34,7 +34,7 @@ public class Deck {
                 .forEach(cards::add);
     }
 
-    public List<Card> initDistributeCard() {
+    public List<Card> makeDistributeCard() {
         List<Card> cards = new ArrayList<>();
         IntStream.range(0, INIT_DISTRIBUTE_SIZE)
                 .forEach(i -> cards.add(draw()));
