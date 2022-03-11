@@ -4,60 +4,42 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResultReferee {
 
-    private final Dealer dealer;
     private final ResultStatistics dealerResult;
-    private final List<Player> players;
-    private final List<ResultStatistics> playerResults = new ArrayList<>();
+    private final List<ResultStatistics> playerResults;
 
     public ResultReferee(Dealer dealer, List<Player> players) {
-        this.dealer = dealer;
-        this.players = players;
         this.dealerResult = ResultStatistics.of(dealer);
+        this.playerResults = players.stream()
+                .map(player -> addDuelResult(player, dealer))
+                .collect(Collectors.toUnmodifiableList());
     }
 
-    public List<ResultStatistics> initAndGetGameResults() {
-        if (dealer.getCurrentScore().toInt() > Score.BLACKJACK) {
-            return getResultsOnDealerBust();
+    private ResultStatistics addDuelResult(Player player, Dealer dealer) {
+        if (player.isBust()) {
+            return initPlayerResultOf(player, ResultType.LOSE);
         }
 
-        return getAllDuelResults();
-    }
-
-    private List<ResultStatistics> getResultsOnDealerBust() {
-        players.stream()
-                .map(player -> initPlayerResultOf(player, ResultType.WIN))
-                .forEach(playerResults::add);
-
-        return getResults();
-    }
-
-    private List<ResultStatistics> getAllDuelResults() {
-        players.forEach(this::getAndAddDuelResult);
-        return getResults();
-    }
-
-    private void getAndAddDuelResult(Player player) {
-        Score playerScore = player.getCurrentScore();
-        int compareResult = playerScore.compareTo(dealer.getCurrentScore());
-
-        if (playerScore.toInt() > Score.BLACKJACK || compareResult < 0) {
-            playerResults.add(initPlayerResultOf(player, ResultType.LOSE));
-            return;
+        if (dealer.isBust()) {
+            return initPlayerResultOf(player, ResultType.WIN);
         }
+
+        return addNoBustDuelResult(player, dealer.getCurrentScore());
+    }
+
+    private ResultStatistics addNoBustDuelResult(Player player, Score dealerScore) {
+        int compareResult = player.getCurrentScore().compareTo(dealerScore);
+
         if (compareResult > 0) {
-            playerResults.add(initPlayerResultOf(player, ResultType.WIN));
-            return;
+            return initPlayerResultOf(player, ResultType.WIN);
         }
-        playerResults.add(initPlayerResultOf(player, ResultType.DRAW));
-    }
-
-    private List<ResultStatistics> getResults() {
-        List<ResultStatistics> results = new ArrayList<>(List.of(dealerResult));
-        results.addAll(playerResults);
-        return results;
+        if (compareResult < 0) {
+            return initPlayerResultOf(player, ResultType.LOSE);
+        }
+        return initPlayerResultOf(player, ResultType.DRAW);
     }
 
     private ResultStatistics initPlayerResultOf(Player player, ResultType playerResultType) {
@@ -70,5 +52,20 @@ public class ResultReferee {
     private void incrementResultsByPlayerResultOf(ResultType playerType, ResultStatistics playerResult) {
         dealerResult.incrementCountOf(ResultType.getOppositeTypeOf(playerType));
         playerResult.incrementCountOf(playerType);
+    }
+
+    public List<ResultStatistics> getResults() {
+        List<ResultStatistics> results = new ArrayList<>(List.of(dealerResult));
+        results.addAll(playerResults);
+
+        return results;
+    }
+
+    @Override
+    public String toString() {
+        return "ResultReferee{" +
+                "dealerResult=" + dealerResult +
+                ", playerResults=" + playerResults +
+                '}';
     }
 }

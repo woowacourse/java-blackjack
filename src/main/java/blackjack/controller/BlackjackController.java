@@ -68,7 +68,7 @@ public class BlackjackController {
 
     public void showGameResult(BlackjackGame game) {
         ResultReferee referee = new ResultReferee(game.getDealer(), game.getPlayers());
-        ResultStatisticsDto dto = new ResultStatisticsDto(referee.initAndGetGameResults());
+        ResultStatisticsDto dto = new ResultStatisticsDto(referee.getResults());
 
         printAllCardsAndScore(dto);
         printGameResult(dto);
