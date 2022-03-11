@@ -17,13 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackJackRefereeTest {
 
-    private Dealer dealer = new Dealer();
-    private Player pobi = new Player("pobi");
-    private Player jason = new Player("jason");
+
 
     @Test
     @DisplayName("아무도 버스트가 아닐 때 플레이어 게임 결과 확인")
     void playerResultCreateNotBurst2() {
+        Dealer dealer = new Dealer();
+        Player pobi = new Player("pobi");
+        Player jason = new Player("jason");
+
         dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.THREE));
         dealer.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.NINE));
         dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.EIGHT));
@@ -50,6 +52,9 @@ class BlackJackRefereeTest {
     @DisplayName("딜러가 버스트일 때, 플레이어 게임 결과 확인")
     void playerResultCreateBurst() {
         Dealer dealer = new Dealer();
+        Player pobi = new Player("pobi");
+        Player jason = new Player("jason");
+
         dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.THREE));
         dealer.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.NINE));
         dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.TEN));
@@ -76,6 +81,10 @@ class BlackJackRefereeTest {
     @Test
     @DisplayName("딜러 게임 결과 확인")
     void dealerResultCreate() {
+        Dealer dealer = new Dealer();
+        Player pobi = new Player("pobi");
+        Player jason = new Player("jason");
+
         dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.THREE));
         dealer.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.NINE));
         dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.EIGHT));

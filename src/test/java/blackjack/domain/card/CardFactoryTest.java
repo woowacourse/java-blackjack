@@ -13,9 +13,7 @@ class CardFactoryTest {
 	@DisplayName("카드 1장 반환 확인")
 	void pickCard() {
 		CardFactory cardFactory = new CardFactory(Card.getCards());
-
 		cardFactory.draw();
-
 		assertThat(cardFactory.getSize()).isEqualTo(51);
 	}
 
