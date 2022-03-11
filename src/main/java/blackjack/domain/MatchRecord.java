@@ -9,7 +9,7 @@ import blackjack.domain.user.Player;
 public enum MatchRecord {
 
     WIN("승", (player, dealer) -> (dealer.isBust() && !player.isBust()) || player.isWinTo(dealer)),
-    TIE("무", (player, dealer) -> player.isWinTo(dealer) && dealer.isWinTo(player)),
+    TIE("무", (player, dealer) -> !player.isWinTo(dealer) && !dealer.isWinTo(player)),
     LOSS("패", (player, dealer) -> player.isBust() || dealer.isWinTo(player));
 
     private final String name;
