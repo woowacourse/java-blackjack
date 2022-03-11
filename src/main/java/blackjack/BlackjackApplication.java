@@ -1,5 +1,8 @@
 package blackjack;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.CardStrategy;
 import blackjack.domain.card.strategy.RandomCardStrategy;
@@ -13,9 +16,6 @@ import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.reader.ConsoleReader;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackjackApplication {
     private static final ConsoleReader reader = new ConsoleReader();

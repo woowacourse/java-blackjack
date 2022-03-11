@@ -1,9 +1,9 @@
 package blackjack.dto;
 
+import java.util.Map;
+
 import blackjack.domain.result.MatchResult;
 import blackjack.domain.result.WinningResult;
-
-import java.util.Map;
 
 public class MatchResultDto {
 

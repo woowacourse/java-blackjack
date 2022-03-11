@@ -1,11 +1,11 @@
 package blackjack.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ParticipantDto {
 

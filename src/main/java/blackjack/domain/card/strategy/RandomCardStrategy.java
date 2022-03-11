@@ -1,11 +1,15 @@
 package blackjack.domain.card.strategy;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class RandomCardStrategy implements CardStrategy {
 
@@ -28,7 +32,7 @@ public class RandomCardStrategy implements CardStrategy {
     @Override
     public List<Card> generate() {
         Collections.shuffle(cards);
-
         return new LinkedList<>(cards);
     }
+
 }

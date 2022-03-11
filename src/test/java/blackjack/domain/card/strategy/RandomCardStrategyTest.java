@@ -1,12 +1,13 @@
 package blackjack.domain.card.strategy;
 
-import blackjack.domain.card.Card;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import blackjack.domain.card.Card;
 
 public class RandomCardStrategyTest {
 

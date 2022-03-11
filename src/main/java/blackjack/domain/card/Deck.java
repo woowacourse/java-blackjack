@@ -1,10 +1,10 @@
 package blackjack.domain.card;
 
-import blackjack.domain.card.strategy.CardStrategy;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import blackjack.domain.card.strategy.CardStrategy;
 
 public class Deck {
 

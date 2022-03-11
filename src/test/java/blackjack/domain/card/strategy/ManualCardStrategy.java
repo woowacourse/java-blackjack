@@ -1,9 +1,9 @@
 package blackjack.domain.card.strategy;
 
-import blackjack.domain.card.Card;
-
 import java.util.LinkedList;
 import java.util.List;
+
+import blackjack.domain.card.Card;
 
 public class ManualCardStrategy implements CardStrategy {
 
