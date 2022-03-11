@@ -6,9 +6,9 @@ import static blackjack.model.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.model.blackjack.Score;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
-import blackjack.model.blackjack.Score;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,5 +64,14 @@ public class CardsTest {
         Cards immutableCards = Cards.toUnmodifiable(Cards.of(ACE, JACK));
         assertThatThrownBy(() -> immutableCards.take(ACE))
             .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @DisplayName("공개 카드 반환")
+    void openCard() {
+        Cards cards = Cards.of(ACE, JACK);
+        Cards openCards = cards.openCard(2);
+        assertThat(openCards).hasSize(2);
+        assertThat(openCards).contains(ACE, JACK);
     }
 }
