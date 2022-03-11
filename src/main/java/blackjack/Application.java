@@ -5,7 +5,6 @@ import static java.util.stream.Collectors.*;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
-import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.dto.DealerDto;
 import blackjack.dto.DealerResultsDto;
@@ -14,9 +13,7 @@ import blackjack.dto.PlayerResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 public class Application {
 
@@ -38,7 +35,7 @@ public class Application {
 
         OutputView.printResultInfo(DealerDto.from(dealer), toPlayersDto(players));
 
-        OutputView.printDealerGameResult(createDealerResult(players, dealer));
+        OutputView.printDealerGameResult(DealerResultsDto.of(players, dealer));
         OutputView.printPlayerGameResult(createPlayerResult(players, dealer));
     }
 
@@ -68,10 +65,6 @@ public class Application {
             OutputView.printDealerDrawableInfo();
             dealer.combine(deck.draw());
         }
-    }
-
-    public static DealerResultsDto createDealerResult(List<Player> players, Dealer dealer) {
-        return DealerResultsDto.of(players, dealer);
     }
 
     public static List<PlayerResultDto> createPlayerResult(List<Player> players, Dealer dealer) {

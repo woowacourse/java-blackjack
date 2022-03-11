@@ -2,15 +2,12 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.GameResult;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerDto;
 import blackjack.dto.DealerResultsDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayerResultDto;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
