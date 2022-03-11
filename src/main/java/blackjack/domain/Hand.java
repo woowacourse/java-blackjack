@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -8,15 +9,20 @@ public class Hand {
     private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int BLACKJACK_SYMBOL_SCORE = 21;
     private static final int ACE_UPPER_SCORE = 11;
+    private static final int ACE_SCORE_DIFFERENCE = 10;
 
-    private List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
+
+    public Hand() {
+        this.cards = new ArrayList<>();
+    }
 
     public void add(Card... cards) {
         this.cards.addAll(List.of(cards));
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     public int getScore() {
@@ -24,7 +30,7 @@ public class Hand {
         int sumOfNoAce = getSumExcludingAce() + (countOfAce * ACE_UPPER_SCORE);
 
         while (countOfAce > 0 && BLACKJACK_SYMBOL_SCORE < sumOfNoAce) {
-            sumOfNoAce -= 10;
+            sumOfNoAce -= ACE_SCORE_DIFFERENCE;
             countOfAce--;
         }
 
@@ -33,9 +39,9 @@ public class Hand {
 
     private int getSumExcludingAce() {
         return cards.stream()
-                .filter(card -> !card.isAce())
-                .mapToInt(Card::getScore)
-                .sum();
+            .filter(card -> !card.isAce())
+            .mapToInt(Card::getScore)
+            .sum();
     }
 
     private int findCountOfAce() {
