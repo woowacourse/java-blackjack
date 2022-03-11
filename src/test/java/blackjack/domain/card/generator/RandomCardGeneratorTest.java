@@ -15,8 +15,8 @@ public class RandomCardGeneratorTest {
 
     private final RandomDeckGenerator randomCardStrategy = new RandomDeckGenerator();
 
+    @DisplayName("카드는 52장 생성되어야 한다.")
     @Test
-    @DisplayName("생성한 카드들이 52개인지 확인한다.")
     void randomGeneratedCardsSizeCheckTest() {
         final List<Card> cards = randomCardStrategy.generate();
         assertThat(cards.size()).isEqualTo(TOTAL_CARD_COUNT);

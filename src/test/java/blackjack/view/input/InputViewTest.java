@@ -19,10 +19,10 @@ public class InputViewTest {
     private final CustomReader customReader = new CustomReader();
     private final InputView inputView = new InputView(customReader);
 
-    @ParameterizedTest
-    @MethodSource("provideForParsePlayerNamesTest")
     @DisplayName("플레이어 이름은 쉼표로 구분되어야 한다.")
-    void parsePlayerNamesTest(final String inputLine, final List<String> expectedPlayerNames) {
+    @ParameterizedTest
+    @MethodSource("provideForRequestPlayerNamesTest")
+    void requestPlayerNamesTest(final String inputLine, final List<String> expectedPlayerNames) {
         customReader.initTest(inputLine);
 
         final List<String> actualPlayerNames = inputView.requestPlayerNames();
@@ -30,7 +30,7 @@ public class InputViewTest {
         assertThat(actualPlayerNames).isEqualTo(expectedPlayerNames);
     }
 
-    public static Stream<Arguments> provideForParsePlayerNamesTest() {
+    public static Stream<Arguments> provideForRequestPlayerNamesTest() {
         return Stream.of(
                 Arguments.of("pobi,if,sun", List.of("pobi", "if", "sun")),
                 Arguments.of("pobi, if, sun", List.of("pobi", "if", "sun")),
@@ -41,10 +41,10 @@ public class InputViewTest {
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("provideForParseHitAndStandTest")
     @DisplayName("y 또는 n을 입력받을 수 있어야 한다.")
-    void parseProgress(final String inputLine, final boolean expectedContinuable) {
+    @ParameterizedTest
+    @MethodSource("provideForRequestDrawingCardChoiceTest")
+    void requestDrawingCardChoiceTest(final String inputLine, final boolean expectedContinuable) {
         customReader.initTest(inputLine);
 
         final boolean actualContinuable = inputView.requestDrawingCardChoice();
@@ -52,7 +52,7 @@ public class InputViewTest {
         assertThat(actualContinuable).isEqualTo(expectedContinuable);
     }
 
-    public static Stream<Arguments> provideForParseHitAndStandTest() {
+    public static Stream<Arguments> provideForRequestDrawingCardChoiceTest() {
         return Stream.of(
                 Arguments.of("y", true),
                 Arguments.of("Y", true),
@@ -61,10 +61,10 @@ public class InputViewTest {
         );
     }
 
+    @DisplayName("y 또는 n만 입력할 수 있습니다.")
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "yyy", "nnn", "123"})
-    @DisplayName("y 또는 n만 입력할 수 있습니다.")
-    void parseProgress(final String inputLine) {
+    void drawingCardChoiceWrongInputExceptionTest(final String inputLine) {
         customReader.initTest(inputLine);
 
         assertThatThrownBy(inputView::requestDrawingCardChoice)

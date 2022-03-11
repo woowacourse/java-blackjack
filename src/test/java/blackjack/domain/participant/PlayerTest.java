@@ -11,10 +11,10 @@ import blackjack.domain.card.generator.RandomDeckGenerator;
 
 class PlayerTest {
 
+    @DisplayName("플레이어명은 공백이 될 수 없습니다.")
     @ParameterizedTest(name = "[{index}] 플레이어명 : \"{0}\"")
     @ValueSource(strings = {"", " "})
-    @DisplayName("플레이어명에 공백이 존재하면 예외 발생")
-    void blankPlayerNameExceptionTest(final String name) {
+    void playerNameBlackExceptionTest(final String name) {
         final Deck deck = Deck.generate(new RandomDeckGenerator());
         assertThatThrownBy(() -> Player.readyToPlay(name, deck))
                 .isInstanceOf(IllegalArgumentException.class)

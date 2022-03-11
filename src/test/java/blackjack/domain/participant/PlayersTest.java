@@ -25,9 +25,9 @@ public class PlayersTest {
 
     private final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
 
+    @DisplayName("플레이어명 중복 시 예외 발생")
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("provideForPlayerNamesDuplicatedExceptionTest")
-    @DisplayName("플레이어명 중복 시 예외 발생")
     void playerNamesDuplicatedExceptionTest(final List<String> playerNames, final List<Card> initializedCards) {
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
@@ -43,10 +43,10 @@ public class PlayersTest {
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("provideForStartWithDrawCardTest")
     @DisplayName("각 플레이어는 카드 2장을 지닌채 게임을 시작한다.")
-    void startWithDrawCardTest(final List<String> playerNames, final List<Card> expectedCards) {
+    @ParameterizedTest
+    @MethodSource("provideForReadyToPlayTest")
+    void readyToPlayTest(final List<String> playerNames, final List<Card> expectedCards) {
         manualCardStrategy.initCards(expectedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
         final Players players = Players.readyToPlay(playerNames, deck);
@@ -62,7 +62,7 @@ public class PlayersTest {
         assertThat(actualCardNames).isEqualTo(expectedCardNames);
     }
 
-    private static Stream<Arguments> provideForStartWithDrawCardTest() {
+    private static Stream<Arguments> provideForReadyToPlayTest() {
         return Stream.of(
                 Arguments.of(
                         List.of("sun", "if"),
@@ -76,10 +76,10 @@ public class PlayersTest {
         );
     }
 
+    @DisplayName("각 플레이어는 딜러와의 승패를 계산할 수 있어야 한다.")
+    @MethodSource("provideForJudgeWinnersTest")
     @ParameterizedTest
-    @MethodSource("provideForCompareCardTotalTest")
-    @DisplayName("각 플레이어는 딜러와의 승패를 계산한다.")
-    void compareCardSum(final List<String> names,
+    void judgeWinnersTest(final List<String> names,
                         final List<Card> initializedCards,
                         final Map<String, MatchStatus> expectedWinningStatuses) {
         manualCardStrategy.initCards(initializedCards);
@@ -92,7 +92,7 @@ public class PlayersTest {
         assertThat(actualWinningStatuses).isEqualTo(expectedWinningStatuses);
     }
 
-    private static Stream<Arguments> provideForCompareCardTotalTest() {
+    private static Stream<Arguments> provideForJudgeWinnersTest() {
         return Stream.of(
                 Arguments.of(
                         List.of("sun"),

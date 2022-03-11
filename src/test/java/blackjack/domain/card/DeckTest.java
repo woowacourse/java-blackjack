@@ -19,17 +19,17 @@ class DeckTest {
 
     private final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
 
+    @DisplayName("카드 생성 시, 중복된 카드는 존재할 수 없다.")
     @ParameterizedTest
-    @MethodSource("provideForValidateCardDuplicatedTest")
-    @DisplayName("중복된 카드가 존재할 시 예외 발생")
-    void validateCardDuplicatedTest(final List<Card> cards) {
+    @MethodSource("provideForDuplicatedCardExceptionTest")
+    void duplicatedCardExceptionTest(final List<Card> cards) {
         manualCardStrategy.initCards(cards);
         assertThatThrownBy(() -> Deck.generate(manualCardStrategy))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("중복된 카드는 존재할 수 없습니다.");
     }
 
-    private static Stream<Arguments> provideForValidateCardDuplicatedTest() {
+    private static Stream<Arguments> provideForDuplicatedCardExceptionTest() {
         final CardPattern pattern = CardPattern.CLOVER;
         final CardNumber number = CardNumber.ACE;
         final CardNumber otherNumber = CardNumber.TWO;
@@ -47,9 +47,9 @@ class DeckTest {
         );
     }
 
+    @DisplayName("한번에 한장씩 카드를 뽑을 수 있어야 한다.")
     @ParameterizedTest
     @MethodSource("provideForDrawCardTest")
-    @DisplayName("카드 덱에서 한장의 카드를 뽑는다.")
     void drawCardTest(final List<Card> expectedCards) {
         manualCardStrategy.initCards(expectedCards);
 
@@ -80,8 +80,8 @@ class DeckTest {
         );
     }
 
+    @DisplayName("뽑을 수 있는 카드가 없으면 예외가 발생한다.")
     @Test
-    @DisplayName("뽑을 수 있는 카드가 없을 시 예외 발생")
     void validateDrawCardTest() {
         manualCardStrategy.initCards(List.of(new Card(CardNumber.ACE, CardPattern.DIAMOND)));
         final Deck deck = Deck.generate(manualCardStrategy);

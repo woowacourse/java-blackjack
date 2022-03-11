@@ -12,14 +12,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class MatchResultTest {
 
+    @DisplayName("플레이어의 승패에 따른 딜러의 승패 개수를 계산한다.")
     @ParameterizedTest
     @MethodSource("provideForMatchResult")
-    @DisplayName("플레이어의 승패에 따른 딜러 승패 계산")
     void calculateCountOfWinningResult(final Map<String, MatchStatus> winningStatuses,
                                        final Map<MatchStatus, Integer> dealerCountOfWinningResult) {
         final MatchResult matchResult = new MatchResult(winningStatuses);
 
-        Map<MatchStatus, Integer> count = matchResult.getResultOfDealer();
+        final Map<MatchStatus, Integer> count = matchResult.getResultOfDealer();
         assertThat(count).isEqualTo(dealerCountOfWinningResult);
     }
 

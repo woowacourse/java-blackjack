@@ -21,18 +21,22 @@ class ParticipantTest {
 
     private final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
 
-    @ParameterizedTest
-    @MethodSource("provideForDrawCardTest")
-    @DisplayName("참여자는 카드를 뽑을 수 있어야 한다.")
-    void drawCardTest(final List<Card> expectedCards) {
-        manualCardStrategy.initCards(expectedCards);
-        final Deck deck = Deck.generate(manualCardStrategy);
-        final Participant participant = new Participant() {
+    private Participant makeParticipant() {
+        return new Participant() {
             @Override
             public boolean isPossibleToDrawCard() {
                 return true;
             }
         };
+    }
+
+    @DisplayName("참여자는 카드를 뽑을 수 있어야 한다.")
+    @ParameterizedTest
+    @MethodSource("provideForDrawCardTest")
+    void drawCardTest(final List<Card> expectedCards) {
+        manualCardStrategy.initCards(expectedCards);
+        final Deck deck = Deck.generate(manualCardStrategy);
+        final Participant participant = makeParticipant();
 
         for (int i = 0; i < expectedCards.size(); i++) {
             participant.drawCard(deck);
@@ -63,27 +67,22 @@ class ParticipantTest {
         );
     }
 
+    @DisplayName("카드의 합계가 버스트인지 확인할 수 있어야 한다.")
     @ParameterizedTest
-    @MethodSource("provideForCannotContinueDrawCardTest")
-    @DisplayName("카드의 합계가 21 초과인지 확인할 수 있어야 한다.")
-    void cannotContinueDrawTest(final List<Card> expectedCards) {
-        manualCardStrategy.initCards(expectedCards);
+    @MethodSource("provideForCheckBurstTest")
+    void checkBurstTest(final List<Card> initializedCards, final boolean isBurst) {
+        manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
-        final Participant participant = new Participant() {
-            @Override
-            public boolean isPossibleToDrawCard() {
-                return true;
-            }
-        };
+        final Participant participant = makeParticipant();
 
-        for (int i = 0; i < expectedCards.size(); i++) {
+        for (int i = 0; i < initializedCards.size(); i++) {
             participant.drawCard(deck);
         }
 
-        assertThat(participant.isBurst()).isTrue();
+        assertThat(participant.isBurst()).isEqualTo(isBurst);
     }
 
-    private static Stream<Arguments> provideForCannotContinueDrawCardTest() {
+    private static Stream<Arguments> provideForCheckBurstTest() {
         return Stream.of(
                 Arguments.of(
                         List.of(
@@ -91,7 +90,7 @@ class ParticipantTest {
                                 new Card(CardNumber.JACK, CardPattern.DIAMOND),
                                 new Card(CardNumber.QUEEN, CardPattern.DIAMOND),
                                 new Card(CardNumber.KING, CardPattern.DIAMOND)
-                        )
+                        ), true
                 ),
                 Arguments.of(
                         List.of(
@@ -99,49 +98,14 @@ class ParticipantTest {
                                 new Card(CardNumber.TEN, CardPattern.HEART),
                                 new Card(CardNumber.JACK, CardPattern.DIAMOND),
                                 new Card(CardNumber.EIGHT, CardPattern.DIAMOND)
-                        )
-                )
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideForCanContinueDrawCardTest")
-    @DisplayName("카드의 합계가 21 이하인지 확인할 수 있어야 한다.")
-    void canContinueDrawTest(final List<Card> expectedCards) {
-        manualCardStrategy.initCards(expectedCards);
-        final Deck deck = Deck.generate(manualCardStrategy);
-        final Participant participant = new Participant() {
-            @Override
-            public boolean isPossibleToDrawCard() {
-                return true;
-            }
-        };
-
-        for (int i = 0; i < expectedCards.size(); i++) {
-            participant.drawCard(deck);
-        }
-
-        assertThat(participant.isBurst()).isFalse();
-    }
-
-    private static Stream<Arguments> provideForCanContinueDrawCardTest() {
-        return Stream.of(
-                Arguments.of(
-                        List.of(
-                                new Card(CardNumber.KING, CardPattern.DIAMOND),
-                                new Card(CardNumber.THREE, CardPattern.DIAMOND),
-                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND)
-                        )
+                        ), true
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardNumber.ACE, CardPattern.SPADE),
-                                new Card(CardNumber.TWO, CardPattern.SPADE),
-                                new Card(CardNumber.SEVEN, CardPattern.SPADE),
-                                new Card(CardNumber.THREE, CardPattern.SPADE)
-                        )
+                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND),
+                                new Card(CardNumber.QUEEN, CardPattern.DIAMOND)
+                        ), false
                 )
         );
     }
-
 }
