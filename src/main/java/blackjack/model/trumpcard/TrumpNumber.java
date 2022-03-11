@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.model.trumpcard;
 
 public enum TrumpNumber {
     ACE(1),
@@ -22,7 +22,7 @@ public enum TrumpNumber {
         this.value = value;
     }
 
-    public int sumTo(int otherValue){
+    public int sumTo(int otherValue) {
         return this.value + otherValue;
     }
 

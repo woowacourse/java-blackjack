@@ -1,7 +1,7 @@
 package blackjack.dto;
 
-import blackjack.Entry;
-import blackjack.Game;
+import blackjack.model.player.Entry;
+import blackjack.model.Game;
 import java.util.List;
 import java.util.stream.Collectors;
 

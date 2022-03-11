@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.dto.DealerDTO;
 import blackjack.dto.EntryDTO;
 import blackjack.dto.PlayersDTO;
+import blackjack.model.Game;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.List;

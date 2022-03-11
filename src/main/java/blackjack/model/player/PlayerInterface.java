@@ -1,5 +1,6 @@
-package blackjack;
+package blackjack.model.player;
 
+import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
 
 public interface PlayerInterface {

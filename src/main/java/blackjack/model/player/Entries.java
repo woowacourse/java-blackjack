@@ -1,5 +1,7 @@
-package blackjack;
+package blackjack.model.player;
 
+import blackjack.model.trumpcard.TrumpCard;
+import blackjack.model.trumpcard.TrumpCardPack;
 import java.util.List;
 import java.util.stream.Collectors;
 

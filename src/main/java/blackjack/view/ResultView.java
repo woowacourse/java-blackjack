@@ -51,6 +51,7 @@ public class ResultView {
     private String joinDeck(DeckDTO deck) {
         return joinStrings(deck.getCards());
     }
+
     private String joinStrings(List<String> strings) {
         return String.join(DELIMITER_JOIN, strings);
     }

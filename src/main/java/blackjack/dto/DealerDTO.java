@@ -1,7 +1,7 @@
 package blackjack.dto;
 
-import blackjack.Dealer;
-import blackjack.Game;
+import blackjack.model.player.Dealer;
+import blackjack.model.Game;
 
 public class DealerDTO extends PlayerDTO {
     private final int addedCount;

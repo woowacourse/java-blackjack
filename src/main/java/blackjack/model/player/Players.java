@@ -1,6 +1,7 @@
-package blackjack;
+package blackjack.model.player;
 
-import java.util.ArrayList;
+import blackjack.model.trumpcard.TrumpCard;
+import blackjack.model.trumpcard.TrumpCardPack;
 import java.util.List;
 
 public class Players {

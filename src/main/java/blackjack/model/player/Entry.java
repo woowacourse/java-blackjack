@@ -1,5 +1,6 @@
-package blackjack;
+package blackjack.model.player;
 
+import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -52,7 +53,7 @@ public class Entry extends Player {
 
     @Override
     public boolean isBust() {
-         return this.deck.isBust();
+        return this.deck.isBust();
     }
 
     @Override
