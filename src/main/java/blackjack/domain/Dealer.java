@@ -2,11 +2,13 @@ package blackjack.domain;
 
 public class Dealer extends AbstractPlayer implements Player {
 
-    private static final String DEALER_NAME = "딜러";
+    public static final String NAME = "딜러";
+    public static final int MAX_POINT = 16;
+    public static final int EXCEED_POINT = 17;
 
     public Dealer() {
         this.cards = new Deck();
-        this.name = DEALER_NAME;
+        this.name = NAME;
     }
 
     @Override

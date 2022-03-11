@@ -4,8 +4,6 @@ import java.util.List;
 
 public class BlackjackGame {
 
-    private static final String DEALER = "딜러";
-
     private final Cards cards;
     private final Players blackjackPlayers;
 
@@ -34,7 +32,7 @@ public class BlackjackGame {
         Results results = new Results();
         Player dealer = players.getPlayers()
                 .stream()
-                .filter(player -> player.isDealer(DEALER))
+                .filter(player -> player.isDealer(Dealer.NAME))
                 .findFirst()
                 .orElseThrow();
         for (Player player : players.getPlayers()) {
@@ -44,7 +42,7 @@ public class BlackjackGame {
     }
 
     private void scoreResultIfGuest(Player dealer, Player player, Results results) {
-        if (player.isDealer(DEALER)) {
+        if (player.isDealer(Dealer.NAME)) {
             return;
         }
         scorePlayers(dealer, player, results);

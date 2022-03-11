@@ -12,19 +12,19 @@ import blackjack.domain.Results;
 
 public class OutputView {
 
-    public static final String RESULT_START_DELIMITER = ": ";
-    public static final String CARD_FORMAT = " 카드";
-    public static final String RESULT_DELIMITER = ", ";
-    public static final String DEALER = "딜러";
-    public static final String SHARE_TWO_CARDS_GUIDE_MESSAGE = "에게 2장의 카드를 각각 나누었습니다.";
-    public static final String DEALER_MORE_CARD_GUIDE_MESSAGE = "딜러는 %d이하라 한장의 카드를 더 받았습니다.";
-    public static final String FINAL_WINNER_GUIDE_MESSAGE = "## 최종 승패";
-    public static final String FINAL_POINT_GUIDE_MESSAGE = " - 결과";
+    private static final String RESULT_START_DELIMITER = ": ";
+    private static final String CARD_FORMAT = " 카드";
+    private static final String RESULT_DELIMITER = ", ";
+    private static final String DEALER = "딜러";
+    private static final String SHARE_TWO_CARDS_GUIDE_MESSAGE = "에게 2장의 카드를 각각 나누었습니다.";
+    private static final String DEALER_MORE_CARD_GUIDE_MESSAGE = "딜러는 %d이하라 한장의 카드를 더 받았습니다.";
+    private static final String FINAL_WINNER_GUIDE_MESSAGE = "## 최종 승패";
+    private static final String FINAL_POINT_GUIDE_MESSAGE = " - 결과";
 
-    public static final char NEW_LINE = '\n';
-    public static final char FINAL_MATCH_DELIMITER = ' ';
+    private static final char NEW_LINE = '\n';
+    private static final char FINAL_MATCH_DELIMITER = ' ';
 
-    public static final int DELETE_FINAL_DELIMITER = 2;
+    private static final int DELETE_FINAL_DELIMITER = 2;
 
     public static void announceStartGame(List<String> playerNames) {
         System.out.println(NEW_LINE + String.join(RESULT_DELIMITER, playerNames) + SHARE_TWO_CARDS_GUIDE_MESSAGE);

@@ -10,11 +10,7 @@ import blackjack.view.OutputView;
 
 public class BlackjackController {
 
-    private static final String DEALER = "딜러";
     private static final String REQUEST_MORE_CARD = "y";
-    private static final int DEALER_POINT_LIMIT = 21;
-    private static final int MAX_POINT_FOR_MORE_CARD = 16;
-    private static final int EXCEED_POINT_FOR_MORE_CARD = 17;
 
     public void playGame() {
         BlackjackGame blackjackGame = new BlackjackGame(InputView.inputPlayerNames());
@@ -54,7 +50,7 @@ public class BlackjackController {
     }
 
     private void turnEachPlayerIfGuest(BlackjackGame blackjackGame, Player player) {
-        if (player.isDealer(DEALER)) {
+        if (player.isDealer(Dealer.NAME)) {
             return;
         }
         while (checkGetMoreCard(player)) {
@@ -67,7 +63,7 @@ public class BlackjackController {
     }
 
     private boolean checkGetMoreCard(Player player) {
-        if (player.isOverLimit(DEALER_POINT_LIMIT)) {
+        if (player.isOverLimit(Dealer.MAX_POINT)) {
             return false;
         }
         return InputView.requestMoreCard(player.getName())
@@ -75,12 +71,12 @@ public class BlackjackController {
     }
 
     private void announceDealerCanGetMoreCard(BlackjackGame blackjackGame, Player dealer) {
-        if (!dealer.isOverLimit(MAX_POINT_FOR_MORE_CARD)) {
-            OutputView.announceGetMoreCard(MAX_POINT_FOR_MORE_CARD);
+        if (!dealer.isOverLimit(Dealer.MAX_POINT)) {
+            OutputView.announceGetMoreCard(Dealer.MAX_POINT);
             blackjackGame.addCard(dealer);
             return;
         }
-        OutputView.announceGetMoreCard(EXCEED_POINT_FOR_MORE_CARD);
+        OutputView.announceGetMoreCard(Dealer.EXCEED_POINT);
     }
 
     private List<GameResponse> toResponse(Players players) {

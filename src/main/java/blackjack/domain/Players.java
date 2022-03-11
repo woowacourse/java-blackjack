@@ -6,8 +6,6 @@ import java.util.List;
 
 public class Players {
 
-    public static final String DEALER = "딜러";
-
     private final List<Player> players;
 
     public Players() {
@@ -24,7 +22,7 @@ public class Players {
 
     public Player getDealer() {
         return players.stream()
-                .filter(player -> player.getName().equals(DEALER))
+                .filter(player -> player.isDealer(Dealer.NAME))
                 .findAny()
                 .orElseThrow();
     }

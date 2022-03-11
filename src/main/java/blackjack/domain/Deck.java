@@ -5,6 +5,10 @@ import java.util.Set;
 
 public class Deck {
 
+    private static final int HAS_NOT_ACE = 0;
+    private static final int ACE_ELEVEN = 11;
+    private static final int MINUS_ACE_SELF_SIZE = 1;
+
     private final Set<Card> cards = new LinkedHashSet<>();
 
     public void addCard(Card card) {
@@ -18,7 +22,7 @@ public class Deck {
                 .sum();
 
         int aceCount = countAces();
-        if (aceCount == 0) {
+        if (aceCount == HAS_NOT_ACE) {
             return sumWithoutAce;
         }
         return calculateAcePoint(sumWithoutAce, aceCount);
@@ -31,8 +35,8 @@ public class Deck {
     }
 
     private int calculateAcePoint(int sumWithoutAce, int aceCount) {
-        if (sumWithoutAce + aceCount + 10 <= 21) {
-            return sumWithoutAce + aceCount + 10;
+        if (sumWithoutAce + aceCount + (ACE_ELEVEN - MINUS_ACE_SELF_SIZE) <= Match.MAX_WINNER_POINT) {
+            return sumWithoutAce + aceCount + (ACE_ELEVEN - MINUS_ACE_SELF_SIZE);
         }
         return sumWithoutAce + aceCount;
     }
@@ -65,6 +69,6 @@ public class Deck {
 
     @Override
     public int hashCode() {
-        return cards != null ? cards.hashCode() : 0;
+        return cards != null ? cards.hashCode() : HAS_NOT_ACE;
     }
 }

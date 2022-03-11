@@ -10,6 +10,8 @@ public enum Match {
     DRAW("무", "무", Objects::equals),
     ;
 
+    static final int MAX_WINNER_POINT = 21;
+
     private final String result;
     private final String oppositeResult;
     private final BiFunction<Integer, Integer, Boolean> expression;
@@ -43,20 +45,20 @@ public enum Match {
     }
 
     private static boolean winPlayerCondition(Integer playerPoint, Integer dealerPoint) {
-        if (playerPoint > dealerPoint && playerPoint <= 21) {
+        if (playerPoint > dealerPoint && playerPoint <= MAX_WINNER_POINT) {
             return true;
         }
-        if (dealerPoint > 21 && playerPoint <= 21) {
+        if (dealerPoint > MAX_WINNER_POINT && playerPoint <= MAX_WINNER_POINT) {
             return true;
         }
         return false;
     }
 
     private static boolean losePlayerCondition(Integer playerPoint, Integer dealerPoint) {
-        if (playerPoint < dealerPoint && dealerPoint <= 21) {
+        if (playerPoint < dealerPoint && dealerPoint <= MAX_WINNER_POINT) {
             return true;
         }
-        if (playerPoint > 21) {
+        if (playerPoint > MAX_WINNER_POINT) {
             return true;
         }
         return false;
