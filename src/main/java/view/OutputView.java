@@ -1,12 +1,13 @@
 package view;
 
+import dto.AllParticipatorsDto;
+import dto.ParticipatorDto;
 import dto.TotalResultDto;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-import dto.AllParticipatorsDto;
-import dto.ParticipatorDto;
 
 public class OutputView {
 
@@ -69,7 +70,53 @@ public class OutputView {
     }
 
     public static void printMatchResult(TotalResultDto resultDto) {
+        Map<String, List<String>> dealerResult = resultDto.getDealerMatchResult();
+        Map<String, String> playerResults = resultDto.getPlayersMatchResult();
 
+        System.out.println("## 최종 승패");
+        printDealerMatchResult(dealerResult);
+        printPlayersMatchResult(playerResults);
+    }
+
+    private static void printPlayersMatchResult(Map<String, String> playerResults) {
+        for (Entry<String, String> stringStringEntry : playerResults.entrySet()) {
+            printResult(stringStringEntry.getKey(), stringStringEntry.getValue());
+        }
+    }
+
+    private static void printResult(String key, String value) {
+        System.out.println(key + ": " + value);
+    }
+
+    private static void printDealerMatchResult(Map<String, List<String>> dealerResult) {
+        for (Entry<String, List<String>> entry : dealerResult.entrySet()) {
+            printResult(entry.getKey(), entry.getValue());
+        }
+    }
+
+    private static void printResult(String key, List<String> value) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(key)
+                .append(": ")
+                .append(convertDealerResult(value));
+        System.out.println(sb);
+    }
+
+    private static String convertDealerResult(List<String> value) {
+        StringBuilder sb = new StringBuilder();
+        if (value.contains("승")) {
+            final int count = (int) value.stream().filter(result -> result.equals("승")).count();
+            sb.append(count + "승");
+        }
+        if (value.contains("패")) {
+            final int count = (int) value.stream().filter(result -> result.equals("패")).count();
+            sb.append(count + "패");
+        }
+        if (value.contains("무")) {
+            final int count = (int) value.stream().filter(result -> result.equals("무")).count();
+            sb.append(count + "무");
+        }
+        return sb.toString();
     }
 
     public static void printResult(Map<ParticipatorDto, Integer> result) {

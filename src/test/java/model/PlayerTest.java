@@ -10,7 +10,6 @@ import static model.CardSuit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
@@ -38,6 +37,6 @@ public class PlayerTest {
         player.cards.addCard(new Card(DIAMOND, KING));
         player.cards.addCard(new Card(SPADE, KING));
         player.cards.addCard(new Card(CLOVER, KING));
-        assertThat(dealer.matchWith(player)).isEqualTo(Result.WIN);
+        assertThat(player.matchWith(dealer)).isEqualTo(Result.LOSE);
     }
 }

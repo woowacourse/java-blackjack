@@ -2,6 +2,8 @@ package model;
 
 import static java.util.stream.Collectors.toMap;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -71,10 +73,30 @@ public class Participators {
         Dealer dealer = findDealer();
         return participators.stream()
                 .filter(participator -> participator instanceof Player)
-                .collect(toMap(player -> player.getPlayerName(), player -> dealer.matchWith(player)));
+                .map(participator -> (Player) participator)
+                .collect(toMap(Participator::getPlayerName, player -> player.matchWith(dealer)));
     }
 
     public List<Participator> findAll() {
         return participators;
+    }
+
+    public Map<PlayerName, Result> getPlayersFinalMatchResult() {
+        Dealer dealer = findDealer();
+        return participators.stream()
+                .filter(participator -> participator instanceof Player)
+                .map(participator -> (Player) participator)
+                .collect(toMap(Participator::getPlayerName, player -> player.matchWith(dealer)));
+    }
+
+    public Map<PlayerName, List<Result>> getDealerFinalMatchResult() {
+        List<Result> playerFinalResults = new ArrayList<>(getPlayersFinalMatchResult().values());
+        List<Result> dealerFinalResults = playerFinalResults
+                .stream()
+                .map(Result::reverseOf)
+                .collect(Collectors.toList());
+        Map<PlayerName, List<Result>> result = new HashMap<>();
+        result.put(findDealer().getPlayerName(), dealerFinalResults);
+        return result;
     }
 }
