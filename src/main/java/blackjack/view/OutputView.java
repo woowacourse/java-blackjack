@@ -29,13 +29,10 @@ public class OutputView {
 
     public static void printInitialParticipantsCards(InitialDistributionDto dto) {
         StringBuilder builder = new StringBuilder();
-        List<ParticipantCardsDto> participantInfos = dto.getParticipantsInfo();
 
         builder.append(getParticipantsCardCountInfo(dto.getPlayerNames()));
-        for (ParticipantCardsDto participantInfo : participantInfos) {
-            builder.append(getParticipantCardsInfo(participantInfo))
-                    .append(NEW_LINE);
-        }
+        builder.append(getAllParticipantCardInfos(dto.getParticipantsInfo()));
+        builder.append(NEW_LINE);
 
         print(builder.toString());
     }
@@ -43,6 +40,12 @@ public class OutputView {
     private static String getParticipantsCardCountInfo(List<String> playerNames) {
         String joinedPlayerNames = String.join(JOIN_DELIMITER, playerNames);
         return String.format(INITIAL_CARD_DISTRIBUTION_MESSAGE, joinedPlayerNames);
+    }
+
+    private static String getAllParticipantCardInfos(List<ParticipantCardsDto> participantInfos) {
+        return participantInfos.stream()
+                .map(OutputView::getParticipantCardsInfo)
+                .collect(Collectors.joining(NEW_LINE));
     }
 
     private static String getParticipantCardsInfo(ParticipantCardsDto dto) {
