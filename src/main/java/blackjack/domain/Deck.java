@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -50,7 +52,7 @@ public class Deck {
     }
 
     public Set<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableSet(cards);
     }
 
     @Override
