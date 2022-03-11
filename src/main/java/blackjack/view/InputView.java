@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 import blackjack.dto.PlayerDto;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class InputView {
@@ -13,21 +14,42 @@ public class InputView {
     public List<String> scanPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         final List<String> playerNames = getPlayerNames();
-        validateDuplicateNames(playerNames);
+        validate(playerNames);
         return playerNames;
     }
 
+    private void validate(final List<String> playerNames) {
+        checkEmpty(playerNames);
+        checkCount(playerNames);
+        checkDuplicate(playerNames);
+    }
+
+    private void checkEmpty(final List<String> playerNames) {
+        if (playerNames.stream()
+            .anyMatch(String::isEmpty)) {
+            throw new IllegalArgumentException("이름에 빈값을 포함할 수 없습니다.");
+        }
+    }
+
+    private void checkCount(final List<String> playerNames) {
+        if (playerNames.size() < 1) {
+            throw new IllegalArgumentException(1 + "개 이상 입력하세요.");
+        }
+    }
+
+    public void checkDuplicate(List<String> values) {
+        if (isDuplicate(values)) {
+            throw new IllegalArgumentException("입력값이 중복될 수 없습니다.");
+        }
+    }
+
     private List<String> getPlayerNames() {
-        return Arrays.stream(SCANNER.nextLine()
+        final String inputNames = SCANNER.nextLine();
+        Objects.requireNonNull(inputNames, "null을 허용하지 않습니다.");
+        return Arrays.stream(inputNames
                 .split(",", -1))
             .map(String::trim)
             .collect(toList());
-    }
-
-    public void validateDuplicateNames(List<String> names) {
-        if (isDuplicate(names)) {
-            throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
-        }
     }
 
     private boolean isDuplicate(final List<String> names) {
