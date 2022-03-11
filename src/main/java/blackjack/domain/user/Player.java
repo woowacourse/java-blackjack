@@ -25,13 +25,13 @@ public class Player extends User {
 
     private static void validateSize(String playerName) {
         if (playerName.length() == 0) {
-            throw new IllegalArgumentException("[ERROR] 참여자 이름이 공백일 수 없습니다.");
+            throw new IllegalArgumentException("참여자 이름이 공백일 수 없습니다.");
         }
     }
 
     private static void validateEmpty(String playerName) {
         if (playerName.contains(" ")) {
-            throw new IllegalArgumentException("[ERROR] 이름에 공백을 포함할 수 없습니다.");
+            throw new IllegalArgumentException("이름에 공백을 포함할 수 없습니다.");
         }
     }
 

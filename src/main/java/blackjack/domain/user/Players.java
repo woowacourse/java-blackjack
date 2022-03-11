@@ -30,7 +30,7 @@ public class Players {
         HashSet<String> hashSet = new HashSet<>(playerNames);
 
         if (hashSet.size() < playerNames.size()) {
-            throw new IllegalArgumentException("[ERROR] 참여자 이름이 중복되면 안됩니다.");
+            throw new IllegalArgumentException("참여자 이름이 중복되면 안됩니다.");
         }
     }
 
