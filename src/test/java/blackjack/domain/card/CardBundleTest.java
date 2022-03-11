@@ -1,11 +1,16 @@
 package blackjack.domain.card;
 
+import static blackjack.fixture.CardRepository.CLOVER2;
 import static blackjack.fixture.CardRepository.CLOVER3;
 import static blackjack.fixture.CardRepository.CLOVER4;
 import static blackjack.fixture.CardRepository.CLOVER5;
 import static blackjack.fixture.CardRepository.CLOVER6;
 import static blackjack.fixture.CardRepository.CLOVER7;
+import static blackjack.fixture.CardRepository.CLOVER8;
 import static blackjack.fixture.CardRepository.CLOVER_ACE;
+import static blackjack.fixture.CardRepository.CLOVER10;
+import static blackjack.fixture.CardRepository.DIAMOND_ACE;
+import static blackjack.fixture.CardRepository.HEART_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -89,6 +94,33 @@ public class CardBundleTest {
 
             Score actual = cardBundle.getScore();
             Score expected = Score.valueOf(12);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+    }
+
+    @DisplayName("getScore 메서드 실행시 에이스가 2개 이상 포함된 경우에 대한 테스트")
+    @Nested
+    class MultipleAceTest {
+
+        @DisplayName("에이스 중 한 장이라도 11로 계산했을 때 21을 초과할 경우, 모든 에이스는 1로 계산한다.")
+        @Test
+        void getScore_allAceIs1IfSumCouldGoOver21() {
+            CardBundle cardBundle = generateCardBundleOf(CLOVER_ACE, HEART_ACE, DIAMOND_ACE, CLOVER8, CLOVER10);
+
+            Score actual = cardBundle.getScore();
+            Score expected = Score.valueOf(21);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @DisplayName("에이스 중 한 장을 11로 계산했을 때 21 이내인 경우, 한 장은 11로, 나머지는 1로 계산한다.")
+        @Test
+        void getScore_onlyOneAceIs11IfSumIsNotOver21() {
+            CardBundle cardBundle = generateCardBundleOf(CLOVER_ACE, HEART_ACE, DIAMOND_ACE, CLOVER2, CLOVER3);
+
+            Score actual = cardBundle.getScore();
+            Score expected = Score.valueOf(18);
 
             assertThat(actual).isEqualTo(expected);
         }

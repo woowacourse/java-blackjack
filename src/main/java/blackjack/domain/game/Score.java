@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+import blackjack.domain.card.CardRank;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -24,6 +25,11 @@ public class Score implements Comparable<Score> {
     public Score add(Score anotherScore) {
         int addedValue = this.value + anotherScore.value;
         return ScoreCache.getCache(addedValue);
+    }
+
+    public Score incrementOneAce() {
+        int replacedValue = this.value + CardRank.getAceValueDifference();
+        return ScoreCache.getCache(replacedValue);
     }
 
     public int toInt() {

@@ -44,6 +44,6 @@ public enum CardRank {
     }
 
     public static int getAceValueDifference() {
-        return ACE.getHighValue().toInt() - ACE.getValue().toInt() ;
+        return ACE_HIGH_VALUE - ACE.getValue().toInt() ;
     }
 }
