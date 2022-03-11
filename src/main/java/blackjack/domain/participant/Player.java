@@ -29,17 +29,6 @@ public class Player extends Participant {
         }
     }
 
-    void hit(Card card) {
-        cards.add(card);
-        updateStatus();
-    }
-
-    private void updateStatus() {
-        if (cards.getStatus() == PlayStatus.BUST) {
-            super.playStatus = PlayStatus.BUST;
-        }
-    }
-
     public void stay() {
         playStatus = PlayStatus.STAY;
     }

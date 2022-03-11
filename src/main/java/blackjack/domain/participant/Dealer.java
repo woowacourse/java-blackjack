@@ -22,7 +22,7 @@ public class Dealer extends Participant {
     public CardCount drawCards(CardDeck cardDeck) {
         int count = 0;
         while (getStatus() == PlayStatus.HIT && getScore() <= 16) {
-            hit(cardDeck);
+            hit(cardDeck.drawCard());
             count++;
         }
 

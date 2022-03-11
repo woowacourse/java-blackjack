@@ -1,7 +1,10 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.card.PlayStatus.*;
+
 import java.util.LinkedHashSet;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.PlayStatus;
@@ -13,7 +16,7 @@ public abstract class Participant {
 
     public Participant() {
         this.cards = new Cards(new LinkedHashSet<>());
-        this.playStatus = PlayStatus.HIT;
+        this.playStatus = HIT;
     }
 
     public void init(CardDeck cardDeck) {
@@ -26,22 +29,16 @@ public abstract class Participant {
     }
 
     public boolean isHit() {
-        return playStatus == PlayStatus.HIT;
+        return playStatus == HIT;
     }
 
     public int getScore() {
         return cards.sum();
     }
 
-    public void hit(CardDeck cardDeck) {
-        cards.add(cardDeck.drawCard());
-        updateStatus();
-    }
-
-    private void updateStatus() {
-        if (cards.getStatus() == PlayStatus.BUST) {
-            playStatus = PlayStatus.BUST;
-        }
+    public void hit(Card card) {
+        cards.add(card);
+        playStatus = updateStatus(cards.getStatus());
     }
 
     public abstract String getName();
