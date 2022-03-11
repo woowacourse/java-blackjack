@@ -38,14 +38,14 @@ public enum Number {
 
     private static int sumTotal(List<Number> numbers) {
         return numbers.stream()
-                .mapToInt(number -> number.value)
-                .sum();
+            .mapToInt(number -> number.value)
+            .sum();
     }
 
     private static long countAce(List<Number> numbers) {
         return numbers.stream()
-                .filter(number -> number == ACE)
-                .count();
+            .filter(number -> number == ACE)
+            .count();
     }
 
     private static int calculateBestNumber(int total, long aceCount) {

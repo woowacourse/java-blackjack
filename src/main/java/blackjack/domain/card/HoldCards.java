@@ -24,8 +24,8 @@ public class HoldCards {
 
     public int countBestNumber() {
         return Number.sum(cards.stream()
-                .map(Card::getNumber)
-                .collect(Collectors.toList()));
+            .map(Card::getNumber)
+            .collect(Collectors.toList()));
     }
 
     public Optional<Card> getFirstCard() {

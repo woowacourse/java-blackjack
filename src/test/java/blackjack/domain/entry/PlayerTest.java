@@ -1,5 +1,6 @@
 package blackjack.domain.entry;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.PlayerOutcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
@@ -7,8 +8,6 @@ import blackjack.domain.card.Number;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
     @Test
