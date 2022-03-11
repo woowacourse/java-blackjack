@@ -2,11 +2,7 @@
 
 블랙잭 미션 저장소
 
-## 우아한테크코스 코드리뷰
-
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
-
-### 페어 프로그래밍 컨벤션
+## 페어 프로그래밍 컨벤션
 
 - 10분 간격으로 역할을 바꾼다.
 - 커밋 단위를 README 기준으로 한다.
@@ -17,34 +13,3 @@
     - boolean을 반환하는 메서드는 (is, has)로 시작하도록 (가능하면) 이름 짓는다.
 - 화장실 타임은 자유롭게 말 끊고 간다. (기분 나빠하지 않는다.)
 - 언제든지 코드를 이해하고 싶을 때는 "타임"을 외친다. "타임"을 누군가 외치면 코드 작성을 멈추고 둘다 코드를 이해한 후 다시 시작한다.
-
-
-```java
-public class hello {
-
-private final static private final static
-
-private final private final
-
-constructor
-
-static void sayHi()
-
-public a (c, d, f)
-
-private c
-
-private d
-
-public b (e, f)
-
-private e
-
-private f
-
-getter
-
-@Override toString 
-}
-```
-
