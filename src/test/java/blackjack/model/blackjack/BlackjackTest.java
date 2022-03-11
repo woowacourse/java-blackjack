@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
+import blackjack.model.cards.Score;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Name;
 import java.util.stream.Stream;

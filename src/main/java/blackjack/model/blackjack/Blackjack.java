@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 import blackjack.model.cards.Cards;
+import blackjack.model.cards.Score;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Name;
 import blackjack.model.player.Player;

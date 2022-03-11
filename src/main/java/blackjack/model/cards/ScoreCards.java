@@ -1,7 +1,6 @@
 package blackjack.model.cards;
 
 import blackjack.model.card.Card;
-import blackjack.model.blackjack.Score;
 import java.util.Iterator;
 import java.util.stream.Stream;
 

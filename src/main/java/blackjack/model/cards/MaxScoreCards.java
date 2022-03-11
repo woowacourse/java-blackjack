@@ -1,7 +1,6 @@
 package blackjack.model.cards;
 
 import blackjack.model.card.Card;
-import blackjack.model.blackjack.Score;
 
 final class MaxScoreCards extends ScoreCards{
 
