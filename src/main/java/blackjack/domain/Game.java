@@ -17,11 +17,22 @@ public class Game {
     private final List<Player> players;
 
     public Game(CardFactory cardFactory, List<String> playerNames) {
+        validateDuplicate(playerNames);
         this.cardFactory = cardFactory;
         this.dealer = new Dealer();
         this.players = playerNames.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
+    }
+
+    private void validateDuplicate(final List<String> playerNames) {
+        final long countNoDuplicate = playerNames.stream()
+                .distinct()
+                .count();
+
+        if (countNoDuplicate != playerNames.size()) {
+            throw new IllegalArgumentException("이름은 중복을 허용하지 않습니다.");
+        }
     }
 
     public int getParticipantCount() {

@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
@@ -24,6 +25,20 @@ public class GameTest {
 
         // then
         assertThat(actual).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("참가자의 이름이 중복되면 예외가 발생한다.")
+    void nameDuplicate() {
+        // give
+        String name = "rick";
+
+        // when
+        // then
+        assertThatThrownBy(() -> new Game(CardFactory.createNoShuffle(), List.of(name, name)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름은 중복을 허용하지 않습니다.");
+
     }
 
     @ParameterizedTest
