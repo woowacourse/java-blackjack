@@ -18,9 +18,8 @@ public class OutputView {
     public static void printInit(AllParticipatorsDto allParticipatorsDto) {
         List<ParticipatorDto> playersDto = allParticipatorsDto.getPlayersDto();
         ParticipatorDto dealerDto = allParticipatorsDto.getDealerDto();
-        List<String> playerNames = getNames(playersDto);
         System.out.println(
-                dealerDto.getName() + CONNECTION_SURVEY + convertPlayerInLine(playerNames) + SUFFIX_INIT_MESSAGE);
+                dealerDto.getName() + CONNECTION_SURVEY + convertPlayerInLine(getNames(playersDto)) + SUFFIX_INIT_MESSAGE);
         printParticipatorNameAndCard(dealerDto);
         for (int i = 0; i < playersDto.size(); i++) {
             printParticipatorNameAndCard(playersDto.get(i));
@@ -73,7 +72,7 @@ public class OutputView {
 
         System.out.println(convertDealerMatchCountInLine(resultDto));
         for (Entry<String, String > entry : resultDto.getPlayersMatchResult().entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
+            System.out.println(entry.getKey() + NAME_CARD_DELIMITER + entry.getValue());
         }
     }
 
