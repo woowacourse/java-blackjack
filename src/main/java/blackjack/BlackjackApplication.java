@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.CardStrategy;
 import blackjack.domain.card.strategy.RandomCardStrategy;
+import blackjack.domain.participant.CardDrawCallback;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -17,7 +18,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackApplication {
-
     private static final ConsoleReader reader = new ConsoleReader();
     private static final InputView inputView = new InputView(reader);
     private static final OutputView outputView = new OutputView();
@@ -47,9 +47,9 @@ public class BlackjackApplication {
         return Players.startWithTwoCards(playerNames, deck);
     }
 
-    private void printParticipantsStatuses(final Dealer dealer, final Players players) {
+    private void printParticipantsStatuses(Dealer dealer, Players players) {
         final ParticipantDto dealerDto = ParticipantDto.toDtoOfDealer(dealer);
-        final List<ParticipantDto> playerDtos = players.getStatuses().stream()
+        List<ParticipantDto> playerDtos = players.getStatuses().stream()
                 .map(ParticipantDto::toDto)
                 .collect(Collectors.toList());
 
@@ -62,21 +62,18 @@ public class BlackjackApplication {
     }
 
     private void proceedPlayersTurn(final Deck deck, final Players players) {
-        int turnIndex = 0;
-        while(players.canPlay(turnIndex)) {
-            final Player player = players.getCurrentPlayer(turnIndex);
-            if (players.play(turnIndex, deck) && requestContinue(player)) {
-                players.drawCard(turnIndex, deck);
-                outputView.printDistributedCards(ParticipantDto.toDto(player));
-                continue;
+        players.play(deck, new CardDrawCallback() {
+            @Override
+            public boolean isContinuable(final Player player) {
+                outputView.printMessageOfRequestContinuable(player);
+                return inputView.requestContinuable();
             }
-            turnIndex++;
-        }
-    }
 
-    private boolean requestContinue(final Player player) {
-        outputView.printMessageOfRequestContinuable(player);
-        return inputView.requestContinuable();
+            @Override
+            public void onUpdate(final Player player) {
+                outputView.printDistributedCards(ParticipantDto.toDto(player));
+            }
+        });
     }
 
     private void printMatchResult(final Dealer dealer, final Players players) {

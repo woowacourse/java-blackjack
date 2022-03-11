@@ -52,21 +52,10 @@ public class Players {
         return List.copyOf(players);
     }
 
-    public boolean play(final int turnIndex, final Deck deck) {
-        Player player = players.get(turnIndex);
-
-        return !player.isBurst();
+    public void play(final Deck deck, final CardDrawCallback callback) {
+        for (Player player : players) {
+            player.continueDraw(deck, callback);
+        }
     }
 
-    public boolean canPlay(final int turnIndex) {
-        return turnIndex < players.size();
-    }
-
-    public Player getCurrentPlayer(final int index) {
-        return players.get(index);
-    }
-
-    public void drawCard(final int turnIndex, final Deck deck) {
-        players.get(turnIndex).drawCard(deck);
-    }
 }
