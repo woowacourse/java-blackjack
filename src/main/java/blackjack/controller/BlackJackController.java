@@ -33,10 +33,6 @@ public class BlackJackController {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    // public boolean isDrawPossible(String name, String answer) {
-    //     return !blackJackGame.isBurst(name) && Answer.from(answer).isYes();
-    // }
-
     public boolean isDrawPossible(String name, UnaryOperator<String> operator) {
         return !blackJackGame.isBurst(name) && Answer.from(operator.apply(name)).isYes();
     }
