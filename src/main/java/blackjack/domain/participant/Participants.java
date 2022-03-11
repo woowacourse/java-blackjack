@@ -23,12 +23,6 @@ public class Participants {
         return Collections.unmodifiableList(players);
     }
 
-    private void validatePlayerNumber(List<Player> players) {
-        if (players.size() < 1 || players.size() > 8) {
-            throw new IllegalArgumentException(PLAYER_NUMBER_ERROR_MESSAGE);
-        }
-    }
-
     public void handOutInitialCards(Deck deck) {
         for (Participant participant : getParticipants()) {
             List<Card> cards = List.of(deck.pickCard(), deck.pickCard());
@@ -41,6 +35,12 @@ public class Participants {
         participants.add(dealer);
         participants.addAll(players);
         return Collections.unmodifiableList(participants);
+    }
+
+    private void validatePlayerNumber(List<Player> players) {
+        if (players.size() < 1 || players.size() > 8) {
+            throw new IllegalArgumentException(PLAYER_NUMBER_ERROR_MESSAGE);
+        }
     }
 
     public Dealer getDealer() {

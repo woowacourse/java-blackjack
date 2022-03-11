@@ -17,12 +17,6 @@ public class Player extends Participant {
         }
     }
 
-//        private void hasBlankNames(List<String> playerNames) {
-//        if(playerNames.stream().anyMatch(x -> x.trim().isEmpty())) {
-//            throw new IllegalArgumentException("[ERROR] 이름은 공백만 올 수 없습니다.");
-//        }
-//    }
-
     public String getName() {
         return name;
     }
