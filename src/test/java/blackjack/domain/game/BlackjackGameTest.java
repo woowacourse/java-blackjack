@@ -1,12 +1,12 @@
 package blackjack.domain.game;
 
-import static blackjack.fixture.CardRepository.CLOVER10;
 import static blackjack.fixture.CardRepository.CLOVER2;
 import static blackjack.fixture.CardRepository.CLOVER3;
 import static blackjack.fixture.CardRepository.CLOVER4;
 import static blackjack.fixture.CardRepository.CLOVER5;
 import static blackjack.fixture.CardRepository.CLOVER6;
 import static blackjack.fixture.CardRepository.CLOVER7;
+import static blackjack.fixture.CardRepository.CLOVER10;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -42,6 +42,14 @@ public class BlackjackGameTest {
         assertThatThrownBy(() -> new BlackjackGame(new CardDeck(), List.of()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어가 없는 게임은 존재할 수 없습니다.");
+    }
+
+    @DisplayName("생성자 파라미터에 들어오는 플레이어명들 중 중복이 존재하면 예외가 발생한다.")
+    @Test
+    void constructor_throwsExceptionOnDuplicatePlayerNameInput() {
+        assertThatThrownBy(() -> new BlackjackGame(new CardDeck(), List.of("중복", "중복")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어명은 중복될 수 없습니다.");
     }
 
     @DisplayName("딜러의 점수가 16이하인 경우 한 장의 카드를 더 할당한다.")
