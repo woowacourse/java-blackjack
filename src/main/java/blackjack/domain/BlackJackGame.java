@@ -19,6 +19,11 @@ public class BlackJackGame {
         Dealer dealer = initializeDealer();
 
         OutputView.printPlayerInitialCards(users, dealer);
+
+        playGame(users, dealer);
+
+        PlayerGameResult playerGameResult = PlayerGameResult.create(dealer.calculateScore(), users);
+        OutputView.printGameResult(playerGameResult.getDealerResultCount(), playerGameResult.getUserResults());
     }
 
     private List<User> initializeUsers() {
@@ -47,6 +52,43 @@ public class BlackJackGame {
 
         if (duplicated) {
             throw new IllegalArgumentException("중복된 사용자 이름이 있습니다.");
+        }
+    }
+
+    private void playGame(final List<User> users, final Dealer dealer) {
+        for (User user : users) {
+            playUser(user);
+        }
+        playDealer(dealer);
+
+        OutputView.printAllPlayerCardStatus(users, dealer);
+    }
+
+    private void playUser(User user) {
+        if (user.isPossibleToReceiveCard()) {
+            DrawStatus drawStatus = requestDrawStatus(user);
+            if (drawStatus == DrawStatus.YES) {
+                user.receiveCard(CARD_DECK.drawCard());
+                OutputView.printPlayerCardStatus(user.getName(), user.getCards().getCards());
+                playUser(user);
+            } else {
+                OutputView.printPlayerCardStatus(user.getName(), user.getCards().getCards());
+            }
+        }
+    }
+
+    private DrawStatus requestDrawStatus(User user) {
+        try {
+            return DrawStatus.from(InputView.requestDrawCardResponse(user.getName()));
+        } catch (IllegalArgumentException e) {
+            OutputView.printException(e);
+            return requestDrawStatus(user);
+        }
+    }
+
+    private void playDealer(Dealer dealer) {
+        if (dealer.isPossibleToReceiveCard()) {
+            OutputView.printDealerDrawOneMoreCard();
         }
     }
 }

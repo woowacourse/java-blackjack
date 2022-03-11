@@ -24,7 +24,7 @@ public class PlayerGameResult {
             ResultType userResult = user.findResult(dealerScore);
 
             addUserResult(userResults, user, userResult);
-            increaseDealerResultCountByUserResult(dealerResultCount, userResult);
+            increaseDealerResultCountByUserResult(dealerResultCount, ResultType.findDealerResult(userResult));
         }
 
         return new PlayerGameResult(userResults, dealerResultCount);
@@ -35,8 +35,8 @@ public class PlayerGameResult {
     }
 
     private static void increaseDealerResultCountByUserResult(Map<ResultType, Integer> dealerResultCount,
-            ResultType userResult) {
-        dealerResultCount.compute(userResult, (resultType, count) -> count + 1);
+            ResultType dealerResult) {
+        dealerResultCount.compute(dealerResult, (resultType, count) -> count + 1);
     }
 
     private static Map<ResultType, Integer> initializeDealerResultCount() {
