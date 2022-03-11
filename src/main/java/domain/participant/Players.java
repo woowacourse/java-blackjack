@@ -11,7 +11,7 @@ import domain.result.Versus;
 
 public class Players {
 
-    private static final String NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] BlackJack 이 없습니다.";
+    private static final String NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] 딜러가 BlackJack 이 아닙니다.";
 
     private final List<Player> players;
 
@@ -42,7 +42,7 @@ public class Players {
     public boolean isBustByName(Name name) {
         return players.stream()
                 .filter(player -> player.isNameMatch(name))
-                .map((Player::isBust)).findFirst().orElseThrow();
+                .map(Player::isBust).findFirst().orElseThrow();
     }
 
     public boolean isAllBust() {
@@ -52,19 +52,21 @@ public class Players {
         return count == players.size();
     }
 
-    public boolean isExistBlackJack() {
-        return players.stream().filter(Player::isBlackJack).count() != 0;
-    }
-
     public boolean isBlackJackByName(Name name) {
         return players.stream()
                 .filter(player -> player.isNameMatch(name))
-                .map((Player::isBlackJack)).findFirst().orElseThrow();
+                .findFirst().orElseThrow().isBlackJack;
+    }
+
+    public boolean isScore21ByName(Name name) {
+        return players.stream()
+                .filter(player -> player.isNameMatch(name))
+                .map((Player::isScore21)).findFirst().orElseThrow();
     }
 
     public Map<Name, Versus> getResultAtDealerBlackJack(Dealer dealer) {
-        if (!dealer.isBlackJack()) {
-            throw new IllegalStateException(NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE);
+        if (!dealer.isScore21()) {
+            throw new IllegalStateException(NOT_DEALER_BLACK_JACK_SITUATION_ERROR_MESSAGE);
         }
         Map<Name, Versus> map = new LinkedHashMap<>();
         players.stream().forEach(player -> map.put(player.name, player.compareAtDealerBlackJack()));
@@ -73,14 +75,7 @@ public class Players {
 
     public Map<Name, Versus> getResultAtFinal(Participant other) {
         Map<Name, Versus> map = new LinkedHashMap<>();
-        players.stream().forEach(player -> {
-                    if (player.isBlackJack()) {
-                        map.put(player.name, Versus.WIN);
-                        return;
-                    }
-                    map.put(player.name, player.compareAtFinal(other));
-                }
-        );
+        players.stream().forEach(player -> map.put(player.name, player.compareAtFinal(other)));
         return map;
     }
 }

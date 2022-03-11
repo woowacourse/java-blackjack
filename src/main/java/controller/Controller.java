@@ -28,13 +28,13 @@ public class Controller {
         Players players = new Players(names, generateInitCardsForPlayers(names, deck));
         printInitHands(names, dealer, players);
 
-        if (dealer.isBlackJack()) {
+        if (dealer.isBlackJack) {
             printBlackJackResult(names, dealer, players);
             return;
         }
 
         for (Name name : names) {
-            if (players.isBlackJackByName(name)) {
+            if (players.isScore21ByName(name)) {
                 OutputView.printPlayerBlackJackMessage(name.getName());
             }
         }
@@ -107,9 +107,9 @@ public class Controller {
     }
 
     private boolean inputAskDraw(String name) {
-        String resultAskDraw = InputView.inputAskDraw(name);
-        validateAskDraw(resultAskDraw);
-        if (resultAskDraw.equals("y")) {
+        String askDraw = InputView.inputAskDraw(name);
+        validateAskDraw(askDraw);
+        if (askDraw.equals("y")) {
             return true;
         }
         return false;
@@ -122,7 +122,7 @@ public class Controller {
     }
 
     private boolean checkBlackJackOrBust(Players players, Name name) {
-        if (players.isBlackJackByName(name)) {
+        if (players.isScore21ByName(name)) {
             OutputView.printBlackJackMessage();
             return false;
         }

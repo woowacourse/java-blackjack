@@ -12,8 +12,7 @@ public class Player extends Participant {
     }
 
     public Versus compareAtDealerBlackJack() {
-        boolean isPlayerBlackJack = isBlackJack();
-        if (isPlayerBlackJack) {
+        if (isScore21()) {
             return Versus.DRAW;
         }
         return Versus.LOSE;
@@ -23,7 +22,7 @@ public class Player extends Participant {
         if (isBust()) {
             return Versus.LOSE;
         }
-        if (other.isBust()) {
+        if (this.isBlackJack || other.isBust()) {
             return Versus.WIN;
         }
         return judgeVersus(other.getBestScore());

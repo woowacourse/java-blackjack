@@ -16,10 +16,12 @@ public class Participant {
 
     protected final Name name;
     protected List<Card> hand;
+    public final boolean isBlackJack;
 
     public Participant(Name name, List<Card> hand) {
         this.name = name;
         this.hand = new ArrayList<>(hand);
+        this.isBlackJack = isScore21();
     }
 
     public void addCard(Card card) {
@@ -46,7 +48,7 @@ public class Participant {
         return hand.stream().mapToInt(Card::getPoint).sum();
     }
 
-    public boolean isBlackJack() {
+    public boolean isScore21() {
         return getBestScore() == BLACK_JACK_NUMBER;
     }
 
