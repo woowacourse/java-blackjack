@@ -24,11 +24,13 @@ public class EntriesTest {
     void nextEntry_reaver() {
         List<String> names = List.of("포키", "리버");
         Entries entries = Entries.from(names);
-        //TODO: index값과 toNext 호출 회수 하나의 변수로 관리
-        entries.toNextEntry();
-        entries.toNextEntry();
 
-        assertThat(entries.getCurrentEntryName()).isEqualTo(names.get(1));
+        final int testingIndex = 1;
+        for (int i = 0; i <= testingIndex; i++) {
+            entries.toNextEntry();
+        }
+
+        assertThat(entries.getCurrentEntryName()).isEqualTo(names.get(testingIndex));
     }
 
     @DisplayName("더 이상 Entry가 없을 때 예외가 발생한다.")
