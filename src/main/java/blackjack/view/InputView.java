@@ -22,6 +22,13 @@ public class InputView {
 
     public static boolean askMoreCard(String name) {
         System.out.printf("%s 한 장의 카드를 더 받겠습니까? (예는 %s, 아니오는 %s)%n", name,OPTION_YES, OPTION_NO);
-        return scanner.nextLine().equals(OPTION_YES);
+        String input = scanner.nextLine();
+        if (input.equals(OPTION_YES)) {
+            return true;
+        }
+        if (input.equals(OPTION_NO)) {
+            return false;
+        }
+        throw new IllegalArgumentException("답은 y, n으로 입력하세요.");
     }
 }

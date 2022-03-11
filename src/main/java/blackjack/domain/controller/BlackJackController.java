@@ -25,7 +25,7 @@ public class BlackJackController {
 
     private void playTurn(BlackJackGame blackJackGame) {
         String name = blackJackGame.playNameOnTurn();
-        boolean decision = InputView.askMoreCard(name);
+        boolean decision = askMoreCard(name);
         List<Card> updatedCard = blackJackGame.playerDrawCardOnDecision(decision);
         if(decision) {
             OutputView.showDrawResult(name, updatedCard);
@@ -38,6 +38,15 @@ public class BlackJackController {
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return initBlackJackGame();
+        }
+    }
+
+    private boolean askMoreCard(String name) {
+        try {
+            return InputView.askMoreCard(name);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e);
+            return askMoreCard(name);
         }
     }
 }
