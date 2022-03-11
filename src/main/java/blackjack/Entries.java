@@ -34,6 +34,13 @@ public class Entries {
                 .count();
     }
 
+    public void giveFirstCards(TrumpCardPack trumpCardPack) {
+        for (Entry entry : entries) {
+            entry.addCard(trumpCardPack.draw());
+            entry.addCard(trumpCardPack.draw());
+        }
+    }
+
     public void toNextEntry() {
         if (hasNoNext()) {
             throw new RuntimeException(ERROR_NO_ENTRY);
@@ -47,5 +54,11 @@ public class Entries {
 
     public String getCurrentEntryName() {
         return entries.get(currentIndex).getName();
+    }
+
+    public List<String> getNames() {
+        return this.entries.stream()
+                .map(Entry::getName)
+                .collect(Collectors.toList());
     }
 }

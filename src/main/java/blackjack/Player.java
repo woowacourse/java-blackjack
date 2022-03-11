@@ -19,6 +19,11 @@ public abstract class Player implements PlayerInterface {
     }
 
     @Override
+    public void addCard(TrumpCard card) {
+        this.deck.add(card);
+    }
+
+    @Override
     public String getName() {
         return this.name;
     }

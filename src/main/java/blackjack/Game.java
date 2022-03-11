@@ -6,8 +6,16 @@ public class Game {
     private final Players players;
     private final TrumpCardPack trumpCardPack;
 
-    private Game(List<String> names) {
+    public Game(List<String> names) {
         this.trumpCardPack = new TrumpCardPack();
         this.players = Players.from(names);
+    }
+
+    public void start() {
+        this.players.giveFirstCards(trumpCardPack);
+    }
+
+    public List<String> getEntryNames() {
+        return this.players.getEntryNames();
     }
 }

@@ -12,10 +12,11 @@ public class Deck {
     private final List<TrumpCard> cards;
 
     public Deck() {
-        this.cards = null;
+        this.cards = new ArrayList<>();
     }
 
     public Deck(TrumpCard card1, TrumpCard card2) {
+        //TODO : test를 위한 생성자이므로 삭제해야 함
         this.cards = new ArrayList<>(Arrays.asList(card1, card2));
     }
 
