@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-
 public class Player extends Human {
 
     private static final String EQUALS_DEALER_NAME_MESSAGE = "딜러와 동일한 이름은 사용할 수 없습니다.";
@@ -10,7 +8,6 @@ public class Player extends Human {
     private static final String NOT_RECEIVE_SYMBOL = "n";
 
     private final String name;
-    private final Cards cards = new Cards();
 
     public Player(final String name) {
         validateEqualsDealerName(name);
@@ -35,31 +32,6 @@ public class Player extends Human {
         if (name.equals(Dealer.getName())) {
             throw new IllegalArgumentException(EQUALS_DEALER_NAME_MESSAGE);
         }
-    }
-
-    @Override
-    public List<String> showCards() {
-        return cards.getAllCards();
-    }
-
-    @Override
-    public int showSumOfCards() {
-        return cards.calculateTotal();
-    }
-
-    @Override
-    public void receiveInitCards(final List<Card> initCards) {
-        cards.add(initCards);
-    }
-
-    @Override
-    public void receiveCard(final Card card) {
-        cards.add(card);
-    }
-
-    @Override
-    public boolean isBust() {
-        return cards.isOverBlackjack();
     }
 
     @Override

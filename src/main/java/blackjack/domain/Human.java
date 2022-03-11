@@ -4,15 +4,27 @@ import java.util.List;
 
 public abstract class Human {
 
-    abstract List<String> showCards();
+    protected final Cards cards = new Cards();
 
-    abstract int showSumOfCards();
+    public List<String> showCards() {
+        return cards.getAllCards();
+    }
 
-    abstract void receiveInitCards(List<Card> initCards);
+    public int showSumOfCards() {
+        return cards.calculateTotal();
+    }
 
-    abstract void receiveCard(Card card);
+    public void receiveInitCards(final List<Card> initCards) {
+        cards.add(initCards);
+    }
 
-    abstract boolean isBust();
+    public void receiveCard(final Card card) {
+        cards.add(card);
+    }
+
+    public boolean isBust() {
+        return cards.isOverBlackjack();
+    }
 
     abstract boolean isReceived();
 }
