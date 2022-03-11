@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import static blackjack.domain.card.CardNumber.JACK;
+import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardNumber.QUEEN;
 import static blackjack.domain.card.CardSymbol.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,6 +11,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Status;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -79,9 +81,10 @@ class PlayerTest {
     void init() {
         // give
         final Player player = new Player("pobi");
+        final List<Card> cards = List.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, KING));
 
         // when
-        player.prepareGame(CardFactory.createNoShuffle());
+        player.prepareGame(CardFactory.createBy(cards));
         final int actual = player.getScore();
 
         // then

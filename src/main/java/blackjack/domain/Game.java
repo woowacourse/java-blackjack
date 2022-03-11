@@ -37,10 +37,6 @@ public class Game {
         }
     }
 
-    public int getParticipantCount() {
-        return players.size() + 1;
-    }
-
     public void init() {
         dealer.prepareGame(cardFactory);
         players.forEach(player -> player.prepareGame(cardFactory));
@@ -66,10 +62,6 @@ public class Game {
 
     public CardCount progressDealerTurn() {
         return dealer.drawCards(cardFactory);
-    }
-
-    public int getDealerScore() {
-        return dealer.getScore();
     }
 
     public Card openCard() {

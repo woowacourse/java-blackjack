@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,12 +25,13 @@ public class CardFactoryTest {
     @DisplayName("카드를 한 장 만들어서 반환한다.")
     void createCard() {
         // give
-        final CardFactory cardFactory = CardFactory.createNoShuffle();
+        final Card card = new Card(CardSymbol.DIAMOND, CardNumber.ACE);
+        final CardFactory cardFactory = CardFactory.createBy(List.of(card));
 
         // when
-        final Card card = cardFactory.drawCard();
+        final Card actual = cardFactory.drawCard();
 
         // then
-        assertThat(card).isInstanceOf(Card.class);
+        assertThat(actual).isEqualTo(card);
     }
 }

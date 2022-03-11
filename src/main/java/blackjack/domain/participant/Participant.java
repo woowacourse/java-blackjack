@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Status;
-import java.util.LinkedHashSet;
 
 public abstract class Participant {
 
@@ -11,7 +10,7 @@ public abstract class Participant {
     private Status status;
 
     public Participant() {
-        this.cards = new Cards(new LinkedHashSet<>());
+        this.cards = new Cards();
         this.status = Status.HIT;
     }
 

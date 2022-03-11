@@ -1,7 +1,16 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.CardNumber.*;
-import static blackjack.domain.card.CardSymbol.*;
+import static blackjack.domain.card.CardNumber.ACE;
+import static blackjack.domain.card.CardNumber.FIVE;
+import static blackjack.domain.card.CardNumber.JACK;
+import static blackjack.domain.card.CardNumber.QUEEN;
+import static blackjack.domain.card.CardNumber.TEN;
+import static blackjack.domain.card.CardNumber.THREE;
+import static blackjack.domain.card.CardNumber.TWO;
+import static blackjack.domain.card.CardSymbol.CLUB;
+import static blackjack.domain.card.CardSymbol.DIAMOND;
+import static blackjack.domain.card.CardSymbol.HEART;
+import static blackjack.domain.card.CardSymbol.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Set;
@@ -54,7 +63,7 @@ class CardsTest {
     @ParameterizedTest
     @MethodSource("provideSource")
     @DisplayName("BUST이고 ACE를 포함하면 ACE의 값을 1로 바꾼다.")
-    void changeAceValue(Cards cards, int expected) {
+    void upgradeAceValue(Cards cards, int expected) {
         // when
         final int actual = cards.sumValue();
 

@@ -33,6 +33,13 @@ public class CardFactory {
         return new CardFactory(deck);
     }
 
+    public static CardFactory createBy(final List<Card> cards) {
+        final Stack<Card> deck = new Stack<>();
+        deck.addAll(cards);
+
+        return new CardFactory(deck);
+    }
+
     private static List<Card> createAllCards() {
         return Arrays.stream(CardSymbol.values())
                 .flatMap(symbol -> createCardsBySymbol(symbol).stream())

@@ -17,12 +17,12 @@ public class OutputView {
     }
 
     public static void printDealerFirstCard(Card card) {
-        System.out.println("딜러: " + card.getNumber().getName() + card.getSymbol().getName());
+        System.out.println("딜러: " + card.getNumberName() + card.getSymbolName());
     }
 
     public static void printPlayerCards(ParticipantVo vo) {
         List<String> list = vo.getCards().stream()
-                .map(card -> card.getNumber().getName() + card.getSymbol().getName())
+                .map(card -> card.getNumberName() + card.getSymbolName())
                 .collect(Collectors.toList());
 
         System.out.println(vo.getName() + "카드: " + String.join(", ", list));
@@ -40,7 +40,7 @@ public class OutputView {
 
     public static void printParticipantCards(ParticipantVo vo) {
         List<String> list = vo.getCards().stream()
-                .map(card -> card.getNumber().getName() + card.getSymbol().getName())
+                .map(card -> card.getNumberName() + card.getSymbolName())
                 .collect(Collectors.toList());
 
         System.out.println(vo.getName() + "카드: " + String.join(", ", list)

@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Player;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,45 +16,19 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class GameTest {
 
     @Test
-    @DisplayName("게임을 초기화 한다.")
-    void initGame() {
-        // give
-        Game game = new Game(CardFactory.createNoShuffle(), List.of("pobi", "rick"));
-
-        // when
-        final int actual = game.getParticipantCount();
-
-        // then
-        assertThat(actual).isEqualTo(3);
-    }
-
-    @Test
     @DisplayName("참가자의 이름이 중복되면 예외가 발생한다.")
     void nameDuplicate() {
         // give
         String name = "rick";
 
         // when
+        final List<String> names = List.of(name, name);
+
         // then
-        assertThatThrownBy(() -> new Game(CardFactory.createNoShuffle(), List.of(name, name)))
+        assertThatThrownBy(() -> new Game(CardFactory.createBy(new ArrayList<>()), names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 중복을 허용하지 않습니다.");
 
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"pobi,rick:46", "pobi,rick,json:44"}, delimiter = ':')
-    @DisplayName("모든 참가자에게 카드를 2장씩 분배한다.")
-    void initParticipants(String names, int expected) {
-        // give
-        Game game = new Game(CardFactory.createNoShuffle(), List.of(names.split(",")));
-
-        // when
-        game.init();
-        int actual = game.getRemainAmount();
-
-        // then
-        assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -71,19 +46,5 @@ public class GameTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("딜러의 턴을 진행한다")
-    void drawDealerCard() {
-        // give
-        Game game = new Game(CardFactory.createNoShuffle(), List.of("pobi"));
-
-        // when
-        game.progressDealerTurn();
-        int actual = game.getDealerScore();
-
-        // then
-        assertThat(actual).isEqualTo(20);
     }
 }

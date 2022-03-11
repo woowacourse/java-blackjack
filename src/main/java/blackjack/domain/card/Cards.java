@@ -10,7 +10,11 @@ public class Cards {
 
     private final Set<Card> value;
 
-    public Cards(Set<Card> value) {
+    public Cards() {
+        this.value = new LinkedHashSet<>();
+    }
+
+    Cards(Set<Card> value) {
         this.value = new LinkedHashSet<>(value);
     }
 
