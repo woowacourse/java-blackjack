@@ -26,4 +26,16 @@ public class Game {
     public List<List<String>> getDecksToString() {
         return this.players.getCardsToString();
     }
+
+    public boolean hasNextEntry() {
+        return this.players.hasNextEntry();
+    }
+
+    public void toNextEntry() {
+        this.players.toNextEntry();
+    }
+
+    public String getCurrentEntryName() {
+        return this.players.getCurrentEntryName();
+    }
 }

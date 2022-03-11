@@ -8,7 +8,7 @@ public class Entries {
     private static final String ERROR_NO_ENTRY = "[ERROR] 더 이상 Entry가 없습니다.";
 
     private final List<Entry> entries;
-    private int currentIndex = 0;
+    private int currentIndex = -1;
 
     private Entries(List<Entry> entries) {
         this.entries = List.copyOf(entries);
@@ -48,7 +48,7 @@ public class Entries {
         this.currentIndex++;
     }
 
-    private boolean hasNoNext() {
+    public boolean hasNoNext() {
         return entries.size() <= currentIndex + 1;
     }
 

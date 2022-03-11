@@ -16,5 +16,10 @@ public class Application {
         final ResultView resultView = new ResultView();
         resultView.printDeckInitialized(game.getEntryNames());
         resultView.printInitializedDecks(game.getNames(), game.getDecksToString());
+
+        do {
+            game.toNextEntry();
+            inputView.askForHit(game.getCurrentEntryName());
+        } while (game.hasNextEntry());
     }
 }

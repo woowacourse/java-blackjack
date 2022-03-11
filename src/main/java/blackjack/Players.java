@@ -1,8 +1,6 @@
 package blackjack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -41,5 +39,17 @@ public class Players {
         cardsToString.add(dealerCardToString);
         cardsToString.addAll(this.entries.getDecksToString());
         return cardsToString;
+    }
+
+    public boolean hasNextEntry() {
+        return !this.entries.hasNoNext();
+    }
+
+    public void toNextEntry() {
+        this.entries.toNextEntry();
+    }
+
+    public String getCurrentEntryName() {
+        return this.entries.getCurrentEntryName();
     }
 }

@@ -24,6 +24,8 @@ public class EntriesTest {
     void nextEntry_reaver() {
         List<String> names = List.of("포키", "리버");
         Entries entries = Entries.from(names);
+        //TODO: index값과 toNext 호출 회수 하나의 변수로 관리
+        entries.toNextEntry();
         entries.toNextEntry();
 
         assertThat(entries.getCurrentEntryName()).isEqualTo(names.get(1));
@@ -34,6 +36,7 @@ public class EntriesTest {
     void nextEntry_exception_no_entry() {
         List<String> names = List.of("포키");
         Entries entries = Entries.from(names);
+        entries.toNextEntry();
 
         assertThatThrownBy(entries::toNextEntry)
                 .isInstanceOf(RuntimeException.class)
