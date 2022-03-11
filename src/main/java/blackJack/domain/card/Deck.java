@@ -26,6 +26,6 @@ public class Deck {
     }
 
     public Card getCard() {
-       return deck.pop();
+        return deck.pop();
     }
 }

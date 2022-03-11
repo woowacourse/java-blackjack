@@ -3,8 +3,7 @@ package blackJack.domain.result;
 public enum WinOrLose {
     WIN("승"),
     DRAW("무"),
-    LOSE("패")
-    ;
+    LOSE("패");
 
     private static final int BLACK_JACK = 21;
     private final String result;

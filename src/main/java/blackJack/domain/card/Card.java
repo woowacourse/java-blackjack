@@ -34,7 +34,7 @@ public class Card {
             return true;
         if (!(o instanceof Card))
             return false;
-        Card card = (Card)o;
+        Card card = (Card) o;
         return symbol == card.symbol && denomination == card.denomination;
     }
 

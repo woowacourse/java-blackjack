@@ -1,11 +1,11 @@
 package blackJack.domain.participant;
 
+import blackJack.domain.card.Card;
+import blackJack.domain.card.Denomination;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import blackJack.domain.card.Card;
-import blackJack.domain.card.Denomination;
 
 public abstract class Participant {
 
@@ -55,15 +55,15 @@ public abstract class Participant {
     }
 
     private int countAce() {
-        return (int)cards.stream()
-            .filter(card -> card.getDenomination() == Denomination.ACE)
-            .count();
+        return (int) cards.stream()
+                .filter(card -> card.getDenomination() == Denomination.ACE)
+                .count();
     }
 
     private int calculateScore() {
         return cards.stream()
-            .mapToInt(Card::getScore)
-            .sum();
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     public List<Card> getCards() {
@@ -80,7 +80,7 @@ public abstract class Participant {
             return true;
         if (!(o instanceof Participant))
             return false;
-        Participant that = (Participant)o;
+        Participant that = (Participant) o;
         return Objects.equals(name, that.name);
     }
 

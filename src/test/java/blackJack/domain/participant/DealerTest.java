@@ -1,13 +1,12 @@
 package blackJack.domain.participant;
 
-import static org.assertj.core.api.Assertions.*;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import blackJack.domain.card.Card;
 import blackJack.domain.card.Denomination;
 import blackJack.domain.card.Symbol;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
 
