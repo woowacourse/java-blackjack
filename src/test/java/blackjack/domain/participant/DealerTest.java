@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
@@ -29,11 +30,12 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 카드를 정상적으로 주는지 확인")
     void drawCard() {
+        List<Card> cards = new ArrayList<>();
         Deck deck = new Deck(List.of(jackCard, sixCard));
         Dealer dealer = new Dealer(new Hand(), deck);
         Card card = dealer.drawCard();
 
-        assertThat(card.getDenomination()).isEqualTo("7");
+        assertThat(card.getDenomination()).isEqualTo("J");
     }
 
     @Test
@@ -113,5 +115,27 @@ class DealerTest {
 
         dealer.giveCard(player);
         assertThat(player.getCards()).containsExactly(excepted);
+    }
+
+    @Test
+    @DisplayName("딜러를 생성할때 덱이 null을 포함한채 생성하면 예외발생")
+    void validateOrNull() {
+        Name name = new Name("승팡");
+        Hand cardHand = new Hand();
+
+        assertThatThrownBy(() -> new Dealer(name, cardHand, null))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("[ERROR] 덱은 null일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("딜러를 생성할때 이름이 null을 포함한채 생성하면 예외발생")
+    void validateNameIsNull() {
+        Hand cardHand = new Hand();
+        Deck deck = Deck.createShuffledCards();
+
+        assertThatThrownBy(() -> new Dealer(null, cardHand, deck))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("[ERROR] 이름과 카드패가 null일 수 없습니다.");
     }
 }

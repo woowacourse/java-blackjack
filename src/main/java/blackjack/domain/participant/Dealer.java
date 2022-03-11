@@ -23,6 +23,13 @@ public class Dealer extends Participant {
     public Dealer(Name name, Hand hand, Deck deck) {
         super(name, hand);
         this.deck = deck;
+        validateNull(deck);
+    }
+
+    private void validateNull(Deck deck) {
+        if (deck == null) {
+            throw new IllegalArgumentException("[ERROR] 덱은 null일 수 없습니다.");
+        }
     }
 
     public static Dealer getInstance() {
