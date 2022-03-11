@@ -4,7 +4,11 @@ import java.util.List;
 
 public class Gamer {
 	private final Cards cards = new Cards();
-	protected int score = 0;
+	protected final Name name;
+
+	public Gamer(String name) {
+		this.name = new Name(name);
+	}
 
 	public void addCards(Deck deck, int times) {
 		for (int i = 0; i < times; i++) {
@@ -12,8 +16,8 @@ public class Gamer {
 		}
 	}
 
-	private void processCard(Card card) {
-		this.score = cards.addCard(card);
+	public void processCard(Card card) {
+		this.cards.addCard(card);
 	}
 
 	public List<Card> getCards() {
@@ -21,10 +25,18 @@ public class Gamer {
 	}
 
 	public int getScore() {
-		return score;
+		return this.cards.getScore();
 	}
 
 	public boolean isBurst() {
-		return this.score < 0;
+		return this.cards.getScore() < 0;
+	}
+
+	public Card getRandomOneCard() {
+		return this.cards.getRandomCard();
+	}
+
+	public String getName() {
+		return this.name.getName();
 	}
 }

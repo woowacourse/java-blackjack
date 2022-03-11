@@ -6,18 +6,20 @@ import java.util.Random;
 
 public class Cards {
 	private final List<Card> cards = new ArrayList<>();
+	private int score = 0;
 
-	public int addCard(Card card) {
+	public void addCard(Card card) {
 		cards.add(card);
-		return calculateScore();
+		calculateScore();
 	}
 
-	private int calculateScore() {
+	private void calculateScore() {
 		int aceCnt = countAceCard();
 		int notAceScore = calculateNotAceCardScore();
 		List<Integer> possible = getPossibleAceScores(aceCnt);
-		return possible.stream()
+		this.score = possible.stream()
 			.filter(each -> each + notAceScore <= 21)
+			.map(each -> each + notAceScore)
 			.max(Integer::compare).orElse(-1);
 	}
 
@@ -43,11 +45,14 @@ public class Cards {
 	}
 
 	public Card getRandomCard() {
-		int lastIndex = cards.size();
-		return cards.get(new Random().nextInt(lastIndex));
+		return cards.get(new Random().nextInt(cards.size()));
 	}
 
 	public List<Card> getCards() {
 		return this.cards;
+	}
+
+	public int getScore() {
+		return score;
 	}
 }

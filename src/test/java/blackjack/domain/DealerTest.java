@@ -11,8 +11,8 @@ public class DealerTest {
 	    Dealer dealer = new Dealer();
 	    Player player = new Player("pobi");
 	    //when
-	    dealer.addCard(new Card(Number.NINE, Type.CLOVER));
-		player.addCard(new Card(Number.FIVE, Type.CLOVER));
+	    dealer.processCard(new Card(Number.NINE, Type.CLOVER));
+		player.processCard(new Card(Number.FIVE, Type.CLOVER));
 	    //then
 		assertThat(dealer.isHigher(player)).isTrue();
 	}
@@ -23,8 +23,8 @@ public class DealerTest {
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
 		//when
-		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
-		player.addCard(new Card(Number.TEN, Type.CLOVER));
+		dealer.processCard(new Card(Number.NINE, Type.CLOVER));
+		player.processCard(new Card(Number.TEN, Type.CLOVER));
 		//then
 		assertThat(dealer.isHigher(player)).isFalse();
 	}
@@ -35,8 +35,8 @@ public class DealerTest {
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
 		//when
-		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
-		player.addCard(new Card(Number.NINE, Type.HEART));
+		dealer.processCard(new Card(Number.NINE, Type.CLOVER));
+		player.processCard(new Card(Number.NINE, Type.HEART));
 		//then
 		assertThat(dealer.isEqaul(player)).isTrue();
 	}

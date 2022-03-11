@@ -11,7 +11,7 @@ class GamerTest {
 		Gamer gamer = new Player("pobi");
 		Deck deck = new Deck();
 		//when
-		gamer.addCard(deck.distributeCard());
+		gamer.processCard(deck.distributeCard());
 		//then
 		assertThat(gamer.getCards().size()).isEqualTo(1);
 	}
@@ -22,9 +22,9 @@ class GamerTest {
 		Gamer gamer = new Dealer();
 		Deck deck = new Deck();
 		//when
-		gamer.addCard(new Card(Number.TEN, Type.CLOVER));
-		gamer.addCard(new Card(Number.TEN, Type.HEART));
-		gamer.addCard(new Card(Number.TWO, Type.SPADE));
+		gamer.processCard(new Card(Number.TEN, Type.CLOVER));
+		gamer.processCard(new Card(Number.TEN, Type.HEART));
+		gamer.processCard(new Card(Number.TWO, Type.SPADE));
 		//then
 		assertThat(gamer.isBurst()).isTrue();
 	}
@@ -33,12 +33,12 @@ class GamerTest {
 	void check_optimal_ace_sum() {
 		// given
 		Gamer gamer = new Player("pobi");
-		gamer.addCard(new Card(Number.ACE, Type.HEART));
-		gamer.addCard(new Card(Number.ACE, Type.SPADE));
-		gamer.addCard(new Card(Number.NINE, Type.SPADE));
 		// when
-		gamer.calculateAceSum();
+		gamer.processCard(new Card(Number.ACE, Type.HEART));
+		gamer.processCard(new Card(Number.ACE, Type.SPADE));
+		gamer.processCard(new Card(Number.NINE, Type.SPADE));
+		System.out.println(gamer.getScore());
 		// then
-		assertThat(gamer).extracting("score").isEqualTo(21);
+		assertThat(gamer.getScore()).isEqualTo(21);
 	}
 }

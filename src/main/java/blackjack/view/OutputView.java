@@ -1,5 +1,9 @@
 package blackjack.view;
 
+import blackjack.domain.Cards;
+import blackjack.domain.Dealer;
+import blackjack.domain.Gamer;
+import blackjack.domain.Players;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -9,45 +13,45 @@ import blackjack.domain.Player;
 import blackjack.domain.ResultType;
 
 public class OutputView {
-	public void displayOneCard(Card card) {
-		String cardNumber = convertCardNumberToString(card);
-		System.out.println("딜러: " + cardNumber + card.getType());
+	public void displayDealerOneCard(Dealer dealer) {
+		Card card = dealer.getRandomOneCard();
+		String cardInfo = convertCardToString(card);
+		System.out.println(dealer.getName() + ": " + cardInfo);
 	}
 
-	public void displayFirstDistribution(List<Player> players) {
-		List<String> collect = players.stream()
+	public void displayFirstDistribution(Players players, Dealer dealer) {
+		String joinedNamesInfo = players.getPlayers().stream()
 			.map(Player::getName)
-			.collect(Collectors.toList());
-		System.out.println("딜러와 " + String.join(", ", collect) + "에게 2장의 카드를 나누었습니다.");
+			.collect(Collectors.joining(", "));
+		System.out.println(dealer.getName() + "와 " + joinedNamesInfo + "에게 2장의 카드를 나누었습니다.");
 	}
 
-	public void displayAllCard(String name, List<Card> cards) {
-		List<String> strings = generateAllCardStrings(cards);
-		System.out.println(name + "카드: " + String.join(", ", strings));
+	public void displayAllCard(Gamer gamer) {
+		List<String> strings = generateAllCardStrings(gamer);
+		System.out.println(gamer.getName() + "카드: " + String.join(", ", strings));
 	}
 
-	public void displayAllCardAndScore(String name, int score, List<Card> cards) {
-		List<String> strings = generateAllCardStrings(cards);
-		String scoreString = String.valueOf(score);
+	public void displayAllCardAndScore(Gamer gamer) {
+		String joinedCardsInfo = String.join(", ", generateAllCardStrings(gamer));
+		String scoreString = String.valueOf(gamer.getScore());
 		if ("-1".equals(scoreString)) {
 			scoreString = "버스트";
 		}
-		System.out.println(name + "카드: " + String.join(", ", strings) + " - 결과: " + scoreString);
+		System.out.println(gamer.getName() + "카드: " + joinedCardsInfo + " - 결과: " + scoreString);
 	}
 
-	private List<String> generateAllCardStrings(List<Card> cards) {
-		List<String> strings = cards.stream()
-			.map(card -> convertCardNumberToString(card) + card.getType())
+	private List<String> generateAllCardStrings(Gamer gamer) {
+		return gamer.getCards().stream()
+			.map(card -> convertCardToString(card) + card.getType())
 			.collect(Collectors.toList());
-		return strings;
 	}
 
-	private String convertCardNumberToString(Card card) {
+	private String convertCardToString(Card card) {
 		String cardNumber = String.valueOf(card.getNumber());
-		if ("1".equals(cardNumber)) {
+		if (card.isAce()) {
 			cardNumber = "A";
 		}
-		return cardNumber;
+		return cardNumber + card.getType();
 	}
 
 	public void displayDealerUnderSevenTeen() {

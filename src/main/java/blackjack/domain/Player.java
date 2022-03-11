@@ -3,14 +3,9 @@ package blackjack.domain;
 import java.util.Objects;
 
 public class Player extends Gamer {
-	private final Name name;
 
 	public Player(String name) {
-		this.name = new Name(name);
-	}
-
-	public String getName() {
-		return this.name.getName();
+		super(name);
 	}
 
 	@Override
@@ -20,11 +15,11 @@ public class Player extends Gamer {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Player player = (Player)o;
-		return name.equals(player.name);
+		return this.getName().equals(player.getName());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(getName());
 	}
 }

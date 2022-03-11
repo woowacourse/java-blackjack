@@ -41,9 +41,9 @@ public class BlackJackGameController {
 	}
 
 	private void makeResult(Players players, Dealer dealer) {
-		outputView.displayAllCardAndScore("딜러", dealer.getScore(), dealer.getCards());
+		outputView.displayAllCardAndScore(dealer);
 		for (Player player : players.getPlayers()) {
-			outputView.displayAllCardAndScore(player.getName(), player.getScore(), player.getCards());
+			outputView.displayAllCardAndScore(player);
 		}
 		Result result = new Result();
 		Map<Player, ResultType> gameResult = result.getResult(players.getPlayers(), dealer);
@@ -53,7 +53,7 @@ public class BlackJackGameController {
 	private void progressDealerTurn(Dealer dealer, Deck deck) {
 		while (dealer.isHit() && !dealer.isBurst()) {
 			outputView.displayDealerUnderSevenTeen();
-			dealer.addCard(deck.distributeCard());
+			dealer.addCards(deck, 1);
 		}
 	}
 
@@ -65,8 +65,8 @@ public class BlackJackGameController {
 
 	private void progressOnePlayer(Deck deck, Player player) {
 		while (!player.isBurst() && decideHitOrStay(player)) {
-			player.addCard(deck.distributeCard());
-			outputView.displayAllCard(player.getName(), player.getCards());
+			player.addCards(deck, 1);
+			outputView.displayAllCard(player);
 		}
 	}
 
@@ -80,8 +80,7 @@ public class BlackJackGameController {
 
 	private String inputDecision(Player player) {
 		try {
-			String decision = inputView.inputYesOrNo(player.getName());
-			return decision;
+			return inputView.inputYesOrNo(player.getName());
 		} catch (IllegalArgumentException exception) {
 			System.out.println(exception.getMessage());
 			return inputDecision(player);
@@ -91,10 +90,10 @@ public class BlackJackGameController {
 	private void initializeCard(Players players, Dealer dealer, Deck deck) {
 		dealer.addCards(deck, 2);
 		players.addCardToAllPlayers(deck, 2);
-		outputView.displayFirstDistribution(players.getPlayers());
-		outputView.displayOneCard(dealer.getCards().get(0));
+		outputView.displayFirstDistribution(players, dealer);
+		outputView.displayDealerOneCard(dealer);
 		for (Player player : players.getPlayers()){
-			outputView.displayAllCard(player.getName(), player.getCards());
+			outputView.displayAllCard(player);
 		}
 	}
 
