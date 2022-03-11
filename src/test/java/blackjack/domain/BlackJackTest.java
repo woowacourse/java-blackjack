@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.Arrays;
 import java.util.List;
 
+import blackjack.domain.card.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -40,4 +41,16 @@ public class BlackJackTest {
 		assertThat(blackJack.getPlayers().get(0).getCards().size()).isEqualTo(2);
 		assertThat(blackJack.getPlayers().get(1).getCards().size()).isEqualTo(2);
 	}
+
+    @Test
+    @DisplayName("16 이하 일때 딜러가 한장의 카드를 더 받는지")
+    void Dealer_Receive_Additional_Card_Under_16(){
+        List<String> playerNames = Arrays.asList("a", "b");
+        BlackJack blackJack = BlackJack.createFrom(playerNames);
+        blackJack.getDealer().receiveCard(new Card("8스페이드", 8));
+        blackJack.getDealer().receiveCard(new Card("5하트", 5));
+        assertThat(blackJack.isDealerNeedAdditionalCard()).isEqualTo(true);
+        blackJack.getDealer().receiveCard(new Card("7클로버", 7));
+        assertThat(blackJack.isDealerNeedAdditionalCard()).isEqualTo(false);
+    }
 }

@@ -10,7 +10,8 @@ public class CardDeckTest {
 	@Test
 	@DisplayName("pickCard 에서 카드를 잘 뽑는지")
 	void PickCard_Return_Only_One() {
-		assertThat(CardDeck.pickCard()).isInstanceOf(Card.class);
+        CardDeck cardDeck = new CardDeck();
+		assertThat(cardDeck.pickCard()).isInstanceOf(Card.class);
 	}
 
 }

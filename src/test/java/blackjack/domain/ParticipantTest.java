@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import blackjack.domain.card.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +32,18 @@ public class ParticipantTest {
 	@DisplayName("카드가 한장 추가되는지")
 	void Receive_Card() {
 		Participant player = Participant.createPlayer("yaho");
-		player.receiveCard(CardDeck.pickCard());
+        CardDeck cardDeck = new CardDeck();
+		player.receiveCard(cardDeck.pickCard());
 		assertThat(player.getCards().size()).isEqualTo(1);
 	}
+
+    @Test
+    @DisplayName("카드의 총합이 21이상인지 판정")
+    void Is_Over_21(){
+        Participant player = Participant.createPlayer("yaho");
+        player.receiveCard(new Card("8스페이드", 8));
+        player.receiveCard(new Card("9하트", 9));
+        player.receiveCard(new Card("5다이아몬드", 5));
+        assertThat(player.isOverMaxScore()).isEqualTo(true);
+    }
 }
