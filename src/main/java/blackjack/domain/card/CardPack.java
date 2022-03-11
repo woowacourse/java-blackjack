@@ -10,6 +10,10 @@ public class CardPack {
     private final List<Card> cards = new ArrayList<>();
 
     public CardPack() {
+        initializeCards();
+    }
+
+    private void initializeCards() {
         addNewCards();
         Collections.shuffle(cards);
     }
@@ -27,6 +31,10 @@ public class CardPack {
     }
 
     public Card pickOne() {
+        if (cards.isEmpty()) {
+            initializeCards();
+        }
+
         return cards.remove(0);
     }
 }
