@@ -1,10 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
+import blackjack.domain.player.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +11,7 @@ public class OutputView {
     private static final int INIT_DISTRIBUTE_SIZE = 2;
     private static final int ADD_CARD_CONDITION = 16;
     private static final String DELIMITER = ", ";
+    private static final String EXPLAIN_SYMBOL = ": ";
 
     public static void printPlayersInitCardInfo(final Players players) {
         final List<Player> participants = players.getParticipants();
@@ -87,20 +85,23 @@ public class OutputView {
         printParticipantsResult(players.getParticipants());
     }
 
-    private static void printDealerResult(final Player dealer) {
-        System.out.printf(dealer.getName() + ": %d승 %d패%n", ((Dealer) dealer).getWinCount(), ((Dealer) dealer).getLoseCount());
+    private static void printDealerResult(final Player player) {
+        Dealer dealer = Player.changeToDealer(player);
+        System.out.println(dealer.getName() + EXPLAIN_SYMBOL + makeResultToText(dealer.getWinResultCount(), dealer.getLoseResultCount()));
     }
 
-    private static void printParticipantsResult(final List<Player> participants) {
-        participants.forEach(OutputView::printParticipantResult);
+    private static String makeResultToText(final ResultCount win, final ResultCount lose) {
+        return String.format("%d%s %d%s", win.getCount(), win.getResult().getValue(), lose.getCount(), lose.getResult().getValue());
     }
 
-    private static void printParticipantResult(final Player participant) {
-        System.out.print(participant.getName() + ": ");
-        if (((Participant) participant).getWinState()) {
-            System.out.println("승");
-            return;
-        }
-        System.out.println("패");
+    private static void printParticipantsResult(final List<Player> players) {
+        players.forEach(OutputView::printParticipantResult);
+    }
+
+    private static void printParticipantResult(final Player player) {
+        System.out.print(player.getName() + EXPLAIN_SYMBOL);
+        System.out.println(Player.changeToParticipant(player)
+                .getWinState().getValue());
+
     }
 }

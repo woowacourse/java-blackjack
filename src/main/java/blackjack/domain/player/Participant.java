@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Participant extends Player {
 
-    private boolean winState = false;
+    private Result winState = Result.LOSE;
 
     public Participant(final List<Card> cards, final String name) {
         super(cards, name);
@@ -20,14 +20,14 @@ public class Participant extends Player {
     }
 
     public void win() {
-        this.winState = true;
+        this.winState = Result.WIN;
     }
 
     public boolean isOverMaxScore() {
         return getScoreByAceOne() > MAX_SCORE;
     }
 
-    public boolean getWinState() {
+    public Result getWinState() {
         return this.winState;
     }
 }

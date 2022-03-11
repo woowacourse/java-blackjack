@@ -95,7 +95,7 @@ class DealerTest {
     @ParameterizedTest
     @MethodSource("participantAndResult")
     @DisplayName("딜러는 참여자와 점수를 비교해 승패를 결정한다.")
-    void calculateWinner(Participant participant, Dealer dealer, boolean result) {
+    void calculateWinner(Participant participant, Dealer dealer, Result result) {
         dealer.compete(participant);
         assertThat(participant.getWinState()).isEqualTo(result);
     }
@@ -127,7 +127,7 @@ class DealerTest {
                         ), "zero"), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
                                 new Card(Type.HEART, Score.EIGHT)
-                        )), false),
+                        )), Result.LOSE),
                 Arguments.of(
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
@@ -135,7 +135,7 @@ class DealerTest {
                         ), "zero"), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
                                 new Card(Type.HEART, Score.EIGHT)
-                        )), false),
+                        )), Result.LOSE),
                 Arguments.of(
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
@@ -143,7 +143,7 @@ class DealerTest {
                         ), "zero"), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
                                 new Card(Type.HEART, Score.EIGHT)
-                        )), true),
+                        )), Result.WIN),
                 Arguments.of(
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.JACK),
@@ -151,7 +151,7 @@ class DealerTest {
                         ), "zero"), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.JACK)
-                        )), false),
+                        )), Result.LOSE),
                 Arguments.of(
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.ACE),
@@ -159,21 +159,21 @@ class DealerTest {
                         ), "zero"), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.TEN)
-                        )), false),
+                        )), Result.LOSE),
                 Arguments.of(
                         participant
                         , new Dealer(List.of(
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.JACK)
-                        )), false),
+                        )), Result.LOSE),
                 Arguments.of(
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.TEN)
                         ), "zero"),
-                        dealer, true),
-                Arguments.of(participant, dealer, false),
-                Arguments.of(participant2, dealer2, false)
+                        dealer, Result.WIN),
+                Arguments.of(participant, dealer, Result.LOSE),
+                Arguments.of(participant2, dealer2, Result.LOSE)
         );
     }
 }

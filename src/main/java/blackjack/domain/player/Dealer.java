@@ -10,20 +10,22 @@ public class Dealer extends Player {
     private static final int FIRST = 0;
     private static final String DEALER_NAME = "딜러";
 
-    private int winCount = 0;
-    private int loseCount = 0;
+    private final ResultCount win;
+    private final ResultCount lose;
 
     public Dealer(final List<Card> cards) {
         super(cards, DEALER_NAME);
+        this.win = new ResultCount(Result.WIN);
+        this.lose = new ResultCount(Result.LOSE);
     }
 
     public void compete(final Participant participant) {
         if (isDealerWin(calculateFinalScore(), participant.calculateFinalScore())) {
-            winCount += 1;
+            win.increaseCount();
             return;
         }
         participant.win();
-        this.loseCount += 1;
+        lose.increaseCount();
     }
 
     private boolean isDealerWin(final int dealerScore, final int participantScore) {
@@ -38,11 +40,11 @@ public class Dealer extends Player {
         return getCards().get(FIRST);
     }
 
-    public int getWinCount() {
-        return this.winCount;
+    public ResultCount getWinResultCount() {
+        return this.win;
     }
 
-    public int getLoseCount() {
-        return this.loseCount;
+    public ResultCount getLoseResultCount() {
+        return this.lose;
     }
 }
