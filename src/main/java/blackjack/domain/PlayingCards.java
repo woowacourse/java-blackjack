@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class PlayingCards {
+    private static final int BLACKJACK_NUMBER = 21;
+    private static final int ACE_DIFFERENCE_UNIT = 10;
     private final List<PlayingCard> playingCards;
 
     public PlayingCards() {
@@ -25,26 +27,16 @@ public class PlayingCards {
 
     public int getCardSum() {
         int currentSum = getCurrentSum();
-        if (hasAce() && currentSum > 21 ) {
+        if (hasAce() && currentSum > BLACKJACK_NUMBER) {
             final PlayingCard aceCard = getAce();
             playingCards.remove(aceCard);
             playingCards.add(new PlayingCard(aceCard.getSuit(), Denomination.ONE));
             return getCurrentSum();
         }
-        return currentSum;
-    }
-
-    private PlayingCard getAce() {
-        return playingCards.stream()
-            .filter(PlayingCard::isAce)
-            .findFirst()
-            .orElseThrow(()-> new RuntimeException("알 수 없는 오류가 발생했습니다."));
-    }
-
-    public int getCardSumWithPeek(final int peekedScore) {
-        int currentSum = getCurrentSum() + peekedScore;
-        if (hasAce() && currentSum > 21 ) {
-            return currentSum-10;
+        if (hasOne() && currentSum <= BLACKJACK_NUMBER - ACE_DIFFERENCE_UNIT) {
+            final PlayingCard oneCard = getOne();
+            playingCards.remove(oneCard);
+            playingCards.add(new PlayingCard(oneCard.getSuit(), Denomination.ACE));
         }
         return currentSum;
     }
@@ -58,5 +50,33 @@ public class PlayingCards {
     private boolean hasAce() {
         return playingCards.stream()
             .anyMatch(PlayingCard::isAce);
+    }
+
+    private boolean hasOne() {
+        return playingCards.stream()
+            .anyMatch(PlayingCard::isOne);
+    }
+
+
+    private PlayingCard getAce() {
+        return playingCards.stream()
+            .filter(PlayingCard::isAce)
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("알 수 없는 오류가 발생했습니다."));
+    }
+
+    private PlayingCard getOne() {
+        return playingCards.stream()
+            .filter(PlayingCard::isOne)
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("알 수 없는 오류가 발생했습니다."));
+    }
+
+    public int getCardSumWithPeek(final int peekedScore) {
+        int currentSum = getCurrentSum() + peekedScore;
+        if (hasAce() && currentSum > BLACKJACK_NUMBER) {
+            return currentSum - ACE_DIFFERENCE_UNIT;
+        }
+        return currentSum;
     }
 }

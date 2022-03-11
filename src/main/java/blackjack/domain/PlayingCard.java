@@ -18,6 +18,10 @@ public class PlayingCard {
         return this.denomination.equals(Denomination.ACE);
     }
 
+    public boolean isOne() {
+        return this.denomination.equals(Denomination.ONE);
+    }
+
     public Suit getSuit() {
         return suit;
     }
@@ -57,5 +61,4 @@ public class PlayingCard {
     public int getScore() {
         return denomination.getScore();
     }
-
 }
