@@ -24,7 +24,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        Users users = getUsersByInput();
+        Users users = getUsers();
 
         Deck deck = new Deck();
         users.setInitCardsPerPlayer(deck);
@@ -38,12 +38,12 @@ public class BlackJackController {
         printFinalResult(users);
     }
 
-    private Users getUsersByInput() {
-        List<String> inputNames = inputView.inputPlayerNames();
+    private Users getUsers() {
+        List<String> playerNames = inputView.inputPlayerNames();
 
-        Users users = Users.from(inputNames);
+        Dealer dealer = new Dealer();
 
-        return users;
+        return Users.from(playerNames, dealer);
     }
 
     private void printInitCardInfo(Users users) {
@@ -62,9 +62,10 @@ public class BlackJackController {
     }
 
     private void drawPlayerCardByYes(Deck deck, Player player) {
-        while (player.isDrawable() &&
-                inputView.inputWhetherToDrawCard(UserDto.from(player))) {
-            player.drawCard(deck);
+        while (player.isDrawable()) {
+            if (inputView.inputWhetherToDrawCard(UserDto.from(player))) {
+                player.drawCard(deck);
+            }
             outputView.printCards(UserDto.from(player));
         }
     }
@@ -87,6 +88,7 @@ public class BlackJackController {
         List<Player> players = users.getPlayers();
 
         outputView.printWithScore(UserDto.from(dealer), dealer.getScore());
+
         for (Player player : players) {
             outputView.printWithScore(UserDto.from(player), player.getScore());
         }
