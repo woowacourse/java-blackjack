@@ -3,9 +3,6 @@ package blackjack.model;
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
-import blackjack.model.Card;
-import blackjack.model.Rank;
-import blackjack.model.Score;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -38,7 +35,7 @@ public final class Cards {
     public Score bestScore() {
         return softHandScores().stream()
                 .filter(not(Score::isBust))
-                .reduce(this::bestScore)
+                .reduce(this::maxScore)
                 .orElse(hardHandScore());
     }
 
@@ -62,7 +59,7 @@ public final class Cards {
         return Rank.ACE.soft() - Rank.ACE.hard();
     }
 
-    private Score bestScore(Score score1, Score score2) {
+    private Score maxScore(Score score1, Score score2) {
         if (score1.moreThan(score2)) {
             return score1;
         }

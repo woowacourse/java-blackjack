@@ -78,10 +78,22 @@ public class Application {
     }
 
     private static void printRecord(Dealer dealer, List<Gamer> gamers) {
+        printDealerRecord(dealer, gamers);
+        printGamerRecords(dealer, gamers);
+    }
+
+    private static void printDealerRecord(Dealer dealer, List<Gamer> gamers) {
         Map<Result, Integer> result = new HashMap<>();
         for (Gamer gamer : gamers) {
             result.merge(dealer.match(gamer.cards()), 1, Integer::sum);
         }
         OutputView.printDealerRecord(result);
+    }
+
+    private static void printGamerRecords(Dealer dealer, List<Gamer> gamers) {
+        for (Gamer gamer : gamers) {
+            Result result = dealer.match(gamer.cards());
+            OutputView.printGamerRecord(gamer.name(), result.reverse().symbol());
+        }
     }
 }

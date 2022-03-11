@@ -59,9 +59,13 @@ public class OutputView {
 
     public static void printDealerRecord(Map<Result, Integer> result) {
         System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d무 %d패",
+        System.out.printf("딜러: %d승 %d무 %d패%n",
                 result.getOrDefault(Result.WIN, 0),
                 result.getOrDefault(Result.DRAW, 0),
                 result.getOrDefault(Result.LOSS, 0));
+    }
+
+    public static void printGamerRecord(String name, String result) {
+        System.out.printf("%s: %s%n", name, result);
     }
 }

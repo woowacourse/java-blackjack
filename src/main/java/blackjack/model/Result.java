@@ -14,4 +14,14 @@ public enum Result {
     public String symbol() {
         return symbol;
     }
+
+    public Result reverse() {
+        if (this == WIN) {
+            return LOSS;
+        }
+        if (this == LOSS) {
+            return WIN;
+        }
+        return DRAW;
+    }
 }
