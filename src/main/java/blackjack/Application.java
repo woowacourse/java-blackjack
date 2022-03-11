@@ -22,9 +22,8 @@ public class Application {
     }
 
     private static void run() {
-        CardDispenser cardDispenser = CardDispenser.shuffledCardDispenser();
         List<Name> playerNames = names();
-        Blackjack blackjack = new Blackjack(cardDispenser, playerNames);
+        Blackjack blackjack = new Blackjack(CardDispenser.shuffledCardDispenser(), playerNames);
         printOpenCard(blackjack, playerNames);
         takeCards(blackjack, playerNames);
         printTotalScore(blackjack, playerNames);
