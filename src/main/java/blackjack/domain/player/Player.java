@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
@@ -26,8 +25,8 @@ public abstract class Player {
         cards.addCard(card);
     }
 
-    public Result findResult(Player otherPlayer) {
-        return Result.findResult(this.cards.calculateScore(), otherPlayer.cards.calculateScore());
+    public int calculateScore() {
+        return cards.calculateScore();
     }
 
     public List<Card> openAllOfCards() {
