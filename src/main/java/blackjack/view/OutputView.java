@@ -9,6 +9,12 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
+    private static final String ERROR = "[ERROR] ";
+
+    public void printErrorMessage(String errorMessage) {
+        System.out.println(ERROR + errorMessage);
+    }
     public void printInitCards(UsersDto usersDto) {
         printInitNames(usersDto.getDealerName(), usersDto.getPlayerNames());
 
