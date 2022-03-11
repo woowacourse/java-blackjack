@@ -57,9 +57,12 @@ public class OutputView {
 
     public void printCardAndScore(PlayersDto playersDto) {
         playersDto.getValue()
-            .forEach(playerDto -> System.out.println(
-                playerDto.getName() + SUFFIX_CARD + getCardNames(playerDto.getPlayingCards()) + SUFFIX_RESULT
-                    + playerDto.getScore()));
+            .forEach(playerDto -> System.out.println(getCardAndScoreMessage(playerDto)));
+    }
+
+    private String getCardAndScoreMessage(final PlayerDto playerDto) {
+        return playerDto.getName() + SUFFIX_CARD + getCardNames(playerDto.getPlayingCards()) + SUFFIX_RESULT
+            + playerDto.getScore();
     }
 
     public void printBurst(final PlayerDto playerDto) {

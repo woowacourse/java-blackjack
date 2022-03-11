@@ -92,10 +92,7 @@ public class BlackJackController {
         if (isBurst(gambler, cardDeck, currentGamblerDto)) {
             return;
         }
-        gambler.addCard(cardDeck);
-        currentGamblerDto = PlayerDto.from(gambler);
-        outputView.printCards(currentGamblerDto);
-
+        addCard(gambler, cardDeck);
         playGame(gambler, cardDeck);
     }
 
@@ -113,6 +110,11 @@ public class BlackJackController {
             return true;
         }
         return false;
+    }
+
+    private void addCard(final Player gambler, final CardDeck cardDeck) {
+        gambler.addCard(cardDeck);
+        outputView.printCards(PlayerDto.from(gambler));
     }
 
     private void playGameForDealer(Player dealer, CardDeck cardDeck) {
