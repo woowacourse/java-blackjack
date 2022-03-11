@@ -4,20 +4,24 @@ import java.util.Objects;
 
 public class Card {
 
-    private final CardNumber number;
-    private final CardPattern pattern;
+    private final CardNumber cardNumber;
+    private final CardPattern cardPattern;
 
-    public Card(final CardNumber number, final CardPattern pattern) {
-        this.number = number;
-        this.pattern = pattern;
-    }
-
-    public int getNumber() {
-        return number.getNumber();
+    public Card(final CardNumber cardNumber, final CardPattern cardPattern) {
+        this.cardNumber = cardNumber;
+        this.cardPattern = cardPattern;
     }
 
     public String getCardName() {
-        return number.getInitial() + pattern.getName();
+        return cardNumber.getInitial() + cardPattern.getName();
+    }
+
+    public int getCardNumber() {
+        return cardNumber.getNumber();
+    }
+
+    public boolean isAceCard() {
+        return cardNumber.equals(CardNumber.ACE);
     }
 
     @Override
@@ -29,12 +33,12 @@ public class Card {
             return false;
         }
         final Card other = (Card) o;
-        return (number == other.number) && (pattern == other.pattern);
+        return (cardNumber == other.cardNumber) && (cardPattern == other.cardPattern);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pattern, number);
+        return Objects.hash(cardPattern, cardNumber);
     }
 
     @Override
