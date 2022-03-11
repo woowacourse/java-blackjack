@@ -14,7 +14,7 @@ public class Dealer extends Participant {
         super(holdCards);
     }
 
-    public boolean shouldHaveMoreCard() {
+    public boolean canHit() {
         return countCards() <= MORE_CARD_STANDARD;
     }
 

@@ -1,6 +1,7 @@
 package blackjack.domain.entry;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.HoldCards;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public abstract class Participant {
         return holdCards.countBestNumber();
     }
 
-    public void putCard(Card card) {
+    public void addCard(Card card) {
         holdCards.addCard(card);
     }
 

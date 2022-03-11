@@ -22,7 +22,7 @@ public class PlayerTest {
     @DisplayName("기본 카드가 주어진 후 한장의 카드를 더 추가한다.")
     void putCard() {
         Player player = new Player("jason", new HoldCards(Card.valueOf(Suit.SPADE, Number.NINE), Card.valueOf(Suit.SPADE, Number.ACE)));
-        player.putCard(Card.valueOf(Suit.HEART, Number.ACE));
+        player.addCard(Card.valueOf(Suit.HEART, Number.ACE));
 
         assertThat(player.countCards()).isEqualTo(21);
     }

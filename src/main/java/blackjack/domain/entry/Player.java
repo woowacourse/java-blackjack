@@ -7,6 +7,8 @@ import blackjack.domain.card.HoldCards;
 import java.util.List;
 
 public class Player extends Participant {
+    private static final int BLACKJACK_NUMBER = 21;
+
     private final String name;
 
     public Player(String name, HoldCards holdCards) {
@@ -16,6 +18,10 @@ public class Player extends Participant {
 
     public PlayerOutcome match(int dealerTotal) {
         return PlayerOutcome.match(dealerTotal, countCards());
+    }
+
+    public boolean hasBustCard() {
+        return getHoldCards().countBestNumber() > BLACKJACK_NUMBER;
     }
 
     @Override

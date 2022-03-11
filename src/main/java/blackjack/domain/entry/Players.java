@@ -17,9 +17,9 @@ public class Players {
         this.players = players;
     }
 
-    public boolean isDealerHit(Deck deck) {
-        if (dealer.shouldHaveMoreCard()) {
-            dealer.putCard(deck.draw());
+    public boolean isHitDealer(Deck deck) {
+        if (dealer.canHit()) {
+            dealer.addCard(deck.draw());
             return true;
         }
         return false;

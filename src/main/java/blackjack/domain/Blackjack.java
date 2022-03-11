@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Blackjack {
-    private static final int BLACKJACK_NUMBER = 21;
-
     private final Deck deck;
     private final Players players;
 
@@ -23,16 +21,16 @@ public class Blackjack {
         this.players = new Players(createDealer(), toPlayers(names));
     }
 
-    public void receiveOneMoreCard(Player player) {
-        player.putCard(deck.draw());
+    public void hit(Player player) {
+        player.addCard(deck.draw());
     }
 
-    public boolean isDealerReceiveOneMoreCard() {
-        return players.isDealerHit(deck);
+    public boolean needMoreCardByDealer() {
+        return players.isHitDealer(deck);
     }
 
     public boolean canHit(Player player, Command command) {
-        return command == Command.HIT && player.countCards() < BLACKJACK_NUMBER;
+        return !player.hasBustCard() && command == Command.HIT;
     }
 
     public Map<PlayerOutcome, List<Player>> getGameResult() {

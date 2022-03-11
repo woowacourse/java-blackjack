@@ -42,14 +42,14 @@ public class Application {
 
     private static void moreHit(Blackjack blackjack, Player player, Command command) {
         while (blackjack.canHit(player, command)) {
-            blackjack.receiveOneMoreCard(player);
+            blackjack.hit(player);
             OutputView.printPlayerCards(player);
             command = Command.find(InputView.inputCommand(player));
         }
     }
 
     private static void hitDealer(Blackjack blackjack) {
-        if (blackjack.isDealerReceiveOneMoreCard()) {
+        if (blackjack.needMoreCardByDealer()) {
             OutputView.printReceivingMoreCardOfDealer();
         }
     }
