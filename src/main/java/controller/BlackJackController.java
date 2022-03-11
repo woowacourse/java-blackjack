@@ -1,6 +1,5 @@
 package controller;
 
-import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 import domain.BlackJackResult;
@@ -8,91 +7,99 @@ import domain.PlayerDto;
 import domain.card.CardDeck;
 import domain.player.Dealer;
 import domain.player.Gambler;
+import domain.player.Gamblers;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
     public void start() {
-        List<Gambler> gamblers = setupGamblers();
-        Dealer dealer = new Dealer("딜러");
-        final CardDeck cardDeck = setupCards();
-        spreadCards(gamblers, dealer, cardDeck);
-        hitOrStay(gamblers, cardDeck);
-        addCardForDealer(dealer, cardDeck);
-        printCardAndScore(dealer, gamblers);
+        Gamblers gamblers = setupGamblers();
+        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.newInstance();
+
+        playGame(gamblers, dealer, cardDeck);
         OutputView.printResult(BlackJackResult.of(dealer, gamblers));
     }
 
-    public List<Gambler> setupGamblers() {
-        return InputView.scanPlayerNames()
+    public Gamblers setupGamblers() {
+        return new Gamblers(InputView.scanPlayerNames()
                 .stream()
                 .map(Gambler::new)
+                .collect(toList()));
+    }
+
+    private void playGame(Gamblers gamblers, Dealer dealer, CardDeck cardDeck) {
+        spreadCards(cardDeck, dealer, gamblers);
+        playForGamblers(gamblers, cardDeck);
+        playForDealer(dealer, cardDeck);
+        printCardAndScore(dealer, gamblers);
+    }
+
+    public void spreadCards(CardDeck cardDeck, Dealer dealer, Gamblers gamblers) {
+        gamblers.addCardForEach(cardDeck);
+        dealer.addCard(cardDeck.getCard());
+
+        gamblers.addCardForEach(cardDeck);
+        dealer.addCard(cardDeck.getCard());
+
+        printCardsAfterInitialSpread(dealer, gamblers);
+    }
+
+    private void printCardsAfterInitialSpread(Dealer dealer, Gamblers gamblers) {
+        OutputView.printSpreadAnnouncement(dealer.getName(), gamblers.getGamblerNames());
+        OutputView.printSingleCardForDealer(PlayerDto.from(dealer));
+        OutputView.printTwoCardsForGamblers(getPlayerDtos(gamblers));
+    }
+
+    private List<PlayerDto> getPlayerDtos(Gamblers gamblers) {
+        return gamblers.getGamblers()
+                .stream()
+                .map(PlayerDto::from)
                 .collect(toList());
     }
 
-    private CardDeck setupCards() {
-        return CardDeck.getInstance();
-    }
+    private void playForGamblers(Gamblers gamblers, CardDeck cardDeck) {
+        OutputView.printLineSeparator();
 
-    public void spreadCards(List<Gambler> gamblers, Dealer dealer, CardDeck cardDeck) {
-        gamblers
-                .forEach(player -> player.addCard(cardDeck.getCard()));
-        dealer.addCard(cardDeck.getCard());
-
-        gamblers
-                .forEach(player -> player.addCard(cardDeck.getCard()));
-        dealer.addCard(cardDeck.getCard());
-
-        printCards(dealer, gamblers);
-    }
-
-    private void printCards(Dealer dealer, List<Gambler> gamblers) {
-        final String playerNames = gamblers.stream().map(Gambler::getName).collect(joining(", "));
-        OutputView.printAfterSpread(dealer.getName(), playerNames);
-        OutputView.printSingleCardForDealer(PlayerDto.from(dealer));
-
-        gamblers
-                .forEach(gambler -> OutputView.printCards(PlayerDto.from(gambler)));
-    }
-
-    private void hitOrStay(final List<Gambler> gamblers, CardDeck cardDeck) {
-        System.out.println();
-        for (Gambler gambler : gamblers) {
-            playGame(gambler, cardDeck);
+        for (Gambler gambler : gamblers.getGamblers()) {
+            playSingleGamblerGame(gambler, cardDeck);
         }
     }
 
-    private void playGame(Gambler gambler, CardDeck cardDeck) {
-        boolean isHit = InputView.scanHitOrStay(gambler.getName());
-
+    private void playSingleGamblerGame(Gambler gambler, CardDeck cardDeck) {
+        boolean isHit = InputView.scanIsHit(gambler.getName());
         if (!isHit) {
             OutputView.printCards(PlayerDto.from(gambler));
             return;
         }
 
-        do {
-            gambler.addCard(cardDeck.getCard());
-            final PlayerDto playerDto = PlayerDto.from(gambler);
-            OutputView.printCards(playerDto);
-            if (gambler.isBust()) {
-                OutputView.printBust(playerDto);
-                break;
-            }
-        } while (InputView.scanHitOrStay(gambler.getName()));
+        while (isHit) {
+            addCard(gambler, cardDeck);
+            isHit = !gambler.isBust() && !gambler.isBlackJack() && InputView.scanIsHit(gambler.getName());
+        }
     }
 
-    private void addCardForDealer(Dealer dealer, CardDeck cardDeck) {
+    private void addCard(Gambler gambler, CardDeck cardDeck) {
+        gambler.addCard(cardDeck.getCard());
+        OutputView.printCards(PlayerDto.from(gambler));
+    }
+
+    private void playForDealer(Dealer dealer, CardDeck cardDeck) {
+        OutputView.printLineSeparator();
+
         while (dealer.isUnderSixteen()) {
             dealer.addCard(cardDeck.getCard());
             OutputView.printDealerAddCard(dealer);
         }
     }
 
-    private void printCardAndScore(Dealer dealer, List<Gambler> gamblers) {
-        System.out.println();
+    private void printCardAndScore(Dealer dealer, Gamblers gamblers) {
+        OutputView.printLineSeparator();
         OutputView.printCardAndScore(PlayerDto.from(dealer));
-        gamblers.stream()
+
+        gamblers.getGamblers()
+                .stream()
                 .map(PlayerDto::from)
                 .forEach(OutputView::printCardAndScore);
     }
