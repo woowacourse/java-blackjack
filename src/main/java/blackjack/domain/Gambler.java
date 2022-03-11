@@ -19,8 +19,8 @@ public class Gambler extends Player {
     }
 
     @Override
-    public int getResult() {
-        return super.getResult();
+    public int getSumOfCards() {
+        return super.getSumOfCards();
     }
 
 }

@@ -16,14 +16,14 @@ public class PlayingCards {
     }
 
     public int getResultWithPeekCard(final PlayingCard peekedCard) {
-        return getResult() + peekedCard.getScore();
+        return getCardSum() + peekedCard.getScore();
     }
 
     public List<PlayingCard> getPlayingCards() {
         return Collections.unmodifiableList(playingCards);
     }
 
-    public int getResult() {
+    public int getCardSum() {
         return playingCards.stream()
             .mapToInt(playingCard -> playingCard.getDenomination().getScore())
             .sum();

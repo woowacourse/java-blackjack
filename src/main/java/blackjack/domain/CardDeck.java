@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class CardDeck {
     private final Stack<PlayingCard> playingCards;
 
-    private CardDeck() {
+    public CardDeck() {
         Stack<PlayingCard> playingCards = Arrays.stream(Suit.values())
             .flatMap(suit -> Arrays.stream(Denomination.values())
                 .map(denomination -> PlayingCard.of(suit, denomination)))
@@ -16,10 +16,6 @@ public class CardDeck {
 
         Collections.shuffle(playingCards);
         this.playingCards = playingCards;
-    }
-
-    public static CardDeck getInstance() {
-        return new CardDeck();
     }
 
     public PlayingCard getCard() {

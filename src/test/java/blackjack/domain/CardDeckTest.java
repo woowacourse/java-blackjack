@@ -11,7 +11,7 @@ public class CardDeckTest {
     @DisplayName("카드덱 생성 테스트")
     void deck_create() {
         assertThatCode(
-            CardDeck::getInstance
+            CardDeck::new
         ).doesNotThrowAnyException();
     }
 }

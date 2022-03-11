@@ -19,11 +19,13 @@ public abstract class Player {
 
     public abstract boolean isFinished(final CardDeck cardDeck);
 
-
-    public int getResult() {
-        return playingCards.getResult();
+    public GameResult compare(final Player player) {
+        return GameResult.of(this.getSumOfCards(), player.getSumOfCards());
     }
 
+    public int getSumOfCards() {
+        return playingCards.getCardSum();
+    }
 
     public String getName() {
         return this.name;
@@ -39,4 +41,5 @@ public abstract class Player {
             ", playingCards=" + playingCards +
             '}';
     }
+
 }
