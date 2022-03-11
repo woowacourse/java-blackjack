@@ -29,6 +29,6 @@ public class DealerTest {
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(Number.NINE, Type.CLOVER));
 		player.processCard(new Card(Number.NINE, Type.HEART));
-		assertThat(dealer.isEqaul(player)).isTrue();
+		assertThat(dealer.isEqual(player)).isTrue();
 	}
 }
