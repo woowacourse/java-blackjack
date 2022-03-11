@@ -72,7 +72,7 @@ public class GameTest {
         Game game = new Game(CardDeck.createNoShuffle(), List.of("pobi"));
 
         // when
-        game.drawDealerCard();
+        game.drawDealerCards();
         int actual = game.getDealerScore();
 
         // then

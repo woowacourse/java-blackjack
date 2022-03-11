@@ -30,7 +30,7 @@ public class Game {
         players.forEach(player -> player.init(cardDeck));
     }
 
-    public Card openCard() {
+    public Card dealerFirstCard() {
         return dealer.openCard();
     }
 
@@ -42,13 +42,13 @@ public class Game {
 
     public void drawPlayerCard(Player player, PlayStatus playStatus) {
         if (playStatus == PlayStatus.HIT) {
-            player.hit(cardDeck);
+            player.hit(cardDeck.drawCard());
             return;
         }
         player.stay();
     }
 
-    public CardCount drawDealerCard() {
+    public CardCount drawDealerCards() {
         return dealer.drawCards(cardDeck);
     }
 

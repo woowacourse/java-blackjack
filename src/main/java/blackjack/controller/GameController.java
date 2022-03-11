@@ -36,7 +36,7 @@ public class GameController {
         game.init();
 
         OutputView.printInitResult(names);
-        OutputView.printDealerFirstCard(game.openCard());
+        OutputView.printDealerFirstCard(game.dealerFirstCard());
         for (Player player : game.getPlayers()) {
             OutputView.printPlayerCards(new ParticipantVo(player));
         }
@@ -56,7 +56,7 @@ public class GameController {
     }
 
     private void drawDealerCards(Game game) {
-        CardCount cardCount = game.drawDealerCard();
+        CardCount cardCount = game.drawDealerCards();
         OutputView.printDealerDrawCardCount(cardCount);
     }
 
