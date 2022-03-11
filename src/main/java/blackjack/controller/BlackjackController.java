@@ -1,6 +1,10 @@
 package blackjack.controller;
 
+import static blackjack.domain.Dealer.DEALER_LIMIT_POINT;
+import static blackjack.domain.Guest.GUEST_LIMIT_POINT;
+
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.Dealer;
 import blackjack.domain.GameResponse;
 import blackjack.domain.Player;
 import blackjack.domain.Results;
@@ -43,7 +47,7 @@ public class BlackjackController {
     }
 
     private void turnEachPlayerIfGuest(BlackjackGame blackjackGame, Player player) {
-        if (player.getName().equals("딜러")) {
+        if (player.getClass().equals(Dealer.class)) {
             return;
         }
         while (checkGetMoreCard(player)) {
@@ -56,14 +60,14 @@ public class BlackjackController {
     }
 
     private boolean checkGetMoreCard(Player player) {
-        if (player.isOverLimit(21)) {
+        if (player.isOverLimit(GUEST_LIMIT_POINT)) {
             return false;
         }
         return InputView.requestMoreCard(player.getName()).equals("y");
     }
 
     private void announceDealerCanGetMoreCard(BlackjackGame blackjackGame, Player dealer) {
-        if (!dealer.isOverLimit(16)) {
+        if (!dealer.isOverLimit(DEALER_LIMIT_POINT)) {
             OutputView.announceDealerGetMoreCard();
             blackjackGame.addCard(dealer);
             return;

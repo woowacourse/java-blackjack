@@ -2,6 +2,8 @@ package blackjack.domain;
 
 public class Guest extends AbstractPlayer implements Player {
 
+    public static final int GUEST_LIMIT_POINT = 21;
+
     public Guest(String name) {
         this.cards = new Deck();
         this.name = name;

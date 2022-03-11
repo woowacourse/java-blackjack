@@ -7,15 +7,18 @@ import java.util.stream.IntStream;
 
 public class CardShuffleMachine implements CardPickMachine{
 
-    private static final List<Integer> cardIndex;
+    private static final List<Integer> CARD_INDEX;
+    public static final int CARD_MIN_INDEX = 0;
+    public static final int CARD_MAX_INDEX = 52;
+    public static final int FIRST_INDEX = 0;
 
     static {
-         cardIndex = IntStream.range(0, 52).boxed().collect(Collectors.toList());
+         CARD_INDEX = IntStream.range(CARD_MIN_INDEX, CARD_MAX_INDEX).boxed().collect(Collectors.toList());
     }
 
     @Override
     public int assignIndex() {
-        Collections.shuffle(cardIndex);
-        return cardIndex.remove(0);
+        Collections.shuffle(CARD_INDEX);
+        return CARD_INDEX.remove(FIRST_INDEX);
     }
 }

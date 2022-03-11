@@ -10,10 +10,6 @@ public class Card {
         this.rank = rank;
     }
 
-    public Suit getSuit() {
-        return suit;
-    }
-
     public Rank getRank() {
         return rank;
     }

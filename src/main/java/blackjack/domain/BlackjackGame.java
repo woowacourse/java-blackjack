@@ -31,7 +31,10 @@ public class BlackjackGame {
 
     public Results calculateResult(List<Player> players) {
         Results results = new Results();
-        Player dealer = players.stream().filter(player -> player.getName().equals("딜러")).findFirst().orElseThrow();
+        Player dealer = players.stream()
+                .filter(player -> player.getClass().equals(Dealer.class))
+                .findFirst()
+                .orElseThrow();
         for (Player player : players) {
             scoreResultIfGuest(dealer, player, results);
         }
@@ -39,7 +42,7 @@ public class BlackjackGame {
     }
 
     private void scoreResultIfGuest(Player dealer, Player player, Results results) {
-        if (player.getName().equals("딜러")) {
+        if (player.getClass().equals(Dealer.class)) {
             return;
         }
         scorePlayers(dealer, player, results);
