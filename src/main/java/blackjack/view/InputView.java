@@ -20,7 +20,7 @@ public class InputView {
     }
 
     public static Status requestHitOrStay(String name) {
-        System.out.println(name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(System.lineSeparator() + name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
         final String text = scanner.nextLine().trim();
         if (!text.matches("[Y,y,N,n]")) {
