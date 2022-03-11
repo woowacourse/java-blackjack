@@ -1,26 +1,23 @@
 package blackjack.domain.card;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 public class CardFactory {
 
-    private static final int FIRST_CARD = 0;
     private static final String EMPTY_CARD_ERROR = "남은 카드가 존재하지 않습니다.";
 
-    private final List<Card> deck;
+    private final Stack<Card> deck = new Stack<>();
 
     public CardFactory(List<Card> deck) {
-        this.deck = new LinkedList<>(deck);
+        this.deck.addAll(deck);
         Collections.shuffle(this.deck);
     }
 
     public Card draw() {
         validateEmptyDeck();
-        Card card = deck.get(FIRST_CARD);
-        deck.remove(card);
-        return card;
+        return deck.pop();
     }
 
     private void validateEmptyDeck() {
