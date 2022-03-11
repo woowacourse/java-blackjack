@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public class Card {
 
-    private final CardPattern pattern;
     private final CardNumber number;
+    private final CardPattern pattern;
 
-    public Card(final CardPattern pattern, final CardNumber number) {
-        this.pattern = pattern;
+    public Card(final CardNumber number, final CardPattern pattern) {
         this.number = number;
+        this.pattern = pattern;
     }
 
     public int getNumber() {
@@ -17,7 +17,7 @@ public class Card {
     }
 
     public String getCardName() {
-        return number.getName() + pattern.getPattern();
+        return number.getInitial() + pattern.getPattern();
     }
 
     @Override
@@ -35,9 +35,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
-                "pattern=" + pattern +
-                ", number=" + number +
-                '}';
+        return "Card{" + getCardName() + '}';
     }
 }

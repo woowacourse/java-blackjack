@@ -23,7 +23,7 @@ public class RandomCardStrategy implements CardStrategy {
 
     private List<Card> createCardsPerPattern(final CardPattern cardPattern) {
         return Arrays.stream(CardNumber.values())
-                .map(cardNumber -> new Card(cardPattern, cardNumber))
+                .map(cardNumber -> new Card(cardNumber, cardPattern))
                 .collect(Collectors.toList());
     }
 

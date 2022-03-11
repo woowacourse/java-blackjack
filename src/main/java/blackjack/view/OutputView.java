@@ -81,10 +81,6 @@ public class OutputView {
     }
 
     private String makeStringOfDistributedCards(final ParticipantDto participantDto) {
-        final List<String> playerCardDetails = new ArrayList<>();
-        for (final Card card : participantDto.getCards()) {
-            playerCardDetails.add(card.getCardName());
-        }
-        return String.join(", ", playerCardDetails);
+        return String.join(", ", participantDto.getCardNames());
     }
 }

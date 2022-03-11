@@ -16,16 +16,16 @@ public enum CardNumber {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private final String name;
+    private final String initial;
     private final int number;
 
-    CardNumber(final String name, final int number) {
-        this.name = name;
+    CardNumber(final String initial, final int number) {
+        this.initial = initial;
         this.number = number;
     }
 
-    public String getName() {
-        return name;
+    public String getInitial() {
+        return initial;
     }
 
     public int getNumber() {

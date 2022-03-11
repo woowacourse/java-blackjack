@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -57,8 +58,10 @@ public class Participant {
         return name;
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
+    public List<String> getCardNames() {
+        return cards.stream()
+                .map(Card::getCardName)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public int getScore() {
