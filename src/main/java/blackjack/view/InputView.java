@@ -21,18 +21,8 @@ public class InputView {
                 .collect(toList());
     }
 
-    public boolean inputWhetherToDrawCard(UserDto userDto) {
+    public String inputWhetherToDrawCard(UserDto userDto) {
         System.out.println(userDto.getUserName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        String input = scanner.nextLine();
-
-        validateYN(input);
-
-        return input.equalsIgnoreCase("y");
-    }
-
-    private void validateYN(String input) {
-        if (!("y".equalsIgnoreCase(input) || "n".equalsIgnoreCase(input))) {
-            throw new IllegalArgumentException("y or n need");
-        }
+        return scanner.nextLine();
     }
 }
