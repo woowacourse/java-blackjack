@@ -22,6 +22,7 @@ public class Application {
             if (inputView.askForHit(game.getCurrentEntryName())) {
                 game.hitCurrentEntry();
             }
+            resultView.printDeck(game.getCurrentEntryName(), game.getCurrentDeckToString());
         } while (game.hasNextEntry());
     }
 }

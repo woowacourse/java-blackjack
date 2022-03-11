@@ -52,6 +52,10 @@ public class Entries {
         return entries.size() <= currentIndex + 1;
     }
 
+    public void hitCurrentEntry(TrumpCard card) {
+        this.entries.get(currentIndex).hit(card);
+    }
+
     public String getCurrentEntryName() {
         return entries.get(currentIndex).getName();
     }
@@ -68,7 +72,7 @@ public class Entries {
                 .collect(Collectors.toList());
     }
 
-    public void hitCurrentEntry(TrumpCard card) {
-        this.entries.get(currentIndex).hit(card);
+    public List<String> getCurrentDeckToString() {
+        return this.entries.get(currentIndex).getDeckToString();
     }
 }

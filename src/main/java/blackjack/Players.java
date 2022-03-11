@@ -49,11 +49,15 @@ public class Players {
         this.entries.toNextEntry();
     }
 
+    public void hitCurrentEntry(TrumpCard card) {
+        this.entries.hitCurrentEntry(card);
+    }
+
     public String getCurrentEntryName() {
         return this.entries.getCurrentEntryName();
     }
 
-    public void hitCurrentEntry(TrumpCard card) {
-        this.entries.hitCurrentEntry(card);
+    public List<String> getCurrentDeckToString() {
+        return this.entries.getCurrentDeckToString();
     }
 }

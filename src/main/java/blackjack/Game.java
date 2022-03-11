@@ -15,6 +15,18 @@ public class Game {
         this.players.giveFirstCards(trumpCardPack);
     }
 
+    public boolean hasNextEntry() {
+        return this.players.hasNextEntry();
+    }
+
+    public void toNextEntry() {
+        this.players.toNextEntry();
+    }
+
+    public void hitCurrentEntry() {
+        this.players.hitCurrentEntry(trumpCardPack.draw());
+    }
+
     public List<String> getEntryNames() {
         return this.players.getEntryNames();
     }
@@ -27,19 +39,11 @@ public class Game {
         return this.players.getCardsToString();
     }
 
-    public boolean hasNextEntry() {
-        return this.players.hasNextEntry();
-    }
-
-    public void toNextEntry() {
-        this.players.toNextEntry();
-    }
-
     public String getCurrentEntryName() {
         return this.players.getCurrentEntryName();
     }
 
-    public void hitCurrentEntry() {
-        this.players.hitCurrentEntry(trumpCardPack.draw());
+    public List<String> getCurrentDeckToString() {
+        return this.players.getCurrentDeckToString();
     }
 }
