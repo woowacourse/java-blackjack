@@ -10,10 +10,6 @@ final class OwnCards implements Cards{
 
     private final List<Card> cards;
 
-    OwnCards(Card card) {
-        this.cards = List.of(card);
-    }
-
     OwnCards(Card card1, Card card2, Card... cards) {
         this.cards = concat(concat(card1, card2), cards)
             .collect(Collectors.toList());
