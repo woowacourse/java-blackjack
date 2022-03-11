@@ -14,7 +14,7 @@ public class Player extends Participant {
 
     private void validateName(String name) {
         checkNullAndEmpty(name);
-        //checkBlank(name);
+        checkBlank(name);
 
     }
 
@@ -24,12 +24,12 @@ public class Player extends Participant {
             throw new IllegalArgumentException(PLAYER_NAME_EMPTY_ERROR_MESSAGE);
         }
     }
-//
-//    private void checkBlank(String name) {
-//        if (name.isBlank()) {
-//            throw new IllegalArgumentException(PLAYER_NAME_BLANK_ERROR_MESSAGE);
-//        }
-//    }
+
+    private void checkBlank(String name) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException(PLAYER_NAME_BLANK_ERROR_MESSAGE);
+        }
+    }
 
     public String getName() {
         return name;

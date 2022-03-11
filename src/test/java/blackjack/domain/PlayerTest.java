@@ -26,6 +26,14 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("이름에 공백만 들어올 경우 오류")
+    void createPlayerOnlyBlankNameFail() {
+        assertThatThrownBy(() -> {
+            new Player(" ");
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     @DisplayName("플레이어가 초기 카드 2장을 받는다")
     void receiveInitCard() {
         Player player = new Player("president");
