@@ -1,16 +1,14 @@
 package blackjack.model;
 
-import blackjack.model.cards.Cards;
-import blackjack.model.cards.ChangeableCards;
 import java.util.List;
 
 public abstract class Player {
 
-    protected final ChangeableCards cards;
+    protected final Cards cards;
     private final List<Card> openCards;
     private final String name;
 
-    public Player(String name, List<Card> openCards, ChangeableCards cards) {
+    public Player(String name, List<Card> openCards, Cards cards) {
         this.name = name;
         this.openCards = openCards;
         this.cards = cards;
@@ -36,7 +34,7 @@ public abstract class Player {
     }
 
     public Score score() {
-        return cards.score();
+        return cards.bestScore();
     }
 
     public abstract boolean isHittable();

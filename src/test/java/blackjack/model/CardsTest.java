@@ -1,4 +1,4 @@
-package blackjack.model.cards;
+package blackjack.model;
 
 import static blackjack.model.Rank.ACE;
 import static blackjack.model.Rank.JACK;
@@ -14,6 +14,7 @@ import static blackjack.model.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.Card;
+import blackjack.model.Cards;
 import blackjack.model.Score;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -28,19 +29,19 @@ public class CardsTest {
     @MethodSource("provideMixHandCards")
     @DisplayName("MixHand 카드 점수 계산")
     void mixHandScore(Cards cards, int expect) {
-        assertThat(cards.score()).isEqualTo(new Score(expect));
+        assertThat(cards.bestScore()).isEqualTo(new Score(expect));
     }
 
     protected static Stream<Arguments> provideMixHandCards() {
         return Stream.of(
-                Arguments.of(Cards.mixHandCards(new Card(ACE, SPADE), new Card(JACK, HEART)), 21),
-                Arguments.of(Cards.mixHandCards(new Card(ACE, DIAMOND), new Card(JACK, DIAMOND),
+                Arguments.of(new Cards(new Card(ACE, SPADE), new Card(JACK, HEART)), 21),
+                Arguments.of(new Cards(new Card(ACE, DIAMOND), new Card(JACK, DIAMOND),
                         new Card(KING, CLOVER)), 21),
-                Arguments.of(Cards.mixHandCards(new Card(ACE, DIAMOND), new Card(ACE, SPADE),
+                Arguments.of(new Cards(new Card(ACE, DIAMOND), new Card(ACE, SPADE),
                         new Card(NINE, CLOVER)), 21),
-                Arguments.of(Cards.mixHandCards(new Card(QUEEN, CLOVER), new Card(JACK, HEART),
+                Arguments.of(new Cards(new Card(QUEEN, CLOVER), new Card(JACK, HEART),
                         new Card(KING, DIAMOND)), 30),
-                Arguments.of(Cards.mixHandCards(new Card(THREE, DIAMOND), new Card(TWO, DIAMOND)), 5)
+                Arguments.of(new Cards(new Card(THREE, DIAMOND), new Card(TWO, DIAMOND)), 5)
         );
     }
 
@@ -48,15 +49,15 @@ public class CardsTest {
     @MethodSource("provideSoftHandCards")
     @DisplayName("SoftHand 카드 점수 계산")
     void softHandScore(Cards cards, int expect) {
-        assertThat(cards.score()).isEqualTo(new Score(expect));
+        assertThat(cards.maxScore()).isEqualTo(new Score(expect));
     }
 
     protected static Stream<Arguments> provideSoftHandCards() {
         return Stream.of(
-                Arguments.of(Cards.softHandCards(new Card(ACE, SPADE), new Card(JACK, HEART)), 21),
-                Arguments.of(Cards.softHandCards(new Card(ACE, DIAMOND), new Card(JACK, DIAMOND),
+                Arguments.of(new Cards(new Card(ACE, SPADE), new Card(JACK, HEART)), 21),
+                Arguments.of(new Cards(new Card(ACE, DIAMOND), new Card(JACK, DIAMOND),
                         new Card(KING, CLOVER)), 31),
-                Arguments.of(Cards.softHandCards(new Card(ACE, DIAMOND), new Card(ACE, SPADE),
+                Arguments.of(new Cards(new Card(ACE, DIAMOND), new Card(ACE, SPADE),
                         new Card(NINE, CLOVER)), 31)
         );
     }
@@ -64,8 +65,8 @@ public class CardsTest {
     @Test
     @DisplayName("카드 발급")
     void takeCards() {
-        Cards cards = new HardHandCards(new Card(JACK, DIAMOND), new Card(THREE, CLOVER));
+        Cards cards = new Cards(new Card(JACK, DIAMOND), new Card(THREE, CLOVER));
         cards.take(new Card(ACE, HEART));
-        assertThat(cards.score()).isEqualTo(new Score(14));
+        assertThat(cards.bestScore()).isEqualTo(new Score(14));
     }
 }

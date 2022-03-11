@@ -1,16 +1,15 @@
 package blackjack.model;
 
-import blackjack.model.cards.Cards;
 import java.util.List;
 
 public class Dealer extends Player {
 
     public Dealer(Card card1, Card card2, Card... cards) {
-        super("딜러", List.of(card1), Cards.mixHandCards(card1, card2, cards));
+        super("딜러", List.of(card1), new Cards(card1, card2, cards));
     }
 
     public Result match(Cards cards) {
-        Score playerScore = cards.score();
+        Score playerScore = cards.bestScore();
         if (playerScore.isBust()) {
             return Result.WIN;
         }
@@ -31,6 +30,6 @@ public class Dealer extends Player {
     }
 
     public boolean isHittable() {
-        return cards.toSoftHand().score().lessThan(new Score(17));
+        return cards.maxScore().lessThan(new Score(17));
     }
 }

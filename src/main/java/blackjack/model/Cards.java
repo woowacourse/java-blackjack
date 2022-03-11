@@ -1,4 +1,4 @@
-package blackjack.model.cards;
+package blackjack.model;
 
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toUnmodifiableList;
@@ -7,15 +7,35 @@ import blackjack.model.Card;
 import blackjack.model.Rank;
 import blackjack.model.Score;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
-final class MixHandCards extends ChangeableCards {
+public final class Cards {
 
-    MixHandCards(HardHandCards cards) {
-        super(cards);
+    private final List<Card> cards;
+
+    Cards(Card card1, Card card2, Card... cards) {
+        this.cards = Stream.concat(Stream.concat(Stream.of(card1), Stream.of(card2)), List.of(cards).stream())
+            .collect(Collectors.toList());
     }
 
-    public Score score() {
+    public Score maxScore() {
+        int score = stream()
+            .mapToInt(Card::softRank)
+            .sum();
+        return new Score(score);
+    }
+
+    public Stream<Card> stream() {
+        return cards.stream();
+    }
+
+    public void take(Card card) {
+        cards.add(card);
+    }
+
+    public Score bestScore() {
         return softHandScores().stream()
                 .filter(not(Score::isBust))
                 .reduce(this::bestScore)
@@ -47,5 +67,12 @@ final class MixHandCards extends ChangeableCards {
             return score1;
         }
         return score2;
+    }
+
+    private Score hardHandScore() {
+        int score = cards.stream()
+            .mapToInt(Card::hardRank)
+            .sum();
+        return new Score(score);
     }
 }
