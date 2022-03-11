@@ -15,7 +15,7 @@ public class BlackJackController {
         initiateCard(dealer, players);
 
         takeMoreCardPlayerTurnForAllPlayers(dealer, players);
-        takeMoreCardDealerTurn(dealer);
+        takeOneMoreCardDuringDealerTurn(dealer);
         OutputView.printParticipantScore(dealer, players);
 
         decideGameScore(dealer, players);
@@ -35,7 +35,7 @@ public class BlackJackController {
         dealer.shuffleCards();
         dealer.drawCardHandFirstTurn();
         dealer.drawCardToPlayers(players);
-        OutputView.showParticipantsHand(dealer, players);
+        OutputView.printGiveCardsToParticipants(dealer, players);
     }
 
     private static void takeMoreCardPlayerTurnForAllPlayers(Dealer dealer, List<Player> players) {
@@ -51,9 +51,9 @@ public class BlackJackController {
         }
     }
 
-    private static void takeMoreCardDealerTurn(Dealer dealer) {
+    private static void takeOneMoreCardDuringDealerTurn(Dealer dealer) {
         while (dealer.shouldReceive()) {
-            OutputView.printDealerHandDrawMessage();
+            OutputView.printDealerOneMoreCard();
             dealer.selfDraw();
         }
     }
