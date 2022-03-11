@@ -19,13 +19,17 @@ public class MatchRecordDto {
     }
 
     public static MatchRecordDto fromRecords(Map<Player, MatchRecord> playerMatchRecords) {
-        Map<String, String> playerRecords = playerMatchRecords.entrySet()
+        Map<String, String> playerRecords = mapToString(playerMatchRecords);
+        String dealerRecord = joinToString(addUpDealerRecord(playerMatchRecords));
+        return new MatchRecordDto(playerRecords, dealerRecord);
+    }
+
+    private static Map<String, String> mapToString(Map<Player, MatchRecord> playerMatchRecords) {
+        return playerMatchRecords.entrySet()
             .stream()
             .collect(Collectors.toMap(
                 entry -> entry.getKey().getName(),
                 entry -> entry.getValue().getName()));
-        String dealerRecord = joinToString(addUpDealerRecord(playerMatchRecords));
-        return new MatchRecordDto(playerRecords, dealerRecord);
     }
 
     private static Map<MatchRecord, Long> addUpDealerRecord(Map<Player, MatchRecord> playerMatchRecords) {
