@@ -37,15 +37,17 @@ public class Application {
             OutputView.printPlayerCards(player);
             return;
         }
+        blackjack.receiveOneMoreCard(player);
+        OutputView.printPlayerCards(player);
         moreHit(blackjack, player, command);
     }
 
     private static void moreHit(Blackjack blackjack, Player player, Command command) {
-        while (blackjack.canHit(player, command)) {
+        do {
+            command = Command.find(InputView.inputCommand(player));
             blackjack.receiveOneMoreCard(player);
             OutputView.printPlayerCards(player);
-            command = Command.find(InputView.inputCommand(player));
-        }
+        } while (blackjack.canHit(player, command));
     }
 
     private static void hitDealer(Blackjack blackjack) {
