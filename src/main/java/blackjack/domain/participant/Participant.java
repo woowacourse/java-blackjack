@@ -10,7 +10,7 @@ public class Participant {
 
     private static final int BLACKJACK_NUMBER = 21;
     private static final int ACE_NUMBER = 1;
-    private static final int ADD_ALTERNATIVE_ACE_VALUE = 10;
+    private static final int ALTERNATE_ACE_VALUE = 10;
 
     protected String name;
     protected List<Card> cards = new ArrayList<>();
@@ -23,14 +23,16 @@ public class Participant {
         int totalSum = calculateWithoutAce();
 
         if (hasAceCard()) {
-            totalSum += ADD_ALTERNATIVE_ACE_VALUE;
-            if (totalSum > BLACKJACK_NUMBER) {
-                totalSum -= ADD_ALTERNATIVE_ACE_VALUE;
-            }
+            totalSum = checkAceScore(totalSum);
         }
-
-
         return totalSum;
+    }
+
+    private int checkAceScore(int totalSum) {
+        if (totalSum + ALTERNATE_ACE_VALUE > BLACKJACK_NUMBER) {
+            return totalSum;
+        }
+        return totalSum + ALTERNATE_ACE_VALUE;
     }
 
     private boolean hasAceCard() {
