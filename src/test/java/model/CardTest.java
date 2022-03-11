@@ -19,4 +19,15 @@ public class CardTest {
         assertThat(collect.size()).isOne();
         assertThat(collect.get(0)).isEqualTo(new Card(SPADE, TEN));
     }
+
+    @Test
+    void getAllCards() {
+        List<Card> allCards = Card.getAllCards();
+        long distinctCount = allCards.stream()
+                .distinct()
+                .count();
+
+        assertThat(allCards.size()).isEqualTo(52);
+        assertThat(distinctCount).isEqualTo(52);
+    }
 }
