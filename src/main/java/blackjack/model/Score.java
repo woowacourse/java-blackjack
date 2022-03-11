@@ -18,6 +18,18 @@ public class Score {
         return value > 21;
     }
 
+    public boolean lessThan(Score other) {
+        return getValue() < other.getValue();
+    }
+
+    public boolean moreThan(Score other) {
+        return getValue() > other.getValue();
+    }
+
+    public Score plus(Score score) {
+        return new Score(value + score.getValue());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -40,17 +52,5 @@ public class Score {
         return "Score{" +
             "value=" + value +
             '}';
-    }
-
-    public boolean lessThan(Score other) {
-        return getValue() < other.getValue();
-    }
-
-    public boolean moreThan(Score other) {
-        return getValue() > other.getValue();
-    }
-
-    public Score plus(Score score) {
-        return new Score(value + score.getValue());
     }
 }
