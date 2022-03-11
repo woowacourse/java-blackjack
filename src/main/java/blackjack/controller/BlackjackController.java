@@ -1,16 +1,18 @@
 package blackjack.controller;
 
 import static blackjack.view.InputView.requestMoreCardInput;
+import static blackjack.view.OutputView.printAllCardsAndScore;
 import static blackjack.view.OutputView.printDealerExtraCardInfo;
+import static blackjack.view.OutputView.printGameResult;
 import static blackjack.view.OutputView.printPlayerBustInfo;
 import static blackjack.view.OutputView.printPlayerCardsInfo;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.ResultReferee;
-import blackjack.domain.game.ResultStatistics;
 import blackjack.domain.participant.Player;
 import blackjack.dto.InitialDistributionDto;
+import blackjack.dto.ResultStatisticsDto;
 import java.util.List;
 
 public class BlackjackController {
@@ -40,6 +42,7 @@ public class BlackjackController {
             player.receiveCard(game.popCard());
             printPlayerCardsInfo(player);
         }
+
         printPlayerBustInfo();
     }
 
@@ -49,8 +52,11 @@ public class BlackjackController {
         }
     }
 
-    public List<ResultStatistics> getGameResult(BlackjackGame game) {
+    public void getGameResult(BlackjackGame game) {
         ResultReferee referee = new ResultReferee(game.getDealer(), game.getPlayers());
-        return referee.initAndGetGameResults();
+        ResultStatisticsDto dto = new ResultStatisticsDto(referee.initAndGetGameResults());
+
+        printAllCardsAndScore(dto);
+        printGameResult(dto);
     }
 }

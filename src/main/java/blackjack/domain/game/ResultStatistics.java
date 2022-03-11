@@ -44,6 +44,10 @@ public class ResultStatistics {
         return participantCardsDto.getCards();
     }
 
+    public Score getScore() {
+        return participantCardsDto.getScore();
+    }
+
     @Override
     public String toString() {
         return "ResultStatistics{" +

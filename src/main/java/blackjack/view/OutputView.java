@@ -1,14 +1,12 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.ResultStatistics;
 import blackjack.domain.game.ResultType;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.dto.InitialDistributionDto;
 import blackjack.dto.ParticipantCardsDto;
-import java.util.ArrayList;
+import blackjack.dto.ResultStatisticsDto;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -26,6 +24,8 @@ public class OutputView {
     private static final String PARTICIPANT_CARDS_AND_SCORE_FORMAT = NEW_LINE + "%s 카드: %s - 결과: %d";
     private static final String PLAYER_BUST_MESSAGE = "버스트! 21을 초과하였습니다!";
     private static final String DEALER_EXTRA_CARD_MESSAGE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    public static final String FINAL_RESULT_ANNOUNCEMENT_MESSAGE = "## 최종 승패";
+    public static final String PARTICIPANT_RESULT_FORMAT = "%s: %s";
 
     public static void printInitialParticipantsCards(InitialDistributionDto dto) {
         StringBuilder builder = new StringBuilder();
@@ -54,7 +54,8 @@ public class OutputView {
     }
 
     public static void printPlayerCardsInfo(Player player) {
-        print(getParticipantCardsInfo(player));
+        String playerCards = getCardsInfo(player.getCards());
+        print(String.format(PLAYER_CARDS_FORMAT, player.getName(), playerCards));
     }
 
     public static void printPlayerBustInfo() {
@@ -65,59 +66,65 @@ public class OutputView {
         print(DEALER_EXTRA_CARD_MESSAGE);
     }
 
-    // TODO: DTO로 변경
-    public static void printAllCardsAndScore(BlackjackGame blackjackGame) {
-        List<Participant> participants = new ArrayList<>(List.of(blackjackGame.getDealer()));
-        participants.addAll(blackjackGame.getPlayers());
-
-        StringBuilder builder = new StringBuilder();
-        for (Participant participant : participants) {
-            builder.append(getParticipantCardsAndScore(participant));
-        }
-
-        print(builder.toString());
+    public static void printAllCardsAndScore(ResultStatisticsDto dto) {
+        print(getJoinedCardsAndScores(dto.getResults()) + NEW_LINE);
     }
 
-    // TODO: DTO로 변경
-    public static void printGameResult(List<ResultStatistics> results) {
-        print(NEW_LINE + "## 최종 승패");
-
-        for (ResultStatistics result : results) {
-            String name = result.getParticipantName();
-            List<ResultType> existingTypes = Arrays.stream(ResultType.values())
-                    .filter(type -> result.getCountOf(type).toInt() > 0)
-                    .collect(Collectors.toList());
-
-            if (existingTypes.size() == 1) {
-                int count = result.getCountOf(existingTypes.get(0)).toInt();
-
-                if (count == 1) {
-                    System.out.println(name + ": " + existingTypes.get(0).getDisplayName());
-                    continue;
-                }
-                System.out.println(name + ": " + count + existingTypes.get(0).getDisplayName());
-                continue;
-            }
-
-            String resultString = existingTypes.stream()
-                    .map(type -> result.getCountOf(type).toInt() + type.getDisplayName())
-                    .collect(Collectors.joining(" "));
-
-            System.out.println(name + ": " + resultString);
-        }
+    private static String getJoinedCardsAndScores(List<ResultStatistics> resultStats) {
+        return resultStats.stream()
+                .map(OutputView::getParticipantCardsAndScore)
+                .collect(Collectors.joining());
     }
 
-    private static String getParticipantCardsInfo(Participant participant) {
-        String playerCards = getCardsInfo(participant.getCards());
-        return String.format(PLAYER_CARDS_FORMAT, participant.getName(), playerCards);
-    }
-
-    private static String getParticipantCardsAndScore(Participant participant) {
-        String participantName = participant.getName();
-        String cards = getCardsInfo(participant.getCards());
-        int score = participant.getCurrentScore().toInt();
+    private static String getParticipantCardsAndScore(ResultStatistics stats) {
+        String participantName = stats.getParticipantName();
+        String cards = getCardsInfo(stats.getCards());
+        int score = stats.getScore().toInt();
 
         return String.format(PARTICIPANT_CARDS_AND_SCORE_FORMAT, participantName, cards, score);
+    }
+
+    public static void printGameResult(ResultStatisticsDto dto) {
+        print(FINAL_RESULT_ANNOUNCEMENT_MESSAGE);
+        print(getJoinedGameResults(dto.getResults()));
+    }
+
+    private static String getJoinedGameResults(List<ResultStatistics> stats) {
+        return stats.stream()
+                .map(OutputView::getResultFormat)
+                .collect(Collectors.joining(NEW_LINE));
+    }
+
+    private static String getResultFormat(ResultStatistics result) {
+        String name = result.getParticipantName();
+        List<ResultType> existingTypes = getOccuredResultTypes(result);
+
+        if (existingTypes.size() == 1) {
+            return getSingleResultTypeFormat(result, name, existingTypes);
+        }
+        return String.format(PARTICIPANT_RESULT_FORMAT, name, getMultipleResultTypeFormat(result, existingTypes));
+    }
+
+    private static List<ResultType> getOccuredResultTypes(ResultStatistics result) {
+        return Arrays.stream(ResultType.values())
+                .filter(type -> result.getCountOf(type).toInt() > 0)
+                .collect(Collectors.toList());
+    }
+
+    private static String getSingleResultTypeFormat(ResultStatistics result, String name, List<ResultType> existingTypes) {
+        int count = result.getCountOf(existingTypes.get(0)).toInt();
+        String resultType = existingTypes.get(0).getDisplayName();
+
+        if (count == 1) {
+            return String.format(PARTICIPANT_RESULT_FORMAT, name, resultType);
+        }
+        return String.format(PARTICIPANT_RESULT_FORMAT, name, count + resultType);
+    }
+
+    private static String getMultipleResultTypeFormat(ResultStatistics result, List<ResultType> existingTypes) {
+        return existingTypes.stream()
+                .map(type -> result.getCountOf(type).toInt() + type.getDisplayName())
+                .collect(Collectors.joining(" "));
     }
 
     private static String getCardsInfo(Set<Card> cards) {

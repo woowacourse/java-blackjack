@@ -17,8 +17,6 @@ public class Application {
         printInitialParticipantsCards(controller.getInitialDistribution(game));
 
         controller.distributeAllCards(game);
-
-        printAllCardsAndScore(game);
-        printGameResult(controller.getGameResult(game));
+        controller.getGameResult(game);
     }
 }
