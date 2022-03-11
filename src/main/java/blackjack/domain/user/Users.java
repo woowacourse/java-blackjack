@@ -4,8 +4,11 @@ import static java.util.stream.Collectors.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import blackjack.domain.MatchRecord;
 import blackjack.domain.card.Deck;
 
 public class Users {
@@ -40,9 +43,10 @@ public class Users {
         return dealer;
     }
 
-    public Optional<Player> findPlayersToHit() {
-        return players.stream()
-            .filter(player -> !player.isBust())
-            .findAny();
+    public Map<Player, MatchRecord> createPlayerMatchRecords() {
+        return players.stream().collect(toMap(
+            Function.identity(),
+            player -> MatchRecord.findMatchRecord(player, dealer)
+        ));
     }
 }
