@@ -40,22 +40,17 @@ public class Gamer extends Player {
     }
 
     @Override
-    public List<Card> showCards() {
-        return List.copyOf(cards.getCards());
-    }
-
-    @Override
     public boolean isSatisfyReceiveCondition() {
         return calculateResult() <= LIMIT_GAMER_TOTAL_POINT;
-    }
-
-    public boolean isHit(final Answer answer) {
-        return answer == Answer.YES;
     }
 
     @Override
     public String getName() {
         return name;
+    }
+
+    public boolean isHit(final Answer answer) {
+        return answer == Answer.YES;
     }
 
     @Override
