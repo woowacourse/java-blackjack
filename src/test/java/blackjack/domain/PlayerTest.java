@@ -2,11 +2,10 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
-import blackjack.domain.Card;
-import blackjack.domain.Player;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class PlayerTest {
 
@@ -17,5 +16,12 @@ public class PlayerTest {
 		player.addCard(new Card("3다이아몬드", 3));
 		int playerCardSize = player.getMyCards().size();
 		assertThat(playerCardSize).isEqualTo(1);
+	}
+
+	@DisplayName("이름이 빈 값일 경우 에러 테스트")
+	@ParameterizedTest
+	@ValueSource(strings = {"", "   "})
+	void blankName(String name) {
+		assertThatThrownBy(() -> new Player(name)).isInstanceOf(IllegalArgumentException.class);
 	}
 }

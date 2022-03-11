@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerRepository {
-	private final List<Player> players;
-	private int playerIndex;
+	private final List<Player> players = new ArrayList<>();
+	private int playerIndex = 0;
 
-	public PlayerRepository() {
-		this.players = new ArrayList<>();
-		this.playerIndex = 0;
+	public PlayerRepository(List<String> playerNames) {
+		addAll(playerNames);
 	}
 
-	public void addAll(List<String> playerNames) {
+	private void addAll(List<String> playerNames) {
 		playerNames.forEach(name -> players.add(new Player(name)));
 	}
 

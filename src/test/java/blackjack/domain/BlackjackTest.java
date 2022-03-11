@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +25,22 @@ public class BlackjackTest {
 		intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6));
 
 		blackjack.distributeInitialCards(intendedNumberGenerator);
+	}
+
+	@DisplayName("아무 이름도 들어오지 않는 경우 에러 테스트")
+	@Test
+	void nothing() {
+		List<String> playerNames = new ArrayList<>();
+
+		assertThatThrownBy(() -> new Blackjack(playerNames)).isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@DisplayName("이름 중복 에러 테스트")
+	@Test
+	void duplicate() {
+		List<String> playerNames = List.of("pobi", "pobi");
+
+		assertThatThrownBy(() -> new Blackjack(playerNames)).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@DisplayName("플레이어, 딜러 카드 두장 분배 테스트")

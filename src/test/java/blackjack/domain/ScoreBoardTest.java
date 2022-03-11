@@ -25,6 +25,6 @@ public class ScoreBoardTest {
 		DealerResultDto dealerResultDto = dto.getDealerResultDto();
         List<String> dealerOutcome = dealerResultDto.getOutcome();
 
-        assertThat(String.join(" ",dealerOutcome)).isEqualTo("2패 ");
+        assertThat(String.join(" ",dealerOutcome)).isEqualTo("2패");
     }
 }
