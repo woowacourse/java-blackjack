@@ -1,13 +1,17 @@
 package blackjack.domain.player;
 
+import static java.util.Map.entry;
+
 import blackjack.domain.GameOutcome;
 import blackjack.domain.card.Card;
 import blackjack.dto.OutComeResult;
 import blackjack.dto.PlayerCards;
 import blackjack.dto.PlayerScoreResult;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -96,6 +100,7 @@ public class Players {
 
     private Map<String, GameOutcome> calculateOutcomeResultWithDealer(final Player dealer) {
         return players.stream()
-                .collect(Collectors.toUnmodifiableMap(Player::getName, player -> player.fightResult(dealer)));
+                .map(player -> entry(player.getName(), player.fightResult(dealer)))
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (v1, v2) -> v1, LinkedHashMap::new));
     }
 }
