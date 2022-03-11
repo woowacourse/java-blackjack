@@ -11,18 +11,18 @@ public class Player {
     public static final int OPEN_CARD_COUNT = 2;
 
     protected final ScoreCards cards;
-    private final String name;
+    private final Name name;
 
-    public Player(String name, Card card1, Card card2, Card... cards) {
+    public Player(Name name, Card card1, Card card2, Card... cards) {
         this(name, Cards.of(card1, card2, cards));
     }
 
-    protected Player(String name, Cards cards) {
+    protected Player(Name name, Cards cards) {
         this.name = name;
         this.cards = Cards.bestScoreCards(cards);
     }
 
-    public final String name() {
+    public final Name name() {
         return name;
     }
 

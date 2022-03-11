@@ -4,7 +4,6 @@ import static blackjack.model.card.Suit.CLOVER;
 import static blackjack.model.card.Suit.DIAMOND;
 import static blackjack.model.card.Suit.HEART;
 import static blackjack.model.card.Suit.SPADE;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -31,7 +30,7 @@ public class DealerTest {
     private static final Card JACK = new Card(Rank.JACK, HEART);
     private static final Card QUEEN = new Card(Rank.QUEEN, SPADE);
     private static final Card KING = new Card(Rank.KING, CLOVER);
-    private static final String GAMER_NAME = "pobi";
+    private static final Name GAMER_NAME = new Name("pobi");
 
     @ParameterizedTest
     @MethodSource("provideDealerWinningCaseCards")

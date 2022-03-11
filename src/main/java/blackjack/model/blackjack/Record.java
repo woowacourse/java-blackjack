@@ -1,18 +1,19 @@
 package blackjack.model.blackjack;
 
+import blackjack.model.player.Name;
 import java.util.Map;
 
 public class Record {
 
-    private String name;
+    private Name name;
     private Map<Result, Long> record;
 
-    public Record(String name, Map<Result, Long> record) {
+    public Record(Name name, Map<Result, Long> record) {
         this.name = name;
         this.record = Map.copyOf(record);
     }
 
-    public Record(String name, Result result) {
+    public Record(Name name, Result result) {
         this.name = name;
         this.record = Map.of(result, 1L);
     }
@@ -22,7 +23,7 @@ public class Record {
             .intValue();
     }
 
-    public String name() {
+    public Name name() {
         return name;
     }
 }

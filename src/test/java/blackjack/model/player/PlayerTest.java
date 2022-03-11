@@ -27,7 +27,7 @@ public class PlayerTest {
     private static final Card JACK = new Card(Rank.JACK, HEART);
     private static final Card QUEEN = new Card(Rank.QUEEN, SPADE);
     private static final Card KING = new Card(Rank.KING, CLOVER);
-    private static final String GAMER_NAME = "pobi";
+    private static final Name GAMER_NAME = new Name("pobi");
 
     @ParameterizedTest
     @MethodSource("providePlayers")

@@ -8,9 +8,9 @@ import blackjack.model.cards.ScoreCards;
 
 public final class Dealer extends Player {
 
-    public static final Score HIT_BOUNDARY = new Score(17);
-    public static final String NAME = "딜러";
-    public static final int OPEN_CARD_COUNT = 1;
+    private static final Score HIT_BOUNDARY = new Score(17);
+    private static final Name NAME = new Name("딜러");
+    private static final int OPEN_CARD_COUNT = 1;
 
     private final ScoreCards cards;
 
@@ -49,5 +49,9 @@ public final class Dealer extends Player {
     @Override
     public boolean isHittable() {
         return cards.lessThan(HIT_BOUNDARY);
+    }
+
+    public static Name dealerName() {
+        return NAME;
     }
 }

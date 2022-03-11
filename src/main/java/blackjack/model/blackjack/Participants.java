@@ -4,10 +4,9 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
-import blackjack.model.blackjack.CardDispenser;
-import blackjack.model.blackjack.Record;
-import blackjack.model.blackjack.Result;
+import blackjack.model.card.Card;
 import blackjack.model.player.Dealer;
+import blackjack.model.player.Name;
 import blackjack.model.player.Player;
 import java.util.Arrays;
 import java.util.List;
@@ -15,16 +14,13 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class Participants {
+
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Participants(CardDispenser cardDispenser, String... names) {
-        this.dealer = new Dealer(cardDispenser.issue(), cardDispenser.issue());
-        this.players = Arrays.stream(names).map(name -> createPlayer(cardDispenser, name)).collect(toUnmodifiableList());
-    }
-
-    private Player createPlayer(CardDispenser cardDispenser, String name) {
-        return new Player(name, cardDispenser.issue(), cardDispenser.issue());
+    public Participants(Dealer dealer, List<Player> players) {
+        this.dealer = dealer;
+        this.players = players;
     }
 
     public List<Record> records() {
@@ -36,7 +32,7 @@ public class Participants {
         Map<Result, Long> dealerRecord = players.stream()
             .map(dealer::match)
             .collect(groupingBy(r -> r, counting()));
-        return new Record("딜러", dealerRecord);
+        return new Record(Dealer.dealerName(), dealerRecord);
     }
 
     private List<Record> playerRecords() {
@@ -46,5 +42,11 @@ public class Participants {
     private Record playerRecord(Player player) {
         Result result = dealer.match(player);
         return new Record(player.name(), result.reverse());
+    }
+
+    public void takeCardByName(Name name, Card card) {
+        if (name.equals(Dealer.dealerName())) {
+            dealer.take(card);
+        }
     }
 }

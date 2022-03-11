@@ -8,6 +8,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
+import blackjack.model.player.Dealer;
+import blackjack.model.player.Name;
 import org.junit.jupiter.api.Test;
 
 public class BlackjackTest {
@@ -46,15 +48,16 @@ public class BlackjackTest {
 
     @Test
     void blackjackWithOnePlayer() {
-        Blackjack blackjack = new Blackjack(new CardDispenserStub(ACE, JACK, TWO, THREE), "pobi");
+        Name pobi = new Name("pobi");
+        Blackjack blackjack = new Blackjack(new CardDispenserStub(ACE, JACK, TWO, THREE), pobi);
         Records records = blackjack.records();
 
-        Record dealerRecord = records.recordByName("딜러");
+        Record dealerRecord = records.recordByName(Dealer.dealerName());
         assertThat(dealerRecord.countBy(Result.WIN)).isEqualTo(1);
         assertThat(dealerRecord.countBy(Result.DRAW)).isEqualTo(0);
         assertThat(dealerRecord.countBy(Result.LOSS)).isEqualTo(0);
 
-        Record playerRecord = records.recordByName("pobi");
+        Record playerRecord = records.recordByName(pobi);
         assertThat(playerRecord.countBy(Result.WIN)).isEqualTo(0);
         assertThat(playerRecord.countBy(Result.DRAW)).isEqualTo(0);
         assertThat(playerRecord.countBy(Result.LOSS)).isEqualTo(1);
@@ -62,20 +65,46 @@ public class BlackjackTest {
 
     @Test
     void blackjackWithTwoPlayer() {
-        Blackjack blackjack = new Blackjack(new CardDispenserStub(JACK, QUEEN, TWO, THREE, ACE, JACK), "pobi", "crong");
+        Name pobi = new Name("pobi");
+        Name crong = new Name("crong");
+        Blackjack blackjack = new Blackjack(new CardDispenserStub(JACK, QUEEN, TWO, THREE, ACE, JACK), pobi, crong);
         Records records = blackjack.records();
 
-        Record dealerRecord = records.recordByName("딜러");
+        Record dealerRecord = records.recordByName(Dealer.dealerName());
         assertThat(dealerRecord.countBy(Result.WIN)).isEqualTo(1);
         assertThat(dealerRecord.countBy(Result.DRAW)).isEqualTo(0);
         assertThat(dealerRecord.countBy(Result.LOSS)).isEqualTo(1);
 
-        Record pobiRecord = records.recordByName("pobi");
+        Record pobiRecord = records.recordByName(pobi);
         assertThat(pobiRecord.countBy(Result.WIN)).isEqualTo(0);
         assertThat(pobiRecord.countBy(Result.DRAW)).isEqualTo(0);
         assertThat(pobiRecord.countBy(Result.LOSS)).isEqualTo(1);
 
-        Record crongRecord = records.recordByName("crong");
+        Record crongRecord = records.recordByName(crong);
+        assertThat(crongRecord.countBy(Result.WIN)).isEqualTo(1);
+        assertThat(crongRecord.countBy(Result.DRAW)).isEqualTo(0);
+        assertThat(crongRecord.countBy(Result.LOSS)).isEqualTo(0);
+    }
+
+    @Test
+    void blackjackWithSameNamePlayers() {
+        Name pobi1 = new Name("pobi");
+        Name pobi2 = new Name("pobi");
+
+        Blackjack blackjack = new Blackjack(new CardDispenserStub(JACK, QUEEN, TWO, THREE, ACE, JACK), pobi1, pobi2);
+        Records records = blackjack.records();
+
+        Record dealerRecord = records.recordByName(Dealer.dealerName());
+        assertThat(dealerRecord.countBy(Result.WIN)).isEqualTo(1);
+        assertThat(dealerRecord.countBy(Result.DRAW)).isEqualTo(0);
+        assertThat(dealerRecord.countBy(Result.LOSS)).isEqualTo(1);
+
+        Record pobiRecord = records.recordByName(pobi1);
+        assertThat(pobiRecord.countBy(Result.WIN)).isEqualTo(0);
+        assertThat(pobiRecord.countBy(Result.DRAW)).isEqualTo(0);
+        assertThat(pobiRecord.countBy(Result.LOSS)).isEqualTo(1);
+
+        Record crongRecord = records.recordByName(pobi2);
         assertThat(crongRecord.countBy(Result.WIN)).isEqualTo(1);
         assertThat(crongRecord.countBy(Result.DRAW)).isEqualTo(0);
         assertThat(crongRecord.countBy(Result.LOSS)).isEqualTo(0);

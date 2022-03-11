@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.model.player.Name;
 import blackjack.model.card.Card;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
@@ -23,6 +24,7 @@ public class OutputView {
     private static String gamerNames(List<Player> gamers) {
         return gamers.stream()
             .map(Player::name)
+            .map(Name::value)
             .collect(Collectors.joining(", "));
     }
 

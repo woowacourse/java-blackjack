@@ -1,6 +1,9 @@
 package blackjack;
 
+import static java.util.stream.Collectors.toUnmodifiableList;
+
 import blackjack.model.blackjack.CardDispenser;
+import blackjack.model.player.Name;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.blackjack.Result;
@@ -35,18 +38,20 @@ public class Application {
         return new Dealer(cardDispenser.issue(), cardDispenser.issue());
     }
 
-    private static List<String> names() {
+    private static List<Name> names() {
         String namesText = InputView.inputNames();
-        return List.of(namesText.split(","));
+        return List.of(namesText.split(",")).stream()
+            .map(Name::new)
+            .collect(toUnmodifiableList());
     }
 
-    private static List<Player> createGamers(List<String> names, CardDispenser cardDispenser) {
+    private static List<Player> createGamers(List<Name> names, CardDispenser cardDispenser) {
         return names.stream()
             .map(name -> createEachGamer(cardDispenser, name))
             .collect(Collectors.toList());
     }
 
-    private static Player createEachGamer(CardDispenser cardDispenser, String name) {
+    private static Player createEachGamer(CardDispenser cardDispenser, Name name) {
         return new Player(name, cardDispenser.issue(), cardDispenser.issue());
     }
 
@@ -72,7 +77,7 @@ public class Application {
     }
 
     private static boolean isKeepTakeCard(Player gamer) {
-        String option = InputView.chooseOptions(gamer.name());
+        String option = InputView.chooseOptions(gamer.name().value());
         return option.equals("y");
     }
 
@@ -92,7 +97,7 @@ public class Application {
     private static void printGamerRecords(Dealer dealer, List<Player> gamers) {
         for (Player gamer : gamers) {
             Result result = dealer.match(gamer);
-            OutputView.printGamerRecord(gamer.name(), result.reverse().symbol());
+            OutputView.printGamerRecord(gamer.name().value(), result.reverse().symbol());
         }
     }
 }
