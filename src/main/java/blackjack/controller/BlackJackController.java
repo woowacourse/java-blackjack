@@ -21,8 +21,7 @@ public class BlackJackController {
 
         OutputView.printParticipantScore(dealer, players);
 
-        GameScoreDecider gameScoreDecider = new GameScoreDecider(dealer, players);
-
+        decideGameScore(dealer, players);
         OutputView.printBlackjackGameResult(dealer, players);
     }
 
@@ -64,6 +63,13 @@ public class BlackJackController {
         while (dealer.shouldReceive()) {
             OutputView.printDealerHandDrawMessage();
             dealer.selfDraw();
+        }
+    }
+
+    private void decideGameScore(Dealer dealer, List<Player> players) {
+        for (Player player : players) {
+            player.decideMatchResult(dealer);
+            dealer.decideMatchResult(player);
         }
     }
 }

@@ -67,13 +67,21 @@ public class OutputView {
     public static void printBlackjackGameResult(Dealer dealer, List<Player> players) {
         out.println(NEW_LINE + "## 최종 승패");
 
+        printDealerResult(dealer);
+
+        printPlayerResult(players);
+    }
+
+    private static void printDealerResult(Dealer dealer) {
         Map<Result, Integer> resultScores = dealer.getResultScores();
         String dealerScoreString = resultScores.entrySet().stream()
                 .filter(entry -> entry.getValue() != 0)
                 .map(entry -> entry.getValue() + entry.getKey().getName() + " ")
                 .collect(joining(" "));
         out.println("딜러: " + dealerScoreString);
+    }
 
+    private static void printPlayerResult(List<Player> players) {
         for (Player player : players) {
             out.printf("%s: %s" + NEW_LINE, player.getName(), player.getResult().getName());
         }
