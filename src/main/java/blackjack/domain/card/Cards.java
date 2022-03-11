@@ -1,10 +1,12 @@
 package blackjack.domain.card;
 
+import blackjack.domain.Result;
 import java.util.Collections;
 import java.util.List;
 
 public class Cards {
 
+    private static final int ACE_VALUE = 10;
     private List<Card> cards;
 
     public Cards(List<Card> cards) {
@@ -18,8 +20,8 @@ public class Cards {
     public int calculateScore() {
         int totalScore = getTotalScore();
         int countOfAce = getCountOfAce();
-        while (countOfAce-- > 0 && totalScore > 21) {
-            totalScore -= 10;
+        while (countOfAce-- > 0 && totalScore > Result.MAX_SCORE) {
+            totalScore -= ACE_VALUE;
         }
         return totalScore;
     }

@@ -6,6 +6,8 @@ public enum Result {
     DRAW("무"),
     LOSE("패");
 
+    public static final int MAX_SCORE = 21;
+
     private final String result;
 
     Result(String result) {
@@ -13,13 +15,13 @@ public enum Result {
     }
 
     public static Result findResult(int myScore, int otherScore) {
-        if (myScore > 21 && otherScore > 21) {
+        if (myScore > MAX_SCORE && otherScore > MAX_SCORE) {
             return DRAW;
         }
-        if (myScore > 21) {
+        if (myScore > MAX_SCORE) {
             return LOSE;
         }
-        if (otherScore > 21) {
+        if (otherScore > MAX_SCORE) {
             return WIN;
         }
         return compareScore(myScore, otherScore);

@@ -3,12 +3,18 @@ package blackjack.view;
 import blackjack.domain.GameResult;
 import blackjack.domain.Result;
 import blackjack.domain.player.Player;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ResultView {
+
+    private static final String CARD_MARK_MESSAGE = "카드: ";
+    private static final String RESULT_MARK_MESSAGE = " - 결과: ";
+    private static final String FINAL_RESULT_MESSAGE = "##최종 승패";
+    private static final String DEALER_MARK_MESSAGE = "딜러: ";
+    private static final String DEALER_RECEIVE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String COLON = ": ";
 
     public static void printUsersCards(List<Player> users) {
         for (Player user : users) {
@@ -22,17 +28,17 @@ public class ResultView {
 
     private static String makeUserCardsToString(Player user) {
         StringBuilder sb = new StringBuilder();
-        sb.append(user.getName())
-                .append("카드: ");
         List<String> userCards = user.getCards().stream()
                 .map(card -> card.getCardNumberType() + card.getCardPattern())
                 .collect(Collectors.toList());
-        sb.append(String.join(", ", userCards));
+        sb.append(user.getName())
+                .append(CARD_MARK_MESSAGE)
+                .append(String.join(", ", userCards));
         return sb.toString();
     }
 
     public static void printDealerCard(Player dealer) {
-        System.out.print(dealer.getName() + "카드: ");
+        System.out.print(dealer.getName() + CARD_MARK_MESSAGE);
         String dealerCard = dealer.getCards().stream()
                 .map(card -> card.getCardNumberType() + card.getCardPattern())
                 .findFirst()
@@ -42,26 +48,26 @@ public class ResultView {
 
     public static void printDealerReceiveCard() {
         System.out.println();
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(DEALER_RECEIVE_CARD_MESSAGE);
     }
 
     public static void printTotalCardResult(Player dealer, List<Player> users) {
         System.out.println();
-        System.out.println(makeUserCardsToString(dealer) + " - 결과: " + dealer.getTotalScore());
+        System.out.println(makeUserCardsToString(dealer) + RESULT_MARK_MESSAGE + dealer.getTotalScore());
         for (Player user : users) {
-            System.out.println(makeUserCardsToString(user) + " - 결과: " + user.getTotalScore());
+            System.out.println(makeUserCardsToString(user) + RESULT_MARK_MESSAGE + user.getTotalScore());
         }
     }
 
     public static void printGameResult(GameResult gameResult) {
         System.out.println();
-        System.out.println("##최종 승패");
+        System.out.println(FINAL_RESULT_MESSAGE);
         printDealerGameResult(gameResult.getDealerResult());
         printUsersGameResult(gameResult.getUserResult());
     }
 
     private static void printDealerGameResult(Map<Result, Integer> dealerResult) {
-        System.out.print("딜러: ");
+        System.out.print(DEALER_MARK_MESSAGE);
         for (Result result : Result.values()) {
             System.out.print(dealerResult.get(result) + result.getResult() + " ");
         }
@@ -70,7 +76,7 @@ public class ResultView {
 
     private static void printUsersGameResult(Map<String, Result> userResult) {
         for (String userName : userResult.keySet()) {
-            System.out.println(userName + ": " + userResult.get(userName).getResult());
+            System.out.println(userName + COLON + userResult.get(userName).getResult());
         }
     }
 }

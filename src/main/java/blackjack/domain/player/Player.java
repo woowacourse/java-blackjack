@@ -20,13 +20,13 @@ public abstract class Player {
         this.cards = new Cards(cards);
     }
 
+    public abstract boolean isPossibleToPickCard();
+
     private void checkFirstReceivedCardsSize(int size) {
         if (size != FIRST_RECEIVED_CARD_SIZE) {
             throw new IllegalArgumentException(FIRST_RECEIVED_CARD_SIZE_EXCEPTION_MESSAGE);
         }
     }
-
-    public abstract boolean isPossibleToPickCard();
 
     public void pickCard(Card card) {
         cards.addCard(card);
