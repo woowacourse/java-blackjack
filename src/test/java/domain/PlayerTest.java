@@ -52,7 +52,7 @@ class PlayerTest {
         int expected = 10;
 
         // when
-        int actual = rich.getResult();
+        int actual = rich.getPlayResult();
 
         // then
         assertThat(actual).isEqualTo(expected);

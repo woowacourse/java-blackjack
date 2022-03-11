@@ -14,7 +14,7 @@ public class PlayerDto {
 
     private PlayerDto(String name, List<PlayingCard> playingCards) {
         this.name = name;
-        this.playingCards = playingCards;
+        this.playingCards = List.copyOf(playingCards);
     }
 
     public static PlayerDto from(Player player) {
@@ -25,6 +25,11 @@ public class PlayerDto {
         return name;
     }
 
+    public String getFirstCardName() {
+        return playingCards.get(FIRST_CARD_INDEX)
+                .getCardName();
+    }
+
     public String getJoinedCardNames() {
         return playingCards.stream()
                 .map(PlayingCard::getCardName)
@@ -32,13 +37,6 @@ public class PlayerDto {
     }
 
     public int getScore() {
-        return playingCards.stream()
-                .mapToInt(playingCard -> playingCard.getDenomination().getScore())
-                .sum();
-    }
-
-    public String getFirstCardName() {
-        return playingCards.get(FIRST_CARD_INDEX)
-                .getCardName();
+        return ScoreUtil.getScore(playingCards);
     }
 }
