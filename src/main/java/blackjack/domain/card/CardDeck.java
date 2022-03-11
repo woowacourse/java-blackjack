@@ -5,14 +5,20 @@ import java.util.Stack;
 
 public class CardDeck {
     private static final String NO_CARD_EXCEPTION_MESSAGE = "덱에 남은 카드가 없습니다";
-    private final Stack<Card> cards;
+    private final Stack<Card> value;
 
     private CardDeck() {
-        this.cards = new Stack<>();
+        this.value = new Stack<>();
         for (Denomination value : Denomination.values()) {
-            addCards(value);
+            initForDenomination(value);
         }
-        Collections.shuffle(cards);
+        Collections.shuffle(value);
+    }
+
+    private void initForDenomination(Denomination denomination) {
+        for (Suit suit : Suit.values()) {
+            this.value.push(Card.of(denomination, suit));
+        }
     }
 
     public static CardDeck getInstance() {
@@ -20,22 +26,16 @@ public class CardDeck {
     }
 
     public int size() {
-        return cards.size();
+        return value.size();
     }
 
     public Card draw() {
         validateSize();
-        return cards.pop();
-    }
-
-    private void addCards(Denomination value) {
-        for (Suit suit : Suit.values()) {
-            cards.push(Card.of(value, suit));
-        }
+        return value.pop();
     }
 
     private void validateSize() {
-        if (cards.isEmpty()) {
+        if (value.isEmpty()) {
             throw new ArrayIndexOutOfBoundsException(NO_CARD_EXCEPTION_MESSAGE);
         }
     }

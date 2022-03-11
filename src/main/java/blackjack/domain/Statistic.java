@@ -21,13 +21,6 @@ public class Statistic {
         return new Statistic();
     }
 
-    public void calculate(Table table) {
-        for (Player player : table.getPlayers().get()) {
-            playerResult.put(player, calculateResult(player.getPoint(), table.getDealer().getPoint()));
-        }
-        calculateDealerResult(table.getPlayers());
-    }
-
     public Map<Result, Integer> getDealerResult() {
         return dealerResult;
     }
@@ -36,23 +29,34 @@ public class Statistic {
         return playerResult;
     }
 
-    private void calculateDealerResult(Players players) {
+    public void calculate(Table table) {
+        calculateEachPlayers(table.getPlayers(), table.getDealer().getPoint());
+        calculateDealerResult(table.getPlayers());
+    }
+
+    private void calculateEachPlayers(final Players players, final int dealerPoint) {
+        for (Player player : players.get()) {
+            playerResult.put(player, calculatePlayerResult(player.getPoint(), dealerPoint));
+        }
+    }
+
+    private void calculateDealerResult(final Players players) {
         dealerResult.put(Result.LOSE, computeResultCount(players, Result.WIN));
         dealerResult.put(Result.DRAW, computeResultCount(players, Result.DRAW));
         dealerResult.put(Result.WIN, computeResultCount(players, Result.LOSE));
     }
 
-    private int computeResultCount(Players players, Result result) {
-        return (int) players.get().stream()
-                .filter(player -> playerResult.get(player).equals(result))
-                .count();
-    }
-
-    private Result calculateResult(final int point, final int dealerPoint) {
+    private Result calculatePlayerResult(final int point, final int dealerPoint) {
         if (dealerPoint > BLACKJACK_NUMBER) {
             return getResultIfDealerBurst(point);
         }
         return getResultIfDealerNotBurst(dealerPoint, point);
+    }
+
+    private int computeResultCount(final Players players, final Result result) {
+        return (int) players.get().stream()
+                .filter(player -> playerResult.get(player).equals(result))
+                .count();
     }
 
     private Result getResultIfDealerBurst(final int point) {

@@ -12,7 +12,7 @@ public class Table {
 
     private Table(Players players) {
         this.players = players;
-        this.dealer = Dealer.of();
+        this.dealer = Dealer.getInstance();
     }
 
     public static Table of(Players players) {

@@ -12,7 +12,7 @@ class DealerTest {
 
     @Test
     public void 참여자에_카드_추가() {
-        Dealer dealer = Dealer.of();
+        Dealer dealer = Dealer.getInstance();
 
         Card card5 = Card.of(Denomination.of("5"), Suit.SPADE);
         Card card6 = Card.of(Denomination.of("6"), Suit.SPADE);
@@ -26,7 +26,7 @@ class DealerTest {
 
     @Test
     public void 딜러_히트가능() {
-        Dealer dealer = Dealer.of();
+        Dealer dealer = Dealer.getInstance();
 
         Card card5 = Card.of(Denomination.of("5"), Suit.SPADE);
         Card card6 = Card.of(Denomination.of("6"), Suit.SPADE);

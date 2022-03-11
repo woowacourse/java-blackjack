@@ -6,11 +6,11 @@ public class Name {
     private static final String NAME_ERROR_MESSAGE = "이름 형식에 맞게 입력해야 합니다";
     private static final Pattern NAME_PATTERN = Pattern.compile("[가-힣a-zA-Z]+");
 
-    private final String name;
+    private final String value;
 
-    private Name(final String name) {
-        this.name = name;
-        validateName(name);
+    private Name(final String input) {
+        this.value = input;
+        validateName(input);
     }
 
     private static void validateName(final String input) {
@@ -24,6 +24,6 @@ public class Name {
     }
 
     public String get() {
-        return name;
+        return value;
     }
 }
