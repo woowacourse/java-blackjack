@@ -35,8 +35,8 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printCards(final String name, final List<String> cards) {
-        System.out.printf(CARDS_FORMAT, name, String.join(DELIMITER, cards));
+    public static void printCards(final String name, final List<String> playingCards) {
+        System.out.printf(CARDS_FORMAT, name, String.join(DELIMITER, playingCards));
         printNewLine();
     }
 
@@ -50,8 +50,8 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printScore(final String name, final List<String> cards, final int total) {
-        System.out.printf(CARDS_FORMAT + " - 결과: %d", name, String.join(DELIMITER, cards), total);
+    public static void printScore(final String name, final List<String> playingCards, final int total) {
+        System.out.printf(CARDS_FORMAT + " - 결과: %d", name, String.join(DELIMITER, playingCards), total);
         printNewLine();
     }
 

@@ -34,6 +34,6 @@ public class Player extends Human {
 
     @Override
     public boolean isDrawable() {
-        return cards.isUnderBlackjack();
+        return playingCards.isUnderBlackjack();
     }
 }

@@ -16,11 +16,11 @@ public class Dealer extends Human {
     }
 
     public List<Card> showPartOfCards() {
-        return cards.getPartOfDealerCard();
+        return playingCards.getPartOfDealerCard();
     }
 
     @Override
     public boolean isDrawable() {
-        return cards.calculateTotal() <= RECEIVED_MAXIMUM;
+        return playingCards.calculateTotal() <= RECEIVED_MAXIMUM;
     }
 }

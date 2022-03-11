@@ -4,26 +4,26 @@ import java.util.List;
 
 public abstract class Human {
 
-    protected final Cards cards = new Cards();
+    protected final PlayingCards playingCards = new PlayingCards();
 
     public List<Card> showCards() {
-        return cards.getAllCards();
+        return playingCards.getAllCards();
     }
 
     public int showSumOfCards() {
-        return cards.calculateTotal();
+        return playingCards.calculateTotal();
     }
 
     public void drawInitCards(final List<Card> initCards) {
-        cards.add(initCards);
+        playingCards.add(initCards);
     }
 
     public void drawCard(final Card card) {
-        cards.add(card);
+        playingCards.add(card);
     }
 
     public boolean isBust() {
-        return cards.isOverBlackjack();
+        return playingCards.isOverBlackjack();
     }
 
     abstract boolean isDrawable();

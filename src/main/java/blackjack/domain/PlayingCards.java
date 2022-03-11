@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Cards {
+public class PlayingCards {
 
     private static final int BLACKJACK = 21;
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> playingCards = new ArrayList<>();
 
     public void add(final List<Card> initCards) {
-        cards.addAll(initCards);
+        playingCards.addAll(initCards);
     }
 
     public void add(final Card card) {
-        cards.add(card);
+        playingCards.add(card);
     }
 
     public int calculateTotal() {
-        List<CardNumber> cardNumbers = cards.stream()
+        List<CardNumber> cardNumbers = playingCards.stream()
                 .map(Card::getCardNumber)
                 .collect(Collectors.toUnmodifiableList());
         return CardNumber.getTotal(cardNumbers);
@@ -35,11 +35,11 @@ public class Cards {
 
     public List<Card> getPartOfDealerCard() {
         // TODO: 방식 수정
-        return List.of(cards.get(0));
+        return List.of(playingCards.get(0));
     }
 
     public List<Card> getAllCards() {
-        return cards.stream()
+        return playingCards.stream()
                 .collect(Collectors.toUnmodifiableList());
     }
 }
