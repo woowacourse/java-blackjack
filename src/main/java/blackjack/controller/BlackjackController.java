@@ -5,15 +5,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.*;
+import blackjack.utils.InputValidator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackjackController {
 
-    private static final String REQUEST_MORE_CARD = "y";
-
     public void playGame() {
-        BlackjackGame blackjackGame = new BlackjackGame(InputView.inputPlayerNames());
+        BlackjackGame blackjackGame = receivePlayerNames();
         Players players = blackjackGame.initGames();
 
         printStartGame(players);
@@ -22,6 +21,18 @@ public class BlackjackController {
         turnDealer(blackjackGame, players);
 
         printResult(blackjackGame, players);
+    }
+
+    private BlackjackGame receivePlayerNames() {
+        try {
+            List<String> names = InputView.inputPlayerNames();
+            InputValidator.inputListBlank(names);
+            InputValidator.hasDuplicateName(names);
+            return new BlackjackGame(names);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return receivePlayerNames();
+        }
     }
 
     private void printStartGame(Players players) {
@@ -66,8 +77,20 @@ public class BlackjackController {
         if (player.isOverLimit(Dealer.MAX_POINT)) {
             return false;
         }
-        return InputView.requestMoreCard(player.getName())
-                .equals(REQUEST_MORE_CARD);
+        return receiveAnswerForGetMoreCard(player);
+    }
+
+    private boolean receiveAnswerForGetMoreCard(Player player) {
+        try {
+            String answer = InputView.requestMoreCard(player.getName());
+            InputValidator.inputBlank(answer);
+            InputValidator.isAnswerFormat(answer);
+            return InputView.requestMoreCard(player.getName())
+                    .equals(InputValidator.MORE_CARD);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return checkGetMoreCard(player);
     }
 
     private void announceDealerCanGetMoreCard(BlackjackGame blackjackGame, Player dealer) {
