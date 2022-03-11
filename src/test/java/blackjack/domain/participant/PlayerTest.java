@@ -12,6 +12,7 @@ import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Status;
 import java.util.List;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -44,30 +45,18 @@ class PlayerTest {
 
     }
 
-    @Test
-    @DisplayName("카드를 받아 저장한다.")
-    void hit() {
-        // give
-        final Player player = new Player("pobi");
-        final Card card = new Card(DIAMOND, JACK);
-
-        // when
-        player.hit(card);
-        final int actual = player.getScore();
-
-        // then
-        assertThat(actual).isEqualTo(10);
-    }
-
     @ParameterizedTest
     @CsvSource(value = {"TWO:BUST", "ACE:HIT"}, delimiter = ':')
     @DisplayName("카드의 합이 21을 초과하면 BUST를 반환한다.")
     void returnBust(CardNumber cardNumber, Status expected) {
         // give
         final Player player = new Player("pobi");
-        player.hit(new Card(DIAMOND, JACK));
-        player.hit(new Card(DIAMOND, QUEEN));
-        player.hit(new Card(DIAMOND, cardNumber));
+        final List<Card> cards = List.of(new Card(DIAMOND, cardNumber), new Card(DIAMOND, QUEEN),
+                new Card(DIAMOND, JACK));
+        final CardFactory cardFactory = CardFactory.createBy(cards);
+        IntStream.range(0, 3)
+                .mapToObj(i -> cardFactory)
+                .forEach(player::hit);
 
         // when
         final Status actual = player.getStatus();

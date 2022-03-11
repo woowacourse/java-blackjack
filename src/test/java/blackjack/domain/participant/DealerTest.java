@@ -22,11 +22,11 @@ class DealerTest {
     @DisplayName("조건에 만족할 때 까지 카드르 뽑는다. (버스트)")
     void drawCards_BUST() {
         // give
-        final CardFactory cardFactory = CardFactory.createBy(List.of(new Card(DIAMOND, TEN)));
-        List<Card> cards = List.of(new Card(DIAMOND, QUEEN), new Card(CLUB, FIVE));
+        final CardFactory cardFactory = CardFactory.createBy(
+                List.of(new Card(DIAMOND, TEN), new Card(DIAMOND, QUEEN), new Card(CLUB, FIVE)));
 
         final Dealer dealer = new Dealer();
-        dealer.init(cards);
+        dealer.prepareGame(cardFactory);
 
         // when
         dealer.drawCards(cardFactory);
