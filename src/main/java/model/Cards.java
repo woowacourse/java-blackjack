@@ -11,7 +11,14 @@ public class Cards {
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
+        if (isDistinct(cards)) {
+            throw new IllegalArgumentException("중복된 카드를 받을 수 없습니다.");
+        }
         this.cards = new ArrayList<>(cards);
+    }
+
+    private boolean isDistinct(final List<Card> cards) {
+        return cards.stream().distinct().count() != cards.size();
     }
 
     public boolean canReceiveCard() {
@@ -22,7 +29,7 @@ public class Cards {
         if (countAce() == 0) {
             return getMinimumSum();
         }
-        return convertableAceCount() * SCORE_GAP_PER_ACE + getMinimumSum();
+        return (convertableAceCount() * SCORE_GAP_PER_ACE) + getMinimumSum();
     }
 
     private int convertableAceCount() {
@@ -42,6 +49,9 @@ public class Cards {
     }
 
     public void addCard(Card card) {
+        if (cards.contains(card)) {
+            throw new IllegalArgumentException("중복된 카드를 받을 수 없습니다.");
+        }
         cards.add(card);
     }
 
@@ -71,6 +81,7 @@ public class Cards {
     public boolean isBusted() {
         return getStatus().isBusted();
     }
+
     public List<Card> getValue() {
         return cards;
     }
