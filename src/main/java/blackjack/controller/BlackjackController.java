@@ -23,10 +23,7 @@ public class BlackjackController {
     }
 
     public InitialDistributionDto getInitialDistribution(BlackjackGame game) {
-        Dealer dealer = game.getDealer();
-        List<Player> players = game.getPlayers();
-
-        return InitialDistributionDto.of(dealer, players);
+        return new InitialDistributionDto(game.getParticipants());
     }
 
     public void distributeAllCards(BlackjackGame game) {

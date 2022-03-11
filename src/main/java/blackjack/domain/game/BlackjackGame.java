@@ -6,6 +6,7 @@ import blackjack.domain.card.CardStack;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameParticipants;
 import blackjack.domain.participant.Player;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,12 +54,16 @@ public class BlackjackGame {
         return cardDeck.pop();
     }
 
+    public GameParticipants getParticipants() {
+        return participants;
+    }
+
     public Dealer getDealer() {
         return participants.getDealer();
     }
 
     public List<Player> getPlayers() {
-        return participants.getPlayers();
+        return Collections.unmodifiableList(participants.getPlayers());
     }
 
     private CardBundle initializeCardBundle() {
