@@ -36,13 +36,13 @@ class DeckTest {
 
         return Stream.of(
                 Arguments.of(
-                        List.of(new Card(pattern, number),
-                                new Card(pattern, number))
+                        List.of(new Card(number, pattern),
+                                new Card(number, pattern))
                 ),
                 Arguments.of(
-                        List.of(new Card(pattern, otherNumber),
-                                new Card(pattern, otherNumber),
-                                new Card(pattern, otherNumber))
+                        List.of(new Card(otherNumber, pattern),
+                                new Card(otherNumber, pattern),
+                                new Card(otherNumber, pattern))
                 )
         );
     }
@@ -66,15 +66,15 @@ class DeckTest {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.DIAMOND, CardNumber.ACE),
-                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT)
+                                new Card(CardNumber.ACE, CardPattern.DIAMOND),
+                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND)
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.SPADE, CardNumber.ACE),
-                                new Card(CardPattern.HEART, CardNumber.EIGHT),
-                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT)
+                                new Card(CardNumber.ACE, CardPattern.SPADE),
+                                new Card(CardNumber.EIGHT, CardPattern.HEART),
+                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND)
                         )
                 )
         );
@@ -83,7 +83,7 @@ class DeckTest {
     @Test
     @DisplayName("뽑을 수 있는 카드가 없을 시 예외 발생")
     void validateDrawCardTest() {
-        manualCardStrategy.initCards(List.of(new Card(CardPattern.DIAMOND, CardNumber.ACE)));
+        manualCardStrategy.initCards(List.of(new Card(CardNumber.ACE, CardPattern.DIAMOND)));
         final Deck deck = Deck.generate(manualCardStrategy);
         deck.drawCard();
         assertThatThrownBy(deck::drawCard)

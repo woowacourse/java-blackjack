@@ -69,6 +69,6 @@ public class InputViewTest {
 
         assertThatThrownBy(inputView::requestContinuable)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("입력은 y 또는 n이어야 합니다.");
+                .hasMessageContaining("입력은 y 또는 n 이어야 합니다.");
     }
 }

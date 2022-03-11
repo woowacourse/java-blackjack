@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -32,23 +33,26 @@ class ParticipantTest {
             participant.drawCard(deck);
         }
 
-        final List<Card> actualCards = participant.getCards();
-        assertThat(actualCards).isEqualTo(expectedCards);
+        final List<String> actualCardNames = participant.getCardNames();
+        final List<String> expectedCardNames = expectedCards.stream()
+                .map(Card::getCardName)
+                .collect(Collectors.toUnmodifiableList());
+        assertThat(actualCardNames).isEqualTo(expectedCardNames);
     }
 
     private static Stream<Arguments> provideForDrawCardTest() {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.DIAMOND, CardNumber.ACE),
-                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT)
+                                new Card(CardNumber.ACE, CardPattern.DIAMOND),
+                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND)
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.SPADE, CardNumber.ACE),
-                                new Card(CardPattern.HEART, CardNumber.EIGHT),
-                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT)
+                                new Card(CardNumber.ACE, CardPattern.SPADE),
+                                new Card(CardNumber.EIGHT, CardPattern.HEART),
+                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND)
                         )
                 )
         );
@@ -73,18 +77,18 @@ class ParticipantTest {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
-                                new Card(CardPattern.DIAMOND, CardNumber.JACK),
-                                new Card(CardPattern.DIAMOND, CardNumber.QUEEN),
-                                new Card(CardPattern.DIAMOND, CardNumber.KING)
+                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND),
+                                new Card(CardNumber.JACK, CardPattern.DIAMOND),
+                                new Card(CardNumber.QUEEN, CardPattern.DIAMOND),
+                                new Card(CardNumber.KING, CardPattern.DIAMOND)
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.SPADE, CardNumber.ACE),
-                                new Card(CardPattern.HEART, CardNumber.TEN),
-                                new Card(CardPattern.DIAMOND, CardNumber.JACK),
-                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT)
+                                new Card(CardNumber.ACE, CardPattern.SPADE),
+                                new Card(CardNumber.TEN, CardPattern.HEART),
+                                new Card(CardNumber.JACK, CardPattern.DIAMOND),
+                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND)
                         )
                 )
         );
@@ -109,17 +113,17 @@ class ParticipantTest {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.DIAMOND, CardNumber.KING),
-                                new Card(CardPattern.DIAMOND, CardNumber.THREE),
-                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT)
+                                new Card(CardNumber.KING, CardPattern.DIAMOND),
+                                new Card(CardNumber.THREE, CardPattern.DIAMOND),
+                                new Card(CardNumber.EIGHT, CardPattern.DIAMOND)
                         )
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.SPADE, CardNumber.ACE),
-                                new Card(CardPattern.SPADE, CardNumber.TWO),
-                                new Card(CardPattern.SPADE, CardNumber.SEVEN),
-                                new Card(CardPattern.SPADE, CardNumber.THREE)
+                                new Card(CardNumber.ACE, CardPattern.SPADE),
+                                new Card(CardNumber.TWO, CardPattern.SPADE),
+                                new Card(CardNumber.SEVEN, CardPattern.SPADE),
+                                new Card(CardNumber.THREE, CardPattern.SPADE)
                         )
                 )
         );
@@ -150,55 +154,55 @@ class ParticipantTest {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.DIAMOND, CardNumber.KING),
-                                new Card(CardPattern.DIAMOND, CardNumber.TEN),
-                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
-                                new Card(CardPattern.DIAMOND, CardNumber.NINE)
+                                new Card(CardNumber.KING, CardPattern.SPADE),
+                                new Card(CardNumber.TEN, CardPattern.SPADE),
+                                new Card(CardNumber.EIGHT, CardPattern.SPADE),
+                                new Card(CardNumber.NINE, CardPattern.SPADE)
                         ), 2, 2
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.SPADE, CardNumber.TEN),
-                                new Card(CardPattern.SPADE, CardNumber.EIGHT),
-                                new Card(CardPattern.SPADE, CardNumber.NINE),
-                                new Card(CardPattern.HEART, CardNumber.EIGHT)
+                                new Card(CardNumber.TEN, CardPattern.SPADE),
+                                new Card(CardNumber.EIGHT, CardPattern.SPADE),
+                                new Card(CardNumber.NINE, CardPattern.SPADE),
+                                new Card(CardNumber.EIGHT, CardPattern.HEART)
                         ), 2, 2
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.SPADE, CardNumber.ACE),
-                                new Card(CardPattern.SPADE, CardNumber.TEN),
-                                new Card(CardPattern.SPADE, CardNumber.THREE),
-                                new Card(CardPattern.SPADE, CardNumber.EIGHT),
-                                new Card(CardPattern.HEART, CardNumber.NINE)
+                                new Card(CardNumber.ACE, CardPattern.SPADE),
+                                new Card(CardNumber.TEN, CardPattern.SPADE),
+                                new Card(CardNumber.THREE, CardPattern.SPADE),
+                                new Card(CardNumber.EIGHT, CardPattern.SPADE),
+                                new Card(CardNumber.NINE, CardPattern.HEART)
                         ), 2, 3
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.SPADE, CardNumber.ACE),
-                                new Card(CardPattern.SPADE, CardNumber.TEN),
-                                new Card(CardPattern.SPADE, CardNumber.KING),
-                                new Card(CardPattern.SPADE, CardNumber.THREE),
-                                new Card(CardPattern.SPADE, CardNumber.EIGHT),
-                                new Card(CardPattern.HEART, CardNumber.NINE)
+                                new Card(CardNumber.ACE, CardPattern.SPADE),
+                                new Card(CardNumber.TEN, CardPattern.SPADE),
+                                new Card(CardNumber.KING, CardPattern.SPADE),
+                                new Card(CardNumber.THREE, CardPattern.SPADE),
+                                new Card(CardNumber.EIGHT, CardPattern.SPADE),
+                                new Card(CardNumber.NINE, CardPattern.HEART)
                         ), 3, 3
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.SPADE, CardNumber.ACE),
-                                new Card(CardPattern.DIAMOND, CardNumber.ACE),
-                                new Card(CardPattern.HEART, CardNumber.ACE),
-                                new Card(CardPattern.SPADE, CardNumber.TWO),
-                                new Card(CardPattern.SPADE, CardNumber.TEN)
+                                new Card(CardNumber.ACE, CardPattern.SPADE),
+                                new Card(CardNumber.ACE, CardPattern.DIAMOND),
+                                new Card(CardNumber.ACE, CardPattern.HEART),
+                                new Card(CardNumber.TWO, CardPattern.SPADE),
+                                new Card(CardNumber.TEN, CardPattern.SPADE)
                         ), 3, 2
                 ),
                 Arguments.of(
                         List.of(
-                                new Card(CardPattern.SPADE, CardNumber.FOUR),
-                                new Card(CardPattern.SPADE, CardNumber.TEN),
-                                new Card(CardPattern.SPADE, CardNumber.ACE),
-                                new Card(CardPattern.DIAMOND, CardNumber.ACE),
-                                new Card(CardPattern.HEART, CardNumber.ACE)
+                                new Card(CardNumber.FOUR, CardPattern.SPADE),
+                                new Card(CardNumber.TEN, CardPattern.SPADE),
+                                new Card(CardNumber.ACE, CardPattern.DIAMOND),
+                                new Card(CardNumber.ACE, CardPattern.SPADE),
+                                new Card(CardNumber.ACE, CardPattern.HEART)
                         ), 2, 3
                 )
         );
