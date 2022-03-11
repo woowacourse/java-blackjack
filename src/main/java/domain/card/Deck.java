@@ -1,9 +1,8 @@
 package domain.card;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+
+import domain.card.deckstrategy.GenerationDeckStrategy;
 
 public class Deck {
 
@@ -11,17 +10,13 @@ public class Deck {
 
 	private final List<Card> cards;
 
-	public Deck() {
-		this.cards = generateCardsForBlackJack();
+	private Deck(List<Card> cards) {
+		this.cards = cards;
 	}
 
-	protected List<Card> generateCardsForBlackJack() {
-		List<Card> cards = new ArrayList<>();
-		Arrays.stream(Rank.values()).forEach(rank -> {
-			Arrays.stream(Suit.values()).map(suit -> new Card(rank, suit)).forEach(cards::add);
-		});
-		Collections.shuffle(cards);
-		return cards;
+	public static Deck from(GenerationDeckStrategy strategy) {
+		List<Card> cards = strategy.generateCardsForBlackJack();
+		return new Deck(cards);
 	}
 
 	public Card draw() {

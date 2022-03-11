@@ -12,8 +12,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Card;
+import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.card.deckstrategy.GenerationDeckStrategy;
 import domain.result.Versus;
 
 public class PlayersTest {
@@ -27,14 +29,15 @@ public class PlayersTest {
 	List<Card> cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
 	List<List<Card>> initCards = new ArrayList<>(Arrays.asList(cards_21, cards_BURST));
 	List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"));
-	Dealer dealer_17 = new Dealer(List.of(card_A, card_6));
 	Dealer dealerBlackJack = new Dealer(cards_21);
 
 	Players players;
+	Dealer dealer_17;
 
 	@BeforeEach
 	void setUp() {
 		players = new Players(names, initCards);
+		dealer_17 = new Dealer(List.of(card_A, card_6));
 	}
 
 	@Test
@@ -96,6 +99,23 @@ public class PlayersTest {
 	@Test
 	@DisplayName("최종 게임 결과 반환")
 	void getResultAtFinal() {
+		Map<Name, Versus> resultMap = players.getResultAtFinal(dealer_17);
+		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(Versus.WIN);
+		assertThat(resultMap.get(new Name("jason"))).isEqualTo(Versus.LOSE);
+	}
+
+	@Test
+	@DisplayName("초기 카드에 한명이 블랙잭이고 딜러가 나중에 블랙잭인 경우")
+	void getResultAtFinal_PlayerBlackJack() {
+		class TestGenerationDeckStrategy implements GenerationDeckStrategy {
+
+			@Override
+			public List<Card> generateCardsForBlackJack() {
+				return new ArrayList<Card>(Arrays.asList(new Card(Rank.RANK_4, Suit.CLOVER)));
+			}
+		}
+		Deck deck = Deck.from(new TestGenerationDeckStrategy());
+		dealer_17.addCard(deck.draw());
 		Map<Name, Versus> resultMap = players.getResultAtFinal(dealer_17);
 		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(Versus.WIN);
 		assertThat(resultMap.get(new Name("jason"))).isEqualTo(Versus.LOSE);

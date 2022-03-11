@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.InitCards;
+import domain.card.deckstrategy.GeneralGenerationDeckStrategy;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
@@ -24,11 +25,11 @@ public class Controller {
 	public void run() {
 		List<Name> names = inputNames();
 
-		Deck deck = new Deck();
+		Deck deck = Deck.from(new GeneralGenerationDeckStrategy());
 		Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
 		Players players = new Players(names, generateInitCardsForPlayers(names, deck));
 		printInitHands(names, dealer, players);
-		
+
 		if (dealer.isBlackJack()) {
 			printBlackJackResult(names, dealer, players);
 			return;
