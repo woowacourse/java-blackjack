@@ -39,11 +39,17 @@ public class BlackJackController {
     }
 
     private Users getUsers() {
-        List<String> playerNames = inputView.inputPlayerNames();
+        try {
+            List<String> playerNames = inputView.inputPlayerNames();
 
-        Dealer dealer = new Dealer();
+            Dealer dealer = new Dealer();
 
-        return Users.from(playerNames, dealer);
+            return Users.from(playerNames, dealer);
+        } catch(IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+
+            return getUsers();
+        }
     }
 
     private void printInitCardInfo(Users users) {
@@ -62,10 +68,8 @@ public class BlackJackController {
     }
 
     private void drawPlayerCardByYes(Deck deck, Player player) {
-        while (player.isDrawable()) {
-            if (inputView.inputWhetherToDrawCard(UserDto.from(player))) {
-                player.drawCard(deck);
-            }
+        while (player.isDrawable() && inputView.inputWhetherToDrawCard(UserDto.from(player))) {
+            player.drawCard(deck);
             outputView.printCards(UserDto.from(player));
         }
     }
