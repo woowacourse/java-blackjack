@@ -19,6 +19,13 @@ public class Dealer extends Player {
         this.lose = new ResultCount(Result.LOSE);
     }
 
+    public static Dealer changeToDealer(Player player) {
+        if (player instanceof Dealer) {
+            return (Dealer) player;
+        }
+        throw new ClassCastException("[ERROR] Player가 딜러가 아닙니다.");
+    }
+
     public void compete(final Participant participant) {
         if (isDealerWin(calculateFinalScore(), participant.calculateFinalScore())) {
             win.increaseCount();
@@ -30,13 +37,6 @@ public class Dealer extends Player {
 
     private boolean isDealerWin(final int dealerScore, final int participantScore) {
         return participantScore > MAX_SCORE || (dealerScore <= MAX_SCORE && dealerScore >= participantScore);
-    }
-
-    public static Dealer changeToDealer(Player player) {
-        if (player instanceof Dealer) {
-            return (Dealer) player;
-        }
-        throw new ClassCastException("[ERROR] Player가 딜러가 아닙니다.");
     }
 
     public boolean acceptableCard() {
