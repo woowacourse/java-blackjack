@@ -6,20 +6,20 @@ import domain.card.Card;
 
 public class Dealer extends Participant {
 
-	private static final String DEALER_NAME = "딜러";
-	private static final String SHOW_ONE_HAND_FORMAT = "%s: %s";
-	private static final int STANDARD_OF_ENOUGH_CARD = 16;
-	private static final int FIRST_CARD_INDEX = 0;
+    private static final String DEALER_NAME = "딜러";
+    private static final String SHOW_ONE_HAND_FORMAT = "%s: %s";
+    private static final int STANDARD_OF_ENOUGH_CARD = 16;
+    private static final int FIRST_CARD_INDEX = 0;
 
-	public Dealer(List<Card> hand) {
-		super(new Name(DEALER_NAME), hand);
-	}
+    public Dealer(List<Card> hand) {
+        super(new Name(DEALER_NAME), hand);
+    }
 
-	public String showOneHand() {
-		return String.format(SHOW_ONE_HAND_FORMAT, name.getName(), hand.get(FIRST_CARD_INDEX));
-	}
+    public String showOneHand() {
+        return String.format(SHOW_ONE_HAND_FORMAT, name.getName(), hand.get(FIRST_CARD_INDEX));
+    }
 
-	public boolean isEnoughCard() {
-		return getBestScore() > STANDARD_OF_ENOUGH_CARD;
-	}
+    public boolean isEnoughCard() {
+        return getBestScore() > STANDARD_OF_ENOUGH_CARD;
+    }
 }
