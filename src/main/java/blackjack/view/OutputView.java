@@ -35,12 +35,14 @@ public class OutputView {
 			.collect(Collectors.joining(OUTPUT_CONTEXT_DISTRIBUTOR));
 
 		final String message = dealerStatus.getRoleName() + WITH + playerNames + DISTRIBUTED_TWO_CARDS;
+		System.out.print("\n");
 		System.out.println(message);
 	}
 
 	private static void printHand(TableStatusDto dealerStatus, List<TableStatusDto> playersStatus) {
 		printPersonalHand(dealerStatus);
 		playersStatus.forEach(OutputView::printPersonalHand);
+		System.out.print("\n");
 	}
 
 	public static void printPersonalHand(final TableStatusDto status) {
@@ -49,11 +51,14 @@ public class OutputView {
 	}
 
 	public static void printDealerStatus(DealerTurnDto dealerTurn) {
+		System.out.print("\n");
 		if (dealerTurn.isDraw()) {
-			System.out.println(dealerTurn.getName() + IS + dealerTurn.getStandard() + RECEIVED_ONE_MORE_CARD);
+			System.out.println(
+				dealerTurn.getName() + IS + SPACE + dealerTurn.getStandard() + RECEIVED_ONE_MORE_CARD + "\n");
 			return;
 		}
-		System.out.println(dealerTurn.getName() + IS + dealerTurn.getStandard() + FAIL_TO_RECEIVE_ONE_MORE_CARD);
+		System.out.println(
+			dealerTurn.getName() + IS + SPACE + dealerTurn.getStandard() + FAIL_TO_RECEIVE_ONE_MORE_CARD + "\n");
 	}
 
 	public static void printFinalResult(FinalResultDto finalResult) {
@@ -61,6 +66,7 @@ public class OutputView {
 		final List<PlayerResultDto> playerResult = finalResult.getPlayerResults();
 		printDealerFinalResult(dealerResult);
 		playerResult.forEach(OutputView::printPlayerFinalResult);
+		System.out.print("\n");
 		System.out.println(FINAL_OUTCOME);
 		printDealerOutcome(dealerResult);
 		printPlayerOutcome(playerResult);
@@ -81,7 +87,7 @@ public class OutputView {
 	private static void printDealerOutcome(final DealerResultDto dealerResult) {
 		System.out.print(dealerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		final String dealerOutcome = dealerResult.getCompeteResult().entrySet().stream()
-			.map(entry -> EMPTY + entry.getValue() + entry.getKey())
+			.map(entry -> EMPTY + entry.getValue() + entry.getKey().getValue())
 			.collect(Collectors.joining(SPACE));
 		System.out.println(dealerOutcome);
 	}
