@@ -38,6 +38,6 @@ public class TrumpCard {
 
     @Override
     public String toString() {
-        return this.number.getValue() + this.symbol.getValue();
+        return this.number.toString() + this.symbol.getValue();
     }
 }
