@@ -14,13 +14,13 @@ public class Player extends Participant {
     public Versus compareAtBlackJack(Participant other) {
         boolean isPlayerBlackJack = isBlackJack();
         boolean isOtherBlackJack = other.isBlackJack();
-        if (isPlayerBlackJack && !isOtherBlackJack) {
+        if (isOtherBlackJack && isPlayerBlackJack) {
+            return Versus.DRAW;
+        }
+        if (!isOtherBlackJack && isPlayerBlackJack) {
             return Versus.WIN;
         }
-        if (!isPlayerBlackJack && isOtherBlackJack) {
-            return Versus.LOSE;
-        }
-        return Versus.DRAW;
+        return Versus.LOSE;
     }
 
     public Versus compareAtFinal(Participant other) {
