@@ -62,13 +62,8 @@ public class Blackjack {
 
     public List<CurrentCardsDTO> generateAllCurrentCardsDTO() {
         List<CurrentCardsDTO> allCurrentCardsDTOs = new ArrayList<>();
-
         allCurrentCardsDTOs.add(new CurrentCardsDTO(dealer));
-
-        allCurrentCardsDTOs.addAll(players.stream()
-                .map(CurrentCardsDTO::new)
-                .collect(Collectors.toList()));
-
+        players.forEach(player -> allCurrentCardsDTOs.add(new CurrentCardsDTO(player)));
         return allCurrentCardsDTOs;
     }
 
@@ -80,9 +75,7 @@ public class Blackjack {
     public List<TotalScoreDTO> calculateTotalScore() {
         List<TotalScoreDTO> totalScoreDTOs = new ArrayList<>();
         totalScoreDTOs.add(new TotalScoreDTO(dealer));
-        totalScoreDTOs.addAll(players.stream()
-                .map(TotalScoreDTO::new)
-                .collect(Collectors.toList()));
+        players.forEach(player -> totalScoreDTOs.add(new TotalScoreDTO(player)));
         return totalScoreDTOs;
     }
 
@@ -120,7 +113,9 @@ public class Blackjack {
     }
 
     private DealerResultDTO calculateDealerResult(List<PlayerResultDTO> totalPlayerResult) {
-        int loseCount = (int) totalPlayerResult.stream().filter(PlayerResultDTO::isWin).count();
+        int loseCount = (int) totalPlayerResult.stream()
+                .filter(PlayerResultDTO::isWin)
+                .count();
         int winCount = totalPlayerResult.size() - loseCount;
 
         return new DealerResultDTO(dealer.getName(), winCount, loseCount);
