@@ -9,17 +9,20 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class CardDeckTest {
+
     CardDeck cardDeck;
+
     @BeforeEach
-    void init(){
+    void init() {
         cardDeck = CardDeckGenerator.generate();
     }
+
     @Test
     @DisplayName("카드덱 생성 테스트")
     public void createCardTest() {
 //        CardDeck cardDeck = CardDeckGenerator.generate();
         assertThat(cardDeck.size())
-                .isEqualTo(52);
+            .isEqualTo(52);
     }
 
     @Test
@@ -36,7 +39,7 @@ class CardDeckTest {
             cardDeck.giveCard();
         }
         assertThatThrownBy(cardDeck::giveCard)
-                .isInstanceOf(Exception.class)
-                .hasMessage("[ERROR] 남은 카드가 존재하지 않습니다.");
+            .isInstanceOf(Exception.class)
+            .hasMessage("[ERROR] 남은 카드가 존재하지 않습니다.");
     }
 }

@@ -4,13 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Symbol;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class DealerTest {
 
     @Test
-    public void 참여자에_카드_추가() {
+    @DisplayName("딜러 카드 추가 테스트")
+    public void dealerAddCardTest() {
         Dealer dealer = Dealer.of();
 
         Card card5 = Card.of(Denomination.of("5"), Symbol.of("스페이드"));

@@ -5,19 +5,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Symbol;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class PlayerTest {
 
     @Test
-    public void 참여자생성() {
+    @DisplayName("플레이어 생성 테스트")
+    public void createPlayer() {
         Player player = Player.of(Name.of("test"));
         assertThat(player.getName()).isEqualTo("test");
     }
 
     @Test
-    public void 참여자에_카드_추가() {
+    @DisplayName("플레이어 카드 추가 테스트")
+    public void addCard_Player() {
         Player player = Player.of(Name.of("test"));
 
         Card card5 = Card.of(Denomination.of("5"), Symbol.of("스페이드"));

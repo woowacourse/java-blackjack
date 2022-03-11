@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import blackjack.domain.human.Name;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -12,16 +13,18 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class NameTest {
 
     @Test
-    public void 참여자이름_객체_생성_통과() {
+    @DisplayName("플레이어이름 객체 생성 성공 테스트")
+    public void createNameTest() {
         assertThat(Name.of("jack").getName())
                 .isEqualTo("jack");
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"ja ck", "jac.k",""})
-    public void 참여자이름_객체_생성_실패(String input) {
+    @DisplayName("플레이어 이름 객체 생성 실패 테스트")
+    public void exceptionNameTest(String input) {
         assertThatThrownBy(() -> Name.of(input))
                 .isInstanceOf(Exception.class)
-                .hasMessage("이름 형식에 맞게 입력해야 합니다");
+                .hasMessage("[ERROR] 입력 형식에 맞춰 입력해주세요.");
     }
 }

@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Denomination;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -25,7 +26,8 @@ class DenominationTest {
             , "Q,QUEEN"
             , "K,KING"
     })
-    void 테스트(String numStr, Denomination expectedDenomination) {
+    @DisplayName("Denomination 생성 테스트")
+    void createDenomination(String numStr, Denomination expectedDenomination) {
         Denomination denomination = Denomination.of(numStr);
         assertThat(denomination)
                 .isEqualTo(expectedDenomination);

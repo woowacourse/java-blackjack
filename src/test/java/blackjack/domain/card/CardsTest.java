@@ -7,12 +7,14 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Symbol;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class CardsTest {
     @Test
-    public void 카드모음_생성_테스트(){
+    @DisplayName("카드 목록 추가 테스트")
+    public void createCardsTest(){
         Cards cards = Cards.create();
 
         Card card5 = Card.of(Denomination.of("5"), Symbol.of("스페이드"));
