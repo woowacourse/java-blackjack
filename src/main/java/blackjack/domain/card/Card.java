@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.Objects;
 
@@ -15,7 +15,7 @@ public class Card {
 
     private void validateNull(Denomination denomination, Suit suit) {
         if (denomination == null || suit == null) {
-            throw new NullPointerException("카드를 생성할때 숫자와 무늬중 null이 존재합니다.");
+            throw new NullPointerException("[ERROR] 카드를 생성할때 숫자와 무늬중 null이 존재합니다.");
         }
     }
 
@@ -50,13 +50,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(denomination, suit);
-    }
-
-    @Override
-    public String toString() {
-        return "Card{" +
-                "denomination=" + denomination +
-                ", suit=" + suit +
-                '}';
     }
 }

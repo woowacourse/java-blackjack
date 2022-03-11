@@ -1,8 +1,11 @@
 package blackjack.domain;
 
-import static blackjack.domain.Deck.EMPTY_CARD_EXCEPTION_MESSAGE;
 import static org.assertj.core.api.Assertions.*;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
@@ -39,6 +42,6 @@ class DeckTest {
 
         assertThatThrownBy(deck::draw)
             .isInstanceOf(NoSuchElementException.class)
-            .hasMessageContaining(EMPTY_CARD_EXCEPTION_MESSAGE);
+            .hasMessageContaining("[ERROR] 52장의 카드가 모두 소진되었습니다.");
     }
 }

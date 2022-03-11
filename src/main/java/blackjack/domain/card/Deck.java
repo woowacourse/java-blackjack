@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class Deck {
 
     private static final List<Card> CACHE_DECK = new ArrayList<>();
-    static final String EMPTY_CARD_EXCEPTION_MESSAGE = "[ERROR] 52장의 카드가 모두 소진되었습니다.";
+    private static final String EMPTY_CARD_EXCEPTION_MESSAGE = "[ERROR] 52장의 카드가 모두 소진되었습니다.";
 
     static {
         CACHE_DECK.addAll(Arrays.stream(Suit.values())

@@ -3,17 +3,17 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.Card;
-import blackjack.domain.Deck;
-import blackjack.domain.Denomination;
-import blackjack.domain.Suit;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class DealerTest {
+class DealerTest {
 
     @Test
     @DisplayName("딜러가 정상적으로 생성되는지 확인")
