@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.Names;
 import java.util.Map;
 
 import blackjack.domain.Dealer;
@@ -32,7 +33,7 @@ public class BlackJackGameController {
 
 	private Players generatePlayers() {
 		try {
-			Players players = new Players(inputView.inputPlayerNames());
+			Players players = new Players(new Names(inputView.inputPlayerNames()));
 			return players;
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
@@ -46,8 +47,7 @@ public class BlackJackGameController {
 			outputView.displayAllCardAndScore(player);
 		}
 		Result result = new Result();
-		Map<Player, ResultType> gameResult = result.getResult(players.getPlayers(), dealer);
-		outputView.displayResult(gameResult);
+		outputView.displayResult(result, players, dealer);
 	}
 
 	private void progressDealerTurn(Dealer dealer, Deck deck) {

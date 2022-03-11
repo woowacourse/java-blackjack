@@ -2,7 +2,7 @@ package blackjack.domain;
 
 public class Dealer extends Gamer {
 	public Dealer() {
-		super("딜러");
+		super(new Name("딜러"));
 	}
 
 	public boolean isHigher(Gamer gamer) {

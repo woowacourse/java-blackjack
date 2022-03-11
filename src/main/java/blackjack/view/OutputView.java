@@ -4,6 +4,7 @@ import blackjack.domain.Cards;
 import blackjack.domain.Dealer;
 import blackjack.domain.Gamer;
 import blackjack.domain.Players;
+import blackjack.domain.Result;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -58,18 +59,15 @@ public class OutputView {
 		System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
 	}
 
-	public void displayResult(Map<Player, ResultType> result) {
-		final int winCount = (int) result.values().stream()
-			.filter(resultType -> resultType == ResultType.LOSE)
-			.count();
-		final int loseCount = (int)result.values().stream()
-			.filter(resultType -> resultType == ResultType.WIN)
-			.count();
-		final int drawCount = result.size() - (winCount + loseCount);
+	public void displayResult(Result result, Players players, Dealer dealer) {
+		final int winCount = result.calculateCount(ResultType.WIN);
+		final int loseCount = result.calculateCount(ResultType.LOSE);
+		final int drawCount = result.calculateCount(ResultType.DRAW);
+		Map<Player, ResultType> gameResults = result.getResult(players, dealer);
 		System.out.println("## 최종 승패");
-		System.out.println("딜러: " + winCount + "승 " + loseCount + "패 " + drawCount + "무");
-		for (Player player : result.keySet()) {
-			System.out.println(player.getName() + ": " + result.get(player).getValue());
+		System.out.println(dealer.getName() + ": " + winCount + "승 " + loseCount + "패 " + drawCount + "무");
+		for (Player player : gameResults.keySet()) {
+			System.out.println(player.getName() + ": " + gameResults.get(player).getValue());
 		}
 	}
 }

@@ -14,7 +14,7 @@ public class PlayersTest {
 	void check_empty_list() {
 		String lines = ",,,,";
 		List<String> strings = Arrays.asList(lines.split(","));
-		assertThatThrownBy(() -> new Players(strings))
+		assertThatThrownBy(() -> new Players(new Names(strings)))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 }

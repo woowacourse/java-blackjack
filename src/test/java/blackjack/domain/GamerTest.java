@@ -8,7 +8,7 @@ class GamerTest {
 	@Test
 	void distribute_card() {
 		//given
-		Gamer gamer = new Player("pobi");
+		Gamer gamer = new Player(new Name("pobi"));
 		Deck deck = new Deck();
 		//when
 		gamer.processCard(deck.distributeCard());
@@ -32,7 +32,7 @@ class GamerTest {
 	@Test
 	void check_optimal_ace_sum() {
 		// given
-		Gamer gamer = new Player("pobi");
+		Gamer gamer = new Player(new Name("pobi"));
 		// when
 		gamer.processCard(new Card(Number.ACE, Type.HEART));
 		gamer.processCard(new Card(Number.ACE, Type.SPADE));

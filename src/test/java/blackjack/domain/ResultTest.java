@@ -15,19 +15,19 @@ public class ResultTest {
 	@BeforeEach
 	void gamer_init() {
 		dealer = new Dealer();
-		player1 = new Player("pobi");
-		player2 = new Player("jason");
+		player1 = new Player(new Name("pobi"));
+		player2 = new Player(new Name("jason"));
 	}
 	@Test
 	void all_player_lose() {
 		// given
-		List<Player> players = List.of(player1, player2);
-		dealer.addCard(new Card(Number.QUEEN, Type.CLOVER));
-		dealer.addCard(new Card(Number.KING, Type.SPADE));
-		player1.addCard(new Card(Number.TEN, Type.SPADE));
-		player1.addCard(new Card(Number.NINE, Type.DIAMOND));
-		player2.addCard(new Card(Number.TEN, Type.DIAMOND));
-		player2.addCard(new Card(Number.NINE, Type.SPADE));
+		Players players = new Players(new Names(List.of("pobi", "jason")));
+		dealer.processCard(new Card(Number.QUEEN, Type.CLOVER));
+		dealer.processCard(new Card(Number.KING, Type.SPADE));
+		player1.processCard(new Card(Number.TEN, Type.SPADE));
+		player1.processCard(new Card(Number.NINE, Type.DIAMOND));
+		player2.processCard(new Card(Number.TEN, Type.DIAMOND));
+		player2.processCard(new Card(Number.NINE, Type.SPADE));
 		// when
 		Result result = new Result();
 		Map<Player, ResultType> gameResult = result.getResult(players, dealer);
@@ -41,13 +41,13 @@ public class ResultTest {
 	@Test
 	void all_player_win() {
 		// given
-		List<Player> players = List.of(player1, player2);
-		dealer.addCard(new Card(Number.QUEEN, Type.CLOVER));
-		dealer.addCard(new Card(Number.NINE, Type.SPADE));
-		player1.addCard(new Card(Number.TEN, Type.SPADE));
-		player1.addCard(new Card(Number.TEN, Type.DIAMOND));
-		player2.addCard(new Card(Number.TEN, Type.HEART));
-		player2.addCard(new Card(Number.TEN, Type.CLOVER));
+		Players players = new Players(new Names(List.of("pobi", "jason")));
+		dealer.processCard(new Card(Number.QUEEN, Type.CLOVER));
+		dealer.processCard(new Card(Number.NINE, Type.SPADE));
+		player1.processCard(new Card(Number.TEN, Type.SPADE));
+		player1.processCard(new Card(Number.TEN, Type.DIAMOND));
+		player2.processCard(new Card(Number.TEN, Type.HEART));
+		player2.processCard(new Card(Number.TEN, Type.CLOVER));
 		// when
 		Result result = new Result();
 		Map<Player, ResultType> gameResult = result.getResult(players, dealer);
@@ -60,13 +60,13 @@ public class ResultTest {
 	@Test
 	void all_player_draw() {
 	    //given
-		List<Player> players = List.of(player1, player2);
-		dealer.addCard(new Card(Number.QUEEN, Type.CLOVER));
-		dealer.addCard(new Card(Number.NINE, Type.SPADE));
-		player1.addCard(new Card(Number.TEN, Type.SPADE));
-		player1.addCard(new Card(Number.NINE, Type.DIAMOND));
-		player2.addCard(new Card(Number.TEN, Type.HEART));
-		player2.addCard(new Card(Number.NINE, Type.CLOVER));
+		Players players = new Players(new Names(List.of("pobi", "jason")));
+		dealer.processCard(new Card(Number.QUEEN, Type.CLOVER));
+		dealer.processCard(new Card(Number.NINE, Type.SPADE));
+		player1.processCard(new Card(Number.TEN, Type.SPADE));
+		player1.processCard(new Card(Number.NINE, Type.DIAMOND));
+		player2.processCard(new Card(Number.TEN, Type.HEART));
+		player2.processCard(new Card(Number.NINE, Type.CLOVER));
 	    //when
 		Result result = new Result();
 		Map<Player, ResultType> gameResult = result.getResult(players, dealer);

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Player extends Gamer {
 
-	public Player(String name) {
+	public Player(Name name) {
 		super(name);
 	}
 

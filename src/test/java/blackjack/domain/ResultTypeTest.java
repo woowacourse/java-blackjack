@@ -11,8 +11,8 @@ class ResultTypeTest {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
-		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
-		player.addCard(new Card(Number.EIGHT, Type.CLOVER));
+		dealer.processCard(new Card(Number.NINE, Type.CLOVER));
+		player.processCard(new Card(Number.EIGHT, Type.CLOVER));
 		//when
 		ResultType resultType = ResultType.generateResultType(player, dealer);
 		//then
@@ -24,8 +24,8 @@ class ResultTypeTest {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
-		dealer.addCard(new Card(Number.EIGHT, Type.CLOVER));
-		player.addCard(new Card(Number.NINE, Type.CLOVER));
+		dealer.processCard(new Card(Number.EIGHT, Type.CLOVER));
+		player.processCard(new Card(Number.NINE, Type.CLOVER));
 		//when
 		ResultType resultType = ResultType.generateResultType(player, dealer);
 		//then
@@ -37,8 +37,8 @@ class ResultTypeTest {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
-		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
-		player.addCard(new Card(Number.NINE, Type.HEART));
+		dealer.processCard(new Card(Number.NINE, Type.CLOVER));
+		player.processCard(new Card(Number.NINE, Type.HEART));
 		//when
 		ResultType resultType = ResultType.generateResultType(player, dealer);
 		//then

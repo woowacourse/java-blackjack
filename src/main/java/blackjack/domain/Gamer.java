@@ -6,8 +6,8 @@ public class Gamer {
 	private final Cards cards = new Cards();
 	protected final Name name;
 
-	public Gamer(String name) {
-		this.name = new Name(name);
+	public Gamer(Name name) {
+		this.name = name;
 	}
 
 	public void addCards(Deck deck, int times) {

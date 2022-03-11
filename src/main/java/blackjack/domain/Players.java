@@ -3,17 +3,14 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.jar.Attributes;
 
 public class Players {
 	private final List<Player> players;
 
-	public Players(List<String> playerNames) {
-		if (playerNames.isEmpty()) {
-			throw new IllegalArgumentException("플레이어를 한명 이상 입력해야 합니다.");
-		}
-		validateDuplicateName(playerNames);
+	public Players(Names playerNames) {
 		players = new ArrayList<>();
-		for (String playerName : playerNames) {
+		for (Name playerName : playerNames.getNames()) {
 			players.add(new Player(playerName));
 		}
 	}
@@ -25,11 +22,5 @@ public class Players {
 	public void addCardToAllPlayers(Deck deck, int times) {
 		players.stream()
 			.forEach(player -> player.addCards(deck, times));
-	}
-
-	private void validateDuplicateName(List<String> playerNames) {
-		if (new HashSet<>(playerNames).size() != playerNames.size()) {
-			throw new IllegalArgumentException("이름에 중복이 있으면 안됩니다.");
-		}
 	}
 }

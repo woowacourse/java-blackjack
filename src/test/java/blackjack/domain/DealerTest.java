@@ -9,7 +9,7 @@ public class DealerTest {
 	void dealer_score_higher_than_player_score() {
 	    //given
 	    Dealer dealer = new Dealer();
-	    Player player = new Player("pobi");
+	    Player player = new Player(new Name("pobi"));
 	    //when
 	    dealer.processCard(new Card(Number.NINE, Type.CLOVER));
 		player.processCard(new Card(Number.FIVE, Type.CLOVER));
@@ -21,7 +21,7 @@ public class DealerTest {
 	void dealer_score_lower_than_player_score() {
 		//given
 		Dealer dealer = new Dealer();
-		Player player = new Player("pobi");
+		Player player = new Player(new Name("pobi"));
 		//when
 		dealer.processCard(new Card(Number.NINE, Type.CLOVER));
 		player.processCard(new Card(Number.TEN, Type.CLOVER));
@@ -33,7 +33,7 @@ public class DealerTest {
 	void dealer_score_equal_to_player_score() {
 		//given
 		Dealer dealer = new Dealer();
-		Player player = new Player("pobi");
+		Player player = new Player(new Name("pobi"));
 		//when
 		dealer.processCard(new Card(Number.NINE, Type.CLOVER));
 		player.processCard(new Card(Number.NINE, Type.HEART));
