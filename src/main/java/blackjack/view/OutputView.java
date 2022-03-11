@@ -4,20 +4,27 @@ import static java.lang.System.out;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.GameScoreBoard;
+import blackjack.domain.Result;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Map.Entry;
 
 public class OutputView {
 
     private static final String NEWLINE = System.lineSeparator();
+    private static final String TURN_CARD_PROMPT = NEWLINE + "딜러와 %s에게 2장의 카드를 나누었습니다." + NEWLINE;
+    private static final String DEALER_CARD_STATUS_FORMAT = "%s: %s" + NEWLINE;
+    private static final String DELIMITER = ", ";
+
+    private OutputView() {
+    }
 
     public static void showParticipantsHand(Dealer dealer, List<Player> players) {
-        out.printf(NEWLINE + "딜러와 %s에게 2장의 카드를 나누었습니다." + NEWLINE, getPlayerNames(players));
-        out.printf("%s: %s" + NEWLINE, dealer.getName(),
-                dealer.getOpenCard().getDenomination() + dealer.getOpenCard().getSuit());
+        out.printf(TURN_CARD_PROMPT, getPlayerNames(players));
+        out.printf(DEALER_CARD_STATUS_FORMAT, dealer.getName(), getCardDetail(dealer));
         for (Player player : players) {
             printPlayerHand(player);
         }
@@ -25,22 +32,26 @@ public class OutputView {
 
     private static String getPlayerNames(List<Player> players) {
         return players.stream()
-                .map(Player::getName)
-                .collect(joining(", "));
+            .map(Player::getName)
+            .collect(joining(DELIMITER));
     }
 
-    public static void showPlayerHand(Player player) {
-        printPlayerHand(player);
+    private static String getCardDetail(Dealer dealer) {
+        return dealer.getOpenCard().getDenomination() + dealer.getOpenCard().getSuit();
     }
 
     private static void printPlayerHand(Player player) {
         out.printf("%s: 카드: %s" + NEWLINE, player.getName(), getCards(player));
     }
 
-    private static String getCards(Player player) {
-        return player.getCards().stream()
-                .map(card -> card.getDenomination() + card.getSuit())
-                .collect(joining(", "));
+    public static void showPlayerHand(Player player) {
+        printPlayerHand(player);
+    }
+
+    private static String getCards(Participant participant) {
+        return participant.getCards().stream()
+            .map(card -> card.getDenomination() + card.getSuit())
+            .collect(joining(DELIMITER));
     }
 
     public static void printDealerHandDrawMessage() {
@@ -48,21 +59,17 @@ public class OutputView {
     }
 
     public static void printParticipantResult(Dealer dealer, List<Player> players) {
-        out.printf("%s 카드: %s - 결과: %d" + NEWLINE, dealer.getName(), dealer.getCards().stream()
-                .map(card -> card.getDenomination()+card.getSuit())
-                .collect(Collectors.joining(", ")), dealer.getCardHand().getScore());
-
+        printCardHand(dealer);
         for (Player player : players) {
-            out.printf("%s카드: %s - 결과: %d" + NEWLINE, player.getName(), getCards(player), player.getCardHand().getScore());
+            printCardHand(player);
         }
     }
 
-    /**
-     * ## 최종 승패
-     * 딜러: 1승 1패
-     * pobi: 승
-     * jason: 패
-     */
+    private static void printCardHand(Participant participant) {
+        out.printf("%s 카드: %s - 결과: %d" + NEWLINE, participant.getName(), getCards(participant),
+            participant.getCardTotalScore());
+    }
+
     public static void printBlackjackGameResult(GameScoreBoard result) {
         out.println(NEWLINE + "## 최종 승패");
         printDealerGameResult(result);
@@ -70,16 +77,17 @@ public class OutputView {
     }
 
     private static void printDealerGameResult(GameScoreBoard result) {
-        int winCount = result.getDealerWinCount();
-        int loseCount = result.getDealerLoseCount();
-        int drawCount = result.getDrawCount();
-        out.printf("딜러: %d승 %d패 %d무" + NEWLINE, winCount, loseCount, drawCount);
+        out.print("딜러: ");
+        for (Entry<Result, Integer> dealerGameResult : result.getDealerGameResult().entrySet()) {
+            out.printf("%d%s ", dealerGameResult.getValue(), dealerGameResult.getKey());
+        }
+        out.println();
     }
 
     private static void printPlayersGameResult(GameScoreBoard result) {
-        Map<String, String> playerResult = result.getPlayerResultMap();
-        for (String player : playerResult.keySet()) {
-            out.printf("%s: %s" + NEWLINE, player, playerResult.get(player));
+        Map<String, String> playerResult = result.getPlayerGameResultMap();
+        for (Entry<String, String> playerGameResult : playerResult.entrySet()) {
+            out.printf("%s: %s" + NEWLINE, playerGameResult.getKey(), playerGameResult.getValue());
         }
     }
 

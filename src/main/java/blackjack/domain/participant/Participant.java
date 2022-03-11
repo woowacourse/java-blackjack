@@ -26,7 +26,7 @@ public abstract class Participant {
         return cardHand.getCards();
     }
 
-    public Hand getCardHand() {
-        return cardHand;
+    public int getCardTotalScore() {
+        return cardHand.getScore();
     }
 }
