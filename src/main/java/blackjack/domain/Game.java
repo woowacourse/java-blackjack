@@ -25,17 +25,19 @@ public class Game {
             .collect(Collectors.toList());
     }
 
-    public int getParticipantCount() {
-        return players.size() + 1;
-    }
-
     public void init() {
         dealer.init(cardFactory);
         players.forEach(player -> player.init(cardFactory));
     }
 
-    public int getRemainAmount() {
-        return cardFactory.getRemainAmount();
+    public Card openCard() {
+        return dealer.openCard();
+    }
+
+    public Optional<Player> findHitPlayer() {
+        return players.stream()
+            .filter(Player::isHit)
+            .findFirst();
     }
 
     public void drawPlayerCard(Player player, Status status) {
@@ -46,22 +48,12 @@ public class Game {
         player.stay();
     }
 
-    public Optional<Player> findHitPlayer() {
-        return players.stream()
-            .filter(Player::isHit)
-            .findFirst();
-    }
-
     public CardCount drawDealerCard() {
         return dealer.drawCards(cardFactory);
     }
 
     public int getDealerScore() {
         return dealer.getScore();
-    }
-
-    public Card openCard() {
-        return dealer.openCard();
     }
 
     public Dealer getDealer() {
