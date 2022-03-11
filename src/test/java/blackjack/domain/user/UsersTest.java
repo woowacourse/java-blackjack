@@ -16,7 +16,7 @@ class UsersTest {
         List<String> names = List.of("pobi", "jason");
 
         //when
-        Users users = Users.from(names);
+        Users users = Users.from(names, new Dealer());
 
         //then
         Assertions.assertAll(

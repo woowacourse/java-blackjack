@@ -12,17 +12,17 @@ public class Users {
     private final List<Player> players;
     private final Dealer dealer;
 
-    private Users(List<Player> players) {
+    private Users(List<Player> players, Dealer dealer) {
         this.players = players;
-        dealer = new Dealer();
+        this.dealer = dealer;
     }
 
-    public static Users from(List<String> inputNames) {
+    public static Users from(List<String> inputNames, Dealer dealer) {
         List<Player> players = inputNames.stream()
                 .map(Player::new)
                 .collect(toList());
 
-        return new Users(players);
+        return new Users(players, dealer);
     }
 
     public void setInitCardsPerPlayer(Deck deck) {
