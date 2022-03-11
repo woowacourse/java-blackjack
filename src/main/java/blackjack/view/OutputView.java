@@ -29,15 +29,15 @@ public class OutputView {
     }
 
     public void printDealer() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printWithScore(UserDto userDto, int score) {
-        System.out.printf("%s카드: %s - 결과: %d\n", userDto.getUserName(), userDto.getCardsInfo(), score);
+        System.out.printf("\n%s카드: %s - 결과: %d", userDto.getUserName(), userDto.getCardsInfo(), score);
     }
 
     public void printYield(Map<String, Result> map) {
-        System.out.println("## 최종승패");
+        System.out.println("\n\n## 최종승패");
 
         String dealerYield = calculateDealerYield(map);
         System.out.printf("딜러: %s\n", dealerYield);
