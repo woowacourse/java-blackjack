@@ -1,4 +1,4 @@
-package blackjack.domain.card.strategy;
+package blackjack.domain.card.generator;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,8 +29,9 @@ public class RandomDeckGenerator implements DeckGenerator {
 
     @Override
     public List<Card> generate() {
-        Collections.shuffle(cards);
-        return new LinkedList<>(cards);
+        final List<Card> shuffledCards = new LinkedList<>(cards);
+        Collections.shuffle(shuffledCards);
+        return shuffledCards;
     }
 
 }

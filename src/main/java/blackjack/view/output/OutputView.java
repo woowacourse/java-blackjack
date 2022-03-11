@@ -61,14 +61,14 @@ public class OutputView {
     }
 
     private void printMatchResultOfDealer(final Map<MatchStatus, Integer> resultOfDealer) {
-        final String dealerResultString = resultOfDealer.entrySet().stream()
+        final String matchResultOfDealer = resultOfDealer.entrySet().stream()
                 .map(entry -> entry.getValue() + entry.getKey().getName())
                 .collect(Collectors.joining(" "));
-        printMessage(Delimiter.COLON.joinWith("딜러", dealerResultString));
+        printMessage(Delimiter.COLON.joinWith("딜러", matchResultOfDealer));
     }
 
-    private void printMatchResultOfPlayers(Map<String, MatchStatus> resultOfPlayers) {
-        for (Map.Entry<String, MatchStatus> entry : resultOfPlayers.entrySet()) {
+    private void printMatchResultOfPlayers(final Map<String, MatchStatus> resultOfPlayers) {
+        for (final Map.Entry<String, MatchStatus> entry : resultOfPlayers.entrySet()) {
             final String playerName = entry.getKey();
             final String matchStatusName = entry.getValue().getName();
             printMessage(Delimiter.COLON.joinWith(playerName, matchStatusName));

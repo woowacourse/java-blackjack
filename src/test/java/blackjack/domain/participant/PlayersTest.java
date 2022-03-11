@@ -18,7 +18,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.strategy.ManualDeckGenerator;
+import blackjack.domain.card.generator.ManualDeckGenerator;
 import blackjack.domain.result.MatchStatus;
 
 public class PlayersTest {

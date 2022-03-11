@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.strategy.RandomDeckGenerator;
+import blackjack.domain.card.generator.RandomDeckGenerator;
 
 class PlayerTest {
 

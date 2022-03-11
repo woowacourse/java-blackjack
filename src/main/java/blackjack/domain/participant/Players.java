@@ -15,13 +15,13 @@ public class Players {
     private final List<Player> players;
 
     private Players(final List<String> playerNames, final Deck deck) {
-        validatePlayerNameDuplicated(playerNames);
+        validateNameNotDuplicated(playerNames);
         this.players = playerNames.stream()
                 .map(playerName -> Player.readyToPlay(playerName, deck))
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    private static void validatePlayerNameDuplicated(final List<String> playerNames) {
+    private static void validateNameNotDuplicated(final List<String> playerNames) {
         if (isPlayerNameDuplicated(playerNames)) {
             throw new IllegalArgumentException("플레이어명은 중복될 수 없습니다.");
         }
@@ -37,7 +37,7 @@ public class Players {
     }
 
     public void drawCardsPerPlayer(final Deck deck, final CardDrawCallback callback) {
-        for (Player player : players) {
+        for (final Player player : players) {
             player.drawCards(deck, callback);
         }
     }

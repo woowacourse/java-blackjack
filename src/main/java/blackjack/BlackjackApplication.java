@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.strategy.DeckGenerator;
+import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.participant.CardDrawCallback;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Players;

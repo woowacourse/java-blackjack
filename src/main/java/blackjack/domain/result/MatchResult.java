@@ -9,11 +9,11 @@ public class MatchResult {
     private final Map<String, MatchStatus> resultOfPlayers;
 
     public MatchResult(final Map<String, MatchStatus> resultOfPlayers) {
-        this.resultOfDealer = calculateDealerResult(resultOfPlayers);
+        this.resultOfDealer = calculateResultOfDealer(resultOfPlayers);
         this.resultOfPlayers = resultOfPlayers;
     }
 
-    private Map<MatchStatus, Integer> calculateDealerResult(final Map<String, MatchStatus> playerResult) {
+    private Map<MatchStatus, Integer> calculateResultOfDealer(final Map<String, MatchStatus> playerResult) {
         final Map<MatchStatus, Integer> playerMatchStatusCounts = new EnumMap<>(MatchStatus.class);
         for (final MatchStatus result : playerResult.values()) {
             playerMatchStatusCounts.merge(result, 1, Integer::sum);
