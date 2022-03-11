@@ -19,25 +19,10 @@ public class GameController {
 
     public void play() {
         final Game game = createGame();
+        init(game);
 
-        game.init();
-        OutputView.printInitResult(game.getNames());
-        OutputView.printDealerFirstCard(game.openCard());
-        for (Player player : game.getPlayers()) {
-            OutputView.printPlayerCards(new ParticipantVo(player));
-        }
-
-        while (game.findHitPlayer().isPresent()) {
-            final Player player = game.findHitPlayer().get();
-            final Status hitOrStay = getHitOrStay(player);
-
-            game.drawPlayerCard(player, hitOrStay);
-
-            OutputView.printPlayerCards(new ParticipantVo(player));
-        }
-
-        final CardCount cardCount = game.drawDealerCard();
-        OutputView.printDealerDrawCardCount(cardCount);
+        progressPlayerTurns(game);
+        progressDealerTurn(game);
 
         OutputView.printParticipantCards(new ParticipantVo(game.getDealer()));
         for (Player player : game.getPlayers()) {
@@ -68,6 +53,27 @@ public class GameController {
         }
     }
 
+    private void init(final Game game) {
+        game.init();
+
+        OutputView.printInitResult(game.getNames());
+        OutputView.printDealerFirstCard(game.openCard());
+        game.getPlayers().stream()
+                .map(ParticipantVo::new)
+                .forEach(OutputView::printPlayerCards);
+    }
+
+    private void progressPlayerTurns(final Game game) {
+        while (game.findHitPlayer().isPresent()) {
+            final Player player = game.findHitPlayer().get();
+            final Status hitOrStay = getHitOrStay(player);
+
+            game.drawPlayerCard(player, hitOrStay);
+
+            OutputView.printPlayerCards(new ParticipantVo(player));
+        }
+    }
+
     private Status getHitOrStay(final Player player) {
         try {
             return InputView.requestHitOrStay(player.getName());
@@ -75,5 +81,10 @@ public class GameController {
             OutputView.printError(e.getMessage());
             return getHitOrStay(player);
         }
+    }
+
+    private void progressDealerTurn(final Game game) {
+        final CardCount cardCount = game.drawDealerCard();
+        OutputView.printDealerDrawCardCount(cardCount);
     }
 }
