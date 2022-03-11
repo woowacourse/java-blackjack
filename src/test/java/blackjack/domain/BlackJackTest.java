@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.property.CardNumber;
+import blackjack.domain.card.property.CardShape;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.PlayerGroup;

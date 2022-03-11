@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.domain.card.property;
 
 public enum CardShape {
     HEART("하트"),

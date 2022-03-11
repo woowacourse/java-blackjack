@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.domain.card.property;
 
 public enum CardNumber {
     A("A", 1),

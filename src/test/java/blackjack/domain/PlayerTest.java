@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.property.CardShape;
 import blackjack.domain.gamer.Player;
 import java.util.List;
 import java.util.stream.Stream;

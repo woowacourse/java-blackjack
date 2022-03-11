@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.card.property.CardNumber;
+import blackjack.domain.card.property.CardShape;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

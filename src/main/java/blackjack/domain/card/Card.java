@@ -1,21 +1,23 @@
 package blackjack.domain.card;
 
+import blackjack.domain.card.property.CardNumber;
+import blackjack.domain.card.property.CardProperty;
+import blackjack.domain.card.property.CardShape;
+
 public class Card {
-    private final CardShape shape;
-    private final CardNumber number;
+    private final CardProperty cardProperty;
     private boolean isOpen = true;
 
     public Card(CardShape shape, CardNumber number) {
-        this.shape = shape;
-        this.number = number;
+        this.cardProperty = new CardProperty(shape, number);
     }
 
     public CardShape getCardShape() {
-        return this.shape;
+        return cardProperty.getShape();
     }
 
     public CardNumber getCardNumber() {
-        return this.number;
+        return cardProperty.getNumber();
     }
 
     public void close() {
@@ -31,6 +33,6 @@ public class Card {
     }
 
     public boolean isA() {
-        return number.isA();
+        return cardProperty.isA();
     }
 }
