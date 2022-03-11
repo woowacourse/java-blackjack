@@ -1,13 +1,11 @@
 package blackjack.dto;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameParticipants;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class InitialDistributionDto {
@@ -20,10 +18,7 @@ public class InitialDistributionDto {
     }
 
     private void initDealerInfo(Dealer dealer) {
-        String dealerName = dealer.getName();
-        Set<Card> openCardInfo = Set.of(dealer.getOpenCard());
-
-        ParticipantCardsDto dealerCardInfo = ParticipantCardsDto.of(dealerName, openCardInfo);
+        ParticipantCardsDto dealerCardInfo = ParticipantCardsDto.ofInitialDealer(dealer);
         participantsInfo.add(dealerCardInfo);
     }
 
@@ -32,10 +27,7 @@ public class InitialDistributionDto {
     }
 
     private void addPlayerInfo(Player player) {
-        String playerName = player.getName();
-        Set<Card> playerCards = player.getCards();
-
-        ParticipantCardsDto playerCardsInfo = ParticipantCardsDto.of(playerName, playerCards);
+        ParticipantCardsDto playerCardsInfo = ParticipantCardsDto.of(player);
         participantsInfo.add(playerCardsInfo);
     }
 

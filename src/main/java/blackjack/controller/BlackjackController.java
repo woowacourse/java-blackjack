@@ -56,7 +56,7 @@ public class BlackjackController {
         Dealer dealer = game.getDealer();
         List<Player> players = game.getPlayers();
 
-        ResultStatistics dealerResult = ResultStatistics.of(dealer.getName());
+        ResultStatistics dealerResult = ResultStatistics.of(dealer);
         Score dealerScore = dealer.getCurrentScore();
 
         if (dealerScore.toInt() > Score.BLACKJACK) {
@@ -72,7 +72,7 @@ public class BlackjackController {
     private List<ResultStatistics> getResultsOnDealerBust(List<Player> players, ResultStatistics dealerResult) {
         List<ResultStatistics> results = new ArrayList<>();
         for (Player player : players) {
-            ResultStatistics playerResult = ResultStatistics.of(player.getName());
+            ResultStatistics playerResult = ResultStatistics.of(player);
             dealerResult.incrementCountOf(ResultType.LOSE);
             playerResult.incrementCountOf(ResultType.WIN);
             results.add(playerResult);
@@ -85,7 +85,7 @@ public class BlackjackController {
         List<ResultStatistics> results = new ArrayList<>();
 
         for (Player player : players) {
-            ResultStatistics playerResult = ResultStatistics.of(player.getName());
+            ResultStatistics playerResult = ResultStatistics.of(player);
             Score playerScore = player.getCurrentScore();
 
             if (playerScore.toInt() > Score.BLACKJACK) {

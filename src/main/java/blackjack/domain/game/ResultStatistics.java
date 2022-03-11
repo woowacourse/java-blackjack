@@ -1,22 +1,26 @@
 package blackjack.domain.game;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.participant.Participant;
+import blackjack.dto.ParticipantCardsDto;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ResultStatistics {
 
-    private final String participantName;
+    private final ParticipantCardsDto participantCardsDto;
     private final Map<ResultType, ResultCount> stats = new EnumMap<>(ResultType.class);
 
-    private ResultStatistics(String participantName) {
-        this.participantName = participantName;
+    private ResultStatistics(Participant participant) {
+        this.participantCardsDto = ParticipantCardsDto.of(participant);
         Arrays.stream(ResultType.values())
                 .forEach(this::initializeResult);
     }
 
-    public static ResultStatistics of(String participantName) {
-        return new ResultStatistics(participantName);
+    public static ResultStatistics of(Participant participant) {
+        return new ResultStatistics(participant);
     }
 
     private void initializeResult(ResultType resultType) {
@@ -33,11 +37,18 @@ public class ResultStatistics {
     }
 
     public String getParticipantName() {
-        return participantName;
+        return participantCardsDto.getName();
+    }
+
+    public Set<Card> getCards() {
+        return participantCardsDto.getCards();
     }
 
     @Override
     public String toString() {
-        return "ResultStatistics{" + "stats=" + stats + '}';
+        return "ResultStatistics{" +
+                "participantCardsDto=" + participantCardsDto +
+                ", stats=" + stats +
+                '}';
     }
 }

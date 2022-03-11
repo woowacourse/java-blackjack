@@ -1,24 +1,36 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.Score;
 import blackjack.domain.participant.Dealer;
-import java.util.Collections;
-import java.util.HashSet;
+import blackjack.domain.participant.Participant;
 import java.util.Objects;
 import java.util.Set;
 
 public class ParticipantCardsDto {
 
     private final String name;
-    private final Set<Card> cards;
+    private final CardsDto cardsDto;
 
-    private ParticipantCardsDto(String name, Set<Card> cards) {
+    private ParticipantCardsDto(String name, Set<Card> cards, Score score) {
         this.name = name;
-        this.cards = new HashSet<>(cards);
+        this.cardsDto = new CardsDto(cards, score);
     }
 
-    public static ParticipantCardsDto of(String name, Set<Card> cards) {
-        return new ParticipantCardsDto(name, cards);
+    public static ParticipantCardsDto of(Participant participant) {
+        String name = participant.getName();
+        Set<Card> cards = participant.getCards();
+        Score score = participant.getCurrentScore();
+
+        return new ParticipantCardsDto(name, cards, score);
+    }
+
+    public static ParticipantCardsDto ofInitialDealer(Dealer dealer) {
+        String name = dealer.getName();
+        Set<Card> openCardInfo = Set.of(dealer.getOpenCard());
+        Score score = dealer.getCurrentScore();
+
+        return new ParticipantCardsDto(name, openCardInfo, score);
     }
 
     public boolean isPlayer() {
@@ -30,6 +42,18 @@ public class ParticipantCardsDto {
     }
 
     public Set<Card> getCards() {
-        return Collections.unmodifiableSet(cards);
+        return cardsDto.getCards();
+    }
+
+    public Score getScore() {
+        return cardsDto.getScore();
+    }
+
+    @Override
+    public String toString() {
+        return "ParticipantCardsDto{" +
+                "name='" + name + '\'' +
+                ", cardsDto=" + cardsDto +
+                '}';
     }
 }

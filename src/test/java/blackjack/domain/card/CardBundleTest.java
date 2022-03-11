@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 public class CardBundleTest {
 
-    @DisplayName("of 팩토리 메소드는 두개의 카드를 받아 CardBundle 인스턴스를 생성한다.")
+    @DisplayName("of 팩토리 메소드는 두 개의 카드를 받아 CardBundle 인스턴스를 생성한다.")
     @Test
     void of_initsNewCardBundleWithTwoCards() {
         CardDeck cardDeck = new CardDeck();
