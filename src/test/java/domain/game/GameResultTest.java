@@ -71,7 +71,7 @@ class GameResultTest {
     private static List<Card> getCardList(Denomination... arguments) {
         List<Card> list = new ArrayList<>();
         for (Denomination denomination : arguments) {
-            list.add(new Card(denomination, Suit.CLOVER));
+            list.add(Card.valueOf(denomination, Suit.CLOVER));
         }
         return list;
     }

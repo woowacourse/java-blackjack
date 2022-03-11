@@ -1,15 +1,40 @@
 package domain.card;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Card {
 
+    private static final List<Card> CACHE = new ArrayList<>();
+    private static final String NOT_FOUND_ERROR = "조건에 맞는 카드가 존재하지 않습니다.";
+
+    static {
+        for (Suit suit : Suit.values()) {
+            for (Denomination denomination : Denomination.values()) {
+                CACHE.add(new Card(denomination, suit));
+            }
+        }
+    }
+
     private final Denomination denomination;
     private final Suit suit;
 
-    public Card(final Denomination denomination, final Suit suit) {
+    private Card(final Denomination denomination, final Suit suit) {
         this.denomination = denomination;
         this.suit = suit;
+    }
+
+    public static Card valueOf(Denomination denomination, Suit suit) {
+        return CACHE.stream()
+                .filter(card -> card.denomination == denomination)
+                .filter(card -> card.suit == suit)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_ERROR));
+    }
+
+    public static List<Card> generateDeck() {
+        return new ArrayList<>(CACHE);
     }
 
     public Denomination getDenomination() {

@@ -36,7 +36,7 @@ public class PlayerTest {
     private static List<Card> getCardList(Denomination... arguments) {
         List<Card> list = new ArrayList<>();
         for (Denomination denomination : arguments) {
-            list.add(new Card(denomination, Suit.CLOVER));
+            list.add(Card.valueOf(denomination, Suit.CLOVER));
         }
         return list;
     }
@@ -44,7 +44,7 @@ public class PlayerTest {
     @Test
     void drawCard() {
         Player player = new Player(new Name("name"), new Cards(getCardList(Denomination.QUEEN)));
-        player.drawCard(new Card(Denomination.ACE, Suit.CLOVER));
+        player.drawCard(Card.valueOf(Denomination.ACE, Suit.CLOVER));
         assertThat(player.getCards().getValue().size()).isEqualTo(2);
     }
 }

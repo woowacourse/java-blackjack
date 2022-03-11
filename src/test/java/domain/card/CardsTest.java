@@ -20,7 +20,7 @@ public class CardsTest {
     @MethodSource("provideParameters")
     @DisplayName("단일 카드 총합 구하기")
     void sum(Denomination denomination, int expect) {
-        Cards cards = new Cards(Collections.singletonList(new Card(denomination, Suit.CLOVER)));
+        Cards cards = new Cards(Collections.singletonList(Card.valueOf(denomination, Suit.CLOVER)));
         assertThat(cards.sum()).isEqualTo(expect);
     }
 
@@ -45,8 +45,8 @@ public class CardsTest {
     @Test
     @DisplayName("ACE 2개인 경우")
     void sum2() {
-        Cards cards = new Cards(Arrays.asList(new Card(Denomination.ACE, Suit.CLOVER)
-                , new Card(Denomination.ACE, Suit.HEART)));
+        Cards cards = new Cards(Arrays.asList(Card.valueOf(Denomination.ACE, Suit.CLOVER)
+                , Card.valueOf(Denomination.ACE, Suit.HEART)));
         assertThat(cards.sum()).isEqualTo(12);
     }
 
@@ -54,10 +54,10 @@ public class CardsTest {
     @DisplayName("카드 추가하기")
     void add() {
         List<Card> list = new ArrayList<>();
-        list.add(new Card(Denomination.ACE, Suit.CLOVER));
+        list.add(Card.valueOf(Denomination.ACE, Suit.CLOVER));
         Cards cards = new Cards(list);
 
-        cards.add(new Card(Denomination.JACK, Suit.HEART));
+        cards.add(Card.valueOf(Denomination.JACK, Suit.HEART));
 
         List<Card> cardList = cards.getValue();
         assertThat(cardList.size()).isEqualTo(2);

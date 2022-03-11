@@ -1,28 +1,17 @@
 package domain.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class CardDistributor {
 
     private static final String DECK_IS_EMPTY = "카드가 모두 소요됐습니다.";
-    private static final List<Card> CACHE = new ArrayList<>();
 
-    private final Stack<Card> deck = new Stack<>();
-
-    static {
-        for (Suit suit : Suit.values()) {
-            for (Denomination denomination : Denomination.values()) {
-                CACHE.add(new Card(denomination, suit));
-            }
-        }
-    }
+    private final Deque<Card> deck;
 
     public CardDistributor() {
-        Collections.shuffle(CACHE);
-        deck.addAll(CACHE);
+        List<Card> cards = Card.generateDeck();
+        Collections.shuffle(cards);
+        this.deck = new ArrayDeque<>(cards);
     }
 
     public Card distribute() {
