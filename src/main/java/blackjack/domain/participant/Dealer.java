@@ -8,6 +8,7 @@ import java.util.List;
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
+    private static final int DEALER_OVER_SCORE = 17;
 
     private final Deck deck;
 
@@ -34,7 +35,7 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldReceive() {
-        return cardHand.getScore() < 17;
+        return cardHand.getScore() < DEALER_OVER_SCORE;
     }
 
     public Card getOpenCard() {
