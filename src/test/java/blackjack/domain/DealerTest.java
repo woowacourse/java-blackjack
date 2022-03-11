@@ -1,8 +1,9 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +27,7 @@ public class DealerTest {
     void checkDealerHit() {
         Dealer dealer = new Dealer();
 
-        dealer.receiveInitCards(List.of(new Card(Suit.DIAMOND, Denomination.TEN),
+        dealer.initCards(List.of(new Card(Suit.DIAMOND, Denomination.TEN),
             new Card(Suit.HEART, Denomination.SIX)));
 
         assertThat(dealer.checkHitRule()).isTrue();
@@ -37,7 +38,7 @@ public class DealerTest {
     void checkDealerNotHit() {
         Dealer dealer = new Dealer();
 
-        dealer.receiveInitCards(List.of(new Card(Suit.DIAMOND, Denomination.KING),
+        dealer.initCards(List.of(new Card(Suit.DIAMOND, Denomination.KING),
             new Card(Suit.HEART, Denomination.SEVEN)));
 
         assertThat(dealer.checkHitRule()).isFalse();
@@ -48,7 +49,7 @@ public class DealerTest {
     void getFirstCard() {
         Dealer dealer = new Dealer();
 
-        dealer.receiveInitCards(List.of(new Card(Suit.DIAMOND, Denomination.KING),
+        dealer.initCards(List.of(new Card(Suit.DIAMOND, Denomination.KING),
             new Card(Suit.HEART, Denomination.SEVEN)));
 
         Card card = dealer.getFirstCard();

@@ -26,7 +26,7 @@ public class Participants {
     public void handOutInitialCards(Deck deck) {
         for (Participant participant : getParticipants()) {
             List<Card> cards = List.of(deck.pickCard(), deck.pickCard());
-            participant.receiveInitCards(cards);
+            participant.initCards(cards);
         }
     }
 

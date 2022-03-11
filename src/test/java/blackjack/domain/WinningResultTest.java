@@ -30,8 +30,8 @@ public class WinningResultTest {
 
         Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
-        dealer.receiveInitCards(dealerCards);
-        player.receiveInitCards(playerCards);
+        dealer.initCards(dealerCards);
+        player.initCards(playerCards);
 
         assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.DRAW);
     }
@@ -50,8 +50,8 @@ public class WinningResultTest {
 
         Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
-        dealer.receiveInitCards(dealerCards);
-        player.receiveInitCards(playerCards);
+        dealer.initCards(dealerCards);
+        player.initCards(playerCards);
 
         assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.DRAW);
     }
@@ -70,8 +70,8 @@ public class WinningResultTest {
 
         Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
-        dealer.receiveInitCards(dealerCards);
-        player.receiveInitCards(playerCards);
+        dealer.initCards(dealerCards);
+        player.initCards(playerCards);
 
         assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.WIN);
     }
@@ -90,8 +90,8 @@ public class WinningResultTest {
 
         Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
-        dealer.receiveInitCards(dealerCards);
-        player.receiveInitCards(playerCards);
+        dealer.initCards(dealerCards);
+        player.initCards(playerCards);
 
         assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.WIN);
     }
@@ -110,8 +110,8 @@ public class WinningResultTest {
 
         Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
-        dealer.receiveInitCards(dealerCards);
-        player.receiveInitCards(playerCards);
+        dealer.initCards(dealerCards);
+        player.initCards(playerCards);
 
         assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.LOSE);
     }
@@ -130,10 +130,9 @@ public class WinningResultTest {
 
         Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
-        dealer.receiveInitCards(dealerCards);
-        player.receiveInitCards(playerCards);
+        dealer.initCards(dealerCards);
+        player.initCards(playerCards);
 
         assertThat(WinningResult.of(player,dealer)).isEqualTo(WinningResult.LOSE);
     }
-
 }

@@ -13,11 +13,11 @@ public abstract class Participant {
 
     private ParticipantCards participantCards;
 
-    public void receiveInitCards(List<Card> cards) {
+    public void initCards(List<Card> cards) {
         participantCards = new ParticipantCards(new ArrayList<>(cards));
     }
 
-    public void receiveCard(Card card) {
+    public void addCard(Card card) {
         participantCards.addCard(card);
     }
 
@@ -25,14 +25,17 @@ public abstract class Participant {
         return participantCards.calculateScore();
     }
 
+    public boolean isBurst() {
+        return getScore() > BUST_THRESHOLD_NUMBER;
+    }
+
+    public boolean canHit() {
+        return !isBurst();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(participantCards.getCards());
     }
 
-    public boolean isBust() {
-        return getScore() > BUST_THRESHOLD_NUMBER;
-    }
-
     public abstract String getName();
-
 }
