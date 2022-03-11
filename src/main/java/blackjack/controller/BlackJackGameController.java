@@ -33,8 +33,7 @@ public class BlackJackGameController {
 
 	private Players generatePlayers() {
 		try {
-			Players players = new Players(new Names(inputView.inputPlayerNames()));
-			return players;
+			return new Players(new Names(inputView.inputPlayerNames()));
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			return generatePlayers();
@@ -42,15 +41,20 @@ public class BlackJackGameController {
 	}
 
 	private void makeResult(Players players, Dealer dealer) {
+		outputView.displayNewLine();
 		outputView.displayAllCardAndScore(dealer);
 		for (Player player : players.getPlayers()) {
 			outputView.displayAllCardAndScore(player);
 		}
 		Result result = new Result();
+		outputView.displayNewLine();
 		outputView.displayResult(result, players, dealer);
 	}
 
 	private void progressDealerTurn(Dealer dealer, Deck deck) {
+		if (dealer.isHit()) {
+			outputView.displayNewLine();
+		}
 		while (dealer.isHit() && !dealer.isBurst()) {
 			outputView.displayDealerUnderSevenTeen();
 			dealer.addCards(deck, 1);
@@ -95,5 +99,6 @@ public class BlackJackGameController {
 		for (Player player : players.getPlayers()) {
 			outputView.displayAllCard(player);
 		}
+		outputView.displayNewLine();
 	}
 }

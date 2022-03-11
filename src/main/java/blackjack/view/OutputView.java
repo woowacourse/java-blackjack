@@ -63,14 +63,18 @@ public class OutputView {
 	}
 
 	public void displayResult(Result result, Players players, Dealer dealer) {
-		final int winCount = result.calculateCount(ResultType.WIN);
-		final int loseCount = result.calculateCount(ResultType.LOSE);
-		final int drawCount = result.calculateCount(ResultType.DRAW);
 		Map<Player, ResultType> gameResults = result.getResult(players, dealer);
+		final int winCount = result.calculateCount(ResultType.LOSE);
+		final int loseCount = result.calculateCount(ResultType.WIN);
+		final int drawCount = result.calculateCount(ResultType.DRAW);
 		System.out.println("## 최종 승패");
 		System.out.println(dealer.getName() + ": " + winCount + "승 " + loseCount + "패 " + drawCount + "무");
 		for (Player player : gameResults.keySet()) {
 			System.out.println(player.getName() + ": " + gameResults.get(player).getValue());
 		}
+	}
+
+	public void displayNewLine() {
+		System.out.print("\n");
 	}
 }
