@@ -1,16 +1,21 @@
 package blackjack.domain;
 
 public class PlayingCard {
+
     private final Suit suit;
     private final Denomination denomination;
 
-    private PlayingCard(final Suit suit, final Denomination denomination) {
+    protected PlayingCard(final Suit suit, final Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
     }
 
     public static PlayingCard of(Suit suit, Denomination denomination) {
         return new PlayingCard(suit, denomination);
+    }
+
+    public boolean isAce() {
+        return this.denomination.equals(Denomination.ACE);
     }
 
     public Suit getSuit() {
@@ -22,7 +27,7 @@ public class PlayingCard {
     }
 
     public String getCardName() {
-        return this.denomination.getScore() + this.suit.getName();
+        return this.denomination.getRawScore() + this.suit.getName();
     }
 
     @Override
@@ -52,4 +57,5 @@ public class PlayingCard {
     public int getScore() {
         return denomination.getScore();
     }
+
 }

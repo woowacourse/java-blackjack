@@ -16,7 +16,7 @@ public class PlayingCards {
     }
 
     public int getResultWithPeekCard(final PlayingCard peekedCard) {
-        return getCardSum() + peekedCard.getScore();
+        return getCardSumWithPeek(peekedCard.getScore());
     }
 
     public List<PlayingCard> getPlayingCards() {
@@ -24,10 +24,39 @@ public class PlayingCards {
     }
 
     public int getCardSum() {
+        int currentSum = getCurrentSum();
+        if (hasAce() && currentSum > 21 ) {
+            final PlayingCard aceCard = getAce();
+            playingCards.remove(aceCard);
+            playingCards.add(new PlayingCard(aceCard.getSuit(), Denomination.ONE));
+            return getCurrentSum();
+        }
+        return currentSum;
+    }
+
+    private PlayingCard getAce() {
+        return playingCards.stream()
+            .filter(PlayingCard::isAce)
+            .findFirst()
+            .orElseThrow(()-> new RuntimeException("알 수 없는 오류가 발생했습니다."));
+    }
+
+    public int getCardSumWithPeek(final int peekedScore) {
+        int currentSum = getCurrentSum() + peekedScore;
+        if (hasAce() && currentSum > 21 ) {
+            return currentSum-10;
+        }
+        return currentSum;
+    }
+
+    private int getCurrentSum() {
         return playingCards.stream()
             .mapToInt(playingCard -> playingCard.getDenomination().getScore())
             .sum();
     }
 
-
+    private boolean hasAce() {
+        return playingCards.stream()
+            .anyMatch(PlayingCard::isAce);
+    }
 }

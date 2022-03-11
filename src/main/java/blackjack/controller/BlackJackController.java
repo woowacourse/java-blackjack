@@ -59,7 +59,7 @@ public class BlackJackController {
     }
 
     private void printSpreadCards(Player dealer, List<Player> gamblers) {
-        outputView.printSpreadInstruction(PlayersDto.from(concatPlayers(dealer, gamblers)));
+        outputView.printSpreadInstruction(PlayersDto.from(gamblers));
         outputView.printSingleCardForDealer(PlayerDto.from(dealer));
         outputView.printCardsForGambler(PlayersDto.from(gamblers));
     }

@@ -10,6 +10,7 @@ import blackjack.dto.PlayersDto;
 import java.util.List;
 
 public class OutputView {
+
     private static final String WITH_DEALER_NAME = "딜러와 ";
     private static final String COMMA_DELIMITER = ", ";
     private static final String SEPARATE_TWO_CARD = "에게 2장을 나누었습니다.";
@@ -66,7 +67,6 @@ public class OutputView {
     }
 
     public void printBurst(final PlayerDto playerDto) {
-        printCards(playerDto);
         System.out.println(playerDto.getName() + BURST_INSTRUCTION);
     }
 
