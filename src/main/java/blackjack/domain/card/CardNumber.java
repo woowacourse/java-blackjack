@@ -1,10 +1,7 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Cards.BLACK_JACK_NUMBER;
-
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public enum CardNumber {
 
@@ -23,6 +20,9 @@ public enum CardNumber {
     KING(10, "K"),
     ;
 
+    private static final int MIN_VALUE_ADDING_BONUS = 11;
+    private static final int BONUS_VALUE = 10;
+
     private final int defaultValue;
     private final String printValue;
 
@@ -36,39 +36,32 @@ public enum CardNumber {
     }
 
     public static int calculateScore(final List<CardNumber> numbers) {
-        final int bonusMaxScore = countAce(numbers) * 10;
-        final int defaultScore = sumDefaultScore(numbers);
-        final int startScore = defaultScore + bonusMaxScore;
-
-        return calculateScore(numbers, defaultScore, startScore);
+        final int defaultSum = calculateDefaultSum(numbers);
+        final int countOfA = countA(numbers);
+        if (countOfA > 0) {
+            return addBonusValue(defaultSum, countOfA);
+        }
+        return defaultSum;
     }
 
-    private static int calculateScore(final List<CardNumber> numbers, final int defaultScore, final int startScore) {
-        return IntStream.range(0, countAce(numbers))
-                .map(aceCount -> decreaseByAceCount(startScore, aceCount))
-                .filter(CardNumber::isLowerThanBlackJack)
-                .findFirst()
-                .orElse(defaultScore);
-    }
-
-    private static int countAce(final List<CardNumber> numbers) {
-        return (int) numbers.stream()
-                .filter(number -> number == A)
-                .count();
-    }
-
-    private static int sumDefaultScore(final List<CardNumber> numbers) {
+    private static int calculateDefaultSum(final List<CardNumber> numbers) {
         return numbers.stream()
                 .mapToInt(number -> number.defaultValue)
                 .sum();
     }
 
-    private static int decreaseByAceCount(final int startScore, final int aceCount) {
-        return startScore - aceCount * 10;
+    private static int countA(final List<CardNumber> numbers) {
+        return (int) numbers.stream()
+                .filter(number -> number == A)
+                .count();
     }
 
-    private static boolean isLowerThanBlackJack(final int sumCount) {
-        return sumCount <= BLACK_JACK_NUMBER;
+    private static int addBonusValue(final int defaultSum, int countOfA) {
+        int bonusSum = defaultSum;
+        while (bonusSum <= MIN_VALUE_ADDING_BONUS && countOfA-- > 0) {
+            bonusSum += BONUS_VALUE;
+        }
+        return bonusSum;
     }
 
     public String getPrintValue() {
