@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackjackGame {
@@ -13,7 +14,7 @@ public class BlackjackGame {
     }
 
     public void calculatePlayerResult() {
-        playerResult = new HashMap<>();
+        playerResult = new LinkedHashMap<>();
         Dealer dealer = participants.getDealer();
         for (Player player : participants.getPlayers()) {
             playerResult.put(player, WinningResult.of(player, dealer));
