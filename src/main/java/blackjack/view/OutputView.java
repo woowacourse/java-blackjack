@@ -4,8 +4,8 @@ import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.Player;
-import blackjack.domain.PlayerDto;
-import blackjack.domain.PlayersDto;
+import blackjack.dto.PlayerDto;
+import blackjack.dto.PlayersDto;
 import blackjack.domain.PlayingCard;
 import java.util.List;
 import java.util.Map;
