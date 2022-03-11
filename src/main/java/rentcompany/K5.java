@@ -1,6 +1,6 @@
 package rentcompany;
 
-public class K5 extends Car {
+public class K5 implements Car {
 
     private final int tripDistance;
 
@@ -9,17 +9,17 @@ public class K5 extends Car {
     }
 
     @Override
-    double getDistancePerLiter() {
+    public double getDistancePerLiter() {
         return 13;
     }
 
     @Override
-    double getTripDistance() {
+    public double getTripDistance() {
         return tripDistance;
     }
 
     @Override
-    String getName() {
+    public String getName() {
         return "K5";
     }
 }
