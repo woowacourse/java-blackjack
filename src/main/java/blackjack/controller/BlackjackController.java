@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import static blackjack.view.InputView.requestMorePlayerCardInput;
+import static blackjack.view.InputView.requestMoreCardInput;
 import static blackjack.view.OutputView.printPlayerBustInfo;
 import static blackjack.view.OutputView.printPlayerCardsInfo;
 
@@ -30,7 +30,7 @@ public class BlackjackController {
 
     public void givePlayerCards(Player player, BlackjackGame game) {
         while (player.canReceive()) {
-            if (!requestMorePlayerCardInput(player.getName())) {
+            if (!requestMoreCardInput(player.getName())) {
                 return;
             }
             player.receiveCard(game.popCard());
