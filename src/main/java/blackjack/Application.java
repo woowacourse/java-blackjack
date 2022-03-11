@@ -2,8 +2,9 @@ package blackjack;
 
 import blackjack.domain.game.BlackJackGame;
 import blackjack.dto.PlayerDto;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
+import blackjack.view.input.DrawCommand;
+import blackjack.view.input.InputView;
+import blackjack.view.output.OutputView;
 import java.util.List;
 
 public class Application {
@@ -31,8 +32,16 @@ public class Application {
     private static void runPlayerTurn(final BlackJackGame blackJackGame) {
         while (!blackJackGame.isAllPlayersEnd()) {
             final String command = InputView.inputDrawCommand(blackJackGame.getCurrentTurnPlayerInfo());
-            final PlayerDto currentPlayerDto = blackJackGame.drawCurrentPlayer(command);
+            final DrawCommand drawCommand = DrawCommand.from(command);
+            final PlayerDto currentPlayerDto = checkCurrentPlayerDrawNew(blackJackGame, drawCommand);
             OutputView.printPlayerCardInfo(currentPlayerDto);
         }
+    }
+
+    private static PlayerDto checkCurrentPlayerDrawNew(final BlackJackGame blackJackGame, final DrawCommand command) {
+        if (command.isNo()) {
+            return blackJackGame.drawNextPlayer();
+        }
+        return blackJackGame.drawCurrentPlayer();
     }
 }

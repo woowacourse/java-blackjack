@@ -42,14 +42,14 @@ public class BlackJackGame {
         return players.isAllTurnEnd();
     }
 
-    public PlayerDto drawCurrentPlayer(final String command) {
-        final DrawCommand drawCommand = DrawCommand.from(command);
-        if (drawCommand.isNo()) {
+    public PlayerDto drawCurrentPlayer() {
+        return players.drawCurrentPlayer(cardDeck.provideCard());
+    }
+
+    public PlayerDto drawNextPlayer() {
             final PlayerDto currentPlayer = players.getCurrentTurnPlayerInfo();
             players.turnToNextPlayer();
             return currentPlayer;
-        }
-        return players.drawCurrentPlayer(cardDeck.provideCard());
     }
 
     public boolean isDealerTurnEnd() {

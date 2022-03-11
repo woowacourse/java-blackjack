@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.view.output;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
