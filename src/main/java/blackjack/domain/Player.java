@@ -21,8 +21,26 @@ public class Player {
         cards.add(drawable.draw());
     }
 
+    public Score compete(Player player) {
+        if (player.isBust()) {
+            return getScoreWithBust();
+        }
+        if (this.isBust()) {
+            return Score.LOSE;
+        }
+
+        return Score.compare(this.getTotalNumber(), player.getTotalNumber());
+    }
+
     public boolean isBust() {
         return getTotalNumber() > BLACKJACK_NUMBER;
+    }
+
+    private Score getScoreWithBust() {
+        if (this.isBust()) {
+            return Score.DRAW;
+        }
+        return Score.WIN;
     }
 
     public int getTotalNumber() {
@@ -35,23 +53,5 @@ public class Player {
 
     public List<Card> getCards() {
         return cards.getCards();
-    }
-
-    public Score compete(Player player) {
-        if (this.isBust()) {
-            return Score.LOSE;
-        }
-        if (player.isBust()) {
-            return getScoreWithBust();
-        }
-
-        return Score.compare(this.getTotalNumber(), player.getTotalNumber());
-    }
-
-    private Score getScoreWithBust() {
-        if (this.isBust()) {
-            return Score.DRAW;
-        }
-        return Score.WIN;
     }
 }
