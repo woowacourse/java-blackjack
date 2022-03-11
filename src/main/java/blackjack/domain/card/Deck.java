@@ -33,7 +33,7 @@ public class Deck {
 
     private void validateDrawCard() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("더 이상 뽑을 수 있는 카드가 없습니다.");
+            throw new IllegalStateException("더 이상 뽑을 수 있는 카드가 없습니다.");
         }
     }
 

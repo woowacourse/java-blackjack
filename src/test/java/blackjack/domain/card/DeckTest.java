@@ -87,7 +87,7 @@ class DeckTest {
         final Deck deck = Deck.generate(manualCardStrategy);
         deck.drawCard();
         assertThatThrownBy(deck::drawCard)
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("더 이상 뽑을 수 있는 카드가 없습니다.");
     }
 
