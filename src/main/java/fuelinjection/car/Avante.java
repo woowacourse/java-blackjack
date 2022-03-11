@@ -1,9 +1,9 @@
-package fuelinjection;
+package fuelinjection.car;
 
 public class Avante extends Car {
 
-    private static final String NAME = "Avante";
     private static final double DISTANCE_PER_LITER = 15;
+    private static final String NAME = "Avante";
 
     private final double tripDistance;
 
@@ -12,17 +12,17 @@ public class Avante extends Car {
     }
 
     @Override
-    double getDistancePerLiter() {
+    public double getDistancePerLiter() {
         return DISTANCE_PER_LITER;
     }
 
     @Override
-    double getTripDistance() {
+    public double getTripDistance() {
         return this.tripDistance;
     }
 
     @Override
-    String getName() {
+    public String getName() {
         return NAME;
     }
 }

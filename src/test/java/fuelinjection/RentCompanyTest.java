@@ -4,6 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
+import fuelinjection.car.Avante;
+import fuelinjection.car.K5;
+import fuelinjection.car.Sonata;
+
 public class RentCompanyTest {
     private static final String NEWLINE = System.getProperty("line.separator");
 
