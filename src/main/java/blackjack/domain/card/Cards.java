@@ -18,11 +18,7 @@ public class Cards {
     }
 
     public PlayStatus getStatus() {
-        if (sum() > BUST_SCORE) {
-            return PlayStatus.BUST;
-        }
-
-        return PlayStatus.HIT;
+        return PlayStatus.updateStatus(sum());
     }
 
     public int sum() {

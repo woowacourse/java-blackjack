@@ -1,11 +1,11 @@
 package blackjack.domain;
 
+import static blackjack.domain.card.PlayStatus.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class RecordFactory {
-
-    public static final int BUST_SCORE = 21;
 
     private final int dealerScore;
     private final boolean isDealerBust;
