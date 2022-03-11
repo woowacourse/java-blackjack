@@ -16,7 +16,9 @@ public class CardDeck {
 
     private Stack<PlayingCard> createPlayingCards() {
         return Arrays.stream(Suit.values())
+            .filter(suit -> !suit.equals(Suit.BURST.BURST))
             .flatMap(suit -> Arrays.stream(Denomination.values())
+                .filter(denomination -> !denomination.equals(Denomination.BURST))
                 .map(denomination -> PlayingCard.of(suit, denomination)))
             .collect(Collectors.toCollection(Stack::new));
     }

@@ -7,7 +7,7 @@ import java.util.List;
 public class PlayingCards {
     private static final int BLACKJACK_NUMBER = 21;
     private static final int ACE_DIFFERENCE_UNIT = 10;
-    private final List<PlayingCard> playingCards;
+    private List<PlayingCard> playingCards;
 
     public PlayingCards() {
         playingCards = new ArrayList<>();
@@ -28,17 +28,26 @@ public class PlayingCards {
     public int getCardSum() {
         int currentSum = getCurrentSum();
         if (hasAce() && currentSum > BLACKJACK_NUMBER) {
-            final PlayingCard aceCard = getAce();
-            playingCards.remove(aceCard);
-            playingCards.add(new PlayingCard(aceCard.getSuit(), Denomination.ONE));
+            changeAceToOne();
             return getCurrentSum();
         }
         if (hasOne() && currentSum <= BLACKJACK_NUMBER - ACE_DIFFERENCE_UNIT) {
-            final PlayingCard oneCard = getOne();
-            playingCards.remove(oneCard);
-            playingCards.add(new PlayingCard(oneCard.getSuit(), Denomination.ACE));
+            changeOneToAce();
+            return getCurrentSum();
         }
         return currentSum;
+    }
+
+    private void changeOneToAce() {
+        final PlayingCard oneCard = getOne();
+        playingCards.remove(oneCard);
+        playingCards.add(new PlayingCard(oneCard.getSuit(), Denomination.ACE));
+    }
+
+    private void changeAceToOne() {
+        final PlayingCard aceCard = getAce();
+        playingCards.remove(aceCard);
+        playingCards.add(new PlayingCard(aceCard.getSuit(), Denomination.ONE));
     }
 
     private int getCurrentSum() {
@@ -78,5 +87,9 @@ public class PlayingCards {
             return currentSum - ACE_DIFFERENCE_UNIT;
         }
         return currentSum;
+    }
+
+    public void changeToBurst() {
+        playingCards = List.of(new PlayingCard(Suit.BURST, Denomination.BURST));
     }
 }

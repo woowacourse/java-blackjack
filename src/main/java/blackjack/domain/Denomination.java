@@ -15,6 +15,7 @@ public enum Denomination {
     JACK("J", 10),
     QUEEN("Q", 10),
     KING("K", 10),
+    BURST("burst", 0),
     ;
 
     private final String rawScore;

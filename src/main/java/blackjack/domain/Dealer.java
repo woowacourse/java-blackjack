@@ -12,7 +12,11 @@ public class Dealer extends Player {
     public boolean isFinished(final CardDeck cardDeck) {
         final PlayingCard peekedCard = cardDeck.justPeek();
         final int currentResult = playingCards.getResultWithPeekCard(peekedCard);
-        return currentResult > GET_CARD_UPPER_BOUND;
+        if (currentResult > GET_CARD_UPPER_BOUND){
+            playingCards.changeToBurst();
+            return true;
+        }
+        return false;
     }
 
     @Override

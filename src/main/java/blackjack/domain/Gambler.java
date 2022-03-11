@@ -10,7 +10,11 @@ public class Gambler extends Player {
     public boolean isFinished(final CardDeck cardDeck) {
         final PlayingCard peekedCard = cardDeck.justPeek();
         final int currentResult = playingCards.getResultWithPeekCard(peekedCard);
-        return currentResult > BURST_CRITERIA;
+        if (currentResult > BURST_CRITERIA) {
+            playingCards.changeToBurst();
+            return true;
+        }
+        return false;
     }
 
     @Override
