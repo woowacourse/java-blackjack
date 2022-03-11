@@ -1,9 +1,9 @@
 package blackjack;
 
 import blackjack.model.CardGenerator;
-import blackjack.model.Dealer;
-import blackjack.model.Gamer;
-import blackjack.model.Player;
+import blackjack.model.player.Dealer;
+import blackjack.model.player.Gamer;
+import blackjack.model.player.Player;
 import blackjack.model.Result;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -43,11 +43,11 @@ public class Application {
 
     private static List<Gamer> createGamers(List<String> names, CardGenerator cardGenerator) {
         return names.stream()
-            .map(name -> createEachGamer(cardGenerator, name))
-            .collect(Collectors.toList());
+                .map(name -> createEachGamer(name, cardGenerator))
+                .collect(Collectors.toList());
     }
 
-    private static Gamer createEachGamer(CardGenerator cardGenerator, String name) {
+    private static Gamer createEachGamer(String name, CardGenerator cardGenerator) {
         return new Gamer(name, cardGenerator.generate(), cardGenerator.generate());
     }
 

@@ -5,6 +5,9 @@ import static blackjack.model.Suit.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.player.Dealer;
+import blackjack.model.player.Gamer;
+import blackjack.model.player.Player;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,6 @@
 package blackjack.model;
 
 import static blackjack.model.Rank.ACE;
-import static blackjack.model.Rank.EIGHT;
 import static blackjack.model.Rank.JACK;
 import static blackjack.model.Rank.KING;
 import static blackjack.model.Rank.NINE;
@@ -47,7 +46,7 @@ public class CardsTest {
     @MethodSource("provideMaxCards")
     @DisplayName("최대 카드 점수 계산")
     void maxScore(Cards cards, int expect) {
-        assertThat(cards.maxScore()).isEqualTo(new Score(expect));
+        assertThat(cards.softHandScore()).isEqualTo(new Score(expect));
     }
 
     protected static Stream<Arguments> provideMaxCards() {
@@ -64,7 +63,7 @@ public class CardsTest {
     @DisplayName("카드 발급")
     void takeCards() {
         Cards cards = new Cards(new Card(JACK, DIAMOND), new Card(THREE, CLOVER));
-        cards.take(new Card(ACE, HEART));
+        cards.takeCard(new Card(ACE, HEART));
         assertThat(cards.bestScore()).isEqualTo(new Score(14));
     }
 }

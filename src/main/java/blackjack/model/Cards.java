@@ -11,15 +11,19 @@ public final class Cards {
 
     private final List<Card> cards;
 
-    Cards(Card card1, Card card2, Card... cards) {
+    public Cards(Card card1, Card card2, Card... cards) {
         this.cards = Stream.concat(Stream.concat(Stream.of(card1), Stream.of(card2)), List.of(cards).stream())
-            .collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
 
-    public Score maxScore() {
+    public void takeCard(Card card) {
+        cards.add(card);
+    }
+
+    public Score softHandScore() {
         int score = stream()
-            .mapToInt(Card::softRank)
-            .sum();
+                .mapToInt(Card::softRank)
+                .sum();
         return new Score(score);
     }
 
@@ -27,39 +31,31 @@ public final class Cards {
         return cards.stream();
     }
 
-    public void take(Card card) {
-        cards.add(card);
-    }
-
     public Score bestScore() {
-        return softHandScore()
+        return applySoftHandScore()
                 .filter(not(Score::isBust))
                 .orElse(hardHandScore());
     }
 
-    private Optional<Score> softHandScore() {
+    private Score hardHandScore() {
+        int score = stream()
+                .mapToInt(Card::hardRank)
+                .sum();
+        return new Score(score);
+    }
+
+    private Optional<Score> applySoftHandScore() {
         if (hasAce()) {
-            return Optional.of(hardHandScore().plus(increaseScore()));
+            return Optional.of(hardHandScore().plus(diffSoftAndHardOfAce()));
         }
         return Optional.empty();
     }
 
     private boolean hasAce() {
-        return stream().anyMatch(Card::isAce);
+        return cards.stream().anyMatch(Card::isAce);
     }
 
-    private Score increaseScore() {
-        return new Score(diffSoftAndHardOfAce());
-    }
-
-    private int diffSoftAndHardOfAce() {
-        return Rank.ACE.soft() - Rank.ACE.hard();
-    }
-
-    private Score hardHandScore() {
-        int score = cards.stream()
-            .mapToInt(Card::hardRank)
-            .sum();
-        return new Score(score);
+    private Score diffSoftAndHardOfAce() {
+        return new Score(Rank.ACE.soft() - Rank.ACE.hard());
     }
 }

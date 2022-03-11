@@ -6,16 +6,28 @@ public class Score {
 
     private final int value;
 
-    public int getValue() {
-        return value;
-    }
-
     public Score(int value) {
         this.value = value;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     public boolean isBust() {
         return value > 21;
+    }
+
+    public boolean lessThan(Score other) {
+        return getValue() < other.getValue();
+    }
+
+    public boolean moreThan(Score other) {
+        return getValue() > other.getValue();
+    }
+
+    public Score plus(Score score) {
+        return new Score(value + score.getValue());
     }
 
     @Override
@@ -38,19 +50,7 @@ public class Score {
     @Override
     public String toString() {
         return "Score{" +
-            "value=" + value +
-            '}';
-    }
-
-    public boolean lessThan(Score other) {
-        return getValue() < other.getValue();
-    }
-
-    public boolean moreThan(Score other) {
-        return getValue() > other.getValue();
-    }
-
-    public Score plus(Score score) {
-        return new Score(value + score.getValue());
+                "value=" + value +
+                '}';
     }
 }
