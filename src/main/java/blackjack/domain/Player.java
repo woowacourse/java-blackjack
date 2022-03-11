@@ -21,7 +21,7 @@ public class Player extends Participant {
     }
 
     public boolean isFinished() {
-        return super.getHoldingCard().isBust() || finish;
+        return super.getHoldingCard().isBlackJackOrBust() || finish;
     }
 
 }

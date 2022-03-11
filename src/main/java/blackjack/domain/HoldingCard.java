@@ -20,6 +20,14 @@ public class HoldingCard {
         return calculateTotal() > BLACK_JACK_SCORE;
     }
 
+    private boolean isBlackJack() {
+        return calculateTotal() == BLACK_JACK_SCORE;
+    }
+
+    public boolean isBlackJackOrBust() {
+        return isBlackJack() || isBust();
+    }
+
     public int calculateTotal() {
         int sum = sum();
         if (hasAce() && sum <= 11) {
