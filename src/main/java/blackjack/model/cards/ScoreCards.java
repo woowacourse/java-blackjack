@@ -28,5 +28,9 @@ public abstract class ScoreCards implements Cards {
         return cards.iterator();
     }
 
+    public boolean lessThan(Score score) {
+        return score().lessThan(score);
+    }
+
     public abstract Score score();
 }

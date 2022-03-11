@@ -38,6 +38,6 @@ public class Dealer extends Player {
     }
 
     public boolean isHittable() {
-        return maxScoreCards.score().lessThan(HIT_BOUNDARY);
+        return maxScoreCards.lessThan(HIT_BOUNDARY);
     }
 }
