@@ -1,5 +1,6 @@
 package blackjack.model;
 
+import blackjack.model.cards.OwnCards;
 import java.util.List;
 
 public class Dealer extends Player {
@@ -7,7 +8,7 @@ public class Dealer extends Player {
     public static final Score HIT_BOUNDARY = new Score(17);
 
     public Dealer(Card card1, Card card2, Card... cards) {
-        super("딜러", List.of(card1), new Cards(card1, card2, cards));
+        super("딜러", List.of(card1), new OwnCards(card1, card2, cards));
     }
 
     public Result match(Gamer gamer) {

@@ -1,14 +1,17 @@
 package blackjack.model;
 
+import blackjack.model.cards.Cards;
+import blackjack.model.cards.ImmutableCards;
+import blackjack.model.cards.OwnCards;
 import java.util.List;
 
 public abstract class Player {
 
-    protected final Cards cards;
+    protected final OwnCards cards;
     private final List<Card> openCards;
     private final String name;
 
-    public Player(String name, List<Card> openCards, Cards cards) {
+    public Player(String name, List<Card> openCards, OwnCards cards) {
         this.name = name;
         this.openCards = openCards;
         this.cards = cards;
@@ -23,7 +26,7 @@ public abstract class Player {
     }
 
     public Cards cards() {
-        return cards;
+        return new ImmutableCards(cards);
     }
 
     public void take(Card card) {

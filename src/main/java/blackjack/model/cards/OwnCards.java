@@ -1,14 +1,17 @@
-package blackjack.model;
+package blackjack.model.cards;
 
+import blackjack.model.Card;
+import blackjack.model.Rank;
+import blackjack.model.Score;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Cards {
+public class OwnCards implements Cards{
 
     private final List<Card> cards;
 
-    public Cards(Card card1, Card card2, Card... cards) {
+    public OwnCards(Card card1, Card card2, Card... cards) {
         this.cards = concat(concat(card1, card2), cards)
             .collect(Collectors.toList());
     }
