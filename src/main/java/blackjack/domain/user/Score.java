@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class Score implements Comparable<Score>{
+public class Score {
 	public static final int INITIAL_SCORE = 0;
 	public static final int ELEVEN_ACE_SCORE = 11;
 	public static final int MAX_SCORE = 21;
@@ -40,10 +40,6 @@ public class Score implements Comparable<Score>{
 		return this.score > otherScore.score;
 	}
 
-	public boolean isSmallerThan(final Score otherScore) {
-		return this.score < otherScore.score;
-	}
-
 	public Score setToMinusOne() {
 		return Score.from(-1);
 	}
@@ -73,11 +69,6 @@ public class Score implements Comparable<Score>{
 	@Override
 	public int hashCode() {
 		return Objects.hash(score);
-	}
-
-	@Override
-	public int compareTo(Score o) {
-		return Integer.compare(this.score, o.score);
 	}
 
 	public boolean isHit() {

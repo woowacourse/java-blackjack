@@ -4,8 +4,6 @@ import static blackjack.domain.exceptionMessages.UserExceptionMessage.*;
 
 import java.util.regex.Pattern;
 
-import blackjack.domain.exceptionMessages.UserExceptionMessage;
-
 public class Name {
 	private static final Pattern BLANK = Pattern.compile("[\\s]+");
 
