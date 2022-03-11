@@ -22,7 +22,7 @@ public class InitCards {
 		return cards;
 	}
 
-	public List<Card> getIntiCards() {
-		return intiCards;
+	public List<Card> getInitCards() {
+		return List.copyOf(intiCards);
 	}
 }

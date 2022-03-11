@@ -25,7 +25,7 @@ public class Controller {
 		List<Name> names = inputNames();
 
 		Deck deck = new Deck();
-		Dealer dealer = new Dealer(new InitCards(deck).getIntiCards());
+		Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
 		Players players = new Players(names, generateInitCardsForPlayers(names, deck));
 		printInitHands(names, dealer, players);
 
@@ -58,7 +58,7 @@ public class Controller {
 
 	private List<List<Card>> generateInitCardsForPlayers(List<Name> names, Deck deck) {
 		List<List<Card>> initCardForPlayers = IntStream.range(0, names.size())
-			.mapToObj(i -> new InitCards(deck).getIntiCards())
+			.mapToObj(i -> new InitCards(deck).getInitCards())
 			.collect(Collectors.toList());
 		return initCardForPlayers;
 	}
