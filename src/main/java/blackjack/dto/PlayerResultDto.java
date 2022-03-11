@@ -15,7 +15,7 @@ public class PlayerResultDto {
     }
 
     public static PlayerResultDto of(Player player, Dealer dealer) {
-        GameResult gameResult = dealer.decideResult(player.getTotalScore());
+        GameResult gameResult = player.decideResult(dealer.getTotalScore());
         return new PlayerResultDto(player.getName(), gameResult.getValue());
     }
 

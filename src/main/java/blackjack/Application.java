@@ -8,11 +8,13 @@ import blackjack.domain.Deck;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.dto.DealerDto;
+import blackjack.dto.DealerResultsDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayerResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,15 +70,13 @@ public class Application {
         }
     }
 
+    public static DealerResultsDto createDealerResult(List<Player> players, Dealer dealer) {
+        return DealerResultsDto.of(players, dealer);
+    }
+
     public static List<PlayerResultDto> createPlayerResult(List<Player> players, Dealer dealer) {
         return players.stream()
                 .map(player -> PlayerResultDto.of(player, dealer))
                 .collect(toList());
-    }
-
-
-    public static Map<GameResult, Long> createDealerResult(List<Player> players, Dealer dealer) {
-        return players.stream()
-                .collect(groupingBy(player -> dealer.decideResult(player.getTotalScore()), counting()));
     }
 }
