@@ -13,7 +13,7 @@ public class Deck {
         deck = init();
     }
 
-    private static Stack<Card> init() {
+    private Stack<Card> init() {
         List<Card> cards = makeCards();
         Collections.shuffle(cards);
         Stack<Card> deck = new Stack<>();
@@ -21,14 +21,14 @@ public class Deck {
         return deck;
     }
 
-    private static List<Card> makeCards() {
+    private List<Card> makeCards() {
         List<Card> cards = new ArrayList<>();
         Type.getTypeValues()
                 .forEach(type -> makeCardByScore(cards, type));
         return cards;
     }
 
-    private static void makeCardByScore(final List<Card> cards, final Type type) {
+    private void makeCardByScore(final List<Card> cards, final Type type) {
         Score.getScoreValues().stream()
                 .map(score -> new Card(type, score))
                 .forEach(cards::add);

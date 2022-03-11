@@ -35,7 +35,9 @@ public class Cards {
     }
 
     public int calculateScoreByAceOne() {
-        return cards.stream().mapToInt(card -> card.getScore().getAmount()).sum();
+        return cards.stream()
+                .mapToInt(card -> card.getScore().getAmount())
+                .sum();
     }
 
     public int calculateScoreByAceEleven() {
@@ -46,7 +48,8 @@ public class Cards {
     }
 
     private boolean isContainsAce() {
-        return cards.stream().anyMatch(card -> card.getScore() == Score.ACE);
+        return cards.stream()
+                .anyMatch(card -> card.getScore() == Score.ACE);
     }
 
     public List<Card> getCards() {
