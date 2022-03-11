@@ -24,4 +24,51 @@ class DealerTest {
                 Symbol.SPADE)));
         assertThat(dealer.isFinished()).isTrue();
     }
+
+    @Test
+    @DisplayName("플레이어만 버스트되면 딜러는 승리한다")
+    void playerIsBust_dealerWin() {
+        Player player = new Player("dog",
+                List.of(new Card(CardNumber.TEN, Symbol.SPADE), new Card(CardNumber.SEVEN, Symbol.SPADE)));
+        player.receiveCard(new Card(CardNumber.FIVE, Symbol.SPADE));
+        Dealer dealer = new Dealer(
+                List.of(new Card(CardNumber.TEN, Symbol.SPADE), new Card(CardNumber.SEVEN, Symbol.SPADE)));
+        assertThat(dealer.judgeResult(player)).isEqualTo(GameResult.WIN);
+    }
+
+    @Test
+    @DisplayName("딜러만 버스트라면 딜러가 패배한다")
+    void dealerIsBust_dealerLose() {
+        Player player = new Player("dog",
+                List.of(new Card(CardNumber.TEN, Symbol.SPADE), new Card(CardNumber.SEVEN, Symbol.SPADE)));
+        player.receiveCard(new Card(CardNumber.THREE, Symbol.SPADE));
+        Dealer dealer = new Dealer(
+                List.of(new Card(CardNumber.TEN, Symbol.SPADE), new Card(CardNumber.SEVEN, Symbol.SPADE)));
+        dealer.receiveCard(new Card(CardNumber.FIVE, Symbol.CLOVER));
+        assertThat(dealer.judgeResult(player)).isEqualTo(GameResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("딜러, 플레이어가 둘 다 버스트가 아니라면, 숫자가 클 때 승리한다")
+    void bothNotBust_dealerScoreHigher_win() {
+        Player player = new Player("dog",
+                List.of(new Card(CardNumber.TEN, Symbol.SPADE), new Card(CardNumber.SIX, Symbol.SPADE)));
+        player.receiveCard(new Card(CardNumber.TWO, Symbol.CLOVER));
+        Dealer dealer = new Dealer(
+                List.of(new Card(CardNumber.ACE, Symbol.SPADE), new Card(CardNumber.SIX, Symbol.SPADE)));
+        dealer.receiveCard(new Card(CardNumber.TWO, Symbol.CLOVER));
+        assertThat(dealer.judgeResult(player)).isEqualTo(GameResult.WIN);
+    }
+
+    @Test
+    @DisplayName("딜러, 플레이어 점수가 동일하면 무승부다")
+    void bothNotBust_equalScore_draw() {
+        Player player = new Player("dog",
+                List.of(new Card(CardNumber.SIX, Symbol.SPADE), new Card(CardNumber.SEVEN, Symbol.SPADE)));
+        player.receiveCard(new Card(CardNumber.FIVE, Symbol.CLOVER));
+        Dealer dealer = new Dealer(
+                List.of(new Card(CardNumber.THREE, Symbol.SPADE), new Card(CardNumber.FOUR, Symbol.SPADE)));
+        dealer.receiveCard(new Card(CardNumber.ACE, Symbol.CLOVER));
+        assertThat(dealer.judgeResult(player)).isEqualTo(GameResult.DRAW);
+    }
 }
