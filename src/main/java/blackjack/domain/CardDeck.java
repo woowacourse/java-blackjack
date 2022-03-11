@@ -13,7 +13,14 @@ public class CardDeck {
     }
 
     public Card drawCard() {
+        checkEmptyCardDeck();
         return cardDeck.poll();
+    }
+
+    private void checkEmptyCardDeck() {
+        if (cardDeck.isEmpty()) {
+            throw new IllegalArgumentException("카드덱에 남은 카드가 없습니다.");
+        }
     }
 
     public int size() {
