@@ -14,6 +14,6 @@ public class Dealer extends User {
 
     @Override
     public List<Card> showInitCards() {
-        return Collections.unmodifiableList(cards.subList(0, INIT_COUNT));
+        return this.hand.getCards(INIT_COUNT);
     }
 }
