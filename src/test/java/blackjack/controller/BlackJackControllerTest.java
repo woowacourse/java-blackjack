@@ -73,7 +73,7 @@ class BlackJackControllerTest extends BlackJackController {
     void player_win_when_dealer_bust_player_not_bust() {
         // given
         Dealer dealer = createDealerWithDenominations(QUEEN, TEN, TWO);
-        Player player = createPlayerWithDenominations("user A", JACK, NINE);
+        Player player = createPlayerWithDenominations("user a", JACK, NINE);
 
         // when
         decideGameScore(dealer, List.of(player));
@@ -92,7 +92,7 @@ class BlackJackControllerTest extends BlackJackController {
     void dealer_win_when_player_bust_dealer_not_bust() {
         // given
         Dealer dealer = createDealerWithDenominations(JACK, NINE);
-        Player player = createPlayerWithDenominations("user A", QUEEN, TEN, TWO);
+        Player player = createPlayerWithDenominations("user b", QUEEN, TEN, TWO);
 
         // when
         decideGameScore(dealer, List.of(player));
@@ -160,6 +160,7 @@ class BlackJackControllerTest extends BlackJackController {
         assertAll(
                 () -> assertThat(dealer.getMatchResultScore(WIN)).isEqualTo(2),
                 () -> assertThat(dealer.getMatchResultScore(LOSE)).isEqualTo(1),
+
                 () -> assertThat(playerA.getResult()).isEqualTo(LOSE),
                 () -> assertThat(playerB.getResult()).isEqualTo(WIN),
                 () -> assertThat(playerC.getResult()).isEqualTo(LOSE)
