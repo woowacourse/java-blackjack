@@ -9,26 +9,39 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackController {
+	private Blackjack blackjack;
 
 	public void run() {
+		startBlackJack();
+		progressBlackjack();
+		endBlackjack();
+	}
+
+	private void startBlackJack() {
 		List<String> playerNames = InputView.getPlayerNames();
-		Blackjack blackjack = new Blackjack(playerNames);
+		blackjack = new Blackjack(playerNames);
 		blackjack.distributeInitialCards(RandomNumberGenerator.getInstance());
 
 		OutputView.printInitStatus(blackjack.getDealer(), blackjack.getPlayers());
+	}
 
+	private void progressBlackjack() {
 		while (blackjack.isDistributeMore()) {
-			Player player = blackjack.getPlayer();
+			askDistributingCard( blackjack.getPlayer());
+		}
+	}
 
-			while (InputView.askAdditionalCard(player)) {
-				blackjack.distributeAdditionalCardPlayer(RandomNumberGenerator.getInstance(), player);
-				OutputView.printCards(blackjack.findPlayer(player));
-			}
+	private void askDistributingCard(Player player) {
+		while (InputView.askAdditionalCard(player)) {
+			blackjack.distributeAdditionalCardPlayer(RandomNumberGenerator.getInstance(), player);
+			OutputView.printCards(blackjack.findPlayer(player));
 		}
 
 		blackjack.distributeAdditionalCardDealer(RandomNumberGenerator.getInstance());
 		OutputView.printDealerAdditionalCard();
+	}
 
+	private void endBlackjack() {
 		OutputView.printCardsAndResult(blackjack.getDealer(), blackjack.getPlayers());
 		OutputView.printResult(blackjack.result());
 	}
