@@ -44,17 +44,17 @@ public class BlackJackController {
         playDealer(dealer, deck);
     }
 
-    private void playDealer(Dealer dealer, Deck deck) {
-        while (dealer.checkUnderSumStandard()) {
-            OutputView.printDealerDraw();
-            dealer.receiveCard(deck.drawCard());
-        }
-    }
-
     private void playEachUser(User user, Deck deck) {
         while (!user.checkBust() && InputView.inputMoreCard(user)) {
             user.receiveCard(deck.drawCard());
             OutputView.printUserData(user);
+        }
+    }
+
+    private void playDealer(Dealer dealer, Deck deck) {
+        while (dealer.checkUnderSumStandard()) {
+            OutputView.printDealerDraw();
+            dealer.receiveCard(deck.drawCard());
         }
     }
 
