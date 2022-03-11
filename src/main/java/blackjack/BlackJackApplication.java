@@ -7,7 +7,7 @@ import blackjack.view.OutputView;
 public class BlackJackApplication {
 
     public static void main(String[] args) {
-        BlackJackController controller = new BlackJackController(InputView::getNames);
+        BlackJackController controller = new BlackJackController(InputView.getNames());
         OutputView.printFirstCards(controller.getDealerDto(), controller.getPlayerDtos());
 
         controller.askHitOrStay(InputView::getAnswerOfAdditionalDraw, OutputView::printPlayerCard);

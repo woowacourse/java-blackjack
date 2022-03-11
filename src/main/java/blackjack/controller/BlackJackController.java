@@ -18,8 +18,8 @@ public class BlackJackController {
 
 	private final BlackJackGame blackJackGame;
 
-	public BlackJackController(Supplier<List<String>> supplier) {
-		blackJackGame = new BlackJackGame(supplier.get());
+	public BlackJackController(List<String> names) {
+		blackJackGame = new BlackJackGame(names);
 		blackJackGame.distributeFirstCards();
 	}
 
@@ -36,7 +36,7 @@ public class BlackJackController {
 
 	private void hitOrStay(UnaryOperator<String> operator, Consumer<GamerDto> consumer, String name) {
 		while (!blackJackGame.isBurst(name) && Answer.from(operator.apply(name)).isYes()) {
-			requestPlayerDrawCard(name);
+			blackJackGame.distributeCardToPlayer(name);
 			consumer.accept(findPlayerByName(name));
 		}
 	}
@@ -51,10 +51,6 @@ public class BlackJackController {
 		return players.stream()
 			.map((GamerDto::new))
 			.collect(Collectors.toUnmodifiableList());
-	}
-
-	public void requestPlayerDrawCard(String name) {
-		blackJackGame.distributeCardToPlayer(name);
 	}
 
 	public int getDealerAdditionalCardCount() {
