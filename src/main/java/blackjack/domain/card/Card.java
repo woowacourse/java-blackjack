@@ -17,7 +17,6 @@ public class Card {
 
     private static Stream<Card> toCard(Suit suit) {
         return Arrays.stream(Number.values())
-                .filter(number -> number != Number.HIDDEN_ACE)
                 .map(number -> new Card(suit, number));
     }
 

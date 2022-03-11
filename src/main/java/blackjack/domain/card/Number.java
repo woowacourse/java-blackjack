@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public enum Number {
@@ -16,8 +15,10 @@ public enum Number {
     TEN(10, "10"),
     JACK(10, "J"),
     QUEEN(10, "Q"),
-    KING(10, "K"),
-    HIDDEN_ACE(11, "NONE");
+    KING(10, "K");
+
+    private static final int SUM_HIDDEN_ACE = -1 + 11;
+    private static final int BLACK_JACK_NUMBER = 21;
 
     private final int value;
     private final String name;
@@ -28,28 +29,36 @@ public enum Number {
     }
 
     public static int sum(List<Number> numbers) {
-        numbers = new ArrayList<>(numbers);
-        numbers.sort((o1, o2) -> o2.value - o1.value);
-        int sum = 0;
-        for (int i = 0; i < numbers.size(); i++) {
-            sum += getNumberOrHiddenAce(numbers, i, sum).value;
-        }
-        return sum;
-    }
-
-    public static Number getNumberOrHiddenAce(List<Number> numbers, int index, int sum) {
-        Number number = numbers.get(index);
-        if (number == ACE && sum < HIDDEN_ACE.value && isEndIndex(index, numbers)) {
-            return HIDDEN_ACE;
-        }
-        return number;
-    }
-
-    private static boolean isEndIndex(int index, List<Number> numbers) {
-        return numbers.size() - 1 == index;
+        return calculateBestNumber(sumTotal(numbers), countAce(numbers));
     }
 
     public String getName() {
         return name;
+    }
+
+    private static int sumTotal(List<Number> numbers) {
+        return numbers.stream()
+                .mapToInt(number -> number.value)
+                .sum();
+    }
+
+    private static long countAce(List<Number> numbers) {
+        return numbers.stream()
+                .filter(number -> number == ACE)
+                .count();
+    }
+
+    private static int calculateBestNumber(int total, long aceCount) {
+        for (int i = 0; i < aceCount; i++) {
+            total = sumUnderBlackJackNumber(total);
+        }
+        return total;
+    }
+
+    private static int sumUnderBlackJackNumber(int total) {
+        if (total + SUM_HIDDEN_ACE <= BLACK_JACK_NUMBER) {
+            total = total + SUM_HIDDEN_ACE;
+        }
+        return total;
     }
 }
