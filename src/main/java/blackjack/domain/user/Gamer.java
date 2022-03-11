@@ -13,14 +13,14 @@ public class Gamer {
 
 	public void addCard(Card card) {
 		cards.add(card);
-		score = this.score.addBy(card.getScore());
+		this.score = this.score.addBy(card.getScore());
 
 		if (hasAce()) {
 			this.score = Score.from(calculateOptimalScoreWithAce());
 		}
 
 		if (this.score.isBiggerThan(21)) {
-			score = this.score.setToMinusOne();
+			this.score = this.score.setToMinusOne();
 		}
 	}
 
@@ -61,11 +61,11 @@ public class Gamer {
 	}
 
 	private List<Integer> getPossibleAceScores(int aceCnt) {
-		List<Integer> possible = new ArrayList<>();
+		List<Integer> possibleScores = new ArrayList<>();
 		for (int i = 0; i <= aceCnt; i++) {
-			possible.add(i + 11 * (aceCnt - i));
+			possibleScores.add(i + 11 * (aceCnt - i));
 		}
-		return possible;
+		return possibleScores;
 	}
 
 	private int countAceCard() {

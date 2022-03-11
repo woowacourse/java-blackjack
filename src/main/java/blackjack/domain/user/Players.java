@@ -1,17 +1,20 @@
 package blackjack.domain.user;
 
+import static blackjack.domain.exceptionMessages.UserExceptionMessage.*;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.exceptionMessages.UserExceptionMessage;
 
 public class Players {
 	private final List<Player> players;
 
 	public Players(List<String> playerNames) {
 		if (playerNames.isEmpty()) {
-			throw new IllegalArgumentException("플레이어를 한명 이상 입력해야 합니다.");
+			throw new IllegalArgumentException(EMPTY_PLAYER_EXCEPTION.getMessage());
 		}
 		validateDuplicateName(playerNames);
 		players = new ArrayList<>();
@@ -30,8 +33,8 @@ public class Players {
 	}
 
 	private void validateDuplicateName(List<String> playerNames) {
-		if (new HashSet<String>(playerNames).size() != playerNames.size()) {
-			throw new IllegalArgumentException("이름에 중복이 있으면 안됩니다.");
+		if (new HashSet<>(playerNames).size() != playerNames.size()) {
+			throw new IllegalArgumentException(DUPLICATE_PLAYER_EXCEPTION.getMessage());
 		}
 	}
 }

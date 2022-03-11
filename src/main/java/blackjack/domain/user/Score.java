@@ -1,5 +1,7 @@
 package blackjack.domain.user;
 
+import static blackjack.domain.exceptionMessages.UserExceptionMessage.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -21,7 +23,7 @@ public class Score {
 
 	public static Score from(final int score) {
 		if (score < -1 || score > 32) {
-			throw new IllegalArgumentException("-1부터 32사이의 숫자만 생성 가능합니다.");
+			throw new IllegalArgumentException(SCORE_RANGE_EXCEPTION.getMessage());
 		}
 		return scores.get(score);
 	}

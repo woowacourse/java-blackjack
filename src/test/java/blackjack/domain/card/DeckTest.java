@@ -1,11 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
+import static blackjack.domain.exceptionMessages.CardExceptionMessage.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
 
 public class DeckTest {
 	@Test
@@ -35,6 +33,6 @@ public class DeckTest {
 		//then
 		assertThatThrownBy(() -> deck.distributeCard())
 			.isInstanceOf(IllegalStateException.class)
-			.hasMessageContaining("덱의 카드가 다 소진되었습니다.");
+			.hasMessageContaining(EMPTY_DECK_EXCEPTION.getMessage());
 	}
 }

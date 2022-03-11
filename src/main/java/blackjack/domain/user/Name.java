@@ -1,17 +1,22 @@
 package blackjack.domain.user;
 
+import static blackjack.domain.exceptionMessages.UserExceptionMessage.*;
+
 import java.util.regex.Pattern;
 
+import blackjack.domain.exceptionMessages.UserExceptionMessage;
+
 public class Name {
-	private final String name;
 	private static final Pattern BLANK = Pattern.compile("[\\s]+");
+
+	private final String name;
 
 	public Name(String name) {
 		if (name == null || name.isEmpty()) {
-			throw new IllegalArgumentException("이름이 빈 입력이면 안됩니다.");
+			throw new IllegalArgumentException(EMPTY_NAME_EXCEPTION.getMessage());
 		}
 		if (BLANK.matcher(name).matches()) {
-			throw new IllegalArgumentException("이름에 공백이 있으면 안됩니다.");
+			throw new IllegalArgumentException(BLANK_NAME_EXCEPTION.getMessage());
 		}
 		this.name = name;
 	}

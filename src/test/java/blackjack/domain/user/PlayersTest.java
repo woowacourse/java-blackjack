@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -7,8 +7,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import blackjack.domain.user.Players;
 
 public class PlayersTest {
 	@Test

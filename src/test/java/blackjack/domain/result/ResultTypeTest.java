@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -7,43 +7,48 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Number;
 import blackjack.domain.card.Type;
+import blackjack.domain.result.ResultType;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 
-public class DealerTest {
+class ResultTypeTest {
+
 	@Test
-	void dealer_score_higher_than_player_score() {
+	void get_resultType_LOSE() {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
-		//when
 		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
-		player.addCard(new Card(Number.FIVE, Type.CLOVER));
+		player.addCard(new Card(Number.EIGHT, Type.CLOVER));
+		//when
+		ResultType resultType = ResultType.generateResultType(player, dealer);
 		//then
-		assertThat(dealer.hasHigherScore(player)).isTrue();
+		assertThat(resultType).isEqualTo(ResultType.LOSE);
 	}
 
 	@Test
-	void dealer_score_lower_than_player_score() {
+	void get_resultType_WIN() {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
+		dealer.addCard(new Card(Number.EIGHT, Type.CLOVER));
+		player.addCard(new Card(Number.NINE, Type.CLOVER));
 		//when
-		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
-		player.addCard(new Card(Number.TEN, Type.CLOVER));
+		ResultType resultType = ResultType.generateResultType(player, dealer);
 		//then
-		assertThat(dealer.hasHigherScore(player)).isFalse();
+		assertThat(resultType).isEqualTo(ResultType.WIN);
 	}
 
 	@Test
-	void dealer_score_equal_to_player_score() {
+	void get_resultType_DRAW() {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
-		//when
 		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
 		player.addCard(new Card(Number.NINE, Type.HEART));
+		//when
+		ResultType resultType = ResultType.generateResultType(player, dealer);
 		//then
-		assertThat(dealer.hasEqualScore(player)).isTrue();
+		assertThat(resultType).isEqualTo(ResultType.DRAW);
 	}
 }
