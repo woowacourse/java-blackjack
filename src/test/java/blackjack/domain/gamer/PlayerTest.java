@@ -26,4 +26,11 @@ class PlayerTest {
 
         assertThat(pobi.match(dealer)).isEqualTo(BlackJackResult.WIN);
     }
+
+    @Test
+    @DisplayName("플레이어와 이름이 같다면 True를 반환한다.")
+    void isSameName() {
+        Player player1 = new Player("더즈");
+        assertThat(player1.isSameName("더즈")).isTrue();
+    }
 }

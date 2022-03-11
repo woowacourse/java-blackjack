@@ -5,8 +5,6 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
@@ -14,14 +12,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class GamerTest {
 
-    @Test
-    @DisplayName("딜러가 카드를 추가한다.")
-    void addCard() {
-        Gamer gamer = new Gamer("name");
-        CardFactory cardFactory = new CardFactory(Card.getCards());
-        Card card = cardFactory.draw();
+    private Gamer gamer = new Gamer("name");
 
-        gamer.addCard(card);
+    @Test
+    @DisplayName("카드를 추가한다.")
+    void addCard() {
+        gamer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.ACE));
         List<Card> cards = gamer.getCards();
 
         assertThat(cards.size()).isEqualTo(1);
@@ -30,7 +26,6 @@ class GamerTest {
     @Test
     @DisplayName("보유 카드 번호 합 반환")
     void calculateCardsNumberSum() {
-        Gamer gamer = new Gamer("name");
         Card card1 = Card.getInstance(CardShape.SPADE, CardNumber.TEN);
         Card card2 = Card.getInstance(CardShape.SPADE, CardNumber.FIVE);
 
