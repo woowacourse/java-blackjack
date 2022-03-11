@@ -39,7 +39,7 @@ class GameScoreBoardTest {
     }
 
     @Test
-    @DisplayName("게임 승패를 잘 반환하는지 확인")
+    @DisplayName("플레이어의 게임 승패를 잘 반환하는지 확인")
     void equalsPlayerGameResult() {
         GameScoreBoard result = GameScoreBoard.recordGameScore(dealer, players);
         Map<String, String> playerGameResultMap = result.getPlayerGameResultMap();
