@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.Game;
-import blackjack.domain.Record;
 import blackjack.domain.RecordFactory;
 import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardFactory;
@@ -10,10 +9,7 @@ import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.vo.ParticipantVo;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class GameController {
 
@@ -29,18 +25,12 @@ public class GameController {
             OutputView.printParticipantCards(new ParticipantVo(player));
         }
 
-        final RecordFactory recordFactory = new RecordFactory(game.getDealerScore());
-        final Map<String, Record> map = new LinkedHashMap<>();
-
-        for (Player player : game.getPlayers()) {
-            final Record record = recordFactory.getPlayerRecord(player.getScore());
-            map.put(player.getName(), record);
-        }
+        final RecordFactory recordFactory = game.getRecordFactory();
 
         OutputView.printDealerRecord(recordFactory.getDealerRecord());
-        for (Entry<String, Record> entry : map.entrySet()) {
-            OutputView.printPlayerRecord(entry.getKey(), entry.getValue());
-        }
+        game.getPlayers()
+                .forEach(it ->
+                        OutputView.printPlayerRecord(it.getName(), recordFactory.getPlayerRecord(it.getName())));
     }
 
     private Game createGame() {

@@ -74,6 +74,10 @@ public class Game {
         return dealer.openCard();
     }
 
+    public RecordFactory getRecordFactory() {
+        return new RecordFactory(dealer.getScore(), players);
+    }
+
     public Dealer getDealer() {
         return dealer;
     }

@@ -4,22 +4,46 @@ import static blackjack.domain.Record.LOSS;
 import static blackjack.domain.Record.PUSH;
 import static blackjack.domain.Record.WIN;
 
+import blackjack.domain.participant.Player;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RecordFactory {
 
     private final int dealerScore;
-    private final boolean isDealerBust;
     private final Map<Record, Integer> dealerRecord;
+    private final Map<String, Record> playerRecord;
 
-    public RecordFactory(int dealerScore) {
+    public RecordFactory(final int dealerScore, final List<Player> players) {
         this.dealerScore = dealerScore;
-        this.isDealerBust = dealerScore > 21;
         this.dealerRecord = new HashMap<>();
+        this.playerRecord = init(players);
     }
 
-    public Record getPlayerRecord(int score) {
+    RecordFactory(final int dealerScore) {
+        this.dealerScore = dealerScore;
+        this.dealerRecord = new HashMap<>();
+        this.playerRecord = new HashMap<>();
+    }
+
+    private Map<String, Record> init(final List<Player> players) {
+        final Map<String , Record> playerRecord = new HashMap<>();
+        for (Player player : players) {
+            playerRecord.put(player.getName(), compareScore(player.getScore()));
+        }
+        return playerRecord;
+    }
+
+    public Record getPlayerRecord(String name) {
+        return playerRecord.get(name);
+    }
+
+    Record getPlayerRecord(int score) {
+        return compareScore(score);
+    }
+
+    private Record compareScore(int score) {
         final Record playerRecord = createRecord(score);
         updateDealerRecord(playerRecord.getOpposite());
 
@@ -27,7 +51,7 @@ public class RecordFactory {
     }
 
     private Record createRecord(int score) {
-        if (isDealerBust) {
+        if (dealerScore > 21) {
             return getRecordWhenDealerBust(score);
         }
 
