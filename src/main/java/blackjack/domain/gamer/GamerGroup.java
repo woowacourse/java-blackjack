@@ -1,12 +1,14 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardPack;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Match;
 import blackjack.domain.result.PlayerResult;
-import blackjack.domain.card.CardPack;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -20,13 +22,29 @@ public class GamerGroup {
         this.playerGroup = playerGroup;
     }
 
-    public void addTwoCards(CardPack cardPack) {
+    public void addInitialCards(CardPack cardPack) {
         playerGroup.addTwoCards(cardPack);
-        dealer.addTwoCards(cardPack.pickOne(), cardPack.pickOne());
+        addInitialDealerCards(cardPack);
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    private void addInitialDealerCards(CardPack cardPack) {
+        Card card = cardPack.pickOne();
+        card.close();
+        dealer.addTwoCards(card, cardPack.pickOne());
+    }
+
+    public int addCardToDealer(CardPack cardPack) {
+        int addedCardsCount = 0;
+        while (dealer.isAddable()) {
+            dealer.addCard(cardPack.pickOne());
+            addedCardsCount++;
+        }
+
+        return addedCardsCount;
+    }
+
+    public void openDealerCards() {
+        dealer.openAllCards();
     }
 
     public GameResult getGameResult() {
@@ -45,7 +63,7 @@ public class GamerGroup {
         for (Match match : Match.values()) {
             matchResults.put(match, countMatch(matches, match));
         }
-        return matchResults;
+        return Collections.unmodifiableMap(matchResults);
     }
 
     private int countMatch(Collection<Match> matches, Match type) {
@@ -56,20 +74,10 @@ public class GamerGroup {
         List<Gamer> gamers = new ArrayList<>();
         gamers.add(dealer);
         playerGroup.addAllTo(gamers);
-        return gamers;
+        return Collections.unmodifiableList(gamers);
     }
 
-    public int addCardToDealer(CardPack cardPack) {
-        int addedCardsCount = 0;
-        while (dealer.isAddable()) {
-            dealer.addCard(cardPack.pickOne());
-            addedCardsCount++;
-        }
-
-        return addedCardsCount;
-    }
-
-    public void openDealerCards() {
-        dealer.openAllCards();
+    public Dealer getDealer() {
+        return dealer;
     }
 }

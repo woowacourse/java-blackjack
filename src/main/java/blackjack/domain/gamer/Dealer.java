@@ -20,12 +20,6 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public void addTwoCards(Card firstCard, Card secondCard) {
-        firstCard.close();
-        super.addTwoCards(firstCard, secondCard);
-    }
-
-    @Override
     public boolean isAddable() {
         return getMaxCardGroupSum() <= DEALER_STAND_CONDITION;
     }
