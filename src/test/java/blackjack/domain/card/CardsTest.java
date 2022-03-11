@@ -55,13 +55,13 @@ class CardsTest {
     @ParameterizedTest
     @CsvSource(value = {"SEVEN:BUST", "FOUR:HIT"}, delimiter = ':')
     @DisplayName("합산한 값이 21을 초과하면 BUST를 반환한다.")
-    void isBust1(CardNumber cardNumber, Status expected) {
+    void isBust1(CardNumber cardNumber, PlayStatus expected) {
         // give
         final Cards cards = new Cards(Set.of(new Card(DIAMOND, JACK), new Card(DIAMOND, FIVE),
             new Card(DIAMOND, cardNumber)));
 
         // when
-        final Status actual = cards.getStatus();
+        final PlayStatus actual = cards.getStatus();
 
         // then
         assertThat(actual).isEqualTo(expected);

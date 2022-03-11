@@ -5,7 +5,7 @@ import java.util.List;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Status;
+import blackjack.domain.card.PlayStatus;
 
 public class Dealer extends Participant {
 
@@ -21,7 +21,7 @@ public class Dealer extends Participant {
 
     public CardCount drawCards(CardDeck cardDeck) {
         int count = 0;
-        while (getStatus() == Status.HIT && getScore() <= 16) {
+        while (getStatus() == PlayStatus.HIT && getScore() <= 16) {
             hit(cardDeck);
             count++;
         }

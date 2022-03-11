@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Status;
+import blackjack.domain.card.PlayStatus;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
@@ -40,8 +40,8 @@ public class Game {
             .findFirst();
     }
 
-    public void drawPlayerCard(Player player, Status status) {
-        if (status == Status.HIT) {
+    public void drawPlayerCard(Player player, PlayStatus playStatus) {
+        if (playStatus == PlayStatus.HIT) {
             player.hit(cardDeck);
             return;
         }

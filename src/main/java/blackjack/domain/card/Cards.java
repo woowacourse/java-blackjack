@@ -17,12 +17,12 @@ public class Cards {
         value.add(card);
     }
 
-    public Status getStatus() {
+    public PlayStatus getStatus() {
         if (sum() > BUST_SCORE) {
-            return Status.BUST;
+            return PlayStatus.BUST;
         }
 
-        return Status.HIT;
+        return PlayStatus.HIT;
     }
 
     public int sum() {

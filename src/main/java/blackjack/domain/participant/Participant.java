@@ -4,16 +4,16 @@ import java.util.LinkedHashSet;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Status;
+import blackjack.domain.card.PlayStatus;
 
 public abstract class Participant {
 
     protected final Cards cards;
-    protected Status status;
+    protected PlayStatus playStatus;
 
     public Participant() {
         this.cards = new Cards(new LinkedHashSet<>());
-        this.status = Status.HIT;
+        this.playStatus = PlayStatus.HIT;
     }
 
     public void init(CardDeck cardDeck) {
@@ -21,12 +21,12 @@ public abstract class Participant {
         cards.add(cardDeck.drawCard());
     }
 
-    public Status getStatus() {
-        return status;
+    public PlayStatus getStatus() {
+        return playStatus;
     }
 
     public boolean isHit() {
-        return status == Status.HIT;
+        return playStatus == PlayStatus.HIT;
     }
 
     public int getScore() {
@@ -39,8 +39,8 @@ public abstract class Participant {
     }
 
     private void updateStatus() {
-        if (cards.getStatus() == Status.BUST) {
-            status = Status.BUST;
+        if (cards.getStatus() == PlayStatus.BUST) {
+            playStatus = PlayStatus.BUST;
         }
     }
 

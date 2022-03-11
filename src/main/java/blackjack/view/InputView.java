@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import blackjack.domain.card.Status;
+import blackjack.domain.card.PlayStatus;
 
 public class InputView {
 
@@ -20,7 +20,7 @@ public class InputView {
             .collect(Collectors.toList());
     }
 
-    public static Status requestHitOrStay(String name) {
+    public static PlayStatus requestHitOrStay(String name) {
         System.out.println(name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
         final String text = scanner.nextLine().trim();
@@ -29,9 +29,9 @@ public class InputView {
         }
 
         if (text.equalsIgnoreCase("y")) {
-            return Status.HIT;
+            return PlayStatus.HIT;
         }
 
-        return Status.STAY;
+        return PlayStatus.STAY;
     }
 }

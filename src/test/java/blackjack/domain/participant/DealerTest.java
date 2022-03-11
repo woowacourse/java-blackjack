@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Status;
+import blackjack.domain.card.PlayStatus;
 
 class DealerTest {
 
@@ -26,10 +26,10 @@ class DealerTest {
 
         // when
         dealer.drawCards(cardDeck);
-        final Status actual = dealer.getStatus();
+        final PlayStatus actual = dealer.getStatus();
 
         // then
-        assertThat(actual).isEqualTo(Status.BUST);
+        assertThat(actual).isEqualTo(PlayStatus.BUST);
     }
 
     @Test
@@ -42,10 +42,10 @@ class DealerTest {
 
         // when
         dealer.drawCards(cardDeck);
-        final Status actual = dealer.getStatus();
+        final PlayStatus actual = dealer.getStatus();
 
         // then
-        assertThat(actual).isEqualTo(Status.HIT);
+        assertThat(actual).isEqualTo(PlayStatus.HIT);
     }
 
     @Test

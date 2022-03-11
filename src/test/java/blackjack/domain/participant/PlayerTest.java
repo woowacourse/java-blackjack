@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Status;
+import blackjack.domain.card.PlayStatus;
 
 class PlayerTest {
 
@@ -58,7 +58,7 @@ class PlayerTest {
     @ParameterizedTest
     @CsvSource(value = {"TWO:BUST", "ACE:HIT"}, delimiter = ':')
     @DisplayName("카드의 합이 21을 초과하면 BUST를 반환한다.")
-    void returnBust(CardNumber cardNumber, Status expected) {
+    void returnBust(CardNumber cardNumber, PlayStatus expected) {
         // give
         final Player player = new Player("pobi");
         player.hit(new Card(DIAMOND, JACK));
@@ -66,7 +66,7 @@ class PlayerTest {
         player.hit(new Card(DIAMOND, cardNumber));
 
         // when
-        final Status actual = player.getStatus();
+        final PlayStatus actual = player.getStatus();
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -94,9 +94,9 @@ class PlayerTest {
 
         // when
         player.stay();
-        final Status actual = player.getStatus();
+        final PlayStatus actual = player.getStatus();
 
         // then
-        assertThat(actual).isEqualTo(Status.STAY);
+        assertThat(actual).isEqualTo(PlayStatus.STAY);
     }
 }

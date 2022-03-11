@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Status;
+import blackjack.domain.card.PlayStatus;
 
 public class Player extends Participant {
 
@@ -35,13 +35,13 @@ public class Player extends Participant {
     }
 
     private void updateStatus() {
-        if (cards.getStatus() == Status.BUST) {
-            super.status = Status.BUST;
+        if (cards.getStatus() == PlayStatus.BUST) {
+            super.playStatus = PlayStatus.BUST;
         }
     }
 
     public void stay() {
-        status = Status.STAY;
+        playStatus = PlayStatus.STAY;
     }
 
     public String getName() {

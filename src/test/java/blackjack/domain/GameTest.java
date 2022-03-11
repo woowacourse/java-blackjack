@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Status;
+import blackjack.domain.card.PlayStatus;
 import blackjack.domain.participant.Player;
 
 public class GameTest {
@@ -52,13 +52,13 @@ public class GameTest {
     @ParameterizedTest
     @CsvSource(value = {"HIT:10", "STAY:0"}, delimiter = ':')
     @DisplayName("상태가 HIT이면 플레이어가 카드를 1장 뽑는다.")
-    void drawCard_HIT(Status status, int expected) {
+    void drawCard_HIT(PlayStatus playStatus, int expected) {
         // give
         Game game = new Game(CardDeck.createNoShuffle(), List.of("pobi"));
         final Player player = game.getPlayers().get(0);
 
         // when
-        game.drawPlayerCard(player, status);
+        game.drawPlayerCard(player, playStatus);
         int actual = player.getScore();
 
         // then

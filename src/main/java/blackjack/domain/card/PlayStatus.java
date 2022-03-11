@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-public enum Status {
+public enum PlayStatus {
     BUST,
     HIT,
     STAY
