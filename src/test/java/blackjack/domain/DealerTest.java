@@ -9,6 +9,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.MockDeck;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardPattern;
+import blackjack.domain.player.Dealer;
 
 public class DealerTest {
 

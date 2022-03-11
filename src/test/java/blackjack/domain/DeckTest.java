@@ -6,6 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+
 public class DeckTest {
 
     @Nested

@@ -3,7 +3,7 @@ package blackjack.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.domain.Player;
+import blackjack.domain.player.Player;
 
 public class PlayerDto {
 

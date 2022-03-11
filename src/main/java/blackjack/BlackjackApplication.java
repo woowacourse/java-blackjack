@@ -5,11 +5,11 @@ import static blackjack.view.OutputView.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
-import blackjack.domain.Name;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.card.Deck;
+import blackjack.domain.player.Name;
+import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import blackjack.domain.Selection;
 import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;

@@ -3,12 +3,14 @@ package blackjack.domain;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import blackjack.domain.player.Player;
+
 public class ScoreResult {
 
     private final Map<Score, Integer> dealerResult;
     private final Map<String, Score> playerResult;
 
-    ScoreResult(Map<Score, Integer> dealerResult, Map<String, Score> playerResult){
+    public ScoreResult(Map<Score, Integer> dealerResult, Map<String, Score> playerResult){
         this.dealerResult = dealerResult;
         this.playerResult = playerResult;
     }

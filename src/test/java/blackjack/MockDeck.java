@@ -3,8 +3,8 @@ package blackjack;
 import java.util.ArrayList;
 import java.util.List;
 
-import blackjack.domain.Card;
-import blackjack.domain.Drawable;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Drawable;
 
 public class MockDeck implements Drawable {
 
