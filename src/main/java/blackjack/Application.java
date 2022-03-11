@@ -6,6 +6,7 @@ import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Player;
+import blackjack.domain.Players;
 import blackjack.dto.DealerDto;
 import blackjack.dto.DealerResultsDto;
 import blackjack.dto.PlayerDto;
@@ -22,18 +23,16 @@ public class Application {
         Dealer dealer = new Dealer(deck.getInitCards());
 
         List<String> names = InputView.getNames();
-        List<Player> players = names.stream()
-                .map(name -> new Player(name, deck.getInitCards()))
-                .collect(toList());
+        Players players = new Players(deck, names);
 
-        List<PlayerDto> playersDto = toPlayersDto(players);
+        List<PlayerDto> playersDto = toPlayersDto(players.getValue());
 
         OutputView.printStartInfo(DealerDto.from(dealer), playersDto);
 
-        players.forEach(player -> playing(deck, player));
+        players.getValue().forEach(player -> playing(deck, player));
         drawDealer(deck, dealer);
 
-        OutputView.printResultInfo(DealerDto.from(dealer), toPlayersDto(players));
+        OutputView.printResultInfo(DealerDto.from(dealer), toPlayersDto(players.getValue()));
         OutputView.printGameResult(DealerResultsDto.of(players, dealer), createPlayerResult(players, dealer));
     }
 
@@ -65,8 +64,9 @@ public class Application {
         }
     }
 
-    public static List<PlayerResultDto> createPlayerResult(List<Player> players, Dealer dealer) {
-        return players.stream()
+    public static List<PlayerResultDto> createPlayerResult(Players players, Dealer dealer) {
+        return players.getValue()
+                .stream()
                 .map(player -> PlayerResultDto.of(player, dealer))
                 .collect(toList());
     }

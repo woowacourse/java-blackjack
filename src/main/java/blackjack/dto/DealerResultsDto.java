@@ -7,6 +7,7 @@ import static java.util.stream.Collectors.groupingBy;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
+import blackjack.domain.Players;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +20,9 @@ public class DealerResultsDto {
         this.value = value;
     }
 
-    public static DealerResultsDto of(List<Player> players, Dealer dealer) {
-        Map<GameResult, Long> results = players.stream()
+    public static DealerResultsDto of(Players players, Dealer dealer) {
+        Map<GameResult, Long> results = players.getValue()
+                .stream()
                 .collect(groupingBy(player -> dealer.decideResult(player.getTotalScore()),
                         () -> new EnumMap<>(GameResult.class), counting()));
 
