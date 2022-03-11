@@ -7,7 +7,7 @@ public enum PlayStatus {
 
     public static final int BUST_SCORE = 21;
 
-    public static PlayStatus updateStatus(int sum) {
+    public static PlayStatus hitOrBust(int sum) {
         if (sum > BUST_SCORE) {
             return BUST;
         }

@@ -17,7 +17,7 @@ public class Cards {
     }
 
     public PlayStatus getStatus() {
-        return PlayStatus.updateStatus(sum());
+        return PlayStatus.hitOrBust(sum());
     }
 
     public int sum() {
