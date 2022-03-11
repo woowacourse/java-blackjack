@@ -13,8 +13,22 @@ public abstract class Player {
     private final String name;
 
     Player(final List<Card> cards, final String name) {
+        validateCards(cards);
+        validateName(name);
         this.cards = new Cards(cards);
         this.name = name;
+    }
+
+    private void validateCards(final List<Card> cards) {
+        if (cards == null || cards.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 비어있는 카드입니다.");
+        }
+    }
+
+    private void validateName(final String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 이름은 비어있을 수 없습니다.");
+        }
     }
 
     public int calculateFinalScore() {

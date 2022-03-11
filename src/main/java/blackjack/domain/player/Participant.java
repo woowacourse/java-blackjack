@@ -10,13 +10,6 @@ public class Participant extends Player {
 
     public Participant(final List<Card> cards, final String name) {
         super(cards, name);
-        validateEmpty(name);
-    }
-
-    private void validateEmpty(final String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 이름은 비어있을 수 없습니다.");
-        }
     }
 
     public void win() {
