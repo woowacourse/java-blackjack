@@ -1,9 +1,11 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Deck;
-import blackjack.domain.Hand;
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class Dealer extends Participant {
 
@@ -11,14 +13,22 @@ public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
+    private final Map<Result, Integer> resultScores = new EnumMap(Result.class);
 
     public Dealer() {
-        super.name = new Name(DEALER_NAME);
-        this.deck = Deck.createFixedCards();
+        this(Deck.createFixedCards());
     }
 
     public Dealer(Deck deck) {
         this.deck = deck;
+        super.name = new Name(DEALER_NAME);
+        initResultScores();
+    }
+
+    private void initResultScores() {
+        for (Result result : Result.values()) {
+            resultScores.put(result, 0);
+        }
     }
 
     public Card drawCard() {
@@ -51,5 +61,14 @@ public class Dealer extends Participant {
 
     public void giveCard(Player player) {
         player.receiveCard(drawCard());
+    }
+
+    public Map<Result, Integer> getResultScores() {
+        return resultScores;
+    }
+
+    public void decideMatchResult(Player player) {
+        Result result = cardHand.compareMatchResult(player.getCardHand());
+        resultScores.put(result, resultScores.get(result) + 1);
     }
 }

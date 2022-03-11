@@ -1,8 +1,8 @@
 package blackjack.controller;
 
-import blackjack.domain.GameScoreBoard;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.service.GameScoreDecider;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -21,8 +21,9 @@ public class BlackJackController {
 
         OutputView.printParticipantScore(dealer, players);
 
-        GameScoreBoard result = new GameScoreBoard(dealer, players);
-        OutputView.printBlackjackGameResult(result);
+        GameScoreDecider gameScoreDecider = new GameScoreDecider(dealer, players);
+
+        OutputView.printBlackjackGameResult(dealer, players);
     }
 
     private static List<Player> getPlayers() {

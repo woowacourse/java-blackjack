@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private static final String NEWLINE = System.lineSeparator();
+    private static final String NEW_LINE = System.lineSeparator();
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
@@ -20,7 +20,7 @@ public class InputView {
     }
 
     public static String inputOneMoreCard(Player player) {
-        out.printf(NEWLINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEWLINE, player.getName());
+        out.printf(NEW_LINE + "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + NEW_LINE, player.getName());
         return SCANNER.nextLine();
     }
 }
