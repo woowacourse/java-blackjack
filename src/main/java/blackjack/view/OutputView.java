@@ -3,8 +3,6 @@ package blackjack.view;
 import blackjack.domain.Record;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardCount;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
 import blackjack.vo.ParticipantVo;
 import java.util.Arrays;
 import java.util.List;

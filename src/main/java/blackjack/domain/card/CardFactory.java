@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +15,7 @@ public class CardFactory {
     }
 
     public static CardFactory create() {
-        final List<Card> list = getCards();
+        final List<Card> list = createAllCards();
         Collections.shuffle(list);
 
         final Stack<Card> deck = new Stack<>();
@@ -26,21 +25,18 @@ public class CardFactory {
     }
 
     public static CardFactory createNoShuffle() {
-        final List<Card> list = getCards();
+        final List<Card> list = createAllCards();
 
         final Stack<Card> deck = new Stack<>();
         deck.addAll(list);
 
         return new CardFactory(deck);
     }
-
-    private static List<Card> getCards() {
-        final List<Card> list = new ArrayList<>();
-        for (CardSymbol symbol : CardSymbol.values()) {
-            list.addAll(createSymbolCards(symbol));
-        }
-
-        return list;
+    // 모든 카드 만들기
+    private static List<Card> createAllCards() {
+        return Arrays.stream(CardSymbol.values())
+                .flatMap(symbol -> createSymbolCards(symbol).stream())
+                .collect(Collectors.toList());
     }
 
     private static List<Card> createSymbolCards(CardSymbol symbol) {

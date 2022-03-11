@@ -14,7 +14,7 @@ public class Dealer extends Participant {
 
     void init(List<Card> rawCards) {
         for (Card rawCard : rawCards) {
-            cards.add(rawCard);
+            getCards().add(rawCard);
         }
     }
 
@@ -29,7 +29,7 @@ public class Dealer extends Participant {
     }
 
     public Card openCard() {
-        return cards.findFirst();
+        return getCards().findFirst();
     }
 
     public String getName() {

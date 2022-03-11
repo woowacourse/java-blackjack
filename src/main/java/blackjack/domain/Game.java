@@ -5,7 +5,9 @@ import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,7 +50,7 @@ public class Game {
         return cardFactory.getRemainAmount();
     }
 
-    public void drawPlayerCard(Player player, Status status) {
+    public void progressPlayerTurn(Player player, Status status) {
         if (status == Status.HIT) {
             player.hit(cardFactory);
             return;
@@ -62,7 +64,7 @@ public class Game {
                 .findFirst();
     }
 
-    public CardCount drawDealerCard() {
+    public CardCount progressDealerTurn() {
         return dealer.drawCards(cardFactory);
     }
 
@@ -78,12 +80,16 @@ public class Game {
         return new RecordFactory(dealer.getScore(), players);
     }
 
-    public Dealer getDealer() {
-        return dealer;
-    }
-
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public List<Participant> getAllParticipant() {
+        final List<Participant> list = new ArrayList<>();
+        list.add(dealer);
+        list.addAll(players);
+
+        return list;
     }
 
     public List<String> getNames() {

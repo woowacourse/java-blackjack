@@ -4,6 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class Cards {
+
     private final Set<Card> value;
 
     public Cards(Set<Card> value) {

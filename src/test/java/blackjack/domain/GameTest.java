@@ -66,7 +66,7 @@ public class GameTest {
         final List<Player> players = game.getPlayers();
 
         // when
-        game.drawPlayerCard(players.get(0), status);
+        game.progressPlayerTurn(players.get(0), status);
         final int actual = game.getRemainAmount();
 
         // then
@@ -80,7 +80,7 @@ public class GameTest {
         Game game = new Game(CardFactory.createNoShuffle(), List.of("pobi"));
 
         // when
-        game.drawDealerCard();
+        game.progressDealerTurn();
         int actual = game.getDealerScore();
 
         // then

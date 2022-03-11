@@ -7,8 +7,8 @@ import java.util.LinkedHashSet;
 
 public abstract class Participant {
 
-    protected final Cards cards;
-    protected Status status;
+    private final Cards cards;
+    private Status status;
 
     public Participant() {
         this.cards = new Cards(new LinkedHashSet<>());
@@ -18,10 +18,6 @@ public abstract class Participant {
     public void init(CardFactory cardFactory) {
         cards.add(cardFactory.drawCard());
         cards.add(cardFactory.drawCard());
-    }
-
-    public Status getStatus() {
-        return status;
     }
 
     public boolean isHit() {
@@ -37,15 +33,23 @@ public abstract class Participant {
         updateStatus();
     }
 
-    private void updateStatus() {
+    protected void updateStatus() {
         if (cards.getStatus() == Status.BUST) {
             status = Status.BUST;
         }
+    }
+
+    public void stay() {
+        status = Status.STAY;
     }
 
     public abstract String getName();
 
     public Cards getCards() {
         return cards;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 }
