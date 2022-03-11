@@ -19,11 +19,7 @@ public enum Record {
     }
 
     public static Record of(boolean isDealerBust, int dealerScore, int score) {
-        if (isDealerBust) {
-            return getRecordWhenDealerBust(score);
-        }
-
-        if (score > BUST_SCORE || score < dealerScore) {
+        if (isPlayerLoss(isDealerBust, dealerScore, score)) {
             return LOSS;
         }
 
@@ -34,12 +30,8 @@ public enum Record {
         return WIN;
     }
 
-    private static Record getRecordWhenDealerBust(int score) {
-        if (score > BUST_SCORE) {
-            return LOSS;
-        }
-
-        return WIN;
+    private static boolean isPlayerLoss(boolean isDealerBust, int dealerScore, int score) {
+        return score > BUST_SCORE || (!isDealerBust && score < dealerScore);
     }
 
     public String getName() {
