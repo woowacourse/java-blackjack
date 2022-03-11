@@ -2,11 +2,11 @@ package blackjack.domain.card;
 
 public class Card {
     private final CardNumber cardNumber;
-    private final Symbol symbol;
+    private final CardSymbol cardSymbol;
 
-    public Card(CardNumber cardNumber,Symbol symbol) {
+    public Card(CardNumber cardNumber, CardSymbol cardSymbol) {
         this.cardNumber = cardNumber;
-        this.symbol = symbol;
+        this.cardSymbol = cardSymbol;
     }
 
     public int getCardNumberValue() {
@@ -15,6 +15,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return cardNumber.toString() + symbol.toString();
+        return cardNumber.toString() + cardSymbol.toString();
     }
 }

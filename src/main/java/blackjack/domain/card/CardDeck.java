@@ -21,14 +21,14 @@ public class CardDeck {
     }
 
     private static List<Card> createCards() {
-        return Arrays.stream(Symbol.values())
+        return Arrays.stream(CardSymbol.values())
                 .flatMap(symbol -> createSymbolCards(symbol).stream())
                 .collect(Collectors.toList());
     }
 
-    private static List<Card> createSymbolCards(Symbol symbol) {
+    private static List<Card> createSymbolCards(CardSymbol cardSymbol) {
         return Arrays.stream(CardNumber.values())
-                .map(cardNumber -> new Card(cardNumber, symbol))
+                .map(cardNumber -> new Card(cardNumber, cardSymbol))
                 .collect(Collectors.toList());
     }
 

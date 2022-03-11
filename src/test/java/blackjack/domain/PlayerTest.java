@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Symbol;
+import blackjack.domain.card.CardSymbol;
 import blackjack.domain.participant.Player;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -15,8 +15,8 @@ public class PlayerTest {
     @DisplayName("플레이어가 버스트 상태인지 알려준다")
     void isPlayerBust() {
         Player player = new Player("pobi",
-                List.of(new Card(CardNumber.JACK, Symbol.SPADE), new Card(CardNumber.QUEEN, Symbol.SPADE),
-                        new Card(CardNumber.KING, Symbol.SPADE)));
+                List.of(new Card(CardNumber.JACK, CardSymbol.SPADE), new Card(CardNumber.QUEEN, CardSymbol.SPADE),
+                        new Card(CardNumber.KING, CardSymbol.SPADE)));
         Assertions.assertThat(player.isFinished()).isTrue();
     }
 }
