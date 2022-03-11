@@ -23,9 +23,10 @@ public class Game {
         this.players = playerNames.stream()
             .map(Player::new)
             .collect(Collectors.toList());
+        init();
     }
 
-    public void init() {
+    private void init() {
         dealer.init(cardDeck);
         players.forEach(player -> player.init(cardDeck));
     }

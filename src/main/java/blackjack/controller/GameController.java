@@ -33,8 +33,6 @@ public class GameController {
         List<String> names = InputView.requestPlayerNames();
         Game game = new Game(CardDeck.create(), names);
 
-        game.init();
-
         OutputView.printInitResult(names);
         OutputView.printDealerFirstCard(game.dealerFirstCard());
         for (Player player : game.getPlayers()) {

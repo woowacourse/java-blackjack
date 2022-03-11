@@ -37,7 +37,6 @@ public class GameTest {
         Game game = new Game(CardDeck.createNoShuffle(), List.of("pobi", "jason"));
 
         // when
-        game.init();
         List<Integer> actual = new ArrayList<>();
         actual.add(game.getDealerScore());
         List<Player> players = game.getPlayers();
@@ -50,7 +49,7 @@ public class GameTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"HIT:10", "STAY:0"}, delimiter = ':')
+    @CsvSource(value = {"HIT:29", "STAY:20"}, delimiter = ':')
     @DisplayName("상태가 HIT이면 플레이어가 카드를 1장 뽑는다.")
     void drawCard_HIT(PlayStatus playStatus, int expected) {
         // give
