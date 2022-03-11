@@ -31,4 +31,17 @@ public class Dealer extends Player {
     public int countAddedCards() {
         return this.deck.countAddedCards();
     }
+
+    public boolean isWinning(Entry entry) {
+        if (entry.isBust()) {
+            return true;
+        }
+        if (this.isBust()) {
+            return false;
+        }
+        if (entry.getScore() >= this.getScore()) {
+            return false;
+        }
+        return true;
+    }
 }
