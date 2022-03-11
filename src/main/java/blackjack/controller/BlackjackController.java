@@ -7,14 +7,13 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.io.OutputStream;
 import java.util.List;
 
 public class BlackjackController {
 
     public GameMachine createGameMachine() {
         try {
-            List<String> names = InputView.inputNames();
+            List<String> names = InputView.responseNames();
             return new GameMachine(names);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
