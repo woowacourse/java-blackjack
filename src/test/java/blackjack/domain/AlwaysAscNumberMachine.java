@@ -8,7 +8,9 @@ public class AlwaysAscNumberMachine implements CardPickMachine {
 
     private List<Integer> cardIndex;
     public AlwaysAscNumberMachine() {
-        this.cardIndex = IntStream.range(0,52).boxed().collect(Collectors.toList());
+        this.cardIndex = IntStream.range(0,52)
+                .boxed()
+                .collect(Collectors.toList());
     }
 
     @Override

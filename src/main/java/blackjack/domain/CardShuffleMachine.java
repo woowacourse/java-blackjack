@@ -10,7 +10,9 @@ public class CardShuffleMachine implements CardPickMachine{
     private static final List<Integer> cardIndex;
 
     static {
-         cardIndex = IntStream.range(0, 52).boxed().collect(Collectors.toList());
+         cardIndex = IntStream.range(0, 52)
+                 .boxed()
+                 .collect(Collectors.toList());
     }
 
     @Override

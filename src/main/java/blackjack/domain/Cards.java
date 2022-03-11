@@ -21,8 +21,10 @@ public class Cards {
     }
 
     private void makeCards() {
-        List<Suit> suits = Arrays.stream(Suit.values()).collect(Collectors.toList());
-        List<Rank> ranks = Arrays.stream(Rank.values()).collect(Collectors.toList());
+        List<Suit> suits = Arrays.stream(Suit.values())
+                .collect(Collectors.toList());
+        List<Rank> ranks = Arrays.stream(Rank.values())
+                .collect(Collectors.toList());
         for (Suit suit : suits) {
             addRankForSuit(ranks, suit);
         }
