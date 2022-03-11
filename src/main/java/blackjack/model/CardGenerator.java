@@ -1,8 +1,9 @@
 package blackjack.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CardGenerator {
 
@@ -10,14 +11,16 @@ public class CardGenerator {
     private int index;
 
     public CardGenerator() {
-        deck = new ArrayList<>();
         index = 0;
-        for (Rank rank : Rank.values()) {
-            for (Suit suit : Suit.values()) {
-                deck.add(new Card(rank, suit));
-            }
-        }
+        deck = Stream.of(Suit.values())
+                .flatMap(this::cardStream)
+                .collect(Collectors.toList());
         Collections.shuffle(deck);
+    }
+
+    private Stream<Card> cardStream(Suit suit) {
+        return Stream.of(Rank.values())
+                .map(rank -> new Card(rank, suit));
     }
 
     public Card generate() {
