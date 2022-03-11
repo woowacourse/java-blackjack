@@ -53,7 +53,7 @@ public class BlackJackController {
 			.collect(Collectors.toUnmodifiableList());
 	}
 
-	public int getDealerAdditionalCardCount() {
+	public int requestAdditionalDrawToDealer() {
 		return blackJackGame.distributeAdditionalToDealer();
 	}
 

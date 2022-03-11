@@ -12,7 +12,7 @@ public class BlackJackApplication {
 
         controller.askHitOrStay(InputView::getAnswerOfAdditionalDraw, OutputView::printPlayerCard);
 
-        OutputView.printAdditionalDrawDealer(controller.getDealerAdditionalCardCount());
+        OutputView.printAdditionalDrawDealer(controller.requestAdditionalDrawToDealer());
         OutputView.printFinalCards(controller.getDealerDto(), controller.getPlayerDtos());
         OutputView.printFinalResult(controller.getGamerResult());
     }
