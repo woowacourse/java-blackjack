@@ -29,12 +29,9 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("블랙잭 발생 시 승패 판단")
-    void compareAtBlackJack() {
-        List<Card> handForDealer = new ArrayList<>(
-                List.of(new Card(Rank.RANK_J, Suit.CLOVER), new Card(Rank.RANK_A, Suit.CLOVER)));
-        Dealer dealer = new Dealer(handForDealer);
-        assertThat(player.compareAtBlackJack(dealer)).isEqualTo(Versus.LOSE);
+    @DisplayName("딜러가 블랙잭 발생 시 승패 판단")
+    void compareAtDealerBlackJack() {
+        assertThat(player.compareAtDealerBlackJack()).isEqualTo(Versus.LOSE);
     }
 
     @Test

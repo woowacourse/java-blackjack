@@ -62,18 +62,25 @@ public class Players {
                 .map((Player::isBlackJack)).findFirst().orElseThrow();
     }
 
-    public Map<Name, Versus> getResultAtBlackJack(Participant other) {
-        if (!isExistBlackJack() && !other.isBlackJack()) {
+    public Map<Name, Versus> getResultAtDealerBlackJack(Dealer dealer) {
+        if (!dealer.isBlackJack()) {
             throw new IllegalStateException(NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE);
         }
         Map<Name, Versus> map = new LinkedHashMap<>();
-        players.stream().forEach(player -> map.put(player.name, player.compareAtBlackJack(other)));
+        players.stream().forEach(player -> map.put(player.name, player.compareAtDealerBlackJack()));
         return map;
     }
 
     public Map<Name, Versus> getResultAtFinal(Participant other) {
         Map<Name, Versus> map = new LinkedHashMap<>();
-        players.stream().forEach(player -> map.put(player.name, player.compareAtFinal(other)));
+        players.stream().forEach(player -> {
+                    if (player.isBlackJack()) {
+                        map.put(player.name, Versus.WIN);
+                        return;
+                    }
+                    map.put(player.name, player.compareAtFinal(other));
+                }
+        );
         return map;
     }
 }

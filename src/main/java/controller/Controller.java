@@ -28,9 +28,15 @@ public class Controller {
         Players players = new Players(names, generateInitCardsForPlayers(names, deck));
         printInitHands(names, dealer, players);
 
-        if (players.isExistBlackJack() || dealer.isBlackJack()) {
+        if (dealer.isBlackJack()) {
             printBlackJackResult(names, dealer, players);
             return;
+        }
+
+        for (Name name : names) {
+            if (players.isBlackJackByName(name)) {
+                OutputView.printPlayerBlackJackMessage(name.getName());
+            }
         }
 
         drawForPlayers(names, deck, players);
@@ -69,11 +75,14 @@ public class Controller {
     }
 
     private void printBlackJackResult(List<Name> names, Dealer dealer, Players players) {
-        OutputView.printBlackJackResultTitle();
-        Result blackjackResult = new Result(players.getResultAtBlackJack(dealer));
+        OutputView.printDealerBlackJackMessage();
+        Result blackjackResult = new Result(players.getResultAtDealerBlackJack(dealer));
         OutputView.printResultTitle();
-        OutputView.printDealerResult(blackjackResult.getDealerWinCount(), blackjackResult.getDealerDrawCount(),
-                blackjackResult.getDealerLoseCount());
+        OutputView.printDealerResult(
+                blackjackResult.getDealerWinCount(),
+                blackjackResult.getDealerDrawCount(),
+                blackjackResult.getDealerLoseCount()
+        );
         for (Name name : names) {
             OutputView.printPlayerResult(name.getName(), blackjackResult.getVersusOfPlayer(name).getResult());
         }
@@ -81,26 +90,23 @@ public class Controller {
 
     private void drawForPlayers(List<Name> names, Deck deck, Players players) {
         for (Name name : names) {
+            if (players.isBlackJackByName(name)) {
+                continue;
+            }
             askAndDrawForPlayer(deck, players, name);
-        }
-    }
-
-    private void drawForDealer(Deck deck, Dealer dealer, Players players) {
-        if (!players.isAllBust()) {
-            drawForDealer(deck, dealer);
         }
     }
 
     private void askAndDrawForPlayer(Deck deck, Players players, Name name) {
         boolean isKeepDraw = true;
-        while (isKeepDraw && askDraw(name.getName())) {
+        while (isKeepDraw && inputAskDraw(name.getName())) {
             players.addCardByName(name, deck.draw());
             OutputView.printHand(players.showHandByName(name));
             isKeepDraw = checkBlackJackOrBust(players, name);
         }
     }
 
-    private boolean askDraw(String name) {
+    private boolean inputAskDraw(String name) {
         String resultAskDraw = InputView.inputAskDraw(name);
         validateAskDraw(resultAskDraw);
         if (resultAskDraw.equals("y")) {
@@ -127,7 +133,13 @@ public class Controller {
         return true;
     }
 
-    private void drawForDealer(Deck deck, Dealer dealer) {
+    private void drawForDealer(Deck deck, Dealer dealer, Players players) {
+        if (!players.isAllBust()) {
+            checkAndDrawForDealer(deck, dealer);
+        }
+    }
+
+    private void checkAndDrawForDealer(Deck deck, Dealer dealer) {
         while (!dealer.isEnoughCard()) {
             OutputView.printDealerDrawMessage();
             dealer.addCard(deck.draw());

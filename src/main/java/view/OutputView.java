@@ -11,8 +11,8 @@ public class OutputView {
     private static final String RESULT_TITLE_MESSAGE = "\n## 최종 승패";
     private static final String DEALER_RESULT_MESSAGE_FORMAT = "딜러: %d승 %d무 %d패\n";
     private static final String PLAYER_RESULT_MESSAGE_FORMAT = "%s: %s\n";
-    private static final String DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
-    private static final String BLACK_JACK_RESuLT_TITLE_MESSAGE = "[ BLACK JACK ]";
+    private static final String DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String DEALER_BLACK_JACK_MESSAGE = "\n== DEALER IS BLACK JACK ==";
 
     public static void printInitMessage(List<String> names) {
         String namesForPrint = names.stream().collect(Collectors.joining(", "));
@@ -20,6 +20,7 @@ public class OutputView {
     }
 
     public static void printParticipantStatus(String dealerStatus, List<String> playerStatuses) {
+        printNewLine();
         System.out.println(dealerStatus);
         playerStatuses.stream().forEach(System.out::println);
     }
@@ -52,7 +53,15 @@ public class OutputView {
         System.out.println(DEALER_DRAW_MESSAGE);
     }
 
-    public static void printBlackJackResultTitle() {
-        System.out.println(BLACK_JACK_RESuLT_TITLE_MESSAGE);
+    public static void printDealerBlackJackMessage() {
+        System.out.println(DEALER_BLACK_JACK_MESSAGE);
+    }
+
+    public static void printPlayerBlackJackMessage(String name) {
+        System.out.printf("\n== %s IS BLACK JACK ==\n", name);
+    }
+
+    private static void printNewLine() {
+        System.out.println();
     }
 }

@@ -93,7 +93,7 @@ public class PlayersTest {
     @Test
     @DisplayName("딜러를 포함한 참가자들 중 블랙잭이 있을 경우 결과 반환")
     void getResultAtBlackJack() {
-        Map<Name, Versus> resultMap = players.getResultAtBlackJack(dealer_17);
+        Map<Name, Versus> resultMap = players.getResultAtDealerBlackJack(dealer_17);
         assertThat(resultMap.get(new Name("pobi"))).isEqualTo(Versus.WIN);
         assertThat(resultMap.get(new Name("jason"))).isEqualTo(Versus.LOSE);
     }
@@ -101,7 +101,7 @@ public class PlayersTest {
     @Test
     @DisplayName("최종 게임 결과 반환")
     void getResultAtFinal() {
-        Map<Name, Versus> resultMap = players.getResultAtBlackJack(dealer_17);
+        Map<Name, Versus> resultMap = players.getResultAtDealerBlackJack(dealer_17);
         assertThat(resultMap.get(new Name("pobi"))).isEqualTo(Versus.WIN);
         assertThat(resultMap.get(new Name("jason"))).isEqualTo(Versus.LOSE);
     }

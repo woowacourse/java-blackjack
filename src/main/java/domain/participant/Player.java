@@ -11,14 +11,10 @@ public class Player extends Participant {
         super(name, hand);
     }
 
-    public Versus compareAtBlackJack(Participant other) {
+    public Versus compareAtDealerBlackJack() {
         boolean isPlayerBlackJack = isBlackJack();
-        boolean isOtherBlackJack = other.isBlackJack();
-        if (isOtherBlackJack && isPlayerBlackJack) {
+        if (isPlayerBlackJack) {
             return Versus.DRAW;
-        }
-        if (!isOtherBlackJack && isPlayerBlackJack) {
-            return Versus.WIN;
         }
         return Versus.LOSE;
     }
