@@ -13,9 +13,12 @@ abstract public class Player {
     public Player(final String name) {
         checkNameBlank(name);
         checkNameSpecialCharacters(name);
+
         this.name = name;
         this.cards = new Cards(new ArrayList<>());
     }
+
+    abstract public boolean canAddCard();
 
     private void checkNameSpecialCharacters(String name) {
         if (!NON_SPECIAL_CHARACTERS.matcher(name).matches()) {
@@ -44,6 +47,4 @@ abstract public class Player {
     public Cards getCards() {
         return cards;
     }
-
-    abstract public boolean canAddCard();
 }

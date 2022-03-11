@@ -40,7 +40,7 @@ public class Cards implements Iterable<Card> {
                 .count();
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 
