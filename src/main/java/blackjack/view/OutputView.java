@@ -20,10 +20,8 @@ public class OutputView {
     private static final String DEALER_MORE_CARD_GUIDE_MESSAGE = "딜러는 %d이하라 한장의 카드를 더 받았습니다.";
     private static final String FINAL_WINNER_GUIDE_MESSAGE = "## 최종 승패";
     private static final String FINAL_POINT_GUIDE_MESSAGE = " - 결과";
-
     private static final char NEW_LINE = '\n';
     private static final char FINAL_MATCH_DELIMITER = ' ';
-
     private static final int DELETE_FINAL_DELIMITER = 2;
 
     public static void announceStartGame(List<String> playerNames) {

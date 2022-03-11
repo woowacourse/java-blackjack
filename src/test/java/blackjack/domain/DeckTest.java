@@ -14,6 +14,7 @@ public class DeckTest {
     public void setUp() {
         deck = new Deck();
     }
+
     @Test
     @DisplayName("덱 객체 생성 확인")
     public void createDeck() {
@@ -26,6 +27,7 @@ public class DeckTest {
         deck.addCard(new Card(Suit.SPADE, Rank.EIGHT));
         Deck comparedDeck = new Deck();
         comparedDeck.addCard(new Card(Suit.SPADE, Rank.EIGHT));
+
         assertThat(deck).isEqualTo(comparedDeck);
     }
 
@@ -35,6 +37,7 @@ public class DeckTest {
         deck.addCard(new Card(Suit.SPADE, Rank.EIGHT));
         deck.addCard(new Card(Suit.SPADE, Rank.TWO));
         int sumPoint = deck.sumPoints();
+
         assertThat(sumPoint).isEqualTo(10);
     }
 
@@ -45,6 +48,7 @@ public class DeckTest {
         deck.addCard(new Card(Suit.SPADE, Rank.TWO));
         deck.addCard(new Card(Suit.SPADE, Rank.JACK));
         int sumPoint = deck.sumPoints();
+
         assertThat(sumPoint).isEqualTo(20);
     }
 
@@ -56,6 +60,7 @@ public class DeckTest {
         deck.addCard(new Card(Suit.DIAMOND, Rank.ACE));
         deck.addCard(new Card(Suit.HEART, Rank.ACE));
         int sumPoint = deck.sumPoints();
+
         assertThat(sumPoint).isEqualTo(14);
     }
 
@@ -67,6 +72,7 @@ public class DeckTest {
         deck.addCard(new Card(Suit.DIAMOND, Rank.ACE));
         deck.addCard(new Card(Suit.DIAMOND, Rank.TWO));
         int sumPoint = deck.sumPoints();
+
         assertThat(sumPoint).isEqualTo(15);
     }
 
@@ -77,6 +83,7 @@ public class DeckTest {
         deck.addCard(new Card(Suit.CLUB, Rank.ACE));
         deck.addCard(new Card(Suit.DIAMOND, Rank.NINE));
         int sumPoint = deck.sumPoints();
+
         assertThat(sumPoint).isEqualTo(21);
     }
 
@@ -87,6 +94,7 @@ public class DeckTest {
         deck.addCard(new Card(Suit.CLUB, Rank.ACE));
         deck.addCard(new Card(Suit.DIAMOND, Rank.JACK));
         int sumPoint = deck.sumPoints();
+
         assertThat(sumPoint).isEqualTo(12);
     }
 }

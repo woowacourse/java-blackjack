@@ -18,6 +18,7 @@ public class RankTest {
     void checkValidateEnumNumberSize() {
         List<Rank> rankValues = Arrays.stream(Rank.values())
                 .collect(Collectors.toList());
+
         assertThat(rankValues.size()).isEqualTo(13);
     }
 

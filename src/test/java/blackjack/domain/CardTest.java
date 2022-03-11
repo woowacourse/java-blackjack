@@ -13,8 +13,7 @@ class CardTest {
         Suit suit = Suit.SPADE;
         Rank rank = Rank.FOUR;
         Card card = new Card(suit, rank);
+
         assertThat(card).isInstanceOf(Card.class);
     }
-
-
 }

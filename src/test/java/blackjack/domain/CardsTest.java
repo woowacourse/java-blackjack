@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CardsTest {
 
     private Cards cards;
+
     @BeforeEach
     public void setUp() {
         cards = new Cards(new AlwaysAscNumberMachine());
@@ -23,6 +24,7 @@ public class CardsTest {
     @DisplayName("Cards 반환 확인")
     public void checkCardReturn() {
         Card card = cards.assignCard();
+
         assertThat(card.getRank()).isEqualTo(Rank.ACE);
     }
 }

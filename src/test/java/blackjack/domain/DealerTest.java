@@ -11,7 +11,8 @@ class DealerTest {
     @DisplayName("dealer 객체 생성 확인")
     public void createDealer() {
        Dealer dealer = new Dealer();
-        assertThat(dealer).isInstanceOf(Dealer.class);
+
+       assertThat(dealer).isInstanceOf(Dealer.class);
     }
 
     @Test
@@ -23,6 +24,7 @@ class DealerTest {
 
         Dealer compareDealer = new Dealer();
         compareDealer.addCard(card);
+
         assertThat(dealer).isEqualTo(compareDealer);
     }
 
@@ -33,6 +35,7 @@ class DealerTest {
         dealer.addCard(new Card(Suit.SPADE, Rank.JACK));
         dealer.addCard(new Card(Suit.SPADE, Rank.SEVEN));
         boolean overLimit = dealer.isOverLimit(16);
+
         assertThat(overLimit).isTrue();
     }
 
@@ -43,6 +46,7 @@ class DealerTest {
         dealer.addCard(new Card(Suit.SPADE, Rank.JACK));
         dealer.addCard(new Card(Suit.SPADE, Rank.SIX));
         boolean overLimit = dealer.isOverLimit(16);
+
         assertThat(overLimit).isFalse();
     }
 }

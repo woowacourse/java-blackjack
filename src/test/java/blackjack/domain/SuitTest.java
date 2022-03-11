@@ -16,6 +16,7 @@ public class SuitTest {
     public void checkEnumSuitSize() {
         List<Suit> suitValues = Arrays.stream(Suit.values())
                 .collect(Collectors.toList());
+
         assertThat(suitValues.size()).isEqualTo(4);
     }
 }
