@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.RecordFactory.*;
 import static blackjack.domain.card.CardNumber.*;
 
 import java.util.LinkedHashSet;
