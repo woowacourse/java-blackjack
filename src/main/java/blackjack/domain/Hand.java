@@ -19,6 +19,14 @@ public class Hand {
 		cards.add(card);
 	}
 
+	public String getFinalScore() {
+		int score = calculateOptimalScore();
+		if (score == BlackJackService.BUST) {
+			return BlackJackService.BUST_MESSAGE;
+		}
+		return Integer.toString(score);
+	}
+
 	public int calculateOptimalScore() {
 		int totalScore = cards.stream()
 			.mapToInt(Card::getScore)

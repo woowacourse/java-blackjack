@@ -13,7 +13,7 @@ public class DealerResultDto {
 
 	private final String name;
 	private final List<String> cards;
-	private final int totalScore;
+	private final String totalScore;
 	private final Map<Outcome, Integer> competeResult;
 
 	private DealerResultDto(final String name, final Hand hand, final Map<Outcome, Integer> competeResult) {
@@ -21,7 +21,7 @@ public class DealerResultDto {
 		this.cards = hand.getCards().stream()
 			.map(Card::getInformation)
 			.collect(Collectors.toList());
-		this.totalScore = hand.calculateOptimalScore();
+		this.totalScore = hand.getFinalScore();
 		this.competeResult = competeResult;
 	}
 
@@ -37,7 +37,7 @@ public class DealerResultDto {
 		return cards;
 	}
 
-	public int getTotalScore() {
+	public String getTotalScore() {
 		return totalScore;
 	}
 

@@ -20,8 +20,9 @@ import blackjack.dto.TableStatusDto;
 
 public class BlackJackService {
 
+	public static final String BUST_MESSAGE = "파산";
 	public static final int BUST = 0;
-	public static int OPTIMIZED_WINNING_NUMBER = 21;
+	public static final int OPTIMIZED_WINNING_NUMBER = 21;
 
 	private List<Role> players;
 	private Role dealer;

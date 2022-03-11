@@ -20,9 +20,6 @@ public class BlackJackApplication {
 		List<TableStatusDto> playersStatus = controller.distributeCardToPlayers();
 		OutputView.printInitialStatus(dealerStatus, playersStatus);
 
-		// 결과 파산시 파산이ㅡ로 리턴
-		// 딜러 빅토리 해결
-		// 출력 개행 및 스페이스바
 		while (true) {
 			String answer = InputView.drawOneMoreCard(controller.getWhoseTurn());
 			PlayerStatusDto playerStatus = controller.drawPlayer(answer);
