@@ -5,6 +5,7 @@ import blackjack.model.Dealer;
 import blackjack.model.Gamer;
 import blackjack.model.Player;
 import blackjack.model.Result;
+import blackjack.model.cards.Cards;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class OutputView {
             .collect(Collectors.joining(", "));
     }
 
-    private static String openCards(List<Card> openCard) {
+    private static String openCards(Cards openCard) {
         return openCard.stream()
             .map(OutputView::cardText)
             .collect(Collectors.joining(", "));

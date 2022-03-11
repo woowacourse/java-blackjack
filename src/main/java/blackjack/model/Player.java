@@ -1,32 +1,31 @@
 package blackjack.model;
 
 import blackjack.model.cards.Cards;
-import blackjack.model.cards.ImmutableCards;
-import blackjack.model.cards.OwnCards;
+import blackjack.model.cards.ScoreCards;
 import java.util.List;
 
 public abstract class Player {
 
-    protected final OwnCards cards;
-    private final List<Card> openCards;
+    protected final ScoreCards cards;
+    private final Cards openCards;
     private final String name;
 
-    public Player(String name, List<Card> openCards, OwnCards cards) {
+    public Player(String name, Cards openCards, Cards cards) {
         this.name = name;
         this.openCards = openCards;
-        this.cards = cards;
+        this.cards = Cards.bestScoreCards(cards);
     }
 
     public String name() {
         return name;
     }
 
-    public List<Card> openCards() {
-        return openCards;
+    public Cards openCards() {
+        return Cards.toUnmodifiable(openCards);
     }
 
     public Cards cards() {
-        return new ImmutableCards(cards);
+        return Cards.toUnmodifiable(cards);
     }
 
     public void take(Card card) {
@@ -37,7 +36,7 @@ public abstract class Player {
     }
 
     public Score score() {
-        return cards.bestScore();
+        return cards.score();
     }
 
     public boolean isBust() {

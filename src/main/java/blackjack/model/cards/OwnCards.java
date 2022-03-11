@@ -3,15 +3,20 @@ package blackjack.model.cards;
 import blackjack.model.Card;
 import blackjack.model.Rank;
 import blackjack.model.Score;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class OwnCards implements Cards{
+final class OwnCards implements Cards{
 
     private final List<Card> cards;
 
-    public OwnCards(Card card1, Card card2, Card... cards) {
+    OwnCards(Card card) {
+        this.cards = List.of(card);
+    }
+
+    OwnCards(Card card1, Card card2, Card... cards) {
         this.cards = concat(concat(card1, card2), cards)
             .collect(Collectors.toList());
     }
@@ -24,44 +29,18 @@ public class OwnCards implements Cards{
         return Stream.concat(cards1, List.of(cards2).stream());
     }
 
-    public Score maxScore() {
-        int score = stream()
-            .mapToInt(Card::softRank)
-            .sum();
-        return new Score(score);
-    }
-
+    @Override
     public Stream<Card> stream() {
         return cards.stream();
     }
 
+    @Override
     public void take(Card card) {
         cards.add(card);
     }
 
-    public Score bestScore() {
-        if (hasAce() && !softHandScore().isBust()) {
-            return softHandScore();
-        }
-        return hardHandScore();
-    }
-
-    private boolean hasAce() {
-        return stream().anyMatch(Card::isAce);
-    }
-
-    private Score softHandScore() {
-        return hardHandScore().plus(increaseScore());
-    }
-
-    private Score increaseScore() {
-        return new Score(Rank.ACE.soft() - Rank.ACE.hard());
-    }
-
-    private Score hardHandScore() {
-        int score = cards.stream()
-            .mapToInt(Card::hardRank)
-            .sum();
-        return new Score(score);
+    @Override
+    public Iterator<Card> iterator() {
+        return cards.iterator();
     }
 }

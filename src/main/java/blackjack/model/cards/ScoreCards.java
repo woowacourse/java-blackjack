@@ -1,20 +1,21 @@
 package blackjack.model.cards;
 
 import blackjack.model.Card;
+import blackjack.model.Score;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
-final class ImmutableCards implements Cards{
+public abstract class ScoreCards implements Cards {
 
     private final Cards cards;
 
-    ImmutableCards(Cards cards) {
+    public ScoreCards(Cards cards) {
         this.cards = cards;
     }
 
     @Override
     public void take(Card card) {
-        throw new UnsupportedOperationException("현재 카드는 ImmutableCards 입니다.");
+        cards.take(card);
     }
 
     @Override
@@ -26,4 +27,6 @@ final class ImmutableCards implements Cards{
     public Iterator<Card> iterator() {
         return cards.iterator();
     }
+
+    public abstract Score score();
 }
