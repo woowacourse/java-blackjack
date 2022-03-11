@@ -1,12 +1,9 @@
 package blackjack.domain;
 
-public class Dealer extends Gamer {
+public class Dealer extends AbstractGamer {
 
     private static final Name DEALER_NAME = new Name("딜러");
     private static final int MAX_SCORE = 17;
-    private static final int WIN = 1;
-    private static final int DRAW = 0;
-    private static final int LOSE = -1;
 
     public Dealer() {
         super(DEALER_NAME);
