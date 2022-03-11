@@ -18,6 +18,16 @@ import java.util.Map.Entry;
 public class GameController {
 
     public void play() {
+        final Game game = initPlay();
+
+        drawPlayerCards(game);
+        drawDealerCards(game);
+
+        ParticipantsResult(game);
+        playRecord(game);
+    }
+
+    private Game initPlay() {
         final List<String> names = InputView.requestPlayerNames();
         final Game game = new Game(CardFactory.create(), names);
 
@@ -29,7 +39,10 @@ public class GameController {
         for (Player player : players) {
             OutputView.printPlayerCards(new ParticipantVo(player));
         }
+        return game;
+    }
 
+    private void drawPlayerCards(Game game) {
         while (game.findHitPlayer().isPresent()) {
             final Player player = game.findHitPlayer().get();
             final Status hitOrStay = InputView.requestHitOrStay(player.getName());
@@ -38,15 +51,21 @@ public class GameController {
 
             OutputView.printPlayerCards(new ParticipantVo(player));
         }
+    }
 
+    private void drawDealerCards(Game game) {
         final CardCount cardCount = game.drawDealerCard();
         OutputView.printDealerDrawCardCount(cardCount);
+    }
 
+    private void ParticipantsResult(Game game) {
         OutputView.printParticipantCards(new ParticipantVo(game.getDealer()));
         for (Player player : game.getPlayers()) {
             OutputView.printParticipantCards(new ParticipantVo(player));
         }
+    }
 
+    private void playRecord(Game game) {
         final RecordFactory recordFactory = new RecordFactory(game.getDealerScore());
         final Map<String, Record> map = new LinkedHashMap<>();
 
