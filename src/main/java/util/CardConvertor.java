@@ -1,19 +1,19 @@
 package util;
 
-import static model.CardFace.ACE;
-import static model.CardFace.JACK;
-import static model.CardFace.KING;
-import static model.CardFace.QUEEN;
-import static model.CardSuit.CLOVER;
-import static model.CardSuit.DIAMOND;
-import static model.CardSuit.HEART;
-import static model.CardSuit.SPADE;
+import static model.card.CardFace.ACE;
+import static model.card.CardFace.JACK;
+import static model.card.CardFace.KING;
+import static model.card.CardFace.QUEEN;
+import static model.card.CardSuit.CLOVER;
+import static model.card.CardSuit.DIAMOND;
+import static model.card.CardSuit.HEART;
+import static model.card.CardSuit.SPADE;
 
 import java.util.EnumMap;
 import java.util.Map;
-import model.Card;
-import model.CardFace;
-import model.CardSuit;
+import model.card.Card;
+import model.card.CardFace;
+import model.card.CardSuit;
 
 public class CardConvertor {
     private static Map<CardFace, String> faces = new EnumMap<>(CardFace.class);

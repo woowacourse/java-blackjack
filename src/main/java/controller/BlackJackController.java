@@ -1,8 +1,9 @@
 package controller;
 
+import static model.Dealer.DEALER_NAME;
+
 import java.util.List;
 import dto.AllParticipatorsDto;
-import dto.NamesDto;
 import service.BlackJackService;
 import view.InputView;
 import view.OutputView;
@@ -17,8 +18,7 @@ public class BlackJackController {
 
     public void initGame() {
         List<String> names = InputView.inputPlayerNames();
-        NamesDto namesDto = new NamesDto(names);
-        AllParticipatorsDto allParticipatorsDto = service.initGame(namesDto);
+        AllParticipatorsDto allParticipatorsDto = service.initGame(names);
         OutputView.printInit(allParticipatorsDto);
     }
 
@@ -30,22 +30,23 @@ public class BlackJackController {
     }
 
     private void hit(String name) {
-        boolean decidedToHit;
-        do {
-            decidedToHit = service.canReceiveCard(name) && InputView.inputHitResponse(name);
-            OutputView.printParticipatorHit(decidedToHit, service.tryToHit(decidedToHit, name));
-        } while (decidedToHit);
+        while (service.canReceiveCard(name) && InputView.inputHitResponse(name)) {
+            OutputView.printParticipatorHit(service.hitParticipatorOf(name));
+        }
     }
 
     public void hitDealer() {
-        OutputView.printHitDealer(service.tryToHitForDealer());
+        if (service.canReceiveCard(DEALER_NAME)) {
+            service.hitParticipatorOf(DEALER_NAME);
+            OutputView.printHitDealer();
+        }
+    }
+
+    public void getCardsResults() {
+        OutputView.printResult(service.getAllCardsResults());
     }
 
     public void match() {
         OutputView.printMatchResult(service.match());
-    }
-
-    public void getDrawResult() {
-        OutputView.printResult(service.getAllDrawResults());
     }
 }

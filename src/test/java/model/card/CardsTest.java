@@ -1,14 +1,18 @@
-package model;
+package model.card;
 
-import static model.CardFace.ACE;
-import static model.CardFace.KING;
-import static model.CardSuit.DIAMOND;
-import static model.CardSuit.HEART;
-import static model.CardSuit.SPADE;
+import static model.card.CardFace.ACE;
+import static model.card.CardFace.KING;
+import static model.card.CardSuit.DIAMOND;
+import static model.card.CardSuit.HEART;
+import static model.card.CardSuit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
+import model.Result;
+import model.card.Card;
+import model.card.CardFace;
+import model.card.Cards;
 import org.junit.jupiter.api.Test;
 
 public class CardsTest {

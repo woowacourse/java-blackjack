@@ -1,21 +1,23 @@
 package model;
 
 import java.util.List;
-import model.cardbehavior.CardsBehavior;
-import model.cardbehavior.FirstCardsBehavior;
+import model.card.Card;
+import model.cardGettable.CardsGettable;
+import model.cardGettable.EveryCardsGettable;
+import model.cardGettable.FirstCardsGettable;
 
 public class Dealer extends Participator {
-    private static final String DEALER_NAME = "딜러";
+    public static final String DEALER_NAME = "딜러";
 
-    private CardsBehavior behavior;
+    private CardsGettable behavior;
 
     public Dealer() {
-        super(new PlayerName(DEALER_NAME));
-        behavior = new FirstCardsBehavior();
+        super(DEALER_NAME);
+        behavior = new FirstCardsGettable();
     }
 
-    public void setBehavior(CardsBehavior behavior) {
-        this.behavior = behavior;
+    public void setEveryCardGettable() {
+        this.behavior = new EveryCardsGettable();
     }
 
     @Override

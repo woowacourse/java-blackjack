@@ -2,19 +2,19 @@ package model;
 
 public class Player extends Participator {
 
-    public Player(PlayerName playerName) {
+    public Player(String playerName) {
         super(playerName);
     }
 
-    public Player(String playerName) {
-        super(new PlayerName(playerName));
+    @Override
+    public boolean canReceiveCard() {
+        return cards.canReceiveCard();
     }
 
     public Result matchWith(Dealer dealer) {
-        Result result = this.cards.getResult(dealer.cards);
-        if (result.equals(Result.DRAW) && this.cards.isBusted()) {
+        if (dealer.cards.isBusted() && this.cards.isBusted()) {
             return Result.LOSE;
         }
-        return result;
+        return this.cards.getResult(dealer.cards);
     }
 }

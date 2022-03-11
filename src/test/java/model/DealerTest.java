@@ -1,11 +1,12 @@
 package model;
 
-import static model.CardFace.ACE;
-import static model.CardFace.FIVE;
-import static model.CardFace.TWO;
-import static model.CardSuit.SPADE;
+import static model.card.CardFace.ACE;
+import static model.card.CardFace.TWO;
+import static model.card.CardSuit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import model.card.Card;
+import model.card.CardFace;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

@@ -1,23 +1,23 @@
 package model;
 
-import static model.CardFace.ACE;
-import static model.CardFace.KING;
-import static model.CardFace.QUEEN;
-import static model.CardFace.TWO;
-import static model.CardSuit.CLOVER;
-import static model.CardSuit.DIAMOND;
-import static model.CardSuit.SPADE;
+import static model.card.CardFace.ACE;
+import static model.card.CardFace.KING;
+import static model.card.CardFace.QUEEN;
+import static model.card.CardFace.TWO;
+import static model.card.CardSuit.CLOVER;
+import static model.card.CardSuit.DIAMOND;
+import static model.card.CardSuit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
-import java.util.List;
+import model.card.Card;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
     @Test
     void getCard() {
-        Participator player = new Player(new PlayerName("클레이"));
+        Participator player = new Player("클레이");
         final Card firstCard = new Card(SPADE, ACE);
         final Card secondCard = new Card(SPADE, TWO);
 
@@ -28,7 +28,7 @@ public class PlayerTest {
     }
 
     @Test
-    void matchWithDealer() {
+    void matchWithDealerBothBust() {
         Dealer dealer = new Dealer();
         dealer.cards.addCard(new Card(DIAMOND, QUEEN));
         dealer.cards.addCard(new Card(SPADE, QUEEN));
@@ -38,6 +38,6 @@ public class PlayerTest {
         player.cards.addCard(new Card(DIAMOND, KING));
         player.cards.addCard(new Card(SPADE, KING));
         player.cards.addCard(new Card(CLOVER, KING));
-        assertThat(dealer.matchWith(player)).isEqualTo(Result.WIN);
+        assertThat(player.matchWith(dealer)).isEqualTo(Result.LOSE);
     }
 }

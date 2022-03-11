@@ -1,12 +1,14 @@
 package view;
 
+import dto.AllParticipatorsDto;
+import dto.ParticipatorDto;
 import dto.TotalResultDto;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-import dto.AllParticipatorsDto;
-import dto.ParticipatorDto;
+import model.Result;
 
 public class OutputView {
 
@@ -19,7 +21,8 @@ public class OutputView {
         List<ParticipatorDto> playersDto = allParticipatorsDto.getPlayersDto();
         ParticipatorDto dealerDto = allParticipatorsDto.getDealerDto();
         System.out.println(
-                dealerDto.getName() + CONNECTION_SURVEY + convertPlayerInLine(getNames(playersDto)) + SUFFIX_INIT_MESSAGE);
+                dealerDto.getName() + CONNECTION_SURVEY + convertPlayerInLine(getNames(playersDto))
+                        + SUFFIX_INIT_MESSAGE);
         printParticipatorNameAndCard(dealerDto);
         for (int i = 0; i < playersDto.size(); i++) {
             printParticipatorNameAndCard(playersDto.get(i));
@@ -50,45 +53,43 @@ public class OutputView {
         return sb.toString();
     }
 
-    public static void printParticipatorHit(boolean flag, ParticipatorDto participatorDto) {
-        if (!flag && participatorDto.getCards().size() > 2) {
-            return;
-        }
+    public static void printParticipatorHit(ParticipatorDto participatorDto) {
         printParticipatorNameAndCard(participatorDto);
     }
 
-    public static void printHitDealer(ParticipatorDto dealerDto) {
-        if (isReceived(dealerDto)) {
-            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-        }
+    public static void printHitDealer() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+
     }
 
-    private static boolean isReceived(ParticipatorDto dealerDto) {
-        return dealerDto.getCards().size() != 2;
-    }
-
-    public static void printMatchResult(TotalResultDto resultDto) {
+    public static void printMatchResult(Map<String, String> results) {
         System.out.println("## 최종 승패");
 
-        System.out.println(convertDealerMatchCountInLine(resultDto));
-        for (Entry<String, String > entry : resultDto.getPlayersMatchResult().entrySet()) {
+        System.out.println(convertDealerMatchCountInLine(results));
+        for (Entry<String, String> entry : results.entrySet()) {
             System.out.println(entry.getKey() + NAME_CARD_DELIMITER + entry.getValue());
         }
     }
 
-    private static String convertDealerMatchCountInLine(TotalResultDto resultDto) {
+    private static String convertDealerMatchCountInLine(Map<String, String> results) {
         StringBuilder sb = new StringBuilder();
         sb.append("딜러: ");
-        if (resultDto.getPlayerLoseCount() != 0) {
-            sb.append(resultDto.getPlayerLoseCount()).append("승 ");
+        if (countOf(results, "LOSE") != 0) {
+            sb.append(countOf(results, "LOSE")).append("승 ");
         }
-        if (resultDto.getPlayerWinCount() != 0) {
-            sb.append(resultDto.getPlayerWinCount()).append("패 ");
+        if (countOf(results, "WIN") != 0) {
+            sb.append(countOf(results, "WIN")).append("패 ");
         }
-        if (resultDto.getPlayerDrawCount() != 0) {
-            sb.append(resultDto.getPlayerDrawCount()).append("무");
+        if (countOf(results, "DRAW") != 0) {
+            sb.append(countOf(results, "DRAW")).append("무");
         }
         return sb.toString();
+    }
+
+    private static long countOf(Map<String, String> results, String target) {
+        return new ArrayList<>(results.values()).stream()
+                .filter(result -> result.equals(target))
+                .count();
     }
 
     public static void printResult(Map<ParticipatorDto, Integer> result) {

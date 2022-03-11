@@ -1,4 +1,4 @@
-package model;
+package model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import model.card.Card;
+import model.card.CardDeck;
 import org.junit.jupiter.api.Test;
 
 public class CardDeckTest {

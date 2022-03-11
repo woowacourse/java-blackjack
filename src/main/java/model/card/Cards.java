@@ -1,7 +1,9 @@
-package model;
+package model.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.Result;
+import model.Status;
 
 public class Cards {
     private static final int BLACK_JACK_SCORE = 21;
@@ -25,7 +27,7 @@ public class Cards {
         return getSum() < BLACK_JACK_SCORE;
     }
 
-    int getSum() {
+    public int getSum() {
         if (countAce() == 0) {
             return getMinimumSum();
         }
