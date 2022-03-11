@@ -24,6 +24,7 @@ public class BlackjackView {
     }
 
     public void printFirstDistributedCards(final ParticipantDto dealderDto, final List<ParticipantDto> playerDtos) {
+        outputView.printMessageOfPlayerNames(playerDtos);
         outputView.printDistributedCards(dealderDto);
         playerDtos.forEach(outputView::printDistributedCards);
     }

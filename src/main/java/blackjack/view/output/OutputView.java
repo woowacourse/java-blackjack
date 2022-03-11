@@ -18,19 +18,11 @@ public class OutputView {
         printMessage("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    private void printMessageOfPlayerNames(final List<ParticipantDto> playerDtos) {
+    public void printMessageOfPlayerNames(final List<ParticipantDto> playerDtos) {
         final String combinedPlayerNames = playerDtos.stream()
                 .map(ParticipantDto::getName)
                 .collect(Collectors.joining(", "));
         printMessage("딜러와 " + combinedPlayerNames + " 에게 2장의 카드를 나누었습니다.");
-    }
-
-
-    private void printListOfDistributedCards(final ParticipantDto dealerDto, final List<ParticipantDto> playerDtos) {
-        printDistributedCards(dealerDto);
-        for (final ParticipantDto participantDto : playerDtos) {
-            printDistributedCards(participantDto);
-        }
     }
 
     public void printScores(final List<ParticipantDto> participantDtos) {
