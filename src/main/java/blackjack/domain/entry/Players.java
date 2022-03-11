@@ -1,10 +1,7 @@
 package blackjack.domain.entry;
 
-import blackjack.domain.Outcome;
+import blackjack.domain.PlayerOutcome;
 import blackjack.domain.card.Deck;
-import blackjack.domain.entry.Dealer;
-import blackjack.domain.entry.Participant;
-import blackjack.domain.entry.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +25,7 @@ public class Players {
         return false;
     }
 
-    public Map<Outcome, List<Player>> getGameResult() {
+    public Map<PlayerOutcome, List<Player>> getGameResult() {
         return players.stream()
                 .collect(Collectors.groupingBy(player -> player.match(dealer.countCards())));
     }

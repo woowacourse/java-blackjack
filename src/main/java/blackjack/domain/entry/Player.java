@@ -1,6 +1,6 @@
 package blackjack.domain.entry;
 
-import blackjack.domain.Outcome;
+import blackjack.domain.PlayerOutcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
 
@@ -14,8 +14,8 @@ public class Player extends Participant {
         this.name = name;
     }
 
-    public Outcome match(int dealerTotal) {
-        return Outcome.match(dealerTotal, countCards());
+    public PlayerOutcome match(int dealerTotal) {
+        return PlayerOutcome.match(dealerTotal, countCards());
     }
 
     @Override

@@ -35,7 +35,7 @@ public class Blackjack {
         return command == Command.HIT && player.countCards() < BLACKJACK_NUMBER;
     }
 
-    public Map<Outcome, List<Player>> getGameResult() {
+    public Map<PlayerOutcome, List<Player>> getGameResult() {
         return players.getGameResult();
     }
 

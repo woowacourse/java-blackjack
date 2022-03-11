@@ -34,7 +34,7 @@ public class PlayerTest {
     void playerIsLoseByOver21() {
         Player player = new Player("jason", new HoldCards(Card.valueOf(Suit.SPADE, Number.KING), Card.valueOf(Suit.SPADE, Number.ACE)));
 
-        assertThat(player.match(20)).isEqualTo(Outcome.WIN);
+        assertThat(player.match(20)).isEqualTo(PlayerOutcome.WIN);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class PlayerTest {
     void playerIsWinByDealerOver21() {
         Player player = new Player("jason", new HoldCards(Card.valueOf(Suit.SPADE, Number.NINE), Card.valueOf(Suit.SPADE, Number.ACE)));
 
-        assertThat(player.match(21)).isEqualTo(Outcome.LOSE);
+        assertThat(player.match(21)).isEqualTo(PlayerOutcome.LOSE);
     }
 
     @Test
@@ -50,6 +50,6 @@ public class PlayerTest {
     void playerIsDrawByDealerAndPlayerOver21() {
         Player player = new Player("jason", new HoldCards(Card.valueOf(Suit.SPADE, Number.KING), Card.valueOf(Suit.SPADE, Number.ACE)));
 
-        assertThat(player.match(21)).isEqualTo(Outcome.DRAW);
+        assertThat(player.match(21)).isEqualTo(PlayerOutcome.DRAW);
     }
 }

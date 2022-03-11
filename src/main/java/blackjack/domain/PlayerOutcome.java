@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-public enum Outcome {
+public enum PlayerOutcome {
     WIN("승"),
     LOSE("패"),
     DRAW("무");
@@ -9,11 +9,11 @@ public enum Outcome {
 
     private String value;
 
-    Outcome(String value) {
+    PlayerOutcome(String value) {
         this.value = value;
     }
 
-    public static Outcome match(int dealerTotal, int playerTotal) {
+    public static PlayerOutcome match(int dealerTotal, int playerTotal) {
         if (dealerTotal > BLACK_JACK_NUMBER && playerTotal > BLACK_JACK_NUMBER) {
             return LOSE;
         }
@@ -23,6 +23,10 @@ public enum Outcome {
         if (playerTotal > BLACK_JACK_NUMBER) {
             return LOSE;
         }
+        return matchCards(dealerTotal, playerTotal);
+    }
+
+    private static PlayerOutcome matchCards(int dealerTotal, int playerTotal) {
         if (dealerTotal < playerTotal) {
             return WIN;
         }
