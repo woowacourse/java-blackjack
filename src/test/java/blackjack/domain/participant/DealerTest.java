@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Status;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -61,6 +62,7 @@ class DealerTest {
         final Card actual = dealer.openCard();
 
         // then
-        assertThat(actual).isEqualTo(new Card(CLUB, KING));
+        assertThat(actual.getNumber()).isEqualTo(KING);
+        assertThat(actual.getSymbol()).isEqualTo(CLUB);
     }
 }
