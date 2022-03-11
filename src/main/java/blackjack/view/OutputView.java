@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.Dealer;
+import blackjack.domain.Player;
 import blackjack.domain.Players;
 
 import java.util.List;
@@ -28,23 +30,37 @@ public class OutputView {
     }
 
     public static void printDistributeInitCards(final String dealerName, final List<String> playerNames) {
+        printNewLine();
         System.out.printf("%s와 %s에게 2장씩 나누었습니다.", dealerName, String.join(DELIMITER, playerNames));
+        printNewLine();
+    }
+
+    public static void printInitCard(final Dealer dealer, final Players players) {
+        printCards(Dealer.getName(), dealer.showPartOfCards());
+        for (Player player : players.getPlayers()) {
+            printCards(player.getName(), player.showCards());
+        }
+        printNewLine();
     }
 
     public static void printCards(final String name, final List<String> cards) {
         System.out.printf(CARDS_FORMAT, name, String.join(DELIMITER, cards));
+        printNewLine();
     }
 
     public static void printDrawInstruction(final String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
+        printNewLine();
     }
 
     public static void printDrawDealer(final String name, final int receivedMaximum) {
         System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.", name, receivedMaximum);
+        printNewLine();
     }
 
     public static void printScore(final String name, final List<String> cards, final int total) {
         System.out.printf(CARDS_FORMAT + " - 결과: %d", name, String.join(DELIMITER, cards), total);
+        printNewLine();
     }
 
     public static void printResultTitle() {
@@ -53,10 +69,12 @@ public class OutputView {
 
     public static void printDealerResult(final String name, final int countOfWinning, final int countOfLosing) {
         System.out.printf("%s: %d%s %d%s", name, countOfWinning, WIN, countOfLosing, LOSE);
+        printNewLine();
     }
 
     public static void printPlayerResult(final String name, final boolean isWinning) {
         System.out.printf("%s: %s", name, getResult(isWinning));
+        printNewLine();
     }
 
     private static String getResult(final boolean isWinning) {
