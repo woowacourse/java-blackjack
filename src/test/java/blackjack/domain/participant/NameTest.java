@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class NameTest {
+class NameTest {
 
     @Test
     @DisplayName("이름을 정상적으로 생성하는지 확인")

@@ -1,12 +1,10 @@
 package blackjack.domain.result;
 
+import static blackjack.domain.TestBlackjackUtils.createCardHand;
+import static blackjack.domain.TestCardFixture.*;
 import static blackjack.domain.result.Result.LOSE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Hand;
-import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
@@ -15,13 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameScoreBoardTest {
-
-    private static final Card aceCard = new Card(Denomination.ACE, Suit.SPADE);
-    private static final Card tenCard = new Card(Denomination.TEN, Suit.DIAMOND);
-    private static final Card sevenCard = new Card(Denomination.SEVEN, Suit.HEART);
 
     private Dealer dealer;
     private List<Player> players;
@@ -33,6 +28,7 @@ class GameScoreBoardTest {
     }
 
     @Test
+    @DisplayName("딜러의 게임 승패를 잘 반환하는지 확인")
     void equalsDealerGameResult() {
         GameScoreBoard result = GameScoreBoard.recordGameScore(dealer, players);
         Map<Result, Integer> dealerGameResult = result.getDealerGameResult();
@@ -43,6 +39,7 @@ class GameScoreBoardTest {
     }
 
     @Test
+    @DisplayName("게임 승패를 잘 반환하는지 확인")
     void equalsPlayerGameResult() {
         GameScoreBoard result = GameScoreBoard.recordGameScore(dealer, players);
         Map<String, String> playerGameResultMap = result.getPlayerGameResultMap();
@@ -55,11 +52,5 @@ class GameScoreBoardTest {
     private List<Player> createPlayers() {
         return Collections.singletonList(
             new Player(new Name("승팡"), createCardHand(aceCard, tenCard)));
-    }
-
-    private Hand createCardHand(Card card1, Card card2) {
-        Hand cardHand = new Hand();
-        cardHand.add(card1, card2);
-        return cardHand;
     }
 }

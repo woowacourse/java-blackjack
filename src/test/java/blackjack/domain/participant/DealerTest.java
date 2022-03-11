@@ -1,14 +1,13 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.TestCardFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.Suit;
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -16,9 +15,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
-
-    private static final Card jackCard = new Card(Denomination.JACK, Suit.DIAMOND);
-    private static final Card sixCard = new Card(Denomination.SIX, Suit.DIAMOND);
 
     @Test
     @DisplayName("딜러가 정상적으로 생성되는지 확인")
@@ -30,7 +26,6 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 카드를 정상적으로 주는지 확인")
     void drawCard() {
-        List<Card> cards = new ArrayList<>();
         Deck deck = new Deck(List.of(jackCard, sixCard));
         Dealer dealer = new Dealer(new Hand(), deck);
         Card card = dealer.drawCard();
@@ -41,11 +36,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 카드의 수가 16이하 일 때 한 장의 카드를 더 받는다")
     void dealerReceiveCard() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(jackCard);
-        cards.add(sixCard);
-
-        Deck deck = new Deck(cards);
+        Deck deck = new Deck(List.of(jackCard, sixCard));
         Dealer dealer = new Dealer(new Hand(), deck);
         dealer.selfDraw();
         dealer.selfDraw();
@@ -56,11 +47,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 카드의 수가 17이상일 떄 카드를 받을 수 없다")
     void dealerCannotReceiveCard() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Denomination.JACK, Suit.DIAMOND));
-        cards.add(new Card(Denomination.SEVEN, Suit.DIAMOND));
-
-        Deck deck = new Deck(cards);
+        Deck deck = new Deck(List.of(jackCard, sevenCard));
         Dealer dealer = new Dealer(new Hand(), deck);
         dealer.selfDraw();
         dealer.selfDraw();
@@ -71,17 +58,12 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 자신의 카드 한장을 정상적으로 오픈 하는지 확인")
     void openDealerCard() {
-        List<Card> cards = new ArrayList<>();
-        Card excepted = new Card(Denomination.JACK, Suit.DIAMOND);
-        cards.add(excepted);
-        cards.add(new Card(Denomination.ACE, Suit.DIAMOND));
-
-        Deck deck = new Deck(cards);
+        Deck deck = new Deck(List.of(jackCard, aceCard));
         Dealer dealer = new Dealer(new Hand(), deck);
         dealer.selfDraw();
         dealer.selfDraw();
 
-        assertThat(dealer.getOpenCard()).isEqualTo(excepted);
+        assertThat(dealer.getOpenCard()).isEqualTo(jackCard);
     }
 
     @Test
@@ -105,16 +87,11 @@ class DealerTest {
     @Test
     @DisplayName("플레이어에게 카드 한장을 정상적으로 주는지 확인")
     void giveCard() {
-        List<Card> cards = new ArrayList<>();
-        Card excepted = new Card(Denomination.JACK, Suit.DIAMOND);
-        cards.add(excepted);
-        cards.add(new Card(Denomination.ACE, Suit.DIAMOND));
-
-        Dealer dealer = new Dealer(new Hand(), new Deck(cards));
+        Dealer dealer = new Dealer(new Hand(), new Deck(List.of(jackCard, aceCard)));
         Player player = new Player("승팡");
 
         dealer.giveCard(player);
-        assertThat(player.getCards()).containsExactly(excepted);
+        assertThat(player.getCards()).containsExactly(jackCard);
     }
 
     @Test

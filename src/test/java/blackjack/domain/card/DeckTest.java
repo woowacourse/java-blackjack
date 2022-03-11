@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.TestCardFixture.aceCard;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
@@ -32,7 +33,7 @@ class DeckTest {
     @Test
     @DisplayName("카드가 모두 소진되었을 때 예외를 발생한다")
     void cardEmptyException() {
-        List<Card> cards = List.of(new Card(Denomination.ACE, Suit.SPADE));
+        List<Card> cards = List.of(aceCard);
         Deck deck = new Deck(cards);
         deck.draw();
 

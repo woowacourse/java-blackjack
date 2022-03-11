@@ -1,12 +1,9 @@
 package blackjack.domain.participant;
 
+import static blackjack.domain.TestCardFixture.aceCard;
 import static org.assertj.core.api.Assertions.*;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.Suit;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,11 +22,9 @@ class PlayerTest {
     @DisplayName("플레이어가 카드를 정상적으로 받는지 확인")
     void receiveCard() {
         Player player = new Player("필즈");
-        Card card = new Card(Denomination.ACE, Suit.SPADE);
+        player.receiveCard(aceCard);
 
-        player.receiveCard(card);
-
-        assertThat(player.getCards()).containsExactly(card);
+        assertThat(player.getCards()).containsExactly(aceCard);
     }
 
     @Test
