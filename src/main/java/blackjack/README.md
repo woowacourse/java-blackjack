@@ -5,6 +5,7 @@
 - 그만 받음 : STAY
 - 21이 넘어서 탈락 : BUST
 - 카드를 나눠줌 : DRAW
+- 무승부: PUSH
 - 카드 명칭 🃏
 - 숫자인 카드 : pip
 - JQK : face
