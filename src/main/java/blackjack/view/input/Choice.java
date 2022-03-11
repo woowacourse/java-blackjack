@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.view.input;
 
 import java.util.Arrays;
 
@@ -10,7 +10,7 @@ public enum Choice {
     private final String answer;
     private final boolean continuable;
 
-    Choice(String answer, boolean continuable) {
+    Choice(final String answer, final boolean continuable) {
         this.answer = answer;
         this.continuable = continuable;
     }
@@ -19,7 +19,7 @@ public enum Choice {
         return Arrays.stream(Choice.values())
                 .filter(it -> it.matchesAnswer(answer))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("입력은 y 또는 n이어야 합니다."));
+                .orElseThrow(() -> new IllegalArgumentException("입력은 y 또는 n 이어야 합니다."));
     }
 
     private boolean matchesAnswer(final String answer) {

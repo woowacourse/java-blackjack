@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.view.output;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +19,6 @@ public class OutputView {
 
     public void printMessageOfRequestPlayerNames() {
         printMessage("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-    }
-
-    public void printMessageOfPlayerStatuses(ParticipantDto dealerDto, List<ParticipantDto> playerDtos) {
-        printMessageOfPlayerNames(playerDtos);
-        printListOfDistributedCards(dealerDto, playerDtos);
     }
 
     private void printMessageOfPlayerNames(final List<ParticipantDto> playerDtos) {

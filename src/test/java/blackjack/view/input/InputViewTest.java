@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.view.input;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import blackjack.view.reader.CustomReader;
+import blackjack.view.input.reader.CustomReader;
 
 public class InputViewTest {
 
@@ -71,5 +71,4 @@ public class InputViewTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("입력은 y 또는 n이어야 합니다.");
     }
-
 }

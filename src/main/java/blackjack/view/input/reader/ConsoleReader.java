@@ -1,4 +1,4 @@
-package blackjack.view.reader;
+package blackjack.view.input.reader;
 
 import java.util.Scanner;
 
@@ -10,5 +10,4 @@ public class ConsoleReader implements Reader {
     public String readLine() {
         return scanner.nextLine();
     }
-
 }

@@ -1,4 +1,4 @@
-package blackjack.view.reader;
+package blackjack.view.input.reader;
 
 public interface Reader {
 

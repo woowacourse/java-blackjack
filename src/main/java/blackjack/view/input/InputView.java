@@ -1,10 +1,10 @@
-package blackjack.view;
+package blackjack.view.input;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.view.reader.Reader;
+import blackjack.view.input.reader.Reader;
 
 public class InputView {
 
