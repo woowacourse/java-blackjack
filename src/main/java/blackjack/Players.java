@@ -76,4 +76,12 @@ public class Players {
     public boolean canDealerHit() {
         return this.dealer.canHit();
     }
+
+    public List<Integer> getScores() {
+        int dealerScore = this.dealer.getScore();
+        List<Integer> playerScores = new ArrayList<>();
+        playerScores.add(dealerScore);
+        playerScores.addAll(entries.getScores());
+        return playerScores;
+    }
 }

@@ -18,6 +18,10 @@ public abstract class Player implements PlayerInterface {
         }
     }
 
+    public int getScore() {
+        return deck.sumScore();
+    }
+
     @Override
     public void addCard(TrumpCard card) {
         this.deck.add(card);

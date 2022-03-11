@@ -60,4 +60,8 @@ public class Game {
     public int countCardsAddedToDealer() {
         return this.players.countCardsAddedToDealer();
     }
+
+    public List<Integer> getScores() {
+        return this.players.getScores();
+    }
 }

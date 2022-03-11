@@ -83,4 +83,10 @@ public class Entries {
     public List<String> getCurrentDeckToString() {
         return getCurrentEntry().getDeckToString();
     }
+
+    public List<Integer> getScores() {
+        return this.entries.stream()
+                .map(Player::getScore)
+                .collect(Collectors.toList());
+    }
 }

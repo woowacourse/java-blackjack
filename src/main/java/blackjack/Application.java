@@ -26,6 +26,8 @@ public class Application {
         if (game.countCardsAddedToDealer() > 0) {
             resultView.printDealerHitCount(game.countCardsAddedToDealer());
         }
+
+        resultView.printScores(game.getNames(), game.getDecksToString(), game.getScores());
     }
 
     private static void playTurn(InputView inputView, Game game, ResultView resultView) {

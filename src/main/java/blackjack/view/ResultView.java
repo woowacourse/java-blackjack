@@ -9,6 +9,7 @@ public class ResultView {
     private static final String FORMAT_MESSAGE_DEALER_HIT = "%n딜러는 16이하라 %d장의 카드를 더 받았습니다.%n";
 
     public static final String DELIMITER_NAME = ", ";
+    public static final String FORMAT_SCORE = "%s 카드: %s - 결과: %d%n";
 
     public void printDeckInitialized(List<String> names) {
         String joinedNames = String.join(DELIMITER_NAME, names);
@@ -33,5 +34,16 @@ public class ResultView {
 
     public void printDealerHitCount(int count) {
         System.out.printf(FORMAT_MESSAGE_DEALER_HIT, count);
+    }
+
+    public void printScores(List<String> names, List<List<String>> decks, List<Integer> scores) {
+        for (int index = 0; index < names.size(); index++) {
+            printScore(names.get(index), decks.get(index), scores.get(index));
+        }
+    }
+
+    private void printScore(String name, List<String> deck, int score) {
+        String joinedCards = String.join(DELIMITER_NAME, deck);
+        System.out.printf(FORMAT_SCORE, name, joinedCards, score);
     }
 }
