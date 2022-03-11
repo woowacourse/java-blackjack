@@ -6,9 +6,10 @@ import java.util.stream.IntStream;
 
 public class AlwaysAscNumberMachine implements CardPickMachine {
 
-    private List<Integer> cardIndex;
+    private final List<Integer> cardIndex;
+
     public AlwaysAscNumberMachine() {
-        this.cardIndex = IntStream.range(0,52)
+        this.cardIndex = IntStream.range(0, 52)
                 .boxed()
                 .collect(Collectors.toList());
     }

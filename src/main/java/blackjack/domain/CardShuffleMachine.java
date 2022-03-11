@@ -8,9 +8,11 @@ import java.util.stream.IntStream;
 public class CardShuffleMachine implements CardPickMachine{
 
     private static final List<Integer> cardIndex;
+    private static final int CARD_NUMBER = 52;
+    private static final int POP = 0;
 
     static {
-         cardIndex = IntStream.range(0, 52)
+         cardIndex = IntStream.range(0, CARD_NUMBER)
                  .boxed()
                  .collect(Collectors.toList());
     }
@@ -18,6 +20,6 @@ public class CardShuffleMachine implements CardPickMachine{
     @Override
     public int assignIndex() {
         Collections.shuffle(cardIndex);
-        return cardIndex.remove(0);
+        return cardIndex.remove(POP);
     }
 }
