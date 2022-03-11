@@ -4,9 +4,12 @@ import blackjack.model.CardGenerator;
 import blackjack.model.Dealer;
 import blackjack.model.Gamer;
 import blackjack.model.Player;
+import blackjack.model.Result;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Application {
@@ -26,6 +29,7 @@ public class Application {
         OutputView.printOpenCard(dealer, gamers);
         takeCards(cardGenerator, dealer, gamers);
         OutputView.printTotalScore(dealer, gamers);
+        printRecord(dealer, gamers);
     }
 
     private static Dealer createDealer(CardGenerator cardGenerator) {
@@ -71,5 +75,13 @@ public class Application {
     private static boolean isKeepTakeCard(Player gamer) {
         String option = InputView.chooseOptions(gamer.name());
         return option.equals("y");
+    }
+
+    private static void printRecord(Dealer dealer, List<Gamer> gamers) {
+        Map<Result, Integer> result = new HashMap<>();
+        for (Gamer gamer : gamers) {
+            result.merge(dealer.match(gamer.cards()), 1, Integer::sum);
+        }
+        OutputView.printDealerRecord(result);
     }
 }

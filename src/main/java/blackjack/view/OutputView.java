@@ -4,7 +4,9 @@ import blackjack.model.Card;
 import blackjack.model.Dealer;
 import blackjack.model.Gamer;
 import blackjack.model.Player;
+import blackjack.model.Result;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -53,5 +55,13 @@ public class OutputView {
         for (Player player : gamers) {
             System.out.printf("%s 카드: %s - 결과: %d%n", player.name(), takenCards(player), player.score().getValue());
         }
+    }
+
+    public static void printDealerRecord(Map<Result, Integer> result) {
+        System.out.println("## 최종 승패");
+        System.out.printf("딜러: %d승 %d무 %d패",
+                result.getOrDefault(Result.WIN, 0),
+                result.getOrDefault(Result.DRAW, 0),
+                result.getOrDefault(Result.LOSS, 0));
     }
 }
