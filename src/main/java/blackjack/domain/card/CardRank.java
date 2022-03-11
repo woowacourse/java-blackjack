@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.game.Score.ACE_HIGH_VALUE;
-
 import blackjack.domain.game.Score;
 
 public enum CardRank {
@@ -36,14 +34,7 @@ public enum CardRank {
         return value;
     }
 
-    public Score getHighValue() {
-        if (this == ACE) {
-            return Score.valueOf(ACE_HIGH_VALUE);
-        }
-        return value;
-    }
-
     public static int getAceValueDifference() {
-        return ACE_HIGH_VALUE - ACE.getValue().toInt() ;
+        return Score.ACE_HIGH_VALUE - ACE.getValue().toInt() ;
     }
 }

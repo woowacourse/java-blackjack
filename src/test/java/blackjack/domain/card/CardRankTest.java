@@ -44,15 +44,6 @@ public class CardRankTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("getHighValue 메서드는 ACE의 경우 11의 Score를 지닌다.")
-    @Test
-    void getHighValue_Ace() {
-        Score actual = CardRank.ACE.getHighValue();
-        Score expected = Score.valueOf(11);
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
     @DisplayName("TWO부터 TEN까지는 각각 대응되는 값을 Score로 지닌다.")
     @ParameterizedTest(name = "[{index}] 랭크: {0}, 값: {1}")
     @CsvSource(value = {"TWO,2", "THREE,3", "FOUR,4", "FIVE,5", "SIX,6", "SEVEN,7", "EIGHT,8", "NINE,9", "TEN,10"})

@@ -36,17 +36,6 @@ public class CardTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("getHighRankValue 메서드는 에이스의 경우 11의 값을 가져온다.")
-    @Test
-    void getHighRankValue() {
-        Card card = Card.of(CardRank.ACE, CardSymbol.CLOVER);
-
-        Score actual = card.getHighRankValue();
-        Score expected = Score.valueOf(11);
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
     @DisplayName("getName 메서드는 카드의 이름을 반환한다.")
     @Test
     void getName() {
