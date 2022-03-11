@@ -3,26 +3,29 @@ package blackjack.domain;
 public class BlackJackMachine {
 
     private final CardDeck deck;
-    private int index;
+    private final CardDeckIndex index;
 
     public BlackJackMachine(final CardDeck deck) {
         this.deck = deck;
-        this.index = 0;
+        this.index = new CardDeckIndex();
     }
 
     public void giveInitialCards(final Dealer dealer, final Participants participants) {
-        dealer.addCard(deck.getCard(index++));
-        dealer.addCard(deck.getCard(index++));
+        addInitialCards(dealer);
 
         for (Participant participant : participants) {
-            participant.addCard(deck.getCard(index++));
-            participant.addCard(deck.getCard(index++));
+            addInitialCards(participant);
         }
+    }
+
+    private void addInitialCards(final Player player) {
+        player.addCard(deck.getCard(index.getAndIncrease()));
+        player.addCard(deck.getCard(index.getAndIncrease()));
     }
 
     public void giveCardToParticipant(final Participant participant, final Choice choice) {
         if (isYes(choice) && participant.canAddCard()) {
-            participant.addCard(deck.getCard(index++));
+            participant.addCard(deck.getCard(index.getAndIncrease()));
         }
     }
 
@@ -32,7 +35,7 @@ public class BlackJackMachine {
 
     public void giveCardToDealer(final Dealer dealer) {
         while (dealer.canAddCard()) {
-            dealer.addCard(deck.getCard(index++));
+            dealer.addCard(deck.getCard(index.getAndIncrease()));
         }
     }
 }
