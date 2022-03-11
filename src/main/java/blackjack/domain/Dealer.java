@@ -20,7 +20,7 @@ public class Dealer extends Human {
     }
 
     @Override
-    public boolean isReceived() {
+    public boolean isDrawable() {
         return cards.calculateTotal() <= RECEIVED_MAXIMUM;
     }
 }

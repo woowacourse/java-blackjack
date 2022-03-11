@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,8 +30,8 @@ class WinnerTest {
     @DisplayName("플레이어의 카드합이 21을 넘길 경우 승자에 포함되지 않는 것을 확인한다.")
     @Test
     void bust_player() {
-        dealer.receiveInitCards(List.of(twoSpade, twoSpade));
-        player.receiveInitCards(List.of(queenSpade, queenSpade, twoSpade));
+        dealer.drawInitCards(List.of(twoSpade, twoSpade));
+        player.drawInitCards(List.of(queenSpade, queenSpade, twoSpade));
 
         winner.compare(dealer, player);
 
@@ -42,8 +41,8 @@ class WinnerTest {
     @DisplayName("플레이어의 값이 클 경우 비교하여 승자를 확인한다.")
     @Test
     void winner_player() {
-        dealer.receiveInitCards(List.of(twoSpade, twoSpade));
-        player.receiveInitCards(List.of(twoSpade, threeSpade));
+        dealer.drawInitCards(List.of(twoSpade, twoSpade));
+        player.drawInitCards(List.of(twoSpade, threeSpade));
 
         winner.compare(dealer, player);
 
@@ -53,8 +52,8 @@ class WinnerTest {
     @DisplayName("플레이어의 값이 적을 경우 비교하여 승자를 확인한다.")
     @Test
     void winner_dealer() {
-        dealer.receiveInitCards(List.of(twoSpade, threeSpade));
-        player.receiveInitCards(List.of(twoSpade, twoSpade));
+        dealer.drawInitCards(List.of(twoSpade, threeSpade));
+        player.drawInitCards(List.of(twoSpade, twoSpade));
 
         winner.compare(dealer, player);
 
@@ -64,8 +63,8 @@ class WinnerTest {
     @DisplayName("딜러의 값과 플레이어의 값이 같을 경우 승자를 확인한다.")
     @Test
     void equals_score() {
-        dealer.receiveInitCards(List.of(twoSpade, twoSpade));
-        player.receiveInitCards(List.of(twoSpade, twoSpade));
+        dealer.drawInitCards(List.of(twoSpade, twoSpade));
+        player.drawInitCards(List.of(twoSpade, twoSpade));
 
         winner.compare(dealer, player);
 
@@ -75,8 +74,8 @@ class WinnerTest {
     @DisplayName("플레이어가 21을 초과하지 않았을 때 딜러가 21을 초과할 경우 승자를 확인한다.")
     @Test
     void bust_dealer() {
-        dealer.receiveInitCards(List.of(queenSpade, queenSpade, queenSpade));
-        player.receiveInitCards(List.of(twoSpade, twoSpade, twoSpade));
+        dealer.drawInitCards(List.of(queenSpade, queenSpade, queenSpade));
+        player.drawInitCards(List.of(twoSpade, twoSpade, twoSpade));
 
         winner.compare(dealer, player);
 

@@ -51,11 +51,13 @@ public class Card {
 
     @Override
     public boolean equals(Object otherCard) {
-        if (this == otherCard) return true;
-        if (!(otherCard instanceof Card)) return false;
-
+        if (this == otherCard) {
+            return true;
+        }
+        if (!(otherCard instanceof Card)) {
+            return false;
+        }
         Card card = (Card) otherCard;
-
         return cardNumber == card.cardNumber && cardShape == card.cardShape;
     }
 

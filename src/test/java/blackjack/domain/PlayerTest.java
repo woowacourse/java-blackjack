@@ -4,10 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -59,16 +57,16 @@ public class PlayerTest {
     @DisplayName("플레이어의 카드 합이 21 미만일 경우 카드를 받는 것을 확인한다.")
     @Test
     void is_received_true() {
-        player.receiveInitCards(List.of(queenSpade, queenSpade));
+        player.drawInitCards(List.of(queenSpade, queenSpade));
 
-        assertThat(player.isReceived()).isTrue();
+        assertThat(player.isDrawable()).isTrue();
     }
 
     @DisplayName("플레이어의 카드 합이 21 이상일 경우 카드를 받지 못하는 것을 확인한다.")
     @Test
     void is_received_false() {
-        player.receiveInitCards(List.of(aceSpade, queenSpade, queenSpade));
+        player.drawInitCards(List.of(aceSpade, queenSpade, queenSpade));
 
-        assertThat(player.isReceived()).isFalse();
+        assertThat(player.isDrawable()).isFalse();
     }
 }

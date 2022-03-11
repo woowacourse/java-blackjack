@@ -7,7 +7,7 @@ public class InputView {
     private InputView() {
     }
 
-    public static String inputPlayerNames(Enterable enterable) {
+    public static String inputPlayerNames(final Enterable enterable) {
         String input = enterable.enter();
 
         validateNullOrEmpty(input);
@@ -17,14 +17,14 @@ public class InputView {
         return input;
     }
 
-    public static String inputReceiveMoreCardAnswer(Enterable enterable) {
+    public static String inputDrawingAnswer(final Enterable enterable) {
         String input = enterable.enter();
 
         validateNullOrEmpty(input);
         return input;
     }
 
-    private static void validateNullOrEmpty(String input) {
+    private static void validateNullOrEmpty(final String input) {
         if (input == null || input.isEmpty()) {
             throw new IllegalArgumentException("빈 값을 입력할 수 없습니다.");
         }

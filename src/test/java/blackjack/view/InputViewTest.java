@@ -3,8 +3,6 @@ package blackjack.view;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -35,7 +33,7 @@ public class InputViewTest {
     void receive_more_card_answer_null() {
         Enterable enterable = () -> null;
 
-        Assertions.assertThatThrownBy(() -> InputView.inputReceiveMoreCardAnswer(enterable))
+        Assertions.assertThatThrownBy(() -> InputView.inputDrawingAnswer(enterable))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("빈 값을 입력할 수 없습니다.");
     }
@@ -45,7 +43,7 @@ public class InputViewTest {
     void receive_more_card_answer_empty() {
         Enterable enterable = () -> "";
 
-        Assertions.assertThatThrownBy(() -> InputView.inputReceiveMoreCardAnswer(enterable))
+        Assertions.assertThatThrownBy(() -> InputView.inputDrawingAnswer(enterable))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("빈 값을 입력할 수 없습니다.");
     }

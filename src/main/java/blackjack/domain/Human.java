@@ -14,11 +14,11 @@ public abstract class Human {
         return cards.calculateTotal();
     }
 
-    public void receiveInitCards(final List<Card> initCards) {
+    public void drawInitCards(final List<Card> initCards) {
         cards.add(initCards);
     }
 
-    public void receiveCard(final Card card) {
+    public void drawCard(final Card card) {
         cards.add(card);
     }
 
@@ -26,5 +26,5 @@ public abstract class Human {
         return cards.isOverBlackjack();
     }
 
-    abstract boolean isReceived();
+    abstract boolean isDrawable();
 }

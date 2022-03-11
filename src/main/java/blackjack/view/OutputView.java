@@ -27,7 +27,7 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void printReceiveInitCards(final String dealerName, final List<String> playerNames) {
+    public static void printDistributeInitCards(final String dealerName, final List<String> playerNames) {
         System.out.printf("%s와 %s에게 2장씩 나누었습니다.", dealerName, String.join(DELIMITER, playerNames));
     }
 
@@ -35,11 +35,11 @@ public class OutputView {
         System.out.printf(CARDS_FORMAT, name, String.join(DELIMITER, cards));
     }
 
-    public static void printReceiveMoreCard(final String name) {
+    public static void printDrawInstruction(final String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name);
     }
 
-    public static void printReceiveDealerMoreCard(final String name, final int receivedMaximum) {
+    public static void printDrawDealer(final String name, final int receivedMaximum) {
         System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.", name, receivedMaximum);
     }
 

@@ -39,11 +39,11 @@ public class BlackjackController {
 
     private void distributeInitCards(final CardMachine cardMachine, final Dealer dealer, final Players players) {
         OutputView.printNewLine();
-        OutputView.printReceiveInitCards(Dealer.getName(), players.getNames());
+        OutputView.printDistributeInitCards(Dealer.getName(), players.getNames());
         OutputView.printNewLine();
-        dealer.receiveInitCards(cardMachine.pickInitCards());
+        dealer.drawInitCards(cardMachine.pickInitCards());
         for (Player player : players.getPlayers()) {
-            player.receiveInitCards(cardMachine.pickInitCards());
+            player.drawInitCards(cardMachine.pickInitCards());
         }
         openInitCard(dealer, players);
     }
@@ -66,29 +66,29 @@ public class BlackjackController {
     }
 
     private void distributeCardToPlayer(final Player player, final CardMachine cardMachine) {
-        while (player.isReceived() && isReceivingMoreCard(player)) {
-            player.receiveCard(cardMachine.pickCard());
+        while (player.isDrawable() && isDrawing(player)) {
+            player.drawCard(cardMachine.pickCard());
             OutputView.printCards(player.getName(), player.showCards());
             OutputView.printNewLine();
         }
     }
 
-    private boolean isReceivingMoreCard(final Player player) {
+    private boolean isDrawing(final Player player) {
         try {
-            OutputView.printReceiveMoreCard(player.getName());
+            OutputView.printDrawInstruction(player.getName());
             OutputView.printNewLine();
-            String input = InputView.inputReceiveMoreCardAnswer(enterable);
+            String input = InputView.inputDrawingAnswer(enterable);
             return player.answer(input);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
-            return isReceivingMoreCard(player);
+            return isDrawing(player);
         }
     }
 
     private void distributeCardToDealer(final Dealer dealer, final CardMachine cardMachine) {
-        while (dealer.isReceived()) {
-            dealer.receiveCard(cardMachine.pickCard());
-            OutputView.printReceiveDealerMoreCard(Dealer.getName(), Dealer.RECEIVED_MAXIMUM);
+        while (dealer.isDrawable()) {
+            dealer.drawCard(cardMachine.pickCard());
+            OutputView.printDrawDealer(Dealer.getName(), Dealer.RECEIVED_MAXIMUM);
             OutputView.printNewLine();
         }
         OutputView.printNewLine();
