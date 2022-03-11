@@ -65,7 +65,7 @@ public class OutputView {
         print(DEALER_EXTRA_CARD_MESSAGE);
     }
 
-    // TODO: DTO 로 변경
+    // TODO: DTO로 변경
     public static void printAllCardsAndScore(BlackjackGame blackjackGame) {
         List<Participant> participants = new ArrayList<>(List.of(blackjackGame.getDealer()));
         participants.addAll(blackjackGame.getPlayers());
@@ -78,6 +78,7 @@ public class OutputView {
         print(builder.toString());
     }
 
+    // TODO: DTO로 변경
     public static void printGameResult(List<ResultStatistics> results) {
         print(NEW_LINE + "## 최종 승패");
 
