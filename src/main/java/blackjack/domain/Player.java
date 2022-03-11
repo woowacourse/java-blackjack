@@ -37,19 +37,16 @@ public class Player {
         return cards.getCards();
     }
 
-    public Score compete(Player player) {
-        if (player.isBust()) {
-            if (this.isBust()) {
-                return Score.DRAW;
-            }
+    public Score compete(Player otherPlayer) {
+        if (!this.isBust() && !otherPlayer.isBust()) {
+            return Score.compete(this.getTotalNumber(), otherPlayer.getTotalNumber());
+        }
+        if (this.isBust() && otherPlayer.isBust()) {
+            return Score.DRAW;
+        }
+        if (otherPlayer.isBust()) {
             return Score.WIN;
         }
-        if (this.isBust() || this.getTotalNumber() < player.getTotalNumber()) {
-            return Score.LOSE;
-        }
-        if (this.getTotalNumber() > player.getTotalNumber()) {
-            return Score.WIN;
-        }
-        return Score.DRAW;
+        return Score.LOSE;
     }
 }

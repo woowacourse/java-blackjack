@@ -58,7 +58,7 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printResult(ScoreResult result) {
+    public static void printScoreResult(ScoreResult result) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d무 %d패%n",
             result.getDealerScoreCount(Score.WIN),

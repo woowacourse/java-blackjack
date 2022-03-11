@@ -21,6 +21,18 @@ public enum Score {
         return DRAW;
     }
 
+    public static Score compete(int playerTotalNumber, int dealerTotalNumber) {
+        int competeNumber = playerTotalNumber - dealerTotalNumber;
+
+        if (competeNumber > 0) {
+            return Score.WIN;
+        }
+        if (competeNumber == 0) {
+            return Score.DRAW;
+        }
+        return Score.LOSE;
+    }
+
     public String getValue(){
         return value;
     }

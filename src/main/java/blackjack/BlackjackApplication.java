@@ -32,9 +32,8 @@ public class BlackjackApplication {
         takeTurnDealer(dealer, deck);
 
         printPlayersResult(toDto(players), toDto(dealer));
-        ScoreResult result = players.compete(dealer);
-
-        printResult(result);
+        ScoreResult scoreResult = players.compete(dealer);
+        printScoreResult(scoreResult);
     }
 
     private static void takeTurnsPlayers(Players players, Deck deck) {
