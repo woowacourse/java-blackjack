@@ -48,12 +48,20 @@ public class OutputView {
     }
 
     public static void printParticipantScore(Dealer dealer, List<Player> players) {
-        String dealerCardDisplayContents = dealer.getCards().stream()
+        printDealerScore(dealer);
+        printPlayersScore(players);
+        out.println();
+    }
+
+    private static void printDealerScore(Dealer dealer) {
+        String dealerCards = dealer.getCards().stream()
                 .map(card -> cardDisplayContents(card))
                 .collect(joining(", "));
 
-        out.printf("%s 카드: %s - 결과: %d" + NEW_LINE, dealer.getName(), dealerCardDisplayContents, dealer.getScore());
+        out.printf(NEW_LINE + "%s 카드: %s - 결과: %d" + NEW_LINE, dealer.getName(), dealerCards, dealer.getScore());
+    }
 
+    private static void printPlayersScore(List<Player> players) {
         for (Player player : players) {
             out.printf("%s카드: %s - 결과: %d" + NEW_LINE, player.getName(), getCards(player),
                     player.getCardHand().getScore());
@@ -65,23 +73,21 @@ public class OutputView {
     }
 
     public static void printBlackjackGameResult(Dealer dealer, List<Player> players) {
-        out.println(NEW_LINE + "## 최종 승패");
-
-        printDealerResult(dealer);
-
-        printPlayerResult(players);
+        out.println("## 최종 승패");
+        printDealerMatchResult(dealer);
+        printPlayerMatchResult(players);
     }
 
-    private static void printDealerResult(Dealer dealer) {
+    private static void printDealerMatchResult(Dealer dealer) {
         Map<MatchResult, Integer> resultScores = dealer.getMatchResultScores();
         String dealerScoreString = resultScores.entrySet().stream()
                 .filter(entry -> entry.getValue() != 0)
-                .map(entry -> entry.getValue() + entry.getKey().getName() + " ")
+                .map(entry -> entry.getValue() + entry.getKey().getName())
                 .collect(joining(" "));
         out.println("딜러: " + dealerScoreString);
     }
 
-    private static void printPlayerResult(List<Player> players) {
+    private static void printPlayerMatchResult(List<Player> players) {
         for (Player player : players) {
             out.printf("%s: %s" + NEW_LINE, player.getName(), player.getResult().getName());
         }
