@@ -1,17 +1,35 @@
 package blackjack.domain;
 
-import blackjack.domain.strategy.CardGenerator;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class CardDeck {
-    public static final Queue<Card> cardDeck = new LinkedList<>();
+    public static final Queue<Card> cardDeck = createCardDeck();
 
-    public CardDeck(CardGenerator cardGenerator) {
-        List<Card> cards = cardGenerator.generate();
-        cardDeck.addAll(cards);
+    private CardDeck() {
+    }
+
+    private static Queue<Card> createCardDeck() {
+        List<Card> cards = createCards();
+        Collections.shuffle(cards);
+        return new LinkedList<>(cards);
+    }
+
+    private static List<Card> createCards() {
+        return Arrays.stream(Symbol.values())
+                .flatMap(symbol -> createSymbolCards(symbol).stream())
+                .collect(Collectors.toList());
+    }
+
+    private static List<Card> createSymbolCards(Symbol symbol) {
+        return Arrays.stream(CardNumber.values())
+                .map(cardNumber -> new Card(cardNumber, symbol))
+                .collect(Collectors.toList());
     }
 
     public Card drawCard() {
