@@ -3,8 +3,6 @@ package blackjack.domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
-import java.util.Arrays;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,11 +26,20 @@ public class CardTest {
     }
 
     @Test
-    void example() {
-        String value = ",,,,,";
-        List<String> list = Arrays.asList(value.trim().split(","));
-        System.out.print("사이즈"+list.size());
-        System.out.println(list);
+    @DisplayName("카드 에이스 판별")
+    void isAce() {
+        Card card = new Card(Suit.DIAMOND, Denomination.ACE);
+
+        assertThat(card.isAce()).isEqualTo(true);
     }
+
+    @Test
+    @DisplayName("카드 에이스 아님 판별")
+    void isNotAce() {
+        Card card = new Card(Suit.DIAMOND, Denomination.JACK);
+
+        assertThat(card.isAce()).isEqualTo(false);
+    }
+
 
 }
