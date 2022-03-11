@@ -1,10 +1,10 @@
 package blackjack.view.input;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.view.input.reader.Reader;
+import blackjack.view.utils.Delimiter;
 
 public class InputView {
 
@@ -15,16 +15,16 @@ public class InputView {
     }
 
     public List<String> requestPlayerNames() {
-        final String input = reader.readLine();
-        final int limitForSplitAllElement = -1;
-        String COMMA_UNIT = ",";
-        return Arrays.stream(input.split(COMMA_UNIT, limitForSplitAllElement))
+        final String inputLine = reader.readLine();
+        final List<String> playerNames = Delimiter.COMMA.splitWith(inputLine);
+        return playerNames.stream()
                 .map(String::trim)
                 .collect(Collectors.toUnmodifiableList());
     }
 
     public boolean requestContinuable() {
-        final String input = reader.readLine();
-        return Choice.from(input).getContinuable();
+        final String inputLine = reader.readLine();
+        final Choice choice = Choice.from(inputLine);
+        return choice.getContinuable();
     }
 }

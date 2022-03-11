@@ -23,9 +23,9 @@ public class BlackjackView {
         return inputView.requestPlayerNames();
     }
 
-    public void printFirstDistributedCards(final ParticipantDto dealderDto, final List<ParticipantDto> playerDtos) {
+    public void printFirstDistributedCards(final ParticipantDto dealerDto, final List<ParticipantDto> playerDtos) {
         outputView.printMessageOfPlayerNames(playerDtos);
-        outputView.printDistributedCards(dealderDto);
+        outputView.printDistributedCards(dealerDto);
         playerDtos.forEach(outputView::printDistributedCards);
     }
 
@@ -43,7 +43,7 @@ public class BlackjackView {
     }
 
     public void printMatchResult(final List<ParticipantDto> participantDtos, final MatchResultDto matchResultDto) {
-        outputView.printScores(participantDtos);
+        outputView.printFinalScores(participantDtos);
         outputView.printMatchResult(matchResultDto);
     }
 }
