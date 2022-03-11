@@ -37,7 +37,6 @@ public class Players {
 
     public List<String> showStatuses() {
         return players.stream()
-                .filter(player -> !player.isBlackJack)
                 .map(Player::showStatus)
                 .collect(Collectors.toList());
     }
