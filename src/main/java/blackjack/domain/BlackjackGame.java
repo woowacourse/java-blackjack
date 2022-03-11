@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackGame {
@@ -8,19 +7,19 @@ public class BlackjackGame {
     private static final String DEALER = "딜러";
 
     private final Cards cards;
-    private final List<Player> blackjackPlayers;
+    private final Players blackjackPlayers;
 
     public BlackjackGame(List<String> playerNames) {
         this.cards = new Cards(new CardShuffleMachine());
-        this.blackjackPlayers = new ArrayList<>();
-        blackjackPlayers.add(new Dealer());
+        this.blackjackPlayers = new Players();
+        blackjackPlayers.addPlayer(new Dealer());
         for (String playerName : playerNames) {
-            blackjackPlayers.add(new Guest(playerName));
+            blackjackPlayers.addPlayer(new Guest(playerName));
         }
     }
 
-    public List<Player> initGames() {
-        for (Player blackjackPlayer : blackjackPlayers) {
+    public Players initGames() {
+        for (Player blackjackPlayer : blackjackPlayers.getPlayers()) {
             blackjackPlayer.addCard(cards.assignCard());
             blackjackPlayer.addCard(cards.assignCard());
         }
@@ -31,10 +30,14 @@ public class BlackjackGame {
         player.addCard(cards.assignCard());
     }
 
-    public Results calculateResult(List<Player> players) {
+    public Results calculateResult(Players players) {
         Results results = new Results();
-        Player dealer = players.stream().filter(player -> player.isDealer(DEALER)).findFirst().orElseThrow();
-        for (Player player : players) {
+        Player dealer = players.getPlayers()
+                .stream()
+                .filter(player -> player.isDealer(DEALER))
+                .findFirst()
+                .orElseThrow();
+        for (Player player : players.getPlayers()) {
             scoreResultIfGuest(dealer, player, results);
         }
         return results;
