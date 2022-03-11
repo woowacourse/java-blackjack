@@ -18,7 +18,7 @@ public class PlayerDto {
     }
 
     public static PlayerDto from(Player player) {
-        return new PlayerDto(player.getName(), player.getCards());
+        return new PlayerDto(player.getName(), player.getPlayingCards());
     }
 
     public String getName() {

@@ -62,7 +62,7 @@ class PlayerTest {
     @DisplayName("딜러는 현재 합산 16이하인지 확인할 수 있다")
     void less_than_or_same_sixteen() {
         // given
-        final Dealer rich = new Dealer("rich");
+        Dealer rich = new Dealer("rich");
         rich.addCard(PlayingCard.of(Suit.HEARTS, Denomination.FIVE));
         rich.addCard(PlayingCard.of(Suit.SPADES, Denomination.FIVE));
 
@@ -77,7 +77,7 @@ class PlayerTest {
     @DisplayName("딜러는 현재 합산 17이상인지 확인할 수 있다")
     void over_than_sixteen() {
         // given
-        final Dealer rich = new Dealer("rich");
+        Dealer rich = new Dealer("rich");
         rich.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
         rich.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
 
@@ -92,8 +92,8 @@ class PlayerTest {
     @DisplayName("딜러와 겜블러 모두 버스트 여부를 확인할 수 있다.")
     void is_bust() {
         // given
-        final Dealer rich = new Dealer("rich");
-        final Player dolbum = new Gambler("dolbum");
+        Dealer rich = new Dealer("rich");
+        Player dolbum = new Gambler("dolbum");
         rich.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
         rich.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
         rich.addCard(PlayingCard.of(Suit.CLUBS, Denomination.KING));

@@ -9,12 +9,12 @@ import java.util.List;
 
 public abstract class Player {
     private static final int BUST_CRITERIA = 21;
-    private static final int ZERO_SCORE_FOR_BUST = 0;
+    private static final int BLACK_JACK = 21;
 
     private final String name;
     private final PlayingCards playingCards = new PlayingCards();
 
-    protected Player(final String name) {
+    protected Player(String name) {
         this.name = name;
     }
 
@@ -26,20 +26,19 @@ public abstract class Player {
         playingCards.addCard(playingCard);
     }
 
-    public int getRawResult() {
-        return ScoreUtil.getScore(playingCards.getPlayingCards());
-    }
-
     public int getPlayResult() {
-        int result = ScoreUtil.getScore(playingCards.getPlayingCards());
-        return result > BUST_CRITERIA ? ZERO_SCORE_FOR_BUST : result;
+        return ScoreUtil.getScore(playingCards.getPlayingCards());
     }
 
     public boolean isBust() {
         return getPlayResult() > BUST_CRITERIA;
     }
 
-    public List<PlayingCard> getCards() {
+    public boolean isBlackJack() {
+        return getPlayResult() == BLACK_JACK;
+    }
+
+    public List<PlayingCard> getPlayingCards() {
         return unmodifiableList(playingCards.getPlayingCards());
     }
 

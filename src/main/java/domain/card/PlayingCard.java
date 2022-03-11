@@ -1,5 +1,7 @@
 package domain.card;
 
+import java.util.Objects;
+
 public class PlayingCard {
     private static final String ACE_NUMBERS = "(1,11)";
 
@@ -32,27 +34,20 @@ public class PlayingCard {
     }
 
     @Override
-    public boolean equals(final Object object) {
-        if (this == object) {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (object == null || getClass() != object.getClass()) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
-        final PlayingCard that = (PlayingCard) object;
-
-        if (suit != that.suit) {
-            return false;
-        }
-        return denomination == that.denomination;
+        PlayingCard that = (PlayingCard) o;
+        return suit == that.suit && denomination == that.denomination;
     }
 
     @Override
     public int hashCode() {
-        int result = suit != null ? suit.hashCode() : 0;
-        result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
-        return result;
+        return Objects.hash(suit, denomination);
     }
 
     @Override
