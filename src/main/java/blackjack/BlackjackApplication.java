@@ -64,8 +64,8 @@ public class BlackjackApplication {
     private void proceedPlayersTurn(final Deck deck, final Players players) {
         players.play(deck, new CardDrawCallback() {
             @Override
-            public boolean isContinuable(final Player player) {
-                outputView.printMessageOfRequestContinuable(player);
+            public boolean isContinuable(final String playerName) {
+                outputView.printMessageOfRequestContinuable(playerName);
                 return inputView.requestContinuable();
             }
 
