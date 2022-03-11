@@ -1,14 +1,8 @@
-import controller.BlackJackController;
-import service.BlackJackService;
+import controller.BlackJackGame;
 
 public class Application {
 
     public static void main(String[] args) {
-        BlackJackController controller = new BlackJackController(new BlackJackService());
-        controller.initGame();
-        controller.hitPlayers();
-        controller.hitDealer();
-        controller.getResult();
-        controller.match();
+        new BlackJackGame().run();
     }
 }

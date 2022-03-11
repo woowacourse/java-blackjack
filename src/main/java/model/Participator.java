@@ -28,10 +28,6 @@ public abstract class Participator {
         return playerName;
     }
 
-    public boolean isSameName(String otherName) {
-        return playerName.isSameName(otherName);
-    }
-
     public int getSum() {
         return cards.getSum();
     }

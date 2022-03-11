@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import model.Participator;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -15,26 +16,25 @@ public class InputView {
         return splitAndTrim(SCANNER.nextLine());
     }
 
-    private static List<String> splitAndTrim(String line) {
-        return Arrays.stream(line.split(DELIMITER))
-                .map(token -> token.trim())
+    private static List<String> splitAndTrim(String inputPlayerNames) {
+        return Arrays.stream(inputPlayerNames.split(DELIMITER))
+                .map(String::trim)
                 .collect(Collectors.toList());
     }
 
-    public static boolean inputHitResponse(final String name) {
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        String option = SCANNER.nextLine();
-        checkYesOrNo(option);
-        return convertOptionToBoolean(option);
+    public static boolean inputHitResponse(Participator player) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y,아니오는 n)%n", player.getPlayerName().getValue());
+        return convertToBoolean(SCANNER.nextLine());
     }
 
-    private static boolean convertOptionToBoolean(String option) {
-        return option.equalsIgnoreCase("y");
-    }
-
-    private static void checkYesOrNo(String response) {
-        if (!(response.equalsIgnoreCase("y") || response.equalsIgnoreCase("n"))) {
-            throw new IllegalArgumentException("Y 또는 N을 입력해주세요.");
+    private static boolean convertToBoolean(String hitResponse) {
+        if (isValidHitResponse(hitResponse)) {
+            return hitResponse.equalsIgnoreCase("y");
         }
+        throw new IllegalArgumentException("Y 또는 N을 입력해주세요.(대소문자 상관없습니다.)");
+    }
+
+    private static boolean isValidHitResponse(String hitResponse) {
+        return hitResponse.equalsIgnoreCase("y") || hitResponse.equalsIgnoreCase("n");
     }
 }

@@ -1,4 +1,4 @@
-package util;
+package view.util;
 
 import java.util.EnumMap;
 import java.util.List;

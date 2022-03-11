@@ -71,6 +71,7 @@ public class Cards {
     public boolean isBusted() {
         return getStatus().isBusted();
     }
+
     public List<Card> getValue() {
         return cards;
     }

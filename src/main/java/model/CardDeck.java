@@ -9,10 +9,10 @@ public class CardDeck {
     private final Queue<Card> deck;
 
     public CardDeck() {
-        this.deck = new LinkedList<>(initCardDeck());
+        this.deck = new LinkedList<>(createShuffledAllCards());
     }
 
-    private List<Card> initCardDeck() {
+    private List<Card> createShuffledAllCards() {
         List<Card> cards = Card.getAllCards();
         Collections.shuffle(cards);
         return cards;
