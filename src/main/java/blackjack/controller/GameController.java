@@ -18,21 +18,18 @@ import java.util.Map.Entry;
 public class GameController {
 
     public void play() {
-        final List<String> names = InputView.requestPlayerNames();
-        final Game game = new Game(CardFactory.create(), names);
+        final Game game = createGame();
 
         game.init();
-
-        OutputView.printInitResult(names);
+        OutputView.printInitResult(game.getNames());
         OutputView.printDealerFirstCard(game.openCard());
-        final List<Player> players = game.getPlayers();
-        for (Player player : players) {
+        for (Player player : game.getPlayers()) {
             OutputView.printPlayerCards(new ParticipantVo(player));
         }
 
         while (game.findHitPlayer().isPresent()) {
             final Player player = game.findHitPlayer().get();
-            final Status hitOrStay = InputView.requestHitOrStay(player.getName());
+            final Status hitOrStay = getHitOrStay(player);
 
             game.drawPlayerCard(player, hitOrStay);
 
@@ -58,6 +55,25 @@ public class GameController {
         OutputView.printDealerRecord(recordFactory.getDealerRecord());
         for (Entry<String, Record> entry : map.entrySet()) {
             OutputView.printPlayerRecord(entry.getKey(), entry.getValue());
+        }
+    }
+
+    private Game createGame() {
+        try {
+            final List<String> names = InputView.requestPlayerNames();
+            return new Game(CardFactory.create(), names);
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+            return createGame();
+        }
+    }
+
+    private Status getHitOrStay(final Player player) {
+        try {
+            return InputView.requestHitOrStay(player.getName());
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+            return getHitOrStay(player);
         }
     }
 }

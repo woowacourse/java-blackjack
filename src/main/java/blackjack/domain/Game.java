@@ -70,4 +70,10 @@ public class Game {
     public List<Player> getPlayers() {
         return players;
     }
+
+    public List<String> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toList());
+    }
 }
