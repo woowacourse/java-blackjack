@@ -37,31 +37,19 @@ public class Game {
         }
     }
 
-    public List<String> getEntryNames() {
-        return this.players.getEntryNames();
-    }
-
-    public List<String> getNames() {
-        return this.players.getNames();
-    }
-
-    public List<List<String>> getDecksToString() {
-        return this.players.getCardsToString();
-    }
-
-    public String getCurrentEntryName() {
-        return this.players.getCurrentEntryName();
-    }
-
-    public List<String> getCurrentDeckToString() {
-        return this.players.getCurrentDeckToString();
-    }
-
     public int countCardsAddedToDealer() {
         return this.players.countCardsAddedToDealer();
     }
 
-    public List<Integer> getScores() {
-        return this.players.getScores();
+    public List<Entry> getEntries() {
+        return this.players.getEntries();
+    }
+
+    public Dealer getDealer() {
+        return this.players.getDealer();
+    }
+
+    public Entry getCurrentEntry() {
+        return this.players.getCurrentEntry();
     }
 }

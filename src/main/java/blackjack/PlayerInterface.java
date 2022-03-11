@@ -1,5 +1,7 @@
 package blackjack;
 
+import java.util.List;
+
 public interface PlayerInterface {
     void addCard(TrumpCard card);
 
@@ -8,4 +10,6 @@ public interface PlayerInterface {
     void hit(TrumpCard card);
 
     String getName();
+
+    List<String> getDeckToString();
 }

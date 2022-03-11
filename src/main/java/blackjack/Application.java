@@ -1,5 +1,8 @@
 package blackjack;
 
+import blackjack.dto.DealerDTO;
+import blackjack.dto.EntryDTO;
+import blackjack.dto.PlayersDTO;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.List;
@@ -14,8 +17,9 @@ public class Application {
         game.start();
 
         final ResultView resultView = new ResultView();
-        resultView.printDeckInitialized(game.getEntryNames());
-        resultView.printInitializedDecks(game.getNames(), game.getDecksToString());
+        PlayersDTO playersDTO = PlayersDTO.from(game);
+        resultView.printDeckInitialized(playersDTO);
+        resultView.printInitializedDecks(playersDTO);
 
         do {
             game.toNextEntry();
@@ -24,23 +28,24 @@ public class Application {
 
         game.hitDealer();
         if (game.countCardsAddedToDealer() > 0) {
-            resultView.printDealerHitCount(game.countCardsAddedToDealer());
+            resultView.printDealerHitCount(DealerDTO.from(game));
         }
 
-        resultView.printScores(game.getNames(), game.getDecksToString(), game.getScores());
+        resultView.printScores(PlayersDTO.from(game));
     }
 
     private static void playTurn(InputView inputView, Game game, ResultView resultView) {
+        EntryDTO entryDTO = EntryDTO.fromCurrent(game);
         if (game.isCurrentEntryBust()) {
-            resultView.printBustMessage(game.getCurrentEntryName());
+            resultView.printBustMessage(entryDTO);
             return;
         }
-        if (!inputView.askForHit(game.getCurrentEntryName())) {
-            resultView.printDeck(game.getCurrentEntryName(), game.getCurrentDeckToString());
+        if (!inputView.askForHit(entryDTO)) {
+            resultView.printDeck(entryDTO);
             return;
         }
         game.hitCurrentEntry();
-        resultView.printDeck(game.getCurrentEntryName(), game.getCurrentDeckToString());
+        resultView.printDeck(entryDTO);
         playTurn(inputView, game, resultView);
     }
 }

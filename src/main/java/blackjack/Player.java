@@ -31,6 +31,4 @@ public abstract class Player implements PlayerInterface {
     public String getName() {
         return this.name;
     }
-
-
 }

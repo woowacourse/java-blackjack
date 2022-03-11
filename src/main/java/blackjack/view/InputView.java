@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.dto.EntryDTO;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -19,12 +20,12 @@ public class InputView {
         return splitNames(namesInput);
     }
 
-    private List<String> splitNames(String namesInput) {
-        return Arrays.asList((namesInput.split(REGEX_NAME)));
+    private List<String> splitNames(String rawNames) {
+        return Arrays.asList((rawNames.split(REGEX_NAME)));
     }
 
-    public boolean askForHit(String name) {
-        System.out.printf(FORMAT_HIT, name, SIGN_TRUE, SIGN_FALSE);
+    public boolean askForHit(EntryDTO entry) {
+        System.out.printf(FORMAT_HIT, entry.getName(), SIGN_TRUE, SIGN_FALSE);
         String input = new Scanner(System.in).nextLine();
         return isInputTrue(input.trim());
     }

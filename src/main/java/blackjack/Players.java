@@ -21,26 +21,6 @@ public class Players {
         this.dealer.addCard(trumpCardPack.draw());
     }
 
-    public List<String> getEntryNames() {
-        return this.entries.getNames();
-    }
-
-    public List<String> getNames() {
-        List<String> names = new ArrayList<>();
-        names.add(this.dealer.getName());
-        names.addAll(getEntryNames());
-        return names;
-    }
-
-    public List<List<String>> getCardsToString() {
-        List<String> dealerCardToString = new ArrayList<>();
-        dealerCardToString.add(this.dealer.getFirstDeckToString());
-        List<List<String>> cardsToString = new ArrayList<>();
-        cardsToString.add(dealerCardToString);
-        cardsToString.addAll(this.entries.getDecksToString());
-        return cardsToString;
-    }
-
     public boolean hasNextEntry() {
         return !this.entries.hasNoNext();
     }
@@ -61,14 +41,6 @@ public class Players {
         this.dealer.hit(card);
     }
 
-    public String getCurrentEntryName() {
-        return this.entries.getCurrentEntryName();
-    }
-
-    public List<String> getCurrentDeckToString() {
-        return this.entries.getCurrentDeckToString();
-    }
-
     public int countCardsAddedToDealer() {
         return this.dealer.countAddedCards();
     }
@@ -77,11 +49,15 @@ public class Players {
         return this.dealer.canHit();
     }
 
-    public List<Integer> getScores() {
-        int dealerScore = this.dealer.getScore();
-        List<Integer> playerScores = new ArrayList<>();
-        playerScores.add(dealerScore);
-        playerScores.addAll(entries.getScores());
-        return playerScores;
+    public List<Entry> getEntries() {
+        return this.entries.getValues();
+    }
+
+    public Dealer getDealer() {
+        return this.dealer;
+    }
+
+    public Entry getCurrentEntry() {
+        return this.entries.getCurrentEntry();
     }
 }

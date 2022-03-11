@@ -50,10 +50,6 @@ public class Entry extends Player {
         }
     }
 
-    public List<String> getDeckToString() {
-        return this.deck.getCardsToString();
-    }
-
     @Override
     public boolean isBust() {
          return this.deck.isBust();
@@ -62,5 +58,10 @@ public class Entry extends Player {
     @Override
     public void hit(TrumpCard card) {
         this.deck.add(card);
+    }
+
+    @Override
+    public List<String> getDeckToString() {
+        return this.deck.getCardsToString();
     }
 }
