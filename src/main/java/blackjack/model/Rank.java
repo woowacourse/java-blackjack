@@ -19,15 +19,15 @@ public enum Rank {
         this.hardRank = hardRank;
     }
 
-    public int soft() {
+    public int getSoft() {
         return softRank;
     }
 
-    public int hard() {
+    public int getHard() {
         return hardRank;
     }
 
-    public String symbol() {
+    public String getSymbol() {
         return symbol;
     }
 }

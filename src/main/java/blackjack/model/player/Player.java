@@ -17,16 +17,16 @@ public abstract class Player {
         this.cards = cards;
     }
 
-    public String name() {
+    public String getName() {
         return name;
+    }
+
+    public Cards getCards() {
+        return cards;
     }
 
     public List<Card> openCards() {
         return openCards;
-    }
-
-    public Cards cards() {
-        return cards;
     }
 
     public void take(Card card) {

@@ -10,9 +10,9 @@ public class ResultTest {
 
     @ParameterizedTest
     @DisplayName("결과 reverse 테스트")
-    @CsvSource({"WIN,LOSS", "LOSS,WIN", "DRAW,DRAW"})
+    @CsvSource({"WIN,LOSE", "LOSE,WIN", "DRAW,DRAW"})
     void reverse(Result result, Result expect) {
-        assertThat(result.reverse()).isEqualTo(expect);
+        assertThat(result.opposite()).isEqualTo(expect);
     }
 
 }

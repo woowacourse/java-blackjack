@@ -27,6 +27,10 @@ public final class Cards {
         return new Score(score);
     }
 
+    public List<Card> getEachCard() {
+        return cards;
+    }
+
     public Stream<Card> stream() {
         return cards.stream();
     }
@@ -56,6 +60,6 @@ public final class Cards {
     }
 
     private Score diffSoftAndHardOfAce() {
-        return new Score(Rank.ACE.soft() - Rank.ACE.hard());
+        return new Score(Rank.ACE.getSoft() - Rank.ACE.getHard());
     }
 }

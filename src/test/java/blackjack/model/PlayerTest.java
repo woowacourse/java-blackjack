@@ -42,7 +42,7 @@ public class PlayerTest {
     @MethodSource("provideDealerLosingCaseCards")
     @DisplayName("딜러가 지는 경우 판별 테스트")
     void dealerIsLoser(Dealer dealer, Cards playerCards) {
-        assertThat(dealer.match(playerCards)).isEqualTo(Result.LOSS);
+        assertThat(dealer.match(playerCards)).isEqualTo(Result.LOSE);
     }
 
     private static Stream<Arguments> provideDealerLosingCaseCards() {

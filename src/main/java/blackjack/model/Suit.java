@@ -10,7 +10,7 @@ public enum Suit {
         this.symbol = symbol;
     }
 
-    public String symbol() {
+    public String getSymbol() {
         return symbol;
     }
 }

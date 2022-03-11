@@ -3,7 +3,7 @@ package blackjack.model;
 public enum Result {
     WIN("승"),
     DRAW("무"),
-    LOSS("패");
+    LOSE("패");
 
     private final String symbol;
 
@@ -11,15 +11,15 @@ public enum Result {
         this.symbol = symbol;
     }
 
-    public String symbol() {
+    public String getSymbol() {
         return symbol;
     }
 
-    public Result reverse() {
+    public Result opposite() {
         if (this == WIN) {
-            return LOSS;
+            return LOSE;
         }
-        if (this == LOSS) {
+        if (this == LOSE) {
             return WIN;
         }
         return DRAW;

@@ -13,12 +13,20 @@ public class Card {
         this.suit = suit;
     }
 
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
+
     public int hardRank() {
-        return rank.hard();
+        return rank.getHard();
     }
 
     public int softRank() {
-        return rank.soft();
+        return rank.getSoft();
     }
 
     public boolean isAce() {
@@ -44,14 +52,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return rank.hard() + "-" + suit;
-    }
-
-    public Rank rank() {
-        return rank;
-    }
-
-    public Suit suit() {
-        return suit;
+        return rank.getHard() + "-" + suit;
     }
 }

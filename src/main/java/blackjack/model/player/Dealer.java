@@ -18,14 +18,14 @@ public class Dealer extends Player {
             return Result.WIN;
         }
         if (score().isBust()) {
-            return Result.LOSS;
+            return Result.LOSE;
         }
         return compare(playerScore);
     }
 
     private Result compare(Score playerScore) {
         if (score().lessThan(playerScore)) {
-            return Result.LOSS;
+            return Result.LOSE;
         }
         if (score().moreThan(playerScore)) {
             return Result.WIN;
