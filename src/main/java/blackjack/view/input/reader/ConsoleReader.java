@@ -10,4 +10,5 @@ public class ConsoleReader implements Reader {
     public String readLine() {
         return scanner.nextLine();
     }
+
 }

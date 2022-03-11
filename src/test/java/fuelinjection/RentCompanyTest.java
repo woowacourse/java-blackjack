@@ -29,4 +29,5 @@ public class RentCompanyTest {
                 "K5 : 30리터" + NEWLINE
         );
     }
+
 }

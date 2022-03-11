@@ -14,13 +14,13 @@ public enum Delimiter {
         this.unit = unit;
     }
 
-    public List<String> splitWith(final String targetString) {
+    public List<String> splitWith(final String value) {
         final int limitForSplitAllElement = -1;
-        return List.of(targetString.split(this.unit, limitForSplitAllElement));
+        return List.of(value.split(this.unit, limitForSplitAllElement));
     }
 
-    public String joinWith(final List<String> strings) {
-        return String.join(this.unit + SPACE.unit, strings);
+    public String joinWith(final List<String> values) {
+        return String.join(this.unit + SPACE.unit, values);
     }
 
 }

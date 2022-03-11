@@ -1,8 +1,10 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
+
 public class Player extends Participant {
 
-    public Player(final String name) {
+    private Player(final String name) {
         validatePlayerName(name);
         this.name = name;
     }
@@ -13,8 +15,19 @@ public class Player extends Participant {
         }
     }
 
+    public static Player readyToPlay(final String name, final Deck deck) {
+        final Player player = new Player(name);
+        player.drawTwoCard(deck);
+        return player;
+    }
+
     @Override
     public boolean isPossibleToDrawCard() {
+        return isNotBurst();
+    }
+
+    private boolean isNotBurst() {
         return !isBurst();
     }
+
 }

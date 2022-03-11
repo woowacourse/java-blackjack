@@ -30,4 +30,5 @@ public enum Choice {
     public boolean getContinuable() {
         return continuable;
     }
+
 }

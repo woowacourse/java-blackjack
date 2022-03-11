@@ -15,14 +15,15 @@ public enum MatchStatus {
         this.result = result;
     }
 
-    public static MatchStatus valueOf(final boolean result) {
+    public static MatchStatus from(final boolean result) {
         return Arrays.stream(MatchStatus.values())
                 .filter(it -> it.result == result)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("승패를 구분지을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("승패를 구분 지을 수 없습니다."));
     }
 
     public String getName() {
         return name;
     }
+
 }

@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import blackjack.domain.card.strategy.CardStrategy;
+import blackjack.domain.card.strategy.DeckGenerator;
 
 public class Deck {
 
@@ -22,7 +22,7 @@ public class Deck {
         }
     }
 
-    public static Deck generate(final CardStrategy strategy) {
+    public static Deck generate(final DeckGenerator strategy) {
         return new Deck(strategy.generate());
     }
 
@@ -37,10 +37,4 @@ public class Deck {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Deck size = " + cards.size() + '{' +
-                "cards=" + cards +
-                '}';
-    }
 }

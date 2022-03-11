@@ -11,7 +11,7 @@ import blackjack.domain.card.Card;
 
 public class RandomCardStrategyTest {
 
-    private final RandomCardStrategy randomCardStrategy = new RandomCardStrategy();
+    private final RandomDeckGenerator randomCardStrategy = new RandomDeckGenerator();
 
     @Test
     @DisplayName("생성한 카드들이 52개인지 확인한다.")

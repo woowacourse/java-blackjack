@@ -25,7 +25,7 @@ public class RentCompany {
 
     public String generateReport() {
         final StringBuilder stringBuilder = new StringBuilder();
-        for (Car car : cars) {
+        for (final Car car : cars) {
             final String name = car.getName();
             final int chargeQuantity = (int) car.getChargeQuantity();
             stringBuilder.append(String.format(MESSAGE_FORMAT_OF_CAR_OF_CHARGE_QUANTITY, name, chargeQuantity));
@@ -33,4 +33,5 @@ public class RentCompany {
         }
         return stringBuilder.toString();
     }
+
 }

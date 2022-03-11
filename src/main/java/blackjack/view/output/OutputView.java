@@ -26,10 +26,15 @@ public class OutputView {
         printMessage(MESSAGE_OF_REQUEST_PLAYER_NAMES);
     }
 
+    public void printDealerFirstCard(final String dealerFirstCard) {
+        printMessage(Delimiter.COLON.joinWith(List.of("딜러", dealerFirstCard)));
+    }
+
     public void printMessageOfPlayerNames(final List<ParticipantDto> playerDtos) {
-        final String combinedPlayerNames = playerDtos.stream()
+        final List<String> playerNames = playerDtos.stream()
                 .map(ParticipantDto::getName)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.toUnmodifiableList());
+        final String combinedPlayerNames = Delimiter.COMMA.joinWith(playerNames);
         printMessage(String.format(MESSAGE_FORMAT_OF_DISTRIBUTE_TWO_CARDS, combinedPlayerNames));
     }
 
@@ -60,8 +65,8 @@ public class OutputView {
 
     public void printMatchResult(final MatchResultDto resultDto) {
         printMessage(MESSAGE_OF_MATCH_RESULT_TITLE);
-        printMatchResultOfDealer(resultDto.getDealerResult());
-        printMatchResultOfPlayers(resultDto.getPlayerResult());
+        printMatchResultOfDealer(resultDto.getResultOfDealer());
+        printMatchResultOfPlayers(resultDto.getResultOfPlayers());
     }
 
     private void printMatchResultOfDealer(final Map<MatchStatus, Integer> resultOfDealer) {
@@ -75,8 +80,9 @@ public class OutputView {
     private void printMatchResultOfPlayers(Map<String, MatchStatus> resultOfPlayers) {
         for (Map.Entry<String, MatchStatus> entry : resultOfPlayers.entrySet()) {
             final String playerName = entry.getKey();
-            final String matchStatus = entry.getValue().getName();
-            printMessage(Delimiter.COLON.joinWith(List.of(playerName, matchStatus)));
+            final String matchStatusName = entry.getValue().getName();
+            printMessage(Delimiter.COLON.joinWith(List.of(playerName, matchStatusName)));
         }
     }
+
 }

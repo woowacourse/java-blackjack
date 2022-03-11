@@ -7,7 +7,6 @@ import blackjack.dto.ParticipantDto;
 import blackjack.view.input.InputView;
 import blackjack.view.output.OutputView;
 
-
 public class BlackjackView {
 
     private final InputView inputView;
@@ -23,9 +22,9 @@ public class BlackjackView {
         return inputView.requestPlayerNames();
     }
 
-    public void printFirstDistributedCards(final ParticipantDto dealerDto, final List<ParticipantDto> playerDtos) {
+    public void printFirstDistributedCards(final String dealerFirstCardName, final List<ParticipantDto> playerDtos) {
         outputView.printMessageOfPlayerNames(playerDtos);
-        outputView.printDistributedCards(dealerDto);
+        outputView.printDealerFirstCard(dealerFirstCardName);
         playerDtos.forEach(outputView::printDistributedCards);
     }
 
@@ -46,4 +45,5 @@ public class BlackjackView {
         outputView.printFinalScores(participantDtos);
         outputView.printMatchResult(matchResultDto);
     }
+
 }

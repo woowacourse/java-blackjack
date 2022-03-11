@@ -19,7 +19,7 @@ class MatchResultTest {
                                        final Map<MatchStatus, Integer> dealerCountOfWinningResult) {
         final MatchResult matchResult = new MatchResult(winningStatuses);
 
-        Map<MatchStatus, Integer> count = matchResult.getDealerResult();
+        Map<MatchStatus, Integer> count = matchResult.getResultOfDealer();
         assertThat(count).isEqualTo(dealerCountOfWinningResult);
     }
 

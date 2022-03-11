@@ -71,4 +71,5 @@ public class InputViewTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("입력은 y 또는 n 이어야 합니다.");
     }
+
 }

@@ -17,15 +17,19 @@ public class Card {
     }
 
     public String getCardName() {
-        return number.getInitial() + pattern.getPattern();
+        return number.getInitial() + pattern.getName();
     }
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final Card card = (Card) o;
-        return number == card.number && pattern == card.pattern;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Card other = (Card) o;
+        return (number == other.number) && (pattern == other.pattern);
     }
 
     @Override
@@ -37,4 +41,5 @@ public class Card {
     public String toString() {
         return "Card{" + getCardName() + '}';
     }
+
 }

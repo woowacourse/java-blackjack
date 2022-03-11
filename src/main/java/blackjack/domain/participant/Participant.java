@@ -16,11 +16,16 @@ public abstract class Participant {
     protected String name;
     protected List<Card> cards = new ArrayList<>();
 
+    protected void drawTwoCard(final Deck deck) {
+        drawCard(deck);
+        drawCard(deck);
+    }
+
     public void drawCard(final Deck deck) {
         cards.add(deck.drawCard());
     }
 
-    public void continueDraw(final Deck deck, final CardDrawCallback callback) {
+    public void drawCards(final Deck deck, final CardDrawCallback callback) {
         while (isPossibleToDrawCard() && callback.isContinuable(getParticipantName())) {
             drawCard(deck);
             callback.onUpdate(this);
@@ -70,4 +75,5 @@ public abstract class Participant {
     public int getScore() {
         return calculateScore();
     }
+
 }

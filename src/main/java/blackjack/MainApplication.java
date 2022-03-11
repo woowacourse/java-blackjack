@@ -1,5 +1,7 @@
 package blackjack;
 
+import blackjack.domain.card.strategy.DeckGenerator;
+import blackjack.domain.card.strategy.RandomDeckGenerator;
 import blackjack.view.BlackjackView;
 import blackjack.view.input.InputView;
 import blackjack.view.input.reader.ConsoleReader;
@@ -17,7 +19,9 @@ public class MainApplication {
         final InputView inputView = new InputView(reader);
         final OutputView outputView = new OutputView();
         final BlackjackView blackjackView = new BlackjackView(inputView, outputView);
-        final BlackjackApplication blackjackApplication = new BlackjackApplication(blackjackView);
+        final DeckGenerator deckGenerator = new RandomDeckGenerator();
+        final BlackjackApplication blackjackApplication = new BlackjackApplication(blackjackView, deckGenerator);
         blackjackApplication.run();
     }
+
 }

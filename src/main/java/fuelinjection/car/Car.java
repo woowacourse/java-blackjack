@@ -11,4 +11,5 @@ public abstract class Car {
     public abstract double getTripDistance();
 
     public abstract String getName();
+
 }

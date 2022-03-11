@@ -5,7 +5,7 @@ import java.util.List;
 
 import blackjack.domain.card.Card;
 
-public class ManualCardStrategy implements CardStrategy {
+public class ManualDeckGenerator implements DeckGenerator {
 
     private List<Card> cards;
 

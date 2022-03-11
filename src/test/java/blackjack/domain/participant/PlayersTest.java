@@ -18,12 +18,12 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.strategy.ManualCardStrategy;
+import blackjack.domain.card.strategy.ManualDeckGenerator;
 import blackjack.domain.result.MatchStatus;
 
 public class PlayersTest {
 
-    private final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
+    private final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
 
     @ParameterizedTest(name = "{index} {0}")
     @MethodSource("provideForPlayerNamesDuplicatedExceptionTest")
@@ -31,7 +31,7 @@ public class PlayersTest {
     void playerNamesDuplicatedExceptionTest(final List<String> playerNames, final List<Card> initializedCards) {
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
-        assertThatThrownBy(() -> Players.startWithTwoCards(playerNames, deck))
+        assertThatThrownBy(() -> Players.readyToPlay(playerNames, deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("플레이어명은 중복될 수 없습니다.");
     }
@@ -49,8 +49,8 @@ public class PlayersTest {
     void startWithDrawCardTest(final List<String> playerNames, final List<Card> expectedCards) {
         manualCardStrategy.initCards(expectedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
-        final Players players = Players.startWithTwoCards(playerNames, deck);
-        final List<Player> actualPlayers = players.getStatuses();
+        final Players players = Players.readyToPlay(playerNames, deck);
+        final List<Player> actualPlayers = players.getPlayers();
 
         final List<String> actualCardNames = actualPlayers.stream()
                 .map(Participant::getCardNames)
@@ -85,10 +85,10 @@ public class PlayersTest {
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
 
-        final Dealer dealer = Dealer.startWithTwoCards(deck);
-        final Players players = Players.startWithTwoCards(names, deck);
+        final Dealer dealer = Dealer.readyToPlay(deck);
+        final Players players = Players.readyToPlay(names, deck);
 
-        final Map<String, MatchStatus> actualWinningStatuses = players.judgeWinners(dealer).getPlayerResult();
+        final Map<String, MatchStatus> actualWinningStatuses = players.judgeWinners(dealer).getResultOfPlayers();
         assertThat(actualWinningStatuses).isEqualTo(expectedWinningStatuses);
     }
 
@@ -121,4 +121,5 @@ public class PlayersTest {
                 )
         );
     }
+
 }

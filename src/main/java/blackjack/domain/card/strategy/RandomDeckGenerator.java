@@ -10,11 +10,11 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 
-public class RandomCardStrategy implements CardStrategy {
+public class RandomDeckGenerator implements DeckGenerator {
 
     private final List<Card> cards;
 
-    public RandomCardStrategy() {
+    public RandomDeckGenerator() {
         this.cards = Arrays.stream(CardPattern.values())
                 .map(this::createCardsPerPattern)
                 .flatMap(List::stream)

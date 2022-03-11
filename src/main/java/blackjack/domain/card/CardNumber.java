@@ -31,4 +31,5 @@ public enum CardNumber {
     public int getNumber() {
         return number;
     }
+
 }

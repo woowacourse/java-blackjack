@@ -7,24 +7,25 @@ import blackjack.domain.result.MatchStatus;
 
 public class MatchResultDto {
 
-    private final Map<MatchStatus, Integer> dealerResult;
-    private final Map<String, MatchStatus> playerResult;
+    private final Map<MatchStatus, Integer> resultOfDealer;
+    private final Map<String, MatchStatus> resultOfPlayers;
 
-    private MatchResultDto(final Map<MatchStatus, Integer> dealerResult,
-                           final Map<String, MatchStatus> playerResult) {
-        this.dealerResult = dealerResult;
-        this.playerResult = playerResult;
+    private MatchResultDto(final Map<MatchStatus, Integer> resultOfDealer,
+                           final Map<String, MatchStatus> resultOfPlayers) {
+        this.resultOfDealer = resultOfDealer;
+        this.resultOfPlayers = resultOfPlayers;
     }
 
-    public static MatchResultDto toDto(final MatchResult result) {
-        return new MatchResultDto(result.getDealerResult(), result.getPlayerResult());
+    public static MatchResultDto toDto(final MatchResult matchResult) {
+        return new MatchResultDto(matchResult.getResultOfDealer(), matchResult.getResultOfPlayers());
     }
 
-    public Map<MatchStatus, Integer> getDealerResult() {
-        return dealerResult;
+    public Map<MatchStatus, Integer> getResultOfDealer() {
+        return resultOfDealer;
     }
 
-    public Map<String, MatchStatus> getPlayerResult() {
-        return playerResult;
+    public Map<String, MatchStatus> getResultOfPlayers() {
+        return resultOfPlayers;
     }
+
 }

@@ -4,7 +4,8 @@ import java.util.List;
 
 import blackjack.domain.card.Card;
 
-public interface CardStrategy {
+public interface DeckGenerator {
 
     List<Card> generate();
+
 }

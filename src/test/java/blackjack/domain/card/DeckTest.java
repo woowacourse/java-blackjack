@@ -13,11 +13,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import blackjack.domain.card.strategy.ManualCardStrategy;
+import blackjack.domain.card.strategy.ManualDeckGenerator;
 
 class DeckTest {
 
-    private final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
+    private final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
 
     @ParameterizedTest
     @MethodSource("provideForValidateCardDuplicatedTest")
@@ -90,4 +90,5 @@ class DeckTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("더 이상 뽑을 수 있는 카드가 없습니다.");
     }
+
 }

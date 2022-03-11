@@ -15,12 +15,12 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.strategy.ManualCardStrategy;
+import blackjack.domain.card.strategy.ManualDeckGenerator;
 import blackjack.domain.result.MatchStatus;
 
 class DealerTest {
 
-    private final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
+    private final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
     private final CardDrawCallback cardDrawCallback = new CardDrawCallback() {
         @Override
         public boolean isContinuable(String participantName) {
@@ -38,7 +38,7 @@ class DealerTest {
     void startWithDrawCardTest(final List<Card> expectedCards) {
         manualCardStrategy.initCards(expectedCards);
         Deck deck = Deck.generate(manualCardStrategy);
-        final Dealer dealer = Dealer.startWithTwoCards(deck);
+        final Dealer dealer = Dealer.readyToPlay(deck);
 
         List<String> actualCardNames = dealer.getCardNames();
         List<String> expectedCardNames = expectedCards.stream()
@@ -54,8 +54,8 @@ class DealerTest {
     void dealerUnderMinimumTotal(final List<Card> initializedCards, final List<Card> expectedCards) {
         manualCardStrategy.initCards(initializedCards);
         Deck deck = Deck.generate(manualCardStrategy);
-        final Dealer dealer = Dealer.startWithTwoCards(deck);
-        dealer.continueDraw(deck, cardDrawCallback);
+        final Dealer dealer = Dealer.readyToPlay(deck);
+        dealer.drawCards(deck, cardDrawCallback);
 
         List<String> actualCardNames = dealer.getCardNames();
         List<String> expectedCardNames = expectedCards.stream()
@@ -97,13 +97,13 @@ class DealerTest {
     @MethodSource("provideForDealerLoseByBurst")
     @DisplayName("플레이어의 카드 합이 버스트일 경우 패배한다.")
     void dealerLoseByBurst(List<Card> initializedCards) {
-        final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
+        final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
-        final Dealer dealer = Dealer.startWithTwoCards(deck);
-        dealer.continueDraw(deck, cardDrawCallback);
+        final Dealer dealer = Dealer.readyToPlay(deck);
+        dealer.drawCards(deck, cardDrawCallback);
 
-        assertThat(dealer.judgeWinner(new Player("sun"))).isEqualTo(MatchStatus.WIN);
+        assertThat(dealer.judgeWinner(Player.readyToPlay("sun", deck))).isEqualTo(MatchStatus.WIN);
     }
 
     private static Stream<Arguments> provideForDealerLoseByBurst() {
@@ -125,14 +125,13 @@ class DealerTest {
     @DisplayName("딜러는 승패를 결정한다.")
     void dealerCalculateWinningResultTest(final List<Card> initializedCards,
                                           final MatchStatus expectedWinningResult) {
-        final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
+        final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
-        final Dealer dealer = Dealer.startWithTwoCards(deck);
-        final Player player = new Player("if");
-        player.drawCard(deck);
-        player.drawCard(deck);
-        dealer.continueDraw(deck, cardDrawCallback);
+
+        final Dealer dealer = Dealer.readyToPlay(deck);
+        final Player player = Player.readyToPlay("if", deck);
+        dealer.drawCards(deck, cardDrawCallback);
 
         final MatchStatus actualWinningResult = dealer.judgeWinner(player);
         assertThat(actualWinningResult).isEqualTo(expectedWinningResult);
@@ -161,4 +160,5 @@ class DealerTest {
                 )
         );
     }
+
 }

@@ -27,4 +27,5 @@ public class InputView {
         final Choice choice = Choice.from(inputLine);
         return choice.getContinuable();
     }
+
 }

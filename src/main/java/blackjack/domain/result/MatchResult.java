@@ -5,21 +5,19 @@ import java.util.Map;
 
 public class MatchResult {
 
-    private final Map<String, MatchStatus> playerResult;
-    private final Map<MatchStatus, Integer> dealerResult;
+    private final Map<MatchStatus, Integer> resultOfDealer;
+    private final Map<String, MatchStatus> resultOfPlayers;
 
-    public MatchResult(final Map<String, MatchStatus> playerResult) {
-        this.dealerResult = calculateDealerResult(playerResult);
-        this.playerResult = playerResult;
+    public MatchResult(final Map<String, MatchStatus> resultOfPlayers) {
+        this.resultOfDealer = calculateDealerResult(resultOfPlayers);
+        this.resultOfPlayers = resultOfPlayers;
     }
 
     private Map<MatchStatus, Integer> calculateDealerResult(final Map<String, MatchStatus> playerResult) {
         final Map<MatchStatus, Integer> playerMatchStatusCounts = new EnumMap<>(MatchStatus.class);
-
         for (final MatchStatus result : playerResult.values()) {
             playerMatchStatusCounts.merge(result, 1, Integer::sum);
         }
-
         return reverseMatchStatusCounts(playerMatchStatusCounts);
     }
 
@@ -30,11 +28,12 @@ public class MatchResult {
         return matchStatusCounts;
     }
 
-    public Map<MatchStatus, Integer> getDealerResult() {
-        return Map.copyOf(dealerResult);
+    public Map<MatchStatus, Integer> getResultOfDealer() {
+        return Map.copyOf(resultOfDealer);
     }
 
-    public Map<String, MatchStatus> getPlayerResult() {
-        return Map.copyOf(playerResult);
+    public Map<String, MatchStatus> getResultOfPlayers() {
+        return Map.copyOf(resultOfPlayers);
     }
+
 }

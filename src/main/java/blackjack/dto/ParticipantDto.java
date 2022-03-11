@@ -3,7 +3,6 @@ package blackjack.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 
 public class ParticipantDto {
@@ -20,10 +19,6 @@ public class ParticipantDto {
 
     public static ParticipantDto toDto(final Participant participant) {
         return new ParticipantDto(participant.getParticipantName(), participant.getCardNames(), participant.getScore());
-    }
-
-    public static ParticipantDto toDtoOfDealer(final Dealer dealer) {
-        return new ParticipantDto(dealer.getParticipantName(), dealer.getCardNames().subList(0,1), dealer.getScore());
     }
 
     public String getName() {

@@ -25,4 +25,5 @@ public class K5 extends Car {
     public String getName() {
         return NAME;
     }
+
 }

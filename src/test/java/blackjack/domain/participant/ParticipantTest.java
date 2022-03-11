@@ -15,11 +15,11 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.strategy.ManualCardStrategy;
+import blackjack.domain.card.strategy.ManualDeckGenerator;
 
 class ParticipantTest {
 
-    private final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
+    private final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
 
     @ParameterizedTest
     @MethodSource("provideForDrawCardTest")
@@ -143,4 +143,5 @@ class ParticipantTest {
                 )
         );
     }
+
 }
