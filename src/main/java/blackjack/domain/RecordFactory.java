@@ -4,8 +4,10 @@ import static blackjack.domain.Record.LOSS;
 import static blackjack.domain.Record.PUSH;
 import static blackjack.domain.Record.WIN;
 
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,7 +35,7 @@ public class RecordFactory {
     private Map<String, Record> toMap(final List<Player> players) {
         return players.stream()
                 .collect(Collectors.toMap(
-                        Player::getName, player -> compareScore(player.getScore()), (a, b) -> b));
+                        Player::getName, player -> compareScore(player.getScore()), (a, b) -> b, LinkedHashMap::new));
     }
 
     Record getPlayerRecord(int score) {
