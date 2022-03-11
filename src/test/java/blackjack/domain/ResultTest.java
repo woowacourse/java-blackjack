@@ -10,13 +10,13 @@ public class ResultTest {
     @DisplayName("인자가 양수일때 WIN인지 테스트")
     @Test
     void valueOfTest() {
-        assertThat(Result.valueOf(1)).isEqualTo(Result.WIN);
+        assertThat(Result.valueOf(1)).isEqualTo(Result.LOSE);
     }
 
     @DisplayName("인자가 음수일때 LOSE인지 테스트")
     @Test
     void valueOfTest2() {
-        assertThat(Result.valueOf(-1)).isEqualTo(Result.LOSE);
+        assertThat(Result.valueOf(-1)).isEqualTo(Result.WIN);
     }
 
     @DisplayName("인자가 0일때 DRAW인지 테스트")
