@@ -52,8 +52,8 @@ public class GameController {
         while (game.isPossibleToPlay()) {
             String name = game.getCurrentHitablePlayerName();
             Command command = inputCommand(name);
-            game.playTurn(command);
-            printStatus(game);
+            Status status = game.playTurn(command);
+            OutputView.printStatus(status);
         }
     }
 
@@ -99,15 +99,6 @@ public class GameController {
         }
     }
 
-    private void printStatus(Game game) {
-        Player player = game.getCurrentPlayer();
-        OutputView.printStatus(
-                new Status(
-                        player.getName(),
-                        player.getCardsToList().stream().map(CardDto::of).collect(Collectors.toList()),
-                        player.getScore()));
-    }
-
     private void printInitialStatus(Game game) {
         Dealer dealer = game.getDealer();
         List<Player> players = game.getPlayersToList();
@@ -116,7 +107,6 @@ public class GameController {
         result.add(new Status(dealer.getName(), List.of(CardDto.of(dealer.getCardsToList().get(0))), dealer.getScore()));
 
         addPlayerStatus(players, result);
-
         OutputView.printInitialStatus(result);
     }
 }

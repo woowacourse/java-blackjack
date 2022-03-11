@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.dto.Status;
 import blackjack.domain.player.*;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class Game {
         dealer = new Dealer(Cards.of(deck.initialDraw()));
     }
 
-    public void playTurn(Command command) {
+    public Status playTurn(Command command) {
         Player currentTurn = players.getCurrentTurn();
         if (command.equals(Command.HIT)) {
             currentTurn.addCard(deck.draw());
@@ -30,6 +31,7 @@ public class Game {
         if (command.equals(Command.STAY)) {
             currentTurn.stay();
         }
+        return Status.of(currentTurn);
     }
 
     public boolean isPossibleToPlay() {

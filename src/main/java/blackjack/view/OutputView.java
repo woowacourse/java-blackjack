@@ -49,7 +49,7 @@ public class OutputView {
     }
 
     public static void printResult(Map<String, String> playerResults, List<String> dealerResult) {
-        System.out.println("## 최종 승패");
+        System.out.println("\n## 최종 승패");
         System.out.println(makeDealerResultString(dealerResult));
 
         playerResults.forEach(
@@ -61,7 +61,7 @@ public class OutputView {
         Map<String, Long> countMap = dealerResult.stream()
                 .collect(groupingBy(Function.identity(), Collectors.counting()));
         return "딜러 : " + countMap.getOrDefault("승", 0L) + "승 " +
-                countMap.getOrDefault("패", 0L);
+                countMap.getOrDefault("패", 0L) + "패";
     }
 
     public static void printDealerHitMessage() {
