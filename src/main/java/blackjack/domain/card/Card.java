@@ -26,6 +26,10 @@ public class Card {
         return rank.getValue();
     }
 
+    public Score getHighRankValue() {
+        return rank.getHighValue();
+    }
+
     public String getName() {
         return rank.getDisplayName() + symbol.getDisplayName();
     }

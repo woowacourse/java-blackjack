@@ -35,10 +35,19 @@ public class CardRankTest {
         }
     }
 
-    @DisplayName("ACE는 기본값으로 11의 Score를 지닌다.")
+    @DisplayName("ACE는 기본값으로 1의 Score를 지닌다.")
     @Test
     void getValue_Ace() {
         Score actual = CardRank.ACE.getValue();
+        Score expected = Score.valueOf(1);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("getHighValue 메서드는 ACE의 경우 11의 Score를 지닌다.")
+    @Test
+    void getHighValue_Ace() {
+        Score actual = CardRank.ACE.getHighValue();
         Score expected = Score.valueOf(11);
 
         assertThat(actual).isEqualTo(expected);

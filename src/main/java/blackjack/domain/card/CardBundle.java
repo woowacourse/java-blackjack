@@ -36,26 +36,18 @@ public class CardBundle {
     }
 
     public Score getScore() {
-        Score defaultScore = calculateScoreBy(Card::getRankValue);
-        if (defaultScore.toInt() <= Score.BLACKJACK) {
-            return defaultScore;
+        Score maxScore = calculateScoreBy(Card::getHighRankValue);
+        if (maxScore.toInt() <= Score.BLACKJACK) {
+            return maxScore;
         }
 
-        return calculateScoreBy(this::getMinimumScore);
+        return calculateScoreBy(Card::getRankValue);
     }
 
     private Score calculateScoreBy(Function<Card, Score> function) {
         return cards.stream()
                 .map(function)
                 .reduce(Score.valueOf(0), Score::add);
-    }
-
-    private Score getMinimumScore(Card card) {
-        if (card.isAce()) {
-            return Score.valueOf(Score.SMALL_ACE_VALUE);
-        }
-
-        return card.getRankValue();
     }
 
     @Override

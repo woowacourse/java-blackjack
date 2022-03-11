@@ -1,10 +1,12 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.game.Score.ACE_HIGH_VALUE;
+
 import blackjack.domain.game.Score;
 
 public enum CardRank {
 
-    ACE("A", Score.valueOf(11)),
+    ACE("A", Score.valueOf(1)),
     TWO("2", Score.valueOf(2)),
     THREE("3", Score.valueOf(3)),
     FOUR("4", Score.valueOf(4)),
@@ -31,6 +33,13 @@ public enum CardRank {
     }
 
     public Score getValue() {
+        return value;
+    }
+
+    public Score getHighValue() {
+        if (this == ACE) {
+            return Score.valueOf(ACE_HIGH_VALUE);
+        }
         return value;
     }
 }
