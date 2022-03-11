@@ -33,7 +33,13 @@ public class BlackjackController {
     }
 
     private List<String> names() {
-        String namesText = InputView.inputNames();
+        String namesText;
+        try {
+            namesText = InputView.inputNames();
+        } catch (IllegalArgumentException exception) {
+            System.out.println("[ERROR] " + exception.getMessage());
+            return names();
+        }
         return List.of(namesText.split(","));
     }
 
@@ -85,7 +91,13 @@ public class BlackjackController {
     }
 
     private boolean isKeepTakeCard(Player gamer) {
-        String option = InputView.chooseOptions(gamer.getName());
+        String option;
+        try {
+            option = InputView.chooseOptions(gamer.getName());
+        } catch (IllegalArgumentException exception) {
+            System.out.println("[ERROR] " + exception.getMessage());
+            return isKeepTakeCard(gamer);
+        }
         return option.equals("y");
     }
 
