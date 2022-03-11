@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Dealer;
@@ -16,13 +15,11 @@ import blackjack.view.OutputView;
 public class BlackjackController {
 
     public void run() {
-        Deck deck = new Deck();
-        Participants participants = createParticipants();
-
-        handOutAndPrintInitialCards(participants, deck);
-        isHandOut(participants, deck);
-
-        printResult(participants);
+        BlackjackGame blackjackGame = new BlackjackGame(createParticipants());
+        blackjackGame.initCards();
+        OutputView.printInitialCardInformation(blackjackGame.getParticipants());
+        dealMoreCards(blackjackGame);
+        printResult(blackjackGame.getParticipants());
     }
 
     private Participants createParticipants() {
@@ -32,25 +29,20 @@ public class BlackjackController {
             .collect(Collectors.toList()));
     }
 
-    private void handOutAndPrintInitialCards(Participants participants, Deck deck) {
-        participants.handOutInitialCards(deck);
-        OutputView.printInitialCardInformation(participants);
+    private void dealMoreCards(BlackjackGame blackjackGame) {
+        dealMoreCardsToPlayers(blackjackGame);
+        dealMoreCardsToDealer(blackjackGame);
     }
 
-    private void isHandOut(Participants participants, Deck deck) {
-        handOutMoreCardsToPlayers(participants.getPlayers(), deck);
-        handOutMoreCardsToDealer(participants.getDealer(), deck);
-    }
-
-    private void handOutMoreCardsToPlayers(List<Player> players, Deck deck) {
-        for (Player player : players) {
-            handOutMoreCardsToPlayer(deck, player);
+    private void dealMoreCardsToPlayers(BlackjackGame blackjackGame) {
+        for (Player player : blackjackGame.getParticipants().getPlayers()) {
+            dealMoreCardsToPlayer(blackjackGame, player);
         }
     }
 
-    private void handOutMoreCardsToPlayer(Deck deck, Player player) {
+    private void dealMoreCardsToPlayer(BlackjackGame blackjackGame, Player player) {
         boolean printCheck = false;
-        while (player.canHit() && isHandOut(player, deck)) {
+        while (player.canHit() && blackjackGame.isHitAndDealMoreCard(isHit(player), player)) {
             OutputView.printPlayerCardInformation(player);
             printCheck = true;
         }
@@ -59,19 +51,15 @@ public class BlackjackController {
         }
     }
 
-    private boolean isHandOut(Player player, Deck deck) {
-        boolean isHit = InputView.inputPlayerHit(player.getName());
-        if (isHit) {
-            player.addCard(deck.pickCard());
-            return true;
-        }
-        return false;
+    private boolean isHit(Player player) {
+        return InputView.inputPlayerHit(player.getName());
     }
 
-    private void handOutMoreCardsToDealer(Dealer dealer, Deck deck) {
+    private void dealMoreCardsToDealer(BlackjackGame blackjackGame) {
+        Dealer dealer = blackjackGame.getParticipants().getDealer();
         while (dealer.checkHitRule()) {
             OutputView.printDealerHitMessage();
-            dealer.addCard(deck.pickCard());
+            blackjackGame.hitCard(dealer);
         }
     }
 

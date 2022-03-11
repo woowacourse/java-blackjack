@@ -23,7 +23,7 @@ public class Participants {
         return Collections.unmodifiableList(players);
     }
 
-    public void handOutInitialCards(Deck deck) {
+    public void dealInitialCards(Deck deck) {
         for (Participant participant : getParticipants()) {
             List<Card> cards = List.of(deck.pickCard(), deck.pickCard());
             participant.initCards(cards);

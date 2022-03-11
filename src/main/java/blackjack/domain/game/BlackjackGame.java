@@ -3,17 +3,36 @@ package blackjack.domain.game;
 import java.util.HashMap;
 import java.util.Map;
 
+import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 
 public class BlackjackGame {
 
+    private final Deck deck = new Deck();
     private final Participants participants;
     private Map<Player, WinningResult> playerResult;
 
     public BlackjackGame(Participants participants) {
         this.participants = participants;
+    }
+
+    public void initCards() {
+        participants.dealInitialCards(deck);
+    }
+
+    public void hitCard(Participant participant) {
+        participant.addCard(deck.pickCard());
+    }
+
+    public boolean isHitAndDealMoreCard(boolean isHit, Participant participant) {
+        if (isHit && participant.canHit()) {
+            hitCard(participant);
+            return true;
+        }
+        return false;
     }
 
     public void calculatePlayerResult() {
@@ -38,12 +57,16 @@ public class BlackjackGame {
     }
 
     private WinningResult convertToDealerWinningResult(WinningResult winningResult) {
-        if(winningResult == WinningResult.DRAW) {
+        if (winningResult == WinningResult.DRAW) {
             return winningResult;
         }
-        if(winningResult == WinningResult.WIN) {
+        if (winningResult == WinningResult.WIN) {
             return WinningResult.LOSE;
         }
         return WinningResult.WIN;
+    }
+
+    public Participants getParticipants() {
+        return participants;
     }
 }
