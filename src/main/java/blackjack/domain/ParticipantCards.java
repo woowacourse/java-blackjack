@@ -7,6 +7,8 @@ import java.util.List;
 public class ParticipantCards {
 
     private final static int NO_COUNT = 0;
+    private final static int BUST_THRESHOLD = 21;
+    private final static int CONVERT_ACE_AMOUNT = 10;
 
     private final List<Card> cards;
 
@@ -32,11 +34,15 @@ public class ParticipantCards {
     }
 
     private int calculateScoreWithAce(int aceCount, int totalScore) {
-        while (aceCount > 0 && totalScore > 21) {
-            totalScore = totalScore - 10;
+        while (isNeedToConvertAceValue(aceCount, totalScore)) {
+            totalScore = totalScore - CONVERT_ACE_AMOUNT;
             aceCount--;
         }
         return totalScore;
+    }
+
+    private boolean isNeedToConvertAceValue(int aceCount, int totalScore) {
+        return aceCount > NO_COUNT && totalScore > BUST_THRESHOLD;
     }
 
 
