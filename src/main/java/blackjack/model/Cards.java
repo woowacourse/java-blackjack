@@ -35,14 +35,15 @@ public final class Cards {
     public Score bestScore() {
         return softHandScores().stream()
                 .filter(not(Score::isBust))
-                .reduce(this::maxScore)
+                .findFirst()
                 .orElse(hardHandScore());
     }
 
     private List<Score> softHandScores() {
-        return IntStream.rangeClosed(1, numberOfAce())
-            .mapToObj(count -> hardHandScore().plus(increaseScore(count)))
-            .collect(toUnmodifiableList());
+        if (numberOfAce() > 0) {
+            return List.of(hardHandScore().plus(increaseScore(1)));
+        }
+        return List.of();
     }
 
     private int numberOfAce() {
@@ -57,13 +58,6 @@ public final class Cards {
 
     private int diffSoftAndHardOfAce() {
         return Rank.ACE.soft() - Rank.ACE.hard();
-    }
-
-    private Score maxScore(Score score1, Score score2) {
-        if (score1.moreThan(score2)) {
-            return score1;
-        }
-        return score2;
     }
 
     private Score hardHandScore() {
