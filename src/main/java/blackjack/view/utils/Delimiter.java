@@ -23,4 +23,8 @@ public enum Delimiter {
         return String.join(this.unit + SPACE.unit, values);
     }
 
+    public String joinWith(final String... values) {
+        return String.join(this.unit + SPACE.unit, values);
+    }
+
 }

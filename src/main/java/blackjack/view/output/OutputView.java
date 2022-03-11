@@ -25,13 +25,13 @@ public class OutputView {
     }
 
     public void printFirstCardOfDealer(final String dealerFirstCard) {
-        printMessage(Delimiter.COLON.joinWith(List.of("딜러", dealerFirstCard)));
+        printMessage(Delimiter.COLON.joinWith("딜러", dealerFirstCard));
     }
 
     public void printDistributedCardsOfPlayer(final ParticipantDto participantDto) {
         final String playerName = participantDto.getName();
         final String distributedCards = Delimiter.COMMA.joinWith(participantDto.getCardNames());
-        printMessage(Delimiter.COLON.joinWith(List.of(playerName, distributedCards)));
+        printMessage(Delimiter.COLON.joinWith(playerName, distributedCards));
     }
 
     public void printMessageOfRequestDrawingCardChoice(final String playerName) {
@@ -40,7 +40,7 @@ public class OutputView {
 
     public void printCurrentCardsOfPlayer(final String playerName, final List<String> cardNames) {
         final String distributedCards = Delimiter.COMMA.joinWith(cardNames);
-        printMessage(Delimiter.COLON.joinWith(List.of(playerName, distributedCards)));
+        printMessage(Delimiter.COLON.joinWith(playerName, distributedCards));
     }
 
     public void printFinalScoreOfParticipants(final List<ParticipantDto> participantDtos) {
@@ -64,14 +64,14 @@ public class OutputView {
         final String dealerResultString = resultOfDealer.entrySet().stream()
                 .map(entry -> entry.getValue() + entry.getKey().getName())
                 .collect(Collectors.joining(" "));
-        printMessage(Delimiter.COLON.joinWith(List.of("딜러", dealerResultString)));
+        printMessage(Delimiter.COLON.joinWith("딜러", dealerResultString));
     }
 
     private void printMatchResultOfPlayers(Map<String, MatchStatus> resultOfPlayers) {
         for (Map.Entry<String, MatchStatus> entry : resultOfPlayers.entrySet()) {
             final String playerName = entry.getKey();
             final String matchStatusName = entry.getValue().getName();
-            printMessage(Delimiter.COLON.joinWith(List.of(playerName, matchStatusName)));
+            printMessage(Delimiter.COLON.joinWith(playerName, matchStatusName));
         }
     }
 
