@@ -12,7 +12,7 @@ public class Result {
 		this.playerResults = Map.copyOf(playerResults);
 	}
 
-	public Versus getVersus(Name name) {
+	public Versus getVersusOfPlayer(Name name) {
 		return playerResults.get(name);
 	}
 

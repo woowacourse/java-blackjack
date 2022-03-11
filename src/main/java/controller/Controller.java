@@ -34,8 +34,8 @@ public class Controller {
 			return;
 		}
 
-		askAndDrawForPlayers(names, deck, players);
-		checkAllBustAndDrawForDealer(deck, dealer, players);
+		drawForPlayers(names, deck, players);
+		drawForDealer(deck, dealer, players);
 		OutputView.printParticipantStatus(dealer.showHandAndBestScore(), players.showHandsAndBestScores());
 		printFinalResult(names, dealer, players);
 	}
@@ -75,17 +75,17 @@ public class Controller {
 		OutputView.printDealerResult(blackjackResult.getDealerWinCount(), blackjackResult.getDealerDrawCount(),
 			blackjackResult.getDealerLoseCount());
 		for (Name name : names) {
-			OutputView.printPlayerResult(name.getName(), blackjackResult.getVersus(name).getResult());
+			OutputView.printPlayerResult(name.getName(), blackjackResult.getVersusOfPlayer(name).getResult());
 		}
 	}
 
-	private void askAndDrawForPlayers(List<Name> names, Deck deck, Players players) {
+	private void drawForPlayers(List<Name> names, Deck deck, Players players) {
 		for (Name name : names) {
 			askAndDrawForPlayer(deck, players, name);
 		}
 	}
 
-	private void checkAllBustAndDrawForDealer(Deck deck, Dealer dealer, Players players) {
+	private void drawForDealer(Deck deck, Dealer dealer, Players players) {
 		if (!players.isAllBust()) {
 			drawForDealer(deck, dealer);
 		}
@@ -145,7 +145,7 @@ public class Controller {
 			finalResult.getDealerLoseCount()
 		);
 		for (Name name : names) {
-			OutputView.printPlayerResult(name.getName(), finalResult.getVersus(name).getResult());
+			OutputView.printPlayerResult(name.getName(), finalResult.getVersusOfPlayer(name).getResult());
 		}
 	}
 }

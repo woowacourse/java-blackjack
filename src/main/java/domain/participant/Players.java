@@ -11,7 +11,7 @@ import domain.result.Versus;
 
 public class Players {
 
-	public static final String NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] BlackJack 이 없습니다.";
+	private static final String NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE = "[Error] BlackJack 이 없습니다.";
 
 	private final List<Player> players;
 
