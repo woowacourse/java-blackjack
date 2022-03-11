@@ -14,7 +14,7 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    private Player convertToPlayer(String name) {
+    public Player convertToPlayer(String name) {
         return players.stream()
                 .filter(player -> player.isSameName(name))
                 .findFirst()
@@ -27,7 +27,18 @@ public class Players {
         }
     }
 
+    public List<String> namesAbleToGetAdditionalCard() {
+        return players.stream()
+                .filter(player -> !player.isBurst())
+                .map(Player::getName)
+                .collect(Collectors.toList());
+    }
+
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public boolean isPlayerBurst(String playerName) {
+        return convertToPlayer(playerName).isBurst();
     }
 }

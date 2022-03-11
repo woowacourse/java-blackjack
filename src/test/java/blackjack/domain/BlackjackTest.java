@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,47 +18,35 @@ public class BlackjackTest {
 
     @BeforeEach
     void setUp() {
-        List<String> playerNames = List.of("pobi", "jason");
-        blackjack = new Blackjack(playerNames);
-        intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6));
-
-        blackjack.distributeInitialCards(intendedNumberGenerator);
+        blackjack = new Blackjack();
+        intendedNumberGenerator = new IntendedNumberGenerator(List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13));
     }
 
-    @DisplayName("플레이어, 딜러 카드 두장 분배 테스트")
+    @DisplayName("처음 두장 나눠주는 기능 테스트")
     @Test
-    void distributeInit() {
-        Player dealer = blackjack.getDealer();
-        List<Player> players = blackjack.getPlayers();
-
-        Set<Integer> checker = new HashSet<>();
-        int dealerCardSize = dealer.getMyCards().size();
-        checker.add(dealerCardSize);
-
-        players.forEach(player -> checker.add(player.getMyCards().size()));
-
-        assertThat(checker.size() == 1 && checker.contains(2)).isTrue();
+    void distributeInitialCardsTest() {
+        List<Card> cards = blackjack.distributeInitialCards(intendedNumberGenerator);
+        assertThat(cards.size()).isEqualTo(2);
     }
 
-    @DisplayName("카드 한장 더 분배 테스트_딜러 hit")
+    @DisplayName("딜러에게 처음 두장 나눠주는 기능 테스트")
     @Test
-    void distributeOneMoreCardDealer() {
-        NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(12));
-        blackjack.distributeAdditionalCardDealer(numberGenerator);
-        assertThat(blackjack.getDealer().getMyCards().size()).isEqualTo(3);
+    void distributeInitialCardsToDealerTest() {
+        blackjack.distributeInitialCardsToDealer(intendedNumberGenerator);
+        assertThat(blackjack.getDealer().getMyCards().size()).isEqualTo(2);
     }
 
-    @DisplayName("카드 한장 더 분배 테스트_딜러 stay")
+    @DisplayName("한장 나눠주는 기능 테스트")
     @Test
-    void distributeOneMoreCardDealer2() {
-        NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(12, 9));
-        blackjack.distributeAdditionalCardDealer(numberGenerator);
-        assertThat(blackjack.getDealer().getMyCards().size()).isEqualTo(3);
+    void distributeCardTest() {
+        Card card = blackjack.distributeCard(intendedNumberGenerator);
+        assertThat(Objects.nonNull(card)).isTrue();
     }
 
-    @DisplayName("최종 승패 기능 테스트")
+    @DisplayName("딜러가 hit할때까지 나눠주는 기능 테스트")
     @Test
-    void result() {
-       assertDoesNotThrow(() -> blackjack.result());
+    void distributeCardToDealerUntilHitTest() {
+        int numberOfAddedCards = blackjack.distributeCardToDealerUntilHit(intendedNumberGenerator);
+        assertThat(numberOfAddedCards).isEqualTo(4);
     }
 }

@@ -36,4 +36,18 @@ public class PlayersTest {
         assertThat(pobiCardAddSuccess && jasonCardAddSuccess).isTrue();
     }
 
+    @DisplayName("카드를 더 받을 수 있는 플레이어 이름 가져오는 기능 테스트")
+    @Test
+    void namesAbleToGetAdditionalCardTest() {
+        Players players = new Players(List.of("pobi", "jason"));
+        players.addCardToPlayers(Map.of("pobi", new Card("9다이아몬드", 9)
+                , "jason", new Card("1다이아몬드", 1)));
+        players.addCardToPlayers(Map.of("pobi", new Card("9하트", 9)
+                , "jason", new Card("1하트", 1)));
+        players.addCardToPlayers(Map.of("pobi", new Card("9클로버", 9)
+                , "jason", new Card("1클로버", 1)));
+
+        assertThat(players.namesAbleToGetAdditionalCard().size() == 1
+                && players.namesAbleToGetAdditionalCard().get(0) == "jason").isTrue();
+    }
 }

@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-
     public static void printInitStatus(Dealer dealer, List<Player> players) {
         List<String> names = new ArrayList<>(List.of("딜러"));
         players.stream()
@@ -40,8 +39,10 @@ public class OutputView {
         System.out.println(makeStatusFormat(person.getName(), person.getMyCards()));
     }
 
-    public static void printDealerAdditionalCard() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    public static void printDealerAdditionalCard(int number) {
+        while(number-- != 0) {
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
     }
 
     public static void printCardsAndResult(Dealer dealer, List<Player> players) {

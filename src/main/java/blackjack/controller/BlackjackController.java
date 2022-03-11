@@ -2,36 +2,45 @@ package blackjack.controller;
 
 import blackjack.domain.Blackjack;
 import blackjack.domain.Player;
+import blackjack.domain.Players;
 import blackjack.domain.RandomNumberGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
-    private void controlAdditionalCardForPlayer(Blackjack blackjack, Player player) {
-        while (InputView.askAdditionalCard(player)) {
-            blackjack.distributeAdditionalCardPlayer(new RandomNumberGenerator(), player);
-            OutputView.printCards(player);
+    private void controlInitFlow(Blackjack blackjack, Players players, RandomNumberGenerator randomNumberGenerator) {
+        blackjack.distributeInitialCardsToDealer(randomNumberGenerator);
+        for (String playerName : players.namesAbleToGetAdditionalCard()) {
+            blackjack.distributeInitialCards(randomNumberGenerator)
+                    .forEach(card -> players.addCardToPlayers(Map.of(playerName, card)));
+        }
+    }
+
+    private void controlAdditionalCardFlow(Blackjack blackjack, Players players, RandomNumberGenerator randomNumberGenerator) {
+        for (String playerName : players.namesAbleToGetAdditionalCard()) {
+            while (!players.isPlayerBurst(playerName) && InputView.askAdditionalCard(playerName)) {
+                players.addCardToPlayers(Map.of(playerName, blackjack.distributeCard(randomNumberGenerator)));
+                OutputView.printCards(players.convertToPlayer(playerName));
+            }
         }
     }
 
     public void run() {
+        RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
         List<String> playerNames = InputView.getPlayerNames();
-        Blackjack blackjack = new Blackjack(playerNames);
-        blackjack.distributeInitialCards(new RandomNumberGenerator());
+        Blackjack blackjack = new Blackjack();
+        Players players = new Players(playerNames);
 
-        OutputView.printInitStatus(blackjack.getDealer(), blackjack.getPlayers());
+        controlInitFlow(blackjack, players, randomNumberGenerator);
+        OutputView.printInitStatus(blackjack.getDealer(), players.getPlayers());
 
-        List<Player> players = blackjack.getPlayers();
-        for (Player player : players) {
-            controlAdditionalCardForPlayer(blackjack, player);
-        }
 
-        blackjack.distributeAdditionalCardDealer(new RandomNumberGenerator());
-        OutputView.printDealerAdditionalCard();
+        controlAdditionalCardFlow(blackjack, players, randomNumberGenerator);
+        OutputView.printDealerAdditionalCard(blackjack.distributeCardToDealerUntilHit(randomNumberGenerator));
 
-        OutputView.printCardsAndResult(blackjack.getDealer(), blackjack.getPlayers());
-        OutputView.printResult(blackjack.result());
+        OutputView.printCardsAndResult(blackjack.getDealer(), players.getPlayers());
     }
 }
