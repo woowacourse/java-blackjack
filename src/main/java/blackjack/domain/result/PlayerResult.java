@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import java.util.Collections;
 import java.util.Map;
 
 public class PlayerResult {
@@ -10,6 +11,6 @@ public class PlayerResult {
     }
 
     public Map<String, Match> get() {
-        return playerResults;
+        return Collections.unmodifiableMap(playerResults);
     }
 }

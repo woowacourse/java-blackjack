@@ -24,15 +24,15 @@ public enum CardNumber {
         this.number = number;
     }
 
+    public boolean isA() {
+        return this.equals(A);
+    }
+
     public String getName() {
         return name;
     }
 
     public int getNumber() {
         return number;
-    }
-
-    public boolean isA() {
-        return this.equals(A);
     }
 }

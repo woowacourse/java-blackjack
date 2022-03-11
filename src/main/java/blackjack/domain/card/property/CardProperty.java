@@ -9,15 +9,15 @@ public class CardProperty {
         this.number = number;
     }
 
+    public boolean isA() {
+        return number.isA();
+    }
+
     public CardShape getShape() {
         return shape;
     }
 
     public CardNumber getNumber() {
         return number;
-    }
-
-    public boolean isA() {
-        return number.isA();
     }
 }

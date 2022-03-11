@@ -3,6 +3,7 @@ package blackjack.dto;
 import blackjack.domain.result.Match;
 import blackjack.domain.result.PlayerResult;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -20,7 +21,7 @@ public class PlayerResultDto {
         for (Entry<String, Match> playerMatch : playerResult.get().entrySet()) {
             playersResultDto.add(new PlayerResultDto(playerMatch.getKey(), playerMatch.getValue().getResult()));
         }
-        return playersResultDto;
+        return Collections.unmodifiableList(playersResultDto);
     }
 
     public String getName() {

@@ -19,15 +19,19 @@ public class BlackJack {
     }
 
     public void divideCards() {
-        gamerGroup.addTwoCards(cardPack);
-    }
-
-    public Dealer getDealer() {
-        return gamerGroup.getDealer();
+        gamerGroup.addInitialCards(cardPack);
     }
 
     public void addCardTo(Player player) {
         player.addCard(cardPack.pickOne());
+    }
+
+    public int addCardToDealer() {
+        return gamerGroup.addCardToDealer(cardPack);
+    }
+
+    public void openDealerCards() {
+        gamerGroup.openDealerCards();
     }
 
     public GameResult getGameResult() {
@@ -38,11 +42,7 @@ public class BlackJack {
         return gamerGroup.getGamers();
     }
 
-    public int addCardToDealer() {
-        return gamerGroup.addCardToDealer(cardPack);
-    }
-
-    public void openDealerCards() {
-        gamerGroup.openDealerCards();
+    public Dealer getDealer() {
+        return gamerGroup.getDealer();
     }
 }

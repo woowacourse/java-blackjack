@@ -6,11 +6,11 @@ import java.util.Scanner;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final String NAME_DELIMITER = ",";
     private static final String EMPTY_INPUT_ERROR_MESSAGE = "빈 문자는 입력할 수 없습니다.";
     private static final String NOT_Y_OR_N_ERROR_MESSAGE = "y 또는 n 으로만 입력해주세요.";
     private static final String YES_MESSAGE = "y";
     private static final String NO_MESSAGE = "n";
+    private static final String NAME_DELIMITER = ",";
 
     public static List<String> requestPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");

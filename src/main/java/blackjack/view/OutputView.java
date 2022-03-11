@@ -97,19 +97,27 @@ public class OutputView {
 
     public static void printGameResult(DealerResultDto dealerResult, List<PlayerResultDto> playersResult) {
         StringBuilder stringBuilder = new StringBuilder();
+        appendDealerResultToStringBuilder(dealerResult, stringBuilder);
+
+        for (PlayerResultDto playerResult : playersResult) {
+            appendPlayerResultToStringBuilder(stringBuilder, playerResult);
+        }
+        System.out.println(stringBuilder);
+    }
+
+    private static void appendDealerResultToStringBuilder(DealerResultDto dealerResult, StringBuilder stringBuilder) {
         stringBuilder.append("## 최종 승패").append(System.lineSeparator());
         stringBuilder.append(dealerResult.getName()).append(": ")
                 .append(dealerResult.getWinCount()).append("승 ")
                 .append(dealerResult.getLoseCount()).append("패 ")
                 .append(dealerResult.getDrawCount()).append("무 ")
                 .append(System.lineSeparator());
+    }
 
-        for (PlayerResultDto playerResult : playersResult) {
-            stringBuilder.append(playerResult.getName())
-                    .append(": ")
-                    .append(playerResult.getResult())
-                    .append(System.lineSeparator());
-        }
-        System.out.println(stringBuilder);
+    private static void appendPlayerResultToStringBuilder(StringBuilder stringBuilder, PlayerResultDto playerResult) {
+        stringBuilder.append(playerResult.getName())
+                .append(": ")
+                .append(playerResult.getResult())
+                .append(System.lineSeparator());
     }
 }

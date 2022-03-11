@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Gamer{
-
     private static final int BLACKJACK_NUMBER = 21;
 
     public Player(String name) {

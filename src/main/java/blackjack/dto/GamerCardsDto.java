@@ -3,6 +3,7 @@ package blackjack.dto;
 import blackjack.domain.card.CardGroup;
 import blackjack.domain.gamer.Gamer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GamerCardsDto {
@@ -25,7 +26,7 @@ public class GamerCardsDto {
         for (Gamer gamer : gamersCards) {
             gamersCardsDto.add(of(gamer.getName(), gamer.getCardGroup()));
         }
-        return gamersCardsDto;
+        return Collections.unmodifiableList(gamersCardsDto);
     }
 
     public String getName() {
@@ -33,7 +34,7 @@ public class GamerCardsDto {
     }
 
     public List<CardDto> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     public int getSum() {

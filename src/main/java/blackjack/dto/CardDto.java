@@ -3,6 +3,7 @@ package blackjack.dto;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardDto {
@@ -24,7 +25,7 @@ public class CardDto {
             addOpenCard(cardsDto, card);
         }
 
-        return cardsDto;
+        return Collections.unmodifiableList(cardsDto);
     }
 
     private static void addOpenCard(List<CardDto> cardsDto, Card card) {

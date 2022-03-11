@@ -42,10 +42,6 @@ public class Gamer {
         return name.length() < MINIMUM_NAME_LENGTH || name.length() > MAXIMUM_NAME_LENGTH;
     }
 
-    public int getCardsSize() {
-        return cardGroup.getSize();
-    }
-
     public void addTwoCards(Card firstCard, Card secondCard) {
         cardGroup.addTwoCards(firstCard, secondCard);
     }
@@ -55,6 +51,18 @@ public class Gamer {
             return;
         }
         cardGroup.addCard(card);
+    }
+
+    public void openAllCards() {
+        cardGroup.open();
+    }
+
+    public boolean isBust() {
+        return cardGroup.isBust();
+    }
+
+    public boolean isAddable() {
+        return cardGroup.isAddable();
     }
 
     public int getCardGroupSum() {
@@ -69,14 +77,6 @@ public class Gamer {
         return cardGroup.getScore();
     }
 
-    public boolean isBust() {
-        return cardGroup.isBust();
-    }
-
-    public boolean isAddable() {
-        return cardGroup.isAddable();
-    }
-
     public CardGroup getCardGroup() {
         return cardGroup;
     }
@@ -85,7 +85,7 @@ public class Gamer {
         return this.name;
     }
 
-    public void openAllCards() {
-        cardGroup.open();
+    public int getCardsSize() {
+        return cardGroup.getSize();
     }
 }

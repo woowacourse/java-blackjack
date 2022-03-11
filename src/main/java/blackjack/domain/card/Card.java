@@ -12,27 +12,27 @@ public class Card {
         this.cardProperty = new CardProperty(shape, number);
     }
 
-    public CardShape getCardShape() {
-        return cardProperty.getShape();
-    }
-
-    public CardNumber getCardNumber() {
-        return cardProperty.getNumber();
+    public void open() {
+        isOpen = true;
     }
 
     public void close() {
         isOpen = false;
     }
 
+    public boolean isA() {
+        return cardProperty.isA();
+    }
+
     public boolean isOpen() {
         return isOpen;
     }
 
-    public void open() {
-        isOpen = true;
+    public CardShape getCardShape() {
+        return cardProperty.getShape();
     }
 
-    public boolean isA() {
-        return cardProperty.isA();
+    public CardNumber getCardNumber() {
+        return cardProperty.getNumber();
     }
 }

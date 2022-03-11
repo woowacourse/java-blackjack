@@ -1,7 +1,7 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.result.Match;
 import blackjack.domain.card.CardPack;
+import blackjack.domain.result.Match;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -55,17 +55,17 @@ public class PlayerGroup {
         }
     }
 
+    public void addAllTo(List<Gamer> gamers) {
+        gamers.addAll(players);
+    }
+
     public Map<String, Match> getPlayerResult(int sum) {
         Map<String, Match> result = new LinkedHashMap<>();
         for (Player player : players) {
             Optional<Match> matchResult = Match.of(player.compareCardsSumTo(sum));
             matchResult.ifPresent(match -> result.put(player.getName(), match));
         }
-        return result;
-    }
-
-    public void addAllTo(List<Gamer> gamers) {
-        gamers.addAll(players);
+        return Collections.unmodifiableMap(result);
     }
 
     public List<Player> getPlayers() {
