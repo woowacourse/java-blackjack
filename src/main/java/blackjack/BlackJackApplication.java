@@ -1,11 +1,10 @@
 package blackjack;
 
+import java.util.List;
+
 import blackjack.controller.BlackJackController;
-import blackjack.controller.dto.GamerDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
-import java.util.List;
 
 public class BlackJackApplication {
 
@@ -15,24 +14,10 @@ public class BlackJackApplication {
 
         OutputView.printFirstCards(controller.getDealerDto(), controller.getPlayerDtos());
 
-        drawAdditionalCard(names, controller);
+        controller.askHitOrStay(names, InputView::getAnswerOfAdditionalDraw, OutputView::printPlayerCard);
 
         OutputView.printAdditionalDrawDealer(controller.getDealerAdditionalCardCount());
         OutputView.printFinalCards(controller.getDealerDto(), controller.getPlayerDtos());
         OutputView.printFinalResult(controller.getGamerResult());
-    }
-
-    private static void drawAdditionalCard(List<String> names, BlackJackController controller) {
-        for (String name : names) {
-            drawCardToPlayer(controller, name);
-        }
-    }
-
-    private static void drawCardToPlayer(BlackJackController controller, String name) {
-        while (controller.isDrawPossible(name, InputView::getAnswerOfAdditionalDraw)) {
-            controller.requestPlayerDrawCard(name);
-            GamerDto playerDtoByName = controller.findPlayerByName(name);
-            OutputView.printPlayerCard(playerDtoByName);
-        }
     }
 }
