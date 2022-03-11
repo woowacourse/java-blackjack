@@ -32,11 +32,11 @@ public class CardDeck {
                 .collect(Collectors.toList());
     }
 
-    public Card drawCard() {
+    public static Card drawCard() {
         return cardDeck.poll();
     }
 
-    public List<Card> drawTwoCards() {
+    public static List<Card> drawTwoCards() {
         return List.of(Objects.requireNonNull(cardDeck.poll()), Objects.requireNonNull(cardDeck.poll()));
     }
 

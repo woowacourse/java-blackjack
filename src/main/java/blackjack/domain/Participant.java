@@ -15,16 +15,16 @@ public abstract class Participant {
         holdingCard.add(card);
     };
 
-    List<Card> showCards(){
-        return holdingCard.getHoldingCard();
-    };
-
     public String getName() {
         return name;
     }
 
     public HoldingCard getHoldingCard() {
         return holdingCard;
+    }
+
+    public boolean isBust() {
+        return holdingCard.isBust();
     }
 
     public abstract boolean isFinished();

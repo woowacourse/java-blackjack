@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
+import blackjack.domain.HoldingCard;
 import blackjack.domain.ParticipantDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,5 +29,9 @@ public class OutputView {
                 participantDto.getCards().getHoldingCard().stream()
                         .map(Card::toString)
                         .collect(Collectors.joining(", ")));
+    }
+
+    public static void printPlayerCards(String currentPlayerName, HoldingCard holdingCard) {
+        System.out.println(currentPlayerName + "카드" + holdingCard.toString());
     }
 }

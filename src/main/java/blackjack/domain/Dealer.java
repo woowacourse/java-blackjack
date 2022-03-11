@@ -9,10 +9,6 @@ public class Dealer extends Participant {
         super("딜러",new HoldingCard(cards));
     }
 
-    public Card showFirstCard() {
-        return super.getHoldingCard().getFirstCard();
-    }
-
     public boolean isFinished() {
         return super.getHoldingCard().calculateTotal() >= DEALER_MIN_TOTAL;
     }
