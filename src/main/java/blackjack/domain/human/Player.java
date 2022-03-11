@@ -10,7 +10,6 @@ public class Player extends Human {
 
     private final Name name;
     private final Cards cards;
-    private GameResult gameResult;
 
     private Player(Name name) {
         this.name = name;
@@ -19,14 +18,6 @@ public class Player extends Human {
 
     public static Player of(Name name) {
         return new Player(name);
-    }
-
-    public void setResult(GameResult gameResult) {
-        this.gameResult = gameResult;
-    }
-
-    public GameResult getResult() {
-        return gameResult;
     }
 
     @Override

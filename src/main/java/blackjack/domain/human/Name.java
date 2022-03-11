@@ -4,8 +4,8 @@ import java.util.regex.Pattern;
 
 public class Name {
 
-    public static final String NAME_ERROR_MESSAGE = "이름 형식에 맞게 입력해야 합니다";
-    private static final Pattern NAME_PATTERN = Pattern.compile("[가-힣a-zA-Z]+");
+    public static final String NAME_ERROR_MESSAGE = "[ERROR] 입력 형식에 맞춰 입력해주세요.";
+    private static final Pattern NAME_PATTERN = Pattern.compile("[a-zA-Z]+");
 
     private final String name;
 
