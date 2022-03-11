@@ -6,7 +6,7 @@ public enum WinningResult {
     LOSE("패"),
     DRAW("무");
 
-    private String result;
+    private final String result;
 
     WinningResult(String result) {
         this.result = result;
