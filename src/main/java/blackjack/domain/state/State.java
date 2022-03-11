@@ -20,6 +20,6 @@ public interface State {
         if (cards.isBlackJack()) {
             return new BlackJack(cards);
         }
-        return new Running(cards);
+        return new Hit(cards);
     }
 }

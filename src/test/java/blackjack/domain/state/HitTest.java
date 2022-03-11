@@ -15,7 +15,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class RunningTest {
+class HitTest {
 
     final List<Card> cards = new ArrayList<>(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
     State state = State.create(new Cards(cards));
@@ -44,7 +44,7 @@ class RunningTest {
     @DisplayName("Running 상태에서 비교 결과를 반환하려고 하면 예외를 발생시킨다.")
     void compareException() {
         final Cards cards = new Cards(new ArrayList<>());
-        final State running = new Running(cards);
+        final State running = new Hit(cards);
         final State another = new Stay(cards);
 
         assertThatThrownBy(() -> running.compare(another))

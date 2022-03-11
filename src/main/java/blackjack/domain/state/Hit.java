@@ -4,9 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.game.GameOutcome;
 
-public class Running extends Created {
+public class Hit extends Created {
 
-    Running(final Cards cards) {
+    Hit(final Cards cards) {
         super(cards);
     }
 
