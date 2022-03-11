@@ -7,6 +7,7 @@ import static blackjack.fixture.CardRepository.CLOVER5;
 import static blackjack.fixture.CardRepository.CLOVER6;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
@@ -18,11 +19,28 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     private Player player;
+    private CardBundle cardBundle;
 
     @BeforeEach
     void setUp() {
-        CardBundle cardBundle = CardBundle.of(CLOVER4, CLOVER5);
+        cardBundle = CardBundle.of(CLOVER4, CLOVER5);
         player = Player.of("hudi", cardBundle);
+    }
+
+    @DisplayName("플레이어의 이름을 빈 문자열로 생성하려는 경우 예외가 발생한다.")
+    @Test
+    void constructor_throwExceptionOnBlankName() {
+        assertThatThrownBy(()-> Player.of("", cardBundle))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage( "플레이어는 이름을 지녀야 합니다.");
+    }
+
+    @DisplayName("플레이어의 이름을 '딜러'로 생성하려는 경우 예외가 발생한다.")
+    @Test
+    void constructor_throwExceptionOnDealerName() {
+        assertThatThrownBy(()-> Player.of("딜러", cardBundle))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어의 이름은 딜러가 될 수 없습니다.");
     }
 
     @DisplayName("카드를 전달받아 cardBundle에 추가할 수 있다.")
