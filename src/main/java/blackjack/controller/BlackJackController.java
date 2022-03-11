@@ -18,7 +18,7 @@ public class BlackJackController {
         BlackJack blackJack = new BlackJack(playerGroup);
         blackJack.divideCards();
 
-        OutputView.printGamersCards(GamerCardsDto.of(blackJack.getGamersCards()));
+        OutputView.printGamersCards(GamerCardsDto.of(blackJack.getGamers()));
 
         List<Player> players = playerGroup.getPlayers();
         for (Player player : players) {
@@ -28,7 +28,7 @@ public class BlackJackController {
         OutputView.printDealerCardMessage(blackJack.addCardToDealer());
 
         blackJack.openDealerCards();
-        OutputView.printGamersCardAndSum(GamerCardsDto.of(blackJack.getGamersCards()));
+        OutputView.printGamersCardAndSum(GamerCardsDto.of(blackJack.getGamers()));
 
         GameResult gameResult = blackJack.getGameResult();
         OutputView.printGameResult(DealerResultDto.of(gameResult.getDealerResult()),
