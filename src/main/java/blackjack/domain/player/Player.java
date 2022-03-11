@@ -37,20 +37,6 @@ public abstract class Player {
         cards.addCard(card);
     }
 
-    public static Participant changeToParticipant(Player player) {
-        if (player instanceof Participant) {
-            return (Participant) player;
-        }
-        throw new ClassCastException("[ERROR] Player가 참여자가 아닙니다.");
-    }
-
-    public static Dealer changeToDealer(Player player) {
-        if (player instanceof Dealer) {
-            return (Dealer) player;
-        }
-        throw new ClassCastException("[ERROR] Player가 딜러가 아닙니다.");
-    }
-
     public List<Card> getCards() {
         return this.cards.getCards();
     }

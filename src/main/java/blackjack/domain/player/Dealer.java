@@ -32,6 +32,13 @@ public class Dealer extends Player {
         return participantScore > MAX_SCORE || (dealerScore <= MAX_SCORE && dealerScore >= participantScore);
     }
 
+    public static Dealer changeToDealer(Player player) {
+        if (player instanceof Dealer) {
+            return (Dealer) player;
+        }
+        throw new ClassCastException("[ERROR] Player가 딜러가 아닙니다.");
+    }
+
     public boolean acceptableCard() {
         return getScoreByAceEleven() <= ADD_CARD_CONDITION;
     }

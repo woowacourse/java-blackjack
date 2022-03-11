@@ -86,7 +86,7 @@ public class OutputView {
     }
 
     private static void printDealerResult(final Player player) {
-        Dealer dealer = Player.changeToDealer(player);
+        Dealer dealer = Dealer.changeToDealer(player);
         System.out.println(dealer.getName() + EXPLAIN_SYMBOL + makeResultToText(dealer.getWinResultCount(), dealer.getLoseResultCount()));
     }
 
@@ -100,8 +100,7 @@ public class OutputView {
 
     private static void printParticipantResult(final Player player) {
         System.out.print(player.getName() + EXPLAIN_SYMBOL);
-        System.out.println(Player.changeToParticipant(player)
+        System.out.println(Participant.changeToParticipant(player)
                 .getWinState().getValue());
-
     }
 }

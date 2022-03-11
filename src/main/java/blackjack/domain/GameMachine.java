@@ -37,7 +37,7 @@ public class GameMachine {
     }
 
     public boolean isDealerGetCard() {
-        if (Player.changeToDealer(players.getDealer()).acceptableCard()) {
+        if (Dealer.changeToDealer(players.getDealer()).acceptableCard()) {
             players.addDealerCard(deck.draw());
             return true;
         }

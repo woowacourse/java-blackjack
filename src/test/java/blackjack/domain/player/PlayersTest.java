@@ -94,7 +94,7 @@ class PlayersTest {
     void downCastingPlayerToDealer() {
         Deck deck = new Deck();
         Player participant = new Participant(deck.makeDistributeCard(), "corinne");
-        Assertions.assertThatThrownBy(() -> Player.changeToDealer(participant))
+        Assertions.assertThatThrownBy(() -> Dealer.changeToDealer(participant))
                 .isInstanceOf(ClassCastException.class)
                 .hasMessage("[ERROR] Player가 딜러가 아닙니다.");
 
@@ -105,7 +105,7 @@ class PlayersTest {
     void downCastingPlayerToParticipant() {
         Deck deck = new Deck();
         Player dealer = new Dealer(deck.makeDistributeCard());
-        Assertions.assertThatThrownBy(() -> Player.changeToParticipant(dealer))
+        Assertions.assertThatThrownBy(() -> Participant.changeToParticipant(dealer))
                 .isInstanceOf(ClassCastException.class)
                 .hasMessage("[ERROR] Player가 참여자가 아닙니다.");
 
