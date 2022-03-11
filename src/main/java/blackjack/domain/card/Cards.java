@@ -1,5 +1,8 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.RecordFactory.*;
+import static blackjack.domain.card.CardNumber.*;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -14,12 +17,8 @@ public class Cards {
         value.add(card);
     }
 
-    public int getSize() {
-        return value.size();
-    }
-
     public Status getStatus() {
-        if (sum() > 21) {
+        if (sum() > BUST_SCORE) {
             return Status.BUST;
         }
 
@@ -27,12 +26,14 @@ public class Cards {
     }
 
     public int sum() {
-        int sum = value.stream()
+        return sumWithAce(value.stream()
             .mapToInt(Card::getNumberValue)
-            .sum();
+            .sum());
+    }
 
-        if (sum <= 11 && hasAce()) {
-            sum += 10;
+    private int sumWithAce(int sum) {
+        if (sum <= ACE_BIG && hasAce()) {
+            sum += (ACE_BIG - ACE.getValue());
         }
         return sum;
     }

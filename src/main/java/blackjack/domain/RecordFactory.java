@@ -7,13 +7,14 @@ import java.util.Map;
 
 public class RecordFactory {
 
+    public static final int BUST_SCORE = 21;
     private final int dealerScore;
     private final boolean isDealerBust;
     private final Map<Record, Integer> dealerRecord;
 
     public RecordFactory(int dealerScore) {
         this.dealerScore = dealerScore;
-        this.isDealerBust = dealerScore > 21;
+        this.isDealerBust = dealerScore > BUST_SCORE;
         this.dealerRecord = new HashMap<>();
     }
 
@@ -29,7 +30,7 @@ public class RecordFactory {
             return getRecordWhenDealerBust(score);
         }
 
-        if (score > 21 || score < dealerScore) {
+        if (score > BUST_SCORE || score < dealerScore) {
             return LOSS;
         }
 
@@ -41,7 +42,7 @@ public class RecordFactory {
     }
 
     private Record getRecordWhenDealerBust(int score) {
-        if (score > 21) {
+        if (score > BUST_SCORE) {
             return LOSS;
         }
 

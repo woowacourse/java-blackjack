@@ -18,6 +18,7 @@ public enum CardNumber {
 
     private final int value;
     private final String name;
+    public static final int ACE_BIG = 11;
 
     CardNumber(int value, String name) {
         this.value = value;

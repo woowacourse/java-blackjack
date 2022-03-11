@@ -16,44 +16,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class CardsTest {
 
-    private static Stream<Arguments> provideCards() {
-        return Stream.of(
-            Arguments.of(Set.of(new Card(DIAMOND, ACE), new Card(DIAMOND, TEN)), 21),
-            Arguments.of(Set.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE)), 5),
-            Arguments.of(Set.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, JACK)), 20)
-        );
-    }
-
-    private static Stream<Arguments> provideSource() {
-        return Stream.of(
-            Arguments.of(new Cards(Set.of(new Card(DIAMOND, ACE),
-                new Card(CLUB, TEN),
-                new Card(CLUB, FIVE))), 16),
-            Arguments.of(new Cards(Set.of(new Card(DIAMOND, ACE),
-                new Card(CLUB, ACE),
-                new Card(SPADE, ACE),
-                new Card(HEART, ACE))), 14),
-            Arguments.of(new Cards(Set.of(new Card(DIAMOND, ACE),
-                new Card(CLUB, ACE),
-                new Card(SPADE, ACE),
-                new Card(HEART, TEN))), 13)
-        );
-    }
-
-    @Test
-    @DisplayName("여러장의 카드가 주어지면 객체를 생성한다.")
-    void createCards() {
-        // given
-        final Cards cards = new Cards(Set.of(new Card(DIAMOND, ACE),
-            new Card(DIAMOND, TEN)));
-
-        // when
-        int actual = cards.getSize();
-
-        // then
-        assertThat(actual).isEqualTo(2);
-    }
-
     @ParameterizedTest
     @MethodSource("provideCards")
     @DisplayName("모든 카드의 값을 합산한 값을 반환한다.")
@@ -68,6 +30,14 @@ class CardsTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    private static Stream<Arguments> provideCards() {
+        return Stream.of(
+            Arguments.of(Set.of(new Card(DIAMOND, ACE), new Card(DIAMOND, TEN)), 21),
+            Arguments.of(Set.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE)), 5),
+            Arguments.of(Set.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, JACK)), 20)
+        );
+    }
+
     @Test
     @DisplayName("카드를 추가한다.")
     void add() {
@@ -76,10 +46,10 @@ class CardsTest {
 
         // when
         cards.add(new Card(DIAMOND, TEN));
-        int actual = cards.getSize();
+        int actual = cards.sum();
 
         // then
-        assertThat(actual).isEqualTo(2);
+        assertThat(actual).isEqualTo(21);
     }
 
     @ParameterizedTest
@@ -106,5 +76,21 @@ class CardsTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideSource() {
+        return Stream.of(
+            Arguments.of(new Cards(Set.of(new Card(DIAMOND, ACE),
+                new Card(CLUB, TEN),
+                new Card(CLUB, FIVE))), 16),
+            Arguments.of(new Cards(Set.of(new Card(DIAMOND, ACE),
+                new Card(CLUB, ACE),
+                new Card(SPADE, ACE),
+                new Card(HEART, ACE))), 14),
+            Arguments.of(new Cards(Set.of(new Card(DIAMOND, ACE),
+                new Card(CLUB, ACE),
+                new Card(SPADE, ACE),
+                new Card(HEART, TEN))), 13)
+        );
     }
 }

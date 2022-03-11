@@ -20,7 +20,7 @@ public enum Record {
         return name;
     }
 
-    public Record getOpposite() {
+    Record getOpposite() {
         return Arrays.stream(Record.values())
             .filter(record -> record.name.equals(opposite))
             .findFirst()
