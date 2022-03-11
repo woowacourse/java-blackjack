@@ -2,10 +2,9 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +25,7 @@ public class DealerTest {
     @Test
     @DisplayName("딜러의 승패 결과 확인")
     void dealerWinDrawLoseTest() {
-        Gamer dealer = new Dealer();
+        Player dealer = new Dealer();
         dealer.win();
         dealer.win();
         dealer.lose();

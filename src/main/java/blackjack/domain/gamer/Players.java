@@ -10,10 +10,10 @@ public class Players {
 
     private static final String PLAYER_NAME_DUPLICATE_ERROR_MESSAGE = "참가자 이름은 중복될 수 없습니다.";
 
-    private final List<Player> players;
+    private final List<CasinoCustomer> players;
     private int nowIndex;
 
-    private Players(List<Player> players) {
+    private Players(List<CasinoCustomer> players) {
         this.players = players;
         this.nowIndex = 0;
     }
@@ -23,9 +23,9 @@ public class Players {
         return new Players(toPlayers(names));
     }
 
-    private static List<Player> toPlayers(List<String> names) {
+    private static List<CasinoCustomer> toPlayers(List<String> names) {
         return names.stream()
-                .map(Player::new)
+                .map(CasinoCustomer::new)
                 .collect(Collectors.toList());
     }
 
@@ -44,11 +44,11 @@ public class Players {
         return nowIndex < players.size();
     }
 
-    public Player getNowPlayer() {
+    public CasinoCustomer getNowPlayer() {
         return players.get(nowIndex);
     }
 
-    public List<Player> getPlayers() {
+    public List<CasinoCustomer> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 }

@@ -3,13 +3,13 @@ package blackjack.domain.gamer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
-public abstract class AbstractGamer implements Gamer {
+public abstract class AbstractPlayer implements Player {
     private static final String NAME_INPUT_ERROR_MESSAGE = "참가자의 이름으로 공백이나 빈 문자열은 입력할 수 없습니다.";
 
     private final String name;
     private final Cards cards;
 
-    public AbstractGamer(String name, Cards cards) {
+    public AbstractPlayer(String name, Cards cards) {
         validate(name);
         this.name = name;
         this.cards = cards;

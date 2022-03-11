@@ -9,11 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Dealer extends AbstractGamer {
+public class Dealer extends AbstractPlayer {
     private static final String DEALER_NAME = "딜러";
     private static final int HIT_FLAG_SCORE = 16;
     private static final String WIN_DRAW_LOSE_RESULT_DELIMITER = " ";
-
 
     private final Map<WinDrawLose, Integer> winDrawLose = new EnumMap<>(WinDrawLose.class);
 

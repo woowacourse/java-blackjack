@@ -1,41 +1,27 @@
 package blackjack.domain.gamer;
 
-import blackjack.domain.WinDrawLose;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Player extends AbstractGamer {
+public interface Player {
+    boolean isBust();
 
-    private WinDrawLose winDrawLose;
+    boolean isBlackjack();
 
-    public Player(String name) {
-        super(name, new Cards(new ArrayList<>()));
-    }
+    void hit(Card card);
 
-    @Override
-    public List<Card> getViewCard() {
-        return getCards().getCards();
-    }
+    List<Card> getViewCard();
 
-    @Override
-    public void win() {
-        winDrawLose = WinDrawLose.WIN;
-    }
+    void win();
 
-    @Override
-    public void draw() {
-        winDrawLose = WinDrawLose.DRAW;
-    }
+    void draw();
 
-    @Override
-    public void lose() {
-        winDrawLose = WinDrawLose.LOSE;
-    }
+    void lose();
 
-    @Override
-    public String getWinDrawLoseString() {
-        return winDrawLose.getName();
-    }
+    String getWinDrawLoseString();
+
+    String getName();
+
+    Cards getCards();
 }
