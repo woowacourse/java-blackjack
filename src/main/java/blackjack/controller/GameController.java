@@ -16,10 +16,9 @@ public class GameController {
         List<Player> users = gameMachine.createUsers(InputView.inputUsers());
         ResultView.printDealerAndUserCards(users, dealer);
 
-        askReceiveCardToUsers(gameMachine, users);
-        
-        if (gameMachine.checkDealerReceiveCard(dealer)) {
-            ResultView.printDealerReceiveCard();
+        if (!gameMachine.haveBlackJack(users, dealer)) {
+            askReceiveCardToUsers(gameMachine, users);
+            receiveDealerCard(gameMachine, dealer);
         }
         ResultView.printTotalCardResult(dealer, users);
         
@@ -47,6 +46,12 @@ public class GameController {
             askReceiveCard(gameMachine, user);
         } else if (!getCard) {
             ResultView.printUserCards(user);
+        }
+    }
+
+    private void receiveDealerCard(GameMachine gameMachine, Player dealer) {
+        if (gameMachine.checkDealerReceiveCard(dealer)) {
+            ResultView.printDealerReceiveCard();
         }
     }
 }

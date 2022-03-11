@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,5 +35,12 @@ public class GameMachine {
 
     public void drawCardToUser(Player user) {
         user.pickCard(cardDeck.drawCard());
+    }
+
+    public Boolean haveBlackJack(List<Player> users, Player dealer) {
+        List<Player> players = new ArrayList(users);
+        players.add(dealer);
+        return players.stream()
+                .anyMatch(player -> player.isBlackJack());
     }
 }

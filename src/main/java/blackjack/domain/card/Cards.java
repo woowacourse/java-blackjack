@@ -9,11 +9,9 @@ public class Cards {
     private static final int ACE_VALUE = 10;
 
     private List<Card> cards;
-    private Boolean isBlackJack;
 
     public Cards(List<Card> cards) {
         this.cards = cards;
-        isBlackJack = calculateScore() == Result.BLACK_JACK_SCORE;
     }
 
     public void addCard(Card card) {
@@ -27,10 +25,6 @@ public class Cards {
             totalScore -= ACE_VALUE;
         }
         return totalScore;
-    }
-
-    public Boolean getBlackJack() {
-        return isBlackJack;
     }
 
     private int getCountOfAce() {

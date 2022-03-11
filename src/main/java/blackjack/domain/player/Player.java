@@ -21,12 +21,16 @@ public abstract class Player {
         this.cards = new Cards(cards);
     }
 
-    public abstract boolean isPossibleToPickCard();
-
     private void checkFirstReceivedCardsSize(int size) {
         if (size != FIRST_RECEIVED_CARD_SIZE) {
             throw new IllegalArgumentException(FIRST_RECEIVED_CARD_SIZE_EXCEPTION_MESSAGE);
         }
+    }
+
+    public abstract boolean isPossibleToPickCard();
+
+    public Boolean isBlackJack() {
+        return cards.getCards().size() == FIRST_RECEIVED_CARD_SIZE && cards.calculateScore() == Result.BLACK_JACK_SCORE;
     }
 
     public void pickCard(Card card) {

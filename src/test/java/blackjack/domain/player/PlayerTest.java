@@ -99,4 +99,16 @@ public class PlayerTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("처음 제공받는 카드는 2장이어야 합니다.");
     }
+
+    @Test
+    @DisplayName("딜러가 블랙잭인 경우를 확인한다.")
+    void isBlackJack() {
+        List<Card> cards = Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.ACE), new Card(CardPattern.HEART, CardNumber.KING));
+        Player dealer = new Dealer(cards);
+        final boolean expected = true;
+
+        final boolean actual = dealer.isBlackJack();
+
+        assertThat(actual).isEqualTo(expected);
+    }
 }
