@@ -1,12 +1,20 @@
 package blackjack.trumpcard;
 
-public class TrumpCard {
+public class Card {
     private final TrumpNumber number;
     private final TrumpSymbol symbol;
 
-    public TrumpCard(TrumpNumber number, TrumpSymbol symbol) {
+    public Card(TrumpNumber number, TrumpSymbol symbol) {
         this.number = number;
         this.symbol = symbol;
+    }
+
+    public TrumpNumber getNumber() {
+        return number;
+    }
+
+    public TrumpSymbol getSymbol() {
+        return symbol;
     }
 
     public int sumNumberTo(int otherNumber) {

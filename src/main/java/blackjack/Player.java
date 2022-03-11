@@ -1,6 +1,7 @@
 package blackjack;
 
-import blackjack.trumpcard.TrumpCard;
+import blackjack.trumpcard.Card;
+import blackjack.trumpcard.Deck;
 
 public abstract class Player implements PlayerInterface {
     private static final String ERROR_NULL = "[ERROR] 입력된 이름이 없습니다.";
@@ -25,7 +26,7 @@ public abstract class Player implements PlayerInterface {
     }
 
     @Override
-    public void addCard(TrumpCard card) {
+    public void receiveCard(Card card) {
         this.deck.add(card);
     }
 
@@ -34,5 +35,7 @@ public abstract class Player implements PlayerInterface {
         return this.name;
     }
 
-
+    public Deck getDeck() {
+        return deck;
+    }
 }

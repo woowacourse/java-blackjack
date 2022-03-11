@@ -1,17 +1,48 @@
 package blackjack;
 
-import blackjack.trumpcard.TrumpCardPack;
+import blackjack.trumpcard.CardPack;
+
 import java.util.List;
 
-public class Game {
-    private final Players players;
-    private final TrumpCardPack trumpCardPack;
+public class BlackJackGame {
+    private static final int START_CARD_COUNT = 2;
 
-    public Game(List<String> names) {
-        this.trumpCardPack = new TrumpCardPack();
-        this.players = Players.from(names);
+    private final Player dealer;
+    private final Entries entries;
+
+    public BlackJackGame(List<String> names) {
+        this.dealer = new Dealer();
+        this.entries = Entries.from(names);
     }
 
+    //TODO: 함수 네이밍 변경
+    public void initGame(CardPack cardPack) {
+        giveCardsToDealer(cardPack);
+        for (Player entry : entries.getValues()) {
+            giveCardsToEntry(entry, cardPack);
+        }
+    }
+
+    private void giveCardsToDealer(CardPack cardPack) {
+        for (int i = 0; i < START_CARD_COUNT; i++) {
+            dealer.receiveCard(cardPack.draw());
+        }
+    }
+
+    private void giveCardsToEntry(Player entry, CardPack cardPack) {
+        for (int i = 0; i < START_CARD_COUNT; i++) {
+            entry.receiveCard(cardPack.draw());
+        }
+    }
+
+    public Player getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getEntries() {
+        return entries.getValues();
+    }
+/*
     public void start() {
         this.players.giveFirstCards(trumpCardPack);
     }
@@ -65,4 +96,6 @@ public class Game {
     public List<Integer> getScores() {
         return this.players.getScores();
     }
+
+ */
 }

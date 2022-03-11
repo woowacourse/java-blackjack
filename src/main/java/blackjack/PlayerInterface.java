@@ -1,13 +1,11 @@
 package blackjack;
 
-import blackjack.trumpcard.TrumpCard;
+import blackjack.trumpcard.Card;
 
 public interface PlayerInterface {
-    void addCard(TrumpCard card);
+    void receiveCard(Card card);
 
     boolean isBust();
-
-    void hit(TrumpCard card);
 
     String getName();
 }

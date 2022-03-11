@@ -1,46 +1,65 @@
 package blackjack;
 
+import blackjack.dto.PlayerDto;
+import blackjack.trumpcard.CardPack;
 import blackjack.view.InputView;
+
 import blackjack.view.ResultView;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Application {
 
     public static void main(String[] args) {
         final InputView inputView = new InputView();
+        final ResultView resultView = new ResultView();
+
         List<String> names = inputView.askEntryNames();
 
-        Game game = new Game(names);
-        game.start();
+        CardPack cardPack = new CardPack();
 
-        final ResultView resultView = new ResultView();
-        resultView.printDeckInitialized(game.getEntryNames());
-        resultView.printInitializedDecks(game.getNames(), game.getDecksToString());
+        BlackJackGame blackJackGame = new BlackJackGame(names);
+        blackJackGame.initGame(cardPack);
+
+        Player dealer = blackJackGame.getDealer();
+        List<Player> entries = blackJackGame.getEntries();
+
+        PlayerDto dealerDto = new PlayerDto(dealer);
+        List<PlayerDto> entriesDtos = entries.stream()
+                .map(PlayerDto::new)
+                .collect(Collectors.toList());
+
+        resultView.printInitGameResult(dealerDto, entriesDtos);
+/*
+        resultView.printDeckInitialized(blackJackGame.getEntryNames());
+        resultView.printInitializedDecks(blackJackGame.getNames(), blackJackGame.getDecksToString());
 
         do {
-            game.toNextEntry();
-            playTurn(inputView, game, resultView);
-        } while (game.hasNextEntry());
+            blackJackGame.toNextEntry();
+            playTurn(inputView, blackJackGame, resultView);
+        } while (blackJackGame.hasNextEntry());
 
-        game.hitDealer();
-        if (game.countCardsAddedToDealer() > 0) {
-            resultView.printDealerHitCount(game.countCardsAddedToDealer());
+        blackJackGame.hitDealer();
+        if (blackJackGame.countCardsAddedToDealer() > 0) {
+            resultView.printDealerHitCount(blackJackGame.countCardsAddedToDealer());
         }
 
-        resultView.printScores(game.getNames(), game.getDecksToString(), game.getScores());
+        resultView.printScores(blackJackGame.getNames(), blackJackGame.getDecksToString(), blackJackGame.getScores());
     }
 
-    private static void playTurn(InputView inputView, Game game, ResultView resultView) {
-        if (game.isCurrentEntryBust()) {
-            resultView.printBustMessage(game.getCurrentEntryName());
+    private static void playTurn(InputView inputView, BlackJackGame blackJackGame, ResultView resultView) {
+        if (blackJackGame.isCurrentEntryBust()) {
+            resultView.printBustMessage(blackJackGame.getCurrentEntryName());
             return;
         }
-        if (!inputView.askForHit(game.getCurrentEntryName())) {
-            resultView.printDeck(game.getCurrentEntryName(), game.getCurrentDeckToString());
+        if (!inputView.askForHit(blackJackGame.getCurrentEntryName())) {
+            resultView.printDeck(blackJackGame.getCurrentEntryName(), blackJackGame.getCurrentDeckToString());
             return;
         }
-        game.hitCurrentEntry();
-        resultView.printDeck(game.getCurrentEntryName(), game.getCurrentDeckToString());
-        playTurn(inputView, game, resultView);
+        blackJackGame.hitCurrentEntry();
+        resultView.printDeck(blackJackGame.getCurrentEntryName(), blackJackGame.getCurrentDeckToString());
+        playTurn(inputView, blackJackGame, resultView);
+    }
+    */
     }
 }

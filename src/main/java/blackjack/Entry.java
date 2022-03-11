@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.trumpcard.TrumpCard;
+import blackjack.trumpcard.Card;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -60,8 +60,5 @@ public class Entry extends Player {
          return this.deck.isBust();
     }
 
-    @Override
-    public void hit(TrumpCard card) {
-        this.deck.add(card);
-    }
+
 }

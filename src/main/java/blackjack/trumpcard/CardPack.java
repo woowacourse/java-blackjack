@@ -6,32 +6,32 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TrumpCardPack {
-    private final List<TrumpCard> values;
+public class CardPack {
+    private final List<Card> values;
 
-    public TrumpCardPack() {
+    public CardPack() {
         this.values = createCards();
     }
 
-    private List<TrumpCard> createCards() {
-        List<TrumpCard> trumpCards = new ArrayList<>();
+    private List<Card> createCards() {
+        List<Card> cards = new ArrayList<>();
         Arrays.stream(TrumpSymbol.values())
                 .map(this::createCardsOfSymbol)
-                .forEach(trumpCards::addAll);
-        return trumpCards;
+                .forEach(cards::addAll);
+        return cards;
     }
 
-    private List<TrumpCard> createCardsOfSymbol(TrumpSymbol trumpSymbol) {
+    private List<Card> createCardsOfSymbol(TrumpSymbol trumpSymbol) {
         return Arrays.stream(TrumpNumber.values())
-                .map(trumpNumber -> new TrumpCard(trumpNumber, trumpSymbol))
+                .map(trumpNumber -> new Card(trumpNumber, trumpSymbol))
                 .collect(Collectors.toList());
     }
 
-    public TrumpCard draw() {
+    public Card draw() {
         Collections.shuffle(values);
 
         final int topCardIndex = 0;
-        TrumpCard topCard = values.get(topCardIndex);
+        Card topCard = values.get(topCardIndex);
         values.remove(topCardIndex);
         return topCard;
     }

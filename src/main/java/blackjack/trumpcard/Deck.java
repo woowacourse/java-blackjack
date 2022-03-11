@@ -1,6 +1,6 @@
-package blackjack;
+package blackjack.trumpcard;
 
-import blackjack.trumpcard.TrumpCard;
+import blackjack.trumpcard.Card;
 import blackjack.trumpcard.TrumpNumber;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,15 +13,19 @@ public class Deck {
     private static final int SCORE_ADVANTAGE_CRITERIA = SCORE_LIMIT - SCORE_ACE_ADVANTAGE;
     private static final int FIRST_SIZE = 2;
 
-    private final List<TrumpCard> cards;
+    private final List<Card> cards;
 
     public Deck() {
         this.cards = new ArrayList<>();
     }
 
-    public Deck(TrumpCard card1, TrumpCard card2) {
+    public Deck(Card card1, Card card2) {
         //TODO : test를 위한 생성자이므로 삭제해야 함
         this.cards = new ArrayList<>(Arrays.asList(card1, card2));
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 
     public int sumScore() {
@@ -34,7 +38,7 @@ public class Deck {
     }
 
     private int sumCardNumbersTo(int score) {
-        for (TrumpCard card : cards) {
+        for (Card card : cards) {
             score = card.sumNumberTo(score);
         }
         return score;
@@ -65,7 +69,7 @@ public class Deck {
         return 0;
     }
 
-    public void add(TrumpCard card) {
+    public void add(Card card) {
         this.cards.add(card);
     }
 
@@ -83,7 +87,7 @@ public class Deck {
 
     public List<String> getCardsToString() {
         return this.cards.stream()
-                .map(TrumpCard::toString)
+                .map(Card::toString)
                 .collect(Collectors.toList());
     }
 
