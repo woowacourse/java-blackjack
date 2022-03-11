@@ -4,8 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Diamond;
-import blackjack.domain.card.Heart;
+import blackjack.domain.card.CardPattern;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
@@ -31,7 +30,7 @@ public class GameResultTest {
     }
 
     private List<Card> createFirstReceivedCard(CardNumber firstCardNumber, CardNumber secondCardNumber) {
-        return List.of(new Diamond(firstCardNumber), new Heart(secondCardNumber));
+        return List.of(new Card(CardPattern.DIAMOND, firstCardNumber), new Card(CardPattern.HEART, secondCardNumber));
     }
 
     @Test

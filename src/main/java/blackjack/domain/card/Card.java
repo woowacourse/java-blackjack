@@ -1,14 +1,18 @@
 package blackjack.domain.card;
 
-public abstract class Card {
+public class Card {
 
+    private final CardPattern cardPattern;
     private final CardNumber cardNumber;
 
-    public Card(CardNumber cardNumber) {
+    public Card(CardPattern cardPattern, CardNumber cardNumber) {
+        this.cardPattern = cardPattern;
         this.cardNumber = cardNumber;
     }
 
-    public abstract String getCardPattern();
+    public String getCardPattern() {
+        return cardPattern.getPattern();
+    };
 
     public String getCardNumberType() {
         return cardNumber.getType();

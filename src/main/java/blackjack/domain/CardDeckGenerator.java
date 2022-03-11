@@ -2,10 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Clover;
-import blackjack.domain.card.Diamond;
-import blackjack.domain.card.Heart;
-import blackjack.domain.card.Spade;
+import blackjack.domain.card.CardPattern;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -14,10 +11,10 @@ public class CardDeckGenerator {
     public static CardDeck createCardDeckByCardNumber() {
         LinkedList<Card> cards = new LinkedList<>();
         for (CardNumber cardNumber : CardNumber.values()) {
-            cards.add(new Diamond(cardNumber));
-            cards.add(new Clover(cardNumber));
-            cards.add(new Heart(cardNumber));
-            cards.add(new Spade(cardNumber));
+            cards.add(new Card(CardPattern.DIAMOND, cardNumber));
+            cards.add(new Card(CardPattern.HEART, cardNumber));
+            cards.add(new Card(CardPattern.CLOVER, cardNumber));
+            cards.add(new Card(CardPattern.SPADE, cardNumber));
         }
         return new CardDeck(shuffleCard(cards));
     }

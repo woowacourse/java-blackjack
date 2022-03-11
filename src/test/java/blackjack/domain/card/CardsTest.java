@@ -30,7 +30,7 @@ class CardsTest {
         final Cards cards = new Cards(createFirstReceivedCard(CardNumber.KING, CardNumber.JACK));
         final int expected = 3;
 
-        cards.addCard(new Diamond(CardNumber.TWO));
+        cards.addCard(new Card(CardPattern.DIAMOND, CardNumber.TWO));
         final int actual = cards.getCards().size();
 
         assertThat(actual).isEqualTo(expected);
@@ -58,7 +58,7 @@ class CardsTest {
     private static List<Card> createFirstReceivedCard(CardNumber... cardNumbers) {
         List<Card> cards = new ArrayList<>();
         for (CardNumber cardNumber : cardNumbers) {
-            cards.add(new Diamond(cardNumber));
+            cards.add(new Card(CardPattern.DIAMOND, cardNumber));
         }
         return cards;
     }
