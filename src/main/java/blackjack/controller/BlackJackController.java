@@ -6,7 +6,7 @@ import blackjack.domain.Answer;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.result.BlackJackReferee;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +50,7 @@ public class BlackJackController {
     }
 
     public GameResultDto getGamerResult() {
-        GameResult result = blackJackGame.createResult();
+        BlackJackReferee result = blackJackGame.createResult();
         return new GameResultDto(result);
     }
 }

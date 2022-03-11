@@ -14,6 +14,6 @@ public class NameTest {
         Assertions.assertThatThrownBy(() -> {
                     new Name(source);
                 }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("빈 분자열이 입력 되었습니다.");
+                .hasMessageContaining("이름은 공백이 될 수 없습니다.");
     }
 }

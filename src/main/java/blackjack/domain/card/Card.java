@@ -8,13 +8,14 @@ import java.util.stream.Collectors;
 
 public class Card {
 
+    private static final String NOT_EXIST_CARD_ERROR = "존재하지 않는 카드입니다.";
+    private static final List<Card> CARDS;
+
     private final CardShape cardShape;
     private final CardNumber cardNumber;
 
-    private final static List<Card> cards;
-
     static {
-        cards = Arrays.stream(CardShape.values())
+        CARDS = Arrays.stream(CardShape.values())
                 .flatMap(shape -> Arrays.stream(CardNumber.values())
                         .map(number -> new Card(shape, number)))
                 .collect(Collectors.toList());
@@ -26,10 +27,10 @@ public class Card {
     }
 
     public static Card getInstance(CardShape shape, CardNumber number) {
-        return cards.stream()
+        return CARDS.stream()
                 .filter(card -> card.isSame(shape, number))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_CARD_ERROR));
     }
 
     private boolean isSame(CardShape shape, CardNumber number) {
@@ -41,7 +42,7 @@ public class Card {
     }
 
     public static List<Card> getCards() {
-        return new LinkedList<>(cards);
+        return new LinkedList<>(CARDS);
     }
 
     public int getValue() {

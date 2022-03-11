@@ -3,7 +3,7 @@ package blackjack.domain.gamer;
 import java.util.Objects;
 
 public class Name {
-
+	private static final String BLANK_NAME_ERROR = "이름은 공백이 될 수 없습니다.";
 	private final String name;
 
 	public Name(String name) {
@@ -13,7 +13,7 @@ public class Name {
 
 	private void validateName(String name) {
 		if (name.isBlank()) {
-			throw new IllegalArgumentException("빈 분자열이 입력 되었습니다.");
+			throw new IllegalArgumentException(BLANK_NAME_ERROR);
 		}
 	}
 

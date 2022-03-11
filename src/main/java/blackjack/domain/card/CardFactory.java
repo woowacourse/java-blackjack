@@ -6,7 +6,8 @@ import java.util.List;
 
 public class CardFactory {
 
-    public static final int FIRST_CARD = 0;
+    private static final int FIRST_CARD = 0;
+    private static final String EMPTY_CARD_ERROR = "남은 카드가 존재하지 않습니다.";
 
     private final List<Card> deck;
 
@@ -24,7 +25,7 @@ public class CardFactory {
 
     private void validateEmptyDeck() {
         if (deck.isEmpty()) {
-            throw new IllegalStateException("카드가 존재하지 않습니다.");
+            throw new IllegalStateException(EMPTY_CARD_ERROR);
         }
     }
 

@@ -16,7 +16,6 @@ public class Player extends Gamer{
 
     public boolean isSameName(String name) {
         return this.getName()
-                .getValue()
-                .equals(name);
+                .isSame(name);
     }
 }

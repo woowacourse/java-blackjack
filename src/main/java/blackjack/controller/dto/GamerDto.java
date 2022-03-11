@@ -7,7 +7,9 @@ import blackjack.domain.gamer.Name;
 import java.util.List;
 
 public class GamerDto {
-    public static final int FIRST_INDEX = 0;
+
+    public static final int FIRST_CARD_INDEX = 0;
+
     private final Name name;
     private final List<Card> cards;
     private final int cardNumberSum;
@@ -31,7 +33,7 @@ public class GamerDto {
     }
 
     public Card getFirstCard() {
-        return cards.get(FIRST_INDEX);
+        return cards.get(FIRST_CARD_INDEX);
     }
 
     public int getCardNumberSum() {

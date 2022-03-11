@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.result.BlackJackResult;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.result.BlackJackReferee;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GameResultTest {
+class BlackJackRefereeTest {
 
     @Test
     @DisplayName("아무도 버스트가 아닐 때 플레이어 게임 결과 확인")
@@ -32,9 +32,9 @@ class GameResultTest {
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.SEVEN));
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
 
-        GameResult gameResult = new GameResult(List.of(pobi, jason), dealer);
+        BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi, jason), dealer);
 
-        Map<String, BlackJackResult> playerResults = gameResult.getPlayerResult();
+        Map<String, BlackJackResult> playerResults = blackJackReferee.getPlayerResult();
 
         BlackJackResult pobiResult = playerResults.get("pobi");
         BlackJackResult jasonResult = playerResults.get("jason");
@@ -61,9 +61,9 @@ class GameResultTest {
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.SEVEN));
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
 
-        GameResult gameResult = new GameResult(List.of(pobi, jason), dealer);
+        BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi, jason), dealer);
 
-        Map<String, BlackJackResult> playerResults = gameResult.getPlayerResult();
+        Map<String, BlackJackResult> playerResults = blackJackReferee.getPlayerResult();
 
         BlackJackResult pobiResult = playerResults.get("pobi");
         BlackJackResult jasonResult = playerResults.get("jason");
@@ -89,9 +89,9 @@ class GameResultTest {
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.SEVEN));
         jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
 
-        GameResult gameResult = new GameResult(List.of(pobi, jason), dealer);
+        BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi, jason), dealer);
 
-        Map<BlackJackResult, Integer> dealerResult = gameResult.getDealerResult();
+        Map<BlackJackResult, Integer> dealerResult = blackJackReferee.getDealerResult();
         int winningCount = dealerResult.get(BlackJackResult.WIN);
         int losingCount = dealerResult.get(BlackJackResult.LOSE);
         int drawingCount = dealerResult.get(BlackJackResult.DRAW);

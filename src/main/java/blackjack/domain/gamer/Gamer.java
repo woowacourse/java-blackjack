@@ -4,14 +4,15 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.BlackJackGame.POSSIBLE_MAX_VALUE;
+import static blackjack.domain.BlackJackGame.MAX_CARD_VALUE;
 
 public class Gamer {
-    private final Name name;
 
+    private final Name name;
     private final List<Card> cards;
 
     public Gamer(String name) {
@@ -24,7 +25,7 @@ public class Gamer {
     }
 
     public List<Card> getCards() {
-        return new ArrayList<>(cards);
+        return Collections.unmodifiableList(cards);
     }
 
     public int getCardsNumberSum() {
@@ -54,17 +55,10 @@ public class Gamer {
     }
 
     private int selectAceValue(int sum, Card ace) {
-        validateAceCard(ace);
-        if (ace.getValue() + sum > POSSIBLE_MAX_VALUE) {
+        if (ace.isAce() && ace.getValue() + sum > MAX_CARD_VALUE) {
             return CardNumber.LOWER_ACE_VALUE;
         }
         return ace.getValue();
-    }
-
-    private void validateAceCard(Card ace) {
-        if (!ace.isAce()) {
-            throw new IllegalArgumentException("입력받은 값이 에이스 카드가 아닙니다.");
-        }
     }
 
     public Name getName() {
