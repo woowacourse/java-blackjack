@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+import static blackjack.fixture.CardBundleGenerator.generateCardBundleOf;
 import static blackjack.fixture.CardRepository.CLOVER4;
 import static blackjack.fixture.CardRepository.CLOVER5;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +18,7 @@ public class ResultStatisticsTest {
 
     @BeforeEach
     void setUp() {
-        CardBundle cardBundle = CardBundle.of(CLOVER4, CLOVER5);
+        CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
         player = Player.of("hudi", cardBundle);
     }
 

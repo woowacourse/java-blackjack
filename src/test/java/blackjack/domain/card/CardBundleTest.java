@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import static blackjack.fixture.CardBundleGenerator.generateCardBundleOf;
 import static blackjack.fixture.CardRepository.CLOVER2;
 import static blackjack.fixture.CardRepository.CLOVER3;
 import static blackjack.fixture.CardRepository.CLOVER4;
@@ -33,7 +34,7 @@ public class CardBundleTest {
     @DisplayName("add 메서드로 새로운 카드를 추가할 수 있다.")
     @Test
     void add() {
-        CardBundle cardBundle = CardBundle.of(CLOVER4, CLOVER5);
+        CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
         cardBundle.add(CLOVER6);
 
         assertThat(cardBundle.getCards())
@@ -43,7 +44,7 @@ public class CardBundleTest {
     @DisplayName("add 메서드로 중복된 카드를 추가하려고 하면 예외가 발생한다.")
     @Test
     void add_throwsExceptionOnDuplicateCard() {
-        CardBundle cardBundle = CardBundle.of(CLOVER4, CLOVER5);
+        CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
 
         assertThatExceptionOfType(RuntimeException.class)
                 .isThrownBy(() -> cardBundle.add(CLOVER5))
@@ -53,7 +54,7 @@ public class CardBundleTest {
     @DisplayName("getScore 메서드는 에이스가 없을 때 각 카드가 지닌 값들을 그대로 합산하여 반환한다.")
     @Test
     void getScore_noAce() {
-        CardBundle cardBundle = CardBundle.of(CLOVER4, CLOVER5);
+        CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
 
         Score actual = cardBundle.getScore();
         Score expected = Score.valueOf(9);
@@ -124,16 +125,5 @@ public class CardBundleTest {
 
             assertThat(actual).isEqualTo(expected);
         }
-    }
-
-    private CardBundle generateCardBundleOf(Card... cards) {
-        if (cards.length < 2) {
-            throw new IllegalArgumentException("최소 두 장의 카드를 입력하여 테스트해야 합니다.");
-        }
-        CardBundle cardBundle = CardBundle.of(cards[0], cards[1]);
-        for (int i = 2; i < cards.length; i++) {
-            cardBundle.add(cards[i]);
-        }
-        return cardBundle;
     }
 }

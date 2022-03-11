@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import static blackjack.fixture.CardBundleGenerator.generateCardBundleOf;
 import static blackjack.fixture.CardRepository.CLOVER10;
 import static blackjack.fixture.CardRepository.CLOVER2;
 import static blackjack.fixture.CardRepository.CLOVER4;
@@ -11,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
+import blackjack.fixture.CardBundleGenerator;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +26,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        cardBundle = CardBundle.of(CLOVER4, CLOVER5);
+        cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
         player = Player.of("hudi", cardBundle);
     }
 
