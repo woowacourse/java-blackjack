@@ -1,6 +1,6 @@
 package fuel;
 
-public class Avante extends Car {
+public class Avante extends AbstractCar {
 
     private static final String CAR_NAME = "Avante";
     private static final int DISTANCE_PER_LITER = 15;

@@ -6,24 +6,24 @@ import java.util.List;
 public class RentCompany {
 
     private static final String CAR_REPORT_FORMAT = "%s : %d리터" + System.lineSeparator();
-    private final List<Car> cars;
+    private final List<AbstractCar> abstractCars;
 
     private RentCompany() {
-        cars = new ArrayList<>();
+        abstractCars = new ArrayList<>();
     }
 
     public static RentCompany create() {
         return new RentCompany();
     }
 
-    public void addCar(Car car) {
-        cars.add(car);
+    public void addCar(AbstractCar abstractCar) {
+        abstractCars.add(abstractCar);
     }
 
     public String generateReport() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Car car : cars) {
-            stringBuilder.append(String.format(CAR_REPORT_FORMAT, car.getName(), (int) car.getChargeQuantity()));
+        for (AbstractCar abstractCar : abstractCars) {
+            stringBuilder.append(String.format(CAR_REPORT_FORMAT, abstractCar.getName(), (int) abstractCar.getChargeQuantity()));
         }
         return stringBuilder.toString();
     }
