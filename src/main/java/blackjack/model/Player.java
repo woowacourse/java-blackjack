@@ -37,5 +37,9 @@ public abstract class Player {
         return cards.bestScore();
     }
 
+    public boolean isBust() {
+        return score().isBust();
+    }
+
     public abstract boolean isHittable();
 }

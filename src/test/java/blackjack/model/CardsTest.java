@@ -23,6 +23,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class CardsTest {
 
+    private static final Card ACE = new Card(Rank.ACE, SPADE);
+    private static final Card TWO = new Card(Rank.TWO, SPADE);
+    private static final Card THREE = new Card(Rank.THREE, CLOVER);
+    private static final Card NINE = new Card(Rank.NINE, SPADE);
+    private static final Card JACK = new Card(Rank.JACK, HEART);
+    private static final Card QUEEN = new Card(Rank.QUEEN, SPADE);
+    private static final Card KING = new Card(Rank.KING, CLOVER);
+
     @ParameterizedTest
     @MethodSource("provideCards")
     @DisplayName("최고의 카드 점수 계산")
@@ -32,14 +40,11 @@ public class CardsTest {
 
     protected static Stream<Arguments> provideCards() {
         return Stream.of(
-                Arguments.of(new Cards(new Card(ACE, SPADE), new Card(JACK, HEART)), 21),
-                Arguments.of(new Cards(new Card(ACE, DIAMOND), new Card(JACK, DIAMOND),
-                        new Card(KING, CLOVER)), 21),
-                Arguments.of(new Cards(new Card(ACE, DIAMOND), new Card(ACE, SPADE), new Card(ACE, HEART),
-                        new Card(ACE, CLOVER)), 14),
-                Arguments.of(new Cards(new Card(QUEEN, CLOVER), new Card(JACK, HEART),
-                        new Card(KING, DIAMOND)), 30),
-                Arguments.of(new Cards(new Card(THREE, DIAMOND), new Card(TWO, DIAMOND)), 5)
+                Arguments.of(new Cards(ACE, JACK), 21),
+                Arguments.of(new Cards(ACE, JACK, KING), 21),
+                Arguments.of(new Cards(ACE, ACE, ACE, ACE), 14),
+                Arguments.of(new Cards(QUEEN, JACK, KING), 30),
+                Arguments.of(new Cards(THREE, TWO), 5)
         );
     }
 
@@ -52,19 +57,17 @@ public class CardsTest {
 
     protected static Stream<Arguments> provideMaxCards() {
         return Stream.of(
-                Arguments.of(new Cards(new Card(ACE, SPADE), new Card(JACK, HEART)), 21),
-                Arguments.of(new Cards(new Card(ACE, DIAMOND), new Card(JACK, DIAMOND),
-                        new Card(KING, CLOVER)), 31),
-                Arguments.of(new Cards(new Card(ACE, DIAMOND), new Card(ACE, SPADE),
-                        new Card(NINE, CLOVER)), 31)
+                Arguments.of(new Cards(ACE, JACK), 21),
+                Arguments.of(new Cards(ACE, JACK, KING), 31),
+                Arguments.of(new Cards(ACE, ACE, NINE), 31)
         );
     }
 
     @Test
     @DisplayName("카드 발급")
     void takeCards() {
-        Cards cards = new Cards(new Card(JACK, DIAMOND), new Card(THREE, CLOVER));
-        cards.take(new Card(ACE, HEART));
+        Cards cards = new Cards(JACK, THREE);
+        cards.take(ACE);
         assertThat(cards.bestScore()).isEqualTo(new Score(14));
     }
 }

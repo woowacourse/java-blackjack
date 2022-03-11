@@ -85,14 +85,14 @@ public class Application {
     private static void printDealerRecord(Dealer dealer, List<Gamer> gamers) {
         Map<Result, Integer> result = new HashMap<>();
         for (Gamer gamer : gamers) {
-            result.merge(dealer.match(gamer.cards()), 1, Integer::sum);
+            result.merge(dealer.match(gamer), 1, Integer::sum);
         }
         OutputView.printDealerRecord(result);
     }
 
     private static void printGamerRecords(Dealer dealer, List<Gamer> gamers) {
         for (Gamer gamer : gamers) {
-            Result result = dealer.match(gamer.cards());
+            Result result = dealer.match(gamer);
             OutputView.printGamerRecord(gamer.name(), result.reverse().symbol());
         }
     }

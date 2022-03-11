@@ -8,22 +8,21 @@ public class Dealer extends Player {
         super("딜러", List.of(card1), new Cards(card1, card2, cards));
     }
 
-    public Result match(Cards cards) {
-        Score playerScore = cards.bestScore();
-        if (playerScore.isBust()) {
+    public Result match(Gamer gamer) {
+        if (gamer.isBust()) {
             return Result.WIN;
         }
-        if (score().isBust()) {
+        if (isBust()) {
             return Result.LOSS;
         }
-        return compare(playerScore);
+        return compare(score(), gamer.score());
     }
 
-    private Result compare(Score playerScore) {
-        if (score().lessThan(playerScore)) {
+    private Result compare(Score dealerScore, Score playerScore) {
+        if (dealerScore.lessThan(playerScore)) {
             return Result.LOSS;
         }
-        if (score().moreThan(playerScore)) {
+        if (dealerScore.moreThan(playerScore)) {
             return Result.WIN;
         }
         return Result.DRAW;
