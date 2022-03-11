@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
-    private static final int MINIMUM_USER_COUNT_TO_PLAY_GAME = 1;
+    private static final int MIN_USER_COUNT_TO_PLAY_GAME = 1;
+    private static final int MAX_USER_COUNT_TO_PLAY_GAME = 8;
 
     private static final CardDeck CARD_DECK = CardDeckGenerator.createCardDeckByCardNumber();
 
@@ -22,7 +23,7 @@ public class BlackJackGame {
 
     private List<User> initializeUsers() {
         List<String> userNames = InputView.requestUserNamesToPlayGame();
-        checkUserMinimumCountToPlayGame(userNames.size());
+        checkUserCountToPlayGame(userNames.size());
         checkDuplicateUserName(userNames);
         return userNames.stream()
                 .map(name -> new User(name, CARD_DECK.drawInitialCards()))
@@ -33,9 +34,9 @@ public class BlackJackGame {
         return new Dealer(CARD_DECK.drawInitialCards());
     }
 
-    private void checkUserMinimumCountToPlayGame(int userCount) {
-        if (userCount < MINIMUM_USER_COUNT_TO_PLAY_GAME) {
-            throw new IllegalArgumentException("게임을 하기 위한 유저를 1명이상 입력해주세요.");
+    private void checkUserCountToPlayGame(int userCount) {
+        if (userCount < MIN_USER_COUNT_TO_PLAY_GAME || userCount > MAX_USER_COUNT_TO_PLAY_GAME) {
+            throw new IllegalArgumentException("게임을 하기 위한 유저 수는 1명이상 8명이하로 입력해주세요.");
         }
     }
 
