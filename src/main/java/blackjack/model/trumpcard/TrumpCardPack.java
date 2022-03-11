@@ -1,38 +1,44 @@
 package blackjack.model.trumpcard;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Stack;
 
 public class TrumpCardPack {
-    private final List<TrumpCard> values;
+    private static final String ERROR_EMPTY = "[ERROR] 더 이상 카드를 꺼낼 수 없습니다.";
+
+    private final Stack<TrumpCard> values;
 
     public TrumpCardPack() {
         this.values = createCards();
     }
 
-    private List<TrumpCard> createCards() {
-        List<TrumpCard> trumpCards = new ArrayList<>();
-        Arrays.stream(TrumpSymbol.values())
-                .map(this::createCardsOfSymbol)
-                .forEach(trumpCards::addAll);
-        return trumpCards;
+    private Stack<TrumpCard> createCards() {
+        Stack<TrumpCard> cards = new Stack<>();
+        stackCards(cards);
+        Collections.shuffle(cards);
+        return cards;
     }
 
-    private List<TrumpCard> createCardsOfSymbol(TrumpSymbol trumpSymbol) {
-        return Arrays.stream(TrumpNumber.values())
-                .map(trumpNumber -> new TrumpCard(trumpNumber, trumpSymbol))
-                .collect(Collectors.toList());
+    private void stackCards(Stack<TrumpCard> cards) {
+        for (TrumpSymbol symbol : TrumpSymbol.values()) {
+            stackCardsOfSymbol(cards, symbol);
+        }
+    }
+
+    private void stackCardsOfSymbol(Stack<TrumpCard> cards, TrumpSymbol symbol) {
+        for (TrumpNumber number : TrumpNumber.values()) {
+            cards.push(new TrumpCard(number, symbol));
+        }
     }
 
     public TrumpCard draw() {
-        Collections.shuffle(values);
+        checkEmpty();
+        return this.values.pop();
+    }
 
-        final int topCardIndex = 0;
-        TrumpCard topCard = values.get(topCardIndex);
-        values.remove(topCardIndex);
-        return topCard;
+    private void checkEmpty() {
+        if (this.values.empty()) {
+            throw new RuntimeException(ERROR_EMPTY);
+        }
     }
 }
