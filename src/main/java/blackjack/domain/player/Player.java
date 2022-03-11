@@ -9,6 +9,7 @@ import java.util.List;
 public abstract class Player {
 
     private static final String FIRST_RECEIVED_CARD_SIZE_EXCEPTION_MESSAGE = "처음 제공받는 카드는 2장이어야 합니다.";
+
     private static final int FIRST_RECEIVED_CARD_SIZE = 2;
 
     private final String name;

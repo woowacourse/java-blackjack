@@ -16,7 +16,12 @@ public class ResultView {
     private static final String DEALER_RECEIVE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String COLON = ": ";
 
-    public static void printUsersCards(List<Player> users) {
+    public static void printDealerAndUserCards(List<Player> users, Player dealer) {
+        printDealerCard(dealer);
+        printUsersCards(users);
+    }
+
+    private static void printUsersCards(List<Player> users) {
         for (Player user : users) {
             printUserCards(user);
         }
@@ -37,7 +42,7 @@ public class ResultView {
         return sb.toString();
     }
 
-    public static void printDealerCard(Player dealer) {
+    private static void printDealerCard(Player dealer) {
         System.out.print(dealer.getName() + CARD_MARK_MESSAGE);
         String dealerCard = dealer.getCards().stream()
                 .map(card -> card.getCardNumberType() + card.getCardPattern())

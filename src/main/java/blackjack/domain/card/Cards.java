@@ -7,10 +7,13 @@ import java.util.List;
 public class Cards {
 
     private static final int ACE_VALUE = 10;
+
     private List<Card> cards;
+    private Boolean isBlackJack;
 
     public Cards(List<Card> cards) {
         this.cards = cards;
+        isBlackJack = calculateScore() == Result.BLACK_JACK_SCORE;
     }
 
     public void addCard(Card card) {
@@ -20,10 +23,14 @@ public class Cards {
     public int calculateScore() {
         int totalScore = getTotalScore();
         int countOfAce = getCountOfAce();
-        while (countOfAce-- > 0 && totalScore > Result.MAX_SCORE) {
+        while (countOfAce-- > 0 && totalScore > Result.BLACK_JACK_SCORE) {
             totalScore -= ACE_VALUE;
         }
         return totalScore;
+    }
+
+    public Boolean getBlackJack() {
+        return isBlackJack;
     }
 
     private int getCountOfAce() {
