@@ -12,6 +12,16 @@ public enum ResultType {
         this.displayName = displayName;
     }
 
+    public static ResultType getOppositeTypeOf(ResultType targetType) {
+        if (targetType == ResultType.WIN) {
+            return ResultType.LOSE;
+        }
+        if (targetType == ResultType.LOSE) {
+            return ResultType.WIN;
+        }
+        return ResultType.DRAW;
+    }
+
     public String getDisplayName() {
         return displayName;
     }
