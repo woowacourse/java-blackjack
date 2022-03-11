@@ -76,5 +76,4 @@ public class GameController {
         final RecordFactory factory = game.getRecordFactory();
         OutputView.printRecord(factory.getDealerRecord(), factory.getAllPlayerRecord());
     }
-
 }

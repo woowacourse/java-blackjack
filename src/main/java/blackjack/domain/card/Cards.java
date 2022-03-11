@@ -5,6 +5,8 @@ import java.util.Set;
 
 public class Cards {
 
+    private static final int MAX_SCORE = 21;
+
     private final Set<Card> value;
 
     public Cards(Set<Card> value) {
@@ -20,7 +22,7 @@ public class Cards {
     }
 
     public Status getStatus() {
-        if (sum() > 21) {
+        if (sum() > MAX_SCORE) {
             return Status.BUST;
         }
 

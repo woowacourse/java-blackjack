@@ -11,6 +11,8 @@ import java.util.Map;
 
 public class RecordFactory {
 
+    private static final int MAX_SCORE = 21;
+
     private final int dealerScore;
     private final Map<Record, Integer> dealerRecord;
     private final Map<String, Record> playerRecord;
@@ -35,10 +37,6 @@ public class RecordFactory {
         return playerRecord;
     }
 
-    public Record getPlayerRecord(String name) {
-        return playerRecord.get(name);
-    }
-
     public Map<String, Record> getAllPlayerRecord() {
         return playerRecord;
     }
@@ -55,11 +53,11 @@ public class RecordFactory {
     }
 
     private Record createRecord(int score) {
-        if (dealerScore > 21) {
+        if (dealerScore > MAX_SCORE) {
             return getRecordWhenDealerBust(score);
         }
 
-        if (score > 21 || score < dealerScore) {
+        if (score > MAX_SCORE || score < dealerScore) {
             return LOSS;
         }
 
@@ -71,7 +69,7 @@ public class RecordFactory {
     }
 
     private Record getRecordWhenDealerBust(int score) {
-        if (score > 21) {
+        if (score > MAX_SCORE) {
             return LOSS;
         }
 

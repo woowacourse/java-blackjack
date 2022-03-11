@@ -30,12 +30,12 @@ public class OutputView {
 
     public static void printDealerDrawCardCount(CardCount cardCount) {
         if (cardCount.isDraw()) {
-            System.out.println(System.lineSeparator() + "딜러는 16이하라 " + cardCount.getName() + "장의 카드를 더 받았습니다."
-                    + System.lineSeparator());
+            System.out.println(System.lineSeparator() + "딜러가 16초과여서 카드를 받지않았습니다." + System.lineSeparator());
             return;
         }
 
-        System.out.println(System.lineSeparator() + "딜러가 16초과여서 카드를 받지않았습니다." + System.lineSeparator());
+        System.out.println(System.lineSeparator() + "딜러는 16이하라 " + cardCount.getName() + "장의 카드를 더 받았습니다."
+                + System.lineSeparator());
     }
 
     public static void printParticipantCards(ParticipantVo vo) {

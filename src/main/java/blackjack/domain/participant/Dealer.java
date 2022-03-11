@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
+    private static final int SCORE_LOWER_BOUND = 17;
+
     public Dealer() {
         super();
     }
@@ -20,7 +22,7 @@ public class Dealer extends Participant {
 
     public CardCount drawCards(CardFactory cardFactory) {
         int count = 0;
-        while (getStatus() == Status.HIT && getScore() <= 16) {
+        while (getStatus() == Status.HIT && getScore() < SCORE_LOWER_BOUND) {
             hit(cardFactory);
             count++;
         }
