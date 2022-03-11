@@ -34,6 +34,10 @@ public class PlayingCard {
         return this.denomination.getRawScore() + this.suit.getName();
     }
 
+    public int getScore() {
+        return denomination.getScore();
+    }
+
     @Override
     public boolean equals(final Object object) {
         if (this == object) {
@@ -56,9 +60,5 @@ public class PlayingCard {
         int result = suit != null ? suit.hashCode() : 0;
         result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
         return result;
-    }
-
-    public int getScore() {
-        return denomination.getScore();
     }
 }

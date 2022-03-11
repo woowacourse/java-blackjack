@@ -36,10 +36,8 @@ public class BlackJackController {
         processResult(dealer, gamblers);
     }
 
-
     public List<Player> getGambler() {
         final List<String> playerNames = inputView.scanPlayerNames();
-
         return playerNames.stream()
             .map(Gambler::new)
             .collect(toList());

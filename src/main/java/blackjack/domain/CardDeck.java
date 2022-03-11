@@ -6,6 +6,7 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class CardDeck {
+
     private final Stack<PlayingCard> playingCards;
 
     public CardDeck() {
@@ -16,7 +17,7 @@ public class CardDeck {
 
     private Stack<PlayingCard> createPlayingCards() {
         return Arrays.stream(Suit.values())
-            .filter(suit -> !suit.equals(Suit.BURST.BURST))
+            .filter(suit -> !suit.equals(Suit.BURST))
             .flatMap(suit -> Arrays.stream(Denomination.values())
                 .filter(denomination -> !denomination.equals(Denomination.BURST))
                 .map(denomination -> PlayingCard.of(suit, denomination)))

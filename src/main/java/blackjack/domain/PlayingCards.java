@@ -5,8 +5,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class PlayingCards {
+
     private static final int BLACKJACK_NUMBER = 21;
     private static final int ACE_DIFFERENCE_UNIT = 10;
+
     private List<PlayingCard> playingCards;
 
     public PlayingCards() {
@@ -65,7 +67,6 @@ public class PlayingCards {
         return playingCards.stream()
             .anyMatch(PlayingCard::isOne);
     }
-
 
     private PlayingCard getAce() {
         return playingCards.stream()

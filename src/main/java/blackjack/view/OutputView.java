@@ -16,8 +16,8 @@ public class OutputView {
     private static final String SEPARATE_TWO_CARD = "에게 2장을 나누었습니다.";
     private static final String COLON_DELIMITER = ": ";
     private static final String UNDER_SIXTEEN_INSTRUCTION = "는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String SUFFIX_CARD = "카드: ";
-    private static final String SUFFIX_RESULT = " - 결과: ";
+    private static final String PREFIX_CARD = "카드: ";
+    private static final String PREFIX_RESULT = " - 결과: ";
     private static final String BURST_INSTRUCTION = "님 버스트로 패배하였습니다.";
     private static final String FINAL_RESULT_INSTRUCTION = "## 최종 승패";
     private static final String DEALER_NAME = "딜러";
@@ -62,7 +62,7 @@ public class OutputView {
     }
 
     private String getCardAndScoreMessage(final PlayerDto playerDto) {
-        return playerDto.getName() + SUFFIX_CARD + getCardNames(playerDto.getPlayingCards()) + SUFFIX_RESULT
+        return playerDto.getName() + PREFIX_CARD + getCardNames(playerDto.getPlayingCards()) + PREFIX_RESULT
             + playerDto.getScore();
     }
 

@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 public class Gambler extends Player {
+
     private static final int BURST_CRITERIA = 21;
 
     public Gambler(final String name) {
@@ -26,5 +27,4 @@ public class Gambler extends Player {
     public int getSumOfCards() {
         return super.getSumOfCards();
     }
-
 }

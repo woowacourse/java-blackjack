@@ -12,6 +12,12 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String SCAN_PLAYER_NAMES_INSTRUCTION = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String PLAYER_NAMES_EMPTY_MESSAGE = "이름에 빈값을 포함할 수 없습니다.";
+    private static final int NAME_COUNT_MIN = 1;
+    private static final String NAME_COUNT_SUFFIX = "개 이상 입력하세요.";
+    private static final String PLAYER_NAMES_DUPLICATE_MESSAGE = "입력값이 중복될 수 없습니다.";
+    private static final String PLAYER_NAMES_NOT_NULL_MESSAGE = "null을 허용하지 않습니다.";
+    private static final String HIT_OR_STAY_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
 
     public List<String> scanPlayerNames() {
         System.out.println(SCAN_PLAYER_NAMES_INSTRUCTION);
@@ -29,25 +35,25 @@ public class InputView {
     private void checkEmpty(final List<String> playerNames) {
         if (playerNames.stream()
             .anyMatch(String::isEmpty)) {
-            throw new IllegalArgumentException("이름에 빈값을 포함할 수 없습니다.");
+            throw new IllegalArgumentException(PLAYER_NAMES_EMPTY_MESSAGE);
         }
     }
 
     private void checkCount(final List<String> playerNames) {
-        if (playerNames.size() < 1) {
-            throw new IllegalArgumentException(1 + "개 이상 입력하세요.");
+        if (playerNames.size() < NAME_COUNT_MIN) {
+            throw new IllegalArgumentException(NAME_COUNT_MIN + NAME_COUNT_SUFFIX);
         }
     }
 
     public void checkDuplicate(List<String> values) {
         if (isDuplicate(values)) {
-            throw new IllegalArgumentException("입력값이 중복될 수 없습니다.");
+            throw new IllegalArgumentException(PLAYER_NAMES_DUPLICATE_MESSAGE);
         }
     }
 
     private List<String> getPlayerNames() {
         final String inputNames = SCANNER.nextLine();
-        Objects.requireNonNull(inputNames, "null을 허용하지 않습니다.");
+        Objects.requireNonNull(inputNames, PLAYER_NAMES_NOT_NULL_MESSAGE);
         return Arrays.stream(inputNames
                 .split(",", -1))
             .map(String::trim)
@@ -61,7 +67,7 @@ public class InputView {
     }
 
     public String scanHitOrStay(final PlayerDto playerDto) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerDto.getName());
+        System.out.printf(HIT_OR_STAY_MESSAGE, playerDto.getName());
         return SCANNER.nextLine();
     }
 }

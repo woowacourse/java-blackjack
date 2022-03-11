@@ -32,7 +32,6 @@ public enum GameResult {
         if (this.equals(LOSE)) {
             return WIN;
         }
-
         return this;
     }
 
