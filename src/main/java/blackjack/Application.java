@@ -22,7 +22,7 @@ public class Application {
     }
 
     private static void run() {
-        CardDispenser cardDispenser = new CardDispenser();
+        CardDispenser cardDispenser = CardDispenser.shuffledCardDispenser();
         Dealer dealer = createDealer(cardDispenser);
         List<Player> gamers = createGamers(names(), cardDispenser);
         OutputView.printOpenCard(dealer, gamers);
