@@ -21,6 +21,7 @@ public class OutputView {
     private static final String JOIN_DELIMITER = ", ";
     private static final String INITIAL_CARD_DISTRIBUTION_MESSAGE = NEW_LINE + "딜러와 %s에게 2장의 카드를 나누었습니다." + NEW_LINE;
     private static final String PLAYER_CARDS_FORMAT = "%s 카드: %s";
+    private static final String DEALER_BLACKJACK_MESSAGE = NEW_LINE + "블랙잭! 게임을 종료합니다.";
     private static final String PARTICIPANT_CARDS_AND_SCORE_FORMAT = NEW_LINE + "%s 카드: %s - 결과: %d";
     private static final String PLAYER_BUST_MESSAGE = "버스트! 21을 초과하였습니다!";
     private static final String DEALER_EXTRA_CARD_MESSAGE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
@@ -28,13 +29,18 @@ public class OutputView {
     public static final String PARTICIPANT_RESULT_FORMAT = "%s: %s";
 
     public static void printInitialParticipantsCards(InitialDistributionDto dto) {
-        StringBuilder builder = new StringBuilder();
+        String message = getParticipantsCardCountInfo(dto.getPlayerNames())
+                + getAllParticipantCardInfos(dto.getParticipantsInfo())
+                + NEW_LINE;
 
-        builder.append(getParticipantsCardCountInfo(dto.getPlayerNames()));
-        builder.append(getAllParticipantCardInfos(dto.getParticipantsInfo()));
-        builder.append(NEW_LINE);
+        print(message);
+    }
 
-        print(builder.toString());
+    public static void printDealerBlackjackInfo(InitialDistributionDto dto) {
+        String message = getParticipantsCardCountInfo(dto.getPlayerNames())
+                + DEALER_BLACKJACK_MESSAGE;
+
+        print(message);
     }
 
     private static String getParticipantsCardCountInfo(List<String> playerNames) {
@@ -111,7 +117,8 @@ public class OutputView {
                 .collect(Collectors.toList());
     }
 
-    private static String getSingleResultTypeFormat(ResultStatistics result, String name, List<ResultType> existingTypes) {
+    private static String getSingleResultTypeFormat(ResultStatistics result, String name,
+                                                    List<ResultType> existingTypes) {
         int count = result.getCountOf(existingTypes.get(0)).toInt();
         String resultType = existingTypes.get(0).getDisplayName();
 
