@@ -25,6 +25,10 @@ public abstract class Participant {
         return cardBundle.getScore();
     }
 
+    public boolean isBust() {
+        return cardBundle.getScore().toInt() > Score.BLACKJACK;
+    }
+
     public String getName() {
         return name;
     }

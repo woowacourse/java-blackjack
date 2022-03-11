@@ -1,10 +1,12 @@
 package blackjack.domain.participant;
 
+import static blackjack.fixture.CardRepository.CLOVER10;
 import static blackjack.fixture.CardRepository.CLOVER4;
 import static blackjack.fixture.CardRepository.CLOVER5;
 import static blackjack.fixture.CardRepository.CLOVER6;
 import static blackjack.fixture.CardRepository.CLOVER7;
 import static blackjack.fixture.CardRepository.CLOVER8;
+import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -12,6 +14,7 @@ import blackjack.domain.card.CardBundle;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
@@ -43,23 +46,52 @@ public class DealerTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("점수가 16이면 true를 반환한다.")
-    @Test
-    void canReceive_returnTrueOn16() {
-        dealer.receiveCard(CLOVER7);
+    @DisplayName("canReceive 메서드 테스트")
+    @Nested
+    class CanReceiveTest {
 
-        boolean actual = dealer.canReceive();
+        @DisplayName("점수가 16이면 true를 반환한다.")
+        @Test
+        void canReceive_returnTrueOn16() {
+            dealer.receiveCard(CLOVER7);
 
-        assertThat(actual).isTrue();
+            boolean actual = dealer.canReceive();
+
+            assertThat(actual).isTrue();
+        }
+
+        @DisplayName("점수가 17 이상이면 false를 반환한다.")
+        @Test
+        void canReceive_returnFalseOnGreaterThan16() {
+            dealer.receiveCard(CLOVER8);
+
+            boolean actual = dealer.canReceive();
+
+            assertThat(actual).isFalse();
+        }
     }
 
-    @DisplayName("점수가 17 이상이면 false를 반환한다.")
-    @Test
-    void canReceive_returnFalseOnGreaterThan16() {
-        dealer.receiveCard(CLOVER8);
+    @DisplayName("isBust 메서드 테스트")
+    @Nested
+    class IsBustTest {
 
-        boolean actual = dealer.canReceive();
+        @DisplayName("점수가 21을 넘지 않으면 false를 반환한다.")
+        @Test
+        void isBust_returnFalseOn21OrLess() {
+            boolean actual = dealer.isBust();
 
-        assertThat(actual).isFalse();
+            assertThat(actual).isFalse();
+        }
+
+        @DisplayName("점수가 21을 넘으면 true를 반환한다.")
+        @Test
+        void isBust_returnTrueOnOver21() {
+            dealer.receiveCard(CLOVER10);
+            dealer.receiveCard(CLOVER_KING);
+
+            boolean actual = dealer.isBust();
+
+            assertThat(actual).isTrue();
+        }
     }
 }

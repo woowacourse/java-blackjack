@@ -14,6 +14,7 @@ import blackjack.domain.card.CardBundle;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
@@ -30,15 +31,15 @@ public class PlayerTest {
     @DisplayName("플레이어의 이름을 빈 문자열로 생성하려는 경우 예외가 발생한다.")
     @Test
     void constructor_throwExceptionOnBlankName() {
-        assertThatThrownBy(()-> Player.of("", cardBundle))
+        assertThatThrownBy(() -> Player.of("", cardBundle))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage( "플레이어는 이름을 지녀야 합니다.");
+                .hasMessage("플레이어는 이름을 지녀야 합니다.");
     }
 
     @DisplayName("플레이어의 이름을 '딜러'로 생성하려는 경우 예외가 발생한다.")
     @Test
     void constructor_throwExceptionOnDealerName() {
-        assertThatThrownBy(()-> Player.of("딜러", cardBundle))
+        assertThatThrownBy(() -> Player.of("딜러", cardBundle))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 이름은 딜러가 될 수 없습니다.");
     }
@@ -53,33 +54,62 @@ public class PlayerTest {
         assertThat(actual).containsExactlyInAnyOrder(CLOVER4, CLOVER5, CLOVER6);
     }
 
-    @DisplayName("점수가 21을 넘지 않으면 true를 반환한다.")
-    @Test
-    void canReceive_returnTrueOnLessThan21() {
-        boolean actual = player.canReceive();
+    @DisplayName("canReceive 메서드 테스트")
+    @Nested
+    class CanReceiveTest {
 
-        assertThat(actual).isTrue();
+        @DisplayName("점수가 21을 넘지 않으면 true를 반환한다.")
+        @Test
+        void canReceive_returnTrueOnLessThan21() {
+            boolean actual = player.canReceive();
+
+            assertThat(actual).isTrue();
+        }
+
+        @DisplayName("점수가 21이면 true를 반환한다.")
+        @Test
+        void canReceive_returnTrueOn21() {
+            player.receiveCard(CLOVER2);
+            player.receiveCard(CLOVER10);
+
+            boolean actual = player.canReceive();
+
+            assertThat(actual).isTrue();
+        }
+
+        @DisplayName("점수가 21을 초과하면 false를 반환한다.")
+        @Test
+        void canReceive_returnFalseOnGreaterThan21() {
+            player.receiveCard(CLOVER10);
+            player.receiveCard(CLOVER_KING);
+
+            boolean actual = player.canReceive();
+
+            assertThat(actual).isFalse();
+        }
     }
 
-    @DisplayName("점수가 21이면 true를 반환한다.")
-    @Test
-    void canReceive_returnTrueOn21() {
-        player.receiveCard(CLOVER2);
-        player.receiveCard(CLOVER10);
+    @DisplayName("isBust 메서드 테스트")
+    @Nested
+    class IsBustTest {
 
-        boolean actual = player.canReceive();
+        @DisplayName("점수가 21을 넘지 않으면 false를 반환한다.")
+        @Test
+        void isBust_returnFalseOn21OrLess() {
+            boolean actual = player.isBust();
 
-        assertThat(actual).isTrue();
-    }
+            assertThat(actual).isFalse();
+        }
 
-    @DisplayName("점수가 21을 초과하면 false를 반환한다.")
-    @Test
-    void canReceive_returnFalseOnGreaterThan21() {
-        player.receiveCard(CLOVER10);
-        player.receiveCard(CLOVER_KING);
+        @DisplayName("점수가 21을 넘으면 true를 반환한다.")
+        @Test
+        void isBust_returnTrueOnOver21() {
+            player.receiveCard(CLOVER10);
+            player.receiveCard(CLOVER_KING);
 
-        boolean actual = player.canReceive();
+            boolean actual = player.isBust();
 
-        assertThat(actual).isFalse();
+            assertThat(actual).isTrue();
+        }
     }
 }

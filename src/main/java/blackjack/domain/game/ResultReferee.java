@@ -35,24 +35,23 @@ public class ResultReferee {
     }
 
     private List<ResultStatistics> getAllDuelResults() {
-        for (Player player : players) {
-            getAndAddDuelResult(player);
-        }
-
+        players.forEach(this::getAndAddDuelResult);
         return getResults();
     }
 
-    private boolean getAndAddDuelResult(Player player) {
+    private void getAndAddDuelResult(Player player) {
         Score playerScore = player.getCurrentScore();
         int compareResult = playerScore.compareTo(dealer.getCurrentScore());
 
         if (playerScore.toInt() > Score.BLACKJACK || compareResult < 0) {
-            return playerResults.add(initPlayerResultOf(player, ResultType.LOSE));
+            playerResults.add(initPlayerResultOf(player, ResultType.LOSE));
+            return;
         }
         if (compareResult > 0) {
-            return playerResults.add(initPlayerResultOf(player, ResultType.WIN));
+            playerResults.add(initPlayerResultOf(player, ResultType.WIN));
+            return;
         }
-        return playerResults.add(initPlayerResultOf(player, ResultType.DRAW));
+        playerResults.add(initPlayerResultOf(player, ResultType.DRAW));
     }
 
     private List<ResultStatistics> getResults() {
