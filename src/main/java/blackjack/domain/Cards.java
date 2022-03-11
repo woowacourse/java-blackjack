@@ -27,28 +27,24 @@ public class Cards {
                 .mapToInt(value -> value.getCardNumber().getValue())
                 .sum();
 
-        for (int i = 0; i < countAce(); i++) {
-            sum += getAceAdditionalValue(sum);
+        if (hasAce() && canAddAceAdditionalValue(sum)) {
+            return sum + ACE_ADDITIONAL_VALUE;
         }
         return sum;
     }
 
-    private int countAce() {
-        return (int) cards.stream()
-                .filter(card -> card.getCardNumber().equals(CardNumber.ACE))
-                .count();
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(card -> card.getCardNumber().equals(CardNumber.ACE));
+    }
+
+    private boolean canAddAceAdditionalValue(int sum) {
+        return sum + ACE_ADDITIONAL_VALUE <= MAX_SCORE;
     }
 
     public boolean containsCardNumber(CardNumber number) {
         return cards.stream()
                 .anyMatch(card -> card.getCardNumber() == number);
-    }
-
-    private int getAceAdditionalValue(int sum) {
-        if (sum + ACE_ADDITIONAL_VALUE <= MAX_SCORE) {
-            return ACE_ADDITIONAL_VALUE;
-        }
-        return 0;
     }
 
     @Override
