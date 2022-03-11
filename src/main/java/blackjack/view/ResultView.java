@@ -13,7 +13,7 @@ public class ResultView {
 	private static final String RESULT_DELIMITER = " - 결과: ";
 	private static final String MESSAGE_FINAL_RESULT = "\n## 최종 승패";
 
-	public static void showStartingStatus(BlackJackDto blackJackDto) {
+	public void showStartingStatus(BlackJackDto blackJackDto) {
 		String[] playerNames = blackJackDto.getPlayers().stream()
 			.map(Participant::getName)
 			.toArray(String[]::new);
@@ -27,18 +27,18 @@ public class ResultView {
 		System.out.println();
 	}
 
-	public static void showEachPlayerCurrentStatus(BlackJackDto blackJackDto, Participant participant) {
+	public void showEachPlayerCurrentStatus(BlackJackDto blackJackDto, Participant participant) {
 		System.out.println(getEachPlayerStatus(blackJackDto, participant));
 		if (participant.isOverMaxScore()) {
 			System.out.println(MESSAGE_SCORE_OVER_21);
 		}
 	}
 
-	private static String getEachPlayerStatus(BlackJackDto blackJackDto, Participant participant) {
+	private String getEachPlayerStatus(BlackJackDto blackJackDto, Participant participant) {
 		return blackJackDto.getPlayerCardStatus(participant);
 	}
 
-	public static void showWhetherDealerReceivedOrNot(Boolean isReceived) {
+	public void showWhetherDealerReceivedOrNot(Boolean isReceived) {
 		System.out.println();
 		if (isReceived) {
 			System.out.println(MESSAGE_DEALER_NOT_RECEIVE);
@@ -47,7 +47,7 @@ public class ResultView {
 		System.out.println(MESSAGE_DEALER_RECEIVE);
 	}
 
-	public static void showFinalStatus(BlackJackDto blackJackDto) {
+	public void showFinalStatus(BlackJackDto blackJackDto) {
 		System.out.println();
 		Participant dealer = blackJackDto.getDealer();
 		System.out.println(getEachPlayerStatus(blackJackDto, dealer) + RESULT_DELIMITER + dealer.getScore());
@@ -56,7 +56,7 @@ public class ResultView {
 		}
 	}
 
-	public static void showResult(BlackJackDto blackJackDto) {
+	public void showResult(BlackJackDto blackJackDto) {
 		System.out.println(MESSAGE_FINAL_RESULT);
 		System.out.println(blackJackDto.getDealerResult());
 		blackJackDto.getPlayersResult().forEach(System.out::println);

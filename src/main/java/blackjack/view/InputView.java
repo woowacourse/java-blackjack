@@ -18,13 +18,13 @@ public class InputView {
 		scanner.close();
 	}
 
-	public static List<String> askPlayerNameInput() {
+	public List<String> askPlayerNameInput() {
 		System.out.println(MESSAGE_ASK_PARTICIPANTS);
 		String input = scanner.nextLine();
 		return Arrays.asList(input.split(NAME_DELIMITER));
 	}
 
-	public static Boolean askAdditionalCardInput(String name) {
+	public Boolean askAdditionalCardInput(String name) {
 		System.out.printf(MESSAGE_ASK_ADDITIONAL_CARD_CHOICE, name);
 		try {
 			String input = scanner.nextLine().toLowerCase(Locale.ROOT);
@@ -35,7 +35,7 @@ public class InputView {
 		}
 	}
 
-	private static void checkValidChoice(String choice) {
+	private void checkValidChoice(String choice) {
 		if (!(choice.equals(CHOICE_YES) || choice.equals(CHOICE_NO))) {
 			throw new IllegalArgumentException(ERROR_MESSAGE_ILLEGAL_CHOICE_FORMAT);
 		}
