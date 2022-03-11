@@ -49,6 +49,10 @@ public class Player {
         return score().isBust();
     }
 
+    public final boolean isSameName(Name name) {
+        return name.equals(name);
+    }
+
     public boolean isHittable() {
         return cards.lessThan(HIT_BOUNDARY);
     }

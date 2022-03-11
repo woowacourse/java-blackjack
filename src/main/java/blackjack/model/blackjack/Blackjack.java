@@ -1,5 +1,7 @@
 package blackjack.model.blackjack;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
@@ -10,15 +12,18 @@ import blackjack.model.player.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class Blackjack {
 
     private CardDispenser cardDispenser;
-    private Participants participants;
+    private Dealer dealer;
+    private List<Player> players;
 
     public Blackjack(CardDispenser cardDispenser, Name... names) {
         this.cardDispenser = cardDispenser;
-        this.participants = new Participants(createDealer(), createPlayers(cardDispenser, names));
+        this.dealer = createDealer();
+        this.players = createPlayers(cardDispenser, names);
     }
 
     private Dealer createDealer() {
@@ -35,12 +40,8 @@ public class Blackjack {
         return new Player(name, cardDispenser.issue(), cardDispenser.issue());
     }
 
-    public void dealerTakeCard() {
-        participants.takeCardByName(Dealer.dealerName(), cardDispenser.issue());
-    }
-
-    public void playerTakeCard(Name name) {
-        participants.takeCardByName(name, cardDispenser.issue());
+    public void takeCardByName(Name name) {
+        findPlayerByName(name).take(cardDispenser.issue());
     }
 
     public Records records() {
@@ -48,19 +49,49 @@ public class Blackjack {
     }
 
     private Map<Name, Record> recordsMap() {
-        return participants.records().stream()
+        return Stream.concat(Stream.of(dealerRecord()), playerRecords().stream())
             .collect(toMap(Record::name, record -> record));
     }
 
-    public boolean isDealerHittable() {
-        return participants.isHittableByName(Dealer.dealerName());
+    private Record dealerRecord() {
+        Map<Result, Long> dealerRecord = players.stream()
+            .map(dealer::match)
+            .collect(groupingBy(r -> r, counting()));
+        return new Record(Dealer.dealerName(), dealerRecord);
     }
 
-    public boolean isPlayerHittable(Name name) {
-        return participants.isHittableByName(name);
+    private List<Record> playerRecords() {
+        return players.stream().map(this::playerRecord).collect(toUnmodifiableList());
     }
 
-    public Cards dealerCards() {
-        return participants.takenCardsByName(Dealer.dealerName());
+    private Record playerRecord(Player player) {
+        Result result = dealer.match(player);
+        return new Record(player.name(), result.reverse());
+    }
+
+    public boolean isHittableByName(Name name) {
+        return findPlayerByName(name).isHittable();
+    }
+
+    public Cards ownCardsByName(Name name) {
+        return findPlayerByName(name).cards();
+    }
+
+    public Cards openedCardsByName(Name name) {
+        return findPlayerByName(name).openCards();
+    }
+
+    public Score scoreByName(Name name) {
+        return findPlayerByName(name).score();
+    }
+
+    private Player findPlayerByName(Name name) {
+        if (name.equals(Dealer.dealerName())) {
+            return dealer;
+        }
+        return players.stream()
+            .filter(player -> player.isSameName(name))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 }
