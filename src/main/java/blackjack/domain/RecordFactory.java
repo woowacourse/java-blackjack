@@ -1,8 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.Record.LOSS;
-import static blackjack.domain.Record.PUSH;
-import static blackjack.domain.Record.WIN;
+import static blackjack.domain.Record.*;
 
 import java.util.HashMap;
 import java.util.Map;

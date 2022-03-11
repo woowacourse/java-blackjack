@@ -1,8 +1,9 @@
 package blackjack.vo;
 
+import java.util.Set;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Participant;
-import java.util.Set;
 
 public class ParticipantVo {
 

@@ -1,19 +1,20 @@
 package blackjack.view;
 
-import blackjack.domain.Record;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardCount;
-import blackjack.vo.ParticipantVo;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import blackjack.domain.Record;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardCount;
+import blackjack.vo.ParticipantVo;
+
 public class OutputView {
 
     public static void printInitResult(List<String> names) {
         System.out.printf("딜러와 %s에게 2장의 카드를 나누어주었습니다." + System.lineSeparator(),
-                String.join(", ", names));
+            String.join(", ", names));
     }
 
     public static void printDealerFirstCard(Card card) {
@@ -22,8 +23,8 @@ public class OutputView {
 
     public static void printPlayerCards(ParticipantVo vo) {
         List<String> list = vo.getCards().stream()
-                .map(card -> card.getNumber().getName() + card.getSymbol().getName())
-                .collect(Collectors.toList());
+            .map(card -> card.getNumber().getName() + card.getSymbol().getName())
+            .collect(Collectors.toList());
 
         System.out.println(vo.getName() + "카드: " + String.join(", ", list));
     }
@@ -39,11 +40,11 @@ public class OutputView {
 
     public static void printParticipantCards(ParticipantVo vo) {
         List<String> list = vo.getCards().stream()
-                .map(card -> card.getNumber().getName() + card.getSymbol().getName())
-                .collect(Collectors.toList());
+            .map(card -> card.getNumber().getName() + card.getSymbol().getName())
+            .collect(Collectors.toList());
 
         System.out.println(vo.getName() + "카드: " + String.join(", ", list)
-                + " - 결과: " + vo.getScore());
+            + " - 결과: " + vo.getScore());
     }
 
     public static void printDealerRecord(Map<Record, Integer> record) {
@@ -51,8 +52,8 @@ public class OutputView {
 
         final StringBuilder builder = new StringBuilder();
         Arrays.stream(Record.values())
-                .filter(it -> record.getOrDefault(it, 0) != 0)
-                .forEach(it -> builder.append(record.get(it)).append(it.getName()));
+            .filter(it -> record.getOrDefault(it, 0) != 0)
+            .forEach(it -> builder.append(record.get(it)).append(it.getName()));
 
         System.out.println("딜러: " + builder);
     }

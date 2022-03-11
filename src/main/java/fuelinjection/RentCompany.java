@@ -2,6 +2,7 @@ package fuelinjection;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RentCompany {
 
@@ -24,14 +25,9 @@ public class RentCompany {
     }
 
     public String generateReport() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        for (Car car : value) {
-            stringBuilder.append(car.getName())
-                    .append(" : ")
-                    .append((int) Math.round(car.getChargeQuantity()))
-                    .append("리터\n");
-        }
-
-        return stringBuilder.toString();
+        return value.stream()
+            .map(car -> car.getName() + " : " +
+                (int)Math.round(car.getChargeQuantity()) + "리터" + System.lineSeparator())
+            .collect(Collectors.joining());
     }
 }

@@ -45,14 +45,13 @@ public class CardFactory {
 
     private static List<Card> createSymbolCards(CardSymbol symbol) {
         return Arrays.stream(CardNumber.values())
-                .map(cardNumber -> new Card(symbol, cardNumber))
-                .collect(Collectors.toList());
+            .map(cardNumber -> new Card(symbol, cardNumber))
+            .collect(Collectors.toList());
     }
 
     public Card drawCard() {
         return deck.pop();
     }
-
 
     public int getRemainAmount() {
         return deck.size();

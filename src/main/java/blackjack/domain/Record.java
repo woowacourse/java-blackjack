@@ -22,8 +22,8 @@ public enum Record {
 
     public Record getOpposite() {
         return Arrays.stream(Record.values())
-                .filter(record -> record.name.equals(opposite))
-                .findFirst()
-                .orElseThrow();
+            .filter(record -> record.name.equals(opposite))
+            .findFirst()
+            .orElseThrow();
     }
 }

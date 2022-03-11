@@ -1,14 +1,15 @@
 package blackjack.domain;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Game {
 
@@ -20,8 +21,8 @@ public class Game {
         this.cardFactory = cardFactory;
         this.dealer = new Dealer();
         this.players = playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
+            .map(Player::new)
+            .collect(Collectors.toList());
     }
 
     public int getParticipantCount() {
@@ -47,8 +48,8 @@ public class Game {
 
     public Optional<Player> findHitPlayer() {
         return players.stream()
-                .filter(Player::isHit)
-                .findFirst();
+            .filter(Player::isHit)
+            .findFirst();
     }
 
     public CardCount drawDealerCard() {

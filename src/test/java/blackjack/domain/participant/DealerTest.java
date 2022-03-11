@@ -1,18 +1,17 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.CardNumber.FIVE;
-import static blackjack.domain.card.CardNumber.KING;
-import static blackjack.domain.card.CardNumber.QUEEN;
-import static blackjack.domain.card.CardSymbol.CLUB;
-import static blackjack.domain.card.CardSymbol.DIAMOND;
-import static org.assertj.core.api.Assertions.assertThat;
+import static blackjack.domain.card.CardNumber.*;
+import static blackjack.domain.card.CardSymbol.*;
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.List;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
-import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 class DealerTest {
 

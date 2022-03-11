@@ -1,8 +1,9 @@
 package fuelinjection;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.stream.Stream;
+
 import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,9 +14,9 @@ public class CarTest {
 
     private static Stream<Arguments> provideSource() {
         return Stream.of(
-                Arguments.of(new Sonata(150)),
-                Arguments.of(new Avante(225)),
-                Arguments.of(new K5(195))
+            Arguments.of(new Sonata(150)),
+            Arguments.of(new Avante(225)),
+            Arguments.of(new K5(195))
         );
     }
 

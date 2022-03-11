@@ -21,9 +21,9 @@ public enum CardCount {
 
     public static CardCount of(int value) {
         return Arrays.stream(values())
-                .filter(it -> it.value == value)
-                .findFirst()
-                .orElseThrow();
+            .filter(it -> it.value == value)
+            .findFirst()
+            .orElseThrow();
     }
 
     public boolean isDraw() {

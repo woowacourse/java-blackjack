@@ -36,7 +36,7 @@ public class Card {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Card card = (Card) o;
+        Card card = (Card)o;
         return symbol == card.symbol && number == card.number;
     }
 
@@ -48,8 +48,8 @@ public class Card {
     @Override
     public String toString() {
         return "Card{" +
-                "symbol=" + symbol +
-                ", number=" + number +
-                '}';
+            "symbol=" + symbol +
+            ", number=" + number +
+            '}';
     }
 }

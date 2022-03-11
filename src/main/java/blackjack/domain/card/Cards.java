@@ -28,8 +28,8 @@ public class Cards {
 
     public int sum() {
         int sum = value.stream()
-                .mapToInt(Card::getNumberValue)
-                .sum();
+            .mapToInt(Card::getNumberValue)
+            .sum();
 
         if (sum <= 11 && hasAce()) {
             sum += 10;
@@ -39,13 +39,13 @@ public class Cards {
 
     private boolean hasAce() {
         return value.stream()
-                .anyMatch(Card::isAce);
+            .anyMatch(Card::isAce);
     }
 
     public Card findFirst() {
         return value.stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("카드가 한 장도 없습니다."));
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException("카드가 한 장도 없습니다."));
     }
 
     public Set<Card> getValue() {
@@ -55,7 +55,7 @@ public class Cards {
     @Override
     public String toString() {
         return "Cards{" +
-                "value=" + value +
-                '}';
+            "value=" + value +
+            '}';
     }
 }
