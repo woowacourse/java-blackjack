@@ -27,7 +27,12 @@ class ParticipantTest {
     void drawCardTest(final List<Card> expectedCards) {
         manualCardStrategy.initCards(expectedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
-        final Participant participant = new Participant();
+        final Participant participant = new Participant() {
+            @Override
+            public boolean isPossibleToDrawCard() {
+                return true;
+            }
+        };
 
         for (int i = 0; i < expectedCards.size(); i++) {
             participant.drawCard(deck);
@@ -64,7 +69,12 @@ class ParticipantTest {
     void cannotContinueDrawTest(final List<Card> expectedCards) {
         manualCardStrategy.initCards(expectedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
-        final Participant participant = new Participant();
+        final Participant participant = new Participant() {
+            @Override
+            public boolean isPossibleToDrawCard() {
+                return true;
+            }
+        };
 
         for (int i = 0; i < expectedCards.size(); i++) {
             participant.drawCard(deck);
@@ -100,7 +110,12 @@ class ParticipantTest {
     void canContinueDrawTest(final List<Card> expectedCards) {
         manualCardStrategy.initCards(expectedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
-        final Participant participant = new Participant();
+        final Participant participant = new Participant() {
+            @Override
+            public boolean isPossibleToDrawCard() {
+                return true;
+            }
+        };
 
         for (int i = 0; i < expectedCards.size(); i++) {
             participant.drawCard(deck);
@@ -136,8 +151,18 @@ class ParticipantTest {
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
 
-        final Participant participant1 = new Participant();
-        final Participant participant2 = new Participant();
+        final Participant participant1 = new Participant() {
+            @Override
+            public boolean isPossibleToDrawCard() {
+                return true;
+            }
+        };
+        final Participant participant2 = new Participant() {
+            @Override
+            public boolean isPossibleToDrawCard() {
+                return true;
+            }
+        };
         drawCards(participant1, deck, drawCount1);
         drawCards(participant2, deck, drawCount2);
 

@@ -2,8 +2,8 @@ package blackjack;
 
 import blackjack.view.BlackjackView;
 import blackjack.view.input.InputView;
-import blackjack.view.output.OutputView;
 import blackjack.view.input.reader.ConsoleReader;
+import blackjack.view.output.OutputView;
 
 public class MainApplication {
 

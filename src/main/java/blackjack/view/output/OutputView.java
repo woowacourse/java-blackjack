@@ -1,12 +1,9 @@
 package blackjack.view.output;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.participant.Player;
 import blackjack.domain.result.WinningResult;
 import blackjack.dto.MatchResultDto;
 import blackjack.dto.ParticipantDto;
@@ -56,7 +53,7 @@ public class OutputView {
     }
 
     public void printMessageOfDealerDrawCard() {
-        printMessage("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+        printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printMatchResult(final MatchResultDto resultDto) {

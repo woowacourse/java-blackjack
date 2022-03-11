@@ -19,11 +19,11 @@ public class ParticipantDto {
     }
 
     public static ParticipantDto toDto(final Participant participant) {
-        return new ParticipantDto(participant.getName(), participant.getCardNames(), participant.getScore());
+        return new ParticipantDto(participant.getParticipantName(), participant.getCardNames(), participant.getScore());
     }
 
     public static ParticipantDto toDtoOfDealer(final Dealer dealer) {
-        return new ParticipantDto(dealer.getName(), dealer.getCardNames().subList(0,1), dealer.getScore());
+        return new ParticipantDto(dealer.getParticipantName(), dealer.getCardNames().subList(0,1), dealer.getScore());
     }
 
     public String getName() {

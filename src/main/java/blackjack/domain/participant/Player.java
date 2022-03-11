@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Deck;
-
 public class Player extends Participant {
 
     public Player(final String name) {
@@ -15,8 +13,8 @@ public class Player extends Participant {
         }
     }
 
-    public void continueDraw(final Deck deck, final CardDrawCallback callback) {
-        callback.drawCard(this, deck);
+    @Override
+    public boolean isPossibleToDrawCard() {
+        return !isBurst();
     }
-
 }

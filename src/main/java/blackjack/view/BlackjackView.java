@@ -2,7 +2,6 @@ package blackjack.view;
 
 import java.util.List;
 
-import blackjack.domain.participant.Participant;
 import blackjack.dto.MatchResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.input.InputView;

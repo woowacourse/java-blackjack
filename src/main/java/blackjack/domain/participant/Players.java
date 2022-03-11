@@ -38,7 +38,7 @@ public class Players {
     public MatchResult judgeWinners(Dealer dealer) {
         final Map<String, WinningResult> winningResults = new HashMap<>();
         for (final Player player : players) {
-            final String playerName = player.getName();
+            final String playerName = player.getParticipantName();
             final WinningResult winningResult = dealer.judgeWinner(player);
             winningResults.put(playerName, winningResult);
         }

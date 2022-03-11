@@ -19,13 +19,8 @@ public class Dealer extends Participant {
         return dealer;
     }
 
-    public void continueDraw(final Deck deck) {
-        while (isPossibleToDrawCard()) {
-            drawCard(deck);
-        }
-    }
-
-    private boolean isPossibleToDrawCard() {
+    @Override
+    public boolean isPossibleToDrawCard() {
         return calculateScore() < DEALER_MIN_SCORE;
     }
 

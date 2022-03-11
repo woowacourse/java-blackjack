@@ -7,7 +7,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.RandomCardStrategy;
 import blackjack.domain.participant.CardDrawCallback;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.MatchResult;
 import blackjack.dto.MatchResultDto;
@@ -49,20 +49,29 @@ public class BlackjackApplication {
     private void proceedPlayersTurn(final Deck deck, final Players players) {
         players.play(deck, new CardDrawCallback() {
             @Override
-            public boolean isContinuable(final String playerName) {
-                return blackjackView.requestContinuable(playerName);
+            public boolean isContinuable(final String participantName) {
+                return blackjackView.requestContinuable(participantName);
             }
 
             @Override
-            public void onUpdate(final Player player) {
-                blackjackView.printDistributedCards(ParticipantDto.toDto(player));
+            public void onUpdate(Participant participant) {
+                blackjackView.printDistributedCards(ParticipantDto.toDto(participant));
             }
         });
     }
 
     private void proceedDealerTurn(final Deck deck, final Dealer dealer) {
-        dealer.continueDraw(deck);
-        blackjackView.printMessageOfDealerDrawCard();
+        dealer.continueDraw(deck, new CardDrawCallback() {
+            @Override
+            public boolean isContinuable(final String participantName) {
+                return true;
+            }
+
+            @Override
+            public void onUpdate(Participant participant) {
+                blackjackView.printMessageOfDealerDrawCard();
+            }
+        });
     }
 
     private void printMatchResult(final Dealer dealer, final Players players) {

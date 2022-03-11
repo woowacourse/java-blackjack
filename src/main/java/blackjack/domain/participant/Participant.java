@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
-public class Participant {
+public abstract class Participant {
 
     private static final int BLACKJACK_NUMBER = 21;
     private static final int ACE_NUMBER = 1;
@@ -19,6 +19,15 @@ public class Participant {
     public void drawCard(final Deck deck) {
         cards.add(deck.drawCard());
     }
+
+    public void continueDraw(final Deck deck, final CardDrawCallback callback) {
+        while (isPossibleToDrawCard() && callback.isContinuable(getParticipantName())) {
+            drawCard(deck);
+            callback.onUpdate(this);
+        }
+    }
+
+    public abstract boolean isPossibleToDrawCard();
 
     protected int calculateScore() {
         int totalSum = calculateWithoutAce();
@@ -54,7 +63,7 @@ public class Participant {
         return thisScore > otherScore;
     }
 
-    public String getName() {
+    public String getParticipantName() {
         return name;
     }
 

@@ -21,6 +21,16 @@ import blackjack.domain.result.WinningResult;
 class DealerTest {
 
     private final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
+    private final CardDrawCallback cardDrawCallback = new CardDrawCallback() {
+        @Override
+        public boolean isContinuable(String participantName) {
+            return true;
+        }
+
+        @Override
+        public void onUpdate(Participant participant) {
+        }
+    };
 
     @ParameterizedTest
     @MethodSource("provideForStartWithDrawCardTest")
@@ -45,7 +55,7 @@ class DealerTest {
         manualCardStrategy.initCards(initializedCards);
         Deck deck = Deck.generate(manualCardStrategy);
         final Dealer dealer = Dealer.startWithTwoCards(deck);
-        dealer.continueDraw(deck);
+        dealer.continueDraw(deck, cardDrawCallback);
 
         List<String> actualCardNames = dealer.getCardNames();
         List<String> expectedCardNames = expectedCards.stream()
@@ -91,7 +101,7 @@ class DealerTest {
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
         final Dealer dealer = Dealer.startWithTwoCards(deck);
-        dealer.continueDraw(deck);
+        dealer.continueDraw(deck, cardDrawCallback);
 
         assertThat(dealer.judgeWinner(new Player("sun"))).isEqualTo(WinningResult.WIN);
     }
@@ -122,7 +132,7 @@ class DealerTest {
         final Player player = new Player("if");
         player.drawCard(deck);
         player.drawCard(deck);
-        dealer.continueDraw(deck);
+        dealer.continueDraw(deck, cardDrawCallback);
 
         final WinningResult actualWinningResult = dealer.judgeWinner(player);
         assertThat(actualWinningResult).isEqualTo(expectedWinningResult);
