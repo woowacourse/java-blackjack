@@ -19,10 +19,21 @@ public class Application {
 
         do {
             game.toNextEntry();
-            if (inputView.askForHit(game.getCurrentEntryName())) {
-                game.hitCurrentEntry();
-            }
-            resultView.printDeck(game.getCurrentEntryName(), game.getCurrentDeckToString());
+            playTurn(inputView, game, resultView);
         } while (game.hasNextEntry());
+    }
+
+    private static void playTurn(InputView inputView, Game game, ResultView resultView) {
+        if (game.isCurrentEntryBust()) {
+            resultView.printBustMessage(game.getCurrentEntryName());
+            return;
+        }
+        if (!inputView.askForHit(game.getCurrentEntryName())) {
+            resultView.printDeck(game.getCurrentEntryName(), game.getCurrentDeckToString());
+            return;
+        }
+        game.hitCurrentEntry();
+        resultView.printDeck(game.getCurrentEntryName(), game.getCurrentDeckToString());
+        playTurn(inputView, game, resultView);
     }
 }

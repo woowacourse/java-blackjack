@@ -27,6 +27,10 @@ public class Game {
         this.players.hitCurrentEntry(trumpCardPack.draw());
     }
 
+    public boolean isCurrentEntryBust() {
+        return this.players.isCurrentEntryBust();
+    }
+
     public List<String> getEntryNames() {
         return this.players.getEntryNames();
     }

@@ -53,11 +53,19 @@ public class Entries {
     }
 
     public void hitCurrentEntry(TrumpCard card) {
-        this.entries.get(currentIndex).hit(card);
+        getCurrentEntry().hit(card);
+    }
+
+    public boolean isCurrentEntryBust() {
+        return getCurrentEntry().isBust();
+    }
+
+    private Entry getCurrentEntry() {
+        return this.entries.get(currentIndex);
     }
 
     public String getCurrentEntryName() {
-        return entries.get(currentIndex).getName();
+        return getCurrentEntry().getName();
     }
 
     public List<String> getNames() {
@@ -73,6 +81,6 @@ public class Entries {
     }
 
     public List<String> getCurrentDeckToString() {
-        return this.entries.get(currentIndex).getDeckToString();
+        return getCurrentEntry().getDeckToString();
     }
 }

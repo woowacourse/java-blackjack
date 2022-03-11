@@ -53,6 +53,10 @@ public class Players {
         this.entries.hitCurrentEntry(card);
     }
 
+    public boolean isCurrentEntryBust() {
+        return this.entries.isCurrentEntryBust();
+    }
+
     public String getCurrentEntryName() {
         return this.entries.getCurrentEntryName();
     }
