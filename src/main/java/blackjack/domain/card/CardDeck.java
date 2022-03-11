@@ -1,33 +1,27 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.Stack;
 
 public class CardDeck {
-	private final static List<Card> deck = new ArrayList<>();
+    private final Stack<Card> deck;
 
-	static {
-		for (CardType type : CardType.values()) {
-			generateCardWith(type);
-		}
-	}
+    public CardDeck() {
+        this.deck = new Stack<>();
+        for (CardType type : CardType.values()) {
+            generateCardWith(type);
+        }
+        Collections.shuffle(deck);
+    }
 
-	private static void generateCardWith(CardType type) {
-		for (CardValue value : CardValue.values()) {
-			String key = value.getName().concat(type.getName());
-			deck.add(new Card(key, value.getValue()));
-		}
-	}
+    private void generateCardWith(CardType type) {
+        for (CardValue value : CardValue.values()) {
+            String key = value.getName().concat(type.getName());
+            deck.push(new Card(key, value.getValue()));
+        }
+    }
 
-	public static Card pickCard() {
-		Collections.shuffle(deck);
-		Card pickedCard = deck.get(0);
-		removeCard(pickedCard);
-		return pickedCard;
-	}
-
-	private static void removeCard(Card card) {
-		deck.remove(card);
-	}
+    public Card pickCard() {
+        return deck.pop();
+    }
 }
