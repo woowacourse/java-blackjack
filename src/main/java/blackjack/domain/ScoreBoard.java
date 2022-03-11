@@ -14,19 +14,13 @@ public class ScoreBoard {
 	private static final String DEFEAT = "패 ";
 	private static final String DRAW = "무 ";
 
-	public static Map<Player, Integer> of(Dealer dealer, List<Player> players) {
-		Map<Player, Integer> result = new HashMap<>();
-		players.forEach(player -> result.put(player, dealer.isWin(player)));
-		return result;
-	}
-
-	public static ResultDto calculateResult1(Dealer dealer, List<Player> players) {
+	public static ResultDto of(Dealer dealer, List<Player> players) {
 		List<Integer> dealerResult = new ArrayList<>();
 		Map<String, String> playerResult = new HashMap<>();
 		players.forEach(player -> playerResult.put(player.getName(),
 			makePlayerOutcome(dealer.isWin(player))));
 
-		for(Player player: players) {
+		for (Player player : players) {
 			String name = player.getName();
 			int result = dealer.isWin(player);
 
@@ -41,11 +35,11 @@ public class ScoreBoard {
 	}
 
 	private static String makePlayerOutcome(int result) {
-		if(result == 1) {
+		if (result == 1) {
 			return DEFEAT;
 		}
 
-		if(result == -1) {
+		if (result == -1) {
 			return VICTORY;
 		}
 
@@ -57,7 +51,7 @@ public class ScoreBoard {
 		int drawCount = 0;
 		int loseCount = 0;
 
-		for(int result: dealerResult) {
+		for (int result : dealerResult) {
 			if (result == 1) {
 				winCount++;
 			}
@@ -66,7 +60,7 @@ public class ScoreBoard {
 				loseCount++;
 			}
 
-			if(result == 0) {
+			if (result == 0) {
 				drawCount++;
 			}
 		}
@@ -78,15 +72,15 @@ public class ScoreBoard {
 	private static List<String> makeDealerOutcomeFormat(int winCount, int drawCount, int loseCount) {
 		List<String> dealerOutcome = new ArrayList<>();
 
-		if(winCount != 0) {
+		if (winCount != 0) {
 			dealerOutcome.add(winCount + VICTORY);
 		}
 
-		if(drawCount != 0) {
+		if (drawCount != 0) {
 			dealerOutcome.add(drawCount + DRAW);
 		}
 
-		if(loseCount != 0) {
+		if (loseCount != 0) {
 			dealerOutcome.add(loseCount + DEFEAT);
 		}
 

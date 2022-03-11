@@ -1,9 +1,12 @@
 package blackjack.domain;
 
 import java.util.List;
-import java.util.Map;
+
+import blackjack.domain.dto.ResultDto;
 
 public class Blackjack {
+	private static final int NUMBER_OF_INIT_CARD = 2;
+
 	private final PlayerRepository playerRepository = new PlayerRepository();
 	private final Dealer dealer;
 
@@ -13,7 +16,7 @@ public class Blackjack {
 	}
 
 	public void distributeInitialCards(NumberGenerator numberGenerator) {
-		for (int i = 0; i < 2; ++i) {
+		for (int i = 0; i < NUMBER_OF_INIT_CARD; ++i) {
 			dealer.addCard(dealer.handOutCard(numberGenerator));
 
 			List<Player> players = playerRepository.findAll();
@@ -56,7 +59,7 @@ public class Blackjack {
 		return dealer;
 	}
 
-	public Map<Player, Integer> result() {
-		return ScoreBoard.calculateResult(dealer, playerRepository.findAll());
+	public ResultDto result() {
+		return ScoreBoard.of(dealer, playerRepository.findAll());
 	}
 }
