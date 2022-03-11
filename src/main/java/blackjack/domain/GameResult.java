@@ -10,4 +10,18 @@ public enum GameResult {
     GameResult(String result) {
         this.result = result;
     }
+
+    public static GameResult getPairResult(GameResult gameResult) {
+        if(gameResult == WIN) {
+            return LOSE;
+        }
+        if(gameResult == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
+    public String getResult() {
+        return result;
+    }
 }

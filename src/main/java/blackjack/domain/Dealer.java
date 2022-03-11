@@ -16,4 +16,17 @@ public class Dealer extends Participant {
     public boolean isFinished() {
         return super.getHoldingCard().calculateTotal() >= DEALER_MIN_TOTAL;
     }
+
+    public GameResult judgeResult(Player player) {
+        if(player.getHoldingCard().isBust()) {
+            return GameResult.WIN;
+        }
+        if(super.getHoldingCard().isBust() && !player.getHoldingCard().isBust()) {
+            return GameResult.LOSE;
+        }
+        if(super.getHoldingCard().calculateTotal() > player.getHoldingCard().calculateTotal()) {
+            return GameResult.WIN;
+        }
+        return GameResult.DRAW;
+    }
 }
