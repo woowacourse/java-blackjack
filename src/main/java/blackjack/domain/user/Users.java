@@ -1,39 +1,32 @@
 package blackjack.domain.user;
 
-import static java.util.stream.Collectors.toList;
-
 import blackjack.domain.Rule;
 import blackjack.domain.card.Deck;
-import java.util.Collections;
 import java.util.List;
 
 public class Users {
 
-    private final List<Player> players;
+    private final Players players;
     private final Dealer dealer;
 
-    private Users(List<Player> players, Dealer dealer) {
+    private Users(Players players, Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
     }
 
-    public static Users from(List<String> inputNames, Dealer dealer) {
-        List<Player> players = inputNames.stream()
-                .map(Player::new)
-                .collect(toList());
+    public static Users from(List<String> playerNames, Dealer dealer) {
+        Players players = Players.from(playerNames);
 
         return new Users(players, dealer);
     }
 
     public void setInitCardsPerPlayer(Deck deck) {
-        for (Player player : players) {
-            player.drawInitCards(deck);
-        }
+        players.drawInitCards(deck);
         dealer.drawInitCards(deck);
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return players.getPlayers();
     }
 
     public Dealer getDealer() {
@@ -41,9 +34,7 @@ public class Users {
     }
 
     public void calculateAllUser(Rule rule) {
-        for (Player player : players) {
-            player.calculate(rule);
-        }
+        players.calculate(rule);
         dealer.calculate(rule);
     }
 }
