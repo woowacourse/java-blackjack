@@ -2,9 +2,11 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class BlackjackGame {
 
+    private static final String CANNOT_FIND_DEALER_MESSAGE = "딜러를 찾을 수 없습니다.";
     private final Cards cards;
     private final List<Player> blackjackPlayers;
 
@@ -34,7 +36,7 @@ public class BlackjackGame {
         Player dealer = players.stream()
                 .filter(Player::isDealer)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new NoSuchElementException(CANNOT_FIND_DEALER_MESSAGE));
         for (Player player : players) {
             scoreResultIfGuest(dealer, player, results);
         }

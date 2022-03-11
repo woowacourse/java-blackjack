@@ -10,18 +10,20 @@ import blackjack.domain.Player;
 import blackjack.domain.Results;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static final String COMMA_DELIMITER = ", ";
-    public static final String DISTRIBUTE_TWO_CARDS_MESSAGE = "에게 2장의 카드를 각각 나누었습니다.";
-    public static final String CARD_OUTPUT_FORMAT = "%s 카드: %s";
-    public static final String NEW_LINE = "\n";
-    public static final String TOTAL_POINT_OUTPUT_FORMAT = " - 결과: %d";
-    public static final String DEALER_GIVEN_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    public static final String DEALER_GIVEN_NO_MORE_CARD_MESSAGE = "딜러는 17이상이라 카드를 더 받지 않습니다.";
-    public static final String MATCH_RESULT_DELIMITER = ": ";
+    private static final String COMMA_DELIMITER = ", ";
+    private static final String DISTRIBUTE_TWO_CARDS_MESSAGE = "에게 2장의 카드를 각각 나누었습니다.";
+    private static final String CARD_OUTPUT_FORMAT = "%s 카드: %s";
+    private static final String NEW_LINE = "\n";
+    private static final String TOTAL_POINT_OUTPUT_FORMAT = " - 결과: %d";
+    private static final String DEALER_GIVEN_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String DEALER_GIVEN_NO_MORE_CARD_MESSAGE = "딜러는 17이상이라 카드를 더 받지 않습니다.";
+    private static final String MATCH_RESULT_DELIMITER = ": ";
+    private static final String NO_CARDS_ERROR_MESSAGE = "카드가 존재하지 않습니다.";
 
     public static void announceStartGame(List<String> playerNames) {
         System.out.println(String.join(COMMA_DELIMITER, playerNames) + DISTRIBUTE_TWO_CARDS_MESSAGE);
@@ -49,7 +51,7 @@ public class OutputView {
                 .getCards()
                 .stream()
                 .findFirst()
-                .orElseThrow()
+                .orElseThrow(() -> new NoSuchElementException(NO_CARDS_ERROR_MESSAGE))
                 .toString();
     }
 

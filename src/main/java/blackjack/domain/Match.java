@@ -3,6 +3,7 @@ package blackjack.domain;
 import static blackjack.domain.Guest.GUEST_LIMIT_POINT;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
@@ -12,6 +13,7 @@ public enum Match {
     DRAW("무", "무", Objects::equals),
     ;
 
+    private static final String NOTHING_MATCH_RESULT_MESSAGE = "결과를 찾을 수 없습니다.";
     private final String result;
     private final String oppositeResult;
     private final BiFunction<Integer, Integer, Boolean> expression;
@@ -37,7 +39,7 @@ public enum Match {
         return Arrays.stream(values())
                 .filter(this::findOppositeResult)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new NoSuchElementException(NOTHING_MATCH_RESULT_MESSAGE));
     }
 
     private boolean findOppositeResult(Match match) {
