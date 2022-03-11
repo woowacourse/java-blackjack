@@ -2,21 +2,24 @@ package blackjack.view.input;
 
 import java.util.Arrays;
 
-public enum Choice {
+public enum DrawingCardChoice {
 
-    HIT("y", true),
-    STAND("n", false);
+    YES("y"),
+    NO("n");
 
     private final String answer;
-    private final boolean continuable;
 
-    Choice(final String answer, final boolean continuable) {
+    DrawingCardChoice(final String answer) {
         this.answer = answer;
-        this.continuable = continuable;
     }
 
-    public static Choice from(final String answer) {
-        return Arrays.stream(Choice.values())
+    public static boolean isChoiceYes(final String answer) {
+        final DrawingCardChoice choice = DrawingCardChoice.from(answer);
+        return choice.equals(YES);
+    }
+
+    private static DrawingCardChoice from(final String answer) {
+        return Arrays.stream(DrawingCardChoice.values())
                 .filter(it -> it.matchesAnswer(answer))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("입력은 y 또는 n 이어야 합니다."));
@@ -25,10 +28,6 @@ public enum Choice {
     private boolean matchesAnswer(final String answer) {
         final String lowerCasedAnswer = answer.toLowerCase();
         return lowerCasedAnswer.equals(this.answer);
-    }
-
-    public boolean getContinuable() {
-        return continuable;
     }
 
 }

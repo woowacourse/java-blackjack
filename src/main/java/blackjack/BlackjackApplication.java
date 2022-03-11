@@ -7,7 +7,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.DeckGenerator;
 import blackjack.domain.participant.CardDrawCallback;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.MatchResult;
 import blackjack.dto.MatchResultDto;
@@ -28,19 +27,20 @@ public class BlackjackApplication {
         final Deck deck = Deck.generate(deckGenerator);
         final Dealer dealer = Dealer.readyToPlay(deck);
         final Players players = Players.readyToPlay(blackjackView.requestPlayerNames(), deck);
+        announceInitiallyDistributedCards(dealer, players);
 
-        printParticipantsStatuses(dealer, players);
         playGame(deck, players, dealer);
-        printMatchResult(dealer, players);
+        announceFinalScoresOfParticipants(dealer, players);
+        announceMatchResult(dealer, players);
     }
 
-    private void printParticipantsStatuses(final Dealer dealer, final Players players) {
-        final String dealerFirstCardName = dealer.getFirstCardName();
+    private void announceInitiallyDistributedCards(final Dealer dealer, final Players players) {
+        final String firstCardNameOfDealer = dealer.getFirstCardName();
         final List<ParticipantDto> playerDtos = players.getPlayers().stream()
                 .map(ParticipantDto::toDto)
                 .collect(Collectors.toList());
 
-        blackjackView.printFirstDistributedCards(dealerFirstCardName, playerDtos);
+        blackjackView.printInitiallyDistributedCards(firstCardNameOfDealer, playerDtos);
     }
 
     private void playGame(final Deck deck, final Players players, final Dealer dealer) {
@@ -52,12 +52,12 @@ public class BlackjackApplication {
         players.drawCardsPerPlayer(deck, new CardDrawCallback() {
             @Override
             public boolean isContinuable(final String participantName) {
-                return blackjackView.requestContinuable(participantName);
+                return blackjackView.requestDrawingCardChoice(participantName);
             }
 
             @Override
             public void onUpdate(final String playerName, final List<String> cardNames) {
-                blackjackView.printDistributedCards(playerName, cardNames);
+                blackjackView.printCurrentCardsOfPlayer(playerName, cardNames);
             }
         });
     }
@@ -71,21 +71,25 @@ public class BlackjackApplication {
 
             @Override
             public void onUpdate(final String participantName, final List<String> cardNames) {
-                blackjackView.printMessageOfDealerDrawCard();
+                blackjackView.printMessageOfDealerDrewCard();
             }
         });
     }
 
-    private void printMatchResult(final Dealer dealer, final Players players) {
-        final List<ParticipantDto> participantDtos = players.getPlayers().stream()
+    private void announceFinalScoresOfParticipants(final Dealer dealer, final Players players) {
+        final ParticipantDto dealerDto = ParticipantDto.toDto(dealer);
+        final List<ParticipantDto> playerDtos = players.getPlayers().stream()
                 .map(ParticipantDto::toDto)
-                .collect(Collectors.toList());
-        participantDtos.add(0, ParticipantDto.toDto(dealer));
+                .collect(Collectors.toUnmodifiableList());
 
-        final MatchResult result = players.judgeWinners(dealer);
-        final MatchResultDto matchResultDto = MatchResultDto.toDto(result);
+        blackjackView.printFinalScoresOfParticipants(dealerDto, playerDtos);
+    }
 
-        blackjackView.printMatchResult(participantDtos, matchResultDto);
+    private void announceMatchResult(final Dealer dealer, final Players players) {
+        final MatchResult matchResult = players.judgeWinners(dealer);
+        final MatchResultDto matchResultDto = MatchResultDto.toDto(matchResult);
+
+        blackjackView.printMatchResult(matchResultDto);
     }
 
 }

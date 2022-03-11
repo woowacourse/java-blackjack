@@ -1,5 +1,9 @@
 package blackjack.view;
 
+import static blackjack.view.output.OutputMessage.MESSAGE_OF_DEALER_DREW_CARD;
+import static blackjack.view.output.OutputMessage.MESSAGE_OF_MATCH_RESULT_TITLE;
+import static blackjack.view.output.OutputMessage.MESSAGE_OF_REQUEST_PLAYER_NAMES;
+
 import java.util.List;
 
 import blackjack.dto.MatchResultDto;
@@ -18,31 +22,40 @@ public class BlackjackView {
     }
 
     public List<String> requestPlayerNames() {
-        outputView.printMessageOfRequestPlayerNames();
+        outputView.printMessage(MESSAGE_OF_REQUEST_PLAYER_NAMES);
         return inputView.requestPlayerNames();
     }
 
-    public void printFirstDistributedCards(final String dealerFirstCardName, final List<ParticipantDto> playerDtos) {
-        outputView.printMessageOfPlayerNames(playerDtos);
-        outputView.printDealerFirstCard(dealerFirstCardName);
-        playerDtos.forEach(outputView::printDistributedCards);
+    public void printInitiallyDistributedCards(final String dealerFirstCardName, final List<ParticipantDto> playerDtos) {
+        outputView.printEmptyLine();
+        outputView.printMessageOfInitiallyDistributeCards(playerDtos);
+        outputView.printFirstCardOfDealer(dealerFirstCardName);
+        playerDtos.forEach(outputView::printDistributedCardsOfPlayer);
+        outputView.printEmptyLine();
     }
 
-    public boolean requestContinuable(final String playerName) {
-        outputView.printMessageOfRequestContinuable(playerName);
-        return inputView.requestContinuable();
+    public boolean requestDrawingCardChoice(final String playerName) {
+        outputView.printMessageOfRequestDrawingCardChoice(playerName);
+        return inputView.requestDrawingCardChoice();
     }
 
-    public void printDistributedCards(final String playerName, final List<String> cardNames) {
-        outputView.printDistributedCards(playerName, cardNames);
+    public void printCurrentCardsOfPlayer(final String playerName, final List<String> cardNames) {
+        outputView.printCurrentCardsOfPlayer(playerName, cardNames);
     }
 
-    public void printMessageOfDealerDrawCard() {
-        outputView.printMessageOfDealerDrawCard();
+    public void printMessageOfDealerDrewCard() {
+        outputView.printMessage(MESSAGE_OF_DEALER_DREW_CARD);
     }
 
-    public void printMatchResult(final List<ParticipantDto> participantDtos, final MatchResultDto matchResultDto) {
-        outputView.printFinalScores(participantDtos);
+    public void printFinalScoresOfParticipants(final ParticipantDto dealerDto, final List<ParticipantDto> playerDtos) {
+        outputView.printEmptyLine();
+        outputView.printFinalScoreOfParticipant(dealerDto);
+        outputView.printFinalScoreOfParticipants(playerDtos);
+    }
+
+    public void printMatchResult(final MatchResultDto matchResultDto) {
+        outputView.printEmptyLine();
+        outputView.printMessage(MESSAGE_OF_MATCH_RESULT_TITLE);
         outputView.printMatchResult(matchResultDto);
     }
 

@@ -22,10 +22,9 @@ public class InputView {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public boolean requestContinuable() {
+    public boolean requestDrawingCardChoice() {
         final String inputLine = reader.readLine();
-        final Choice choice = Choice.from(inputLine);
-        return choice.getContinuable();
+        return DrawingCardChoice.isChoiceYes(inputLine);
     }
 
 }

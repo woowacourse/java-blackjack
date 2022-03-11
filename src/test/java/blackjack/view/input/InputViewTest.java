@@ -47,7 +47,7 @@ public class InputViewTest {
     void parseProgress(final String inputLine, final boolean expectedContinuable) {
         customReader.initTest(inputLine);
 
-        final boolean actualContinuable = inputView.requestContinuable();
+        final boolean actualContinuable = inputView.requestDrawingCardChoice();
 
         assertThat(actualContinuable).isEqualTo(expectedContinuable);
     }
@@ -67,7 +67,7 @@ public class InputViewTest {
     void parseProgress(final String inputLine) {
         customReader.initTest(inputLine);
 
-        assertThatThrownBy(inputView::requestContinuable)
+        assertThatThrownBy(inputView::requestDrawingCardChoice)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("입력은 y 또는 n 이어야 합니다.");
     }
