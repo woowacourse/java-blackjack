@@ -12,7 +12,7 @@ public class BlackJackResultTest {
     @BeforeEach
     void setup() {
         gamblers = List.of(new Gambler("포비"), new Gambler("돌범"), new Gambler("리차드"));
-        dealer = new Dealer("딜러");
+        dealer = new Dealer();
     }
 
     @Test

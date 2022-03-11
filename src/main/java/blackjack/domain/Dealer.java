@@ -1,10 +1,11 @@
 package blackjack.domain;
 
 public class Dealer extends Player {
+    private static final String NAME = "딜러";
     private static final int GET_CARD_UPPER_BOUND = 16;
 
-    public Dealer(final String name) {
-        super(name);
+    public Dealer() {
+        super(NAME);
     }
 
     @Override

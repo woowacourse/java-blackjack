@@ -26,7 +26,7 @@ public class BlackJackController {
 
     public void start() {
         final List<Player> gamblers = setupGamblers();
-        final Player dealer = new Dealer("딜러");
+        final Player dealer = new Dealer();
         final CardDeck cardDeck = new CardDeck();
 
         spreadCards(gamblers, dealer, cardDeck);
@@ -113,10 +113,6 @@ public class BlackJackController {
             return true;
         }
         return false;
-    }
-
-    private boolean isHitAndNotBurst(final Player gambler, final CardDeck cardDeck, final BlackJackCommand hitOrStay) {
-        return hitOrStay.equals(BlackJackCommand.YES) && !gambler.isFinished(cardDeck);
     }
 
     private void playGameForDealer(Player dealer, CardDeck cardDeck) {

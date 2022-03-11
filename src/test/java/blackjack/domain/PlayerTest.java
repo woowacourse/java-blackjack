@@ -25,8 +25,8 @@ class PlayerTest {
     @DisplayName("딜러 생성 테스트")
     void dealer_create() {
         // given
-        String expected = "dolbum";
-        final Player dolbum = new Dealer(expected);
+        String expected = "딜러";
+        final Player dolbum = new Dealer();
 
         // when
         String actual = dolbum.getName();
