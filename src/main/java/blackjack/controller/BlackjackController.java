@@ -68,7 +68,7 @@ public class BlackjackController {
     }
 
     private boolean isBust(Player player) {
-        if (player.isBust()) {
+        if (player.isMoreThanThreshold()) {
             OutputView.printPlayerHitImpossibleMessage();
             return true;
         }

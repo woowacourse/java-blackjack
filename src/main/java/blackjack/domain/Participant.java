@@ -30,6 +30,10 @@ public abstract class Participant {
         return getScore() > BUST_THRESHOLD_NUMBER;
     }
 
+    public boolean isMoreThanThreshold() {
+        return getScore() >= BUST_THRESHOLD_NUMBER;
+    }
+
     public abstract String getName();
 
 }
