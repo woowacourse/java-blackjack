@@ -38,18 +38,20 @@ public class Player {
     }
 
     public Score compete(Player player) {
-        if (player.isBust()) {
-            if (this.isBust()) {
-                return Score.DRAW;
-            }
-            return Score.WIN;
-        }
-        if (this.isBust() || this.getTotalNumber() < player.getTotalNumber()) {
+        if (this.isBust()) {
             return Score.LOSE;
         }
-        if (this.getTotalNumber() > player.getTotalNumber()) {
-            return Score.WIN;
+        if (player.isBust()) {
+            return getScoreWithBust();
         }
-        return Score.DRAW;
+
+        return Score.compare(this.getTotalNumber(), player.getTotalNumber());
+    }
+
+    private Score getScoreWithBust() {
+        if (this.isBust()) {
+            return Score.DRAW;
+        }
+        return Score.WIN;
     }
 }

@@ -11,6 +11,16 @@ public enum Score {
         this.value = value;
     }
 
+    public static Score compare(int myNumber, int versusNumber) {
+        if (myNumber < versusNumber) {
+            return Score.LOSE;
+        }
+        if (myNumber > versusNumber) {
+            return Score.WIN;
+        }
+        return Score.DRAW;
+    }
+
     public static Score inverse(Score score) {
         if (score == WIN) {
             return LOSE;
@@ -21,7 +31,7 @@ public enum Score {
         return DRAW;
     }
 
-    public String getValue(){
+    public String getValue() {
         return value;
     }
 }
