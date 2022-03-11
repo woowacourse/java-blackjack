@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
@@ -19,10 +20,21 @@ public class PlayerTest {
         String name = "pobi";
 
         //when
-        Player player = new Player(name);
+        Player player = Player.from(name);
 
         //then
         assertThat(player).isNotNull();
+    }
+
+    @DisplayName("플레이어 생성시 이름 검증")
+    @Test
+    public void testBlankName() {
+        //given
+        String name = " ";
+
+        //when & then
+        assertThatThrownBy(() -> Player.from(name))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("플레이어는 카드를 뽑을 수 있다.")
@@ -30,7 +42,7 @@ public class PlayerTest {
     public void testDrawCard() {
         //given
         Deck deck = new Deck();
-        Player player = new Player("pobi");
+        Player player = Player.from("pobi");
 
         //when
         player.drawCard(deck);
@@ -45,7 +57,7 @@ public class PlayerTest {
     public void testCardDrawable() {
         //given
         Deck deck = new Deck();
-        Player player = new Player("pobi");
+        Player player = Player.from("pobi");
 
         //when
         for (int i = 0; i < MAX_DRAWABLE_COUNT; i++) {
@@ -60,7 +72,7 @@ public class PlayerTest {
     public void testShowInitCards() {
         //given
         Deck deck = new Deck();
-        Player player = new Player("pobi");
+        Player player = Player.from("pobi");
 
         player.drawCard(deck);
         player.drawCard(deck);

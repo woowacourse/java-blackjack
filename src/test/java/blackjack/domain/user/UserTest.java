@@ -12,7 +12,7 @@ public class UserTest {
     public void testDrawInitCard() {
         //given
         Deck deck = new Deck();
-        User user = new Player("pobi");
+        User user = Player.from("pobi");
 
         //when
         user.drawInitCards(deck);

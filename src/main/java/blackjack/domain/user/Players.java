@@ -20,7 +20,7 @@ public class Players {
         validateDuplication(playerNames);
 
         List<Player> players = playerNames.stream()
-                .map(Player::new)
+                .map(Player::from)
                 .collect(toList());
 
         return new Players(players);
