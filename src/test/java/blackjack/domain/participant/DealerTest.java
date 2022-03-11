@@ -27,9 +27,12 @@ public class DealerTest {
 
     private static Stream<Arguments> provideParameters() {
         return Stream.of(
-                Arguments.arguments("합계 22인 경우 true", new Cards(getCardList(Denomination.TWO, Denomination.QUEEN, Denomination.KING)), true),
-                Arguments.arguments("합계 17인 경우 true", new Cards(getCardList(Denomination.SEVEN, Denomination.QUEEN)), true),
-                Arguments.arguments("합계 15인 경우 false", new Cards(getCardList(Denomination.QUEEN, Denomination.FIVE)), false)
+                Arguments.arguments("합계 22인 경우 true",
+                        new Cards(getCardList(Denomination.TWO, Denomination.QUEEN, Denomination.KING)), true),
+                Arguments.arguments("합계 17인 경우 true",
+                        new Cards(getCardList(Denomination.SEVEN, Denomination.QUEEN)), true),
+                Arguments.arguments("합계 15인 경우 false",
+                        new Cards(getCardList(Denomination.QUEEN, Denomination.FIVE)), false)
         );
     }
 

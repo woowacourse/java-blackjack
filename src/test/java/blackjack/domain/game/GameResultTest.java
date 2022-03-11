@@ -33,21 +33,29 @@ class GameResultTest {
     private static Stream<Arguments> provideParameters() {
         return Stream.of(
                 Arguments.arguments("플레이어가 버스트가 아니고 딜러가 버스트인 경우",
-                        new Player(new Name("abc"), new Cards(getCardList(Denomination.ACE, Denomination.NINE))),
-                        new Dealer(new Name("딜러"), new Cards(getCardList(Denomination.QUEEN, Denomination.KING, Denomination.JACK)))),
+                        new Player(new Name("abc"),
+                                new Cards(getCardList(Denomination.ACE, Denomination.NINE))),
+                        new Dealer(new Name("딜러"),
+                                new Cards(getCardList(Denomination.QUEEN, Denomination.KING, Denomination.JACK)))),
                 Arguments.arguments("둘 다 버스트가 아니고 딜러보다 숫자가 높은 경우",
-                        new Player(new Name("abc"), new Cards(getCardList(Denomination.KING, Denomination.QUEEN))),
-                        new Dealer(new Name("딜러"), new Cards(getCardList(Denomination.QUEEN, Denomination.NINE))))
+                        new Player(new Name("abc"),
+                                new Cards(getCardList(Denomination.KING, Denomination.QUEEN))),
+                        new Dealer(new Name("딜러"),
+                                new Cards(getCardList(Denomination.QUEEN, Denomination.NINE))))
         );
     }
 
     @Test
     @DisplayName("딜러가 승리한 횟수")
     void dealer_win_count_test() {
-        Player player1 = new Player(new Name("abc1"), new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
-        Player player2 = new Player(new Name("abc2"), new Cards(getCardList(Denomination.EIGHT, Denomination.NINE)));    // 17
-        Player player3 = new Player(new Name("abc3"), new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
-        Dealer dealer = new Dealer(new Name("딜러"), new Cards(getCardList(Denomination.QUEEN, Denomination.NINE)));                  // 19
+        Player player1 = new Player(new Name("abc1"),
+                new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
+        Player player2 = new Player(new Name("abc2"),
+                new Cards(getCardList(Denomination.EIGHT, Denomination.NINE)));    // 17
+        Player player3 = new Player(new Name("abc3"),
+                new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
+        Dealer dealer = new Dealer(new Name("딜러"),
+                new Cards(getCardList(Denomination.QUEEN, Denomination.NINE)));    // 19
         List<Participant> players = Arrays.asList(player1, player2, player3);
         GameResult gameResult = new GameResult(players, dealer);
 
@@ -57,10 +65,14 @@ class GameResultTest {
     @Test
     @DisplayName("딜러가 패배한 횟수")
     void dealer_lose_count_test() {
-        Player player1 = new Player(new Name("abc1"), new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
-        Player player2 = new Player(new Name("abc2"), new Cards(getCardList(Denomination.EIGHT, Denomination.NINE)));    // 17
-        Player player3 = new Player(new Name("abc3"), new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
-        Dealer dealer = new Dealer(new Name("딜러"), new Cards(getCardList(Denomination.QUEEN, Denomination.NINE)));                  // 19
+        Player player1 = new Player(new Name("abc1"),
+                new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
+        Player player2 = new Player(new Name("abc2"),
+                new Cards(getCardList(Denomination.EIGHT, Denomination.NINE)));    // 17
+        Player player3 = new Player(new Name("abc3"),
+                new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
+        Dealer dealer = new Dealer(new Name("딜러"),
+                new Cards(getCardList(Denomination.QUEEN, Denomination.NINE)));    // 19
 
         List<Participant> players = Arrays.asList(player1, player2, player3);
         GameResult gameResult = new GameResult(players, dealer);
