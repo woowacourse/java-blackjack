@@ -19,7 +19,8 @@ public class RentCompany {
     public String generateReport() {
         return cars.stream()
                 .map(this::generateReportEach)
-                .collect(Collectors.joining("\n", "", "\n"));
+                .collect(Collectors.joining(
+                        System.getProperty("line.separator"), "", System.getProperty("line.separator")));
     }
 
     private String generateReportEach(Car car) {
