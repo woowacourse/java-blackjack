@@ -15,11 +15,13 @@ public class Participant {
 	protected static final int ADDITIONAL_SCORE_ACE = 10;
 
 	protected final Name name;
+	protected final boolean blackJack;
 	protected List<Card> hand;
 
 	public Participant(Name name, List<Card> hand) {
 		this.name = name;
 		this.hand = new ArrayList<>(hand);
+		this.blackJack = isBlackJack();
 	}
 
 	public void addCard(Card card) {

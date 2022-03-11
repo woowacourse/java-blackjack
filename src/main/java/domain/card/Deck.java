@@ -8,15 +8,14 @@ import java.util.List;
 public class Deck {
 
 	private static final int FRONT_CARD_INDEX = 0;
-	
+
 	private final List<Card> cards;
 
 	public Deck() {
 		this.cards = generateCardsForBlackJack();
-		;
 	}
 
-	private List<Card> generateCardsForBlackJack() {
+	protected List<Card> generateCardsForBlackJack() {
 		List<Card> cards = new ArrayList<>();
 		Arrays.stream(Rank.values()).forEach(rank -> {
 			Arrays.stream(Suit.values()).map(suit -> new Card(rank, suit)).forEach(cards::add);

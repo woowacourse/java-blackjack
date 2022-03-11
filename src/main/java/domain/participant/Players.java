@@ -58,12 +58,8 @@ public class Players {
 			.map((Player::isBlackJack)).findFirst().orElseThrow();
 	}
 
-	public boolean isExistBlackJack() {
-		return players.stream().filter(Player::isBlackJack).count() != 0;
-	}
-
 	public Map<Name, Versus> getResultAtBlackJack(Participant other) {
-		if (!isExistBlackJack() && !other.isBlackJack()) {
+		if (!other.isBlackJack()) {
 			throw new IllegalStateException(NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE);
 		}
 		Map<Name, Versus> map = new LinkedHashMap<>();

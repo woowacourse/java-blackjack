@@ -27,7 +27,7 @@ public class Player extends Participant {
 		if (isBust()) {
 			return Versus.LOSE;
 		}
-		if (other.isBust()) {
+		if (this.blackJack || other.isBust()) {
 			return Versus.WIN;
 		}
 		return judgeVersus(other.getBestScore());

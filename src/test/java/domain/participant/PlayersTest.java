@@ -28,6 +28,7 @@ public class PlayersTest {
 	List<List<Card>> initCards = new ArrayList<>(Arrays.asList(cards_21, cards_BURST));
 	List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"));
 	Dealer dealer_17 = new Dealer(List.of(card_A, card_6));
+	Dealer dealerBlackJack = new Dealer(cards_21);
 
 	Players players;
 
@@ -85,23 +86,17 @@ public class PlayersTest {
 	}
 
 	@Test
-	@DisplayName("플레이어들 중 블랙직이 존재하는지 판별")
-	void iExistBlackJack() {
-		assertThat(players.isExistBlackJack()).isTrue();
-	}
-
-	@Test
-	@DisplayName("딜러를 포함한 참가자들 중 블랙잭이 있을 경우 결과 반환")
+	@DisplayName("딜러가 블랙잭일 경우 결과 반환")
 	void getResultAtBlackJack() {
-		Map<Name, Versus> resultMap = players.getResultAtBlackJack(dealer_17);
-		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(Versus.WIN);
+		Map<Name, Versus> resultMap = players.getResultAtBlackJack(dealerBlackJack);
+		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(Versus.DRAW);
 		assertThat(resultMap.get(new Name("jason"))).isEqualTo(Versus.LOSE);
 	}
 
 	@Test
 	@DisplayName("최종 게임 결과 반환")
 	void getResultAtFinal() {
-		Map<Name, Versus> resultMap = players.getResultAtBlackJack(dealer_17);
+		Map<Name, Versus> resultMap = players.getResultAtFinal(dealer_17);
 		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(Versus.WIN);
 		assertThat(resultMap.get(new Name("jason"))).isEqualTo(Versus.LOSE);
 	}

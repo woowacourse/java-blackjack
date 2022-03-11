@@ -28,8 +28,8 @@ public class Controller {
 		Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
 		Players players = new Players(names, generateInitCardsForPlayers(names, deck));
 		printInitHands(names, dealer, players);
-
-		if (players.isExistBlackJack() || dealer.isBlackJack()) {
+		
+		if (dealer.isBlackJack()) {
 			printBlackJackResult(names, dealer, players);
 			return;
 		}
@@ -74,6 +74,7 @@ public class Controller {
 		OutputView.printResultTitle();
 		OutputView.printDealerResult(blackjackResult.getDealerWinCount(), blackjackResult.getDealerDrawCount(),
 			blackjackResult.getDealerLoseCount());
+
 		for (Name name : names) {
 			OutputView.printPlayerResult(name.getName(), blackjackResult.getVersusOfPlayer(name).getResult());
 		}
@@ -92,7 +93,7 @@ public class Controller {
 	}
 
 	private void askAndDrawForPlayer(Deck deck, Players players, Name name) {
-		boolean isKeepDraw = true;
+		boolean isKeepDraw = !(players.isBlackJackByName(name));
 
 		while (isKeepDraw && askDraw(name.getName())) {
 			players.addCardByName(name, deck.draw());
@@ -144,6 +145,7 @@ public class Controller {
 			finalResult.getDealerDrawCount(),
 			finalResult.getDealerLoseCount()
 		);
+
 		for (Name name : names) {
 			OutputView.printPlayerResult(name.getName(), finalResult.getVersusOfPlayer(name).getResult());
 		}
