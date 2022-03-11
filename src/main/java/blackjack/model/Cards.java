@@ -1,11 +1,10 @@
 package blackjack.model;
 
 import static java.util.function.Predicate.not;
-import static java.util.stream.Collectors.toUnmodifiableList;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public final class Cards {
@@ -33,27 +32,24 @@ public final class Cards {
     }
 
     public Score bestScore() {
-        return softHandScores().stream()
+        return softHandScore()
                 .filter(not(Score::isBust))
-                .findFirst()
                 .orElse(hardHandScore());
     }
 
-    private List<Score> softHandScores() {
-        if (numberOfAce() > 0) {
-            return List.of(hardHandScore().plus(increaseScore(1)));
+    private Optional<Score> softHandScore() {
+        if (hasAce()) {
+            return Optional.of(hardHandScore().plus(increaseScore()));
         }
-        return List.of();
+        return Optional.empty();
     }
 
-    private int numberOfAce() {
-        return (int) stream()
-            .filter(Card::isAce)
-            .count();
+    private boolean hasAce() {
+        return stream().anyMatch(Card::isAce);
     }
 
-    private Score increaseScore(int numberOfAce) {
-        return new Score(diffSoftAndHardOfAce() * numberOfAce);
+    private Score increaseScore() {
+        return new Score(diffSoftAndHardOfAce());
     }
 
     private int diffSoftAndHardOfAce() {
