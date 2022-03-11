@@ -6,9 +6,7 @@ import blackjack.domain.Player;
 import blackjack.domain.Result;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -27,7 +25,6 @@ public class OutputView {
                 .map(names::add);
         System.out.println("딜러와 " + String.join(", ", names) + "에게 2장의 카드를 나누었습니다.");
 
-      /*  System.out.println("딜러: ");*/
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(makeStatusFormat("딜러", dealer.getMyCards()))
                 .append("\n");

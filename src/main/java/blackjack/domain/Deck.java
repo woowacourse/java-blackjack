@@ -1,24 +1,20 @@
 package blackjack.domain;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 public class Deck {
     private static boolean lock = false;
     private static final String DECK_GENERATE_LOCK_EXCEPTION
             = "[ERROR] 덱은 이미 존재합니다.";
-
     private static final String FILE_PATH = "src/main/java/blackjack/domain/CardType";
     private static final String FILE_IO_EXCEPTION = "[ERROR] 파일 입력 에러";
+    private static final String NO_AVAILABLE_CARD_EXCEPTION = "[ERROR] 덱이 비었습니다.";
     private static final String FILE_CONTENT_DELIMITER = " ";
     private static final int NAME_INDEX = 0;
     private static final int VALUE_INDEX = 1;
-    private static final String NO_AVAILABLE_CARD_EXCEPTION = "[ERROR] 덱이 비었습니다.";
 
     private final List<Card> cards;
     private final List<Boolean> isExist;
