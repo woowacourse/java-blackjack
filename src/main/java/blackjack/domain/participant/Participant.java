@@ -28,6 +28,10 @@ public abstract class Participant {
 
     public abstract boolean isPossibleToDrawCard();
 
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
     public boolean isBurst() {
         return cards.isBurst();
     }

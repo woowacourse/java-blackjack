@@ -23,7 +23,11 @@ public class Player extends Participant {
 
     @Override
     public boolean isPossibleToDrawCard() {
-        return isNotBurst();
+        return isNotBlackjack() && isNotBurst();
+    }
+
+    private boolean isNotBlackjack() {
+        return !isBlackjack();
     }
 
     private boolean isNotBurst() {

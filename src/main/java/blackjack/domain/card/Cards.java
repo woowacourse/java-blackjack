@@ -34,6 +34,10 @@ public class Cards {
                 .anyMatch(Card::isAceCard);
     }
 
+    public boolean isBlackjack() {
+        return calculateScore() == 21;
+    }
+
     public boolean isBurst() {
         return calculateScore() > 21;
     }
