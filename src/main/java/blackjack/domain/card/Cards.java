@@ -1,12 +1,13 @@
 package blackjack.domain.card;
 
-import blackjack.domain.Result;
 import java.util.Collections;
 import java.util.List;
 
 public class Cards {
 
-    private static final int ACE_VALUE = 10;
+    private static final int BLACK_JACK_SCORE = 21;
+    private static final int FIRST_RECEIVED_CARD_SIZE = 2;
+    private static final int NUMBER_TO_USE_ACE_CARD_WITH_ONE = 10;
 
     private List<Card> cards;
 
@@ -18,11 +19,23 @@ public class Cards {
         cards.add(card);
     }
 
+    public boolean isFirstReceivedCards() {
+        return cards.size() == FIRST_RECEIVED_CARD_SIZE;
+    }
+
+    public boolean isBlackJack() {
+        return isFirstReceivedCards() && getTotalScore() == BLACK_JACK_SCORE;
+    }
+
+    public boolean exceedMaxScore() {
+        return calculateScore() > BLACK_JACK_SCORE;
+    }
+
     public int calculateScore() {
         int totalScore = getTotalScore();
         int countOfAce = getCountOfAce();
-        while (countOfAce-- > 0 && totalScore > Result.BLACK_JACK_SCORE) {
-            totalScore -= ACE_VALUE;
+        while (countOfAce-- > 0 && totalScore > BLACK_JACK_SCORE) {
+            totalScore -= NUMBER_TO_USE_ACE_CARD_WITH_ONE;
         }
         return totalScore;
     }

@@ -1,12 +1,13 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Cards;
+import blackjack.domain.player.Player;
+
 public enum Result {
 
     WIN("승"),
     DRAW("무"),
     LOSE("패");
-
-    public static final int BLACK_JACK_SCORE = 21;
 
     private final String result;
 
@@ -14,17 +15,17 @@ public enum Result {
         this.result = result;
     }
 
-    public static Result findResult(int myScore, int otherScore) {
-        if (myScore > BLACK_JACK_SCORE && otherScore > BLACK_JACK_SCORE) {
+    public static Result findResult(Cards myCards, Cards otherCards) {
+        if (myCards.exceedMaxScore() && otherCards.exceedMaxScore()) {
             return DRAW;
         }
-        if (myScore > BLACK_JACK_SCORE) {
+        if (myCards.exceedMaxScore()) {
             return LOSE;
         }
-        if (otherScore > BLACK_JACK_SCORE) {
+        if (otherCards.exceedMaxScore()) {
             return WIN;
         }
-        return compareScore(myScore, otherScore);
+        return compareScore(myCards.calculateScore(), otherCards.calculateScore());
     }
 
     private static Result compareScore(int myScore, int otherScore) {

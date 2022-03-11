@@ -41,6 +41,6 @@ public class GameMachine {
         List<Player> players = new ArrayList(users);
         players.add(dealer);
         return players.stream()
-                .anyMatch(player -> player.isBlackJack());
+                .anyMatch(Player::isBlackJack);
     }
 }

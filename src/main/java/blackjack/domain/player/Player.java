@@ -3,26 +3,23 @@ package blackjack.domain.player;
 import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.view.ResultView;
 import java.util.List;
 
 public abstract class Player {
 
     private static final String FIRST_RECEIVED_CARD_SIZE_EXCEPTION_MESSAGE = "처음 제공받는 카드는 2장이어야 합니다.";
 
-    private static final int FIRST_RECEIVED_CARD_SIZE = 2;
-
     private final String name;
     protected final Cards cards;
 
     public Player(String name, List<Card> cards) {
-        checkFirstReceivedCardsSize(cards.size());
         this.name = name;
         this.cards = new Cards(cards);
+        validateReceivedCardsSize(this.cards);
     }
 
-    private void checkFirstReceivedCardsSize(int size) {
-        if (size != FIRST_RECEIVED_CARD_SIZE) {
+    private void validateReceivedCardsSize(Cards cards) {
+        if (!cards.isFirstReceivedCards()) {
             throw new IllegalArgumentException(FIRST_RECEIVED_CARD_SIZE_EXCEPTION_MESSAGE);
         }
     }
@@ -30,7 +27,7 @@ public abstract class Player {
     public abstract boolean isPossibleToPickCard();
 
     public Boolean isBlackJack() {
-        return cards.getCards().size() == FIRST_RECEIVED_CARD_SIZE && cards.calculateScore() == Result.BLACK_JACK_SCORE;
+        return cards.isBlackJack();
     }
 
     public void pickCard(Card card) {
@@ -38,7 +35,7 @@ public abstract class Player {
     }
 
     public Result findResult(Player otherPlayer) {
-        return Result.findResult(this.cards.calculateScore(), otherPlayer.cards.calculateScore());
+        return Result.findResult(cards, otherPlayer.cards);
     }
 
     public String getName() {
