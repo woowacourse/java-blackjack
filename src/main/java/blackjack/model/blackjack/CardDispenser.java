@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class CardDispenser {
+public final class CardDispenser {
 
     private static final List<Card> CARD_POOL = createCardPool();
 

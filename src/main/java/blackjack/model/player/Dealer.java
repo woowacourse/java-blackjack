@@ -6,19 +6,21 @@ import blackjack.model.blackjack.Score;
 import blackjack.model.cards.Cards;
 import blackjack.model.cards.ScoreCards;
 
-public class Dealer extends Player {
+public final class Dealer extends Player {
 
     public static final Score HIT_BOUNDARY = new Score(17);
+    public static final String NAME = "딜러";
+    public static final int OPEN_CARD_COUNT = 1;
 
-    private final ScoreCards maxScoreCards;
+    private final ScoreCards cards;
 
     public Dealer(Card card1, Card card2, Card... cards) {
-        this(card1, Cards.of(card1, card2, cards));
+        this(Cards.of(card1, card2, cards));
     }
 
-    private Dealer(Card card1, Cards ownCards) {
-        super("딜러", Cards.of(card1), ownCards);
-        this.maxScoreCards = Cards.maxScoreCards(ownCards);
+    private Dealer(Cards ownCards) {
+        super(NAME, ownCards);
+        this.cards = Cards.maxScoreCards(ownCards);
     }
 
     public Result match(Player gamer) {
@@ -40,7 +42,12 @@ public class Dealer extends Player {
     }
 
     @Override
+    public Cards openCards() {
+        return cards().openCard(OPEN_CARD_COUNT);
+    }
+
+    @Override
     public boolean isHittable() {
-        return maxScoreCards.lessThan(HIT_BOUNDARY);
+        return cards.lessThan(HIT_BOUNDARY);
     }
 }

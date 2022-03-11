@@ -19,6 +19,10 @@ final class OwnCards implements Cards{
             .collect(Collectors.toList());
     }
 
+    private OwnCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
     private Stream<Card> concat(Card card1, Card card2) {
         return Stream.concat(Stream.of(card1), Stream.of(card2));
     }
@@ -30,6 +34,11 @@ final class OwnCards implements Cards{
     @Override
     public Stream<Card> stream() {
         return cards.stream();
+    }
+
+    @Override
+    public Cards openCard(int count) {
+        return new OwnCards(cards.subList(0, count));
     }
 
     @Override

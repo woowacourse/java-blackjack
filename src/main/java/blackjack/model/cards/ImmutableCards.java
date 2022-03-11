@@ -13,6 +13,11 @@ final class ImmutableCards implements Cards{
     }
 
     @Override
+    public Cards openCard(int count) {
+        return cards.openCard(count);
+    }
+
+    @Override
     public void take(Card card) {
         throw new UnsupportedOperationException("현재 카드는 ImmutableCards 입니다.");
     }

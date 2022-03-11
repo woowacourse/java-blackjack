@@ -5,13 +5,11 @@ import java.util.stream.Stream;
 
 public interface Cards extends Iterable<Card> {
 
+    Cards openCard(int count);
+
     void take(Card card);
 
     Stream<Card> stream();
-
-    static OwnCards of(Card card) {
-        return new OwnCards(card);
-    }
 
     static OwnCards of(Card card1, Card card2, Card... cards) {
         return new OwnCards(card1, card2, cards);

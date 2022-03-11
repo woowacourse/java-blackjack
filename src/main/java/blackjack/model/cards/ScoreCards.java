@@ -28,6 +28,11 @@ public abstract class ScoreCards implements Cards {
         return cards.iterator();
     }
 
+    @Override
+    public Cards openCard(int count) {
+        return cards.openCard(count);
+    }
+
     public boolean lessThan(Score score) {
         return score().lessThan(score);
     }

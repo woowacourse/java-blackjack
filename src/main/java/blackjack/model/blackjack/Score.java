@@ -2,7 +2,7 @@ package blackjack.model.blackjack;
 
 import java.util.Objects;
 
-public class Score {
+public final class Score {
 
     private final int value;
 

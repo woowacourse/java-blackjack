@@ -8,45 +8,44 @@ import blackjack.model.cards.ScoreCards;
 public class Player {
 
     public static final Score HIT_BOUNDARY = new Score(21);
+    public static final int OPEN_CARD_COUNT = 2;
 
     protected final ScoreCards cards;
-    private final Cards openCards;
     private final String name;
 
     public Player(String name, Card card1, Card card2, Card... cards) {
-        this(name, Cards.of(card1, card2), Cards.of(card1, card2, cards));
+        this(name, Cards.of(card1, card2, cards));
     }
 
-    protected Player(String name, Cards openCards, Cards cards) {
+    protected Player(String name, Cards cards) {
         this.name = name;
-        this.openCards = openCards;
         this.cards = Cards.bestScoreCards(cards);
     }
 
-    public String name() {
+    public final String name() {
         return name;
     }
 
     public Cards openCards() {
-        return Cards.toUnmodifiable(openCards);
+        return Cards.toUnmodifiable(cards.openCard(OPEN_CARD_COUNT));
     }
 
-    public Cards cards() {
+    public final Cards cards() {
         return Cards.toUnmodifiable(cards);
     }
 
-    public void take(Card card) {
+    public final void take(Card card) {
         if (!isHittable()) {
             throw new IllegalStateException("카드를 더 이상 발급 받을 수 없습니다.");
         }
         cards.take(card);
     }
 
-    public Score score() {
+    public final Score score() {
         return cards.score();
     }
 
-    public boolean isBust() {
+    public final boolean isBust() {
         return score().isBust();
     }
 

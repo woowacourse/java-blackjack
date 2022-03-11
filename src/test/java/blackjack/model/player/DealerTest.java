@@ -4,6 +4,7 @@ import static blackjack.model.card.Suit.CLOVER;
 import static blackjack.model.card.Suit.DIAMOND;
 import static blackjack.model.card.Suit.HEART;
 import static blackjack.model.card.Suit.SPADE;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -100,6 +101,13 @@ public class DealerTest {
         assertThat(dealer.score()).isEqualTo(new Score(14));
     }
 
+    @Test
+    @DisplayName("딜러 카드 발급 후 재 발급 불가")
+    void takeCardAndIsHittable() {
+        Player dealer = new Dealer(JACK, SIX);
+        dealer.take(ACE);
+        assertThat(dealer.isHittable()).isFalse();
+    }
 
     @Test
     @DisplayName("딜러 카드 발급 실패")
