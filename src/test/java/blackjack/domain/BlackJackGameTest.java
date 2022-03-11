@@ -1,9 +1,14 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,5 +59,25 @@ class BlackJackGameTest {
             new BlackJackGame(List.of("name", "name"));
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("중복된 이름이 존재합니다.");
+    }
+
+    @Test
+    @DisplayName("플레이어 이름을 입력 받아, 플레이어를 반환한다.")
+    void findPlayerByName() {
+        BlackJackGame blackJackGame = new BlackJackGame(List.of("pobi", "jason"));
+        Player pobi = blackJackGame.findPlayerByName("pobi");
+        assertThat(pobi.isSameName("pobi")).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"TWO:true", "ACE:false"}, delimiter = ':')
+    @DisplayName("이름을 입력 받아, 해당 플레이어가 카드 총 합이 21이 넘는 버스트 상태인지 확인한다.")
+    void isBurst(String input, boolean result) {
+        BlackJackGame blackJackGame = new BlackJackGame(List.of("pobi", "jason"));
+        Player pobi = blackJackGame.findPlayerByName("pobi");
+        pobi.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.KING));
+        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
+        pobi.addCard(Card.getInstance(CardShape.HEART, CardNumber.valueOf(input)));
+        assertThat(blackJackGame.isBurst("pobi")).isEqualTo(result);
     }
 }
