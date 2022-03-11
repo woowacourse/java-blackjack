@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack;
 
+import blackjack.domain.WinDrawLose;
 import blackjack.domain.card.Deck;
 import blackjack.domain.dto.CardDto;
 import blackjack.domain.dto.HitResultDto;
@@ -14,12 +15,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BlackjackGame {
+public class BlackjackRound {
     private final Deck deck;
     private final Gamer dealer;
     private final Players players;
 
-    public BlackjackGame(Players players) {
+    public BlackjackRound(Players players) {
         this.dealer = new Dealer();
         this.players = players;
         this.deck = new Deck();
@@ -62,7 +63,10 @@ public class BlackjackGame {
     }
 
     public void dealerHit() {
-        while (((Dealer)dealer).checkHitFlag()) {
+        if (!(dealer instanceof Dealer)) {
+            throw new RuntimeException("딜러의 구현체가 Dealer가 맞는지 확인.");
+        }
+        while (((Dealer) dealer).checkHitFlag()) {
             dealer.hit(deck.draw());
         }
     }
