@@ -54,6 +54,6 @@ public class Players {
     }
 
     public List<Player> getParticipants() {
-        return participants;
+        return List.copyOf(participants);
     }
 }

@@ -50,6 +50,6 @@ public class Cards {
     }
 
     public List<Card> getCards() {
-        return this.cards;
+        return List.copyOf(this.cards);
     }
 }
