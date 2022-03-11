@@ -2,8 +2,8 @@ package controller;
 
 import static model.Dealer.DEALER_NAME;
 
-import java.util.List;
 import dto.AllParticipatorsDto;
+import java.util.List;
 import service.BlackJackService;
 import view.InputView;
 import view.OutputView;

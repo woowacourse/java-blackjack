@@ -16,8 +16,8 @@ import model.card.CardFace;
 import model.card.CardSuit;
 
 public class CardConvertor {
-    private static Map<CardFace, String> faces = new EnumMap<>(CardFace.class);
-    private static Map<CardSuit, String> suits = new EnumMap<>(CardSuit.class);
+    private static final Map<CardFace, String> faces = new EnumMap<>(CardFace.class);
+    private static final Map<CardSuit, String> suits = new EnumMap<>(CardSuit.class);
 
     static {
         initSuits();

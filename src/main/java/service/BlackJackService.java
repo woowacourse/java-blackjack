@@ -5,16 +5,14 @@ import static java.util.stream.Collectors.toMap;
 
 import dto.AllParticipatorsDto;
 import dto.ParticipatorDto;
-import dto.TotalResultDto;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import model.card.Card;
-import model.card.CardDeck;
 import model.Participator;
 import model.Participators;
 import model.Result;
+import model.card.Card;
+import model.card.CardDeck;
 import util.CardConvertor;
 import util.ResultConvertor;
 
@@ -79,6 +77,7 @@ public class BlackJackService {
     public Map<ParticipatorDto, Integer> getAllCardsResults() {
         participators.findDealer().setEveryCardGettable();
         return participators.findAll().stream()
-        .collect(toMap(this::convertParticipatorToDto, Participator::getSum, (participator, sum) -> sum, LinkedHashMap::new));
+                .collect(toMap(this::convertParticipatorToDto, Participator::getSum, (participator, sum) -> sum,
+                        LinkedHashMap::new));
     }
 }

@@ -10,9 +10,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import model.Result;
-import model.card.Card;
-import model.card.CardFace;
-import model.card.Cards;
 import org.junit.jupiter.api.Test;
 
 public class CardsTest {
