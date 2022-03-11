@@ -6,14 +6,13 @@ import blackjack.domain.human.Players;
 import blackjack.util.Constants;
 
 public class Table {
-    private final Players players;
+    private static final CardDeck cardDeck = CardDeck.getInstance();
     private final Dealer dealer;
-    private final CardDeck cardDeck;
+    private final Players players;
 
     private Table(Players players) {
         this.players = players;
         this.dealer = Dealer.of();
-        this.cardDeck = CardDeck.getInstance();
     }
 
     public static Table of(Players players) {
