@@ -1,5 +1,7 @@
 package blackjack;
 
+import blackjack.trumpcard.TrumpCard;
+import blackjack.trumpcard.TrumpNumber;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +42,7 @@ public class Deck {
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.isNumber(TrumpNumber.ACE));
+                .anyMatch(card -> card.hasSameNumber(TrumpNumber.ACE));
     }
 
     private int sumAceAdvantageTo(int score) {
@@ -52,7 +54,7 @@ public class Deck {
 
     private int countAce() {
         return (int) cards.stream()
-                .filter(card -> card.isNumber(TrumpNumber.ACE))
+                .filter(card -> card.hasSameNumber(TrumpNumber.ACE))
                 .count();
     }
 

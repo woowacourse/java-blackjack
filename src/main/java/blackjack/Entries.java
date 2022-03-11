@@ -1,5 +1,7 @@
 package blackjack;
 
+import blackjack.trumpcard.TrumpCard;
+import blackjack.trumpcard.TrumpCardPack;
 import java.util.List;
 import java.util.stream.Collectors;
 

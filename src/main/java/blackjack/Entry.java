@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.trumpcard.TrumpCard;
 import java.util.List;
 import java.util.regex.Pattern;
 

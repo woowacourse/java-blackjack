@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.trumpcard;
 
 public enum TrumpNumber {
     ACE(1),

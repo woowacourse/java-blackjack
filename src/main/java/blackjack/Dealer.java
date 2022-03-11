@@ -1,5 +1,7 @@
 package blackjack;
 
+import blackjack.trumpcard.TrumpCard;
+
 public class Dealer extends Player {
     private static final String NAME = "딜러";
     private static final int SCORE_HIT_CRITERIA = 17;
