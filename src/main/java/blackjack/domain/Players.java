@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 public class Players {
 
     public static final String DELIMITER = ",";
-    private static final int MAXIMUM_PLAYER = 25;
+    private static final int MAXIMUM_PLAYER = (Card.getTotalCard().size() / CardMachine.INIT_CARD_COUNT) - 1;
 
     private final List<Player> players = new ArrayList<>();
 
@@ -53,7 +53,7 @@ public class Players {
     }
 
     private void validateMaximumPlayer(final List<String> names) {
-        if (names.size() >= MAXIMUM_PLAYER) {
+        if (names.size() > MAXIMUM_PLAYER) {
             throw new IllegalArgumentException("플레이어 최대 인원은 " + MAXIMUM_PLAYER + "명 입니다.");
         }
     }
