@@ -6,6 +6,7 @@ import blackjack.domain.card.CardSymbol;
 
 public class CardRepository {
 
+    public static final Card CLOVER_ACE = Card.of(CardRank.ACE, CardSymbol.CLOVER);
     public static final Card CLOVER2 = Card.of(CardRank.TWO, CardSymbol.CLOVER);
     public static final Card CLOVER3 = Card.of(CardRank.THREE, CardSymbol.CLOVER);
     public static final Card CLOVER4 = Card.of(CardRank.FOUR, CardSymbol.CLOVER);
