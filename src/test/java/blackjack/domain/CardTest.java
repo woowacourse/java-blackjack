@@ -2,9 +2,10 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +17,7 @@ class CardTest {
     @Test
     @DisplayName("카드를 생성한다")
     void create() {
-        Assertions.assertDoesNotThrow(() -> new Card(Denomination.TWO, Suit.SPADE));
+        assertDoesNotThrow(() -> new Card(Denomination.TWO, Suit.SPADE));
     }
 
     @Test
@@ -34,10 +35,13 @@ class CardTest {
         Card card1 = new Card(denomination, suit);
         Card card2 = new Card(denomination, suit);
         Card card3 = new Card(Denomination.TWO, Suit.CLOVER);
-        
-        assertThat(card1).isEqualTo(card2);
-        assertThat(card1).hasSameHashCodeAs(card2);
-        assertThat(card1).isNotEqualTo(card3);
+
+        assertAll(
+            () -> assertThat(card1).isEqualTo(card2),
+            () -> assertThat(card1).hasSameHashCodeAs(card2),
+            () -> assertThat(card1).isNotEqualTo(card3)
+        );
+
     }
 
     private static Stream<Arguments> equalsCardTestCase() {
@@ -56,10 +60,21 @@ class CardTest {
         Card card2 = new Card(Denomination.TWO, Suit.CLOVER);
         Card card3 = new Card(Denomination.THREE, Suit.CLOVER);
 
-        Assertions.assertAll(
+        assertAll(
                 () -> assertThat(card1).isNotEqualTo(card2),
                 () -> assertThat(card2).isNotEqualTo(card3),
                 () -> assertThat(card3).isNotEqualTo(card2)
+        );
+    }
+
+    @Test
+    @DisplayName("카드가 정상적으로 생성되었을때 그 값이 정학환지 확인")
+    void createCardEqualsValue() {
+        Card card = new Card(Denomination.TEN, Suit.SPADE);
+
+        assertAll(
+            () -> assertThat(card.getDenomination()).isEqualTo("10"),
+            () -> assertThat(card.getSuit()).isEqualTo("스페이드")
         );
     }
 }
