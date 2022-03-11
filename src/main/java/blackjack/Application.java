@@ -21,6 +21,11 @@ public class Application {
             game.toNextEntry();
             playTurn(inputView, game, resultView);
         } while (game.hasNextEntry());
+
+        game.hitDealer();
+        if (game.countCardsAddedToDealer() > 0) {
+            resultView.printDealerHitCount(game.countCardsAddedToDealer());
+        }
     }
 
     private static void playTurn(InputView inputView, Game game, ResultView resultView) {

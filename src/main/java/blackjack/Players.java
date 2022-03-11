@@ -57,11 +57,23 @@ public class Players {
         return this.entries.isCurrentEntryBust();
     }
 
+    public void hitDealer(TrumpCard card) {
+        this.dealer.hit(card);
+    }
+
     public String getCurrentEntryName() {
         return this.entries.getCurrentEntryName();
     }
 
     public List<String> getCurrentDeckToString() {
         return this.entries.getCurrentDeckToString();
+    }
+
+    public int countCardsAddedToDealer() {
+        return this.dealer.countAddedCards();
+    }
+
+    public boolean canDealerHit() {
+        return this.dealer.canHit();
     }
 }

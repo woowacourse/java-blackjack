@@ -31,6 +31,12 @@ public class Game {
         return this.players.isCurrentEntryBust();
     }
 
+    public void hitDealer() {
+        while (this.players.canDealerHit()) {
+            this.players.hitDealer(trumpCardPack.draw());
+        }
+    }
+
     public List<String> getEntryNames() {
         return this.players.getEntryNames();
     }
@@ -49,5 +55,9 @@ public class Game {
 
     public List<String> getCurrentDeckToString() {
         return this.players.getCurrentDeckToString();
+    }
+
+    public int countCardsAddedToDealer() {
+        return this.players.countCardsAddedToDealer();
     }
 }
