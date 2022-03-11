@@ -24,10 +24,9 @@ public class Participant {
 
         if (hasAceCard()) {
             totalSum += 10;
-        }
-
-        if (totalSum > BLACKJACK_NUMBER) {
-            totalSum -= ADD_ALTERNATIVE_ACE_VALUE;
+            if (totalSum > BLACKJACK_NUMBER) {
+                totalSum -= ADD_ALTERNATIVE_ACE_VALUE;
+            }
         }
 
         return totalSum;
