@@ -29,7 +29,7 @@ public class BlackjackController {
     }
 
     private void generateAndPrintResult(Blackjack blackjack) {
-        printTotalScore(blackjack.generateTotalResultDTO());
+        printTotalScore(blackjack.calculateTotalScore());
         printTotalResult(blackjack.calculateTotalResult());
     }
 

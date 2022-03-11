@@ -77,19 +77,19 @@ public class Blackjack {
         players.forEach(Participant::endTurn);
     }
 
-    public List<TotalScoreDTO> generateTotalResultDTO() {
-        List<TotalScoreDTO> resultDTOs = new ArrayList<>();
-        resultDTOs.add(new TotalScoreDTO(dealer));
-        resultDTOs.addAll(players.stream()
+    public List<TotalScoreDTO> calculateTotalScore() {
+        List<TotalScoreDTO> totalScoreDTOs = new ArrayList<>();
+        totalScoreDTOs.add(new TotalScoreDTO(dealer));
+        totalScoreDTOs.addAll(players.stream()
                 .map(TotalScoreDTO::new)
                 .collect(Collectors.toList()));
-        return resultDTOs;
+        return totalScoreDTOs;
     }
 
     public TotalResultDTO calculateTotalResult() {
-        List<PlayerResultDTO> totalPlayerResult = calculateTotalPlayerResult();
-        DealerResultDTO dealerResult = calculateDealerResult(totalPlayerResult);
-        return new TotalResultDTO(totalPlayerResult, dealerResult);
+        List<PlayerResultDTO> playersResult = calculatePlayersResult();
+        DealerResultDTO dealerResult = calculateDealerResult(playersResult);
+        return new TotalResultDTO(playersResult, dealerResult);
     }
 
     private void validateNames(String[] names) {
@@ -110,13 +110,13 @@ public class Blackjack {
         }
     }
 
-    private List<PlayerResultDTO> calculateTotalPlayerResult() {
-        List<PlayerResultDTO> totalPlayerResult = new ArrayList<>();
+    private List<PlayerResultDTO> calculatePlayersResult() {
+        List<PlayerResultDTO> playersResult = new ArrayList<>();
         for (Player player : players) {
-            totalPlayerResult.add(new PlayerResultDTO(player.getName(), player.isWin(dealer.getScore())));
+            playersResult.add(new PlayerResultDTO(player.getName(), player.isWin(dealer.getScore())));
         }
 
-        return totalPlayerResult;
+        return playersResult;
     }
 
     private DealerResultDTO calculateDealerResult(List<PlayerResultDTO> totalPlayerResult) {
