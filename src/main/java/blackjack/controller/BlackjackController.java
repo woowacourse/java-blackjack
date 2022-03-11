@@ -48,7 +48,7 @@ public class BlackjackController {
     }
 
     private void turnEachPlayerIfGuest(BlackjackGame blackjackGame, Player player) {
-        if (player.getClass().equals(Dealer.class)) {
+        if (player.isDealer()) {
             return;
         }
         while (checkGetMoreCard(player)) {

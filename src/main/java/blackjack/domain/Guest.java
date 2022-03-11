@@ -10,6 +10,11 @@ public class Guest extends AbstractPlayer implements Player {
     }
 
     @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

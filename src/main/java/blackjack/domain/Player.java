@@ -9,4 +9,6 @@ public interface Player {
     String getName();
 
     Deck getDeck();
+
+    boolean isDealer();
 }
