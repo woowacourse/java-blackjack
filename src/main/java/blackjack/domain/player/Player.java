@@ -25,6 +25,14 @@ public abstract class Player {
         return getScoreByAceOne();
     }
 
+    protected int getScoreByAceEleven() {
+        return cards.calculateScoreByAceEleven();
+    }
+
+    protected int getScoreByAceOne() {
+        return cards.calculateScoreByAceOne();
+    }
+
     public void addCard(final Card card) {
         cards.addCard(card);
     }
@@ -49,13 +57,5 @@ public abstract class Player {
 
     public String getName() {
         return this.name;
-    }
-
-    protected int getScoreByAceOne() {
-        return cards.calculateScoreByAceOne();
-    }
-
-    protected int getScoreByAceEleven() {
-        return cards.calculateScoreByAceEleven();
     }
 }
