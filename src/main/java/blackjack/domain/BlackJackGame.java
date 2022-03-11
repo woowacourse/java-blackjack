@@ -90,7 +90,7 @@ public class BlackJackGame {
             dealerResults.add(dealerResult);
             gameResultDtos.add(GameResultDto.ofPlayer(player.getName(), GameResult.getPairResult(dealerResult)));
         }
-        gameResultDtos.add(0, GameResultDto.ofDealer("딜러", dealerResults));
+        gameResultDtos.add(0, GameResultDto.ofDealer(Dealer.DEALER_NAME, dealerResults));
         return gameResultDtos;
     }
 

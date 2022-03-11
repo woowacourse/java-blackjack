@@ -3,10 +3,11 @@ package blackjack.domain;
 import java.util.List;
 
 public class Dealer extends Participant {
+    public static final String DEALER_NAME = "딜러";
     private static final int DEALER_MIN_TOTAL = 17;
 
     public Dealer(List<Card> cards) {
-        super("딜러",new HoldingCard(cards));
+        super(DEALER_NAME,new HoldingCard(cards));
     }
 
     public Card showFirstCard() {

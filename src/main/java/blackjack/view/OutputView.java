@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Card;
+import blackjack.domain.Dealer;
 import blackjack.domain.dto.GameResultDto;
 import blackjack.domain.dto.ParticipantDto;
 import java.util.List;
@@ -40,10 +41,10 @@ public class OutputView {
 
     public static void showDealerResult(boolean dealerDrawMoreCard) {
         if(dealerDrawMoreCard) {
-            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            System.out.printf("%s는 16이하라 한장의 카드를 더 받았습니다.%n", Dealer.DEALER_NAME);
             return;
         }
-        System.out.println("딜러는 17이상이라 카드를 더 받지 않았습니다.");
+        System.out.printf("%s는 17이상이라 카드를 더 받지 않았습니다.%n", Dealer.DEALER_NAME);
     }
 
     public static void showFinalCardsAndScore(List<ParticipantDto> participantDtos) {
