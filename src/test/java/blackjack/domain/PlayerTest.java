@@ -14,7 +14,8 @@ public class PlayerTest {
     void createPlayerNullNameFail() {
         assertThatThrownBy(() -> {
             new Player(null);
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[ERROR] 플레이어 이름에 빈 값이 올 수 없습니다.");
     }
 
     @Test
@@ -22,7 +23,8 @@ public class PlayerTest {
     void createPlayerEmptyNameFail() {
         assertThatThrownBy(() -> {
             new Player("");
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[ERROR] 플레이어 이름에 빈 값이 올 수 없습니다.");
     }
 
     @Test
@@ -30,7 +32,18 @@ public class PlayerTest {
     void createPlayerOnlyBlankNameFail() {
         assertThatThrownBy(() -> {
             new Player(" ");
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[ERROR] 플레이어 이름에 공백만 올 수 없습니다.");
+
+    }
+
+    @Test
+    @DisplayName("플레이어 이름은 딜러가 될 수 없다.")
+    void createPlayerNameDealerFail() {
+        assertThatThrownBy(() -> {
+            new Player("딜러");
+        }).isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[ERROR] 플레이어 이름은 딜러가 될 수 없습니다.");
     }
 
     @Test
