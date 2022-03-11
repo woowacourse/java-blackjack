@@ -1,6 +1,7 @@
 package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -23,6 +24,14 @@ public class ScoreTest {
         Score sameScore = Score.valueOf(10);
 
         assertThat(score).isEqualTo(sameScore);
+    }
+
+    @DisplayName("음수로 된 점수를 생성하려는 경우 예외가 발생한다.")
+    @Test
+    void valueOf_throwExceptionOnNegativeValue() {
+        assertThatThrownBy(() -> Score.valueOf(-1))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("점수는 음수가 될 수 없습니다!");
     }
 
     @DisplayName("add 메서드는 다른 Score 인스턴스를 받아 자신과 더한 값의 Score 인스턴스를 반환한다.")

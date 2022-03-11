@@ -10,16 +10,23 @@ public class Score implements Comparable<Score> {
     public static final int ACE_HIGH_VALUE = 11;
     public static final int DEALER_EXTRA_CARD_LIMIT = 16;
     public static final int BLACKJACK = 21;
+    public static final String NEGATIVE_SCORE_NOT_ALLOWED_EXCEPTION = "점수는 음수가 될 수 없습니다!";
 
     private final int value;
 
-    // TODO: 음수 값에 대한 유효성 검증
     private Score(final int value) {
         this.value = value;
     }
 
     public static Score valueOf(final int value) {
+        validateNotNegative(value);
         return ScoreCache.getCache(value);
+    }
+
+    private static void validateNotNegative(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException(NEGATIVE_SCORE_NOT_ALLOWED_EXCEPTION);
+        }
     }
 
     public Score add(Score anotherScore) {
