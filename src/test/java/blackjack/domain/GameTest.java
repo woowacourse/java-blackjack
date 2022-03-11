@@ -88,10 +88,4 @@ class GameTest {
 
         assertThat(game.getCurrentHitablePlayerName()).isEqualTo(player2.getName());
     }
-
-    @Test
-    @DisplayName("게임 결과를 계산한다")
-    void calculateResult() {
-
-    }
 }
