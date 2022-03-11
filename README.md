@@ -122,7 +122,6 @@
 - 페어와 헤어지는 시점 (목요일 00시)
 - [코드 컨벤션](https://github.com/woowacourse/woowacourse-docs/tree/master/styleguide/java)
 - 커밋 작성 방법(한글)
-- [프로그램 설계 방법](https://whimsical.com/sudaltest-JGN5vZ4gSkYxZGZJPjnnX3@2Ux7TurymNM4tJSA7FqU)
 - 매일 저녁 하루 회고
 
 ## 일일 회고
