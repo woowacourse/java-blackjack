@@ -1,6 +1,7 @@
 package blackjack.controller;
 
-import blackjack.dto.MatchRecordDto;
+import java.util.List;
+
 import blackjack.domain.card.Deck;
 import blackjack.domain.strategy.DealerHitStrategy;
 import blackjack.domain.strategy.PlayerHitStrategy;
@@ -8,12 +9,11 @@ import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
+import blackjack.dto.MatchRecordDto;
 import blackjack.dto.UserDto;
 import blackjack.dto.UsersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
-import java.util.List;
 
 public class BlackJackController {
 
@@ -48,25 +48,28 @@ public class BlackJackController {
         hitOrStayCardDealer(deck, users.getDealer());
     }
 
+    private void hitOrStayCardPerPlayers(Deck deck, List<Player> players) {
+        for (Player player : players) {
+            hitOrStayCardPlayer(deck, player);
+        }
+    }
+
+    private void hitOrStayCardPlayer(Deck deck, User user) {
+        boolean isHit = user.hitOrStay(
+            deck, new PlayerHitStrategy(inputView.inputWhetherToDrawCard(UserDto.fromEvery(user)))
+        );
+        if (isHit) {
+            outputView.printUserCards(UserDto.fromEvery(user));
+        }
+        if (isHit && !user.isBust()) {
+            hitOrStayCardPlayer(deck, user);
+        }
+    }
+
     private void hitOrStayCardDealer(Deck deck, Dealer dealer) {
         boolean isHit = dealer.hitOrStay(deck, new DealerHitStrategy(dealer.getScore()));
         if (isHit) {
             outputView.printDealerHit();
-        }
-    }
-
-    private void hitOrStayCardPerPlayers(Deck deck, List<Player> players) {
-        for (Player player : players) {
-            hitOrStayCard(deck, player);
-        }
-    }
-
-    private void hitOrStayCard(Deck deck, User user) {
-        boolean isHit = user.hitOrStay(deck,
-            new PlayerHitStrategy(inputView.inputWhetherToDrawCard(UserDto.fromEvery(user))));
-        if (isHit) {
-            outputView.printCards(UserDto.fromEvery(user));
-            hitOrStayCard(deck, user);
         }
     }
 
