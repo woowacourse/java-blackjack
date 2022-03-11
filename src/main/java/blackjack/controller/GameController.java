@@ -40,6 +40,7 @@ public class GameController {
         for (Player player : players) {
             OutputView.printPlayerCards(new ParticipantVo(player));
         }
+        OutputView.printEmptyLine();
         return game;
     }
 
