@@ -32,11 +32,4 @@ public class ParticipantDto {
         return score;
     }
 
-    @Override
-    public String toString() {
-        return "ParticipantDto{" +
-                "name='" + name + '\'' +
-                ", cards=" + cards +
-                '}';
-    }
 }
