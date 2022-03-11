@@ -1,4 +1,4 @@
-package domain;
+package domain.util;
 
 import domain.card.PlayingCard;
 import java.util.List;
