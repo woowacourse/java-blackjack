@@ -26,7 +26,7 @@ public class Blackjack {
 		}
 	}
 
-	public void distributeAdditionalCardDealer(NumberGenerator numberGenerator) {
+	public void distributeAdditionalCardToDealer(NumberGenerator numberGenerator) {
 		while (dealer.isHit()) {
 			dealer.addCard(dealer.handOutCard(numberGenerator));
 		}
@@ -36,8 +36,8 @@ public class Blackjack {
 		return !playerRepository.isEnd();
 	}
 
-	public Player getPlayer() {
-		Player player = playerRepository.getPlayer();
+	public Player getNextPlayer() {
+		Player player = playerRepository.findNextPlayer();
 		playerRepository.next();
 		return player;
 	}
@@ -46,7 +46,7 @@ public class Blackjack {
 		return playerRepository.findPlayer(player);
 	}
 
-	public void distributeAdditionalCardPlayer(NumberGenerator numberGenerator, Player player) {
+	public void distributeAdditionalCardToPlayer(NumberGenerator numberGenerator, Player player) {
 		player.addCard(dealer.handOutCard(numberGenerator));
 		playerRepository.save(player);
 	}

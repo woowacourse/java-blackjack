@@ -27,17 +27,17 @@ public class BlackjackController {
 
 	private void progressBlackjack() {
 		while (blackjack.isDistributeMore()) {
-			askDistributingCard( blackjack.getPlayer());
+			askDistributingCard(blackjack.getNextPlayer());
 		}
 	}
 
 	private void askDistributingCard(Player player) {
 		while (InputView.askAdditionalCard(player)) {
-			blackjack.distributeAdditionalCardPlayer(RandomNumberGenerator.getInstance(), player);
+			blackjack.distributeAdditionalCardToPlayer(RandomNumberGenerator.getInstance(), player);
 			OutputView.printCards(blackjack.findPlayer(player));
 		}
 
-		blackjack.distributeAdditionalCardDealer(RandomNumberGenerator.getInstance());
+		blackjack.distributeAdditionalCardToDealer(RandomNumberGenerator.getInstance());
 		OutputView.printDealerAdditionalCard();
 	}
 

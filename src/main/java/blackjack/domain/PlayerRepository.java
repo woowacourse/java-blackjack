@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerRepository {
-	private List<Player> players;
+	private final List<Player> players;
 	private int playerIndex;
 
 	public PlayerRepository() {
@@ -17,8 +17,7 @@ public class PlayerRepository {
 	}
 
 	public Player findPlayer(Player player) {
-		int index = players.indexOf(player);
-		return players.get(index);
+		return players.get(findIndex(player));
 	}
 
 	public List<Player> findAll() {
@@ -33,13 +32,9 @@ public class PlayerRepository {
 		playerIndex++;
 	}
 
-	public Player getPlayer() {
+	public Player findNextPlayer() {
 		Player player = players.get(playerIndex);
 		return Player.copy(player);
-	}
-
-	public int size() {
-		return players.size();
 	}
 
 	public void saveAll(List<Player> players) {
@@ -47,7 +42,10 @@ public class PlayerRepository {
 	}
 
 	public void save(Player player) {
-		int index = players.indexOf(player);
-		players.set(index, player);
+		players.set(findIndex(player), player);
+	}
+
+	private int findIndex(Player player) {
+		return players.indexOf(player);
 	}
 }

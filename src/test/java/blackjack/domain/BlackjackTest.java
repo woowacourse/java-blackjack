@@ -3,12 +3,6 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import blackjack.domain.Blackjack;
-import blackjack.domain.IntendedNumberGenerator;
-import blackjack.domain.NumberGenerator;
-import blackjack.domain.Person;
-import blackjack.domain.Player;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,7 +43,7 @@ public class BlackjackTest {
 	@Test
 	void distributeOneMoreCardDealer() {
 		NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(10));
-		blackjack.distributeAdditionalCardDealer(numberGenerator);
+		blackjack.distributeAdditionalCardToDealer(numberGenerator);
 		assertThat(blackjack.getDealer().getMyCards().size()).isEqualTo(3);
 	}
 
@@ -57,7 +51,7 @@ public class BlackjackTest {
 	@Test
 	void distributeOneMoreCardDealer2() {
 		NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(10, 4));
-		blackjack.distributeAdditionalCardDealer(numberGenerator);
+		blackjack.distributeAdditionalCardToDealer(numberGenerator);
 		assertThat(blackjack.getDealer().getMyCards().size()).isEqualTo(3);
 	}
 
@@ -66,7 +60,7 @@ public class BlackjackTest {
 	void distributeOneMoreCardPlayer() {
 		NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(10));
 		Player player = blackjack.getPlayers().get(0);
-		blackjack.distributeAdditionalCardPlayer(numberGenerator, player);
+		blackjack.distributeAdditionalCardToPlayer(numberGenerator, player);
 
 		assertThat(player.getMyCards().size()).isEqualTo(3);
 	}
