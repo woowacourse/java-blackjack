@@ -16,7 +16,7 @@ final class ShuffledCardDispenser implements CardDispenser {
     private final List<Card> deck;
     private int index;
 
-    public ShuffledCardDispenser() {
+    ShuffledCardDispenser() {
         this.deck = shuffledCards();
         this.index = 0;
     }
