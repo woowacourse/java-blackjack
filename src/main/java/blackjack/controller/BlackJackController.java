@@ -8,9 +8,11 @@ import blackjack.view.ResultView;
 
 public class BlackJackController {
     private final InputView inputView;
+    private final ResultView resultView;
 
     public BlackJackController() {
         this.inputView = new InputView();
+        this.resultView = new ResultView();
     }
 
     public void run() {
@@ -26,7 +28,7 @@ public class BlackJackController {
 
     private void startGame(BlackJack blackJack, BlackJackDto blackJackDto) {
         blackJack.handOutStartingCards();
-        ResultView.showStartingStatus(blackJackDto);
+        resultView.showStartingStatus(blackJackDto);
     }
 
     private void decidePlayersReceivingAdditionalCard(BlackJack blackJack, BlackJackDto blackJackDto) {
@@ -37,10 +39,10 @@ public class BlackJackController {
 
     private void decidePlayerReceivingAdditionalCard(BlackJack blackJack, BlackJackDto blackJackDto,
                                                      Participant player) {
-        ResultView.showEachPlayerCurrentStatus(blackJackDto, player);
+        resultView.showEachPlayerCurrentStatus(blackJackDto, player);
         while (!player.isOverMaxScore() && inputView.askAdditionalCardInput(player.getName())) {
             blackJack.handOutCardTo(player);
-            ResultView.showEachPlayerCurrentStatus(blackJackDto, player);
+            resultView.showEachPlayerCurrentStatus(blackJackDto, player);
         }
     }
 
@@ -49,12 +51,12 @@ public class BlackJackController {
         if (dealerNeedAdditionalCard) {
             blackJack.handOutCardTo(blackJackDto.getDealer());
         }
-        ResultView.showWhetherDealerReceivedOrNot(dealerNeedAdditionalCard);
+        resultView.showWhetherDealerReceivedOrNot(dealerNeedAdditionalCard);
     }
 
     private void finishGame(BlackJack blackJack, BlackJackDto blackJackDto) {
-        ResultView.showFinalStatus(blackJackDto);
+        resultView.showFinalStatus(blackJackDto);
         blackJack.calculateResult();
-        ResultView.showResult(blackJackDto);
+        resultView.showResult(blackJackDto);
     }
 }

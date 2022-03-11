@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.BlackJack;
 import blackjack.domain.Participant;
+import blackjack.domain.Result;
 import blackjack.domain.card.Card;
 
 public class BlackJackDto {
@@ -17,9 +18,9 @@ public class BlackJackDto {
 
 	private final Participant dealer;
 	private final List<Participant> players;
-	private final Map<Participant, Boolean> result;
+	private final Map<Participant, Result> result;
 
-	public BlackJackDto(Participant dealer, List<Participant> players, Map<Participant, Boolean> result) {
+	public BlackJackDto(Participant dealer, List<Participant> players, Map<Participant, Result> result) {
 		this.dealer = dealer;
 		this.players = players;
 		this.result = result;
@@ -42,7 +43,7 @@ public class BlackJackDto {
 	}
 
 	public String getDealerResult() {
-		long loseCount = result.values().stream().filter(value -> value).count();
+		long loseCount = result.values().stream().filter(Result::getIsWin).count();
 		long winCount = result.size() - loseCount;
 
 		return dealer.getName() + NAME_DELIMITER + winCount + MESSAGE_WIN + loseCount + MESSAGE_LOSE;
@@ -50,7 +51,7 @@ public class BlackJackDto {
 
 	public List<String> getPlayersResult() {
 		return result.keySet().stream()
-			.map(key -> key.getName() + NAME_DELIMITER + decodeResult(result.get(key)))
+			.map(key -> key.getName() + NAME_DELIMITER + decodeResult(result.get(key).getIsWin()))
 			.collect(Collectors.toList());
 	}
 
