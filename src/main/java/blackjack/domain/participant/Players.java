@@ -52,13 +52,13 @@ public class Players {
         return List.copyOf(players);
     }
 
-    public boolean play(final int turnIndex, final Deck deck) {
+    public boolean canHit(final int turnIndex) {
         Player player = players.get(turnIndex);
 
         return !player.isBurst();
     }
 
-    public boolean canPlay(final int turnIndex) {
+    public boolean isStillInGame(final int turnIndex) {
         return turnIndex < players.size();
     }
 

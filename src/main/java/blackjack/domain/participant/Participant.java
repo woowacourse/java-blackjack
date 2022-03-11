@@ -23,12 +23,12 @@ public class Participant {
         int totalSum = calculateWithoutAce();
 
         if (hasAceCard()) {
-            totalSum += 10;
+            totalSum += ADD_ALTERNATIVE_ACE_VALUE;
+            if (totalSum > BLACKJACK_NUMBER) {
+                totalSum -= ADD_ALTERNATIVE_ACE_VALUE;
+            }
         }
 
-        if (totalSum > BLACKJACK_NUMBER) {
-            totalSum -= ADD_ALTERNATIVE_ACE_VALUE;
-        }
 
         return totalSum;
     }

@@ -63,9 +63,9 @@ public class BlackjackApplication {
 
     private void proceedPlayersTurn(final Deck deck, final Players players) {
         int turnIndex = 0;
-        while(players.canPlay(turnIndex)) {
+        while(players.isStillInGame(turnIndex)) {
             final Player player = players.getCurrentPlayer(turnIndex);
-            if (players.play(turnIndex, deck) && requestContinue(player)) {
+            if (players.canHit(turnIndex) && requestContinue(player)) {
                 players.drawCard(turnIndex, deck);
                 outputView.printDistributedCards(ParticipantDto.toDto(player));
                 continue;
