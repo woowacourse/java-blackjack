@@ -42,10 +42,13 @@ public class Blackjack {
 		}
 	}
 
-	public void distributeAdditionalCardToDealer(NumberGenerator numberGenerator) {
-		while (dealer.isHit()) {
+	public boolean distributeAdditionalCardToDealer(NumberGenerator numberGenerator) {
+		if (dealer.isHit()) {
 			dealer.addCard(dealer.handOutCard(numberGenerator));
+			return true;
 		}
+
+		return false;
 	}
 
 	public boolean isDistributeMore() {

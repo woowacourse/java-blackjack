@@ -37,8 +37,9 @@ public class BlackjackController {
 			OutputView.printCards(blackjack.findPlayer(player));
 		}
 
-		blackjack.distributeAdditionalCardToDealer(RandomNumberGenerator.getInstance());
-		OutputView.printDealerAdditionalCard();
+		if(blackjack.distributeAdditionalCardToDealer(RandomNumberGenerator.getInstance())) {
+			OutputView.printDealerAdditionalCard();
+		}
 	}
 
 	private void endBlackjack() {
