@@ -11,6 +11,10 @@ public class Deck {
 
     private final List<TrumpCard> cards;
 
+    public Deck() {
+        this.cards = null;
+    }
+
     public Deck(TrumpCard card1, TrumpCard card2) {
         this.cards = new ArrayList<>(Arrays.asList(card1, card2));
     }

@@ -14,25 +14,13 @@ public class Game {
 
     private List<Player> buildPlayers(List<String> names) {
         List<Player> players = buildEntries(names);
-        players.add(buildDealer());
+        players.add(new Dealer());
         return players;
     }
 
     private List<Player> buildEntries(List<String> names) {
         return names.stream()
-                .map(this::buildEntry)
+                .map(Entry::new)
                 .collect(Collectors.toList());
-    }
-
-    private Player buildEntry(String name) {
-        return new Entry.Builder(name)
-                .deck(trumpCardPack.draw(), trumpCardPack.draw())
-                .build();
-    }
-
-    private Player buildDealer() {
-        return new Dealer.Builder()
-                .deck(trumpCardPack.draw(), trumpCardPack.draw())
-                .build();
     }
 }

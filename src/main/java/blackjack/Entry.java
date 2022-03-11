@@ -13,8 +13,8 @@ public class Entry extends Player {
 
     private static final int MAX_LENGTH = 15;
 
-    private Entry(String name, Deck deck) {
-        super(name, deck);
+    public Entry(String name) {
+        super(name);
         validate(name);
     }
 
@@ -46,21 +46,6 @@ public class Entry extends Player {
     private void checkSignIn(String name) {
         if (Pattern.matches(REGEX_NAME_CONTAINS_SIGN, name)) {
             throw new IllegalArgumentException(ERROR_CONTAINS_SIGN);
-        }
-    }
-
-    public static class Builder extends Player.Builder {
-
-        public Builder(String name) {
-            super(name);
-        }
-
-        @Override
-        public Entry build() {
-            if (deck == null) {
-                throw new RuntimeException(ERROR_DECK_IS_NULL);
-            }
-            return new Entry(this.name, this.deck);
         }
     }
 
