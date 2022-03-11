@@ -53,7 +53,6 @@ public class Blackjack {
                         .collect(Collectors.toList())
                 , players.stream()
                         .map(dealer::isWin)
-                        .map(Result::valueOf)
                         .collect(Collectors.toList()));
     }
 
