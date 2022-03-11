@@ -10,9 +10,9 @@ import blackjack.domain.dto.PlayerResultDto;
 import blackjack.domain.dto.ResultDto;
 
 public class ScoreBoard {
-	private static final String VICTORY = "승 ";
-	private static final String DEFEAT = "패 ";
-	private static final String DRAW = "무 ";
+	private static final String VICTORY = "승";
+	private static final String DEFEAT = "패";
+	private static final String DRAW = "무";
 
 	public static ResultDto of(Dealer dealer, List<Player> players) {
 		List<Integer> dealerResult = new ArrayList<>();

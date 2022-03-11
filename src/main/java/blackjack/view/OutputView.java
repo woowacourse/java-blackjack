@@ -20,6 +20,7 @@ public class OutputView {
 	private static final String SCORE_MESSAGE = " - 결과: ";
 	private static final String RESULT_MESSAGE = "## 최종 승패";
 	private static final String COLON = ": ";
+	private static final String BLANK = " ";
 
 	public static void printInitStatus(Dealer dealer, List<Player> players) {
 		System.out.println();
@@ -78,8 +79,7 @@ public class OutputView {
 
 		DealerResultDto dealerResultDto = resultDto.getDealerResultDto();
 		System.out.print(dealerResultDto.getName() + COLON);
-		dealerResultDto.getOutcome()
-			.forEach(System.out::print);
+		System.out.println(String.join(BLANK, dealerResultDto.getOutcome()));
 		System.out.println();
 
 		printPlayerResult(resultDto.getPlayerResultDto());
