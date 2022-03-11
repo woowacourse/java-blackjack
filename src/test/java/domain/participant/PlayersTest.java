@@ -23,9 +23,9 @@ public class PlayersTest {
     Card card_Q = new Card(Rank.RANK_Q, Suit.CLOVER);
     Card card_K = new Card(Rank.RANK_K, Suit.CLOVER);
     Card card_6 = new Card(Rank.RANK_6, Suit.CLOVER);
-    List<Card> cards_21 = new ArrayList<>(Arrays.asList(card_A, card_Q));
+    List<Card> cards_BLACKJACK = new ArrayList<>(Arrays.asList(card_A, card_Q));
     List<Card> cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
-    List<List<Card>> initCards = new ArrayList<>(Arrays.asList(cards_21, cards_BURST));
+    List<List<Card>> initCards = new ArrayList<>(Arrays.asList(cards_BLACKJACK, cards_BURST));
     List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"));
     Dealer dealer_17 = new Dealer(List.of(card_A, card_6));
     Dealer dealer_BLACKJACK = new Dealer(List.of(card_A, card_Q));
@@ -54,7 +54,7 @@ public class PlayersTest {
     @DisplayName("모든 플레이어 손패와 베스트 스코어 반환")
     void showHandsAndBestScores() {
         assertThat(players.showStatuses()).isEqualTo(
-                List.of("pobi카드: A클로버, Q클로버 - 결과 : 21", "jason카드: K클로버, Q클로버, 2클로버 - 결과 : 22"));
+                List.of("jason카드: K클로버, Q클로버, 2클로버 - 결과 : 22"));
     }
 
     @Test

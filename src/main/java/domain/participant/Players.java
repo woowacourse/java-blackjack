@@ -36,7 +36,10 @@ public class Players {
     }
 
     public List<String> showStatuses() {
-        return players.stream().map(Player::showStatus).collect(Collectors.toList());
+        return players.stream()
+                .filter(player -> !player.isBlackJack)
+                .map(Player::showStatus)
+                .collect(Collectors.toList());
     }
 
     public boolean isBustByName(Name name) {
@@ -55,7 +58,9 @@ public class Players {
     public boolean isBlackJackByName(Name name) {
         return players.stream()
                 .filter(player -> player.isNameMatch(name))
-                .findFirst().orElseThrow().isBlackJack;
+                .findFirst()
+                .orElseThrow()
+                .isBlackJack;
     }
 
     public boolean isScore21ByName(Name name) {

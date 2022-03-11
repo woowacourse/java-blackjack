@@ -69,8 +69,8 @@ public class Controller {
     }
 
     private void printDealerBlackJackResult(List<Name> names, Dealer dealer, Players players) {
-        OutputView.printDealerBlackJackMessage();
         Result dealerBlackjackResult = new Result(players.getResultAtDealerBlackJack(dealer));
+        OutputView.printDealerBlackJackMessage();
         OutputView.printResultTitle();
         OutputView.printDealerResult(
                 dealerBlackjackResult.getDealerWinCount(),
