@@ -2,8 +2,10 @@ package blackjack.controller;
 
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.game.GameResult;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -13,14 +15,12 @@ public class BlackJackController {
 
     public void run() {
         BlackJackGame blackJackGame = createBlackJackGame();
-
-        Participant dealer = blackJackGame.findDealer();
-        List<Participant> players = blackJackGame.findPlayers();
-
+        Dealer dealer = blackJackGame.getDealer();
+        Players players = blackJackGame.getPlayers();
         OutputView.printInitialCards(dealer, players);
 
-        playPlayersTurn(blackJackGame, players);
-        playDealerTurn(blackJackGame, dealer);
+        playAllPlayers(blackJackGame);
+        playDealer(blackJackGame);
 
         showGameResult(blackJackGame, dealer, players);
     }
@@ -35,49 +35,42 @@ public class BlackJackController {
         }
     }
 
-    private void playPlayersTurn(BlackJackGame blackJackGame, List<Participant> players) {
-        for (Participant player : players) {
-            playPlayerTurn(blackJackGame, player);
+    private void playAllPlayers(BlackJackGame blackJackGame) {
+        while (!blackJackGame.isAllPlayersFinished()) {
+            playPresentPlayer(blackJackGame);
+            blackJackGame.passToNextPlayer();
+        }
+        blackJackGame.passToNextPlayer();
+    }
+
+    private void playPresentPlayer(BlackJackGame blackJackGame) {
+        boolean canDraw = true;
+        while (!blackJackGame.isPresentPlayerFinished() && canDraw) {
+            canDraw = wantDraw(blackJackGame.getPresentPlayer());
+            blackJackGame.drawPresentPlayer(canDraw);
+            OutputView.printCards(blackJackGame.getPresentPlayer());
         }
     }
 
-    private void playPlayerTurn(BlackJackGame blackJackGame, Participant player) {
-        boolean draw = true;
-
-        while (draw && !player.isFinished()) {
-            draw = wantDraw(player);
-            drawPlayerCard(blackJackGame, player, draw);
-            OutputView.printCards(player);
-        }
-    }
-
-    private void drawPlayerCard(BlackJackGame blackJackGame, Participant player, boolean draw) {
-        if (draw) {
-            blackJackGame.drawPlayerCard(player);
-        }
-    }
-
-    private boolean wantDraw(Participant player) {
+    private boolean wantDraw(Player player) {
         try {
             return InputView.inputWantDraw(player.getName());
-
         } catch (IllegalArgumentException e) {
             OutputView.printException(e);
             return wantDraw(player);
         }
     }
 
-    private void playDealerTurn(BlackJackGame blackJackGame, Participant dealer) {
-        while (!dealer.isFinished()) {
+    private void playDealer(BlackJackGame blackJackGame) {
+        while (!blackJackGame.isDealerFinished()) {
             OutputView.printDealerDrawInfo();
-            blackJackGame.drawPlayerCard(dealer);
+            blackJackGame.drawDealer();
         }
     }
 
-    private void showGameResult(BlackJackGame blackJackGame, Participant dealer, List<Participant> players) {
+    private void showGameResult(BlackJackGame blackJackGame, Dealer dealer, Players players) {
         GameResult gameResult = blackJackGame.createGameResult();
         OutputView.printCardsResult(dealer, players);
         OutputView.printGameResult(gameResult);
     }
-
 }

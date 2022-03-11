@@ -5,8 +5,8 @@ import blackjack.domain.card.CardDistributor;
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,56 +15,80 @@ import java.util.stream.Collectors;
 public class BlackJackGame {
 
     public static final String DEALER_NAME = "딜러";
-    private static final String NOT_EXIST_DEALER_ERROR = "딜러가 존재하지 않습니다.";
+    private static final int INITIAL_DRAW_CARD_COUNT = 2;
 
-    private final List<Participant> participants = new ArrayList<>();
+    private final Dealer dealer;
+    private final Players players;
     private final CardDistributor cardDistributor = new CardDistributor();
 
     public BlackJackGame(List<Name> names) {
-        this.participants.add(new Dealer(new Name(DEALER_NAME), drawInitialCards()));
-        this.participants.addAll(initializePlayers(new ArrayList<>(names)));
+        this.dealer = new Dealer(new Name(DEALER_NAME), drawInitialCards());
+        this.players = initializePlayers(names);
     }
 
-    private List<Player> initializePlayers(List<Name> names) {
-        return names.stream()
+    private Players initializePlayers(List<Name> names) {
+        return new Players(names.stream()
                 .map(name -> new Player(name, drawInitialCards()))
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toUnmodifiableList()));
     }
 
     private Cards drawInitialCards() {
         List<Card> cards = new ArrayList<>();
-        cards.add(cardDistributor.distribute());
-        cards.add(cardDistributor.distribute());
+        for (int i = 0; i < INITIAL_DRAW_CARD_COUNT; i++) {
+            cards.add(cardDistributor.distribute());
+        }
         return new Cards(cards);
     }
 
-    public void drawPlayerCard(Participant participant) {
-        int index = participants.indexOf(participant);
-        Participant nowParticipant = participants.get(index);
-        nowParticipant.drawCard(cardDistributor.distribute());
+    public boolean isAllPlayersFinished() {
+        return players.isAllPlayerFinished();
+    }
+
+    public boolean isPresentPlayerFinished() {
+        return getPresentPlayer().isFinished();
+    }
+
+    public void passToNextPlayer() {
+        players.passToNextPlayer();
+    }
+
+    public void drawPresentPlayer(boolean canDraw) {
+        if (canDraw) {
+            players.drawCardPresentPlayer(cardDistributor.distribute());
+            return;
+        }
+        players.makePresentPlayerStay();
+    }
+
+    public boolean isDealerFinished() {
+        return dealer.isFinished();
+    }
+
+    public void drawDealer() {
+        dealer.drawCard(cardDistributor.distribute());
     }
 
     public GameResult createGameResult() {
-        return new GameResult(findPlayers(), findDealer());
+        return new GameResult(players, dealer);
     }
 
-    public List<Participant> findPlayers() {
-        return participants.stream()
-                .filter(participant -> participant instanceof Player)
-                .collect(Collectors.toUnmodifiableList());
+    public Player getPresentPlayer() {
+        return players.getPresentPlayer();
     }
 
-    public Participant findDealer() {
-        return participants.stream()
-                .filter(participant -> participant instanceof Dealer)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_DEALER_ERROR));
+    public Players getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 
     @Override
     public String toString() {
         return "BlackJackGame{" +
-                "participants=" + participants +
+                "dealer=" + dealer +
+                ", players=" + players +
                 ", cardDistributor=" + cardDistributor +
                 '}';
     }

@@ -1,19 +1,23 @@
 package blackjack.domain.game;
 
-import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class GameResult {
 
-    private final Map<Participant, MatchResult> gameResult = new LinkedHashMap<>();
+    private final Map<Player, MatchResult> gameResult = new LinkedHashMap<>();
 
-    public GameResult(List<Participant> players, Participant dealer) {
-        initialGameResult(new ArrayList<>(players), dealer);
+    public GameResult(Players players, Dealer dealer) {
+        initialGameResult(players, dealer);
     }
 
-    private void initialGameResult(List<Participant> players, Participant dealer) {
-        for (Participant player : players) {
+    private void initialGameResult(Players players, Dealer dealer) {
+        for (Player player : players.getPlayers()) {
             if (playerWinCondition(player, dealer)) {
                 gameResult.put(player, MatchResult.WIN);
                 continue;
@@ -22,12 +26,12 @@ public class GameResult {
         }
     }
 
-    private boolean playerWinCondition(Participant player, Participant dealer) {
+    private boolean playerWinCondition(Player player, Dealer dealer) {
         return !player.getCards().isBust()
                 && (dealer.getCards().isBust() || dealer.getCards().sum() < player.getCards().sum());
     }
 
-    public MatchResult getMatchResult(Participant player) {
+    public MatchResult getMatchResult(Player player) {
         return gameResult.get(player);
     }
 
@@ -41,7 +45,7 @@ public class GameResult {
         return gameResult.size() - getDealerWinCount();
     }
 
-    public Map<Participant, MatchResult> getGameResult() {
+    public Map<Player, MatchResult> getGameResult() {
         return Collections.unmodifiableMap(gameResult);
     }
 

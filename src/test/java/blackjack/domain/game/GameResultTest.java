@@ -6,8 +6,8 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,7 +26,7 @@ class GameResultTest {
     @MethodSource("provideParameters")
     @DisplayName("플레이어 승리")
     void test(String comment, Player player, Dealer dealer) {
-        GameResult gameResult = new GameResult(Arrays.asList(player), dealer);
+        GameResult gameResult = new GameResult(new Players(Arrays.asList(player)), dealer);
         assertThat(gameResult.getMatchResult(player)).isEqualTo(MatchResult.WIN);
     }
 
@@ -56,7 +56,7 @@ class GameResultTest {
                 new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
         Dealer dealer = new Dealer(new Name("딜러"),
                 new Cards(getCardList(Denomination.QUEEN, Denomination.NINE)));    // 19
-        List<Participant> players = Arrays.asList(player1, player2, player3);
+        Players players = new Players(Arrays.asList(player1, player2, player3));
         GameResult gameResult = new GameResult(players, dealer);
 
         assertThat(gameResult.getDealerWinCount()).isEqualTo(1);
@@ -74,7 +74,7 @@ class GameResultTest {
         Dealer dealer = new Dealer(new Name("딜러"),
                 new Cards(getCardList(Denomination.QUEEN, Denomination.NINE)));    // 19
 
-        List<Participant> players = Arrays.asList(player1, player2, player3);
+        Players players = new Players(Arrays.asList(player1, player2, player3));
         GameResult gameResult = new GameResult(players, dealer);
 
         assertThat(gameResult.getDealerLoseCount()).isEqualTo(2);
