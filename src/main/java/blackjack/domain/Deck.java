@@ -8,6 +8,10 @@ import java.util.stream.Stream;
 
 public class Deck {
 
+    private final static int FIRST_INDEX = 0;
+
+    private final static String RUN_OUT_OF_CARDS_ERROR_MESSAGE = "[ERROR] 카드를 모두 사용하였습니다.";
+
     private final List<Card> cards = new ArrayList<>();
 
     public Deck() {
@@ -19,10 +23,10 @@ public class Deck {
     }
 
     public Card pickCard() {
-        if (cards.size() == 0) {
-            throw new IllegalArgumentException("[ERROR] 카드를 모두 사용하였습니다.");
+        if (cards.size() == FIRST_INDEX) {
+            throw new IllegalArgumentException(RUN_OUT_OF_CARDS_ERROR_MESSAGE);
         }
-        return cards.remove(0);
+        return cards.remove(FIRST_INDEX);
     }
 
     public List<Card> getCards() {

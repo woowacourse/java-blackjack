@@ -6,6 +6,8 @@ import java.util.List;
 
 public class ParticipantCards {
 
+    private final static int NO_COUNT = 0;
+
     private final List<Card> cards;
 
     public ParticipantCards(List<Card> cards) {
@@ -15,7 +17,7 @@ public class ParticipantCards {
     public int calculateScore() {
         int totalScore = cards.stream().mapToInt(Card::getPoint).sum();
         int aceCount = getAceCount();
-        if (aceCount != 0) {
+        if (aceCount != NO_COUNT) {
             return calculateScoreWithAce(aceCount, totalScore);
         }
         return totalScore;
@@ -26,7 +28,7 @@ public class ParticipantCards {
     }
 
     private int getAceCount() {
-        return (int) cards.stream().filter(card -> card.isAce()).count();
+        return (int) cards.stream().filter(Card::isAce).count();
     }
 
     private int calculateScoreWithAce(int aceCount, int totalScore) {

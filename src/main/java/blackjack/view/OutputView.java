@@ -21,7 +21,7 @@ public class OutputView {
     private static final String DEALER_DIRECTION = "딜러:";
     private static final String RESULT_DELIMITER = ": ";
     private static final String PLAYER_HIT_IMPOSSIBLE_MESSAGE = "가진 카드의 합이 21을 초과하여 카드를 더 받을 수 없습니다.";
-
+    private static final String BLANK_FORMAT = " ";
 
     public static void printInitialCardInformation(Participants participants) {
         List<String> participantName = participants.getPlayers().stream()
@@ -93,7 +93,7 @@ public class OutputView {
         Map<Player, WinningResult> playerResult) {
         System.out.println(PARTICIPANT_WINNING_RESULT_MESSAGE);
         System.out.print(DEALER_DIRECTION);
-        dealerResult.forEach((key, value) -> System.out.print(" " + value + key.getResult()));
+        dealerResult.forEach((key, value) -> System.out.print(BLANK_FORMAT + value + key.getResult()));
         System.out.println();
         playerResult.forEach(
             (key, value) -> System.out.println(
