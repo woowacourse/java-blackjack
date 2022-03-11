@@ -6,6 +6,8 @@ import java.util.List;
 import blackjack.domain.strategy.NumberGenerator;
 
 public class Cards {
+	private static final int SIZE = 48;
+
 	private static final int ONE = 1;
 	private static final int TWO = 2;
 	private static final int THREE = 3;
@@ -18,16 +20,9 @@ public class Cards {
 	private static final int TEN = 10;
 	private static final int ELEVEN = 11;
 
-	private static final String DUPLICATED_INDEX_EXCEPTION = "[ERROR] 이미 뽑힌 카드입니다.";
-	private List<Card> cards;
-	private List<Boolean> isUsed;
+	private static final List<Card> cards;
 
-	public Cards() {
-		isUsed = new ArrayList<>();
-		for (int i = 0; i < 48; ++i) {
-			isUsed.add(false);
-		}
-
+	static {
 		cards = new ArrayList<>();
 		cards.add(new Card("A다이아몬드", ELEVEN));
 		cards.add(new Card("2다이아몬드", TWO));
@@ -80,6 +75,15 @@ public class Cards {
 		cards.add(new Card("J클로버", TEN));
 		cards.add(new Card("Q클로버", TEN));
 		cards.add(new Card("K클로버", TEN));
+	}
+
+	private List<Boolean> isUsed;
+
+	public Cards() {
+		isUsed = new ArrayList<>();
+		for (int i = 0; i < SIZE; ++i) {
+			isUsed.add(false);
+		}
 	}
 
 	public Card pickCard(NumberGenerator numberGenerator) {
