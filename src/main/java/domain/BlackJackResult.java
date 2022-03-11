@@ -1,52 +1,51 @@
 package domain;
 
 import static java.util.Collections.unmodifiableMap;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
 
 import domain.player.Dealer;
-import domain.player.Gambler;
-import java.util.HashMap;
-import java.util.List;
+import domain.player.Gamblers;
+import domain.player.Player;
+import java.util.EnumMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 public class BlackJackResult {
-    private final Map<String, Boolean> playerResult;
-    private final Map<Boolean, Integer> dealerResult;
+    private final Map<String, MatchResult> playerResult;
+    private final Map<MatchResult, Long> dealerResult;
 
-    private BlackJackResult(Map<String, Boolean> playerResult, Map<Boolean, Integer> dealerResult) {
+    private BlackJackResult(Map<String, MatchResult> playerResult, Map<MatchResult, Long> dealerResult) {
         this.playerResult = unmodifiableMap(playerResult);
         this.dealerResult = unmodifiableMap(dealerResult);
     }
 
-    public static BlackJackResult of(Dealer dealer, List<Gambler> gamblers) {
-        Map<String, Boolean> playerResult = new HashMap<>();
-        Map<Boolean, Integer> dealerResult = new HashMap<>();
-
-        final List<Entry<String, Boolean>> collect = gamblers.stream()
-                .map(gambler -> Map.entry(gambler.getName(), gambler.getResult() > dealer.getResult()))
-                .collect(Collectors.toList());
-
-        collect.forEach(entry ->
-                playerResult.put(entry.getKey(), entry.getValue()));
-
-        gamblers.forEach(gambler -> {
-            if (gambler.getResult() > dealer.getResult()) {
-                dealerResult.merge(Boolean.FALSE, 1, Integer::sum);
-            }
-            if (gambler.getResult() < dealer.getResult()) {
-                dealerResult.merge(Boolean.TRUE, 1, Integer::sum);
-            }
-        });
+    public static BlackJackResult of(Dealer dealer, Gamblers gamblers) {
+        Map<String, MatchResult> playerResult = getPlayerResult(dealer, gamblers);
+        Map<MatchResult, Long> dealerResult = getDealerResult(playerResult);
 
         return new BlackJackResult(playerResult, dealerResult);
     }
 
-    public Map<String, Boolean> getPlayerResult() {
+    private static Map<String, MatchResult> getPlayerResult(Dealer dealer, Gamblers gamblers) {
+        return gamblers.getGamblers()
+                .stream()
+                .collect(toMap(Player::getName, gambler -> MatchResult.of(dealer, gambler)));
+    }
+
+    private static Map<MatchResult, Long> getDealerResult(Map<String, MatchResult> playerResult) {
+        return playerResult.values()
+                .stream()
+                .map(MatchResult::opposite)
+                .collect(groupingBy(identity(), () -> new EnumMap<>(MatchResult.class), counting()));
+    }
+
+    public Map<String, MatchResult> getPlayerResult() {
         return playerResult;
     }
 
-    public Map<Boolean, Integer> getDealerResult() {
+    public Map<MatchResult, Long> getDealerResult() {
         return dealerResult;
     }
 }
