@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.GameScoreBoard;
+import blackjack.domain.result.GameScoreBoard;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;

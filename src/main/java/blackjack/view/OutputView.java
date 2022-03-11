@@ -3,8 +3,8 @@ package blackjack.view;
 import static java.lang.System.out;
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.GameScoreBoard;
-import blackjack.domain.Result;
+import blackjack.domain.result.GameScoreBoard;
+import blackjack.domain.result.Result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
