@@ -47,6 +47,7 @@ public class BlackJackController {
         for (Participant participant : participants) {
             askAndGiveCardToParticipant(blackJackMachine, participant);
         }
+        OutputView.printNewLine();
     }
 
     private void askAndGiveCardToParticipant(final BlackJackMachine blackJackMachine, final Participant participant) {
@@ -72,6 +73,7 @@ public class BlackJackController {
             blackJackMachine.giveCardToDealer(dealer);
             OutputView.printDealerGetCardMessage(dealer);
         }
+        OutputView.printNewLine();
     }
 
     private void calculateTotalScores(Dealer dealer, Participants participants) {

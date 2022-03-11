@@ -24,6 +24,7 @@ public class OutputView {
         printDealMessage(dealer, participants);
         printDealerCard(dealer);
         printParticipantsCards(participants);
+        printNewLine();
     }
 
     private static void printDealMessage(final Dealer dealer, final Participants participants) {
@@ -31,7 +32,7 @@ public class OutputView {
         for (Participant participant : participants) {
             names.add(participant.getName());
         }
-        System.out.println(dealer.getName() + "와 " + String.join(CARD_DELIMITER, names) + "에게 2장의 나누었습니다.");
+        System.out.println("\n" + dealer.getName() + "와 " + String.join(CARD_DELIMITER, names) + "에게 2장의 나누었습니다.");
     }
 
     private static void printDealerCard(final Dealer dealer) {
@@ -65,7 +66,7 @@ public class OutputView {
     }
 
     public static void printResults(final Dealer dealer, final DealerResult dealerResult, final ParticipantResult results) {
-        System.out.println("## 최종 승패");
+        System.out.println("\n## 최종 승패");
         printDealerResult(dealer, dealerResult);
         printParticipantsResult(results);
     }
@@ -88,5 +89,9 @@ public class OutputView {
         participantsResult.keySet()
                 .forEach(participant -> System.out.println(
                         participant.getName() + COLON_AND_BLANK + participantsResult.get(participant).getName()));
+    }
+
+    public static void printNewLine() {
+        System.out.println();
     }
 }
