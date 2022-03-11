@@ -12,6 +12,9 @@ public class InputView {
     private static final String ASK_MORE_CARD = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String PLAYER_DELIMITER = ",";
 
+    private InputView() {
+    }
+
     public static List<String> inputPlayerNames() {
         System.out.println(START_GAME_GUIDE_MESSAGE);
         return Arrays.stream(SCANNER.nextLine().split(PLAYER_DELIMITER))

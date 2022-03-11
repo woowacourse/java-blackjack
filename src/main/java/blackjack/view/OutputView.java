@@ -24,6 +24,9 @@ public class OutputView {
     private static final char FINAL_MATCH_DELIMITER = ' ';
     private static final int DELETE_FINAL_DELIMITER = 2;
 
+    private OutputView() {
+    }
+
     public static void announceStartGame(List<String> playerNames) {
         System.out.println(NEW_LINE + String.join(RESULT_DELIMITER, playerNames) + SHARE_TWO_CARDS_GUIDE_MESSAGE);
     }
