@@ -1,9 +1,11 @@
 package blackjack.controller;
 
 import static blackjack.view.InputView.requestMoreCardInput;
+import static blackjack.view.InputView.requestPlayerNamesInput;
 import static blackjack.view.OutputView.printAllCardsAndScore;
 import static blackjack.view.OutputView.printDealerExtraCardInfo;
 import static blackjack.view.OutputView.printGameResult;
+import static blackjack.view.OutputView.printInitialParticipantsCards;
 import static blackjack.view.OutputView.printPlayerBustInfo;
 import static blackjack.view.OutputView.printPlayerCardsInfo;
 
@@ -17,33 +19,34 @@ import java.util.List;
 
 public class BlackjackController {
 
-    public BlackjackGame initializeGame(List<String> playerNames) {
+    public BlackjackGame initializeGame() {
+        List<String> playerNames = requestPlayerNamesInput();
         return new BlackjackGame(new CardDeck(), playerNames);
     }
 
-    public InitialDistributionDto getInitialDistribution(BlackjackGame game) {
-        return new InitialDistributionDto(game.getParticipants());
+    public void showInitialDistribution(BlackjackGame game) {
+        InitialDistributionDto dto = new InitialDistributionDto(game.getParticipants());
+        printInitialParticipantsCards(dto);
     }
 
     public void distributeAllCards(BlackjackGame game) {
         List<Player> players = game.getPlayers();
-        for (Player player : players) {
-            drawAllPlayerCards(player, game);
-        }
-
+        players.forEach(player -> drawAllPlayerCards(player, game));
         drawDealerCard(game);
     }
 
     private void drawAllPlayerCards(Player player, BlackjackGame game) {
-        while (player.canReceive()) {
-            if (!requestMoreCardInput(player.getName())) {
-                return;
-            }
+        while (player.canReceive() && requestMoreCardInput(player.getName())) {
             player.receiveCard(game.popCard());
             printPlayerCardsInfo(player);
         }
+        showPlayerBust(player);
+    }
 
-        printPlayerBustInfo();
+    private void showPlayerBust(Player player) {
+        if (player.canReceive()) {
+            printPlayerBustInfo();
+        }
     }
 
     private void drawDealerCard(BlackjackGame game) {
@@ -52,7 +55,7 @@ public class BlackjackController {
         }
     }
 
-    public void getGameResult(BlackjackGame game) {
+    public void showGameResult(BlackjackGame game) {
         ResultReferee referee = new ResultReferee(game.getDealer(), game.getPlayers());
         ResultStatisticsDto dto = new ResultStatisticsDto(referee.initAndGetGameResults());
 
