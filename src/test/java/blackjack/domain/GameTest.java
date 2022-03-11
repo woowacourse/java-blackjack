@@ -55,7 +55,7 @@ public class GameTest {
     void drawCard_HIT(PlayStatus playStatus, int expected) {
         // give
         Game game = new Game(CardDeck.createNoShuffle(), List.of("pobi"));
-        final Player player = game.getPlayers().get(0);
+        Player player = game.getPlayers().get(0);
 
         // when
         game.drawPlayerCard(player, playStatus);

@@ -69,8 +69,7 @@ public class GameController {
 
     private void playRecord(Game game) {
         RecordFactory recordFactory = new RecordFactory(game.getDealerScore());
-        Map<String, Record> map = game.getPlayers()
-            .stream()
+        Map<String, Record> map = game.getPlayers().stream()
             .collect(Collectors.toMap(Player::getName, player -> recordFactory.getPlayerRecord(player.getScore()),
                 (a, b) -> b, LinkedHashMap::new));
 

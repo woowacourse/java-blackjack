@@ -18,19 +18,19 @@ public class CardDeck {
     }
 
     public static CardDeck create() {
-        final List<Card> list = getCards();
+        List<Card> list = getCards();
         Collections.shuffle(list);
 
-        final Stack<Card> deck = new Stack<>();
+        Stack<Card> deck = new Stack<>();
         deck.addAll(list);
 
         return new CardDeck(deck);
     }
 
     public static CardDeck createNoShuffle() {
-        final List<Card> list = getCards();
+        List<Card> list = getCards();
 
-        final Stack<Card> deck = new Stack<>();
+        Stack<Card> deck = new Stack<>();
         deck.addAll(list);
 
         return new CardDeck(deck);

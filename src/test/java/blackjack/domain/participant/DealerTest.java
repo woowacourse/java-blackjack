@@ -19,14 +19,14 @@ class DealerTest {
     @DisplayName("조건에 만족할 때 까지 카드르 뽑는다. (버스트)")
     void drawCards_BUST() {
         // give
-        final Dealer dealer = new Dealer();
-        final CardDeck cardDeck = CardDeck.createNoShuffle();
+        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createNoShuffle();
         List<Card> cards = List.of(new Card(DIAMOND, QUEEN), new Card(CLUB, FIVE));
         dealer.init(cards);
 
         // when
         dealer.drawCards(cardDeck);
-        final PlayStatus actual = dealer.getStatus();
+        PlayStatus actual = dealer.getStatus();
 
         // then
         assertThat(actual).isEqualTo(PlayStatus.BUST);
@@ -36,13 +36,13 @@ class DealerTest {
     @DisplayName("조건에 만족할 때 까지 카드르 뽑는다. (BUST X)")
     void drawCards_NOT_BUST() {
         // give
-        final Dealer dealer = new Dealer();
-        final CardDeck cardDeck = CardDeck.createNoShuffle();
+        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createNoShuffle();
         dealer.init(cardDeck);
 
         // when
         dealer.drawCards(cardDeck);
-        final PlayStatus actual = dealer.getStatus();
+        PlayStatus actual = dealer.getStatus();
 
         // then
         assertThat(actual).isEqualTo(PlayStatus.HIT);
@@ -52,12 +52,12 @@ class DealerTest {
     @DisplayName("처음 받은 카드 중에 한 장의 카드를 공개한다.")
     void openCard() {
         // give
-        final Dealer dealer = new Dealer();
-        final CardDeck cardDeck = CardDeck.createNoShuffle();
+        Dealer dealer = new Dealer();
+        CardDeck cardDeck = CardDeck.createNoShuffle();
         dealer.init(cardDeck);
 
         // when
-        final Card actual = dealer.openCard();
+        Card actual = dealer.openCard();
 
         // then
         assertThat(actual).isEqualTo(new Card(CLUB, KING));

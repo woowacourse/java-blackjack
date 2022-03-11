@@ -44,12 +44,12 @@ class PlayerTest {
     @DisplayName("카드를 받아 저장한다.")
     void hit() {
         // give
-        final Player player = new Player("pobi");
-        final Card card = new Card(DIAMOND, JACK);
+        Player player = new Player("pobi");
+        Card card = new Card(DIAMOND, JACK);
 
         // when
         player.hit(card);
-        final int actual = player.getScore();
+        int actual = player.getScore();
 
         // then
         assertThat(actual).isEqualTo(10);
@@ -60,13 +60,13 @@ class PlayerTest {
     @DisplayName("카드의 합이 21을 초과하면 BUST를 반환한다.")
     void returnBust(CardNumber cardNumber, PlayStatus expected) {
         // give
-        final Player player = new Player("pobi");
+        Player player = new Player("pobi");
         player.hit(new Card(DIAMOND, JACK));
         player.hit(new Card(DIAMOND, QUEEN));
         player.hit(new Card(DIAMOND, cardNumber));
 
         // when
-        final PlayStatus actual = player.getStatus();
+        PlayStatus actual = player.getStatus();
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -76,11 +76,11 @@ class PlayerTest {
     @DisplayName("게임준비를 위해 가진 카드를 초기화한다.")
     void init() {
         // give
-        final Player player = new Player("pobi");
+        Player player = new Player("pobi");
 
         // when
         player.init(CardDeck.createNoShuffle());
-        final int actual = player.getScore();
+        int actual = player.getScore();
 
         // then
         assertThat(actual).isEqualTo(20);
@@ -90,11 +90,11 @@ class PlayerTest {
     @DisplayName("상태를 STAY로 변경한다.")
     void stay() {
         // give
-        final Player player = new Player("pobi");
+        Player player = new Player("pobi");
 
         // when
         player.stay();
-        final PlayStatus actual = player.getStatus();
+        PlayStatus actual = player.getStatus();
 
         // then
         assertThat(actual).isEqualTo(PlayStatus.STAY);

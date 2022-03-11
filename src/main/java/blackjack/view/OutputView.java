@@ -57,7 +57,7 @@ public class OutputView {
         printEmptyLine();
         System.out.println("## 최종 승패");
 
-        final StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         Arrays.stream(Record.values())
             .filter(it -> record.getOrDefault(it, 0) != 0)
             .forEach(it -> builder.append(record.get(it)).append(it.getName()));

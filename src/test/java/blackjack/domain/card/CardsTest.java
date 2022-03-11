@@ -21,7 +21,7 @@ class CardsTest {
     @DisplayName("모든 카드의 값을 합산한 값을 반환한다.")
     void sum(Set<Card> value, int expected) {
         // give
-        final Cards cards = new Cards(value);
+        Cards cards = new Cards(value);
 
         // when
         int actual = cards.sum();
@@ -42,7 +42,7 @@ class CardsTest {
     @DisplayName("카드를 추가한다.")
     void add() {
         // give
-        final Cards cards = new Cards(Set.of(new Card(DIAMOND, ACE)));
+        Cards cards = new Cards(Set.of(new Card(DIAMOND, ACE)));
 
         // when
         cards.add(new Card(DIAMOND, TEN));
@@ -57,11 +57,11 @@ class CardsTest {
     @DisplayName("합산한 값이 21을 초과하면 BUST를 반환한다.")
     void isBust1(CardNumber cardNumber, PlayStatus expected) {
         // give
-        final Cards cards = new Cards(Set.of(new Card(DIAMOND, JACK), new Card(DIAMOND, FIVE),
+        Cards cards = new Cards(Set.of(new Card(DIAMOND, JACK), new Card(DIAMOND, FIVE),
             new Card(DIAMOND, cardNumber)));
 
         // when
-        final PlayStatus actual = cards.getStatus();
+        PlayStatus actual = cards.getStatus();
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -72,7 +72,7 @@ class CardsTest {
     @DisplayName("BUST이고 ACE를 포함하면 ACE의 값을 1로 바꾼다.")
     void changeAceValue(Cards cards, int expected) {
         // when
-        final int actual = cards.sum();
+        int actual = cards.sum();
 
         // then
         assertThat(actual).isEqualTo(expected);

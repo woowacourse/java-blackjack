@@ -19,7 +19,7 @@ public class RecordFactory {
     }
 
     public Record getPlayerRecord(int score) {
-        final Record playerRecord = createRecord(score);
+        Record playerRecord = createRecord(score);
         updateDealerRecord(playerRecord.getOpposite());
 
         return playerRecord;

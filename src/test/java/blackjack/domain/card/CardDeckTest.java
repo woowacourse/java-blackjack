@@ -10,7 +10,7 @@ public class CardDeckTest {
     @Test
     @DisplayName("객체가 생성되면 52장의 카드를 갖는다.")
     void initDeck() {
-        final CardDeck cardDeck = CardDeck.create();
+        CardDeck cardDeck = CardDeck.create();
 
         assertThatCode(() -> {
             for (int i = 0; i < 52; i++) {
@@ -23,10 +23,10 @@ public class CardDeckTest {
     @DisplayName("카드를 한 장 만들어서 반환한다.")
     void createCard() {
         // give
-        final CardDeck cardDeck = CardDeck.createNoShuffle();
+        CardDeck cardDeck = CardDeck.createNoShuffle();
 
         // when
-        final Card card = cardDeck.drawCard();
+        Card card = cardDeck.drawCard();
 
         // then
         assertThat(card).isInstanceOf(Card.class);

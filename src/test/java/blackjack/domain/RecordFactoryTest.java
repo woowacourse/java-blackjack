@@ -15,8 +15,8 @@ class RecordFactoryTest {
     @DisplayName("딜러가 버스트 하지 않은 경우 플레이어의 승패 여부를 반환한다.")
     void getRecord_dealerNotBust(int score, Record expected) {
         // give
-        final int dealerScore = 19;
-        final RecordFactory factory = new RecordFactory(dealerScore);
+        int dealerScore = 19;
+        RecordFactory factory = new RecordFactory(dealerScore);
 
         // when
         Record actual = factory.getPlayerRecord(score);
@@ -30,8 +30,8 @@ class RecordFactoryTest {
     @DisplayName("딜러가 버스트한 경우 플레이어의 승패 여부를 반환한다.")
     void getRecord_dealerBust(int score, Record expected) {
         // give
-        final int dealerScore = 22;
-        final RecordFactory factory = new RecordFactory(dealerScore);
+        int dealerScore = 22;
+        RecordFactory factory = new RecordFactory(dealerScore);
 
         // when
         Record actual = factory.getPlayerRecord(score);
@@ -46,13 +46,13 @@ class RecordFactoryTest {
     @DisplayName("딜러의 전적을 반환한다.")
     void getDealerRecord(int dealerScore, int playerScore, Record expected) {
         // give
-        final RecordFactory factory = new RecordFactory(dealerScore);
+        RecordFactory factory = new RecordFactory(dealerScore);
 
         factory.getPlayerRecord(playerScore);
 
         // when
-        final Map<Record, Integer> record = factory.getDealerRecord();
-        final int actual = record.get(expected);
+        Map<Record, Integer> record = factory.getDealerRecord();
+        int actual = record.get(expected);
 
         // then
         assertThat(actual).isEqualTo(1);
