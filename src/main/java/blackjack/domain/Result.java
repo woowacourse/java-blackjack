@@ -5,13 +5,15 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public enum Result {
-    WIN(number -> number > 0),
-    DRAW(number -> number == 0),
-    LOSE(number -> number < 0);
+    WIN("승", number -> number < 0),
+    DRAW("무", number -> number == 0),
+    LOSE("패", number -> number > 0);
 
+    private String name;
     private Function<Integer, Boolean> expression;
 
-    Result(Function<Integer, Boolean> expression) {
+    Result(String name, Function<Integer, Boolean> expression) {
+        this.name = name;
         this.expression = expression;
     }
 
@@ -20,5 +22,9 @@ public enum Result {
                 .filter(result -> result.expression.apply(number))
                 .findFirst()
                 .orElseThrow();
+    }
+
+    public String getName() {
+        return name;
     }
 }

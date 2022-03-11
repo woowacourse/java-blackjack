@@ -3,13 +3,22 @@ package blackjack.view;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
+import blackjack.domain.Result;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
+    private static final String PLAYER_RESULT_FORMAT = "%s: %s\n";
+    private static final String FINAL_RESULT_MESSAGE = "\n###최종 승패";
+    private static final String DEALER = "딜러:";
+    private static final String WIN_RESULT = " %d승";
+    private static final String DRAW_RESULT = " %d무";
+    private static final String LOSE_RESULT = " %d패";
 
     public static void printInitStatus(Dealer dealer, List<Player> players) {
         List<String> names = new ArrayList<>(List.of("딜러"));
@@ -45,7 +54,7 @@ public class OutputView {
         }
     }
 
-    public static void printCardsAndResult(Dealer dealer, List<Player> players) {
+    public static void printCardsAndScores(Dealer dealer, List<Player> players) {
         System.out.println();
         System.out.println(makeStatusFormat("딜러", dealer.getMyCards()) + printScoreResult(dealer.score()));
 
@@ -59,46 +68,34 @@ public class OutputView {
         return (" - 결과: " + score);
     }
 
-    public static void printResult(Map<Player, Integer> result) {
-        System.out.println("\n## 최종 승패");
-        System.out.println("딜러: " + getDealerResult(result));
-        Set<Player> keys = result.keySet();
-        for (Player key : keys) {
-            System.out.print(key.getName() + ": ");
-            if (result.get(key) == 1) {
-                System.out.println("승");
-            } else if (result.get(key) == 0) {
-                System.out.println("무");
-            } else {
-                System.out.println("패");
-            }
+    public static void printResults(Map<String, Result> results) {
+        System.out.println(FINAL_RESULT_MESSAGE);
+        printDealerResult(new ArrayList<>(results.values()));
+        for (Map.Entry<String, Result> entry : results.entrySet()) {
+            System.out.printf(PLAYER_RESULT_FORMAT, entry.getKey(), entry.getValue().getName());
         }
     }
 
-    private static String getDealerResult(Map<Player, Integer> result) {
-        Set<Player> keys = result.keySet();
-        int winCount = 0;
-        int drawCount = 0;
-        int loseCount = 0;
-        for (Player key : keys) {
-            if (result.get(key) == 1) {
-                ++winCount;
-            } else if (result.get(key) == -1) {
-                ++loseCount;
-            } else {
-                ++drawCount;
-            }
-        }
-        StringBuilder stringBuilder = new StringBuilder();
+    private static void printDealerResult(List<Result> results) {
+        int winCount = countDealerSpecificResult(Result.LOSE, results);
+        int drawCount = countDealerSpecificResult(Result.DRAW, results);
+        int loseCount = countDealerSpecificResult(Result.WIN, results);
+        System.out.printf(DEALER);
         if (winCount > 0) {
-            stringBuilder.append(winCount + "승");
+            System.out.printf(WIN_RESULT, winCount);
         }
         if (drawCount > 0) {
-            stringBuilder.append(drawCount + "무");
+            System.out.printf(DRAW_RESULT, drawCount);
         }
         if (loseCount > 0) {
-            stringBuilder.append(loseCount + "패");
+            System.out.printf(LOSE_RESULT, loseCount);
         }
-        return stringBuilder.toString();
+        System.out.println();
+    }
+
+    private static int countDealerSpecificResult(Result specificResult, List<Result> results) {
+        return (int) results.stream()
+                .filter(result -> result.equals(specificResult))
+                .count();
     }
 }

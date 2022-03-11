@@ -1,11 +1,9 @@
 package blackjack.domain;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class Blackjack {
     private static final int INITIAL_CARD_NUMBER = 2;
@@ -23,7 +21,7 @@ public class Blackjack {
     }
 
     public void distributeInitialCardsToDealer(NumberGenerator numberGenerator) {
-        for (int i = 0; i<INITIAL_CARD_NUMBER; ++i) {
+        for (int i = 0; i < INITIAL_CARD_NUMBER; ++i) {
             distributeCardToDealer(numberGenerator);
         }
     }
@@ -34,7 +32,7 @@ public class Blackjack {
 
     public int distributeCardToDealerUntilHit(NumberGenerator numberGenerator) {
         int count = 0;
-        while(dealer.isHit()) {
+        while (dealer.isHit()) {
             distributeCardToDealer(numberGenerator);
             ++count;
         }
@@ -47,5 +45,20 @@ public class Blackjack {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public Map<String, Result> results(List<Player> players) {
+        return zipToMap(players.stream()
+                        .map(Player::getName)
+                        .collect(Collectors.toList())
+                , players.stream()
+                        .map(dealer::isWin)
+                        .map(Result::valueOf)
+                        .collect(Collectors.toList()));
+    }
+
+    private <K, V> Map<K, V> zipToMap(List<K> keys, List<V> values) {
+        return IntStream.range(0, keys.size()).boxed()
+                .collect(Collectors.toMap(keys::get, values::get));
     }
 }

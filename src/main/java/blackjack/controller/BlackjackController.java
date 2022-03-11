@@ -41,6 +41,8 @@ public class BlackjackController {
         controlAdditionalCardFlow(blackjack, players, randomNumberGenerator);
         OutputView.printDealerAdditionalCard(blackjack.distributeCardToDealerUntilHit(randomNumberGenerator));
 
-        OutputView.printCardsAndResult(blackjack.getDealer(), players.getPlayers());
+        OutputView.printCardsAndScores(blackjack.getDealer(), players.getPlayers());
+
+        OutputView.printResults(blackjack.results(players.getPlayers()));
     }
 }
