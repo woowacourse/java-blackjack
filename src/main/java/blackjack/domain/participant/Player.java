@@ -1,5 +1,10 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+
+import java.util.Collections;
+import java.util.List;
+
 public class Player extends Participant {
 
     public Player(final String name) {
@@ -13,4 +18,8 @@ public class Player extends Participant {
         }
     }
 
+    @Override
+    public List<Card> showFirstCards() {
+        return Collections.unmodifiableList(cards);
+    }
 }

@@ -55,7 +55,7 @@ public class Players {
     public boolean canHit(final int turnIndex) {
         Player player = players.get(turnIndex);
 
-        return !player.isBurst();
+        return !player.isBust();
     }
 
     public boolean isStillInGame(final int turnIndex) {

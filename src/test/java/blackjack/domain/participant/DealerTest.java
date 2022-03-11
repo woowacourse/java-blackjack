@@ -28,21 +28,19 @@ class DealerTest {
         Deck deck = Deck.generate(manualCardStrategy);
         final Dealer dealer = Dealer.startWithTwoCards(deck);
 
-        List<Card> cards = dealer.getCards();
+        List<Card> cards = dealer.openAllCards();
         assertThat(cards).isEqualTo(initializedCards.subList(0, 2));
     }
 
     @ParameterizedTest
     @MethodSource("provideForStartWithDrawCardTest")
-    @DisplayName("딜러의 카드가 17 미만이라면 추가로 드로우한다.")
-    void dealerUnderMinimumTotal(final List<Card> initializedCards, final List<Card> expectedCards) {
+    @DisplayName("딜러의 카드 점수에 따라 카드 뽑기 가능 여부를 반환한다.")
+    void dealerUnderMinimumTotal(final List<Card> initializedCards, final boolean canDraw) {
         manualCardStrategy.initCards(initializedCards);
         Deck deck = Deck.generate(manualCardStrategy);
         final Dealer dealer = Dealer.startWithTwoCards(deck);
-        dealer.continueDraw(deck);
 
-        List<Card> actualCards = dealer.getCards();
-        assertThat(actualCards).isEqualTo(expectedCards);
+        assertThat(dealer.isPossibleToDraw()).isEqualTo(canDraw);
     }
 
     private static Stream<Arguments> provideForStartWithDrawCardTest() {
@@ -52,24 +50,13 @@ class DealerTest {
                                 new Card(CardPattern.DIAMOND, CardNumber.TWO),
                                 new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
                                 new Card(CardPattern.DIAMOND, CardNumber.KING)
-                        ),
-                        List.of(
-                                new Card(CardPattern.DIAMOND, CardNumber.TWO),
-                                new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
-                                new Card(CardPattern.DIAMOND, CardNumber.KING)
-                        )
+                        ), true
                 ),
                 Arguments.of(
                         List.of(
                                 new Card(CardPattern.SPADE, CardNumber.NINE),
-                                new Card(CardPattern.HEART, CardNumber.KING),
-                                new Card(CardPattern.HEART, CardNumber.SEVEN),
-                                new Card(CardPattern.HEART, CardNumber.JACK)
-                        ),
-                        List.of(
-                                new Card(CardPattern.SPADE, CardNumber.NINE),
                                 new Card(CardPattern.HEART, CardNumber.KING)
-                        )
+                        ), false
                 )
         );
     }
@@ -82,7 +69,9 @@ class DealerTest {
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
         final Dealer dealer = Dealer.startWithTwoCards(deck);
-        dealer.continueDraw(deck);
+        while(dealer.isPossibleToDraw()) {
+            dealer.drawCard(deck);
+        }
 
         assertThat(dealer.judgeWinner(new Player("sun"))).isEqualTo(WinningResult.WIN);
     }
@@ -113,7 +102,9 @@ class DealerTest {
         final Player player = new Player("if");
         player.drawCard(deck);
         player.drawCard(deck);
-        dealer.continueDraw(deck);
+        while(dealer.isPossibleToDraw()) {
+            dealer.drawCard(deck);
+        }
 
         final WinningResult actualWinningResult = dealer.judgeWinner(player);
         assertThat(actualWinningResult).isEqualTo(expectedWinningResult);

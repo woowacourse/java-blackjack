@@ -13,6 +13,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.reader.ConsoleReader;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,22 +44,24 @@ public class BlackjackGame {
     }
 
     private void printParticipantsStatuses(final Dealer dealer, final Players players) {
-        final ParticipantDto dealerDto = ParticipantDto.toDtoOfDealer(dealer);
+        final ParticipantDto dealerDto = ParticipantDto.toShowFirstCards(dealer);
         final List<ParticipantDto> playerDtos = players.getStatuses().stream()
-                .map(ParticipantDto::toDto)
+                .map(ParticipantDto::toShowFirstCards)
                 .collect(Collectors.toList());
 
         outputView.printMessageOfPlayerStatuses(dealerDto, playerDtos);
     }
 
     private void proceedDealerTurn(final Deck deck, final Dealer dealer) {
-        dealer.continueDraw(deck);
-        outputView.printMessageOfDealerDrawCard();
+        while (dealer.isPossibleToDraw()) {
+            dealer.drawCard(deck);
+            outputView.printMessageOfDealerDrawCard();
+        }
     }
 
     private void proceedPlayersTurn(final Deck deck, final Players players) {
         int turnIndex = 0;
-        while(players.isStillInGame(turnIndex)) {
+        while (players.isStillInGame(turnIndex)) {
             turnIndex = takeTurn(deck, players, turnIndex);
         }
     }
@@ -67,7 +70,7 @@ public class BlackjackGame {
         final Player player = players.getCurrentPlayer(index);
         if (players.canHit(index) && requestContinue(player)) {
             players.drawCard(index, deck);
-            outputView.printDistributedCards(ParticipantDto.toDto(player));
+            outputView.printDistributedCards(ParticipantDto.toOpenAllCards(player));
             return index;
         }
 
@@ -80,14 +83,15 @@ public class BlackjackGame {
     }
 
     private void printMatchResult(final Dealer dealer, final Players players) {
-        final List<ParticipantDto> participantDtos = players.getStatuses().stream()
-                .map(ParticipantDto::toDto)
-                .collect(Collectors.toList());
-        participantDtos.add(0, ParticipantDto.toDto(dealer));
-
-        outputView.printScores(participantDtos);
+        final List<ParticipantDto> participantDtos = new ArrayList<>();
+        participantDtos.add(ParticipantDto.toOpenAllCards(dealer));
+        participantDtos.addAll(players.getStatuses().stream()
+                .map(ParticipantDto::toOpenAllCards)
+                .collect(Collectors.toList()));
 
         MatchResult result = players.judgeWinners(dealer);
+
+        outputView.printScores(participantDtos);
         outputView.printMatchResult(MatchResultDto.toDto(result));
     }
 }

@@ -1,7 +1,11 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.WinningResult;
+
+import java.util.Collections;
+import java.util.List;
 
 public class Dealer extends Participant {
 
@@ -19,25 +23,24 @@ public class Dealer extends Participant {
         return dealer;
     }
 
-    public void continueDraw(final Deck deck) {
-        while (isPossibleToDrawCard()) {
-            drawCard(deck);
-        }
-    }
-
-    private boolean isPossibleToDrawCard() {
+    public boolean isPossibleToDraw() {
         return calculateScore() < DEALER_MIN_SCORE;
     }
 
     public WinningResult judgeWinner(final Player player) {
-        if (player.isBurst()) {
+        if (player.isBust()) {
             return WinningResult.LOSS;
         }
-        if (this.isBurst()) {
+        if (this.isBust()) {
             return WinningResult.WIN;
         }
 
-        return WinningResult.valueOf(player.isHigherThan(this));
+        return WinningResult.calculateResult(player.calculateScore(), this.calculateScore());
+    }
+
+    @Override
+    public List<Card> showFirstCards() {
+        return Collections.singletonList(cards.get(0));
     }
 
 }

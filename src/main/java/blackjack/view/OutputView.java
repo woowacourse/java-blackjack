@@ -61,7 +61,7 @@ public class OutputView {
     }
 
     public void printMessageOfDealerDrawCard() {
-        printMessage("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+        printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
     public void printMatchResult(final MatchResultDto resultDto) {

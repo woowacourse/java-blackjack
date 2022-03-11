@@ -1,25 +1,21 @@
 package blackjack.domain.result;
 
-import java.util.Arrays;
-
 public enum WinningResult {
 
-    WIN("승", true),
-    LOSS("패", false);
+    WIN("승"),
+    LOSS("패");
 
     private final String name;
-    private final boolean result;
 
-    WinningResult(final String name, final boolean result) {
+    WinningResult(final String name) {
         this.name = name;
-        this.result = result;
     }
 
-    public static WinningResult valueOf(final boolean result) {
-        return Arrays.stream(WinningResult.values())
-                .filter(it -> it.result == result)
-                .findAny()
-                .get();
+    public static WinningResult calculateResult(final int score, final int otherScore) {
+        if (score > otherScore) {
+            return WIN;
+        }
+        return LOSS;
     }
 
     public String getName() {
