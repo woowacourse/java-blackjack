@@ -2,43 +2,40 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class GameScoreBoard {
 
-    private Map<Result, Integer> dealerResultMap = new EnumMap<>(Result.class);
-    private Map<String, String> playerResultMap = new HashMap<>();
+    private final Map<Result, Integer> dealerGameResult;
+    private final Map<String, String> playerGameResultMap;
 
-    public GameScoreBoard(Dealer dealer, List<Player> players) {
+    public GameScoreBoard(Map<Result, Integer> dealerGameResult,
+        Map<String, String> playerGameResultMap) {
+        this.dealerGameResult = dealerGameResult;
+        this.playerGameResultMap = playerGameResultMap;
+    }
 
-        for (Result result : Result.values()) {
-            dealerResultMap.put(result, 0);
-        }
-
+    public static GameScoreBoard of(Dealer dealer, List<Player> players) {
+        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
+        Map<String, String> playerResult = new TreeMap<>();
         for (Player player : players) {
-            Result playerResult = player.compareMatchResult(dealer.getCardHand().getScore());
-            Result dealerResult = playerResult.reverse();
-            dealerResultMap.put(dealerResult, dealerResultMap.get(dealerResult) + 1);
-            playerResultMap.put(player.getName(), playerResult.getName());
+            Result playerGameScore = player.compareMatchResult(dealer.getCardTotalScore());
+            Result dealerGameScore = playerGameScore.reverse();
+            dealerResult.put(dealerGameScore, dealerResult.getOrDefault(dealerGameScore, 0) + 1);
+            playerResult.put(player.getName(), playerGameScore.getName());
         }
+        return new GameScoreBoard(dealerResult, playerResult);
     }
 
-    public int getDealerWinCount() {
-        return dealerResultMap.get(Result.WIN);
+    public Map<String, String> getPlayerGameResultMap() {
+        return Collections.unmodifiableMap(playerGameResultMap);
     }
 
-    public int getDealerLoseCount() {
-        return dealerResultMap.get(Result.LOSE);
-    }
-
-    public int getDrawCount() {
-        return dealerResultMap.get(Result.DRAW);
-    }
-
-    public Map<String, String> getPlayerResultMap() {
-        return playerResultMap;
+    public Map<Result, Integer> getDealerGameResult() {
+        return Collections.unmodifiableMap(dealerGameResult);
     }
 }

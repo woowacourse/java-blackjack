@@ -21,7 +21,7 @@ public class Application {
         takeMoreCardDealerTurn(dealer);
         OutputView.printParticipantResult(dealer, players);
 
-        GameScoreBoard result = new GameScoreBoard(dealer, players);
+        GameScoreBoard result = GameScoreBoard.of(dealer, players);
         OutputView.printBlackjackGameResult(result);
     }
 
