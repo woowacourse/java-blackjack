@@ -1,8 +1,8 @@
 package blackjack.domain;
 
-import blackjack.domain.strategy.RandomCardGenerator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackGame {
@@ -55,5 +55,15 @@ public class BlackJackGame {
             System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         }
         System.out.println();
+    }
+
+    public Map<GameResult, Integer> getDealerResult() {
+        int score = dealer.calculateScore();
+        return players.getDealerGameResult(score);
+    }
+
+    public Map<String, GameResult> getPlayersResult() {
+        int score = dealer.calculateScore();
+        return players.getPlayersGameResult(score);
     }
 }

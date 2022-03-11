@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,4 +36,23 @@ public class Participants {
     public void skipTurn() {
         nowTurnIndex++;
     }
+
+    public Map<GameResult, Integer> getDealerGameResult(int dealerScore) {
+        Map<GameResult, Integer> gameResult = new EnumMap<>(GameResult.class);
+        for (Participant participant : participants) {
+            GameResult result = GameResult.compare(dealerScore, participant.calculateScore());
+            gameResult.put(result, gameResult.getOrDefault(result, 0) + 1);
+        }
+        return gameResult;
+    }
+
+    public Map<String, GameResult> getPlayersGameResult(int dealerScore) {
+        HashMap<String, GameResult> playersGameResult = new HashMap<>();
+        for (Participant participant : participants) {
+            GameResult result = GameResult.compare(participant.calculateScore(), dealerScore);
+            playersGameResult.put(participant.getName(), result);
+        }
+        return playersGameResult;
+    }
+
 }

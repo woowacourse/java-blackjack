@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-
 public abstract class Participant {
     private String name;
     private HoldingCard holdingCard;
@@ -28,4 +26,13 @@ public abstract class Participant {
     }
 
     public abstract boolean isFinished();
+
+    public int calculateScore() {
+        int score = holdingCard.calculateTotal();
+        if (score > 21) {
+            return 0;
+        }
+        return score;
+
+    }
 }

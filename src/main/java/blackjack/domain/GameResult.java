@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 public enum GameResult {
     WIN("승"),
     DRAW("무"),
@@ -9,5 +12,20 @@ public enum GameResult {
 
     GameResult(String result) {
         this.result = result;
+    }
+
+    public static GameResult compare(int score, int targetScore) {
+        if (score > targetScore) {
+            return WIN;
+        }
+        if (score < targetScore) {
+            return LOSE;
+        }
+        return DRAW;
+    }
+
+    @Override
+    public String toString() {
+        return result;
     }
 }

@@ -4,6 +4,7 @@ import blackjack.domain.BlackJackGame;
 import blackjack.domain.DrawCommand;
 import blackjack.domain.GameMachine;
 import blackjack.domain.HoldingCard;
+import blackjack.domain.ScoreResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -15,6 +16,9 @@ public class BlackJackController {
 
         blackJackGame = runAllPlayersTurn(blackJackGame);
         OutputView.printPlayerFinalCards(GameMachine.createPlayerFinalCardsAndScore(blackJackGame));
+        ScoreResultDto finalScore = GameMachine.createFinalScore(blackJackGame);
+        OutputView.printFinalScore(finalScore);
+
     }
 
     private BlackJackGame runAllPlayersTurn(BlackJackGame blackJackGame) {
