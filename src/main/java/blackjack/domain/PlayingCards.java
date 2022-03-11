@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,9 @@ public class PlayingCards {
     }
 
     public List<Card> getPartOfDealerCard() {
-        // TODO: 방식 수정
+        if (playingCards.isEmpty()) {
+            return new ArrayList<>();
+        }
         return List.of(playingCards.get(0));
     }
 
