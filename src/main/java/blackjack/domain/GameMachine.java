@@ -52,4 +52,8 @@ public class GameMachine {
     public Players getPlayers() {
         return this.players;
     }
+
+    public List<Player> getParicipants() {
+        return players.getParticipants();
+    }
 }

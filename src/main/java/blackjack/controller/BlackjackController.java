@@ -7,8 +7,20 @@ import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.io.OutputStream;
+import java.util.List;
 
 public class BlackjackController {
+
+    public GameMachine createGameMachine() {
+        try {
+            List<String> names = InputView.inputNames();
+            return new GameMachine(names);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return createGameMachine();
+        }
+    }
 
     public void play(final GameMachine gameMachine) {
         OutputView.printPlayersInitCardInfo(gameMachine.getPlayers());
@@ -19,10 +31,19 @@ public class BlackjackController {
     }
 
     private void decideMoreCard(final GameMachine gameMachine) {
-        for (Player participant : gameMachine.getPlayers().getParticipants()) {
-            decideParticipantOneMoreCard(participant, gameMachine);
+        for (Player participant : gameMachine.getParicipants()) {
+            fulfilParticipantOneMoreCard(participant, gameMachine);
         }
         decideOneMoreCard(gameMachine);
+    }
+
+    private void fulfilParticipantOneMoreCard(Player participant, GameMachine gameMachine) {
+        try {
+            decideParticipantOneMoreCard(participant, gameMachine);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            fulfilParticipantOneMoreCard(participant, gameMachine);
+        }
     }
 
     private void decideParticipantOneMoreCard(final Player participant, final GameMachine gameMachine) {

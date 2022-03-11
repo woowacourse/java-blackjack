@@ -88,7 +88,8 @@ public class OutputView {
     }
 
     private static void printDealerResult(final Player dealer) {
-        System.out.printf(dealer.getName() + ": %d승 %d패%n", ((Dealer) dealer).getWinCount(), ((Dealer) dealer).getLoseCount());
+        System.out.printf(dealer.getName() + ": %d승 %d패%n", ((Dealer) dealer).getWinCount(),
+                ((Dealer) dealer).getLoseCount());
     }
 
     private static void printParticipantsResult(final List<Player> participants) {
@@ -102,5 +103,9 @@ public class OutputView {
             return;
         }
         System.out.println("패");
+    }
+
+    public static void printErrorMessage(String message) {
+        System.out.println(message);
     }
 }
