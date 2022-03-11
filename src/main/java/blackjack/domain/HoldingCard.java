@@ -43,7 +43,8 @@ public class HoldingCard {
         return holdingCard;
     }
 
-    public Card getFirstCard() {
-        return holdingCard.get(0);
+    @Override
+    public String toString() {
+        return holdingCard.toString();
     }
 }

@@ -21,11 +21,7 @@ public class ParticipantDto {
         return cards;
     }
 
-    @Override
-    public String toString() {
-        return "ParticipantDto{" +
-                "name='" + name + '\'' +
-                ", cards=" + cards +
-                '}';
+    public int getSum() {
+        return cards.calculateTotal();
     }
 }

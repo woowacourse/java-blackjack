@@ -14,6 +14,7 @@ public class BlackJackController {
         OutputView.printInitialCardStatus(blackJackGame.getParticipantsDto());
 
         blackJackGame = runAllPlayersTurn(blackJackGame);
+        OutputView.printPlayerFinalCards(GameMachine.createPlayerFinalCardsAndScore(blackJackGame));
     }
 
     private BlackJackGame runAllPlayersTurn(BlackJackGame blackJackGame) {

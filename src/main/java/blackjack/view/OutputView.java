@@ -34,4 +34,15 @@ public class OutputView {
     public static void printPlayerCards(String currentPlayerName, HoldingCard holdingCard) {
         System.out.println(currentPlayerName + "카드" + holdingCard.toString());
     }
+
+    public static void printPlayerFinalCards(List<ParticipantDto> playerFinalCardsAndScore) {
+        for (ParticipantDto participantDto : playerFinalCardsAndScore) {
+            printEachFinalCards(participantDto);
+        }
+    }
+
+    private static void printEachFinalCards(ParticipantDto participantDto) {
+        System.out.println(
+                participantDto.getName() + "카드:" + participantDto.getCards() + "- 결과: " + participantDto.getSum());
+    }
 }
