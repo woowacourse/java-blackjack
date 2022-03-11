@@ -3,7 +3,9 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Suit;
 
 import org.junit.jupiter.api.DisplayName;
@@ -28,5 +30,15 @@ class PlayerTest {
         player.receiveCard(card);
 
         assertThat(player.getCards()).containsExactly(card);
+    }
+
+    @Test
+    @DisplayName("플레이어를 생성할때 이름이 null을 포함한채 생성하면 예외발생")
+    void validateNameIsNull() {
+        Hand cardHand = new Hand();
+
+        assertThatThrownBy(() -> new Player(null, cardHand))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("[ERROR] 이름과 카드패가 null일 수 없습니다.");
     }
 }

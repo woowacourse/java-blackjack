@@ -10,8 +10,15 @@ public abstract class Participant {
     protected final Hand cardHand;
 
     protected Participant(Name name, Hand cardHand) {
+        validateNull(name, cardHand);
         this.name = name;
         this.cardHand = cardHand;
+    }
+
+    private void validateNull(Name name, Hand cardHand) {
+        if (name == null || cardHand == null) {
+            throw new IllegalArgumentException("[ERROR] 이름과 카드패가 null일 수 없습니다.");
+        }
     }
 
     public boolean isBust() {
