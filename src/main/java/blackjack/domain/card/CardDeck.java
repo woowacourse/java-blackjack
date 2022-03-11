@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public class CardDeck {
 
     public static final String OVER_CAPACITY_EXCEPTION_MESSAGE = "카드가 부족합니다.";
+
     private final LinkedList<Card> cardDeck;
 
     private CardDeck(List<Card> cardDeck) {

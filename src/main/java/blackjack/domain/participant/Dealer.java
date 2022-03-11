@@ -36,9 +36,14 @@ public class Dealer extends Participant {
 
     private int adjustBustedScore(List<Card> cards, int sum) {
         if (sum > BUST_THRESHOLD) {
-            for (Card card : cards) {
-                sum = getLowest(sum, card);
-            }
+            sum = getLowestSum(cards, sum);
+        }
+        return sum;
+    }
+
+    private int getLowestSum(List<Card> cards, int sum) {
+        for (Card card : cards) {
+            sum = getLowest(sum, card);
         }
         return sum;
     }
