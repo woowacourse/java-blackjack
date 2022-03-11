@@ -8,6 +8,7 @@ import blackjack.domain.Player;
 import blackjack.domain.Results;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -17,23 +18,28 @@ public class OutputView {
 
     public static void announcePresentCards(List<GameResponse> gameResponses) {
         for (GameResponse gameResponse : gameResponses) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(gameResponse.getName()).append(" 카드: ");
-            if (gameResponse.getName().equals("딜러")) {
-                for (Card card : gameResponse.getDeck().getCards()) {
-                    sb.append(card.getRank().getValue()).append(card.getSuit().getName()).append(", ");
-                    break;
-                }
-                sb.deleteCharAt(sb.length() - 2);
-                System.out.println(sb);
-                continue;
-            }
-            for (Card card : gameResponse.getDeck().getCards()) {
-                sb.append(card.getRank().getValue()).append(card.getSuit().getName()).append(", ");
-            }
-            sb.deleteCharAt(sb.length() - 2);
-            System.out.println(sb);
+            printFirstStartCards(gameResponse);
         }
+    }
+
+    private static void printFirstStartCards(GameResponse gameResponse) {
+        String playerName = gameResponse.getName();
+        if (playerName.equals("딜러")) {
+            String cardOutputFormat = hideOneCard(gameResponse);
+            System.out.printf("%s 카드: %s\n", playerName, cardOutputFormat);
+            return;
+        }
+        String cardOutputFormat = toCardOutputFormat(gameResponse);
+        System.out.printf("%s 카드: %s\n", playerName, cardOutputFormat);
+    }
+
+    private static String hideOneCard(GameResponse gameResponse) {
+        return gameResponse.getDeck()
+                .getCards()
+                .stream()
+                .findFirst()
+                .orElseThrow()
+                .toString();
     }
 
     public static void announceDealerGetMoreCard() {
@@ -46,17 +52,20 @@ public class OutputView {
 
     public static void announceResultCards(List<GameResponse> gameResponses) {
         for (GameResponse gameResponse : gameResponses) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(gameResponse.getName()).append(" 카드: ");
+            String playerName = gameResponse.getName();
+            String cardOutputFormat = toCardOutputFormat(gameResponse);
+            int totalPoint = gameResponse.getDeck().sumPoints();
 
-            for (Card card : gameResponse.getDeck().getCards()) {
-                sb.append(card.getRank().getValue()).append(card.getSuit().getName()).append(", ");
-            }
-            sb.deleteCharAt(sb.length() - 2);
-
-            sb.append(" - 결과: " + gameResponse.getDeck().sumPoints());
-            System.out.println(sb);
+            System.out.printf("%s 카드: %s - 결과: %d\n", playerName, cardOutputFormat, totalPoint);
         }
+    }
+
+    private static String toCardOutputFormat(GameResponse gameResponse) {
+        return gameResponse.getDeck()
+                .getCards()
+                .stream()
+                .map(Card::toString)
+                .collect(Collectors.joining(", "));
     }
 
     public static void announceResultWinner(Results results) {
