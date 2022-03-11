@@ -34,7 +34,7 @@ final class OwnCards implements Cards{
 
     @Override
     public Cards openCard(int count) {
-        return new OwnCards(cards.subList(0, count));
+        return Cards.toUnmodifiable(new OwnCards(cards.subList(0, count)));
     }
 
     @Override
