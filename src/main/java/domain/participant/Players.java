@@ -35,8 +35,8 @@ public class Players {
         return players.stream().map(Player::showHand).collect(Collectors.toList());
     }
 
-    public List<String> showHandsAndBestScores() {
-        return players.stream().map(Player::showHandAndBestScore).collect(Collectors.toList());
+    public List<String> showStatuses() {
+        return players.stream().map(Player::showStatus).collect(Collectors.toList());
     }
 
     public boolean isBustByName(Name name) {

@@ -53,7 +53,7 @@ public class PlayersTest {
     @Test
     @DisplayName("모든 플레이어 손패와 베스트 스코어 반환")
     void showHandsAndBestScores() {
-        assertThat(players.showHandsAndBestScores()).isEqualTo(
+        assertThat(players.showStatuses()).isEqualTo(
                 List.of("pobi카드: A클로버, Q클로버 - 결과 : 21", "jason카드: K클로버, Q클로버, 2클로버 - 결과 : 22"));
     }
 
@@ -86,7 +86,7 @@ public class PlayersTest {
     }
 
     @Test
-    @DisplayName("딜러를 포함한 참가자들 중 블랙잭이 있을 경우 결과 반환")
+    @DisplayName("딜러가 블랙잭인 경우 결과 반환")
     void getResultAtDealerBlackJack() {
         Map<Name, Versus> resultMap = players.getResultAtDealerBlackJack(dealer_BLACKJACK);
         assertThat(resultMap.get(new Name("pobi"))).isEqualTo(Versus.DRAW);

@@ -26,20 +26,17 @@ public class Controller {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = new Players(names, generateInitCardsForPlayers(names, deck));
-
         printInitHands(names, dealer, players);
 
         if (dealer.isBlackJack) {
             printDealerBlackJackResult(names, dealer, players);
             return;
         }
-
         printBlackJackPlayer(names, players);
 
         drawForPlayers(names, deck, players);
         drawForDealer(deck, dealer, players);
-
-        OutputView.printParticipantStatus(dealer.showHandAndBestScore(), players.showHandsAndBestScores());
+        OutputView.printParticipantStatus(dealer.showStatus(), players.showStatuses());
         printFinalResult(names, dealer, players);
     }
 
@@ -73,15 +70,15 @@ public class Controller {
 
     private void printDealerBlackJackResult(List<Name> names, Dealer dealer, Players players) {
         OutputView.printDealerBlackJackMessage();
-        Result blackjackResult = new Result(players.getResultAtDealerBlackJack(dealer));
+        Result dealerBlackjackResult = new Result(players.getResultAtDealerBlackJack(dealer));
         OutputView.printResultTitle();
         OutputView.printDealerResult(
-                blackjackResult.getDealerWinCount(),
-                blackjackResult.getDealerDrawCount(),
-                blackjackResult.getDealerLoseCount()
+                dealerBlackjackResult.getDealerWinCount(),
+                dealerBlackjackResult.getDealerDrawCount(),
+                dealerBlackjackResult.getDealerLoseCount()
         );
         for (Name name : names) {
-            OutputView.printPlayerResult(name.getName(), blackjackResult.getVersusOfPlayer(name).getResult());
+            OutputView.printPlayerResult(name.getName(), dealerBlackjackResult.getVersusOfPlayer(name).getResult());
         }
     }
 

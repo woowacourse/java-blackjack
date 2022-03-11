@@ -42,7 +42,7 @@ public class ParticipantTest {
     @DisplayName("자신의 손패와 베스트 스코어를 문자열로 반환하는 기능")
     void showHandAndBestScore() {
         Participant participant = new Participant(new Name("pobi"), new ArrayList<>(List.of(card1, card2)));
-        assertThat(participant.showHandAndBestScore()).isEqualTo("pobi카드: K하트, A스페이드 - 결과 : 21");
+        assertThat(participant.showStatus()).isEqualTo("pobi카드: K하트, A스페이드 - 결과 : 21");
     }
 
     @Test

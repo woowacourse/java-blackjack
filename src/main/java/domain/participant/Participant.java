@@ -9,7 +9,7 @@ import domain.card.Card;
 public class Participant {
     protected static final String SHOW_HAND_FORMAT = "%s카드: %s";
     protected static final String JOINING_DELIMITER = ", ";
-    protected static final String SHOW_HAND_AND_BEST_SCORE_DELIMITER = " - 결과 : ";
+    protected static final String SHOW_STATUS_DELIMITER = " - 결과 : ";
     protected static final int BLACK_JACK_NUMBER = 21;
     protected static final int ACE_COUNT_LOWER_BOUND = 0;
     protected static final int ADDITIONAL_SCORE_ACE = 10;
@@ -36,8 +36,8 @@ public class Participant {
         return String.format(SHOW_HAND_FORMAT, name.getName(), joinedCards);
     }
 
-    public String showHandAndBestScore() {
-        return String.join(SHOW_HAND_AND_BEST_SCORE_DELIMITER, showHand(), String.valueOf(getBestScore()));
+    public String showStatus() {
+        return String.join(SHOW_STATUS_DELIMITER, showHand(), String.valueOf(getBestScore()));
     }
 
     public boolean isBust() {
