@@ -24,33 +24,49 @@ public class BlackJackController {
     }
 
     public void run() {
-        List<String> inputNames = inputView.inputPlayerNames();
-        Users users = Users.from(inputNames);
+        Users users = getUsersByInput();
+
         Deck deck = new Deck();
         users.setInitCardsPerPlayer(deck);
 
+        printInitCardInfo(users);
+
+        drawAdditionalCard(users, deck);
+
+        calculateByRule(users);
+
+        printFinalResult(users);
+    }
+
+    private Users getUsersByInput() {
+        List<String> inputNames = inputView.inputPlayerNames();
+
+        Users users = Users.from(inputNames);
+
+        return users;
+    }
+
+    private void printInitCardInfo(Users users) {
         UsersDto usersDto = new UsersDto(users);
         outputView.printInitCards(usersDto);
+    }
 
+    private void drawAdditionalCard(Users users, Deck deck) {
         List<Player> players = users.getPlayers();
+
         for (Player player : players) {
             drawPlayerCardByYes(deck, player);
         }
+
         drawDealerCard(deck, users.getDealer());
+    }
 
-        Rule rule = new Rule();
-
-        users.calculateAllUser(rule);
-
-        Dealer dealer = users.getDealer();
-
-        outputView.printWithScore(UserDto.from(dealer), dealer.getScore());
-        for (Player player : players) {
-            outputView.printWithScore(UserDto.from(player), player.getScore());
+    private void drawPlayerCardByYes(Deck deck, Player player) {
+        while (player.isDrawable() &&
+                inputView.inputWhetherToDrawCard(UserDto.from(player))) {
+            player.drawCard(deck);
+            outputView.printCards(UserDto.from(player));
         }
-        //최종 승패
-        Map<String, Result> map = Result.getMap(players, dealer);
-        outputView.printYield(map);
     }
 
     private void drawDealerCard(Deck deck, Dealer dealer) {
@@ -60,11 +76,22 @@ public class BlackJackController {
         }
     }
 
-    private void drawPlayerCardByYes(Deck deck, Player player) {
-        while (player.isDrawable() &&
-                inputView.inputWhetherToDrawCard(UserDto.from(player))) {
-            player.drawCard(deck);
-            outputView.printCards(UserDto.from(player));
+    private void calculateByRule(Users users) {
+        Rule rule = new Rule();
+
+        users.calculateAllUser(rule);
+    }
+
+    private void printFinalResult(Users users) {
+        Dealer dealer = users.getDealer();
+        List<Player> players = users.getPlayers();
+
+        outputView.printWithScore(UserDto.from(dealer), dealer.getScore());
+        for (Player player : players) {
+            outputView.printWithScore(UserDto.from(player), player.getScore());
         }
+
+        Map<String, Result> map = Result.getMap(players, dealer);
+        outputView.printYield(map);
     }
 }
