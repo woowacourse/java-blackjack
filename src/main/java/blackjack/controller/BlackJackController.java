@@ -61,10 +61,20 @@ public class BlackJackController {
         List<Player> players = users.getPlayers();
 
         for (Player player : players) {
-            drawPlayerCardByYes(deck, player);
+            drawCardPerPlayer(deck, player);
         }
 
         drawDealerCard(deck, users.getDealer());
+    }
+
+    private void drawCardPerPlayer(Deck deck, Player player) {
+        try {
+            drawPlayerCardByYes(deck, player);
+        } catch(IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+
+            drawCardPerPlayer(deck, player);
+        }
     }
 
     private void drawPlayerCardByYes(Deck deck, Player player) {
