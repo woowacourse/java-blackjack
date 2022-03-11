@@ -30,7 +30,7 @@ public abstract class Player {
         if (!isHittable()) {
             throw new IllegalStateException("카드를 더 이상 발급 받을 수 없습니다.");
         }
-        cards.take(card);
+        cards.takeCard(card);
     }
 
     public Score score() {

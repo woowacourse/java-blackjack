@@ -30,6 +30,6 @@ public class Dealer extends Player {
     }
 
     public boolean isHittable() {
-        return cards.maxScore().lessThan(new Score(17));
+        return cards.softHandScore().lessThan(new Score(17));
     }
 }
