@@ -8,9 +8,11 @@ import blackjack.domain.card.Deck;
 
 public class Gamer {
 	protected final Cards cards;
+	protected final Name name;
 
-	public Gamer() {
+	public Gamer(String name) {
 		this.cards = new Cards();
+		this.name = new Name(name);
 	}
 
 	public void addCard(Card card) {
@@ -34,5 +36,8 @@ public class Gamer {
 		return this.cards.isBust();
 	}
 
+	public String getName() {
+		return this.name.getName();
+	}
 
 }

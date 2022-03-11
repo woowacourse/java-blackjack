@@ -3,14 +3,9 @@ package blackjack.domain.user;
 import java.util.Objects;
 
 public class Player extends Gamer {
-	private final Name name;
 
 	public Player(String name) {
-		this.name = new Name(name);
-	}
-
-	public String getName() {
-		return this.name.getName();
+		super(name);
 	}
 
 	@Override

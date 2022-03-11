@@ -12,6 +12,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackGameController {
+
 	private final InputView inputView;
 	private final OutputView outputView;
 
@@ -41,7 +42,7 @@ public class BlackJackGameController {
 	}
 
 	private void makeResult(Players players, Dealer dealer) {
-		outputView.displayAllCardAndScore("딜러", dealer.getScore(), dealer.getCards());
+		outputView.displayAllCardAndScore(dealer.getName(), dealer.getScore(), dealer.getCards());
 		for (Player player : players.getPlayers()) {
 			outputView.displayAllCardAndScore(player.getName(), player.getScore(), player.getCards());
 		}
