@@ -10,11 +10,13 @@ public class Player extends Gamer {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
+		if (this == o) {
 			return true;
-		if (o == null || getClass() != o.getClass())
+		}
+		if (o == null || getClass() != o.getClass()) {
 			return false;
-		Player player = (Player)o;
+		}
+		Player player = (Player) o;
 		return this.getName().equals(player.getName());
 	}
 

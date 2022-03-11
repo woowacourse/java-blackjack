@@ -1,20 +1,20 @@
 package blackjack.controller;
 
 import blackjack.domain.Names;
-import java.util.Map;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.Result;
-import blackjack.domain.ResultType;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackGameController {
 	private final InputView inputView;
 	private final OutputView outputView;
+	private static final String NO_UPPERCASE = "N";
+	private static final String NO_LOWERCASE = "n";
 
 	public BlackJackGameController(InputView inputView, OutputView outputView) {
 		this.inputView = inputView;
@@ -72,7 +72,7 @@ public class BlackJackGameController {
 
 	private boolean decideHitOrStay(Player player) {
 		String decision = inputDecision(player);
-		if (decision.equals("N") || decision.equals("n")) {
+		if (decision.equals(NO_UPPERCASE) || decision.equals(NO_LOWERCASE)) {
 			return false;
 		}
 		return true;
@@ -92,9 +92,8 @@ public class BlackJackGameController {
 		players.addCardToAllPlayers(deck, 2);
 		outputView.displayFirstDistribution(players, dealer);
 		outputView.displayDealerOneCard(dealer);
-		for (Player player : players.getPlayers()){
+		for (Player player : players.getPlayers()) {
 			outputView.displayAllCard(player);
 		}
 	}
-
 }

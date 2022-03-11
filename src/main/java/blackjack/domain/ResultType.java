@@ -12,11 +12,14 @@ public enum ResultType {
 	}
 
 	public static ResultType generateResultType(Player player, Dealer dealer) {
-		if (player.isBurst() || dealer.isHigher(player)) {
+		if (player.isBurst()) {
 			return LOSE;
 		}
 		if (dealer.isEqaul(player)) {
 			return DRAW;
+		}
+		if (dealer.isHigher(player)) {
+			return LOSE;
 		}
 		return WIN;
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Names {
+	private static final String EMPTY_NAMES = "[ERROR] 플레이어를 한명 이상 입력해야 합니다.";
 	private final List<Name> names;
 
 	public Names(List<String> names) {
@@ -16,7 +17,7 @@ public class Names {
 
 	private void validateEmptyNames(List<String> names) {
 		if (names.isEmpty()) {
-			throw new IllegalArgumentException("플레이어를 한명 이상 입력해야 합니다.");
+			throw new IllegalArgumentException(EMPTY_NAMES);
 		}
 	}
 

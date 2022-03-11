@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Result {
@@ -14,6 +13,8 @@ public class Result {
 	}
 
 	public int calculateCount(ResultType resultType) {
-		return (int) this.gameResult.values().stream().filter(each -> each == resultType).count();
+		return (int) this.gameResult.values().stream()
+			.filter(each -> each == resultType)
+			.count();
 	}
 }

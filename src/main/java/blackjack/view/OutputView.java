@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.Cards;
 import blackjack.domain.Dealer;
 import blackjack.domain.Gamer;
 import blackjack.domain.Players;
@@ -14,6 +13,10 @@ import blackjack.domain.Player;
 import blackjack.domain.ResultType;
 
 public class OutputView {
+	private static final String BUST_STATUS_TO_STRING = "-1";
+	private static final String ACE_NUMBER_TO_STRING = "A";
+	private static final String DELIMITER = ", ";
+
 	public void displayDealerOneCard(Dealer dealer) {
 		Card card = dealer.getRandomOneCard();
 		String cardInfo = convertCardToString(card);
@@ -23,19 +26,19 @@ public class OutputView {
 	public void displayFirstDistribution(Players players, Dealer dealer) {
 		String joinedNamesInfo = players.getPlayers().stream()
 			.map(Player::getName)
-			.collect(Collectors.joining(", "));
+			.collect(Collectors.joining(DELIMITER));
 		System.out.println(dealer.getName() + "와 " + joinedNamesInfo + "에게 2장의 카드를 나누었습니다.");
 	}
 
 	public void displayAllCard(Gamer gamer) {
 		List<String> strings = generateAllCardStrings(gamer);
-		System.out.println(gamer.getName() + "카드: " + String.join(", ", strings));
+		System.out.println(gamer.getName() + "카드: " + String.join(DELIMITER, strings));
 	}
 
 	public void displayAllCardAndScore(Gamer gamer) {
-		String joinedCardsInfo = String.join(", ", generateAllCardStrings(gamer));
+		String joinedCardsInfo = String.join(DELIMITER, generateAllCardStrings(gamer));
 		String scoreString = String.valueOf(gamer.getScore());
-		if ("-1".equals(scoreString)) {
+		if (BUST_STATUS_TO_STRING.equals(scoreString)) {
 			scoreString = "버스트";
 		}
 		System.out.println(gamer.getName() + "카드: " + joinedCardsInfo + " - 결과: " + scoreString);
@@ -50,7 +53,7 @@ public class OutputView {
 	private String convertCardToString(Card card) {
 		String cardNumber = String.valueOf(card.getNumber());
 		if (card.isAce()) {
-			cardNumber = "A";
+			cardNumber = ACE_NUMBER_TO_STRING;
 		}
 		return cardNumber + card.getType();
 	}

@@ -6,6 +6,9 @@ import java.util.Random;
 
 public class Cards {
 	private final List<Card> cards = new ArrayList<>();
+	private static final int BUST_THRESHOLD = 21;
+	private static final int BUST_STATUS = -1;
+	private static final int ANOTHER_ACE_SCORE = 11;
 	private int score = 0;
 
 	public void addCard(Card card) {
@@ -18,21 +21,21 @@ public class Cards {
 		int notAceScore = calculateNotAceCardScore();
 		List<Integer> possible = getPossibleAceScores(aceCnt);
 		this.score = possible.stream()
-			.filter(each -> each + notAceScore <= 21)
+			.filter(each -> each + notAceScore <= BUST_THRESHOLD)
 			.map(each -> each + notAceScore)
-			.max(Integer::compare).orElse(-1);
+			.max(Integer::compare).orElse(BUST_STATUS);
 	}
 
 	private List<Integer> getPossibleAceScores(int aceCnt) {
 		List<Integer> possible = new ArrayList<>();
 		for (int i = 0; i <= aceCnt; i++) {
-			possible.add(i + 11 * (aceCnt - i));
+			possible.add(i + ANOTHER_ACE_SCORE * (aceCnt - i));
 		}
 		return possible;
 	}
 
 	private int countAceCard() {
-		return (int)cards.stream()
+		return (int) cards.stream()
 			.filter(Card::isAce)
 			.count();
 	}

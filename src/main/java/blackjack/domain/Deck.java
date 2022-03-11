@@ -6,12 +6,13 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class Deck {
+	private static final String EMPTY_MESSAGE = "[ERROR] 덱의 카드가 다 소진되었습니다.";
 	private final List<Card> cards;
 
 	public Card distributeCard() {
 		final int cardSize = cards.size();
 		if (cardSize <= 0) {
-			throw new IllegalStateException("덱의 카드가 다 소진되었습니다.");
+			throw new IllegalStateException(EMPTY_MESSAGE);
 		}
 		return cards.remove(cards.size() - 1);
 	}
