@@ -10,17 +10,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class RentCompanyTest {
+class RentCompanyTest {
 
     private static final String NEWLINE = System.getProperty("line.separator");
-
-    private static Stream<Arguments> provideSource() {
-        return Stream.of(
-            Arguments.of(new Sonata(150)),
-            Arguments.of(new Avante(200)),
-            Arguments.of(new K5(300))
-        );
-    }
 
     @ParameterizedTest
     @MethodSource("provideSource")
@@ -35,6 +27,14 @@ public class RentCompanyTest {
 
         // then
         assertThat(actual).isEqualTo(1);
+    }
+
+    private static Stream<Arguments> provideSource() {
+        return Stream.of(
+            Arguments.of(new Sonata(150)),
+            Arguments.of(new Avante(200)),
+            Arguments.of(new K5(300))
+        );
     }
 
     @Test
