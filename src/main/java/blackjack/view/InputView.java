@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class InputView {
 
     private static final String DELIMITER = ",";
-
     private static final Scanner scanner = new Scanner(System.in);
 
     public List<String> inputPlayerNames() {
@@ -31,8 +30,8 @@ public class InputView {
     }
 
     private void validateYN(String input) {
-        if (!("y".equalsIgnoreCase(input) || "n".equalsIgnoreCase(input))) {
-            throw new IllegalArgumentException("y or n need");
+        if (!(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n"))) {
+            throw new IllegalArgumentException("잘못된 입력 형식입니다.");
         }
     }
 }
