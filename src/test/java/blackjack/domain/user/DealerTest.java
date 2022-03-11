@@ -29,7 +29,7 @@ public class DealerTest {
 
         //when
         dealer.drawCard(deck);
-        List<Card> cards = dealer.showCards();
+        List<Card> cards = dealer.getHandCards();
 
         //then
         assertThat(cards.size()).isEqualTo(1);

@@ -86,4 +86,8 @@ public class Score {
     public int hashCode() {
         return Objects.hash(score);
     }
+
+    public int getScore() {
+        return score;
+    }
 }

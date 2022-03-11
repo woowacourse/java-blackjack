@@ -18,6 +18,6 @@ public class UserTest {
         user.drawInitCards(deck);
 
         //then
-        Assertions.assertThat(user.showCards().size()).isEqualTo(2);
+        Assertions.assertThat(user.getHandCards().size()).isEqualTo(2);
     }
 }

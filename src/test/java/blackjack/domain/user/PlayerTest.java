@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Score;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -36,7 +35,7 @@ public class PlayerTest {
 
         //when
         player.drawCard(deck);
-        List<Card> cards = player.showCards();
+        List<Card> cards = player.getHandCards();
 
         //then
         assertThat(cards.size()).isEqualTo(1);
