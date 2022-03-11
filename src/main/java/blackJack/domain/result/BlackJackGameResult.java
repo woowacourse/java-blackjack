@@ -1,11 +1,12 @@
 package blackJack.domain.result;
 
+import blackJack.domain.participant.Dealer;
+import blackJack.domain.participant.Player;
+
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import blackJack.domain.participant.Dealer;
-import blackJack.domain.participant.Player;
 
 public class BlackJackGameResult {
 
@@ -38,7 +39,7 @@ public class BlackJackGameResult {
     }
 
     private Map<WinOrLose, Integer> getWinOrLose() {
-        final Map<WinOrLose, Integer> dealerGameScore = new LinkedHashMap<>();
+        final Map<WinOrLose, Integer> dealerGameScore = new EnumMap<>(WinOrLose.class);
 
         for (WinOrLose value : WinOrLose.values()) {
             dealerGameScore.put(value, 0);
