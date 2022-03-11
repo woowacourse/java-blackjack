@@ -2,10 +2,6 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.*;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Hand;
-import blackjack.domain.card.Suit;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +15,7 @@ class HandTest {
 
     @Test
     @DisplayName("카드를 가져와서 나의 패(Hand)를 만든다")
-    void make_hand() {
+    void createCardHand() {
         Card card = new Card(Denomination.TWO, Suit.SPADE);
         Card card2 = new Card(Denomination.JACK, Suit.DIAMOND);
 
@@ -31,7 +27,7 @@ class HandTest {
 
     @Test
     @DisplayName("카드팩의 합계를 구한다")
-    void sum_hand() {
+    void sumCardHand() {
         Card card = new Card(Denomination.TWO, Suit.SPADE);
         Card card2 = new Card(Denomination.JACK, Suit.DIAMOND);
 
@@ -43,7 +39,7 @@ class HandTest {
 
     @Test
     @DisplayName("카드팩의 합계를 구한다")
-    void sum_hand_other_case() {
+    void sumCardHandOtherCase() {
         Card card = new Card(Denomination.FOUR, Suit.SPADE);
         Card card2 = new Card(Denomination.JACK, Suit.DIAMOND);
 
@@ -94,7 +90,7 @@ class HandTest {
     @DisplayName("Ace가 포함된 경우 점수 계산이 정확한지 확인")
     @ParameterizedTest
     @MethodSource("hasAceCardHandScoreTestCase")
-    void test(Hand hand, int expected) {
+    void getScoreIsMakeSure(Hand hand, int expected) {
         assertThat(hand.getScore()).isEqualTo(expected);
     }
 

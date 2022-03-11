@@ -2,10 +2,6 @@ package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.*;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
