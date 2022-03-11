@@ -9,7 +9,7 @@ public class Dealer extends Gamer {
 		return this.getScore() > gamer.getScore();
 	}
 
-	public boolean isEqaul(Gamer gamer) {
+	public boolean isEqual(Gamer gamer) {
 		return this.getScore() == gamer.getScore();
 	}
 

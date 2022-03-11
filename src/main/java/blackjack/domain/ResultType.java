@@ -15,7 +15,7 @@ public enum ResultType {
 		if (player.isBurst()) {
 			return LOSE;
 		}
-		if (dealer.isEqaul(player)) {
+		if (dealer.isEqual(player)) {
 			return DRAW;
 		}
 		if (dealer.isHigher(player)) {

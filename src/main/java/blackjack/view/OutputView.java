@@ -46,7 +46,7 @@ public class OutputView {
 
 	private List<String> generateAllCardStrings(Gamer gamer) {
 		return gamer.getCards().stream()
-			.map(card -> convertCardToString(card) + card.getType())
+			.map(this::convertCardToString)
 			.collect(Collectors.toList());
 	}
 
