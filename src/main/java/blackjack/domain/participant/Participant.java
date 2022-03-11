@@ -43,7 +43,6 @@ public class Participant {
         return false;
     }
 
-
     public int getScore() {
         return score;
     }

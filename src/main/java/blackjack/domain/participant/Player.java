@@ -6,7 +6,7 @@ public class Player extends Participant {
         super(name);
     }
 
-    public boolean canHit(){
+    public boolean canHit() {
         return getScore() < GOAL_SCORE;
     }
 

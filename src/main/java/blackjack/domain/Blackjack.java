@@ -77,13 +77,13 @@ public class Blackjack {
         players.forEach(Participant::endTurn);
     }
 
-    public List<TotalScoreDTO> generateAllResultDTO() {
-        List<TotalScoreDTO> addResultDTOs = new ArrayList<>();
-        addResultDTOs.add(new TotalScoreDTO(dealer));
-        addResultDTOs.addAll(players.stream()
+    public List<TotalScoreDTO> generateTotalResultDTO() {
+        List<TotalScoreDTO> resultDTOs = new ArrayList<>();
+        resultDTOs.add(new TotalScoreDTO(dealer));
+        resultDTOs.addAll(players.stream()
                 .map(TotalScoreDTO::new)
                 .collect(Collectors.toList()));
-        return addResultDTOs;
+        return resultDTOs;
     }
 
     public TotalResultDTO calculateTotalResult() {

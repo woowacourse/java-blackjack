@@ -10,7 +10,6 @@ public class Dealer extends Participant {
     }
 
     public boolean needMoreCard() {
-        int score = getScore();
-        return score <= BOUND_FOR_ADDITIONAL_CARD;
+        return getScore() <= BOUND_FOR_ADDITIONAL_CARD;
     }
 }

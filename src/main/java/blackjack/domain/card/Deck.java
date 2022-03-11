@@ -4,8 +4,10 @@ import java.util.Collections;
 import java.util.Stack;
 
 public class Deck {
-    public static final String NO_MORE_CARDS = "더이상 뽑을 수 있는 카드가 없습니다.";
-    private Stack<Card> cards = new Stack<>();
+
+    private static final String NO_MORE_CARDS = "더이상 뽑을 수 있는 카드가 없습니다.";
+
+    private final Stack<Card> cards = new Stack<>();
 
     public Deck() {
         for (Symbol symbol : Symbol.values()) {
