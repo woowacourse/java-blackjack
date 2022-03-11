@@ -99,7 +99,7 @@ public class BlackJackGameTest {
     @DisplayName("딜러가 턴을 종료했는지 확인한다.")
     void is_dealer_finished() {
         Dealer dealer = blackJackGame.getDealer();
-        dealer.drawCard(Card.valueOf(Denomination.SEVEN, Suit.CLOVER)); //초기 2장 + 14 이므로 무조건 16이 넘는다.
+        dealer.drawCard(Card.valueOf(Denomination.EIGHT, Suit.CLOVER)); //초기 2장 + 14 이므로 무조건 16이 넘는다.
         dealer.drawCard(Card.valueOf(Denomination.SEVEN, Suit.CLOVER));
 
         assertThat(blackJackGame.isDealerFinished()).isTrue();

@@ -10,29 +10,20 @@ import java.util.Map;
 
 public class GameResult {
 
-    private final Map<Player, MatchResult> gameResult = new LinkedHashMap<>();
+    private final Map<Player, MatchResult> gameResult;
 
     public GameResult(Players players, Dealer dealer) {
-        initialGameResult(players, dealer);
-    }
-
-    private void initialGameResult(Players players, Dealer dealer) {
-        for (Player player : players.getPlayers()) {
-            if (playerWinCondition(player, dealer)) {
-                gameResult.put(player, MatchResult.WIN);
-                continue;
-            }
-            gameResult.put(player, MatchResult.LOSE);
-        }
-    }
-
-    private boolean playerWinCondition(Player player, Dealer dealer) {
-        return !player.getCards().isBust()
-                && (dealer.getCards().isBust() || dealer.getCards().sum() < player.getCards().sum());
+        gameResult = new LinkedHashMap<>(players.match(dealer));
     }
 
     public MatchResult getMatchResult(Player player) {
         return gameResult.get(player);
+    }
+
+    public long getDealerDrawCount() {
+        return gameResult.entrySet().stream()
+                .filter(entry -> entry.getValue() == MatchResult.DRAW)
+                .count();
     }
 
     public long getDealerWinCount() {
@@ -42,7 +33,7 @@ public class GameResult {
     }
 
     public long getDealerLoseCount() {
-        return gameResult.size() - getDealerWinCount();
+        return gameResult.size() - getDealerDrawCount() - getDealerWinCount();
     }
 
     public Map<Player, MatchResult> getGameResult() {

@@ -1,11 +1,9 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.MatchResult;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Players {
 
@@ -31,6 +29,14 @@ public class Players {
 
     public void passToNextPlayer() {
         players.offer(players.poll());
+    }
+
+    public Map<Player, MatchResult> match(Dealer dealer) {
+        Map<Player, MatchResult> gameResult = new LinkedHashMap<>();
+        for (Player player : players) {
+            gameResult.put(player, player.match(dealer));
+        }
+        return gameResult;
     }
 
     public Player getPresentPlayer() {

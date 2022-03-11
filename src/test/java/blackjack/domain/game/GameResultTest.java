@@ -8,6 +8,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,6 +23,25 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GameResultTest {
+
+    private Players players;
+    private Dealer dealer;
+
+    @BeforeEach
+    void init() {
+        Player player1 = new Player(new Name("abc1"),
+                new Cards(getCardList(Denomination.JACK, Denomination.NINE)));      // 19
+        Player player2 = new Player(new Name("abc2"),
+                new Cards(getCardList(Denomination.EIGHT, Denomination.NINE)));    // 17
+        Player player3 = new Player(new Name("abc3"),
+                new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
+        Player player4 = new Player(new Name("abc4"),
+                new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
+        dealer = new Dealer(new Name("딜러"),
+                new Cards(getCardList(Denomination.QUEEN, Denomination.NINE)));    // 19
+        players = new Players(Arrays.asList(player1, player2, player3, player4));
+    }
+
     @ParameterizedTest(name = "{0}")
     @MethodSource("provideParameters")
     @DisplayName("플레이어 승리")
@@ -47,16 +67,7 @@ class GameResultTest {
 
     @Test
     @DisplayName("딜러가 승리한 횟수")
-    void dealer_win_count_test() {
-        Player player1 = new Player(new Name("abc1"),
-                new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
-        Player player2 = new Player(new Name("abc2"),
-                new Cards(getCardList(Denomination.EIGHT, Denomination.NINE)));    // 17
-        Player player3 = new Player(new Name("abc3"),
-                new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
-        Dealer dealer = new Dealer(new Name("딜러"),
-                new Cards(getCardList(Denomination.QUEEN, Denomination.NINE)));    // 19
-        Players players = new Players(Arrays.asList(player1, player2, player3));
+    void dealer_win_count() {
         GameResult gameResult = new GameResult(players, dealer);
 
         assertThat(gameResult.getDealerWinCount()).isEqualTo(1);
@@ -64,20 +75,18 @@ class GameResultTest {
 
     @Test
     @DisplayName("딜러가 패배한 횟수")
-    void dealer_lose_count_test() {
-        Player player1 = new Player(new Name("abc1"),
-                new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
-        Player player2 = new Player(new Name("abc2"),
-                new Cards(getCardList(Denomination.EIGHT, Denomination.NINE)));    // 17
-        Player player3 = new Player(new Name("abc3"),
-                new Cards(getCardList(Denomination.ACE, Denomination.NINE)));      // 20
-        Dealer dealer = new Dealer(new Name("딜러"),
-                new Cards(getCardList(Denomination.QUEEN, Denomination.NINE)));    // 19
-
-        Players players = new Players(Arrays.asList(player1, player2, player3));
+    void dealer_lose_count() {
         GameResult gameResult = new GameResult(players, dealer);
 
         assertThat(gameResult.getDealerLoseCount()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("딜러가 무승부 한 횟수")
+    void dealer_draw_count() {
+        GameResult gameResult = new GameResult(players, dealer);
+
+        assertThat(gameResult.getDealerDrawCount()).isEqualTo(1);
     }
 
     private static List<Card> getCardList(Denomination... arguments) {

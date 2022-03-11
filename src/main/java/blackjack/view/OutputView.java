@@ -73,8 +73,9 @@ public class OutputView {
     public static void printGameResult(GameResult gameResult) {
         Map<Player, MatchResult> map = gameResult.getGameResult();
 
-        System.out.printf("%n%s: %d승 %d패%n",
-                BlackJackGame.DEALER_NAME, gameResult.getDealerWinCount(), gameResult.getDealerLoseCount());
+        System.out.printf("%n%s: %d승 %d무 %d패%n",
+                BlackJackGame.DEALER_NAME, gameResult.getDealerWinCount(),
+                gameResult.getDealerDrawCount(), gameResult.getDealerLoseCount());
 
         for (Player player : map.keySet()) {
             System.out.printf("%s: %s%n", player.getName(), gameResult.getMatchResult(player).getValue());
