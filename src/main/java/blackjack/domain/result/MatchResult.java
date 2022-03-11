@@ -24,13 +24,13 @@ public class MatchResult {
         }
 
         final Map<WinningResult, Integer> dealerResult = new EnumMap<>(WinningResult.class);
-        dealerResult.put(WinningResult.WIN, collectResult.getOrDefault(WinningResult.LOSS, 0));
         dealerResult.put(WinningResult.LOSS, collectResult.getOrDefault(WinningResult.WIN, 0));
+        dealerResult.put(WinningResult.WIN, collectResult.getOrDefault(WinningResult.LOSS, 0));
         return dealerResult;
     }
 
     public Map<WinningResult, Integer> getDealerResult() {
-        return Map.copyOf(dealerResult);
+        return new EnumMap<>(dealerResult);
     }
 
     public Map<String, WinningResult> getPlayerResult() {
