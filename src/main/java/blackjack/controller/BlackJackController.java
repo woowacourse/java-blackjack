@@ -1,17 +1,19 @@
 package blackjack.controller;
 
-import blackjack.domain.Result;
-import blackjack.domain.Rule;
+import blackjack.dto.MatchRecordDto;
 import blackjack.domain.card.Deck;
+import blackjack.domain.strategy.DealerHitStrategy;
+import blackjack.domain.strategy.PlayerHitStrategy;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 import blackjack.dto.UserDto;
 import blackjack.dto.UsersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackController {
 
@@ -24,47 +26,52 @@ public class BlackJackController {
     }
 
     public void run() {
-        List<String> inputNames = inputView.inputPlayerNames();
-        Users users = Users.from(inputNames);
         Deck deck = new Deck();
-        users.setInitCardsPerPlayer(deck);
 
-        UsersDto usersDto = new UsersDto(users);
-        outputView.printInitCards(usersDto);
-
-        List<Player> players = users.getPlayers();
-        for (Player player : players) {
-            drawPlayerCardByYes(deck, player);
-        }
-        drawDealerCard(deck, users.getDealer());
-
-        Rule rule = new Rule();
-
-        users.calculateAllUser(rule);
-
-        Dealer dealer = users.getDealer();
-
-        outputView.printWithScore(UserDto.from(dealer), dealer.getScore());
-        for (Player player : players) {
-            outputView.printWithScore(UserDto.from(player), player.getScore());
-        }
-        //최종 승패
-        Map<String, Result> map = Result.getMap(players, dealer);
-        outputView.printYield(map);
+        Users users = inputPlayerNames();
+        drawInitialCards(deck, users);
+        hitOrStayCardPerUsers(deck, users);
+        showGameResult(users);
     }
 
-    private void drawDealerCard(Deck deck, Dealer dealer) {
-        if (dealer.isDrawable()) {
-            dealer.drawCard(deck);
-            outputView.printDealer();
+    private Users inputPlayerNames() {
+        return Users.from(inputView.inputPlayerNames());
+    }
+
+    private void drawInitialCards(Deck deck, Users users) {
+        users.drawInitCards(deck);
+        outputView.printInitCards(UsersDto.fromInit(users));
+    }
+
+    private void hitOrStayCardPerUsers(Deck deck, Users users) {
+        hitOrStayCardPerPlayers(deck, users.getPlayers());
+        hitOrStayCardDealer(deck, users.getDealer());
+    }
+
+    private void hitOrStayCardDealer(Deck deck, Dealer dealer) {
+        boolean isHit = dealer.hitOrStay(deck, new DealerHitStrategy(dealer.getScore()));
+        if (isHit) {
+            outputView.printDealerHit();
         }
     }
 
-    private void drawPlayerCardByYes(Deck deck, Player player) {
-        while (player.isDrawable() &&
-                inputView.inputWhetherToDrawCard(UserDto.from(player))) {
-            player.drawCard(deck);
-            outputView.printCards(UserDto.from(player));
+    private void hitOrStayCardPerPlayers(Deck deck, List<Player> players) {
+        for (Player player : players) {
+            hitOrStayCard(deck, player);
         }
+    }
+
+    private void hitOrStayCard(Deck deck, User user) {
+        boolean isHit = user.hitOrStay(deck,
+            new PlayerHitStrategy(inputView.inputWhetherToDrawCard(UserDto.fromEvery(user))));
+        if (isHit) {
+            outputView.printCards(UserDto.fromEvery(user));
+            hitOrStayCard(deck, user);
+        }
+    }
+
+    private void showGameResult(Users users) {
+        outputView.printAllUserCardsWithScore(UsersDto.fromEvery(users));
+        outputView.printMatchResult(MatchRecordDto.fromRecords(users.createPlayerMatchRecords()));
     }
 }

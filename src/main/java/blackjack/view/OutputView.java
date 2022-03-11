@@ -1,60 +1,53 @@
 package blackjack.view;
 
-import blackjack.domain.Result;
+import blackjack.dto.MatchRecordDto;
 import blackjack.dto.UserDto;
 import blackjack.dto.UsersDto;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 public class OutputView {
+
+    private static class StringFormatter {
+        private static final String USER_CARDS_FORMAT = "%s카드 : %s";
+        private static final String USER_CARDS_SCORE_FORMAT = "%s카드 : %s - 결과 : %d";
+        private static final String USER_MATCH_RECORD_FORMAT = "%s : %s";
+
+        public static String formatUserCards(UserDto userDto) {
+            return String.format(USER_CARDS_FORMAT, userDto.getUserName(), userDto.getCardNames());
+        }
+
+        public static String formatUserCardsWithScore(UserDto userDto) {
+            return String.format(USER_CARDS_SCORE_FORMAT,
+                userDto.getUserName(), userDto.getCardNames(), userDto.getScore());
+        }
+
+        public static String formatUserMatchRecord(String name, String record) {
+            return String.format(USER_MATCH_RECORD_FORMAT, name, record);
+        }
+    }
+
     public void printInitCards(UsersDto usersDto) {
-        printInitNames(usersDto.getDealerName(), usersDto.getPlayerNames());
-
-        usersDto.getAllUserDto().forEach(this::printCards);
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", usersDto.getDealerName(), usersDto.getPlayerNames());
+        usersDto.getAllUserDto()
+            .forEach(this::printUserCards);
     }
 
-    private void printInitNames(String dealerName, String playerNames) {
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", dealerName, playerNames);
+    public void printUserCards(UserDto userDto) {
+        System.out.println(StringFormatter.formatUserCards(userDto));
     }
 
-    public void printCards(UserDto userDto) {
-        System.out.printf("%s카드: %s\n", userDto.getUserName(), userDto.getInitCardNames());
-    }
-
-    public void printDealer() {
+    public void printDealerHit() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printWithScore(UserDto userDto, int score) {
-        System.out.printf("%s카드: %s - 결과: %d\n",userDto.getUserName(), userDto.getCardNames(), score);
+    public void printAllUserCardsWithScore(UsersDto usersDto) {
+        usersDto.getAllUserDto()
+            .forEach(userDto -> System.out.println(StringFormatter.formatUserCardsWithScore(userDto)));
     }
 
-    public void printYield(Map<String, Result> map) {
+    public void printMatchResult(MatchRecordDto matchResult) {
         System.out.println("## 최종승패");
-        printDealerYield(map);
-        printPlayerYield(map);
-    }
-
-    private void printDealerYield(Map<String, Result> map) {
-        String dealerYield = map.values().stream()
-                .collect(Collectors.groupingBy(
-                        Result::reverseResult,
-                        TreeMap::new,
-                        Collectors.counting()
-                ))
-                .entrySet()
-                .stream()
-                .map(entry -> entry.getValue() + entry.getKey().getName())
-                .collect(Collectors.joining(" "));
-
-        System.out.printf("딜러: %s\n", dealerYield);
-    }
-
-    private void printPlayerYield(Map<String, Result> map) {
-        for (Entry<String, Result> entry : map.entrySet()) {
-            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue().getName());
-        }
+        System.out.println(StringFormatter.formatUserMatchRecord("딜러", matchResult.getDealerRecord()));
+        matchResult.getPlayerRecords()
+            .forEach((key, value) -> System.out.println(StringFormatter.formatUserMatchRecord(key, value)));
     }
 }
