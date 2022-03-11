@@ -1,8 +1,6 @@
 package blackjack.model.cards;
 
-import blackjack.model.Card;
-import blackjack.model.Rank;
-import blackjack.model.Score;
+import blackjack.model.card.Card;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;

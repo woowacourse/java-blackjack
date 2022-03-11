@@ -1,8 +1,10 @@
-package blackjack.model;
+package blackjack.model.player;
 
+import blackjack.model.card.Card;
+import blackjack.model.blackjack.Result;
+import blackjack.model.blackjack.Score;
 import blackjack.model.cards.Cards;
 import blackjack.model.cards.ScoreCards;
-import java.util.List;
 
 public class Dealer extends Player {
 
@@ -19,7 +21,7 @@ public class Dealer extends Player {
         this.maxScoreCards = Cards.maxScoreCards(ownCards);
     }
 
-    public Result match(Gamer gamer) {
+    public Result match(Player gamer) {
         if (gamer.isBust()) {
             return Result.WIN;
         } else if (isBust()) {
@@ -37,6 +39,7 @@ public class Dealer extends Player {
         return Result.DRAW;
     }
 
+    @Override
     public boolean isHittable() {
         return maxScoreCards.lessThan(HIT_BOUNDARY);
     }

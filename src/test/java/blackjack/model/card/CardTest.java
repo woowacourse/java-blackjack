@@ -1,13 +1,9 @@
-package blackjack.model;
+package blackjack.model.card;
 
-import static blackjack.model.Rank.*;
-import static blackjack.model.Suit.*;
-import static org.assertj.core.api.Assertions.*;
+import static blackjack.model.card.Rank.ACE;
+import static blackjack.model.card.Suit.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.Card;
-import blackjack.model.Rank;
-import blackjack.model.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

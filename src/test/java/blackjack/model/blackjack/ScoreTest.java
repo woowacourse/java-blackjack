@@ -1,8 +1,7 @@
-package blackjack.model;
+package blackjack.model.blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

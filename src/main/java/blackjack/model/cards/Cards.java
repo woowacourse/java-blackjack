@@ -1,6 +1,6 @@
 package blackjack.model.cards;
 
-import blackjack.model.Card;
+import blackjack.model.card.Card;
 import java.util.stream.Stream;
 
 public interface Cards extends Iterable<Card> {

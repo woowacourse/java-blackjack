@@ -1,14 +1,14 @@
 package blackjack.model.cards;
 
-import static blackjack.model.Suit.CLOVER;
-import static blackjack.model.Suit.HEART;
-import static blackjack.model.Suit.SPADE;
+import static blackjack.model.card.Suit.CLOVER;
+import static blackjack.model.card.Suit.HEART;
+import static blackjack.model.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.model.Card;
-import blackjack.model.Rank;
-import blackjack.model.Score;
+import blackjack.model.card.Card;
+import blackjack.model.card.Rank;
+import blackjack.model.blackjack.Score;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,11 +35,11 @@ public class CardsTest {
 
     protected static Stream<Arguments> provideCards() {
         return Stream.of(
-                Arguments.of(Cards.bestScoreCards(new OwnCards(ACE, JACK)), 21),
-                Arguments.of(Cards.bestScoreCards(new OwnCards(ACE, JACK, KING)), 21),
-                Arguments.of(Cards.bestScoreCards(new OwnCards(ACE, ACE, ACE, ACE)), 14),
-                Arguments.of(Cards.bestScoreCards(new OwnCards(QUEEN, JACK, KING)), 30),
-                Arguments.of(Cards.bestScoreCards(new OwnCards(THREE, TWO)), 5)
+                Arguments.of(Cards.bestScoreCards(Cards.of(ACE, JACK)), 21),
+                Arguments.of(Cards.bestScoreCards(Cards.of(ACE, JACK, KING)), 21),
+                Arguments.of(Cards.bestScoreCards(Cards.of(ACE, ACE, ACE, ACE)), 14),
+                Arguments.of(Cards.bestScoreCards(Cards.of(QUEEN, JACK, KING)), 30),
+                Arguments.of(Cards.bestScoreCards(Cards.of(THREE, TWO)), 5)
         );
     }
 
@@ -52,16 +52,16 @@ public class CardsTest {
 
     protected static Stream<Arguments> provideMaxCards() {
         return Stream.of(
-                Arguments.of(new MaxScoreCards(new OwnCards(ACE, JACK)), 21),
-                Arguments.of(new MaxScoreCards(new OwnCards(ACE, JACK, KING)), 31),
-                Arguments.of(new MaxScoreCards(new OwnCards(ACE, ACE, NINE)), 31)
+                Arguments.of(Cards.maxScoreCards(Cards.of(ACE, JACK)), 21),
+                Arguments.of(Cards.maxScoreCards(Cards.of(ACE, JACK, KING)), 31),
+                Arguments.of(Cards.maxScoreCards(Cards.of(ACE, ACE, NINE)), 31)
         );
     }
 
     @Test
     @DisplayName("불변 카드 상태 변경 시 예외 발생")
     void immutableCards() {
-        Cards immutableCards = Cards.toUnmodifiable(new OwnCards(ACE, JACK));
+        Cards immutableCards = Cards.toUnmodifiable(Cards.of(ACE, JACK));
         assertThatThrownBy(() -> immutableCards.take(ACE))
             .isInstanceOf(UnsupportedOperationException.class);
     }

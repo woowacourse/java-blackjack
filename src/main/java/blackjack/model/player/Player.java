@@ -1,16 +1,23 @@
-package blackjack.model;
+package blackjack.model.player;
 
+import blackjack.model.card.Card;
+import blackjack.model.blackjack.Score;
 import blackjack.model.cards.Cards;
 import blackjack.model.cards.ScoreCards;
-import java.util.List;
 
-public abstract class Player {
+public class Player {
+
+    public static final Score HIT_BOUNDARY = new Score(21);
 
     protected final ScoreCards cards;
     private final Cards openCards;
     private final String name;
 
-    public Player(String name, Cards openCards, Cards cards) {
+    public Player(String name, Card card1, Card card2, Card... cards) {
+        this(name, Cards.of(card1, card2), Cards.of(card1, card2, cards));
+    }
+
+    protected Player(String name, Cards openCards, Cards cards) {
         this.name = name;
         this.openCards = openCards;
         this.cards = Cards.bestScoreCards(cards);
@@ -43,5 +50,7 @@ public abstract class Player {
         return score().isBust();
     }
 
-    public abstract boolean isHittable();
+    public boolean isHittable() {
+        return cards.lessThan(HIT_BOUNDARY);
+    }
 }
