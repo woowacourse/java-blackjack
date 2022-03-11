@@ -51,7 +51,7 @@ public class PlayerTest {
 
         player.combine(card);
 
-        assertThat(player.getCards().size()).isEqualTo(3);
+        assertThat(player.getCards().getValue().size()).isEqualTo(3);
     }
 
     @DisplayName("Cards가 주어지면 점수를 계산하면 반환한다.")

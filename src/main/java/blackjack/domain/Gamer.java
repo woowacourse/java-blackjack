@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class Gamer {
+public abstract class Gamer {
 
     protected static final int PLAYING_STANDARD = 21;
 
@@ -22,22 +22,13 @@ public class Gamer {
         cards.combine(card);
     }
 
-    public GameResult createResult(int targetScore) {
-        if (getTotalScore() > PLAYING_STANDARD) {
-            return GameResult.LOSE;
-        }
-
-        if (targetScore > PLAYING_STANDARD) {
-            return GameResult.WIN;
-        }
-        return GameResult.of(getTotalScore() - targetScore);
-    }
+    abstract GameResult createResult(int targetScore);
 
     public String getName() {
         return name.getValue();
     }
 
-    public List<Card> getCards() {
-        return cards.getValue();
+    public Cards getCards() {
+        return cards;
     }
 }
