@@ -10,13 +10,15 @@ import blackjack.domain.human.Name;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
 import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class StatisticTest {
 
     @Test
-    void 딜러_21초과_플레이어승() {
+    @DisplayName("딜러가 21을 초과했을 경우 플레이어 결과 경우의 수 테스트")
+    void dealerIsBurst() {
         Dealer dealer = Dealer.of();
         Player player1 = Player.of(Name.of("pobi"));
         Player player2 = Player.of(Name.of("jason"));
@@ -37,40 +39,45 @@ class StatisticTest {
         player2.addCard(Card.of(Denomination.TWO, Symbol.CLOVER));
 
         Statistic statistic = Statistic.of(dealer, players);
-        statistic.calculate();
-        assertThat(player1.getResult().equals(GameResult.WIN) &&
-                player2.getResult().equals(GameResult.LOSE))
-                .isTrue();
+
+        assertThat(statistic.getGameResultByPlayer(player1).equals("승") &&
+            statistic.getGameResultByPlayer(player2).equals("패"))
+            .isTrue();
     }
 
     @Test
-    void 딜러_21초과_딜러승() {
+    @DisplayName("딜러, 플레이어 모두 버스트")
+    void dealerAndAllPlayerBurst() {
         Dealer dealer = Dealer.of();
         Player player1 = Player.of(Name.of("pobi"));
         Player player2 = Player.of(Name.of("jason"));
         Players players = Players.of(List.of(player1, player2));
 
+        // 30
         dealer.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
         dealer.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
         dealer.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
 
+        // 30
         player1.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
         player1.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
         player1.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
 
+        // 30
         player2.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
         player2.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
         player2.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
 
         Statistic statistic = Statistic.of(dealer, players);
-        statistic.calculate();
-        assertThat(player1.getResult().equals(GameResult.LOSE) &&
-                player2.getResult().equals(GameResult.LOSE))
-                .isTrue();
+
+        assertThat(statistic.getGameResultByPlayer(player1).equals("패") &&
+            statistic.getGameResultByPlayer(player2).equals("패"))
+            .isTrue();
     }
 
     @Test
-    void 딜러_21이하_딜러승() {
+    @DisplayName("딜러 21 이하일 경우 플레이어 경우의 수 테스트")
+    void dealerUnderMaxPoint() {
         Dealer dealer = Dealer.of();
         Player player1 = Player.of(Name.of("pobi"));
         Player player2 = Player.of(Name.of("jason"));
@@ -86,10 +93,6 @@ class StatisticTest {
         player1.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
         player1.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
 
-        //딜러보다 크게
-        player4.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
-        player4.addCard(Card.of(Denomination.ACE, Symbol.CLOVER));
-
         //딜러보다 작게
         player2.addCard(Card.of(Denomination.FIVE, Symbol.CLOVER));
         player2.addCard(Card.of(Denomination.ACE, Symbol.CLOVER));
@@ -98,12 +101,16 @@ class StatisticTest {
         player3.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
         player3.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
 
+        //딜러보다 크게
+        player4.addCard(Card.of(Denomination.JACK, Symbol.CLOVER));
+        player4.addCard(Card.of(Denomination.ACE, Symbol.CLOVER));
+
         Statistic statistic = Statistic.of(dealer, players);
-        statistic.calculate();
-        assertThat(player1.getResult().equals(GameResult.LOSE) &&
-                player2.getResult().equals(GameResult.LOSE) &&
-                player4.getResult().equals(GameResult.WIN) &&
-                player3.getResult().equals(GameResult.DRAW))
-                .isTrue();
+
+        assertThat(statistic.getGameResultByPlayer(player1).equals("패") &&
+            statistic.getGameResultByPlayer(player2).equals("패") &&
+            statistic.getGameResultByPlayer(player3).equals("무") &&
+            statistic.getGameResultByPlayer(player4).equals("승"))
+            .isTrue();
     }
 }
