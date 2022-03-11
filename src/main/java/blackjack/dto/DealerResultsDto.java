@@ -6,7 +6,6 @@ import static java.util.stream.Collectors.groupingBy;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
-import blackjack.domain.Player;
 import blackjack.domain.Players;
 import java.util.EnumMap;
 import java.util.List;

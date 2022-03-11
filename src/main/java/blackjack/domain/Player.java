@@ -34,6 +34,7 @@ public class Player {
         if (dealerScore > PLAYING_STANDARD) {
             return GameResult.WIN;
         }
+
         return GameResult.of(getTotalScore() - dealerScore);
     }
 

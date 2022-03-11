@@ -42,7 +42,7 @@ public class Application {
                 .collect(toList());
     }
 
-    public static void playing(Deck deck, Player player) {
+    private static void playing(Deck deck, Player player) {
         PlayCommand playCommand = PlayCommand.YES;
         while (player.isPlaying() && playCommand == PlayCommand.YES) {
             playCommand = InputView.getPlayCommand(player);
@@ -57,14 +57,14 @@ public class Application {
         }
     }
 
-    public static void drawDealer(Deck deck, Dealer dealer) {
+    private static void drawDealer(Deck deck, Dealer dealer) {
         while (dealer.isDrawable()) {
             OutputView.printDealerDrawableInfo();
             dealer.combine(deck.draw());
         }
     }
 
-    public static List<PlayerResultDto> createPlayerResult(Players players, Dealer dealer) {
+    private static List<PlayerResultDto> createPlayerResult(Players players, Dealer dealer) {
         return players.getValue()
                 .stream()
                 .map(player -> PlayerResultDto.of(player, dealer))
