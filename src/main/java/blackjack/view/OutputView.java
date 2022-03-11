@@ -71,6 +71,7 @@ public class OutputView {
             System.out.printf("%s카드: %s- 결과: %d\n",
                     player.getName(), getCardNames(player), player.getCardNumberSum());
         }
+        System.out.println();
     }
 
     public static void printFinalResult(GameResultDto gameResultDto) {
