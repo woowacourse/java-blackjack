@@ -14,6 +14,7 @@ import domain.card.Rank;
 import domain.card.Suit;
 
 public class DealerTest {
+
 	Card card1;
 	Card card2;
 

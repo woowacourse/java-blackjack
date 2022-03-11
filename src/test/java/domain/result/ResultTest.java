@@ -17,6 +17,7 @@ import domain.participant.Name;
 import domain.participant.Players;
 
 public class ResultTest {
+
 	Card card_A = new Card(Rank.RANK_A, Suit.CLOVER);
 	Card card_2 = new Card(Rank.RANK_2, Suit.CLOVER);
 	Card card_Q = new Card(Rank.RANK_Q, Suit.CLOVER);
@@ -29,11 +30,13 @@ public class ResultTest {
 	List<Card> cards_17 = new ArrayList<>(Arrays.asList(card_A, card_6));
 	List<List<Card>> initCards = new ArrayList<>(Arrays.asList(cards_20, cards_15, cards_BURST, cards_17));
 	List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"), new Name("woni"), new Name("gugu"));
+
 	Players players = new Players(names, initCards);
 	Dealer dealer_17 = new Dealer(List.of(card_A, card_6));
 	Dealer dealer_BURST = new Dealer(List.of(card_K, card_Q, card_2));
-	Result result = new Result(players.finalCompare(dealer_17));
-	Result result_dealer_burst = new Result(players.finalCompare(dealer_BURST));
+
+	Result result = new Result(players.getResultAtFinal(dealer_17));
+	Result result_dealer_burst = new Result(players.getResultAtFinal(dealer_BURST));
 
 	@Test
 	@DisplayName("딜러도 safe, 플레이어 safe, 플레이어 승")

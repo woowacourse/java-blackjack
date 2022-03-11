@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.card.Card;
 import domain.card.Rank;
@@ -33,20 +31,18 @@ public class ParticipantTest {
 		card4 = new Card(Rank.RANK_8, Suit.CLOVER);
 	}
 
-	@ParameterizedTest(name = "이름이 공백이거나 빈칸일 경우")
-	@NullAndEmptySource
-	@ValueSource(strings = {"", " ", "\t", "\n"})
-	void validateName(String name) {
-		assertThatThrownBy(() -> new Participant(new Name(name), new ArrayList<>())).isInstanceOf(
-			IllegalArgumentException.class)
-			.hasMessage("[Error] 이름은 공백이거나 빈칸일 수 없습니다.");
-	}
-
 	@Test
 	@DisplayName("자신의 손패를 문자열로 반환하는 기능")
 	void showHand() {
 		Participant participant = new Participant(new Name("pobi"), new ArrayList<>(List.of(card1, card2)));
 		assertThat(participant.showHand()).isEqualTo("pobi카드: K하트, A스페이드");
+	}
+
+	@Test
+	@DisplayName("자신의 손패와 베스트 스코어를 문자열로 반환하는 기능")
+	void showHandAndBestScore() {
+		Participant participant = new Participant(new Name("pobi"), new ArrayList<>(List.of(card1, card2)));
+		assertThat(participant.showHandAndBestScore()).isEqualTo("pobi카드: K하트, A스페이드 - 결과 : 21");
 	}
 
 	@Test

@@ -6,23 +6,24 @@ import domain.card.Card;
 import domain.result.Versus;
 
 public class Player extends Participant {
-	
+
 	public Player(Name name, List<Card> hand) {
 		super(name, hand);
 	}
 
-	public Versus initCompare(boolean isDealerBlackJack) {
-		boolean isParticipantBlackJack = isBlackJack();
-		if (isDealerBlackJack && isParticipantBlackJack) {
+	public Versus compareAtBlackJack(Participant other) {
+		boolean isPlayerBlackJack = isBlackJack();
+		boolean isOtherBlackJack = other.isBlackJack();
+		if (isOtherBlackJack && isPlayerBlackJack) {
 			return Versus.DRAW;
 		}
-		if (!isDealerBlackJack && isParticipantBlackJack) {
+		if (!isOtherBlackJack && isPlayerBlackJack) {
 			return Versus.WIN;
 		}
 		return Versus.LOSE;
 	}
 
-	public Versus finalCompare(Participant other) {
+	public Versus compareAtFinal(Participant other) {
 		if (isBust()) {
 			return Versus.LOSE;
 		}
@@ -43,7 +44,7 @@ public class Player extends Participant {
 		return Versus.DRAW;
 	}
 
-	public boolean compareName(Name name) {
+	public boolean isNameMatch(Name name) {
 		return this.name.equals(name);
 	}
 }

@@ -70,7 +70,7 @@ public class Controller {
 
 	private void printBlackJackResult(List<Name> names, Dealer dealer, Players players) {
 		OutputView.printBlackJackResultTitle();
-		Result blackjackResult = new Result(players.initCompare(dealer.isBlackJack()));
+		Result blackjackResult = new Result(players.getResultAtBlackJack(dealer));
 		OutputView.printResultTitle();
 		OutputView.printDealerResult(blackjackResult.getDealerWinCount(), blackjackResult.getDealerDrawCount(),
 			blackjackResult.getDealerLoseCount());
@@ -137,7 +137,7 @@ public class Controller {
 	}
 
 	private void printFinalResult(List<Name> names, Dealer dealer, Players players) {
-		Result finalResult = new Result(players.finalCompare(dealer));
+		Result finalResult = new Result(players.getResultAtFinal(dealer));
 		OutputView.printResultTitle();
 		OutputView.printDealerResult(
 			finalResult.getDealerWinCount(),
