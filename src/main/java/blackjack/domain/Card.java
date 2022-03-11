@@ -50,7 +50,7 @@ public class Card {
     }
 
     @Override
-    public boolean equals(Object otherCard) {
+    public boolean equals(final Object otherCard) {
         if (this == otherCard) {
             return true;
         }

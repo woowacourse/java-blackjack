@@ -6,6 +6,9 @@ import blackjack.view.Enterable;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class BlackjackController {
 
     private static final Enterable enterable = new Enter();
@@ -43,7 +46,27 @@ public class BlackjackController {
         for (Player player : players.getPlayers()) {
             player.drawInitCards(cardMachine.pickInitCards());
         }
-        OutputView.printInitCard(dealer, players);
+        openInitCards(dealer, players);
+    }
+
+    private void openInitCards(final Dealer dealer, final Players players) {
+        OutputView.printCards(Dealer.getName(), getDealerInitCards(dealer));
+        for (Player player : players.getPlayers()) {
+            OutputView.printCards(player.getName(), getPlayerCards(player));
+        }
+        OutputView.printNewLine();
+    }
+
+    private List<String> getPlayerCards(final Player player) {
+        return player.showCards().stream()
+                .map(Card::getName)
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getDealerInitCards(final Dealer dealer) {
+        return dealer.showPartOfCards().stream()
+                .map(Card::getName)
+                .collect(Collectors.toList());
     }
 
     private void distributeCardToPlayers(final Players players, final CardMachine cardMachine) {
@@ -56,7 +79,7 @@ public class BlackjackController {
     private void distributeCardToPlayer(final Player player, final CardMachine cardMachine) {
         while (player.isDrawable() && isDrawing(player)) {
             player.drawCard(cardMachine.pickCard());
-            OutputView.printCards(player.getName(), player.showCards());
+            OutputView.printCards(player.getName(), getPlayerCards(player));
         }
     }
 
@@ -91,11 +114,17 @@ public class BlackjackController {
     }
 
     private void openScore(final Dealer dealer, final Players players) {
-        OutputView.printScore(Dealer.getName(), dealer.showCards(), dealer.showSumOfCards());
+        OutputView.printScore(Dealer.getName(), getDealerCards(dealer), dealer.showSumOfCards());
         for (Player player : players.getPlayers()) {
-            OutputView.printScore(player.getName(), player.showCards(), player.showSumOfCards());
+            OutputView.printScore(player.getName(), getPlayerCards(player), player.showSumOfCards());
         }
         OutputView.printNewLine();
+    }
+
+    private List<String> getDealerCards(final Dealer dealer) {
+        return dealer.showCards().stream()
+                .map(Card::getName)
+                .collect(Collectors.toList());
     }
 
     private void showResult(final Winner winner, final Players players) {

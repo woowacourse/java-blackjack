@@ -6,7 +6,7 @@ public abstract class Human {
 
     protected final Cards cards = new Cards();
 
-    public List<String> showCards() {
+    public List<Card> showCards() {
         return cards.getAllCards();
     }
 

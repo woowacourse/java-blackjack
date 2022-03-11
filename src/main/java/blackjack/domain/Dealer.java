@@ -15,7 +15,7 @@ public class Dealer extends Human {
         return showSumOfCards() < player.showSumOfCards();
     }
 
-    public List<String> showPartOfCards() {
+    public List<Card> showPartOfCards() {
         return cards.getPartOfDealerCard();
     }
 

@@ -18,15 +18,6 @@ public class CardsTest {
         queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
     }
 
-    @DisplayName("52개의 생성된 카드 개수가 올바른지 확인한다.")
-    @Test
-    void select_cards() {
-        Cards cards = new Cards();
-        cards.generate();
-
-        assertThat(cards.getCards().size()).isEqualTo(52);
-    }
-
     @DisplayName("카드들의 총합이 올바르게 계산되는지 확인한다.")
     @Test
     void calculate_total() {

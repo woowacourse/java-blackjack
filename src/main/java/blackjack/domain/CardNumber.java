@@ -38,7 +38,6 @@ public enum CardNumber {
                 .map(cardNumber -> cardNumber.number)
                 .mapToInt(Integer::intValue)
                 .sum();
-
         total = addAceExtraNumber(cardNumbers, total);
         return total;
     }

@@ -35,14 +35,6 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printInitCard(final Dealer dealer, final Players players) {
-        printCards(Dealer.getName(), dealer.showPartOfCards());
-        for (Player player : players.getPlayers()) {
-            printCards(player.getName(), player.showCards());
-        }
-        printNewLine();
-    }
-
     public static void printCards(final String name, final List<String> cards) {
         System.out.printf(CARDS_FORMAT, name, String.join(DELIMITER, cards));
         printNewLine();

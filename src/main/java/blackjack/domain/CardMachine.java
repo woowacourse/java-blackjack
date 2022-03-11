@@ -14,14 +14,14 @@ public class CardMachine {
     }
 
     public List<Card> pickInitCards() {
-        List<Card> givenCards = new ArrayList<>();
+        List<Card> cards = new ArrayList<>();
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            givenCards.add(cards.giveCard());
+            cards.add(this.cards.pick());
         }
-        return givenCards;
+        return cards;
     }
 
     public Card pickCard() {
-        return cards.giveCard();
+        return cards.pick();
     }
 }
