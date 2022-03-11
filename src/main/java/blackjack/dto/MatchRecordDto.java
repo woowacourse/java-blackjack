@@ -5,6 +5,7 @@ import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import blackjack.domain.MatchRecord;
 import blackjack.domain.user.Player;
 
 public class MatchRecordDto {
@@ -17,7 +18,7 @@ public class MatchRecordDto {
         this.dealerRecord = dealerRecord;
     }
 
-    public static MatchRecordDto fromRecords(Map<Player, blackjack.domain.MatchRecord> playerMatchRecords) {
+    public static MatchRecordDto fromRecords(Map<Player, MatchRecord> playerMatchRecords) {
         Map<String, String> playerRecords = playerMatchRecords.entrySet()
             .stream()
             .collect(Collectors.toMap(
@@ -27,9 +28,9 @@ public class MatchRecordDto {
         return new MatchRecordDto(playerRecords, dealerRecord);
     }
 
-    private static Map<blackjack.domain.MatchRecord, Long> addUpDealerRecord(Map<Player, blackjack.domain.MatchRecord> playerMatchRecords) {
+    private static Map<MatchRecord, Long> addUpDealerRecord(Map<Player, MatchRecord> playerMatchRecords) {
         return playerMatchRecords.values().stream()
-            .map(blackjack.domain.MatchRecord::reverseRecord)
+            .map(MatchRecord::reverseRecord)
             .collect(Collectors.groupingBy(
                 Function.identity(),
                 TreeMap::new,
@@ -37,7 +38,7 @@ public class MatchRecordDto {
             ));
     }
 
-    private static String joinToString(Map<blackjack.domain.MatchRecord, Long> dealerRecordCounts) {
+    private static String joinToString(Map<MatchRecord, Long> dealerRecordCounts) {
         return dealerRecordCounts.entrySet().stream()
             .map(entry -> entry.getValue() + entry.getKey().getName())
             .collect(Collectors.joining(" "));

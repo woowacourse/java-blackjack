@@ -1,11 +1,8 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.strategy.HitStrategy;
-
-import java.util.Collections;
 import java.util.List;
+
+import blackjack.domain.card.Card;
 
 public class Player extends User {
 

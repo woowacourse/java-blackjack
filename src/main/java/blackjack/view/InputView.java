@@ -1,11 +1,12 @@
 package blackjack.view;
 
-import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.toList;
+import static java.util.Arrays.*;
+import static java.util.stream.Collectors.*;
 
-import blackjack.dto.UserDto;
 import java.util.List;
 import java.util.Scanner;
+
+import blackjack.dto.UserDto;
 
 public class InputView {
 

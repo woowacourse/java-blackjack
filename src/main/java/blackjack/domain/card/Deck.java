@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import static java.util.Arrays.stream;
+import static java.util.Arrays.*;
 
 import java.util.ArrayDeque;
 import java.util.Collections;

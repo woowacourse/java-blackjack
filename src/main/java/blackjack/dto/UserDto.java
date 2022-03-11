@@ -1,11 +1,12 @@
 package blackjack.dto;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
+
+import java.util.List;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Score;
 import blackjack.domain.user.User;
-import java.util.List;
 
 public class UserDto {
 

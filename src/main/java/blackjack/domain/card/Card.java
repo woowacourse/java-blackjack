@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.*;
 
 import java.util.Objects;
 

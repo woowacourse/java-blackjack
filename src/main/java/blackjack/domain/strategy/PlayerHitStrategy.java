@@ -20,6 +20,6 @@ public class PlayerHitStrategy implements HitStrategy {
 
     @Override
     public boolean isHit() {
-        return input.equalsIgnoreCase("y");
+        return input.equalsIgnoreCase(YES);
     }
 }

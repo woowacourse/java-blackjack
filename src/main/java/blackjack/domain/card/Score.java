@@ -37,6 +37,14 @@ public class Score {
         );
     }
 
+    private static int countAce(List<Card> cards) {
+        return Math.toIntExact(
+            cards.stream()
+                .filter(Card::isAce)
+                .count()
+        );
+    }
+
     private static Score sumWithAce(int aceCount, List<Card> cards) {
         int sum = cards.stream()
             .mapToInt(Card::getPoint)
@@ -54,14 +62,6 @@ public class Score {
         }
 
         return sum;
-    }
-
-    private static int countAce(List<Card> cards) {
-        return Math.toIntExact(
-            cards.stream()
-                .filter(Card::isAce)
-                .count()
-        );
     }
 
     public boolean isBust() {

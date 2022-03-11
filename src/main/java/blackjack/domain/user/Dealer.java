@@ -1,8 +1,8 @@
 package blackjack.domain.user;
 
-import blackjack.domain.card.Card;
-import java.util.Collections;
 import java.util.List;
+
+import blackjack.domain.card.Card;
 
 public class Dealer extends User {
 

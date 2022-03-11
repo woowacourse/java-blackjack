@@ -42,15 +42,15 @@ public class Hand {
         return List.copyOf(cards.subList(0, count));
     }
 
-    public Score getScore() {
-        return score;
-    }
-
     private void validateCount(int count) {
         if (count > cards.size()) {
             throw new IllegalArgumentException(
                 String.format("보유한 카드의 개수(%d)가 %d보다 작습니다.", cards.size(), count)
             );
         }
+    }
+
+    public Score getScore() {
+        return score;
     }
 }
