@@ -16,8 +16,9 @@ public abstract class Participant {
         this.cardBundle = cardBundle;
     }
 
-    public abstract void receiveCard(Card card);
-
+    public void receiveCard(Card card) {
+        cardBundle.add(card);
+    }
     public abstract boolean canReceive();
 
     public Score getCurrentScore() {

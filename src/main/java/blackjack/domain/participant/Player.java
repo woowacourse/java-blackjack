@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.game.Score;
 
@@ -33,10 +32,6 @@ public class Player extends Participant {
         if (name.equals(Dealer.UNIQUE_NAME)) {
             throw new IllegalArgumentException(INVALID_PLAYER_NAME_EXCEPTION_MESSAGE);
         }
-    }
-
-    public void receiveCard(Card card) {
-        cardBundle.add(card);
     }
 
     public boolean canReceive() {

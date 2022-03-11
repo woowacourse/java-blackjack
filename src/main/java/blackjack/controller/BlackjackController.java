@@ -50,7 +50,7 @@ public class BlackjackController {
     }
 
     private void drawDealerCard(BlackjackGame game) {
-        if (game.giveCardToDealer()) {
+        while (game.giveCardToDealer()) {
             printDealerExtraCardInfo();
         }
     }
