@@ -1,5 +1,9 @@
-package blackjack.model;
+package blackjack.model.player;
 
+import blackjack.model.Card;
+import blackjack.model.Cards;
+import blackjack.model.Result;
+import blackjack.model.Score;
 import java.util.List;
 
 public class Dealer extends Player {
