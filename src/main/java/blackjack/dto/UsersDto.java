@@ -17,6 +17,7 @@ public class UsersDto {
                 .stream()
                 .map(UserDto::from)
                 .collect(toList());
+
         this.dealerDto = UserDto.from(users.getDealer());
     }
 
@@ -31,10 +32,7 @@ public class UsersDto {
     }
 
     public List<UserDto> getAllUserDto() {
-        return Stream.concat(
-                Stream.of(dealerDto),
-                        playersDto.stream()
-                )
+        return Stream.concat(Stream.of(dealerDto), playersDto.stream())
                 .collect(toList());
     }
 }
