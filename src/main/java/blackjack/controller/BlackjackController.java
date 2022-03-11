@@ -6,6 +6,7 @@ import static blackjack.domain.Guest.GUEST_LIMIT_POINT;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResponse;
+import blackjack.domain.Hit;
 import blackjack.domain.Player;
 import blackjack.domain.Results;
 import blackjack.view.InputView;
@@ -63,7 +64,8 @@ public class BlackjackController {
         if (player.isOverLimit(GUEST_LIMIT_POINT)) {
             return false;
         }
-        return InputView.requestMoreCard(player.getName()).equals("y");
+        String userResponse = InputView.requestMoreCard(player.getName());
+        return Hit.isYes(userResponse);
     }
 
     private void announceDealerCanGetMoreCard(BlackjackGame blackjackGame, Player dealer) {
