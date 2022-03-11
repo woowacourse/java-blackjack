@@ -18,19 +18,21 @@ public class Cards {
 	}
 
 	public int sum() {
-		int sum = cards.stream()
-			.mapToInt(Card::getValue)
-			.reduce(0, Integer::sum);
-		if (hasAce()) {
-			return selectAceValue(sum);
-		}
-		return sum;
+        return getCalibratedSum(cards.stream()
+            .mapToInt(Card::getValue)
+            .sum());
 	}
 
-	private boolean hasAce() {
+    private int getCalibratedSum(int sum) {
+        if (hasAce()) {
+            return selectAceValue(sum);
+        }
+        return sum;
+    }
+
+    private boolean hasAce() {
 		return cards.stream()
-			.map(Card::isAce)
-			.anyMatch(x -> x.equals(true));
+            .anyMatch(Card::isAce);
 	}
 
 	private int selectAceValue(int sum) {
