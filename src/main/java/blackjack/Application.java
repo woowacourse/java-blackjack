@@ -45,7 +45,7 @@ public class Application {
             return;
         }
         game.hitCurrentEntry();
-        resultView.printDeck(entryDTO);
+        resultView.printDeck(EntryDTO.fromCurrent(game));
         playTurn(inputView, game, resultView);
     }
 }

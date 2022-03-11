@@ -10,7 +10,7 @@ import java.util.List;
 public class ResultView {
     private static final String FORMAT_MESSAGE_DECK_INITIALIZED = "%n딜러와 %s에게 2장의 카드를 나누었습니다.%n";
     private static final String FORMAT_DECK_INITIALIZED = "%s : %s%n";
-    private static final String FORMAT_MESSAGE_BUST = "%s의 점수 합이 21을 넘어, 다음 참가자로 넘어갑니다.%n";
+    private static final String FORMAT_MESSAGE_BUST = "%n%s의 점수 합이 21을 넘어, 다음 참가자로 넘어갑니다.%n%n";
     private static final String FORMAT_MESSAGE_DEALER_HIT = "%n딜러는 16이하라 %d장의 카드를 더 받았습니다.%n";
     private static final String FORMAT_SCORE = "%s 카드: %s - 결과: %d%n";
 
