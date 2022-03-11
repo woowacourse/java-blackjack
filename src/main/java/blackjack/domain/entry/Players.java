@@ -37,10 +37,6 @@ public class Players {
         return participants;
     }
 
-    public Dealer getDealer() {
-        return dealer;
-    }
-
     public List<Player> getPlayers() {
         return players;
     }
