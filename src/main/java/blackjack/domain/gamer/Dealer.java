@@ -23,4 +23,9 @@ public class Dealer extends Gamer {
     public boolean isAddable() {
         return getMaxCardGroupSum() <= DEALER_STAND_CONDITION;
     }
+
+    @Override
+    public int getCardGroupScore() {
+        return super.getMaxCardGroupSum();
+    }
 }

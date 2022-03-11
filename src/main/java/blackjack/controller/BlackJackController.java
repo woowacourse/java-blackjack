@@ -6,6 +6,7 @@ import blackjack.domain.gamer.PlayerGroup;
 import blackjack.domain.result.GameResult;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.GamerCardsDto;
+import blackjack.dto.GamerCardsResultDto;
 import blackjack.dto.PlayerResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -68,7 +69,7 @@ public class BlackJackController {
 
     private void printCards() {
         blackJack.openDealerCards();
-        OutputView.printGamersCardAndSum(GamerCardsDto.of(blackJack.getGamers()));
+        OutputView.printGamersCardAndSum(GamerCardsResultDto.of(blackJack.getGamers()));
     }
 
     private void printResult() {

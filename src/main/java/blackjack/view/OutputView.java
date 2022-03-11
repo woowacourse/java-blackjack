@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.GamerCardsDto;
+import blackjack.dto.GamerCardsResultDto;
 import blackjack.dto.PlayerResultDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,19 +73,19 @@ public class OutputView {
         System.out.print(stringBuilder);
     }
 
-    public static void printGamersCardAndSum(List<GamerCardsDto> gamersCards) {
+    public static void printGamersCardAndSum(List<GamerCardsResultDto> gamersCardsResults) {
         System.out.println();
-        for (GamerCardsDto gamerCards : gamersCards) {
-            printGamerCardAndSum(gamerCards);
+        for (GamerCardsResultDto gamerCardsResult : gamersCardsResults) {
+            printGamerCardAndSum(gamerCardsResult);
         }
         System.out.println();
     }
 
-    private static void printGamerCardAndSum(GamerCardsDto gamerCardsDto) {
+    private static void printGamerCardAndSum(GamerCardsResultDto gamerCardsResultDto) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(gamerCardsDto.getName()).append(": ");
-        stringBuilder.append(String.join(", ", getGamerCards(gamerCardsDto)));
-        stringBuilder.append(" - 결과: ").append(gamerCardsDto.getSum());
+        stringBuilder.append(gamerCardsResultDto.getGamerCardsDto().getName()).append(": ");
+        stringBuilder.append(String.join(", ", getGamerCards(gamerCardsResultDto.getGamerCardsDto())));
+        stringBuilder.append(" - 결과: ").append(gamerCardsResultDto.getSum());
         System.out.println(stringBuilder);
     }
 
