@@ -11,10 +11,10 @@ import blackjack.domain.human.Players;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("NonAsciiCharacters")
 class StatisticTest {
     private final Player player1 = Player.of("pobi");
     private final Player player2 = Player.of("jason");
@@ -28,8 +28,8 @@ class StatisticTest {
     }
 
     @Nested
-    @SuppressWarnings("NonAsciiCharacters")
-    class 딜러_21초과_플레이어승 {
+    @DisplayName("딜러_21초과_플레이어승")
+    class DealerOverPlayerUnderTest {
         Statistic statistic;
 
         @BeforeEach
@@ -41,8 +41,7 @@ class StatisticTest {
             Table table = Table.of(players);
             addCardList(table.getDealer(), List.of("8", "10", "10"));
 
-            statistic = Statistic.of();
-            statistic.calculate(table);
+            statistic = Statistic.of(table);
         }
 
         @Test
@@ -65,8 +64,8 @@ class StatisticTest {
     }
 
     @Nested
-    @SuppressWarnings("NonAsciiCharacters")
-    class 딜러_21초과_딜러승 {
+    @DisplayName("딜러_21초과_딜러승")
+    class DealerOverPlayerOverTest {
         Statistic statistic;
 
         @BeforeEach
@@ -78,8 +77,7 @@ class StatisticTest {
             Table table = Table.of(players);
             addCardList(table.getDealer(), List.of("10", "10", "10", "10"));
 
-            statistic = Statistic.of();
-            statistic.calculate(table);
+            statistic = Statistic.of(table);
         }
 
         @Test
@@ -102,7 +100,8 @@ class StatisticTest {
     }
 
     @Nested
-    class 딜러_21이하_딜러승 {
+    @DisplayName("딜러_21이하_테스트")
+    class DealerUnderTest {
         Statistic statistic;
 
         @BeforeEach
@@ -115,8 +114,7 @@ class StatisticTest {
 
             Table table = Table.of(players);
             addCardList(table.getDealer(), List.of("10", "10"));
-            statistic = Statistic.of();
-            statistic.calculate(table);
+            statistic = Statistic.of(table);
         }
 
         @Test

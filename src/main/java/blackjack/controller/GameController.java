@@ -67,8 +67,7 @@ public class GameController {
     private void endGame(final Table table) {
         OutputView.printHandAndPoint(table);
 
-        Statistic statistic = Statistic.of();
-        statistic.calculate(table);
+        Statistic statistic = Statistic.of(table);
 
         OutputView.printDealerResult(statistic.getDealerResult());
         OutputView.printPlayerResult(statistic.getPlayersResult());
