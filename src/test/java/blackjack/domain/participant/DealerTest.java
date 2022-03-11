@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Suit;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,30 +16,35 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
+    private static final Card jackCard = new Card(Denomination.JACK, Suit.DIAMOND);
+    private static final Card sixCard = new Card(Denomination.SIX, Suit.DIAMOND);
+
     @Test
     @DisplayName("딜러가 정상적으로 생성되는지 확인")
     void create() {
-    	Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new Hand());
         assertThat(dealer).isNotNull();
     }
 
     @Test
     @DisplayName("딜러가 카드를 정상적으로 주는지 확인")
     void drawCard() {
-        Dealer dealer = new Dealer();
+        Deck deck = new Deck(List.of(jackCard, sixCard));
+        Dealer dealer = new Dealer(new Hand(), deck);
         Card card = dealer.drawCard();
-        assertThat(card).isNotNull();
+
+        assertThat(card.getDenomination()).isEqualTo("7");
     }
 
     @Test
     @DisplayName("딜러는 카드의 수가 16이하 일 때 한 장의 카드를 더 받는다")
     void dealerReceiveCard() {
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(Denomination.JACK, Suit.DIAMOND));
-        cards.add(new Card(Denomination.SIX, Suit.DIAMOND));
+        cards.add(jackCard);
+        cards.add(sixCard);
 
         Deck deck = new Deck(cards);
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(new Hand(), deck);
         dealer.selfDraw();
         dealer.selfDraw();
 
@@ -53,7 +59,7 @@ class DealerTest {
         cards.add(new Card(Denomination.SEVEN, Suit.DIAMOND));
 
         Deck deck = new Deck(cards);
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(new Hand(), deck);
         dealer.selfDraw();
         dealer.selfDraw();
 
@@ -69,7 +75,7 @@ class DealerTest {
         cards.add(new Card(Denomination.ACE, Suit.DIAMOND));
 
         Deck deck = new Deck(cards);
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(new Hand(), deck);
         dealer.selfDraw();
         dealer.selfDraw();
 
@@ -85,7 +91,7 @@ class DealerTest {
         players.add(p1);
         players.add(p2);
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new Hand());
 
         dealer.drawCardToPlayers(players);
         assertAll(
@@ -102,7 +108,7 @@ class DealerTest {
         cards.add(excepted);
         cards.add(new Card(Denomination.ACE, Suit.DIAMOND));
 
-        Dealer dealer = new Dealer(new Deck(cards));
+        Dealer dealer = new Dealer(new Hand(), new Deck(cards));
         Player player = new Player("승팡");
 
         dealer.giveCard(player);

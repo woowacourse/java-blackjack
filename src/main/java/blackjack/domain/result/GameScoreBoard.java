@@ -19,7 +19,7 @@ public class GameScoreBoard {
         this.playerGameResultMap = playerGameResultMap;
     }
 
-    public static GameScoreBoard of(Dealer dealer, List<Player> players) {
+    public static GameScoreBoard recordGameScore(Dealer dealer, List<Player> players) {
         Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
         Map<String, String> playerResult = new TreeMap<>();
         for (Player player : players) {

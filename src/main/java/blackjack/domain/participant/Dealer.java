@@ -7,18 +7,26 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    private static final String DEALER_NAME = "딜러";
+    private static final Name DEALER_NAME = new Name("딜러");
     private static final int DEALER_OVER_SCORE = 17;
 
     private final Deck deck;
 
-    public Dealer() {
-        this(Deck.createShuffledCards());
+    public Dealer(Hand hand) {
+        this(hand, Deck.createShuffledCards());
     }
 
-    public Dealer(Deck deck) {
-        super(new Name(DEALER_NAME), new Hand());
+    public Dealer(Hand hand, Deck deck) {
+        this(DEALER_NAME, hand, deck);
+    }
+
+    public Dealer(Name name, Hand hand, Deck deck) {
+        super(name, hand);
         this.deck = deck;
+    }
+
+    public static Dealer getInstance() {
+        return new Dealer(new Hand());
     }
 
     public Card drawCard() {

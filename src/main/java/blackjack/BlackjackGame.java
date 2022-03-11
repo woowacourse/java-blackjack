@@ -14,7 +14,7 @@ public class BlackjackGame {
     public static final String DELIMITER = ",";
 
     public void run() {
-        Dealer dealer = new Dealer();
+        Dealer dealer = Dealer.getInstance();
         List<Player> players = getPlayers();
 
         initiallySetCard(dealer, players);
@@ -22,7 +22,7 @@ public class BlackjackGame {
         takeMoreCardDealerTurn(dealer);
         OutputView.printParticipantResult(dealer, players);
 
-        GameScoreBoard result = GameScoreBoard.of(dealer, players);
+        GameScoreBoard result = GameScoreBoard.recordGameScore(dealer, players);
         OutputView.printBlackjackGameResult(result);
     }
 
