@@ -62,6 +62,9 @@ public abstract class AbstractParticipant implements Participant {
     @Override
     public int calculateResultScore() {
         validateCanCalculateResultScore();
+        if (isDealer()) {
+            return cards.calculateMaxScore();
+        }
         return cards.calculateScore();
     }
 
@@ -73,6 +76,10 @@ public abstract class AbstractParticipant implements Participant {
 
     int calculateScore() {
         return cards.calculateScore();
+    }
+
+    int calculateMaxScore() {
+        return cards.calculateMaxScore();
     }
 
     @Override

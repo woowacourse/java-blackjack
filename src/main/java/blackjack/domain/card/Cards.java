@@ -25,10 +25,19 @@ public class Cards {
     }
 
     public int calculateScore() {
-        final List<CardNumber> cardNumbers = cards.stream()
+        final List<CardNumber> cardNumbers = cardNumbers();
+        return CardNumber.calculateScore(cardNumbers);
+    }
+
+    public int calculateMaxScore() {
+        final List<CardNumber> cardNumbers = cardNumbers();
+        return CardNumber.calculateMaxScore(cardNumbers);
+    }
+
+    private List<CardNumber> cardNumbers() {
+        return cards.stream()
                 .map(Card::getNumber)
                 .collect(Collectors.toUnmodifiableList());
-        return CardNumber.calculateScore(cardNumbers);
     }
 
     public void addCard(final Card card) {

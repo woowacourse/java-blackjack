@@ -5,6 +5,7 @@ import static blackjack.domain.card.CardNumber.SEVEN;
 import static blackjack.domain.card.CardNumber.SIX;
 import static blackjack.domain.card.CardNumber.TEN;
 import static blackjack.domain.card.CardNumber.TWO;
+import static blackjack.domain.card.CardPattern.HEART;
 import static blackjack.domain.card.CardPattern.SPADE;
 import static blackjack.testutil.CardFixtureGenerator.createCards;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -87,5 +88,14 @@ class DealerTest {
         assertThatThrownBy(() -> dealer.calculateResultScore())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("딜러는 본인이 가지는 최대 점수를 반환한다.")
+    void calculateResultScore() {
+        final List<Card> cards = createCards(Card.of(SPADE, A), Card.of(HEART, A));
+        final Dealer dealer = Dealer.createNewDealer(cards);
+
+        assertThat(dealer.calculateResultScore()).isEqualTo(22);
     }
 }
