@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ public class DealerTest {
     @Test
     public void testDrawCard() {
         //given
-        Deck deck = new Deck();
+        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
         Dealer dealer = new Dealer();
 
         //when
@@ -39,7 +40,7 @@ public class DealerTest {
     @Test
     public void testShowInitCards() {
         //given
-        Deck deck = new Deck();
+        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
         Dealer dealer = new Dealer();
 
         dealer.drawCard(deck);
@@ -54,7 +55,7 @@ public class DealerTest {
     @Test
     public void testDrawCardIfSumOfPointUnder16() {
         //given
-        Deck deck = new Deck();
+        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
         Dealer dealer = new Dealer();
         //when
 

@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.Result;
 import blackjack.domain.card.Deck;
+import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.user.Users;
@@ -25,7 +26,7 @@ public class BlackJack {
     public void run() {
         Users users = getUsers();
 
-        Deck deck = new Deck();
+        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
         users.setInitCardsPerPlayer(deck);
 
         printInitCardInfo(users);

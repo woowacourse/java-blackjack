@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ public class PlayerTest {
     @Test
     public void testDrawCard() {
         //given
-        Deck deck = new Deck();
+        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
         Player player = Player.from("pobi");
 
         //when
@@ -56,7 +57,7 @@ public class PlayerTest {
     @Test
     public void testCardDrawable() {
         //given
-        Deck deck = new Deck();
+        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
         Player player = Player.from("pobi");
 
         //when
@@ -71,7 +72,7 @@ public class PlayerTest {
     @Test
     public void testShowInitCards() {
         //given
-        Deck deck = new Deck();
+        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
         Player player = Player.from("pobi");
 
         player.drawCard(deck);

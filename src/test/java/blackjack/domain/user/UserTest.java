@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ public class UserTest {
     @Test
     public void testDrawInitCard() {
         //given
-        Deck deck = new Deck();
+        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
         User user = Player.from("pobi");
 
         //when

@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ public class DeckTest {
     @Test
     public void createDeck() {
         //given & when
-        Deck deck = new Deck();
+        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
 
         //then
         assertThat(deck).isNotNull();
@@ -22,7 +23,7 @@ public class DeckTest {
     @Test
     public void testDrawCard() {
         //given
-        Deck deck = new Deck();
+        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
 
         //when
         Card firstCard = deck.drawCard();
@@ -36,7 +37,7 @@ public class DeckTest {
     @Test
     public void testDeckSize() {
         //given
-        Deck deck = new Deck();
+        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
 
         //when
         for (int i = 0; i < 52; i++) {
@@ -47,4 +48,6 @@ public class DeckTest {
         assertThatThrownBy(() -> deck.drawCard())
                 .isInstanceOf(IllegalStateException.class);
     }
+
+
 }
