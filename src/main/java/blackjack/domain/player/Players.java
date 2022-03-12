@@ -62,4 +62,8 @@ public class Players {
         }
         return result;
     }
+
+    public int size() {
+        return players.size();
+    }
 }

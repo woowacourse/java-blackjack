@@ -13,14 +13,20 @@ import static java.util.stream.Collectors.toMap;
 
 public class Game {
 
-    private final Players players;
     private final Deck deck;
+    private final Players players;
     private final Dealer dealer;
 
-    public Game(Players players, Deck deck) {
-        this.players = players;
-        this.deck = deck;
+    public Game(List<String> names) {
+        deck = new Deck();
+        players = generatePlayers(names);
         dealer = new Dealer(Cards.of(deck.initialDraw()));
+    }
+
+    private Players generatePlayers(List<String> names) {
+        return new Players(names.stream()
+                .map(name -> new Player(name, Cards.of(deck.initialDraw())))
+                .collect(toList()));
     }
 
     public Status playTurn(Command command) {
@@ -69,5 +75,9 @@ public class Game {
                 .map(Outcome::reverse)
                 .map(Outcome::getMessage)
                 .collect(toList());
+    }
+
+    public Players getPlayers() {
+        return players;
     }
 }

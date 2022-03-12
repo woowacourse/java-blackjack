@@ -15,13 +15,13 @@ import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class GameController {
 
     public void run() {
-        Deck deck = new Deck();
-        Game game = new Game(generatePlayers(deck), deck);
+        Game game = generateGame();
         printInitialStatus(game);
 
         executePlayerTurn(game);
@@ -29,6 +29,21 @@ public class GameController {
 
         printTotalScore(game);
         printResult(game);
+    }
+
+    private Game generateGame() {
+        try {
+            return new Game(inputPlayerNames());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return generateGame();
+        }
+    }
+
+    private List<String> inputPlayerNames() {
+        return Arrays.stream(InputView.inputName())
+                .map(String::trim)
+                .collect(toList());
     }
 
     private void printResult(Game game) {
@@ -40,7 +55,7 @@ public class GameController {
             return new Players(Arrays.stream(InputView.inputName())
                     .map(String::trim)
                     .map(name -> new Player(name, Cards.of(deck.initialDraw())))
-                    .collect(Collectors.toList()));
+                    .collect(toList()));
 
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -84,7 +99,7 @@ public class GameController {
     private List<Status> createDealerStatus(Dealer dealer) {
         List<Status> result = new ArrayList<>();
         result.add(new Status(dealer.getName(),
-                dealer.getCardsToList().stream().map(CardDto::of).collect(Collectors.toList()),
+                dealer.getCardsToList().stream().map(CardDto::of).collect(toList()),
                 dealer.getScore()
         ));
         return result;
@@ -93,7 +108,7 @@ public class GameController {
     private void addPlayerStatus(List<Player> players, List<Status> result) {
         for (Player player : players) {
             result.add(new Status(player.getName(),
-                    player.getCardsToList().stream().map(CardDto::of).collect(Collectors.toList()),
+                    player.getCardsToList().stream().map(CardDto::of).collect(toList()),
                     player.getScore()
             ));
         }
