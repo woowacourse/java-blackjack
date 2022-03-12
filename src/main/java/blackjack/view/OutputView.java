@@ -37,7 +37,7 @@ public class OutputView {
 
     private static String printCards(List<Card> cards) {
         return cards.stream()
-                .map(card -> card.getCardNumber().getValue() + card.getCardPattern().getName())
+                .map(card -> card.getCardNumber().getType() + card.getCardPattern().getName())
                 .collect(Collectors.joining(", "));
     }
 

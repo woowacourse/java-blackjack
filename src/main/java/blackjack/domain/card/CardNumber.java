@@ -27,4 +27,8 @@ public enum CardNumber {
     public int getValue() {
         return value;
     }
+
+    public String getType() {
+        return type;
+    }
 }
