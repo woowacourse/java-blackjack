@@ -21,8 +21,8 @@ class ParticipantTest {
 
     private final ManualDeckGenerator manualCardStrategy = new ManualDeckGenerator();
 
-    private Participant makeParticipant() {
-        return new Participant() {
+    private Participant makeParticipant(final Deck deck) {
+        return new Participant("Participant", deck) {
             @Override
             public boolean isPossibleToDrawCard() {
                 return true;
@@ -36,9 +36,9 @@ class ParticipantTest {
     void drawCardTest(final List<Card> expectedCards) {
         manualCardStrategy.initCards(expectedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
-        final Participant participant = makeParticipant();
+        final Participant participant = makeParticipant(deck);
 
-        for (int i = 0; i < expectedCards.size(); i++) {
+        for (int i = 0; i < expectedCards.size() - 2; i++) {
             participant.drawCard(deck);
         }
 
@@ -73,9 +73,9 @@ class ParticipantTest {
     void checkBurstTest(final List<Card> initializedCards, final boolean isBurst) {
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
-        final Participant participant = makeParticipant();
+        final Participant participant = makeParticipant(deck);
 
-        for (int i = 0; i < initializedCards.size(); i++) {
+        for (int i = 0; i < initializedCards.size() - 2; i++) {
             participant.drawCard(deck);
         }
 

@@ -7,10 +7,22 @@ import blackjack.domain.card.Deck;
 
 public abstract class Participant {
 
+    private final String name;
     protected Cards cards = new Cards();
-    protected String name;
 
-    protected void drawTwoCard(final Deck deck) {
+    protected Participant(final String name, final Deck deck) {
+        validateNameNotBlank(name);
+        this.name = name;
+        drawTwoCard(deck);
+    }
+
+    private static void validateNameNotBlank(final String name) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("플레이어명은 공백이 될 수 없습니다.");
+        }
+    }
+
+    private void drawTwoCard(final Deck deck) {
         drawCard(deck);
         drawCard(deck);
     }

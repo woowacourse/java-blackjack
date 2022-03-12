@@ -4,21 +4,12 @@ import blackjack.domain.card.Deck;
 
 public class Player extends Participant {
 
-    private Player(final String name) {
-        validateNameNotBlank(name);
-        this.name = name;
-    }
-
-    private static void validateNameNotBlank(final String name) {
-        if (name.isBlank()) {
-            throw new IllegalArgumentException("플레이어명은 공백이 될 수 없습니다.");
-        }
+    private Player(final String name, final Deck deck) {
+        super(name, deck);
     }
 
     public static Player readyToPlay(final String name, final Deck deck) {
-        final Player player = new Player(name);
-        player.drawTwoCard(deck);
-        return player;
+        return new Player(name, deck);
     }
 
     @Override

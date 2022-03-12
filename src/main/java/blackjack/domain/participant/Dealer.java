@@ -8,14 +8,12 @@ public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
     public static final int DEALER_MIN_SCORE = 17;
 
-    private Dealer() {
-        this.name = DEALER_NAME;
+    private Dealer(final Deck deck) {
+        super(DEALER_NAME, deck);
     }
 
     public static Dealer readyToPlay(final Deck deck) {
-        final Dealer dealer = new Dealer();
-        dealer.drawTwoCard(deck);
-        return dealer;
+        return new Dealer(deck);
     }
 
     @Override
