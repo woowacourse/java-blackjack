@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -77,7 +78,7 @@ public class BlackJackGame {
         Dealer dealer = gamers.getDealer();
         List<Player> players = gamers.getPlayers();
 
-        Map<String, BlackJackResult> playerResults = new HashMap<>();
+        Map<String, BlackJackResult> playerResults = new LinkedHashMap<>();
         for (Player player : players) {
             BlackJackResult result = player.match(dealer);
             playerResults.put(player.getName().getValue(), result);
@@ -87,7 +88,7 @@ public class BlackJackGame {
     }
 
     private Map<BlackJackResult, Integer> createDealerResult() {
-        Map<BlackJackResult, Integer> dealerResult = new HashMap<>();
+        Map<BlackJackResult, Integer> dealerResult = new LinkedHashMap<>();
         for (BlackJackResult blackJackResult : BlackJackResult.values()) {
             dealerResult.put(blackJackResult, DEFAULT_COUNT);
         }

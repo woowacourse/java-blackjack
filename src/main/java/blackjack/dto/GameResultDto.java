@@ -1,5 +1,6 @@
 package blackjack.dto;
 
+import java.util.Collections;
 import java.util.Map;
 
 import blackjack.domain.result.BlackJackResult;
@@ -16,10 +17,10 @@ public class GameResultDto {
     }
 
     public Map<String, BlackJackResult> getPlayerResults() {
-        return playerResults;
+        return Collections.unmodifiableMap(playerResults);
     }
 
     public Map<BlackJackResult, Integer> getDealerResult() {
-        return dealerResult;
+        return Collections.unmodifiableMap(dealerResult);
     }
 }
