@@ -30,11 +30,10 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return new ArrayList<>(players);
     }
 
     public Map<String, String> getStatistics(Dealer dealer) {
-
         Map<String, String> result = new HashMap<>();
         for (Player player : players) {
             Result compare = dealer.compare(player);

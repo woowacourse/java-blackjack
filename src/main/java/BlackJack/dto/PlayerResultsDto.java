@@ -1,5 +1,6 @@
 package BlackJack.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -8,7 +9,7 @@ public class PlayerResultsDto {
     private final List<PlayerResultDto> playerResultDtos;
 
     public PlayerResultsDto(List<PlayerResultDto> playerResultDtos) {
-        this.playerResultDtos = playerResultDtos;
+        this.playerResultDtos = new ArrayList<>(playerResultDtos);
     }
 
     public static PlayerResultsDto from(Map<String, String> result) {
@@ -21,6 +22,6 @@ public class PlayerResultsDto {
     }
 
     public List<PlayerResultDto> getPlayerResultDtos() {
-        return playerResultDtos;
+        return new ArrayList<>(playerResultDtos);
     }
 }
