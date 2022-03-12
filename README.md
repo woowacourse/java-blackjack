@@ -30,35 +30,44 @@
 
 ### 객체 별 역할 정리
 
-- Dealer
-    - 게임의 딜러
-    - 카드를 소유하고 있다.
-    - 카드 덱을 받아서 보유 카드 숫자가 17이 넘을 때 까지 카드를 뽑는다.
-- Player
-    - 게임의 플레이어
-    - 카드를 소유하고 있다.
-    - 카드 덱을 받아서 카드를 뽑는다.
-- Name
-    - 딜러 또는 플레이어의 이름
-    - null이거나 빈 문자열일 수 없다.
-- Card
-    - Pattern
-        - 카드의 문양이 저장된 enum
-    - Denomination
-        - 카드의 끗수가 저장된 enum
+- **Card**
     - 카드의 문양과 끗수를 저장하고 있다.
-- CardDeck
+    - **Pattern**
+        - 카드의 문양이 저장된 enum
+    - **Denomination**
+        - 카드의 끗수가 저장된 enum
+        -
+- **CardDeck**
     - 게임에서 사용하는 카드들을 관리하고 있다.
-    - CardsGenerator
+    - **CardsGenerator**
         - 카드를 생성하는 전략을 제공하는 인터페이스
-        - BlackJackCardsGenerator
-            - CardsGenerator의 구현체로 서로 다른 52장의 카드를 가진 덱을 생성한다.
-- Rule
+        - **BlackJackCardsGenerator**
+            - 서로 다른 52장의 카드를 가진 덱을 생성한다.
+
+- **Participant**
+    - 게임 참여자
+    - 카드를 보유하고 있다.
+    - 카드 덱에서 카드를 한 장 뽑을 수 있다.
+    - **Dealer**
+        - 게임의 딜러
+        - 보유 카드 숫자가 17이 넘을 때 까지 카드를 뽑을 수 있다.
+    - **Player**
+        - 게임의 플레이어
+        - 보유 카드 숫자가 21이 넘을 때 까지 카드를 뽑을 수 있다.
+    - **Name**
+        - 참여자의 이름
+
+- **HitRequest**
+    - 카드 추가 여부에 대한 응답 값을 의미하는 enum
+
+- **Judgement**
+    - 승, 무, 패 값을 가진 enum
+
+- **Rule**
     - 게임의 규칙을 담고 있다.
     - 카드의 총합을 계산한다.
     - 버스트(총합이 21을 넘는 경우) 여부를 판단한다.
-- Result
+
+- **WinResult**
     - 플레이어와 딜러의 카드를 받는다.
     - 승패를 결정한다.
-    - Judgement
-        - 승, 무, 패 값을 가진 enum
