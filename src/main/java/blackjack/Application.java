@@ -7,6 +7,7 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Gamer;
 import blackjack.domain.Player;
+import blackjack.domain.Players;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.GamerDto;
 import blackjack.view.InputView;
@@ -21,7 +22,7 @@ public class Application {
     public static void main(String[] args) {
         Deck deck = new Deck(Card.VALUES);
         Dealer dealer = new Dealer(deck.getInitCards());
-        List<Player> players = createPlayers(deck);
+        Players players = createPlayers(deck);
         OutputView.printStartInfo(toGamerDto(dealer), toPlayersDto(players));
 
         List<GamerDto> playerDtos = playPlayers(deck, players);
@@ -31,15 +32,15 @@ public class Application {
         printResult(dealer, players);
     }
 
-    private static List<Player> createPlayers(Deck deck) {
+    private static Players createPlayers(Deck deck) {
         List<Player> players = InputView.getNames().stream()
                 .map(name -> new Player(name, deck.getInitCards()))
                 .collect(toList());
-        return players;
+        return new Players(players);
     }
 
-    public static List<GamerDto> toPlayersDto(List<Player> players) {
-        return players.stream()
+    public static List<GamerDto> toPlayersDto(Players players) {
+        return players.getValue().stream()
                 .map(GamerDto::from)
                 .collect(Collectors.toList());
     }
@@ -48,8 +49,8 @@ public class Application {
         return GamerDto.from(gamer);
     }
 
-    public static List<GamerDto> playPlayers(Deck deck, List<Player> players) {
-        players.forEach(player -> playing(deck, player));
+    public static List<GamerDto> playPlayers(Deck deck, Players players) {
+        players.getValue().forEach(player -> playing(deck, player));
         return toPlayersDto(players);
     }
 
@@ -80,19 +81,19 @@ public class Application {
         }
     }
 
-    private static Map<String, GameResultDto> createPlayerResult(List<Player> players, Dealer dealer) {
-        return players.stream()
+    private static Map<String, GameResultDto> createPlayerResult(Players players, Dealer dealer) {
+        return players.getValue().stream()
                 .collect(toMap(player -> player.getName(),
                         player -> GameResultDto.from(player.createResult(dealer.getTotalScore()))));
     }
 
-    private static Map<GameResultDto, Long> createDealerResult(List<Player> players, Dealer dealer) {
-        return players.stream()
+    private static Map<GameResultDto, Long> createDealerResult(Players players, Dealer dealer) {
+        return players.getValue().stream()
                 .collect(groupingBy(player -> GameResultDto.from(dealer.createResult(player.getTotalScore())),
                         counting()));
     }
 
-    private static void printResult(Dealer dealer, List<Player> players) {
+    private static void printResult(Dealer dealer, Players players) {
         OutputView.printDealerGameResult(createDealerResult(players, dealer));
         OutputView.printPlayerGameResult(createPlayerResult(players, dealer));
     }
