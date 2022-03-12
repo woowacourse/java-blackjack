@@ -3,16 +3,14 @@ package domain;
 import static domain.GameResult.DRAW;
 import static domain.GameResult.LOSE;
 import static domain.GameResult.WIN;
-import static domain.MockCard.ACE_CARD;
-import static domain.MockCard.NINE_CARD;
-import static domain.MockCard.TEN_CARD;
+import static domain.MockCard.CLUB_ACE_CARD;
+import static domain.MockCard.HEART_TEN_CARD;
+import static domain.MockCard.SPADE_NINE_CARD;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Face;
 import domain.card.Suit;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,8 +27,8 @@ public class CardsTest {
 
     @BeforeEach
     void setUp() {
-        myCards = new Cards(CanAddCardThreshold.PLAYER_THRESHOLD);
-        dealerCards = new Cards(CanAddCardThreshold.DEALER_THRESHOLD);
+        myCards = new Cards(HitThreshold.PLAYER_THRESHOLD);
+        dealerCards = new Cards(HitThreshold.DEALER_THRESHOLD);
     }
 
     @ParameterizedTest
@@ -65,15 +63,11 @@ public class CardsTest {
 
     public static Stream<Arguments> provideSumAndCards() {
         return Stream.of(
-                Arguments.of(11, generateCardList(ACE_CARD)),
-                Arguments.of(12, generateCardList(ACE_CARD, ACE_CARD)),
-                Arguments.of(20, generateCardList(ACE_CARD, NINE_CARD)),
-                Arguments.of(21, generateCardList(ACE_CARD, TEN_CARD)),
-                Arguments.of(21, generateCardList(ACE_CARD, TEN_CARD, TEN_CARD)));
-    }
-
-    private static List<Card> generateCardList(Card... cards) {
-        return new ArrayList<>(Arrays.asList(cards));
+                Arguments.of(11, List.of(CLUB_ACE_CARD)),
+                Arguments.of(12, List.of(CLUB_ACE_CARD, CLUB_ACE_CARD)),
+                Arguments.of(20, List.of(CLUB_ACE_CARD, SPADE_NINE_CARD)),
+                Arguments.of(21, List.of(CLUB_ACE_CARD, HEART_TEN_CARD)),
+                Arguments.of(21, List.of(CLUB_ACE_CARD, HEART_TEN_CARD, HEART_TEN_CARD)));
     }
 
     @ParameterizedTest
@@ -88,35 +82,35 @@ public class CardsTest {
             dealerCards.add(card);
         }
 
-        assertThat(myCards.calculateFinalResult(dealerCards)).isEqualTo(expected);
+        assertThat(myCards.calculateGameResult(dealerCards)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> provideResultAndCards() {
         return Stream.of(
                 Arguments.of(WIN,
-                        generateCardList(ACE_CARD, TEN_CARD),
-                        generateCardList(TEN_CARD, TEN_CARD, TEN_CARD)),
+                        List.of(CLUB_ACE_CARD, HEART_TEN_CARD),
+                        List.of(HEART_TEN_CARD, HEART_TEN_CARD, HEART_TEN_CARD)),
                 Arguments.of(WIN,
-                        generateCardList(ACE_CARD, TEN_CARD),
-                        generateCardList(TEN_CARD, TEN_CARD)),
+                        List.of(CLUB_ACE_CARD, HEART_TEN_CARD),
+                        List.of(HEART_TEN_CARD, HEART_TEN_CARD)),
                 Arguments.of(WIN,
-                        generateCardList(ACE_CARD, NINE_CARD),
-                        generateCardList(NINE_CARD, NINE_CARD)),
+                        List.of(CLUB_ACE_CARD, SPADE_NINE_CARD),
+                        List.of(SPADE_NINE_CARD, SPADE_NINE_CARD)),
                 Arguments.of(LOSE,
-                        generateCardList(TEN_CARD, TEN_CARD, NINE_CARD),
-                        generateCardList(TEN_CARD, TEN_CARD, NINE_CARD)),
+                        List.of(HEART_TEN_CARD, HEART_TEN_CARD, SPADE_NINE_CARD),
+                        List.of(HEART_TEN_CARD, HEART_TEN_CARD, SPADE_NINE_CARD)),
                 Arguments.of(LOSE,
-                        generateCardList(ACE_CARD, NINE_CARD),
-                        generateCardList(ACE_CARD, TEN_CARD)),
+                        List.of(CLUB_ACE_CARD, SPADE_NINE_CARD),
+                        List.of(CLUB_ACE_CARD, HEART_TEN_CARD)),
                 Arguments.of(LOSE,
-                        generateCardList(TEN_CARD, NINE_CARD),
-                        generateCardList(ACE_CARD, NINE_CARD)),
+                        List.of(HEART_TEN_CARD, SPADE_NINE_CARD),
+                        List.of(CLUB_ACE_CARD, SPADE_NINE_CARD)),
                 Arguments.of(DRAW,
-                        generateCardList(ACE_CARD, TEN_CARD),
-                        generateCardList(ACE_CARD, TEN_CARD)),
+                        List.of(CLUB_ACE_CARD, HEART_TEN_CARD),
+                        List.of(CLUB_ACE_CARD, HEART_TEN_CARD)),
                 Arguments.of(DRAW,
-                        generateCardList(ACE_CARD, NINE_CARD),
-                        generateCardList(ACE_CARD, NINE_CARD))
+                        List.of(CLUB_ACE_CARD, SPADE_NINE_CARD),
+                        List.of(CLUB_ACE_CARD, SPADE_NINE_CARD))
         );
     }
 }

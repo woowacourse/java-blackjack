@@ -21,7 +21,7 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("게임이 끝나면 두 장의 카드를 반환한다.")
+    @DisplayName("게임이 끝나면 모든 카드를 반환한다.")
     void getCards2() {
         //given
         Dealer dealer = new Dealer();
