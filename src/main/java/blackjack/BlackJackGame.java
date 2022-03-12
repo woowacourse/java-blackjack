@@ -40,7 +40,7 @@ public class BlackJackGame {
 
     private void proceed(CardDeck deck, Dealer dealer, List<Player> players) {
         alertStart(dealer, players);
-        proceedPlayersTurn(players, deck);
+        proceedPlayers(players, deck);
         proceedDealer(dealer, deck);
         showResult(dealer, players);
     }
@@ -51,7 +51,7 @@ public class BlackJackGame {
         players.forEach(player -> OutputView.printParticipantCards(player, player.getScore()));
     }
 
-    private void proceedPlayersTurn(List<Player> players, CardDeck deck) {
+    private void proceedPlayers(List<Player> players, CardDeck deck) {
         players.forEach(player -> proceedPlayer(player, deck));
     }
 
