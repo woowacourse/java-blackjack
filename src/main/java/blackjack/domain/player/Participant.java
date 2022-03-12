@@ -34,11 +34,9 @@ public abstract class Participant {
     }
 
 
-    public String getName() {
-        return name;
-    }
+    public abstract List<Card> openCards();
 
-    public List<Card> getCardsToList() {
+    public List<Card> getCards() {
         return cards.toList();
     }
 
@@ -52,6 +50,10 @@ public abstract class Participant {
 
     public int getScore() {
         return cards.calculateScore();
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

@@ -3,9 +3,13 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
+import java.util.List;
+
 public class Player extends Participant{
 
     private boolean stay = false;
+    private static final int OPEN_CARD_SIZE = 2;
+
 
     public Player(String name, Cards cards) {
         super(name, cards);
@@ -17,6 +21,11 @@ public class Player extends Participant{
         if (super.isBust() || super.isBlackjack()) {
             stay = true;
         }
+    }
+
+    @Override
+    public List<Card> openCards() {
+        return getCards().subList(0, OPEN_CARD_SIZE);
     }
 
     public boolean isAbleToHit() {

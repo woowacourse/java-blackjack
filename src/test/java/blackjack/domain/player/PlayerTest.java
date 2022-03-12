@@ -86,4 +86,14 @@ class PlayerTest {
         // then
         assertThat(actual).isFalse();
     }
+
+    @Test
+    @DisplayName("첫 공개 카드는 두 장을 반환한다")
+    void testOpenCards() {
+        List<Card> initCards = List.of(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
+        Player player = new Player("pobi", Cards.of(initCards));
+
+        assertThat(player.openCards().size()).isEqualTo(2);
+    }
+
 }

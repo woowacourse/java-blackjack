@@ -1,6 +1,6 @@
 package blackjack.domain.dto;
 
-import blackjack.domain.player.Player;
+import blackjack.domain.player.Participant;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,13 +17,22 @@ public class Status {
         this.score = score;
     }
 
-    public static Status of(Player player) {
+    public static Status of(Participant participant) {
         return new Status(
-                player.getName(),
-                player.getCardsToList().stream()
+                participant.getName(),
+                participant.getCards().stream()
                         .map(CardDto::of)
                         .collect(Collectors.toList()),
-                player.getScore());
+                participant.getScore());
+    }
+
+    public static Status initialOf(Participant participant) {
+        return new Status(
+                participant.getName(),
+                participant.openCards().stream()
+                        .map(CardDto::of)
+                        .collect(Collectors.toList()),
+                participant.getScore());
     }
 
     public String getName() {

@@ -34,4 +34,15 @@ class DealerTest {
 
         assertThat(dealer.doesNeedToDraw()).isFalse();
     }
+
+    @Test
+    @DisplayName("첫 공개카드는 한 장을 반환한다")
+    void testOpenCards() {
+        Dealer dealer = new Dealer(Cards.of(List.of(
+                new Card(Symbol.HEART,Denomination.NINE),
+                new Card(Symbol.SPADE,Denomination.EIGHT)
+        )));
+
+        assertThat(dealer.openCards().size()).isEqualTo(1);
+    }
 }
