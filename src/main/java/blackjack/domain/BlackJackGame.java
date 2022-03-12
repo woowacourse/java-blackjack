@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +19,7 @@ import blackjack.dto.GamerDto;
 public class BlackJackGame {
 
     public static final int MAX_CARD_VALUE = 21;
-    private static final int INIT_DISTRIBUTION_COUNT = 2;
+    public static final int INIT_DISTRIBUTION_COUNT = 2;
     private static final int ADDITIONAL_DISTRIBUTE_STANDARD = 16;
     private static final int DEFAULT_COUNT = 0;
     private static final int INCREASE_COUNT = 1;
@@ -49,13 +47,13 @@ public class BlackJackGame {
     }
 
     private void hitOrStay(UnaryOperator<String> operator, Consumer<GamerDto> consumer, String name) {
-        while (!isBurst(name) && Answer.from(operator.apply(name)).isYes()) {
+        while (!isBust(name) && Answer.from(operator.apply(name)).isYes()) {
             gamers.giveCardToPlayer(name, cardFactory::draw);
             consumer.accept(getPlayerDto(name));
         }
     }
 
-    private boolean isBurst(String name) {
+    private boolean isBust(String name) {
         return gamers.checkPlayerOverThan(name, MAX_CARD_VALUE);
     }
 

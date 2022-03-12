@@ -12,6 +12,7 @@ public enum CardStatus {
 	BUST(cards -> cards.sum() > BlackJackGame.MAX_CARD_VALUE),
 	NORMAL(cards -> true);
 
+	public static final String NOT_FIND_RESULT = "결과를 찾을 수 없습니다.";
 	private final Predicate<Cards> predicate;
 
 	CardStatus(Predicate<Cards> predicate) {
@@ -22,7 +23,7 @@ public enum CardStatus {
 		return Arrays.stream(values())
 			.filter(status -> status.predicate.test(cards))
 			.findAny()
-			.orElseThrow();
+			.orElseThrow(() -> new IllegalArgumentException(NOT_FIND_RESULT));
 	}
 
 	public boolean isBlackJack() {

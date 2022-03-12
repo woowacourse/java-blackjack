@@ -52,12 +52,24 @@ public class Cards {
 		return ace.getValue();
 	}
 
-	public CardStatus getStatus() {
-		return CardStatus.of(this);
+	public boolean isBlackJack() {
+		return CardStatus.of(this).isBlackJack();
+	}
+
+	public boolean isBust() {
+		return CardStatus.of(this).isBust();
+	}
+
+	public boolean isGreaterThan(Cards cards) {
+		return this.sum() > cards.sum();
 	}
 
 	public int size() {
 		return values.size();
+	}
+
+	public boolean isSame(Cards dealer) {
+		return this.sum() == dealer.sum();
 	}
 
 	public List<Card> getValues() {
