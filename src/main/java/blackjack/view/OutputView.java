@@ -15,7 +15,7 @@ public class OutputView {
 
     private static final String PROVIDE_FIRST_DRAW_CARD_TO_PLAYER_MESSAGE = "%s와 %s에게 2장을 나누었습니다.%n";
     private static final String PROVIDED_CARD_TO_DEALER_CARD_MESSAGE = "%s: %s%n";
-    private static final String PROVIDED_CARD_TO_PLAYER_CARD_MESSAGE = "%s카드: %s%n";
+    private static final String PROVIDED_CARD_TO_PLAYER_CARD_MESSAGE = "%s 카드: %s%n";
 
     private static final String PROVIDE_CARD_TO_DEALER_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
