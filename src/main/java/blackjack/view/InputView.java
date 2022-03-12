@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Players;
+import blackjack.domain.game.Players;
 
 public class InputView {
 

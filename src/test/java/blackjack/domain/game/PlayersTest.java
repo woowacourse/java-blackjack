@@ -1,9 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
+import blackjack.domain.game.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
