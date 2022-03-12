@@ -3,6 +3,7 @@ package domain;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Player;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -32,5 +33,9 @@ public final class Players {
             cardsWithNameTotal.putAll(player.getCardsWithName());
         }
         return cardsWithNameTotal;
+    }
+
+    public List<Player> getPlayers() {
+        return new ArrayList<>(players);
     }
 }

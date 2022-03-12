@@ -3,6 +3,7 @@ package domain;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
+import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
 import view.InputView;
@@ -16,6 +17,8 @@ public final class BlackJackGame {
 
     public void run() {
         initParticipants();
+        hit();
+
     }
 
     private void initParticipants() {
@@ -26,6 +29,13 @@ public final class BlackJackGame {
         OutputView.printInitCardsResult(getCardsWithName());
     }
 
+    private void initCards() {
+        for (int i = 0; i < INIT_CARD_COUNT; i++) {
+            dealer.receiveCard(CardDeck.draw());
+            players.receiveCard();
+        }
+    }
+
     private Map<String, List<Card>> getCardsWithName() {
         Map<String, List<Card>> cardsWithNameTotal = dealer.getCardsWithName();
         assert cardsWithNameTotal != null;
@@ -33,10 +43,29 @@ public final class BlackJackGame {
         return cardsWithNameTotal;
     }
 
-    private void initCards() {
-        for (int i = 0; i < INIT_CARD_COUNT; i++) {
+    private void hit() {
+        for (Player player : players.getPlayers()) {
+            hitPlayer(player);
+        }
+        hitDealer();
+    }
+
+    private void hitPlayer(Player player) {
+        int printCount = 0;
+        while (player.canReceiveCard() && InputView.inputTryToHit(player.getName())) {
+            player.receiveCard(CardDeck.draw());
+            OutputView.printCardsWithName(player.getCardsWithName());
+            printCount++;
+        }
+        if (printCount == 0) {
+            OutputView.printCardsWithName(player.getCardsWithName());
+        }
+    }
+
+    private void hitDealer() {
+        if (dealer.canReceiveCard()) {
             dealer.receiveCard(CardDeck.draw());
-            players.receiveCard();
+            OutputView.printDealerHit();
         }
     }
 }

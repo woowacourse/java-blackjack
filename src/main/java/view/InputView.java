@@ -12,6 +12,8 @@ public class InputView {
     private static final String INPUT_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String DUPLICATE_NAME_MESSAGE = "중복된 이름은 불가합니다.";
     private static final String BLANK_INPUT_MESSAGE = "값을 입력해주세요.";
+    private static final String HIT_SUFFIX_MESSAGE = "는  한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    private static final String INVALID_HIT_MESSAGE = "예는 y, 아니오는 n를 입력하세요.";
 
     private InputView() {
     }
@@ -50,5 +52,24 @@ public class InputView {
         return Arrays.stream(input.split(NAME_OR_CARD_DELIMITER))
                 .map(String::trim)
                 .collect(Collectors.toList());
+    }
+
+    public static boolean inputTryToHit(final String name) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(name)
+                .append(HIT_SUFFIX_MESSAGE);
+        print(stringBuilder.toString());
+
+        String response = readLine();
+        if (isYOrN(response)) {
+            return response.equalsIgnoreCase("y");
+        }
+        print(INVALID_HIT_MESSAGE);
+        return inputTryToHit(name);
+    }
+
+    private static boolean isYOrN(String response) {
+        return response.equalsIgnoreCase("y") || response.equalsIgnoreCase("n");
     }
 }
