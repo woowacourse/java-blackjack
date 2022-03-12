@@ -9,7 +9,7 @@ public class Dealer extends Participant {
         super(NAME_OF_DEALER);
     }
 
-    public boolean needMoreCard() {
+    public boolean isAbleToAddCard() {
         return getScore() <= BOUND_FOR_ADDITIONAL_CARD;
     }
 }

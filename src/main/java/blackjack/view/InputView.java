@@ -12,7 +12,8 @@ public class InputView {
     private static final String WRONG_FORM = "입력형식에 맞춰 입력해주세요.";
     private static final String WRONG_HIT_OR_STAY = HIT + " 혹은 " + STAY + "만 입력 가능합니다.";
 
-    private InputView(){}
+    private InputView() {
+    }
 
     public static String[] inputNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉽표 기준으로 분리)");
@@ -23,7 +24,7 @@ public class InputView {
         return names;
     }
 
-    public static boolean requestHitOrStay(String name) {
+    public static boolean isRequestHit(String name) {
         System.out.println(name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = inputLine();
         validateEmpty(input);

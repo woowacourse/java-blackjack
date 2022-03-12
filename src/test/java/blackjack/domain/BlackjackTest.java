@@ -36,7 +36,7 @@ public class BlackjackTest {
         blackjack.firstDistribute();
 
         int count = 0;
-        while (blackjack.getPlayerWhoCanHit() != null) {
+        while (blackjack.findPlayerWhoCanHit() != null) {
             count++;
         }
 
@@ -49,7 +49,7 @@ public class BlackjackTest {
         String[] names = {"pobi"};
         Blackjack blackjack = new Blackjack(names);
         blackjack.firstDistribute();
-        Player player = blackjack.getPlayerWhoCanHit();
+        Player player = blackjack.findPlayerWhoCanHit();
         blackjack.hit(player);
 
         assertThat(player.getCards().size()).isEqualTo(3);

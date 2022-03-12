@@ -17,7 +17,7 @@ class PlayerTest {
         Player player = new Player("pobi");
         player.addCard(new Card(Symbol.HEART, Denomination.KING));
 
-        assertThat(player.canHit()).isTrue();
+        assertThat(player.isAbleToHit()).isTrue();
     }
 
     @Test
@@ -26,9 +26,9 @@ class PlayerTest {
         Player player = new Player("pobi");
         player.addCard(new Card(Symbol.HEART, Denomination.KING));
         player.addCard(new Card(Symbol.CLOVER, Denomination.QUEEN));
-        player.addCard(new Card(Symbol.SPADE,Denomination.ACE));
+        player.addCard(new Card(Symbol.SPADE, Denomination.ACE));
 
-        assertThat(player.canHit()).isFalse();
+        assertThat(player.isAbleToHit()).isFalse();
     }
 
     @Test

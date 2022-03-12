@@ -39,7 +39,7 @@ public class Blackjack {
         playersWhoCanHit.addAll(players);
     }
 
-    public Player getPlayerWhoCanHit() {
+    public Player findPlayerWhoCanHit() {
         if (playersWhoCanHit.isEmpty()) {
             return null;
         }
@@ -51,12 +51,12 @@ public class Blackjack {
     }
 
     public void addCardForDealerIfNeed() {
-        while (dealer.needMoreCard()) {
+        while (dealer.isAbleToAddCard()) {
             dealer.addCard(deck.draw());
         }
     }
 
-    public boolean didDealerAdded() {
+    public boolean isDealerTakeMoreCards() {
         return dealer.getCards().size() > CARD_COUNT_OF_FIRST_DISTRIBUTE;
     }
 
@@ -72,16 +72,16 @@ public class Blackjack {
         players.forEach(Participant::endTurn);
     }
 
-    public List<TotalScoreDTO> calculateTotalScore() {
+    public List<TotalScoreDTO> computeTotalScore() {
         List<TotalScoreDTO> totalScoreDTOs = new ArrayList<>();
         totalScoreDTOs.add(new TotalScoreDTO(dealer));
         players.forEach(player -> totalScoreDTOs.add(new TotalScoreDTO(player)));
         return totalScoreDTOs;
     }
 
-    public TotalResultDTO calculateTotalResult() {
-        List<PlayerResultDTO> playersResult = calculatePlayersResult();
-        DealerResultDTO dealerResult = calculateDealerResult(playersResult);
+    public TotalResultDTO computeTotalResult() {
+        List<PlayerResultDTO> playersResult = computePlayersResult();
+        DealerResultDTO dealerResult = computeDealerResult(playersResult);
         return new TotalResultDTO(playersResult, dealerResult);
     }
 
@@ -103,7 +103,7 @@ public class Blackjack {
         }
     }
 
-    private List<PlayerResultDTO> calculatePlayersResult() {
+    private List<PlayerResultDTO> computePlayersResult() {
         List<PlayerResultDTO> playersResult = new ArrayList<>();
         for (Player player : players) {
             playersResult.add(new PlayerResultDTO(player.getName(), player.isWin(dealer.getScore())));
@@ -112,7 +112,7 @@ public class Blackjack {
         return playersResult;
     }
 
-    private DealerResultDTO calculateDealerResult(List<PlayerResultDTO> totalPlayerResult) {
+    private DealerResultDTO computeDealerResult(List<PlayerResultDTO> totalPlayerResult) {
         int loseCount = (int) totalPlayerResult.stream()
                 .filter(PlayerResultDTO::isWin)
                 .count();

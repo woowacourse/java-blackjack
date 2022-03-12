@@ -31,11 +31,11 @@ public class Participant {
 
         boolean changed = true;
         while (aceCount-- > 0 && changed) {
-            changed = moreScoreForAceOrNot();
+            changed = isMorePointForAce();
         }
     }
 
-    private boolean moreScoreForAceOrNot() {
+    private boolean isMorePointForAce() {
         if (score + ADDITIONAL_SCORE_FOR_ACE <= GOAL_SCORE) {
             score += ADDITIONAL_SCORE_FOR_ACE;
             return true;

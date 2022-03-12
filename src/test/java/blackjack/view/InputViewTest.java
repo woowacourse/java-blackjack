@@ -9,14 +9,14 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import static blackjack.view.InputView.inputNames;
-import static blackjack.view.InputView.requestHitOrStay;
+import static blackjack.view.InputView.isRequestHit;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class InputViewTest {
 
     @Test
     @DisplayName("빈 입력으로 이름을 입력한 경우 에러 발생")
-    void inputEmptyName(){
+    void inputEmptyName() {
         setInput("\n");
         assertThatThrownBy(() -> inputNames())
                 .isInstanceOf(IllegalArgumentException.class)
@@ -33,9 +33,9 @@ public class InputViewTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"123,456,789","!!!,***"})
+    @ValueSource(strings = {"123,456,789", "!!!,***"})
     @DisplayName("허용되지 않는 문자로 이름을 입력한 경우 에러 발생")
-    void inputWrongCharName(String input){
+    void inputWrongCharName(String input) {
         setInput(input);
         assertThatThrownBy(() -> inputNames())
                 .isInstanceOf(IllegalArgumentException.class)
@@ -44,19 +44,19 @@ public class InputViewTest {
 
     @Test
     @DisplayName("빈 입력으로 hitOrNot을 입력한 경우 에러 발생")
-    void inputEmptyHitOrNot(){
+    void inputEmptyHitOrNot() {
         setInput("\n");
-        assertThatThrownBy(() -> requestHitOrStay("pobi"))
+        assertThatThrownBy(() -> isRequestHit("pobi"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("입력은 빈 입력일 수 없습니다.");
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"1","@","a"})
+    @ValueSource(strings = {"1", "@", "a"})
     @DisplayName("허용되지 않다 문자로 hitOrNot을 입력한 경우 에러 발생")
-    void inputWrongHitOrNot(String input){
+    void inputWrongHitOrNot(String input) {
         setInput(input);
-        assertThatThrownBy(() -> requestHitOrStay("pobi"))
+        assertThatThrownBy(() -> isRequestHit("pobi"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("혹은")
                 .hasMessageContaining("만 입력 가능합니다.");

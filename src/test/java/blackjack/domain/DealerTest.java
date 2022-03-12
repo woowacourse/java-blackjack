@@ -17,7 +17,7 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(Symbol.HEART, Denomination.TWO));
 
-        assertThat(dealer.needMoreCard()).isTrue();
+        assertThat(dealer.isAbleToAddCard()).isTrue();
     }
 
     @Test
@@ -27,6 +27,6 @@ class DealerTest {
         dealer.addCard(new Card(Symbol.HEART, Denomination.NINE));
         dealer.addCard(new Card(Symbol.SPADE, Denomination.NINE));
 
-        assertThat(dealer.needMoreCard()).isFalse();
+        assertThat(dealer.isAbleToAddCard()).isFalse();
     }
 }
