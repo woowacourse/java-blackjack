@@ -4,6 +4,8 @@ import BlackJack.domain.Card.CardFactory;
 import BlackJack.domain.Card.Cards;
 import BlackJack.domain.Result;
 
+import static BlackJack.domain.Card.Cards.BUST_LINE;
+
 public class Dealer extends User {
 
     private static final int DEALER_ADD_CARD_LIMIT = 16;
@@ -25,10 +27,10 @@ public class Dealer extends User {
     }
 
     public Result compare(Player player) {
-        if (player.getScore() > 21 || (this.getScore() > player.getScore() && this.getScore() <= 21)) {
+        if (player.getScore() > BUST_LINE || (this.getScore() > player.getScore() && this.getScore() <= BUST_LINE)) {
             return Result.LOSE;
         }
-        if (this.getScore() > 21 || this.getScore() < player.getScore() && player.getScore() <= 21) {
+        if (this.getScore() > BUST_LINE || this.getScore() < player.getScore() && player.getScore() <= BUST_LINE) {
             dealerLoseCount++;
             return Result.WIN;
         }

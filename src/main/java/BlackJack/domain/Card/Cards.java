@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Cards {
     public static final int BUST_LINE = 21;
-    public static final int EXTRA_SCORE = 10;
+    private static final int EXTRA_SCORE = 10;
     private final List<Card> deck;
 
     public Cards(List<Card> deck) {
