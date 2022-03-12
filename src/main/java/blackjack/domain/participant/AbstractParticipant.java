@@ -73,15 +73,25 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     @Override
-    public GameOutcome fightResult(final Participant participant) {
+    public GameOutcome fight(final Participant participant) {
         validateFightGame(participant);
-        return cards.fightResult(new Cards(participant.cards()));
+        return GameOutcome.calculateOutcome(this, participant);
     }
 
     private void validateFightGame(final Participant participant) {
         if (this.canDraw() || participant.canDraw()) {
             throw new IllegalStateException("턴이 종료되지 않아 비교할 수 없습니다.");
         }
+    }
+
+    @Override
+    public boolean isBust() {
+        return cards.isBust();
+    }
+
+    @Override
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
     }
 
     @Override

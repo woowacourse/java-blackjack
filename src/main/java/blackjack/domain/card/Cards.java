@@ -1,10 +1,7 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.GameOutcome.DRAW;
-import static blackjack.domain.GameOutcome.LOSE;
-import static blackjack.domain.GameOutcome.WIN;
-
 import blackjack.domain.GameOutcome;
+import blackjack.domain.participant.Participant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -51,35 +48,12 @@ public class Cards {
         return List.copyOf(cards);
     }
 
-    public GameOutcome fightResult(final Cards compareCards) {
-        if (this.isBust() || compareCards.isBust()) {
-            return bustGameFightResult(compareCards);
-        } else if (this.isBlackJack() || compareCards.isBlackJack()) {
-            return blackJackGameFightResult(compareCards);
-        }
-        return GameOutcome.calculateOutcome(this.calculateScore(), compareCards.calculateScore());
+    public GameOutcome fight(final Participant dealer) {
+        return GameOutcome.calculateOutcome((Participant) this, dealer);
     }
 
-    private GameOutcome bustGameFightResult(final Cards compareCards) {
-        if (this.isBust() && compareCards.isBust()) {
-            return DRAW;
-        } else if (this.isBust()) {
-            return LOSE;
-        }
-        return WIN;
-    }
-
-    private boolean isBust() {
+    public boolean isBust() {
         return calculateScore() > BLACK_JACK_TARGET_NUMBER;
-    }
-
-    private GameOutcome blackJackGameFightResult(final Cards compareCards) {
-        if (this.isBlackJack() && compareCards.isBlackJack()) {
-            return DRAW;
-        } else if (this.isBlackJack()) {
-            return WIN;
-        }
-        return LOSE;
     }
 
     public boolean isBlackJack() {

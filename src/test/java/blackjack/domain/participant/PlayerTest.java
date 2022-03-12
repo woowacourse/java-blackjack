@@ -111,7 +111,7 @@ class PlayerTest {
     void outcomeResultException() {
         final Participant player = Player.createNewPlayer("user", cards);
         final Participant dealer = Dealer.createNewDealer(createCards(Card.of(HEART, TEN), Card.of(HEART, SEVEN)));
-        assertThatThrownBy(() -> player.fightResult(dealer))
+        assertThatThrownBy(() -> player.fight(dealer))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("턴이 종료되지 않아 비교할 수 없습니다.");
     }

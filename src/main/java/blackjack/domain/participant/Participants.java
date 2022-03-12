@@ -116,7 +116,7 @@ public class Participants {
 
     private Map<String, GameOutcome> calculateOutcomeResultWithDealer(final Participant dealer) {
         return participants.stream()
-                .map(player -> entry(player.getName(), player.fightResult(dealer)))
+                .map(player -> entry(player.getName(), player.fight(dealer)))
                 .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (v1, v2) -> v1, LinkedHashMap::new));
     }
 }

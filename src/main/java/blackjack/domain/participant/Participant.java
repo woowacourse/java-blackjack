@@ -16,9 +16,13 @@ public interface Participant {
 
     int calculateResultScore();
 
-    GameOutcome fightResult(final Participant participant);
+    GameOutcome fight(final Participant participant);
 
     List<Card> cards();
 
     String getName();
+
+    boolean isBlackJack();
+
+    boolean isBust();
 }
