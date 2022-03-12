@@ -1,16 +1,20 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.result.Result;
 
 import java.util.List;
 
 public class Participant extends Player {
 
-    private Result winState = Result.LOSE;
+    private static final int MAX_SCORE = 21;
+
+    private Result result;
 
     public Participant(final List<Card> cards, final String name) {
         super(cards, name);
         validateEmpty(name);
+        result = Result.LOSE;
     }
 
     private void validateEmpty(final String name) {
@@ -19,15 +23,16 @@ public class Participant extends Player {
         }
     }
 
-    public void win() {
-        this.winState = Result.WIN;
+    public boolean acceptableCard() {
+        return cards.calculateScoreByAceOne() <= MAX_SCORE;
     }
 
-    public boolean isOverMaxScore() {
-        return cards.calculateScoreByAceOne() > MAX_SCORE;
+    public void makeWin() {
+        result = Result.WIN;
     }
 
-    public Result getWinState() {
-        return this.winState;
+    public Result getResult() {
+        return result;
     }
+
 }

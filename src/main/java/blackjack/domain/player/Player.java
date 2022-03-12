@@ -7,8 +7,6 @@ import java.util.List;
 
 public abstract class Player {
 
-    protected static final int MAX_SCORE = 21;
-
     protected final Cards cards;
     private final String name;
 

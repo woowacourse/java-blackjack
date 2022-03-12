@@ -1,6 +1,9 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.Lose;
+import blackjack.domain.result.Win;
 
 import java.util.List;
 
@@ -10,26 +13,11 @@ public class Dealer extends Player {
     private static final int FIRST = 0;
     private static final String DEALER_NAME = "딜러";
 
-    private final ResultCount win;
-    private final ResultCount lose;
+    private final DealerResult result;
 
     public Dealer(final List<Card> cards) {
         super(cards, DEALER_NAME);
-        this.win = new ResultCount(Result.WIN);
-        this.lose = new ResultCount(Result.LOSE);
-    }
-
-    public void compete(final Participant participant) {
-        if (isDealerWin(calculateFinalScore(), participant.calculateFinalScore())) {
-            win.increaseCount();
-            return;
-        }
-        participant.win();
-        lose.increaseCount();
-    }
-
-    private boolean isDealerWin(final int dealerScore, final int participantScore) {
-        return participantScore > MAX_SCORE || (dealerScore <= MAX_SCORE && dealerScore >= participantScore);
+        result = new DealerResult();
     }
 
     public boolean acceptableCard() {
@@ -40,11 +28,19 @@ public class Dealer extends Player {
         return getCards().get(FIRST);
     }
 
-    public ResultCount getWinResultCount() {
-        return this.win;
+    public void increaseWinCount() {
+        result.increaseWin();
     }
 
-    public ResultCount getLoseResultCount() {
-        return this.lose;
+    public void increaseLoseCount() {
+        result.increaseLose();
+    }
+
+    public Win getWin() {
+        return result.getWin();
+    }
+
+    public Lose getLose() {
+        return result.getLose();
     }
 }

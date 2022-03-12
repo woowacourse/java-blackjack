@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.result.Judge;
 
 import java.util.List;
 import java.util.Set;
@@ -39,6 +40,21 @@ public class Players {
         if (names.size() != participants.size()) {
             throw new IllegalArgumentException("[ERROR] 참가자 이름은 중복될 수 없습니다.");
         }
+    }
+
+    public void competeWithParticipants() {
+        for (Participant participant : participants) {
+            compete(participant);
+        }
+    }
+
+    private void compete(Participant participant) {
+        if (Judge.compete(dealer, participant)) {
+            dealer.increaseWinCount();
+            return;
+        }
+        participant.makeWin();
+        dealer.increaseLoseCount();
     }
 
     public Dealer getDealer() {

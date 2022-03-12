@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.player.*;
+import blackjack.domain.result.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,11 +89,13 @@ public class OutputView {
     }
 
     private static void printDealerResult(final Dealer dealer) {
-        System.out.println(dealer.getName() + EXPLAIN_SYMBOL + makeResultToText(dealer.getWinResultCount(), dealer.getLoseResultCount()));
+        System.out.println(dealer.getName() + EXPLAIN_SYMBOL + makeResultToText(dealer));
     }
 
-    private static String makeResultToText(final ResultCount win, final ResultCount lose) {
-        return String.format("%d%s %d%s", win.getCount(), win.getResult().getValue(), lose.getCount(), lose.getResult().getValue());
+    private static String makeResultToText(final Dealer dealer) {
+        Win win = dealer.getWin();
+        Lose lose = dealer.getLose();
+        return String.format("%d%s %d%s", win.getCount(), win.getVerify().getValue(), lose.getCount(), lose.getVerify().getValue());
     }
 
     private static void printParticipantsResult(final List<Participant> participants) {
@@ -101,7 +104,6 @@ public class OutputView {
 
     private static void printParticipantResult(final Participant participant) {
         System.out.print(participant.getName() + EXPLAIN_SYMBOL);
-        System.out.println(participant
-                .getWinState().getValue());
+        System.out.println(participant.getResult().getValue());
     }
 }

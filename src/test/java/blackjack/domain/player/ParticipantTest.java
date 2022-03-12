@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -49,50 +48,38 @@ class ParticipantTest {
     }
 
     @ParameterizedTest
-    @MethodSource("participantList")
-    @DisplayName("참가자는 카드에 따라 올바른 점수를 부여받는다.")
-    void calculateParticipantScore(List<Card> cards, List<Card> addCards, int score) {
+    @MethodSource("notBurstCase")
+    @DisplayName("참가자는 Burst가 되지 않으면 카드를 받을 수 있다.")
+    void acceptCardWhenNotBurst(List<Card> cards, boolean acceptable) {
         Participant participant = new Participant(cards, "pobi");
 
-        for (Card card : addCards) {
-            participant.addCard(card);
-        }
-
-        assertThat(participant.calculateFinalScore())
-                .isEqualTo(score);
+        assertThat(participant.acceptableCard()).isEqualTo(acceptable);
     }
 
-    private static Stream<Arguments> participantList() {
+    private static Stream<Arguments> notBurstCase() {
         return Stream.of(
-                Arguments.of(List.of(
+                Arguments.of(
+                        List.of(
                         new Card(Type.SPADE, Score.EIGHT),
-                        new Card(Type.HEART, Score.EIGHT)
-                ), Collections.emptyList(), 16),
-                Arguments.of(List.of(
-                        new Card(Type.SPADE, Score.ACE),
-                        new Card(Type.HEART, Score.ACE)
-                ), Collections.emptyList(), 12),
-                Arguments.of(List.of(
-                        new Card(Type.SPADE, Score.ACE),
-                        new Card(Type.HEART, Score.ACE)
-                ), List.of(new Card(Type.HEART, Score.NINE)), 21),
-                Arguments.of(List.of(
-                        new Card(Type.SPADE, Score.ACE),
-                        new Card(Type.HEART, Score.ACE)
-                ), List.of(new Card(Type.HEART, Score.NINE),
-                        new Card(Type.DIAMOND, Score.NINE)), 20),
-                Arguments.of(List.of(
-                        new Card(Type.SPADE, Score.ACE),
-                        new Card(Type.HEART, Score.KING)
-                ), Collections.emptyList(), 21),
-                Arguments.of(List.of(
-                        new Card(Type.SPADE, Score.ACE),
-                        new Card(Type.HEART, Score.ACE)
-                ),List.of(new Card(Type.HEART, Score.SIX)), 18),
-                Arguments.of(List.of(
-                        new Card(Type.SPADE, Score.FIVE),
-                        new Card(Type.HEART, Score.SIX)
-                ),List.of(new Card(Type.HEART, Score.ACE)), 12)
+                        new Card(Type.HEART, Score.EIGHT)),
+                        true
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(Type.SPADE, Score.ACE),
+                                new Card(Type.HEART, Score.KING)),
+                        true
+                )
         );
+    }
+
+    @Test
+    @DisplayName("참가자는 Burst가 되면 카드를 받을 수 없다.")
+    void notAcceptCardWhenBurst() {
+        Participant participant = new Participant(List.of(
+                new Card(Type.SPADE, Score.EIGHT),
+                new Card(Type.HEART, Score.EIGHT)), "pobi");
+        participant.addCard(new Card(Type.DIAMOND, Score.SIX));
+        assertThat(participant.acceptableCard()).isEqualTo(false);
     }
 }

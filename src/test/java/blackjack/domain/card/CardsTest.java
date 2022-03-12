@@ -1,8 +1,11 @@
 package blackjack.domain.card;
 
+import blackjack.domain.player.Dealer;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Collections;
@@ -67,6 +70,40 @@ public class CardsTest {
                         new Card(Type.DIAMOND, Score.TWO),
                         new Card(Type.CLOVER, Score.THREE)
                 )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("dealerList")
+    void calculateParticipantScore(List<Card> receivedCards, Card card, int score) {
+        Cards cards = new Cards(receivedCards);
+        cards.addCard(card);
+
+        Assertions.assertThat(cards.calculateFinalScore()).isEqualTo(score);
+    }
+
+    private static Stream<Arguments> dealerList() {
+        return Stream.of(
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.EIGHT),
+                        new Card(Type.HEART, Score.EIGHT)
+                ), new Card(Type.SPADE, Score.EIGHT), 24),
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.EIGHT),
+                        new Card(Type.HEART, Score.NINE)
+                ), new Card(Type.SPADE, Score.EIGHT), 25),
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.ACE),
+                        new Card(Type.HEART, Score.ACE)
+                ), new Card(Type.HEART, Score.NINE), 21),
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.ACE),
+                        new Card(Type.HEART, Score.JACK)
+                ), new Card(Type.HEART, Score.ACE), 12),
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.TWO),
+                        new Card(Type.HEART, Score.EIGHT)
+                ), new Card(Type.HEART, Score.ACE), 21)
         );
     }
 }
