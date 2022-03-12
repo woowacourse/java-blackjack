@@ -1,17 +1,15 @@
 package blackjack.domain.card;
 
+import blackjack.domain.Score;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class Cards {
 
     private static final int INITIAL_CARDS_SIZE = 2;
 
     private final List<Card> cards;
-
-    private static final int BUST_STANDARD = 21;
 
     public Cards(List<Card> cards) {
         Objects.requireNonNull(cards, "[ERROR] 카드는 null일 수 없습니다.");
@@ -41,27 +39,8 @@ public class Cards {
         cards.add(card);
     }
 
-    public int calculateScore() {
-        int minimumScore = calculateMinimumScore();
-        if (containsAce()) {
-            return IntStream.rangeClosed(0, 1)
-                    .map(i -> minimumScore + (1 - i) * 10)
-                    .filter(i -> i <= BUST_STANDARD)
-                    .findFirst()
-                    .orElse(minimumScore);
-        }
-        return minimumScore;
-    }
-
-    private int calculateMinimumScore() {
-        return cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
-    }
-
-    private boolean containsAce() {
-        return cards.stream()
-                .anyMatch(card -> card.isSameValueWith(Denomination.ACE));
+    public Score calculateScore() {
+        return Score.from(cards);
     }
 
     public List<Card> getCards() {

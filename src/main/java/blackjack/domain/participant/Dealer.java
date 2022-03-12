@@ -15,6 +15,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isHittable() {
-        return calculateSum() < HIT_STANDARD;
+        return getScore() < HIT_STANDARD;
     }
 }

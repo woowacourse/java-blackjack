@@ -62,8 +62,8 @@ public class winResult {
     }
 
     private void judgeWithoutBust(Dealer dealer, Player player) {
-        int dealerScore = dealer.calculateSum();
-        int playerScore = player.calculateSum();
+        int dealerScore = dealer.getScore();
+        int playerScore = player.getScore();
         if (dealerScore == playerScore) {
             updateResult(player, Judgement.DRAW);
             return;

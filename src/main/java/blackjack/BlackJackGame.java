@@ -48,7 +48,7 @@ public class BlackJackGame {
     private void alertStart(Dealer dealer, List<Player> players) {
         OutputView.printStartMessage(dealer, players);
         OutputView.printDealerFirstCard(dealer);
-        players.forEach(player -> OutputView.printParticipantCards(player, player.calculateSum()));
+        players.forEach(player -> OutputView.printParticipantCards(player, player.getScore()));
     }
 
     private void proceedPlayersTurn(List<Player> players, CardDeck deck) {
@@ -58,7 +58,7 @@ public class BlackJackGame {
     private void proceedPlayer(Player player, CardDeck deck) {
         while (player.isHittable() && inputHitRequest(player) == HitRequest.YES) {
             player.hit(deck);
-            OutputView.printParticipantCards(player, player.calculateSum());
+            OutputView.printParticipantCards(player, player.getScore());
         }
         showStopReason(player);
     }
@@ -91,9 +91,9 @@ public class BlackJackGame {
 
     private void showResult(Dealer dealer, List<Player> players) {
         OutputView.printCardResultMessage();
-        OutputView.printParticipantCards(dealer, dealer.calculateSum());
+        OutputView.printParticipantCards(dealer, dealer.getScore());
         players.forEach(
-                player -> OutputView.printParticipantCards(player, player.calculateSum()));
+                player -> OutputView.printParticipantCards(player, player.getScore()));
         OutputView.printWinResult(new winResult(dealer, players));
     }
 }

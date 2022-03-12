@@ -33,8 +33,9 @@ public abstract class Participant {
         return Rule.INSTANCE.isBlackJack(cards.getCards());
     }
 
-    public int calculateSum() {
-        return Rule.INSTANCE.calculateSum(cards.getCards());
+    public int getScore() {
+        return cards.calculateScore()
+                .getValue();
     }
 
     public List<Card> getCards() {
