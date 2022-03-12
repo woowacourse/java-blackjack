@@ -1,14 +1,14 @@
 package blackjack;
 
-import blackjack.domain.HitRequest;
 import blackjack.domain.Name;
 import blackjack.domain.WinResult;
 import blackjack.domain.card.BlackJackCardsGenerator;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.dto.ParticipantInitialResponse;
-import blackjack.domain.dto.ParticipantResponse;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.HitRequest;
+import blackjack.dto.ParticipantInitialResponse;
+import blackjack.dto.ParticipantResponse;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
