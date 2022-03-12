@@ -1,7 +1,5 @@
 package BlackJack.view;
 
-import BlackJack.dto.UserDto;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -30,8 +28,8 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static boolean askOneMoreCard(UserDto player) {
-        System.out.printf(ONE_MORE_CARD_MESSAGE, player.getName());
+    public static boolean askOneMoreCard(String playerName) {
+        System.out.printf(ONE_MORE_CARD_MESSAGE, playerName);
         String input = input();
         validateYesOrNo(input);
         return "y".equals(input);
