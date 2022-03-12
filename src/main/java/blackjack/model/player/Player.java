@@ -7,8 +7,8 @@ import blackjack.model.cards.ScoreCards;
 
 public class Player {
 
-    public static final Score HIT_BOUNDARY = new Score(21);
-    public static final int OPEN_CARD_COUNT = 2;
+    private static final Score HIT_BOUNDARY = new Score(21);
+    private static final int OPEN_CARD_COUNT = 2;
 
     private final ScoreCards cards;
     private final Name name;

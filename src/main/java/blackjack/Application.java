@@ -74,8 +74,8 @@ public class Application {
     }
 
     private static boolean isKeepTakeCard(Name name) {
-        String option = InputView.chooseOptions(name.value());
-        return option.equals("y");
+        String option = InputView.chooseOptions(name.value(), "y", "n", "Y", "N");
+        return option.equals("y") || option.equals("Y");
     }
 
     private static void takeDealerCard(Dealer dealer, CardDispenser cardDispenser) {

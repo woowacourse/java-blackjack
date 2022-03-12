@@ -3,46 +3,40 @@ package blackjack.model.blackjack;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 final class ShuffledCardDispenser implements CardDispenser {
 
-    private static final List<Card> CARD_POOL = createCardPool();
-
-    private final List<Card> deck;
-    private int index;
+    private final Queue<Card> deck;
 
     ShuffledCardDispenser() {
-        this.deck = shuffledCards();
-        this.index = 0;
+        this.deck = new LinkedList<>(shuffledCards());
     }
 
     private List<Card> shuffledCards() {
-        List<Card> cards = new ArrayList<>(CARD_POOL);
-        Collections.shuffle(cards);
-        return Collections.unmodifiableList(cards);
+        List<Card> cardPool = createCardPool();
+        Collections.shuffle(cardPool);
+        return cardPool;
+    }
+
+    private List<Card> createCardPool() {
+        return Stream.of(Suit.values())
+            .flatMap(
+                suit -> Stream.of(Rank.values())
+                    .map(rank -> new Card(rank, suit)))
+            .collect(Collectors.toList());
     }
 
     @Override
     public Card issue() {
-        if (index >= deck.size()) {
+        if (deck.isEmpty()) {
             throw new IllegalStateException("남아있는 카드가 없습니다.");
         }
-        return deck.get(index++);
-    }
-
-    private static List<Card> createCardPool() {
-        return Stream.of(Suit.values())
-            .flatMap(ShuffledCardDispenser::eachSuitCards)
-            .collect(Collectors.toUnmodifiableList());
-    }
-
-    private static Stream<Card> eachSuitCards(Suit suit) {
-        return Stream.of(Rank.values())
-            .map(rank -> new Card(rank, suit));
+        return deck.remove();
     }
 }

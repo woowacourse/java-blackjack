@@ -125,7 +125,7 @@ public class DealerTest {
     @Test
     @DisplayName("딜러 카드 발급")
     void takeCards() {
-        Player dealer = new Dealer(JACK, THREE);
+        Dealer dealer = new Dealer(JACK, THREE);
         dealer.take(ACE);
         assertThat(dealer.score()).isEqualTo(new Score(14));
     }
@@ -133,7 +133,7 @@ public class DealerTest {
     @Test
     @DisplayName("딜러 카드 발급 후 재 발급 불가")
     void takeCardAndIsHittable() {
-        Player dealer = new Dealer(JACK, SIX);
+        Dealer dealer = new Dealer(JACK, SIX);
         dealer.take(ACE);
         assertThat(dealer.isHittable()).isFalse();
     }

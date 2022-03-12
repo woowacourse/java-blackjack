@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class InputView {
 
@@ -19,16 +20,19 @@ public class InputView {
         return text;
     }
 
-    public static String chooseOptions(String name) {
+    public static String chooseOptions(String name, String... options) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
         String value = SCANNER.nextLine();
 
-        if (value.matches("(y|n)")) {
+        if (isValidOption(value, options)) {
             return value;
         }
 
         return chooseOptions(name);
     }
 
+    private static boolean isValidOption(String value, String... options) {
+        return Stream.of(options).anyMatch(option -> option.equals(value));
+    }
 
 }
