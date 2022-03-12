@@ -3,41 +3,39 @@ package blackjack.domain.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Player;
 
 public class TurnManager {
 
-    private final Deck deck = new Deck();
+    private static final int DEFAULT_TURN_INDEX = 0;
+    public static final String TURN_IS_END_MESSAGE = "턴이 종료되어 플레이어를 가져올 수 없습니다.";
+
     private final List<Player> players;
-    private int currentPlayerIndex;
+    private int turnIndex;
 
     public TurnManager(List<Player> players) {
-        currentPlayerIndex = 0;
+        turnIndex = DEFAULT_TURN_INDEX;
         this.players = new ArrayList<>(players);
     }
 
-    public boolean isAllTurnEnd() {
-        return currentPlayerIndex == players.size();
-    }
-
-    public boolean canHitStatus() {
-        return players.get(currentPlayerIndex).canHit();
-    }
-
-    public boolean doPlayerTurn(boolean isHit) {
-        if (!isHit) {
-            return false;
-        }
-        players.get(currentPlayerIndex).addCard(deck.pickCard());
-        return true;
+    public boolean isEndAllTurn() {
+        return turnIndex == players.size();
     }
 
     public Player getCurrentPlayer() {
-        return players.get(currentPlayerIndex);
+        validateTurnIndex();
+        return players.get(turnIndex);
+    }
+
+    private void validateTurnIndex() {
+        if (turnIndex >= players.size()) {
+            throw new IllegalArgumentException(TURN_IS_END_MESSAGE);
+        }
     }
 
     public void turnToNext() {
-        currentPlayerIndex++;
+        if (turnIndex < players.size()) {
+            turnIndex++;
+        }
     }
 }

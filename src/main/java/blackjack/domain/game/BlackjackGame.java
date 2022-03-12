@@ -1,7 +1,6 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 
 public class BlackjackGame {
@@ -17,8 +16,17 @@ public class BlackjackGame {
         participants.dealInitialCards(deck);
     }
 
-    public void hitCard(Participant participant) {
-        participant.addCard(deck.pickCard());
+    public void playPlayerTurn(TurnManager turnManager) {
+        turnManager.getCurrentPlayer().addCard(deck.pickCard());
+    }
+
+    public int playDealerTurnAndReturnTurnCount() {
+        int count = 0;
+        while (participants.getDealer().checkMustHit()) {
+            participants.getDealer().addCard(deck.pickCard());
+            count++;
+        }
+        return count;
     }
 
     public Participants getParticipants() {
