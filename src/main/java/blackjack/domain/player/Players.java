@@ -22,16 +22,20 @@ public class Players {
         players.offer(players.poll());
     }
 
-    public List<Player> getPlayers() {
-        return new ArrayList<>(players);
-    }
-
     public void passTurnUntilHitable() {
         int count = 0;
         while (count < 8 && !getCurrentTurn().isAbleToHit()) {
             passTurnToNext();
             count++;
         }
+    }
+
+    public boolean isPossibleToPlay() {
+        boolean isPossibleToPlay = false;
+        for (Player player : players) {
+            isPossibleToPlay |= player.isAbleToHit();
+        }
+        return isPossibleToPlay;
     }
 
     public List<Player> toList() {

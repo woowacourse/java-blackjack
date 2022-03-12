@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import static blackjack.domain.card.Symbol.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@DisplayName("Players 클래스")
 class PlayersTest {
 
     Player first;
@@ -88,5 +90,50 @@ class PlayersTest {
 
         assertThatThrownBy(() -> new Players(List.of(first, second)))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+
+    @Nested
+    @DisplayName("isPossibleToPlay 메서드는")
+    class Describe_isPossibleToPlay {
+
+        private Player bustPlayer;
+        private Player stayPlayer;
+        private Player playablePlayer;
+
+        @BeforeEach
+        void setUp() {
+            bustPlayer = new Player("1", Cards.of(List.of(new Card(CLOVER, JACK), new Card(CLOVER, QUEEN))));
+            bustPlayer.addCard(new Card(HEART, TWO));
+
+            stayPlayer = new Player("2", Cards.of(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, THREE))));
+            stayPlayer.stay();
+
+            playablePlayer = new Player("2", Cards.of(List.of(new Card(DIAMOND, JACK), new Card(DIAMOND, THREE))));
+        }
+
+        @Nested
+        @DisplayName("플레이 가능한 플레이어가 남아있다면")
+        class Context_with_remain_playable_player {
+
+            @Test
+            @DisplayName("참을 반환한다")
+            void it_returns_true() {
+                Players players = new Players(List.of(playablePlayer, bustPlayer));
+                assertThat(players.isPossibleToPlay()).isTrue();
+            }
+        }
+
+        @Nested
+        @DisplayName("플레이 가능한 플레이어가 남아있지 않다면")
+        class Context_with_no_playable_player {
+
+            @Test
+            @DisplayName("거짓을 반환한다")
+            void it_returns_false() {
+                Players players = new Players(List.of(stayPlayer, bustPlayer));
+                assertThat(players.isPossibleToPlay()).isFalse();
+            }
+        }
     }
 }

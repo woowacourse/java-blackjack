@@ -35,11 +35,7 @@ public class Game {
     }
 
     public boolean isPossibleToPlay() {
-        boolean isPossibleToPlay = false;
-        for (Player player : players.getPlayers()) {
-            isPossibleToPlay |= player.isAbleToHit();
-        }
-        return isPossibleToPlay;
+        return players.isPossibleToPlay();
     }
 
     public String getCurrentHitablePlayerName() {
@@ -61,10 +57,6 @@ public class Game {
 
     public List<Player> getPlayersToList() {
         return players.toList();
-    }
-
-    public Player getCurrentPlayer() {
-        return players.getCurrentTurn();
     }
 
     public Map<String, String> getPlayerResults() {
