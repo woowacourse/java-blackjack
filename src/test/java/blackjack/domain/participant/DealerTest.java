@@ -95,7 +95,7 @@ public class DealerTest {
         boolean actual = dealer.isHittable();
 
         // then
-        assertThat(actual).isEqualTo(true);
+        assertThat(actual).isTrue();
     }
 
     @Test
@@ -113,6 +113,6 @@ public class DealerTest {
         boolean actual = dealer.isHittable();
 
         // then
-        assertThat(actual).isEqualTo(false);
+        assertThat(actual).isFalse();
     }
 }
