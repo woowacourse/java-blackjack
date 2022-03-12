@@ -25,15 +25,16 @@ public class CardDeckTest {
     @Test
     @DisplayName("카드덱 수동 생성 테스트")
     void deck_manual_create() {
+        //given
+        final PlayingCard expectedCard = new PlayingCard(Suit.CLUBS, Denomination.FIVE);
+
         Stack<PlayingCard> playingCards = new Stack<>();
-        playingCards.push(new PlayingCard(Suit.CLUBS, Denomination.FIVE));
-        playingCards.push(new PlayingCard(Suit.CLUBS, Denomination.SIX));
-        playingCards.push(new PlayingCard(Suit.CLUBS, Denomination.SEVEN));
+        playingCards.push(expectedCard);
 
-        final CardDeck cardDeck = new CardDeck(() -> playingCards);
-        final PlayingCard poppedCard = cardDeck.pop();
+        //when
+        final PlayingCard card = new CardDeck(() -> playingCards).pop();
 
-        assertThat(poppedCard).isEqualTo(new PlayingCard(Suit.CLUBS, Denomination.SEVEN));
-        System.out.println();
+        //then
+        assertThat(card).isEqualTo(expectedCard);
     }
 }

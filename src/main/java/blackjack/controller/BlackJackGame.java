@@ -85,11 +85,15 @@ public class BlackJackGame {
     private void playGame(Player gambler, CardDeck cardDeck) {
         PlayerDto currentGamblerDto = PlayerDto.from(gambler);
 
-        while (askHitOrStay(currentGamblerDto).equals(BlackJackCommand.YES) && !isBurst(gambler, cardDeck)) {
+        while (isHit(currentGamblerDto) && !isBurst(gambler, cardDeck)) {
             outputView.printCards(PlayerDto.from(gambler));
         }
 
         outputView.printCards(PlayerDto.from(gambler));
+    }
+
+    private boolean isHit(final PlayerDto currentGamblerDto) {
+        return askHitOrStay(currentGamblerDto).equals(BlackJackCommand.YES);
     }
 
     private BlackJackCommand askHitOrStay(final PlayerDto currentGamblerDto) {

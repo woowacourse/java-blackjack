@@ -25,7 +25,7 @@ public class BlackJackResultTest {
 
     @Test
     @DisplayName("딜러에게 겜블러들을 전달해서 승무패를 반환받는다")
-    void judgeByDealer() {
+    void judge_by_dealer() {
         // given &  when
         BlackJackResult blackJackResult = BlackJackResult.of(dealer, gamblers);
         final Map<GameResult, Integer> dealerResult = blackJackResult.getDealerResult();

@@ -14,8 +14,7 @@ public class Dealer extends Player {
     @Override
     public boolean isFinished(final CardDeck cardDeck) {
         playingCards.addCard(cardDeck.pop());
-        final int currentResult = playingCards.getCardSum();
-        return currentResult > GET_CARD_UPPER_BOUND;
+        return playingCards.getCardSum() > GET_CARD_UPPER_BOUND;
     }
 
     @Override

@@ -13,8 +13,7 @@ public class Gambler extends Player {
     @Override
     public boolean isFinished(final CardDeck cardDeck) {
         playingCards.addCard(cardDeck.pop());
-        final int currentResult = playingCards.getCardSum();
-        return currentResult > BURST_CRITERIA;
+        return playingCards.getCardSum() > BURST_CRITERIA;
     }
 
     @Override
