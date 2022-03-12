@@ -2,7 +2,6 @@ package domain.player;
 
 import static java.util.stream.Collectors.joining;
 
-import domain.card.CardDeck;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,12 +24,6 @@ public class Gamblers {
 
     public List<Gambler> getGamblers() {
         return gamblers;
-    }
-
-    public void addCard(CardDeck cardDeck) {
-        gamblers.forEach(
-                gambler -> gambler.addCard(cardDeck.getCard())
-        );
     }
 
     public String getGamblerNames() {
