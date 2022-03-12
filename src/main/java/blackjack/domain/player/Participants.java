@@ -16,47 +16,47 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Players {
+public class Participants {
 
-    private final List<Player> players;
+    private final List<Participant> participants;
     private int currentTurnIndex;
 
-    public Players(final List<Player> players) {
-        Objects.requireNonNull(players, "players는 null로 생성할 수 없습니다.");
-        this.players = new ArrayList<>(players);
-        validateDuplicationPlayers(this.players);
+    public Participants(final List<Participant> participants) {
+        Objects.requireNonNull(participants, "players는 null로 생성할 수 없습니다.");
+        this.participants = new ArrayList<>(participants);
+        validateDuplicationPlayers(this.participants);
     }
 
-    private void validateDuplicationPlayers(final List<Player> players) {
-        if (calculateDistinctCount(players) != players.size()) {
+    private void validateDuplicationPlayers(final List<Participant> participants) {
+        if (calculateDistinctCount(participants) != participants.size()) {
             throw new IllegalArgumentException("이름 간에 중복이 있으면 안됩니다.");
         }
     }
 
-    private int calculateDistinctCount(final List<Player> players) {
-        return (int) players.stream()
-                .map(Player::getName)
+    private int calculateDistinctCount(final List<Participant> participants) {
+        return (int) participants.stream()
+                .map(Participant::getName)
                 .distinct()
                 .count();
     }
 
-    public static Players createByPlayerNames(final List<String> playerNames, final CardDeck cardDeck) {
-        final List<Player> players = createPlayers(playerNames, cardDeck);
-        return new Players(players);
+    public static Participants createByPlayerNames(final List<String> playerNames, final CardDeck cardDeck) {
+        final List<Participant> participants = createPlayers(playerNames, cardDeck);
+        return new Participants(participants);
     }
 
-    private static List<Player> createPlayers(final List<String> playerNames, final CardDeck cardDeck) {
+    private static List<Participant> createPlayers(final List<String> playerNames, final CardDeck cardDeck) {
         return playerNames.stream()
                 .map(name -> createPlayer(name, cardDeck))
                 .collect(Collectors.toList());
     }
 
-    private static ParticipatingPlayer createPlayer(final String name, final CardDeck cardDeck) {
-        return ParticipatingPlayer.createNewPlayer(name, cardDeck.provideFirstDrawCards());
+    private static Player createPlayer(final String name, final CardDeck cardDeck) {
+        return Player.createNewPlayer(name, cardDeck.provideFirstDrawCards());
     }
 
     public List<PlayerCards> getPlayerFirstCards() {
-        return players.stream()
+        return participants.stream()
                 .map(PlayerCards::toPlayerFirstCards)
                 .collect(Collectors.toUnmodifiableList());
     }
@@ -74,30 +74,30 @@ public class Players {
     }
 
     public boolean isAllTurnEnd() {
-        return players.size() <= currentTurnIndex;
+        return participants.size() <= currentTurnIndex;
     }
 
     public PlayerCards drawCurrentPlayer(final Card card) {
-        final Player currentPlayer = currentTurnPlayer();
-        currentPlayer.draw(card);
-        checkCanTurnNext(currentPlayer);
-        return PlayerCards.toPlayerCards(currentPlayer);
+        final Participant currentParticipant = currentTurnPlayer();
+        currentParticipant.draw(card);
+        checkCanTurnNext(currentParticipant);
+        return PlayerCards.toPlayerCards(currentParticipant);
     }
 
-    private void checkCanTurnNext(final Player currentPlayer) {
-        if (!currentPlayer.canDraw()) {
+    private void checkCanTurnNext(final Participant currentParticipant) {
+        if (!currentParticipant.canDraw()) {
             currentTurnIndex++;
         }
     }
 
-    private Player currentTurnPlayer() {
+    private Participant currentTurnPlayer() {
         validateAllTurnEnd();
-        return players.get(currentTurnIndex);
+        return participants.get(currentTurnIndex);
     }
 
     public String getCurrentTurnPlayerName() {
         validateAllTurnEnd();
-        return players.get(currentTurnIndex).getName();
+        return participants.get(currentTurnIndex).getName();
     }
 
     public PlayerCards getCurrentTurnPlayerCards() {
@@ -105,17 +105,17 @@ public class Players {
     }
 
     public List<PlayerScoreResult> getPlayerScoreResults() {
-        return players.stream()
+        return participants.stream()
                 .map(PlayerScoreResult::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public OutComeResult outcomeResult(Player dealer) {
+    public OutComeResult outcomeResult(Participant dealer) {
         return OutComeResult.from(calculateOutcomeResultWithDealer(dealer));
     }
 
-    private Map<String, GameOutcome> calculateOutcomeResultWithDealer(final Player dealer) {
-        return players.stream()
+    private Map<String, GameOutcome> calculateOutcomeResultWithDealer(final Participant dealer) {
+        return participants.stream()
                 .map(player -> entry(player.getName(), player.fightResult(dealer)))
                 .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (v1, v2) -> v1, LinkedHashMap::new));
     }

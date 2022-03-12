@@ -6,7 +6,7 @@ import blackjack.domain.card.Cards;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractPlayer implements Player {
+public abstract class AbstractParticipant implements Participant {
 
     private static final int FIRST_DRAW_CARD_SIZE = 2;
 
@@ -14,7 +14,7 @@ public abstract class AbstractPlayer implements Player {
     private final Cards cards;
     private boolean turnState;
 
-    public AbstractPlayer(final String name, final Cards cards, final boolean turnState) {
+    public AbstractParticipant(final String name, final Cards cards, final boolean turnState) {
         Objects.requireNonNull(name, "플레이어의 이름은 null이 들어올 수 없습니다.");
         Objects.requireNonNull(cards, "보유 카드에는 null이 들어올 수 없습니다.");
         validateEmptyName(name);
@@ -71,13 +71,13 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public GameOutcome fightResult(final Player player) {
-        validateFightGame(player);
-        return cards.fightResult(new Cards(player.cards()));
+    public GameOutcome fightResult(final Participant participant) {
+        validateFightGame(participant);
+        return cards.fightResult(new Cards(participant.cards()));
     }
 
-    private void validateFightGame(final Player player) {
-        if (this.canDraw() || player.canDraw()) {
+    private void validateFightGame(final Participant participant) {
+        if (this.canDraw() || participant.canDraw()) {
             throw new IllegalStateException("턴이 종료되지 않아 비교할 수 없습니다.");
         }
     }

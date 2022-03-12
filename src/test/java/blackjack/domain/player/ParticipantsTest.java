@@ -16,12 +16,12 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayersTest {
+class ParticipantsTest {
 
     @Test
     @DisplayName("null으로 생성하려는 경우 예외를 발생시킨다.")
     void createExceptionByNull() {
-        assertThatThrownBy(() -> new Players(null))
+        assertThatThrownBy(() -> new Participants(null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("players는 null로 생성할 수 없습니다.");
     }
@@ -29,13 +29,13 @@ class PlayersTest {
     @Test
     @DisplayName("중복된 이름들로 생성 시 예외를 발생시킨다.")
     void createExceptionByDuplication() {
-        final Player firstplayer = ParticipatingPlayer
+        final Participant firstplayer = Player
                 .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
-        final Player secondplayer = ParticipatingPlayer
+        final Participant secondplayer = Player
                 .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
-        final List<Player> players = Arrays.asList(firstplayer, secondplayer);
+        final List<Participant> participants = Arrays.asList(firstplayer, secondplayer);
 
-        assertThatThrownBy(() -> new Players(players))
+        assertThatThrownBy(() -> new Participants(participants))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름 간에 중복이 있으면 안됩니다.");
     }
@@ -43,22 +43,22 @@ class PlayersTest {
     @Test
     @DisplayName("현재 턴의 플레이어가 버스트될 경우 다음 플레이어로 턴을 넘긴다.")
     void drawCurrentPlayerIsBust() {
-        final Player player = ParticipatingPlayer
+        final Participant participant = Player
                 .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
-        final Players players = new Players(Collections.singletonList(player));
-        players.drawCurrentPlayer(Card.of(SPADE, JACK));
-        assertTrue(players.isAllTurnEnd());
+        final Participants participants = new Participants(Collections.singletonList(participant));
+        participants.drawCurrentPlayer(Card.of(SPADE, JACK));
+        assertTrue(participants.isAllTurnEnd());
     }
 
     @Test
     @DisplayName("모든 플레이어의 턴이 종료되었는데 드로우하려고하면 예외가 발생해야 한다.")
     void drawCurrentPlayerExceptionByEndAllTurn() {
-        final Player player =
-                ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
-        final Players players = new Players(Collections.singletonList(player));
-        players.drawCurrentPlayer(Card.of(SPADE, JACK));
+        final Participant participant =
+                Player.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Participants participants = new Participants(Collections.singletonList(participant));
+        participants.drawCurrentPlayer(Card.of(SPADE, JACK));
 
-        assertThatThrownBy(() -> players.drawCurrentPlayer(Card.of(SPADE, A)))
+        assertThatThrownBy(() -> participants.drawCurrentPlayer(Card.of(SPADE, A)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("모든 턴이 종료되었습니다.");
     }
@@ -66,12 +66,12 @@ class PlayersTest {
     @Test
     @DisplayName("모든 턴이 종료되었을 때 턴 증가를 할 수 없다.")
     void turnToNextPlayerExceptionByEndAllTurn() {
-        final Player player =
-                ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
-        final Players players = new Players(Collections.singletonList(player));
-        players.turnToNextPlayer();
+        final Participant participant =
+                Player.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Participants participants = new Participants(Collections.singletonList(participant));
+        participants.turnToNextPlayer();
 
-        assertThatThrownBy(() -> players.turnToNextPlayer())
+        assertThatThrownBy(() -> participants.turnToNextPlayer())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("모든 턴이 종료되었습니다.");
     }
@@ -79,11 +79,12 @@ class PlayersTest {
     @Test
     @DisplayName("모든 턴이 종료되었을 때 현재 플레이어 정보를 반환하려하면 예외가 발생한다.")
     void getCurrentTurnPlayerCardExceptionByEndAllTurn() {
-        final Player player = ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
-        final Players players = new Players(Collections.singletonList(player));
-        players.turnToNextPlayer();
+        final Participant participant = Player
+                .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Participants participants = new Participants(Collections.singletonList(participant));
+        participants.turnToNextPlayer();
 
-        assertThatThrownBy(() -> players.getCurrentTurnPlayerCards())
+        assertThatThrownBy(() -> participants.getCurrentTurnPlayerCards())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("모든 턴이 종료되었습니다.");
     }
@@ -91,11 +92,12 @@ class PlayersTest {
     @Test
     @DisplayName("모든 턴이 종료되었을 때 현재 플레이어 이름 반환하려하면 예외가 발생한다.")
     void getCurrentTurnPlayerNameExceptionByEndAllTurn() {
-        final Player player = ParticipatingPlayer.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
-        final Players players = new Players(Collections.singletonList(player));
-        players.turnToNextPlayer();
+        final Participant participant = Player
+                .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Participants participants = new Participants(Collections.singletonList(participant));
+        participants.turnToNextPlayer();
 
-        assertThatThrownBy(() -> players.getCurrentTurnPlayerName())
+        assertThatThrownBy(() -> participants.getCurrentTurnPlayerName())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("모든 턴이 종료되었습니다.");
     }

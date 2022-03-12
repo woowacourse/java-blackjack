@@ -1,24 +1,28 @@
 package blackjack.domain.player;
 
-import blackjack.domain.GameOutcome;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import java.util.List;
 
-public interface Player {
+public class Player extends AbstractParticipant {
 
-    List<Card> firstDrawCard();
+    private static final int FIRST_DRAW_CARD_SIZE = 2;
 
-    void draw(final Card card);
+    private Player(final String name, final Cards cards, final boolean turnState) {
+        super(name, cards, turnState);
+    }
 
-    boolean canDraw();
+    public static Player createNewPlayer(final String name, final List<Card> cards) {
+        return new Player(name, new Cards(cards), true);
+    }
 
-    void endTurn();
+    @Override
+    public List<Card> firstDrawCard() {
+        return List.copyOf(cards().subList(0, FIRST_DRAW_CARD_SIZE));
+    }
 
-    int calculateResultScore();
-
-    GameOutcome fightResult(final Player player);
-
-    List<Card> cards();
-
-    String getName();
+    @Override
+    boolean isEnd() {
+        return super.calculateScore() > Cards.BLACK_JACK_TARGET_NUMBER;
+    }
 }

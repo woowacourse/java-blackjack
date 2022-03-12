@@ -23,7 +23,7 @@ class DealerTest {
     @DisplayName("딜러의 카드가 17이상일 때 카드를 추가하면 예외가 발생해야 한다.")
     void drawExceptionByLimitDealerScore() {
         final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN));
-        final Player dealer = Dealer.createNewDealer(cards);
+        final Participant dealer = Dealer.createNewDealer(cards);
         assertThatThrownBy(() -> dealer.draw(Card.of(SPADE, A)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
@@ -37,7 +37,7 @@ class DealerTest {
         @DisplayName("헌 장을 더 받을 수 있다.")
         void isNotEnd() {
             final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SIX));
-            final Player dealer = Dealer.createNewDealer(cards);
+            final Participant dealer = Dealer.createNewDealer(cards);
             assertTrue(dealer.canDraw());
         }
 
@@ -45,7 +45,7 @@ class DealerTest {
         @DisplayName("헌 장을 더 받을 수 없다.")
         void isEnd() {
             final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN));
-            final Player dealer = Dealer.createNewDealer(cards);
+            final Participant dealer = Dealer.createNewDealer(cards);
             assertFalse(dealer.canDraw());
         }
     }

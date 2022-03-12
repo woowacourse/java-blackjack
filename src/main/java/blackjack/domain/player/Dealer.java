@@ -5,7 +5,7 @@ import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dealer extends AbstractPlayer {
+public class Dealer extends AbstractParticipant {
 
     private static final String NAME = "딜러";
     private static final int DEALER_LIMIT_SCORE = 17;
