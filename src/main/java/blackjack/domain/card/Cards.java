@@ -27,17 +27,17 @@ public class Cards implements Iterable<Card> {
         return totalScore;
     }
 
+    private int countAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+    }
+
     private int changeAceScore(int totalScore) {
         if (totalScore > WINNING_SCORE.getValue()) {
             totalScore -= DIFFERENCE_IN_ACE_SCORE.getValue();
         }
         return totalScore;
-    }
-
-    private int countAce() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
     }
 
     public void addCard(final Card card) {
