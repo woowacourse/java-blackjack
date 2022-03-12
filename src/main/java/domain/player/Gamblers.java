@@ -27,7 +27,7 @@ public class Gamblers {
         return gamblers;
     }
 
-    public void addCardForEach(CardDeck cardDeck) {
+    public void addCard(CardDeck cardDeck) {
         gamblers.forEach(
                 gambler -> gambler.addCard(cardDeck.getCard())
         );
