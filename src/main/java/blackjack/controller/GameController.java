@@ -14,7 +14,7 @@ import java.util.List;
 
 public class GameController {
 
-    private static final int FIRST_QUESTION_FLAG = 2;
+    private static final int DEFAULT_CARD_AMOUNT = 2;
 
     public void run() {
         CardDeck cardDeck = CardDeckGenerator.generate();
@@ -83,7 +83,7 @@ public class GameController {
     }
 
     private void checkFirstQuestion(Player player) {
-        if (player.getCards().size() <= FIRST_QUESTION_FLAG) {
+        if (player.getCards().size() <= DEFAULT_CARD_AMOUNT) {
             OutputView.printHumanCardState(player);
         }
     }
