@@ -33,7 +33,7 @@ class WinnerTest {
         dealer.drawInitCards(List.of(twoSpade, twoSpade));
         player.drawInitCards(List.of(queenSpade, queenSpade, twoSpade));
 
-        winner.compare(dealer, player);
+        winner.compete(dealer, player);
 
         assertThat(winner.contains(player)).isFalse();
     }
@@ -44,7 +44,7 @@ class WinnerTest {
         dealer.drawInitCards(List.of(twoSpade, twoSpade));
         player.drawInitCards(List.of(twoSpade, threeSpade));
 
-        winner.compare(dealer, player);
+        winner.compete(dealer, player);
 
         assertThat(winner.contains(player)).isTrue();
     }
@@ -55,7 +55,7 @@ class WinnerTest {
         dealer.drawInitCards(List.of(twoSpade, threeSpade));
         player.drawInitCards(List.of(twoSpade, twoSpade));
 
-        winner.compare(dealer, player);
+        winner.compete(dealer, player);
 
         assertThat(winner.contains(player)).isFalse();
     }
@@ -66,7 +66,7 @@ class WinnerTest {
         dealer.drawInitCards(List.of(twoSpade, twoSpade));
         player.drawInitCards(List.of(twoSpade, twoSpade));
 
-        winner.compare(dealer, player);
+        winner.compete(dealer, player);
 
         assertThat(winner.contains(player)).isFalse();
     }
@@ -77,7 +77,7 @@ class WinnerTest {
         dealer.drawInitCards(List.of(queenSpade, queenSpade, queenSpade));
         player.drawInitCards(List.of(twoSpade, twoSpade, twoSpade));
 
-        winner.compare(dealer, player);
+        winner.compete(dealer, player);
 
         assertThat(winner.contains(player)).isTrue();
     }

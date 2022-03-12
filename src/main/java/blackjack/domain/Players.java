@@ -30,10 +30,6 @@ public class Players {
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public int numberOfPlayers() {
-        return players.size();
-    }
-
     private List<String> trimNames(String input) {
         return Arrays.stream(input.split(DELIMITER, -1))
                 .map(String::trim)
