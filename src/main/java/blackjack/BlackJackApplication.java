@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.domain.HitRequest;
-import blackjack.domain.Name;
+import blackjack.domain.participant.Name;
 import blackjack.domain.card.BlackJackCardsGenerator;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
