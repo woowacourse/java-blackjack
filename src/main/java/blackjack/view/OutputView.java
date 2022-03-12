@@ -41,7 +41,7 @@ public class OutputView {
     }
 
     private static String createCardInfoString(Card card) {
-        return card.getDenomination().getName() + card.getPattern().getName();
+        return String.format("%s%s", card.getDenomination().getName(), card.getPattern().getName());
     }
 
     public static void printBlackJackMessage(String name) {
@@ -52,7 +52,7 @@ public class OutputView {
         System.out.printf("%s의 카드의 합이 21을 넘었습니다.%n", name);
     }
 
-    public static void printDealerHitMessage() {
+    public static void printDealerHitMessage(ParticipantResponse dealer) {
         System.out.printf("%n딜러는 16이하라 한 장의 카드를 더 받았습니다.%n");
     }
 
