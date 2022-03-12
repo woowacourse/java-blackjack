@@ -1,7 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.player.Participant;
+import blackjack.domain.participant.Participant;
 import java.util.List;
 
 public class PlayerScoreResult {

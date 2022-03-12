@@ -1,4 +1,4 @@
-package blackjack.domain.player;
+package blackjack.domain.participant;
 
 import static blackjack.domain.card.CardNumber.A;
 import static blackjack.domain.card.CardNumber.JACK;
