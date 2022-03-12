@@ -13,17 +13,17 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private static final String PROVIDE_FIRST_DRAW_CARD_TO_PLAYER_MESSAGE = "%s와 %s에게 2장의 나누었습니다.\n";
-    private static final String PROVIDED_CARD_TO_DEALER_CARD_MESSAGE = "%s: %s\n";
-    private static final String PROVIDED_CARD_TO_PLAYER_CARD_MESSAGE = "%s카드: %s\n";
+    private static final String PROVIDE_FIRST_DRAW_CARD_TO_PLAYER_MESSAGE = "%s와 %s에게 2장을 나누었습니다.%n";
+    private static final String PROVIDED_CARD_TO_DEALER_CARD_MESSAGE = "%s: %s%n";
+    private static final String PROVIDED_CARD_TO_PLAYER_CARD_MESSAGE = "%s카드: %s%n";
 
     private static final String PROVIDE_CARD_TO_DEALER_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
-    private static final String PLAYER_CARD_RESULT_AND_SCORE_MESSAGE = "%s 카드: %s - 결과: %d\n";
+    private static final String PLAYER_CARD_RESULT_AND_SCORE_MESSAGE = "%s 카드: %s - 결과: %d%n";
 
     private static final String OUTCOME_TITLE = "## 최종 승패";
-    private static final String DEALER_OUTCOME_RESULT_MESSAGE = "딜러: %s\n";
-    private static final String PLAYER_OUTCOME_RESULT_MESSAGE = "%s: %s\n";
+    private static final String DEALER_OUTCOME_RESULT_MESSAGE = "딜러: %s%n";
+    private static final String PLAYER_OUTCOME_RESULT_MESSAGE = "%s: %s%n";
 
     private static final String PLAYER_NAME_DELIMITER = ", ";
     private static final String CARD_DELIMITER = ", ";
