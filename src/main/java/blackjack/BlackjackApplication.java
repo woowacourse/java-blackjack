@@ -19,7 +19,7 @@ public class BlackjackApplication {
     public static void main(String[] args) {
         Players players = requestPlayers();
         Dealer dealer = new Dealer();
-        Deck deck = new Deck();
+        Deck deck = Deck.create();
 
         drawCardTwice(players, dealer, deck);
         printPlayersCard(toDto(players), PlayerDto.from(dealer));
