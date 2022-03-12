@@ -15,6 +15,7 @@ class GameResultTest {
         //when
         final GameResult result = GameResult.of(dealerScore, gamblerScore);
 
+        //then
         assertThat(result).isEqualTo(GameResult.WIN);
     }
 
@@ -25,6 +26,7 @@ class GameResultTest {
         //when
         final GameResult result = GameResult.of(dealerScore, gamblerScore);
 
+        //then
         assertThat(result).isEqualTo(GameResult.LOSE);
     }
 
@@ -35,6 +37,7 @@ class GameResultTest {
         //when
         final GameResult result = GameResult.of(dealerScore, gamblerScore);
 
+        //then
         assertThat(result).isEqualTo(GameResult.DRAW);
     }
 }

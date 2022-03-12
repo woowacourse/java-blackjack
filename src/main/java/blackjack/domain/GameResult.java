@@ -5,9 +5,9 @@ import java.util.function.BiPredicate;
 
 public enum GameResult {
 
-    WIN("승", (score1, score2) -> score1 > score2),
-    DRAW("무", (score1, score2) -> score1 == score2),
-    LOSE("패", (score1, score2) -> score1 < score2),
+    WIN("승", (dealerScore, playerScore) -> dealerScore > playerScore),
+    DRAW("무", (dealerScore, playerScore) -> dealerScore == playerScore),
+    LOSE("패", (dealerScore, playerScore) -> dealerScore < playerScore),
         ;
 
     private final String result;
@@ -18,9 +18,18 @@ public enum GameResult {
         this.condition = condition;
     }
 
-    public static GameResult of(final int score1, final int score2) {
+    public static GameResult of(final int dealerScore, final int playerScore) {
+        if (dealerScore > 21 && playerScore > 21) {
+            return DRAW;
+        }
+        if (dealerScore > 21) {
+           return LOSE;
+        }
+        if (playerScore > 21) {
+            return WIN;
+        }
         return Arrays.stream(values())
-            .filter(it -> it.condition.test(score1, score2))
+            .filter(it -> it.condition.test(dealerScore, playerScore))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("잘못된 점수가 입력되었습니다."));
     }

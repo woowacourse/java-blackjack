@@ -90,7 +90,7 @@ public class PlayingCards {
         return currentSum;
     }
 
-    public void changeToBurst() {
-        playingCards = List.of(new PlayingCard(Suit.BURST, Denomination.BURST));
-    }
+//    public void changeToBurst() {
+//        playingCards = List.of(new PlayingCard(Suit.BURST, Denomination.BURST));
+//    }
 }

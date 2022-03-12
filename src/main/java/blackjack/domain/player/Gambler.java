@@ -16,14 +16,14 @@ public class Gambler extends Player {
         final PlayingCard peekedCard = cardDeck.justPeek();
         final int currentResult = playingCards.getResultWithPeekCard(peekedCard);
         if (currentResult > BURST_CRITERIA) {
-            playingCards.changeToBurst();
+//            playingCards.changeToBurst();
             return true;
         }
         return false;
     }
 
     @Override
-    public void addCard(final CardDeck cardDeck) {
+    public void receiveCard(final CardDeck cardDeck) {
         playingCards.addCard(cardDeck.addCard());
     }
 

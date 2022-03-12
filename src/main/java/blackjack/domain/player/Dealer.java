@@ -20,7 +20,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    public void addCard(CardDeck cardDeck) {
+    public void receiveCard(CardDeck cardDeck) {
         playingCards.addCard(cardDeck.pop());
     }
 }

@@ -19,7 +19,7 @@ public abstract class Player {
         playingCards.addCard(playingCard);
     }
 
-    public abstract void addCard(CardDeck cardDeck);
+    public abstract void receiveCard(CardDeck cardDeck);
 
     public abstract boolean isFinished(final CardDeck cardDeck);
 
