@@ -5,11 +5,11 @@ import blackjack.domain.card.Deck;
 public class Player extends Participant {
 
     private Player(final String name) {
-        validateNameNotBlack(name);
+        validateNameNotBlank(name);
         this.name = name;
     }
 
-    private static void validateNameNotBlack(final String name) {
+    private static void validateNameNotBlank(final String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException("플레이어명은 공백이 될 수 없습니다.");
         }
