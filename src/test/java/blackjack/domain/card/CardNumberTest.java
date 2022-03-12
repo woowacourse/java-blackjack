@@ -8,8 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class CardNumberTest {
 
@@ -23,35 +27,20 @@ class CardNumberTest {
         assertThat(distinctCount).isEqualTo(13);
     }
 
-    @Test
-    @DisplayName("3 7 10은 스코어가 20이다.")
-    void calculateScore_3_7_10() {
-        final List<CardNumber> cardNumbers = Arrays.asList(THREE, SEVEN, TEN);
+    @ParameterizedTest
+    @MethodSource("createCardNumbersAndScore")
+    @DisplayName("숫자를 받아 스코어를 계산할 수 있다.")
+    void calculateScore(List<CardNumber> cardNumbers, int expected) {
         final int result = CardNumber.calculateScore(cardNumbers);
-        assertThat(result).isEqualTo(20);
+        assertThat(result).isEqualTo(expected);
     }
 
-    @Test
-    @DisplayName("a 10은 스코어가 21이다.")
-    void calculateScore_A_10() {
-        final List<CardNumber> cardNumbers = Arrays.asList(A, TEN);
-        final int result = CardNumber.calculateScore(cardNumbers);
-        assertThat(result).isEqualTo(21);
-    }
-
-    @Test
-    @DisplayName("a a 10은 스코어가 12이다.")
-    void calculateScore_A_A_10() {
-        final List<CardNumber> cardNumbers = Arrays.asList(A, A, TEN);
-        final int result = CardNumber.calculateScore(cardNumbers);
-        assertThat(result).isEqualTo(12);
-    }
-
-    @Test
-    @DisplayName("a a 10 10은 스코어가 22이다.")
-    void calculateScore_A_A_10_10() {
-        final List<CardNumber> cardNumbers = Arrays.asList(A, A, TEN, TEN);
-        final int result = CardNumber.calculateScore(cardNumbers);
-        assertThat(result).isEqualTo(22);
+    private static Stream<Arguments> createCardNumbersAndScore() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(THREE, SEVEN, TEN), 20),
+                Arguments.of(Arrays.asList(A, TEN), 21),
+                Arguments.of(Arrays.asList(A, A, TEN), 12),
+                Arguments.of(Arrays.asList(A, A, TEN, TEN), 22)
+        );
     }
 }
