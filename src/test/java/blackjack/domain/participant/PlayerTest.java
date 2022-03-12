@@ -93,7 +93,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("턴을 종료할 수 있다.")
-    void endTurn() {
+    void changeFinishStatus() {
         final Participant player = Player.createNewPlayer("user", cards);
         player.changeFinishStatus();
         assertFalse(player.canDraw());
