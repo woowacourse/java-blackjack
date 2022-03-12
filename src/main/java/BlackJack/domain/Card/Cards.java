@@ -1,18 +1,25 @@
 package BlackJack.domain.Card;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Cards {
     public static final int BUST_LINE = 21;
     private static final int EXTRA_SCORE = 10;
-    private final List<Card> deck;
+
+    private final Set<Card> deck;
 
     public Cards(List<Card> deck) {
-        this.deck = deck;
+        this(new HashSet<>(deck));
     }
 
-    public List<Card> getDeck() {
-        return deck;
+    public Cards(Set<Card> deck) {
+        this.deck = new HashSet<>(deck);
+    }
+
+    public Set<Card> getDeck() {
+        return new HashSet<>(deck);
     }
 
     public void add(Card card) {
