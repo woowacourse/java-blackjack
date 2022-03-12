@@ -3,10 +3,10 @@ package blackjack.model.card;
 import java.util.Collections;
 import java.util.Stack;
 
-public class CardPack {
+public class CardDeck {
     private final Stack<Card> cards;
 
-    public CardPack() {
+    public CardDeck() {
         this.cards = createCards();
         Collections.shuffle(cards);
     }

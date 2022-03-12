@@ -1,37 +1,24 @@
 package blackjack.model.player;
 
-import blackjack.model.card.Deck;
-import blackjack.model.card.PlayerInterface;
+import blackjack.model.card.Card;
+import blackjack.model.card.Cards;
 
-public abstract class Player implements PlayerInterface {
-    private static final String ERROR_NULL = "[ERROR] 입력된 이름이 없습니다.";
+public abstract class Player {
+    protected final Cards cards;
 
-    protected final String name;
-    protected final Deck deck;
-
-    public Player(String name) {
-        checkNull(name);
-        this.name = name.trim();
-        this.deck = new Deck();
+    public Player() {
+        this.cards = new Cards();
     }
 
-    private void checkNull(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException(ERROR_NULL);
-        }
+    public void receive(Card card) {
+        this.cards.add(card);
     }
 
-    @Override
-    public String getName() {
-        return this.name;
+    public boolean canReceive() {
+        return this.cards.isBust();
     }
 
-    public Deck getDeck() {
-        return deck;
-    }
-
-    public boolean isWinningBy(Player otherPlayer) {
-        Deck otherPlayerDeck = otherPlayer.getDeck();
-        return deck.sumScore() > otherPlayerDeck.sumScore();
+    public Cards getDeck() {
+        return cards;
     }
 }

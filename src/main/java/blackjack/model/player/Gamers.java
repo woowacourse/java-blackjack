@@ -5,33 +5,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Gamers {
-    private static final String ERROR_DUPLICATE_NAME = "[ERROR] 중복되는 이름이 있습니다.";
-
     private final List<Player> values;
     private int gamerOrder = 0;
 
-    private Gamers(List<Gamer> entries) {
-        this.values = List.copyOf(entries);
+    private Gamers(List<Gamer> gamers) {
+        this.values = List.copyOf(gamers);
     }
 
     public static Gamers from(List<String> names) {
-        checkDuplicate(names);
-        List<Gamer> entries = names.stream()
+        List<Gamer> gamers = names.stream()
                 .map(Gamer::new)
                 .collect(Collectors.toList());
-        return new Gamers(entries);
-    }
-
-    private static void checkDuplicate(List<String> names) {
-        if (countDistinct(names) != names.size()) {
-            throw new IllegalArgumentException(ERROR_DUPLICATE_NAME);
-        }
-    }
-
-    private static int countDistinct(List<String> names) {
-        return (int) names.stream()
-                .distinct()
-                .count();
+        return new Gamers(gamers);
     }
 
     public List<Player> getValues() {

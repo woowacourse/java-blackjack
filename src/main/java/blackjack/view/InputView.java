@@ -5,6 +5,7 @@ import blackjack.dto.PlayerDto;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import javax.security.sasl.SaslClient;
 
 public class InputView {
     private static final String INPUT_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -13,9 +14,11 @@ public class InputView {
 
     private static final String NAME_DELIMITER = ",";
 
-    public List<String> inputEntryNames() {
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static List<String> inputNames() {
         System.out.println(INPUT_NAMES);
-        String names = new Scanner(System.in).nextLine();
+        String names = scanner.nextLine();
         return Arrays.asList(names.split(NAME_DELIMITER));
     }
 

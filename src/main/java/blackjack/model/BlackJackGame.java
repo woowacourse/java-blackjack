@@ -1,6 +1,6 @@
 package blackjack.model;
 
-import blackjack.model.card.CardPack;
+import blackjack.model.card.CardDeck;
 import blackjack.model.player.Gamers;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
@@ -17,22 +17,22 @@ public class BlackJackGame {
         this.gamers = Gamers.from(names);
     }
 
-    public void giveStartingCardsBy(CardPack cardPack) {
-        giveCardsToDealerBy(cardPack);
+    public void giveStartingCardsBy(CardDeck cardDeck) {
+        giveCardsToDealerBy(cardDeck);
         for (Player gamer : gamers.getValues()) {
-            giveCardsTo(gamer, cardPack);
+            giveCardsTo(gamer, cardDeck);
         }
     }
 
-    private void giveCardsToDealerBy(CardPack cardPack) {
+    private void giveCardsToDealerBy(CardDeck cardDeck) {
         for (int i = 0; i < START_CARD_COUNT; i++) {
-            dealer.receive(cardPack.draw());
+            dealer.receive(cardDeck.draw());
         }
     }
 
-    private void giveCardsTo(Player gamer, CardPack cardPack) {
+    private void giveCardsTo(Player gamer, CardDeck cardDeck) {
         for (int i = 0; i < START_CARD_COUNT; i++) {
-            gamer.receive(cardPack.draw());
+            gamer.receive(cardDeck.draw());
         }
     }
 
@@ -44,8 +44,8 @@ public class BlackJackGame {
         return gamers.isCurrentGamerCanReceive();
     }
 
-    public void drawCardFrom(CardPack cardPack) {
-        gamers.giveCurrentGamer(cardPack.draw());
+    public void drawCardFrom(CardDeck cardDeck) {
+        gamers.giveCurrentGamer(cardDeck.draw());
     }
 
     public void nextDrawTurn() {
@@ -64,9 +64,9 @@ public class BlackJackGame {
         return gamers.getCurrentValue();
     }
 
-    public void giveCardBy(CardPack cardPack) {
+    public void giveCardBy(CardDeck cardDeck) {
         while (dealer.canReceive()) {
-            dealer.receive(cardPack.draw());
+            dealer.receive(cardDeck.draw());
         }
     }
 }

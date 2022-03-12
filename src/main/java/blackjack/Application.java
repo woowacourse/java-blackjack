@@ -3,10 +3,9 @@ package blackjack;
 import blackjack.dto.BlackJackGameDto;
 import blackjack.dto.PlayerDto;
 import blackjack.model.BlackJackGame;
-import blackjack.model.card.CardPack;
+import blackjack.model.card.CardDeck;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
-
 import java.util.List;
 
 public class Application {
@@ -14,22 +13,21 @@ public class Application {
     private final static ResultView resultView = new ResultView();
 
     public static void main(String[] args) {
-        List<String> names = inputView.inputEntryNames();
+        CardDeck cardDeck = new CardDeck();
 
-        CardPack cardPack = new CardPack();
+        BlackJackGame blackJackGame = initBlackJackGame();
 
-        BlackJackGame blackJackGame = new BlackJackGame(names);
-        blackJackGame.giveStartingCardsBy(cardPack);
+        blackJackGame.giveStartingCardsBy(cardDeck);
 
         BlackJackGameDto gameDto = new BlackJackGameDto(blackJackGame);
         resultView.printStartingCardsInGame(gameDto);
 
         while (blackJackGame.isDrawPossible()) {
-            startTurn(blackJackGame, cardPack);
+            startTurn(blackJackGame, cardDeck);
             nextTurn(blackJackGame);
         }
 
-        blackJackGame.giveCardBy(cardPack);
+        blackJackGame.giveCardBy(cardDeck);
         resultView.printDealerAddCardCount(new BlackJackGameDto(blackJackGame));
 
         resultView.printScoreResultOfGame(new BlackJackGameDto(blackJackGame));
@@ -37,7 +35,12 @@ public class Application {
         resultView.printWinningResultOfGame(new BlackJackGameDto(blackJackGame));
     }
 
-    private static void startTurn(BlackJackGame blackJackGame, CardPack cardPack) {
+    private static BlackJackGame initBlackJackGame() {
+        List<String> names = InputView.inputNames();
+        return new BlackJackGame(names);
+    }
+
+    private static void startTurn(BlackJackGame blackJackGame, CardDeck cardDeck) {
         if (blackJackGame.isBustOnNowTurn()) {
             resultView.printBust();
             return;
@@ -46,9 +49,9 @@ public class Application {
         if (drawSign.equals("n")) {
             return;
         }
-        blackJackGame.drawCardFrom(cardPack);
+        blackJackGame.drawCardFrom(cardDeck);
         resultView.printDeck(PlayerDto.from(blackJackGame.getCurrentPlayer()));
-        startTurn(blackJackGame, cardPack);
+        startTurn(blackJackGame, cardDeck);
     }
 
     private static void nextTurn(BlackJackGame blackJackGame) {

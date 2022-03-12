@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Deck {
+public class Cards {
     private static final int SCORE_LIMIT = 21;
     private static final int SCORE_ACE_ADVANTAGE = 10;
     private static final int SCORE_ADVANTAGE_CRITERIA = SCORE_LIMIT - SCORE_ACE_ADVANTAGE;
@@ -13,13 +13,12 @@ public class Deck {
 
     private final List<Card> cards;
 
-    public Deck() {
+    public Cards(Card card1, Card card2) {
         this.cards = new ArrayList<>();
     }
 
-    public Deck(Card card1, Card card2) {
-        //TODO : test를 위한 생성자이므로 삭제해야 함
-        this.cards = new ArrayList<>(Arrays.asList(card1, card2));
+    public Cards() {
+        this.cards = new ArrayList<>();
     }
 
     public List<Card> getCards() {
