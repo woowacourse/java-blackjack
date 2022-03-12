@@ -12,7 +12,7 @@ public abstract class AbstractParticipant implements Participant {
     private final Cards cards;
     private GameStatus gameStatus;
 
-    public AbstractParticipant(final String name, final Cards cards, final GameStatus gameStatus) {
+    AbstractParticipant(final String name, final Cards cards, final GameStatus gameStatus) {
         Objects.requireNonNull(name, "플레이어의 이름은 null이 들어올 수 없습니다.");
         Objects.requireNonNull(cards, "보유 카드에는 null이 들어올 수 없습니다.");
         validateEmptyName(name);
