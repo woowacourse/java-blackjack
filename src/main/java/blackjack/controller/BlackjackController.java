@@ -29,16 +29,16 @@ public class BlackjackController {
 		while (blackjack.isDistributeMore()) {
 			askDistributingCard(blackjack.getNextPlayer());
 		}
+
+		if(blackjack.distributeAdditionalCardToDealer(RandomNumberGenerator.getInstance())) {
+			OutputView.printDealerAdditionalCard();
+		}
 	}
 
 	private void askDistributingCard(Player player) {
 		while (InputView.askAdditionalCard(player)) {
 			blackjack.distributeAdditionalCardToPlayer(RandomNumberGenerator.getInstance(), player);
 			OutputView.printCards(blackjack.findPlayer(player));
-		}
-
-		if(blackjack.distributeAdditionalCardToDealer(RandomNumberGenerator.getInstance())) {
-			OutputView.printDealerAdditionalCard();
 		}
 	}
 
