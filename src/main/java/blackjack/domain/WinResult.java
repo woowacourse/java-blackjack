@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
@@ -24,55 +25,47 @@ public class WinResult {
 
     private void initDealerResult() {
         Arrays.stream(Judgement.values())
-                .forEach(value -> dealerResult.put(value, 0));
+            .forEach(value -> dealerResult.put(value, 0));
     }
 
     private void calculateResult(Dealer dealer, List<Player> players) {
-        players.forEach(player -> judge(dealer, player));
+        players.forEach(player -> updateResult(player, judge(dealer, player)));
     }
 
-    private void judge(Dealer dealer, Player player) {
+    private Judgement judge(Dealer dealer, Player player) {
         if (player.isBust()) {
-            updateResult(player, Judgement.LOSE);
-            return;
+            return Judgement.LOSE;
         }
         if (dealer.isBust()) {
-            updateResult(player, Judgement.WIN);
-            return;
+            return Judgement.WIN;
         }
         if (dealer.isBlackJack() || player.isBlackJack()) {
-            judgeWithBlackJack(dealer, player);
-            return;
+            return judgeWithBlackJack(dealer, player);
         }
-        judgeWithoutBust(dealer, player);
+        return judgeWithScore(dealer, player);
     }
 
-    private void judgeWithBlackJack(Dealer dealer, Player player) {
+    private Judgement judgeWithBlackJack(Dealer dealer, Player player) {
         if (dealer.isBlackJack() && player.isBlackJack()) {
-            updateResult(player, Judgement.DRAW);
-            return;
+            return Judgement.DRAW;
         }
         if (dealer.isBlackJack()) {
-            updateResult(player, Judgement.LOSE);
-            return;
+            return Judgement.LOSE;
         }
-        if (player.isBlackJack()) {
-            updateResult(player, Judgement.WIN);
-        }
+        return Judgement.WIN;
     }
 
-    private void judgeWithoutBust(Dealer dealer, Player player) {
+    private Judgement judgeWithScore(Dealer dealer, Player player) {
         int dealerScore = dealer.calculateScore();
         int playerScore = player.calculateScore();
         if (dealerScore == playerScore) {
-            updateResult(player, Judgement.DRAW);
-            return;
+            return Judgement.DRAW;
         }
         if (dealerScore > playerScore) {
-            updateResult(player, Judgement.LOSE);
-            return;
+            return Judgement.LOSE;
+
         }
-        updateResult(player, Judgement.WIN);
+        return Judgement.WIN;
     }
 
     private void updateResult(Player player, Judgement playerJudgement) {
