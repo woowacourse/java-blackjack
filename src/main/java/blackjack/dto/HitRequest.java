@@ -14,7 +14,7 @@ public enum HitRequest {
 
     public static HitRequest find(String requestName) {
         return Arrays.stream(HitRequest.values())
-                .filter(value -> value.getName().equals(requestName))
+                .filter(value -> value.getName().toLowerCase().equals(requestName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 요청입니다."));
     }
