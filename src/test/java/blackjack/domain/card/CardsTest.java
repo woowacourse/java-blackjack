@@ -70,4 +70,18 @@ public class CardsTest {
             () -> assertThat(cards.getValues()).containsOnly(card1, card2, card3)
         );
     }
+
+    @Test
+    @DisplayName("중복된 카드를 추가할 수 없다.")
+    void addDuplicatedCard() {
+        // given
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
+        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
+        Cards cards = new Cards(List.of(card1, card2));
+
+        // then
+        assertThatThrownBy(() -> cards.add(card1))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[ERROR] 카드는 중복될 수 없습니다.");
+    }
 }

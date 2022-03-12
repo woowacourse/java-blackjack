@@ -41,7 +41,14 @@ public class Cards {
     }
 
     public void add(Card card) {
+        validateDistinct(card);
         cards.add(card);
+    }
+
+    private void validateDistinct(Card card) {
+        if (cards.contains(card)) {
+            throw new IllegalArgumentException("[ERROR] 카드는 중복될 수 없습니다.");
+        }
     }
 
     public int calculateScore() {
