@@ -25,27 +25,25 @@ public class Hand {
 
     public int getScore() {
         if (hasAce()) {
-            return getSumIncludingAce();
+            return getIncludingAceSum();
         }
 
-        return getCardScoreSumWithOutAce();
+        return getExcludingAceSum();
     }
 
-    private int getSumIncludingAce() {
-        int aceCount = getNumberOfAce();
-        int sumExcludingAce = getCardScoreSumWithOutAce();
+    private int getIncludingAceSum() {
+        int aceCount = getAceCount();
+        int excludingAceSum = getExcludingAceSum();
+        int sum = excludingAceSum + aceCount * ACE_UPPER_SCORE;
 
-        for (int i = 0; i < aceCount; i++) {
-            int sum = sumExcludingAce + (aceCount * ACE_UPPER_SCORE) - i * ACE_SCORE_DIFFERENCE;
-            if (sum <= BLACKJACK_SYMBOL_SCORE) {
-                return sum;
-            }
+        while (sum > BLACKJACK_SYMBOL_SCORE && aceCount > 0) {
+            sum -= ACE_SCORE_DIFFERENCE;
+            aceCount--;
         }
-
-        return sumExcludingAce + aceCount;
+        return sum;
     }
 
-    private int getCardScoreSumWithOutAce() {
+    private int getExcludingAceSum() {
         return cards.stream()
                 .filter(card -> !card.isAce())
                 .mapToInt(Card::getScore)
@@ -53,10 +51,10 @@ public class Hand {
     }
 
     private boolean hasAce() {
-        return getNumberOfAce() > 0;
+        return getAceCount() > 0;
     }
 
-    private int getNumberOfAce() {
+    private int getAceCount() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();

@@ -16,6 +16,7 @@ public enum Denomination {
     QUEEN("Q", 10),
     KING("K", 10);
 
+    public static final int FIRST_INDEX = 0;
     private final String name;
     private final int[] scores;
 
@@ -29,6 +30,6 @@ public enum Denomination {
     }
 
     public int getScore() {
-        return scores[0];
+        return scores[FIRST_INDEX];
     }
 }

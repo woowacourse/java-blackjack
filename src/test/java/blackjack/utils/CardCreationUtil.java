@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.utils;
 
 import static blackjack.domain.card.Suit.HEART;
 

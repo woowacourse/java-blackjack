@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.CardCreationUtil.createHand;
+import static blackjack.utils.CardCreationUtil.createHand;
 import static blackjack.domain.card.Denomination.*;
 import static org.assertj.core.api.Assertions.*;
 
