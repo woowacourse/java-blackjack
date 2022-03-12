@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 public class Players {
 
     public static final String DELIMITER = ",";
-    private static final int MAXIMUM_PLAYER = (Card.getTotalCard().size() / CardMachine.INIT_CARD_COUNT) - 1;
+    private static final int MAXIMUM_PLAYER = 8;
 
     private final List<Player> players = new ArrayList<>();
 

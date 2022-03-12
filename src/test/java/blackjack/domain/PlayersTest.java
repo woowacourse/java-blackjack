@@ -20,9 +20,9 @@ class PlayersTest {
     @DisplayName("플레이어 최대 인원을 넘게 입력했을 때 예외 발생을 확인한다.")
     @Test
     void maximum_player_error() {
-        String input = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26";
+        String input = "1, 2, 3, 4, 5, 6, 7, 8, 9";
         assertThatThrownBy(() -> new Players(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("플레이어 최대 인원은 25명 입니다.");
+                .hasMessage("플레이어 최대 인원은 8명 입니다.");
     }
 }
