@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
@@ -20,13 +20,13 @@ public class BlackJackGame {
     private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
     private static final String NOT_EXIST_PLAYER_ERROR = "플레이어가 존재하지 않습니다.";
 
-    private final CardFactory cardFactory;
+    private final Deck deck;
     private final List<Player> players;
     private final Dealer dealer;
 
     public BlackJackGame(List<String> names) {
         validateDuplicationNames(names);
-        this.cardFactory = new CardFactory(Card.getCards());
+        this.deck = new Deck(Card.getCards());
         this.dealer = new Dealer();
         this.players = names.stream()
                 .map(Player::new)
@@ -59,11 +59,11 @@ public class BlackJackGame {
     }
 
     private void distributeCard(Gamer gamer) {
-        gamer.addCard(cardFactory.draw());
+        gamer.addCard(deck.draw());
     }
 
     public void distributeCardToPlayer(String name) {
-        findPlayerByName(name).addCard(cardFactory.draw());
+        findPlayerByName(name).addCard(deck.draw());
     }
 
     public Player findPlayerByName(String name) {
