@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.player.Player;
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +20,10 @@ public class BlackJackResult {
 
     public static BlackJackResult of(Player dealer, List<Player> gamblers) {
         final LinkedHashMap<Player, GameResult> gamblerResult = new LinkedHashMap<>();
-        final Map<GameResult, Integer> dealerResult = gamblers.stream()
+        final EnumMap<GameResult, Integer> dealerResult = gamblers.stream()
             .collect(Collectors.groupingBy(
                 gambler -> getResultPlayer(dealer, gamblerResult, gambler),
+                () -> new EnumMap<>(GameResult.class),
                 Collectors.summingInt(count -> 1)
             ));
         return new BlackJackResult(dealerResult, gamblerResult);

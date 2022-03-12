@@ -7,14 +7,17 @@ import java.util.List;
 public class PlayerDto {
     private final String name;
     private final List<PlayingCard> playingCards;
+    private final int score;
 
-    private PlayerDto(String name, List<PlayingCard> playingCards) {
+    private PlayerDto(String name, List<PlayingCard> playingCards, final int score) {
         this.name = name;
         this.playingCards = playingCards;
+        this.score = score;
     }
 
     public static PlayerDto from(Player player) {
-        return new PlayerDto(player.getName(), player.getCards());
+
+        return new PlayerDto(player.getName(), player.getCards(), player.getSumOfCards());
     }
 
     public String getName() {
@@ -26,8 +29,6 @@ public class PlayerDto {
     }
 
     public int getScore() {
-        return playingCards.stream()
-            .mapToInt(playingCard -> playingCard.getDenomination().getScore())
-            .sum();
+        return score;
     }
 }
