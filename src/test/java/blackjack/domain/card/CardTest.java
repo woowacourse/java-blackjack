@@ -11,6 +11,7 @@ public class CardTest {
     @DisplayName("카드를 생성한다.")
     void createCard() {
         Card card = new Card(Denomination.THREE, Suit.DIAMOND);
+
         assertThat(card.toString()).isEqualTo("3다이아몬드");
     }
 }

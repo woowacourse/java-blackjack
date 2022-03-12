@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -11,7 +12,7 @@ public class PlayerTest {
     @ValueSource(strings = {"", " "})
     @DisplayName("플레이어 이름이 공백일 경우 예외를 발생시킨다.")
     void checkNameBlank(String name) {
-        Assertions.assertThatThrownBy(() -> new Player(name) {
+        assertThatThrownBy(() -> new Player(name) {
                     @Override
                     public boolean canTakeCard() {
                         return false;
@@ -25,7 +26,7 @@ public class PlayerTest {
     @ValueSource(strings = {"13!", "123@", "#asd", "$wqe", "qwer%$"})
     @DisplayName("플레이어 이름에 특수문자가 들어갈 경우 예외를 발생시킨다.")
     void checkNameSpecialCharacters(String name) {
-        Assertions.assertThatThrownBy(() -> new Player(name) {
+        assertThatThrownBy(() -> new Player(name) {
                     @Override
                     public boolean canTakeCard() {
                         return false;

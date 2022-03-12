@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Denomination;
@@ -7,7 +9,6 @@ import blackjack.domain.card.Suit;
 import blackjack.domain.player.Choice;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +27,7 @@ public class BlackJackMachineTest {
 
         blackJackMachine.giveCardToParticipant(participant, Choice.HIT);
 
-        Assertions.assertThat(participant.getTotalScore()).isGreaterThan(totalScore);
+        assertThat(participant.getTotalScore()).isGreaterThan(totalScore);
     }
 
     @Test
@@ -40,7 +41,7 @@ public class BlackJackMachineTest {
 
         blackJackMachine.giveCardToParticipant(participant, Choice.STAY);
 
-        Assertions.assertThat(participant.getTotalScore()).isEqualTo(totalScore);
+        assertThat(participant.getTotalScore()).isEqualTo(totalScore);
     }
 
     @Test
@@ -52,6 +53,6 @@ public class BlackJackMachineTest {
 
         blackJackMachine.giveCardToDealer(dealer);
 
-        Assertions.assertThat(dealer.getTotalScore()).isGreaterThan(16);
+        assertThat(dealer.getTotalScore()).isGreaterThan(16);
     }
 }

@@ -11,13 +11,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class ResultTest {
 
     @ParameterizedTest
-    @MethodSource("parameters1")
+    @MethodSource("generateDecideResultArguments")
     @DisplayName("참가자의 승패를 결정한다.")
-    void getResult(int dealerScore, int participantScore, Result result) {
+    void decideResult(int dealerScore, int participantScore, Result result) {
         assertThat(Result.decide(dealerScore, participantScore)).isEqualTo(result);
     }
 
-    static Stream<Arguments> parameters1() {
+    static Stream<Arguments> generateDecideResultArguments() {
         return Stream.of(
                 // 딜러 21 이하
                 Arguments.of(20, 21, Result.WIN),
@@ -36,13 +36,13 @@ public class ResultTest {
     }
 
     @ParameterizedTest(name = "[{index}] {0}의 반대는 {1}")
-    @MethodSource("generateInputAndOutput")
+    @MethodSource("generateGetOppositeArguments")
     @DisplayName("반대 승패를 반환한다.")
     void getOpposite(Result input, Result output) {
         assertThat(input.getOpposite()).isEqualTo(output);
     }
 
-    static Stream<Arguments> generateInputAndOutput() {
+    static Stream<Arguments> generateGetOppositeArguments() {
         return Stream.of(
                 Arguments.of(Result.WIN, Result.LOSE),
                 Arguments.of(Result.DRAW, Result.DRAW),

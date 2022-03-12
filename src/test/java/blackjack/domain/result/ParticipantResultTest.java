@@ -19,7 +19,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class ParticipantResultTest {
 
     @ParameterizedTest(name = "[{index}] 딜러 : {0}, {1}, 참가자 : {2}, {3} -> {4}")
-    @MethodSource("parameters1")
+    @MethodSource("generateDecideWhenDealerIsAliveArguments")
     @DisplayName("딜러의 점수가 21점 이하인 경우, 참가자의 승패를 테스트한다.")
     void decideWhenDealerIsAlive(Card card1, Card card2, Card card3, Card card4, Result expected) {
         Dealer dealer = new Dealer();
@@ -39,7 +39,7 @@ public class ParticipantResultTest {
         }
     }
 
-    static Stream<Arguments> parameters1() {
+    static Stream<Arguments> generateDecideWhenDealerIsAliveArguments() {
         return Stream.of(
                 Arguments.of(
                         new Card(Denomination.NINE, Suit.CLOVER), new Card(Denomination.EIGHT, Suit.HEART),
@@ -90,7 +90,7 @@ public class ParticipantResultTest {
     }
 
     @ParameterizedTest(name = "[{index}] 딜러 : {0}, {1}, 참가자 : {2}, {3}, {4} -> {5}")
-    @MethodSource("parameters2")
+    @MethodSource("generateDecideWhenDealerIsAliveAndParticipantBustArguments")
     @DisplayName("딜러의 점수가 21점 이하이고 참가자가 버스트가 있는 경우, 참가자의 승패를 테스트한다.")
     void decideWhenDealerIsAliveAndParticipantBust(Card card1, Card card2, Card card3, Card card4,
                                                    Card card5, Result expected) {
@@ -112,7 +112,7 @@ public class ParticipantResultTest {
         }
     }
 
-    static Stream<Arguments> parameters2() {
+    static Stream<Arguments> generateDecideWhenDealerIsAliveAndParticipantBustArguments() {
         return Stream.of(
                 Arguments.of(
                         new Card(Denomination.NINE, Suit.CLOVER), new Card(Denomination.EIGHT, Suit.HEART),
@@ -130,7 +130,7 @@ public class ParticipantResultTest {
     }
 
     @ParameterizedTest(name = "[{index}] 딜러 : {0}, {1}, 참가자 : {3}, {4}, {5} -> {6}")
-    @MethodSource("parameters3")
+    @MethodSource("generateDecideWhenDealerBustArguments")
     @DisplayName("딜러의 점수가 21점 초과일 경우(버스트), 참가자의 승패를 테스트한다.")
     void decideWhenDealerBust(Card card1, Card card2, Card card3,
                               Card card4, Card card5, Card card6,
@@ -154,7 +154,7 @@ public class ParticipantResultTest {
         }
     }
 
-    static Stream<Arguments> parameters3() {
+    static Stream<Arguments> generateDecideWhenDealerBustArguments() {
         return Stream.of(
                 Arguments.of(
                         new Card(Denomination.NINE, Suit.CLOVER), new Card(Denomination.EIGHT, Suit.HEART),

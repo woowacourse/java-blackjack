@@ -1,11 +1,12 @@
 package blackjack.domain.player;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,16 +15,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class DealerTest {
 
     @ParameterizedTest(name = "[{index}] cards {0}, canAddCard {1}")
-    @MethodSource("parameters1")
+    @MethodSource("generateCanTakeCardArguments")
     @DisplayName("16점 이하일 경우 카드를 추가할 수 있다.")
-    void canAddCard(List<Card> cards) {
+    void canTakeCard(List<Card> cards) {
         Dealer dealer = new Dealer();
         cards.forEach(dealer::takeCard);
 
-        Assertions.assertThat(dealer.canTakeCard()).isTrue();
+        assertThat(dealer.canTakeCard()).isTrue();
     }
 
-    static Stream<Arguments> parameters1() {
+    static Stream<Arguments> generateCanTakeCardArguments() {
         return Stream.of(
                 Arguments.of(
                         List.of(new Card(Denomination.THREE, Suit.CLOVER), new Card(Denomination.EIGHT, Suit.HEART))),
@@ -35,16 +36,16 @@ public class DealerTest {
     }
 
     @ParameterizedTest(name = "[{index}] cards {0}, canAddCard {1}")
-    @MethodSource("parameters2")
+    @MethodSource("generateCantTakeCardArguments")
     @DisplayName("16점을 초과할 경우 카드를 추가하지 못한다.")
-    void cantAddCard(List<Card> cards) {
+    void cantTakeCard(List<Card> cards) {
         Dealer dealer = new Dealer();
         cards.forEach(dealer::takeCard);
 
-        Assertions.assertThat(dealer.canTakeCard()).isFalse();
+        assertThat(dealer.canTakeCard()).isFalse();
     }
 
-    static Stream<Arguments> parameters2() {
+    static Stream<Arguments> generateCantTakeCardArguments() {
         return Stream.of(
                 Arguments.of(
                         List.of(new Card(Denomination.EIGHT, Suit.CLOVER), new Card(Denomination.JACK, Suit.HEART))),

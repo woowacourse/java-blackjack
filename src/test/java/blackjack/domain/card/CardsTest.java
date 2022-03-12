@@ -1,8 +1,9 @@
 package blackjack.domain.card;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,14 +13,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class CardsTest {
 
     @ParameterizedTest(name = "[{index}] cards {0}, totalScore {1}")
-    @MethodSource("parameters")
+    @MethodSource("generateCalculateTotalScoreBasicCardArguments")
     @DisplayName("카드에 대한 점수 계산한다.")
-    void getTotalScoreBasicCard(List<Card> input, int totalScore) {
+    void calculateTotalScoreBasicCard(List<Card> input, int totalScore) {
         Cards cards = new Cards(input);
-        Assertions.assertThat(cards.calculateTotalScore()).isEqualTo(totalScore);
+
+        assertThat(cards.calculateTotalScore()).isEqualTo(totalScore);
     }
 
-    static Stream<Arguments> parameters() {
+    static Stream<Arguments> generateCalculateTotalScoreBasicCardArguments() {
         return Stream.of(
                 Arguments.of(List.of(new Card(Denomination.THREE, Suit.CLOVER),
                         new Card(Denomination.EIGHT, Suit.HEART)), 11),
@@ -42,8 +44,9 @@ public class CardsTest {
     void addCard() {
         Cards cards = new Cards(
                 List.of(new Card(Denomination.QUEEN, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE)));
-        cards.addCard(new Card(Denomination.SIX, Suit.HEART));
-        Assertions.assertThat(cards.calculateTotalScore()).isEqualTo(21);
 
+        cards.addCard(new Card(Denomination.SIX, Suit.HEART));
+
+        assertThat(cards.calculateTotalScore()).isEqualTo(21);
     }
 }
