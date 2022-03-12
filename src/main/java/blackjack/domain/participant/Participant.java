@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Name;
-import blackjack.domain.Rule;
+import blackjack.domain.State;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
@@ -26,11 +26,11 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return Rule.INSTANCE.isBust(cards.getCards());
+        return State.from(cards) == State.BUST;
     }
 
     public boolean isBlackJack() {
-        return Rule.INSTANCE.isBlackJack(cards.getCards());
+        return State.from(cards) == State.BLACKJACK;
     }
 
     public int getScore() {
