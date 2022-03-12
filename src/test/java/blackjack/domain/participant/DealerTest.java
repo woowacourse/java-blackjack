@@ -9,7 +9,6 @@ import static blackjack.fixture.CardRepository.CLOVER7;
 import static blackjack.fixture.CardRepository.CLOVER8;
 import static blackjack.fixture.CardRepository.CLOVER_ACE;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
-import static blackjack.fixture.CardRepository.DIAMOND_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -74,53 +73,25 @@ public class DealerTest {
         }
     }
 
-    @DisplayName("isBust 메서드 테스트")
-    @Nested
-    class IsBustTest {
+    @DisplayName("Dealer 인스턴스에는 CardBundle의 isBust 메서드가 구현되어있다.")
+    @Test
+    void isBust_implementationTest() {
+        dealer.receiveCard(CLOVER10);
+        dealer.receiveCard(CLOVER_KING);
 
-        @DisplayName("점수가 21을 넘지 않으면 false를 반환한다.")
-        @Test
-        void isBust_returnFalseOn21OrLess() {
-            boolean actual = dealer.isBust();
+        boolean actual = dealer.isBust();
 
-            assertThat(actual).isFalse();
-        }
-
-        @DisplayName("점수가 21을 넘으면 true를 반환한다.")
-        @Test
-        void isBust_returnTrueOnOver21() {
-            dealer.receiveCard(CLOVER10);
-            dealer.receiveCard(CLOVER_KING);
-
-            boolean actual = dealer.isBust();
-
-            assertThat(actual).isTrue();
-        }
+        assertThat(actual).isTrue();
     }
 
-    @DisplayName("isBlackjack 메서드 테스트")
-    @Nested
-    class IsBlackjackTest {
+    @DisplayName("Dealer 인스턴스에는 CardBundle의 isBlackjack 메서드가 구현되어있다.")
+    @Test
+    void isBlackjack_implementationTest() {
+        CardBundle cardBundle = generateCardBundleOf(CLOVER10, CLOVER_ACE);
+        Dealer dealer = Dealer.of(cardBundle);
 
-        @DisplayName("점수가 21이면 true를 반환한다.")
-        @Test
-        void isBlackjack_returnTruOn21() {
-            dealer.receiveCard(CLOVER_ACE);
-            dealer.receiveCard(DIAMOND_ACE);
+        boolean actual = dealer.isBlackjack();
 
-            boolean actual = dealer.isBlackjack();
-
-            assertThat(actual).isTrue();
-        }
-
-        @DisplayName("점수가 21이 아니면 false를 반환한다.")
-        @Test
-        void isBlackjack_returnTrueIfNot21() {
-            dealer.receiveCard(CLOVER_ACE);
-
-            boolean actual = dealer.isBust();
-
-            assertThat(actual).isFalse();
-        }
+        assertThat(actual).isTrue();
     }
 }

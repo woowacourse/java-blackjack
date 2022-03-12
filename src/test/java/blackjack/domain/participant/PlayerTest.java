@@ -6,6 +6,7 @@ import static blackjack.fixture.CardRepository.CLOVER2;
 import static blackjack.fixture.CardRepository.CLOVER4;
 import static blackjack.fixture.CardRepository.CLOVER5;
 import static blackjack.fixture.CardRepository.CLOVER6;
+import static blackjack.fixture.CardRepository.CLOVER_ACE;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -90,27 +91,25 @@ public class PlayerTest {
         }
     }
 
-    @DisplayName("isBust 메서드 테스트")
-    @Nested
-    class IsBustTest {
+    @DisplayName("Player 인스턴스에는 CardBundle의 isBust 메서드가 구현되어있다.")
+    @Test
+    void isBust_implementationTest() {
+        player.receiveCard(CLOVER10);
+        player.receiveCard(CLOVER_KING);
 
-        @DisplayName("점수가 21을 넘지 않으면 false를 반환한다.")
-        @Test
-        void isBust_returnFalseOn21OrLess() {
-            boolean actual = player.isBust();
+        boolean actual = player.isBust();
 
-            assertThat(actual).isFalse();
-        }
+        assertThat(actual).isTrue();
+    }
 
-        @DisplayName("점수가 21을 넘으면 true를 반환한다.")
-        @Test
-        void isBust_returnTrueOnOver21() {
-            player.receiveCard(CLOVER10);
-            player.receiveCard(CLOVER_KING);
+    @DisplayName("Player 인스턴스에는 CardBundle의 isBlackjack 메서드가 구현되어있다.")
+    @Test
+    void isBlackjack_implementationTest() {
+        CardBundle cardBundle = generateCardBundleOf(CLOVER10, CLOVER_ACE);
+        Player player = Player.of("hudi", cardBundle);
 
-            boolean actual = player.isBust();
+        boolean actual = player.isBlackjack();
 
-            assertThat(actual).isTrue();
-        }
+        assertThat(actual).isTrue();
     }
 }

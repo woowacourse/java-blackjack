@@ -26,8 +26,12 @@ public abstract class Participant {
         return cardBundle.getScore();
     }
 
+    public boolean isBlackjack() {
+        return cardBundle.isBlackjack();
+    }
+
     public boolean isBust() {
-        return cardBundle.getScore().toInt() > Score.BLACKJACK;
+        return cardBundle.isBust();
     }
 
     public String getName() {

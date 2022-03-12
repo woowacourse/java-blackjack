@@ -23,11 +23,6 @@ public class Dealer extends Participant {
         return score.toInt() <= Score.DEALER_EXTRA_CARD_LIMIT;
     }
 
-    public boolean isBlackjack() {
-        Score score = cardBundle.getScore();
-        return score.toInt() == Score.BLACKJACK;
-    }
-
     public Card getOpenCard() {
         return cardBundle.getCards()
                 .stream()
