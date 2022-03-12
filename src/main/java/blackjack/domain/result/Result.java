@@ -20,7 +20,7 @@ public enum Result {
         return Arrays.stream(values())
                 .filter(result -> result.determiner.compare(userScore, dealerScore))
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(NullPointerException::new);
     }
 
     public static Result swap(Result result) {

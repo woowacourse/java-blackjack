@@ -14,7 +14,7 @@ public class Deck {
 
     public Card drawCard() {
         if (cards.isEmpty()) {
-            throw new RuntimeException(ERROR_EMPTY_DECK);
+            throw new IndexOutOfBoundsException(ERROR_EMPTY_DECK);
         }
         return cards.poll();
     }
