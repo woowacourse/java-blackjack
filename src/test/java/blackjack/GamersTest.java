@@ -16,7 +16,7 @@ public class GamersTest {
 
         assertThatThrownBy(() -> Gamers.from(names))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 중복된 이름이 있습니다.");
+                .hasMessage("[ERROR] 중복되는 이름이 있습니다.");
     }
 
     @DisplayName("포키와 리버가 있을 때, 리버의 턴을 시작한다")
@@ -24,22 +24,9 @@ public class GamersTest {
     void nextEntry_reaver() {
         List<String> names = List.of("포키", "리버");
         Gamers gamers = Gamers.from(names);
-        //TODO: index값과 toNext 호출 회수 하나의 변수로 관리
-        gamers.toNextEntry();
-        gamers.toNextEntry();
 
-        assertThat(gamers.getCurrentEntryName()).isEqualTo(names.get(1));
-    }
+        gamers.nextGamer();
 
-    @DisplayName("더 이상 Entry가 없을 때 예외가 발생한다.")
-    @Test
-    void nextEntry_exception_no_entry() {
-        List<String> names = List.of("포키");
-        Gamers gamers = Gamers.from(names);
-        gamers.toNextEntry();
-
-        assertThatThrownBy(gamers::toNextEntry)
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("[ERROR] 더 이상 Entry가 없습니다.");
+        assertThat(gamers.getCurrentValue().name).isEqualTo(names.get(1));
     }
 }
