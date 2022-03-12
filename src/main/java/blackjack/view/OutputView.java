@@ -11,17 +11,18 @@ public class OutputView {
 
     private static final String START_ERROR = "[ERROR] ";
 
-    private OutputView(){}
+    private OutputView() {
+    }
 
     public static void printErrorMessage(String message) {
         System.out.println(START_ERROR + message);
     }
 
-    public static void printFirstDistribute(List<CurrentCardsDTO> currentCardsDTOs) {
-        System.out.println(makeFirstDistributeTitleString(currentCardsDTOs));
+    public static void printFirstDistribute(CurrentCardsDTO dealer, List<CurrentCardsDTO> players) {
+        System.out.println(makeFirstDistributeTitleString(dealer, players));
 
-        for (CurrentCardsDTO dto : currentCardsDTOs) {
-            System.out.println(makeCurrentCardToString(dto.getName(), dto.getCards()));
+        for (CurrentCardsDTO player : players) {
+            printCurrentStatus(player);
         }
 
         System.out.println();
@@ -33,7 +34,7 @@ public class OutputView {
 
     public static void printDealerAdded(String name) {
         System.out.println("\n" + name + "는 " + Dealer.BOUND_FOR_ADDITIONAL_CARD
-                + "이하라 카드를 더 받았습니다.");
+                + "이하라 카드를 1장 더 받았습니다.");
     }
 
     public static void printTotalScore(List<TotalScoreDTO> totalScoreDTOs) {
@@ -52,13 +53,10 @@ public class OutputView {
         }
     }
 
-    private static String makeFirstDistributeTitleString(List<CurrentCardsDTO> dtos) {
+    private static String makeFirstDistributeTitleString(CurrentCardsDTO dealer, List<CurrentCardsDTO> players) {
         StringBuilder title = new StringBuilder("\n");
-
-        title.append(dtos.get(0).getName())
-                .append("와 ")
-                .append(dtos.subList(1, dtos.size()).stream()
-                        .map(CurrentCardsDTO::getName)
+        title.append(dealer.getName())
+                .append(players.stream().map(CurrentCardsDTO::getName)
                         .collect(Collectors.joining(", ")))
                 .append("에게 2장을 나누었습니다.\n");
 

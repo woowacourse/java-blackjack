@@ -38,8 +38,8 @@ class PlayerTest {
         player.addCard(new Card(Symbol.SPADE, Denomination.FIVE));
         player.addCard(new Card(Symbol.DIAMOND, Denomination.TWO));
 
-        assertThat(player.isWin(16)).isFalse();
-        assertThat(player.isWin(6)).isTrue();
+        assertThat(player.computeResult(16).isWin()).isFalse();
+        assertThat(player.computeResult(6).isWin()).isTrue();
     }
 
     @Test
@@ -50,7 +50,7 @@ class PlayerTest {
         player.addCard(new Card(Symbol.SPADE, Denomination.QUEEN));
         player.addCard(new Card(Symbol.DIAMOND, Denomination.TWO));
 
-        assertThat(player.isWin(1)).isFalse();
+        assertThat(player.computeResult(1).isWin()).isFalse();
     }
 
     @Test
@@ -60,6 +60,6 @@ class PlayerTest {
         player.addCard(new Card(Symbol.SPADE, Denomination.ACE));
         player.addCard(new Card(Symbol.SPADE, Denomination.ACE));
 
-        assertThat(player.isWin(22)).isTrue();
+        assertThat(player.computeResult(22).isWin()).isTrue();
     }
 }

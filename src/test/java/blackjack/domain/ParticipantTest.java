@@ -19,7 +19,7 @@ class ParticipantTest {
         participant.addCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
         participant.addCard(new Card(Symbol.HEART, Denomination.TWO));
 
-        assertThat(participant.getScore()).isEqualTo(20);
+        assertThat(participant.computeTotalScore().getScore()).isEqualTo(20);
     }
 
     @Test
@@ -29,9 +29,8 @@ class ParticipantTest {
         participant.addCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
         participant.addCard(new Card(Symbol.HEART, Denomination.TWO));
         participant.addCard(new Card(Symbol.SPADE, Denomination.ACE));
-        participant.endTurn();
 
-        assertThat(participant.getScore()).isEqualTo(21);
+        assertThat(participant.computeTotalScore().getScore()).isEqualTo(21);
     }
 
     @Test
@@ -41,8 +40,7 @@ class ParticipantTest {
         participant.addCard(new Card(Symbol.CLOVER, Denomination.KING));
         participant.addCard(new Card(Symbol.HEART, Denomination.QUEEN));
         participant.addCard(new Card(Symbol.SPADE, Denomination.ACE));
-        participant.endTurn();
 
-        assertThat(participant.getScore()).isEqualTo(21);
+        assertThat(participant.computeTotalScore().getScore()).isEqualTo(21);
     }
 }

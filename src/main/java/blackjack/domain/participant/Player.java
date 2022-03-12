@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.dto.PlayerResultDTO;
+
 public class Player extends Participant {
 
     public Player(String name) {
@@ -10,7 +12,11 @@ public class Player extends Participant {
         return getScore() < GOAL_SCORE;
     }
 
-    public boolean isWin(int comparisonScore) {
+    public PlayerResultDTO computeResult(int comparisonScore) {
+        return new PlayerResultDTO(getName(), isWin(comparisonScore));
+    }
+
+    private boolean isWin(int comparisonScore) {
         if (getScore() > GOAL_SCORE) {
             return false;
         }

@@ -1,6 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
+import blackjack.dto.CurrentCardsDTO;
+import blackjack.dto.TotalScoreDTO;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,23 +26,13 @@ public class Participant {
         score += card.getValue();
     }
 
-    public void endTurn() {
-        int aceCount = (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
-
-        boolean changed = true;
-        while (aceCount-- > 0 && changed) {
-            changed = isMorePointForAce();
-        }
+    public CurrentCardsDTO generateCurrentCardsDTO() {
+        return new CurrentCardsDTO(name, Collections.unmodifiableList(cards));
     }
 
-    private boolean isMorePointForAce() {
-        if (score + ADDITIONAL_SCORE_FOR_ACE <= GOAL_SCORE) {
-            score += ADDITIONAL_SCORE_FOR_ACE;
-            return true;
-        }
-        return false;
+    public TotalScoreDTO computeTotalScore() {
+        this.endTurn();
+        return new TotalScoreDTO(name, Collections.unmodifiableList(cards), score);
     }
 
     public int getScore() {
@@ -53,5 +45,15 @@ public class Participant {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    private void endTurn() {
+        int aceCount = (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+
+        if (aceCount > 0 && score + ADDITIONAL_SCORE_FOR_ACE <= GOAL_SCORE) {
+            score += ADDITIONAL_SCORE_FOR_ACE;
+        }
     }
 }
