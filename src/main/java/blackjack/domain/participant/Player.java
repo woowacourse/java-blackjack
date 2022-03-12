@@ -13,6 +13,6 @@ public class Player extends Participant {
 
     @Override
     public boolean isHittable() {
-        return calculateSum() < HIT_STANDARD;
+        return calculateScore() < HIT_STANDARD;
     }
 }

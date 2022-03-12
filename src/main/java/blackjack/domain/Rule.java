@@ -13,9 +13,13 @@ public class Rule {
     private Rule() {
     }
 
-    public static int calculateSum(List<Card> cards) {
+    public static int calculateScore(List<Card> cards) {
         int aceCount = calculateAceCount(cards);
         int sum = calculateMinimumSum(cards);
+        return calculateSum(aceCount, sum);
+    }
+
+    private static int calculateSum(int aceCount, int sum) {
         return IntStream.rangeClosed(0, aceCount)
                 .map(i -> sum + (aceCount - i) * 10)
                 .filter(i -> i <= BLACKJACK_SCORE)
@@ -36,10 +40,10 @@ public class Rule {
     }
 
     public static boolean isBust(List<Card> cards) {
-        return calculateSum(cards) > BLACKJACK_SCORE;
+        return calculateScore(cards) > BLACKJACK_SCORE;
     }
 
     public static boolean isBlackJack(List<Card> cards) {
-        return cards.size() == BLACKJACK_COUNT && calculateSum(cards) == BLACKJACK_SCORE;
+        return cards.size() == BLACKJACK_COUNT && calculateScore(cards) == BLACKJACK_SCORE;
     }
 }

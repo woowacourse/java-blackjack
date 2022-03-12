@@ -57,8 +57,8 @@ public abstract class Participant {
         return Rule.isBlackJack(cards);
     }
 
-    public int calculateSum() {
-        return Rule.calculateSum(cards);
+    public int calculateScore() {
+        return Rule.calculateScore(cards);
     }
 
     public List<Card> getCards() {

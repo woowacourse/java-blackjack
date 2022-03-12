@@ -24,7 +24,7 @@ public class RuleTest {
         List<Card> cards = List.of(card1, card2);
 
         // when
-        int actual = Rule.calculateSum(cards);
+        int actual = Rule.calculateScore(cards);
 
         // then
         assertThat(actual).isEqualTo(6);
@@ -41,7 +41,7 @@ public class RuleTest {
         List<Card> cards = List.of(card1, card2, card3, card4);
 
         // when
-        int actual = Rule.calculateSum(cards);
+        int actual = Rule.calculateScore(cards);
 
         // then
         assertThat(actual).isEqualTo(14);
@@ -57,7 +57,7 @@ public class RuleTest {
         List<Card> cards = List.of(card1, card2, card3);
 
         // when
-        int actual = Rule.calculateSum(cards);
+        int actual = Rule.calculateScore(cards);
 
         // then
         assertThat(actual).isEqualTo(22);
