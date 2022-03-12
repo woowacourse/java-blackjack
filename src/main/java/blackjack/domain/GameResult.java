@@ -24,10 +24,6 @@ public enum GameResult {
                 .orElseThrow(() -> new IllegalArgumentException("결과가 정상적으로 나오지 않았습니다."));
     }
 
-    private static boolean checkBust(int score) {
-        return score > 21;
-    }
-
     public String getValue() {
         return value;
     }
