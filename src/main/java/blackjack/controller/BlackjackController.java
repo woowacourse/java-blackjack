@@ -1,10 +1,10 @@
 package blackjack.controller;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.TurnManager;
 import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
@@ -16,17 +16,20 @@ public class BlackjackController {
 
     public void run() {
         BlackjackGame blackjackGame = new BlackjackGame(createParticipants());
-        blackjackGame.initCards();
-        OutputView.printInitialCardInformation(blackjackGame.getParticipants());
+        dealInitialCards(blackjackGame);
         dealMoreCards(blackjackGame);
         printResult(blackjackGame.getParticipants());
     }
 
     private Participants createParticipants() {
-        List<String> playerNames = InputView.inputPlayerName();
-        return new Participants(playerNames.stream()
+        return new Participants(InputView.inputPlayerName().stream()
             .map(Player::new)
             .collect(Collectors.toList()));
+    }
+
+    private void dealInitialCards(BlackjackGame blackjackGame) {
+        blackjackGame.initCards();
+        OutputView.printInitialCardInformation(blackjackGame.getParticipants());
     }
 
     private void dealMoreCards(BlackjackGame blackjackGame) {
@@ -35,20 +38,22 @@ public class BlackjackController {
     }
 
     private void dealMoreCardsToPlayers(BlackjackGame blackjackGame) {
-        for (Player player : blackjackGame.getParticipants().getPlayers()) {
-            dealMoreCardsToPlayer(blackjackGame, player);
+        TurnManager gameManager = new TurnManager(blackjackGame.getParticipants().getPlayers());
+        while (!gameManager.isAllTurnEnd()) {
+            dealMoreCardsToPlayer(gameManager);
         }
     }
 
-    private void dealMoreCardsToPlayer(BlackjackGame blackjackGame, Player player) {
+    private void dealMoreCardsToPlayer(TurnManager gameManager) {
         boolean printCheck = false;
-        while (player.canHit() && blackjackGame.isHitAndDealMoreCard(isHit(player), player)) {
-            OutputView.printPlayerCardInformation(player);
+        while (gameManager.canHitStatus() && gameManager.doPlayerTurn(isHit(gameManager.getCurrentPlayer()))) {
+            OutputView.printPlayerCardInformation(gameManager.getCurrentPlayer());
             printCheck = true;
         }
         if (!printCheck) {
-            OutputView.printPlayerCardInformation(player);
+            OutputView.printPlayerCardInformation(gameManager.getCurrentPlayer());
         }
+        gameManager.turnToNext();
     }
 
     private boolean isHit(Player player) {
