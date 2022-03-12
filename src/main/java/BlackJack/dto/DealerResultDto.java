@@ -1,11 +1,13 @@
 package BlackJack.dto;
 
+import BlackJack.domain.User.Dealer;
+
 public class DealerResultDto {
 
     private final String name;
-    private int dealerLoseCount = 0;
-    private int dealerDrawCount = 0;
-    private int dealerWinCount = 0;
+    private final int dealerLoseCount;
+    private final int dealerDrawCount;
+    private final int dealerWinCount;
 
     public DealerResultDto(String name, int dealerLoseCount, int dealerDrawCount, int dealerWinCount) {
         this.name = name;
@@ -14,8 +16,11 @@ public class DealerResultDto {
         this.dealerWinCount = dealerWinCount;
     }
 
-    public static DealerResultDto from(String name, int dealerLoseCount, int dealerDrawCount, int dealerWinCount) {
-        return new DealerResultDto(name, dealerLoseCount, dealerDrawCount, dealerWinCount);
+    public static DealerResultDto from(Dealer dealer, int totalGameCount) {
+        int dealerLoseCount = dealer.getDealerLoseCount();
+        int dealerDrawCount = dealer.getDealerDrawCount();
+        int dealerWinCount = totalGameCount - (dealerLoseCount + dealerDrawCount);
+        return new DealerResultDto(dealer.getName(), dealerLoseCount, dealerDrawCount, dealerWinCount);
     }
 
     public String getName() {

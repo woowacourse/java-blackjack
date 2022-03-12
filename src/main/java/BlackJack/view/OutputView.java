@@ -1,11 +1,10 @@
 package BlackJack.view;
 
 import BlackJack.dto.DealerResultDto;
-import BlackJack.dto.PlayerResultDto;
+import BlackJack.dto.PlayerResultsDto;
 import BlackJack.dto.UserDto;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String DRAW_MESSAGE = "딜러와 %s에게 2장의 나누었습니다.\n";
@@ -20,7 +19,7 @@ public class OutputView {
     private static final String PLAYER_RESULT_FORMAT = "%s";
 
     public static void printDrawMessage(List<String> userNames) {
-        System.out.printf(DRAW_MESSAGE, userNames.stream().collect(Collectors.joining(DELIMITER)));
+        System.out.printf(DRAW_MESSAGE, String.join(DELIMITER, userNames));
     }
 
     public static void printTotalUserCards(List<UserDto> users) {
@@ -34,7 +33,7 @@ public class OutputView {
     }
 
     public static void printPlayerCard(UserDto userDto) {
-        String cards = userDto.getCards().stream().collect(Collectors.joining(DELIMITER));
+        String cards = String.join(DELIMITER, userDto.getCards());
         System.out.println(String.format(CARD_FORMAT, userDto.getName(), cards));
     }
 
@@ -44,18 +43,17 @@ public class OutputView {
 
     public static void printTotalResult(List<UserDto> userDtos) {
         for (UserDto userDto : userDtos) {
-            String cards = userDto.getCards().stream().collect(Collectors.joining(DELIMITER));
+            String cards = String.join(DELIMITER, userDto.getCards());
             System.out.println(String.format(CARD_FORMAT + SCORE_FORMAT, userDto.getName(), cards, userDto.getScore()));
         }
     }
 
-    public static void printFinalResult(List<PlayerResultDto> resultDtos, DealerResultDto dealerDto) {
+    public static void printFinalResult(PlayerResultsDto resultDtos, DealerResultDto dealerDto) {
         System.out.println(FINAL_RESULT_MESSAGE);
 
         System.out.println(String.format(NAME_FORMAT + DEALER_RESULT_FORMAT, dealerDto.getName(), dealerDto.getDealerWinCount(), dealerDto.getDealerLoseCount(), dealerDto.getDealerDrawCount()));
-        for (PlayerResultDto resultDto : resultDtos) {
-            System.out.println(String.format(NAME_FORMAT + PLAYER_RESULT_FORMAT, resultDto.getName(), resultDto.getResult()));
-        }
-
+        resultDtos.getPlayerResultDtos().stream()
+                .map(resultDto -> String.format(NAME_FORMAT + PLAYER_RESULT_FORMAT, resultDto.getName(), resultDto.getResult()))
+                .forEach(System.out::println);
     }
 }

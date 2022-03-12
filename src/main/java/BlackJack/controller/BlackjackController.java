@@ -1,18 +1,18 @@
 package BlackJack.controller;
 
 import BlackJack.domain.Card.CardFactory;
-import BlackJack.domain.Result;
 import BlackJack.domain.User.Dealer;
 import BlackJack.domain.User.Player;
 import BlackJack.domain.User.Players;
 import BlackJack.dto.DealerResultDto;
-import BlackJack.dto.PlayerResultDto;
+import BlackJack.dto.PlayerResultsDto;
 import BlackJack.dto.UserDto;
 import BlackJack.view.InputView;
 import BlackJack.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -25,35 +25,12 @@ public class BlackjackController {
 
         OutputView.printTotalResult(playGame(dealer, players));
 
-        List<PlayerResultDto> resultDtos = calculatePlayerResult(dealer, players);
-        DealerResultDto dealerDto = calculateDealerResult(dealer, players);
-        OutputView.printFinalResult(resultDtos, dealerDto);
-    }
-
-    private DealerResultDto calculateDealerResult(Dealer dealer, Players players) {
-        int dealerLoseCount = dealer.getDealerLoseCount();
-        int dealerDrawCount = dealer.getDealerDrawCount();
-        return DealerResultDto.from(
-                dealer.getName(),
-                dealerLoseCount,
-                dealerDrawCount,
-                players.size() - (dealerLoseCount + dealerDrawCount));
-    }
-
-    private List<PlayerResultDto> calculatePlayerResult(Dealer dealer, Players players) {
-        List<PlayerResultDto> resultPlayerDtos = new ArrayList<>();
-
-        for (Player player : players.getPlayers()) {
-            Result compare = dealer.compare(player);
-            resultPlayerDtos.add(PlayerResultDto.from(player.getName(), compare));
-        }
-        return resultPlayerDtos;
+        Map<String, String> statistics = players.getStatistics(dealer);
+        OutputView.printFinalResult(PlayerResultsDto.from(statistics), DealerResultDto.from(dealer, players.size()));
     }
 
     private List<UserDto> playGame(Dealer dealer, Players players) {
-        for (Player player : players.getPlayers()) {
-            askOneMoreCard(player);
-        }
+        players.getPlayers().forEach(this::askOneMoreCard);
         while (dealer.checkScore()) {
             OutputView.printAddDealerCard();
             dealer.addCard();
