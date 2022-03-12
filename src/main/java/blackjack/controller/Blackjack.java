@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Answer;
-import blackjack.domain.game.CardMachine;
+import blackjack.domain.game.CardDeck;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
@@ -20,13 +20,13 @@ public class Blackjack {
     private static final Enterable enterable = new Enter();
 
     public void run() {
-        CardMachine cardMachine = new CardMachine();
+        CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
 
         OutputView.printPlayerNameInstruction();
         Players players = createPlayers();
 
-        drawCards(cardMachine, dealer, players);
+        drawCards(cardDeck, dealer, players);
         showWinner(dealer, players);
     }
 
@@ -39,18 +39,18 @@ public class Blackjack {
         }
     }
 
-    private void drawCards(final CardMachine cardMachine, final Dealer dealer, final Players players) {
-        drawInitCards(cardMachine, dealer, players);
+    private void drawCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
+        drawInitCards(cardDeck, dealer, players);
 
-        drawCardToPlayers(players, cardMachine);
-        drawCardToDealer(dealer, cardMachine);
+        drawCardToPlayers(players, cardDeck);
+        drawCardToDealer(dealer, cardDeck);
     }
 
-    private void drawInitCards(final CardMachine cardMachine, final Dealer dealer, final Players players) {
+    private void drawInitCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
         OutputView.printDrawInitCards(dealer.getName(), players.getNames());
-        dealer.drawInitCards(cardMachine.pickInitCards());
+        dealer.drawInitCards(cardDeck.pickInit());
         for (Player player : players.getPlayers()) {
-            player.drawInitCards(cardMachine.pickInitCards());
+            player.drawInitCards(cardDeck.pickInit());
         }
         openInitCards(dealer, players);
     }
@@ -75,16 +75,16 @@ public class Blackjack {
                 .collect(Collectors.toList());
     }
 
-    private void drawCardToPlayers(final Players players, final CardMachine cardMachine) {
+    private void drawCardToPlayers(final Players players, final CardDeck cardDeck) {
         for (Player player : players.getPlayers()) {
-            drawCardToPlayer(player, cardMachine);
+            drawCardToPlayer(player, cardDeck);
         }
         OutputView.printNewLine();
     }
 
-    private void drawCardToPlayer(final Player player, final CardMachine cardMachine) {
+    private void drawCardToPlayer(final Player player, final CardDeck cardDeck) {
         while (player.isDrawable() && isDrawing(player)) {
-            player.drawCard(cardMachine.pickCard());
+            player.drawCard(cardDeck.pick());
             OutputView.printCards(player.getName(), getPlayerCards(player));
         }
     }
@@ -100,9 +100,9 @@ public class Blackjack {
         }
     }
 
-    private void drawCardToDealer(final Dealer dealer, final CardMachine cardMachine) {
+    private void drawCardToDealer(final Dealer dealer, final CardDeck cardDeck) {
         while (dealer.isDrawable()) {
-            dealer.drawCard(cardMachine.pickCard());
+            dealer.drawCard(cardDeck.pick());
             OutputView.printDrawDealer(dealer.getName(), Dealer.RECEIVED_MAXIMUM);
         }
         OutputView.printNewLine();
