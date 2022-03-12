@@ -15,7 +15,7 @@ public enum Choice {
         this.value = value;
     }
 
-    public static Choice of(final String inputValue) {
+    public static Choice from(final String inputValue) {
         return Arrays.stream(Choice.values())
                 .filter(choice -> Objects.equals(choice.value, inputValue))
                 .findAny()
