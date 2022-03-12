@@ -9,9 +9,12 @@ final class MaxScoreCards extends ScoreCards{
     }
 
     public Score score() {
-        int score = stream()
+        return new Score(softHandScore());
+    }
+
+    private int softHandScore() {
+        return stream()
             .mapToInt(Card::softRank)
             .sum();
-        return new Score(score);
     }
 }

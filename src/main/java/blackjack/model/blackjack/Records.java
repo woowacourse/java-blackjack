@@ -15,10 +15,13 @@ public class Records {
 
     public Result resultByName(Name name) {
         if (!records.containsKey(name)) {
-            throw new IllegalArgumentException(
-                String.format("%s의 이름을 가진 플레이어가 없습니다.", name.value()));
+            throw new IllegalArgumentException(errorMessage(name));
         }
         return records.get(name);
+    }
+
+    private String errorMessage(Name name) {
+        return String.format("%s의 이름을 가진 플레이어가 없습니다.", name.value());
     }
 
     public Collection<Result> results() {

@@ -16,8 +16,7 @@ public enum Result {
     public Result reverse() {
         if (this == WIN) {
             return LOSS;
-        }
-        if (this == LOSS) {
+        } else if (this == LOSS) {
             return WIN;
         }
         return DRAW;
