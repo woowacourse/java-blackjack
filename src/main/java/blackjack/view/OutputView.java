@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
-
     private static final String JOIN_DELIMITER = ", ";
     private static final String INITIAL_CARD_DISTRIBUTION_MESSAGE = NEW_LINE + "딜러와 %s에게 2장의 카드를 나누었습니다." + NEW_LINE;
     private static final String PLAYER_CARDS_FORMAT = "%s 카드: %s";
@@ -25,8 +24,8 @@ public class OutputView {
     private static final String PARTICIPANT_CARDS_AND_SCORE_FORMAT = NEW_LINE + "%s 카드: %s - 결과: %d";
     private static final String PLAYER_BUST_MESSAGE = "버스트! 21을 초과하였습니다!";
     private static final String DEALER_EXTRA_CARD_MESSAGE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    public static final String FINAL_RESULT_ANNOUNCEMENT_MESSAGE = "## 최종 승패";
-    public static final String PARTICIPANT_RESULT_FORMAT = "%s: %s";
+    private static final String FINAL_RESULT_ANNOUNCEMENT_MESSAGE = "## 최종 승패";
+    private static final String PARTICIPANT_RESULT_FORMAT = "%s: %s";
 
     public static void printInitialParticipantsCards(InitialDistributionDto dto) {
         String message = getParticipantsCardCountInfo(dto.getPlayerNames())

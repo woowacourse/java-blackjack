@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class InitialDistributionDto {
 
-    List<ParticipantCardsDto> participantsInfo = new ArrayList<>();
+    private final List<ParticipantCardsDto> participantsInfo = new ArrayList<>();
 
     public InitialDistributionDto(Dealer dealer, List<Player> players) {
         initDealerInfo(dealer);

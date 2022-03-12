@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class BlackjackGame {
 
     private static final String NO_PLAYER_EXCEPTION_MESSAGE = "플레이어가 없는 게임은 존재할 수 없습니다.";
-    public static final String DUPLICATE_PLAYER_NAMES_EXCEPTION_MESSAGE = "플레이어명은 중복될 수 없습니다.";
+    private static final String DUPLICATE_PLAYER_NAMES_EXCEPTION_MESSAGE = "플레이어명은 중복될 수 없습니다.";
 
     private final CardStack cardDeck;
     private final GameParticipants participants;

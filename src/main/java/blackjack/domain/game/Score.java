@@ -10,7 +10,7 @@ public class Score implements Comparable<Score> {
     public static final int ACE_HIGH_VALUE = 11;
     public static final int DEALER_EXTRA_CARD_LIMIT = 16;
     public static final int BLACKJACK = 21;
-    public static final String NEGATIVE_SCORE_NOT_ALLOWED_EXCEPTION = "점수는 음수가 될 수 없습니다!";
+    private static final String NEGATIVE_SCORE_NOT_ALLOWED_EXCEPTION = "점수는 음수가 될 수 없습니다!";
 
     private final int value;
 
