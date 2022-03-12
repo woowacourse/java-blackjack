@@ -14,28 +14,28 @@ public class OutputView {
     private static final String EXPLAIN_SYMBOL = ": ";
 
     public static void printPlayersInitCardInfo(final Players players) {
-        final List<Player> participants = players.getParticipants();
-        final Player dealer = players.getDealer();
+        final List<Participant> participants = players.getParticipants();
+        final Dealer dealer = players.getDealer();
 
-        final String basicDistribute = "딜러와 %s에게 " + INIT_DISTRIBUTE_SIZE + "을 나누어주었습니다.";
+        final String basicDistribute = "%s와 %s에게 " + INIT_DISTRIBUTE_SIZE + "을 나누어주었습니다.";
         System.out.println();
-        System.out.printf((basicDistribute) + "%n", String.join(DELIMITER, extractNames(participants)));
+        System.out.printf((basicDistribute) + "%n", dealer.getName(), String.join(DELIMITER, extractNames(participants)));
         printInitDealerInfo(dealer);
         printParticipantsInfo(participants);
     }
 
-    private static List<String> extractNames(final List<Player> participants) {
+    private static List<String> extractNames(final List<Participant> participants) {
         return participants.stream()
-                .map(Player::getName)
+                .map(Participant::getName)
                 .collect(Collectors.toList());
     }
 
-    private static void printInitDealerInfo(final Player dealer) {
-        Card dealerCard = ((Dealer) dealer).getCardFirstOne();
-        System.out.println("딜러: " + dealerCard.getScore().getSymbol() + dealerCard.getType().getName());
+    private static void printInitDealerInfo(final Dealer dealer) {
+        Card dealerCard = dealer.getCardFirstOne();
+        System.out.println(dealer.getName() + EXPLAIN_SYMBOL + dealerCard.getScore().getSymbol() + dealerCard.getType().getName());
     }
 
-    private static void printParticipantsInfo(final List<Player> participants) {
+    private static void printParticipantsInfo(final List<Participant> participants) {
         participants.forEach(
                 participant -> System.out.println(makePlayerCardInfo(participant))
         );
@@ -70,13 +70,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printPlayerFinalInfo(final Player player) {
-        System.out.println(makePlayerCardInfo(player) + " - 결과:" + player.calculateFinalScore());
-    }
-
-    public static void printFinishParticipantInfo(final List<Player> participants) {
+    public static void printFinishParticipantInfo(final List<Participant> participants) {
         participants.forEach(OutputView::printPlayerFinalInfo);
         System.out.println();
+    }
+
+    public static void printPlayerFinalInfo(final Player player) {
+        System.out.println(makePlayerCardInfo(player) + " - 결과:" + player.calculateFinalScore());
     }
 
     public static void printResult(final Players players) {
@@ -85,8 +85,7 @@ public class OutputView {
         printParticipantsResult(players.getParticipants());
     }
 
-    private static void printDealerResult(final Player player) {
-        Dealer dealer = Dealer.changeToDealer(player);
+    private static void printDealerResult(final Dealer dealer) {
         System.out.println(dealer.getName() + EXPLAIN_SYMBOL + makeResultToText(dealer.getWinResultCount(), dealer.getLoseResultCount()));
     }
 
@@ -94,13 +93,13 @@ public class OutputView {
         return String.format("%d%s %d%s", win.getCount(), win.getResult().getValue(), lose.getCount(), lose.getResult().getValue());
     }
 
-    private static void printParticipantsResult(final List<Player> players) {
+    private static void printParticipantsResult(final List<Participant> players) {
         players.forEach(OutputView::printParticipantResult);
     }
 
-    private static void printParticipantResult(final Player player) {
-        System.out.print(player.getName() + EXPLAIN_SYMBOL);
-        System.out.println(Participant.changeToParticipant(player)
+    private static void printParticipantResult(final Participant participant) {
+        System.out.print(participant.getName() + EXPLAIN_SYMBOL);
+        System.out.println(participant
                 .getWinState().getValue());
     }
 }

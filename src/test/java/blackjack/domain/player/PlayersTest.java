@@ -17,13 +17,13 @@ class PlayersTest {
     @ParameterizedTest
     @MethodSource("participantListBySuccess")
     @DisplayName("참가자는 2~8명 사이이다. (성공)")
-    void checkParticipantNumberBySuccess(List<Player> participants) {
+    void checkParticipantNumberBySuccess(List<Participant> participants) {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(deck.makeDistributeCard());
         assertDoesNotThrow(() -> new Players(participants, dealer));
     }
 
-    private static Stream<List<Player>> participantListBySuccess() {
+    private static Stream<List<Participant>> participantListBySuccess() {
         Deck deck = new Deck();
         return Stream.of(
                 List.of(
@@ -46,7 +46,7 @@ class PlayersTest {
     @ParameterizedTest
     @MethodSource("participantListByFail")
     @DisplayName("참가자는 2~8명 사이이다. (실패)")
-    void checkParticipantNumber(List<Player> participants) {
+    void checkParticipantNumber(List<Participant> participants) {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(deck.makeDistributeCard());
 
@@ -55,7 +55,7 @@ class PlayersTest {
                 .hasMessage("[ERROR] 참가자 정보가 잘못 입력되었습니다.");
     }
 
-    private static Stream<List<Player>> participantListByFail() {
+    private static Stream<List<Participant>> participantListByFail() {
         Deck deck = new Deck();
         return Stream.of(
                 null,
@@ -89,25 +89,4 @@ class PlayersTest {
                 .hasMessage("[ERROR] 참가자 이름은 중복될 수 없습니다.");
     }
 
-    @Test
-    @DisplayName("참여자가 딜러로 변환되면 예외를 발생한다.")
-    void downCastingPlayerToDealer() {
-        Deck deck = new Deck();
-        Player participant = new Participant(deck.makeDistributeCard(), "corinne");
-        Assertions.assertThatThrownBy(() -> Dealer.changeToDealer(participant))
-                .isInstanceOf(ClassCastException.class)
-                .hasMessage("[ERROR] Player가 딜러가 아닙니다.");
-
-    }
-
-    @Test
-    @DisplayName("참여자가 딜러로 변환되면 예외를 발생한다.")
-    void downCastingPlayerToParticipant() {
-        Deck deck = new Deck();
-        Player dealer = new Dealer(deck.makeDistributeCard());
-        Assertions.assertThatThrownBy(() -> Participant.changeToParticipant(dealer))
-                .isInstanceOf(ClassCastException.class)
-                .hasMessage("[ERROR] Player가 참여자가 아닙니다.");
-
-    }
 }

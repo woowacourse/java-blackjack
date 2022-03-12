@@ -13,13 +13,6 @@ public class Participant extends Player {
         validateEmpty(name);
     }
 
-    public static Participant changeToParticipant(Player player) {
-        if (player instanceof Participant) {
-            return (Participant) player;
-        }
-        throw new ClassCastException("[ERROR] Player가 참여자가 아닙니다.");
-    }
-
     private void validateEmpty(final String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 이름은 비어있을 수 없습니다.");
