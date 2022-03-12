@@ -40,8 +40,8 @@ public final class Cards {
         return cards.stream().anyMatch(Card::isAceCard);
     }
 
-    public GameResult calculateFinalResult(final Cards other) {
-        return GameResult.of(this, other);
+    public FinalGameResult calculateFinalResult(final Cards other) {
+        return FinalGameResult.of(this, other);
     }
 
     public CardState getCardState() {
@@ -66,5 +66,9 @@ public final class Cards {
 
     public boolean isBlackJack() {
         return getCardState().isBlackJack();
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(cards);
     }
 }

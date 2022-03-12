@@ -1,8 +1,12 @@
 package domain;
 
+import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Player;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class Players {
@@ -19,5 +23,14 @@ public final class Players {
         for (Player player : players) {
             player.receiveCard(CardDeck.draw());
         }
+    }
+
+    public Map<String, List<Card>> getCardsWithName() {
+        final Map<String, List<Card>> cardsWithNameTotal = new LinkedHashMap<>();
+        for (Player player : players) {
+            assert player.getCardsWithName() != null;
+            cardsWithNameTotal.putAll(player.getCardsWithName());
+        }
+        return cardsWithNameTotal;
     }
 }

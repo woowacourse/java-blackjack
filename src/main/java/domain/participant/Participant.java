@@ -3,12 +3,17 @@ package domain.participant;
 import domain.CanAddCardThreshold;
 import domain.Cards;
 import domain.card.Card;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-public class Participant {
-    private final Cards cards;
+public abstract class Participant {
+    protected final Cards cards;
+    private final String name;
 
-    public Participant(final CanAddCardThreshold canAddCardThreshold) {
-        cards = new Cards(canAddCardThreshold);
+    public Participant(final CanAddCardThreshold canAddCardThreshold, final String name) {
+        this.cards = new Cards(canAddCardThreshold);
+        this.name = name;
     }
 
     public void receiveCard(final Card card) {
@@ -17,5 +22,14 @@ public class Participant {
 
     public boolean canReceiveCard() {
         return cards.canAddCard();
+    }
+
+    //    abstract public List<FinalGameResult> calculateFinalGameResult(Participant other);
+    public Map<String, List<Card>> getCardsWithName() {
+        return new LinkedHashMap<>(Map.of(name, getCards()));
+    }
+
+    protected List<Card> getCards() {
+        return cards.getCards();
     }
 }
