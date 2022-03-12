@@ -1,8 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.result.Result;
-
-import static blackjack.domain.result.ScoreCalculator.cardSum;
+import blackjack.domain.result.ScoreCalculator;
 
 public class User extends Participant{
 
@@ -23,11 +22,11 @@ public class User extends Participant{
     }
 
     public Result checkResult(int otherScore) {
-        return Result.checkUserResult(cardSum(cards), otherScore);
+        return Result.checkUserResult(ScoreCalculator.cardSum(cards), otherScore);
     }
 
     public boolean checkBust() {
-        return cardSum(cards) > BUST_STANDARD;
+        return ScoreCalculator.cardSum(cards) > BUST_STANDARD;
     }
 
     public String getName() {
