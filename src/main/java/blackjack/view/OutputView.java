@@ -7,11 +7,8 @@ import blackjack.dto.InitialDistributionDto;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.ResultStatsDto;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -24,7 +21,7 @@ public class OutputView {
     private static final String PARTICIPANT_CARDS_AND_SCORE_FORMAT = NEW_LINE + "%s 카드: %s - 결과: %d";
     private static final String PLAYER_BUST_MESSAGE = "버스트! 21을 초과하였습니다!";
     private static final String DEALER_EXTRA_CARD_MESSAGE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String FINAL_RESULT_ANNOUNCEMENT_MESSAGE = "## 최종 승패";
+    private static final String FINAL_RESULT_ANNOUNCEMENT_MESSAGE = "## 최종 승패" + NEW_LINE;
     private static final String PARTICIPANT_RESULT_FORMAT = "%s: %s";
 
     public static void printInitialParticipantsCards(InitialDistributionDto dto) {
@@ -75,73 +72,69 @@ public class OutputView {
         print(getJoinedCardsAndScores(dto.getResults()) + NEW_LINE);
     }
 
-    private static String getJoinedCardsAndScores(List<ResultStatsDto> resultStats) {
-        return resultStats.stream()
+    private static String getJoinedCardsAndScores(List<ResultStatsDto> dtos) {
+        return dtos.stream()
                 .map(OutputView::getParticipantCardsAndScore)
                 .collect(Collectors.joining());
     }
 
-    private static String getParticipantCardsAndScore(ResultStatsDto stats) {
-        String participantName = stats.getParticipantName();
-        String cards = getCardsInfo(stats.getCards());
-        int score = stats.getScore().toInt();
+    private static String getParticipantCardsAndScore(ResultStatsDto dto) {
+        String participantName = dto.getParticipantName();
+        String cards = getCardsInfo(dto.getCards());
+        int score = dto.getScore().toInt();
 
         return String.format(PARTICIPANT_CARDS_AND_SCORE_FORMAT, participantName, cards, score);
     }
 
     public static void printGameResult(GameResultDto dto) {
-        print(FINAL_RESULT_ANNOUNCEMENT_MESSAGE);
-        print(getJoinedGameResults(dto.getResults()));
+        String gameResultFullTexts = FINAL_RESULT_ANNOUNCEMENT_MESSAGE
+                + getAllParticipantsGameResults(dto.getResults());
+
+        print(gameResultFullTexts);
     }
 
-    private static String getJoinedGameResults(List<ResultStatsDto> stats) {
-        return stats.stream()
-                .map(OutputView::getResultFormat)
+    private static String getAllParticipantsGameResults(List<ResultStatsDto> dtos) {
+        return dtos.stream()
+                .map(OutputView::getParticipantGameResult)
                 .collect(Collectors.joining(NEW_LINE));
     }
 
-    private static String getResultFormat(ResultStatsDto result) {
-        String name = result.getParticipantName();
-        List<ResultType> existingTypes = getOccurredResultTypes(result);
+    private static String getParticipantGameResult(ResultStatsDto dto) {
+        String name = dto.getParticipantName();
 
-        if (existingTypes.size() == 1) {
-            return getSingleResultTypeFormat(result, name, existingTypes);
+        if (dto.hasSingleResultType()) {
+            return getSingleResultTypeFormat(dto, name);
         }
-        return String.format(PARTICIPANT_RESULT_FORMAT, name, getMultipleResultTypeFormat(result, existingTypes));
+        return getMultipleResultTypeFormat(dto, name);
     }
 
-    private static List<ResultType> getOccurredResultTypes(ResultStatsDto dto) {
-        return Arrays.stream(ResultType.values())
-                .filter(type -> dto.getCountOf(type).toInt() > 0)
-                .collect(Collectors.toList());
-    }
+    private static String getSingleResultTypeFormat(ResultStatsDto dto, String name) {
+        ResultType resultType = dto.getResultStatsTypes().get(0);
 
-    private static String getSingleResultTypeFormat(ResultStatsDto result,
-                                                    String name,
-                                                    List<ResultType> existingTypes) {
-        int count = result.getCountOf(existingTypes.get(0)).toInt();
-        String resultType = existingTypes.get(0).getDisplayName();
-
-        if (count == 1) {
-            return String.format(PARTICIPANT_RESULT_FORMAT, name, resultType);
+        if (dto.hasMultipleCountOf(resultType)) {
+            return String.format(PARTICIPANT_RESULT_FORMAT, name, getMultipleCountResultTextOf(dto, resultType));
         }
-        return String.format(PARTICIPANT_RESULT_FORMAT, name, count + resultType);
+        return String.format(PARTICIPANT_RESULT_FORMAT, name, resultType.getDisplayName());
     }
 
-    private static String getMultipleResultTypeFormat(ResultStatsDto dto,
-                                                      List<ResultType> existingTypes) {
-        return existingTypes.stream()
-                .map(type -> dto.getCountOf(type).toInt() + type.getDisplayName())
+    private static String getMultipleResultTypeFormat(ResultStatsDto dto, String name) {
+        String multipleResultTypesInfo = dto.getResultStatsTypes().stream()
+                .map(resultType -> getMultipleCountResultTextOf(dto, resultType))
                 .collect(Collectors.joining(" "));
+
+        return String.format(PARTICIPANT_RESULT_FORMAT, name, multipleResultTypesInfo);
+    }
+
+    private static String getMultipleCountResultTextOf(ResultStatsDto dto, ResultType resultType) {
+        int count = dto.getCountValueOf(resultType);
+        String resultDisplayName = resultType.getDisplayName();
+
+        return count + resultDisplayName;
     }
 
     private static String getCardsInfo(Set<Card> cards) {
-        return mapAndJoinString(cards, Card::getName);
-    }
-
-    private static <T> String mapAndJoinString(Collection<T> collection, Function<T, String> function) {
-        return collection.stream()
-                .map(function)
+        return cards.stream()
+                .map(Card::getName)
                 .collect(Collectors.joining(JOIN_DELIMITER));
     }
 

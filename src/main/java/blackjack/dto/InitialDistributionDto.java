@@ -1,7 +1,6 @@
 package blackjack.dto;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.GameParticipants;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
 import java.util.Collections;

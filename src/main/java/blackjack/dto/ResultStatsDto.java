@@ -5,10 +5,11 @@ import blackjack.domain.game.ResultCount;
 import blackjack.domain.game.ResultStatistics;
 import blackjack.domain.game.ResultType;
 import blackjack.domain.game.Score;
-import java.util.Collections;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ResultStatsDto {
 
@@ -36,14 +37,6 @@ public class ResultStatsDto {
         }
     }
 
-    public boolean hasSingleResultType() {
-        return participantResultStats.keySet().size() == 1;
-    }
-
-    public ResultCount getCountOf(ResultType resultType) {
-        return participantResultStats.get(resultType);
-    }
-
     public String getParticipantName() {
         return participantCardsDto.getName();
     }
@@ -56,8 +49,22 @@ public class ResultStatsDto {
         return participantCardsDto.getScore();
     }
 
-    public Map<ResultType, ResultCount> getResultStats() {
-        return Collections.unmodifiableMap(participantResultStats);
+    public boolean hasSingleResultType() {
+        return participantResultStats.keySet().size() == 1;
+    }
+
+    public boolean hasMultipleCountOf(ResultType resultType) {
+        return participantResultStats.get(resultType).toInt() > 1;
+    }
+
+    public int getCountValueOf(ResultType resultType) {
+        return participantResultStats.get(resultType).toInt();
+    }
+
+    public List<ResultType> getResultStatsTypes() {
+        return participantResultStats.keySet()
+                .stream()
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Override
