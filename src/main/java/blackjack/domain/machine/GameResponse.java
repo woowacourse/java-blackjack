@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.machine;
+
+import blackjack.domain.card.Deck;
 
 public class GameResponse {
 

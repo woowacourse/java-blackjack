@@ -1,13 +1,13 @@
 package blackjack.controller;
 
-import static blackjack.domain.Dealer.DEALER_LIMIT_POINT;
-import static blackjack.domain.Guest.GUEST_LIMIT_POINT;
+import static blackjack.domain.participant.Dealer.DEALER_LIMIT_POINT;
+import static blackjack.domain.participant.Guest.GUEST_LIMIT_POINT;
 
-import blackjack.domain.BlackjackGame;
-import blackjack.domain.GameResponse;
-import blackjack.domain.Hit;
-import blackjack.domain.Player;
-import blackjack.domain.Results;
+import blackjack.domain.machine.BlackjackGame;
+import blackjack.domain.machine.GameResponse;
+import blackjack.domain.machine.Hit;
+import blackjack.domain.participant.Player;
+import blackjack.domain.machine.Results;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;

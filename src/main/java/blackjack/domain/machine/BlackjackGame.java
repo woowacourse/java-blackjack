@@ -1,5 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.machine;
 
+import blackjack.domain.card.CardShuffleMachine;
+import blackjack.domain.card.Cards;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.List;
 import java.util.NoSuchElementException;
 

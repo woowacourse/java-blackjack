@@ -1,6 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.machine;
 
-import static blackjack.domain.Guest.GUEST_LIMIT_POINT;
+import static blackjack.domain.participant.Guest.GUEST_LIMIT_POINT;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;

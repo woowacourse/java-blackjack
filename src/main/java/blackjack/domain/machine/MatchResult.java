@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.machine;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

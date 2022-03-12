@@ -1,11 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
+import blackjack.domain.card.CardPickMachine;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class CardShuffleMachine implements CardPickMachine{
+public class CardShuffleMachine implements CardPickMachine {
 
     private static final List<Integer> CARD_INDEX;
     public static final int CARD_MIN_INDEX = 0;

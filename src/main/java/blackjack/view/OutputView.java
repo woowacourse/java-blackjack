@@ -1,13 +1,13 @@
 package blackjack.view;
 
-import static blackjack.domain.Dealer.DEALER_NAME;
+import static blackjack.domain.participant.Dealer.DEALER_NAME;
 
-import blackjack.domain.Card;
-import blackjack.domain.GameResponse;
-import blackjack.domain.Match;
-import blackjack.domain.MatchResult;
-import blackjack.domain.Player;
-import blackjack.domain.Results;
+import blackjack.domain.card.Card;
+import blackjack.domain.machine.GameResponse;
+import blackjack.domain.machine.Match;
+import blackjack.domain.machine.MatchResult;
+import blackjack.domain.participant.Player;
+import blackjack.domain.machine.Results;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;

@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;

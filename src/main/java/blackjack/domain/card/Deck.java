@@ -1,6 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import static blackjack.domain.Guest.GUEST_LIMIT_POINT;
+import static blackjack.domain.participant.Guest.GUEST_LIMIT_POINT;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
