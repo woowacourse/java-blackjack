@@ -2,7 +2,6 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +46,6 @@ class PlayerTest {
     }
 
     @Test
-    @Disabled
     @DisplayName("블랙잭이면 더이상 hit을 할 수 없다.")
     void testIsAbleToHit2() {
         // given

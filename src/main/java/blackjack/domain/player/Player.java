@@ -5,7 +5,6 @@ import blackjack.domain.card.Cards;
 
 public class Player extends Participant{
 
-
     private boolean stay = false;
 
     public Player(String name, Cards cards) {
@@ -20,9 +19,8 @@ public class Player extends Participant{
         }
     }
 
-
     public boolean isAbleToHit() {
-        return !stay;
+        return !super.isBust() && !super.isBlackjack() && !stay;
     }
 
     public void stay() {
