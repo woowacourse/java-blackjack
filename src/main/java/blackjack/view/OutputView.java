@@ -57,9 +57,11 @@ public class OutputView {
 
     public static void printCardsAndPoint(Participants participants) {
         System.out.println();
-        for (Participant participant : participants.getParticipants()) {
-            printCards(participant);
-            printPoint(participant);
+        printCards(participants.getDealer());
+        printPoint(participants.getDealer());
+        for (Player player : participants.getPlayers()) {
+            printCards(player);
+            printPoint(player);
         }
     }
 

@@ -21,31 +21,25 @@ public class Participants {
         this.players = new ArrayList<>(players);
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
-    public void dealInitialCards(Deck deck) {
-        for (Participant participant : getParticipants()) {
-            List<Card> cards = List.of(deck.pickCard(), deck.pickCard());
-            participant.initCards(cards);
-        }
-    }
-
-    public List<Participant> getParticipants() {
-        List<Participant> participants = new ArrayList<>();
-        participants.add(dealer);
-        participants.addAll(players);
-        return Collections.unmodifiableList(participants);
-    }
-
     private void validatePlayerNumber(List<Player> players) {
         if (players.size() < MIN_COUNT || players.size() > MAX_COUNT) {
             throw new IllegalArgumentException(PLAYER_NUMBER_ERROR_MESSAGE);
         }
     }
 
+    public void dealInitialCards(Deck deck) {
+        dealer.initCards(List.of(deck.pickCard(), deck.pickCard()));
+        for (Player player : players) {
+            List<Card> cards = List.of(deck.pickCard(), deck.pickCard());
+            player.initCards(cards);
+        }
+    }
+
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

@@ -15,11 +15,10 @@ public class ParticipantsTest {
     @Test
     @DisplayName("참가자들은 딜러와 플레이어들로 구성된다.")
     void createParticipants() {
-
         Participants participants = new Participants(
             List.of(new Player("마루"), new Player("엔젤앤지")));
 
-        assertThat(participants.getParticipants().size()).isEqualTo(3);
+        assertThat(participants.getPlayers().size()).isEqualTo(2);
     }
 
     @Test
