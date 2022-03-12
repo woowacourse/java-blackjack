@@ -52,15 +52,14 @@ public class BlackjackGame {
         }
     }
 
-    public boolean giveCardToDealer() {
+    public boolean dealerCanDraw() {
         Dealer dealer = getDealer();
+        return dealer.canReceive();
+    }
 
-        if (!dealer.canReceive()) {
-            return false;
-        }
-
+    public void drawDealerCard() {
+        Dealer dealer = getDealer();
         dealer.receiveCard(cardDeck.pop());
-        return true;
     }
 
     public Card popCard() {

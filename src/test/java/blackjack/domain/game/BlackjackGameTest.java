@@ -52,28 +52,42 @@ public class BlackjackGameTest {
                 .hasMessage("플레이어명은 중복될 수 없습니다.");
     }
 
-    @DisplayName("딜러의 점수가 16이하인 경우 한 장의 카드를 더 할당한다.")
+    @DisplayName("dealerCanDraw 메서드는 딜러의 점수가 16이하인 경우 true를 반환한다.")
     @Test
-    void giveCardToDealer_returnTrueIfDealerReceivedExtraCard() {
+    void dealerCanDraw_returnTrueIfDealerCanDraw() {
         CardStack cards = CardStackGenerator.ofReverse(
                 CLOVER6, CLOVER10, CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER_KING);
         BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
 
-        boolean actual = blackjackGame.giveCardToDealer();
+        boolean actual = blackjackGame.dealerCanDraw();
 
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("딜러의 점수가 17이상인 경우 한 장의 카드를 더 받지 않는다.")
+    @DisplayName("dealerCanDraw 메서드는 딜러의 점수가 17이상인 경우 false를 반환한다.")
     @Test
-    void giveCardToDealer_returnFalseIfDealerDidNotReceiveExtraCard() {
+    void dealerCanDraw_returnFalseIfDealerCanNotDraw() {
         CardStack cards = CardStackGenerator.ofReverse(
                 CLOVER7, CLOVER10, CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER_KING);
         BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
 
-        boolean actual = blackjackGame.giveCardToDealer();
+        boolean actual = blackjackGame.dealerCanDraw();
 
         assertThat(actual).isFalse();
+    }
+
+    @DisplayName("drawDealerCard 메서드는 딜러에게 카드를 한 장 더 제공한다.")
+    @Test
+    void drawDealerCard_givesExtraCardToDealer() {
+        CardStack cards = CardStackGenerator.ofReverse(
+                CLOVER6, CLOVER10, CLOVER2, CLOVER3, CLOVER4, CLOVER5, CLOVER_KING);
+        BlackjackGame blackjackGame = new BlackjackGame(cards, playerNames);
+
+        blackjackGame.drawDealerCard();
+        Score actual = blackjackGame.getDealer().getCurrentScore();
+        Score expected = Score.valueOf(26);
+
+        assertThat(actual).isEqualTo(expected);
     }
 
     @DisplayName("CardDeck 에서 카드 한장을 뽑아서 반환한다.")

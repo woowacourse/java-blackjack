@@ -43,7 +43,7 @@ public class BlackjackController {
 
         List<Player> players = game.getPlayers();
         players.forEach(player -> drawAllPlayerCards(player, game));
-        drawDealerCard(game);
+        drawDealerCards(game);
     }
 
     private void drawAllPlayerCards(Player player, BlackjackGame game) {
@@ -60,8 +60,9 @@ public class BlackjackController {
         }
     }
 
-    private void drawDealerCard(BlackjackGame game) {
-        while (game.giveCardToDealer()) {
+    private void drawDealerCards(BlackjackGame game) {
+        while (game.dealerCanDraw()) {
+            game.drawDealerCard();
             printDealerExtraCardInfo();
         }
     }
