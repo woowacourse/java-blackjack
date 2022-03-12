@@ -20,16 +20,6 @@ public class Players {
         }
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
-    public List<String> getNames() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toUnmodifiableList());
-    }
-
     private List<String> trimNames(String input) {
         return Arrays.stream(input.split(DELIMITER, -1))
                 .map(String::trim)
@@ -54,4 +44,13 @@ public class Players {
         }
     }
 
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
+
+    public List<String> getNames() {
+        return players.stream()
+                .map(Player::getName)
+                .collect(Collectors.toUnmodifiableList());
+    }
 }

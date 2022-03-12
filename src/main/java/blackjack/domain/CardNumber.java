@@ -29,10 +29,6 @@ public enum CardNumber {
         this.number = number;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public static int getTotal(final List<CardNumber> cardNumbers) {
         int total = cardNumbers.stream()
                 .map(cardNumber -> cardNumber.number)
@@ -54,5 +50,9 @@ public enum CardNumber {
         return (int) cardNumbers.stream()
                 .filter(cardNumber -> cardNumber.name.equals(ACE.name))
                 .count();
+    }
+
+    public String getName() {
+        return name;
     }
 }

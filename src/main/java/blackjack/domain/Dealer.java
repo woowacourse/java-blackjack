@@ -5,10 +5,10 @@ import java.util.List;
 public class Dealer extends Human {
 
     public static final int RECEIVED_MAXIMUM = 16;
-    private static final String name = "딜러";
+    public static final String NAME = "딜러";
 
-    public static String getName() {
-        return name;
+    public Dealer() {
+        super(NAME);
     }
 
     public boolean isLowerScore(final Player player) {
@@ -17,6 +17,10 @@ public class Dealer extends Human {
 
     public List<Card> showPartOfCards() {
         return playingCards.getPartOfDealerCard();
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

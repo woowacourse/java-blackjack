@@ -41,7 +41,7 @@ public class Blackjack {
     }
 
     private void drawInitCards(final CardMachine cardMachine, final Dealer dealer, final Players players) {
-        OutputView.printDrawInitCards(Dealer.getName(), players.getNames());
+        OutputView.printDrawInitCards(dealer.getName(), players.getNames());
         dealer.drawInitCards(cardMachine.pickInitCards());
         for (Player player : players.getPlayers()) {
             player.drawInitCards(cardMachine.pickInitCards());
@@ -50,7 +50,7 @@ public class Blackjack {
     }
 
     private void openInitCards(final Dealer dealer, final Players players) {
-        OutputView.printCards(Dealer.getName(), getDealerInitCards(dealer));
+        OutputView.printCards(dealer.getName(), getDealerInitCards(dealer));
         for (Player player : players.getPlayers()) {
             OutputView.printCards(player.getName(), getPlayerCards(player));
         }
@@ -97,7 +97,7 @@ public class Blackjack {
     private void drawCardToDealer(final Dealer dealer, final CardMachine cardMachine) {
         while (dealer.isDrawable()) {
             dealer.drawCard(cardMachine.pickCard());
-            OutputView.printDrawDealer(Dealer.getName(), Dealer.RECEIVED_MAXIMUM);
+            OutputView.printDrawDealer(dealer.getName(), Dealer.RECEIVED_MAXIMUM);
         }
         OutputView.printNewLine();
     }
@@ -110,11 +110,11 @@ public class Blackjack {
             winner.compete(dealer, player);
         }
         OutputView.printResultTitle();
-        showResult(winner, players);
+        showResult(dealer, winner, players);
     }
 
     private void openScore(final Dealer dealer, final Players players) {
-        OutputView.printScore(Dealer.getName(), getDealerCards(dealer), dealer.showSumOfCards());
+        OutputView.printScore(dealer.getName(), getDealerCards(dealer), dealer.showSumOfCards());
         for (Player player : players.getPlayers()) {
             OutputView.printScore(player.getName(), getPlayerCards(player), player.showSumOfCards());
         }
@@ -127,8 +127,8 @@ public class Blackjack {
                 .collect(Collectors.toList());
     }
 
-    private void showResult(final Winner winner, final Players players) {
-        OutputView.printDealerResult(Dealer.getName(), winner.numberOfLosers(), winner.numberOfWinners());
+    private void showResult(final Dealer dealer, final Winner winner, final Players players) {
+        OutputView.printDealerResult(dealer.getName(), winner.numberOfLosers(), winner.numberOfWinners());
 
         for (Player player : players.getPlayers()) {
             OutputView.printPlayerResult(player.getName(), winner.contains(player));

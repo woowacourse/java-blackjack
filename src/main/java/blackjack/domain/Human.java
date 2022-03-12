@@ -4,7 +4,12 @@ import java.util.List;
 
 public abstract class Human {
 
+    protected final String name;
     protected final PlayingCards playingCards = new PlayingCards();
+
+    protected Human(final String name) {
+        this.name = name;
+    }
 
     public List<Card> showCards() {
         return playingCards.getAllCards();

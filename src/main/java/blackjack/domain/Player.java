@@ -5,15 +5,9 @@ public class Player extends Human {
     private static final String RECEIVE_SYMBOL = "y";
     private static final String NOT_RECEIVE_SYMBOL = "n";
 
-    private final String name;
-
     public Player(final String name) {
+        super(name);
         validateEqualsDealerName(name);
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public boolean answer(final String answer) {
@@ -27,9 +21,13 @@ public class Player extends Human {
     }
 
     private void validateEqualsDealerName(final String name) {
-        if (name.equals(Dealer.getName())) {
+        if (name.equals(Dealer.NAME)) {
             throw new IllegalArgumentException("딜러와 동일한 이름은 사용할 수 없습니다.");
         }
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
