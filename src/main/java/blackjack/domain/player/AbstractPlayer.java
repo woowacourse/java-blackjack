@@ -17,17 +17,10 @@ public abstract class AbstractPlayer implements Player {
     public AbstractPlayer(final String name, final Cards cards, final boolean turnState) {
         Objects.requireNonNull(name, "플레이어의 이름은 null이 들어올 수 없습니다.");
         Objects.requireNonNull(cards, "보유 카드에는 null이 들어올 수 없습니다.");
-        validateCardsSize(cards);
         validateEmptyName(name);
         this.name = name;
         this.cards = cards;
         this.turnState = turnState;
-    }
-
-    private void validateCardsSize(final Cards cards) {
-        if (cards.size() != FIRST_DRAW_CARD_SIZE) {
-            throw new IllegalArgumentException("카드의 크기는 2장이 들어와야 합니다.");
-        }
     }
 
     private void validateEmptyName(final String name) {

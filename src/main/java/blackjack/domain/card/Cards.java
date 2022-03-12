@@ -20,6 +20,13 @@ public class Cards {
     public Cards(final List<Card> cards) {
         Objects.requireNonNull(cards, "카드에는 null이 들어올 수 없습니다.");
         this.cards = new ArrayList<>(cards);
+        validateCardsSize(this.cards);
+    }
+
+    private void validateCardsSize(final List<Card> cards) {
+        if (cards.size() != BLACK_JACK_SIZE) {
+            throw new IllegalArgumentException("카드 2장으로 생성해야 합니다.");
+        }
     }
 
     public int calculateScore() {
@@ -38,10 +45,6 @@ public class Cards {
         if (cards.contains(card)) {
             throw new IllegalArgumentException("중복된 카드를 추가할 수 없습니다.");
         }
-    }
-
-    public int size() {
-        return cards.size();
     }
 
     public List<Card> cards() {
