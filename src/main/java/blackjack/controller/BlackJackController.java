@@ -9,6 +9,8 @@ import java.util.List;
 
 public class BlackJackController {
 
+    public static final String Y = "Y";
+
     public void run() {
         Dealer dealer = new Dealer();
         List<Player> players = getPlayers();
@@ -45,7 +47,7 @@ public class BlackJackController {
     }
 
     private static void takeMoreCardPlayerTurnForPlayer(Dealer dealer, Player player) {
-        while (InputView.inputOneMoreCard(player).equalsIgnoreCase("Y") && !player.isBust()) {
+        while (InputView.inputOneMoreCard(player).equalsIgnoreCase(Y) && !player.isBust()) {
             dealer.giveCard(player);
             OutputView.showPlayerHand(player);
         }
