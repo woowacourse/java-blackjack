@@ -11,12 +11,14 @@ public abstract class Player {
 
     private final Cards cards;
     private final String name;
+    private final State state;
 
     Player(final List<Card> cards, final String name) {
         validateCards(cards);
         validateName(name);
         this.cards = new Cards(cards);
         this.name = name;
+        this.state = new State();
     }
 
     private void validateCards(final List<Card> cards) {
@@ -44,6 +46,14 @@ public abstract class Player {
         cards.addCard(card);
     }
 
+    public void win() {
+        state.win();
+    }
+
+    public void lose() {
+        state.lose();
+    }
+
     public List<Card> getCards() {
         return this.cards.getCards();
     }
@@ -52,11 +62,21 @@ public abstract class Player {
         return this.name;
     }
 
+    public int getWinCount() {
+        return state.getWinCount();
+    }
+
+    public int getLoseCount() {
+        return state.getLoseCount();
+    }
+
+    public abstract boolean acceptableCard();
+
     protected int getScoreByAceOne() {
         return cards.calculateScoreByAceOne();
     }
 
     protected int getScoreByAceEleven() {
-        return cards.calculateScoreByAceEleven();
+        return cards.calculateMaxScore();
     }
 }

@@ -15,20 +15,27 @@ public class Deck {
 
     private static Stack<Card> init() {
         Stack<Card> deck = new Stack<>();
-        List<Card> cards = new ArrayList<>();
-
-        Type.getTypeValues()
-                .forEach(type -> makeCardByScore(cards, type));
-        Collections.shuffle(cards);
-
+        List<Card> cards = makeCards();
+        cardShuffle(cards);
         deck.addAll(cards);
         return deck;
     }
 
+    private static List<Card> makeCards() {
+        List<Card> cards = new ArrayList<>();
+        Type.getTypeValues()
+                .forEach(type -> makeCardByScore(cards, type));
+        return cards;
+    }
+
     private static void makeCardByScore(final List<Card> cards, final Type type) {
-        Score.getScoreValues().stream()
+        Arrays.stream(Score.values())
                 .map(score -> new Card(type, score))
                 .forEach(cards::add);
+    }
+
+    private static void cardShuffle(List<Card> cards) {
+        Collections.shuffle(cards);
     }
 
     public List<Card> initDistributeCard() {
@@ -40,9 +47,5 @@ public class Deck {
 
     public Card draw() {
         return deck.pop();
-    }
-
-    public boolean containCard(final Card card) {
-        return deck.contains(card);
     }
 }

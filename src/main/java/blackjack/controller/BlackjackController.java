@@ -1,8 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.GameMachine;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
@@ -25,7 +23,7 @@ public class BlackjackController {
         OutputView.printPlayersInitCardInfo(gameMachine.getPlayers());
         decideMoreCard(gameMachine);
         announcePlayersFinishInfo(gameMachine.getPlayers());
-        competeWithDealer(gameMachine.getPlayers());
+        compete(gameMachine.getPlayers());
         OutputView.printResult(gameMachine.getPlayers());
     }
 
@@ -53,10 +51,10 @@ public class BlackjackController {
     }
 
     private boolean isNotOverMaxScore(final Player participant) {
-        if (((Participant) participant).isOverMaxScore()) {
+        if (participant.acceptableCard()) {
             OutputView.printParticipantOverMaxScore(participant.getName());
         }
-        return !((Participant) participant).isOverMaxScore();
+        return !participant.acceptableCard();
     }
 
     private void decideOneMoreCard(final GameMachine gameMachine) {
@@ -67,9 +65,8 @@ public class BlackjackController {
         OutputView.printDealerDenyCard();
     }
 
-    private void competeWithDealer(final Players players) {
-        players.getParticipants().forEach(player ->
-                ((Dealer) players.getDealer()).compete((Participant) player));
+    private void compete(final Players players) {
+        players.competeWithDealer();
     }
 
     private void announcePlayersFinishInfo(final Players players) {

@@ -18,8 +18,9 @@ public enum Score {
     TEN("10", 10),
     JACK("J", 10),
     KING("K", 10),
-    QUEEN("Q", 10),
-    ACE_ELEVEN("A", 11);
+    QUEEN("Q", 10);
+
+    private static final int ACE_ELEVEN = 11;
 
     private final String symbol;
     private final int amount;
@@ -29,14 +30,8 @@ public enum Score {
         this.amount = amount;
     }
 
-    public static List<Score> getScoreValues() {
-        return Arrays.stream(Score.values())
-                .filter(score -> score != Score.ACE_ELEVEN)
-                .collect(Collectors.toList());
-    }
-
     public static int getDifferenceAcesScore() {
-        return Score.ACE_ELEVEN.getAmount() - Score.ACE.getAmount();
+        return ACE_ELEVEN - Score.ACE.getAmount();
     }
 
     public String getSymbol() {

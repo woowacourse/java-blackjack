@@ -19,7 +19,7 @@ public class Cards {
         }
     }
 
-    public void addCards(final List<Card> cards) {
+    private void addCards(final List<Card> cards) {
         cards.forEach(this::addCard);
     }
 
@@ -38,7 +38,7 @@ public class Cards {
         return cards.stream().mapToInt(card -> card.getScore().getAmount()).sum();
     }
 
-    public int calculateScoreByAceEleven() {
+    public int calculateMaxScore() {
         if (isContainsAce()) {
             return calculateScoreByAceOne() + Score.getDifferenceAcesScore();
         }

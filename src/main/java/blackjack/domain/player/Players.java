@@ -11,27 +11,27 @@ public class Players {
     private static final int MIN_SIZE = 2;
     private static final int MAX_SIZE = 8;
 
-    private final Player dealer;
-    private final List<Player> participants;
+    private final Dealer dealer;
+    private final List<Participant> participants;
 
-    public Players(final List<Player> participants, final Player dealer) {
+    public Players(final List<Participant> participants, final Dealer dealer) {
         validateParticipants(participants);
         this.participants = participants;
         this.dealer = dealer;
     }
 
-    private void validateParticipants(final List<Player> participants) {
+    private void validateParticipants(final List<Participant> participants) {
         validateSize(participants);
         validateDuplicated(participants);
     }
 
-    private void validateSize(final List<Player> participants) {
+    private void validateSize(final List<Participant> participants) {
         if (participants == null || participants.size() < MIN_SIZE || participants.size() > MAX_SIZE) {
-            throw new IllegalArgumentException("[ERROR] 참가자 정보가 잘못 입력되었습니다.");
+            throw new IllegalArgumentException("[ERROR] 참가자의 수는 2~8명 입니다.");
         }
     }
 
-    private void validateDuplicated(final List<Player> participants) {
+    private void validateDuplicated(final List<Participant> participants) {
         final Set<String> names = extractNames(participants);
 
         if (names.size() != participants.size()) {
@@ -39,7 +39,7 @@ public class Players {
         }
     }
 
-    public Set<String> extractNames(final List<Player> participants) {
+    public Set<String> extractNames(final List<Participant> participants) {
         return participants.stream()
                 .map(Player::getName)
                 .collect(Collectors.toSet());
@@ -49,11 +49,17 @@ public class Players {
         this.dealer.addCard(card);
     }
 
-    public Player getDealer() {
+    public void competeWithDealer() {
+        participants.forEach(player ->
+                dealer.compete(player));
+    }
+
+    public Dealer getDealer() {
         return dealer;
     }
 
-    public List<Player> getParticipants() {
+    public List<Participant> getParticipants() {
         return participants;
     }
+
 }

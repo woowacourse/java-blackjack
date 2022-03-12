@@ -17,7 +17,7 @@ class PlayersTest {
     @ParameterizedTest
     @MethodSource("participantListBySuccess")
     @DisplayName("참가자는 2~8명 사이이다. (성공)")
-    void checkParticipantNumberBySuccess(List<Player> participants) {
+    void checkParticipantNumberBySuccess(List<Participant> participants) {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(deck.initDistributeCard());
         assertDoesNotThrow(() -> new Players(participants, dealer));
@@ -46,13 +46,13 @@ class PlayersTest {
     @ParameterizedTest
     @MethodSource("participantListByFail")
     @DisplayName("참가자는 2~8명 사이이다. (실패)")
-    void checkParticipantNumber(List<Player> participants) {
+    void checkParticipantNumber(List<Participant> participants) {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(deck.initDistributeCard());
 
         Assertions.assertThatThrownBy(() -> new Players(participants, dealer))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 참가자 정보가 잘못 입력되었습니다.");
+                .hasMessage("[ERROR] 참가자의 수는 2~8명 입니다.");
     }
 
     private static Stream<List<Player>> participantListByFail() {

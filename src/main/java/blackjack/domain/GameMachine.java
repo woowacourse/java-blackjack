@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
-import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class GameMachine {
         }
     }
 
-    public List<Player> createParticipants(final List<String> names) {
+    public List<Participant> createParticipants(final List<String> names) {
         return names.stream()
                 .map(name -> new Participant(deck.initDistributeCard(), name))
                 .collect(Collectors.toList());
@@ -53,7 +52,7 @@ public class GameMachine {
         return this.players;
     }
 
-    public List<Player> getParicipants() {
+    public List<Participant> getParicipants() {
         return players.getParticipants();
     }
 }

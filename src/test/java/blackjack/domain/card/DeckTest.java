@@ -1,5 +1,8 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,6 +13,8 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.*;
 
 public class DeckTest {
+
+    private static final int TOTAL_SIZE = 52;
 
     @Test
     @DisplayName("덱에서 카드를 한 장 반환한다.")
@@ -35,8 +40,11 @@ public class DeckTest {
     void pickedCardNotInDeck() {
         Deck deck = new Deck();
         Card card = deck.draw();
+        List<Card> cards = new ArrayList<>();
+        IntStream.range(0, TOTAL_SIZE - 1)
+                        .forEach(i -> cards.add(deck.draw()));
 
-        assertThat(deck.containCard(card)).isFalse();
+        assertThat(cards.contains(card)).isFalse();
     }
 
     @ParameterizedTest
@@ -44,8 +52,11 @@ public class DeckTest {
     @DisplayName("덱에 카드가 포함되어 있는지 확인한다.")
     void checkContainsCard(Card card) {
         Deck deck = new Deck();
+        List<Card> cards = new ArrayList<>();
+        IntStream.range(0, TOTAL_SIZE)
+                .forEach(i -> cards.add(deck.draw()));
 
-        assertThat(deck.containCard(card)).isTrue();
+        assertThat(cards.contains(card)).isTrue();
     }
 
     private static Stream<Card> getCombinationOfCard() {
