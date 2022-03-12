@@ -2,17 +2,15 @@ package blackjack.controller;
 
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
-import blackjack.controller.dto.GameResultDto;
-import blackjack.controller.dto.GamerDto;
+import blackjack.dto.GameResultDto;
+import blackjack.dto.GamerDto;
 import blackjack.domain.Answer;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
-import blackjack.domain.result.BlackJackReferee;
 
 public class BlackJackController {
 
@@ -58,7 +56,6 @@ public class BlackJackController {
 	}
 
 	public GameResultDto getGamerResult() {
-		BlackJackReferee result = blackJackGame.createResult();
-		return new GameResultDto(result);
+		return blackJackGame.createResult();
 	}
 }

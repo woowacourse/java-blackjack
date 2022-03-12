@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import blackjack.controller.dto.GameResultDto;
-import blackjack.controller.dto.GamerDto;
+import blackjack.dto.GameResultDto;
+import blackjack.dto.GamerDto;
 import blackjack.domain.card.Card;
 import blackjack.domain.result.BlackJackResult;
 
