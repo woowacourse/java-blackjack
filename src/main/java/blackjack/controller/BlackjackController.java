@@ -13,6 +13,7 @@ import static blackjack.view.OutputView.printPlayerCardsInfo;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.ResultReferee;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.InitialDistributionDto;
 import blackjack.dto.ResultStatisticsDto;
@@ -26,9 +27,10 @@ public class BlackjackController {
     }
 
     public void showInitialDistribution(BlackjackGame game) {
-        InitialDistributionDto dto = new InitialDistributionDto(game.getParticipants());
+        Dealer dealer = game.getDealer();
+        InitialDistributionDto dto = new InitialDistributionDto(dealer, game.getPlayers());
 
-        if (game.getDealer().isBlackjack()) {
+        if (dealer.isBlackjack()) {
             printDealerBlackjackInfo(dto);
             return;
         }

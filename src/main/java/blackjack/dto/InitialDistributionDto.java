@@ -12,9 +12,9 @@ public class InitialDistributionDto {
 
     List<ParticipantCardsDto> participantsInfo = new ArrayList<>();
 
-    public InitialDistributionDto(GameParticipants participants) {
-        initDealerInfo(participants.getDealer());
-        initPlayerInfos(participants.getPlayers());
+    public InitialDistributionDto(Dealer dealer, List<Player> players) {
+        initDealerInfo(dealer);
+        initPlayerInfos(players);
     }
 
     private void initDealerInfo(Dealer dealer) {

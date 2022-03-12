@@ -66,10 +66,6 @@ public class BlackjackGame {
         return cardDeck.pop();
     }
 
-    public GameParticipants getParticipants() {
-        return participants;
-    }
-
     public Dealer getDealer() {
         return participants.getDealer();
     }
