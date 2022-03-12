@@ -74,8 +74,12 @@ public class Application {
     }
 
     private static boolean isKeepTakeCard(Name name) {
-        String option = InputView.chooseOptions(name.value(), "y", "n", "Y", "N");
-        return option.equals("y") || option.equals("Y");
+        String option = InputView.chooseOptions(message(name), "y", "n");
+        return option.equals("y");
+    }
+
+    private static String message(Name name) {
+        return String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name.value());
     }
 
     private static void takeDealerCard(Dealer dealer, CardDispenser cardDispenser) {
