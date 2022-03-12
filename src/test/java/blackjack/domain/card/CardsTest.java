@@ -84,7 +84,7 @@ class CardsTest {
         final Cards cards = new Cards(createReceivedCard(CardNumber.KING, CardNumber.JACK));
         final int expected = 20;
 
-        final int actual = cards.calculateScore();
+        final int actual = cards.calculateScore(cards.getTotalScore(), cards.getCountOfAce());
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -92,7 +92,7 @@ class CardsTest {
     @MethodSource("provideCardsAndScore")
     @DisplayName("Ace를 포함한 카드의 총합을 구한다.")
     void calculateScoreIncludeAce(Cards cards, int expected) {
-        final int actual = cards.calculateScore();
+        final int actual = cards.calculateScore(cards.getTotalScore(), cards.getCountOfAce());
         assertThat(actual).isEqualTo(expected);
     }
 

@@ -28,25 +28,23 @@ public class Cards {
     }
 
     public boolean exceedMaxScore() {
-        return calculateScore() > BLACK_JACK_SCORE;
+        return calculateScore(getTotalScore(), getCountOfAce()) > BLACK_JACK_SCORE;
     }
 
-    public int calculateScore() {
-        int totalScore = getTotalScore();
-        int countOfAce = getCountOfAce();
-        while (countOfAce-- > 0 && totalScore > BLACK_JACK_SCORE) {
-            totalScore -= NUMBER_TO_USE_ACE_CARD_WITH_ONE;
+    public int calculateScore(int score, int countOfAce) {
+        if (score <= BLACK_JACK_SCORE || countOfAce == 0) {
+            return score;
         }
-        return totalScore;
+        return calculateScore(score - NUMBER_TO_USE_ACE_CARD_WITH_ONE, countOfAce - 1);
     }
 
-    private int getCountOfAce() {
+    public int getCountOfAce() {
         return (int) cards.stream()
                 .filter(Card::isAceCard)
                 .count();
     }
 
-    private int getTotalScore() {
+    public int getTotalScore() {
         return cards.stream()
                 .mapToInt(Card::getCardNumber)
                 .sum();

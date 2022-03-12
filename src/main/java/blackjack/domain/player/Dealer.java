@@ -13,6 +13,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean isPossibleToPickCard() {
-        return cards.calculateScore() <= MAX_SCORE_TO_PICK;
+        return cards.calculateScore(cards.getTotalScore(), cards.getCountOfAce()) <= MAX_SCORE_TO_PICK;
     }
 }

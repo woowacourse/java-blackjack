@@ -12,6 +12,6 @@ public class User extends Player {
 
     @Override
     public boolean isPossibleToPickCard() {
-        return cards.calculateScore() <= Cards.BLACK_JACK_SCORE;
+        return cards.calculateScore(cards.getTotalScore(), cards.getCountOfAce()) <= Cards.BLACK_JACK_SCORE;
     }
 }

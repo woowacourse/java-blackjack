@@ -17,7 +17,7 @@ public class PlayerTest {
     @Test
     @DisplayName("유저의 정상 생성을 확인한다.")
     void createUser() {
-        final Player user = new User("pobi", initializeCardsForUser());
+        final User user = new User("pobi", initializeCardsForUser());
         final String expected = "pobi";
 
         final String actual = user.getName();
@@ -27,7 +27,7 @@ public class PlayerTest {
     @Test
     @DisplayName("유저의 카드 총합이 21이하이면, true를 반환한다.")
     void isPossibleToPickCardForUser() {
-        final Player user = new User("pobi", initializeCardsForUser());
+        final User user = new User("pobi", initializeCardsForUser());
         final boolean expected = true;
 
         final boolean actual = user.isPossibleToPickCard();
@@ -37,7 +37,7 @@ public class PlayerTest {
     @Test
     @DisplayName("유저의 카드 총합이 21을 초과하면, false를 반환한다.")
     void isImpossibleToPickCardForUser() {
-        final Player user = new User("pobi", initializeCardsForUser());
+        final User user = new User("pobi", initializeCardsForUser());
         user.pickCard(new Card(CardPattern.CLOVER, CardNumber.TWO));
         final boolean expected = false;
 
@@ -55,7 +55,7 @@ public class PlayerTest {
     void isPossibleToPickCardForDealer() {
         List<Card> cards = Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.JACK),
                 new Card(CardPattern.HEART, CardNumber.SIX));
-        final Player dealer = new Dealer(cards);
+        final Dealer dealer = new Dealer(cards);
         final boolean expected = true;
 
         final boolean actual = dealer.isPossibleToPickCard();
@@ -67,7 +67,7 @@ public class PlayerTest {
     void isImpossibleToPickCardForDealer() {
         List<Card> cards = Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.JACK),
                 new Card(CardPattern.HEART, CardNumber.KING));
-        final Player dealer = new Dealer(cards);
+        final Dealer dealer = new Dealer(cards);
         final boolean expected = false;
 
         final boolean actual = dealer.isPossibleToPickCard();
@@ -103,7 +103,7 @@ public class PlayerTest {
     void isBlackJack() {
         List<Card> cards = Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.ACE),
                 new Card(CardPattern.HEART, CardNumber.KING));
-        Player dealer = new Dealer(cards);
+        Dealer dealer = new Dealer(cards);
         final boolean expected = true;
 
         final boolean actual = dealer.isBlackJack();

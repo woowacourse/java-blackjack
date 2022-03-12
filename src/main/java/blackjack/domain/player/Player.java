@@ -26,27 +26,27 @@ public abstract class Player {
 
     public abstract boolean isPossibleToPickCard();
 
-    public Boolean isBlackJack() {
+    public final Boolean isBlackJack() {
         return cards.isBlackJack();
     }
 
-    public void pickCard(Card card) {
+    public final void pickCard(Card card) {
         cards.addCard(card);
     }
 
-    public Result findResult(Player otherPlayer) {
+    public final Result findResult(Player otherPlayer) {
         return Result.findResult(cards, otherPlayer.cards);
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return cards.getCards();
     }
 
-    public int getTotalScore() {
-        return cards.calculateScore();
+    public final int getTotalScore() {
+        return cards.calculateScore(cards.getTotalScore(), cards.getCountOfAce());
     }
 }

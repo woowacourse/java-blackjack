@@ -24,7 +24,8 @@ public enum Result {
         if (otherCards.exceedMaxScore()) {
             return WIN;
         }
-        return compareScore(myCards.calculateScore(), otherCards.calculateScore());
+        return compareScore(myCards.calculateScore(myCards.getTotalScore(), myCards.getCountOfAce()),
+                otherCards.calculateScore(otherCards.getTotalScore(), otherCards.getCountOfAce()));
     }
 
     private static Result compareScore(int myScore, int otherScore) {

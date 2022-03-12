@@ -10,15 +10,9 @@ public abstract class Car {
         this.fuelEfficiency = fuelEfficiency;
     }
 
-    /**
-     * 차종의 이름
-     */
-    abstract String getName();
+    public abstract String getName();
 
-    /**
-     * 주입해야할 연료량을 구한다.
-     */
-    double getChargeQuantity() {
+    public final double getChargeQuantity() {
         return tripDistance / fuelEfficiency;
     }
 }

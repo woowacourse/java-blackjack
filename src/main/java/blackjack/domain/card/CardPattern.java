@@ -6,7 +6,7 @@ public enum CardPattern {
     HEART("하트"),
     SPADE("스페이드");
 
-    private String pattern;
+    private final String pattern;
 
     CardPattern(String pattern) {
         this.pattern = pattern;

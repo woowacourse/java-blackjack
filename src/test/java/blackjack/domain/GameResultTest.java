@@ -6,7 +6,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Player;
 import blackjack.domain.player.User;
 import java.util.HashMap;
 import java.util.List;
@@ -21,10 +20,10 @@ public class GameResultTest {
 
     @BeforeEach
     void setUpGameResult() {
-        Player dealer = new Dealer(createFirstReceivedCard(CardNumber.KING, CardNumber.FIVE));
-        Player user1 = new User("pobi", createFirstReceivedCard(CardNumber.TWO, CardNumber.JACK));
-        Player user2 = new User("jun", createFirstReceivedCard(CardNumber.KING, CardNumber.JACK));
-        List<Player> users = List.of(user1, user2);
+        Dealer dealer = new Dealer(createFirstReceivedCard(CardNumber.KING, CardNumber.FIVE));
+        User user1 = new User("pobi", createFirstReceivedCard(CardNumber.TWO, CardNumber.JACK));
+        User user2 = new User("jun", createFirstReceivedCard(CardNumber.KING, CardNumber.JACK));
+        List<User> users = List.of(user1, user2);
 
         gameResult = GameResult.createPlayerGameResult(dealer, users);
     }

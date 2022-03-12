@@ -2,7 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.Result;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.User;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,39 +18,35 @@ public class ResultView {
     private static final String DEALER_RECEIVE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String COLON = ": ";
 
-    public static void printDealerAndUserCards(List<Player> users, Player dealer) {
-        printDealerCard(dealer);
-        printUsersCards(users);
-    }
-
-    private static void printUsersCards(List<Player> users) {
-        for (Player user : users) {
-            printUserCards(user);
+    public static void printPlayersCards(Dealer dealer, List<User> users) {
+        printPlayerCards(dealer);
+        for (User user : users) {
+            printPlayerCards(user);
         }
     }
 
-    public static void printUserCards(Player user) {
-        System.out.println(makeUserCardsToString(user));
+    public static void printPlayerCards(Player player) {
+        System.out.println(makePlayerCardsToString(player));
     }
 
-    private static String makeUserCardsToString(Player user) {
+    private static String makePlayerCardsToString(Player player) {
         StringBuilder sb = new StringBuilder();
-        List<String> userCards = user.getCards().stream()
-                .map(card -> card.getCardNumberType() + card.getCardPattern())
-                .collect(Collectors.toList());
-        sb.append(user.getName())
+        sb.append(player.getName())
                 .append(CARD_MARK_MESSAGE)
-                .append(String.join(", ", userCards));
+                .append(checkPlayerType(player));
         return sb.toString();
     }
 
-    private static void printDealerCard(Player dealer) {
-        System.out.print(dealer.getName() + CARD_MARK_MESSAGE);
-        String dealerCard = dealer.getCards().stream()
+    private static String checkPlayerType(Player player) {
+        if (player instanceof Dealer) {
+            return player.getCards().stream()
+                    .map(card -> card.getCardNumberType() + card.getCardPattern())
+                    .findFirst()
+                    .orElseThrow();
+        }
+        return String.join(", ", player.getCards().stream()
                 .map(card -> card.getCardNumberType() + card.getCardPattern())
-                .findFirst()
-                .orElseThrow();
-        System.out.println(dealerCard);
+                .collect(Collectors.toList()));
     }
 
     public static void printDealerReceiveCard() {
@@ -56,11 +54,11 @@ public class ResultView {
         System.out.println(DEALER_RECEIVE_CARD_MESSAGE);
     }
 
-    public static void printTotalCardResult(Player dealer, List<Player> users) {
+    public static void printTotalCardResult(Dealer dealer, List<User> users) {
         System.out.println();
-        System.out.println(makeUserCardsToString(dealer) + RESULT_MARK_MESSAGE + dealer.getTotalScore());
-        for (Player user : users) {
-            System.out.println(makeUserCardsToString(user) + RESULT_MARK_MESSAGE + user.getTotalScore());
+        System.out.println(makePlayerCardsToString(dealer) + RESULT_MARK_MESSAGE + dealer.getTotalScore());
+        for (User user : users) {
+            System.out.println(makePlayerCardsToString(user) + RESULT_MARK_MESSAGE + user.getTotalScore());
         }
     }
 
