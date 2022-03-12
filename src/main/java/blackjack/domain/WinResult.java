@@ -9,12 +9,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class winResult {
+public class WinResult {
 
     private final Map<Judgement, Integer> dealerResult;
     private final Map<String, Judgement> playersResult;
 
-    public winResult(Dealer dealer, List<Player> players) {
+    public WinResult(Dealer dealer, List<Player> players) {
         dealerResult = new EnumMap<>(Judgement.class);
         playersResult = new LinkedHashMap<>();
 

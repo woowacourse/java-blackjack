@@ -33,7 +33,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class winResultTest {
+public class WinResultTest {
 
     @ParameterizedTest
     @MethodSource("provideResultForNotBust")
@@ -47,7 +47,7 @@ public class winResultTest {
         List<Player> players = List.of(player);
 
         // when
-        winResult winResult = new winResult(dealer, players);
+        WinResult winResult = new WinResult(dealer, players);
         Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
         Map<String, Judgement> playersResult = winResult.getPlayersResult();
 
@@ -82,7 +82,7 @@ public class winResultTest {
         List<Player> players = List.of(player);
 
         // when
-        winResult winResult = new winResult(dealer, players);
+        WinResult winResult = new WinResult(dealer, players);
         Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
         Map<String, Judgement> playersResult = winResult.getPlayersResult();
         Map<Judgement, Integer> judgementMap = createJudgementMap(1, 0, 0);
@@ -115,7 +115,7 @@ public class winResultTest {
         List<Player> players = List.of(player);
 
         // when
-        winResult winResult = new winResult(dealer, players);
+        WinResult winResult = new WinResult(dealer, players);
         Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
         Map<String, Judgement> playersResult = winResult.getPlayersResult();
         Map<Judgement, Integer> judgementMap = createJudgementMap(0, 0, 1);
@@ -141,7 +141,7 @@ public class winResultTest {
         List<Player> players = List.of(player);
 
         // when
-        winResult winResult = new winResult(dealer, players);
+        WinResult winResult = new WinResult(dealer, players);
         Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
         Map<String, Judgement> playersResult = winResult.getPlayersResult();
         Map<Judgement, Integer> judgementMap = createJudgementMap(1, 0, 0);
@@ -166,7 +166,7 @@ public class winResultTest {
         List<Player> players = List.of(player);
 
         // when
-        winResult winResult = new winResult(dealer, players);
+        WinResult winResult = new WinResult(dealer, players);
         Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
         Map<String, Judgement> playersResult = winResult.getPlayersResult();
         Map<Judgement, Integer> judgementMap = createJudgementMap(0, 1, 0);
