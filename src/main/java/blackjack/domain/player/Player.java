@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public class Player {
 
+    private static final int FIRST_DRAW_CARD_SIZE = 2;
+
     private final String name;
     private final Cards cards;
     private GameStatus gameStatus;
@@ -42,6 +44,14 @@ public class Player {
     }
 
     public List<Card> firstDrawCards() {
-        return List.copyOf(cards.cards().subList(0, 2));
+        return cards().subList(0, FIRST_DRAW_CARD_SIZE);
+    }
+
+    public List<Card> cards() {
+        return List.copyOf(cards.cards());
+    }
+
+    public String getName() {
+        return name;
     }
 }
