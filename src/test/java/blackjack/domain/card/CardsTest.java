@@ -107,20 +107,19 @@ public class CardsTest {
 
     private static Stream<Arguments> containsAce() {
         return Stream.of(
-                Arguments.of(
-                        Arguments.of(List.of(
-                                new Card(Type.SPADE, Score.ACE),
-                                new Card(Type.HEART, Score.ACE)
-                        ), new Card(Type.HEART, Score.NINE), 21),
-                        Arguments.of(List.of(
-                                new Card(Type.SPADE, Score.ACE),
-                                new Card(Type.HEART, Score.JACK)
-                        ), new Card(Type.HEART, Score.ACE), 12),
-                        Arguments.of(List.of(
-                                new Card(Type.SPADE, Score.TWO),
-                                new Card(Type.HEART, Score.EIGHT)
-                        ), new Card(Type.HEART, Score.ACE), 21)
-                )
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.ACE),
+                        new Card(Type.HEART, Score.ACE)
+                ), new Card(Type.HEART, Score.NINE), 21),
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.ACE),
+                        new Card(Type.HEART, Score.JACK)
+                ), new Card(Type.HEART, Score.ACE), 12),
+                Arguments.of(List.of(
+                        new Card(Type.SPADE, Score.TWO),
+                        new Card(Type.HEART, Score.EIGHT)
+                ), new Card(Type.HEART, Score.ACE), 21)
+
         );
     }
 }
