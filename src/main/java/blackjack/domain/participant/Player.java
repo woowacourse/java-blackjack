@@ -10,13 +10,13 @@ public class Player extends Participant {
         return getScore() < GOAL_SCORE;
     }
 
-    public boolean isWin(int score) {
+    public boolean isWin(int comparisonScore) {
         if (getScore() > GOAL_SCORE) {
             return false;
         }
-        if (score > GOAL_SCORE) {
+        if (comparisonScore > GOAL_SCORE) {
             return true;
         }
-        return getScore() >= score;
+        return getScore() >= comparisonScore;
     }
 }
