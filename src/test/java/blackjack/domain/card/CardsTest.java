@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 class CardsTest {
 
     @Test
-    @DisplayName("카드의 합의 반환한다.")
+    @DisplayName("카드의 합을 계산할 수 있다.")
     void calculateScore() {
         final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, TWO), Card.of(SPADE, THREE)));
         assertThat(cards.calculateScore()).isEqualTo(5);
