@@ -1,4 +1,4 @@
-package blackjack.trumpcard;
+package blackjack.model.card;
 
 import java.util.Collections;
 import java.util.Stack;

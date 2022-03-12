@@ -1,6 +1,6 @@
-package blackjack;
+package blackjack.model.player;
 
-import blackjack.trumpcard.Card;
+import blackjack.model.card.Card;
 
 public class Dealer extends Player {
     private static final String NAME = "딜러";

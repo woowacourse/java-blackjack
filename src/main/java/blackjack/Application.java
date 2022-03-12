@@ -2,7 +2,8 @@ package blackjack;
 
 import blackjack.dto.BlackJackGameDto;
 import blackjack.dto.PlayerDto;
-import blackjack.trumpcard.CardPack;
+import blackjack.model.BlackJackGame;
+import blackjack.model.card.CardPack;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 

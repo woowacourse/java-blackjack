@@ -1,4 +1,4 @@
-package blackjack.trumpcard;
+package blackjack.model.card;
 
 public class Card {
     private final TrumpNumber number;

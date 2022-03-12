@@ -1,7 +1,6 @@
-package blackjack;
+package blackjack.model.player;
 
-import blackjack.trumpcard.Card;
-
+import blackjack.model.card.Card;
 import java.util.regex.Pattern;
 
 public class Gamer extends Player {

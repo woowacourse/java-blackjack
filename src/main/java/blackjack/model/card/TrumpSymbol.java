@@ -1,4 +1,4 @@
-package blackjack.trumpcard;
+package blackjack.model.card;
 
 public enum TrumpSymbol {
     HEART("하트"),

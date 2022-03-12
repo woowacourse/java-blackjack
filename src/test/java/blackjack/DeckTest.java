@@ -2,10 +2,10 @@ package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.trumpcard.Card;
-import blackjack.trumpcard.Deck;
-import blackjack.trumpcard.TrumpNumber;
-import blackjack.trumpcard.TrumpSymbol;
+import blackjack.model.card.Card;
+import blackjack.model.card.Deck;
+import blackjack.model.card.TrumpNumber;
+import blackjack.model.card.TrumpSymbol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

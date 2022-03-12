@@ -1,7 +1,5 @@
-package blackjack.trumpcard;
+package blackjack.model.card;
 
-import blackjack.trumpcard.Card;
-import blackjack.trumpcard.TrumpNumber;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

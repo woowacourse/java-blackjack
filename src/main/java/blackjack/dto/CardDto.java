@@ -1,8 +1,8 @@
 package blackjack.dto;
 
-import blackjack.trumpcard.Card;
-import blackjack.trumpcard.TrumpNumber;
-import blackjack.trumpcard.TrumpSymbol;
+import blackjack.model.card.Card;
+import blackjack.model.card.TrumpNumber;
+import blackjack.model.card.TrumpSymbol;
 
 public class CardDto {
     private final TrumpNumber trumpNumber;

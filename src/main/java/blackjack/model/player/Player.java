@@ -1,6 +1,7 @@
-package blackjack;
+package blackjack.model.player;
 
-import blackjack.trumpcard.Deck;
+import blackjack.model.card.Deck;
+import blackjack.model.card.PlayerInterface;
 
 public abstract class Player implements PlayerInterface {
     private static final String ERROR_NULL = "[ERROR] 입력된 이름이 없습니다.";

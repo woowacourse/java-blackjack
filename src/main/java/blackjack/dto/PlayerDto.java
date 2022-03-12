@@ -1,7 +1,6 @@
 package blackjack.dto;
 
-import blackjack.Player;
-import blackjack.trumpcard.Deck;
+import blackjack.model.player.Player;
 import java.util.List;
 
 public class PlayerDto {

@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.trumpcard.Deck;
+import blackjack.model.card.Deck;
 import java.util.List;
 import java.util.stream.Collectors;
 

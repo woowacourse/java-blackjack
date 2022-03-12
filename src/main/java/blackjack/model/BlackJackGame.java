@@ -1,9 +1,10 @@
-package blackjack;
+package blackjack.model;
 
-import blackjack.trumpcard.CardPack;
-
+import blackjack.model.card.CardPack;
+import blackjack.model.player.Gamers;
+import blackjack.model.player.Dealer;
+import blackjack.model.player.Player;
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackGame {
     private static final int START_CARD_COUNT = 2;

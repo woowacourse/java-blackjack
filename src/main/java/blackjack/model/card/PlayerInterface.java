@@ -1,6 +1,4 @@
-package blackjack;
-
-import blackjack.trumpcard.Card;
+package blackjack.model.card;
 
 public interface PlayerInterface {
     void receive(Card card);
