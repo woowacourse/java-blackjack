@@ -11,7 +11,7 @@ public class Player {
 
     public static final int BLACKJACK_NUMBER = 21;
 
-    private final Cards cards = new Cards();
+    private final Cards cards;
     private final Name name;
 
     public Player(String name) {
@@ -19,6 +19,7 @@ public class Player {
     }
 
     public Player(Name name) {
+        this.cards = new Cards();
         this.name = name;
     }
 
