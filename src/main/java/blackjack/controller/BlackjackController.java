@@ -12,44 +12,41 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlackjackController {
 
     public void playGame() {
         BlackjackGame blackjackGame = new BlackjackGame(InputView.inputPlayerNames());
-        List<Player> players = blackjackGame.initGames();
 
-        OutputView.announceStartGame(players.stream().map(Player::getName).collect(Collectors.toList()));
-        OutputView.announcePresentCards(toResponse(players));
+        OutputView.announceStartGame(blackjackGame.getPlayerNames());
+        OutputView.announcePresentCards(toResponse(blackjackGame.getPlayers()));
 
-        turnPlayers(blackjackGame, players);
-        turnDealer(blackjackGame, players);
+        turnGuests(blackjackGame);
+        turnDealer(blackjackGame);
 
-        printResult(blackjackGame, players);
+        printResult(blackjackGame);
     }
 
-    private void printResult(BlackjackGame blackjackGame, List<Player> players) {
+    private void printResult(BlackjackGame blackjackGame) {
+        List<Player> players = blackjackGame.getPlayers();
         OutputView.announceResultCards(toResponse(players));
         Results results = blackjackGame.calculateResult(players);
         OutputView.announceResultWinner(results);
     }
 
-    private void turnDealer(BlackjackGame blackjackGame, List<Player> players) {
-        Player dealer = players.get(0);
+    private void turnDealer(BlackjackGame blackjackGame) {
+        Player dealer = blackjackGame.getDealer();
         announceDealerCanGetMoreCard(blackjackGame, dealer);
     }
 
-    private void turnPlayers(BlackjackGame blackjackGame, List<Player> players) {
-        for (Player player : players) {
-            turnEachPlayerIfGuest(blackjackGame, player);
+    private void turnGuests(BlackjackGame blackjackGame) {
+        List<Player> guests = blackjackGame.getGuests();
+        for (Player guest : guests) {
+            turnEachGuest(blackjackGame, guest);
         }
     }
 
-    private void turnEachPlayerIfGuest(BlackjackGame blackjackGame, Player player) {
-        if (player.isDealer()) {
-            return;
-        }
+    private void turnEachGuest(BlackjackGame blackjackGame, Player player) {
         while (checkGetMoreCard(player)) {
             blackjackGame.addCard(player);
             List<GameResponse> gameResponses = new ArrayList<>();

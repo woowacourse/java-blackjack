@@ -7,15 +7,12 @@ public class BlackjackGame {
 
     private static final String CANNOT_FIND_DEALER_MESSAGE = "딜러를 찾을 수 없습니다.";
     private final Cards cards;
-    private final Participants blackjackPlayers;
+    private final Players blackjackPlayers;
 
     public BlackjackGame(List<String> playerNames) {
         this.cards = new Cards(new CardShuffleMachine());
-        this.blackjackPlayers = new Participants(playerNames);
-    }
-
-    public List<Player> initGames() {
-        return blackjackPlayers.startWithTwoCards(cards);
+        this.blackjackPlayers = new Players(playerNames);
+        blackjackPlayers.startWithTwoCards(cards);
     }
 
     public void addCard(Player player) {
@@ -49,5 +46,21 @@ public class BlackjackGame {
         Match dealerResult = result.getDealerResult();
         results.addResult(dealer, dealerResult);
         results.addResult(guest, result);
+    }
+
+    public List<String> getPlayerNames() {
+        return blackjackPlayers.getNames();
+    }
+
+    public List<Player> getPlayers() {
+        return blackjackPlayers.getPlayers();
+    }
+
+    public List<Player> getGuests() {
+        return blackjackPlayers.getGuests();
+    }
+
+    public Player getDealer() {
+        return blackjackPlayers.getDealer();
     }
 }
