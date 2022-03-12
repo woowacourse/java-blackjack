@@ -67,7 +67,7 @@ public class BlackJackBoard {
         final List<PlayerScoreResult> results = new ArrayList<>();
         results.add(PlayerScoreResult.from(dealer));
         results.addAll(players.getPlayerScoreResults());
-        return List.copyOf(results);
+        return results;
     }
 
     public OutComeResult calculateAllResults() {
