@@ -11,10 +11,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
 
@@ -28,25 +32,19 @@ class DealerTest {
                 .hasMessage("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
     }
 
-    @Nested
-    @DisplayName("딜러가 카드 한 장을 더 받을 수 있는지 확인할 수 있다.")
-    class CanDraw {
+    @ParameterizedTest(name = "{index} : {1}")
+    @MethodSource("createCardDraw")
+    @DisplayName("딜러의 드로우 가능여부를 반환할 수 있다.")
+    void canDraw(final List<Card> cards, final boolean expected) {
+        final Participant dealer = Dealer.createNewDealer(cards);
+        assertThat(dealer.canDraw()).isEqualTo(expected);
+    }
 
-        @Test
-        @DisplayName("헌 장을 더 받을 수 있다.")
-        void isNotEnd() {
-            final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SIX));
-            final Participant dealer = Dealer.createNewDealer(cards);
-            assertThat(dealer.canDraw()).isTrue();
-        }
-
-        @Test
-        @DisplayName("헌 장을 더 받을 수 없다.")
-        void isEnd() {
-            final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN));
-            final Participant dealer = Dealer.createNewDealer(cards);
-            assertThat(dealer.canDraw()).isFalse();
-        }
+    private static Stream<Arguments> createCardDraw() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, SIX)), true),
+                Arguments.of(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)), false)
+        );
     }
 
     @Test
