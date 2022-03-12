@@ -5,6 +5,7 @@ import blackjack.domain.Name;
 import blackjack.domain.WinResult;
 import blackjack.domain.card.BlackJackCardsGenerator;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.dto.ParticipantResponse;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
@@ -46,9 +47,12 @@ public class BlackJackGame {
     }
 
     private void alertStart(Dealer dealer, List<Player> players) {
-        OutputView.printStartMessage(dealer, players);
-        OutputView.printDealerFirstCard(dealer);
-        players.forEach(player -> OutputView.printParticipantCards(player, player.getScore()));
+        List<ParticipantResponse> playersResponse = players.stream()
+                .map(ParticipantResponse::new)
+                .collect(Collectors.toUnmodifiableList());
+        OutputView.printStartMessage(new ParticipantResponse(dealer), playersResponse);
+        OutputView.printDealerFirstCard(new ParticipantResponse(dealer));
+        players.forEach(player -> OutputView.printParticipantCards(new ParticipantResponse(player)));
     }
 
     private void proceedPlayers(List<Player> players, CardDeck deck) {
@@ -58,7 +62,7 @@ public class BlackJackGame {
     private void proceedPlayer(Player player, CardDeck deck) {
         while (player.isHittable() && inputHitRequest(player) == HitRequest.YES) {
             player.hit(deck);
-            OutputView.printParticipantCards(player, player.getScore());
+            OutputView.printParticipantCards(new ParticipantResponse(player));
         }
         showStopReason(player);
     }
@@ -91,9 +95,9 @@ public class BlackJackGame {
 
     private void showResult(Dealer dealer, List<Player> players) {
         OutputView.printCardResultMessage();
-        OutputView.printParticipantCards(dealer, dealer.getScore());
+        OutputView.printParticipantCards(new ParticipantResponse(dealer));
         players.forEach(
-                player -> OutputView.printParticipantCards(player, player.getScore()));
+                player -> OutputView.printParticipantCards(new ParticipantResponse(player)));
         OutputView.printWinResult(WinResult.of(dealer, players));
     }
 }

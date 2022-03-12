@@ -3,9 +3,7 @@ package blackjack.view;
 import blackjack.domain.Outcome;
 import blackjack.domain.WinResult;
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
+import blackjack.domain.dto.ParticipantResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,27 +14,27 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printStartMessage(Dealer dealer, List<Player> players) {
+    public static void printStartMessage(ParticipantResponse dealer, List<ParticipantResponse> players) {
         List<String> playerNames = players.stream()
-                .map(Player::getName)
+                .map(ParticipantResponse::getName)
                 .collect(Collectors.toUnmodifiableList());
         System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.", dealer.getName(), String.join(", ", playerNames));
         System.out.println();
     }
 
-    public static void printDealerFirstCard(Dealer dealer) {
+    public static void printDealerFirstCard(ParticipantResponse dealer) {
         Card firstCard = dealer.getCards().get(0);
         System.out.printf("%s: %s", dealer.getName(), createCardInfoString(firstCard));
         System.out.println();
     }
 
-    public static void printParticipantCards(Participant participant, int score) {
+    public static void printParticipantCards(ParticipantResponse participant) {
         String cardsInfo = participant.getCards()
                 .stream()
                 .map(OutputView::createCardInfoString)
                 .collect(Collectors.joining(", "));
 
-        System.out.printf("%s카드: %s - 합계: %d", participant.getName(), cardsInfo, score);
+        System.out.printf("%s카드: %s - 합계: %d", participant.getName(), cardsInfo, participant.getScore());
         System.out.println();
     }
 
