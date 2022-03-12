@@ -45,11 +45,15 @@ public abstract class AbstractParticipant implements Participant {
 
     @Override
     public void draw(final Card card) {
+        validateCanDraw();
+        cards.addCard(card);
+        refreshGameStatus();
+    }
+
+    private void validateCanDraw() {
         if (gameStatus.isFinishedGame()) {
             throw new IllegalStateException("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
         }
-        cards.addCard(card);
-        refreshGameStatus();
     }
 
     private void refreshGameStatus() {
