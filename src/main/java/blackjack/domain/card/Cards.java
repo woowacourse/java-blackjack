@@ -9,7 +9,7 @@ public class Cards {
     private static final int FIRST_RECEIVED_CARD_SIZE = 2;
     private static final int NUMBER_TO_USE_ACE_CARD_WITH_ONE = 10;
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Cards(List<Card> cards) {
         this.cards = cards;
@@ -19,12 +19,12 @@ public class Cards {
         cards.add(card);
     }
 
-    public boolean isFirstReceivedCards() {
-        return cards.size() == FIRST_RECEIVED_CARD_SIZE;
-    }
-
     public boolean isBlackJack() {
         return isFirstReceivedCards() && getTotalScore() == BLACK_JACK_SCORE;
+    }
+
+    public boolean isFirstReceivedCards() {
+        return cards.size() == FIRST_RECEIVED_CARD_SIZE;
     }
 
     public boolean exceedMaxScore() {

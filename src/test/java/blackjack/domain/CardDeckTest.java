@@ -15,7 +15,6 @@ public class CardDeckTest {
 
         cardDeck.drawCard();
         final int actual = cardDeck.size();
-
         assertThat(actual).isEqualTo(expected);
     }
 }

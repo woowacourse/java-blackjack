@@ -27,7 +27,6 @@ public class RentCompanyTest {
         final int expected = 3;
 
         final int actual = rentCompany.getCountOfCar();
-
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -54,7 +53,6 @@ public class RentCompanyTest {
         rentCompany.addCar(new K5(390));
 
         final String report = rentCompany.generateReport();
-
         assertThat(report).isEqualTo(expected);
     }
 }

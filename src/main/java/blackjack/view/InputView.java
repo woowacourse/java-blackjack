@@ -27,7 +27,7 @@ public class InputView {
         String[] usersName = users.split(",");
         if (Arrays.stream(usersName)
                 .anyMatch(String::isBlank)) {
-            throw  new IllegalArgumentException(USER_NAME_EXCEPTION_MESSAGE);
+            throw new IllegalArgumentException(USER_NAME_EXCEPTION_MESSAGE);
         }
         return Arrays.stream(usersName)
                 .collect(Collectors.toList());

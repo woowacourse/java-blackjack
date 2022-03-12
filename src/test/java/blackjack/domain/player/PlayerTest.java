@@ -9,7 +9,6 @@ import blackjack.domain.card.CardPattern;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +21,6 @@ public class PlayerTest {
         final String expected = "pobi";
 
         final String actual = user.getName();
-
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -33,7 +31,6 @@ public class PlayerTest {
         final boolean expected = true;
 
         final boolean actual = user.isPossibleToPickCard();
-
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -45,35 +42,35 @@ public class PlayerTest {
         final boolean expected = false;
 
         final boolean actual = user.isPossibleToPickCard();
-
         assertThat(actual).isEqualTo(expected);
     }
 
     private List<Card> initializeCardsForUser() {
-        return new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.JACK), new Card(CardPattern.HEART, CardNumber.KING)));
+        return new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.JACK),
+                new Card(CardPattern.HEART, CardNumber.KING)));
     }
 
     @Test
     @DisplayName("딜러의 카드 총합이 16이하이면, true를 반환한다.")
     void isPossibleToPickCardForDealer() {
-        List<Card> cards = Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.JACK), new Card(CardPattern.HEART, CardNumber.SIX));
+        List<Card> cards = Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.JACK),
+                new Card(CardPattern.HEART, CardNumber.SIX));
         final Player dealer = new Dealer(cards);
         final boolean expected = true;
 
         final boolean actual = dealer.isPossibleToPickCard();
-
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("딜러의 카드 총합이 16을 초과하면, false를 반환한다.")
     void isImpossibleToPickCardForDealer() {
-        List<Card> cards = Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.JACK), new Card(CardPattern.HEART, CardNumber.KING));
+        List<Card> cards = Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.JACK),
+                new Card(CardPattern.HEART, CardNumber.KING));
         final Player dealer = new Dealer(cards);
         final boolean expected = false;
 
         final boolean actual = dealer.isPossibleToPickCard();
-
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -104,12 +101,12 @@ public class PlayerTest {
     @Test
     @DisplayName("딜러가 블랙잭인 경우를 확인한다.")
     void isBlackJack() {
-        List<Card> cards = Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.ACE), new Card(CardPattern.HEART, CardNumber.KING));
+        List<Card> cards = Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.ACE),
+                new Card(CardPattern.HEART, CardNumber.KING));
         Player dealer = new Dealer(cards);
         final boolean expected = true;
 
         final boolean actual = dealer.isBlackJack();
-
         assertThat(actual).isEqualTo(expected);
     }
 }

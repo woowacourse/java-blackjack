@@ -19,7 +19,7 @@ public class GameController {
 
         checkPlayerHaveBlackJack(gameMachine, dealer, users);
         ResultView.printTotalCardResult(dealer, users);
-        
+
         GameResult gameResult = GameResult.createPlayerGameResult(dealer, users);
         ResultView.printGameResult(gameResult);
     }
@@ -50,7 +50,7 @@ public class GameController {
             gameMachine.drawCardToPlayer(user);
             ResultView.printUserCards(user);
             askReceiveCard(gameMachine, user);
-            return ;
+            return;
         }
         ResultView.printUserCards(user);
     }

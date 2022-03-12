@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.player.Player;
 
 public enum Result {
 

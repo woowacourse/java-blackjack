@@ -42,7 +42,6 @@ public class GameResultTest {
         ));
 
         final Map<String, Result> actual = gameResult.getUserResult();
-
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -56,7 +55,6 @@ public class GameResultTest {
         ));
 
         final Map<Result, Integer> actual = gameResult.getDealerResult();
-
         assertThat(actual).isEqualTo(expected);
     }
 }
