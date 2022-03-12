@@ -8,10 +8,13 @@ public enum CardState {
     STAND(cards -> !(isBlackJack(cards)) && cards.calculateSum() <= 21, 2),
     BUST(cards -> cards.calculateSum() > 21, 1);
 
+    private static final int BLACK_JACK_SCORE = 21;
+    private static final int BLACK_JACK_CARD_COUNT = 2;
+
     private final Predicate<Cards> predicate;
     private final int statePower;
 
-    CardState(Predicate<Cards> predicate, int statePower) {
+    CardState(final Predicate<Cards> predicate, final int statePower) {
         this.predicate = predicate;
         this.statePower = statePower;
     }
@@ -25,15 +28,11 @@ public enum CardState {
     }
 
     private static boolean isBlackJack(final Cards cards) {
-        return cards.getCardCount() == 2 && cards.calculateSum() == 21;
+        return cards.getCardCount() == BLACK_JACK_CARD_COUNT && cards.calculateSum() == BLACK_JACK_SCORE;
     }
 
     public boolean isStand() {
         return this == STAND;
-    }
-
-    public int getStatePower() {
-        return statePower;
     }
 
     public boolean isBust() {
@@ -42,5 +41,9 @@ public enum CardState {
 
     public boolean isBlackJack() {
         return this == BLACKJACK;
+    }
+
+    public int getStatePower() {
+        return statePower;
     }
 }

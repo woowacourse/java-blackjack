@@ -6,7 +6,7 @@ public final class Card {
     private final Suit suit;
     private final Face face;
 
-    public Card(Suit suit, Face face) {
+    public Card(final Suit suit, final Face face) {
         this.suit = suit;
         this.face = face;
     }
@@ -20,7 +20,7 @@ public final class Card {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

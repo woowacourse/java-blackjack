@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class InputView {
-
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String NAME_OR_CARD_DELIMITER = ",";
     private static final String INPUT_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -14,6 +13,8 @@ public class InputView {
     private static final String BLANK_INPUT_MESSAGE = "값을 입력해주세요.";
     private static final String HIT_SUFFIX_MESSAGE = "는  한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String INVALID_HIT_MESSAGE = "예는 y, 아니오는 n를 입력하세요.";
+    private static final String DO_HIT = "y";
+    private static final String DO_NOT_HIT = "n";
 
     private InputView() {
     }
@@ -49,27 +50,32 @@ public class InputView {
     }
 
     private static List<String> getSplitAndTrim(final String input) {
-        return Arrays.stream(input.split(NAME_OR_CARD_DELIMITER))
+        return Arrays
+                .stream(input.split(NAME_OR_CARD_DELIMITER))
                 .map(String::trim)
                 .collect(Collectors.toList());
     }
 
     public static boolean inputTryToHit(final String name) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append(name)
-                .append(HIT_SUFFIX_MESSAGE);
-        print(stringBuilder.toString());
+        printPlayerHitIntro(name);
 
         String response = readLine();
         if (isYOrN(response)) {
-            return response.equalsIgnoreCase("y");
+            return response.equalsIgnoreCase(DO_HIT);
         }
         print(INVALID_HIT_MESSAGE);
         return inputTryToHit(name);
     }
 
-    private static boolean isYOrN(String response) {
-        return response.equalsIgnoreCase("y") || response.equalsIgnoreCase("n");
+    private static void printPlayerHitIntro(final String name) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(name)
+                .append(HIT_SUFFIX_MESSAGE);
+        print(stringBuilder.toString());
+    }
+
+    private static boolean isYOrN(final String response) {
+        return response.equalsIgnoreCase(DO_HIT) || response.equalsIgnoreCase(DO_NOT_HIT);
     }
 }

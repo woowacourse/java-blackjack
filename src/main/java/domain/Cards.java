@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Cards {
-    private final List<Card> cards = new ArrayList<>();
-    private final CanAddCardThreshold threshold;
+    private static final int MAXIMUM_SUM_VALUE = 21;
+    private static final int DIFFERENCE_MAX_MIN_SUM_VALUE = 10;
 
-    public Cards(final CanAddCardThreshold threshold) {
+    private final List<Card> cards = new ArrayList<>();
+    private final HitThreshold threshold;
+
+    public Cards(final HitThreshold threshold) {
         this.threshold = threshold;
     }
 
@@ -21,9 +24,9 @@ public final class Cards {
     }
 
     public int calculateSum() {
-        int minimumSum = cards.stream().mapToInt(Card::getScore).sum();
-        int maximumSum = calculateMaximumSum(minimumSum);
-        if (maximumSum > 21) {
+        final int minimumSum = cards.stream().mapToInt(Card::getScore).sum();
+        final int maximumSum = calculateMaximumSum(minimumSum);
+        if (maximumSum > MAXIMUM_SUM_VALUE) {
             return minimumSum;
         }
         return maximumSum;
@@ -31,7 +34,7 @@ public final class Cards {
 
     private int calculateMaximumSum(final int minimumSum) {
         if (hasAce()) {
-            return minimumSum + 10;
+            return minimumSum + DIFFERENCE_MAX_MIN_SUM_VALUE;
         }
         return minimumSum;
     }
@@ -40,20 +43,8 @@ public final class Cards {
         return cards.stream().anyMatch(Card::isAceCard);
     }
 
-    public FinalGameResult calculateFinalResult(final Cards other) {
-        return FinalGameResult.of(this, other);
-    }
-
-    public CardState getCardState() {
-        return CardState.of(this);
-    }
-
-    public int getCardCount() {
-        return cards.size();
-    }
-
-    public int getCardStatePower() {
-        return getCardState().getStatePower();
+    public GameResult calculateGameResult(final Cards other) {
+        return GameResult.of(this, other);
     }
 
     public boolean isStand() {
@@ -68,7 +59,19 @@ public final class Cards {
         return getCardState().isBlackJack();
     }
 
+    public CardState getCardState() {
+        return CardState.of(this);
+    }
+
     public List<Card> getCards() {
         return new ArrayList<>(cards);
+    }
+
+    public int getCardStatePower() {
+        return getCardState().getStatePower();
+    }
+
+    public int getCardCount() {
+        return cards.size();
     }
 }

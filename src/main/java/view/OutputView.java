@@ -11,6 +11,12 @@ import utils.CardConvertor;
 public class OutputView {
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String GAME_RESULT_INTRO_MESSAGE = "## 최종 승패";
+    private static final String CARD_OR_NAME_DELIMITER = ", ";
+    private static final String INIT_CARD_SUFFIX_MESSAGE = "에게 2장을 나누었습니다 *^^*";
+    private static final String NAME_SUFFIX = "카드: ";
+    private static final String SCORE_PREFIX = " - 결과: ";
+    private static final String BLANK = " ";
+    private static final String NAME_AND_GAME_RESULT_DELIMITER = ": ";
 
     private OutputView() {
     }
@@ -23,8 +29,8 @@ public class OutputView {
     private static void printInitCardsIntro(final Set<String> names) {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
-                .append(String.join(", ", names))
-                .append("에게 2장을 나누었습니다 *^^*");
+                .append(String.join(CARD_OR_NAME_DELIMITER, names))
+                .append(INIT_CARD_SUFFIX_MESSAGE);
         print(stringBuilder.toString());
     }
 
@@ -33,7 +39,7 @@ public class OutputView {
             final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder
                     .append(entry.getKey())
-                    .append("카드: ")
+                    .append(NAME_SUFFIX)
                     .append(convertToString(entry.getValue()));
             addScore(stringBuilder, score);
             print(stringBuilder.toString());
@@ -43,13 +49,13 @@ public class OutputView {
     private static void addScore(final StringBuilder stringBuilder, final int[] score) {
         if (score.length != 0) {
             stringBuilder
-                    .append(" - 결과: ")
+                    .append(SCORE_PREFIX)
                     .append(score[0]);
         }
     }
 
     private static String convertToString(final List<Card> cards) {
-        return String.join(", ", CardConvertor.convertToString(cards));
+        return String.join(CARD_OR_NAME_DELIMITER, CardConvertor.convertToString(cards));
     }
 
     private static void print(final String content) {
@@ -60,8 +66,8 @@ public class OutputView {
         print(DEALER_HIT_MESSAGE);
     }
 
-    public static void printCardsWithTotalScore(CardsWithTotalScore cardsWithTotalScore) {
-        for (Entry<Map<String, List<Card>>, Integer> entry : cardsWithTotalScore.get().entrySet()) {
+    public static void printCardsWithTotalScore(final CardsWithTotalScore cardsWithTotalScore) {
+        for (final Entry<Map<String, List<Card>>, Integer> entry : cardsWithTotalScore.get().entrySet()) {
             printCardsWithName(entry.getKey(), entry.getValue());
         }
     }
@@ -72,8 +78,8 @@ public class OutputView {
             final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder
                     .append(entry.getKey())
-                    .append(": ")
-                    .append(String.join(" ", entry.getValue()));
+                    .append(NAME_AND_GAME_RESULT_DELIMITER)
+                    .append(String.join(BLANK, entry.getValue()));
             print(stringBuilder.toString());
         }
     }

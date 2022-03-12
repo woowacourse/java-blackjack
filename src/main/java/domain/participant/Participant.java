@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.CardScoreThreshold;
+import domain.HitThreshold;
 import domain.Cards;
 import domain.card.Card;
 import java.util.LinkedHashMap;
@@ -11,7 +11,7 @@ public abstract class Participant {
     protected final Cards cards;
     protected final String name;
 
-    public Participant(final CardScoreThreshold canAddCardThreshold, final String name) {
+    public Participant(final HitThreshold canAddCardThreshold, final String name) {
         this.cards = new Cards(canAddCardThreshold);
         this.name = name;
     }
@@ -24,7 +24,6 @@ public abstract class Participant {
         return cards.canAddCard();
     }
 
-    //    abstract public List<FinalGameResult> calculateFinalGameResult(Participant other);
     public Map<String, List<Card>> getCardsWithName() {
         return new LinkedHashMap<>(Map.of(name, getCards()));
     }

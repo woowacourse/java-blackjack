@@ -73,7 +73,7 @@ public class GameResultConvertor {
             GAME_RESULT_MAPPER.put(GameResult.DRAW, "무");
         }
 
-        static String get(GameResult gameResult) {
+        static String get(final GameResult gameResult) {
             return GAME_RESULT_MAPPER.get(gameResult);
         }
 

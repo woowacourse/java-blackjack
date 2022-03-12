@@ -49,7 +49,7 @@ public final class BlackJackGame {
     }
 
     private void hit() {
-        for (Player player : players.getPlayers()) {
+        for (final Player player : players.getPlayers()) {
             hitPlayer(player);
         }
         hitDealer();
@@ -83,15 +83,15 @@ public final class BlackJackGame {
     }
 
     private void showGameResult() {
-        final Map<String, GameResult> playersGameResult = players.calculateGameResult(dealer);
-        final Map<String, List<GameResult>> dealerGameResult = dealer.calculateGameResult(
-                new ArrayList<>(playersGameResult.values()));
-        final Map<String, List<String>> gameResult = convertGameResultToString(dealerGameResult, playersGameResult);
+        final Map<String, GameResult> playersGameResults = players.calculateGameResult(dealer);
+        final Map<String, List<GameResult>> dealerGameResult = dealer.getGameResultWithName(
+                new ArrayList<>(playersGameResults.values()));
+        final Map<String, List<String>> gameResult = convertGameResultToString(dealerGameResult, playersGameResults);
         OutputView.printGameResultWithName(gameResult);
     }
 
     private Map<String, List<String>> convertGameResultToString(final Map<String, List<GameResult>> dealerGameResult,
-                                                                final Map<String, GameResult> playersGameResult) {
-        return GameResultConvertor.convertToString(dealerGameResult, playersGameResult);
+                                                                final Map<String, GameResult> playersGameResults) {
+        return GameResultConvertor.convertToString(dealerGameResult, playersGameResults);
     }
 }

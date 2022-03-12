@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public final class Players {
     private final List<Player> players;
 
-    public Players(List<String> names) {
+    public Players(final List<String> names) {
         this.players = names
                 .stream()
                 .map(Player::new)
@@ -21,37 +21,37 @@ public final class Players {
     }
 
     public void receiveCard() {
-        for (Player player : players) {
+        for (final Player player : players) {
             player.receiveCard(CardDeck.draw());
         }
     }
 
+    public Map<String, GameResult> calculateGameResult(final Dealer dealer) {
+        final Map<String, GameResult> gameResultWithName = new LinkedHashMap<>();
+        for (Player player : players) {
+            gameResultWithName.putAll(player.getGameResultWithName(dealer));
+        }
+        return gameResultWithName;
+    }
+
     public Map<String, List<Card>> getCardsWithName() {
         final Map<String, List<Card>> cardsWithNameTotal = new LinkedHashMap<>();
-        for (Player player : players) {
+        for (final Player player : players) {
             assert player.getCardsWithName() != null;
             cardsWithNameTotal.putAll(player.getCardsWithName());
         }
         return cardsWithNameTotal;
     }
 
-    public List<Player> getPlayers() {
-        return new ArrayList<>(players);
-    }
-
     public Map<String, Integer> getTotalScoreWithName() {
         final Map<String, Integer> totalScoreWithName = new LinkedHashMap<>();
-        for (Player player : players) {
+        for (final Player player : players) {
             totalScoreWithName.putAll(player.getTotalScoreWithName());
         }
         return totalScoreWithName;
     }
 
-    public Map<String, GameResult> calculateGameResult(Dealer dealer) {
-        final Map<String, GameResult> gameResultWithName = new LinkedHashMap<>();
-        for (Player player : players) {
-            gameResultWithName.putAll(player.getGameResultWithName(dealer));
-        }
-        return gameResultWithName;
+    public List<Player> getPlayers() {
+        return new ArrayList<>(players);
     }
 }

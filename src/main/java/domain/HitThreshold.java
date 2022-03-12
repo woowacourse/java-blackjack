@@ -1,12 +1,12 @@
 package domain;
 
-public enum CanAddCardThreshold {
+public enum HitThreshold {
     PLAYER_THRESHOLD(20),
     DEALER_THRESHOLD(16);
 
     private final int thresholdValue;
 
-    CanAddCardThreshold(int thresholdValue) {
+    HitThreshold(int thresholdValue) {
         this.thresholdValue = thresholdValue;
     }
 
