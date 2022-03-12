@@ -49,6 +49,14 @@ public class Player {
         return score().isBust();
     }
 
+    protected final boolean lessScoreThan(Player other) {
+        return score().lessThan(other.score());
+    }
+
+    protected final boolean moreScoreThan(Player other) {
+        return score().moreThan(other.score());
+    }
+
     public boolean isHittable() {
         return cards.lessThan(HIT_BOUNDARY);
     }

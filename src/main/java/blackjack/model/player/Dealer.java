@@ -1,5 +1,8 @@
 package blackjack.model.player;
 
+import static blackjack.model.blackjack.Result.DRAW;
+import static blackjack.model.blackjack.Result.LOSS;
+import static blackjack.model.blackjack.Result.WIN;
 import static java.util.stream.Collectors.toUnmodifiableMap;
 
 import blackjack.model.blackjack.Records;
@@ -38,20 +41,20 @@ public final class Dealer extends Player {
 
     private Result eachPlayerResult(Player player) {
         if (player.isBust()) {
-            return Result.LOSS;
+            return LOSS;
         } else if (isBust()) {
-            return Result.WIN;
+            return WIN;
         }
-        return compare(player.score(), score());
+        return compareWith(player);
     }
 
-    private Result compare(Score playerScore, Score dealerScore) {
-        if (playerScore.lessThan(dealerScore)) {
-            return Result.LOSS;
-        } else if (playerScore.moreThan(dealerScore)) {
-            return Result.WIN;
+    private Result compareWith(Player player) {
+        if(player.lessScoreThan(this)) {
+            return LOSS;
+        } else if(player.moreScoreThan(this)) {
+            return WIN;
         }
-        return Result.DRAW;
+        return DRAW;
     }
 
     @Override
