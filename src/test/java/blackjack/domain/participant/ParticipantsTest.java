@@ -6,8 +6,8 @@ import static blackjack.domain.card.CardNumber.SEVEN;
 import static blackjack.domain.card.CardNumber.TEN;
 import static blackjack.domain.card.CardPattern.SPADE;
 import static blackjack.testutil.CardFixtureGenerator.createCards;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.card.Card;
 import java.util.Arrays;
@@ -47,7 +47,7 @@ class ParticipantsTest {
                 .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Participants participants = new Participants(Collections.singletonList(participant));
         participants.drawCurrentPlayer(Card.of(SPADE, JACK));
-        assertTrue(participants.isAllTurnEnd());
+        assertThat(participants.isAllTurnEnd()).isTrue();
     }
 
     @Test

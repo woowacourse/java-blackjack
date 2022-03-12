@@ -7,9 +7,8 @@ import static blackjack.domain.card.CardNumber.TEN;
 import static blackjack.domain.card.CardNumber.TWO;
 import static blackjack.domain.card.CardPattern.SPADE;
 import static blackjack.testutil.CardFixtureGenerator.createCards;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.card.Card;
 import java.util.List;
@@ -38,7 +37,7 @@ class DealerTest {
         void isNotEnd() {
             final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SIX));
             final Participant dealer = Dealer.createNewDealer(cards);
-            assertTrue(dealer.canDraw());
+            assertThat(dealer.canDraw()).isTrue();
         }
 
         @Test
@@ -46,7 +45,7 @@ class DealerTest {
         void isEnd() {
             final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN));
             final Participant dealer = Dealer.createNewDealer(cards);
-            assertFalse(dealer.canDraw());
+            assertThat(dealer.canDraw()).isFalse();
         }
     }
 

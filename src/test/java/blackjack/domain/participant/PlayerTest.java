@@ -10,8 +10,6 @@ import static blackjack.domain.card.CardPattern.SPADE;
 import static blackjack.testutil.CardFixtureGenerator.createCards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import blackjack.domain.card.Card;
 import java.util.List;
@@ -60,7 +58,7 @@ class PlayerTest {
         @DisplayName("가능한 경우 true를 반환한다.")
         void canDraw() {
             final Participant player = Player.createNewPlayer("user", cards);
-            assertTrue(player.canDraw());
+            assertThat(player.canDraw()).isTrue();
         }
 
         @Test
@@ -68,7 +66,7 @@ class PlayerTest {
         void cannotDraw() {
             final Participant player = Player.createNewPlayer("user", cards);
             player.draw(Card.of(SPADE, EIGHT));
-            assertFalse(player.canDraw());
+            assertThat(player.canDraw()).isFalse();
         }
     }
 
@@ -96,7 +94,7 @@ class PlayerTest {
     void changeFinishStatus() {
         final Participant player = Player.createNewPlayer("user", cards);
         player.changeFinishStatus();
-        assertFalse(player.canDraw());
+        assertThat(player.canDraw()).isFalse();
     }
 
     @Test
