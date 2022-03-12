@@ -4,7 +4,7 @@ import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackjackController {
+public class Game {
 
     public void run() {
         OutputView.printPlayerNameInstruction();
