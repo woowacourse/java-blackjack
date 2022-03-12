@@ -2,8 +2,10 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 
@@ -11,11 +13,12 @@ public class CardDeck {
 
     public static final int INIT_CARD_COUNT = 2;
 
-    private final Stack<Card> cardDeck = new Stack<>();
+    private final Deque<Card> cardDeck = new ArrayDeque<>();
 
     public CardDeck() {
-        cardDeck.addAll(Card.getTotalCard());
-        Collections.shuffle(cardDeck);
+        List<Card> totalCards = new ArrayList<>(Card.getTotalCard());
+        Collections.shuffle(totalCards);
+        cardDeck.addAll(totalCards);
     }
 
     public List<Card> pickInit() {
