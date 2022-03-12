@@ -34,7 +34,7 @@ public class Application {
     }
 
     private static void hitPlayer(Blackjack blackjack, Player player) {
-        Command command = Command.find(InputView.inputCommand(player));
+        Command command = Command.find(InputView.inputCommand(player.getName()));
         if (command == Command.STAY) {
             OutputView.printPlayerCards(player);
             return;
@@ -46,7 +46,7 @@ public class Application {
         while (blackjack.canHit(player, command)) {
             BlackjackController.hitPlayer(blackjack, player, command);
             OutputView.printPlayerCards(player);
-            command = Command.find(InputView.inputCommand(player));
+            command = Command.find(InputView.inputCommand(player.getName()));
         }
     }
 

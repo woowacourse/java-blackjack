@@ -1,7 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.entry.Player;
-
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -20,21 +18,21 @@ public class InputView {
         return toNames(SCANNER.nextLine().trim());
     }
 
-    private static List<String> toNames(String inputNames) {
-        return Arrays.stream(inputNames.split(NAME_DELIMITER))
+    private static List<String> toNames(String names) {
+        return Arrays.stream(names.split(NAME_DELIMITER))
                 .map(String::trim)
                 .collect(Collectors.toList());
     }
 
-    public static String inputCommand(Player player) {
-        System.out.println(MessageFormat.format("{0}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName()));
+    public static String inputCommand(String name) {
+        System.out.println(MessageFormat.format("{0}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
         return validateCommand(SCANNER.nextLine().trim().toLowerCase());
     }
 
-    private static String validateCommand(String value) {
-        if (!YES.equals(value) && !NO.equals(value)) {
+    private static String validateCommand(String command) {
+        if (!YES.equals(command) && !NO.equals(command)) {
             throw new IllegalArgumentException("입력은 y 또는 n이어야 합니다.");
         }
-        return value;
+        return command;
     }
 }
