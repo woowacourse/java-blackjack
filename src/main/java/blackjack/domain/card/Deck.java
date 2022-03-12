@@ -13,7 +13,7 @@ public class Deck {
         this.bunchOfCards = cardGenerator.generate();
     }
 
-    public List<Card> makeDistributeCard() {
+    public List<Card> makeInitCards() {
         List<Card> cards = new ArrayList<>();
         IntStream.range(0, INIT_DISTRIBUTE_SIZE)
                 .forEach(i -> cards.add(draw()));

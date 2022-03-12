@@ -15,7 +15,7 @@ public class DeckTest {
     @Test
     @DisplayName("초기에 전달받는 카드는 2장이다.")
     void returnDistributeCards() {
-        List<Card> cards = new Deck(new DeckCardGenerator()).makeDistributeCard();
+        List<Card> cards = new Deck(new DeckCardGenerator()).makeInitCards();
 
         assertThat(cards.size()).isEqualTo(2);
     }
@@ -23,7 +23,7 @@ public class DeckTest {
     @Test
     @DisplayName("초기에 전달받는 카드는 중복일 수 없다.")
     void notRedundantCards() {
-        List<Card> cards = new Deck(new DeckCardGenerator()).makeDistributeCard();
+        List<Card> cards = new Deck(new DeckCardGenerator()).makeInitCards();
 
         assertThat(new HashSet<>(cards).size()).isEqualTo(2);
     }

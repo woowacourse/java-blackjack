@@ -28,7 +28,7 @@ class ParticipantTest {
     @NullAndEmptySource
     @DisplayName("참여자 이름은 비어있을 수 없다")
     void checkNameNullOrEmpty(String name) {
-        assertThatThrownBy(() -> new Participant(deck.makeDistributeCard(), name))
+        assertThatThrownBy(() -> new Participant(deck.makeInitCards(), name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름은 비어있을 수 없습니다.");
     }
@@ -36,14 +36,14 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자는 시작시 카드를 2장 받는다.")
     void checkParticipantCardSize() {
-        Participant participant = new Participant(deck.makeDistributeCard(), "pobi");
+        Participant participant = new Participant(deck.makeInitCards(), "pobi");
         assertThat(participant.getCards().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("참가자는 추가로 카드를 받을 수 있다.")
     void addParticipantCard() {
-        Participant participant = new Participant(deck.makeDistributeCard(), "pobi");
+        Participant participant = new Participant(deck.makeInitCards(), "pobi");
         int size = participant.getCards().size();
         participant.addCard(deck.draw());
         assertThat(participant.getCards().size()).isEqualTo(size + 1);

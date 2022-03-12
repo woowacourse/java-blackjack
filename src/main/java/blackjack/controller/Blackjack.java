@@ -29,12 +29,12 @@ public class Blackjack {
 
     private List<Player> createParticipants(final List<String> names, final Deck deck) {
         return names.stream()
-                .map(name -> new Participant(deck.makeDistributeCard(), name))
+                .map(name -> new Participant(deck.makeInitCards(), name))
                 .collect(Collectors.toList());
     }
 
     private Dealer createDealer(final Deck deck) {
-        return new Dealer(deck.makeDistributeCard());
+        return new Dealer(deck.makeInitCards());
     }
 
     private void decideGetMoreCard(final Players players, final Deck deck) {
@@ -71,5 +71,4 @@ public class Blackjack {
         OutputView.printPlayerFinalInfo(players.getDealer());
         OutputView.printFinishParticipantInfo(players.getParticipants());
     }
-
 }
