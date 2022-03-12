@@ -2,7 +2,6 @@ package blackjack.domain.user;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Rule;
 import blackjack.domain.card.Deck;
 import java.util.Collections;
 import java.util.HashSet;
@@ -44,9 +43,9 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
-    public void calculate(Rule rule) {
+    public void calculate() {
         for (Player player : players) {
-            player.calculate(rule);
+            player.calculate();
         }
     }
 }

@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.Result;
-import blackjack.domain.Rule;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -33,7 +32,7 @@ public class BlackJack {
 
         drawAdditionalCard(users, deck);
 
-        calculateByRule(users);
+        users.calculateAllUser();
 
         printFinalResult(users);
     }
@@ -89,12 +88,6 @@ public class BlackJack {
             dealer.drawCard(deck);
             outputView.printDealer();
         }
-    }
-
-    private void calculateByRule(Users users) {
-        Rule rule = new Rule();
-
-        users.calculateAllUser(rule);
     }
 
     private void printFinalResult(Users users) {

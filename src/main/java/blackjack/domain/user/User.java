@@ -1,22 +1,20 @@
 package blackjack.domain.user;
 
-import blackjack.domain.Rule;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class User {
 
     private static final int BLACKJACK_NUMBER = 21;
 
-    protected final List<Card> cards;
+    protected final Cards cards;
     protected final String name;
     protected int score = 0;
 
     protected User(String name) {
-        cards = new ArrayList<>();
+        cards = new Cards();
         this.name = name;
     }
 
@@ -26,7 +24,7 @@ public abstract class User {
     }
 
     public List<Card> showCards() {
-        return Collections.unmodifiableList(cards);
+        return cards.showCards();
     }
 
     public void drawCard(Deck deck) {
@@ -41,8 +39,8 @@ public abstract class User {
         return name;
     }
 
-    public void calculate(Rule rule) {
-        score = rule.sumPoint(cards);
+    public void calculate() {
+        score = cards.sumPoint();
         validateNegative(score);
     }
 

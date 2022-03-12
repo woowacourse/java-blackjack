@@ -1,6 +1,5 @@
 package blackjack.domain.user;
 
-import blackjack.domain.Rule;
 import blackjack.domain.card.Deck;
 import java.util.List;
 
@@ -33,8 +32,8 @@ public class Users {
         return dealer;
     }
 
-    public void calculateAllUser(Rule rule) {
-        players.calculate(rule);
-        dealer.calculate(rule);
+    public void calculateAllUser() {
+        players.calculate();
+        dealer.calculate();
     }
 }

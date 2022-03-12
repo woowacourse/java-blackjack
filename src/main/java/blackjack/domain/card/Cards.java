@@ -1,14 +1,33 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Rule {
+public class Cards {
 
     private static final int BLACKJACK_NUMBER = 21;
     private static final int ACE_POINT_DIFFERENCE = 10;
 
-    public int sumPoint(List<Card> cards) {
+    private final List<Card> cards;
+
+    public Cards() {
+        this.cards = new ArrayList<>();
+    }
+
+    public void add(Card drawCard) {
+        cards.add(drawCard);
+    }
+
+    public List<Card> showCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    public List<Card> showLimitedCard(int size) {
+        return Collections.unmodifiableList(cards.subList(0, size));
+    }
+
+    public int sumPoint() {
         int aceCount = countAce(cards);
 
         if (aceCount > 0) {
@@ -42,5 +61,11 @@ public class Rule {
     private int countAce(List<Card> cards) {
         return Math.toIntExact(cards.stream()
                 .filter(Card::isAce).count());
+    }
+
+    public int getSumPoint() {
+        return cards.stream()
+                .mapToInt(Card::getPoint)
+                .sum();
     }
 }
