@@ -2,13 +2,16 @@ package fuel;
 
 public class Avante extends Car {
 
+    public static final int DISTANCE_PER_LITER_AVANTE = 15;
+    public static final String CAR_NAME_AVANTE = "Avante";
+
     public Avante(int distance) {
-        super(15, distance, "Avante");
+        super(DISTANCE_PER_LITER_AVANTE, distance, CAR_NAME_AVANTE);
     }
 
     @Override
     double getDistancePerLiter() {
-        return 15;
+        return DISTANCE_PER_LITER_AVANTE;
     }
 
     @Override
