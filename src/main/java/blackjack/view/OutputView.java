@@ -15,8 +15,8 @@ public class OutputView {
     private static final String EXPLAIN_SYMBOL = ": ";
 
     public static void printPlayersInitCardInfo(final Players players) {
-        final List<Participant> participants = players.getParticipants();
-        final Dealer dealer = players.getDealer();
+        final List<Player> participants = players.getParticipants();
+        final Player dealer = players.getDealer();
 
         final String basicDistribute = "%s와 %s에게 " + INIT_DISTRIBUTE_SIZE + "을 나누어주었습니다.";
         System.out.println();
@@ -25,18 +25,18 @@ public class OutputView {
         printParticipantsInfo(participants);
     }
 
-    private static List<String> extractNames(final List<Participant> participants) {
+    private static List<String> extractNames(final List<Player> participants) {
         return participants.stream()
-                .map(Participant::getName)
+                .map(Player::getName)
                 .collect(Collectors.toList());
     }
 
-    private static void printInitDealerInfo(final Dealer dealer) {
-        Card dealerCard = dealer.getCardFirstOne();
+    private static void printInitDealerInfo(final Player dealer) {
+        Card dealerCard = dealer.getCards().get(0);
         System.out.println(dealer.getName() + EXPLAIN_SYMBOL + dealerCard.getScore().getSymbol() + dealerCard.getType().getName());
     }
 
-    private static void printParticipantsInfo(final List<Participant> participants) {
+    private static void printParticipantsInfo(final List<Player> participants) {
         participants.forEach(
                 participant -> System.out.println(makePlayerCardInfo(participant))
         );
@@ -71,8 +71,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printFinishParticipantInfo(final List<Participant> participants) {
-        for (Participant participant : participants) {
+    public static void printFinishParticipantInfo(final List<Player> participants) {
+        for (Player participant : participants) {
             printPlayerFinalInfo(participant);
         }
         System.out.println();
@@ -93,8 +93,8 @@ public class OutputView {
     }
 
     private static String makeResultToText(final DealerResult dealerResult) {
-        Win win = dealerResult.getWin();
-        Lose lose = dealerResult.getLose();
+        ResultCount win = dealerResult.getWin();
+        ResultCount lose = dealerResult.getLose();
         return String.format("%d%s %d%s", win.getCount(), win.getVerify().getValue(), lose.getCount(), lose.getVerify().getValue());
     }
 

@@ -23,6 +23,10 @@ public abstract class Player {
         cards.addCard(card);
     }
 
+    public boolean acceptableCard() {
+        return false;
+    }
+
     public List<Card> getCards() {
         return this.cards.getCards();
     }

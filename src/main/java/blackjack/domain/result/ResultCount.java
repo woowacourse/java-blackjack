@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-public abstract class ResultCount {
+public class ResultCount {
 
     private final Result verify;
     private int count;

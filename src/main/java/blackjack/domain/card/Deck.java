@@ -9,8 +9,8 @@ public class Deck {
 
     private final Stack<Card> bunchOfCards;
 
-    public Deck(Stack<Card> bunchOfCards) {
-        this.bunchOfCards = bunchOfCards;
+    public Deck(CardGenerator cardGenerator) {
+        this.bunchOfCards = cardGenerator.generate();
     }
 
     public List<Card> makeDistributeCard() {

@@ -18,7 +18,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 시작시 카드를 2장 받는다.")
     void checkParticipantCardSize() {
-        Deck deck = new Deck(new DeckCardGenerator().generate());
+        Deck deck = new Deck(new DeckCardGenerator());
         Dealer dealer = new Dealer(deck.makeDistributeCard());
         assertThat(dealer.getCards().size()).isEqualTo(2);
     }

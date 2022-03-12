@@ -4,6 +4,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckCardGenerator;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
+import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.result.Judge;
 import blackjack.view.InputView;
@@ -15,9 +16,9 @@ import java.util.stream.Collectors;
 public class Blackjack {
 
     public void play() {
-        final Deck deck = new Deck(new DeckCardGenerator().generate());
-        final List<Participant> participants = createParticipants(InputView.responseNames(), deck);
-        final Dealer dealer = createDealer(deck);
+        final Deck deck = new Deck(new DeckCardGenerator());
+        final List<Player> participants = createParticipants(InputView.responseNames(), deck);
+        final Player dealer = createDealer(deck);
         final Players players = new Players(participants, dealer);
 
         OutputView.printPlayersInitCardInfo(players);
@@ -26,7 +27,7 @@ public class Blackjack {
         OutputView.printGameResult(Judge.calculateGameResult(players));
     }
 
-    private List<Participant> createParticipants(final List<String> names, final Deck deck) {
+    private List<Player> createParticipants(final List<String> names, final Deck deck) {
         return names.stream()
                 .map(name -> new Participant(deck.makeDistributeCard(), name))
                 .collect(Collectors.toList());
@@ -37,27 +38,27 @@ public class Blackjack {
     }
 
     private void decideGetMoreCard(final Players players, final Deck deck) {
-        for (Participant participant : players.getParticipants()) {
+        for (Player participant : players.getParticipants()) {
             decideParticipantOneMoreCard(participant, deck);
         }
         decideDealerMoreCard(players.getDealer(), deck);
     }
 
-    private void decideParticipantOneMoreCard(final Participant participant, final Deck deck) {
+    private void decideParticipantOneMoreCard(final Player participant, final Deck deck) {
         while (isNotOverMaxScore(participant) && InputView.oneMoreCard(participant)) {
             participant.addCard(deck.draw());
             OutputView.printPlayerCardInfo(participant);
         }
     }
 
-    private boolean isNotOverMaxScore(final Participant participant) {
+    private boolean isNotOverMaxScore(final Player participant) {
         if (!participant.acceptableCard()) {
             OutputView.printParticipantOverMaxScore(participant.getName());
         }
         return participant.acceptableCard();
     }
 
-    private void decideDealerMoreCard(final Dealer dealer, final Deck deck) {
+    private void decideDealerMoreCard(final Player dealer, final Deck deck) {
         if (dealer.acceptableCard()) {
             dealer.addCard(deck.draw());
             OutputView.printDealerAcceptCard();

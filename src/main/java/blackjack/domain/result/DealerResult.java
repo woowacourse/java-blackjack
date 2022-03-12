@@ -2,12 +2,12 @@ package blackjack.domain.result;
 
 public class DealerResult {
 
-    private final Win win;
-    private final Lose lose;
+    private final ResultCount win;
+    private final ResultCount lose;
 
     public DealerResult() {
-        win = new Win();
-        lose = new Lose();
+        win = new ResultCount(Result.WIN);
+        lose = new ResultCount(Result.LOSE);
     }
 
     public void increaseWin() {
@@ -18,11 +18,11 @@ public class DealerResult {
         this.lose.increaseCount();
     }
 
-    public Win getWin() {
+    public ResultCount getWin() {
         return win;
     }
 
-    public Lose getLose() {
+    public ResultCount getLose() {
         return lose;
     }
 }

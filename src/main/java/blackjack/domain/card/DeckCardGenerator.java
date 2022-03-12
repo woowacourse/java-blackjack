@@ -5,8 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class DeckCardGenerator {
+public class DeckCardGenerator implements CardGenerator {
 
+    @Override
     public Stack<Card> generate() {
         List<Card> cards = makeCards();
         Collections.shuffle(cards);

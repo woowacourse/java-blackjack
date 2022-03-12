@@ -20,7 +20,7 @@ public class CardsTest {
     @Test
     @DisplayName("카드를 추가할 떄 null을 전달하면 예외를 발생한다.")
     void thrownExceptionWhenGivenNull() {
-        Cards cards = new Cards(new Deck(new DeckCardGenerator().generate()).makeDistributeCard());
+        Cards cards = new Cards(new Deck(new DeckCardGenerator()).makeDistributeCard());
         assertThatThrownBy(() -> cards.addCard(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 올바른 카드를 입력해주세요.");
@@ -74,15 +74,16 @@ public class CardsTest {
     }
 
     @ParameterizedTest
-    @MethodSource("dealerList")
-    void calculateParticipantScore(List<Card> receivedCards, Card card, int score) {
+    @MethodSource("cardsAndScore")
+    @DisplayName("카드의 점수를 계산한다.")
+    void calculateScore(List<Card> receivedCards, Card card, int score) {
         Cards cards = new Cards(receivedCards);
         cards.addCard(card);
 
         Assertions.assertThat(cards.calculateFinalScore()).isEqualTo(score);
     }
 
-    private static Stream<Arguments> dealerList() {
+    private static Stream<Arguments> cardsAndScore() {
         return Stream.of(
                 Arguments.of(List.of(
                         new Card(Type.SPADE, Score.EIGHT),

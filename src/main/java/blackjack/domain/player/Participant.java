@@ -1,13 +1,12 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.result.Judge;
 import blackjack.domain.result.Result;
 
 import java.util.List;
 
 public class Participant extends Player {
-
-    private static final int MAX_SCORE = 21;
 
     public Participant(final List<Card> cards, final String name) {
         super(cards, name);
@@ -20,7 +19,8 @@ public class Participant extends Player {
         }
     }
 
+    @Override
     public boolean acceptableCard() {
-        return cards.calculateScoreByAceOne() <= MAX_SCORE;
+        return cards.calculateScoreByAceOne() <= Judge.MAX_SCORE;
     }
 }
