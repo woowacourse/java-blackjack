@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BlackJackCardsGeneratorTest {
+class BlackJackGameCardsGeneratorTest {
 
     @Test
     @DisplayName("블랙잭 게임에는 서로 다른 52장의 카드를 생성한다.")
