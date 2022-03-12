@@ -1,19 +1,19 @@
 package blackjack;
 
-import blackjack.controller.BlackJackController;
+import blackjack.domain.BlackJackGame;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackApplication {
 
     public static void main(String[] args) {
-        BlackJackController controller = new BlackJackController(InputView.getNames());
-        OutputView.printFirstCards(controller.getDealerDto(), controller.getPlayerDtos());
+        BlackJackGame blackJackGame = BlackJackGame.start(InputView.getNames());
+        OutputView.printFirstCards(blackJackGame.getDealerDto(), blackJackGame.getPlayerDtos());
 
-        controller.askHitOrStay(InputView::getAnswerOfAdditionalDraw, OutputView::printPlayerCard);
+        blackJackGame.askHitOrStay(InputView::getAnswerOfAdditionalDraw, OutputView::printPlayerCard);
+        OutputView.printAdditionalDrawDealer(blackJackGame.distributeAdditionalToDealer());
 
-        OutputView.printAdditionalDrawDealer(controller.requestAdditionalDrawToDealer());
-        OutputView.printFinalCards(controller.getDealerDto(), controller.getPlayerDtos());
-        OutputView.printFinalResult(controller.getGamerResult());
+        OutputView.printFinalCards(blackJackGame.getDealerDto(), blackJackGame.getPlayerDtos());
+        OutputView.printFinalResult(blackJackGame.createResult());
     }
 }

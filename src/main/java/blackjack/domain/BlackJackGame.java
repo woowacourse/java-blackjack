@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.Card;
@@ -26,15 +28,34 @@ public class BlackJackGame {
     private final CardFactory cardFactory;
     private final Gamers gamers;
 
-    public BlackJackGame(List<String> names) {
+    private BlackJackGame(List<String> names) {
         this.cardFactory = new CardFactory(Card.getCards());
         this.gamers = new Gamers(names);
-    }
 
-    public void distributeFirstCards() {
         for (int i = 0; i < INIT_DISTRIBUTION_COUNT; i++) {
             gamers.giveCardToAllGamers(cardFactory::draw);
         }
+    }
+
+    public static BlackJackGame start(List<String> names) {
+        return new BlackJackGame(names);
+    }
+
+    public void askHitOrStay(UnaryOperator<String> operator, Consumer<GamerDto> consumer) {
+        for (String name : gamers.findPlayerNames()) {
+            hitOrStay(operator, consumer, name);
+        }
+    }
+
+    private void hitOrStay(UnaryOperator<String> operator, Consumer<GamerDto> consumer, String name) {
+        while (!isBurst(name) && Answer.from(operator.apply(name)).isYes()) {
+            gamers.giveCardToPlayer(name, cardFactory::draw);
+            consumer.accept(getPlayerDto(name));
+        }
+    }
+
+    private boolean isBurst(String name) {
+        return gamers.checkPlayerOverThan(name, MAX_CARD_VALUE);
     }
 
     public int distributeAdditionalToDealer() {
@@ -44,14 +65,6 @@ public class BlackJackGame {
             count++;
         }
         return count;
-    }
-
-    public void distributeCardToPlayer(String name) {
-        gamers.giveCardToPlayer(name, cardFactory::draw);
-    }
-
-    public boolean isBurst(String name) {
-        return gamers.checkPlayerOverThan(name, MAX_CARD_VALUE);
     }
 
     public GameResultDto createResult() {
@@ -81,10 +94,6 @@ public class BlackJackGame {
         return dealerResult;
     }
 
-    public List<String> getPlayerNames() {
-        return gamers.findPlayerNames();
-    }
-
     public GamerDto getDealerDto() {
         return new GamerDto(gamers.getDealer());
     }
@@ -95,7 +104,7 @@ public class BlackJackGame {
             .collect(Collectors.toList());
     }
 
-    public GamerDto getPlayerDto(String name) {
+    private GamerDto getPlayerDto(String name) {
         return new GamerDto(gamers.findPlayerByName(name));
     }
 }
