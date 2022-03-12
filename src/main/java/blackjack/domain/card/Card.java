@@ -20,6 +20,10 @@ public class Card {
         return type;
     }
 
+    public boolean isAce() {
+        return score == Score.ACE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

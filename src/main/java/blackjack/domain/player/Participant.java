@@ -9,12 +9,9 @@ public class Participant extends Player {
 
     private static final int MAX_SCORE = 21;
 
-    private Result result;
-
     public Participant(final List<Card> cards, final String name) {
         super(cards, name);
         validateEmpty(name);
-        result = Result.LOSE;
     }
 
     private void validateEmpty(final String name) {
@@ -26,13 +23,4 @@ public class Participant extends Player {
     public boolean acceptableCard() {
         return cards.calculateScoreByAceOne() <= MAX_SCORE;
     }
-
-    public void makeWin() {
-        result = Result.WIN;
-    }
-
-    public Result getResult() {
-        return result;
-    }
-
 }

@@ -22,8 +22,7 @@ public class Blackjack {
         OutputView.printPlayersInitCardInfo(players);
         decideGetMoreCard(players, deck);
         announcePlayersFinishInfo(players);
-        players.competeWithParticipants();
-        OutputView.printResult(players);
+        OutputView.printGameResult(Judge.calculateGameResult(players));
     }
 
     private List<Participant> createParticipants(final List<String> names, final Deck deck) {

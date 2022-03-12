@@ -95,23 +95,4 @@ class PlayersTest {
                 .hasMessage("[ERROR] 참가자 이름은 중복될 수 없습니다.");
     }
 
-
-    @Test
-    @DisplayName("딜러와 참여자의 승패를 겨룬다.")
-    void competeDealerAndParticipants() {
-        Participant zero = new Participant(
-                List.of(new Card(Type.SPADE, Score.ACE), new Card(Type.HEART, Score.KING)), "zero");
-        Participant corinne = new Participant(
-                List.of(new Card(Type.HEART, Score.SIX), new Card(Type.HEART, Score.TEN)), "corinne");
-        Dealer dealer = new Dealer(List.of(new Card(Type.SPADE, Score.JACK), new Card(Type.DIAMOND, Score.KING)));
-        Players players = new Players(List.of(zero, corinne), dealer);
-        players.competeWithParticipants();
-
-        assertAll(() -> {
-            assertThat(dealer.getWin().getCount()).isEqualTo(1);
-            assertThat(dealer.getLose().getCount()).isEqualTo(1);
-            assertThat(zero.getResult()).isEqualTo(Result.WIN);
-            assertThat(corinne.getResult()).isEqualTo(Result.LOSE);
-        });
-    }
 }

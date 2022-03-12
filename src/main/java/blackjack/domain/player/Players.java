@@ -42,21 +42,6 @@ public class Players {
         }
     }
 
-    public void competeWithParticipants() {
-        for (Participant participant : participants) {
-            compete(participant);
-        }
-    }
-
-    private void compete(Participant participant) {
-        if (Judge.compete(dealer, participant)) {
-            dealer.increaseWinCount();
-            return;
-        }
-        participant.makeWin();
-        dealer.increaseLoseCount();
-    }
-
     public Dealer getDealer() {
         return dealer;
     }

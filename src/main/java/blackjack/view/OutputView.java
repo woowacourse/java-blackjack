@@ -82,28 +82,28 @@ public class OutputView {
         System.out.println(makePlayerCardInfo(player) + " - 결과:" + player.calculateFinalScore());
     }
 
-    public static void printResult(final Players players) {
+    public static void printGameResult(final GameResult gameResult) {
         System.out.println("## 최종 승패");
-        printDealerResult(players.getDealer());
-        printParticipantsResult(players.getParticipants());
+        printDealerResult(gameResult.getDealerResult());
+        printParticipantsResult(gameResult.getParticipantResults());
     }
 
-    private static void printDealerResult(final Dealer dealer) {
-        System.out.println(dealer.getName() + EXPLAIN_SYMBOL + makeResultToText(dealer));
+    private static void printDealerResult(final DealerResult dealerResult) {
+        System.out.println("딜러" + EXPLAIN_SYMBOL + makeResultToText(dealerResult));
     }
 
-    private static String makeResultToText(final Dealer dealer) {
-        Win win = dealer.getWin();
-        Lose lose = dealer.getLose();
+    private static String makeResultToText(final DealerResult dealerResult) {
+        Win win = dealerResult.getWin();
+        Lose lose = dealerResult.getLose();
         return String.format("%d%s %d%s", win.getCount(), win.getVerify().getValue(), lose.getCount(), lose.getVerify().getValue());
     }
 
-    private static void printParticipantsResult(final List<Participant> participants) {
-        participants.forEach(OutputView::printParticipantResult);
+    private static void printParticipantsResult(final List<ParticipantResult> participantResults) {
+        participantResults.forEach(OutputView::printParticipantResult);
     }
 
-    private static void printParticipantResult(final Participant participant) {
-        System.out.print(participant.getName() + EXPLAIN_SYMBOL);
-        System.out.println(participant.getResult().getValue());
+    private static void printParticipantResult(final ParticipantResult participantResult) {
+        System.out.print(participantResult.getName() + EXPLAIN_SYMBOL);
+        System.out.println(participantResult.getResult().getValue());
     }
 }

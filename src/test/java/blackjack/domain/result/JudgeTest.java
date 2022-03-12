@@ -8,74 +8,106 @@ import blackjack.domain.player.Participant;
 import blackjack.domain.player.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class JudgeTest {
 
-    @ParameterizedTest
-    @MethodSource("dealerWinWhenNotBurst")
+    @Test
     @DisplayName("딜러가 참여자보다 점수가 크거나 같으면 딜러가 승리한다.")
-    void whenDealerWinOverThanParticipants(List<Card> participantCards, List<Card> dealerCards) {
-        Dealer dealer = new Dealer(dealerCards);
-        Participant participant = new Participant(participantCards, "zero");
-        assertThat(Judge.compete(dealer, participant)).isEqualTo(true);
-    }
+    void dealerWinWhenOverThanParticipant() {
+        Participant zero = new Participant(
+                List.of(new Card(Type.SPADE, Score.ACE), new Card(Type.HEART, Score.KING)), "zero");
 
-    private static Stream<Arguments> dealerWinWhenNotBurst() {
-        return Stream.of(
-                Arguments.of(List.of(new Card(Type.SPADE, Score.TEN),
-                                new Card(Type.HEART, Score.TEN)),
-                        List.of(new Card(Type.SPADE, Score.TEN),
-                                new Card(Type.HEART, Score.TEN))
-                ),
-                Arguments.of(List.of(new Card(Type.SPADE, Score.ACE),
-                                new Card(Type.HEART, Score.KING)),
-                        List.of(new Card(Type.SPADE, Score.ACE),
-                                new Card(Type.HEART, Score.JACK))
-                )
-        );
-    }
+        Participant corinne = new Participant(
+                List.of(new Card(Type.HEART, Score.SIX), new Card(Type.HEART, Score.TEN)), "corinne");
 
-    @Test
-    @DisplayName("참여자가 Burst고 딜러가 Burst가 아니면 딜러가 승리한다.")
-    void whenDealerWinParticipantBurst() {
-        Dealer dealer = new Dealer(List.of(new Card(Type.SPADE, Score.ACE),
-                new Card(Type.HEART, Score.KING)));
-        Participant participant = new Participant(
-                List.of(new Card(Type.SPADE, Score.TEN),
-                        new Card(Type.HEART, Score.EIGHT)), "corinne");
-        participant.addCard(new Card(Type.DIAMOND, Score.FOUR));
-        assertThat(Judge.compete(dealer, participant)).isEqualTo(true);
+        Dealer dealer = new Dealer(List.of(new Card(Type.HEART, Score.ACE), new Card(Type.DIAMOND, Score.KING)));
+        Players players = new Players(List.of(zero, corinne), dealer);
+        GameResult result = Judge.calculateGameResult(players);
+
+        assertAll(() -> {
+            assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(2);
+            assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0);
+            for (ParticipantResult participantResult : result.getParticipantResults()) {
+                assertThat(participantResult.getResult()).isEqualTo(Result.LOSE);
+            }
+        });
     }
 
     @Test
-    @DisplayName("참여자와 딜러 모두 Burst면 딜러가 승리한다.")
-    void whenDealerWinBothBurst() {
-        Dealer dealer = new Dealer(List.of(new Card(Type.SPADE, Score.TEN),
-                new Card(Type.HEART, Score.KING)));
-        dealer.addCard(new Card(Type.CLOVER, Score.TWO));
-        Participant participant = new Participant(
-                List.of(new Card(Type.SPADE, Score.TEN),
-                        new Card(Type.HEART, Score.EIGHT)), "corinne");
-        participant.addCard(new Card(Type.DIAMOND, Score.FOUR));
-        assertThat(Judge.compete(dealer, participant)).isEqualTo(true);
+    @DisplayName("참가자가 Burst고 딜러는 Burst가 아니라면 딜러가 승리한다.")
+    void dealerWinWhenNotBurstAndParticipantBurst() {
+        Participant zero = new Participant(
+                List.of(new Card(Type.SPADE, Score.KING), new Card(Type.HEART, Score.SIX)), "zero");
+        zero.addCard(new Card(Type.CLOVER, Score.TEN));
+
+        Participant corinne = new Participant(
+                List.of(new Card(Type.CLOVER, Score.SIX), new Card(Type.HEART, Score.TEN)), "corinne");
+        corinne.addCard(new Card(Type.DIAMOND, Score.SIX));
+
+        Dealer dealer = new Dealer(List.of(new Card(Type.HEART, Score.ACE), new Card(Type.DIAMOND, Score.KING)));
+        Players players = new Players(List.of(zero, corinne), dealer);
+        GameResult result = Judge.calculateGameResult(players);
+
+        assertAll(() -> {
+            assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(2);
+            assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0);
+            for (ParticipantResult participantResult : result.getParticipantResults()) {
+                assertThat(participantResult.getResult()).isEqualTo(Result.LOSE);
+            }
+        });
     }
 
     @Test
-    @DisplayName("참여자가 딜러보다 점수가 크면 참여자가 승리한다.")
-    void whenParticipantWin() {
-        Dealer dealer = new Dealer(List.of(new Card(Type.SPADE, Score.TEN),
-                new Card(Type.HEART, Score.KING)));
-        Participant participant = new Participant(
-                List.of(new Card(Type.SPADE, Score.ACE),
-                        new Card(Type.HEART, Score.JACK)), "corinne");
-        assertThat(Judge.compete(dealer, participant)).isEqualTo(false);
+    @DisplayName("참가자와 딜러 모두 Burst 라면 딜러가 승리한다.")
+    void dealerWinWhenBurstAndParticipantBurst() {
+        Participant zero = new Participant(
+                List.of(new Card(Type.SPADE, Score.KING), new Card(Type.HEART, Score.SIX)), "zero");
+        zero.addCard(new Card(Type.CLOVER, Score.TEN));
+
+        Participant corinne = new Participant(
+                List.of(new Card(Type.CLOVER, Score.SIX), new Card(Type.HEART, Score.TEN)), "corinne");
+        corinne.addCard(new Card(Type.DIAMOND, Score.SIX));
+
+        Dealer dealer = new Dealer(List.of(new Card(Type.HEART, Score.ACE), new Card(Type.DIAMOND, Score.KING)));
+        dealer.addCard(new Card(Type.CLOVER, Score.ACE));
+
+        Players players = new Players(List.of(zero, corinne), dealer);
+        GameResult result = Judge.calculateGameResult(players);
+
+        assertAll(() -> {
+            assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(2);
+            assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(0);
+            for (ParticipantResult participantResult : result.getParticipantResults()) {
+                assertThat(participantResult.getResult()).isEqualTo(Result.LOSE);
+            }
+        });
+    }
+
+    @Test
+    @DisplayName("참가자가 딜러보다 점수합이 높으면 참가자가 승리한다.")
+    void participantWinWhenOverDealer() {
+        Participant zero = new Participant(
+                List.of(new Card(Type.SPADE, Score.KING), new Card(Type.HEART, Score.SEVEN)), "zero");
+
+        Participant corinne = new Participant(
+                List.of(new Card(Type.CLOVER, Score.ACE), new Card(Type.HEART, Score.TEN)), "corinne");
+
+        Dealer dealer = new Dealer(List.of(new Card(Type.HEART, Score.ACE), new Card(Type.DIAMOND, Score.FIVE)));
+
+        Players players = new Players(List.of(zero, corinne), dealer);
+        GameResult result = Judge.calculateGameResult(players);
+
+        assertAll(() -> {
+            assertThat(result.getDealerResult().getWin().getCount()).isEqualTo(0);
+            assertThat(result.getDealerResult().getLose().getCount()).isEqualTo(2);
+            for (ParticipantResult participantResult : result.getParticipantResults()) {
+                assertThat(participantResult.getResult()).isEqualTo(Result.WIN);
+            }
+        });
     }
 }
