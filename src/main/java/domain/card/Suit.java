@@ -1,5 +1,5 @@
 package domain.card;
 
-public enum SUIT {
+public enum Suit {
     HEART, SPADE, CLUB, DIAMOND;
 }

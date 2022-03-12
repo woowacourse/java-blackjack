@@ -1,6 +1,6 @@
 package domain.card;
 
-public enum FACE {
+public enum Face {
     ACE(1),
     TWO(2),
     THREE(3),
@@ -17,15 +17,15 @@ public enum FACE {
 
     private final int score;
 
-    FACE(int score) {
+    Face(int score) {
         this.score = score;
-    }
-
-    public int getScore() {
-        return score;
     }
 
     public boolean isAce() {
         return this == ACE;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

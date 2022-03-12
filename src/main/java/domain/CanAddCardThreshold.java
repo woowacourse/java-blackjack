@@ -1,4 +1,4 @@
-package domain.card;
+package domain;
 
 public enum CanAddCardThreshold {
     PLAYER_THRESHOLD(20),

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class inputViewTest {
+public class InputViewTest {
     @ParameterizedTest
     @DisplayName("참여할 사람의 이름 중복검사")
     @CsvSource(value = {"apple,banana:true", "apple,banana,apple:false"}, delimiter = ':')
