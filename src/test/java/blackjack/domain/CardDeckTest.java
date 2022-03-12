@@ -3,7 +3,11 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.CardGenerator.RandomCardGenerator;
+import blackjack.domain.cardGenerator.RandomCardGenerator;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.PlayingCard;
+import blackjack.domain.card.Suit;
 import java.util.Stack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

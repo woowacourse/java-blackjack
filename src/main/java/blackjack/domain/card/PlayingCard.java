@@ -1,11 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 public class PlayingCard {
 
     private final Suit suit;
     private final Denomination denomination;
 
-    protected PlayingCard(final Suit suit, final Denomination denomination) {
+    public PlayingCard(final Suit suit, final Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
     }

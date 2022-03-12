@@ -1,5 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
+import blackjack.domain.GameResult;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.PlayingCard;
+import blackjack.domain.card.PlayingCards;
 import java.util.List;
 
 public abstract class Player {

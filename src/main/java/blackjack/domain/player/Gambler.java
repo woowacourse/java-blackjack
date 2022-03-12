@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.player;
+
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.PlayingCard;
 
 public class Gambler extends Player {
 
@@ -8,6 +11,7 @@ public class Gambler extends Player {
         super(name);
     }
 
+    @Override
     public boolean isFinished(final CardDeck cardDeck) {
         final PlayingCard peekedCard = cardDeck.justPeek();
         final int currentResult = playingCards.getResultWithPeekCard(peekedCard);

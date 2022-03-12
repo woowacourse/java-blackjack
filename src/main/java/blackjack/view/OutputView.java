@@ -2,8 +2,8 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.Player;
-import blackjack.domain.PlayingCard;
+import blackjack.domain.player.Player;
+import blackjack.domain.card.PlayingCard;
 import blackjack.dto.BlackJackResultDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayersDto;
