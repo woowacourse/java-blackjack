@@ -52,6 +52,10 @@ public class Participants {
         return participants.get(nowTurnIndex);
     }
 
+    public String getCurrentPlayerName() {
+        return getCurrentPlayer().getName();
+    }
+
     public List<Participant> getParticipants() {
         return participants;
     }

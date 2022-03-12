@@ -53,7 +53,7 @@ public class BlackJackGame {
     }
 
     public String getCurrentPlayerName() {
-        return players.getCurrentPlayer().getName();
+        return players.getCurrentPlayerName();
     }
 
     public List<ParticipantDto> getParticipantsDto() {
