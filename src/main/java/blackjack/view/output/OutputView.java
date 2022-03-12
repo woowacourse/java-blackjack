@@ -1,11 +1,5 @@
 package blackjack.view.output;
 
-import static blackjack.view.output.OutputMessage.DEALER_NAME;
-import static blackjack.view.output.OutputMessage.EMPTY_STRING;
-import static blackjack.view.output.OutputMessage.MESSAGE_FORMAT_OF_DISTRIBUTE_TWO_CARDS;
-import static blackjack.view.output.OutputMessage.MESSAGE_FORMAT_OF_FINAL_SCORE;
-import static blackjack.view.output.OutputMessage.MESSAGE_FORMAT_OF_REQUEST_DRAWING_CARD_CHOICE;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,11 +16,11 @@ public class OutputView {
                 .map(ParticipantDto::getName)
                 .collect(Collectors.toUnmodifiableList());
         final String combinedPlayerNames = Delimiter.COMMA.joinWith(playerNames);
-        printMessage(String.format(MESSAGE_FORMAT_OF_DISTRIBUTE_TWO_CARDS.getMessage(), combinedPlayerNames));
+        printMessage(String.format("딜러와 %s에게 2장의 카드를 나누었습니다.", combinedPlayerNames));
     }
 
     public void printFirstCardOfDealer(final String dealerFirstCard) {
-        printMessage(Delimiter.COLON.joinWith(DEALER_NAME.getMessage(), dealerFirstCard));
+        printMessage(Delimiter.COLON.joinWith("딜러", dealerFirstCard));
     }
 
     public void printDistributedCardsOfPlayer(final ParticipantDto participantDto) {
@@ -36,7 +30,7 @@ public class OutputView {
     }
 
     public void printMessageOfRequestDrawingCardChoice(final String playerName) {
-        printMessage(String.format(MESSAGE_FORMAT_OF_REQUEST_DRAWING_CARD_CHOICE.getMessage(), playerName));
+        printMessage(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", playerName));
     }
 
     public void printCurrentCardsOfPlayer(final String playerName, final List<String> cardNames) {
@@ -52,8 +46,7 @@ public class OutputView {
         final String playerName = participantDto.getName();
         final String distributedCards = Delimiter.COMMA.joinWith(participantDto.getCardNames());
         final int score = participantDto.getScore();
-        printMessage(String.format(
-                MESSAGE_FORMAT_OF_FINAL_SCORE.getMessage(), playerName, distributedCards, score));
+        printMessage(String.format("%s: %s - 결과: %d", playerName, distributedCards, score));
     }
 
     public void printMatchResult(final MatchResultDto resultDto) {
@@ -66,7 +59,7 @@ public class OutputView {
                 .map(entry -> entry.getValue() + entry.getKey().getName())
                 .collect(Collectors.toUnmodifiableList());
         final String matchResultOfDealer = Delimiter.SPACE.joinWith(dealerMatchCounts);
-        printMessage(Delimiter.COLON.joinWith(DEALER_NAME.getMessage(), matchResultOfDealer));
+        printMessage(Delimiter.COLON.joinWith("딜러", matchResultOfDealer));
     }
 
     private void printMatchResultOfPlayers(final Map<String, MatchStatus> resultOfPlayers) {
@@ -77,16 +70,12 @@ public class OutputView {
         }
     }
 
-    public void printMessage(final OutputMessage outputMessage) {
-        printMessage(outputMessage.getMessage());
-    }
-
-    private void printMessage(final String message) {
+    public void printMessage(final String message) {
         System.out.println(message);
     }
 
     public void printEmptyLine() {
-        printMessage(EMPTY_STRING);
+        printMessage("");
     }
 
 }

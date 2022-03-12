@@ -1,9 +1,5 @@
 package blackjack.view;
 
-import static blackjack.view.output.OutputMessage.MESSAGE_OF_DEALER_DREW_CARD;
-import static blackjack.view.output.OutputMessage.MESSAGE_OF_MATCH_RESULT_TITLE;
-import static blackjack.view.output.OutputMessage.MESSAGE_OF_REQUEST_PLAYER_NAMES;
-
 import java.util.List;
 
 import blackjack.dto.MatchResultDto;
@@ -22,7 +18,7 @@ public class BlackjackView {
     }
 
     public List<String> requestPlayerNames() {
-        outputView.printMessage(MESSAGE_OF_REQUEST_PLAYER_NAMES);
+        outputView.printMessage("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         return inputView.requestPlayerNames();
     }
 
@@ -44,7 +40,7 @@ public class BlackjackView {
     }
 
     public void printMessageOfDealerDrewCard() {
-        outputView.printMessage(MESSAGE_OF_DEALER_DREW_CARD);
+        outputView.printMessage("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printFinalScoresOfParticipants(final ParticipantDto dealerDto, final List<ParticipantDto> playerDtos) {
@@ -55,7 +51,7 @@ public class BlackjackView {
 
     public void printMatchResult(final MatchResultDto matchResultDto) {
         outputView.printEmptyLine();
-        outputView.printMessage(MESSAGE_OF_MATCH_RESULT_TITLE);
+        outputView.printMessage("## 최종 승패");
         outputView.printMatchResult(matchResultDto);
     }
 
