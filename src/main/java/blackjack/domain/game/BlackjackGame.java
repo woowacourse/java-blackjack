@@ -35,6 +35,10 @@ public class BlackjackGame {
                 .collect(Collectors.toList());
     }
 
+    private CardBundle initializeCardBundle() {
+        return CardBundle.of(cardDeck.pop(), cardDeck.pop());
+    }
+
     private void validatePlayerNames(List<String> playerNames) {
         validatePlayerExists(playerNames);
         validateNoDuplicateNames(playerNames);
@@ -59,7 +63,7 @@ public class BlackjackGame {
 
     public void drawDealerCard() {
         Dealer dealer = getDealer();
-        dealer.receiveCard(cardDeck.pop());
+        dealer.receiveCard(popCard());
     }
 
     public Card popCard() {
@@ -72,10 +76,6 @@ public class BlackjackGame {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(participants.getPlayers());
-    }
-
-    private CardBundle initializeCardBundle() {
-        return CardBundle.of(cardDeck.pop(), cardDeck.pop());
     }
 
     @Override

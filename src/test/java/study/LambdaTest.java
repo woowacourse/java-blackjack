@@ -36,7 +36,7 @@ public class LambdaTest {
     void lambdaTest() {
         Runnable lambda = () -> new Sonata(10);
 
-         System.out.println(lambda.getClass());
+        // System.out.println(lambda.getClass());
         // class study.LambdaTest$$Lambda$336/0x0000000800174040
     }
 }
