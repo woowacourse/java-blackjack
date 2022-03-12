@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.game.Score;
 
 public class Player extends Participant {
 
@@ -36,8 +35,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canReceive() {
-        Score score = cardBundle.getScore();
-        return score.toInt() <= Score.BLACKJACK;
+        return !isBust();
     }
 
     @Override
