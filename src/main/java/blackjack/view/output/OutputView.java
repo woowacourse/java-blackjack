@@ -1,5 +1,6 @@
 package blackjack.view.output;
 
+import static blackjack.view.output.OutputMessage.DEALER_NAME;
 import static blackjack.view.output.OutputMessage.EMPTY_STRING;
 import static blackjack.view.output.OutputMessage.MESSAGE_FORMAT_OF_DISTRIBUTE_TWO_CARDS;
 import static blackjack.view.output.OutputMessage.MESSAGE_FORMAT_OF_FINAL_SCORE;
@@ -25,7 +26,7 @@ public class OutputView {
     }
 
     public void printFirstCardOfDealer(final String dealerFirstCard) {
-        printMessage(Delimiter.COLON.joinWith("딜러", dealerFirstCard));
+        printMessage(Delimiter.COLON.joinWith(DEALER_NAME.getMessage(), dealerFirstCard));
     }
 
     public void printDistributedCardsOfPlayer(final ParticipantDto participantDto) {
@@ -61,10 +62,11 @@ public class OutputView {
     }
 
     private void printMatchResultOfDealer(final Map<MatchStatus, Integer> resultOfDealer) {
-        final String matchResultOfDealer = resultOfDealer.entrySet().stream()
+        final List<String> dealerMatchCounts = resultOfDealer.entrySet().stream()
                 .map(entry -> entry.getValue() + entry.getKey().getName())
-                .collect(Collectors.joining(" "));
-        printMessage(Delimiter.COLON.joinWith("딜러", matchResultOfDealer));
+                .collect(Collectors.toUnmodifiableList());
+        final String matchResultOfDealer = Delimiter.SPACE.joinWith(dealerMatchCounts);
+        printMessage(Delimiter.COLON.joinWith(DEALER_NAME.getMessage(), matchResultOfDealer));
     }
 
     private void printMatchResultOfPlayers(final Map<String, MatchStatus> resultOfPlayers) {
