@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import static blackjack.domain.card.CardNumber.EIGHT;
+import static blackjack.domain.card.CardNumber.NINE;
 import static blackjack.domain.card.CardNumber.SEVEN;
 import static blackjack.domain.card.CardNumber.TEN;
 import static blackjack.domain.card.CardPattern.SPADE;
@@ -36,7 +38,7 @@ public class PlayerTest {
     @EmptySource
     @DisplayName("플레이어의 이름이 공백이 들어올 경우 예외가 발생해야 한다.")
     void createExceptionByBlank(final String input) {
-        assertThatThrownBy(() -> Player.createNewPlayer("player", cards))
+        assertThatThrownBy(() -> Player.createNewPlayer(input, cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름이 공백이 들어올 수 없습니다.");
     }
@@ -56,5 +58,15 @@ public class PlayerTest {
     void firstDrawCards() {
         final Player player = Player.createNewPlayer("player", cards);
         assertThat(player.firstDrawCards()).isEqualTo(cards);
+    }
+
+    @Test
+    @DisplayName("종료상태인데 드로우하면 예외가 발생해야 한다.")
+    void drawExceptionByFinishedStatus() {
+        final Player player = Player.createNewPlayer("player", cards);
+        player.drawCard(Card.of(SPADE, NINE));
+        assertThatThrownBy(() -> player.drawCard(Card.of(SPADE, EIGHT)))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("이미 종료된 게임은 카드를 더 받을 수 없습니다.");
     }
 }

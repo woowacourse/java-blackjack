@@ -47,6 +47,24 @@ public class Player {
         return cards().subList(0, FIRST_DRAW_CARD_SIZE);
     }
 
+    public void drawCard(final Card card) {
+        validateDrawStatus();
+        cards.addCard(card);
+        refreshStatus();
+    }
+
+    private void validateDrawStatus() {
+        if (gameStatus.isFinishedGame()) {
+            throw new IllegalStateException("이미 종료된 게임은 카드를 더 받을 수 없습니다.");
+        }
+    }
+
+    private void refreshStatus() {
+        if (cards.isBust()) {
+            gameStatus = GameStatus.FINISHED;
+        }
+    }
+
     public List<Card> cards() {
         return List.copyOf(cards.cards());
     }
