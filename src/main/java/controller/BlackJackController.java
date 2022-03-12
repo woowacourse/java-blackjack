@@ -3,11 +3,11 @@ package controller;
 import static java.util.stream.Collectors.toList;
 
 import domain.BlackJackResult;
-import domain.PlayerDto;
 import domain.card.CardDeck;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
+import dto.PlayerDto;
 import java.util.List;
 import view.InputView;
 import view.OutputView;

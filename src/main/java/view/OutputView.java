@@ -6,8 +6,8 @@ import static domain.MatchResult.WIN;
 
 import domain.BlackJackResult;
 import domain.MatchResult;
-import domain.PlayerDto;
 import domain.player.Dealer;
+import dto.PlayerDto;
 import java.util.List;
 import java.util.Map;
 
