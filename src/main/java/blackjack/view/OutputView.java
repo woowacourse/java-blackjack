@@ -65,8 +65,8 @@ public class OutputView {
 
     public static void printRecords(Records records, List<Name> playerNames) {
         System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d무 %d패%n", countByResult(records, Result.WIN),
-            countByResult(records, Result.DRAW), countByResult(records, Result.LOSS));
+        System.out.printf("딜러: %d승 %d무 %d패%n", countByResult(records, Result.LOSS),
+            countByResult(records, Result.DRAW), countByResult(records, Result.WIN));
         playerNames.stream()
             .forEach(name -> printEachPlayerRecord(name, records.resultByName(name)));
     }

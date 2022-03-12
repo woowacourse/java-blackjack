@@ -1,11 +1,12 @@
 package blackjack;
 
-import static blackjack.model.player.Name.dealerName;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
-import blackjack.model.blackjack.Blackjack;
 import blackjack.model.blackjack.CardDispenser;
+import blackjack.model.player.Dealer;
 import blackjack.model.player.Name;
+import blackjack.model.player.Player;
+import blackjack.model.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -21,11 +22,16 @@ public class Application {
     }
 
     private static void run() {
-        List<Name> playerNames = names();
-        Blackjack blackjack = new Blackjack(CardDispenser.shuffledCardDispenser(), playerNames);
-        printOpenCard(blackjack, playerNames);
-        takeCards(blackjack, playerNames);
-        printResults(blackjack, playerNames);
+        CardDispenser cardDispenser = CardDispenser.shuffledCardDispenser();
+        Dealer dealer = new Dealer(cardDispenser.issue(), cardDispenser.issue());
+        Players players = new Players(createPlayers(cardDispenser));
+        playBlackjack(cardDispenser, dealer, players);
+    }
+
+    private static List<Player> createPlayers(CardDispenser cardDispenser) {
+        return names().stream()
+            .map(n -> new Player(n, cardDispenser.issue(), cardDispenser.issue()))
+            .collect(toUnmodifiableList());
     }
 
     private static List<Name> names() {
@@ -35,25 +41,35 @@ public class Application {
             .collect(toUnmodifiableList());
     }
 
-    private static void printOpenCard(Blackjack blackjack, List<Name> playerNames) {
-        OutputView.printOpenCardMessage(dealerName(), playerNames);
-        OutputView.printOpenCard(dealerName(), blackjack.openedCardsByName(dealerName()));
-        for (Name name : playerNames) {
-            OutputView.printOpenCard(name, blackjack.openedCardsByName(name));
+    private static void playBlackjack(CardDispenser cardDispenser, Dealer dealer, Players players) {
+        printOpenCard(dealer, players);
+        takeCards(cardDispenser, dealer, players);
+        printResults(dealer, players);
+    }
+
+    private static void printOpenCard(Dealer dealer, Players players) {
+        OutputView.printOpenCardMessage(dealer.name(), playerNames(players));
+        OutputView.printOpenCard(dealer.name(), dealer.openCards());
+        for (Player player : players) {
+            OutputView.printOpenCard(player.name(), player.openCards());
         }
     }
 
-    private static void takeCards(Blackjack blackjack, List<Name> playerNames) {
-        for (Name name : playerNames) {
-            takePlayerCard(blackjack, name);
-        }
-        takeDealerCard(blackjack);
+    private static List<Name> playerNames(Players gamers) {
+        return gamers.stream().map(Player::name).collect(toUnmodifiableList());
     }
 
-    private static void takePlayerCard(Blackjack blackjack, Name name) {
-        while (blackjack.isHittableByName(name) && isKeepTakeCard(name)) {
-            blackjack.takeCardByName(name);
-            OutputView.printCards(name, blackjack.ownCardsByName(name));
+    private static void takeCards(CardDispenser cardDispenser, Dealer dealer, Players players) {
+        for (Player gamer : players) {
+            takePlayerCard(gamer, cardDispenser);
+        }
+        takeDealerCard(dealer, cardDispenser);
+    }
+
+    private static void takePlayerCard(Player gamer, CardDispenser cardDispenser) {
+        while (gamer.isHittable() && isKeepTakeCard(gamer.name())) {
+            gamer.take(cardDispenser.issue());
+            OutputView.printCards(gamer.name(), gamer.cards());
         }
     }
 
@@ -62,22 +78,18 @@ public class Application {
         return option.equals("y");
     }
 
-    private static void takeDealerCard(Blackjack blackjack) {
-        while (blackjack.isHittableByName(dealerName())) {
-            blackjack.takeCardByName(dealerName());
+    private static void takeDealerCard(Dealer dealer, CardDispenser cardDispenser) {
+        while (dealer.isHittable()) {
+            dealer.take(cardDispenser.issue());
             OutputView.printDealerTakeCardMessage();
         }
     }
 
-    private static void printResults(Blackjack blackjack, List<Name> playerNames) {
-        OutputView.printTotalScore(dealerName(), blackjack.ownCardsByName(dealerName()),
-            blackjack.scoreByName(dealerName()));
-
-        for (Name name : playerNames) {
-            OutputView.printTotalScore(name, blackjack.ownCardsByName(name),
-                blackjack.scoreByName(name));
+    private static void printResults(Dealer dealer, Players players) {
+        OutputView.printTotalScore(dealer.name(), dealer.cards(), dealer.score());
+        for (Player gamer : players) {
+            OutputView.printTotalScore(gamer.name(), gamer.cards(), gamer.score());
         }
-
-        OutputView.printRecords(blackjack.records(), playerNames);
+        OutputView.printRecords(dealer.matchAll(players), playerNames(players));
     }
 }
