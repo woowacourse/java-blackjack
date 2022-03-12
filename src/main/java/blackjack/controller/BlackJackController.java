@@ -4,7 +4,7 @@ import blackjack.domain.card.CardGenerator;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.User;
-import blackjack.domain.participant.Users;
+import blackjack.domain.participant.Participants;
 import blackjack.domain.result.DealerResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -12,7 +12,7 @@ import blackjack.view.OutputView;
 public class BlackJackController {
 
     public void play() {
-        Users users = new Users(InputView.inputUsersName());
+        Participants users = new Participants(InputView.inputUsersName());
         Dealer dealer = new Dealer();
         Deck deck = new Deck(new CardGenerator());
         initDistribute(deck, users, dealer);
@@ -22,7 +22,7 @@ public class BlackJackController {
         calculateResult(users, dealer);
     }
 
-    private void initDistribute(Deck deck, Users users, Dealer dealer) {
+    private void initDistribute(Deck deck, Participants users, Dealer dealer) {
         for (int i = 0; i < 2; i++) {
             userDistribute(deck, users);
             dealer.receiveCard(deck.drawCard());
@@ -30,13 +30,13 @@ public class BlackJackController {
         OutputView.printInitDistribute(users, dealer);
     }
 
-    private void userDistribute(Deck deck, Users users) {
+    private void userDistribute(Deck deck, Participants users) {
         for (User user : users.getUsers()) {
             user.receiveCard(deck.drawCard());
         }
     }
 
-    private void playGame(Users users, Dealer dealer, Deck deck) {
+    private void playGame(Participants users, Dealer dealer, Deck deck) {
         for (User user : users.getUsers()) {
             playEachUser(user, deck);
         }
@@ -58,7 +58,7 @@ public class BlackJackController {
         }
     }
 
-    private void calculateResult(Users users, Dealer dealer) {
+    private void calculateResult(Participants users, Dealer dealer) {
         DealerResult result = new DealerResult(users, dealer);
         int dealerSum = dealer.getCardSum();
 

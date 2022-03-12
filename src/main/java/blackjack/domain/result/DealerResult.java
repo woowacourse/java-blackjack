@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.User;
-import blackjack.domain.participant.Users;
+import blackjack.domain.participant.Participants;
 
 import java.util.Collections;
 import java.util.EnumMap;
@@ -12,12 +12,12 @@ public class DealerResult {
 
     Map<Result, Integer> count;
 
-    public DealerResult(Users users, Dealer dealer) {
+    public DealerResult(Participants users, Dealer dealer) {
         this.count = new EnumMap<>(Result.class);
         calculateFinalCount(users, dealer);
     }
 
-    private void calculateFinalCount(Users users, Dealer dealer) {
+    private void calculateFinalCount(Participants users, Dealer dealer) {
         int dealerSum = dealer.getCardSum();
         for (User user : users.getUsers()) {
             Result userResult = user.checkResult(dealerSum);

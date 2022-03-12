@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.User;
-import blackjack.domain.participant.Users;
+import blackjack.domain.participant.Participants;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.Result;
 
@@ -25,7 +25,7 @@ public class OutputView {
     private static final String USER_RESULT_FORMAT = "%s: %s";
     public static final int DEALER_HIDE_INDEX = 0;
 
-    public static void printInitDistribute(Users users, Dealer dealer) {
+    public static void printInitDistribute(Participants users, Dealer dealer) {
         System.out.printf(lineSeparator() + INIT_DISTRIBUTE_FORMAT, String.join(CARD_SEPARATOR, users.getUserNames()));
         printDealerData(dealer);
 
@@ -59,7 +59,7 @@ public class OutputView {
         System.out.println(lineSeparator() + MORE_DEALER_DRAW_CARD);
     }
 
-    public static void printFinalCard(Users users, Dealer dealer) {
+    public static void printFinalCard(Participants users, Dealer dealer) {
         printDealerDataContainsScore(dealer);
         for (User user : users.getUsers()) {
             printUserDataContainsScore(user);
@@ -76,7 +76,7 @@ public class OutputView {
         System.out.print(lineSeparator());
     }
 
-    public static void printFinalScore(DealerResult result, Users users, int dealerSum) {
+    public static void printFinalScore(DealerResult result, Participants users, int dealerSum) {
         printDealerResult(result.getCount());
 
         for (User user : users.getUsers()) {

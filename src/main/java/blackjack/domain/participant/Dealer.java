@@ -9,4 +9,14 @@ public class Dealer extends Participant {
     public boolean checkUnderSumStandard() {
         return ScoreCalculator.cardSum(cards) <= MIN_SUM_STANDARD;
     }
+
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
+
+    @Override
+    public boolean isUser() {
+        return false;
+    }
 }

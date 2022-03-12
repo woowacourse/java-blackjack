@@ -33,4 +33,14 @@ public class User extends Participant{
     public String getName() {
         return name;
     }
+
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
+    public boolean isUser() {
+        return true;
+    }
 }
