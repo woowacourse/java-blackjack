@@ -17,11 +17,6 @@ public class Dealer extends User {
         super("딜러", cards);
     }
 
-    @Override
-    public void addCard() {
-        cards.add(CardFactory.drawOneCard());
-    }
-
     public boolean checkScore() {
         return cards.calculateScore() <= DEALER_ADD_CARD_LIMIT;
     }
@@ -44,6 +39,11 @@ public class Dealer extends User {
 
     public int getDealerDrawCount() {
         return dealerDrawCount;
+    }
+
+    @Override
+    public void addCard() {
+        cards.add(CardFactory.drawOneCard());
     }
 
 }
