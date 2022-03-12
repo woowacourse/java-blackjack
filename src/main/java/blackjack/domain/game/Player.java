@@ -7,10 +7,6 @@ public class Player extends Human {
         validateEqualsDealerName(name);
     }
 
-    public boolean answer(final String answer) {
-        return Answer.isDraw(answer);
-    }
-
     private void validateEqualsDealerName(final String name) {
         if (name.equals(Dealer.NAME)) {
             throw new IllegalArgumentException("딜러와 동일한 이름은 사용할 수 없습니다.");

@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.Answer;
 import blackjack.domain.game.CardMachine;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Player;
@@ -92,7 +93,7 @@ public class Blackjack {
         try {
             OutputView.printDrawInstruction(player.getName());
             String input = InputView.inputDrawingAnswer(enterable);
-            return player.answer(input);
+            return Answer.isDraw(input);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
             return isDrawing(player);
