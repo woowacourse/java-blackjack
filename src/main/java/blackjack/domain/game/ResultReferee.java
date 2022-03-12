@@ -19,15 +19,23 @@ public class ResultReferee {
     }
 
     private ResultStatistics addDuelResult(Player player, Dealer dealer) {
+        if (dealer.isBlackjack()) {
+            return addBlackjackDealerDuelResult(player);
+        }
         if (player.isBust()) {
             return initPlayerResultOf(player, ResultType.LOSE);
         }
-
         if (dealer.isBust()) {
             return initPlayerResultOf(player, ResultType.WIN);
         }
-
         return addNoBustDuelResult(player, dealer.getCurrentScore());
+    }
+
+    private ResultStatistics addBlackjackDealerDuelResult(Player player) {
+        if (player.isBlackjack()) {
+            return initPlayerResultOf(player, ResultType.DRAW);
+        }
+        return initPlayerResultOf(player, ResultType.LOSE);
     }
 
     private ResultStatistics addNoBustDuelResult(Player player, Score dealerScore) {
@@ -55,7 +63,9 @@ public class ResultReferee {
     }
 
     public List<ResultStatistics> getResults() {
-        List<ResultStatistics> results = new ArrayList<>(List.of(dealerResult));
+        List<ResultStatistics> results = new ArrayList<>();
+
+        results.add(dealerResult);
         results.addAll(playerResults);
 
         return results;

@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfBlackjack;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfBust;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfFifteen;
+import static blackjack.fixture.CardBundleGenerator.getCardBundleOfNonBlackjackTwentyOne;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTen;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTwenty;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,12 +20,14 @@ import org.junit.jupiter.api.Test;
 public class ResultRefereeTest {
 
     private static final Dealer dealer20 = Dealer.of(getCardBundleOfTwenty());
+    private static final Dealer dealer21 = Dealer.of(getCardBundleOfNonBlackjackTwentyOne());
     private static final Dealer dealerBlackjack = Dealer.of(getCardBundleOfBlackjack());
     private static final Dealer dealerBust = Dealer.of(getCardBundleOfBust());
 
     private static final Player player10 = Player.of("ten", getCardBundleOfTen());
     private static final Player player15 = Player.of("fifteen", getCardBundleOfFifteen());
     private static final Player player20 = Player.of("twenty", getCardBundleOfTwenty());
+    private static final Player player21 = Player.of("nonBlackjack21", getCardBundleOfNonBlackjackTwentyOne());
     private static final Player playerBlackjack = Player.of("blackjack", getCardBundleOfBlackjack());
     private static final Player playerBust = Player.of("bust", getCardBundleOfBust());
 
@@ -32,18 +35,19 @@ public class ResultRefereeTest {
     private static final List<Integer> WIN_ONCE = List.of(1, 0, 0);
     private static final List<Integer> DRAW_ONCE = List.of(0, 0, 1);
 
-    @DisplayName("딜러가 블랙잭인 경우, 패가 21인 플레이어는 무승부, 그 외에는 전부 패배한다.")
+    @DisplayName("딜러가 블랙잭인 경우, 블랙잭인 플레이어는 무승부, 그 외에는 전부 패배한다.")
     @Test
-    void blackjackDealer() {
+    void dealerBlackjack() {
         List<ResultStatistics> results = new ResultReferee(
-                dealerBlackjack, List.of(playerBlackjack,player20, playerBust))
-                .getResults();
+                dealerBlackjack, List.of(playerBlackjack, player20, player21, playerBust))
+                .getResults(); // 실제로는 해당 시점에 플레이어가 버스트 혹은 3장의 카드를 지닐 수 없다.
 
         ResultStatistics dealerResult = results.get(0);
-        assertThat(getResultCounts(dealerResult)).isEqualTo(List.of(2, 0, 1));
+        assertThat(getResultCounts(dealerResult)).isEqualTo(List.of(3, 0, 1));
         assertThat(getResultCounts(results.get(1))).isEqualTo(DRAW_ONCE);
         assertThat(getResultCounts(results.get(2))).isEqualTo(LOSE_ONCE);
         assertThat(getResultCounts(results.get(3))).isEqualTo(LOSE_ONCE);
+        assertThat(getResultCounts(results.get(4))).isEqualTo(LOSE_ONCE);
     }
 
     @DisplayName("플레이어가 버스트인 경우 무조건 딜러가 승리한다.")
@@ -81,7 +85,7 @@ public class ResultRefereeTest {
 
     @DisplayName("딜러가 버스트인 경우, 버스트가 아닌 플레이어는 전부 승리한다.")
     @Test
-    void bustDealer() {
+    void dealerBust() {
         List<ResultStatistics> results = new ResultReferee(dealerBust,
                 List.of(player10, player15, player20, playerBust))
                 .getResults();
