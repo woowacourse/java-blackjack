@@ -6,17 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlayerResult {
+public class ParticipantResult {
 
     private final Map<String, GameResult> playerResults;
     private final Map<GameResult, Integer> dealerResultCount;
 
-    private PlayerResult(Map<String, GameResult> playerResults, Map<GameResult, Integer> dealerResultCount) {
+    private ParticipantResult(Map<String, GameResult> playerResults, Map<GameResult, Integer> dealerResultCount) {
         this.playerResults = playerResults;
         this.dealerResultCount = dealerResultCount;
     }
 
-    public static PlayerResult create(int dealerScore, List<Player> players) {
+    public static ParticipantResult create(int dealerScore, List<Player> players) {
         Map<String, GameResult> playerResults = new HashMap<>();
         Map<GameResult, Integer> dealerResultCount = initializeDealerResultCount();
 
@@ -27,7 +27,7 @@ public class PlayerResult {
             increaseDealerResultCountByPlayerResult(dealerResultCount, GameResult.findDealerResult(playerResult));
         }
 
-        return new PlayerResult(playerResults, dealerResultCount);
+        return new ParticipantResult(playerResults, dealerResultCount);
     }
 
     private static void addPlayerResult(Map<String, GameResult> playerResults, Player player, GameResult playerResult) {

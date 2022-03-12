@@ -53,14 +53,14 @@ public class ParticipantResultTest {
     @Test
     @DisplayName("플레이어 게임결과를 확인한다.")
     void checkPlayerGameResult() {
-        PlayerResult playerResult = PlayerResult.create(dealer.calculateScore(), players);
+        ParticipantResult participantResult = ParticipantResult.create(dealer.calculateScore(), players);
         final Map<String, GameResult> expected = new HashMap<>(Map.ofEntries(
                 Map.entry("slow", GameResult.WIN),
                 Map.entry("jason", GameResult.DRAW),
                 Map.entry("pobi", GameResult.LOSE)
         ));
 
-        final Map<String, GameResult> actual = playerResult.getPlayerResults();
+        final Map<String, GameResult> actual = participantResult.getPlayerResults();
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -68,14 +68,14 @@ public class ParticipantResultTest {
     @Test
     @DisplayName("딜러 게임결과를 확인한다.")
     void checkDealerGameResult() {
-        PlayerResult playerResult = PlayerResult.create(dealer.calculateScore(), players);
+        ParticipantResult participantResult = ParticipantResult.create(dealer.calculateScore(), players);
         final Map<GameResult, Integer> expected = new HashMap<>(Map.ofEntries(
                 Map.entry(GameResult.LOSE, 1),
                 Map.entry(GameResult.WIN, 1),
                 Map.entry(GameResult.DRAW, 1)
         ));
 
-        final Map<GameResult, Integer> actual = playerResult.getDealerResultCount();
+        final Map<GameResult, Integer> actual = participantResult.getDealerResultCount();
 
         assertThat(actual).isEqualTo(expected);
     }
