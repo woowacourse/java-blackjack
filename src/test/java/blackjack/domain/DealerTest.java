@@ -54,7 +54,7 @@ public class DealerTest {
 
         Card card = dealer.getFirstCard();
 
-        String cardInfo = card.getDenominationName() + card.getSuitName();
+        String cardInfo = card.getDenomination().getName() + card.getSuit().getName();
         String answer = "K다이아몬드";
 
         assertThat(cardInfo).isEqualTo(answer);

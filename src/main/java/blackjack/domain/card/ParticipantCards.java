@@ -15,29 +15,31 @@ public class ParticipantCards {
         this.cards = new ArrayList<>(cards);
     }
 
-    public int calculateScore() {
-        int totalScore = cards.stream().mapToInt(Card::getPoint).sum();
-        int aceCount = getAceCount();
-        if (aceCount != 0) {
-            return calculateScoreWithAce(aceCount, totalScore);
-        }
-        return totalScore;
-    }
-
     public void addCard(Card card) {
         cards.add(card);
     }
 
-    private int getAceCount() {
-        return (int)cards.stream().filter(card -> card.isAce()).count();
+    public int getScore() {
+        int score = 0;
+        for (Card card : cards) {
+            score += card.getPoint();
+        }
+        score = calculateScoreAdvantageousWithAce(score);
+        return score;
     }
 
-    private int calculateScoreWithAce(int aceCount, int totalScore) {
-        while (aceCount > 0 && totalScore > BUST_THRESHOLD_NUMBER) {
-            totalScore = totalScore - ACE_SCORE_DIFFERENCE;
-            aceCount--;
+    private int calculateScoreAdvantageousWithAce(int score) {
+        int aceCount = getAceCount();
+        while (aceCount-- > 0 && score > BUST_THRESHOLD_NUMBER) {
+            score -= ACE_SCORE_DIFFERENCE;
         }
-        return totalScore;
+        return score;
+    }
+
+    private int getAceCount() {
+        return (int)cards.stream()
+            .filter(card -> card.getDenomination() == Denomination.ACE)
+            .count();
     }
 
     public List<Card> getCards() {

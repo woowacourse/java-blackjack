@@ -26,13 +26,25 @@ public class ParticipantCardsTest {
     }
 
     @Test
+    @DisplayName("참가자 카드 추가")
+    void addParticipantCards() {
+        List<Card> cards = List.of(new Card(Suit.DIAMOND, Denomination.ACE)
+            , new Card(Suit.DIAMOND, Denomination.JACK));
+
+        ParticipantCards participantCards = new ParticipantCards(cards);
+        participantCards.addCard(new Card(Suit.CLOVER, Denomination.TEN));
+
+        assertThat(participantCards.getCards().size()).isEqualTo(3);
+    }
+
+    @Test
     @DisplayName("에이스 없는 경우 점수 계산")
     void calculateScoreNotContainAce() {
         List<Card> cards = List.of(new Card(Suit.DIAMOND, Denomination.FIVE)
             , new Card(Suit.DIAMOND, Denomination.JACK));
         ParticipantCards participantCards = new ParticipantCards(cards);
 
-        assertThat(participantCards.calculateScore()).isEqualTo(15);
+        assertThat(participantCards.getScore()).isEqualTo(15);
     }
 
     @Test
@@ -43,7 +55,7 @@ public class ParticipantCardsTest {
 
         ParticipantCards participantCards = new ParticipantCards(cards);
 
-        assertThat(participantCards.calculateScore()).isEqualTo(21);
+        assertThat(participantCards.getScore()).isEqualTo(21);
     }
 
     @Test
@@ -54,7 +66,7 @@ public class ParticipantCardsTest {
 
         ParticipantCards participantCards = new ParticipantCards(cards);
 
-        assertThat(participantCards.calculateScore()).isEqualTo(12);
+        assertThat(participantCards.getScore()).isEqualTo(12);
     }
 
     @Test
@@ -66,7 +78,7 @@ public class ParticipantCardsTest {
 
         ParticipantCards participantCards = new ParticipantCards(cards);
 
-        assertThat(participantCards.calculateScore()).isEqualTo(13);
+        assertThat(participantCards.getScore()).isEqualTo(13);
     }
 
     @Test
@@ -78,7 +90,7 @@ public class ParticipantCardsTest {
 
         ParticipantCards participantCards = new ParticipantCards(cards);
 
-        assertThat(participantCards.calculateScore()).isEqualTo(17);
+        assertThat(participantCards.getScore()).isEqualTo(17);
     }
 
     @Test
@@ -90,6 +102,6 @@ public class ParticipantCardsTest {
 
         ParticipantCards participantCards = new ParticipantCards(cards);
 
-        assertThat(participantCards.calculateScore()).isEqualTo(21);
+        assertThat(participantCards.getScore()).isEqualTo(21);
     }
 }

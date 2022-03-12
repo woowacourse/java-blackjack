@@ -22,7 +22,7 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        return participantCards.calculateScore();
+        return participantCards.getScore();
     }
 
     public boolean isBurst() {

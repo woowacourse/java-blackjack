@@ -42,7 +42,7 @@ public class OutputView {
     public static void printCards(Participant participant) {
         List<String> participantCardInfo = participant.getCards()
             .stream()
-            .map(x -> x.getDenominationName() + x.getSuitName())
+            .map(x -> x.getDenomination().getName() + x.getSuit().getName())
             .collect(Collectors.toList());
 
         String cardInfo = String.join(NAME_DELIMITER, participantCardInfo);
@@ -78,7 +78,7 @@ public class OutputView {
         Card dealerFirstCard = dealer.getFirstCard();
 
         System.out.printf(CARD_INFORMATION_FORMAT, dealer.getName(),
-            dealerFirstCard.getDenominationName() + dealerFirstCard.getSuitName());
+            dealerFirstCard.getDenomination().getName() + dealerFirstCard.getSuit().getName());
 
         System.out.println();
     }
