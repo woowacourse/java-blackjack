@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import blackjack.domain.GameOutcome;
-import blackjack.domain.participant.Participant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,10 +44,6 @@ public class Cards {
 
     public List<Card> cards() {
         return List.copyOf(cards);
-    }
-
-    public GameOutcome fight(final Participant dealer) {
-        return GameOutcome.calculateOutcome((Participant) this, dealer);
     }
 
     public boolean isBust() {
