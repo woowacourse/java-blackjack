@@ -51,10 +51,11 @@ public abstract class AbstractParticipant implements Participant {
         return !gameStatus.isFinishedGame();
     }
 
-    // TODO : 플레이어만 가능
     @Override
     public void changeFinishStatus() {
-        gameStatus = GameStatus.FINISHED;
+        if (canHit()) {
+            gameStatus = GameStatus.FINISHED;
+        }
     }
 
     @Override
@@ -64,7 +65,7 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     private void validateCanCalculateResultScore() {
-        if (!gameStatus.isFinishedGame()) {
+        if (canHit()) {
             throw new IllegalStateException("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
         }
     }
