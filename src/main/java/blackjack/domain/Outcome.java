@@ -1,17 +1,17 @@
 package blackjack.domain;
 
-public enum Judgement {
+public enum Outcome {
     WIN("승"),
     DRAW("무"),
     LOSE("패");
 
     private final String name;
 
-    Judgement(String name) {
+    Outcome(String name) {
         this.name = name;
     }
 
-    public Judgement getOpposite() {
+    public Outcome getOpposite() {
         if (this == WIN) {
             return LOSE;
         }

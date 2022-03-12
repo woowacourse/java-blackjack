@@ -1,8 +1,8 @@
 package blackjack.domain;
 
-import static blackjack.domain.Judgement.DRAW;
-import static blackjack.domain.Judgement.LOSE;
-import static blackjack.domain.Judgement.WIN;
+import static blackjack.domain.Outcome.DRAW;
+import static blackjack.domain.Outcome.LOSE;
+import static blackjack.domain.Outcome.WIN;
 import static blackjack.domain.card.Denomination.ACE;
 import static blackjack.domain.card.Denomination.EIGHT;
 import static blackjack.domain.card.Denomination.FIVE;
@@ -38,7 +38,7 @@ public class WinResultTest {
     @ParameterizedTest
     @MethodSource("provideResultForNotBust")
     @DisplayName("딜러와 플레이어 둘 다 버스트하지 않았을 경우 점수가 더 큰 쪽이 이긴다.")
-    void bothNotBust(Dealer dealer, Map<Judgement, Integer> judgementMap, Judgement playerJudgement) {
+    void bothNotBust(Dealer dealer, Map<Outcome, Integer> judgementMap, Outcome playerOutcome) {
         // given
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, NINE);
@@ -48,13 +48,13 @@ public class WinResultTest {
 
         // when
         WinResult winResult = new WinResult(dealer, players);
-        Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
-        Map<String, Judgement> playersResult = winResult.getPlayersResult();
+        Map<Outcome, Integer> dealerResult = winResult.getDealerResult();
+        Map<String, Outcome> playersResult = winResult.getPlayersResult();
 
         // then
         assertAll(
                 () -> assertThat(dealerResult).isEqualTo(judgementMap),
-                () -> assertThat(playersResult.get(player.getName())).isEqualTo(playerJudgement)
+                () -> assertThat(playersResult.get(player.getName())).isEqualTo(playerOutcome)
         );
     }
 
@@ -83,9 +83,9 @@ public class WinResultTest {
 
         // when
         WinResult winResult = new WinResult(dealer, players);
-        Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
-        Map<String, Judgement> playersResult = winResult.getPlayersResult();
-        Map<Judgement, Integer> judgementMap = createJudgementMap(1, 0, 0);
+        Map<Outcome, Integer> dealerResult = winResult.getDealerResult();
+        Map<String, Outcome> playersResult = winResult.getPlayersResult();
+        Map<Outcome, Integer> judgementMap = createJudgementMap(1, 0, 0);
 
         // then
         assertAll(
@@ -116,9 +116,9 @@ public class WinResultTest {
 
         // when
         WinResult winResult = new WinResult(dealer, players);
-        Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
-        Map<String, Judgement> playersResult = winResult.getPlayersResult();
-        Map<Judgement, Integer> judgementMap = createJudgementMap(0, 0, 1);
+        Map<Outcome, Integer> dealerResult = winResult.getDealerResult();
+        Map<String, Outcome> playersResult = winResult.getPlayersResult();
+        Map<Outcome, Integer> judgementMap = createJudgementMap(0, 0, 1);
 
         // then
         assertAll(
@@ -142,9 +142,9 @@ public class WinResultTest {
 
         // when
         WinResult winResult = new WinResult(dealer, players);
-        Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
-        Map<String, Judgement> playersResult = winResult.getPlayersResult();
-        Map<Judgement, Integer> judgementMap = createJudgementMap(1, 0, 0);
+        Map<Outcome, Integer> dealerResult = winResult.getDealerResult();
+        Map<String, Outcome> playersResult = winResult.getPlayersResult();
+        Map<Outcome, Integer> judgementMap = createJudgementMap(1, 0, 0);
 
         // then
         assertAll(
@@ -167,9 +167,9 @@ public class WinResultTest {
 
         // when
         WinResult winResult = new WinResult(dealer, players);
-        Map<Judgement, Integer> dealerResult = winResult.getDealerResult();
-        Map<String, Judgement> playersResult = winResult.getPlayersResult();
-        Map<Judgement, Integer> judgementMap = createJudgementMap(0, 1, 0);
+        Map<Outcome, Integer> dealerResult = winResult.getDealerResult();
+        Map<String, Outcome> playersResult = winResult.getPlayersResult();
+        Map<Outcome, Integer> judgementMap = createJudgementMap(0, 1, 0);
 
         // then
         assertAll(
@@ -185,8 +185,8 @@ public class WinResultTest {
         return new Dealer(dealerCards);
     }
 
-    private static Map<Judgement, Integer> createJudgementMap(int win, int draw, int lose) {
-        Map<Judgement, Integer> judgementMap = new EnumMap<>(Judgement.class);
+    private static Map<Outcome, Integer> createJudgementMap(int win, int draw, int lose) {
+        Map<Outcome, Integer> judgementMap = new EnumMap<>(Outcome.class);
         judgementMap.put(WIN, win);
         judgementMap.put(DRAW, draw);
         judgementMap.put(LOSE, lose);

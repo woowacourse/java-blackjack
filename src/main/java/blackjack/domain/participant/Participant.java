@@ -42,6 +42,10 @@ public abstract class Participant {
         return List.copyOf(cards.getCards());
     }
 
+    public Cards getCardsCollection() {
+        return cards;
+    }
+
     public String getName() {
         return name.getValue();
     }

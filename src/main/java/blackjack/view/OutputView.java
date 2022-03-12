@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Judgement;
+import blackjack.domain.Outcome;
 import blackjack.domain.WinResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
@@ -75,26 +75,26 @@ public class OutputView {
         printPlayersWinResult(winResult.getPlayersResult());
     }
 
-    private static void printDealerWinResult(Map<Judgement, Integer> dealerResult) {
+    private static void printDealerWinResult(Map<Outcome, Integer> dealerResult) {
         System.out.printf("딜러: %s", createDealerWinResultString(dealerResult));
         System.out.println();
     }
 
-    private static String createDealerWinResultString(Map<Judgement, Integer> dealerResult) {
+    private static String createDealerWinResultString(Map<Outcome, Integer> dealerResult) {
         return dealerResult.keySet()
                 .stream()
-                .filter(judgement -> dealerResult.get(judgement) > 0)
-                .map(judgement -> String.format("%d%s", dealerResult.get(judgement), judgement.getName()))
+                .filter(outcome -> dealerResult.get(outcome) > 0)
+                .map(outcome -> String.format("%d%s", dealerResult.get(outcome), outcome.getName()))
                 .collect(Collectors.joining(" "));
     }
 
-    private static void printPlayersWinResult(Map<String, Judgement> playersResult) {
+    private static void printPlayersWinResult(Map<String, Outcome> playersResult) {
         playersResult.keySet()
                 .forEach(playerName -> printPlayerWinResult(playerName, playersResult.get(playerName)));
     }
 
-    private static void printPlayerWinResult(String playerName, Judgement judgement) {
-        System.out.printf("%s: %s", playerName, judgement.getName());
+    private static void printPlayerWinResult(String playerName, Outcome outcome) {
+        System.out.printf("%s: %s", playerName, outcome.getName());
         System.out.println();
     }
 }

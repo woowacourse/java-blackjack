@@ -11,11 +11,11 @@ import java.util.Map;
 
 public class WinResult {
 
-    private final Map<Judgement, Integer> dealerResult;
-    private final Map<String, Judgement> playersResult;
+    private final Map<Outcome, Integer> dealerResult;
+    private final Map<String, Outcome> playersResult;
 
     public WinResult(Dealer dealer, List<Player> players) {
-        dealerResult = new EnumMap<>(Judgement.class);
+        dealerResult = new EnumMap<>(Outcome.class);
         playersResult = new LinkedHashMap<>();
 
         initDealerResult();
@@ -23,68 +23,24 @@ public class WinResult {
     }
 
     private void initDealerResult() {
-        Arrays.stream(Judgement.values())
+        Arrays.stream(Outcome.values())
                 .forEach(value -> dealerResult.put(value, 0));
     }
 
     private void calculateResult(Dealer dealer, List<Player> players) {
-        players.forEach(player -> judge(dealer, player));
+        players.forEach(player -> updateResult(player, Rule.INSTANCE.judgeOutcome(player, dealer)));
     }
 
-    private void judge(Dealer dealer, Player player) {
-        if (player.isBust()) {
-            updateResult(player, Judgement.LOSE);
-            return;
-        }
-        if (dealer.isBust()) {
-            updateResult(player, Judgement.WIN);
-            return;
-        }
-        if (dealer.isBlackJack() || player.isBlackJack()) {
-            judgeWithBlackJack(dealer, player);
-            return;
-        }
-        judgeWithoutBust(dealer, player);
+    private void updateResult(Player player, Outcome playerOutcome) {
+        dealerResult.merge(playerOutcome.getOpposite(), 1, Integer::sum);
+        playersResult.put(player.getName(), playerOutcome);
     }
 
-    private void judgeWithBlackJack(Dealer dealer, Player player) {
-        if (dealer.isBlackJack() && player.isBlackJack()) {
-            updateResult(player, Judgement.DRAW);
-            return;
-        }
-        if (dealer.isBlackJack()) {
-            updateResult(player, Judgement.LOSE);
-            return;
-        }
-        if (player.isBlackJack()) {
-            updateResult(player, Judgement.WIN);
-        }
-    }
-
-    private void judgeWithoutBust(Dealer dealer, Player player) {
-        int dealerScore = dealer.getScore();
-        int playerScore = player.getScore();
-        if (dealerScore == playerScore) {
-            updateResult(player, Judgement.DRAW);
-            return;
-        }
-        if (dealerScore > playerScore) {
-            updateResult(player, Judgement.LOSE);
-            return;
-        }
-        updateResult(player, Judgement.WIN);
-    }
-
-    private void updateResult(Player player, Judgement playerJudgement) {
-        dealerResult.merge(playerJudgement.getOpposite(), 1, Integer::sum);
-        playersResult.put(player.getName(), playerJudgement);
-    }
-
-    public Map<Judgement, Integer> getDealerResult() {
+    public Map<Outcome, Integer> getDealerResult() {
         return Collections.unmodifiableMap(dealerResult);
     }
 
-    public Map<String, Judgement> getPlayersResult() {
+    public Map<String, Outcome> getPlayersResult() {
         return Collections.unmodifiableMap(playersResult);
     }
 }
