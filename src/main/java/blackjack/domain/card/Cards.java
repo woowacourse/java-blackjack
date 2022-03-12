@@ -1,10 +1,15 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Cards {
+
+    private static final int BLACKJACK = 21;
+    private static final int DEFAULT_SCORE = 0;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -13,33 +18,59 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int totalSum = calculateScoreWithAceAsMinimum();
-        if (hasAceCard()) {
-            totalSum += 10;
-            if (totalSum > 21) {
-                totalSum -= 10;
-            }
+        List<Integer> sortedTotalSums = calculateSortedTotalSums();
+        if (sortedTotalSums.isEmpty()) {
+            return DEFAULT_SCORE;
         }
-        return totalSum;
+
+        final int lowestTotalSum = sortedTotalSums.get(0);
+        if (lowestTotalSum >= BLACKJACK) {
+            return lowestTotalSum;
+        }
+
+        return getHighestTotalSumsUnderBlackjack(sortedTotalSums);
     }
 
-    private int calculateScoreWithAceAsMinimum() {
-        return cards.stream()
-                .mapToInt(Card::getCardNumber)
-                .sum();
+    private List<Integer> calculateSortedTotalSums() {
+        final Set<Integer> totalSumSets = calculateTotalSums(Set.of(0), 0);
+        final List<Integer> totalSums = new ArrayList<>(totalSumSets);
+        Collections.sort(totalSums);
+        return totalSums;
     }
 
-    private boolean hasAceCard() {
-        return cards.stream()
-                .anyMatch(Card::isAceCard);
+    private Set<Integer> calculateTotalSums(final Set<Integer> numbers, final int depth) {
+        if (depth < 0 || cards.size() < depth) {
+            throw new IndexOutOfBoundsException("카드 인덱스의 범위를 벗어났습니다.");
+        }
+        if (depth == cards.size()) {
+            return numbers;
+        }
+        final Set<Integer> partialTotalSums = calculatePartialTotalSum(numbers, cards.get(depth));
+        return calculateTotalSums(partialTotalSums, depth + 1);
+    }
+
+    private Set<Integer> calculatePartialTotalSum(final Set<Integer> numbers, final Card card) {
+        return numbers.stream()
+                .map(card::addNumbers)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+    }
+
+    private int getHighestTotalSumsUnderBlackjack(final List<Integer> sortedTotalSums) {
+        final List<Integer> revereSortedTotalSums = new ArrayList<>(sortedTotalSums);
+        Collections.reverse(revereSortedTotalSums);
+        return revereSortedTotalSums.stream()
+                .filter(number -> number <= BLACKJACK)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("21 이하의 점수가 존재하지 않습니다."));
     }
 
     public boolean isBlackjack() {
-        return calculateScore() == 21;
+        return calculateScore() == BLACKJACK;
     }
 
     public boolean isBurst() {
-        return calculateScore() > 21;
+        return calculateScore() > BLACKJACK;
     }
 
     public List<String> getCardNames() {
@@ -49,11 +80,15 @@ public class Cards {
     }
 
     public String getFirstCardName() {
+        validateCardNotEmpty();
+        final Card firstCard = cards.get(0);
+        return firstCard.getCardName();
+    }
+
+    private void validateCardNotEmpty() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드가 존재하지 않습니다.");
         }
-        final Card firstCard = cards.get(0);
-        return firstCard.getCardName();
     }
 
 }

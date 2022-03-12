@@ -1,6 +1,9 @@
 package blackjack.domain.card;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Card {
 
@@ -16,12 +19,11 @@ public class Card {
         return cardNumber.getInitial() + cardPattern.getName();
     }
 
-    public int getCardNumber() {
-        return cardNumber.getNumber();
-    }
-
-    public boolean isAceCard() {
-        return cardNumber.equals(CardNumber.ACE);
+    public Set<Integer> addNumbers(final int otherNumber) {
+        final List<Integer> numbers = cardNumber.getNumbers();
+        return numbers.stream()
+                .map(number -> otherNumber + number)
+                .collect(Collectors.toSet());
     }
 
     @Override
