@@ -25,7 +25,8 @@ public class BlackJackGame {
 
     private List<Name> inputPlayerNames() {
         try {
-            return InputView.inputPlayerNames().stream()
+            return InputView.inputPlayerNames()
+                    .stream()
                     .map(Name::new)
                     .collect(Collectors.toUnmodifiableList());
         } catch (IllegalArgumentException e) {
@@ -90,15 +91,14 @@ public class BlackJackGame {
     private void proceedDealer(Dealer dealer, CardDeck deck) {
         while (dealer.isHittable()) {
             dealer.hit(deck);
-            OutputView.printDealerHitMessage();
+            OutputView.printDealerHitMessage(new ParticipantResponse(dealer));
         }
     }
 
     private void showResult(Dealer dealer, List<Player> players) {
         OutputView.printCardResultMessage();
         OutputView.printParticipantCards(new ParticipantResponse(dealer));
-        players.forEach(
-                player -> OutputView.printParticipantCards(new ParticipantResponse(player)));
+        players.forEach(player -> OutputView.printParticipantCards(new ParticipantResponse(player)));
         OutputView.printWinResult(WinResult.of(dealer, players));
     }
 }
