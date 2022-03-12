@@ -59,5 +59,4 @@ public class DeckTest {
                 .isThrownBy(() -> Deck.of(Collections.singletonList(Card.valueOf(Suit.SPADE, Number.ACE))))
                 .withMessage("카드는 52장으로 생성되어야 합니다.");
     }
-
 }
