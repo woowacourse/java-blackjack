@@ -4,8 +4,8 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.dto.OutComeResult;
-import blackjack.dto.PlayerCards;
-import blackjack.dto.PlayerScoreResult;
+import blackjack.dto.ParticipantCards;
+import blackjack.dto.ParticipantScoreResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,22 +25,22 @@ public class BlackJackBoard {
     public static BlackJackBoard createGame(final List<String> playerNames) {
         Objects.requireNonNull(playerNames, "blackjackgame은 null이 들어올 수 없습니다.");
         final CardDeck cardDeck = CardDeck.createNewCardDek();
-        final Participants participants = Participants.createByPlayerNames(playerNames, cardDeck);
+        final Participants players = Participants.createByPlayerNames(playerNames, cardDeck);
         final Participant dealer = Dealer.createNewDealer(cardDeck.provideFirstHitCards());
-        return new BlackJackBoard(cardDeck, dealer, participants);
+        return new BlackJackBoard(cardDeck, dealer, players);
     }
 
     public boolean isPlayersTurnEnd() {
         return players.isAllTurnEnd();
     }
 
-    public PlayerCards hitCurrentPlayer(final HitCommand command) {
+    public ParticipantCards hitCurrentPlayer(final HitCommand command) {
         if (command.isNo()) {
-            final PlayerCards currentPlayer = players.getCurrentTurnPlayerCards();
-            players.turnToNextPlayer();
+            final ParticipantCards currentPlayer = players.getCurrentParticipantCards();
+            players.turnToNextParticipant();
             return currentPlayer;
         }
-        return players.hitCurrentPlayer(cardDeck.provideCard());
+        return players.hitCurrentParticipant(cardDeck.provideCard());
     }
 
     public boolean isDealerTurnEnd() {
@@ -51,22 +51,22 @@ public class BlackJackBoard {
         dealer.hit(cardDeck.provideCard());
     }
 
-    public PlayerCards getDealerFirstCard() {
-        return PlayerCards.toPlayerFirstCards(dealer);
+    public ParticipantCards getDealerFirstCard() {
+        return ParticipantCards.toParticipantFirstCards(dealer);
     }
 
-    public List<PlayerCards> getPlayersFirstCards() {
-        return players.getPlayerFirstCards();
+    public List<ParticipantCards> getPlayersFirstCards() {
+        return players.getFirstCards();
     }
 
     public String getCurrentTurnPlayerName() {
-        return players.getCurrentTurnPlayerName();
+        return players.getCurrentParticipantName();
     }
 
-    public List<PlayerScoreResult> allPlayerScoreResults() {
-        final List<PlayerScoreResult> results = new ArrayList<>();
-        results.add(PlayerScoreResult.from(dealer));
-        results.addAll(players.getPlayerScoreResults());
+    public List<ParticipantScoreResult> allPlayerScoreResults() {
+        final List<ParticipantScoreResult> results = new ArrayList<>();
+        results.add(ParticipantScoreResult.from(dealer));
+        results.addAll(players.getParticipantScoreResults());
         return results;
     }
 

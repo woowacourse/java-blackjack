@@ -5,8 +5,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.dto.OutComeResult;
-import blackjack.dto.PlayerCards;
-import blackjack.dto.PlayerScoreResult;
+import blackjack.dto.ParticipantCards;
+import blackjack.dto.ParticipantScoreResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,16 +32,16 @@ public class OutputView {
         throw new AssertionError();
     }
 
-    public static void showPlayersFirstCards(final PlayerCards dealerCards, final List<PlayerCards> playerCards) {
+    public static void showPlayersFirstCards(final ParticipantCards dealerCards, final List<ParticipantCards> playerCards) {
         System.out.printf(PROVIDE_FIRST_HIT_CARD_TO_PLAYER_MESSAGE, dealerCards.getName(), joinPlayerNames(playerCards));
         System.out.printf(PROVIDED_CARD_TO_DEALER_CARD_MESSAGE,
                 dealerCards.getName(), joinPlayerCards(dealerCards.getCards()));
         playerCards.forEach(OutputView::printPlayerCards);
     }
 
-    private static String joinPlayerNames(final List<PlayerCards> playerCards) {
+    private static String joinPlayerNames(final List<ParticipantCards> playerCards) {
         return playerCards.stream()
-                .map(PlayerCards::getName)
+                .map(ParticipantCards::getName)
                 .collect(Collectors.joining(PLAYER_NAME_DELIMITER));
     }
 
@@ -55,7 +55,7 @@ public class OutputView {
         return number.getPrintValue() + pattern.getName();
     }
 
-    public static void printPlayerCards(final PlayerCards playerCards) {
+    public static void printPlayerCards(final ParticipantCards playerCards) {
         System.out.printf(PROVIDED_CARD_TO_PLAYER_CARD_MESSAGE,
                 playerCards.getName(), joinPlayerCards(playerCards.getCards()));
     }
@@ -64,13 +64,13 @@ public class OutputView {
         System.out.println(PROVIDE_CARD_TO_DEALER_MESSAGE);
     }
 
-    public static void printPlayerScoreResults(final List<PlayerScoreResult> playerScoreResults) {
-        playerScoreResults.forEach(OutputView::printPlayerScoreResult);
+    public static void printPlayerScoreResults(final List<ParticipantScoreResult> participantScoreResults) {
+        participantScoreResults.forEach(OutputView::printPlayerScoreResult);
     }
 
-    private static void printPlayerScoreResult(final PlayerScoreResult playerScoreResult) {
-        System.out.printf(PLAYER_CARD_RESULT_AND_SCORE_MESSAGE, playerScoreResult.getName(),
-                joinPlayerCards(playerScoreResult.getCards()), playerScoreResult.getScore());
+    private static void printPlayerScoreResult(final ParticipantScoreResult participantScoreResult) {
+        System.out.printf(PLAYER_CARD_RESULT_AND_SCORE_MESSAGE, participantScoreResult.getName(),
+                joinPlayerCards(participantScoreResult.getCards()), participantScoreResult.getScore());
     }
 
     public static void printAllOutcomeResult(final OutComeResult outComeResult) {

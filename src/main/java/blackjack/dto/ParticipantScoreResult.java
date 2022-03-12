@@ -4,20 +4,22 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Participant;
 import java.util.List;
 
-public class PlayerScoreResult {
+public class ParticipantScoreResult {
 
     private final String name;
     private final List<Card> cards;
     private final int score;
 
-    private PlayerScoreResult(final String name, final List<Card> cards, final int score) {
+    private ParticipantScoreResult(final String name, final List<Card> cards, final int score) {
         this.name = name;
         this.cards = cards;
         this.score = score;
     }
 
-    public static PlayerScoreResult from(final Participant participant) {
-        return new PlayerScoreResult(participant.getName(), participant.cards(), participant.calculateResultScore());
+    public static ParticipantScoreResult from(final Participant participant) {
+        return new ParticipantScoreResult(
+                participant.getName(), participant.cards(), participant.calculateResultScore()
+        );
     }
 
     public String getName() {

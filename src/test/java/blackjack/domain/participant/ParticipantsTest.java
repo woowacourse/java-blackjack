@@ -46,7 +46,7 @@ class ParticipantsTest {
         final Participant participant = Player
                 .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Participants participants = new Participants(Collections.singletonList(participant));
-        participants.hitCurrentPlayer(Card.of(SPADE, JACK));
+        participants.hitCurrentParticipant(Card.of(SPADE, JACK));
         assertThat(participants.isAllTurnEnd()).isTrue();
     }
 
@@ -56,9 +56,9 @@ class ParticipantsTest {
         final Participant participant =
                 Player.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Participants participants = new Participants(Collections.singletonList(participant));
-        participants.hitCurrentPlayer(Card.of(SPADE, JACK));
+        participants.hitCurrentParticipant(Card.of(SPADE, JACK));
 
-        assertThatThrownBy(() -> participants.hitCurrentPlayer(Card.of(SPADE, A)))
+        assertThatThrownBy(() -> participants.hitCurrentParticipant(Card.of(SPADE, A)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("모든 턴이 종료되었습니다.");
     }
@@ -69,9 +69,9 @@ class ParticipantsTest {
         final Participant participant =
                 Player.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Participants participants = new Participants(Collections.singletonList(participant));
-        participants.turnToNextPlayer();
+        participants.turnToNextParticipant();
 
-        assertThatThrownBy(() -> participants.turnToNextPlayer())
+        assertThatThrownBy(() -> participants.turnToNextParticipant())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("모든 턴이 종료되었습니다.");
     }
@@ -82,9 +82,9 @@ class ParticipantsTest {
         final Participant participant = Player
                 .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Participants participants = new Participants(Collections.singletonList(participant));
-        participants.turnToNextPlayer();
+        participants.turnToNextParticipant();
 
-        assertThatThrownBy(() -> participants.getCurrentTurnPlayerCards())
+        assertThatThrownBy(() -> participants.getCurrentParticipantCards())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("모든 턴이 종료되었습니다.");
     }
@@ -95,9 +95,9 @@ class ParticipantsTest {
         final Participant participant = Player
                 .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Participants participants = new Participants(Collections.singletonList(participant));
-        participants.turnToNextPlayer();
+        participants.turnToNextParticipant();
 
-        assertThatThrownBy(() -> participants.getCurrentTurnPlayerName())
+        assertThatThrownBy(() -> participants.getCurrentParticipantName())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("모든 턴이 종료되었습니다.");
     }

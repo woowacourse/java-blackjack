@@ -4,25 +4,25 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Participant;
 import java.util.List;
 
-public class PlayerCards {
+public class ParticipantCards {
 
     private final String name;
     private final List<Card> cards;
 
-    private PlayerCards(final String name, final List<Card> cards) {
+    private ParticipantCards(final String name, final List<Card> cards) {
         this.name = name;
         this.cards = cards;
     }
 
-    public static PlayerCards toPlayerFirstCards(final Participant participant) {
-        return new PlayerCards(
+    public static ParticipantCards toParticipantFirstCards(final Participant participant) {
+        return new ParticipantCards(
                 participant.getName(),
                 participant.firstCards()
         );
     }
 
-    public static PlayerCards toPlayerCards(final Participant participant) {
-        return new PlayerCards(
+    public static ParticipantCards toParticipantCards(final Participant participant) {
+        return new ParticipantCards(
                 participant.getName(),
                 participant.cards()
         );

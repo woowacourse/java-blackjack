@@ -6,8 +6,8 @@ import blackjack.domain.CardDeck;
 import blackjack.domain.GameOutcome;
 import blackjack.domain.card.Card;
 import blackjack.dto.OutComeResult;
-import blackjack.dto.PlayerCards;
-import blackjack.dto.PlayerScoreResult;
+import blackjack.dto.ParticipantCards;
+import blackjack.dto.ParticipantScoreResult;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,8 +41,8 @@ public class Participants {
     }
 
     public static Participants createByPlayerNames(final List<String> playerNames, final CardDeck cardDeck) {
-        final List<Participant> participants = createPlayers(playerNames, cardDeck);
-        return new Participants(participants);
+        final List<Participant> players = createPlayers(playerNames, cardDeck);
+        return new Participants(players);
     }
 
     private static List<Participant> createPlayers(final List<String> playerNames, final CardDeck cardDeck) {
@@ -55,15 +55,15 @@ public class Participants {
         return Player.createNewPlayer(name, cardDeck.provideFirstHitCards());
     }
 
-    public List<PlayerCards> getPlayerFirstCards() {
+    public List<ParticipantCards> getFirstCards() {
         return participants.stream()
-                .map(PlayerCards::toPlayerFirstCards)
+                .map(ParticipantCards::toParticipantFirstCards)
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    public void turnToNextPlayer() {
+    public void turnToNextParticipant() {
         validateAllTurnEnd();
-        currentTurnPlayer().changeFinishStatus();
+        currentTurnParticipant().changeFinishStatus();
         currentTurnIndex++;
     }
 
@@ -77,11 +77,11 @@ public class Participants {
         return participants.size() <= currentTurnIndex;
     }
 
-    public PlayerCards hitCurrentPlayer(final Card card) {
-        final Participant currentParticipant = currentTurnPlayer();
+    public ParticipantCards hitCurrentParticipant(final Card card) {
+        final Participant currentParticipant = currentTurnParticipant();
         currentParticipant.hit(card);
         checkCanTurnNext(currentParticipant);
-        return PlayerCards.toPlayerCards(currentParticipant);
+        return ParticipantCards.toParticipantCards(currentParticipant);
     }
 
     private void checkCanTurnNext(final Participant currentParticipant) {
@@ -90,23 +90,23 @@ public class Participants {
         }
     }
 
-    private Participant currentTurnPlayer() {
+    private Participant currentTurnParticipant() {
         validateAllTurnEnd();
         return participants.get(currentTurnIndex);
     }
 
-    public String getCurrentTurnPlayerName() {
+    public String getCurrentParticipantName() {
         validateAllTurnEnd();
         return participants.get(currentTurnIndex).getName();
     }
 
-    public PlayerCards getCurrentTurnPlayerCards() {
-        return PlayerCards.toPlayerCards(currentTurnPlayer());
+    public ParticipantCards getCurrentParticipantCards() {
+        return ParticipantCards.toParticipantCards(currentTurnParticipant());
     }
 
-    public List<PlayerScoreResult> getPlayerScoreResults() {
+    public List<ParticipantScoreResult> getParticipantScoreResults() {
         return participants.stream()
-                .map(PlayerScoreResult::from)
+                .map(ParticipantScoreResult::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -116,7 +116,7 @@ public class Participants {
 
     private Map<String, GameOutcome> calculateOutcomeResultWithDealer(final Participant dealer) {
         return participants.stream()
-                .map(player -> entry(player.getName(), player.fight(dealer)))
+                .map(participant -> entry(participant.getName(), participant.fight(dealer)))
                 .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (v1, v2) -> v1, LinkedHashMap::new));
     }
 }

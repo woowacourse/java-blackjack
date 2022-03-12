@@ -2,7 +2,7 @@ package blackjack;
 
 import blackjack.domain.BlackJackBoard;
 import blackjack.domain.HitCommand;
-import blackjack.dto.PlayerCards;
+import blackjack.dto.ParticipantCards;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -40,7 +40,7 @@ public class BlackJackGame {
             return;
         }
         final HitCommand hitCommand = inputHitCommand();
-        final PlayerCards currentPlayerCards = blackJackBoard.hitCurrentPlayer(hitCommand);
+        final ParticipantCards currentPlayerCards = blackJackBoard.hitCurrentPlayer(hitCommand);
         OutputView.printPlayerCards(currentPlayerCards);
         runPlayerTurn();
     }
