@@ -9,7 +9,7 @@ import blackjack.view.OutputView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackjackController {
+public class Blackjack {
 
     private static final Enterable enterable = new Enter();
 
@@ -20,7 +20,7 @@ public class BlackjackController {
         Dealer dealer = new Dealer();
         Players players = createPlayers();
 
-        distributeCards(cardMachine, dealer, players);
+        drawCards(cardMachine, dealer, players);
         showWinner(dealer, players);
     }
 
@@ -33,15 +33,15 @@ public class BlackjackController {
         }
     }
 
-    private void distributeCards(final CardMachine cardMachine, final Dealer dealer, final Players players) {
-        distributeInitCards(cardMachine, dealer, players);
+    private void drawCards(final CardMachine cardMachine, final Dealer dealer, final Players players) {
+        drawInitCards(cardMachine, dealer, players);
 
-        distributeCardToPlayers(players, cardMachine);
-        distributeCardToDealer(dealer, cardMachine);
+        drawCardToPlayers(players, cardMachine);
+        drawCardToDealer(dealer, cardMachine);
     }
 
-    private void distributeInitCards(final CardMachine cardMachine, final Dealer dealer, final Players players) {
-        OutputView.printDistributeInitCards(Dealer.getName(), players.getNames());
+    private void drawInitCards(final CardMachine cardMachine, final Dealer dealer, final Players players) {
+        OutputView.printDrawInitCards(Dealer.getName(), players.getNames());
         dealer.drawInitCards(cardMachine.pickInitCards());
         for (Player player : players.getPlayers()) {
             player.drawInitCards(cardMachine.pickInitCards());
@@ -69,14 +69,14 @@ public class BlackjackController {
                 .collect(Collectors.toList());
     }
 
-    private void distributeCardToPlayers(final Players players, final CardMachine cardMachine) {
+    private void drawCardToPlayers(final Players players, final CardMachine cardMachine) {
         for (Player player : players.getPlayers()) {
-            distributeCardToPlayer(player, cardMachine);
+            drawCardToPlayer(player, cardMachine);
         }
         OutputView.printNewLine();
     }
 
-    private void distributeCardToPlayer(final Player player, final CardMachine cardMachine) {
+    private void drawCardToPlayer(final Player player, final CardMachine cardMachine) {
         while (player.isDrawable() && isDrawing(player)) {
             player.drawCard(cardMachine.pickCard());
             OutputView.printCards(player.getName(), getPlayerCards(player));
@@ -94,7 +94,7 @@ public class BlackjackController {
         }
     }
 
-    private void distributeCardToDealer(final Dealer dealer, final CardMachine cardMachine) {
+    private void drawCardToDealer(final Dealer dealer, final CardMachine cardMachine) {
         while (dealer.isDrawable()) {
             dealer.drawCard(cardMachine.pickCard());
             OutputView.printDrawDealer(Dealer.getName(), Dealer.RECEIVED_MAXIMUM);
