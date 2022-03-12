@@ -11,7 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ParticipantTest {
 
-
     @Test
     @DisplayName("점수를 올바르게 계산하는지 확인한다")
     void testCalculateScore() {
@@ -34,5 +33,4 @@ class ParticipantTest {
 
         assertThat(participant.getScore()).isEqualTo(21);
     }
-
 }

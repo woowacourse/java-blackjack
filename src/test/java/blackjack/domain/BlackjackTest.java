@@ -35,8 +35,8 @@ public class BlackjackTest {
         Blackjack blackjack = new Blackjack(names);
         blackjack.firstDistribute();
 
-        int count=0;
-        while(blackjack.getPlayerWhoCanHit()!=null){
+        int count = 0;
+        while (blackjack.getPlayerWhoCanHit() != null) {
             count++;
         }
 
@@ -45,7 +45,7 @@ public class BlackjackTest {
 
     @Test
     @DisplayName("hit을 선택하면 카드 한장 추가")
-    void hit(){
+    void hit() {
         String[] names = {"pobi"};
         Blackjack blackjack = new Blackjack(names);
         blackjack.firstDistribute();
