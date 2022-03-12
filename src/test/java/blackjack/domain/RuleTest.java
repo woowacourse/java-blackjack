@@ -5,8 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Pattern;
+
 import java.util.List;
 import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -80,8 +82,8 @@ public class RuleTest {
         Card HEART_TWO = new Card(Pattern.HEART, Denomination.TWO);
         Card SPADE_ACE = new Card(Pattern.SPADE, Denomination.ACE);
         return Stream.of(
-                Arguments.of(List.of(DIAMOND_TEN, CLOVER_TEN, HEART_TWO), true),
-                Arguments.of(List.of(DIAMOND_TEN, CLOVER_TEN, SPADE_ACE), false)
+            Arguments.of(List.of(DIAMOND_TEN, CLOVER_TEN, HEART_TWO), true),
+            Arguments.of(List.of(DIAMOND_TEN, CLOVER_TEN, SPADE_ACE), false)
         );
     }
 
@@ -101,8 +103,8 @@ public class RuleTest {
         Card CLOVER_TEN = new Card(Pattern.CLOVER, Denomination.TEN);
         Card SPADE_ACE = new Card(Pattern.SPADE, Denomination.ACE);
         return Stream.of(
-                Arguments.of(List.of(DIAMOND_TEN, SPADE_ACE), true),
-                Arguments.of(List.of(DIAMOND_TEN, CLOVER_TEN, SPADE_ACE), false)
+            Arguments.of(List.of(DIAMOND_TEN, SPADE_ACE), true),
+            Arguments.of(List.of(DIAMOND_TEN, CLOVER_TEN, SPADE_ACE), false)
         );
     }
 }

@@ -17,7 +17,7 @@ class NameTest {
     void notNullAndEmpty(String input) {
         // then
         assertThatThrownBy(() -> new Name(input)).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이름은 한 글자 이상이어야 합니다.");
+            .hasMessage("[ERROR] 이름은 한 글자 이상이어야 합니다.");
     }
 
     @Test
@@ -25,6 +25,6 @@ class NameTest {
     void notNull() {
         // then
         assertThatThrownBy(() -> new Name(null)).isInstanceOf(NullPointerException.class)
-                .hasMessage("[ERROR] 이름은 null일 수 없습니다.");
+            .hasMessage("[ERROR] 이름은 null일 수 없습니다.");
     }
 }

@@ -23,11 +23,13 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -54,16 +56,16 @@ public class WinResultTest {
 
         // then
         assertAll(
-                () -> assertThat(dealerResult).isEqualTo(judgementMap),
-                () -> assertThat(playersResult.get(player.getName())).isEqualTo(playerJudgement)
+            () -> assertThat(dealerResult).isEqualTo(judgementMap),
+            () -> assertThat(playersResult.get(player.getName())).isEqualTo(playerJudgement)
         );
     }
 
     private static Stream<Arguments> provideResultForNotBust() {
         return Stream.of(
-                Arguments.of(createDealer(TEN), createJudgementMap(1, 0, 0), LOSE),
-                Arguments.of(createDealer(NINE), createJudgementMap(0, 1, 0), DRAW),
-                Arguments.of(createDealer(EIGHT), createJudgementMap(0, 0, 1), WIN)
+            Arguments.of(createDealer(TEN), createJudgementMap(1, 0, 0), LOSE),
+            Arguments.of(createDealer(NINE), createJudgementMap(0, 1, 0), DRAW),
+            Arguments.of(createDealer(EIGHT), createJudgementMap(0, 0, 1), WIN)
         );
     }
 
@@ -90,15 +92,15 @@ public class WinResultTest {
 
         // then
         assertAll(
-                () -> assertThat(dealerResult).isEqualTo(judgementMap),
-                () -> assertThat(playersResult.get(player.getName())).isEqualTo(LOSE)
+            () -> assertThat(dealerResult).isEqualTo(judgementMap),
+            () -> assertThat(playersResult.get(player.getName())).isEqualTo(LOSE)
         );
     }
 
     private static Stream<Arguments> provideForPlayerBust() {
         return Stream.of(
-                Arguments.of(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, SIX), new Card(HEART, TWO))))),
-                Arguments.of(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, FIVE), new Card(HEART, TWO)))))
+            Arguments.of(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, SIX), new Card(HEART, TWO))))),
+            Arguments.of(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, FIVE), new Card(HEART, TWO)))))
         );
     }
 
@@ -123,8 +125,8 @@ public class WinResultTest {
 
         // then
         assertAll(
-                () -> assertThat(dealerResult).isEqualTo(judgementMap),
-                () -> assertThat(playersResult.get(player.getName())).isEqualTo(WIN)
+            () -> assertThat(dealerResult).isEqualTo(judgementMap),
+            () -> assertThat(playersResult.get(player.getName())).isEqualTo(WIN)
         );
     }
 
@@ -149,8 +151,8 @@ public class WinResultTest {
 
         // then
         assertAll(
-                () -> assertThat(dealerResult).isEqualTo(judgementMap),
-                () -> assertThat(playersResult.get(player.getName())).isEqualTo(LOSE)
+            () -> assertThat(dealerResult).isEqualTo(judgementMap),
+            () -> assertThat(playersResult.get(player.getName())).isEqualTo(LOSE)
         );
     }
 
@@ -174,8 +176,8 @@ public class WinResultTest {
 
         // then
         assertAll(
-                () -> assertThat(dealerResult).isEqualTo(judgementMap),
-                () -> assertThat(playersResult.get(player.getName())).isEqualTo(DRAW)
+            () -> assertThat(dealerResult).isEqualTo(judgementMap),
+            () -> assertThat(playersResult.get(player.getName())).isEqualTo(DRAW)
         );
     }
 

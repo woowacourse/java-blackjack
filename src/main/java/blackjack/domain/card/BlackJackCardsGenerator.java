@@ -11,16 +11,16 @@ public class BlackJackCardsGenerator implements CardsGenerator {
     @Override
     public List<Card> generate() {
         List<Card> cards = Arrays.stream(Pattern.values())
-                .map(this::createCardsBy)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+            .map(this::createCardsBy)
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
         Collections.shuffle(cards);
         return cards;
     }
 
     private List<Card> createCardsBy(Pattern pattern) {
         return Arrays.stream(Denomination.values())
-                .map(denomination -> new Card(pattern, denomination))
-                .collect(Collectors.toList());
+            .map(denomination -> new Card(pattern, denomination))
+            .collect(Collectors.toList());
     }
 }

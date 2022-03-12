@@ -35,7 +35,7 @@ public class Card {
             return false;
         }
 
-        Card card = (Card) o;
+        Card card = (Card)o;
 
         if (pattern != card.pattern) {
             return false;

@@ -7,8 +7,10 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Pattern;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +36,7 @@ public class DealerTest {
     void cardsNotNull() {
         // then
         assertThatThrownBy(() -> new Dealer(null))
-                .isInstanceOf(NullPointerException.class);
+            .isInstanceOf(NullPointerException.class);
     }
 
     @Test
@@ -48,8 +50,8 @@ public class DealerTest {
 
         // then
         assertThatThrownBy(() -> new Dealer(cards))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 카드를 두 장 받고 시작해야 합니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[ERROR] 카드를 두 장 받고 시작해야 합니다.");
     }
 
     @Test
@@ -61,8 +63,8 @@ public class DealerTest {
 
         // then
         assertThatThrownBy(() -> new Dealer(cards))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 카드는 중복될 수 없습니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[ERROR] 카드는 중복될 수 없습니다.");
     }
 
     @Test

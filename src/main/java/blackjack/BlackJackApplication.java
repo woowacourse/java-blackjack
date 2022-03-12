@@ -9,6 +9,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.WinResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,8 +25,8 @@ public class BlackJackApplication {
     private static List<Name> inputPlayerNames() {
         try {
             return InputView.inputPlayerNames().stream()
-                    .map(Name::new)
-                    .collect(Collectors.toUnmodifiableList());
+                .map(Name::new)
+                .collect(Collectors.toUnmodifiableList());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return inputPlayerNames();
@@ -34,8 +35,8 @@ public class BlackJackApplication {
 
     private static List<Player> createPlayers(List<Name> playerNames, CardDeck deck) {
         return playerNames.stream()
-                .map(name -> new Player(name, deck.drawDouble()))
-                .collect(Collectors.toUnmodifiableList());
+            .map(name -> new Player(name, deck.drawDouble()))
+            .collect(Collectors.toUnmodifiableList());
     }
 
     private static void play(CardDeck deck, Dealer dealer, List<Player> players) {
@@ -93,7 +94,7 @@ public class BlackJackApplication {
         OutputView.printCardResultMessage();
         OutputView.printParticipantCards(dealer, dealer.calculateScore());
         players.forEach(
-                player -> OutputView.printParticipantCards(player, player.calculateScore()));
+            player -> OutputView.printParticipantCards(player, player.calculateScore()));
         OutputView.printWinResult(new WinResult(dealer, players));
     }
 }

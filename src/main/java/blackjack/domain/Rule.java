@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
+
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -21,22 +22,22 @@ public class Rule {
 
     private static int calculateSum(int aceCount, int sum) {
         return IntStream.rangeClosed(0, aceCount)
-                .map(i -> sum + (aceCount - i) * 10)
-                .filter(i -> i <= BLACKJACK_SCORE)
-                .findFirst()
-                .orElse(sum);
+            .map(i -> sum + (aceCount - i) * 10)
+            .filter(i -> i <= BLACKJACK_SCORE)
+            .findFirst()
+            .orElse(sum);
     }
 
     private static int calculateMinimumSum(List<Card> cards) {
         return cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
+            .mapToInt(Card::getValue)
+            .sum();
     }
 
     private static int calculateAceCount(List<Card> cards) {
-        return (int) cards.stream()
-                .filter(card -> card.isSameValueWith(Denomination.ACE))
-                .count();
+        return (int)cards.stream()
+            .filter(card -> card.isSameValueWith(Denomination.ACE))
+            .count();
     }
 
     public static boolean isBust(List<Card> cards) {

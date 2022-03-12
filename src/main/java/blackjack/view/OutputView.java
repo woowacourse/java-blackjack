@@ -6,6 +6,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.WinResult;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,8 +19,8 @@ public class OutputView {
 
     public static void printStartMessage(Dealer dealer, List<Player> players) {
         List<String> playerNames = players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toUnmodifiableList());
+            .map(Player::getName)
+            .collect(Collectors.toUnmodifiableList());
         System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.", dealer.getName(), String.join(", ", playerNames));
         System.out.println();
     }
@@ -32,9 +33,9 @@ public class OutputView {
 
     public static void printParticipantCards(Participant participant, int score) {
         String cardsInfo = participant.getCards()
-                .stream()
-                .map(OutputView::createCardInfoString)
-                .collect(Collectors.joining(", "));
+            .stream()
+            .map(OutputView::createCardInfoString)
+            .collect(Collectors.joining(", "));
 
         System.out.printf("%s카드: %s - 합계: %d", participant.getName(), cardsInfo, score);
         System.out.println();
@@ -77,15 +78,15 @@ public class OutputView {
 
     private static String createDealerWinResultString(Map<Judgement, Integer> dealerResult) {
         return dealerResult.keySet()
-                .stream()
-                .filter(judgement -> dealerResult.get(judgement) > 0)
-                .map(judgement -> String.format("%d%s", dealerResult.get(judgement), judgement.getName()))
-                .collect(Collectors.joining(" "));
+            .stream()
+            .filter(judgement -> dealerResult.get(judgement) > 0)
+            .map(judgement -> String.format("%d%s", dealerResult.get(judgement), judgement.getName()))
+            .collect(Collectors.joining(" "));
     }
 
     private static void printPlayersWinResult(Map<String, Judgement> playersResult) {
         playersResult.keySet()
-                .forEach(playerName -> printPlayerWinResult(playerName, playersResult.get(playerName)));
+            .forEach(playerName -> printPlayerWinResult(playerName, playersResult.get(playerName)));
     }
 
     private static void printPlayerWinResult(String playerName, Judgement judgement) {
