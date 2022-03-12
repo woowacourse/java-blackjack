@@ -1,6 +1,5 @@
 package domain;
 
-import domain.card.CanAddCardThreshold;
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,5 +38,33 @@ public final class Cards {
 
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAceCard);
+    }
+
+    public GameResult calculateFinalResult(final Cards other) {
+        return GameResult.of(this, other);
+    }
+
+    public CardState getCardState() {
+        return CardState.of(this);
+    }
+
+    public int getCardCount() {
+        return cards.size();
+    }
+
+    public int getCardStatePower() {
+        return getCardState().getStatePower();
+    }
+
+    public boolean isStand() {
+        return getCardState().isStand();
+    }
+
+    public boolean isBust() {
+        return getCardState().isBust();
+    }
+
+    public boolean isBlackJack() {
+        return getCardState().isBlackJack();
     }
 }
