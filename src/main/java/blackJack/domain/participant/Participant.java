@@ -54,16 +54,16 @@ public abstract class Participant {
         return score;
     }
 
-    private int countAce() {
-        return (int)cards.stream()
-            .filter(card -> card.getDenomination() == Denomination.ACE)
-            .count();
-    }
-
     private int calculateScore() {
         return cards.stream()
             .mapToInt(Card::getScore)
             .sum();
+    }
+
+    private int countAce() {
+        return (int)cards.stream()
+                .filter(card -> card.getDenomination() == Denomination.ACE)
+                .count();
     }
 
     public List<Card> getCards() {
