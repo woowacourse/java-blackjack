@@ -13,7 +13,7 @@ public abstract class Participant {
     protected Participant(final String name, final Deck deck) {
         validateNameNotBlank(name);
         this.name = name;
-        drawTwoCard(deck);
+        initiallyDrawCards(deck);
     }
 
     private static void validateNameNotBlank(final String name) {
@@ -22,9 +22,11 @@ public abstract class Participant {
         }
     }
 
-    private void drawTwoCard(final Deck deck) {
-        drawCard(deck);
-        drawCard(deck);
+    private void initiallyDrawCards(final Deck deck) {
+        final int initiallyDrawCardCount = 2;
+        for (int i = 0; i < initiallyDrawCardCount; i++) {
+            drawCard(deck);
+        }
     }
 
     public void drawCard(final Deck deck) {
