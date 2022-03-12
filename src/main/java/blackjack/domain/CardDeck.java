@@ -1,34 +1,37 @@
 package blackjack.domain;
 
+import java.util.ArrayDeque;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CardDeck {
 
-    private static final List<Card> cards;
+    private final Deque<Card> cards;
 
-    static {
-        cards = Stream.of(Denomination.values())
+    public CardDeck() {
+        final List<Card> cards = generateAllCards();
+        Collections.shuffle(cards);
+
+        this.cards = new ArrayDeque<>(cards);
+    }
+
+    private List<Card> generateAllCards() {
+        return Stream.of(Denomination.values())
                 .flatMap(denomination ->
                         Stream.of(Suit.values())
                                 .map(suit -> new Card(denomination, suit)))
                 .collect(Collectors.toList());
     }
 
-    public CardDeck() {
-        Collections.shuffle(cards);
-    }
-
-    public Card getCard(final int index) {
-        checkIndex(index);
-        return cards.get(index);
-    }
-
-    private void checkIndex(int index) {
-        if (index >= cards.size()) {
-            throw new IndexOutOfBoundsException("[ERROR] 카드 덱의 범위를 넘어갔습니다.");
+    public Card pickCard() {
+        try {
+            return cards.pop();
+        } catch (NoSuchElementException exception) {
+            throw new NoSuchElementException("[ERROR] 카드를 더 이상 뽑을 수 없습니다.");
         }
     }
 }

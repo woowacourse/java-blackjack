@@ -3,11 +3,9 @@ package blackjack.domain;
 public class BlackJackMachine {
 
     private final CardDeck deck;
-    private final CardDeckIndex index;
 
     public BlackJackMachine(final CardDeck deck) {
         this.deck = deck;
-        this.index = new CardDeckIndex();
     }
 
     public void giveInitialCards(final Dealer dealer, final Participants participants) {
@@ -19,19 +17,19 @@ public class BlackJackMachine {
     }
 
     private void addInitialCards(final Player player) {
-        player.addCard(deck.getCard(index.getAndIncrease()));
-        player.addCard(deck.getCard(index.getAndIncrease()));
+        player.addCard(deck.pickCard());
+        player.addCard(deck.pickCard());
     }
 
     public void giveCardToParticipant(final Participant participant, final Choice choice) {
         if (choice.isHit() && participant.canAddCard()) {
-            participant.addCard(deck.getCard(index.getAndIncrease()));
+            participant.addCard(deck.pickCard());
         }
     }
 
     public void giveCardToDealer(final Dealer dealer) {
         while (dealer.canAddCard()) {
-            dealer.addCard(deck.getCard(index.getAndIncrease()));
+            dealer.addCard(deck.pickCard());
         }
     }
 }
