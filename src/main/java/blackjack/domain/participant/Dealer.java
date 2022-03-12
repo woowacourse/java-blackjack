@@ -9,9 +9,15 @@ public class Dealer extends Participant {
     public static final int MAX_ACE_NUMBER = 11;
     public static final int MAX_RECEIVABLE_SCORE = 17;
     public static final int BUST_THRESHOLD = 21;
+    private static final Name DEFAULT_NAME = new Name("딜러");
 
-    public Dealer(Name name) {
+
+    private Dealer(Name name) {
         super(name);
+    }
+
+    public static Dealer createDefaultNameDealer() {
+        return new Dealer(DEFAULT_NAME);
     }
 
     @Override

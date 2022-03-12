@@ -15,7 +15,7 @@ class DealerTest {
     @DisplayName("딜러 생성자 테스트")
     @Test
     void create() {
-        Dealer dealer = new Dealer(new Name("딜러"));
+        Dealer dealer = Dealer.createDefaultNameDealer();
         dealer.receive(new Cards(List.of(Card.from(Number.ACE, Kind.SPADE))));
 
         assertThat(dealer).isNotNull();
@@ -24,7 +24,7 @@ class DealerTest {
     @DisplayName("딜러 최적 점수 계산")
     @Test
     void calculateBestScore() {
-        Dealer dealer = new Dealer(new Name("딜러"));
+        Dealer dealer = Dealer.createDefaultNameDealer();
         dealer.receive(new Cards(
                 List.of(Card.from(Number.ACE, Kind.SPADE),
                         Card.from(Number.EIGHT, Kind.HEART))));
@@ -35,7 +35,7 @@ class DealerTest {
     @DisplayName("딜러 카드 버스트 시 에이스 1로 계산 테스트")
     @Test
     void calculateBestScore_TwoAces_Is2() {
-        Dealer dealer = new Dealer(new Name("딜러"));
+        Dealer dealer = Dealer.createDefaultNameDealer();
         dealer.receive(new Cards(
                 List.of(Card.from(Number.ACE, Kind.SPADE),
                         Card.from(Number.ACE, Kind.HEART))));
@@ -46,7 +46,7 @@ class DealerTest {
     @DisplayName("딜러 카드 추가 수령 가능 여부 테스트")
     @Test
     void isReceivable_BestScoreAs16_IsTrue() {
-        Dealer dealer = new Dealer(new Name("딜러"));
+        Dealer dealer = Dealer.createDefaultNameDealer();
         dealer.receive(new Cards(
                 List.of(Card.from(Number.ACE, Kind.SPADE),
                         Card.from(Number.FIVE, Kind.SPADE))));
@@ -57,7 +57,7 @@ class DealerTest {
     @DisplayName("딜러 카드 추가 수령 실패 여부 테스트")
     @Test
     void isReceivable_BestScoreAs17_IsFalse() {
-        Dealer dealer = new Dealer(new Name("딜러"));
+        Dealer dealer = Dealer.createDefaultNameDealer();
         dealer.receive(new Cards(
                 List.of(Card.from(Number.ACE, Kind.SPADE),
                         Card.from(Number.SIX, Kind.SPADE))));

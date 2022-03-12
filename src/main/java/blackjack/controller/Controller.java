@@ -14,7 +14,7 @@ public class Controller {
 
     public void run() {
         CardDeck cardDeck = CardDeck.initShuffled();
-        Dealer dealer = new Dealer(new Name("딜러"));
+        Dealer dealer = Dealer.createDefaultNameDealer();
         Players players = Players.of(InputView.requestPlayerNames());
 
         dealer.receive(cardDeck.distribute(INITIAL_CARD_HAND));
