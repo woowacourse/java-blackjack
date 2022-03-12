@@ -28,7 +28,7 @@ public class InputView {
             return value;
         }
 
-        return chooseOptions(name);
+        return chooseOptions(name, options);
     }
 
     private static boolean isValidOption(String value, String... options) {
