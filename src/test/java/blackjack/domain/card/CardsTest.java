@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
@@ -19,6 +20,21 @@ public class CardsTest {
 
     @Test
     @DisplayName("시작 시 카드를 두 장 가지고 있어야 한다.")
+    void validCardsSize() {
+        // given
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
+        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
+        List<Card> cards = List.of(card1, card2);
+
+        // when
+        Cards actual = new Cards(cards);
+
+        // then
+        assertThat(actual.getCards()).containsOnly(card1, card2);
+    }
+
+    @Test
+    @DisplayName("시작 시 카드가 두 장이 아니면 예외가 발생한다.")
     void invalidCardsSize() {
         // given
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
