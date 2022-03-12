@@ -10,10 +10,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.participant.Dealer;
+import blackjack.domain.card.CardStack;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.CardBundleStrategy;
-import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,12 +20,11 @@ import org.junit.jupiter.api.Test;
 
 public class BlackjackGameTest {
 
-    private static final List<Card> TWO_CARDS_OF_SIXTEEN = List.of(CLOVER6, CLOVER10);
-    private static final List<Card> TWO_CARDS_OF_SEVENTEEN = List.of(CLOVER7, CLOVER10);
     private static final Card DRAWABLE_CARD = CLOVER_KING;
-
-    // TODO: should be fixed for readability
+    private static final List<String> PLAYER_NAMES_LIST = List.of("player1", "player2");
     private static final CardBundleStrategy prodStrategy = (cardStack) -> CardBundle.of(cardStack.pop(), cardStack.pop());
+    private static final CardBundleStrategy cardBundleOfSixteenStrategy = (cardStack) -> CardBundle.of(CLOVER6, CLOVER10);
+    private static final CardBundleStrategy cardBundleOfSeventeenStrategy = (cardStack) -> CardBundle.of(CLOVER7, CLOVER10);
 
     @DisplayName("생성자 테스트")
     @Nested
@@ -70,7 +68,8 @@ public class BlackjackGameTest {
         @DisplayName("dealerCanDraw 메서드는 딜러의 점수가 16이하인 경우 true를 반환한다.")
         @Test
         void dealerCanDraw_returnTrueIfDealerCanDraw() {
-            BlackjackGame blackjackGame = BlackjackGameStub.ofDealerCards(TWO_CARDS_OF_SIXTEEN);
+            BlackjackGame blackjackGame = new BlackjackGame(
+                    new CardsStub(), PLAYER_NAMES_LIST, cardBundleOfSixteenStrategy);
 
             boolean actual = blackjackGame.dealerCanDraw();
 
@@ -80,7 +79,8 @@ public class BlackjackGameTest {
         @DisplayName("dealerCanDraw 메서드는 딜러의 점수가 17이상인 경우 false를 반환한다.")
         @Test
         void dealerCanDraw_returnFalseIfDealerCanNotDraw() {
-            BlackjackGame blackjackGame = BlackjackGameStub.ofDealerCards(TWO_CARDS_OF_SEVENTEEN);
+            BlackjackGame blackjackGame = new BlackjackGame(
+                    new CardsStub(), PLAYER_NAMES_LIST, cardBundleOfSeventeenStrategy);
 
             boolean actual = blackjackGame.dealerCanDraw();
 
@@ -91,7 +91,8 @@ public class BlackjackGameTest {
     @DisplayName("drawDealerCard 메서드는 딜러에게 카드를 한 장 더 제공한다.")
     @Test
     void drawDealerCard_givesExtraCardToDealer() {
-        BlackjackGame blackjackGame = BlackjackGameStub.ofDealerCards(TWO_CARDS_OF_SIXTEEN);
+        BlackjackGame blackjackGame = new BlackjackGame(
+                new CardsStub(), PLAYER_NAMES_LIST, cardBundleOfSixteenStrategy);
 
         blackjackGame.drawDealerCard();
         Score actual = blackjackGame.getDealer().getCurrentScore();
@@ -103,46 +104,19 @@ public class BlackjackGameTest {
     @DisplayName("카드 덱에서 카드 한장을 뽑아서 반환한다.")
     @Test
     void popCard_returnPoppedCard() {
-        BlackjackGame blackjackGame = BlackjackGameStub.ofDealerCards(TWO_CARDS_OF_SIXTEEN);
+        BlackjackGame blackjackGame = new BlackjackGame(
+                new CardsStub(), PLAYER_NAMES_LIST, cardBundleOfSixteenStrategy);
 
         Card actual = blackjackGame.popCard();
 
         assertThat(actual).isEqualTo(DRAWABLE_CARD);
     }
 
-    private static class BlackjackGameStub extends BlackjackGame {
-
-        private final Dealer fakeDealer;
-        private final LinkedList<Card> drawableCards = new LinkedList<>(List.of(DRAWABLE_CARD));
-
-        private BlackjackGameStub(Dealer dealer, CardBundleStrategy strategy) {
-            super(new CardDeck(), List.of("single_player"), strategy);
-            this.fakeDealer = dealer;
-        }
-
-        public static BlackjackGameStub ofDealerCards(List<Card> dealerCards) {
-            Dealer fakeDealer = Dealer.of(CardBundle.of(dealerCards.get(0), dealerCards.get(1)));
-            return new BlackjackGameStub(fakeDealer, prodStrategy);
-        }
+    private static class CardsStub implements CardStack {
 
         @Override
-        public boolean dealerCanDraw() {
-            return fakeDealer.canDraw();
-        }
-
-        @Override
-        public void drawDealerCard() {
-            fakeDealer.receiveCard(popCard());
-        }
-
-        @Override
-        public Card popCard() {
-            return drawableCards.pop();
-        }
-
-        @Override
-        public Dealer getDealer() {
-            return fakeDealer;
+        public Card pop() {
+            return DRAWABLE_CARD;
         }
     }
 }
