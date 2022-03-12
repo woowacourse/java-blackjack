@@ -8,12 +8,12 @@ public class Player extends AbstractParticipant {
 
     private static final int FIRST_DRAW_CARD_SIZE = 2;
 
-    private Player(final String name, final Cards cards, final boolean turnState) {
-        super(name, cards, turnState);
+    private Player(final String name, final Cards cards, final GameStatus gameStatus) {
+        super(name, cards, gameStatus);
     }
 
     public static Player createNewPlayer(final String name, final List<Card> cards) {
-        return new Player(name, new Cards(cards), true);
+        return new Player(name, new Cards(cards), GameStatus.RUNNING);
     }
 
     @Override

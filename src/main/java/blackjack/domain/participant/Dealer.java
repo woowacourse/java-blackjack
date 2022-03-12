@@ -11,16 +11,19 @@ public class Dealer extends AbstractParticipant {
     private static final int DEALER_LIMIT_SCORE = 17;
     private static final int FIRST_DRAW_CARD_SIZE = 1;
 
-    private Dealer(final String name, final Cards cards, final boolean turnState) {
-        super(name, cards, turnState);
+    private Dealer(final String name, final Cards cards, final GameStatus gameStatus) {
+        super(name, cards, gameStatus);
     }
 
     public static Dealer createNewDealer(final List<Card> cards) {
         final Cards ownCards = new Cards(new ArrayList<>(cards));
-        if (ownCards.calculateScore() >= DEALER_LIMIT_SCORE) {
-            return new Dealer(NAME, ownCards, false);
+
+        if (ownCards.isBlackJack()) {
+            return new Dealer(NAME, ownCards, GameStatus.BLACKJACK);
+        } else if (ownCards.calculateScore() >= DEALER_LIMIT_SCORE) {
+            return new Dealer(NAME, ownCards, GameStatus.FINISHED);
         }
-        return new Dealer(NAME, ownCards, true);
+        return new Dealer(NAME, ownCards, GameStatus.RUNNING);
     }
 
     @Override
@@ -41,7 +44,7 @@ public class Dealer extends AbstractParticipant {
     }
 
     @Override
-    boolean isEnd() {
+    boolean isEnd()                              {
         return super.calculateScore() >= DEALER_LIMIT_SCORE;
     }
 }

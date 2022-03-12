@@ -12,15 +12,15 @@ public abstract class AbstractParticipant implements Participant {
 
     private final String name;
     private final Cards cards;
-    private boolean turnState;
+    private GameStatus gameStatus;
 
-    public AbstractParticipant(final String name, final Cards cards, final boolean turnState) {
+    public AbstractParticipant(final String name, final Cards cards, final GameStatus gameStatus) {
         Objects.requireNonNull(name, "플레이어의 이름은 null이 들어올 수 없습니다.");
         Objects.requireNonNull(cards, "보유 카드에는 null이 들어올 수 없습니다.");
         validateEmptyName(name);
         this.name = name;
         this.cards = cards;
-        this.turnState = turnState;
+        this.gameStatus = gameStatus;
     }
 
     private void validateEmptyName(final String name) {
@@ -36,7 +36,7 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     private void validateCanCalculateResultScore() {
-        if (turnState) {
+        if (!gameStatus.isFinishedGame()) {
             throw new IllegalStateException("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
         }
     }
@@ -47,27 +47,27 @@ public abstract class AbstractParticipant implements Participant {
 
     @Override
     public void draw(final Card card) {
-        if (!turnState) {
+        if (gameStatus.isFinishedGame()) {
             throw new IllegalStateException("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
         }
         cards.addCard(card);
-        checkEndGame();
+        refreshGameStatus();
     }
 
-    private void checkEndGame() {
+    private void refreshGameStatus() {
         if (isEnd()) {
-            turnState = false;
+            gameStatus = GameStatus.FINISHED;
         }
     }
 
     @Override
     public boolean canDraw() {
-        return turnState;
+        return !gameStatus.isFinishedGame();
     }
 
     @Override
     public void endTurn() {
-        turnState = false;
+        gameStatus = GameStatus.FINISHED;
     }
 
     @Override

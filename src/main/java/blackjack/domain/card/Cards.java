@@ -82,7 +82,7 @@ public class Cards {
         return LOSE;
     }
 
-    private boolean isBlackJack() {
+    public boolean isBlackJack() {
         return cards.size() == BLACK_JACK_SIZE && calculateScore() == BLACK_JACK_TARGET_NUMBER;
     }
 }
