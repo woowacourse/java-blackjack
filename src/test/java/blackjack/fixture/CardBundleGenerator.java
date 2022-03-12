@@ -47,8 +47,6 @@ public class CardBundleGenerator {
     }
 
     public static CardBundle getCardBundleOfBust() {
-        CardBundle cards = generateCardBundleOf(CLOVER10, CLOVER_KING);
-        cards.add(CLOVER2);
-        return cards;
+        return generateCardBundleOf(CLOVER2, CLOVER10, CLOVER_KING);
     }
 }
