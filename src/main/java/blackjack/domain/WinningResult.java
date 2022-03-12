@@ -27,5 +27,14 @@ public enum WinningResult {
         return result;
     }
 
-
+    public WinningResult convertResult() {
+        if (this == DRAW) {
+            return this;
+        }
+        if (this == WIN) {
+            return LOSE;
+        }
+        return WIN;
+    }
 }
+

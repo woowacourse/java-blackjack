@@ -28,19 +28,10 @@ public class BlackjackGame {
     public Map<WinningResult, Integer> getDealerResult() {
         Map<WinningResult, Integer> dealerResult = new HashMap<>();
         for (WinningResult winningResult : playerResult.values()) {
-            WinningResult convertedResult = convertToDealerWinningResult(winningResult);
+            WinningResult convertedResult = winningResult.convertResult();
             dealerResult.put(convertedResult, dealerResult.getOrDefault(convertedResult, 0) + 1);
         }
         return dealerResult;
     }
 
-    private WinningResult convertToDealerWinningResult(WinningResult winningResult) {
-        if(winningResult == WinningResult.DRAW) {
-            return winningResult;
-        }
-        if(winningResult == WinningResult.WIN) {
-            return WinningResult.LOSE;
-        }
-        return WinningResult.WIN;
-    }
 }
