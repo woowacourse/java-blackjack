@@ -10,7 +10,7 @@ public class Dealer extends Participant {
     private static final String EMPTY_CARD_BUNDLE_EXCEPTION_MESSAGE = "딜러는 카드를 최소 2장의 카드를 지니고 있어야 합니다.";
 
     private Dealer(final CardBundle cardBundle) {
-        super(UNIQUE_NAME, cardBundle);
+        super(cardBundle);
     }
 
     public static Dealer of(final CardBundle cardBundle) {
@@ -23,6 +23,11 @@ public class Dealer extends Participant {
         return score.toInt() <= Score.DEALER_EXTRA_CARD_LIMIT;
     }
 
+    @Override
+    public String getName() {
+        return UNIQUE_NAME;
+    }
+
     public Card getOpenCard() {
         return cardBundle.getCards()
                 .stream()
@@ -32,9 +37,6 @@ public class Dealer extends Participant {
 
     @Override
     public String toString() {
-        return "Dealer{" +
-                "name='" + name + '\'' +
-                ", cardBundle=" + cardBundle +
-                '}';
+        return "Dealer{" + "cardBundle=" + cardBundle + '}';
     }
 }

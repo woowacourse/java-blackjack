@@ -8,11 +8,9 @@ import java.util.Set;
 
 public abstract class Participant {
 
-    protected final String name;
     protected final CardBundle cardBundle;
 
-    protected Participant(final String name, final CardBundle cardBundle) {
-        this.name = name;
+    protected Participant(final CardBundle cardBundle) {
         this.cardBundle = cardBundle;
     }
 
@@ -34,9 +32,7 @@ public abstract class Participant {
         return cardBundle.isBust();
     }
 
-    public String getName() {
-        return name;
-    }
+    public abstract String getName();
 
     public Set<Card> getCards() {
         return Collections.unmodifiableSet(cardBundle.getCards());

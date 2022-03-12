@@ -7,8 +7,11 @@ public class Player extends Participant {
     private static final String BLACK_NAME_INPUT_EXCEPTION_MESSAGE = "플레이어는 이름을 지녀야 합니다.";
     private static final String INVALID_PLAYER_NAME_EXCEPTION_MESSAGE = "플레이어의 이름은 딜러가 될 수 없습니다.";
 
+    private final String name;
+
     private Player(final String name, final CardBundle cardBundle) {
-        super(name, cardBundle);
+        super(cardBundle);
+        this.name = name;
     }
 
     public static Player of(final String name, final CardBundle cardBundle) {
@@ -39,10 +42,15 @@ public class Player extends Participant {
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
     public String toString() {
         return "Player{" +
-                "name='" + name + '\'' +
-                ", cardBundle=" + cardBundle +
+                "cardBundle=" + cardBundle +
+                ", name='" + name + '\'' +
                 '}';
     }
 }
