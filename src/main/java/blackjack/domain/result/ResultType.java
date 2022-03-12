@@ -10,11 +10,11 @@ public enum ResultType {
 
 	private final String value;
 
-	ResultType(String value) {
+	ResultType(final String value) {
 		this.value = value;
 	}
 
-	public static ResultType generateResultType(Player player, Dealer dealer) {
+	public static ResultType generateResultType(final Player player, final Dealer dealer) {
 		if (player.isBurst()) {
 			return LOSE;
 		}

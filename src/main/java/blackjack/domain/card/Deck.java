@@ -22,7 +22,7 @@ public class Deck {
 			);
 	}
 
-	private void setUpCardSuitByDenomination(Denomination denomination) {
+	private void setUpCardSuitByDenomination(final Denomination denomination) {
 		Stream.of(Suit.values())
 			.forEach(type -> cards.add(new Card(denomination, type)));
 	}

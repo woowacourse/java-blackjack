@@ -10,16 +10,16 @@ public class Gamer {
 	protected final Cards cards;
 	protected final Name name;
 
-	public Gamer(String name) {
+	public Gamer(final String name) {
 		this.cards = new Cards();
 		this.name = new Name(name);
 	}
 
-	public void addCard(Card card) {
+	public void addCard(final Card card) {
 		this.cards.addCard(card);
 	}
 
-	public void addTwoCards(Deck deck) {
+	public void addTwoCards(final Deck deck) {
 		addCard(deck.distributeCard());
 		addCard(deck.distributeCard());
 	}

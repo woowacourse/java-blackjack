@@ -32,7 +32,7 @@ public class Score {
 		return scores.get(score);
 	}
 
-	public Score addBy(int number) {
+	public Score addBy(final int number) {
 		return Score.from(this.score + number);
 	}
 

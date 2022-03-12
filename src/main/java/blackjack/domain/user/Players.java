@@ -11,7 +11,7 @@ import blackjack.domain.card.Deck;
 public class Players {
 	private final List<Player> players;
 
-	public Players(List<String> playerNames) {
+	public Players(final List<String> playerNames) {
 		if (playerNames.isEmpty()) {
 			throw new IllegalArgumentException(EMPTY_PLAYER_EXCEPTION.getMessage());
 		}
@@ -26,12 +26,12 @@ public class Players {
 		return players;
 	}
 
-	public void addCardToAllPlayers(Deck deck) {
+	public void addCardToAllPlayers(final Deck deck) {
 		players.stream()
 			.forEach(player -> player.addTwoCards(deck));
 	}
 
-	private void validateDuplicateName(List<String> playerNames) {
+	private void validateDuplicateName(final List<String> playerNames) {
 		if (new HashSet<>(playerNames).size() != playerNames.size()) {
 			throw new IllegalArgumentException(DUPLICATE_PLAYER_EXCEPTION.getMessage());
 		}

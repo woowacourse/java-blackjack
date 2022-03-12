@@ -9,7 +9,7 @@ public class Name {
 
 	private final String name;
 
-	public Name(String name) {
+	public Name(final String name) {
 		if (name == null || name.isEmpty()) {
 			throw new IllegalArgumentException(EMPTY_NAME_EXCEPTION.getMessage());
 		}
