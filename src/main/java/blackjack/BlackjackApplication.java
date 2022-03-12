@@ -22,12 +22,12 @@ public class BlackjackApplication {
         Deck deck = new Deck();
 
         drawCardTwice(players, dealer, deck);
-        printPlayersCard(toDto(players), toDto(dealer));
+        printPlayersCard(toDto(players), PlayerDto.from(dealer));
 
         takeTurnsPlayers(players, deck);
         takeTurnDealer(dealer, deck);
 
-        printPlayersResult(toDto(players), toDto(dealer));
+        printPlayersResult(toDto(players), PlayerDto.from(dealer));
         printScoreResult(players.compete(dealer));
     }
 
@@ -54,7 +54,7 @@ public class BlackjackApplication {
 
     private static Selection requestSelection(Player player) {
         try {
-            return Selection.from(InputView.requestDrawCommand(toDto(player)));
+            return Selection.from(InputView.requestDrawCommand(PlayerDto.from(player)));
         } catch (IllegalArgumentException exception) {
             printException(exception);
             return requestSelection(player);
@@ -65,7 +65,7 @@ public class BlackjackApplication {
         if (selection == Selection.YES) {
             player.drawCard(deck);
         }
-        printPlayerCards(toDto(player));
+        printPlayerCards(PlayerDto.from(player));
     }
 
     private static void drawCardTwice(Players players, Dealer dealer, Deck deck) {
@@ -73,10 +73,6 @@ public class BlackjackApplication {
             players.drawAll(deck);
             dealer.drawCard(deck);
         }
-    }
-
-    private static PlayerDto toDto(Player player) {
-        return PlayerDto.from(player);
     }
 
     private static List<PlayerDto> toDto(Players players) {
