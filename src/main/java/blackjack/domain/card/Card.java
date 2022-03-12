@@ -30,11 +30,10 @@ public class Card {
     }
 
     public static Card of(final CardNumber cardNumber, final CardShape cardShape) {
-        Card newCard = new Card(cardNumber, cardShape);
         return TOTAL_CARD_CACHE.stream()
-                .filter(card -> card.equals(newCard))
-                .findAny()
-                .orElse(newCard);
+                .filter(card -> card.equals(new Card(cardNumber, cardShape)))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("적절하지 않은 카드 정보가 존재합니다."));
     }
 
     public static List<Card> getTotalCard() {
