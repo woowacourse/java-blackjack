@@ -15,7 +15,7 @@ public class CardDeck {
         this.playingCards = playingCards;
     }
 
-    public PlayingCard getCard() {
+    public PlayingCard addCard() {
         return playingCards.pop();
     }
 

@@ -24,7 +24,7 @@ public class Gambler extends Player {
 
     @Override
     public void addCard(final CardDeck cardDeck) {
-        playingCards.addCard(cardDeck.getCard());
+        playingCards.addCard(cardDeck.addCard());
     }
 
     @Override
