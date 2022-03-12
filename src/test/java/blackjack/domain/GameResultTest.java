@@ -20,15 +20,15 @@ public class GameResultTest {
 
     @BeforeEach
     void setUpGameResult() {
-        Dealer dealer = new Dealer(createFirstReceivedCard(CardNumber.KING, CardNumber.FIVE));
-        User user1 = new User("pobi", createFirstReceivedCard(CardNumber.TWO, CardNumber.JACK));
-        User user2 = new User("jun", createFirstReceivedCard(CardNumber.KING, CardNumber.JACK));
-        List<User> users = List.of(user1, user2);
+        final Dealer dealer = new Dealer(createFirstReceivedCard(CardNumber.KING, CardNumber.FIVE));
+        final User user1 = new User("pobi", createFirstReceivedCard(CardNumber.TWO, CardNumber.JACK));
+        final User user2 = new User("jun", createFirstReceivedCard(CardNumber.KING, CardNumber.JACK));
+        final List<User> users = List.of(user1, user2);
 
         gameResult = GameResult.createPlayerGameResult(dealer, users);
     }
 
-    private List<Card> createFirstReceivedCard(CardNumber firstCardNumber, CardNumber secondCardNumber) {
+    private List<Card> createFirstReceivedCard(final CardNumber firstCardNumber, final CardNumber secondCardNumber) {
         return List.of(new Card(CardPattern.DIAMOND, firstCardNumber), new Card(CardPattern.HEART, secondCardNumber));
     }
 

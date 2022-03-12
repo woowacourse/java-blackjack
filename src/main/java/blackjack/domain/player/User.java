@@ -6,7 +6,7 @@ import java.util.List;
 
 public class User extends Player {
 
-    public User(String name, List<Card> cards) {
+    public User(final String name, final List<Card> cards) {
         super(name, cards);
     }
 

@@ -21,7 +21,7 @@ public class GameMachineTest {
     @Test
     @DisplayName("유저들을 생성을 확인한다.")
     void createUsers() {
-        List<String> users = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
+        final List<String> users = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
         final int expected = 7;
 
         final int actual = gameMachine.createUsers(users).size();
@@ -31,7 +31,7 @@ public class GameMachineTest {
     @Test
     @DisplayName("유저 생성 인원이 7명이 넘을 시 에러를 확인한다.")
     void createMoreThanEightUsers() {
-        List<String> users = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
+        final List<String> users = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
         assertThatThrownBy(() ->
                 gameMachine.createUsers(users))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -41,7 +41,7 @@ public class GameMachineTest {
     @Test
     @DisplayName("딜러의 점수가 16이하일 때 딜러가 카드를 받는지 확인한다.")
     void checkDealerReceiveCard() {
-        Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),
+        final Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),
                 new Card(CardPattern.HEART, CardNumber.SIX))));
         final boolean expected = true;
 
@@ -52,7 +52,7 @@ public class GameMachineTest {
     @Test
     @DisplayName("딜러의 점수가 16 초과일 때 카드를 받지 않는지 확인한다.")
     void checkDealerNotReceiveCard() {
-        Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),
+        final Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),
                 new Card(CardPattern.HEART, CardNumber.SEVEN))));
         final boolean expected = false;
 
@@ -63,9 +63,9 @@ public class GameMachineTest {
     @Test
     @DisplayName("블랙잭인 플레이어가 있는지 확인한다.")
     void haveBlackJack() {
-        Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),
+        final Dealer dealer = new Dealer(new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),
                 new Card(CardPattern.HEART, CardNumber.SEVEN))));
-        List<User> users = Arrays.asList(
+        final List<User> users = Arrays.asList(
                 new User("pobi", new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),
                         new Card(CardPattern.HEART, CardNumber.ACE)))),
                 new User("jun", new ArrayList<>(Arrays.asList(new Card(CardPattern.DIAMOND, CardNumber.KING),

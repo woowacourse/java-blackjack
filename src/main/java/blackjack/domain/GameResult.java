@@ -13,15 +13,15 @@ public class GameResult {
     private final Map<String, Result> userResult;
     private final Map<Result, Integer> dealerResult;
 
-    private GameResult(Map<String, Result> userResult, Map<Result, Integer> dealerResult) {
+    private GameResult(final Map<String, Result> userResult, final Map<Result, Integer> dealerResult) {
         this.userResult = userResult;
         this.dealerResult = dealerResult;
     }
 
-    public static GameResult createPlayerGameResult(Dealer dealer, List<User> users) {
+    public static GameResult createPlayerGameResult(final Dealer dealer, final List<User> users) {
         Map<String, Result> userResult = new HashMap<>();
         Map<Result, Integer> dealerResult = initializeDealerResultCount();
-        for (Player user : users) {
+        for (final Player user : users) {
             userResult.put(user.getName(), user.findResult(dealer));
             dealerResult.compute(dealer.findResult(user), (result, count) -> count + 1);
         }

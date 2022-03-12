@@ -14,7 +14,7 @@ public enum Result {
         this.result = result;
     }
 
-    public static Result findResult(Cards myCards, Cards otherCards) {
+    public static Result findResult(final Cards myCards, final Cards otherCards) {
         if (myCards.exceedMaxScore() && otherCards.exceedMaxScore()) {
             return DRAW;
         }
@@ -28,7 +28,7 @@ public enum Result {
                 otherCards.calculateScore(otherCards.getTotalScore(), otherCards.getCountOfAce()));
     }
 
-    private static Result compareScore(int myScore, int otherScore) {
+    private static Result compareScore(final int myScore, final int otherScore) {
         if (myScore > otherScore) {
             return WIN;
         }

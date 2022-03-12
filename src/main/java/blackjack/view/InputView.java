@@ -23,7 +23,7 @@ public class InputView {
         return validateUsersName(users);
     }
 
-    private static List<String> validateUsersName(String users) {
+    private static List<String> validateUsersName(final String users) {
         String[] usersName = users.split(",");
         if (Arrays.stream(usersName)
                 .anyMatch(String::isBlank)) {
@@ -33,13 +33,13 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static Boolean inputDrawCardAnswer(Player user) {
+    public static Boolean inputDrawCardAnswer(final Player user) {
         System.out.println(user.getName() + DRAW_CARD_MESSAGE);
         String answer = scanner.nextLine();
         return validateDrawCardAnswer(answer);
     }
 
-    private static Boolean validateDrawCardAnswer(String answer) {
+    private static Boolean validateDrawCardAnswer(final String answer) {
         if (!answer.equals(YES) && !answer.equals(NO)) {
             throw new IllegalArgumentException(ANSWER_EXCEPTION_MESSAGE);
         }

@@ -10,13 +10,13 @@ public class RentCompany {
     public static final String UNIT_OF_MEASUREMENT = "리터";
     private static final String COLON = " : ";
 
-    private List<Car> cars;
+    private final List<Car> cars;
 
     public RentCompany() {
         cars = new ArrayList<>();
     }
 
-    public void addCar(Car car) {
+    public void addCar(final Car car) {
         Objects.requireNonNull(car);
         cars.add(car);
     }

@@ -66,7 +66,7 @@ public class CardTest {
     @ParameterizedTest(name = "카드의 에이스 카드 여부는 {1}이다.")
     @MethodSource("provideCardAndExpected")
     @DisplayName("에이스 카드인지 확인한다.")
-    void isAceCard(Card card, boolean expected) {
+    void isAceCard(final Card card, final boolean expected) {
         final boolean actual = card.isAceCard();
         assertThat(actual).isEqualTo(expected);
     }

@@ -7,7 +7,7 @@ public class Dealer extends Player {
 
     private static final int MAX_SCORE_TO_PICK = 16;
 
-    public Dealer(List<Card> cards) {
+    public Dealer(final List<Card> cards) {
         super("딜러", cards);
     }
 

@@ -10,7 +10,7 @@ public class CardDeck {
 
     private final Queue<Card> cardDeck;
 
-    public CardDeck(LinkedList<Card> cardDeck) {
+    public CardDeck(final LinkedList<Card> cardDeck) {
         this.cardDeck = cardDeck;
     }
 

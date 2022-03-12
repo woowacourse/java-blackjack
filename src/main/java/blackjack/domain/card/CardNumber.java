@@ -19,7 +19,7 @@ public enum CardNumber {
     private final String type;
     private final int value;
 
-    CardNumber(String type, int value) {
+    CardNumber(final String type, final int value) {
         this.type = type;
         this.value = value;
     }

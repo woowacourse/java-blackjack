@@ -8,7 +8,7 @@ public enum CardPattern {
 
     private final String pattern;
 
-    CardPattern(String pattern) {
+    CardPattern(final String pattern) {
         this.pattern = pattern;
     }
 

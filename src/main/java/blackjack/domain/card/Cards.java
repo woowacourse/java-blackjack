@@ -11,11 +11,11 @@ public class Cards {
 
     private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    public Cards(final List<Card> cards) {
         this.cards = cards;
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 
@@ -31,7 +31,7 @@ public class Cards {
         return calculateScore(getTotalScore(), getCountOfAce()) > BLACK_JACK_SCORE;
     }
 
-    public int calculateScore(int score, int countOfAce) {
+    public int calculateScore(final int score, final int countOfAce) {
         if (score <= BLACK_JACK_SCORE || countOfAce == 0) {
             return score;
         }

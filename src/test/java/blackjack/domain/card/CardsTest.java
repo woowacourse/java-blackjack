@@ -27,7 +27,7 @@ class CardsTest {
     @ParameterizedTest(name = "카드의 블랙잭 여부는 {1}이다.")
     @MethodSource("provideCardsAndExpectedForBlackJack")
     @DisplayName("블랙잭인지 확인한다.")
-    void isBlackJack(Cards cards, boolean expected) {
+    void isBlackJack(final Cards cards, final boolean expected) {
         final boolean actual = cards.isBlackJack();
         assertThat(actual).isEqualTo(expected);
     }
@@ -45,7 +45,7 @@ class CardsTest {
     @ParameterizedTest(name = "카드의 처음 받은 카드인지 여부는 {1}이다.")
     @MethodSource("provideCardsAndExpectedForFirstReceivedCards")
     @DisplayName("처음받은 카드인지(2장인지) 확인한다.")
-    void isFirstReceivedCards(Cards cards, boolean expected) {
+    void isFirstReceivedCards(final Cards cards, final boolean expected) {
         final boolean actual = cards.isFirstReceivedCards();
         assertThat(actual).isEqualTo(expected);
     }
@@ -63,7 +63,7 @@ class CardsTest {
     @ParameterizedTest(name = "카드의 총합이 21을 넘었는지의 여부는 {1}이다.")
     @MethodSource("provideCardsAndExpectedForExceed")
     @DisplayName("카드의 총합이 21을 넘었는지 확인한다.")
-    void exceedMaxScore(Cards cards, boolean expected) {
+    void exceedMaxScore(final Cards cards, final boolean expected) {
         final boolean actual = cards.exceedMaxScore();
         assertThat(actual).isEqualTo(expected);
     }
@@ -91,7 +91,7 @@ class CardsTest {
     @ParameterizedTest(name = "카드의 총합은 {1}이다.")
     @MethodSource("provideCardsAndScore")
     @DisplayName("Ace를 포함한 카드의 총합을 구한다.")
-    void calculateScoreIncludeAce(Cards cards, int expected) {
+    void calculateScoreIncludeAce(final Cards cards, final int expected) {
         final int actual = cards.calculateScore(cards.getTotalScore(), cards.getCountOfAce());
         assertThat(actual).isEqualTo(expected);
     }

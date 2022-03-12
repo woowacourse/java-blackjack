@@ -12,13 +12,13 @@ public abstract class Player {
     private final String name;
     protected final Cards cards;
 
-    public Player(String name, List<Card> cards) {
+    public Player(final String name, final List<Card> cards) {
         this.name = name;
         this.cards = new Cards(cards);
         validateReceivedCardsSize(this.cards);
     }
 
-    private void validateReceivedCardsSize(Cards cards) {
+    private void validateReceivedCardsSize(final Cards cards) {
         if (!cards.isFirstReceivedCards()) {
             throw new IllegalArgumentException(FIRST_RECEIVED_CARD_SIZE_EXCEPTION_MESSAGE);
         }
@@ -30,11 +30,11 @@ public abstract class Player {
         return cards.isBlackJack();
     }
 
-    public final void pickCard(Card card) {
+    public final void pickCard(final Card card) {
         cards.addCard(card);
     }
 
-    public final Result findResult(Player otherPlayer) {
+    public final Result findResult(final Player otherPlayer) {
         return Result.findResult(cards, otherPlayer.cards);
     }
 

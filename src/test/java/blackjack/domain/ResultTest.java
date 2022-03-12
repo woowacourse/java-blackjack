@@ -19,7 +19,7 @@ class ResultTest {
     @ParameterizedTest
     @MethodSource("provideScoreAndResult")
     @DisplayName("점수에 따른 승무패를 계산한다.")
-    void findResult(Result result, Cards myCards, Cards otherCards) {
+    void findResult(final Result result, final Cards myCards, final Cards otherCards) {
         final Result actual = Result.findResult(myCards, otherCards);
 
         assertThat(actual).isEqualTo(result);
@@ -42,7 +42,7 @@ class ResultTest {
         );
     }
 
-    static Cards makeCards(CardNumber... cardNumber) {
+    static Cards makeCards(final CardNumber... cardNumber) {
         List<Card> cards = new ArrayList<>();
         for (CardNumber number : cardNumber) {
             cards.add(new Card(CardPattern.DIAMOND, number));

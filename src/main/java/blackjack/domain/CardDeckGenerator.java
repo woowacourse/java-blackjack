@@ -10,7 +10,7 @@ public class CardDeckGenerator {
 
     public static CardDeck createCardDeckByCardNumber() {
         LinkedList<Card> cards = new LinkedList<>();
-        for (CardNumber cardNumber : CardNumber.values()) {
+        for (final CardNumber cardNumber : CardNumber.values()) {
             cards.add(new Card(CardPattern.DIAMOND, cardNumber));
             cards.add(new Card(CardPattern.HEART, cardNumber));
             cards.add(new Card(CardPattern.CLOVER, cardNumber));
@@ -19,7 +19,7 @@ public class CardDeckGenerator {
         return new CardDeck(shuffleCard(cards));
     }
 
-    private static LinkedList<Card> shuffleCard(LinkedList<Card> cards) {
+    private static LinkedList<Card> shuffleCard(final LinkedList<Card> cards) {
         Collections.shuffle(cards);
         return cards;
     }
