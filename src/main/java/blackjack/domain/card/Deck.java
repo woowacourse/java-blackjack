@@ -17,14 +17,14 @@ public class Deck {
 	}
 
 	private void setUpCards() {
-		Stream.of(Number.values())
-			.forEach(number -> setUpCardTypeByNumber(number)
+		Stream.of(Denomination.values())
+			.forEach(denomination -> setUpCardSuitByDenomination(denomination)
 			);
 	}
 
-	private void setUpCardTypeByNumber(Number number) {
-		Stream.of(Type.values())
-			.forEach(type -> cards.add(new Card(number, type)));
+	private void setUpCardSuitByDenomination(Denomination denomination) {
+		Stream.of(Suit.values())
+			.forEach(type -> cards.add(new Card(denomination, type)));
 	}
 
 	public Card distributeCard() {

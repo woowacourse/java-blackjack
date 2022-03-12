@@ -7,12 +7,11 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
-import blackjack.domain.card.Type;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 
@@ -34,12 +33,12 @@ public class ResultTest {
 	void all_player_lose() {
 		// given
 		List<Player> players = List.of(player1, player2);
-		dealer.addCard(new Card(Number.QUEEN, Type.CLOVER));
-		dealer.addCard(new Card(Number.KING, Type.SPADE));
-		player1.addCard(new Card(Number.TEN, Type.SPADE));
-		player1.addCard(new Card(Number.NINE, Type.DIAMOND));
-		player2.addCard(new Card(Number.TEN, Type.DIAMOND));
-		player2.addCard(new Card(Number.NINE, Type.SPADE));
+		dealer.addCard(new Card(Denomination.QUEEN, Suit.CLOVER));
+		dealer.addCard(new Card(Denomination.KING, Suit.SPADE));
+		player1.addCard(new Card(Denomination.TEN, Suit.SPADE));
+		player1.addCard(new Card(Denomination.NINE, Suit.DIAMOND));
+		player2.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
+		player2.addCard(new Card(Denomination.NINE, Suit.SPADE));
 		// when
 		Result result = new Result();
 		Map<Player, ResultType> gameResult = result.getResult(players, dealer);
@@ -55,12 +54,12 @@ public class ResultTest {
 	void all_player_win() {
 		// given
 		List<Player> players = List.of(player1, player2);
-		dealer.addCard(new Card(Number.QUEEN, Type.CLOVER));
-		dealer.addCard(new Card(Number.NINE, Type.SPADE));
-		player1.addCard(new Card(Number.TEN, Type.SPADE));
-		player1.addCard(new Card(Number.TEN, Type.DIAMOND));
-		player2.addCard(new Card(Number.TEN, Type.HEART));
-		player2.addCard(new Card(Number.TEN, Type.CLOVER));
+		dealer.addCard(new Card(Denomination.QUEEN, Suit.CLOVER));
+		dealer.addCard(new Card(Denomination.NINE, Suit.SPADE));
+		player1.addCard(new Card(Denomination.TEN, Suit.SPADE));
+		player1.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
+		player2.addCard(new Card(Denomination.TEN, Suit.HEART));
+		player2.addCard(new Card(Denomination.TEN, Suit.CLOVER));
 		// when
 		Result result = new Result();
 		Map<Player, ResultType> gameResult = result.getResult(players, dealer);
@@ -75,12 +74,12 @@ public class ResultTest {
 	void all_player_draw() {
 	    //given
 		List<Player> players = List.of(player1, player2);
-		dealer.addCard(new Card(Number.QUEEN, Type.CLOVER));
-		dealer.addCard(new Card(Number.NINE, Type.SPADE));
-		player1.addCard(new Card(Number.TEN, Type.SPADE));
-		player1.addCard(new Card(Number.NINE, Type.DIAMOND));
-		player2.addCard(new Card(Number.TEN, Type.HEART));
-		player2.addCard(new Card(Number.NINE, Type.CLOVER));
+		dealer.addCard(new Card(Denomination.QUEEN, Suit.CLOVER));
+		dealer.addCard(new Card(Denomination.NINE, Suit.SPADE));
+		player1.addCard(new Card(Denomination.TEN, Suit.SPADE));
+		player1.addCard(new Card(Denomination.NINE, Suit.DIAMOND));
+		player2.addCard(new Card(Denomination.TEN, Suit.HEART));
+		player2.addCard(new Card(Denomination.NINE, Suit.CLOVER));
 	    //when
 		Result result = new Result();
 		Map<Player, ResultType> gameResult = result.getResult(players, dealer);

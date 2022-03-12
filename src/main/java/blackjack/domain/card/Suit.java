@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-public enum Type {
+public enum Suit {
 	HEART("하트"),
 	SPADE("스페이드"),
 	DIAMOND("다이아몬드"),
@@ -8,7 +8,7 @@ public enum Type {
 
 	private final String value;
 
-	Type(final String value) {
+	Suit(final String value) {
 		this.value = value;
 	}
 

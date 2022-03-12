@@ -7,11 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Number;
-import blackjack.domain.card.Type;
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Gamer;
-import blackjack.domain.user.Player;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 
 class GamerTest {
 	@Test
@@ -33,9 +30,9 @@ class GamerTest {
 		//given
 		Gamer gamer = new Dealer();
 		//when
-		gamer.addCard(new Card(Number.TEN, Type.CLOVER));
-		gamer.addCard(new Card(Number.TEN, Type.HEART));
-		gamer.addCard(new Card(Number.TWO, Type.SPADE));
+		gamer.addCard(new Card(Denomination.TEN, Suit.CLOVER));
+		gamer.addCard(new Card(Denomination.TEN, Suit.HEART));
+		gamer.addCard(new Card(Denomination.TWO, Suit.SPADE));
 		//then
 		// System.out.println(gamer.getScore());
 		assertThat(gamer.isBurst()).isTrue();
@@ -46,9 +43,9 @@ class GamerTest {
 	void check_optimal_ace_sum() {
 		// given
 		Gamer gamer = new Player("pobi");
-		gamer.addCard(new Card(Number.ACE, Type.HEART));
-		gamer.addCard(new Card(Number.ACE, Type.SPADE));
-		gamer.addCard(new Card(Number.NINE, Type.SPADE));
+		gamer.addCard(new Card(Denomination.ACE, Suit.HEART));
+		gamer.addCard(new Card(Denomination.ACE, Suit.SPADE));
+		gamer.addCard(new Card(Denomination.NINE, Suit.SPADE));
 		// when
 		// then
 		assertThat(gamer).extracting("score").isEqualTo(21);

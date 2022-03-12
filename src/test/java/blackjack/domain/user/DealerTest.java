@@ -6,8 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
-import blackjack.domain.card.Type;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 
 public class DealerTest {
 	@Test
@@ -17,8 +17,8 @@ public class DealerTest {
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
 		//when
-		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
-		player.addCard(new Card(Number.FIVE, Type.CLOVER));
+		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
+		player.addCard(new Card(Denomination.FIVE, Suit.CLOVER));
 		//then
 		assertThat(dealer.hasHigherScore(player)).isTrue();
 	}
@@ -30,8 +30,8 @@ public class DealerTest {
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
 		//when
-		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
-		player.addCard(new Card(Number.TEN, Type.CLOVER));
+		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
+		player.addCard(new Card(Denomination.TEN, Suit.CLOVER));
 		//then
 		assertThat(dealer.hasHigherScore(player)).isFalse();
 	}
@@ -43,8 +43,8 @@ public class DealerTest {
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
 		//when
-		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
-		player.addCard(new Card(Number.NINE, Type.HEART));
+		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
+		player.addCard(new Card(Denomination.NINE, Suit.HEART));
 		//then
 		assertThat(dealer.hasEqualScore(player)).isTrue();
 	}

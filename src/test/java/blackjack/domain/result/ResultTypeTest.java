@@ -6,8 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
-import blackjack.domain.card.Type;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 
@@ -19,8 +19,8 @@ class ResultTypeTest {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
-		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
-		player.addCard(new Card(Number.EIGHT, Type.CLOVER));
+		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
+		player.addCard(new Card(Denomination.EIGHT, Suit.CLOVER));
 		//when
 		ResultType resultType = ResultType.generateResultType(player, dealer);
 		//then
@@ -33,8 +33,8 @@ class ResultTypeTest {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
-		dealer.addCard(new Card(Number.EIGHT, Type.CLOVER));
-		player.addCard(new Card(Number.NINE, Type.CLOVER));
+		dealer.addCard(new Card(Denomination.EIGHT, Suit.CLOVER));
+		player.addCard(new Card(Denomination.NINE, Suit.CLOVER));
 		//when
 		ResultType resultType = ResultType.generateResultType(player, dealer);
 		//then
@@ -47,8 +47,8 @@ class ResultTypeTest {
 		//given
 		Dealer dealer = new Dealer();
 		Player player = new Player("pobi");
-		dealer.addCard(new Card(Number.NINE, Type.CLOVER));
-		player.addCard(new Card(Number.NINE, Type.HEART));
+		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
+		player.addCard(new Card(Denomination.NINE, Suit.HEART));
 		//when
 		ResultType resultType = ResultType.generateResultType(player, dealer);
 		//then
