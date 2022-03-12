@@ -44,8 +44,8 @@ public abstract class Participant {
         return cards.isBlackjack();
     }
 
-    public boolean isBurst() {
-        return cards.isBurst();
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     public String getParticipantName() {

@@ -95,8 +95,8 @@ class DealerTest {
 
     @DisplayName("플레이어의 카드 합계가 버스트일 경우, 플레이어는 패배한다.")
     @ParameterizedTest()
-    @MethodSource("provideForPlayerLoseByBurst")
-    void playerLoseByBurst(final List<Card> initializedCards, final MatchStatus expectedPlayerStatus) {
+    @MethodSource("provideForPlayerLoseByBust")
+    void playerLoseByBust(final List<Card> initializedCards, final MatchStatus expectedPlayerStatus) {
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
         final Dealer dealer = Dealer.readyToPlay(deck);
@@ -107,7 +107,7 @@ class DealerTest {
         assertThat(actualPlayerStatus).isEqualTo(expectedPlayerStatus);
     }
 
-    private static Stream<Arguments> provideForPlayerLoseByBurst() {
+    private static Stream<Arguments> provideForPlayerLoseByBust() {
         return Stream.of(
                 Arguments.of(
                         List.of(
@@ -132,8 +132,8 @@ class DealerTest {
 
     @DisplayName("딜러의 카드 합계가 버스트일 경우, 플레이어가 승리한다.")
     @ParameterizedTest()
-    @MethodSource("provideForDealerLoseByBurst")
-    void dealerLoseByBurst(final List<Card> initializedCards, final MatchStatus expectedPlayerStatus) {
+    @MethodSource("provideForDealerLoseByBust")
+    void dealerLoseByBust(final List<Card> initializedCards, final MatchStatus expectedPlayerStatus) {
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
         final Dealer dealer = Dealer.readyToPlay(deck);
@@ -144,7 +144,7 @@ class DealerTest {
         assertThat(actualPlayerStatus).isEqualTo(expectedPlayerStatus);
     }
 
-    private static Stream<Arguments> provideForDealerLoseByBurst() {
+    private static Stream<Arguments> provideForDealerLoseByBust() {
         return Stream.of(
                 Arguments.of(
                         List.of(

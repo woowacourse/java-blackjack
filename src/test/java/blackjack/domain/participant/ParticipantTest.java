@@ -69,8 +69,8 @@ class ParticipantTest {
 
     @DisplayName("카드의 합계가 버스트인지 확인할 수 있어야 한다.")
     @ParameterizedTest
-    @MethodSource("provideForCheckBurstTest")
-    void checkBurstTest(final List<Card> initializedCards, final boolean isBurst) {
+    @MethodSource("provideForCheckBustTest")
+    void checkBustTest(final List<Card> initializedCards, final boolean isBust) {
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
         final Participant participant = makeParticipant(deck);
@@ -79,10 +79,10 @@ class ParticipantTest {
             participant.drawCard(deck);
         }
 
-        assertThat(participant.isBurst()).isEqualTo(isBurst);
+        assertThat(participant.isBust()).isEqualTo(isBust);
     }
 
-    private static Stream<Arguments> provideForCheckBurstTest() {
+    private static Stream<Arguments> provideForCheckBustTest() {
         return Stream.of(
                 Arguments.of(
                         List.of(

@@ -14,15 +14,15 @@ public class Player extends Participant {
 
     @Override
     public boolean isPossibleToDrawCard() {
-        return isNotBlackjack() && isNotBurst();
+        return isNotBlackjack() && isNotBust();
     }
 
     private boolean isNotBlackjack() {
         return !isBlackjack();
     }
 
-    private boolean isNotBurst() {
-        return !isBurst();
+    private boolean isNotBust() {
+        return !isBust();
     }
 
 }

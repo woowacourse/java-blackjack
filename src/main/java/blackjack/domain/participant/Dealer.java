@@ -22,10 +22,10 @@ public class Dealer extends Participant {
     }
 
     public MatchStatus judgeWinner(final Player player) {
-        if (player.isBurst()) {
+        if (player.isBust()) {
             return MatchStatus.LOSS;
         }
-        if (this.isBurst()) {
+        if (this.isBust()) {
             return MatchStatus.WIN;
         }
         return MatchStatus.from(this.isLowerThan(player));

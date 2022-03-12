@@ -69,7 +69,7 @@ public class Cards {
         return calculateScore() == BLACKJACK;
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return calculateScore() > BLACKJACK;
     }
 
