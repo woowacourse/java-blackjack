@@ -96,16 +96,16 @@ public class CardsTest {
     }
 
     @ParameterizedTest
-    @MethodSource("cardOverMaxScore")
-    @DisplayName("카드의 점수가 21아래 이다.")
-    void calculateUnderMaxScore(List<Card> receivedCards, Card card, int score) {
+    @MethodSource("containsAce")
+    @DisplayName("Ace가 포함되면 1또는 11로 계산될 수 있다.")
+    void calculateContainsAce(List<Card> receivedCards, Card card, int score) {
         Cards cards = new Cards(receivedCards);
         cards.addCard(card);
 
         Assertions.assertThat(cards.calculateFinalScore()).isEqualTo(score);
     }
 
-    private static Stream<Arguments> cardUnderMaxScore() {
+    private static Stream<Arguments> containsAce() {
         return Stream.of(
                 Arguments.of(
                         Arguments.of(List.of(
