@@ -64,13 +64,13 @@ public class Blackjack {
     }
 
     private List<String> getPlayerCards(final Player player) {
-        return player.showCards().stream()
+        return player.openCards().stream()
                 .map(Card::getName)
                 .collect(Collectors.toList());
     }
 
     private List<String> getDealerInitCards(final Dealer dealer) {
-        return dealer.showPartOfCards().stream()
+        return dealer.openPartOfCards().stream()
                 .map(Card::getName)
                 .collect(Collectors.toList());
     }
@@ -120,15 +120,15 @@ public class Blackjack {
     }
 
     private void openScore(final Dealer dealer, final Players players) {
-        OutputView.printScore(dealer.getName(), getDealerCards(dealer), dealer.showSumOfCards());
+        OutputView.printScore(dealer.getName(), getDealerCards(dealer), dealer.sumOfCards());
         for (Player player : players.getPlayers()) {
-            OutputView.printScore(player.getName(), getPlayerCards(player), player.showSumOfCards());
+            OutputView.printScore(player.getName(), getPlayerCards(player), player.sumOfCards());
         }
         OutputView.printNewLine();
     }
 
     private List<String> getDealerCards(final Dealer dealer) {
-        return dealer.showCards().stream()
+        return dealer.openCards().stream()
                 .map(Card::getName)
                 .collect(Collectors.toList());
     }

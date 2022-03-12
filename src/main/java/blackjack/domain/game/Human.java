@@ -13,11 +13,11 @@ public abstract class Human {
         this.name = name;
     }
 
-    public List<Card> showCards() {
+    public List<Card> openCards() {
         return playingCards.getAllCards();
     }
 
-    public int showSumOfCards() {
+    public int sumOfCards() {
         return playingCards.calculateTotal();
     }
 

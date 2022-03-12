@@ -36,7 +36,7 @@ public class PlayingCards {
         return calculateTotal() < BLACKJACK;
     }
 
-    public List<Card> getPartOfDealerCard() {
+    public List<Card> getPartOfCard() {
         if (playingCards.isEmpty()) {
             return new ArrayList<>();
         }

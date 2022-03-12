@@ -14,11 +14,11 @@ public class Dealer extends Human {
     }
 
     public boolean isLowerScore(final Player player) {
-        return showSumOfCards() < player.showSumOfCards();
+        return sumOfCards() < player.sumOfCards();
     }
 
-    public List<Card> showPartOfCards() {
-        return playingCards.getPartOfDealerCard();
+    public List<Card> openPartOfCards() {
+        return playingCards.getPartOfCard();
     }
 
     public String getName() {
