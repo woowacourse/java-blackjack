@@ -27,6 +27,9 @@ public class Application {
             startTurn(blackJackGame, cardPack);
             nextTurn(blackJackGame);
         }
+
+        blackJackGame.giveCardBy(cardPack);
+        resultView.printDealerAddCardCount(new BlackJackGameDto(blackJackGame));
     }
 
     private static void startTurn(BlackJackGame blackJackGame, CardPack cardPack) {
@@ -47,33 +50,4 @@ public class Application {
         blackJackGame.nextDrawTurn();
     }
 
-/*
-
-        do {
-            blackJackGame.toNextEntry();
-            playTurn(inputView, blackJackGame, resultView);
-        } while (blackJackGame.hasNextEntry());
-
-        blackJackGame.hitDealer();
-        if (blackJackGame.countCardsAddedToDealer() > 0) {
-            resultView.printDealerHitCount(blackJackGame.countCardsAddedToDealer());
-        }
-
-        resultView.printScores(blackJackGame.getNames(), blackJackGame.getDecksToString(), blackJackGame.getScores());
-    }
-
-    private static void playTurn(InputView inputView, BlackJackGame blackJackGame, ResultView resultView) {
-        if (blackJackGame.isCurrentEntryBust()) {
-            resultView.printBustMessage(blackJackGame.getCurrentEntryName());
-            return;
-        }
-        if (!inputView.askForHit(blackJackGame.getCurrentEntryName())) {
-            resultView.printDeck(blackJackGame.getCurrentEntryName(), blackJackGame.getCurrentDeckToString());
-            return;
-        }
-        blackJackGame.hitCurrentEntry();
-        resultView.printDeck(blackJackGame.getCurrentEntryName(), blackJackGame.getCurrentDeckToString());
-        playTurn(inputView, blackJackGame, resultView);
-    }
-    */
 }

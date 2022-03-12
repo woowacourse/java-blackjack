@@ -39,7 +39,7 @@ public class BlackJackGame {
     }
 
     public boolean isBustOnNowTurn() {
-        return gamers.isCurrentGamerBust();
+        return gamers.isCurrentGamerCanReceive();
     }
 
     public void drawCardFrom(CardPack cardPack) {
@@ -61,48 +61,10 @@ public class BlackJackGame {
     public Player getCurrentPlayer() {
         return gamers.getCurrentValue();
     }
-/*
-    public void hitCurrentEntry() {
-        this.players.hitCurrentEntry(trumpCardPack.draw());
-    }
 
-    public boolean isCurrentEntryBust() {
-        return this.players.isCurrentEntryBust();
-    }
-
-    public void hitDealer() {
-        while (this.players.canDealerHit()) {
-            this.players.hitDealer(trumpCardPack.draw());
+    public void giveCardBy(CardPack cardPack) {
+        while (dealer.canReceive()) {
+            dealer.receive(cardPack.draw());
         }
     }
-
-    public List<String> getEntryNames() {
-        return this.players.getEntryNames();
-    }
-
-    public List<String> getNames() {
-        return this.players.getNames();
-    }
-
-    public List<List<String>> getDecksToString() {
-        return this.players.getCardsToString();
-    }
-
-    public String getCurrentEntryName() {
-        return this.players.getCurrentEntryName();
-    }
-
-    public List<String> getCurrentDeckToString() {
-        return this.players.getCurrentDeckToString();
-    }
-
-    public int countCardsAddedToDealer() {
-        return this.players.countCardsAddedToDealer();
-    }
-
-    public List<Integer> getScores() {
-        return this.players.getScores();
-    }
-
- */
 }

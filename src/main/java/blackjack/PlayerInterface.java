@@ -5,7 +5,7 @@ import blackjack.trumpcard.Card;
 public interface PlayerInterface {
     void receive(Card card);
 
-    boolean isBust();
+    boolean canReceive();
 
     String getName();
 }

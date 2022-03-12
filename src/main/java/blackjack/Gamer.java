@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.trumpcard.Card;
-import java.util.List;
+
 import java.util.regex.Pattern;
 
 public class Gamer extends Player {
@@ -51,12 +51,13 @@ public class Gamer extends Player {
         }
     }
 
-    public List<String> getDeckToString() {
-        return this.deck.getCardsToString();
+    @Override
+    public void receive(Card card) {
+        this.deck.add(card);
     }
 
     @Override
-    public boolean isBust() {
-         return this.deck.isBust();
+    public boolean canReceive() {
+        return this.deck.isBust();
     }
 }

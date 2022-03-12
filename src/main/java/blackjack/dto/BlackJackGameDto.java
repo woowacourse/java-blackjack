@@ -16,11 +16,19 @@ public class BlackJackGameDto {
                 .collect(Collectors.toList());
     }
 
+    public String getDealerName() {
+        return dealer.getName();
+    }
+
     public PlayerDto getDealer() {
         return dealer;
     }
 
     public List<PlayerDto> getGamers() {
         return gamers;
+    }
+
+    public int getDealerAddCardCount() {
+        return dealer.getCardCount() - 2;
     }
 }

@@ -1,6 +1,5 @@
 package blackjack;
 
-import blackjack.trumpcard.Card;
 import blackjack.trumpcard.Deck;
 
 public abstract class Player implements PlayerInterface {
@@ -19,15 +18,6 @@ public abstract class Player implements PlayerInterface {
         if (name == null) {
             throw new IllegalArgumentException(ERROR_NULL);
         }
-    }
-
-    public int getScore() {
-        return deck.sumScore();
-    }
-
-    @Override
-    public void receive(Card card) {
-        this.deck.add(card);
     }
 
     @Override

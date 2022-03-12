@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.Dealer;
 import blackjack.dto.BlackJackGameDto;
 import blackjack.dto.CardDto;
 import blackjack.dto.PlayerDto;
@@ -10,7 +11,7 @@ public class ResultView {
     private static final String DEALER_MESSAGE_FORMAT = "\n%s와 ";
     private static final String GAMERS_MESSAGE_FORMAT = "%s에게 2장의 카드를 나누었습니다.\n";
     private static final String PLAYER_CARDS_MESSAGE_FORMAT = "%s : %s%n";
-    private static final String FORMAT_MESSAGE_DEALER_HIT = "%n딜러는 16이하라 %d장의 카드를 더 받았습니다.%n";
+    private static final String DEALER_RECEIVE_MESSAGE_FORMAT = "\n%s는 16이하라 %d장의 카드를 더 받았습니다.%n";
 
     public static final String DELIMITER_NAME = ", ";
     public static final String FORMAT_SCORE = "%s 카드: %s - 결과: %d%n";
@@ -62,12 +63,15 @@ public class ResultView {
         System.out.printf(PLAYER_CARDS_MESSAGE_FORMAT, playerDto.getName(), joiner);
     }
 
-    public void printBust(){
+    public void printBust() {
         System.out.println(BUST_MESSAGE);
     }
 
-    public void printDealerHitCount(int count) {
-        System.out.printf(FORMAT_MESSAGE_DEALER_HIT, count);
+    public void printDealerAddCardCount(BlackJackGameDto game) {
+        int addCount = game.getDealerAddCardCount();
+        if (addCount > 0) {
+            System.out.printf(DEALER_RECEIVE_MESSAGE_FORMAT, game.getDealerName(), addCount);
+        }
     }
 
     public void printScores(List<String> names, List<List<String>> decks, List<Integer> scores) {

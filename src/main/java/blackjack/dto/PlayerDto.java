@@ -36,4 +36,8 @@ public class PlayerDto {
     public CardDto getCardDto() {
         return cards.get(0);
     }
+
+    public int getCardCount() {
+        return cards.size();
+    }
 }

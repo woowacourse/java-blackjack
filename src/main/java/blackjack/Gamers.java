@@ -50,8 +50,8 @@ public class Gamers {
         values.get(gamerOrder).receive(card);
     }
 
-    public boolean isCurrentGamerBust() {
-        return values.get(gamerOrder).isBust();
+    public boolean isCurrentGamerCanReceive() {
+        return values.get(gamerOrder).canReceive();
     }
 
     public void nextGamer() {
