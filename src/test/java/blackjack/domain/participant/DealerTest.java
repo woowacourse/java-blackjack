@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -30,6 +31,15 @@ class DealerTest {
         assertThatThrownBy(() -> dealer.hit(Card.of(SPADE, A)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("딜러는 첫번째 카드 반환 시 1장의 카드만 반환해야 한다.")
+    void firstCards() {
+        final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN));
+        final Participant dealer = Dealer.createNewDealer(cards);
+
+        assertThat(dealer.firstCards()).isEqualTo(Collections.singletonList(Card.of(SPADE, TEN)));
     }
 
     @Test
