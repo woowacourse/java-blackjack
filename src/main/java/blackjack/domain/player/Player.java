@@ -5,7 +5,7 @@ import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-abstract public class Player {
+public abstract class Player {
 
     private static final Pattern NON_SPECIAL_CHARACTERS = Pattern.compile("^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣\\s]*$");
 
@@ -20,7 +20,7 @@ abstract public class Player {
         this.cards = new Cards(new ArrayList<>());
     }
 
-    abstract public boolean canTakeCard();
+    public abstract boolean canTakeCard();
 
     private void checkNameSpecialCharacters(String name) {
         if (!NON_SPECIAL_CHARACTERS.matcher(name).matches()) {
