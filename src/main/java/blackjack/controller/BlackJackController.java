@@ -47,7 +47,8 @@ public class BlackJackController {
     }
 
     private void runDealerTurn(BlackJackGame blackJackGame) {
-        blackJackGame.dealerFinishGame();
+        int gainCardCount = blackJackGame.dealerFinishGame();
+        OutputView.printDealerGainCardCount(gainCardCount);
     }
 
     private DrawCommand askDrawCommand(String name) {

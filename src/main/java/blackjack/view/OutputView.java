@@ -56,7 +56,7 @@ public class OutputView {
     }
 
     public static void printFinalScore(ScoreResultDto finalScore) {
-        System.out.println();
+        printEmptyLine();
         System.out.println("## 최종승패");
         System.out.println("딜러" + COLON + finalScore.getDealerResult().keySet().stream()
                 .map(gameResult -> finalScore.getDealerResult().get(gameResult).toString() + gameResult)
@@ -72,5 +72,17 @@ public class OutputView {
         return cards.stream()
                 .map(Card::toString)
                 .collect(Collectors.joining(COMMA_DELIMITER));
+    }
+
+    public static void printDealerGainCardCount(int count) {
+        printEmptyLine();
+        for (int i = 0; i < count; i++) {
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
+        printEmptyLine();
+    }
+
+    private static void printEmptyLine() {
+        System.out.println();
     }
 }
