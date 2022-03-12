@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.dto.GameResultDto;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
-import blackjack.domain.gamer.Name;
+import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BlackJackResult;
+import blackjack.dto.GameResultDto;
+import blackjack.dto.GamerDto;
 
 public class BlackJackGame {
 
@@ -23,74 +23,47 @@ public class BlackJackGame {
     private static final int DEFAULT_COUNT = 0;
     private static final int INCREASE_COUNT = 1;
 
-    private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
-    private static final String NOT_EXIST_PLAYER_ERROR = "플레이어가 존재하지 않습니다.";
-
     private final CardFactory cardFactory;
-    private final List<Player> players;
-    private final Dealer dealer;
+    private final Gamers gamers;
 
     public BlackJackGame(List<String> names) {
-        validateDuplicationNames(names);
         this.cardFactory = new CardFactory(Card.getCards());
-        this.dealer = new Dealer();
-        this.players = names.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
-    }
-
-    private void validateDuplicationNames(List<String> names) {
-        int count = (int) names.stream()
-                .distinct()
-                .count();
-        if (count != names.size()) {
-            throw new IllegalArgumentException(DUPLICATION_NAME_ERROR);
-        }
+        this.gamers = new Gamers(names);
     }
 
     public void distributeFirstCards() {
         for (int i = 0; i < INIT_DISTRIBUTION_COUNT; i++) {
-            distributeCard(dealer);
-            players.forEach(this::distributeCard);
+            gamers.giveCardToAllGamers(cardFactory::draw);
         }
     }
 
     public int distributeAdditionalToDealer() {
         int count = 0;
-        while (!dealer.isOverThan(ADDITIONAL_DISTRIBUTE_STANDARD)) {
-            distributeCard(dealer);
+        while (!gamers.checkDealerOverThan(ADDITIONAL_DISTRIBUTE_STANDARD)) {
+            gamers.giveCardToDealer(cardFactory::draw);
             count++;
         }
         return count;
     }
 
-    private void distributeCard(Gamer gamer) {
-        gamer.addCard(cardFactory.draw());
-    }
-
     public void distributeCardToPlayer(String name) {
-        findPlayerByName(name).addCard(cardFactory.draw());
-    }
-
-    public Player findPlayerByName(String name) {
-        return players.stream()
-                .filter(player -> player.isSameName(name))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PLAYER_ERROR));
+        gamers.giveCardToPlayer(name, cardFactory::draw);
     }
 
     public boolean isBurst(String name) {
-        Player player = findPlayerByName(name);
-        return player.getCardsNumberSum() > MAX_CARD_VALUE;
+        return gamers.checkPlayerOverThan(name, MAX_CARD_VALUE);
     }
 
     public GameResultDto createResult() {
-        Map<BlackJackResult, Integer> dealerResult = initDealerResult();
+        Map<BlackJackResult, Integer> dealerResult = createDealerResult();
         Map<String, BlackJackResult> playerResults = createPlayerResults(dealerResult);
         return new GameResultDto(playerResults, dealerResult);
     }
 
     private Map<String, BlackJackResult> createPlayerResults(Map<BlackJackResult, Integer> dealerResult) {
+        Dealer dealer = gamers.getDealer();
+        List<Player> players = gamers.getPlayers();
+
         Map<String, BlackJackResult> playerResults = new HashMap<>();
         for (Player player : players) {
             BlackJackResult result = player.match(dealer);
@@ -100,7 +73,7 @@ public class BlackJackGame {
         return playerResults;
     }
 
-    private Map<BlackJackResult, Integer> initDealerResult() {
+    private Map<BlackJackResult, Integer> createDealerResult() {
         Map<BlackJackResult, Integer> dealerResult = new HashMap<>();
         for (BlackJackResult blackJackResult : BlackJackResult.values()) {
             dealerResult.put(blackJackResult, DEFAULT_COUNT);
@@ -109,17 +82,20 @@ public class BlackJackGame {
     }
 
     public List<String> getPlayerNames() {
-        return players.stream()
-            .map(Player::getName)
-            .map((Name::getValue))
+        return gamers.findPlayerNames();
+    }
+
+    public GamerDto getDealerDto() {
+        return new GamerDto(gamers.getDealer());
+    }
+
+    public List<GamerDto> getPlayerDtos() {
+        return gamers.getPlayers().stream()
+            .map(GamerDto::new)
             .collect(Collectors.toList());
     }
 
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+    public GamerDto getPlayerDto(String name) {
+        return new GamerDto(gamers.findPlayerByName(name));
     }
 }

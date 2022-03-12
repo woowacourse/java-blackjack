@@ -7,8 +7,4 @@ public class Dealer extends Gamer{
     public Dealer() {
         super(NAME);
     }
-
-    public boolean isOverThan(int number) {
-        return getCardsNumberSum() > number;
-    }
 }

@@ -61,6 +61,10 @@ public class Gamer {
         return ace.getValue();
     }
 
+    public boolean isOverThan(int number) {
+        return getCardsNumberSum() > number;
+    }
+
     public Name getName() {
         return name;
     }

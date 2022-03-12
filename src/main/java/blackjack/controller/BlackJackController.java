@@ -3,14 +3,11 @@ package blackjack.controller;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
-import java.util.stream.Collectors;
 
-import blackjack.dto.GameResultDto;
-import blackjack.dto.GamerDto;
 import blackjack.domain.Answer;
 import blackjack.domain.BlackJackGame;
-import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Player;
+import blackjack.dto.GameResultDto;
+import blackjack.dto.GamerDto;
 
 public class BlackJackController {
 
@@ -22,8 +19,7 @@ public class BlackJackController {
 	}
 
 	public GamerDto getDealerDto() {
-		Dealer dealer = blackJackGame.getDealer();
-		return new GamerDto(dealer);
+		return blackJackGame.getDealerDto();
 	}
 
 	public void askHitOrStay(UnaryOperator<String> operator, Consumer<GamerDto> consumer) {
@@ -40,15 +36,11 @@ public class BlackJackController {
 	}
 
 	private GamerDto findPlayerByName(String name) {
-		Player player = blackJackGame.findPlayerByName(name);
-		return new GamerDto(player);
+		return blackJackGame.getPlayerDto(name);
 	}
 
 	public List<GamerDto> getPlayerDtos() {
-		List<Player> players = blackJackGame.getPlayers();
-		return players.stream()
-			.map((GamerDto::new))
-			.collect(Collectors.toUnmodifiableList());
+		return blackJackGame.getPlayerDtos();
 	}
 
 	public int requestAdditionalDrawToDealer() {
