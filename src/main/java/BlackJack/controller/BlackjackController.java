@@ -17,7 +17,7 @@ public class BlackjackController {
 
     public void run() {
         List<String> inputPlayerNames = InputView.inputPlayerNames();
-        Dealer dealer = new Dealer(CardFactory.drawTwoCards());
+        Dealer dealer = new Dealer(CardFactory.initCards());
         List<Player> players = joinGame(inputPlayerNames);
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToListDto(dealer, players));
@@ -64,7 +64,7 @@ public class BlackjackController {
     public List<Player> joinGame(List<String> inputPlayerNames) {
         List<Player> players = new ArrayList<>();
         for (String name : inputPlayerNames) {
-            players.add(new Player(name, CardFactory.drawTwoCards()));
+            players.add(new Player(name, CardFactory.initCards()));
         }
         return players;
     }

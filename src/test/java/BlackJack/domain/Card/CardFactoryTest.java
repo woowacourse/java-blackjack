@@ -11,7 +11,7 @@ class CardFactoryTest {
     @Test
     @DisplayName("두장의 카드를 나눠주고 나눠준 카드는 카드 캐쉬에서 지운다.")
     void drawTwoCardsTest() {
-        Cards actual = CardFactory.drawTwoCards();
+        Cards actual = CardFactory.initCards();
         int expectedDrawnCards = 2;
         int expectedCardCache = 50;
         assertThat(actual.getDeck().size()).isEqualTo(expectedDrawnCards);
