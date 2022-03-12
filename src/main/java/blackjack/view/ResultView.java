@@ -98,4 +98,7 @@ public class ResultView {
         }
         System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, player.getName(), joiner, player.getTotalScore());
     }
+
+    public void printWinningResultOfGame(BlackJackGameDto gameDto) {
+    }
 }

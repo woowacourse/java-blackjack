@@ -8,4 +8,5 @@ public interface PlayerInterface {
     boolean canReceive();
 
     String getName();
+
 }

@@ -28,4 +28,9 @@ public abstract class Player implements PlayerInterface {
     public Deck getDeck() {
         return deck;
     }
+
+    public boolean isWinningBy(Player otherPlayer) {
+        Deck otherPlayerDeck = otherPlayer.getDeck();
+        return deck.sumScore() > otherPlayerDeck.sumScore();
+    }
 }
