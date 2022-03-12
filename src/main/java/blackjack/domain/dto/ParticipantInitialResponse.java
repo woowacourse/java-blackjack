@@ -4,16 +4,14 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Participant;
 import java.util.List;
 
-public class ParticipantResponse {
+public class ParticipantInitialResponse {
 
     private final String name;
     private final List<Card> cards;
-    private final int score;
 
-    public ParticipantResponse(Participant participant) {
+    public ParticipantInitialResponse(Participant participant) {
         this.name = participant.getName();
-        this.cards = List.copyOf(participant.getCards());
-        this.score = participant.getScore();
+        this.cards = List.copyOf(participant.showInitialCards());
     }
 
     public String getName() {
@@ -22,9 +20,5 @@ public class ParticipantResponse {
 
     public List<Card> getCards() {
         return cards;
-    }
-
-    public int getScore() {
-        return score;
     }
 }

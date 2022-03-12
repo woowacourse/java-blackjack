@@ -38,6 +38,10 @@ public abstract class Participant {
                 .getValue();
     }
 
+    abstract public List<Card> showInitialCards();
+
+    abstract public boolean isHittable();
+
     public List<Card> getCards() {
         return List.copyOf(cards.getCards());
     }
@@ -45,6 +49,4 @@ public abstract class Participant {
     public String getName() {
         return name.getValue();
     }
-
-    abstract public boolean isHittable();
 }

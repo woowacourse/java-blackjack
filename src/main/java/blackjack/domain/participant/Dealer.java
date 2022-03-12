@@ -14,6 +14,11 @@ public class Dealer extends Participant {
     }
 
     @Override
+    public List<Card> showInitialCards() {
+        return List.of(getCards().get(0));
+    }
+
+    @Override
     public boolean isHittable() {
         return getScore() < HIT_STANDARD;
     }

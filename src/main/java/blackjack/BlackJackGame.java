@@ -5,6 +5,7 @@ import blackjack.domain.Name;
 import blackjack.domain.WinResult;
 import blackjack.domain.card.BlackJackCardsGenerator;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.dto.ParticipantInitialResponse;
 import blackjack.domain.dto.ParticipantResponse;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -47,12 +48,12 @@ public class BlackJackGame {
     }
 
     private void alertStart(Dealer dealer, List<Player> players) {
-        List<ParticipantResponse> playersResponse = players.stream()
+        ParticipantInitialResponse dealerResponse = new ParticipantInitialResponse(dealer);
+        List<ParticipantResponse> playerResponses = players.stream()
                 .map(ParticipantResponse::new)
-                .collect(Collectors.toUnmodifiableList());
-        OutputView.printStartMessage(new ParticipantResponse(dealer), playersResponse);
-        OutputView.printDealerFirstCard(new ParticipantResponse(dealer));
-        players.forEach(player -> OutputView.printParticipantCards(new ParticipantResponse(player)));
+                .collect(Collectors.toList());
+
+        OutputView.printStartMessage(dealerResponse, playerResponses);
     }
 
     private void proceedPlayers(List<Player> players, CardDeck deck) {

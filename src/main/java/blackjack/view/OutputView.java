@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.Outcome;
 import blackjack.domain.WinResult;
 import blackjack.domain.card.Card;
+import blackjack.domain.dto.ParticipantInitialResponse;
 import blackjack.domain.dto.ParticipantResponse;
 import java.util.List;
 import java.util.Map;
@@ -14,28 +15,29 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printStartMessage(ParticipantResponse dealer, List<ParticipantResponse> players) {
+    public static void printStartMessage(ParticipantInitialResponse dealer, List<ParticipantResponse> players) {
         List<String> playerNames = players.stream()
                 .map(ParticipantResponse::getName)
                 .collect(Collectors.toUnmodifiableList());
-        System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.", dealer.getName(), String.join(", ", playerNames));
-        System.out.println();
+        System.out.printf("%s와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), String.join(", ", playerNames));
+        printInitialDealerCards(dealer);
+        players.forEach(OutputView::printParticipantCards);
     }
 
-    public static void printDealerFirstCard(ParticipantResponse dealer) {
-        Card firstCard = dealer.getCards().get(0);
-        System.out.printf("%s: %s", dealer.getName(), createCardInfoString(firstCard));
-        System.out.println();
+    public static void printInitialDealerCards(ParticipantInitialResponse participant) {
+        String cardsInfo = createCardsString(participant.getCards());
+        System.out.printf("%s 카드: %s%n", participant.getName(), cardsInfo);
     }
 
     public static void printParticipantCards(ParticipantResponse participant) {
-        String cardsInfo = participant.getCards()
-                .stream()
+        String cardsInfo = createCardsString(participant.getCards());
+        System.out.printf("%s 카드: %s - 합계: %d%n", participant.getName(), cardsInfo, participant.getScore());
+    }
+
+    private static String createCardsString(List<Card> cards) {
+        return cards.stream()
                 .map(OutputView::createCardInfoString)
                 .collect(Collectors.joining(", "));
-
-        System.out.printf("%s카드: %s - 합계: %d", participant.getName(), cardsInfo, participant.getScore());
-        System.out.println();
     }
 
     private static String createCardInfoString(Card card) {
