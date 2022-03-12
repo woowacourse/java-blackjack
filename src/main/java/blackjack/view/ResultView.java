@@ -84,4 +84,8 @@ public class ResultView {
             System.out.println(userName + COLON + userResult.get(userName).getResult());
         }
     }
+
+    public static void printErrorMessage(Exception e) {
+        System.out.println(e.getMessage());
+    }
 }
