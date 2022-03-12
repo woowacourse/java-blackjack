@@ -2,11 +2,11 @@ package blackjack;
 
 import blackjack.domain.HitRequest;
 import blackjack.domain.Name;
+import blackjack.domain.WinResult;
 import blackjack.domain.card.BlackJackCardsGenerator;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.winResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -94,6 +94,6 @@ public class BlackJackGame {
         OutputView.printParticipantCards(dealer, dealer.getScore());
         players.forEach(
                 player -> OutputView.printParticipantCards(player, player.getScore()));
-        OutputView.printWinResult(new winResult(dealer, players));
+        OutputView.printWinResult(new WinResult(dealer, players));
     }
 }

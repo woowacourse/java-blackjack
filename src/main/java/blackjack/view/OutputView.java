@@ -1,11 +1,11 @@
 package blackjack.view;
 
 import blackjack.domain.Judgement;
+import blackjack.domain.WinResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
-import blackjack.domain.winResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -68,7 +68,7 @@ public class OutputView {
         System.out.println("## 최종 카드");
     }
 
-    public static void printWinResult(winResult winResult) {
+    public static void printWinResult(WinResult winResult) {
         System.out.println();
         System.out.println("## 최종 승패");
         printDealerWinResult(winResult.getDealerResult());
