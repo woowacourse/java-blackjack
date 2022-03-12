@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 import blackjack.domain.BlackJackCommand;
 import blackjack.domain.BlackJackResult;
 import blackjack.domain.CardDeck;
+import blackjack.domain.CardGenerator.RandomCardGenerator;
 import blackjack.domain.Dealer;
 import blackjack.domain.Gambler;
 import blackjack.domain.Player;
@@ -29,7 +30,7 @@ public class BlackJackGame {
     public void start() {
         final List<Player> gamblers = getGambler();
         final Player dealer = new Dealer();
-        final CardDeck cardDeck = new CardDeck();
+        final CardDeck cardDeck = new CardDeck(new RandomCardGenerator());
 
         spreadCards(gamblers, dealer, cardDeck);
         playGame(gamblers, dealer, cardDeck);

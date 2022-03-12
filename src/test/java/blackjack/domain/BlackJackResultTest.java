@@ -13,13 +13,11 @@ import org.junit.jupiter.api.Test;
 public class BlackJackResultTest {
     private List<Player> gamblers;
     private Player dealer;
-    private CardDeck cardDeck;
 
     @BeforeEach
     void setup() {
         gamblers = List.of(new Gambler("포비"), new Gambler("돌범"), new Gambler("리차드"));
         dealer = new Dealer();
-        cardDeck = new CardDeck();
     }
 
     @Test
@@ -31,7 +29,6 @@ public class BlackJackResultTest {
         final List<GameResult> gameResults = Arrays.stream(GameResult.values()).collect(Collectors.toList());
 
         // then
-        dealerResult.keySet()
-            .forEach( result -> assertThat(gameResults).contains(result));
+        dealerResult.keySet().forEach(result -> assertThat(gameResults).contains(result));
     }
 }
