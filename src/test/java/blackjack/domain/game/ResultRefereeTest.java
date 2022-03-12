@@ -92,19 +92,68 @@ public class ResultRefereeTest {
         assertThat(getResultCounts(results.get(4))).isEqualTo(LOSE_ONCE);
     }
 
-    @DisplayName("딜러가 20 이하인 경우, 버스트인 플레이어는 패배, 그 외에는 전부 대소비교를 통해 판정한다.")
-    @Test
-    void simpleComparison() {
-        List<ResultStatistics> results = new ResultReferee(dealer20,
-                List.of(playerBlackjack, player20, player10, player15, playerBust))
-                .getResults();
+    @DisplayName("플레이어가 블랙잭인 경우, 딜러도 블랙잭이면 무승부, 그 외에는 전부 승리한다.")
+    @Nested
+    class PlayerBlackjackTest {
 
-        ResultStatistics dealerResult = results.get(0);
-        assertThat(getResultCounts(dealerResult)).isEqualTo(List.of(3, 1, 1));
-        assertThat(getResultCounts(results.get(1))).isEqualTo(WIN_ONCE);
-        assertThat(getResultCounts(results.get(2))).isEqualTo(DRAW_ONCE);
-        for (int i : List.of(3, 4, 5)) {
-            assertThat(getResultCounts(results.get(i))).isEqualTo(LOSE_ONCE);
+        @DisplayName("딜러도 블랙잭이면 서로 무승부가 된다.")
+        @Test
+        void playerDrawOnDealerBlackjack() {
+            List<ResultStatistics> results = new ResultReferee(
+                    dealerBlackjack, List.of(playerBlackjack))
+                    .getResults();
+
+            ResultStatistics dealerResult = results.get(0);
+            assertThat(getResultCounts(dealerResult)).isEqualTo(DRAW_ONCE);
+            assertThat(getResultCounts(results.get(1))).isEqualTo(DRAW_ONCE);
+        }
+
+        @DisplayName("딜러의 패가 3장 이상으로 구성된 21이어도 블랙잭이 아니므로 플레이어가 승리한다.")
+        @Test
+        void playerDrawOnDealerNonBlackjack21() {
+            List<ResultStatistics> results = new ResultReferee(dealer21, List.of(playerBlackjack))
+                    .getResults();
+
+            ResultStatistics dealerResult = results.get(0);
+            assertThat(getResultCounts(dealerResult)).isEqualTo(LOSE_ONCE);
+            assertThat(getResultCounts(results.get(1))).isEqualTo(WIN_ONCE);
+        }
+    }
+
+    @DisplayName("딜러가 블랙잭 및 버스트가 아닌 경우 버스트인 플레이어는 패배, 그 외에는 전부 대소비교를 통해 판정한다.")
+    @Nested
+    class DealerNonBlackjackTest {
+
+        @DisplayName("딜러가 20 이하인 경우")
+        @Test
+        void simpleComparison() {
+            List<ResultStatistics> results = new ResultReferee(dealer20,
+                    List.of(player21, player20, player10, player15, playerBust))
+                    .getResults();
+
+            ResultStatistics dealerResult = results.get(0);
+            assertThat(getResultCounts(dealerResult)).isEqualTo(List.of(3, 1, 1));
+            assertThat(getResultCounts(results.get(1))).isEqualTo(WIN_ONCE);
+            assertThat(getResultCounts(results.get(2))).isEqualTo(DRAW_ONCE);
+            for (int i : List.of(3, 4, 5)) {
+                assertThat(getResultCounts(results.get(i))).isEqualTo(LOSE_ONCE);
+            }
+        }
+
+        @DisplayName("딜러의 패가 블랙잭이 아닌 21인 경우")
+        @Test
+        void simpleComparisonDealerNonBlackjack21() {
+            List<ResultStatistics> results = new ResultReferee(dealer21,
+                    List.of(playerBlackjack, player21, player20, player10, player15, playerBust))
+                    .getResults();
+
+            ResultStatistics dealerResult = results.get(0);
+            assertThat(getResultCounts(dealerResult)).isEqualTo(List.of(4, 1, 1));
+            assertThat(getResultCounts(results.get(1))).isEqualTo(WIN_ONCE);
+            assertThat(getResultCounts(results.get(2))).isEqualTo(DRAW_ONCE);
+            for (int i : List.of(3, 4, 5, 6)) {
+                assertThat(getResultCounts(results.get(i))).isEqualTo(LOSE_ONCE);
+            }
         }
     }
 
