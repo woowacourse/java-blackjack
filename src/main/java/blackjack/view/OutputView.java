@@ -45,34 +45,29 @@ public class OutputView {
     }
 
     public static void printBlackJackMessage(String name) {
-        System.out.printf("%s는 블랙잭입니다!!", name);
-        System.out.println();
+        System.out.printf("%s는 블랙잭입니다!!%n", name);
     }
 
     public static void printBustMessage(String name) {
-        System.out.printf("%s의 카드의 합이 21을 넘었습니다.", name);
-        System.out.println();
+        System.out.printf("%s의 카드의 합이 21을 넘었습니다.%n", name);
     }
 
     public static void printDealerHitMessage() {
-        System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+        System.out.printf("%n딜러는 16이하라 한 장의 카드를 더 받았습니다.%n");
     }
 
     public static void printCardResultMessage() {
-        System.out.println();
-        System.out.println("## 최종 카드");
+        System.out.printf("%n## 최종 카드%n");
     }
 
     public static void printWinResult(WinResult winResult) {
-        System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.printf("%n## 최종 승패%n");
         printDealerWinResult(winResult.getDealerResult());
         printPlayersWinResult(winResult.getPlayersResult());
     }
 
     private static void printDealerWinResult(Map<Outcome, Integer> dealerResult) {
-        System.out.printf("딜러: %s", createDealerWinResultString(dealerResult));
-        System.out.println();
+        System.out.printf("딜러: %s%n", createDealerWinResultString(dealerResult));
     }
 
     private static String createDealerWinResultString(Map<Outcome, Integer> dealerResult) {
@@ -89,7 +84,6 @@ public class OutputView {
     }
 
     private static void printPlayerWinResult(String playerName, Outcome outcome) {
-        System.out.printf("%s: %s", playerName, outcome.getName());
-        System.out.println();
+        System.out.printf("%s: %s%n", playerName, outcome.getName());
     }
 }
