@@ -24,31 +24,37 @@ public class Gamers {
 
     public void giveCardsBy(CardDeck cardDeck) {
         for (Player gamer : values) {
+            giveCardsToGamerBy(cardDeck, gamer);
+        }
+    }
+
+    private void giveCardsToGamerBy(CardDeck cardDeck, Player gamer) {
+        for (int i = 0; i < START_CARD_COUNT; i++) {
             gamer.receive(cardDeck.draw());
         }
+    }
+
+    public boolean hasNeverHitOrStayGamer() {
+        return values.size() > gamerOrder;
+    }
+
+    public void hitCurrentGamerBy(CardDeck cardDeck) {
+        values.get(gamerOrder).hit(cardDeck.draw());
     }
 
     public List<Player> getValues() {
         return values;
     }
 
-    public boolean hasNextGamer() {
-        return values.size() > gamerOrder;
-    }
-
     public Player getCurrentValue() {
         return values.get(gamerOrder);
     }
 
-    public void giveCurrentGamer(Card card) {
-        values.get(gamerOrder).receive(card);
+    public boolean isCurrentGamerCanNotHit() {
+        return values.get(gamerOrder).isImpossibleHit();
     }
 
-    public boolean isCurrentGamerCanReceive() {
-        return values.get(gamerOrder).canReceive();
-    }
-
-    public void nextGamer() {
+    public void readyNextGamer() {
         gamerOrder += 1;
     }
 }

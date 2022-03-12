@@ -26,7 +26,7 @@ public class GamersTest {
         List<String> names = List.of("포키", "리버");
         Gamers gamers = Gamers.from(names);
 
-        gamers.nextGamer();
+        gamers.readyNextGamer();
 
         assertThat(gamers.getCurrentValue().getName()).isEqualTo(names.get(1));
     }

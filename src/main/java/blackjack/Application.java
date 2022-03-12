@@ -19,8 +19,8 @@ public class Application {
 
         giveStartingCardsToBlackJackGame(blackJackGame, cardDeck);
 
-        while (blackJackGame.isDrawPossible()) {
-            startTurn(blackJackGame, cardDeck);
+        while (blackJackGame.isPossibleToHitOrStay()) {
+            startHitOrStay(blackJackGame, cardDeck);
             nextTurn(blackJackGame);
         }
 
@@ -44,8 +44,8 @@ public class Application {
         return new BlackJackGame(names);
     }
 
-    private static void startTurn(BlackJackGame blackJackGame, CardDeck cardDeck) {
-        if (blackJackGame.isBustOnNowTurn()) {
+    private static void startHitOrStay(BlackJackGame blackJackGame, CardDeck cardDeck) {
+        if (blackJackGame.isBust()) {
             resultView.printBust();
             return;
         }
@@ -53,13 +53,13 @@ public class Application {
         if (drawSign.equals("n")) {
             return;
         }
-        blackJackGame.drawCardFrom(cardDeck);
+        blackJackGame.hitFrom(cardDeck);
         resultView.printDeck(PlayerDto.from(blackJackGame.getCurrentPlayer()));
-        startTurn(blackJackGame, cardDeck);
+        startHitOrStay(blackJackGame, cardDeck);
     }
 
     private static void nextTurn(BlackJackGame blackJackGame) {
-        blackJackGame.nextDrawTurn();
+        blackJackGame.stopNowTurn();
     }
 
 }

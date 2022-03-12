@@ -14,7 +14,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    public boolean canReceive() {
+    public boolean isImpossibleHit() {
         return this.cards.isScoreLessThan(SCORE_HIT_CRITERIA);
     }
 

@@ -32,20 +32,20 @@ public class BlackJackGame {
         gamers.giveCardsBy(cardDeck);
     }
 
-    public boolean isDrawPossible() {
-        return gamers.hasNextGamer();
+    public boolean isPossibleToHitOrStay() {
+        return gamers.hasNeverHitOrStayGamer();
     }
 
-    public boolean isBustOnNowTurn() {
-        return gamers.isCurrentGamerCanReceive();
+    public boolean isBust() {
+        return gamers.isCurrentGamerCanNotHit();
     }
 
-    public void drawCardFrom(CardDeck cardDeck) {
-        gamers.giveCurrentGamer(cardDeck.draw());
+    public void hitFrom(CardDeck cardDeck) {
+        gamers.hitCurrentGamerBy(cardDeck);
     }
 
-    public void nextDrawTurn() {
-        gamers.nextGamer();
+    public void stopNowTurn() {
+        gamers.readyNextGamer();
     }
 
     public Player getDealer() {
@@ -61,7 +61,7 @@ public class BlackJackGame {
     }
 
     public void giveCardBy(CardDeck cardDeck) {
-        while (dealer.canReceive()) {
+        while (dealer.isImpossibleHit()) {
             dealer.receive(cardDeck.draw());
         }
     }

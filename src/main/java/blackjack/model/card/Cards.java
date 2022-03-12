@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
-    private static final int SCORE_LIMIT = 21;
+    private static final int SCORE_LIMIT = 20;
     private static final int SCORE_ACE_ADVANTAGE = 10;
     private static final int SCORE_ADVANTAGE_CRITERIA = SCORE_LIMIT - SCORE_ACE_ADVANTAGE;
     private static final int FIRST_SIZE = 2;
@@ -21,8 +21,8 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public boolean isTotalScoreOverLimit() {
+        return sumScore() > SCORE_LIMIT;
     }
 
     public int sumScore() {
@@ -39,6 +39,10 @@ public class Cards {
             score = card.sumNumberTo(score);
         }
         return score;
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 
     private boolean hasAce() {
@@ -68,10 +72,6 @@ public class Cards {
 
     public void add(Card card) {
         this.cards.add(card);
-    }
-
-    public boolean isBust() {
-        return sumScore() > SCORE_LIMIT;
     }
 
     public boolean isScoreLessThan(int otherScore) {

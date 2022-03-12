@@ -14,8 +14,12 @@ public abstract class Player {
         this.cards.add(card);
     }
 
-    public boolean canReceive() {
-        return this.cards.isBust();
+    public boolean isImpossibleHit() {
+        return this.cards.isTotalScoreOverLimit();
+    }
+
+    public void hit(Card card) {
+        this.cards.add(card);
     }
 
     public Cards getDeck() {
