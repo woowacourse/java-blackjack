@@ -1,14 +1,16 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.participant.Participant;
 
 public class Dealer extends Participant {
 
-    private final String name = "딜러";
+    private static final int DEALER_HIT_THRESHOLD_NUMBER = 16;
+    private static final String DEALER_NAME = "딜러";
+
+    private final String name = DEALER_NAME;
 
     public boolean checkHitRule() {
-        return super.getScore() <= 16;
+        return super.getScore() <= DEALER_HIT_THRESHOLD_NUMBER;
     }
 
     public String getName() {

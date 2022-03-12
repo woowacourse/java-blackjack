@@ -1,10 +1,10 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import java.util.Arrays;
 import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +35,7 @@ public class CardTest {
     void example() {
         String value = ",,,,,";
         List<String> list = Arrays.asList(value.trim().split(","));
-        System.out.print("사이즈"+list.size());
+        System.out.print("사이즈" + list.size());
         System.out.println(list);
     }
 

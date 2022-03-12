@@ -4,6 +4,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public enum WinningResult {
+
     WIN("승"),
     LOSE("패"),
     DRAW("무");

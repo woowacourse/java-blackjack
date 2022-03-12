@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.participant.Participant;
-
 public class Player extends Participant {
+
+    public static final String NAME_EMPTY_ERROR = "[ERROR] 플레이어 이름에 빈 값이 올 수 없습니다.";
 
     private final String name;
 
@@ -13,7 +13,7 @@ public class Player extends Participant {
 
     private void validateName(String name) {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 이름에 빈 값이 올 수 없습니다.");
+            throw new IllegalArgumentException(NAME_EMPTY_ERROR);
         }
     }
 

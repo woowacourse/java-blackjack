@@ -1,14 +1,15 @@
 package blackjack.view;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import blackjack.domain.card.Card;
+import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.game.WinningResult;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -20,7 +21,6 @@ public class OutputView {
     private static final String PARTICIPANT_WINNING_RESULT_MESSAGE = "\n## 최종 승패";
     private static final String DEALER_DIRECTION = "딜러:";
     private static final String RESULT_DELIMITER = ": ";
-
 
     public static void printInitialCardInformation(Participants participants) {
         List<String> participantName = participants.getPlayers().stream()

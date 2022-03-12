@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import blackjack.domain.card.Card;
-
 public class ParticipantCards {
+
+    private static final int BUST_THRESHOLD_NUMBER = 21;
+    private static final int ACE_SCORE_DIFFERENCE = 10;
 
     private final List<Card> cards;
 
@@ -28,17 +29,16 @@ public class ParticipantCards {
     }
 
     private int getAceCount() {
-        return (int) cards.stream().filter(card -> card.isAce()).count();
+        return (int)cards.stream().filter(card -> card.isAce()).count();
     }
 
     private int calculateScoreWithAce(int aceCount, int totalScore) {
-        while (aceCount > 0 && totalScore > 21) {
-            totalScore = totalScore - 10;
+        while (aceCount > 0 && totalScore > BUST_THRESHOLD_NUMBER) {
+            totalScore = totalScore - ACE_SCORE_DIFFERENCE;
             aceCount--;
         }
         return totalScore;
     }
-
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
