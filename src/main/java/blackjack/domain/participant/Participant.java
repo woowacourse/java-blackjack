@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
     protected final List<Card> cards;
 
