@@ -55,7 +55,7 @@ public class BlackjackController {
     }
 
     private void showPlayerBust(Player player) {
-        if (!player.canReceive()) {
+        if (player.isBust()) {
             printPlayerBustInfo();
         }
     }
