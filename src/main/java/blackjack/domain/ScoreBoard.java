@@ -15,31 +15,29 @@ public class ScoreBoard {
 	private static final String DRAW = "무";
 
 	public static ResultDto of(Dealer dealer, List<Player> players) {
-		List<Integer> dealerResult = new ArrayList<>();
+		List<Integer> dealerResults = new ArrayList<>();
 		Map<String, String> playerResult = new HashMap<>();
-		players.forEach(player -> playerResult.put(player.getName(),
-			makePlayerOutcome(dealer.isWin(player))));
 
 		for (Player player : players) {
 			String name = player.getName();
-			int result = dealer.isWin(player);
+			int dealerResult = dealer.isWin(player);
 
-			playerResult.put(name, makePlayerOutcome(result));
-			dealerResult.add(result);
+			playerResult.put(name, makePlayerOutcome(dealerResult));
+			dealerResults.add(dealerResult);
 		}
 
-		DealerResultDto dealerResultDto = makeDealerOutcome(dealer.getName(), dealerResult);
+		DealerResultDto dealerResultDto = makeDealerOutcome(dealer.getName(), dealerResults);
 		PlayerResultDto playerResultDto = new PlayerResultDto(playerResult);
 
 		return new ResultDto(dealerResultDto, playerResultDto);
 	}
 
-	private static String makePlayerOutcome(int result) {
-		if (result == 1) {
+	private static String makePlayerOutcome(int dealerResult) {
+		if (dealerResult == 1) {
 			return DEFEAT;
 		}
 
-		if (result == -1) {
+		if (dealerResult == -1) {
 			return VICTORY;
 		}
 

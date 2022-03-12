@@ -17,7 +17,8 @@ public class Dealer extends Person {
 	}
 
 	public boolean isHit() {
-		return (score() <= CONDITION_HIT);
+		return Score.from(myCards).
+			getSum() <= CONDITION_HIT;
 	}
 
 	public int isWin(Player player) {
@@ -33,6 +34,7 @@ public class Dealer extends Person {
 			return 1;
 		}
 
-		return Integer.compare(this.score(), player.score());
+		return Integer.compare(Score.from(myCards).getSum(),
+			Score.from(player.myCards).getSum());
 	}
 }

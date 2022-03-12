@@ -4,6 +4,7 @@ import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Person;
 import blackjack.domain.Player;
+import blackjack.domain.Score;
 import blackjack.domain.dto.DealerResultDto;
 import blackjack.domain.dto.PlayerResultDto;
 import blackjack.domain.dto.ResultDto;
@@ -61,11 +62,12 @@ public class OutputView {
 
 	public static void printCardsAndResult(Dealer dealer, List<Player> players) {
 		System.out.println();
-		System.out.println(makeStatusFormat(dealer.getName(), dealer.getMyCards()) + printScoreResult(dealer.score()));
+		System.out.println(makeStatusFormat(dealer.getName(), dealer.getMyCards()) +
+			printScoreResult(Score.from(dealer.getMyCards()).getSum()));
 
 		for (Player player : players) {
 			System.out.println(makeStatusFormat(player.getName(), player.getMyCards())
-				+ printScoreResult(player.score()));
+				+ printScoreResult(Score.from(player.getMyCards()).getSum()));
 		}
 	}
 

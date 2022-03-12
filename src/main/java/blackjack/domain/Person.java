@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Person {
 	private static final String NAME_ERROR = "[Error] 이름은 빈 값일 수 없습니다.";
+	private static final int CONDITION_BURST = 21;
 
 	protected String name;
 	protected List<Card> myCards;
@@ -25,14 +26,9 @@ public class Person {
 		myCards.add(card);
 	}
 
-	public int score() {
-		return myCards.stream()
-			.mapToInt(Card::getNumber)
-			.sum();
-	}
-
 	public boolean isBurst() {
-		return score() > 21;
+		return Score.from(myCards)
+			.getSum() > CONDITION_BURST;
 	}
 
 	public List<Card> getMyCards() {
