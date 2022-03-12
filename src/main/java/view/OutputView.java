@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import dto.CardsWithTotalScore;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -26,14 +27,23 @@ public class OutputView {
         print(stringBuilder.toString());
     }
 
-    public static void printCardsWithName(Map<String, List<Card>> cardsWithName) {
+    public static void printCardsWithName(final Map<String, List<Card>> cardsWithName, final int... score) {
         for (final Entry<String, List<Card>> entry : cardsWithName.entrySet()) {
             final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder
                     .append(entry.getKey())
                     .append("카드: ")
                     .append(convertToString(entry.getValue()));
+            addScore(stringBuilder, score);
             print(stringBuilder.toString());
+        }
+    }
+
+    private static void addScore(final StringBuilder stringBuilder, final int[] score) {
+        if (score.length != 0) {
+            stringBuilder
+                    .append(" - 결과: ")
+                    .append(score[0]);
         }
     }
 
@@ -47,5 +57,11 @@ public class OutputView {
 
     public static void printDealerHit() {
         print(DEALER_HIT_MESSAGE);
+    }
+
+    public static void printCardsWithTotalScore(CardsWithTotalScore cardsWithTotalScore) {
+        for (Entry<Map<String, List<Card>>, Integer> entry : cardsWithTotalScore.get().entrySet()) {
+            printCardsWithName(entry.getKey(), entry.getValue());
+        }
     }
 }

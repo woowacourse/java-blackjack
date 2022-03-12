@@ -4,6 +4,8 @@ import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import dto.CardsWithTotalScore;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import view.InputView;
@@ -18,7 +20,7 @@ public final class BlackJackGame {
     public void run() {
         initParticipants();
         hit();
-
+        showCardsTotal();
     }
 
     private void initParticipants() {
@@ -37,7 +39,7 @@ public final class BlackJackGame {
     }
 
     private Map<String, List<Card>> getCardsWithName() {
-        Map<String, List<Card>> cardsWithNameTotal = dealer.getCardsWithName();
+        final Map<String, List<Card>> cardsWithNameTotal = dealer.getCardsWithName();
         assert cardsWithNameTotal != null;
         cardsWithNameTotal.putAll(players.getCardsWithName());
         return cardsWithNameTotal;
@@ -50,7 +52,7 @@ public final class BlackJackGame {
         hitDealer();
     }
 
-    private void hitPlayer(Player player) {
+    private void hitPlayer(final Player player) {
         int printCount = 0;
         while (player.canReceiveCard() && InputView.inputTryToHit(player.getName())) {
             player.receiveCard(CardDeck.draw());
@@ -67,5 +69,13 @@ public final class BlackJackGame {
             dealer.receiveCard(CardDeck.draw());
             OutputView.printDealerHit();
         }
+    }
+
+    private void showCardsTotal() {
+        dealer.stopRunning();
+        final Map<String, Integer> totalScoreWithName = new LinkedHashMap<>(dealer.getTotalScoreWithName());
+        totalScoreWithName.putAll(players.getTotalScoreWithName());
+        final CardsWithTotalScore cardsWithTotalScore = new CardsWithTotalScore(getCardsWithName(), totalScoreWithName);
+        OutputView.printCardsWithTotalScore(cardsWithTotalScore);
     }
 }

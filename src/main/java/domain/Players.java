@@ -4,7 +4,6 @@ import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Player;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,5 +36,13 @@ public final class Players {
 
     public List<Player> getPlayers() {
         return new ArrayList<>(players);
+    }
+
+    public Map<String, Integer> getTotalScoreWithName() {
+        final Map<String, Integer> totalScoreWithName = new LinkedHashMap<>();
+        for (Player player : players) {
+            totalScoreWithName.putAll(player.getTotalScoreWithName());
+        }
+        return totalScoreWithName;
     }
 }
