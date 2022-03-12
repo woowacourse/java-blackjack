@@ -24,7 +24,7 @@ final class ShuffledCardDispenser implements CardDispenser {
     private List<Card> shuffledCards() {
         List<Card> cards = new ArrayList<>(CARD_POOL);
         Collections.shuffle(cards);
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     @Override

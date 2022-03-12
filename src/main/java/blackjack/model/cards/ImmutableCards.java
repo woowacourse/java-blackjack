@@ -14,7 +14,7 @@ final class ImmutableCards implements Cards{
 
     @Override
     public Cards openCard(int count) {
-        return cards.openCard(count);
+        return new ImmutableCards(cards.openCard(count));
     }
 
     @Override

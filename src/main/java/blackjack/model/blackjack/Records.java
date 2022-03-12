@@ -10,7 +10,7 @@ public class Records {
     private final Map<Name, Result> records;
 
     public Records(Map<Name, Result> records) {
-        this.records = records;
+        this.records = Map.copyOf(records);
     }
 
     public Result resultByName(Name name) {

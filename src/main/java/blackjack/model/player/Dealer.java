@@ -1,6 +1,6 @@
 package blackjack.model.player;
 
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 
 import blackjack.model.blackjack.Records;
 import blackjack.model.blackjack.Result;
@@ -8,7 +8,6 @@ import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
 import blackjack.model.cards.Score;
 import blackjack.model.cards.ScoreCards;
-import java.util.List;
 import java.util.Map;
 
 public final class Dealer extends Player {
@@ -34,7 +33,7 @@ public final class Dealer extends Player {
 
     private Map<Name, Result> collectResults(Players players) {
         return players.stream()
-            .collect(toMap(Player::name, this::eachPlayerResult));
+            .collect(toUnmodifiableMap(Player::name, this::eachPlayerResult));
     }
 
     private Result eachPlayerResult(Player player) {
@@ -57,7 +56,7 @@ public final class Dealer extends Player {
 
     @Override
     public Cards openCards() {
-        return cards().openCard(OPEN_CARD_COUNT);
+        return Cards.toUnmodifiable(cards().openCard(OPEN_CARD_COUNT));
     }
 
     @Override
