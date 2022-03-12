@@ -55,6 +55,6 @@ public class Dealer extends AbstractParticipant {
 
     @Override
     boolean isEnd() {
-        return super.calculateMaxScore() >= DEALER_LIMIT_SCORE;
+        return super.calculateScore() >= DEALER_LIMIT_SCORE;
     }
 }
