@@ -1,6 +1,7 @@
 package blackjack.domain.result;
 
 import java.util.Arrays;
+import java.util.Map;
 
 public enum MatchStatus {
 
@@ -20,6 +21,12 @@ public enum MatchStatus {
                 .filter(it -> it.result == result)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("승패를 구분 지을 수 없습니다."));
+    }
+
+    public Long countMatchStatus(final Map<String, MatchStatus> matchStatuses) {
+        return matchStatuses.values().stream()
+                .filter(this::equals)
+                .count();
     }
 
     public String getName() {

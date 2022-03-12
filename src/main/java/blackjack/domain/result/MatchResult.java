@@ -9,23 +9,15 @@ public class MatchResult {
     private final Map<String, MatchStatus> resultOfPlayers;
 
     public MatchResult(final Map<String, MatchStatus> resultOfPlayers) {
-        this.resultOfDealer = calculateResultOfDealer(resultOfPlayers);
+        this.resultOfDealer = calculateStatusCountsOfDealer(resultOfPlayers);
         this.resultOfPlayers = resultOfPlayers;
     }
 
-    private Map<MatchStatus, Integer> calculateResultOfDealer(final Map<String, MatchStatus> playerResult) {
-        final Map<MatchStatus, Integer> playerMatchStatusCounts = new EnumMap<>(MatchStatus.class);
-        for (final MatchStatus result : playerResult.values()) {
-            playerMatchStatusCounts.merge(result, 1, Integer::sum);
-        }
-        return reverseMatchStatusCounts(playerMatchStatusCounts);
-    }
-
-    private Map<MatchStatus, Integer> reverseMatchStatusCounts(final Map<MatchStatus, Integer> targetMatchStatusCounts) {
-        final Map<MatchStatus, Integer> matchStatusCounts = new EnumMap<>(MatchStatus.class);
-        matchStatusCounts.put(MatchStatus.WIN, targetMatchStatusCounts.getOrDefault(MatchStatus.LOSS, 0));
-        matchStatusCounts.put(MatchStatus.LOSS, targetMatchStatusCounts.getOrDefault(MatchStatus.WIN, 0));
-        return matchStatusCounts;
+    private Map<MatchStatus, Integer> calculateStatusCountsOfDealer(final Map<String, MatchStatus> playerResult) {
+        final Map<MatchStatus, Integer> dealerMatchStatusCounts = new EnumMap<>(MatchStatus.class);
+        dealerMatchStatusCounts.put(MatchStatus.WIN, Math.toIntExact(MatchStatus.LOSS.countMatchStatus(playerResult)));
+        dealerMatchStatusCounts.put(MatchStatus.LOSS, Math.toIntExact(MatchStatus.WIN.countMatchStatus(playerResult)));
+        return dealerMatchStatusCounts;
     }
 
     public Map<MatchStatus, Integer> getResultOfDealer() {
