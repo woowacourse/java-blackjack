@@ -12,6 +12,7 @@ import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.strategy.CardBundleStrategy;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +25,9 @@ public class BlackjackGameTest {
     private static final List<Card> TWO_CARDS_OF_SEVENTEEN = List.of(CLOVER7, CLOVER10);
     private static final Card DRAWABLE_CARD = CLOVER_KING;
 
+    // TODO: should be fixed for readability
+    private static final CardBundleStrategy prodStrategy = (cardStack) -> CardBundle.of(cardStack.pop(), cardStack.pop());
+
     @DisplayName("생성자 테스트")
     @Nested
     class ConstructorTest {
@@ -32,7 +36,7 @@ public class BlackjackGameTest {
         @Test
         void constructor_initsGameWithPlayerNames() {
             BlackjackGame blackjackGame = new BlackjackGame(
-                    new CardDeck(), List.of("hudi", "jeong"));
+                    new CardDeck(), List.of("hudi", "jeong"), prodStrategy);
 
             List<Player> participants = blackjackGame.getPlayers();
 
@@ -44,7 +48,7 @@ public class BlackjackGameTest {
         @DisplayName("생성자 파라미터에 들어오는 플레이어명 리스트가 비어있으면 예외가 발생한다.")
         @Test
         void constructor_throwsExceptionOnNoPlayerNameInput() {
-            assertThatThrownBy(() -> new BlackjackGame(new CardDeck(), List.of()))
+            assertThatThrownBy(() -> new BlackjackGame(new CardDeck(), List.of(), prodStrategy))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("플레이어가 없는 게임은 존재할 수 없습니다.");
         }
@@ -53,7 +57,7 @@ public class BlackjackGameTest {
         @Test
         void constructor_throwsExceptionOnDuplicatePlayerNameInput() {
             assertThatThrownBy(() -> new BlackjackGame(
-                    new CardDeck(), List.of("중복", "중복")))
+                    new CardDeck(), List.of("중복", "중복"), prodStrategy))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("플레이어명은 중복될 수 없습니다.");
         }
@@ -111,14 +115,14 @@ public class BlackjackGameTest {
         private final Dealer fakeDealer;
         private final LinkedList<Card> drawableCards = new LinkedList<>(List.of(DRAWABLE_CARD));
 
-        private BlackjackGameStub(Dealer dealer) {
-            super(new CardDeck(), List.of("single_player"));
+        private BlackjackGameStub(Dealer dealer, CardBundleStrategy strategy) {
+            super(new CardDeck(), List.of("single_player"), strategy);
             this.fakeDealer = dealer;
         }
 
         public static BlackjackGameStub ofDealerCards(List<Card> dealerCards) {
             Dealer fakeDealer = Dealer.of(CardBundle.of(dealerCards.get(0), dealerCards.get(1)));
-            return new BlackjackGameStub(fakeDealer);
+            return new BlackjackGameStub(fakeDealer, prodStrategy);
         }
 
         @Override

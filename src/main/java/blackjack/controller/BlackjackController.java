@@ -10,20 +10,26 @@ import static blackjack.view.OutputView.printInitialParticipantsCards;
 import static blackjack.view.OutputView.printPlayerBustInfo;
 import static blackjack.view.OutputView.printPlayerCardsInfo;
 
+import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.CardStack;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.ResultReferee;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.InitialDistributionDto;
 import blackjack.dto.ResultStatisticsDto;
+import blackjack.strategy.CardBundleStrategy;
 import java.util.List;
 
 public class BlackjackController {
 
     public BlackjackGame initializeGame() {
+        CardStack cardDeck = new CardDeck();
         List<String> playerNames = requestPlayerNamesInput();
-        return new BlackjackGame(new CardDeck(), playerNames);
+        CardBundleStrategy strategy = (cardStack) -> CardBundle.of(cardStack.pop(), cardStack.pop());
+
+        return new BlackjackGame(cardDeck, playerNames, strategy);
     }
 
     public void showInitialDistribution(BlackjackGame game) {

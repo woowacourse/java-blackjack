@@ -1,11 +1,11 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardStack;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameParticipants;
 import blackjack.domain.participant.Player;
+import blackjack.strategy.CardBundleStrategy;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -19,24 +19,24 @@ public class BlackjackGame {
     private final CardStack cardDeck;
     private final GameParticipants participants;
 
-    public BlackjackGame(CardStack cardDeck, List<String> playerNames) {
+    public BlackjackGame(CardStack cardDeck, List<String> playerNames, CardBundleStrategy strategy) {
         validatePlayerNames(playerNames);
         this.cardDeck = cardDeck;
-        this.participants = GameParticipants.of(initializeDealer(), initializePlayers(playerNames));
+        this.participants = generateParticipantsFrom(playerNames, strategy);
     }
 
-    private Dealer initializeDealer() {
-        return Dealer.of(initializeCardBundle());
+    private GameParticipants generateParticipantsFrom(List<String> playerNames, CardBundleStrategy strategy) {
+        return GameParticipants.of(initializeDealer(strategy), initializePlayers(playerNames, strategy));
     }
 
-    private List<Player> initializePlayers(List<String> playerNames) {
+    private Dealer initializeDealer(CardBundleStrategy strategy) {
+        return Dealer.of(strategy.initCardBundle(cardDeck));
+    }
+
+    private List<Player> initializePlayers(List<String> playerNames, CardBundleStrategy strategy) {
         return playerNames.stream()
-                .map(name -> Player.of(name, initializeCardBundle()))
+                .map(name -> Player.of(name, strategy.initCardBundle(cardDeck)))
                 .collect(Collectors.toList());
-    }
-
-    private CardBundle initializeCardBundle() {
-        return CardBundle.of(cardDeck.pop(), cardDeck.pop());
     }
 
     private void validatePlayerNames(List<String> playerNames) {
