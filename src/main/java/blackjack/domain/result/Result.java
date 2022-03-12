@@ -9,16 +9,16 @@ public enum Result {
     DRAW("무", (userScore, dealerScore) -> userScore == dealerScore);
 
     private String name;
-    private ScoreComparator comparator;
+    private ResultDeterminer determiner;
 
-    Result(String name, ScoreComparator comparator) {
+    Result(String name, ResultDeterminer comparator) {
         this.name = name;
-        this.comparator = comparator;
+        this.determiner = comparator;
     }
 
     public static Result checkUserResult(int userScore, int dealerScore) {
         return Arrays.stream(values())
-                .filter(result -> result.comparator.compare(userScore, dealerScore))
+                .filter(result -> result.determiner.compare(userScore, dealerScore))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
     }

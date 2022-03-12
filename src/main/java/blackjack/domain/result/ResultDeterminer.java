@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-public interface ScoreComparator {
+public interface ResultDeterminer {
 
     boolean compare(int userScore, int dealerScore);
 }
