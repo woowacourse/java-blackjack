@@ -7,31 +7,10 @@ public class Deck {
 
     protected static final int INIT_DISTRIBUTE_SIZE = 2;
 
-    private final Stack<Card> deck;
+    private final Stack<Card> bunchOfCards;
 
-    public Deck() {
-        deck = init();
-    }
-
-    private Stack<Card> init() {
-        List<Card> cards = makeCards();
-        Collections.shuffle(cards);
-        Stack<Card> deck = new Stack<>();
-        deck.addAll(cards);
-        return deck;
-    }
-
-    private List<Card> makeCards() {
-        List<Card> cards = new ArrayList<>();
-        Type.getTypeValues()
-                .forEach(type -> makeCardByScore(cards, type));
-        return cards;
-    }
-
-    private void makeCardByScore(final List<Card> cards, final Type type) {
-        Score.getScoreValues().stream()
-                .map(score -> new Card(type, score))
-                .forEach(cards::add);
+    public Deck(Stack<Card> bunchOfCards) {
+        this.bunchOfCards = bunchOfCards;
     }
 
     public List<Card> makeDistributeCard() {
@@ -42,10 +21,6 @@ public class Deck {
     }
 
     public Card draw() {
-        return deck.pop();
-    }
-
-    public boolean containCard(final Card card) {
-        return deck.contains(card);
+        return bunchOfCards.pop();
     }
 }

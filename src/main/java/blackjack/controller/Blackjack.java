@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.DeckCardGenerator;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Players;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 public class Blackjack {
 
     public void play() {
-        final Deck deck = new Deck();
+        final Deck deck = new Deck(new DeckCardGenerator().generate());
         final List<Participant> participants = createParticipants(InputView.responseNames(), deck);
         final Dealer dealer = createDealer(deck);
         final Players players = new Players(participants, dealer);
