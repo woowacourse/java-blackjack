@@ -7,14 +7,14 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class EntriesTest {
+public class GamersTest {
 
     @DisplayName("중복된 이름이 있을 때 예외가 발생한다.")
     @Test
     void nextEntry_exception_duplicate_name() {
         List<String> names = List.of("포키", "리버", "포키");
 
-        assertThatThrownBy(() -> Entries.from(names))
+        assertThatThrownBy(() -> Gamers.from(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 중복된 이름이 있습니다.");
     }
@@ -23,22 +23,22 @@ public class EntriesTest {
     @Test
     void nextEntry_reaver() {
         List<String> names = List.of("포키", "리버");
-        Entries entries = Entries.from(names);
+        Gamers gamers = Gamers.from(names);
         //TODO: index값과 toNext 호출 회수 하나의 변수로 관리
-        entries.toNextEntry();
-        entries.toNextEntry();
+        gamers.toNextEntry();
+        gamers.toNextEntry();
 
-        assertThat(entries.getCurrentEntryName()).isEqualTo(names.get(1));
+        assertThat(gamers.getCurrentEntryName()).isEqualTo(names.get(1));
     }
 
     @DisplayName("더 이상 Entry가 없을 때 예외가 발생한다.")
     @Test
     void nextEntry_exception_no_entry() {
         List<String> names = List.of("포키");
-        Entries entries = Entries.from(names);
-        entries.toNextEntry();
+        Gamers gamers = Gamers.from(names);
+        gamers.toNextEntry();
 
-        assertThatThrownBy(entries::toNextEntry)
+        assertThatThrownBy(gamers::toNextEntry)
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("[ERROR] 더 이상 Entry가 없습니다.");
     }

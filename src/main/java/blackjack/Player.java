@@ -26,7 +26,7 @@ public abstract class Player implements PlayerInterface {
     }
 
     @Override
-    public void receiveCard(Card card) {
+    public void receive(Card card) {
         this.deck.add(card);
     }
 

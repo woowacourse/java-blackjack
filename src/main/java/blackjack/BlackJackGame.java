@@ -8,59 +8,58 @@ public class BlackJackGame {
     private static final int START_CARD_COUNT = 2;
 
     private final Player dealer;
-    private final Entries entries;
+    private final Gamers gamers;
 
     public BlackJackGame(List<String> names) {
         this.dealer = new Dealer();
-        this.entries = Entries.from(names);
+        this.gamers = Gamers.from(names);
     }
 
-    //TODO: 함수 네이밍 변경
-    public void initGame(CardPack cardPack) {
-        giveCardsToDealer(cardPack);
-        for (Player entry : entries.getValues()) {
-            giveCardsToEntry(entry, cardPack);
+    public void giveStartingCardsBy(CardPack cardPack) {
+        giveCardsToDealerBy(cardPack);
+        for (Player gamer : gamers.getValues()) {
+            giveCardsTo(gamer, cardPack);
         }
     }
 
-    private void giveCardsToDealer(CardPack cardPack) {
+    private void giveCardsToDealerBy(CardPack cardPack) {
         for (int i = 0; i < START_CARD_COUNT; i++) {
-            dealer.receiveCard(cardPack.draw());
+            dealer.receive(cardPack.draw());
         }
     }
 
-    private void giveCardsToEntry(Player entry, CardPack cardPack) {
+    private void giveCardsTo(Player gamer, CardPack cardPack) {
         for (int i = 0; i < START_CARD_COUNT; i++) {
-            entry.receiveCard(cardPack.draw());
+            gamer.receive(cardPack.draw());
         }
+    }
+
+    public boolean isDrawPossible() {
+        return gamers.hasNextGamer();
+    }
+
+    public boolean isBustOnNowTurn() {
+        return gamers.isCurrentGamerBust();
+    }
+
+    public void drawCardFrom(CardPack cardPack) {
+        gamers.giveCurrentGamer(cardPack.draw());
+    }
+
+    public void nextDrawTurn() {
+        gamers.nextGamer();
     }
 
     public Player getDealer() {
         return dealer;
     }
 
-    public List<Player> getEntries() {
-        return entries.getValues();
-    }
-
-    public boolean isDrawPossible() {
-        return entries.hasNextEntry();
-    }
-
-    public void drawCardFrom(CardPack cardPack) {
-        entries.addCurrentEntry(cardPack.draw());
+    public List<Player> getGamers() {
+        return gamers.getValues();
     }
 
     public Player getCurrentPlayer() {
-        return entries.getCurrentValue();
-    }
-
-    public boolean isCurrentPlayerBust() {
-        return entries.isCurrentEntryBust();
-    }
-
-    public void nextDrawTurn() {
-        entries.nextEntry();
+        return gamers.getCurrentValue();
     }
 /*
     public void hitCurrentEntry() {

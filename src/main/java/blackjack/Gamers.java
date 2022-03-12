@@ -4,22 +4,22 @@ import blackjack.trumpcard.Card;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Entries {
+public class Gamers {
     private static final String ERROR_DUPLICATE_NAME = "[ERROR] 중복되는 이름이 있습니다.";
 
     private final List<Player> values;
-    private int entryOrder = 0;
+    private int gamerOrder = 0;
 
-    private Entries(List<Entry> entries) {
+    private Gamers(List<Gamer> entries) {
         this.values = List.copyOf(entries);
     }
 
-    public static Entries from(List<String> names) {
+    public static Gamers from(List<String> names) {
         checkDuplicate(names);
-        List<Entry> entries = names.stream()
-                .map(Entry::new)
+        List<Gamer> entries = names.stream()
+                .map(Gamer::new)
                 .collect(Collectors.toList());
-        return new Entries(entries);
+        return new Gamers(entries);
     }
 
     private static void checkDuplicate(List<String> names) {
@@ -38,23 +38,23 @@ public class Entries {
         return values;
     }
 
-    public boolean hasNextEntry() {
-        return values.size() > entryOrder;
+    public boolean hasNextGamer() {
+        return values.size() > gamerOrder;
     }
 
     public Player getCurrentValue() {
-        return values.get(entryOrder);
+        return values.get(gamerOrder);
     }
 
-    public void addCurrentEntry(Card card) {
-        values.get(entryOrder).receiveCard(card);
+    public void giveCurrentGamer(Card card) {
+        values.get(gamerOrder).receive(card);
     }
 
-    public boolean isCurrentEntryBust() {
-        return values.get(entryOrder).isBust();
+    public boolean isCurrentGamerBust() {
+        return values.get(gamerOrder).isBust();
     }
 
-    public void nextEntry() {
-        entryOrder += 1;
+    public void nextGamer() {
+        gamerOrder += 1;
     }
 }

@@ -3,7 +3,7 @@ package blackjack;
 import blackjack.trumpcard.Card;
 
 public interface PlayerInterface {
-    void receiveCard(Card card);
+    void receive(Card card);
 
     boolean isBust();
 

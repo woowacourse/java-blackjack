@@ -1,6 +1,7 @@
 package blackjack.dto;
 
 import blackjack.Player;
+import blackjack.trumpcard.Card;
 import blackjack.trumpcard.Deck;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,9 +10,13 @@ public class PlayerDto {
     private final String name;
     private final List<CardDto> cards;
 
-    public PlayerDto(Player player) {
+    private PlayerDto(Player player) {
         this.name = player.getName();
         this.cards = createCardsDto(player.getDeck());
+    }
+
+    public static PlayerDto from(Player player) {
+        return new PlayerDto(player);
     }
 
     private List<CardDto> createCardsDto(Deck deck) {

@@ -1,12 +1,12 @@
 package blackjack;
 
+import blackjack.dto.BlackJackGameDto;
 import blackjack.dto.PlayerDto;
 import blackjack.trumpcard.CardPack;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Application {
     private final static InputView inputView = new InputView();
@@ -18,39 +18,35 @@ public class Application {
         CardPack cardPack = new CardPack();
 
         BlackJackGame blackJackGame = new BlackJackGame(names);
-        blackJackGame.initGame(cardPack);
+        blackJackGame.giveStartingCardsBy(cardPack);
 
-        Player dealer = blackJackGame.getDealer();
-        List<Player> entries = blackJackGame.getEntries();
-
-        PlayerDto dealerDto = new PlayerDto(dealer);
-        List<PlayerDto> entriesDtos = entries.stream()
-                .map(PlayerDto::new)
-                .collect(Collectors.toList());
-
-        resultView.printInitGameResult(dealerDto, entriesDtos);
+        BlackJackGameDto gameDto = new BlackJackGameDto(blackJackGame);
+        resultView.printStartingCardsInGame(gameDto);
 
         while (blackJackGame.isDrawPossible()) {
-            playDrawTurn(blackJackGame, cardPack);
-            blackJackGame.nextDrawTurn();
+            startTurn(blackJackGame, cardPack);
+            nextTurn(blackJackGame);
         }
     }
 
-    private static void playDrawTurn(BlackJackGame blackJackGame, CardPack cardPack) {
-        PlayerDto currentEntryDto = new PlayerDto(blackJackGame.getCurrentPlayer());
-        if (blackJackGame.isCurrentPlayerBust()) {
-            resultView.printBustMessage(currentEntryDto);
+    private static void startTurn(BlackJackGame blackJackGame, CardPack cardPack) {
+        if (blackJackGame.isBustOnNowTurn()) {
+            resultView.printBust();
             return;
         }
-        if (inputView.inputDrawCardSign(currentEntryDto).equals("n")) {
-            resultView.printDeck(currentEntryDto);
+        String drawSign = inputView.inputDrawCardSign(PlayerDto.from(blackJackGame.getCurrentPlayer()));
+        if (drawSign.equals("n")) {
             return;
         }
         blackJackGame.drawCardFrom(cardPack);
-        PlayerDto currentEntryDto2 = new PlayerDto(blackJackGame.getCurrentPlayer());
-        resultView.printDeck(currentEntryDto2);
-        playDrawTurn(blackJackGame, cardPack);
+        resultView.printDeck(PlayerDto.from(blackJackGame.getCurrentPlayer()));
+        startTurn(blackJackGame, cardPack);
     }
+
+    private static void nextTurn(BlackJackGame blackJackGame) {
+        blackJackGame.nextDrawTurn();
+    }
+
 /*
 
         do {

@@ -1,7 +1,5 @@
 package blackjack;
 
-import blackjack.trumpcard.Card;
-
 public class Dealer extends Player {
     private static final String NAME = "딜러";
     private static final int SCORE_HIT_CRITERIA = 17;
@@ -28,14 +26,14 @@ public class Dealer extends Player {
         return this.deck.countAddedCards();
     }
 
-    public boolean isWinning(Entry entry) {
-        if (entry.isBust()) {
+    public boolean isWinning(Gamer gamer) {
+        if (gamer.isBust()) {
             return true;
         }
         if (this.isBust()) {
             return false;
         }
-        if (entry.getScore() >= this.getScore()) {
+        if (gamer.getScore() >= this.getScore()) {
             return false;
         }
         return true;

@@ -10,7 +10,7 @@ public class PlayerTest {
     @DisplayName("이름이 null이면 예외가 발생한다")
     @Test
     void from_exception_null() {
-        assertThatThrownBy(() -> new Entry(null))
+        assertThatThrownBy(() -> new Gamer(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 입력된 이름이 없습니다.");
     }
