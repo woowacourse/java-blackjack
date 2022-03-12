@@ -51,7 +51,7 @@ class PlayerTest {
     }
 
     @Nested
-    @DisplayName("드로우 가능 여부를 확인할 수 있다.")
+    @DisplayName("플레이어의 드로우 가능여부를 확인할 수 있다.")
     class CanDraw {
 
         @Test
