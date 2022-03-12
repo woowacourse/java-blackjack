@@ -71,7 +71,9 @@ public class OutputView {
     }
 
     public static void printFinishParticipantInfo(final List<Participant> participants) {
-        participants.forEach(OutputView::printPlayerFinalInfo);
+        for (Participant participant : participants) {
+            printPlayerFinalInfo(participant);
+        }
         System.out.println();
     }
 
@@ -93,8 +95,8 @@ public class OutputView {
         return String.format("%d%s %d%s", win.getCount(), win.getResult().getValue(), lose.getCount(), lose.getResult().getValue());
     }
 
-    private static void printParticipantsResult(final List<Participant> players) {
-        players.forEach(OutputView::printParticipantResult);
+    private static void printParticipantsResult(final List<Participant> participants) {
+        participants.forEach(OutputView::printParticipantResult);
     }
 
     private static void printParticipantResult(final Participant participant) {

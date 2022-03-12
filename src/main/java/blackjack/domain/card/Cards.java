@@ -22,7 +22,9 @@ public class Cards {
     }
 
     public void addCards(final List<Card> cards) {
-        cards.forEach(this::addCard);
+        for (Card card : cards) {
+            addCard(card);
+        }
     }
 
     public void addCard(final Card card) {
