@@ -43,4 +43,12 @@ class CardNumberTest {
                 Arguments.of(Arrays.asList(A, A, TEN, TEN), 22)
         );
     }
+
+    @Test
+    @DisplayName("가질 수 있는 최대 스코어를 계산할 수 있다.")
+    void calculateMaxScore() {
+        final List<CardNumber> cardNumbers = Arrays.asList(A, A);
+        final int result = CardNumber.calculateMaxScore(cardNumbers);
+        assertThat(result).isEqualTo(22);
+    }
 }

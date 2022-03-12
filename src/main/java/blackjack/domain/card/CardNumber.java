@@ -73,6 +73,12 @@ public enum CardNumber {
         return sumCount <= BLACK_JACK_TARGET_NUMBER;
     }
 
+    public static int calculateMaxScore(final List<CardNumber> numbers) {
+        final int defaultScore = sumDefaultScore(numbers);
+        final int bonusMaxScore = calculateAceCount(numbers) * ACE_BONUS_VALUE;
+        return defaultScore + bonusMaxScore;
+    }
+
     public String getPrintValue() {
         return printValue;
     }
