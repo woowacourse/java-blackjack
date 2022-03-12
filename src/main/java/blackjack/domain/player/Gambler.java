@@ -1,7 +1,6 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.PlayingCard;
 
 public class Gambler extends Player {
 
@@ -13,13 +12,8 @@ public class Gambler extends Player {
 
     @Override
     public boolean isFinished(final CardDeck cardDeck) {
-        final PlayingCard peekedCard = cardDeck.justPeek();
-        final int currentResult = playingCards.getResultWithPeekCard(peekedCard);
-        if (currentResult > BURST_CRITERIA) {
-//            playingCards.changeToBurst();
-            return true;
-        }
-        return false;
+        final int currentResult = playingCards.getResultWithPeekCard(cardDeck.justPeek());
+        return currentResult > BURST_CRITERIA;
     }
 
     @Override

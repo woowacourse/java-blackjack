@@ -7,9 +7,11 @@ import java.util.List;
 public class PlayingCards {
 
     private static final int BLACKJACK_NUMBER = 21;
+    private static final int NO_COUNT = 0;
+    private static final int ACE_DECREASE_UNIT = 1;
     private static final int ACE_DIFFERENCE_UNIT = 10;
 
-    private List<PlayingCard> playingCards;
+    private final List<PlayingCard> playingCards;
 
     public PlayingCards() {
         playingCards = new ArrayList<>();
@@ -23,33 +25,25 @@ public class PlayingCards {
         return getCardSumWithPeek(peekedCard.getScore());
     }
 
+    public int getCardSumWithPeek(final int peekedScore) {
+        return adjustSumByAce(getCurrentSum() + peekedScore);
+    }
+
+    private int adjustSumByAce(int currentSum) {
+        int aceCount = aceCount();
+        while (currentSum > BLACKJACK_NUMBER && aceCount > NO_COUNT) {
+            aceCount -= ACE_DECREASE_UNIT;
+            currentSum -= ACE_DIFFERENCE_UNIT;
+        }
+        return currentSum;
+    }
+
     public List<PlayingCard> getPlayingCards() {
         return Collections.unmodifiableList(playingCards);
     }
 
     public int getCardSum() {
-        int currentSum = getCurrentSum();
-        if (hasAce() && currentSum > BLACKJACK_NUMBER) {
-            changeAceToOne();
-            return getCurrentSum();
-        }
-        if (hasOne() && currentSum <= BLACKJACK_NUMBER - ACE_DIFFERENCE_UNIT) {
-            changeOneToAce();
-            return getCurrentSum();
-        }
-        return currentSum;
-    }
-
-    private void changeOneToAce() {
-        final PlayingCard oneCard = getOne();
-        playingCards.remove(oneCard);
-        playingCards.add(new PlayingCard(oneCard.getSuit(), Denomination.ACE));
-    }
-
-    private void changeAceToOne() {
-        final PlayingCard aceCard = getAce();
-        playingCards.remove(aceCard);
-        playingCards.add(new PlayingCard(aceCard.getSuit(), Denomination.ONE));
+        return adjustSumByAce(getCurrentSum());
     }
 
     private int getCurrentSum() {
@@ -58,39 +52,9 @@ public class PlayingCards {
             .sum();
     }
 
-    private boolean hasAce() {
-        return playingCards.stream()
-            .anyMatch(PlayingCard::isAce);
-    }
-
-    private boolean hasOne() {
-        return playingCards.stream()
-            .anyMatch(PlayingCard::isOne);
-    }
-
-    private PlayingCard getAce() {
-        return playingCards.stream()
+    private int aceCount() {
+        return (int) playingCards.stream()
             .filter(PlayingCard::isAce)
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("알 수 없는 오류가 발생했습니다."));
+            .count();
     }
-
-    private PlayingCard getOne() {
-        return playingCards.stream()
-            .filter(PlayingCard::isOne)
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("알 수 없는 오류가 발생했습니다."));
-    }
-
-    public int getCardSumWithPeek(final int peekedScore) {
-        int currentSum = getCurrentSum() + peekedScore;
-        if (hasAce() && currentSum > BLACKJACK_NUMBER) {
-            return currentSum - ACE_DIFFERENCE_UNIT;
-        }
-        return currentSum;
-    }
-
-//    public void changeToBurst() {
-//        playingCards = List.of(new PlayingCard(Suit.BURST, Denomination.BURST));
-//    }
 }
