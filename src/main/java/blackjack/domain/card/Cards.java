@@ -26,11 +26,11 @@ public class Cards {
     }
 
     public void addCard(final Card card) {
-        checkCardNull(card);
+        validateCard(card);
         cards.add(card);
     }
 
-    private void checkCardNull(final Card card) {
+    private void validateCard(final Card card) {
         if (card == null) {
             throw new IllegalArgumentException("[ERROR] 올바른 카드를 입력해주세요.");
         }
@@ -51,15 +51,15 @@ public class Cards {
         return calculateScoreByAceOne();
     }
 
+    private boolean isContainsAce() {
+        return cards.stream()
+                .anyMatch(card -> card.getScore() == Score.ACE);
+    }
+
     public int calculateScoreByAceOne() {
         return cards.stream()
                 .mapToInt(card -> card.getScore().getAmount())
                 .sum();
-    }
-
-    private boolean isContainsAce() {
-        return cards.stream()
-                .anyMatch(card -> card.getScore() == Score.ACE);
     }
 
     public List<Card> getCards() {
