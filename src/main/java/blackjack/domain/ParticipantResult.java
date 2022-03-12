@@ -1,46 +1,35 @@
 package blackjack.domain;
 
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ParticipantResult {
 
-    private final Map<Participant, Result> participantResult;
+    private final Map<Participant, Result> result;
 
     public ParticipantResult(final Dealer dealer, final Participants participants) {
-        participantResult = new LinkedHashMap<>();
-        decideResults(dealer, participants);
+        this.result = decideResult(dealer, participants);
     }
 
-    private void decideResults(final Dealer dealer, final Participants participants) {
-        decideParticipantsResult(dealer, participants);
-    }
-
-    private void decideParticipantsResult(final Dealer dealer, final Participants participants) {
+    private Map<Participant, Result> decideResult(final Dealer dealer, final Participants participants) {
         final int dealerScore = dealer.getTotalScore();
+
+        Map<Participant, Result> result = new LinkedHashMap<>();
         for (Participant participant : participants) {
             final int participantScore = participant.getTotalScore();
-            participantResult.put(participant, Result.decide(dealerScore, participantScore));
+            result.put(participant, Result.decide(dealerScore, participantScore));
         }
+        return result;
     }
 
-    public Map<Result, Integer> getDealerResult() {
-        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
-        for (Result result : Result.values()) {
-            dealerResult.put(result, countDealerResult(result.getOpposite()));
-        }
-        return dealerResult;
-    }
-
-    private int countDealerResult(final Result result) {
-        return (int) participantResult.values()
+    public int countResult(final Result result) {
+        return (int) this.result.values()
                 .stream()
                 .filter(value -> value == result)
                 .count();
     }
 
-    public Map<Participant, Result> getParticipantResult() {
-        return participantResult;
+    public Map<Participant, Result> getResult() {
+        return result;
     }
 }

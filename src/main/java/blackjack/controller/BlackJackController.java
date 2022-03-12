@@ -85,7 +85,7 @@ public class BlackJackController {
 
     private void decideResults(final Dealer dealer, final Participants participants) {
         final ParticipantResult participantResult = new ParticipantResult(dealer, participants);
-        final DealerResult dealerResult = new DealerResult(participantResult.getDealerResult());
+        final DealerResult dealerResult = new DealerResult(participantResult);
         OutputView.printResults(dealer, dealerResult, participantResult);
     }
 }

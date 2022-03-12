@@ -84,7 +84,7 @@ public class OutputView {
     }
 
     private static void printParticipantsResult(final ParticipantResult results) {
-        final Map<Participant, Result> participantsResult = results.getParticipantResult();
+        final Map<Participant, Result> participantsResult = results.getResult();
 
         participantsResult.keySet()
                 .forEach(participant -> System.out.println(
