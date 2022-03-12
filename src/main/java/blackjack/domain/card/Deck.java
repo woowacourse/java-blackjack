@@ -9,24 +9,28 @@ public class Deck {
 
     private static final String DECK_EMPTY_ERROR = "[ERROR] 카드를 모두 사용하였습니다.";
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> deck = new ArrayList<>();
 
     public Deck() {
         for (Suit suit : Suit.values()) {
             Stream.of(Denomination.values())
-                .forEach(denomination -> cards.add(new Card(suit, denomination)));
+                .forEach(denomination -> deck.add(new Card(suit, denomination)));
         }
-        Collections.shuffle(cards);
+        Collections.shuffle(deck);
     }
 
     public Card pickCard() {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException(DECK_EMPTY_ERROR);
-        }
-        return cards.remove(0);
+        validateDeckSize();
+        return deck.remove(0);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    private void validateDeckSize() {
+        if (deck.isEmpty()) {
+            throw new IllegalArgumentException(DECK_EMPTY_ERROR);
+        }
+    }
+
+    public List<Card> getDeck() {
+        return Collections.unmodifiableList(deck);
     }
 }
