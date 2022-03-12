@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.MockDeck;
-import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.player.Dealer;
@@ -26,7 +26,8 @@ public class DealerTest {
         void returnFalse(CardNumber cardNumber, boolean expected) {
             Dealer dealer = new Dealer();
             MockDeck mockDeck = new MockDeck(
-                List.of(Card.of(CardPattern.CLOVER, CardNumber.TEN), Card.of(CardPattern.CLOVER, cardNumber)));
+                List.of(CardFactory.of(CardPattern.CLOVER, CardNumber.TEN),
+                    CardFactory.of(CardPattern.CLOVER, cardNumber)));
             dealer.drawCard(mockDeck);
             dealer.drawCard(mockDeck);
 

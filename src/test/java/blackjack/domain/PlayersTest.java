@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import blackjack.MockDeck;
-import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.player.Dealer;
@@ -45,10 +45,10 @@ public class PlayersTest {
             Player pobi = new Player("pobi");
 
             Players players = new Players(List.of(roma, tonic, pobi));
-            MockDeck mockDeck = new MockDeck(List.of(Card.of(CardPattern.DIAMOND, CardNumber.NINE),
-                Card.of(CardPattern.DIAMOND, CardNumber.TEN),
-                Card.of(CardPattern.DIAMOND, CardNumber.ACE),
-                Card.of(CardPattern.SPADE, CardNumber.TEN)));
+            MockDeck mockDeck = new MockDeck(List.of(CardFactory.of(CardPattern.DIAMOND, CardNumber.NINE),
+                CardFactory.of(CardPattern.DIAMOND, CardNumber.TEN),
+                CardFactory.of(CardPattern.DIAMOND, CardNumber.ACE),
+                CardFactory.of(CardPattern.SPADE, CardNumber.TEN)));
             players.drawAll(mockDeck);
             Dealer dealer = new Dealer();
             dealer.drawCard(mockDeck);

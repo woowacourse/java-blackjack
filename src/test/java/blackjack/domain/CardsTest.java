@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Cards;
@@ -24,7 +24,8 @@ public class CardsTest {
         @DisplayName("가지고 있는 카드의 총합을 반환한다.")
         void returnTotalNumber() {
             Cards cards = new Cards(
-                List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK), Card.of(CardPattern.HEART, CardNumber.EIGHT)));
+                List.of(CardFactory.of(CardPattern.CLOVER, CardNumber.JACK),
+                    CardFactory.of(CardPattern.HEART, CardNumber.EIGHT)));
 
             Assertions.assertThat(cards.getTotalNumber()).isEqualTo(18);
         }
@@ -36,8 +37,10 @@ public class CardsTest {
         void returnTotalNumberWithAce(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3,
             int expected) {
             Cards cards = new Cards(
-                List.of(Card.of(CardPattern.CLOVER, CardNumber.ACE), Card.of(CardPattern.HEART, cardNumber1),
-                    Card.of(CardPattern.SPADE, cardNumber2), Card.of(CardPattern.DIAMOND, cardNumber3)));
+                List.of(CardFactory.of(CardPattern.CLOVER, CardNumber.ACE),
+                    CardFactory.of(CardPattern.HEART, cardNumber1),
+                    CardFactory.of(CardPattern.SPADE, cardNumber2),
+                    CardFactory.of(CardPattern.DIAMOND, cardNumber3)));
 
             Assertions.assertThat(cards.getTotalNumber()).isEqualTo(expected);
         }
@@ -51,8 +54,9 @@ public class CardsTest {
         @DisplayName("카드를 추가한다.")
         void addCard() {
             Cards cards = new Cards(
-                List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK), Card.of(CardPattern.HEART, CardNumber.EIGHT)));
-            cards.add(Card.of(CardPattern.CLOVER, CardNumber.FOUR));
+                List.of(CardFactory.of(CardPattern.CLOVER, CardNumber.JACK),
+                    CardFactory.of(CardPattern.HEART, CardNumber.EIGHT)));
+            cards.add(CardFactory.of(CardPattern.CLOVER, CardNumber.FOUR));
 
             Assertions.assertThat(cards.getTotalNumber()).isEqualTo(22);
         }

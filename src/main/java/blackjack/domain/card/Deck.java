@@ -13,7 +13,7 @@ public class Deck implements Drawable {
     }
 
     public static Deck create() {
-        List<Card> blackjackCards = Card.createDeck();
+        List<Card> blackjackCards = CardFactory.createDeck();
         Collections.shuffle(blackjackCards);
         Stack<Card> deck = new Stack<>();
         for (Card card : blackjackCards) {

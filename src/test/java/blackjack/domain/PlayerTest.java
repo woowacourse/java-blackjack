@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.MockDeck;
-import blackjack.domain.card.Card;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.player.Dealer;
@@ -27,7 +27,7 @@ public class PlayerTest {
         @DisplayName("Card를 자신의 패에 추가한다.")
         void addCard() {
             Player player = new Player(new Name("roma"));
-            player.drawCard(new MockDeck(List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK))));
+            player.drawCard(new MockDeck(List.of(CardFactory.of(CardPattern.CLOVER, CardNumber.JACK))));
             Assertions.assertThat(player.getTotalNumber()).isEqualTo(10);
         }
     }
@@ -41,8 +41,9 @@ public class PlayerTest {
         @DisplayName("패의 합이 21이 넘는지 유무를 알려준다.")
         void returnFalse(CardNumber cardNumber, boolean expected) {
             Player player = new Player(new Name("roma"));
-            MockDeck mockDeck = new MockDeck(List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK)
-                , Card.of(CardPattern.CLOVER, CardNumber.KING), Card.of(CardPattern.CLOVER, cardNumber)));
+            MockDeck mockDeck = new MockDeck(List.of(CardFactory.of(CardPattern.CLOVER, CardNumber.JACK)
+                , CardFactory.of(CardPattern.CLOVER, CardNumber.KING),
+                CardFactory.of(CardPattern.CLOVER, cardNumber)));
             player.drawCard(mockDeck);
             player.drawCard(mockDeck);
             player.drawCard(mockDeck);
@@ -61,8 +62,8 @@ public class PlayerTest {
         void returnFalse(CardNumber cardNumber, Score expected) {
             Player player = new Player("player");
             Dealer dealer = new Dealer();
-            MockDeck mockDeck = new MockDeck(List.of(Card.of(CardPattern.DIAMOND, cardNumber),
-                Card.of(CardPattern.DIAMOND, CardNumber.FIVE)));
+            MockDeck mockDeck = new MockDeck(List.of(CardFactory.of(CardPattern.DIAMOND, cardNumber),
+                CardFactory.of(CardPattern.DIAMOND, CardNumber.FIVE)));
             player.drawCard(mockDeck);
             dealer.drawCard(mockDeck);
             Assertions.assertThat(player.compete(dealer)).isEqualTo(expected);
@@ -74,13 +75,13 @@ public class PlayerTest {
         void returnResult(CardNumber cardNumber, Score expected) {
             Player player = new Player("player");
             Dealer dealer = new Dealer();
-            player.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-            player.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-            player.drawCard(() -> Card.of(CardPattern.DIAMOND, cardNumber));
+            player.drawCard(() -> CardFactory.of(CardPattern.DIAMOND, CardNumber.TEN));
+            player.drawCard(() -> CardFactory.of(CardPattern.DIAMOND, CardNumber.TEN));
+            player.drawCard(() -> CardFactory.of(CardPattern.DIAMOND, cardNumber));
 
-            dealer.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-            dealer.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-            dealer.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TWO));
+            dealer.drawCard(() -> CardFactory.of(CardPattern.DIAMOND, CardNumber.TEN));
+            dealer.drawCard(() -> CardFactory.of(CardPattern.DIAMOND, CardNumber.TEN));
+            dealer.drawCard(() -> CardFactory.of(CardPattern.DIAMOND, CardNumber.TWO));
 
             Assertions.assertThat(player.compete(dealer)).isEqualTo(expected);
         }
