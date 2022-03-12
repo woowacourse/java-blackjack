@@ -19,6 +19,14 @@ public class CardNumberTest {
         assertThat(total).isEqualTo(85);
     }
 
+    @DisplayName("ACE 가 없는 경우 합계를 확인한다.")
+    @Test
+    void total_not_contains_ace() {
+        int total = CardNumber.getTotal(List.of(CardNumber.KING, CardNumber.QUEEN));
+
+        assertThat(total).isEqualTo(20);
+    }
+
     @DisplayName("ACE 가 1로 사용될 경우 합계를 확인한다.")
     @Test
     void total_ace_1() {

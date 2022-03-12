@@ -14,10 +14,10 @@ public class Blackjack {
     private static final Enterable enterable = new Enter();
 
     public void run() {
-        OutputView.printPlayerNameInstruction();
-
         CardMachine cardMachine = new CardMachine();
         Dealer dealer = new Dealer();
+
+        OutputView.printPlayerNameInstruction();
         Players players = createPlayers();
 
         drawCards(cardMachine, dealer, players);
