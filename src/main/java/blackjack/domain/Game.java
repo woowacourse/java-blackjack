@@ -6,6 +6,7 @@ import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,36 +16,21 @@ public class Game {
 
     private final CardFactory cardFactory;
     private final Dealer dealer;
-    private final List<Player> players;
+    private final Players players;
 
     public Game(CardFactory cardFactory, List<String> playerNames) {
-        validateDuplicate(playerNames);
         this.cardFactory = cardFactory;
         this.dealer = new Dealer();
-        this.players = playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
-    }
-
-    private void validateDuplicate(final List<String> playerNames) {
-        final long countNoDuplicate = playerNames.stream()
-                .distinct()
-                .count();
-
-        if (countNoDuplicate != playerNames.size()) {
-            throw new IllegalArgumentException("이름은 중복을 허용하지 않습니다.");
-        }
+        this.players = new Players(playerNames);
     }
 
     public void init() {
         dealer.prepareGame(cardFactory);
-        players.forEach(player -> player.prepareGame(cardFactory));
+        players.prepareGame(cardFactory);
     }
 
     public Optional<Player> findHitPlayer() {
-        return players.stream()
-                .filter(Player::isHit)
-                .findFirst();
+        return players.findHitPlayer();
     }
 
     public void progressPlayerTurn(Player player, Status status) {
@@ -68,24 +54,22 @@ public class Game {
     }
 
     public RecordFactory getRecordFactory() {
-        return new RecordFactory(dealer.getScore(), players);
+        return new RecordFactory(dealer.getScore(), players.getValue());
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return players.getValue();
     }
 
     public List<Participant> getAllParticipant() {
         final List<Participant> list = new ArrayList<>();
         list.add(dealer);
-        list.addAll(players);
+        list.addAll(players.getValue());
 
         return list;
     }
 
     public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::getName)
-                .collect(Collectors.toList());
+        return players.getNames();
     }
 }
