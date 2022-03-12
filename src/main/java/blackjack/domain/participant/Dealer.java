@@ -20,8 +20,7 @@ public class Dealer extends AbstractParticipant {
 
         if (ownCards.isBlackJack()) {
             return new Dealer(NAME, ownCards, GameStatus.BLACKJACK);
-        }
-        else if (ownCards.calculateScore() >= DEALER_LIMIT_SCORE) {
+        } else if (ownCards.calculateScore() >= DEALER_LIMIT_SCORE) {
             return new Dealer(NAME, ownCards, GameStatus.FINISHED);
         }
         return new Dealer(NAME, ownCards, GameStatus.RUNNING);
