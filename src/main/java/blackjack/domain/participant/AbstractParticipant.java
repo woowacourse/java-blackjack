@@ -28,22 +28,6 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     @Override
-    public int calculateResultScore() {
-        validateCanCalculateResultScore();
-        return cards.calculateScore();
-    }
-
-    private void validateCanCalculateResultScore() {
-        if (!gameStatus.isFinishedGame()) {
-            throw new IllegalStateException("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
-        }
-    }
-
-    int calculateScore() {
-        return cards.calculateScore();
-    }
-
-    @Override
     public void hit(final Card card) {
         validateCanHit();
         cards.addCard(card);
@@ -67,9 +51,26 @@ public abstract class AbstractParticipant implements Participant {
         return !gameStatus.isFinishedGame();
     }
 
+    // TODO : 플레이어만 가능
     @Override
     public void changeFinishStatus() {
         gameStatus = GameStatus.FINISHED;
+    }
+
+    @Override
+    public int calculateResultScore() {
+        validateCanCalculateResultScore();
+        return cards.calculateScore();
+    }
+
+    private void validateCanCalculateResultScore() {
+        if (!gameStatus.isFinishedGame()) {
+            throw new IllegalStateException("턴이 종료되지 않아 카드의 합을 계산할 수 없습니다.");
+        }
+    }
+
+    int calculateScore() {
+        return cards.calculateScore();
     }
 
     @Override
@@ -85,13 +86,13 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     @Override
-    public boolean isBust() {
-        return cards.isBust();
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
     }
 
     @Override
-    public boolean isBlackJack() {
-        return cards.isBlackJack();
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     @Override

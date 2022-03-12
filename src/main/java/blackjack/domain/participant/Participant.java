@@ -18,13 +18,13 @@ public interface Participant {
 
     GameOutcome fight(final Participant participant);
 
-    List<Card> cards();
-
-    String getName();
-
     boolean isBlackJack();
 
     boolean isBust();
 
     boolean isDealer();
+
+    List<Card> cards();
+
+    String getName();
 }
