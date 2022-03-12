@@ -14,6 +14,23 @@ import org.junit.jupiter.api.Test;
 public class DealerTest {
 
     @Test
+    @DisplayName("딜러는 처음에 맨 앞 한 장만 보여준다.")
+    void showOnlyOneCard() {
+        // given
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
+        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
+        List<Card> cards = List.of(card1, card2);
+
+        Dealer dealer = new Dealer(cards);
+
+        // when
+        List<Card> actual = dealer.showInitialCards();
+
+        // then
+        assertThat(actual).containsOnly(card1);
+    }
+
+    @Test
     @DisplayName("딜러가 카드 한 장을 더 받는 경우")
     void addCard() {
         // given

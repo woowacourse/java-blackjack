@@ -15,6 +15,23 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     @Test
+    @DisplayName("플레이어는 처음에 모든 카드를 보여준다.")
+    void showEveryCard() {
+        // given
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
+        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
+        List<Card> cards = List.of(card1, card2);
+
+        Player player = new Player(new Name("Player"), cards);
+
+        // when
+        List<Card> actual = player.showInitialCards();
+
+        // then
+        assertThat(actual).containsOnly(card1, card2);
+    }
+
+    @Test
     @DisplayName("플레이어가 카드 한 장을 더 받는 경우")
     void addCard() {
         // given
