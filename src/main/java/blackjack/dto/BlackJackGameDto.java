@@ -29,6 +29,6 @@ public class BlackJackGameDto {
     }
 
     public int getDealerAddCardCount() {
-        return dealer.getCardCount() - 2;
+        return dealer.getCardCountInDeck() - 2;
     }
 }

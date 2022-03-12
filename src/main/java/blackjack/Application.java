@@ -30,6 +30,8 @@ public class Application {
 
         blackJackGame.giveCardBy(cardPack);
         resultView.printDealerAddCardCount(new BlackJackGameDto(blackJackGame));
+
+        resultView.printScoreResultOfGame(new BlackJackGameDto(blackJackGame));
     }
 
     private static void startTurn(BlackJackGame blackJackGame, CardPack cardPack) {

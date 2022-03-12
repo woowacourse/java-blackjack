@@ -1,28 +1,20 @@
 package blackjack.dto;
 
 import blackjack.Player;
-import blackjack.trumpcard.Card;
 import blackjack.trumpcard.Deck;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PlayerDto {
     private final String name;
-    private final List<CardDto> cards;
+    private final DeckDto deck;
 
     private PlayerDto(Player player) {
         this.name = player.getName();
-        this.cards = createCardsDto(player.getDeck());
+        this.deck = new DeckDto(player.getDeck());
     }
 
     public static PlayerDto from(Player player) {
         return new PlayerDto(player);
-    }
-
-    private List<CardDto> createCardsDto(Deck deck) {
-        return deck.getCards().stream()
-                .map(CardDto::new)
-                .collect(Collectors.toList());
     }
 
     public String getName() {
@@ -30,14 +22,18 @@ public class PlayerDto {
     }
 
     public List<CardDto> getCardsDto() {
-        return cards;
+        return deck.getCardsDto();
     }
 
-    public CardDto getCardDto() {
-        return cards.get(0);
+    public CardDto getCardDtoInDeck() {
+        return deck.getCardDto();
     }
 
-    public int getCardCount() {
-        return cards.size();
+    public int getCardCountInDeck() {
+        return deck.getCardCount();
+    }
+
+    public int getTotalScore(){
+        return deck.getTotalScore();
     }
 }
