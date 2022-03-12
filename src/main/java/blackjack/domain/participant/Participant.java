@@ -50,15 +50,15 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return Rule.INSTANCE.isBust(cards);
+        return Rule.isBust(cards);
     }
 
     public boolean isBlackJack() {
-        return Rule.INSTANCE.isBlackJack(cards);
+        return Rule.isBlackJack(cards);
     }
 
     public int calculateSum() {
-        return Rule.INSTANCE.calculateSum(cards);
+        return Rule.calculateSum(cards);
     }
 
     public List<Card> getCards() {
