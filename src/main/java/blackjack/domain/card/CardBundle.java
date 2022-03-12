@@ -8,6 +8,7 @@ import java.util.function.Function;
 public class CardBundle {
 
     private static final String NO_DUPLICATE_CARD_EXCEPTION_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final Set<Card> cards;
 
@@ -59,6 +60,17 @@ public class CardBundle {
                 .count();
 
         return aceCount > 0;
+    }
+
+    public boolean isBlackjack() {
+        if (cards.size() != BLACKJACK_CARD_SIZE) {
+            return false;
+        }
+        return getScore().toInt() == Score.BLACKJACK;
+    }
+
+    public boolean isBust() {
+        return getScore().toInt() > Score.BLACKJACK;
     }
 
     @Override
