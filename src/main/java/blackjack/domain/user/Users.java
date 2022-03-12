@@ -13,7 +13,7 @@ public class Users {
         this.dealer = dealer;
     }
 
-    public static Users from(List<String> playerNames, Dealer dealer) {
+    public static Users of(List<String> playerNames, Dealer dealer) {
         Players players = Players.from(playerNames);
 
         return new Users(players, dealer);

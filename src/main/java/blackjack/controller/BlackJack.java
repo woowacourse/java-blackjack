@@ -43,7 +43,7 @@ public class BlackJack {
 
             Dealer dealer = new Dealer();
 
-            return Users.from(playerNames, dealer);
+            return Users.of(playerNames, dealer);
         } catch(IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
 
