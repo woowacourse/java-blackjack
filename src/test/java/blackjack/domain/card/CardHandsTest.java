@@ -10,13 +10,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class CardsTest {
+class CardHandsTest {
 
     @DisplayName("카드의 합계가 기댓값과 일치해야 한다.")
     @ParameterizedTest(name = "[{index}] 기댓값 : {1}, 카드 : {0}")
     @MethodSource("provideForParameterizedTest")
     void calculateScoreTest(final List<Card> initializedCards, final int expectedScore, final boolean expectedBusted) {
-        final Cards cards = new Cards();
+        final CardHands cards = new CardHands();
         initializedCards.forEach(cards::addCard);
 
         final int actualScore = cards.calculateScore();
@@ -27,7 +27,7 @@ class CardsTest {
     @ParameterizedTest(name = "[{index}] 기댓값 : {2}, 카드 : {0}")
     @MethodSource("provideForParameterizedTest")
     void isBustTest(final List<Card> initializedCards, final int expectedScore, final boolean expectedBust) {
-        final Cards cards = new Cards();
+        final CardHands cards = new CardHands();
         initializedCards.forEach(cards::addCard);
 
         final boolean actualBust = cards.isBust();

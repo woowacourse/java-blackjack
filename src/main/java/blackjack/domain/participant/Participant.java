@@ -2,13 +2,13 @@ package blackjack.domain.participant;
 
 import java.util.List;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.CardHands;
 import blackjack.domain.card.Deck;
 
 public abstract class Participant {
 
     private final String name;
-    protected Cards cards = new Cards();
+    protected CardHands cards = new CardHands();
 
     protected Participant(final String name, final Deck deck) {
         validateNameNotBlank(name);

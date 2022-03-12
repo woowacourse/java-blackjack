@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Cards {
+public class CardHands {
 
     private static final int BLACKJACK = 21;
     private static final int DEFAULT_SCORE = 0;
