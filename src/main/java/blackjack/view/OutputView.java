@@ -80,7 +80,6 @@ public class OutputView {
 		DealerResultDto dealerResultDto = resultDto.getDealerResultDto();
 		System.out.print(dealerResultDto.getName() + COLON);
 		System.out.println(String.join(BLANK, dealerResultDto.getOutcome()));
-		System.out.println();
 
 		printPlayerResult(resultDto.getPlayerResultDto());
 	}
