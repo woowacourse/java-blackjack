@@ -17,10 +17,7 @@ public class Application {
 
         BlackJackGame blackJackGame = initBlackJackGame();
 
-        blackJackGame.giveStartingCardsBy(cardDeck);
-
-        BlackJackGameDto gameDto = new BlackJackGameDto(blackJackGame);
-        resultView.printStartingCardsInGame(gameDto);
+        giveStartingCardsToBlackJackGame(blackJackGame, cardDeck);
 
         while (blackJackGame.isDrawPossible()) {
             startTurn(blackJackGame, cardDeck);
@@ -33,6 +30,13 @@ public class Application {
         resultView.printScoreResultOfGame(new BlackJackGameDto(blackJackGame));
 
         resultView.printWinningResultOfGame(new BlackJackGameDto(blackJackGame));
+    }
+
+    private static void giveStartingCardsToBlackJackGame(BlackJackGame blackJackGame, CardDeck cardDeck) {
+        blackJackGame.giveStartingCardsBy(cardDeck);
+
+        BlackJackGameDto gameDto = new BlackJackGameDto(blackJackGame);
+        resultView.printStartingCardsInGame(gameDto);
     }
 
     private static BlackJackGame initBlackJackGame() {

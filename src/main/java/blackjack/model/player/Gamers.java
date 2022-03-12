@@ -1,10 +1,13 @@
 package blackjack.model.player;
 
 import blackjack.model.card.Card;
+import blackjack.model.card.CardDeck;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Gamers {
+    private static final int START_CARD_COUNT = 2;
+
     private final List<Player> values;
     private int gamerOrder = 0;
 
@@ -17,6 +20,12 @@ public class Gamers {
                 .map(Gamer::new)
                 .collect(Collectors.toList());
         return new Gamers(gamers);
+    }
+
+    public void giveCardsBy(CardDeck cardDeck) {
+        for (Player gamer : values) {
+            gamer.receive(cardDeck.draw());
+        }
     }
 
     public List<Player> getValues() {

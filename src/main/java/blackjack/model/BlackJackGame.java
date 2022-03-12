@@ -19,9 +19,7 @@ public class BlackJackGame {
 
     public void giveStartingCardsBy(CardDeck cardDeck) {
         giveCardsToDealerBy(cardDeck);
-        for (Player gamer : gamers.getValues()) {
-            giveCardsTo(gamer, cardDeck);
-        }
+        giveCardsToGamersBy(cardDeck);
     }
 
     private void giveCardsToDealerBy(CardDeck cardDeck) {
@@ -30,10 +28,8 @@ public class BlackJackGame {
         }
     }
 
-    private void giveCardsTo(Player gamer, CardDeck cardDeck) {
-        for (int i = 0; i < START_CARD_COUNT; i++) {
-            gamer.receive(cardDeck.draw());
-        }
+    private void giveCardsToGamersBy(CardDeck cardDeck) {
+        gamers.giveCardsBy(cardDeck);
     }
 
     public boolean isDrawPossible() {
