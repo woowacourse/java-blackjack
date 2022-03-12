@@ -4,44 +4,46 @@ import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class Statistic {
 
-    private static Map<Player, GameResult> playerResult;
+    private LinkedHashMap<Player, GameResult> playerResult;
 
-    private Statistic() {
+    private Statistic(Dealer dealer, Players players) {
+        this.playerResult = new LinkedHashMap<>();
+        calculate(playerResult, dealer, players);
     }
 
     public static Statistic of(Dealer dealer, Players players) {
-        playerResult = new LinkedHashMap<>();
-        calculate(dealer, players);
-        return new Statistic();
+        return new Statistic(dealer, players);
     }
 
-    private static void calculate(Dealer dealer, Players players) {
+    private void calculate(LinkedHashMap<Player, GameResult> playerResult, Dealer dealer,
+        Players players) {
         if (dealer.isOverThanMaxPoint()) {
-            calculateDealerBurst(players);
+            calculateDealerBurst(playerResult, players);
             return;
         }
-        calculateDealerNotBurst(dealer, players);
+        calculateDealerNotBurst(playerResult, dealer, players);
     }
 
-    private static void calculateDealerBurst(Players players) {
+    private void calculateDealerBurst(LinkedHashMap<Player, GameResult> playerResult,
+        Players players) {
         for (Player player : players.getPlayers()) {
             GameResult gameResult = getResultAtBurst(player);
             playerResult.put(player, gameResult);
         }
     }
 
-    private static GameResult getResultAtBurst(Player player) {
+    private GameResult getResultAtBurst(Player player) {
         if (!player.isOverThanMaxPoint()) {
             return GameResult.WIN;
         }
         return GameResult.LOSE;
     }
 
-    private static void calculateDealerNotBurst(Dealer dealer, Players players) {
+    private void calculateDealerNotBurst(LinkedHashMap<Player, GameResult> playerResult,
+        Dealer dealer, Players players) {
         int dealerPoint = dealer.getPoint();
         for (Player player : players.getPlayers()) {
             GameResult gameResult = getResultAtNotBurst(dealerPoint, player);
@@ -49,7 +51,7 @@ public class Statistic {
         }
     }
 
-    private static GameResult getResultAtNotBurst(int dealerPoint, Player player) {
+    private GameResult getResultAtNotBurst(int dealerPoint, Player player) {
         int playerPoint = player.getPoint();
         if (player.isOverThanMaxPoint() || dealerPoint > playerPoint) {
             return GameResult.LOSE;

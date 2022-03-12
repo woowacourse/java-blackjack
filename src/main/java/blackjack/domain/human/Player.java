@@ -19,7 +19,7 @@ public class Player extends Human {
 
     @Override
     public boolean isOneMoreCard() {
-        return isOverThanMaxPoint();
+        return !isOverThanMaxPoint();
     }
 
     @Override

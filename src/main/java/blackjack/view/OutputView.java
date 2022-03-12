@@ -62,7 +62,8 @@ public class OutputView {
         StringBuilder dealerResult = new StringBuilder(DEALER_RESULT_PREFIX);
         for (GameResult gameResult : GameResult.values()) {
             int resultCount = statistic.getCountByGameResult(gameResult);
-            dealerResult.append(resultCount + gameResult.getResult() + COUNT_JOIN_DELIMITER);
+            String resultString = changeDealerResult(gameResult);
+            dealerResult.append(resultCount + resultString + COUNT_JOIN_DELIMITER);
         }
         System.out.println(dealerResult);
     }
@@ -73,5 +74,16 @@ public class OutputView {
             System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(), result);
             System.out.println();
         }
+    }
+
+
+    private static String changeDealerResult(GameResult gameResult) {
+        if (gameResult.equals(GameResult.WIN)) {
+            return GameResult.LOSE.getResult();
+        }
+        if (gameResult.equals(GameResult.LOSE)) {
+            return GameResult.WIN.getResult();
+        }
+        return GameResult.DRAW.getResult();
     }
 }
