@@ -20,7 +20,9 @@ public class InputView {
 
     public static List<String> scanPlayerNames() {
         System.out.println(INPUT_PLAYER_NAMES);
-        return ExceptionHandler.process(InputView::scanRawPlayerNames, InputView::validateDuplicateNames);
+        List<String> playerNames = scanRawPlayerNames();
+        validateDuplicateNames(playerNames);
+        return playerNames;
     }
 
     private static List<String> scanRawPlayerNames() {
