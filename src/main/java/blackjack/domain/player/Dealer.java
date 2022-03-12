@@ -1,16 +1,17 @@
 package blackjack.domain.player;
 
+import static blackjack.constant.Rule.DEALER_HIT_STANDARD_SCORE;
+
 public class Dealer extends Player {
 
     private static final String NAME = "딜러";
-    private static final int BOUNDARY_SCORE = 16;
 
     public Dealer() {
         super(NAME);
     }
 
     @Override
-    public boolean canAddCard() {
-        return getTotalScore() <= BOUNDARY_SCORE;
+    public boolean canTakeCard() {
+        return getTotalScore() <= DEALER_HIT_STANDARD_SCORE.getValue();
     }
 }

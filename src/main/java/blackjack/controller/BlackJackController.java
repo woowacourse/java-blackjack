@@ -17,27 +17,28 @@ public class BlackJackController {
     public void run() {
         final BlackJackMachine blackJackMachine = new BlackJackMachine(new CardDeck());
         final Dealer dealer = new Dealer();
-        final Participants participants = getParticipants();
+        final Participants participants = generateParticipants();
 
         giveInitialCardsToPlayer(blackJackMachine, dealer, participants);
         askAndGiveCardsToParticipants(blackJackMachine, participants);
         giveCardsToDealer(blackJackMachine, dealer);
 
-        calculateTotalScores(dealer, participants);
-        decideResults(dealer, participants);
+        calculateTotalScore(dealer, participants);
+        decideTotalResult(dealer, participants);
     }
 
-    private Participants getParticipants() {
+    private Participants generateParticipants() {
         try {
             final List<String> names = InputView.getParticipantNames();
             return new Participants(names);
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
-            return getParticipants();
+            return generateParticipants();
         }
     }
 
-    private void giveInitialCardsToPlayer(final BlackJackMachine blackJackMachine, final Dealer dealer,
+    private void giveInitialCardsToPlayer(final BlackJackMachine blackJackMachine,
+                                          final Dealer dealer,
                                           final Participants participants) {
         blackJackMachine.giveInitialCards(dealer, participants);
         OutputView.printInitialCards(dealer, participants);
@@ -51,13 +52,14 @@ public class BlackJackController {
         OutputView.printNewLine();
     }
 
-    private void askAndGiveCardToParticipant(final BlackJackMachine blackJackMachine, final Participant participant) {
+    private void askAndGiveCardToParticipant(final BlackJackMachine blackJackMachine,
+                                             final Participant participant) {
         Choice choice;
         do {
             choice = getChoice(participant);
             blackJackMachine.giveCardToParticipant(participant, choice);
             OutputView.printPlayerCards(participant);
-        } while (choice.isHit() && participant.canAddCard());
+        } while (choice.isHit() && participant.canTakeCard());
     }
 
     private Choice getChoice(final Participant participant) {
@@ -69,24 +71,27 @@ public class BlackJackController {
         }
     }
 
-    private void giveCardsToDealer(final BlackJackMachine blackJackMachine, final Dealer dealer) {
-        while (dealer.canAddCard()) {
+    private void giveCardsToDealer(final BlackJackMachine blackJackMachine,
+                                   final Dealer dealer) {
+        while (dealer.canTakeCard()) {
             blackJackMachine.giveCardToDealer(dealer);
             OutputView.printDealerGetCardMessage(dealer);
         }
         OutputView.printNewLine();
     }
 
-    private void calculateTotalScores(Dealer dealer, Participants participants) {
+    private void calculateTotalScore(final Dealer dealer,
+                                     final Participants participants) {
         OutputView.printTotalScore(dealer, dealer.getTotalScore());
         for (Participant participant : participants) {
             OutputView.printTotalScore(participant, participant.getTotalScore());
         }
     }
 
-    private void decideResults(final Dealer dealer, final Participants participants) {
+    private void decideTotalResult(final Dealer dealer,
+                                   final Participants participants) {
         final ParticipantResult participantResult = new ParticipantResult(dealer, participants);
         final DealerResult dealerResult = new DealerResult(participantResult);
-        OutputView.printResults(dealer, dealerResult, participantResult);
+        OutputView.printTotalResult(dealer, dealerResult, participantResult);
     }
 }

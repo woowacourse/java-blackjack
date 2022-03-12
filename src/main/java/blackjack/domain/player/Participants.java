@@ -1,13 +1,13 @@
 package blackjack.domain.player;
 
+import static blackjack.constant.Rule.MAX_PARTICIPANTS_SIZE;
+import static blackjack.constant.Rule.MIN_PARTICIPANTS_SIZE;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Participants implements Iterable<Participant> {
-
-    private static final int MIN_SIZE = 2;
-    private static final int MAX_SIZE = 8;
 
     private final List<Participant> participants;
 
@@ -22,7 +22,7 @@ public class Participants implements Iterable<Participant> {
 
     private void checkSize(final List<String> names) {
         final int size = names.size();
-        if (size < MIN_SIZE || size > MAX_SIZE) {
+        if (size < MIN_PARTICIPANTS_SIZE.getValue() || size > MAX_PARTICIPANTS_SIZE.getValue()) {
             throw new IllegalArgumentException("[ERROR] 참자가 인원은 2명~8명 사이여야합니다.");
         }
     }

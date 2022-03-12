@@ -16,7 +16,7 @@ public class CardsTest {
     @DisplayName("카드에 대한 점수 계산한다.")
     void getTotalScoreBasicCard(List<Card> input, int totalScore) {
         Cards cards = new Cards(input);
-        Assertions.assertThat(cards.getTotalScore()).isEqualTo(totalScore);
+        Assertions.assertThat(cards.calculateTotalScore()).isEqualTo(totalScore);
     }
 
     static Stream<Arguments> parameters() {
@@ -43,7 +43,7 @@ public class CardsTest {
         Cards cards = new Cards(
                 List.of(new Card(Denomination.QUEEN, Suit.CLOVER), new Card(Denomination.FIVE, Suit.SPADE)));
         cards.addCard(new Card(Denomination.SIX, Suit.HEART));
-        Assertions.assertThat(cards.getTotalScore()).isEqualTo(21);
+        Assertions.assertThat(cards.calculateTotalScore()).isEqualTo(21);
 
     }
 }

@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import static blackjack.constant.Rule.DEALER_HIT_STANDARD_SCORE;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
@@ -18,7 +20,6 @@ public class OutputView {
     private static final String CARD_DELIMITER = ", ";
     private static final String RESULT_DELIMITER = " ";
     private static final String COLON_AND_BLANK = ": ";
-    private static final int DEALER_BOUNDARY_SCORE = 16;
 
     public static void printInitialCards(final Dealer dealer, final Participants participants) {
         printDealMessage(dealer, participants);
@@ -54,7 +55,7 @@ public class OutputView {
     }
 
     public static void printDealerGetCardMessage(final Dealer dealer) {
-        System.out.println(dealer.getName() + "는 " + DEALER_BOUNDARY_SCORE + "이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(dealer.getName() + "는 " + DEALER_HIT_STANDARD_SCORE.getValue() + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printTotalScore(final Player player, final int totalScore) {
@@ -65,10 +66,11 @@ public class OutputView {
         System.out.println(player.getName() + "카드: " + String.join(CARD_DELIMITER, cards) + " - 결과: " + totalScore);
     }
 
-    public static void printResults(final Dealer dealer, final DealerResult dealerResult, final ParticipantResult results) {
+    public static void printTotalResult(final Dealer dealer, final DealerResult dealerResult,
+                                        final ParticipantResult results) {
         System.out.println("\n## 최종 승패");
         printDealerResult(dealer, dealerResult);
-        printParticipantsResult(results);
+        printParticipantResult(results);
     }
 
     private static void printDealerResult(final Dealer dealer, final DealerResult result) {
@@ -83,12 +85,12 @@ public class OutputView {
         System.out.println(dealer.getName() + COLON_AND_BLANK + dealerResultString);
     }
 
-    private static void printParticipantsResult(final ParticipantResult results) {
-        final Map<Participant, Result> participantsResult = results.getResult();
+    private static void printParticipantResult(final ParticipantResult result) {
+        final Map<Participant, Result> participantResult = result.getResult();
 
-        participantsResult.keySet()
+        participantResult.keySet()
                 .forEach(participant -> System.out.println(
-                        participant.getName() + COLON_AND_BLANK + participantsResult.get(participant).getName()));
+                        participant.getName() + COLON_AND_BLANK + participantResult.get(participant).getName()));
     }
 
     public static void printNewLine() {

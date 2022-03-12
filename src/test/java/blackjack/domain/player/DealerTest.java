@@ -18,9 +18,9 @@ public class DealerTest {
     @DisplayName("16점 이하일 경우 카드를 추가할 수 있다.")
     void canAddCard(List<Card> cards) {
         Dealer dealer = new Dealer();
-        cards.forEach(dealer::addCard);
+        cards.forEach(dealer::takeCard);
 
-        Assertions.assertThat(dealer.canAddCard()).isTrue();
+        Assertions.assertThat(dealer.canTakeCard()).isTrue();
     }
 
     static Stream<Arguments> parameters1() {
@@ -39,9 +39,9 @@ public class DealerTest {
     @DisplayName("16점을 초과할 경우 카드를 추가하지 못한다.")
     void cantAddCard(List<Card> cards) {
         Dealer dealer = new Dealer();
-        cards.forEach(dealer::addCard);
+        cards.forEach(dealer::takeCard);
 
-        Assertions.assertThat(dealer.canAddCard()).isFalse();
+        Assertions.assertThat(dealer.canTakeCard()).isFalse();
     }
 
     static Stream<Arguments> parameters2() {

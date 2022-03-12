@@ -19,8 +19,8 @@ public class BlackJackMachineTest {
     @DisplayName("참가자가 카드를 더 뽑는다고 하면 카드를 준다.")
     void giveCardToParticipantYes() {
         Participant participant = new Participant("배카라");
-        participant.addCard(new Card(Denomination.THREE, Suit.SPADE));
-        participant.addCard(new Card(Denomination.TWO, Suit.HEART));
+        participant.takeCard(new Card(Denomination.THREE, Suit.SPADE));
+        participant.takeCard(new Card(Denomination.TWO, Suit.HEART));
 
         int totalScore = participant.getTotalScore();
 
@@ -33,8 +33,8 @@ public class BlackJackMachineTest {
     @DisplayName("참가자가 카드를 더 뽑지 않는다고 하면 카드를 주지 않는다.")
     void giveCardToParticipantNo() {
         Participant participant = new Participant("배카라");
-        participant.addCard(new Card(Denomination.THREE, Suit.SPADE));
-        participant.addCard(new Card(Denomination.ACE, Suit.HEART));
+        participant.takeCard(new Card(Denomination.THREE, Suit.SPADE));
+        participant.takeCard(new Card(Denomination.ACE, Suit.HEART));
 
         int totalScore = participant.getTotalScore();
 
@@ -47,8 +47,8 @@ public class BlackJackMachineTest {
     @DisplayName("딜러의 점수가 16점을 초과할 때 까지 카드를 계속 준다.")
     void giveCardToDealer() {
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Denomination.TWO, Suit.SPADE));
-        dealer.addCard(new Card(Denomination.TWO, Suit.HEART));
+        dealer.takeCard(new Card(Denomination.TWO, Suit.SPADE));
+        dealer.takeCard(new Card(Denomination.TWO, Suit.HEART));
 
         blackJackMachine.giveCardToDealer(dealer);
 

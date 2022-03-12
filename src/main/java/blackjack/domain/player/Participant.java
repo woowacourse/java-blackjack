@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import static blackjack.constant.Rule.WINNING_SCORE;
+
 public class Participant extends Player {
 
     public Participant(final String name) {
@@ -7,7 +9,7 @@ public class Participant extends Player {
     }
 
     @Override
-    public boolean canAddCard() {
-        return getTotalScore() <= 21;
+    public boolean canTakeCard() {
+        return getTotalScore() <= WINNING_SCORE.getValue();
     }
 }

@@ -23,13 +23,13 @@ public class ParticipantResultTest {
     @DisplayName("딜러의 점수가 21점 이하인 경우, 참가자의 승패를 테스트한다.")
     void decideWhenDealerIsAlive(Card card1, Card card2, Card card3, Card card4, Result expected) {
         Dealer dealer = new Dealer();
-        dealer.addCard(card1);
-        dealer.addCard(card2);
+        dealer.takeCard(card1);
+        dealer.takeCard(card2);
 
         Participants participants = new Participants(List.of("엘리", "배카라"));
         for (Participant participant : participants) {
-            participant.addCard(card3);
-            participant.addCard(card4);
+            participant.takeCard(card3);
+            participant.takeCard(card4);
         }
 
         ParticipantResult results = new ParticipantResult(dealer, participants);
@@ -95,14 +95,14 @@ public class ParticipantResultTest {
     void decideWhenDealerIsAliveAndParticipantBust(Card card1, Card card2, Card card3, Card card4,
                                                    Card card5, Result expected) {
         Dealer dealer = new Dealer();
-        dealer.addCard(card1);
-        dealer.addCard(card2);
+        dealer.takeCard(card1);
+        dealer.takeCard(card2);
 
         Participants participants = new Participants(List.of("엘리", "배카라"));
         for (Participant participant : participants) {
-            participant.addCard(card3);
-            participant.addCard(card4);
-            participant.addCard(card5);
+            participant.takeCard(card3);
+            participant.takeCard(card4);
+            participant.takeCard(card5);
         }
 
         ParticipantResult results = new ParticipantResult(dealer, participants);
@@ -136,15 +136,15 @@ public class ParticipantResultTest {
                               Card card4, Card card5, Card card6,
                               Result expected) {
         Dealer dealer = new Dealer();
-        dealer.addCard(card1);
-        dealer.addCard(card2);
-        dealer.addCard(card3);
+        dealer.takeCard(card1);
+        dealer.takeCard(card2);
+        dealer.takeCard(card3);
 
         Participants participants = new Participants(List.of("엘리", "배카라"));
         for (Participant participant : participants) {
-            participant.addCard(card4);
-            participant.addCard(card5);
-            participant.addCard(card6);
+            participant.takeCard(card4);
+            participant.takeCard(card5);
+            participant.takeCard(card6);
         }
 
         ParticipantResult results = new ParticipantResult(dealer, participants);

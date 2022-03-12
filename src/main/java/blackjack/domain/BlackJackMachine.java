@@ -24,19 +24,19 @@ public class BlackJackMachine {
     }
 
     private void addInitialCards(final Player player) {
-        player.addCard(deck.pickCard());
-        player.addCard(deck.pickCard());
+        player.takeCard(deck.pickCard());
+        player.takeCard(deck.pickCard());
     }
 
     public void giveCardToParticipant(final Participant participant, final Choice choice) {
-        if (choice.isHit() && participant.canAddCard()) {
-            participant.addCard(deck.pickCard());
+        if (choice.isHit() && participant.canTakeCard()) {
+            participant.takeCard(deck.pickCard());
         }
     }
 
     public void giveCardToDealer(final Dealer dealer) {
-        while (dealer.canAddCard()) {
-            dealer.addCard(deck.pickCard());
+        while (dealer.canTakeCard()) {
+            dealer.takeCard(deck.pickCard());
         }
     }
 }

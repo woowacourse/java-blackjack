@@ -13,7 +13,7 @@ public class PlayerTest {
     void checkNameBlank(String name) {
         Assertions.assertThatThrownBy(() -> new Player(name) {
                     @Override
-                    public boolean canAddCard() {
+                    public boolean canTakeCard() {
                         return false;
                     }
                 })
@@ -27,7 +27,7 @@ public class PlayerTest {
     void checkNameSpecialCharacters(String name) {
         Assertions.assertThatThrownBy(() -> new Player(name) {
                     @Override
-                    public boolean canAddCard() {
+                    public boolean canTakeCard() {
                         return false;
                     }
                 })

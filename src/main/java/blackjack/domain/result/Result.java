@@ -1,5 +1,7 @@
 package blackjack.domain.result;
 
+import static blackjack.constant.Rule.WINNING_SCORE;
+
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.BiPredicate;
@@ -7,11 +9,14 @@ import java.util.function.BiPredicate;
 public enum Result {
 
     WIN("승", (dealerScore, participantScore) ->
-            (dealerScore < participantScore && participantScore <= 21) || (dealerScore > 21 && participantScore <= 21)),
+            participantScore <= WINNING_SCORE.getValue() &&
+                    (dealerScore < participantScore || dealerScore > WINNING_SCORE.getValue())),
     DRAW("무승부", (dealerScore, participantScore) ->
-            Objects.equals(dealerScore, participantScore) && participantScore <= 21),
+            participantScore <= WINNING_SCORE.getValue() &&
+                    Objects.equals(dealerScore, participantScore)),
     LOSE("패", (dealerScore, participantScore) ->
-            (dealerScore > participantScore && dealerScore <= 21) || participantScore > 21);
+            participantScore > WINNING_SCORE.getValue() ||
+                    (dealerScore > participantScore && dealerScore <= WINNING_SCORE.getValue()));
 
     private final String name;
     private final BiPredicate<Integer, Integer> condition;

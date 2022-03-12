@@ -20,7 +20,7 @@ abstract public class Player {
         this.cards = new Cards(new ArrayList<>());
     }
 
-    abstract public boolean canAddCard();
+    abstract public boolean canTakeCard();
 
     private void checkNameSpecialCharacters(String name) {
         if (!NON_SPECIAL_CHARACTERS.matcher(name).matches()) {
@@ -34,12 +34,12 @@ abstract public class Player {
         }
     }
 
-    public void addCard(final Card card) {
+    public void takeCard(final Card card) {
         cards.addCard(card);
     }
 
     public int getTotalScore() {
-        return cards.getTotalScore();
+        return cards.calculateTotalScore();
     }
 
     public String getName() {
