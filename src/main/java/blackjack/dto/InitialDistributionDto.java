@@ -41,4 +41,11 @@ public class InitialDistributionDto {
                 .map(ParticipantCardsDto::getName)
                 .collect(Collectors.toUnmodifiableList());
     }
+
+    @Override
+    public String toString() {
+        return "InitialDistributionDto{" +
+                "participantsInfo=" + participantsInfo +
+                '}';
+    }
 }

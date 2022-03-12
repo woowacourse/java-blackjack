@@ -159,7 +159,7 @@ public class ResultRefereeTest {
 
     private List<Integer> getResultCounts(ResultStatistics dealerResult) {
         return Arrays.stream(ResultType.values())
-                .map(type -> dealerResult.getCountOf(type).toInt())
+                .map(type -> dealerResult.getStats().get(type).toInt())
                 .collect(Collectors.toList());
     }
 }

@@ -1,12 +1,12 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.ResultStatistics;
 import blackjack.domain.game.ResultType;
 import blackjack.domain.participant.Player;
 import blackjack.dto.InitialDistributionDto;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.GameResultDto;
+import blackjack.dto.ResultStatsDto;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -75,13 +75,13 @@ public class OutputView {
         print(getJoinedCardsAndScores(dto.getResults()) + NEW_LINE);
     }
 
-    private static String getJoinedCardsAndScores(List<ResultStatistics> resultStats) {
+    private static String getJoinedCardsAndScores(List<ResultStatsDto> resultStats) {
         return resultStats.stream()
                 .map(OutputView::getParticipantCardsAndScore)
                 .collect(Collectors.joining());
     }
 
-    private static String getParticipantCardsAndScore(ResultStatistics stats) {
+    private static String getParticipantCardsAndScore(ResultStatsDto stats) {
         String participantName = stats.getParticipantName();
         String cards = getCardsInfo(stats.getCards());
         int score = stats.getScore().toInt();
@@ -94,13 +94,13 @@ public class OutputView {
         print(getJoinedGameResults(dto.getResults()));
     }
 
-    private static String getJoinedGameResults(List<ResultStatistics> stats) {
+    private static String getJoinedGameResults(List<ResultStatsDto> stats) {
         return stats.stream()
                 .map(OutputView::getResultFormat)
                 .collect(Collectors.joining(NEW_LINE));
     }
 
-    private static String getResultFormat(ResultStatistics result) {
+    private static String getResultFormat(ResultStatsDto result) {
         String name = result.getParticipantName();
         List<ResultType> existingTypes = getOccurredResultTypes(result);
 
@@ -110,13 +110,13 @@ public class OutputView {
         return String.format(PARTICIPANT_RESULT_FORMAT, name, getMultipleResultTypeFormat(result, existingTypes));
     }
 
-    private static List<ResultType> getOccurredResultTypes(ResultStatistics result) {
+    private static List<ResultType> getOccurredResultTypes(ResultStatsDto dto) {
         return Arrays.stream(ResultType.values())
-                .filter(type -> result.getCountOf(type).toInt() > 0)
+                .filter(type -> dto.getCountOf(type).toInt() > 0)
                 .collect(Collectors.toList());
     }
 
-    private static String getSingleResultTypeFormat(ResultStatistics result,
+    private static String getSingleResultTypeFormat(ResultStatsDto result,
                                                     String name,
                                                     List<ResultType> existingTypes) {
         int count = result.getCountOf(existingTypes.get(0)).toInt();
@@ -128,10 +128,10 @@ public class OutputView {
         return String.format(PARTICIPANT_RESULT_FORMAT, name, count + resultType);
     }
 
-    private static String getMultipleResultTypeFormat(ResultStatistics result,
+    private static String getMultipleResultTypeFormat(ResultStatsDto dto,
                                                       List<ResultType> existingTypes) {
         return existingTypes.stream()
-                .map(type -> result.getCountOf(type).toInt() + type.getDisplayName())
+                .map(type -> dto.getCountOf(type).toInt() + type.getDisplayName())
                 .collect(Collectors.joining(" "));
     }
 

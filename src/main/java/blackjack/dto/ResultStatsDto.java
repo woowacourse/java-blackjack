@@ -2,9 +2,9 @@ package blackjack.dto;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.ResultCount;
+import blackjack.domain.game.ResultStatistics;
 import blackjack.domain.game.ResultType;
 import blackjack.domain.game.Score;
-import blackjack.domain.participant.Participant;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
@@ -17,9 +17,9 @@ public class ResultStatsDto {
     private final ParticipantCardsDto participantCardsDto;
     private final Map<ResultType, ResultCount> participantResultStats = new EnumMap<>(ResultType.class);
 
-    public ResultStatsDto(Participant participant, Map<ResultType, ResultCount> stats) {
-        this.participantCardsDto = ParticipantCardsDto.of(participant);
-        initializeResultStats(stats);
+    public ResultStatsDto(ResultStatistics resultStats) {
+        this.participantCardsDto = ParticipantCardsDto.of(resultStats.getParticipant());
+        initializeResultStats(resultStats.getStats());
         validateResultStats();
     }
 
@@ -38,6 +38,10 @@ public class ResultStatsDto {
 
     public boolean hasSingleResultType() {
         return participantResultStats.keySet().size() == 1;
+    }
+
+    public ResultCount getCountOf(ResultType resultType) {
+        return participantResultStats.get(resultType);
     }
 
     public String getParticipantName() {

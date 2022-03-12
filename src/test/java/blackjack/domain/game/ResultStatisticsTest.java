@@ -28,7 +28,7 @@ public class ResultStatisticsTest {
     void of_initsResultsWithZero(String key) {
         ResultStatistics stats = ResultStatistics.of(player);
 
-        ResultCount count = stats.getCountOf(ResultType.valueOf(key));
+        ResultCount count = stats.getStats().get(ResultType.valueOf(key));
 
         assertThat(count.toInt()).isZero();
     }
@@ -42,7 +42,7 @@ public class ResultStatisticsTest {
             stats.incrementCountOf(ResultType.valueOf(key));
         }
 
-        ResultCount count = stats.getCountOf(ResultType.valueOf(key));
+        ResultCount count = stats.getStats().get(ResultType.valueOf(key));
 
         assertThat(count.toInt()).isEqualTo(3);
     }
