@@ -1,8 +1,14 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participant;
+import blackjack.domain.player.Participants;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -159,7 +165,7 @@ public class ParticipantResultTest {
                 Arguments.of(
                         new Card(Denomination.NINE, Suit.CLOVER), new Card(Denomination.EIGHT, Suit.HEART),
                         new Card(Denomination.QUEEN, Suit.CLOVER), new Card(Denomination.TWO, Suit.SPADE),
-                        new Card(Denomination.THREE, Suit.HEART),new Card(Denomination.FIVE, Suit.HEART),
+                        new Card(Denomination.THREE, Suit.HEART), new Card(Denomination.FIVE, Suit.HEART),
                         Result.WIN
                 )
         );

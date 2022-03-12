@@ -1,13 +1,13 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackMachine;
-import blackjack.domain.CardDeck;
-import blackjack.domain.Choice;
-import blackjack.domain.Dealer;
-import blackjack.domain.DealerResult;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.ParticipantResult;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.player.Choice;
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participant;
+import blackjack.domain.player.Participants;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.ParticipantResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -43,7 +43,8 @@ public class BlackJackController {
         OutputView.printInitialCards(dealer, participants);
     }
 
-    private void askAndGiveCardsToParticipants(final BlackJackMachine blackJackMachine, final Participants participants) {
+    private void askAndGiveCardsToParticipants(final BlackJackMachine blackJackMachine,
+                                               final Participants participants) {
         for (Participant participant : participants) {
             askAndGiveCardToParticipant(blackJackMachine, participant);
         }
