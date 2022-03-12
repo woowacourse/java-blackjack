@@ -14,33 +14,35 @@ public class WinResult {
     private final Map<Outcome, Integer> dealerResult;
     private final Map<String, Outcome> playersResult;
 
-    public WinResult(Dealer dealer, List<Player> players) {
-        dealerResult = new EnumMap<>(Outcome.class);
-        playersResult = new LinkedHashMap<>();
-
-        initDealerResult();
-        calculateResult(dealer, List.copyOf(players));
+    private WinResult(Map<Outcome, Integer> dealerResult, Map<String, Outcome> playersResult) {
+        this.dealerResult = Collections.unmodifiableMap(new EnumMap<>(dealerResult));
+        this.playersResult = Collections.unmodifiableMap(new LinkedHashMap<>(playersResult));
     }
 
-    private void initDealerResult() {
+    public static WinResult of(Dealer dealer, List<Player> players) {
+        Map<Outcome, Integer> dealerResult = new EnumMap<>(Outcome.class);
+        Map<String, Outcome> playersResult = new LinkedHashMap<>();
+
+        initDealerResult(dealerResult);
+        for (Player player : players) {
+            Outcome playerOutcome = Rule.INSTANCE.judgeOutcome(player, dealer);
+            playersResult.put(player.getName(), playerOutcome);
+            dealerResult.merge(playerOutcome.getOpposite(), 1, Integer::sum);
+        }
+
+        return new WinResult(dealerResult, playersResult);
+    }
+
+    private static void initDealerResult(Map<Outcome, Integer> dealerResult) {
         Arrays.stream(Outcome.values())
                 .forEach(value -> dealerResult.put(value, 0));
     }
 
-    private void calculateResult(Dealer dealer, List<Player> players) {
-        players.forEach(player -> updateResult(player, Rule.INSTANCE.judgeOutcome(player, dealer)));
-    }
-
-    private void updateResult(Player player, Outcome playerOutcome) {
-        dealerResult.merge(playerOutcome.getOpposite(), 1, Integer::sum);
-        playersResult.put(player.getName(), playerOutcome);
-    }
-
     public Map<Outcome, Integer> getDealerResult() {
-        return Collections.unmodifiableMap(dealerResult);
+        return dealerResult;
     }
 
     public Map<String, Outcome> getPlayersResult() {
-        return Collections.unmodifiableMap(playersResult);
+        return playersResult;
     }
 }

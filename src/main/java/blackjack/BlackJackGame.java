@@ -94,6 +94,6 @@ public class BlackJackGame {
         OutputView.printParticipantCards(dealer, dealer.getScore());
         players.forEach(
                 player -> OutputView.printParticipantCards(player, player.getScore()));
-        OutputView.printWinResult(new WinResult(dealer, players));
+        OutputView.printWinResult(WinResult.of(dealer, players));
     }
 }

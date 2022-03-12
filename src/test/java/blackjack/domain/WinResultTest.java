@@ -37,7 +37,7 @@ public class WinResultTest {
         Map<Outcome, Integer> outcomeMap = createOutcomeMap(1, 1, 1);
 
         // when
-        WinResult winResult = new WinResult(dealer, players);
+        WinResult winResult = WinResult.of(dealer, players);
         Map<Outcome, Integer> dealerResult = winResult.getDealerResult();
         Map<String, Outcome> playersResult = winResult.getPlayersResult();
 
