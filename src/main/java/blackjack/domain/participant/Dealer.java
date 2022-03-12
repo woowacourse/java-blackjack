@@ -32,6 +32,11 @@ public class Dealer extends AbstractParticipant {
     }
 
     @Override
+    public boolean isDealer() {
+        return true;
+    }
+
+    @Override
     public List<Card> cards() {
         validateEndTurn();
         return super.cards();

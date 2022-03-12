@@ -22,6 +22,11 @@ public class Player extends AbstractParticipant {
     }
 
     @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
     boolean isEnd() {
         return super.calculateScore() > Cards.BLACK_JACK_TARGET_NUMBER;
     }

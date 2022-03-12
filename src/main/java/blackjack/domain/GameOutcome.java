@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -25,7 +24,7 @@ public enum GameOutcome {
     }
 
     private static void validateDealer(final Participant dealer) {
-        if (!Dealer.class.isInstance(dealer.getClass())) {
+        if (!dealer.isDealer()) {
             throw new IllegalStateException("딜러가 아닌 사람과 비교할 수 없습니다.");
         }
     }
