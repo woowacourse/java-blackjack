@@ -1,6 +1,5 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,10 +33,7 @@ public class Deck {
     }
 
     public List<Card> initialDraw() {
-        List<Card> result = new ArrayList<>();
-        result.add(draw());
-        result.add(draw());
-        return result;
+        return List.of(draw(), draw());
     }
 
     public int size() {
