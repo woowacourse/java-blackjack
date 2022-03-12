@@ -3,8 +3,8 @@ package BlackJack.dto;
 import BlackJack.domain.Card.Card;
 
 public class CardDto {
-    private String shape;
-    private String number;
+    private final String shape;
+    private final String number;
 
     private CardDto(String shape, String number) {
         this.shape = shape;

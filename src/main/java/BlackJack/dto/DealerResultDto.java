@@ -2,7 +2,7 @@ package BlackJack.dto;
 
 public class DealerResultDto {
 
-    private String name;
+    private final String name;
     private int dealerLoseCount = 0;
     private int dealerDrawCount = 0;
     private int dealerWinCount = 0;

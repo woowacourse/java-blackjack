@@ -1,6 +1,7 @@
 package BlackJack.domain.Card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -9,11 +10,9 @@ public class CardFactory {
     static List<Card> CARD_CACHE = new ArrayList<>();
 
     static {
-        for (Shape shape : Shape.values()) {
-            for (Number number : Number.values()) {
-                CARD_CACHE.add(new Card(shape, number));
-            }
-        }
+        Arrays.stream(Shape.values())
+                .forEach(shape -> Arrays.stream(Number.values())
+                        .forEach(number -> CARD_CACHE.add(new Card(shape, number))));
         Collections.shuffle(CARD_CACHE);
 
     }

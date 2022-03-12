@@ -4,8 +4,8 @@ import BlackJack.domain.Result;
 
 public class PlayerResultDto {
 
-    private String name;
-    private String result;
+    private final String name;
+    private final String result;
 
     public PlayerResultDto(String name, Result result) {
         this.name = name;

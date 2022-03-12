@@ -2,8 +2,8 @@ package BlackJack.domain.Card;
 
 public class Card {
 
-    private Shape shape;
-    private Number number;
+    private final Shape shape;
+    private final Number number;
 
     public Card(Shape shape, Number number) {
         this.shape = shape;

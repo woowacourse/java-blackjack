@@ -7,10 +7,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserDto {
-    private String name;
-    private List<CardDto> cards;
-
-    private int score;
+    private final String name;
+    private final List<CardDto> cards;
+    private final int score;
 
     public UserDto(String name, List<CardDto> cards, int score) {
         this.name = name;
@@ -24,7 +23,7 @@ public class UserDto {
 
     public List<String> getCards() {
         return cards.stream()
-                .map((card) -> card.getCardInfo())
+                .map(CardDto::getCardInfo)
                 .collect(Collectors.toUnmodifiableList());
     }
 

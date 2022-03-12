@@ -6,7 +6,7 @@ public enum Shape {
     SPADE("스페이드"),
     CLOVER("클로버");
 
-    private String shapeName;
+    private final String shapeName;
 
     Shape(String shapeName) {
         this.shapeName = shapeName;

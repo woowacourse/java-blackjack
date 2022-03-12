@@ -15,8 +15,8 @@ public enum Number {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private String denomination;
-    private int value;
+    private final String denomination;
+    private final int value;
 
     Number(String denomination, int value) {
         this.denomination = denomination;
