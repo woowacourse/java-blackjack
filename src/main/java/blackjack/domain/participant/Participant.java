@@ -1,15 +1,18 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Rule;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public abstract class Participant {
 
     private static final int INITIAL_CARDS_SIZE = 2;
+    private static final int BLACKJACK_COUNT = 2;
+    private static final int BLACKJACK_SCORE = 21;
 
     private final Name name;
     private final List<Card> cards;
@@ -49,17 +52,41 @@ public abstract class Participant {
         cards.add(card);
     }
 
+    public int calculateScore() {
+        int aceCount = calculateAceCount();
+        int sum = calculateMinimumSum();
+        return calculateSum(aceCount, sum);
+    }
+
+    private int calculateSum(int aceCount, int sum) {
+        return IntStream.rangeClosed(0, aceCount)
+            .map(i -> sum + (aceCount - i) * 10)
+            .filter(i -> i <= BLACKJACK_SCORE)
+            .findFirst()
+            .orElse(sum);
+    }
+
+    private int calculateMinimumSum() {
+        return cards.stream()
+            .mapToInt(Card::getValue)
+            .sum();
+    }
+
+    private int calculateAceCount() {
+        return (int)cards.stream()
+            .filter(card -> card.isSameValueWith(Denomination.ACE))
+            .count();
+    }
+
     public boolean isBust() {
-        return Rule.isBust(cards);
+        return calculateScore() > BLACKJACK_SCORE;
     }
 
     public boolean isBlackJack() {
-        return Rule.isBlackJack(cards);
+        return cards.size() == BLACKJACK_COUNT && calculateScore() == BLACKJACK_SCORE;
     }
 
-    public int calculateScore() {
-        return Rule.calculateScore(cards);
-    }
+    abstract public boolean isHittable();
 
     public List<Card> getCards() {
         return List.copyOf(cards);
@@ -68,6 +95,4 @@ public abstract class Participant {
     public String getName() {
         return name.getValue();
     }
-
-    abstract public boolean isHittable();
 }
