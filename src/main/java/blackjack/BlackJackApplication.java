@@ -15,14 +15,10 @@ import java.util.stream.Collectors;
 public class BlackJackApplication {
 
     public static void main(String[] args) {
-        try {
-            CardDeck deck = new CardDeck(new BlackJackCardsGenerator());
-            Dealer dealer = new Dealer(deck.drawDouble());
-            List<Player> players = createPlayers(inputPlayerNames(), deck);
-            play(deck, dealer, players);
-        } catch (NullPointerException | IllegalArgumentException e) {
-            OutputView.printFatalErrorMessage(e.getMessage());
-        }
+        CardDeck deck = new CardDeck(new BlackJackCardsGenerator());
+        Dealer dealer = new Dealer(deck.drawDouble());
+        List<Player> players = createPlayers(inputPlayerNames(), deck);
+        play(deck, dealer, players);
     }
 
     private static List<Name> inputPlayerNames() {
