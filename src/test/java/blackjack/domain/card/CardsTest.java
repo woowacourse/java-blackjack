@@ -48,4 +48,13 @@ class CardsTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 카드를 추가할 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("null인 카드를 더할 경우 예외가 발생해야 한다.")
+    void addCardExceptionByNullCard() {
+        final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, NINE)));
+        assertThatThrownBy(() -> cards.addCard(null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("null인 카드는 들어올 수 없습니다.");
+    }
 }

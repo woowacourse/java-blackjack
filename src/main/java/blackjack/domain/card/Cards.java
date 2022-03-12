@@ -32,6 +32,7 @@ public class Cards {
     }
 
     public void addCard(final Card card) {
+        Objects.requireNonNull(card, "null인 카드는 들어올 수 없습니다.");
         validateDuplicateCard(card);
         cards.add(card);
     }
