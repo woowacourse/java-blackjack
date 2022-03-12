@@ -2,6 +2,7 @@ package blackjack.domain.player;
 
 import static java.util.Map.entry;
 
+import blackjack.domain.CardDeck;
 import blackjack.domain.GameOutcome;
 import blackjack.domain.card.Card;
 import blackjack.dto.OutComeResult;
@@ -37,6 +38,21 @@ public class Players {
                 .map(Player::getName)
                 .distinct()
                 .count();
+    }
+
+    public static Players createByPlayerNames(final List<String> playerNames, final CardDeck cardDeck) {
+        final List<Player> players = createPlayers(playerNames, cardDeck);
+        return new Players(players);
+    }
+
+    private static List<Player> createPlayers(final List<String> playerNames, final CardDeck cardDeck) {
+        return playerNames.stream()
+                .map(name -> createPlayer(name, cardDeck))
+                .collect(Collectors.toList());
+    }
+
+    private static ParticipatingPlayer createPlayer(final String name, final CardDeck cardDeck) {
+        return ParticipatingPlayer.createNewPlayer(name, cardDeck.provideFirstDrawCards());
     }
 
     public List<PlayerCards> getPlayerFirstCards() {

@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.ParticipatingPlayer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.dto.OutComeResult;
@@ -10,7 +9,6 @@ import blackjack.dto.PlayerScoreResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class BlackJackBoard {
 
@@ -26,21 +24,10 @@ public class BlackJackBoard {
 
     public static BlackJackBoard createGame(final List<String> playerNames) {
         Objects.requireNonNull(playerNames, "blackjackgame은 null이 들어올 수 없습니다.");
-        final List<String> copyNames = new ArrayList<>(playerNames);
         final CardDeck cardDeck = CardDeck.createNewCardDek();
+        final Players players = Players.createByPlayerNames(playerNames, cardDeck);
         final Player dealer = Dealer.createNewDealer(cardDeck.provideFirstDrawCards());
-        final List<Player> players = createPlayers(copyNames, cardDeck);
-        return new BlackJackBoard(cardDeck, dealer, new Players(players));
-    }
-
-    private static List<Player> createPlayers(final List<String> playerNames, final CardDeck cardDeck) {
-        return playerNames.stream()
-                .map(name -> createPlayer(cardDeck, name))
-                .collect(Collectors.toList());
-    }
-
-    private static ParticipatingPlayer createPlayer(final CardDeck cardDeck, final String name) {
-        return ParticipatingPlayer.createNewPlayer(name, cardDeck.provideFirstDrawCards());
+        return new BlackJackBoard(cardDeck, dealer, players);
     }
 
     public boolean isPlayersTurnEnd() {
