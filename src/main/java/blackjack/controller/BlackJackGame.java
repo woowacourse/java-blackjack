@@ -85,11 +85,9 @@ public class BlackJackGame {
 
     private void playGame(Player gambler, CardDeck cardDeck) {
         PlayerDto currentGamblerDto = PlayerDto.from(gambler);
-
         while (isHit(currentGamblerDto) && !isBurst(gambler, cardDeck)) {
             outputView.printCards(PlayerDto.from(gambler));
         }
-
         outputView.printCards(PlayerDto.from(gambler));
     }
 

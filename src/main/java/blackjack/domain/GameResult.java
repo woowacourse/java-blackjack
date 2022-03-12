@@ -21,8 +21,8 @@ public enum GameResult {
     }
 
     public static GameResult of(final int dealerScore, final int gamblerScore) {
-        if (dealerScore > BURST || gamblerScore > BURST) {
-            return checkBurst(dealerScore, gamblerScore);
+        if (containsBurst(dealerScore, gamblerScore)) {
+            return getBurstResult(dealerScore, gamblerScore);
         }
         return Arrays.stream(values())
             .filter(it -> it.condition.test(dealerScore, gamblerScore))
@@ -30,7 +30,11 @@ public enum GameResult {
             .orElseThrow(() -> new IllegalArgumentException("잘못된 점수가 입력되었습니다."));
     }
 
-    private static GameResult checkBurst(final Integer dealerScore, final Integer gamblerScore) {
+    private static boolean containsBurst(final int dealerScore, final int gamblerScore) {
+        return dealerScore > BURST || gamblerScore > BURST;
+    }
+
+    private static GameResult getBurstResult(final Integer dealerScore, final Integer gamblerScore) {
         if (dealerScore > BURST && gamblerScore > BURST) {
             return DRAW;
         }

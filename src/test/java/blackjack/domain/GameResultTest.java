@@ -50,7 +50,6 @@ class GameResultTest {
 
         //then
         assertThat(result).isEqualTo(GameResult.LOSE);
-        System.out.println();
     }
 
     @DisplayName("겜블러가 버스트인 경우, 승리 결과 객체를 반환하는지 확인한다.")
@@ -62,7 +61,6 @@ class GameResultTest {
 
         //then
         assertThat(result).isEqualTo(GameResult.WIN);
-        System.out.println();
     }
 
     @DisplayName("둘다 버스트인 경우, 무승부 결과 객체를 반환하는지 확인한다.")
@@ -74,6 +72,5 @@ class GameResultTest {
 
         //then
         assertThat(result).isEqualTo(GameResult.DRAW);
-        System.out.println();
     }
 }
