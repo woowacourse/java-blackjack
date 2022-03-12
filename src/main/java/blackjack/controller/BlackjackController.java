@@ -18,7 +18,7 @@ import blackjack.domain.game.ResultReferee;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.InitialDistributionDto;
-import blackjack.dto.ResultStatisticsDto;
+import blackjack.dto.GameResultDto;
 import blackjack.strategy.CardBundleStrategy;
 import java.util.List;
 
@@ -77,7 +77,7 @@ public class BlackjackController {
 
     public void showGameResult(BlackjackGame game) {
         ResultReferee referee = new ResultReferee(game.getDealer(), game.getPlayers());
-        ResultStatisticsDto dto = new ResultStatisticsDto(referee.getResults());
+        GameResultDto dto = new GameResultDto(referee.getResults());
 
         printAllCardsAndScore(dto);
         printGameResult(dto);

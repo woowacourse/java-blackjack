@@ -4,11 +4,11 @@ import blackjack.domain.game.ResultStatistics;
 import java.util.Collections;
 import java.util.List;
 
-public class ResultStatisticsDto {
+public class GameResultDto {
 
     private final List<ResultStatistics> results;
 
-    public ResultStatisticsDto(List<ResultStatistics> results) {
+    public GameResultDto(List<ResultStatistics> results) {
         this.results = results;
     }
 

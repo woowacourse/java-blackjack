@@ -6,7 +6,7 @@ import blackjack.domain.game.ResultType;
 import blackjack.domain.participant.Player;
 import blackjack.dto.InitialDistributionDto;
 import blackjack.dto.ParticipantCardsDto;
-import blackjack.dto.ResultStatisticsDto;
+import blackjack.dto.GameResultDto;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -71,7 +71,7 @@ public class OutputView {
         print(DEALER_EXTRA_CARD_MESSAGE);
     }
 
-    public static void printAllCardsAndScore(ResultStatisticsDto dto) {
+    public static void printAllCardsAndScore(GameResultDto dto) {
         print(getJoinedCardsAndScores(dto.getResults()) + NEW_LINE);
     }
 
@@ -89,7 +89,7 @@ public class OutputView {
         return String.format(PARTICIPANT_CARDS_AND_SCORE_FORMAT, participantName, cards, score);
     }
 
-    public static void printGameResult(ResultStatisticsDto dto) {
+    public static void printGameResult(GameResultDto dto) {
         print(FINAL_RESULT_ANNOUNCEMENT_MESSAGE);
         print(getJoinedGameResults(dto.getResults()));
     }
@@ -102,7 +102,7 @@ public class OutputView {
 
     private static String getResultFormat(ResultStatistics result) {
         String name = result.getParticipantName();
-        List<ResultType> existingTypes = getOccuredResultTypes(result);
+        List<ResultType> existingTypes = getOccurredResultTypes(result);
 
         if (existingTypes.size() == 1) {
             return getSingleResultTypeFormat(result, name, existingTypes);
@@ -110,13 +110,14 @@ public class OutputView {
         return String.format(PARTICIPANT_RESULT_FORMAT, name, getMultipleResultTypeFormat(result, existingTypes));
     }
 
-    private static List<ResultType> getOccuredResultTypes(ResultStatistics result) {
+    private static List<ResultType> getOccurredResultTypes(ResultStatistics result) {
         return Arrays.stream(ResultType.values())
                 .filter(type -> result.getCountOf(type).toInt() > 0)
                 .collect(Collectors.toList());
     }
 
-    private static String getSingleResultTypeFormat(ResultStatistics result, String name,
+    private static String getSingleResultTypeFormat(ResultStatistics result,
+                                                    String name,
                                                     List<ResultType> existingTypes) {
         int count = result.getCountOf(existingTypes.get(0)).toInt();
         String resultType = existingTypes.get(0).getDisplayName();
@@ -127,7 +128,8 @@ public class OutputView {
         return String.format(PARTICIPANT_RESULT_FORMAT, name, count + resultType);
     }
 
-    private static String getMultipleResultTypeFormat(ResultStatistics result, List<ResultType> existingTypes) {
+    private static String getMultipleResultTypeFormat(ResultStatistics result,
+                                                      List<ResultType> existingTypes) {
         return existingTypes.stream()
                 .map(type -> result.getCountOf(type).toInt() + type.getDisplayName())
                 .collect(Collectors.joining(" "));
