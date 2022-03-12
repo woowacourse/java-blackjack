@@ -68,4 +68,8 @@ public class OutputView {
 			System.out.println(player.getName() + ": " + result.get(player).getValue());
 		}
 	}
+
+	public void printException(String message) {
+		System.out.println("[ERROR] " + message);
+	}
 }

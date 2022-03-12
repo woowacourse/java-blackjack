@@ -35,8 +35,8 @@ public class BlackJackGameController {
 		try {
 			Players players = new Players(inputView.inputPlayerNames());
 			return players;
-		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
+		} catch (IllegalArgumentException exception) {
+			outputView.printException(exception.getMessage());
 			return generatePlayers();
 		}
 	}
@@ -84,7 +84,7 @@ public class BlackJackGameController {
 			String decision = inputView.inputYesOrNo(player.getName());
 			return decision;
 		} catch (IllegalArgumentException exception) {
-			System.out.println(exception.getMessage());
+			outputView.printException(exception.getMessage());
 			return inputDecision(player);
 		}
 	}
