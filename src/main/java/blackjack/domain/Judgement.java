@@ -1,9 +1,25 @@
 package blackjack.domain;
 
 public enum Judgement {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+
+    WIN("승") {
+        @Override
+        Judgement getOpposite() {
+            return LOSE;
+        }
+    },
+    DRAW("무") {
+        @Override
+        Judgement getOpposite() {
+            return DRAW;
+        }
+    },
+    LOSE("패") {
+        @Override
+        Judgement getOpposite() {
+            return WIN;
+        }
+    };
 
     private final String name;
 
@@ -11,15 +27,7 @@ public enum Judgement {
         this.name = name;
     }
 
-    public Judgement getOpposite() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
-    }
+    abstract Judgement getOpposite();
 
     public String getName() {
         return name;
