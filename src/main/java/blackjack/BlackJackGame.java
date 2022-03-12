@@ -42,19 +42,27 @@ public class BlackJackGame {
     public List<Player> getEntries() {
         return entries.getValues();
     }
+
+    public boolean isDrawPossible() {
+        return entries.hasNextEntry();
+    }
+
+    public void drawCardFrom(CardPack cardPack) {
+        entries.addCurrentEntry(cardPack.draw());
+    }
+
+    public Player getCurrentPlayer() {
+        return entries.getCurrentValue();
+    }
+
+    public boolean isCurrentPlayerBust() {
+        return entries.isCurrentEntryBust();
+    }
+
+    public void nextDrawTurn() {
+        entries.nextEntry();
+    }
 /*
-    public void start() {
-        this.players.giveFirstCards(trumpCardPack);
-    }
-
-    public boolean hasNextEntry() {
-        return this.players.hasNextEntry();
-    }
-
-    public void toNextEntry() {
-        this.players.toNextEntry();
-    }
-
     public void hitCurrentEntry() {
         this.players.hitCurrentEntry(trumpCardPack.draw());
     }

@@ -3,18 +3,17 @@ package blackjack;
 import blackjack.dto.PlayerDto;
 import blackjack.trumpcard.CardPack;
 import blackjack.view.InputView;
-
 import blackjack.view.ResultView;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Application {
+    private final static InputView inputView = new InputView();
+    private final static ResultView resultView = new ResultView();
 
     public static void main(String[] args) {
-        final InputView inputView = new InputView();
-        final ResultView resultView = new ResultView();
-
-        List<String> names = inputView.askEntryNames();
+        List<String> names = inputView.inputEntryNames();
 
         CardPack cardPack = new CardPack();
 
@@ -30,9 +29,29 @@ public class Application {
                 .collect(Collectors.toList());
 
         resultView.printInitGameResult(dealerDto, entriesDtos);
+
+        while (blackJackGame.isDrawPossible()) {
+            playDrawTurn(blackJackGame, cardPack);
+            blackJackGame.nextDrawTurn();
+        }
+    }
+
+    private static void playDrawTurn(BlackJackGame blackJackGame, CardPack cardPack) {
+        PlayerDto currentEntryDto = new PlayerDto(blackJackGame.getCurrentPlayer());
+        if (blackJackGame.isCurrentPlayerBust()) {
+            resultView.printBustMessage(currentEntryDto);
+            return;
+        }
+        if (inputView.inputDrawCardSign(currentEntryDto).equals("n")) {
+            resultView.printDeck(currentEntryDto);
+            return;
+        }
+        blackJackGame.drawCardFrom(cardPack);
+        PlayerDto currentEntryDto2 = new PlayerDto(blackJackGame.getCurrentPlayer());
+        resultView.printDeck(currentEntryDto2);
+        playDrawTurn(blackJackGame, cardPack);
+    }
 /*
-        resultView.printDeckInitialized(blackJackGame.getEntryNames());
-        resultView.printInitializedDecks(blackJackGame.getNames(), blackJackGame.getDecksToString());
 
         do {
             blackJackGame.toNextEntry();
@@ -61,5 +80,4 @@ public class Application {
         playTurn(inputView, blackJackGame, resultView);
     }
     */
-    }
 }

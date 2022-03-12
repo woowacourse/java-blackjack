@@ -53,20 +53,16 @@ public class ResultView {
         System.out.printf(FORMAT_PLAYER_NAME_AND_CARDS, playerDto.getName(), joiner);
     }
 
-    public void printInitializedDecks(List<String> names, List<List<String>> decks) {
-        for (int index = 0; index < names.size(); index++) {
-            printDeck(names.get(index), decks.get(index));
+    public void printDeck(PlayerDto playerDto) {
+        StringJoiner joiner = new StringJoiner(", ");
+        for (CardDto cardDto : playerDto.getCardsDto()) {
+            joiner.add(cardDto.getCard());
         }
+        System.out.printf(FORMAT_PLAYER_NAME_AND_CARDS, playerDto.getName(), joiner);
     }
 
-    public void printDeck(String name, List<String> deck) {
-        //TODO : joinning 겹치는 로직 메서드 분리
-        String joinedCards = String.join(DELIMITER_NAME, deck);
-        System.out.printf(FORMAT_PLAYER_NAME_AND_CARDS, name, joinedCards);
-    }
-
-    public void printBustMessage(String name) {
-        System.out.printf(FORMAT_MESSAGE_BUST, name);
+    public void printBustMessage(PlayerDto playerDto) {
+        System.out.printf(FORMAT_MESSAGE_BUST, playerDto.getName());
     }
 
     public void printDealerHitCount(int count) {
