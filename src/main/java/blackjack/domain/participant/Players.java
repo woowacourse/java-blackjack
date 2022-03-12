@@ -24,9 +24,9 @@ public class Players {
                         .collect(Collectors.toList())));
     }
 
-    public void receive(CardDeck cardDeck) {
+    public void receive(CardDeck cardDeck, int eachCount) {
         for (Player player : players) {
-            player.receive(cardDeck.distribute(INITIAL_CARD_HAND));
+            player.receive(cardDeck, eachCount);
         }
     }
 
