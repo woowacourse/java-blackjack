@@ -34,4 +34,19 @@ public class ResultTest {
                 Arguments.of(22, 22, Result.LOSE), // 버스트
                 Arguments.of(22, 20, Result.WIN));
     }
+
+    @ParameterizedTest(name = "[{index}] {0}의 반대는 {1}")
+    @MethodSource("generateInputAndOutput")
+    @DisplayName("반대 승패를 반환한다.")
+    void getOpposite(Result input, Result output) {
+        assertThat(input.getOpposite()).isEqualTo(output);
+    }
+
+    static Stream<Arguments> generateInputAndOutput() {
+        return Stream.of(
+                Arguments.of(Result.WIN, Result.LOSE),
+                Arguments.of(Result.DRAW, Result.DRAW),
+                Arguments.of(Result.LOSE, Result.WIN)
+        );
+    }
 }
