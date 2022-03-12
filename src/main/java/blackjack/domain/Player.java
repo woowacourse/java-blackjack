@@ -2,22 +2,13 @@ package blackjack.domain;
 
 public class Player extends Human {
 
-    private static final String RECEIVE_SYMBOL = "y";
-    private static final String NOT_RECEIVE_SYMBOL = "n";
-
     public Player(final String name) {
         super(name);
         validateEqualsDealerName(name);
     }
 
     public boolean answer(final String answer) {
-        if (answer.equalsIgnoreCase(RECEIVE_SYMBOL)) {
-            return true;
-        }
-        if (answer.equalsIgnoreCase(NOT_RECEIVE_SYMBOL)) {
-            return false;
-        }
-        throw new IllegalArgumentException("y, n 중에서 입력해주세요.");
+        return Answer.isDraw(answer);
     }
 
     private void validateEqualsDealerName(final String name) {

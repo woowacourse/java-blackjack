@@ -24,28 +24,6 @@ public class PlayerTest {
         queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
     }
 
-    @DisplayName("y, Y를 입력 받았을 때 True 를 반환하는지 확인한다.")
-    @ParameterizedTest
-    @ValueSource(strings = {"y", "Y"})
-    void answer_true(String input) {
-        assertThat(player.answer(input)).isTrue();
-    }
-
-    @DisplayName("n, N를 입력 받았을 때 False 를 반환하는지 확인한다.")
-    @ParameterizedTest
-    @ValueSource(strings = {"n", "N"})
-    void answer_false(String input) {
-        assertThat(player.answer(input)).isFalse();
-    }
-
-    @DisplayName("y, n 외의 값을 입력할 경우 예외를 발생시킨다.")
-    @Test
-    void answer_exception() {
-        assertThatThrownBy(() -> player.answer("a"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("y, n 중에서 입력해주세요.");
-    }
-
     @DisplayName("딜러 이름과 동일한 이름을 입력할 경우 예외를 발생시킨다.")
     @Test
     void equals_dealer_name() {
