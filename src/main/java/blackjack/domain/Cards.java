@@ -8,7 +8,7 @@ import blackjack.domain.strategy.NumberGenerator;
 public class Cards {
 	private static final int SIZE = 48;
 
-	private static final int ONE = 1;
+	public static final int ONE = 1;
 	private static final int TWO = 2;
 	private static final int THREE = 3;
 	private static final int FOUR = 4;
@@ -18,13 +18,12 @@ public class Cards {
 	private static final int EIGHT = 8;
 	private static final int NINE = 9;
 	private static final int TEN = 10;
-	private static final int ELEVEN = 11;
 
 	private static final List<Card> cards;
 
 	static {
 		cards = new ArrayList<>();
-		cards.add(new Card("A다이아몬드", ELEVEN));
+		cards.add(new Card("A다이아몬드", ONE));
 		cards.add(new Card("2다이아몬드", TWO));
 		cards.add(new Card("3다이아몬드", THREE));
 		cards.add(new Card("4다이아몬드", FOUR));
@@ -37,7 +36,7 @@ public class Cards {
 		cards.add(new Card("Q다이아몬드", TEN));
 		cards.add(new Card("K다이아몬드", TEN));
 
-		cards.add(new Card("A하트", ELEVEN));
+		cards.add(new Card("A하트", ONE));
 		cards.add(new Card("2하트", TWO));
 		cards.add(new Card("3하트", THREE));
 		cards.add(new Card("4하트", FOUR));
@@ -50,7 +49,7 @@ public class Cards {
 		cards.add(new Card("Q하트", TEN));
 		cards.add(new Card("K하트", TEN));
 
-		cards.add(new Card("A스페이드", ELEVEN));
+		cards.add(new Card("A스페이드", ONE));
 		cards.add(new Card("2스페이드", TWO));
 		cards.add(new Card("3스페이드", THREE));
 		cards.add(new Card("4스페이드", FOUR));
@@ -63,7 +62,7 @@ public class Cards {
 		cards.add(new Card("Q스페이드", TEN));
 		cards.add(new Card("K스페이드", TEN));
 
-		cards.add(new Card("A클로버", ELEVEN));
+		cards.add(new Card("A클로버", ONE));
 		cards.add(new Card("2클로버", TWO));
 		cards.add(new Card("3클로버", THREE));
 		cards.add(new Card("4클로버", FOUR));

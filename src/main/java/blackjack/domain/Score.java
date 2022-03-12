@@ -1,0 +1,45 @@
+package blackjack.domain;
+
+import java.util.List;
+
+public class Score {
+	private static final int NEW_A_NUMBER = 11;
+
+	private final int sum;
+
+	private Score(int sum) {
+		this.sum = sum;
+	}
+
+	public static Score from(List<Card> hand) {
+		int sum = calculate(hand);
+
+		if (!isContainA(hand)) {
+			return new Score(sum);
+		}
+
+		return new Score(scoreWithA(sum));
+	}
+
+	private static int calculate(List<Card> hand) {
+		return hand.stream()
+			.mapToInt(Card::getNumber)
+			.sum();
+	}
+
+	private static boolean isContainA(List<Card> hand) {
+		return hand.contains(new Card(Cards.ONE));
+	}
+
+	private static int scoreWithA(int sum) {
+		if (sum <= NEW_A_NUMBER) {
+			return sum + NEW_A_NUMBER - Cards.ONE;
+		}
+
+		return sum;
+	}
+
+	public int getSum() {
+		return sum;
+	}
+}
