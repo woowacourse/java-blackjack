@@ -1,9 +1,11 @@
 package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -48,5 +50,24 @@ public class CardsTest {
         assertThatThrownBy(() -> new Cards(cards))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] 카드는 중복될 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("카드를 추가할 수 있다.")
+    void addCard() {
+        // given
+        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
+        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
+        Card card3 = new Card(Pattern.HEART, Denomination.THREE);
+        Cards cards = new Cards(List.of(card1, card2));
+
+        // when
+        cards.add(card3);
+
+        // then
+        assertAll(
+            () -> assertThat(cards.isSameSize(3)).isTrue(),
+            () -> assertThat(cards.getValues()).containsOnly(card1, card2, card3)
+        );
     }
 }
