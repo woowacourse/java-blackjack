@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.game.GameResult;
 import blackjack.domain.game.TurnManager;
 import blackjack.domain.game.WinningResult;
 import blackjack.domain.participant.Dealer;
@@ -71,11 +72,10 @@ public class BlackjackController {
     private void printResult(Participants participants) {
         OutputView.printCardsAndPoint(participants);
 
-        BlackjackGame blackjackGame = new BlackjackGame(participants);
-        blackjackGame.calculatePlayerResult();
+        GameResult gameResult = new GameResult(participants);
 
-        Map<WinningResult, Integer> dealerResult = blackjackGame.getDealerResult();
-        Map<Player, WinningResult> playerResult = blackjackGame.getPlayerResult();
+        Map<WinningResult, Integer> dealerResult = gameResult.getDealerResult();
+        Map<Player, WinningResult> playerResult = gameResult.getPlayerResult();
 
         OutputView.printResult(dealerResult, playerResult);
     }
