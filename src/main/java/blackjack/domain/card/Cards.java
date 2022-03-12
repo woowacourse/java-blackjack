@@ -30,7 +30,7 @@ public class Cards {
 
 	}
 
-	public int calculateOptimalScoreWithAce() {
+	private int calculateOptimalScoreWithAce() {
 		final int theNumberOfAce = countAceCard();
 		final int scoreWithoutAce = calculateNotAceCardScore();
 		List<Integer> possible = getPossibleAceScores(theNumberOfAce);
@@ -49,7 +49,7 @@ public class Cards {
 		return optimalScore;
 	}
 
-	private List<Integer> getPossibleAceScores(int aceCnt) {
+	private List<Integer> getPossibleAceScores(final int aceCnt) {
 		List<Integer> possibleScores = new ArrayList<>();
 		for (int i = 0; i <= aceCnt; i++) {
 			possibleScores.add(i + ELEVEN_ACE_SCORE * (aceCnt - i));
@@ -86,11 +86,11 @@ public class Cards {
 		return score.hasBustState();
 	}
 
-	public boolean hasHigherScore(Cards otherCards) {
+	public boolean hasHigherScore(final Cards otherCards) {
 		return this.score.isBiggerThan(otherCards.score);
 	}
 
-	public boolean isEqualScoreWith(Cards otherCards) {
+	public boolean isEqualScoreWith(final Cards otherCards) {
 		return this.score.equals(otherCards.score);
 	}
 
