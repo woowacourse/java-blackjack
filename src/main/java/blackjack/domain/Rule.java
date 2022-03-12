@@ -1,22 +1,23 @@
 package blackjack.domain;
 
-import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 public enum Rule {
 
     INSTANCE;
 
-    public Outcome judgeOutcome(Participant participant, Participant target) {
-        if (!participant.isBust() && target.isBust() || participant.isBlackJack() && !target.isBlackJack()) {
+    public Outcome judgeOutcome(Player player, Dealer dealer) {
+        if (!player.isBust() && dealer.isBust() || player.isBlackJack() && !dealer.isBlackJack()) {
             return Outcome.WIN;
         }
-        if (participant.isBlackJack() && target.isBlackJack()) {
+        if (player.isBlackJack() && dealer.isBlackJack()) {
             return Outcome.DRAW;
         }
-        if (participant.isBust() || !participant.isBlackJack() && target.isBlackJack()) {
+        if (player.isBust() || !player.isBlackJack() && dealer.isBlackJack()) {
             return Outcome.LOSE;
         }
-        return judgeOutcomeByScore(participant.getScore(), target.getScore());
+        return judgeOutcomeByScore(player.getScore(), dealer.getScore());
     }
 
     private Outcome judgeOutcomeByScore(int score, int target) {
