@@ -15,42 +15,26 @@ import blackjack.domain.participant.Player;
 public class PlayerTest {
 
     @Test
-    @DisplayName("이름으로 null을 받았을 경우 오류")
-    void createPlayerNullNameFail() {
-        assertThatThrownBy(() -> {
-            new Player(null);
-        }).isInstanceOf(IllegalArgumentException.class);
+    @DisplayName("버스트가 나지 않은 플레이어는 hit가 가능하다")
+    void canHit() {
+        Player player = new Player("player");
+
+        player.initCards(List.of(new Card(Suit.DIAMOND, Denomination.TEN),
+            new Card(Suit.HEART, Denomination.JACK)));
+
+        assertThat(player.canHit()).isTrue();
     }
 
     @Test
-    @DisplayName("이름으로 Empty 값을 받았을 경우 오류")
-    void createPlayerEmptyNameFail() {
-        assertThatThrownBy(() -> {
-            new Player("");
-        }).isInstanceOf(IllegalArgumentException.class);
-    }
+    @DisplayName("버스트가 나면 플레이어는 hit 할 수 없다")
+    void canNotHit() {
+        Player player = new Player("player");
 
-    @Test
-    @DisplayName("플레이어가 초기 카드 2장을 받는다")
-    void receiveInitCard() {
-        Player player = new Player("president");
+        player.initCards(List.of(new Card(Suit.DIAMOND, Denomination.TEN),
+            new Card(Suit.HEART, Denomination.JACK)));
 
-        player.initCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
-            new Card(Suit.HEART, Denomination.THREE)));
+        player.addCard(new Card(Suit.DIAMOND, Denomination.FIVE));
 
-        assertThat(player.getCards().size()).isEqualTo(2);
-    }
-
-    @Test
-    @DisplayName("플레이어가 카드를 받는다")
-    void receiveCard() {
-        Player player = new Player("president");
-
-        player.initCards(List.of(new Card(Suit.DIAMOND, Denomination.ACE),
-            new Card(Suit.HEART, Denomination.THREE)));
-
-        player.addCard(new Card(Suit.DIAMOND, Denomination.TWO));
-
-        assertThat(player.getCards().size()).isEqualTo(3);
+        assertThat(player.canHit()).isFalse();
     }
 }

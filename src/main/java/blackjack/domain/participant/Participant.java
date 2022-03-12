@@ -9,21 +9,13 @@ import blackjack.domain.card.ParticipantCards;
 
 public class Participant {
 
-    private static final String NAME_EMPTY_ERROR = "[ERROR] 플레이어 이름에 빈 값이 올 수 없습니다.";
     private static final int BUST_THRESHOLD_NUMBER = 21;
 
-    private final String name;
+    private final ParticipantName name;
     protected ParticipantCards cards;
 
     public Participant(String name) {
-        validateName(name);
-        this.name = name;
-    }
-
-    private void validateName(String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException(NAME_EMPTY_ERROR);
-        }
+        this.name = new ParticipantName(name);
     }
 
     public void initCards(List<Card> cards) {
@@ -43,7 +35,7 @@ public class Participant {
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     public List<Card> getCards() {
