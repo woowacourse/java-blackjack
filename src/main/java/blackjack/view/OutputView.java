@@ -1,20 +1,23 @@
 package blackjack.view;
 
-import blackjack.model.blackjack.Record;
 import blackjack.model.blackjack.Result;
-import blackjack.model.cards.Score;
+import blackjack.model.blackjack.Records;
 import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
+import blackjack.model.cards.Score;
 import blackjack.model.player.Name;
 import blackjack.model.player.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private OutputView() {}
+
+    private OutputView() {
+    }
 
     public static void printOpenCardMessage(Name dealerName, List<Name> playerNames) {
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealerName.value(), formattedPlayerNames(playerNames));
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealerName.value(),
+            formattedPlayerNames(playerNames));
     }
 
     private static String formattedPlayerNames(List<Name> names) {
@@ -56,25 +59,24 @@ public class OutputView {
     }
 
     public static void printTotalScore(Name name, Cards cards, Score score) {
-        System.out.printf("%s 카드: %s - 결과: %d%n", name.value(), formattedCardsText(cards), score.getValue());
+        System.out.printf("%s 카드: %s - 결과: %d%n", name.value(), formattedCardsText(cards),
+            score.getValue());
     }
 
-    public static void printDealerRecord(Record record) {
+    public static void printRecords(Records records, List<Name> playerNames) {
         System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d무 %d패%n", record.countBy(Result.WIN),
-            record.countBy(Result.DRAW), record.countBy(Result.LOSS));
+        System.out.printf("딜러: %d승 %d무 %d패%n", countByResult(records, Result.WIN),
+            countByResult(records, Result.DRAW), countByResult(records, Result.LOSS));
+        playerNames.stream()
+            .forEach(name -> printEachPlayerRecord(name, records.resultByName(name)));
     }
 
-    public static void printPlayerRecord(Record record) {
-        System.out.printf("%s: %s%n", record.name().value(), result(record));
+    private static void printEachPlayerRecord(Name name, Result result) {
+        System.out.printf("%s: %s%n", name.value(), result.symbol());
     }
 
-    private static String result(Record record) {
-        if (record.countBy(Result.WIN) == 1) {
-            return Result.WIN.symbol();
-        } else if (record.countBy(Result.DRAW) == 1) {
-            return Result.DRAW.symbol();
-        }
-        return Result.LOSS.symbol();
+    private static int countByResult(Records records, Result result) {
+        return (int) records.results().stream()
+            .filter(r -> r == result).count();
     }
 }

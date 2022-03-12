@@ -5,6 +5,8 @@ import java.util.UUID;
 
 public class Name {
 
+    private static final Name DEALER_NAME = new Name("딜러");
+
     private final UUID id;
     private final String value;
 
@@ -32,5 +34,9 @@ public class Name {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public static Name dealerName() {
+        return DEALER_NAME;
     }
 }

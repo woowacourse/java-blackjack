@@ -6,9 +6,9 @@ import static blackjack.model.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.model.cards.Score;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
+import blackjack.model.cards.Score;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

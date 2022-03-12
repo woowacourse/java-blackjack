@@ -1,7 +1,5 @@
 package blackjack.model.blackjack;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
@@ -13,7 +11,6 @@ import blackjack.model.player.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class Blackjack {
 
@@ -49,29 +46,23 @@ public class Blackjack {
         findPlayerByName(name).take(cardDispenser.issue());
     }
 
-    public Records records() {
-        return new Records(recordsMap());
+    private Player findPlayerByName(Name name) {
+        if (isDealerName(name)) {
+            return dealer;
+        }
+        return findGamer(name);
     }
 
-    private Map<Name, Record> recordsMap() {
-        return Stream.concat(Stream.of(dealerRecord()), playerRecords().stream())
-            .collect(toMap(Record::name, record -> record));
+    private boolean isDealerName(Name name) {
+        return dealer.isSameName(name);
     }
 
-    private Record dealerRecord() {
-        Map<Result, Long> dealerRecord = players.stream()
-            .map(dealer::match)
-            .collect(groupingBy(r -> r, counting()));
-        return new Record(Dealer.dealerName(), dealerRecord);
-    }
-
-    private List<Record> playerRecords() {
-        return players.stream().map(this::playerRecord).collect(toUnmodifiableList());
-    }
-
-    private Record playerRecord(Player player) {
-        Result result = dealer.match(player);
-        return new Record(player.name(), result.reverse());
+    private Player findGamer(Name name) {
+        return players.stream()
+            .filter(player -> player.isSameName(name))
+            .findFirst()
+            .orElseThrow(
+                () -> new IllegalArgumentException(String.format("%s의 이름을 가진 플레이어가 없습니다.", name)));
     }
 
     public boolean isHittableByName(Name name) {
@@ -90,13 +81,14 @@ public class Blackjack {
         return findPlayerByName(name).score();
     }
 
-    private Player findPlayerByName(Name name) {
-        if (name.equals(Dealer.dealerName())) {
-            return dealer;
-        }
-        return players.stream()
-            .filter(player -> player.isSameName(name))
-            .findFirst()
-            .orElseThrow(IllegalArgumentException::new);
+    public Records records() {
+        Map<Name, Result> results = players.stream()
+            .collect(toMap(Player::name, this::eachPlayerResult));
+        return new Records(results);
+    }
+
+    private Result eachPlayerResult(Player p) {
+        Result result = dealer.match(p);
+        return result.reverse();
     }
 }

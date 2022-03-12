@@ -1,11 +1,10 @@
 package blackjack;
 
-import static blackjack.model.player.Dealer.dealerName;
+import static blackjack.model.player.Name.dealerName;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 import blackjack.model.blackjack.Blackjack;
 import blackjack.model.blackjack.CardDispenser;
-import blackjack.model.blackjack.Records;
 import blackjack.model.player.Name;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -26,8 +25,7 @@ public class Application {
         Blackjack blackjack = new Blackjack(CardDispenser.shuffledCardDispenser(), playerNames);
         printOpenCard(blackjack, playerNames);
         takeCards(blackjack, playerNames);
-        printTotalScore(blackjack, playerNames);
-        printRecord(blackjack, playerNames);
+        printResults(blackjack, playerNames);
     }
 
     private static List<Name> names() {
@@ -71,7 +69,7 @@ public class Application {
         }
     }
 
-    private static void printTotalScore(Blackjack blackjack, List<Name> playerNames) {
+    private static void printResults(Blackjack blackjack, List<Name> playerNames) {
         OutputView.printTotalScore(dealerName(), blackjack.ownCardsByName(dealerName()),
             blackjack.scoreByName(dealerName()));
 
@@ -79,13 +77,7 @@ public class Application {
             OutputView.printTotalScore(name, blackjack.ownCardsByName(name),
                 blackjack.scoreByName(name));
         }
-    }
 
-    private static void printRecord(Blackjack blackjack, List<Name> playerNames) {
-        Records records = blackjack.records();
-        OutputView.printDealerRecord(records.recordByName(dealerName()));
-        for (Name name : playerNames) {
-            OutputView.printPlayerRecord(records.recordByName(name));
-        }
+        OutputView.printRecords(blackjack.records(), playerNames);
     }
 }

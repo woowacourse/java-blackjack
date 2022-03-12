@@ -1,15 +1,16 @@
 package blackjack.model.player;
 
-import blackjack.model.card.Card;
+import static blackjack.model.player.Name.dealerName;
+
 import blackjack.model.blackjack.Result;
-import blackjack.model.cards.Score;
+import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
+import blackjack.model.cards.Score;
 import blackjack.model.cards.ScoreCards;
 
 public final class Dealer extends Player {
 
     private static final Score HIT_BOUNDARY = new Score(17);
-    private static final Name NAME = new Name("딜러");
     private static final int OPEN_CARD_COUNT = 1;
 
     private final ScoreCards cards;
@@ -19,7 +20,7 @@ public final class Dealer extends Player {
     }
 
     private Dealer(Cards ownCards) {
-        super(NAME, ownCards);
+        super(dealerName(), ownCards);
         this.cards = Cards.maxScoreCards(ownCards);
     }
 
@@ -49,9 +50,5 @@ public final class Dealer extends Player {
     @Override
     public boolean isHittable() {
         return cards.lessThan(HIT_BOUNDARY);
-    }
-
-    public static Name dealerName() {
-        return NAME;
     }
 }

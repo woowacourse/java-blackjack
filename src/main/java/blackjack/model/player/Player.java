@@ -1,8 +1,8 @@
 package blackjack.model.player;
 
 import blackjack.model.card.Card;
-import blackjack.model.cards.Score;
 import blackjack.model.cards.Cards;
+import blackjack.model.cards.Score;
 import blackjack.model.cards.ScoreCards;
 
 public class Player {
