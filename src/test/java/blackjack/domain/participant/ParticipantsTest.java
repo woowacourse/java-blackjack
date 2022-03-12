@@ -31,4 +31,17 @@ class ParticipantsTest {
         Assertions.assertThat(nextPlayer).isEqualTo(elsa);
     }
 
+    @Test
+    @DisplayName("모든 플레이어가 끝났는지 확인하는 기능")
+    void allPlayersFinished() {
+        Player pobi = new Player("pobi", new ArrayList<>());
+        Player elsa = new Player("elsa", new ArrayList<>());
+        List<Participant> players = Arrays.asList(pobi, elsa);
+
+        Participants participants = new Participants(players);
+        participants.skipTurn();
+        participants.skipTurn();
+
+        Assertions.assertThat(participants.isFinished()).isTrue();
+    }
 }
