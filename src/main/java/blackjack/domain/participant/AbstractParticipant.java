@@ -8,8 +8,6 @@ import java.util.Objects;
 
 public abstract class AbstractParticipant implements Participant {
 
-    private static final int FIRST_DRAW_CARD_SIZE = 2;
-
     private final String name;
     private final Cards cards;
     private GameStatus gameStatus;
