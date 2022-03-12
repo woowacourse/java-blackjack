@@ -11,7 +11,6 @@ public class Participants {
 
     private static final int MIN_COUNT = 1;
     private static final int MAX_COUNT = 8;
-
     private static final String PLAYER_NUMBER_ERROR_MESSAGE = "[ERROR] 플레이어 수는 1~8명 사이여야 합니다.";
 
     private final Dealer dealer = new Dealer();

@@ -57,7 +57,7 @@ public class BlackjackController {
 
     private void dealMoreCardsToDealer(BlackjackGame blackjackGame) {
         Dealer dealer = blackjackGame.getParticipants().getDealer();
-        while (dealer.checkHitRule()) {
+        while (dealer.checkMustHit()) {
             OutputView.printDealerHitMessage();
             blackjackGame.hitCard(dealer);
         }

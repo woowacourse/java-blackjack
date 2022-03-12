@@ -30,7 +30,7 @@ public class DealerTest {
         dealer.initCards(List.of(new Card(Suit.DIAMOND, Denomination.TEN),
             new Card(Suit.HEART, Denomination.SIX)));
 
-        assertThat(dealer.checkHitRule()).isTrue();
+        assertThat(dealer.checkMustHit()).isTrue();
     }
 
     @Test
@@ -41,7 +41,7 @@ public class DealerTest {
         dealer.initCards(List.of(new Card(Suit.DIAMOND, Denomination.KING),
             new Card(Suit.HEART, Denomination.SEVEN)));
 
-        assertThat(dealer.checkHitRule()).isFalse();
+        assertThat(dealer.checkMustHit()).isFalse();
     }
 
     @Test

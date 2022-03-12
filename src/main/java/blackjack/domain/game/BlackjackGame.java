@@ -27,9 +27,9 @@ public class BlackjackGame {
         participant.addCard(deck.pickCard());
     }
 
-    public boolean isHitAndDealMoreCard(boolean isHit, Participant participant) {
-        if (isHit && participant.canHit()) {
-            hitCard(participant);
+    public boolean isHitAndDealMoreCard(boolean isHit, Player player) {
+        if (isHit && player.canHit()) {
+            hitCard(player);
             return true;
         }
         return false;

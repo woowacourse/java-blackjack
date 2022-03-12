@@ -24,7 +24,7 @@ public class OutputView {
 
     public static void printInitialCardInformation(Participants participants) {
         List<String> participantName = participants.getPlayers().stream()
-            .map(Player::getName)
+            .map(Participant::getName)
             .collect(Collectors.toList());
 
         System.out.printf(HANDOUT_MESSAGE, String.join(NAME_DELIMITER, participantName));
