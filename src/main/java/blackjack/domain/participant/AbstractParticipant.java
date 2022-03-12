@@ -35,7 +35,7 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     private void validateCanHit() {
-        if (gameStatus.isFinishedGame()) {
+        if (!canHit()) {
             throw new IllegalStateException("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
         }
     }
