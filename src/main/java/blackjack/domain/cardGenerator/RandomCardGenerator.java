@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-public class RandomCardGenerator implements CardGenerator{
+public class RandomCardGenerator implements CardGenerator {
     public Stack<PlayingCard> generate() {
         return Arrays.stream(Suit.values())
             .filter(suit -> !suit.equals(Suit.BURST))

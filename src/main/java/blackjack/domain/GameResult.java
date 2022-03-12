@@ -5,10 +5,12 @@ import java.util.function.BiPredicate;
 
 public enum GameResult {
 
-    WIN("승", (dealerScore, playerScore) -> dealerScore > playerScore),
-    DRAW("무", (dealerScore, playerScore) -> dealerScore == playerScore),
-    LOSE("패", (dealerScore, playerScore) -> dealerScore < playerScore),
-        ;
+    WIN("승", GameResult::isDealerWin),
+    DRAW("무", GameResult::isDraw),
+    LOSE("패", GameResult::isDealerLose),
+    ;
+
+    private static final int BURST = 21;
 
     private final String result;
     private final BiPredicate<Integer, Integer> condition;
@@ -18,20 +20,36 @@ public enum GameResult {
         this.condition = condition;
     }
 
-    public static GameResult of(final int dealerScore, final int playerScore) {
-        if (dealerScore > 21 && playerScore > 21) {
-            return DRAW;
-        }
-        if (dealerScore > 21) {
-           return LOSE;
-        }
-        if (playerScore > 21) {
-            return WIN;
+    public static GameResult of(final int dealerScore, final int gamblerScore) {
+        if (dealerScore > BURST || gamblerScore > BURST) {
+            return checkBurst(dealerScore, gamblerScore);
         }
         return Arrays.stream(values())
-            .filter(it -> it.condition.test(dealerScore, playerScore))
+            .filter(it -> it.condition.test(dealerScore, gamblerScore))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("잘못된 점수가 입력되었습니다."));
+    }
+
+    private static GameResult checkBurst(final Integer dealerScore, final Integer gamblerScore) {
+        if (dealerScore > BURST && gamblerScore > BURST) {
+            return DRAW;
+        }
+        if (dealerScore <= BURST && gamblerScore > BURST) {
+            return WIN;
+        }
+        return LOSE;
+    }
+
+    private static boolean isDealerWin(final Integer dealerScore, final Integer gamblerScore) {
+        return dealerScore > gamblerScore;
+    }
+
+    private static boolean isDraw(final Integer dealerScore, final Integer gamblerScore) {
+        return dealerScore == gamblerScore;
+    }
+
+    private static boolean isDealerLose(final Integer dealerScore, final Integer gamblerScore) {
+        return dealerScore < gamblerScore;
     }
 
     public GameResult reverse() {

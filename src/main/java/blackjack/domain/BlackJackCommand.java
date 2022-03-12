@@ -18,8 +18,8 @@ public enum BlackJackCommand {
 
     public static BlackJackCommand from(final String hitOrStay) {
         return Arrays.stream(values())
-            .filter( it -> it.answer.equalsIgnoreCase(hitOrStay))
+            .filter(it -> it.answer.equalsIgnoreCase(hitOrStay))
             .findFirst()
-            .orElseThrow( () -> new IllegalArgumentException(WRONG_COMMAND_INSTRUCTION));
+            .orElseThrow(() -> new IllegalArgumentException(WRONG_COMMAND_INSTRUCTION));
     }
 }

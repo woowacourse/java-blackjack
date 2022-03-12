@@ -40,4 +40,40 @@ class GameResultTest {
         //then
         assertThat(result).isEqualTo(GameResult.DRAW);
     }
+
+    @DisplayName("딜러가 버스트인 경우, 패배 결과 객체를 반환하는지 확인한다.")
+    @ParameterizedTest
+    @CsvSource({"27, 21", "28,11"})
+    void burst_dealer_lose(final int dealerScore, final int gamblerScore) {
+        //when
+        final GameResult result = GameResult.of(dealerScore, gamblerScore);
+
+        //then
+        assertThat(result).isEqualTo(GameResult.LOSE);
+        System.out.println();
+    }
+
+    @DisplayName("겜블러가 버스트인 경우, 승리 결과 객체를 반환하는지 확인한다.")
+    @ParameterizedTest
+    @CsvSource({"21, 27", "21,11"})
+    void burst_dealer_win(final int dealerScore, final int gamblerScore) {
+        //when
+        final GameResult result = GameResult.of(dealerScore, gamblerScore);
+
+        //then
+        assertThat(result).isEqualTo(GameResult.WIN);
+        System.out.println();
+    }
+
+    @DisplayName("둘다 버스트인 경우, 무승부 결과 객체를 반환하는지 확인한다.")
+    @ParameterizedTest
+    @CsvSource({"27, 27", "22,22"})
+    void burst_dealer_draw(final int dealerScore, final int gamblerScore) {
+        //when
+        final GameResult result = GameResult.of(dealerScore, gamblerScore);
+
+        //then
+        assertThat(result).isEqualTo(GameResult.DRAW);
+        System.out.println();
+    }
 }

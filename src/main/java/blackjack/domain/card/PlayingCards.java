@@ -21,14 +21,6 @@ public class PlayingCards {
         playingCards.add(playingCard);
     }
 
-    public int getResultWithPeekCard(final PlayingCard peekedCard) {
-        return getCardSumWithPeek(peekedCard.getScore());
-    }
-
-    public int getCardSumWithPeek(final int peekedScore) {
-        return adjustSumByAce(getCurrentSum() + peekedScore);
-    }
-
     private int adjustSumByAce(int currentSum) {
         int aceCount = aceCount();
         while (currentSum > BLACKJACK_NUMBER && aceCount > NO_COUNT) {

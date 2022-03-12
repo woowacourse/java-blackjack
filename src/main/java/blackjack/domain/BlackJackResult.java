@@ -27,8 +27,9 @@ public class BlackJackResult {
         return new BlackJackResult(dealerResult, gamblerResult);
     }
 
-    private static GameResult getResultPlayer(final Player dealer, final LinkedHashMap<Player, GameResult> gamblerResult,
-                                            final Player gambler) {
+    private static GameResult getResultPlayer(final Player dealer,
+                                              final LinkedHashMap<Player, GameResult> gamblerResult,
+                                              final Player gambler) {
         final GameResult currentDealerResult = dealer.compare(gambler);
         gamblerResult.put(gambler, currentDealerResult.reverse());
         return dealer.compare(gambler);

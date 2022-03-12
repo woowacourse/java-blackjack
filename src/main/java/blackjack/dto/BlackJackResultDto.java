@@ -33,6 +33,7 @@ public class BlackJackResultDto {
             .map(it -> PlayerDto.from(it.getKey()).getName() + NAME_DELIMITER + it.getValue().getResult())
             .collect(Collectors.toList());
     }
+
     public List<String> getDealerResult() {
         return dealerResult;
     }

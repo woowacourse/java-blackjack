@@ -3,11 +3,11 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.cardGenerator.RandomCardGenerator;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.Suit;
+import blackjack.domain.cardGenerator.RandomCardGenerator;
 import java.util.Stack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ public class CardDeckTest {
         playingCards.push(new PlayingCard(Suit.CLUBS, Denomination.SIX));
         playingCards.push(new PlayingCard(Suit.CLUBS, Denomination.SEVEN));
 
-        final CardDeck cardDeck = new CardDeck( () -> playingCards);
+        final CardDeck cardDeck = new CardDeck(() -> playingCards);
         final PlayingCard poppedCard = cardDeck.pop();
 
         assertThat(poppedCard).isEqualTo(new PlayingCard(Suit.CLUBS, Denomination.SEVEN));

@@ -84,35 +84,28 @@ public class BlackJackGame {
 
     private void playGame(Player gambler, CardDeck cardDeck) {
         PlayerDto currentGamblerDto = PlayerDto.from(gambler);
-        while (askHitOrStay(currentGamblerDto).equals(BlackJackCommand.YES) && !isBurst(gambler, cardDeck,
-            currentGamblerDto)) {
-            addCard(gambler, cardDeck);
+
+        while (askHitOrStay(currentGamblerDto).equals(BlackJackCommand.YES) && !isBurst(gambler, cardDeck)) {
+            outputView.printCards(PlayerDto.from(gambler));
         }
-        outputView.printCards(currentGamblerDto);
+
+        outputView.printCards(PlayerDto.from(gambler));
     }
 
     private BlackJackCommand askHitOrStay(final PlayerDto currentGamblerDto) {
         return BlackJackCommand.from(inputView.scanHitOrStay(currentGamblerDto));
     }
 
-    private boolean isBurst(final Player gambler,
-                            final CardDeck cardDeck,
-                            final PlayerDto currentGamblerDto) {
+    private boolean isBurst(final Player gambler, final CardDeck cardDeck) {
         if (gambler.isFinished(cardDeck)) {
-            outputView.printBurst(currentGamblerDto);
+            outputView.printBurst(PlayerDto.from(gambler));
             return true;
         }
         return false;
     }
 
-    private void addCard(final Player gambler, final CardDeck cardDeck) {
-        gambler.receiveCard(cardDeck);
-        outputView.printCards(PlayerDto.from(gambler));
-    }
-
     private void playGameForDealer(Player dealer, CardDeck cardDeck) {
         while (!dealer.isFinished(cardDeck)) {
-            dealer.receiveCard(cardDeck);
             outputView.printDealerAddCard(dealer);
         }
     }

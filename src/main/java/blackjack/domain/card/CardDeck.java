@@ -26,8 +26,4 @@ public class CardDeck {
     public PlayingCard pop() {
         return playingCards.pop();
     }
-
-    public PlayingCard justPeek() {
-        return playingCards.peek();
-    }
 }

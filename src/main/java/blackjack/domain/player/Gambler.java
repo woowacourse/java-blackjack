@@ -12,7 +12,8 @@ public class Gambler extends Player {
 
     @Override
     public boolean isFinished(final CardDeck cardDeck) {
-        final int currentResult = playingCards.getResultWithPeekCard(cardDeck.justPeek());
+        playingCards.addCard(cardDeck.pop());
+        final int currentResult = playingCards.getCardSum();
         return currentResult > BURST_CRITERIA;
     }
 

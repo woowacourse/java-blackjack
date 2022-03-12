@@ -1,7 +1,6 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.PlayingCard;
 
 public class Dealer extends Player {
 
@@ -14,8 +13,8 @@ public class Dealer extends Player {
 
     @Override
     public boolean isFinished(final CardDeck cardDeck) {
-        final PlayingCard peekedCard = cardDeck.justPeek();
-        final int currentResult = playingCards.getResultWithPeekCard(peekedCard);
+        playingCards.addCard(cardDeck.pop());
+        final int currentResult = playingCards.getCardSum();
         return currentResult > GET_CARD_UPPER_BOUND;
     }
 
