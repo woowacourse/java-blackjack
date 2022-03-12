@@ -9,7 +9,7 @@ public class Dealer extends Participant {
 
     private final String name = DEALER_NAME;
 
-    public boolean checkHitRule() {
+    public boolean isHit() {
         return super.getScore() <= HEAT_THRESHOLD;
     }
 

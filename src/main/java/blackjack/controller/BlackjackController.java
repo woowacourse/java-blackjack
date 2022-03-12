@@ -81,7 +81,7 @@ public class BlackjackController {
 
 
     private void handOutMoreCardsToDealer(Dealer dealer, Deck deck) {
-        while (dealer.checkHitRule()) {
+        while (dealer.isHit()) {
             OutputView.printDealerHitMessage();
             dealer.receiveCard(deck.pickCard());
         }
