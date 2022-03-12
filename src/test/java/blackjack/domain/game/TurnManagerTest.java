@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.game.TurnManager;
 import blackjack.domain.participant.Player;
 
 public class TurnManagerTest {

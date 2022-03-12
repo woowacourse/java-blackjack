@@ -1,11 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import blackjack.domain.participant.ParticipantName;
 
 class ParticipantNameTest {
 
