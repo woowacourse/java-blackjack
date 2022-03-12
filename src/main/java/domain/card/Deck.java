@@ -6,8 +6,8 @@ import domain.card.deckstrategy.GenerationDeckStrategy;
 
 public class Deck {
 
+	private static final String DECK_SIZE_ZERO_MESSAGE = "[Error] 카드가 없습니다.";
 	private static final int FRONT_CARD_INDEX = 0;
-	public static final String DECK_SIZE_ZERO_MESSAGE = "[Error] 카드가 없습니다.";
 
 	private final List<Card> cards;
 
@@ -24,7 +24,7 @@ public class Deck {
 		if (cards.size() <= 0) {
 			throw new IllegalStateException(DECK_SIZE_ZERO_MESSAGE);
 		}
-		
+
 		Card card = cards.get(FRONT_CARD_INDEX);
 		cards.remove(FRONT_CARD_INDEX);
 		return card;
