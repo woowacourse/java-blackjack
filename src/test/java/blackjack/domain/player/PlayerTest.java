@@ -17,7 +17,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("플레이어를 정상 생성한다.")
-    void createUser() {
+    void createPlayer() {
         assertThatCode(() -> new Player("slow", new Cards(firstDrawTwoCards())))
                 .doesNotThrowAnyException();
     }

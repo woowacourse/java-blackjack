@@ -15,7 +15,7 @@ public class Player extends Participant {
     }
 
     public GameResult findResult(int dealerScore) {
-        return GameResult.findUserResult(calculateScore(), dealerScore);
+        return GameResult.findPlayerResult(calculateScore(), dealerScore);
     }
 
     @Override

@@ -8,33 +8,33 @@ import java.util.Map;
 
 public class PlayerResult {
 
-    private final Map<String, GameResult> userResults;
+    private final Map<String, GameResult> playerResults;
     private final Map<GameResult, Integer> dealerResultCount;
 
-    private PlayerResult(Map<String, GameResult> userResults, Map<GameResult, Integer> dealerResultCount) {
-        this.userResults = userResults;
+    private PlayerResult(Map<String, GameResult> playerResults, Map<GameResult, Integer> dealerResultCount) {
+        this.playerResults = playerResults;
         this.dealerResultCount = dealerResultCount;
     }
 
     public static PlayerResult create(int dealerScore, List<Player> players) {
-        Map<String, GameResult> userResults = new HashMap<>();
+        Map<String, GameResult> playerResults = new HashMap<>();
         Map<GameResult, Integer> dealerResultCount = initializeDealerResultCount();
 
         for (Player player : players) {
-            GameResult userResult = player.findResult(dealerScore);
+            GameResult playerResult = player.findResult(dealerScore);
 
-            addUserResult(userResults, player, userResult);
-            increaseDealerResultCountByUserResult(dealerResultCount, GameResult.findDealerResult(userResult));
+            addPlayerResult(playerResults, player, playerResult);
+            increaseDealerResultCountByPlayerResult(dealerResultCount, GameResult.findDealerResult(playerResult));
         }
 
-        return new PlayerResult(userResults, dealerResultCount);
+        return new PlayerResult(playerResults, dealerResultCount);
     }
 
-    private static void addUserResult(Map<String, GameResult> userResults, Player player, GameResult userResult) {
-        userResults.put(player.getName(), userResult);
+    private static void addPlayerResult(Map<String, GameResult> playerResults, Player player, GameResult playerResult) {
+        playerResults.put(player.getName(), playerResult);
     }
 
-    private static void increaseDealerResultCountByUserResult(Map<GameResult, Integer> dealerResultCount,
+    private static void increaseDealerResultCountByPlayerResult(Map<GameResult, Integer> dealerResultCount,
             GameResult dealerResult) {
         dealerResultCount.compute(dealerResult, (resultType, count) -> count + 1);
     }
@@ -47,8 +47,8 @@ public class PlayerResult {
         ));
     }
 
-    public Map<String, GameResult> getUserResults() {
-        return Collections.unmodifiableMap(userResults);
+    public Map<String, GameResult> getPlayerResults() {
+        return Collections.unmodifiableMap(playerResults);
     }
 
     public Map<GameResult, Integer> getDealerResultCount() {

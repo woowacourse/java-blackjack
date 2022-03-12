@@ -12,34 +12,34 @@ public enum GameResult {
         this.value = value;
     }
 
-    public static GameResult findUserResult(int userScore, int dealerScore) {
-        if (userScore > 21 && dealerScore > 21) {
+    public static GameResult findPlayerResult(int playerScore, int dealerScore) {
+        if (playerScore > 21 && dealerScore > 21) {
             return DRAW;
         }
-        if (userScore > 21) {
+        if (playerScore > 21) {
             return LOSE;
         }
         if (dealerScore > 21) {
             return WIN;
         }
-        return compareScore(userScore, dealerScore);
+        return compareScore(playerScore, dealerScore);
     }
 
-    private static GameResult compareScore(int myScore, int otherScore) {
-        if (myScore > otherScore) {
+    private static GameResult compareScore(int playerScore, int dealerScore) {
+        if (playerScore > dealerScore) {
             return WIN;
         }
-        if (myScore < otherScore) {
+        if (playerScore < dealerScore) {
             return LOSE;
         }
         return DRAW;
     }
 
-    public static GameResult findDealerResult(GameResult userResult) {
-        if (userResult == WIN) {
+    public static GameResult findDealerResult(GameResult dealerResult) {
+        if (dealerResult == WIN) {
             return LOSE;
         }
-        if (userResult == LOSE) {
+        if (dealerResult == LOSE) {
             return WIN;
         }
         return DRAW;

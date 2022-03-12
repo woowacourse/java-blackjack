@@ -16,7 +16,7 @@ public class OutputView {
     }
 
     public static void printPlayerInitialCards(final List<Player> players, final Dealer dealer) {
-        System.out.printf("%n%s와 %s에게 2장의 카드를 나누었습니다.", dealer.getName(), getUserNames(players));
+        System.out.printf("%n%s와 %s에게 2장의 카드를 나누었습니다.", dealer.getName(), getPlayerNames(players));
         printPlayerCardStatus(dealer.getName(), dealer.openFirstCards());
         for (Player player : players) {
             printPlayerCardStatus(player.getName(), player.openFirstCards());
@@ -24,7 +24,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static String getUserNames(final List<Player> players) {
+    public static String getPlayerNames(final List<Player> players) {
         return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
