@@ -65,13 +65,13 @@ public class Cards {
             .orElse(minimumSum);
     }
 
-    public int calculateMinimumSum() {
+    private int calculateMinimumSum() {
         return cards.stream()
             .mapToInt(Card::getValue)
             .sum();
     }
 
-    public int calculateAceCount() {
+    private int calculateAceCount() {
         return (int)cards.stream()
             .filter(card -> card.isSameValueWith(Denomination.ACE))
             .count();

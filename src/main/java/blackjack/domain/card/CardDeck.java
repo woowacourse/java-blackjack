@@ -30,7 +30,7 @@ public class CardDeck {
         return new ArrayList<>(List.of(draw(), draw()));
     }
 
-    public boolean isEmpty() {
+    private boolean isEmpty() {
         return cards.isEmpty();
     }
 }
