@@ -43,4 +43,12 @@ public final class Card {
                 ", face=" + face +
                 '}';
     }
+
+    public Face getFace() {
+        return face;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
 }
