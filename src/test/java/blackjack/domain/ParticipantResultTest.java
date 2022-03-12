@@ -20,7 +20,7 @@ public class ParticipantResultTest {
         dealer.addCard(card1);
         dealer.addCard(card2);
 
-        Participants participants = new Participants(List.of("엘리리"));
+        Participants participants = new Participants(List.of("엘리", "배카라"));
         for (Participant participant : participants) {
             participant.addCard(card3);
             participant.addCard(card4);
@@ -29,7 +29,7 @@ public class ParticipantResultTest {
         ParticipantResult results = new ParticipantResult(dealer, participants);
 
         for (Participant participant : participants) {
-            assertThat(results.getParticipantResult()).contains(entry(participant, expected));
+            assertThat(results.getResult()).contains(entry(participant, expected));
         }
     }
 
@@ -92,7 +92,7 @@ public class ParticipantResultTest {
         dealer.addCard(card1);
         dealer.addCard(card2);
 
-        Participants participants = new Participants(List.of("배카라"));
+        Participants participants = new Participants(List.of("엘리", "배카라"));
         for (Participant participant : participants) {
             participant.addCard(card3);
             participant.addCard(card4);
@@ -102,7 +102,7 @@ public class ParticipantResultTest {
         ParticipantResult results = new ParticipantResult(dealer, participants);
 
         for (Participant participant : participants) {
-            assertThat(results.getParticipantResult()).contains(entry(participant, expected));
+            assertThat(results.getResult()).contains(entry(participant, expected));
         }
     }
 
@@ -134,7 +134,7 @@ public class ParticipantResultTest {
         dealer.addCard(card2);
         dealer.addCard(card3);
 
-        Participants participants = new Participants(List.of("엘리"));
+        Participants participants = new Participants(List.of("엘리", "배카라"));
         for (Participant participant : participants) {
             participant.addCard(card4);
             participant.addCard(card5);
@@ -144,7 +144,7 @@ public class ParticipantResultTest {
         ParticipantResult results = new ParticipantResult(dealer, participants);
 
         for (Participant participant : participants) {
-            assertThat(results.getParticipantResult()).contains(entry(participant, expected));
+            assertThat(results.getResult()).contains(entry(participant, expected));
         }
     }
 

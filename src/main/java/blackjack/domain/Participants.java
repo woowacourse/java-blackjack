@@ -22,7 +22,7 @@ public class Participants implements Iterable<Participant> {
 
     private void checkSize(final List<String> names) {
         final int size = names.size();
-        if (size < MAX_SIZE || size > MAX_SIZE) {
+        if (size < MIN_SIZE || size > MAX_SIZE) {
             throw new IllegalArgumentException("[ERROR] 참자가 인원은 2명~8명 사이여야합니다.");
         }
     }
