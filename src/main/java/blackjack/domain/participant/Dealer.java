@@ -28,7 +28,7 @@ public class Dealer extends AbstractParticipant {
 
     @Override
     public List<Card> firstCards() {
-        return List.copyOf(super.cards().subList(0, FIRST_HIT_CARD_SIZE));
+        return List.copyOf(cards().subList(0, FIRST_HIT_CARD_SIZE));
     }
 
     @Override
