@@ -3,15 +3,17 @@ package domain.card;
 import static java.util.Collections.shuffle;
 import static java.util.stream.Collectors.toList;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 import java.util.stream.Stream;
 
 public class CardDeck {
     private static final List<PlayingCard> originalPlayingCards;
 
-    private final Stack<PlayingCard> playingCards;
+    private final Deque<PlayingCard> playingCards;
 
     static {
         originalPlayingCards = List.copyOf(
@@ -27,11 +29,10 @@ public class CardDeck {
     }
 
     private CardDeck() {
-        Stack<PlayingCard> playingCards = new Stack<>();
-        playingCards.addAll(originalPlayingCards);
-        shuffle(playingCards);
+        List<PlayingCard> newPlayingCards = new ArrayList<>(originalPlayingCards);
+        shuffle(newPlayingCards);
 
-        this.playingCards = playingCards;
+        this.playingCards = new ArrayDeque<>(newPlayingCards);
     }
 
     public static CardDeck newInstance() {
