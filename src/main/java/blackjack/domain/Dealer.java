@@ -17,12 +17,11 @@ public class Dealer extends Person {
 	}
 
 	public boolean isHit() {
-		return Score.from(myCards).
-			getSum() <= CONDITION_HIT;
+		return score() <= CONDITION_HIT;
 	}
 
 	public int isWin(Player player) {
-		if(isBurst()) {
+		if (isBurst()) {
 			if (player.isBurst()) {
 				return 1;
 			}
@@ -30,11 +29,10 @@ public class Dealer extends Person {
 			return -1;
 		}
 
-		if(player.isBurst()) {
+		if (player.isBurst()) {
 			return 1;
 		}
 
-		return Integer.compare(Score.from(myCards).getSum(),
-			Score.from(player.myCards).getSum());
+		return Integer.compare(this.score(), player.score());
 	}
 }

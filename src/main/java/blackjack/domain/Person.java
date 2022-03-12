@@ -26,9 +26,13 @@ public class Person {
 		myCards.add(card);
 	}
 
-	public boolean isBurst() {
+	public int score() {
 		return Score.from(myCards)
-			.getSum() > CONDITION_BURST;
+			.getSum();
+	}
+
+	public boolean isBurst() {
+		return score() > CONDITION_BURST;
 	}
 
 	public List<Card> getMyCards() {
