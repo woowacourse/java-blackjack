@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class BlackJackController {
+public class BlackJackGame {
 
     private static final int DEFAULT_SPREAD_COUNT_START_INDEX = 0;
     private static final int DEFAULT_SPREAD_COUNT_END_INDEX = 2;
