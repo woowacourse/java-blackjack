@@ -18,10 +18,10 @@ public class CardDeck implements CardStack {
 
     private void initCards() {
         Arrays.stream(CardRank.values())
-                .forEach(this::createAllSymbols);
+                .forEach(this::initAndAddAllSymbolsOf);
     }
 
-    private void createAllSymbols(CardRank rank) {
+    private void initAndAddAllSymbolsOf(CardRank rank) {
         Arrays.stream(CardSymbol.values())
                 .forEach((symbol -> cards.add(Card.of(rank, symbol))));
     }
