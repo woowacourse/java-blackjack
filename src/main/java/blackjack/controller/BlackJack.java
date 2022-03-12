@@ -13,12 +13,12 @@ import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
 
-public class BlackJackController {
+public class BlackJack {
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackJack(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
