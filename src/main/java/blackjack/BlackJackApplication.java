@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.domain.HitRequest;
+import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Name;
 import blackjack.domain.card.BlackJackCardsGenerator;
 import blackjack.domain.card.CardDeck;
@@ -17,9 +18,13 @@ public class BlackJackApplication {
 
     public static void main(String[] args) {
         CardDeck deck = new CardDeck(new BlackJackCardsGenerator());
-        Dealer dealer = new Dealer(deck.drawDouble());
+        Dealer dealer = createDealer(deck);
         List<Player> players = createPlayers(inputPlayerNames(), deck);
         play(deck, dealer, players);
+    }
+
+    private static Dealer createDealer(CardDeck deck) {
+        return new Dealer(new Cards(deck.drawDouble()));
     }
 
     private static List<Name> inputPlayerNames() {
@@ -35,8 +40,13 @@ public class BlackJackApplication {
 
     private static List<Player> createPlayers(List<Name> playerNames, CardDeck deck) {
         return playerNames.stream()
-            .map(name -> new Player(name, deck.drawDouble()))
+            .map(name -> createPlayer(deck, name))
             .collect(Collectors.toUnmodifiableList());
+    }
+
+    private static Player createPlayer(CardDeck deck, Name name) {
+        Cards cards = new Cards(deck.drawDouble());
+        return new Player(name, cards);
     }
 
     private static void play(CardDeck deck, Dealer dealer, List<Player> players) {

@@ -1,14 +1,12 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-
-import java.util.List;
+import blackjack.domain.card.Cards;
 
 public class Player extends Participant {
 
     private static final int HIT_STANDARD = 21;
 
-    public Player(Name name, List<Card> cards) {
+    public Player(Name name, Cards cards) {
         super(name, cards);
     }
 

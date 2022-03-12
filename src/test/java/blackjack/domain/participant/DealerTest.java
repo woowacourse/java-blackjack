@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Pattern;
 
@@ -24,7 +25,7 @@ public class DealerTest {
         // given
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
-        List<Card> cards = List.of(card1, card2);
+        Cards cards = new Cards(List.of(card1, card2));
 
         // when
         Dealer dealer = new Dealer(cards);
@@ -42,40 +43,13 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러를 생성할 때 카드가 두 장이 아니면 예외가 발생한다.")
-    void cardsSizeNotTwo() {
-        // given
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
-        Card card3 = new Card(Pattern.HEART, Denomination.THREE);
-        List<Card> cards = List.of(card1, card2, card3);
-
-        // then
-        assertThatThrownBy(() -> new Dealer(cards))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[ERROR] 카드를 두 장 받고 시작해야 합니다.");
-    }
-
-    @Test
-    @DisplayName("딜러를 생성할 때 카드가 중복되면 예외가 발생한다.")
-    void duplicatedCards() {
-        // given
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
-        List<Card> cards = List.of(card1, card1);
-
-        // then
-        assertThatThrownBy(() -> new Dealer(cards))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[ERROR] 카드는 중복될 수 없습니다.");
-    }
-
-    @Test
     @DisplayName("딜러가 카드 한 장을 더 받는 경우")
     void addCard() {
         // given
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
-        List<Card> cards = List.of(card1, card2);
+        Cards cards = new Cards(List.of(card1, card2));
+
         Dealer dealer = new Dealer(cards);
 
         // when
@@ -91,7 +65,7 @@ public class DealerTest {
         // given
         Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card card2 = new Card(Pattern.CLOVER, Denomination.SIX);
-        List<Card> cards = List.of(card1, card2);
+        Cards cards = new Cards(List.of(card1, card2));
 
         Dealer dealer = new Dealer(cards);
 
@@ -105,11 +79,10 @@ public class DealerTest {
     @Test
     @DisplayName("딜러의 카드의 총합이 17 이상이면 hit이 불가능하다.")
     void notHittable() {
-
         // given
         Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card card2 = new Card(Pattern.CLOVER, Denomination.SEVEN);
-        List<Card> cards = List.of(card1, card2);
+        Cards cards = new Cards(List.of(card1, card2));
 
         Dealer dealer = new Dealer(cards);
 
@@ -126,7 +99,7 @@ public class DealerTest {
         // given
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
-        List<Card> cards = List.of(card1, card2);
+        Cards cards = new Cards(List.of(card1, card2));
 
         Dealer dealer = new Dealer(cards);
 
@@ -145,7 +118,7 @@ public class DealerTest {
         Card card2 = new Card(Pattern.CLOVER, Denomination.ACE);
         Card card3 = new Card(Pattern.HEART, Denomination.ACE);
         Card card4 = new Card(Pattern.SPADE, Denomination.ACE);
-        List<Card> cards = List.of(card1, card2);
+        Cards cards = new Cards(List.of(card1, card2));
 
         Dealer dealer = new Dealer(cards);
         dealer.hit(card3);
@@ -165,7 +138,7 @@ public class DealerTest {
         Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card card2 = new Card(Pattern.CLOVER, Denomination.TEN);
         Card card3 = new Card(Pattern.HEART, Denomination.TWO);
-        List<Card> cards = List.of(card1, card2);
+        Cards cards = new Cards(List.of(card1, card2));
 
         Dealer dealer = new Dealer(cards);
         dealer.hit(card3);
@@ -184,7 +157,7 @@ public class DealerTest {
         // given
         Card DIAMOND_TEN = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card CLOVER_TEN = new Card(Pattern.CLOVER, Denomination.TEN);
-        List<Card> cards = List.of(DIAMOND_TEN, CLOVER_TEN);
+        Cards cards = new Cards(List.of(DIAMOND_TEN, CLOVER_TEN));
 
         Dealer dealer = new Dealer(cards);
         dealer.hit(card);
@@ -210,7 +183,8 @@ public class DealerTest {
     @DisplayName("점수의 총합이 21이면서 2장이면 블랙잭이다.")
     void blackJack(List<Card> initCards, List<Card> hitCards, boolean expected) {
         // given
-        Dealer dealer = new Dealer(initCards);
+        Cards cards = new Cards(initCards);
+        Dealer dealer = new Dealer(cards);
         for (Card hitCard : hitCards) {
             dealer.hit(hitCard);
         }

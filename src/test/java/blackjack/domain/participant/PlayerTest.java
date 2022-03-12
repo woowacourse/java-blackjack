@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Pattern;
 
@@ -18,21 +19,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class PlayerTest {
 
-    @Test
-    @DisplayName("플레이어는 생성될 때 두 장의 카드를 받는다.")
-    void startWithDraw() {
-        // given
-        Name name = new Name("pobi");
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
-        List<Card> cards = List.of(card1, card2);
-
-        // when
-        Player player = new Player(name, cards);
-
-        // then
-        assertThat(player.getCards()).containsOnly(card1, card2);
-    }
 
     @Test
     @DisplayName("플레이어를 생성할 때 카드는 null일 수 없다.")
@@ -46,43 +32,13 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어를 생성할 때 카드가 두 장이 아니면 예외가 발생한다.")
-    void cardsSizeNotTwo() {
-        // given
-        Name name = new Name("pobi");
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
-        Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
-        Card card3 = new Card(Pattern.HEART, Denomination.THREE);
-        List<Card> cards = List.of(card1, card2, card3);
-
-        // then
-        assertThatThrownBy(() -> new Player(name, cards))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[ERROR] 카드를 두 장 받고 시작해야 합니다.");
-    }
-
-    @Test
-    @DisplayName("플레이어를 생성할 때 카드가 중복되면 예외가 발생한다.")
-    void duplicatedCards() {
-        // given
-        Name name = new Name("pobi");
-        Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
-        List<Card> cards = List.of(card1, card1);
-
-        // then
-        assertThatThrownBy(() -> new Player(name, cards))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("[ERROR] 카드는 중복될 수 없습니다.");
-    }
-
-    @Test
     @DisplayName("플레이어가 카드 한 장을 더 받는 경우")
     void addCard() {
         // given
         Name name = new Name("pobi");
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
-        List<Card> cards = List.of(card1, card2);
+        Cards cards = new Cards(List.of(card1, card2));
 
         Player player = new Player(name, cards);
 
@@ -100,7 +56,7 @@ public class PlayerTest {
         Name name = new Name("pobi");
         Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card card2 = new Card(Pattern.CLOVER, Denomination.TEN);
-        List<Card> cards = List.of(card1, card2);
+        Cards cards = new Cards(List.of(card1, card2));
 
         Player player = new Player(name, cards);
 
@@ -118,7 +74,7 @@ public class PlayerTest {
         Name name = new Name("pobi");
         Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card card2 = new Card(Pattern.CLOVER, Denomination.ACE);
-        List<Card> cards = List.of(card1, card2);
+        Cards cards = new Cards(List.of(card1, card2));
 
         Player player = new Player(name, cards);
 
@@ -136,7 +92,7 @@ public class PlayerTest {
         Name name = new Name("lala");
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
-        List<Card> cards = List.of(card1, card2);
+        Cards cards = new Cards(List.of(card1, card2));
 
         Player player = new Player(name, cards);
 
@@ -156,7 +112,7 @@ public class PlayerTest {
         Card card2 = new Card(Pattern.CLOVER, Denomination.ACE);
         Card card3 = new Card(Pattern.HEART, Denomination.ACE);
         Card card4 = new Card(Pattern.SPADE, Denomination.ACE);
-        List<Card> cards = List.of(card1, card2);
+        Cards cards = new Cards(List.of(card1, card2));
 
         Player player = new Player(name, cards);
         player.hit(card3);
@@ -177,7 +133,7 @@ public class PlayerTest {
         Card card1 = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card card2 = new Card(Pattern.CLOVER, Denomination.TEN);
         Card card3 = new Card(Pattern.HEART, Denomination.TWO);
-        List<Card> cards = List.of(card1, card2);
+        Cards cards = new Cards(List.of(card1, card2));
 
         Player player = new Player(name, cards);
         player.hit(card3);
@@ -197,7 +153,7 @@ public class PlayerTest {
         Name name = new Name("lala");
         Card DIAMOND_TEN = new Card(Pattern.DIAMOND, Denomination.TEN);
         Card CLOVER_TEN = new Card(Pattern.CLOVER, Denomination.TEN);
-        List<Card> cards = List.of(DIAMOND_TEN, CLOVER_TEN);
+        Cards cards = new Cards(List.of(DIAMOND_TEN, CLOVER_TEN));
 
         Player player = new Player(name, cards);
         player.hit(card);
@@ -224,7 +180,8 @@ public class PlayerTest {
     void blackJack(List<Card> initCards, List<Card> hitCards, boolean expected) {
         // given
         Name name = new Name("lala");
-        Player player = new Player(name, initCards);
+        Cards cards = new Cards(initCards);
+        Player player = new Player(name, cards);
         for (Card hitCard : hitCards) {
             player.hit(hitCard);
         }

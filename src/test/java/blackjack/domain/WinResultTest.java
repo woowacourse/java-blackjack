@@ -18,6 +18,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
@@ -43,7 +44,7 @@ public class WinResultTest {
         // given
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, NINE);
-        List<Card> playerCards = List.of(heartTen, spadeNine);
+        Cards playerCards = new Cards(List.of(heartTen, spadeNine));
         Player player = new Player(new Name("pobi"), playerCards);
         List<Player> players = List.of(player);
 
@@ -77,7 +78,7 @@ public class WinResultTest {
 
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
-        List<Card> playerCards = List.of(heartTen, spadeNine);
+        Cards playerCards = new Cards(List.of(heartTen, spadeNine));
         Player player = new Player(new Name("pobi"), playerCards);
         player.hit(playerCard);
         List<Player> players = List.of(player);
@@ -111,7 +112,7 @@ public class WinResultTest {
 
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
-        List<Card> playerCards = List.of(heartTen, spadeNine);
+        Cards playerCards = new Cards(List.of(heartTen, spadeNine));
         Player player = new Player(new Name("pobi"), playerCards);
         List<Player> players = List.of(player);
 
@@ -136,7 +137,7 @@ public class WinResultTest {
 
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
-        List<Card> playerCards = List.of(heartTen, spadeNine);
+        Cards playerCards = new Cards(List.of(heartTen, spadeNine));
         Player player = new Player(new Name("pobi"), playerCards);
         player.hit(new Card(HEART, ACE));
         List<Player> players = List.of(player);
@@ -162,7 +163,7 @@ public class WinResultTest {
 
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, ACE);
-        List<Card> playerCards = List.of(heartTen, spadeNine);
+        Cards playerCards = new Cards(List.of(heartTen, spadeNine));
         Player player = new Player(new Name("pobi"), playerCards);
         List<Player> players = List.of(player);
 
@@ -182,8 +183,8 @@ public class WinResultTest {
     private static Dealer createDealer(Denomination denomination2) {
         Card card1 = new Card(DIAMOND, TEN);
         Card card2 = new Card(CLOVER, denomination2);
-        List<Card> dealerCards = List.of(card1, card2);
-        return new Dealer(dealerCards);
+        Cards cards = new Cards(List.of(card1, card2));
+        return new Dealer(cards);
     }
 
     private static Map<Judgement, Integer> createJudgementMap(int win, int draw, int lose) {
