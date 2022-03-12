@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
@@ -42,10 +41,6 @@ public class Game {
         players.forEach(player -> player.prepareGame(cardFactory));
     }
 
-    public int getRemainAmount() {
-        return cardFactory.getRemainAmount();
-    }
-
     public Optional<Player> findHitPlayer() {
         return players.stream()
                 .filter(Player::isHit)
@@ -60,12 +55,16 @@ public class Game {
         player.stay();
     }
 
-    public CardCount progressDealerTurn() {
-        return dealer.drawCards(cardFactory);
-    }
-
     public Card openCard() {
         return dealer.openFirstCard();
+    }
+
+    public boolean canDrawCard() {
+        return dealer.canDrawCard();
+    }
+
+    public void drawDealer() {
+        dealer.hit(cardFactory);
     }
 
     public RecordFactory getRecordFactory() {

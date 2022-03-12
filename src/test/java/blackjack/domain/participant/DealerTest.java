@@ -1,9 +1,9 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.CardNumber.FIVE;
 import static blackjack.domain.card.CardNumber.KING;
 import static blackjack.domain.card.CardNumber.QUEEN;
 import static blackjack.domain.card.CardNumber.SEVEN;
+import static blackjack.domain.card.CardNumber.SIX;
 import static blackjack.domain.card.CardNumber.TEN;
 import static blackjack.domain.card.CardSymbol.CLUB;
 import static blackjack.domain.card.CardSymbol.DIAMOND;
@@ -11,47 +11,36 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardFactory;
-import blackjack.domain.card.Status;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
 
-    @Test
-    @DisplayName("조건에 만족할 때 까지 카드르 뽑는다. (버스트)")
-    void drawCards_BUST() {
+    @ParameterizedTest
+    @DisplayName("딜러가 카드를 뽑아야하는지 확인한다.")
+    @MethodSource("provideCardFactory")
+    void canDrawCard(CardFactory cardFactory, boolean expected) {
         // give
-        final CardFactory cardFactory = CardFactory.createBy(
-                List.of(new Card(DIAMOND, TEN), new Card(DIAMOND, QUEEN), new Card(CLUB, FIVE)));
-
         final Dealer dealer = new Dealer();
         dealer.prepareGame(cardFactory);
 
         // when
-        dealer.drawCards(cardFactory);
-        final Status actual = dealer.getStatus();
+        final boolean actual = dealer.canDrawCard();
 
         // then
-        assertThat(actual).isEqualTo(Status.BUST);
+        assertThat(actual).isEqualTo(expected);
     }
 
-    @Test
-    @DisplayName("조건에 만족할 때 까지 카드르 뽑는다. (BUST X)")
-    void drawCards_NOT_BUST() {
-        // give
-        final List<Card> cards = List.of(new Card(CLUB, TEN), new Card(CLUB, SEVEN));
-        final CardFactory cardFactory = CardFactory.createBy(cards);
-
-        final Dealer dealer = new Dealer();
-        dealer.prepareGame(cardFactory);
-
-        // when
-        dealer.drawCards(cardFactory);
-        final Status actual = dealer.getStatus();
-
-        // then
-        assertThat(actual).isEqualTo(Status.HIT);
+    private static Stream<Arguments> provideCardFactory() {
+        return Stream.of(
+                Arguments.of(CardFactory.createBy(List.of(new Card(DIAMOND, TEN), new Card(DIAMOND, SEVEN))), false),
+                Arguments.of(CardFactory.createBy(List.of(new Card(DIAMOND, TEN), new Card(DIAMOND, SIX))), true)
+        );
     }
 
     @Test

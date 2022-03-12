@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.Record;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardCount;
 import blackjack.vo.ParticipantVo;
 import java.util.Arrays;
 import java.util.List;
@@ -28,14 +27,12 @@ public class OutputView {
         System.out.println(vo.getName() + "카드: " + String.join(", ", list));
     }
 
-    public static void printDealerDrawCardCount(CardCount cardCount) {
-        if (cardCount.isDraw()) {
-            System.out.println(System.lineSeparator() + "딜러가 16초과여서 카드를 받지않았습니다." + System.lineSeparator());
-            return;
-        }
+    public static void printDealerDrawMessage() {
+        System.out.println(System.lineSeparator() + "딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+    }
 
-        System.out.println(System.lineSeparator() + "딜러는 16이하라 " + cardCount.getName() + "장의 카드를 더 받았습니다."
-                + System.lineSeparator());
+    public static void printDealerNotDrawMessage() {
+        System.out.println(System.lineSeparator() + "딜러가 16초과여서 카드를 받지않았습니다.");
     }
 
     public static void printParticipantCards(ParticipantVo vo) {
@@ -69,5 +66,9 @@ public class OutputView {
 
     public static void printError(final String message) {
         System.out.println("[ERROR]: " + message);
+    }
+
+    public static void breakLine() {
+        System.out.println();
     }
 }

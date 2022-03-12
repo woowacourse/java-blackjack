@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.Game;
 import blackjack.domain.RecordFactory;
-import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Player;
@@ -64,11 +63,19 @@ public class GameController {
     }
 
     private void progressDealerTurn(final Game game) {
-        final CardCount cardCount = game.progressDealerTurn();
-        OutputView.printDealerDrawCardCount(cardCount);
+        if (!game.canDrawCard()) {
+            OutputView.printDealerNotDrawMessage();
+            return;
+        }
+
+        do {
+            game.drawDealer();
+            OutputView.printDealerDrawMessage();
+        } while (game.canDrawCard());
     }
 
     private void endGame(final Game game) {
+        OutputView.breakLine();
         game.getAllParticipant().stream()
                 .map(ParticipantVo::new)
                 .forEach(OutputView::printParticipantCards);
