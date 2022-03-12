@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Rule;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +45,8 @@ public abstract class Participant {
         }
     }
 
-    public void hit(CardDeck deck) {
-        cards.add(deck.draw());
+    public void hit(Card card) {
+        cards.add(card);
     }
 
     public boolean isBust() {

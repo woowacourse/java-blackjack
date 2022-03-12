@@ -18,13 +18,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -72,16 +70,16 @@ public class WinResultTest {
     @ParameterizedTest
     @MethodSource("provideForPlayerBust")
     @DisplayName("플레이어가 버스트면 무조건 딜러가 이긴다")
-    void playerBust(CardDeck deck) {
+    void playerBust(Card dealerCard, Card playerCard) {
         // given
         Dealer dealer = createDealer(SIX);
-        dealer.hit(deck);
+        dealer.hit(dealerCard);
 
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
         List<Card> playerCards = List.of(heartTen, spadeNine);
         Player player = new Player(new Name("pobi"), playerCards);
-        player.hit(deck);
+        player.hit(playerCard);
         List<Player> players = List.of(player);
 
         // when
@@ -99,8 +97,8 @@ public class WinResultTest {
 
     private static Stream<Arguments> provideForPlayerBust() {
         return Stream.of(
-            Arguments.of(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, SIX), new Card(HEART, TWO))))),
-            Arguments.of(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, FIVE), new Card(HEART, TWO)))))
+            Arguments.of(new Card(HEART, SIX), new Card(HEART, TWO)),
+            Arguments.of(new Card(HEART, FIVE), new Card(HEART, TWO))
         );
     }
 
@@ -109,7 +107,7 @@ public class WinResultTest {
     void dealerBust() {
         // given
         Dealer dealer = createDealer(SIX);
-        dealer.hit(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, SIX)))));
+        dealer.hit(new Card(HEART, SIX));
 
         Card heartTen = new Card(HEART, TEN);
         Card spadeNine = new Card(SPADE, TEN);
@@ -140,7 +138,7 @@ public class WinResultTest {
         Card spadeNine = new Card(SPADE, TEN);
         List<Card> playerCards = List.of(heartTen, spadeNine);
         Player player = new Player(new Name("pobi"), playerCards);
-        player.hit(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, ACE)))));
+        player.hit(new Card(HEART, ACE));
         List<Player> players = List.of(player);
 
         // when

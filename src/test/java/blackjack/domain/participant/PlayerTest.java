@@ -4,11 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Pattern;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -82,11 +80,10 @@ public class PlayerTest {
         Card card2 = new Card(Pattern.CLOVER, Denomination.THREE);
         List<Card> cards = List.of(card1, card2);
 
-        CardDeck deck = new CardDeck(() -> new ArrayList<>(List.of(new Card(Pattern.HEART, Denomination.THREE))));
         Player player = new Player(name, cards);
 
         // when
-        player.hit(deck);
+        player.hit(new Card(Pattern.HEART, Denomination.THREE));
 
         // then
         assertThat(player.getCards().size()).isEqualTo(3);

@@ -58,7 +58,7 @@ public class BlackJackApplication {
 
     private static void proceedPlayer(Player player, CardDeck deck) {
         while (player.isHittable() && inputHitRequest(player) == HitRequest.YES) {
-            player.hit(deck);
+            player.hit(deck.draw());
             OutputView.printParticipantCards(player, player.calculateScore());
         }
         showStopReason(player);
@@ -85,7 +85,7 @@ public class BlackJackApplication {
 
     private static void proceedDealer(Dealer dealer, CardDeck deck) {
         while (dealer.isHittable()) {
-            dealer.hit(deck);
+            dealer.hit(deck.draw());
             OutputView.printDealerHitMessage();
         }
     }
