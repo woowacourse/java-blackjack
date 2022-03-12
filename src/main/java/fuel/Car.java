@@ -3,13 +3,11 @@ package fuel;
 public abstract class Car {
 
     private final String name;
-    private final int fuelEfficiency;
-    private final int distance;
+    private final int fuelNeeded;
 
     protected Car(final String name, final int fuelEfficiency, final int distance) {
         this.name = name;
-        this.fuelEfficiency = fuelEfficiency;
-        this.distance = distance;
+        this.fuelNeeded = distance / fuelEfficiency;
     }
 
     public String getName() {
@@ -17,6 +15,6 @@ public abstract class Car {
     }
 
     public int getFuelNeeded() {
-        return distance / fuelEfficiency;
+        return fuelNeeded;
     }
 }
