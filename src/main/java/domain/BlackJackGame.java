@@ -5,9 +5,11 @@ import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import dto.CardsWithTotalScore;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import utils.GameResultConvertor;
 import view.InputView;
 import view.OutputView;
 
@@ -21,6 +23,7 @@ public final class BlackJackGame {
         initParticipants();
         hit();
         showCardsTotal();
+        showGameResult();
     }
 
     private void initParticipants() {
@@ -77,5 +80,18 @@ public final class BlackJackGame {
         totalScoreWithName.putAll(players.getTotalScoreWithName());
         final CardsWithTotalScore cardsWithTotalScore = new CardsWithTotalScore(getCardsWithName(), totalScoreWithName);
         OutputView.printCardsWithTotalScore(cardsWithTotalScore);
+    }
+
+    private void showGameResult() {
+        final Map<String, GameResult> playersGameResult = players.calculateGameResult(dealer);
+        final Map<String, List<GameResult>> dealerGameResult = dealer.calculateGameResult(
+                new ArrayList<>(playersGameResult.values()));
+        final Map<String, List<String>> gameResult = convertGameResultToString(dealerGameResult, playersGameResult);
+        OutputView.printGameResultWithName(gameResult);
+    }
+
+    private Map<String, List<String>> convertGameResultToString(final Map<String, List<GameResult>> dealerGameResult,
+                                                                final Map<String, GameResult> playersGameResult) {
+        return GameResultConvertor.convertToString(dealerGameResult, playersGameResult);
     }
 }

@@ -1,10 +1,14 @@
 package domain.participant;
 
 import domain.CardScoreThreshold;
+import domain.GameResult;
 import domain.GameState;
 import domain.card.Card;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class Dealer extends Participant {
     private static final int FIRST_INDEX = 0;
@@ -14,11 +18,6 @@ public final class Dealer extends Participant {
     public Dealer() {
         super(CardScoreThreshold.DEALER_THRESHOLD, "딜러");
     }
-
-//    @Override
-//    public List<FinalGameResult> calculateFinalGameResult(Participant other) {
-//        return null;
-//    }
 
     @Override
     public List<Card> getCards() {
@@ -30,5 +29,9 @@ public final class Dealer extends Participant {
 
     public void stopRunning() {
         gameState = GameState.END;
+    }
+
+    public Map<String, List<GameResult>> calculateGameResult(List<GameResult> playersResult) {
+        return new LinkedHashMap<>(Map.of(name, GameResult.reverse(playersResult)));
     }
 }

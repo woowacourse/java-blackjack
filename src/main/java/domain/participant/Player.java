@@ -1,7 +1,12 @@
 package domain.participant;
 
 import domain.CardScoreThreshold;
-import domain.card.CardDeck;
+import domain.GameResult;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class Player extends Participant {
 
@@ -12,8 +17,8 @@ public final class Player extends Participant {
     public String getName() {
         return name;
     }
-//    @Override
-//    public List<FinalGameResult> calculateFinalGameResult(Participant other) {
-//        return null;
-//    }
+
+    public Map<String, GameResult> getGameResultWithName(Participant other) {
+        return new LinkedHashMap<>(Map.of(name, cards.calculateGameResult(other.cards)));
+    }
 }

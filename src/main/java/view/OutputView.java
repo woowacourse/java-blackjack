@@ -10,6 +10,7 @@ import utils.CardConvertor;
 
 public class OutputView {
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String GAME_RESULT_INTRO_MESSAGE = "## 최종 승패";
 
     private OutputView() {
     }
@@ -62,6 +63,18 @@ public class OutputView {
     public static void printCardsWithTotalScore(CardsWithTotalScore cardsWithTotalScore) {
         for (Entry<Map<String, List<Card>>, Integer> entry : cardsWithTotalScore.get().entrySet()) {
             printCardsWithName(entry.getKey(), entry.getValue());
+        }
+    }
+
+    public static void printGameResultWithName(final Map<String, List<String>> gameResult) {
+        print(GAME_RESULT_INTRO_MESSAGE);
+        for (final Entry<String, List<String>> entry : gameResult.entrySet()) {
+            final StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder
+                    .append(entry.getKey())
+                    .append(": ")
+                    .append(String.join(" ", entry.getValue()));
+            print(stringBuilder.toString());
         }
     }
 }
