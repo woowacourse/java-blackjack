@@ -91,7 +91,7 @@ class PlayerTest {
     void endTurn() {
         final Participant participant = Player
                 .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
-        participant.endTurn();
+        participant.changeFinishStatus();
         assertFalse(participant.canDraw());
     }
 

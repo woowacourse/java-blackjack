@@ -66,7 +66,7 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     @Override
-    public void endTurn() {
+    public void changeFinishStatus() {
         gameStatus = GameStatus.FINISHED;
     }
 

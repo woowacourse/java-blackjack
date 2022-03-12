@@ -12,7 +12,7 @@ public interface Participant {
 
     boolean canDraw();
 
-    void endTurn();
+    void changeFinishStatus();
 
     int calculateResultScore();
 

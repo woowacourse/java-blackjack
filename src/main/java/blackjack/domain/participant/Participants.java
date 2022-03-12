@@ -63,7 +63,7 @@ public class Participants {
 
     public void turnToNextPlayer() {
         validateAllTurnEnd();
-        currentTurnPlayer().endTurn();
+        currentTurnPlayer().changeFinishStatus();
         currentTurnIndex++;
     }
 
