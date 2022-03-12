@@ -6,7 +6,7 @@ import blackjack.domain.result.MatchStatus;
 public class Dealer extends Participant {
 
     public static final String DEALER_NAME = "딜러";
-    public static final int DEALER_MIN_SCORE = 17;
+    public static final int DRAWABLE_SCORE_LIMIT = 16;
 
     private Dealer(final Deck deck) {
         super(DEALER_NAME, deck);
@@ -18,7 +18,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isPossibleToDrawCard() {
-        return cards.calculateScore() < DEALER_MIN_SCORE;
+        return cards.calculateScore() <= DRAWABLE_SCORE_LIMIT;
     }
 
     public MatchStatus judgeWinner(final Player player) {
