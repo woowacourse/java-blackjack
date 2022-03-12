@@ -23,7 +23,7 @@ public class OutputView {
     private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
     private static final String DEALER_RESULT_FORMAT = "딜러: %d승 %d무 %d패";
     private static final String USER_RESULT_FORMAT = "%s: %s";
-    public static final int DEALER_HIDE_INDEX = 0;
+    private static final int DEALER_HIDE_INDEX = 0;
 
     public static void printInitDistribute(Users users, Dealer dealer) {
         System.out.printf(lineSeparator() + INIT_DISTRIBUTE_FORMAT, String.join(CARD_SEPARATOR, users.getUserNames()));
