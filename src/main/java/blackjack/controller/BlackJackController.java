@@ -56,7 +56,7 @@ public class BlackJackController {
             choice = getChoice(participant);
             blackJackMachine.giveCardToParticipant(participant, choice);
             OutputView.printPlayerCards(participant);
-        } while (choice == Choice.YES && participant.canAddCard());
+        } while (choice.isHit() && participant.canAddCard());
     }
 
     private Choice getChoice(final Participant participant) {

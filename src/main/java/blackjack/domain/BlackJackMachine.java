@@ -24,13 +24,9 @@ public class BlackJackMachine {
     }
 
     public void giveCardToParticipant(final Participant participant, final Choice choice) {
-        if (isYes(choice) && participant.canAddCard()) {
+        if (choice.isHit() && participant.canAddCard()) {
             participant.addCard(deck.getCard(index.getAndIncrease()));
         }
-    }
-
-    private boolean isYes(final Choice choice) {
-        return choice == Choice.YES;
     }
 
     public void giveCardToDealer(final Dealer dealer) {

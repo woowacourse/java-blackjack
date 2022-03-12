@@ -17,7 +17,7 @@ public class BlackJackMachineTest {
 
         int totalScore = participant.getTotalScore();
 
-        blackJackMachine.giveCardToParticipant(participant, Choice.YES);
+        blackJackMachine.giveCardToParticipant(participant, Choice.HIT);
 
         Assertions.assertThat(participant.getTotalScore()).isGreaterThan(totalScore);
     }
@@ -31,7 +31,7 @@ public class BlackJackMachineTest {
 
         int totalScore = participant.getTotalScore();
 
-        blackJackMachine.giveCardToParticipant(participant, Choice.NO);
+        blackJackMachine.giveCardToParticipant(participant, Choice.STAY);
 
         Assertions.assertThat(participant.getTotalScore()).isEqualTo(totalScore);
     }
