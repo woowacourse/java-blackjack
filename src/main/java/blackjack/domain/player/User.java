@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.domain.ResultType;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
@@ -14,8 +14,8 @@ public class User extends Player {
         super(name, cards);
     }
 
-    public ResultType findResult(int dealerScore) {
-        return ResultType.findUserResult(calculateScore(), dealerScore);
+    public GameResult findResult(int dealerScore) {
+        return GameResult.findUserResult(calculateScore(), dealerScore);
     }
 
     @Override

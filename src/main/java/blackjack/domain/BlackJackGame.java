@@ -22,8 +22,8 @@ public class BlackJackGame {
 
         playGame(users, dealer);
 
-        PlayerGameResult playerGameResult = PlayerGameResult.create(dealer.calculateScore(), users);
-        OutputView.printGameResult(playerGameResult.getDealerResultCount(), playerGameResult.getUserResults());
+        PlayerResult playerResult = PlayerResult.create(dealer.calculateScore(), users);
+        OutputView.printGameResult(playerResult.getDealerResultCount(), playerResult.getUserResults());
     }
 
     private List<User> initializeUsers() {

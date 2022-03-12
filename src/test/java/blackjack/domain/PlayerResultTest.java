@@ -17,7 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayerGameResultTest {
+public class PlayerResultTest {
 
     private Dealer dealer;
     private List<User> users;
@@ -53,14 +53,14 @@ public class PlayerGameResultTest {
     @Test
     @DisplayName("유저 게임결과를 확인한다.")
     void checkUserGameResult() {
-        PlayerGameResult playerGameResult = PlayerGameResult.create(dealer.calculateScore(), users);
-        final Map<String, ResultType> expected = new HashMap<>(Map.ofEntries(
-                Map.entry("slow", ResultType.WIN),
-                Map.entry("jason", ResultType.DRAW),
-                Map.entry("pobi", ResultType.LOSE)
+        PlayerResult playerResult = PlayerResult.create(dealer.calculateScore(), users);
+        final Map<String, GameResult> expected = new HashMap<>(Map.ofEntries(
+                Map.entry("slow", GameResult.WIN),
+                Map.entry("jason", GameResult.DRAW),
+                Map.entry("pobi", GameResult.LOSE)
         ));
 
-        final Map<String, ResultType> actual = playerGameResult.getUserResults();
+        final Map<String, GameResult> actual = playerResult.getUserResults();
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -68,14 +68,14 @@ public class PlayerGameResultTest {
     @Test
     @DisplayName("딜러 게임결과를 확인한다.")
     void checkDealerGameResult() {
-        PlayerGameResult playerGameResult = PlayerGameResult.create(dealer.calculateScore(), users);
-        final Map<ResultType, Integer> expected = new HashMap<>(Map.ofEntries(
-                Map.entry(ResultType.LOSE, 1),
-                Map.entry(ResultType.WIN, 1),
-                Map.entry(ResultType.DRAW, 1)
+        PlayerResult playerResult = PlayerResult.create(dealer.calculateScore(), users);
+        final Map<GameResult, Integer> expected = new HashMap<>(Map.ofEntries(
+                Map.entry(GameResult.LOSE, 1),
+                Map.entry(GameResult.WIN, 1),
+                Map.entry(GameResult.DRAW, 1)
         ));
 
-        final Map<ResultType, Integer> actual = playerGameResult.getDealerResultCount();
+        final Map<GameResult, Integer> actual = playerResult.getDealerResultCount();
 
         assertThat(actual).isEqualTo(expected);
     }

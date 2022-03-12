@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-public enum ResultType {
+public enum GameResult {
 
     WIN("승"),
     LOSE("패"),
@@ -8,11 +8,11 @@ public enum ResultType {
 
     private final String value;
 
-    ResultType(String value) {
+    GameResult(String value) {
         this.value = value;
     }
 
-    public static ResultType findUserResult(int userScore, int dealerScore) {
+    public static GameResult findUserResult(int userScore, int dealerScore) {
         if (userScore > 21 && dealerScore > 21) {
             return DRAW;
         }
@@ -25,7 +25,7 @@ public enum ResultType {
         return compareScore(userScore, dealerScore);
     }
 
-    private static ResultType compareScore(int myScore, int otherScore) {
+    private static GameResult compareScore(int myScore, int otherScore) {
         if (myScore > otherScore) {
             return WIN;
         }
@@ -35,7 +35,7 @@ public enum ResultType {
         return DRAW;
     }
 
-    public static ResultType findDealerResult(ResultType userResult) {
+    public static GameResult findDealerResult(GameResult userResult) {
         if (userResult == WIN) {
             return LOSE;
         }

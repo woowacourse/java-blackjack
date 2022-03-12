@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.ResultType;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
@@ -56,8 +56,8 @@ public class OutputView {
         System.out.printf("%s카드: %s - 결과: %d%n", name, printCards(cards), cardScore);
     }
 
-    public static void printGameResult(final Map<ResultType, Integer> dealerResultCount,
-            final Map<String, ResultType> userResults) {
+    public static void printGameResult(final Map<GameResult, Integer> dealerResultCount,
+            final Map<String, GameResult> userResults) {
         System.out.println("\n## 최종 승패");
 
         System.out.println(printDealerResult(dealerResultCount));
@@ -67,9 +67,9 @@ public class OutputView {
         }
     }
 
-    private static String printDealerResult(Map<ResultType, Integer> dealerResultCount) {
+    private static String printDealerResult(Map<GameResult, Integer> dealerResultCount) {
         StringBuilder stringBuilder = new StringBuilder("딜러: ");
-        Arrays.stream(ResultType.values()).forEach(resultType -> {
+        Arrays.stream(GameResult.values()).forEach(resultType -> {
             int count = dealerResultCount.get(resultType);
             if (count > 0) {
                 stringBuilder.append(count).append(resultType.getValue()).append(" ");
