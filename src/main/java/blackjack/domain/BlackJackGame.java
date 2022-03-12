@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.User;
+import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -15,23 +15,23 @@ public class BlackJackGame {
     private static final CardDeck CARD_DECK = CardDeckGenerator.createCardDeckByCardNumber();
 
     public void run() {
-        List<User> users = initializeUsers();
+        List<Player> players = initializeUsers();
         Dealer dealer = initializeDealer();
 
-        OutputView.printPlayerInitialCards(users, dealer);
+        OutputView.printPlayerInitialCards(players, dealer);
 
-        playGame(users, dealer);
+        playGame(players, dealer);
 
-        PlayerResult playerResult = PlayerResult.create(dealer.calculateScore(), users);
+        PlayerResult playerResult = PlayerResult.create(dealer.calculateScore(), players);
         OutputView.printGameResult(playerResult.getDealerResultCount(), playerResult.getUserResults());
     }
 
-    private List<User> initializeUsers() {
+    private List<Player> initializeUsers() {
         List<String> userNames = InputView.requestUserNamesToPlayGame();
         checkUserCountToPlayGame(userNames.size());
         checkDuplicateUserName(userNames);
         return userNames.stream()
-                .map(name -> new User(name, CARD_DECK.drawInitialCards()))
+                .map(name -> new Player(name, CARD_DECK.drawInitialCards()))
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -55,34 +55,34 @@ public class BlackJackGame {
         }
     }
 
-    private void playGame(final List<User> users, final Dealer dealer) {
-        for (User user : users) {
-            playUser(user);
+    private void playGame(final List<Player> players, final Dealer dealer) {
+        for (Player player : players) {
+            playUser(player);
         }
         playDealer(dealer);
 
-        OutputView.printAllPlayerCardStatus(users, dealer);
+        OutputView.printAllPlayerCardStatus(players, dealer);
     }
 
-    private void playUser(User user) {
-        if (user.isPossibleToReceiveCard()) {
-            DrawStatus drawStatus = requestDrawStatus(user);
+    private void playUser(Player player) {
+        if (player.isPossibleToReceiveCard()) {
+            DrawStatus drawStatus = requestDrawStatus(player);
             if (drawStatus == DrawStatus.YES) {
-                user.receiveCard(CARD_DECK.drawCard());
-                OutputView.printPlayerCardStatus(user.getName(), user.getCards().getCards());
-                playUser(user);
+                player.receiveCard(CARD_DECK.drawCard());
+                OutputView.printPlayerCardStatus(player.getName(), player.getCards().getCards());
+                playUser(player);
             } else {
-                OutputView.printPlayerCardStatus(user.getName(), user.getCards().getCards());
+                OutputView.printPlayerCardStatus(player.getName(), player.getCards().getCards());
             }
         }
     }
 
-    private DrawStatus requestDrawStatus(User user) {
+    private DrawStatus requestDrawStatus(Player player) {
         try {
-            return DrawStatus.from(InputView.requestDrawCardResponse(user.getName()));
+            return DrawStatus.from(InputView.requestDrawCardResponse(player.getName()));
         } catch (IllegalArgumentException e) {
             OutputView.printException(e);
-            return requestDrawStatus(user);
+            return requestDrawStatus(player);
         }
     }
 

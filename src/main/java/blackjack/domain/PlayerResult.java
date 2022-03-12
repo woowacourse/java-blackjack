@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.player.User;
+import blackjack.domain.player.Player;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -16,22 +16,22 @@ public class PlayerResult {
         this.dealerResultCount = dealerResultCount;
     }
 
-    public static PlayerResult create(int dealerScore, List<User> users) {
+    public static PlayerResult create(int dealerScore, List<Player> players) {
         Map<String, GameResult> userResults = new HashMap<>();
         Map<GameResult, Integer> dealerResultCount = initializeDealerResultCount();
 
-        for (User user : users) {
-            GameResult userResult = user.findResult(dealerScore);
+        for (Player player : players) {
+            GameResult userResult = player.findResult(dealerScore);
 
-            addUserResult(userResults, user, userResult);
+            addUserResult(userResults, player, userResult);
             increaseDealerResultCountByUserResult(dealerResultCount, GameResult.findDealerResult(userResult));
         }
 
         return new PlayerResult(userResults, dealerResultCount);
     }
 
-    private static void addUserResult(Map<String, GameResult> userResults, User user, GameResult userResult) {
-        userResults.put(user.getName(), userResult);
+    private static void addUserResult(Map<String, GameResult> userResults, Player player, GameResult userResult) {
+        userResults.put(player.getName(), userResult);
     }
 
     private static void increaseDealerResultCountByUserResult(Map<GameResult, Integer> dealerResultCount,

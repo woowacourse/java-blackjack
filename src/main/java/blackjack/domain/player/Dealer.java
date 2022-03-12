@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
 
     private static final int MAX_SCORE_TO_PICK = 16;
     private static final int FIRST_OPEN_COUNT = 1;

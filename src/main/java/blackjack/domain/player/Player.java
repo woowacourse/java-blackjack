@@ -1,47 +1,30 @@
 package blackjack.domain.player;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
 
-public abstract class Player {
+public class Player extends Participant {
 
-    private final String name;
-    protected final Cards cards;
+    private static final int MAX_SCORE_TO_PICK = 21;
+    private static final int FIRST_OPEN_COUNT = 2;
 
     public Player(String name, Cards cards) {
-        checkEmptyName(name);
-        this.name = name;
-        this.cards = cards;
+        super(name, cards);
     }
 
-    private void checkEmptyName(String name) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("이름은 공백이 될 수 없습니다.");
-        }
+    public GameResult findResult(int dealerScore) {
+        return GameResult.findUserResult(calculateScore(), dealerScore);
     }
 
-    public void receiveCard(Card card) {
-        cards.addCard(card);
+    @Override
+    public List<Card> openFirstCards() {
+        return cards.getCards().subList(0, FIRST_OPEN_COUNT);
     }
 
-    public int calculateScore() {
-        return cards.calculateScore();
+    @Override
+    public boolean isPossibleToReceiveCard() {
+        return cards.calculateScore() <= MAX_SCORE_TO_PICK;
     }
-
-    public List<Card> openAllOfCards() {
-        return cards.getCards();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Cards getCards() {
-        return cards;
-    }
-
-    public abstract List<Card> openFirstCards();
-
-    public abstract boolean isPossibleToReceiveCard();
 }

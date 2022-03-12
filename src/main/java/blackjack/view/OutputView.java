@@ -4,7 +4,6 @@ import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +15,17 @@ public class OutputView {
         System.out.println(e.getMessage());
     }
 
-    public static void printPlayerInitialCards(final List<User> users, final Dealer dealer) {
-        System.out.printf("%n%s와 %s에게 2장의 카드를 나누었습니다.", dealer.getName(), getUserNames(users));
+    public static void printPlayerInitialCards(final List<Player> players, final Dealer dealer) {
+        System.out.printf("%n%s와 %s에게 2장의 카드를 나누었습니다.", dealer.getName(), getUserNames(players));
         printPlayerCardStatus(dealer.getName(), dealer.openFirstCards());
-        for (User user : users) {
-            printPlayerCardStatus(user.getName(), user.openFirstCards());
+        for (Player player : players) {
+            printPlayerCardStatus(player.getName(), player.openFirstCards());
         }
         System.out.println();
     }
 
-    public static String getUserNames(final List<User> users) {
-        return users.stream()
+    public static String getUserNames(final List<Player> players) {
+        return players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
     }
@@ -45,10 +44,10 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public static void printAllPlayerCardStatus(List<User> users, Dealer dealer) {
+    public static void printAllPlayerCardStatus(List<Player> players, Dealer dealer) {
         printPlayerCardStatusAndScore(dealer.getName(), dealer.getCards().getCards(), dealer.calculateScore());
-        for (User user : users) {
-            printPlayerCardStatusAndScore(user.getName(), user.getCards().getCards(), user.calculateScore());
+        for (Player player : players) {
+            printPlayerCardStatusAndScore(player.getName(), player.getCards().getCards(), player.calculateScore());
         }
     }
 

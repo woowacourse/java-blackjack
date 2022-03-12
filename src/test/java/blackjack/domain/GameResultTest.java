@@ -10,9 +10,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class GameResultTest {
 
-    @ParameterizedTest(name = "유저의 점수가 {1} 이고 딜러의 점수가 {2} 이면, 유저의 결과는 {0} 이다.")
+    @ParameterizedTest(name = "플레이어의 점수가 {1} 이고 딜러의 점수가 {2} 이면, 유저의 결과는 {0} 이다.")
     @MethodSource("provideScoreAndResult")
-    @DisplayName("유저의 승무패를 계산한다.")
+    @DisplayName("플레이어의 승무패를 계산한다.")
     void findUserResult(GameResult gameResult, int userScore, int dealerScore) {
         final GameResult actual = GameResult.findUserResult(userScore, dealerScore);
 
@@ -31,7 +31,7 @@ class GameResultTest {
         );
     }
 
-    @ParameterizedTest(name = "유저의 결과가 {0} 이라면, 딜러의 결과는 {1} 이다.")
+    @ParameterizedTest(name = "플레이어의 결과가 {0} 이라면, 딜러의 결과는 {1} 이다.")
     @MethodSource("provideResultsOfUserAndDealer")
     @DisplayName("딜러의 결과를 계산한다.")
     void findDealerResult(GameResult userResult, GameResult dealerResult) {

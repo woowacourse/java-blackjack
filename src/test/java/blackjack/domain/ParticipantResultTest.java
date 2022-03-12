@@ -7,7 +7,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.User;
+import blackjack.domain.player.Player;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,10 +17,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayerResultTest {
+public class ParticipantResultTest {
 
     private Dealer dealer;
-    private List<User> users;
+    private List<Player> players;
 
     @BeforeEach
     void setUpPlayer() {
@@ -29,17 +29,17 @@ public class PlayerResultTest {
                 new Card(CardPattern.DIAMOND, CardNumber.KING)
         ));
 
-        users = Arrays.asList(
-                new User("slow", createCards(
+        players = Arrays.asList(
+                new Player("slow", createCards(
                         new Card(CardPattern.SPADE, CardNumber.KING),
                         new Card(CardPattern.DIAMOND, CardNumber.QUEEN),
                         new Card(CardPattern.DIAMOND, CardNumber.ACE)
                 )),
-                new User("jason", createCards(
+                new Player("jason", createCards(
                         new Card(CardPattern.SPADE, CardNumber.TEN),
                         new Card(CardPattern.HEART, CardNumber.TEN)
                 )),
-                new User("pobi", createCards(
+                new Player("pobi", createCards(
                         new Card(CardPattern.CLOVER, CardNumber.TEN),
                         new Card(CardPattern.HEART, CardNumber.FIVE)
                 ))
@@ -51,9 +51,9 @@ public class PlayerResultTest {
     }
 
     @Test
-    @DisplayName("유저 게임결과를 확인한다.")
+    @DisplayName("플레이어 게임결과를 확인한다.")
     void checkUserGameResult() {
-        PlayerResult playerResult = PlayerResult.create(dealer.calculateScore(), users);
+        PlayerResult playerResult = PlayerResult.create(dealer.calculateScore(), players);
         final Map<String, GameResult> expected = new HashMap<>(Map.ofEntries(
                 Map.entry("slow", GameResult.WIN),
                 Map.entry("jason", GameResult.DRAW),
@@ -68,7 +68,7 @@ public class PlayerResultTest {
     @Test
     @DisplayName("딜러 게임결과를 확인한다.")
     void checkDealerGameResult() {
-        PlayerResult playerResult = PlayerResult.create(dealer.calculateScore(), users);
+        PlayerResult playerResult = PlayerResult.create(dealer.calculateScore(), players);
         final Map<GameResult, Integer> expected = new HashMap<>(Map.ofEntries(
                 Map.entry(GameResult.LOSE, 1),
                 Map.entry(GameResult.WIN, 1),

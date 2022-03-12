@@ -13,35 +13,35 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class UserTest {
+class PlayerTest {
 
     @Test
-    @DisplayName("유저를 정상 생성한다.")
+    @DisplayName("플레이어를 정상 생성한다.")
     void createUser() {
-        assertThatCode(() -> new User("slow", new Cards(firstDrawTwoCards())))
+        assertThatCode(() -> new Player("slow", new Cards(firstDrawTwoCards())))
                 .doesNotThrowAnyException();
     }
 
     @Test
-    @DisplayName("유저는 처음 받은 카드 두 장을 모두 보여준다.")
+    @DisplayName("플레이어는 처음 받은 카드 두 장을 모두 보여준다.")
     void openFirstCards() {
         final List<Card> firstDrawTwoCards = firstDrawTwoCards();
-        User user = new User("slow", new Cards(firstDrawTwoCards));
+        Player player = new Player("slow", new Cards(firstDrawTwoCards));
 
-        final List<Card> actual = user.openFirstCards();
+        final List<Card> actual = player.openFirstCards();
 
         assertThat(actual).isEqualTo(firstDrawTwoCards);
     }
 
     @Test
-    @DisplayName("유저는 카드를 받아서 본인의 카드 리스트에 추가할 수 있다.")
+    @DisplayName("플레이어는 카드를 받아서 본인의 카드 리스트에 추가할 수 있다.")
     void receiveCard() {
         Cards cards = new Cards(firstDrawTwoCards());
-        User user = new User("slow", cards);
+        Player player = new Player("slow", cards);
         final int expected = 3;
 
-        user.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SIX));
-        final int actual = user.cards.getCards().size();
+        player.receiveCard(new Card(CardPattern.DIAMOND, CardNumber.SIX));
+        final int actual = player.cards.getCards().size();
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -62,42 +62,42 @@ class UserTest {
                 new Card(CardPattern.DIAMOND, CardNumber.TWO),
                 new Card(CardPattern.CLOVER, CardNumber.TWO)
         ));
-        User user = new User("slow", cards);
+        Player player = new Player("slow", cards);
         final List<Card> expected = cards.getCards();
 
-        final List<Card> actual = user.openAllOfCards();
+        final List<Card> actual = player.openAllOfCards();
 
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
-    @DisplayName("유저는 카드의 총합이 21이하일 경우, 카드를 더 받을 수 있다.")
+    @DisplayName("플레이어는 카드의 총합이 21이하일 경우, 카드를 더 받을 수 있다.")
     void possibleToReceivedCard() {
         Cards cards = new Cards(Arrays.asList(
                 new Card(CardPattern.HEART, CardNumber.TEN),
                 new Card(CardPattern.SPADE, CardNumber.TEN),
                 new Card(CardPattern.SPADE, CardNumber.ACE)
         ));
-        User user = new User("slow", cards);
+        Player player = new Player("slow", cards);
         final boolean expected = true;
 
-        final boolean actual = user.isPossibleToReceiveCard();
+        final boolean actual = player.isPossibleToReceiveCard();
 
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
-    @DisplayName("유저는 카드의 총합이 21을 초과할 경우, 카드를 더 받을 수 없다.")
+    @DisplayName("플레이어는 카드의 총합이 21을 초과할 경우, 카드를 더 받을 수 없다.")
     void impossibleToReceivedCard() {
         Cards cards = new Cards(Arrays.asList(
                 new Card(CardPattern.HEART, CardNumber.TEN),
                 new Card(CardPattern.SPADE, CardNumber.TEN),
                 new Card(CardPattern.SPADE, CardNumber.TWO)
         ));
-        User user = new User("slow", cards);
+        Player player = new Player("slow", cards);
         final boolean expected = false;
 
-        final boolean actual = user.isPossibleToReceiveCard();
+        final boolean actual = player.isPossibleToReceiveCard();
 
         assertThat(actual).isEqualTo(expected);
     }
