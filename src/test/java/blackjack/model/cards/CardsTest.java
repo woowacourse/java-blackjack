@@ -69,7 +69,7 @@ public class CardsTest {
     @DisplayName("공개 카드 반환")
     void openCard() {
         Cards cards = Cards.of(ACE, JACK);
-        Cards openCards = cards.openCard(2);
+        Cards openCards = cards.openedCards(2);
         assertThat(openCards).hasSize(2);
         assertThat(openCards).contains(ACE, JACK);
     }

@@ -27,7 +27,7 @@ public class Player {
     }
 
     public Cards openCards() {
-        return Cards.toUnmodifiable(cards.openCard(OPEN_CARD_COUNT));
+        return Cards.toUnmodifiable(cards.openedCards(OPEN_CARD_COUNT));
     }
 
     public final Cards cards() {

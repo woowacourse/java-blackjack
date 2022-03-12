@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-final class OwnCards implements Cards{
+final class HandCards implements Cards{
 
     private final List<Card> cards;
 
-    OwnCards(Card card1, Card card2, Card... cards) {
+    HandCards(Card card1, Card card2, Card... cards) {
         this.cards = concat(concat(card1, card2), cards)
             .collect(Collectors.toList());
     }
 
-    private OwnCards(List<Card> cards) {
+    private HandCards(List<Card> cards) {
         this.cards = cards;
     }
 
@@ -33,8 +33,8 @@ final class OwnCards implements Cards{
     }
 
     @Override
-    public Cards openCard(int count) {
-        return Cards.toUnmodifiable(new OwnCards(cards.subList(0, count)));
+    public Cards openedCards(int count) {
+        return Cards.toUnmodifiable(new HandCards(cards.subList(0, count)));
     }
 
     @Override
