@@ -4,7 +4,7 @@ public class BlackjackGame {
 
     private final Players players;
     private final Dealer dealer = new Dealer();
-    private final Deck deck = new Deck();
+    private final Drawable deck = new Deck();
 
     public BlackjackGame(Players players) {
         this.players = players;
@@ -37,7 +37,7 @@ public class BlackjackGame {
         return dealer;
     }
 
-    public Deck getDeck() {
+    public Drawable getDeck() {
         return deck;
     }
 }

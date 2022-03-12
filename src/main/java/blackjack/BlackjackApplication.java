@@ -1,12 +1,14 @@
 package blackjack;
 
-import static blackjack.view.OutputView.*;
+import static blackjack.view.OutputView.printDealerDrawMessage;
+import static blackjack.view.OutputView.printInitGameMessage;
+import static blackjack.view.OutputView.printOpenCard;
+import static blackjack.view.OutputView.printPlayerCards;
+import static blackjack.view.OutputView.printPlayersResult;
+import static blackjack.view.OutputView.printResult;
 
 import blackjack.domain.BlackjackGame;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import blackjack.domain.Deck;
+import blackjack.domain.Drawable;
 import blackjack.domain.Name;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
@@ -14,6 +16,8 @@ import blackjack.domain.ScoreResult;
 import blackjack.domain.Selection;
 import blackjack.dto.PlayerDto;
 import blackjack.view.InputView;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlackjackApplication {
 
@@ -25,17 +29,6 @@ public class BlackjackApplication {
         endGame(blackjackGame);
     }
 
-    private static void endGame(BlackjackGame blackjackGame) {
-        printPlayersResult(toDto(blackjackGame.getPlayers()), toDto(blackjackGame.getDealer()));
-        ScoreResult result = blackjackGame.makeResults();
-        printResult(result);
-    }
-
-    private static void takeTurns(BlackjackGame blackjackGame) {
-        takeTurnsPlayers(blackjackGame.getPlayers(), blackjackGame.getDeck());
-        takeTurnDealer(blackjackGame);
-    }
-
     private static void startSetting(BlackjackGame blackjackGame) {
         blackjackGame.drawCardTwice();
 
@@ -45,13 +38,24 @@ public class BlackjackApplication {
         printOpenCard(playerDtos, dealerDto);
     }
 
-    private static void takeTurnsPlayers(Players players, Deck deck) {
+    private static void takeTurns(BlackjackGame blackjackGame) {
+        takeTurnsPlayers(blackjackGame.getPlayers(), blackjackGame.getDeck());
+        takeTurnDealer(blackjackGame);
+    }
+
+    private static void endGame(BlackjackGame blackjackGame) {
+        printPlayersResult(toDto(blackjackGame.getPlayers()), toDto(blackjackGame.getDealer()));
+        ScoreResult result = blackjackGame.makeResults();
+        printResult(result);
+    }
+
+    private static void takeTurnsPlayers(Players players, Drawable deck) {
         for (Player player : players.getValue()) {
             takeTurn(player, deck);
         }
     }
 
-    private static void takeTurn(Player player, Deck deck) {
+    private static void takeTurn(Player player, Drawable deck) {
         Selection selection = Selection.YES;
         while (selection == Selection.YES && !player.isBust()) {
             selection = requestSelection(player);
@@ -75,7 +79,7 @@ public class BlackjackApplication {
         }
     }
 
-    private static void draw(Player player, Deck deck, Selection selection) {
+    private static void draw(Player player, Drawable deck, Selection selection) {
         if (selection == Selection.YES) {
             player.drawCard(deck);
         }
