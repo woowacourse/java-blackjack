@@ -16,7 +16,7 @@ public class Person {
 	}
 
 	private void validateName(String name) {
-		if(name.isEmpty() || name.isBlank()) {
+		if (name.isEmpty() || name.isBlank()) {
 			throw new IllegalArgumentException(NAME_ERROR);
 		}
 	}
@@ -29,6 +29,10 @@ public class Person {
 		return myCards.stream()
 			.mapToInt(Card::getNumber)
 			.sum();
+	}
+
+	public boolean isBurst() {
+		return score() > 21;
 	}
 
 	public List<Card> getMyCards() {
