@@ -2,11 +2,8 @@ package blackjack.domain.human;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.GameResult;
 
 public class Player extends Human {
-
-    private static final int AVAILABLE_POINT_FOR_ADD_CARD = 21;
 
     private final Name name;
     private final Cards cards;
@@ -22,7 +19,7 @@ public class Player extends Human {
 
     @Override
     public boolean isOneMoreCard() {
-        return cards.getPoint() < AVAILABLE_POINT_FOR_ADD_CARD;
+        return isOverThanMaxPoint();
     }
 
     @Override

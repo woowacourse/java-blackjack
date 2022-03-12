@@ -10,7 +10,12 @@
     - GameController 내의 FIRST_QUESTION_FLAG
 - [ ] GameResult 내의 `WIN`을 나타내는 문자열은 어느 영역의 관심사인가
     - 다른 언어권에게 제공해야한다면 어떻게 배워야할까?
-- [ ] `MAX_POINT`라는 상수가 여러 곳에 선언되어 있다.(최대 점수가 21의 의미하는 숫자로 사용함.)
+- [x] `MAX_POINT`라는 상수가 여러 곳에 선언되어 있다.(최대 점수가 21의 의미하는 숫자로 사용함.)
+  - 사용 클래스
+    - Cards : MAX_POINT
+    - Player : AVAILABLE_POINT_FOR_ADD_CARD
+    - Statistic : MAX_POINT
+  - `Cards` 클래스 내에서 현재 포인트가 MAX_POINT(21)이 넘는지 계산하는 함수 `isOverThanMaxPoint()`를 구현하여 중복 제거 
 - [ ] `Statistic` 클래스에서 팩터리 메서드 외의 필드 및 멤버 함수도 static으로 설정한 이유
 - [ ] `Card` 구현 시에 캐싱 적용
 - [ ] `Card`에서 toString의 구현이 바뀌게 된다면 View의 출력에 미치는 영향

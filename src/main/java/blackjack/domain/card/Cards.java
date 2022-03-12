@@ -29,6 +29,10 @@ public class Cards {
         return cards.size();
     }
 
+    public boolean isOverThanMaxPoint() {
+        return getPoint() > MAX_POINT;
+    }
+
     public int getPoint() {
         int point = 0;
         for (Card card : cards) {

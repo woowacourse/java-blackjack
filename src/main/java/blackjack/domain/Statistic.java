@@ -8,8 +8,6 @@ import java.util.Map;
 
 public class Statistic {
 
-    private static final int MAX_POINT = 21;
-
     private static Map<Player, GameResult> playerResult;
 
     private Statistic() {
@@ -22,7 +20,7 @@ public class Statistic {
     }
 
     private static void calculate(Dealer dealer, Players players) {
-        if (dealer.getPoint() > MAX_POINT) {
+        if (dealer.isOverThanMaxPoint()) {
             calculateDealerBurst(players);
             return;
         }
@@ -31,14 +29,13 @@ public class Statistic {
 
     private static void calculateDealerBurst(Players players) {
         for (Player player : players.getPlayers()) {
-            int point = player.getPoint();
-            GameResult gameResult = getResultAtBurst(point);
+            GameResult gameResult = getResultAtBurst(player);
             playerResult.put(player, gameResult);
         }
     }
 
-    private static GameResult getResultAtBurst(int point) {
-        if (point <= MAX_POINT) {
+    private static GameResult getResultAtBurst(Player player) {
+        if (!player.isOverThanMaxPoint()) {
             return GameResult.WIN;
         }
         return GameResult.LOSE;
@@ -54,7 +51,7 @@ public class Statistic {
 
     private static GameResult getResultAtNotBurst(int dealerPoint, Player player) {
         int playerPoint = player.getPoint();
-        if (playerPoint > MAX_POINT || dealerPoint > playerPoint) {
+        if (player.isOverThanMaxPoint() || dealerPoint > playerPoint) {
             return GameResult.LOSE;
         }
         if (dealerPoint == playerPoint) {
