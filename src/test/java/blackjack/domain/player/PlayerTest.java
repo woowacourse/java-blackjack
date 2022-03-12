@@ -31,7 +31,7 @@ public class PlayerTest {
     @DisplayName("현재 상태가 종료되었는데 상태를 변경하면 예외가 발생해야 한다.")
     void changeGameStatusExceptionByFinished() {
         final Player player = new Player("player", GameStatus.FINISHED);
-        assertThatThrownBy(() -> player.changeGameStatus())
+        assertThatThrownBy(() -> player.changeStatusFinished())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("이미 종료된 게임은 종료요청을 할 수 없습니다.");
     }

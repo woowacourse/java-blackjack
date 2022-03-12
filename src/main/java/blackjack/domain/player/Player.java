@@ -21,7 +21,12 @@ public class Player {
         }
     }
 
-    public void changeGameStatus() {
+    public void changeStatusFinished() {
+        validateFinishedStatus();
+        gameStatus = GameStatus.FINISHED;
+    }
+
+    private void validateFinishedStatus() {
         if (gameStatus.isFinishedGame()) {
             throw new IllegalStateException("이미 종료된 게임은 종료요청을 할 수 없습니다.");
         }
