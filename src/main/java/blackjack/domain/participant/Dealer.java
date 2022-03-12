@@ -32,6 +32,11 @@ public class Dealer extends AbstractParticipant {
     }
 
     @Override
+    public void changeFinishStatus() {
+        throw new IllegalStateException("딜러는 직접 게임을 종료할 권한이 없습니다.");
+    }
+
+    @Override
     public boolean isDealer() {
         return true;
     }

@@ -32,6 +32,16 @@ class DealerTest {
                 .hasMessage("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
     }
 
+    @Test
+    @DisplayName("딜러가 게임을 직접 종료하려하면 예외가 발생해야 한다.")
+    void changeFinishStatusException() {
+        final List<Card> cards = createCards(Card.of(SPADE, TWO), Card.of(SPADE, SEVEN));
+        final Participant dealer = Dealer.createNewDealer(cards);
+        assertThatThrownBy(() -> dealer.changeFinishStatus())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("딜러는 직접 게임을 종료할 권한이 없습니다.");
+    }
+
     @ParameterizedTest(name = "{index} : {1}")
     @MethodSource("createCardHit")
     @DisplayName("딜러의 hit 가능여부를 반환할 수 있다.")
