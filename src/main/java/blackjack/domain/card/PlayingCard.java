@@ -18,10 +18,6 @@ public class PlayingCard {
         return this.denomination.equals(Denomination.ACE);
     }
 
-    public boolean isOne() {
-        return this.denomination.equals(Denomination.ONE);
-    }
-
     public Suit getSuit() {
         return suit;
     }
@@ -32,10 +28,6 @@ public class PlayingCard {
 
     public String getCardName() {
         return this.denomination.getRawScore() + this.suit.getName();
-    }
-
-    public int getScore() {
-        return denomination.getScore();
     }
 
     @Override

@@ -23,6 +23,7 @@ public class OutputView {
     private static final String DEALER_NAME = "딜러";
     private static final String BLANK_DELIMITER = " ";
     private static final String NEWLINE_DELIMITER = "\n";
+    private static final String BURST = "BURST";
 
     public String getCardNames(List<PlayingCard> playingCards) {
         return playingCards.stream()
@@ -63,7 +64,14 @@ public class OutputView {
 
     private String getCardAndScoreMessage(final PlayerDto playerDto) {
         return playerDto.getName() + PREFIX_CARD + getCardNames(playerDto.getPlayingCards()) + PREFIX_RESULT
-            + playerDto.getScore();
+            + getScoreOrBurst(playerDto);
+    }
+
+    private String getScoreOrBurst(final PlayerDto playerDto) {
+        if (playerDto.getScore() > 21) {
+            return BURST;
+        }
+        return String.valueOf(playerDto.getScore());
     }
 
     public void printBurst(final PlayerDto playerDto) {

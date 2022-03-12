@@ -34,5 +34,6 @@ public class CardDeckTest {
         final PlayingCard poppedCard = cardDeck.pop();
 
         assertThat(poppedCard).isEqualTo(new PlayingCard(Suit.CLUBS, Denomination.SEVEN));
+        System.out.println();
     }
 }
