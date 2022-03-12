@@ -22,7 +22,7 @@ public class Participants {
     private int currentTurnIndex;
 
     public Participants(final List<Participant> participants) {
-        Objects.requireNonNull(participants, "players는 null로 생성할 수 없습니다.");
+        Objects.requireNonNull(participants, "participants는 null로 생성할 수 없습니다.");
         this.participants = new ArrayList<>(participants);
         validateDuplicationPlayers(this.participants);
     }

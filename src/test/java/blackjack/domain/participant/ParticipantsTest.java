@@ -23,7 +23,7 @@ class ParticipantsTest {
     void createExceptionByNull() {
         assertThatThrownBy(() -> new Participants(null))
                 .isInstanceOf(NullPointerException.class)
-                .hasMessage("players는 null로 생성할 수 없습니다.");
+                .hasMessage("participants는 null로 생성할 수 없습니다.");
     }
 
     @Test
