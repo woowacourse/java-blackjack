@@ -74,16 +74,16 @@ public class CardsTest {
     }
 
     @ParameterizedTest
-    @MethodSource("cardsAndScore")
-    @DisplayName("카드의 점수를 계산한다.")
-    void calculateScore(List<Card> receivedCards, Card card, int score) {
+    @MethodSource("cardOverMaxScore")
+    @DisplayName("카드의 점수가 21을 넘을 수 있다.")
+    void calculateOverMaxScore(List<Card> receivedCards, Card card, int score) {
         Cards cards = new Cards(receivedCards);
         cards.addCard(card);
 
         Assertions.assertThat(cards.calculateFinalScore()).isEqualTo(score);
     }
 
-    private static Stream<Arguments> cardsAndScore() {
+    private static Stream<Arguments> cardOverMaxScore() {
         return Stream.of(
                 Arguments.of(List.of(
                         new Card(Type.SPADE, Score.EIGHT),
@@ -92,19 +92,36 @@ public class CardsTest {
                 Arguments.of(List.of(
                         new Card(Type.SPADE, Score.EIGHT),
                         new Card(Type.HEART, Score.NINE)
-                ), new Card(Type.SPADE, Score.EIGHT), 25),
-                Arguments.of(List.of(
-                        new Card(Type.SPADE, Score.ACE),
-                        new Card(Type.HEART, Score.ACE)
-                ), new Card(Type.HEART, Score.NINE), 21),
-                Arguments.of(List.of(
-                        new Card(Type.SPADE, Score.ACE),
-                        new Card(Type.HEART, Score.JACK)
-                ), new Card(Type.HEART, Score.ACE), 12),
-                Arguments.of(List.of(
-                        new Card(Type.SPADE, Score.TWO),
-                        new Card(Type.HEART, Score.EIGHT)
-                ), new Card(Type.HEART, Score.ACE), 21)
+                ), new Card(Type.SPADE, Score.EIGHT), 25)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("cardOverMaxScore")
+    @DisplayName("카드의 점수가 21아래 이다.")
+    void calculateUnderMaxScore(List<Card> receivedCards, Card card, int score) {
+        Cards cards = new Cards(receivedCards);
+        cards.addCard(card);
+
+        Assertions.assertThat(cards.calculateFinalScore()).isEqualTo(score);
+    }
+
+    private static Stream<Arguments> cardUnderMaxScore() {
+        return Stream.of(
+                Arguments.of(
+                        Arguments.of(List.of(
+                                new Card(Type.SPADE, Score.ACE),
+                                new Card(Type.HEART, Score.ACE)
+                        ), new Card(Type.HEART, Score.NINE), 21),
+                        Arguments.of(List.of(
+                                new Card(Type.SPADE, Score.ACE),
+                                new Card(Type.HEART, Score.JACK)
+                        ), new Card(Type.HEART, Score.ACE), 12),
+                        Arguments.of(List.of(
+                                new Card(Type.SPADE, Score.TWO),
+                                new Card(Type.HEART, Score.EIGHT)
+                        ), new Card(Type.HEART, Score.ACE), 21)
+                )
         );
     }
 }
