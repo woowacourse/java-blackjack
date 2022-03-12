@@ -4,7 +4,6 @@ import static blackjack.domain.Dealer.DEALER_LIMIT_POINT;
 import static blackjack.domain.Guest.GUEST_LIMIT_POINT;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.Dealer;
 import blackjack.domain.GameResponse;
 import blackjack.domain.Hit;
 import blackjack.domain.Player;

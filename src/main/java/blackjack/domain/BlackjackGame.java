@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -8,23 +7,15 @@ public class BlackjackGame {
 
     private static final String CANNOT_FIND_DEALER_MESSAGE = "딜러를 찾을 수 없습니다.";
     private final Cards cards;
-    private final List<Player> blackjackPlayers;
+    private final Participants blackjackPlayers;
 
     public BlackjackGame(List<String> playerNames) {
         this.cards = new Cards(new CardShuffleMachine());
-        this.blackjackPlayers = new ArrayList<>();
-        blackjackPlayers.add(new Dealer());
-        for (String playerName : playerNames) {
-            blackjackPlayers.add(new Guest(playerName));
-        }
+        this.blackjackPlayers = new Participants(playerNames);
     }
 
     public List<Player> initGames() {
-        for (Player blackjackPlayer : blackjackPlayers) {
-            blackjackPlayer.addCard(cards.assignCard());
-            blackjackPlayer.addCard(cards.assignCard());
-        }
-        return blackjackPlayers;
+        return blackjackPlayers.startWithTwoCards(cards);
     }
 
     public void addCard(Player player) {
