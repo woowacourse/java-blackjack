@@ -1,7 +1,6 @@
 package domain;
 
-import domain.player.Dealer;
-import domain.player.Gambler;
+import domain.player.Player;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
@@ -12,15 +11,15 @@ public enum MatchResult {
     DRAW("무", (dealer, gambler) -> !gambler.isBust() && dealer.getPlayResult() == gambler.getPlayResult()),
     NO_MATCH("판정오류", (dealer, gambler) -> false);
 
-    private final BiPredicate<Dealer, Gambler> judge;
+    private final BiPredicate<Player, Player> judge;
     private final String result;
 
-    MatchResult(String result, BiPredicate<Dealer, Gambler> judge) {
+    MatchResult(String result, BiPredicate<Player, Player> judge) {
         this.result = result;
         this.judge = judge;
     }
 
-    public static MatchResult of(Dealer dealer, Gambler gambler) {
+    public static MatchResult of(Player dealer, Player gambler) {
         return Arrays.stream(values())
                 .filter(matchResult -> matchResult.judge.test(dealer, gambler))
                 .findAny()
