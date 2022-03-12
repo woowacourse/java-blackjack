@@ -24,23 +24,23 @@ class DealerTest {
 
     @Test
     @DisplayName("딜러의 카드가 17이상일 때 카드를 추가하면 예외가 발생해야 한다.")
-    void drawExceptionByLimitDealerScore() {
+    void hitExceptionByLimitDealerScore() {
         final List<Card> cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN));
         final Participant dealer = Dealer.createNewDealer(cards);
-        assertThatThrownBy(() -> dealer.draw(Card.of(SPADE, A)))
+        assertThatThrownBy(() -> dealer.hit(Card.of(SPADE, A)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
     }
 
     @ParameterizedTest(name = "{index} : {1}")
-    @MethodSource("createCardDraw")
-    @DisplayName("딜러의 드로우 가능여부를 반환할 수 있다.")
-    void canDraw(final List<Card> cards, final boolean expected) {
+    @MethodSource("createCardHit")
+    @DisplayName("딜러의 hit 가능여부를 반환할 수 있다.")
+    void canHit(final List<Card> cards, final boolean expected) {
         final Participant dealer = Dealer.createNewDealer(cards);
-        assertThat(dealer.canDraw()).isEqualTo(expected);
+        assertThat(dealer.canHit()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> createCardDraw() {
+    private static Stream<Arguments> createCardHit() {
         return Stream.of(
                 Arguments.of(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, SIX)), true),
                 Arguments.of(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)), false)

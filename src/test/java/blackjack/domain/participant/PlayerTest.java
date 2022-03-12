@@ -51,41 +51,41 @@ class PlayerTest {
     }
 
     @Nested
-    @DisplayName("플레이어의 드로우 가능여부를 확인할 수 있다.")
-    class CanDraw {
+    @DisplayName("플레이어의 hit 가능여부를 확인할 수 있다.")
+    class CanHit {
 
         @Test
         @DisplayName("가능한 경우 true를 반환한다.")
-        void canDraw() {
+        void canHit() {
             final Participant player = Player.createNewPlayer("user", cards);
-            assertThat(player.canDraw()).isTrue();
+            assertThat(player.canHit()).isTrue();
         }
 
         @Test
         @DisplayName("불가능한 경우 false를 반환한다.")
-        void cannotDraw() {
+        void cannotHit() {
             final Participant player = Player.createNewPlayer("user", cards);
-            player.draw(Card.of(SPADE, EIGHT));
-            assertThat(player.canDraw()).isFalse();
+            player.hit(Card.of(SPADE, EIGHT));
+            assertThat(player.canHit()).isFalse();
         }
     }
 
     @Test
-    @DisplayName("드로우가 불가능한데, 카드를 받으려 하면 예외를 발생시킨다.")
-    void drawException() {
+    @DisplayName("hit이 불가능한데, 카드를 받으려 하면 예외를 발생시킨다.")
+    void hitException() {
         final Participant player = Player.createNewPlayer("user", cards);
-        player.draw(Card.of(SPADE, EIGHT));
-        assertThatThrownBy(() -> player.draw(Card.of(SPADE, NINE)))
+        player.hit(Card.of(SPADE, EIGHT));
+        assertThatThrownBy(() -> player.hit(Card.of(SPADE, NINE)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
     }
 
     @Test
     @DisplayName("카드를 받을 수 있다.")
-    void draw() {
+    void hit() {
         final Participant player = Player.createNewPlayer("user", cards);
         final Card card = Card.of(SPADE, A);
-        player.draw(card);
+        player.hit(card);
         assertThat(player.cards()).contains(card);
     }
 
@@ -94,7 +94,7 @@ class PlayerTest {
     void changeFinishStatus() {
         final Participant player = Player.createNewPlayer("user", cards);
         player.changeFinishStatus();
-        assertThat(player.canDraw()).isFalse();
+        assertThat(player.canHit()).isFalse();
     }
 
     @Test

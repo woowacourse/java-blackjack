@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface Participant {
 
-    List<Card> firstDrawCard();
+    List<Card> firstCards();
 
-    void draw(final Card card);
+    void hit(final Card card);
 
-    boolean canDraw();
+    boolean canHit();
 
     void changeFinishStatus();
 

@@ -44,13 +44,13 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     @Override
-    public void draw(final Card card) {
-        validateCanDraw();
+    public void hit(final Card card) {
+        validateCanHit();
         cards.addCard(card);
         refreshGameStatus();
     }
 
-    private void validateCanDraw() {
+    private void validateCanHit() {
         if (gameStatus.isFinishedGame()) {
             throw new IllegalStateException("이미 턴이 종료되어 카드를 더 받을 수 없습니다.");
         }
@@ -63,7 +63,7 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     @Override
-    public boolean canDraw() {
+    public boolean canHit() {
         return !gameStatus.isFinishedGame();
     }
 
@@ -79,7 +79,7 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     private void validateFightGame(final Participant participant) {
-        if (this.canDraw() || participant.canDraw()) {
+        if (this.canHit() || participant.canHit()) {
             throw new IllegalStateException("턴이 종료되지 않아 비교할 수 없습니다.");
         }
     }

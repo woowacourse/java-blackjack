@@ -9,7 +9,7 @@ public class Dealer extends AbstractParticipant {
 
     private static final String NAME = "딜러";
     private static final int DEALER_LIMIT_SCORE = 17;
-    private static final int FIRST_DRAW_CARD_SIZE = 1;
+    private static final int FIRST_HIT_CARD_SIZE = 1;
 
     private Dealer(final String name, final Cards cards, final GameStatus gameStatus) {
         super(name, cards, gameStatus);
@@ -27,8 +27,8 @@ public class Dealer extends AbstractParticipant {
     }
 
     @Override
-    public List<Card> firstDrawCard() {
-        return List.copyOf(super.cards().subList(0, FIRST_DRAW_CARD_SIZE));
+    public List<Card> firstCards() {
+        return List.copyOf(super.cards().subList(0, FIRST_HIT_CARD_SIZE));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Dealer extends AbstractParticipant {
     }
 
     private void validateEndTurn() {
-        if (canDraw()) {
+        if (canHit()) {
             throw new IllegalStateException("딜러는 턴이 종료되지 않을 때 모든 카드를 반환할 수 없습니다.");
         }
     }

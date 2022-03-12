@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.domain.BlackJackBoard;
-import blackjack.domain.DrawCommand;
+import blackjack.domain.HitCommand;
 import blackjack.dto.PlayerCards;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -16,7 +16,7 @@ public class BlackJackGame {
     }
 
     public void run() {
-        printFirstDrawCard();
+        printFirstHitCard();
         runAllPlayerTurn();
         printAllResults();
     }
@@ -26,7 +26,7 @@ public class BlackJackGame {
         return BlackJackBoard.createGame(playerNames);
     }
 
-    private void printFirstDrawCard() {
+    private void printFirstHitCard() {
         OutputView.showPlayersFirstCards(blackJackBoard.getDealerFirstCard(), blackJackBoard.getPlayersFirstCards());
     }
 
@@ -39,22 +39,22 @@ public class BlackJackGame {
         if (blackJackBoard.isPlayersTurnEnd()) {
             return;
         }
-        final DrawCommand drawCommand = inputDrawCommand();
-        final PlayerCards currentPlayerCards = blackJackBoard.drawCurrentPlayer(drawCommand);
+        final HitCommand hitCommand = inputHitCommand();
+        final PlayerCards currentPlayerCards = blackJackBoard.hitCurrentPlayer(hitCommand);
         OutputView.printPlayerCards(currentPlayerCards);
         runPlayerTurn();
     }
 
-    private DrawCommand inputDrawCommand() {
-        return DrawCommand.from(InputView.inputDrawCommand(blackJackBoard.getCurrentTurnPlayerName()));
+    private HitCommand inputHitCommand() {
+        return HitCommand.from(InputView.inputHitCommand(blackJackBoard.getCurrentTurnPlayerName()));
     }
 
     private void runDealerTurn() {
         if (blackJackBoard.isDealerTurnEnd()) {
             return;
         }
-        blackJackBoard.drawDealer();
-        OutputView.printDealerDraw();
+        blackJackBoard.hitDealer();
+        OutputView.printDealerHit();
         runDealerTurn();
     }
 

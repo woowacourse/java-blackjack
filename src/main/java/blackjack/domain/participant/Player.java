@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Player extends AbstractParticipant {
 
-    private static final int FIRST_DRAW_CARD_SIZE = 2;
+    private static final int FIRST_HIT_CARD_SIZE = 2;
 
     private Player(final String name, final Cards cards, final GameStatus gameStatus) {
         super(name, cards, gameStatus);
@@ -17,8 +17,8 @@ public class Player extends AbstractParticipant {
     }
 
     @Override
-    public List<Card> firstDrawCard() {
-        return List.copyOf(cards().subList(0, FIRST_DRAW_CARD_SIZE));
+    public List<Card> firstCards() {
+        return List.copyOf(cards().subList(0, FIRST_HIT_CARD_SIZE));
     }
 
     @Override

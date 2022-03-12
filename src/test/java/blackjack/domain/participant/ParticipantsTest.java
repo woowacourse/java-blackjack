@@ -42,23 +42,23 @@ class ParticipantsTest {
 
     @Test
     @DisplayName("현재 턴의 플레이어가 버스트될 경우 다음 플레이어로 턴을 넘긴다.")
-    void drawCurrentPlayerIsBust() {
+    void hitCurrentPlayerIsBust() {
         final Participant participant = Player
                 .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Participants participants = new Participants(Collections.singletonList(participant));
-        participants.drawCurrentPlayer(Card.of(SPADE, JACK));
+        participants.hitCurrentPlayer(Card.of(SPADE, JACK));
         assertThat(participants.isAllTurnEnd()).isTrue();
     }
 
     @Test
-    @DisplayName("모든 플레이어의 턴이 종료되었는데 드로우하려고하면 예외가 발생해야 한다.")
-    void drawCurrentPlayerExceptionByEndAllTurn() {
+    @DisplayName("모든 플레이어의 턴이 종료되었는데 hit하려고하면 예외가 발생해야 한다.")
+    void hitCurrentPlayerExceptionByEndAllTurn() {
         final Participant participant =
                 Player.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Participants participants = new Participants(Collections.singletonList(participant));
-        participants.drawCurrentPlayer(Card.of(SPADE, JACK));
+        participants.hitCurrentPlayer(Card.of(SPADE, JACK));
 
-        assertThatThrownBy(() -> participants.drawCurrentPlayer(Card.of(SPADE, A)))
+        assertThatThrownBy(() -> participants.hitCurrentPlayer(Card.of(SPADE, A)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("모든 턴이 종료되었습니다.");
     }

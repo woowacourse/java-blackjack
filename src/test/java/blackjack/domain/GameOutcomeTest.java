@@ -81,12 +81,12 @@ class GameOutcomeTest {
     void calculateOutcomeBothNotBlackJack() {
         final List<Card> playerCards = Arrays.asList(Card.of(HEART, KING), Card.of(HEART, JACK));
         final Participant player = Player.createNewPlayer("player", playerCards);
-        player.draw(Card.of(HEART, A));
+        player.hit(Card.of(HEART, A));
         player.changeFinishStatus();
 
         final List<Card> dealerCards = Arrays.asList(Card.of(SPADE, SEVEN), Card.of(SPADE, NINE));
         final Participant dealer = Dealer.createNewDealer(dealerCards);
-        dealer.draw(Card.of(SPADE, FIVE));
+        dealer.hit(Card.of(SPADE, FIVE));
         assertThat(player.fight(dealer)).isEqualTo(DRAW);
     }
 
@@ -95,12 +95,12 @@ class GameOutcomeTest {
     void calculateOutcomeBothBust() {
         final List<Card> playerCards = Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN));
         final Participant player = Player.createNewPlayer("player", playerCards);
-        player.draw(Card.of(SPADE, JACK));
+        player.hit(Card.of(SPADE, JACK));
         player.changeFinishStatus();
 
         final List<Card> dealerCards = Arrays.asList(Card.of(HEART, KING), Card.of(HEART, SIX));
         final Participant dealer = Dealer.createNewDealer(dealerCards);
-        dealer.draw(Card.of(HEART, JACK));
+        dealer.hit(Card.of(HEART, JACK));
         assertThat(player.fight(dealer)).isEqualTo(LOSE);
     }
 
@@ -109,7 +109,7 @@ class GameOutcomeTest {
     void calculateOutcomeSelfBust() {
         final List<Card> playerCards = Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN));
         final Participant player = Player.createNewPlayer("player", playerCards);
-        player.draw(Card.of(SPADE, JACK));
+        player.hit(Card.of(SPADE, JACK));
         player.changeFinishStatus();
 
         final List<Card> dealerCards = Arrays.asList(Card.of(HEART, KING), Card.of(HEART, QUEEN));
@@ -126,7 +126,7 @@ class GameOutcomeTest {
 
         final List<Card> dealerCards = Arrays.asList(Card.of(HEART, KING), Card.of(HEART, SIX));
         final Participant dealer = Dealer.createNewDealer(dealerCards);
-        dealer.draw(Card.of(HEART, JACK));
+        dealer.hit(Card.of(HEART, JACK));
         assertThat(player.fight(dealer)).isEqualTo(WIN);
     }
 

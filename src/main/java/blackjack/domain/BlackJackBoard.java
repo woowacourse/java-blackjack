@@ -26,7 +26,7 @@ public class BlackJackBoard {
         Objects.requireNonNull(playerNames, "blackjackgame은 null이 들어올 수 없습니다.");
         final CardDeck cardDeck = CardDeck.createNewCardDek();
         final Participants participants = Participants.createByPlayerNames(playerNames, cardDeck);
-        final Participant dealer = Dealer.createNewDealer(cardDeck.provideFirstDrawCards());
+        final Participant dealer = Dealer.createNewDealer(cardDeck.provideFirstHitCards());
         return new BlackJackBoard(cardDeck, dealer, participants);
     }
 
@@ -34,21 +34,21 @@ public class BlackJackBoard {
         return players.isAllTurnEnd();
     }
 
-    public PlayerCards drawCurrentPlayer(final DrawCommand command) {
+    public PlayerCards hitCurrentPlayer(final HitCommand command) {
         if (command.isNo()) {
             final PlayerCards currentPlayer = players.getCurrentTurnPlayerCards();
             players.turnToNextPlayer();
             return currentPlayer;
         }
-        return players.drawCurrentPlayer(cardDeck.provideCard());
+        return players.hitCurrentPlayer(cardDeck.provideCard());
     }
 
     public boolean isDealerTurnEnd() {
-        return !dealer.canDraw();
+        return !dealer.canHit();
     }
 
-    public void drawDealer() {
-        dealer.draw(cardDeck.provideCard());
+    public void hitDealer() {
+        dealer.hit(cardDeck.provideCard());
     }
 
     public PlayerCards getDealerFirstCard() {

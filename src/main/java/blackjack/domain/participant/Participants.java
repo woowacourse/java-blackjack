@@ -52,7 +52,7 @@ public class Participants {
     }
 
     private static Player createPlayer(final String name, final CardDeck cardDeck) {
-        return Player.createNewPlayer(name, cardDeck.provideFirstDrawCards());
+        return Player.createNewPlayer(name, cardDeck.provideFirstHitCards());
     }
 
     public List<PlayerCards> getPlayerFirstCards() {
@@ -77,15 +77,15 @@ public class Participants {
         return participants.size() <= currentTurnIndex;
     }
 
-    public PlayerCards drawCurrentPlayer(final Card card) {
+    public PlayerCards hitCurrentPlayer(final Card card) {
         final Participant currentParticipant = currentTurnPlayer();
-        currentParticipant.draw(card);
+        currentParticipant.hit(card);
         checkCanTurnNext(currentParticipant);
         return PlayerCards.toPlayerCards(currentParticipant);
     }
 
     private void checkCanTurnNext(final Participant currentParticipant) {
-        if (!currentParticipant.canDraw()) {
+        if (!currentParticipant.canHit()) {
             currentTurnIndex++;
         }
     }
