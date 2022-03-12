@@ -22,13 +22,17 @@ public class ResultReferee {
         if (dealer.isBlackjack()) {
             return addBlackjackDealerDuelResult(player);
         }
+        if (player.isBust() || dealer.isBust()) {
+            return getBustDuelResult(player, dealer);
+        }
+        return addNoBustDuelResult(player, dealer.getCurrentScore());
+    }
+
+    private ResultStatistics getBustDuelResult(Player player, Dealer dealer) {
         if (player.isBust()) {
             return initPlayerResultOf(player, ResultType.LOSE);
         }
-        if (dealer.isBust()) {
-            return initPlayerResultOf(player, ResultType.WIN);
-        }
-        return addNoBustDuelResult(player, dealer.getCurrentScore());
+        return initPlayerResultOf(player, ResultType.WIN);
     }
 
     private ResultStatistics addBlackjackDealerDuelResult(Player player) {

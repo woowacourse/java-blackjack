@@ -54,7 +54,7 @@ public class ResultRefereeTest {
     @Nested
     class PlayerBustTest {
 
-        @DisplayName("플레이어와 딜러 모두 버스트인 경우, 나중에 버스트가 된 딜러가 승리한다.")
+        @DisplayName("플레이어와 딜러 모두 버스트인 경우, 딜러가 나중에 버스트가 되었으므로 승리한다.")
         @Test
         void playerLoseOnDealerBust() {
             List<ResultStatistics> results = new ResultReferee(dealerBust, List.of(playerBust))
@@ -65,7 +65,7 @@ public class ResultRefereeTest {
             assertThat(getResultCounts(results.get(1))).isEqualTo(LOSE_ONCE);
         }
 
-        @DisplayName("플레이어가 버스트인 경우, 점수가 더 낮은 딜러가 승리한다.")
+        @DisplayName("플레이어가 버스트인 경우, 딜러가 최종적으로 생존해있으므로 승리한다.")
         @Test
         void playerLoseOnDealerNotBust() {
             List<ResultStatistics> results = new ResultReferee(dealer20, List.of(playerBust))
@@ -75,12 +75,6 @@ public class ResultRefereeTest {
             assertThat(getResultCounts(dealerResult)).isEqualTo(WIN_ONCE);
             assertThat(getResultCounts(results.get(1))).isEqualTo(LOSE_ONCE);
         }
-    }
-
-    private List<Integer> getResultCounts(ResultStatistics dealerResult) {
-        return Arrays.stream(ResultType.values())
-                .map(type -> dealerResult.getCountOf(type).toInt())
-                .collect(Collectors.toList());
     }
 
     @DisplayName("딜러가 버스트인 경우, 버스트가 아닌 플레이어는 전부 승리한다.")
@@ -112,5 +106,11 @@ public class ResultRefereeTest {
         for (int i : List.of(3, 4, 5)) {
             assertThat(getResultCounts(results.get(i))).isEqualTo(LOSE_ONCE);
         }
+    }
+
+    private List<Integer> getResultCounts(ResultStatistics dealerResult) {
+        return Arrays.stream(ResultType.values())
+                .map(type -> dealerResult.getCountOf(type).toInt())
+                .collect(Collectors.toList());
     }
 }
