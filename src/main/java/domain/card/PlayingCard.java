@@ -3,7 +3,7 @@ package domain.card;
 import java.util.Objects;
 
 public class PlayingCard {
-    private static final String ACE_NUMBERS = "(1,11)";
+    private static final String ACE_SYMBOL = "A";
 
     private final Suit suit;
     private final Denomination denomination;
@@ -19,7 +19,7 @@ public class PlayingCard {
 
     public String getCardName() {
         if (isAce()) {
-            return ACE_NUMBERS + this.suit.getName();
+            return ACE_SYMBOL + this.suit.getName();
         }
 
         return this.denomination.getScore() + this.suit.getName();
