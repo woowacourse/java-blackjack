@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.participant.Participant.INITIAL_CARD_HAND;
-
 import blackjack.domain.card.CardDeck;
 import java.util.ArrayList;
 import java.util.Collections;

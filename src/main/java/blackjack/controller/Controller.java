@@ -17,25 +17,24 @@ public class Controller {
         Dealer dealer = Dealer.createDefaultNameDealer();
         Players players = Players.of(InputView.requestPlayerNames());
 
-        dealer.receive(cardDeck, INITIAL_CARD_HAND);
-        players.receive(cardDeck, INITIAL_CARD_HAND);
-
+        dealer.receive(cardDeck, INITIAL_CARD_COUNT);
+        players.receive(cardDeck, INITIAL_CARD_COUNT);
         OutputView.printInitCardHandStatus(dealer, players);
 
         playBlackJack(cardDeck, dealer, players);
+        OutputView.printFinalStatus(dealer, players);
+        OutputView.printFinalResult(dealer, players);
     }
 
     private void playBlackJack(CardDeck cardDeck, Dealer dealer, Players players) {
         playPlayersTurn(cardDeck, players);
         playDealerTurn(cardDeck, dealer);
-        OutputView.printFinalStatus(dealer, players);
-        OutputView.printFinalResult(dealer, players);
     }
 
     private void playPlayersTurn(CardDeck cardDeck, Players players) {
         for (Player player : players.getPlayers()) {
             while (isPlayable(player)) {
-                player.receive(cardDeck, INITIAL_CARD_HAND);
+                player.receive(cardDeck, NORMAL_CARD_COUNT);
                 OutputView.printCardHandStatus(player);
             }
         }
@@ -44,7 +43,7 @@ public class Controller {
     private void playDealerTurn(CardDeck cardDeck, Dealer dealer) {
         while (dealer.isReceivable()) {
             OutputView.printDealerStatus();
-            dealer.receive(cardDeck, INITIAL_CARD_HAND);
+            dealer.receive(cardDeck, NORMAL_CARD_COUNT);
         }
     }
 

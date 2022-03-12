@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    public static final int ACE_ADDITIONAL_NUMBER = 10;
-    public static final int BEST_SCORE = 21;
+    private static final int ACE_ADDITIONAL_NUMBER = 10;
+    private static final int BEST_SCORE = 21;
 
     private Player(Name name) {
         super(name);

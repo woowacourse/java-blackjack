@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 
 public class CardDeck {
 
-    public static final String OVER_CAPACITY_EXCEPTION_MESSAGE = "카드가 부족합니다.";
+    private static final String OVER_CAPACITY_EXCEPTION_MESSAGE = "카드가 부족합니다.";
+
     private final LinkedList<Card> cardDeck;
 
     public CardDeck(List<Card> cardDeck) {
@@ -17,8 +18,9 @@ public class CardDeck {
 
     public static CardDeck initShuffled() {
         List<Card> cardDeck = Arrays.stream(Number.values())
-                .flatMap(number -> Arrays.stream(Kind.values())
-                        .map(kind -> Card.from(number, kind)))
+                .flatMap(number ->
+                        Arrays.stream(Kind.values())
+                            .map(kind -> Card.from(number, kind)))
                 .collect(Collectors.toList());
         Collections.shuffle(cardDeck);
 
