@@ -17,6 +17,7 @@ public class Dealer extends Participant {
         return new Dealer(cardBundle);
     }
 
+    @Override
     public boolean canReceive() {
         Score score = cardBundle.getScore();
         return score.toInt() <= Score.DEALER_EXTRA_CARD_LIMIT;

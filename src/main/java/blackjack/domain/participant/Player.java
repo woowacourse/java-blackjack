@@ -34,6 +34,7 @@ public class Player extends Participant {
         }
     }
 
+    @Override
     public boolean canReceive() {
         Score score = cardBundle.getScore();
         return score.toInt() <= Score.BLACKJACK;

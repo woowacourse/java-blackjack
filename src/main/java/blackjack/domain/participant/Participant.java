@@ -19,6 +19,7 @@ public abstract class Participant {
     public void receiveCard(Card card) {
         cardBundle.add(card);
     }
+
     public abstract boolean canReceive();
 
     public Score getCurrentScore() {
