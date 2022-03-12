@@ -5,11 +5,11 @@ public class State {
     private int winCount = 0;
     private int loseCount = 0;
 
-    public void win(){
+    public void win() {
         winCount += 1;
     }
 
-    public void lose(){
+    public void lose() {
         loseCount += 1;
     }
 

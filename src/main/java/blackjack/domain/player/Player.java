@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Player {
 
@@ -32,6 +33,8 @@ public abstract class Player {
             throw new IllegalArgumentException("[ERROR] 이름은 비어있을 수 없습니다.");
         }
     }
+
+    public abstract boolean acceptableCard();
 
     public int calculateFinalScore() {
         final int score = getScoreByAceEleven();
@@ -70,13 +73,28 @@ public abstract class Player {
         return state.getLoseCount();
     }
 
-    public abstract boolean acceptableCard();
-
     protected int getScoreByAceOne() {
         return cards.calculateScoreByAceOne();
     }
 
     protected int getScoreByAceEleven() {
         return cards.calculateMaxScore();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

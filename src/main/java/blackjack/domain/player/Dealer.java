@@ -14,6 +14,11 @@ public class Dealer extends Player {
         super(cards, DEALER_NAME);
     }
 
+    @Override
+    public boolean acceptableCard() {
+        return getScoreByAceEleven() <= ADD_CARD_CONDITION;
+    }
+
     public void compete(final Participant participant) {
         if (isDealerWin(calculateFinalScore(), participant.calculateFinalScore())) {
             this.win();
@@ -29,10 +34,5 @@ public class Dealer extends Player {
 
     public Card getCardFirstOne() {
         return getCards().get(FIRST);
-    }
-
-    @Override
-    public boolean acceptableCard() {
-        return getScoreByAceEleven() <= ADD_CARD_CONDITION;
     }
 }

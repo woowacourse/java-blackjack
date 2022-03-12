@@ -2,9 +2,8 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Players {
 
@@ -32,17 +31,11 @@ public class Players {
     }
 
     private void validateDuplicated(final List<Participant> participants) {
-        final Set<String> names = extractNames(participants);
+        final HashSet<Participant> notDuplicatedParticipants = new HashSet<>(participants);
 
-        if (names.size() != participants.size()) {
+        if (notDuplicatedParticipants.size() != participants.size()) {
             throw new IllegalArgumentException("[ERROR] 참가자 이름은 중복될 수 없습니다.");
         }
-    }
-
-    public Set<String> extractNames(final List<Participant> participants) {
-        return participants.stream()
-                .map(Player::getName)
-                .collect(Collectors.toSet());
     }
 
     public void addDealerCard(final Card card) {
@@ -61,5 +54,4 @@ public class Players {
     public List<Participant> getParticipants() {
         return participants;
     }
-
 }
