@@ -42,7 +42,7 @@ public class Players {
         }
     }
 
-    public MatchResult judgeWinners(Dealer dealer) {
+    public MatchResult judgeWinners(final Dealer dealer) {
         final Map<String, MatchStatus> matchStatuses = new HashMap<>();
         for (final Player player : players) {
             final String playerName = player.getParticipantName();
