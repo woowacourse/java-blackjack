@@ -54,7 +54,7 @@ public class BlackjackGame {
 
     public boolean dealerCanDraw() {
         Dealer dealer = getDealer();
-        return dealer.canReceive();
+        return dealer.canDraw();
     }
 
     public void drawDealerCard() {

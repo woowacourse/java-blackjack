@@ -55,36 +55,36 @@ public class PlayerTest {
         assertThat(actual).containsExactlyInAnyOrder(CLOVER4, CLOVER5, CLOVER6);
     }
 
-    @DisplayName("canReceive 메서드 테스트")
+    @DisplayName("canDraw 메서드 테스트")
     @Nested
-    class CanReceiveTest {
+    class CanDrawTest {
 
         @DisplayName("점수가 21을 넘지 않으면 true를 반환한다.")
         @Test
-        void canReceive_returnTrueOnLessThan21() {
-            boolean actual = player.canReceive();
+        void canDraw_returnTrueOnLessThan21() {
+            boolean actual = player.canDraw();
 
             assertThat(actual).isTrue();
         }
 
         @DisplayName("점수가 21이면 true를 반환한다.")
         @Test
-        void canReceive_returnTrueOn21() {
+        void canDraw_returnTrueOn21() {
             player.receiveCard(CLOVER2);
             player.receiveCard(CLOVER10);
 
-            boolean actual = player.canReceive();
+            boolean actual = player.canDraw();
 
             assertThat(actual).isTrue();
         }
 
         @DisplayName("점수가 21을 초과하면 false를 반환한다.")
         @Test
-        void canReceive_returnFalseOnGreaterThan21() {
+        void canDraw_returnFalseOnGreaterThan21() {
             player.receiveCard(CLOVER10);
             player.receiveCard(CLOVER_KING);
 
-            boolean actual = player.canReceive();
+            boolean actual = player.canDraw();
 
             assertThat(actual).isFalse();
         }

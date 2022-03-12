@@ -34,7 +34,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean canReceive() {
+    public boolean canDraw() {
         return !isBust();
     }
 

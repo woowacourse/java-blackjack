@@ -18,7 +18,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean canReceive() {
+    public boolean canDraw() {
         Score score = cardBundle.getScore();
         return score.toInt() <= Score.DEALER_EXTRA_CARD_LIMIT;
     }

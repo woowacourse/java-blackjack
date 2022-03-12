@@ -47,7 +47,7 @@ public class BlackjackController {
     }
 
     private void drawAllPlayerCards(Player player, BlackjackGame game) {
-        while (player.canReceive() && requestMoreCardInput(player.getName())) {
+        while (player.canDraw() && requestMoreCardInput(player.getName())) {
             player.receiveCard(game.popCard());
             printPlayerCardsInfo(player);
         }

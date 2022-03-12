@@ -14,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import blackjack.fixture.CardBundleGenerator;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,35 +40,35 @@ public class DealerTest {
         assertThat(actual).containsExactlyInAnyOrder(CLOVER4, CLOVER5, CLOVER6);
     }
 
-    @DisplayName("점수가 16을 넘지 않으면 true를 반환한다.")
-    @Test
-    void canReceive_returnTrueOnLessThan16() {
-        dealer.receiveCard(CLOVER6);
-        boolean actual = dealer.canReceive();
-
-        assertThat(actual).isTrue();
-    }
-
-    @DisplayName("canReceive 메서드 테스트")
+    @DisplayName("canDraw 메서드 테스트")
     @Nested
-    class CanReceiveTest {
+    class CanDrawTest {
+
+        @DisplayName("점수가 16을 넘지 않으면 true를 반환한다.")
+        @Test
+        void canDraw_returnTrueOnLessThan16() {
+            dealer.receiveCard(CLOVER6);
+            boolean actual = dealer.canDraw();
+
+            assertThat(actual).isTrue();
+        }
 
         @DisplayName("점수가 16이면 true를 반환한다.")
         @Test
-        void canReceive_returnTrueOn16() {
+        void canDraw_returnTrueOn16() {
             dealer.receiveCard(CLOVER7);
 
-            boolean actual = dealer.canReceive();
+            boolean actual = dealer.canDraw();
 
             assertThat(actual).isTrue();
         }
 
         @DisplayName("점수가 17 이상이면 false를 반환한다.")
         @Test
-        void canReceive_returnFalseOnGreaterThan16() {
+        void canDraw_returnFalseOnGreaterThan16() {
             dealer.receiveCard(CLOVER8);
 
-            boolean actual = dealer.canReceive();
+            boolean actual = dealer.canDraw();
 
             assertThat(actual).isFalse();
         }
