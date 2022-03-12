@@ -1,19 +1,21 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
-import java.util.Stack;
+import java.util.*;
 
 public class Deck {
 
     private static final String NO_MORE_CARDS = "더이상 뽑을 수 있는 카드가 없습니다.";
 
-    private final Stack<Card> cards = new Stack<>();
+    private final Deque<Card> cards = new ArrayDeque<>();
 
     public Deck() {
+        List<Card> allCards = new ArrayList<>();
         for (Symbol symbol : Symbol.values()) {
-            addCardWithDenomination(symbol);
+            addCardWithDenomination(allCards, symbol);
         }
-        Collections.shuffle(cards);
+        Collections.shuffle(allCards);
+
+        cards.addAll(allCards);
     }
 
     public Card draw() {
@@ -23,9 +25,9 @@ public class Deck {
         return cards.pop();
     }
 
-    private void addCardWithDenomination(Symbol symbol) {
+    private void addCardWithDenomination(List<Card> allCards, Symbol symbol) {
         for (Denomination denomination : Denomination.values()) {
-            cards.add(new Card(symbol, denomination));
+            allCards.add(new Card(symbol, denomination));
         }
     }
 }
