@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.card.CardNumber.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class HoldingCard {
 
     private boolean hasAce() {
         return holdingCard.stream()
-                .anyMatch(card -> card.getCardNumberValue() == CardNumber.ACE.getCardNumberValue());
+                .anyMatch(card -> card.getCardNumberValue() == ACE.getCardNumberValue());
     }
 
     private int sum() {

@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static blackjack.domain.DrawCommand.*;
+
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.HoldingCard;
 import blackjack.domain.participant.Dealer;
@@ -33,10 +35,10 @@ public class BlackJackGame {
 
     public HoldingCard drawCurrentPlayer(DrawCommand drawCommand) {
         Participant currentPlayer = players.getCurrentPlayer();
-        if (drawCommand == DrawCommand.YES) {
+        if (drawCommand == YES) {
             currentPlayer.receiveCard(CardDeck.drawCard());
         }
-        if (drawCommand == DrawCommand.NO || currentPlayer.isBust()) {
+        if (drawCommand == NO || currentPlayer.isBust()) {
             players.skipTurn();
         }
         return currentPlayer.getHoldingCard();
