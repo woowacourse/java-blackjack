@@ -15,8 +15,8 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
-    public void add(Card drawCard) {
-        cards.add(drawCard);
+    public void add(Card card) {
+        cards.add(card);
     }
 
     public List<Card> showCards() {
