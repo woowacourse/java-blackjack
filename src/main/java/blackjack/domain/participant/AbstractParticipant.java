@@ -41,7 +41,8 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     private void refreshGameStatus() {
-        if (isEnd()) {
+        gameStatus.refreshStatus(cards);
+        if (isDealer() && isEnd()) {
             gameStatus = GameStatus.FINISHED;
         }
     }
