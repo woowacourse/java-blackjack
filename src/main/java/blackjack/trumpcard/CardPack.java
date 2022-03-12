@@ -1,38 +1,31 @@
 package blackjack.trumpcard;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Stack;
 
 public class CardPack {
-    private final List<Card> values;
+    private final Stack<Card> cards;
 
     public CardPack() {
-        this.values = createCards();
+        this.cards = createCards();
+        Collections.shuffle(cards);
     }
 
-    private List<Card> createCards() {
-        List<Card> cards = new ArrayList<>();
-        Arrays.stream(TrumpSymbol.values())
-                .map(this::createCardsOfSymbol)
-                .forEach(cards::addAll);
+    private Stack<Card> createCards() {
+        Stack<Card> cards = new Stack<>();
+        for (TrumpSymbol symbol : TrumpSymbol.values()) {
+            pushCardIn(cards, symbol);
+        }
         return cards;
     }
 
-    private List<Card> createCardsOfSymbol(TrumpSymbol trumpSymbol) {
-        return Arrays.stream(TrumpNumber.values())
-                .map(trumpNumber -> new Card(trumpNumber, trumpSymbol))
-                .collect(Collectors.toList());
+    private void pushCardIn(Stack<Card> cards, TrumpSymbol symbol) {
+        for (TrumpNumber number : TrumpNumber.values()) {
+            cards.add(new Card(number, symbol));
+        }
     }
 
     public Card draw() {
-        Collections.shuffle(values);
-
-        final int topCardIndex = 0;
-        Card topCard = values.get(topCardIndex);
-        values.remove(topCardIndex);
-        return topCard;
+        return cards.pop();
     }
 }
