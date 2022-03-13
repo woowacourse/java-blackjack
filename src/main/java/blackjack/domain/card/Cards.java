@@ -1,7 +1,5 @@
 package blackjack.domain.card;
 
-import static java.util.stream.Collectors.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,17 +23,11 @@ public class Cards {
 
     public int calculateTotalScore() {
         int totalScore = 0;
-        for (Denomination denomination : toDenominations()) {
-            totalScore = denomination.addScore(totalScore);
+        for (Card card : value) {
+            totalScore = card.calculateScore(totalScore);
         }
 
         return totalScore;
-    }
-
-    private List<Denomination> toDenominations() {
-        return value.stream()
-                .map(Card::getDenomination)
-                .collect(toList());
     }
 
     public void append(Card card) {

@@ -36,7 +36,7 @@ public enum Denomination {
         return this.score + score;
     }
 
-    private static int calculateAceScore(int score) {
+    private int calculateAceScore(int score) {
         if ((score + BONUS_ACE_SCORE) > BLACKJACK_SCORE) {
             return score + ACE.score;
         }

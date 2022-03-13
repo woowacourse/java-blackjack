@@ -16,6 +16,10 @@ public class Card {
         return new Card(denomination, suit);
     }
 
+    public int calculateScore(int score) {
+        return denomination.addScore(score);
+    }
+
     public Denomination getDenomination() {
         return denomination;
     }
