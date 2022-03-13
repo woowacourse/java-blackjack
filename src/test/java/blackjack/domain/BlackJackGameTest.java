@@ -70,9 +70,9 @@ class BlackJackGameTest {
     void isBurst() {
         BlackJackGame blackJackGame = new BlackJackGame(List.of("pobi", "jason"));
         Player pobi = blackJackGame.findPlayerByName("pobi");
-        pobi.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.KING));
-        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
-        pobi.addCard(Card.getInstance(CardShape.HEART, CardNumber.KING));
+        pobi.addCard(new Card(CardShape.DIAMOND, CardNumber.KING));
+        pobi.addCard(new Card(CardShape.CLOVER, CardNumber.KING));
+        pobi.addCard(new Card(CardShape.HEART, CardNumber.KING));
         assertThat(blackJackGame.isDrawPossible("pobi", s -> "y")).isEqualTo(false);
     }
 }

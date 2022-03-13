@@ -23,16 +23,16 @@ class BlackJackRefereeTest {
         Player pobi = new Player("pobi");
         Player jason = new Player("jason");
 
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.THREE));
-        dealer.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.NINE));
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.EIGHT));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
+        dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
 
-        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.TWO));
-        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
-        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.ACE));
+        pobi.addCard(new Card(CardShape.CLOVER, CardNumber.TWO));
+        pobi.addCard(new Card(CardShape.CLOVER, CardNumber.EIGHT));
+        pobi.addCard(new Card(CardShape.CLOVER, CardNumber.ACE));
 
-        jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.SEVEN));
-        jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
+        jason.addCard(new Card(CardShape.CLOVER, CardNumber.SEVEN));
+        jason.addCard(new Card(CardShape.CLOVER, CardNumber.KING));
 
         BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi, jason), dealer);
 
@@ -52,17 +52,17 @@ class BlackJackRefereeTest {
         Player pobi = new Player("pobi");
         Player jason = new Player("jason");
 
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.THREE));
-        dealer.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.NINE));
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.TEN));
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.ACE));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
+        dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.TEN));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
 
-        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.FOUR));
-        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
-        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.TEN));
+        pobi.addCard(new Card(CardShape.CLOVER, CardNumber.FOUR));
+        pobi.addCard(new Card(CardShape.CLOVER, CardNumber.EIGHT));
+        pobi.addCard(new Card(CardShape.CLOVER, CardNumber.TEN));
 
-        jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.SEVEN));
-        jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
+        jason.addCard(new Card(CardShape.CLOVER, CardNumber.SEVEN));
+        jason.addCard(new Card(CardShape.CLOVER, CardNumber.KING));
 
         BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi, jason), dealer);
 
@@ -82,16 +82,16 @@ class BlackJackRefereeTest {
         Player pobi = new Player("pobi");
         Player jason = new Player("jason");
 
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.THREE));
-        dealer.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.NINE));
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.EIGHT));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
+        dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
 
-        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.TWO));
-        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
-        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.ACE));
+        pobi.addCard(new Card(CardShape.CLOVER, CardNumber.TWO));
+        pobi.addCard(new Card(CardShape.CLOVER, CardNumber.EIGHT));
+        pobi.addCard(new Card(CardShape.CLOVER, CardNumber.ACE));
 
-        jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.SEVEN));
-        jason.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
+        jason.addCard(new Card(CardShape.CLOVER, CardNumber.SEVEN));
+        jason.addCard(new Card(CardShape.CLOVER, CardNumber.KING));
 
         BlackJackReferee blackJackReferee = new BlackJackReferee(List.of(pobi, jason), dealer);
 

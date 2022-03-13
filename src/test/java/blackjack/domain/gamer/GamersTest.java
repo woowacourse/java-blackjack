@@ -24,7 +24,7 @@ public class GamersTest {
         Gamers gamers = new Gamers(List.of("더즈", "범고래"));
         Dealer dealer = gamers.getDealer();
         List<Player> players = gamers.getPlayers();
-        Deck deck = new Deck(Card.getCards());
+        Deck deck = new Deck();
         gamers.distributeFirstCards(deck);
         assertThat(dealer.getCardsSize()).isEqualTo(2);
         assertThat(players.size()).isEqualTo(2);
@@ -34,7 +34,7 @@ public class GamersTest {
     @DisplayName("16이하이면 그 이상이 될 떄 까지 계속 카들르 뽑는다.")
     void distributeAdditionalToDealer() {
         Gamers gamers = new Gamers(List.of());
-        Deck deck = new Deck(Card.getCards());
+        Deck deck = new Deck();
         gamers.distributeAdditionalToDealer(deck);
         Dealer dealer = gamers.getDealer();
 
@@ -46,7 +46,7 @@ public class GamersTest {
     void distributeCardToPlayer() {
         String name = "범고래";
         Gamers gamers = new Gamers(List.of(name));
-        Deck deck = new Deck(Card.getCards());
+        Deck deck = new Deck();
         Player players = gamers.findPlayerByName(name);
         gamers.distributeCardToPlayer(name, deck);
         assertThat(players.getCardsSize()).isEqualTo(1);

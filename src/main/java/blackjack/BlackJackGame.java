@@ -17,7 +17,7 @@ public class BlackJackGame {
     private final Gamers gamers;
 
     public BlackJackGame(List<String> names) {
-        this.deck = new Deck(Card.getCards());
+        this.deck = new Deck();
         gamers = new Gamers(names);
         gamers.distributeFirstCards(deck);
     }

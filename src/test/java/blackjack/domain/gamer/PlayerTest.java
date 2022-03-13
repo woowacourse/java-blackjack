@@ -15,14 +15,14 @@ class PlayerTest {
     @DisplayName("딜러와 카드 점수 결과 반환")
     void match() {
         Dealer dealer = new Dealer();
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.THREE));
-        dealer.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.NINE));
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.EIGHT));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
+        dealer.addCard(new Card(CardShape.CLOVER, CardNumber.NINE));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
 
         Player pobi = new Player("pobi");
-        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.TWO));
-        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
-        pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.ACE));
+        pobi.addCard(new Card(CardShape.CLOVER, CardNumber.TWO));
+        pobi.addCard(new Card(CardShape.CLOVER, CardNumber.EIGHT));
+        pobi.addCard(new Card(CardShape.CLOVER, CardNumber.ACE));
 
         assertThat(pobi.match(dealer)).isEqualTo(BlackJackResult.WIN);
     }

@@ -1,22 +1,35 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Deck {
 
     private final LinkedList<Card> deck;
 
-    public Deck(List<Card> deck) {
-        this.deck = new LinkedList<>(deck);
+    public Deck() {
+        this.deck = new LinkedList<>(createDeck());
         Collections.shuffle(this.deck);
     }
 
+    private List<Card> createDeck() {
+        return Arrays.stream(CardShape.values())
+                .flatMap(shape -> Arrays.stream(CardNumber.values())
+                        .map(number -> new Card(shape, number)))
+                .collect(Collectors.toList());
+    }
+
     public Card draw() {
+        validateEmpty();
         Card card = deck.getFirst();
         deck.removeFirst();
         return card;
+    }
+
+    private void validateEmpty() {
+        if (deck.isEmpty()) {
+            throw new NoSuchElementException("카드를 모두 소진했습니다.");
+        }
     }
 
     public int getSize() {

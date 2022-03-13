@@ -14,8 +14,8 @@ class DealerTest {
     @DisplayName("보유 카드 번호 합이 특정 숫자를 넘었는지 확인")
     void checkCardsNumberSum() {
         Dealer dealer = new Dealer();
-        Card card1 = Card.getInstance(CardShape.SPADE, CardNumber.TEN);
-        Card card2 = Card.getInstance(CardShape.SPADE, CardNumber.FIVE);
+        Card card1 = new Card(CardShape.SPADE, CardNumber.TEN);
+        Card card2 = new Card(CardShape.SPADE, CardNumber.FIVE);
 
         dealer.addCard(card1);
         dealer.addCard(card2);

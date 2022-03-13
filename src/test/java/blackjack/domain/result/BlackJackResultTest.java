@@ -17,8 +17,8 @@ class BlackJackResultTest {
     void of() {
         Player player = new Player("범고래");
         Dealer dealer = new Dealer();
-        player.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.ACE));
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.JACK));
+        player.addCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.JACK));
         BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
         assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("WIN"));
     }
@@ -28,8 +28,8 @@ class BlackJackResultTest {
     void getReverse() {
         Player player = new Player("범고래");
         Dealer dealer = new Dealer();
-        player.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.ACE));
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.JACK));
+        player.addCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.JACK));
         BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
         assertThat(blackJackResult.getReverse()).isEqualTo(BlackJackResult.valueOf("LOSE"));
     }
@@ -39,11 +39,11 @@ class BlackJackResultTest {
     void blackJack() {
         Player player = new Player("범고래");
         Dealer dealer = new Dealer();
-        player.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.ACE));
-        player.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.JACK));
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.JACK));
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.FIVE));
-        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.SIX));
+        player.addCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.JACK));
+        player.addCard(new Card(CardShape.DIAMOND, CardNumber.JACK));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.FIVE));
+        dealer.addCard(new Card(CardShape.DIAMOND, CardNumber.SIX));
         BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
         assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("WIN"));
     }
