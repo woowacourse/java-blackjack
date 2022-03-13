@@ -89,30 +89,14 @@ public class Controller {
 	private void askAndDrawForPlayer(Deck deck, Players players, Name name) {
 		boolean isKeepDraw = !(players.checkMaxScoreByName(name));
 
-		while (isKeepDraw && askDraw(name.getName())) {
+		while (isKeepDraw && InputView.askDraw(name.getName())) {
 			players.addCardByName(name, deck.draw());
 			OutputView.printHand(players.showHandByName(name));
-			isKeepDraw = checkBlackJackOrBust(players, name);
+			isKeepDraw = checkMaxScoreOrBust(players, name);
 		}
 	}
 
-	private boolean askDraw(String name) {
-		String resultAskDraw = InputView.inputAskDraw(name);
-		validateAskDraw(resultAskDraw);
-		if (resultAskDraw.equals("y")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private void validateAskDraw(String resultAsk) {
-		if (!(resultAsk.equals("y") || resultAsk.equals("n"))) {
-			throw new IllegalArgumentException();
-		}
-	}
-
-	private boolean checkBlackJackOrBust(Players players, Name name) {
+	private boolean checkMaxScoreOrBust(Players players, Name name) {
 		if (players.checkMaxScoreByName(name)) {
 			OutputView.printBlackJackMessage();
 			return false;

@@ -12,6 +12,9 @@ public class InputView {
 	private static final String INPUT_ASk_DRAW_MESSAGE_FORMAT = "\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
 	private static final String INPUT_NAMES_SPLIT_DELIMITER = ",";
 	private static final String NAME_DUPLICATE_ERROR_MESSAGE = "[Error] 이름은 중복일 수 없습니다.";
+	public static final String YES = "y";
+	public static final String NO = "n";
+	public static final String INPUT_ASKING_DRAW_ERROR_MESSAGE = "[Error] y나 n만 입력할 수 있습니다.";
 
 	private static Scanner scanner = new Scanner(System.in);
 
@@ -36,8 +39,29 @@ public class InputView {
 		}
 	}
 
-	public static String inputAskDraw(String name) {
+	public static boolean askDraw(String name) {
 		System.out.printf(INPUT_ASk_DRAW_MESSAGE_FORMAT, name);
-		return scanner.nextLine();
+		try {
+			String resultAskDraw = scanner.nextLine();
+			validateAskDraw(resultAskDraw);
+			return giveOpinion(resultAskDraw);
+		} catch (IllegalArgumentException e) {
+			OutputView.printErrorMessage(e.getMessage());
+			return askDraw(name);
+		}
 	}
+
+	private static void validateAskDraw(String resultAsk) {
+		if (!(resultAsk.equals(YES) || resultAsk.equals(NO))) {
+			throw new IllegalArgumentException(INPUT_ASKING_DRAW_ERROR_MESSAGE);
+		}
+	}
+
+	private static boolean giveOpinion(String resultAskDraw) {
+		if (resultAskDraw.equals(YES)) {
+			return true;
+		}
+		return false;
+	}
+
 }
