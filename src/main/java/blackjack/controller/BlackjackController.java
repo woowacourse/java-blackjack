@@ -80,17 +80,16 @@ public class BlackjackController {
     }
 
     private Results calculateOutcomeResults(Players players) {
-        Player dealer = players.getDealer();
-        OutcomeResults dealerResult = new OutcomeResults();
         Map<Player, OutcomeResults> results = new LinkedHashMap<>();
+        Player dealer = players.getDealer();
+        results.put(dealer, new OutcomeResults());
 
         for (Player player : players.getParticipants()) {
             Outcome outcome = Outcome.match((Dealer) dealer, player);
-            dealerResult.increase(outcome);
+            results.get(dealer).increase(outcome);
             results.put(player, new OutcomeResults());
             results.get(player).increase(outcome.not());
         }
-
-        return new Results(dealerResult, results);
+        return new Results(results);
     }
 }

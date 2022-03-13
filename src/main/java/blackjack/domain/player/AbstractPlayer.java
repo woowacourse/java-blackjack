@@ -31,7 +31,7 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isBLACKJACK() {
+    public boolean isBlackjack() {
         if (!cards.containsCardNumber(CardNumber.ACE)) {
             return false;
         }

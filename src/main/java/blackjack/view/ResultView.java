@@ -95,7 +95,7 @@ public class ResultView {
         OutcomeResults dealerResult = results.getDealerResult();
         printDealerOutcomeState(dealerResult);
 
-        Map<Player, OutcomeResults> outcomeResults = results.getPlayerResults();
+        Map<Player, OutcomeResults> outcomeResults = results.getParticipantsResults();
         for (Player player : outcomeResults.keySet()) {
             printPlayerOutcomeState(player, outcomeResults.get(player));
         }

@@ -30,7 +30,7 @@ public enum Outcome {
         if (player.isBust()) {
             return true;
         }
-        if (dealer.isBLACKJACK() && !player.isBLACKJACK()) {
+        if (dealer.isBlackjack() && !player.isBlackjack()) {
             return true;
         }
         return !dealer.isBust() && dealer.getScore() > player.getScore();
@@ -40,7 +40,7 @@ public enum Outcome {
         if (!player.isBust() && dealer.isBust()) {
             return true;
         }
-        if (!dealer.isBLACKJACK() && player.isBLACKJACK()) {
+        if (!dealer.isBlackjack() && player.isBlackjack()) {
             return true;
         }
         return !dealer.isBust() && dealer.getScore() < player.getScore();

@@ -9,7 +9,7 @@ public interface Player {
 
     boolean isBust();
 
-    boolean isBLACKJACK();
+    boolean isBlackjack();
 
     boolean isDealer();
 
