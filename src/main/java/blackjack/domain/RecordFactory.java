@@ -10,6 +10,16 @@ import java.util.stream.Collectors;
 public class RecordFactory {
 
     public static final int MAX_SCORE = 21;
+    private static final Map<Record, Record> oppositeValue;
+
+    static {
+        final Map<Record, Record> map = new HashMap<>();
+        map.put(Record.WIN, Record.LOSS);
+        map.put(Record.PUSH, Record.PUSH);
+        map.put(Record.LOSS, Record.WIN);
+
+        oppositeValue = map;
+    }
 
     private final int dealerScore;
     private final Map<Record, Integer> dealerRecord;
@@ -33,7 +43,7 @@ public class RecordFactory {
 
     private Record compareScore(int score) {
         final Record playerRecord = Record.of(dealerScore, score);
-        updateDealerRecord(playerRecord.getOppositeName());
+        updateDealerRecord(oppositeValue.get(playerRecord));
 
         return playerRecord;
     }
