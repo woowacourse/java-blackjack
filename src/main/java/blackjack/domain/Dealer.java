@@ -19,20 +19,4 @@ public class Dealer extends Person {
 	public boolean isHit() {
 		return score() <= CONDITION_HIT;
 	}
-
-	public int isWin(Player player) {
-		if (isBurst()) {
-			if (player.isBurst()) {
-				return 1;
-			}
-
-			return -1;
-		}
-
-		if (player.isBurst()) {
-			return 1;
-		}
-
-		return Integer.compare(this.score(), player.score());
-	}
 }
