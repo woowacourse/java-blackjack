@@ -57,15 +57,6 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어의 카드 합계 계산 테스트")
-    void calculateScore() {
-        Player player = new Player("rookie");
-        player.receiveCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
-
-        assertThat(player.calculateFinalScore()).isEqualTo(8);
-    }
-
-    @Test
     @DisplayName("플레이어의 카드에 Ace가 11로 되는 경우 합계 계산 테스트")
     void calculateScoreWithAceEleven() {
         Player player = new Player("rookie");
@@ -96,18 +87,5 @@ class PlayerTest {
         player.receiveCard(new Card(Symbol.SPADE, Denomination.EIGHT));
 
         assertThat(player.calculateFinalScore()).isEqualTo(21);
-    }
-
-    @Test
-    @DisplayName("중복된 카드를 받는 경우 예외 발생 테스트")
-    void receiveDuplicatedCard() {
-        Card card1 = new Card(Symbol.CLOVER, Denomination.ACE);
-        Card card2 = new Card(Symbol.CLOVER, Denomination.ACE);
-        Participant participant = new Player("rookie");
-        participant.receiveCard(card1);
-
-        assertThatThrownBy(() -> participant.receiveCard(card2))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("중복된 카드는 받을 수 없습니다.");
     }
 }
