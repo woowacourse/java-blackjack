@@ -15,6 +15,22 @@ import org.junit.jupiter.api.Test;
 public class OutComeTest {
 
     @Test
+    @DisplayName("Outcome의 match 메서드는 딜러와 플레이어가 모두 Bust라면 딜러가 승리했다고 판단한다.")
+    void compare_all_bust() {
+        Player dealer = new Dealer();
+        dealer.hit(new Card(CardNumber.SEVEN, Type.CLOVER));
+        dealer.hit(new Card(CardNumber.TEN, Type.SPADE));
+        dealer.hit(new Card(CardNumber.TEN, Type.HEART));
+
+        Player player = new Participant(new Name("aki"));
+        player.hit(new Card(CardNumber.TEN, Type.CLOVER));
+        player.hit(new Card(CardNumber.TEN, Type.SPADE));
+        player.hit(new Card(CardNumber.TEN, Type.DIAMOND));
+
+        assertThat(Outcome.match((Dealer) dealer, player)).isEqualTo(Outcome.WIN);
+    }
+
+    @Test
     @DisplayName("Outcome의 match 메서드는 플레이어가 Bust라면 무조건 딜러가 승리했다고 판단한다.")
     void compare_player_bust() {
         Player dealer = new Dealer();
@@ -53,7 +69,7 @@ public class OutComeTest {
 
         Player player = new Participant(new Name("aki"));
         player.hit(new Card(CardNumber.ACE, Type.CLOVER));
-        player.hit(new Card(CardNumber.TEN, Type.DIAMOND));
+        player.hit(new Card(CardNumber.NINE, Type.DIAMOND));
 
         assertThat(Outcome.match((Dealer) dealer, player)).isEqualTo(Outcome.WIN);
     }
@@ -63,7 +79,7 @@ public class OutComeTest {
     void compare_player_blackjack() {
         Player dealer = new Dealer();
         dealer.hit(new Card(CardNumber.ACE, Type.CLOVER));
-        dealer.hit(new Card(CardNumber.TEN, Type.SPADE));
+        dealer.hit(new Card(CardNumber.NINE, Type.SPADE));
 
         Player player = new Participant(new Name("aki"));
         player.hit(new Card(CardNumber.ACE, Type.CLOVER));

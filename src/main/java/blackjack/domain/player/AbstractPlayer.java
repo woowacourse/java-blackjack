@@ -32,12 +32,13 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isBLACKJACK() {
-        if (cards.get().size() != BLACKJACK_CARD_COUNT || !cards.containsCardNumber(CardNumber.ACE)) {
+        if (!cards.containsCardNumber(CardNumber.ACE)) {
             return false;
         }
-        return cards.containsCardNumber(CardNumber.JACK)
-                || cards.containsCardNumber(CardNumber.QUEEN)
-                || cards.containsCardNumber(CardNumber.KING);
+        if (cards.get().size() != BLACKJACK_CARD_COUNT) {
+            return false;
+        }
+        return cards.getTotalScore() == MAX_SCORE;
     }
 
     @Override

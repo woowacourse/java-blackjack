@@ -27,7 +27,7 @@ public enum Outcome {
     }
 
     private static boolean checkWin(Player dealer, Player player) {
-        if (player.isBust() && !dealer.isBust()) {
+        if (player.isBust()) {
             return true;
         }
         if (dealer.isBLACKJACK() && !player.isBLACKJACK()) {
