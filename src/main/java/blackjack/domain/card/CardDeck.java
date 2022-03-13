@@ -1,11 +1,7 @@
 package blackjack.domain.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class CardDeck {
-	private final static List<Card> deck = new ArrayList<>();
+	private final static Cards deck = new Cards();
 
 	static {
 		for (CardSymbol symbol : CardSymbol.values()) {
@@ -19,14 +15,9 @@ public class CardDeck {
 		}
 	}
 
-	public static Card pickCard() {
-		Collections.shuffle(deck);
-		Card pickedCard = deck.get(0);
-		removeCard(pickedCard);
+	public static Card pick() {
+		Card pickedCard = deck.pickRandomCard();
+		deck.remove(pickedCard);
 		return pickedCard;
-	}
-
-	private static void removeCard(Card card) {
-		deck.remove(card);
 	}
 }

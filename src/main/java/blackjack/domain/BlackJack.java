@@ -52,7 +52,7 @@ public class BlackJack {
 	}
 
 	public void handOutCardTo(Participant participant) {
-		participant.receiveCard(CardDeck.pickCard());
+		participant.receiveCard(CardDeck.pick());
 	}
 
 	public boolean isDealerNeedAdditionalCard() {
