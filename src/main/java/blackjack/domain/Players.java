@@ -18,7 +18,6 @@ public class Players {
 	}
 
 	public void addCardToAllPlayers(Deck deck, int times) {
-		players.stream()
-			.forEach(player -> player.addCards(deck, times));
+		players.forEach(player -> player.addCards(deck, times));
 	}
 }

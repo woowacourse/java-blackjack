@@ -7,7 +7,7 @@ public class Result {
 	private final Map<Player, ResultType> gameResult = new HashMap<>();
 
 	public Map<Player, ResultType> getResult(Players players, Dealer dealer) {
-		players.getPlayers().stream()
+		players.getPlayers()
 			.forEach(player -> gameResult.put(player, ResultType.generateResultType(player, dealer)));
 		return gameResult;
 	}
