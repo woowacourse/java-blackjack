@@ -60,4 +60,24 @@ public class DeckTest {
 
         assertThat(deck.sumScore()).isEqualTo(12);
     }
+
+    @DisplayName("점수 합이 22이면 Bust이다")
+    @Test
+    void isBust_true() {
+        deck.add(new TrumpCard(TrumpNumber.NINE, TrumpSymbol.CLOVER));
+        deck.add(new TrumpCard(TrumpNumber.THREE, TrumpSymbol.HEART));
+        deck.add(new TrumpCard(TrumpNumber.JACK, TrumpSymbol.SPADE));
+
+        assertThat(deck.isBust()).isTrue();
+    }
+
+    @DisplayName("점수 합이 21이면 Bust가 아니다")
+    @Test
+    void isBust_false() {
+        deck.add(new TrumpCard(TrumpNumber.NINE, TrumpSymbol.CLOVER));
+        deck.add(new TrumpCard(TrumpNumber.TWO, TrumpSymbol.HEART));
+        deck.add(new TrumpCard(TrumpNumber.JACK, TrumpSymbol.SPADE));
+
+        assertThat(deck.isBust()).isFalse();
+    }
 }
