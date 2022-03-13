@@ -29,14 +29,15 @@ public class Dealer extends Participant {
     }
 
     public PlayerResult judgeWinner(final Player player) {
-        if (player.isBust()) {
-            return PlayerResult.LOSS;
-        }
-        if (this.isBust()) {
-            return PlayerResult.WIN;
+        if (bustExist(player)) {
+            return PlayerResult.makeResult(player);
         }
 
         return PlayerResult.calculateResult(player.calculateScore(), this.calculateScore());
+    }
+
+    private boolean bustExist(Player player) {
+        return player.isBust() || this.isBust();
     }
 
     @Override
