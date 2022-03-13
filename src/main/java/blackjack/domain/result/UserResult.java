@@ -2,8 +2,8 @@ package blackjack.domain.result;
 
 public class UserResult {
 
-    private String name;
-    private Result result;
+    private final String name;
+    private final Result result;
 
     public UserResult(String name, Result result) {
         this.name = name;

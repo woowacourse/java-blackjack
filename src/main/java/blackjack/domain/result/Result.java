@@ -9,8 +9,8 @@ public enum Result {
     WIN("승", (userScore, dealerScore) -> dealerScore > 21 || userScore > dealerScore),
     DRAW("무", (userScore, dealerScore) -> userScore == dealerScore);
 
-    private String name;
-    private ResultDeterminer determiner;
+    private final String name;
+    private final ResultDeterminer determiner;
 
     Result(String name, ResultDeterminer comparator) {
         this.name = name;
