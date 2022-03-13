@@ -40,7 +40,7 @@ public class BlackjackGame {
     }
 
     private void turnEachPlayerIfGuest(BlackjackController blackjackController, Player player) {
-        if (player.isDealer(Dealer.NAME)) {
+        if (player.isDealer()) {
             return;
         }
 
@@ -72,7 +72,7 @@ public class BlackjackGame {
         Results results = new Results();
         Player dealer = players.getPlayers()
                 .stream()
-                .filter(player -> player.isDealer(Dealer.NAME))
+                .filter(Player::isDealer)
                 .findFirst()
                 .orElseThrow();
         for (Player player : players.getPlayers()) {
@@ -82,7 +82,7 @@ public class BlackjackGame {
     }
 
     private void scoreResultIfGuest(Player dealer, Player player, Results results) {
-        if (player.isDealer(Dealer.NAME)) {
+        if (player.isDealer()) {
             return;
         }
         scorePlayers(dealer, player, results);

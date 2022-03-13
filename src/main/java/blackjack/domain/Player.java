@@ -6,7 +6,7 @@ public interface Player {
 
     boolean isOverLimit(int limit);
 
-    boolean isDealer(String name);
+    boolean isDealer();
 
     String getName();
 

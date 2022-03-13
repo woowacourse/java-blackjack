@@ -22,7 +22,7 @@ public class Players {
 
     public Player getDealer() {
         return players.stream()
-                .filter(player -> player.isDealer(Dealer.NAME))
+                .filter(Player::isDealer)
                 .findAny()
                 .orElseThrow();
     }
