@@ -27,7 +27,7 @@ public class OutputView {
     }
 
     private static void printDealerFirstCard(Dealer dealer) {
-        Card firstCard = dealer.getFirstCard();
+        Card firstCard = dealer.getCards().get(0);
         String dealerFirstCardName = firstCard.getName() + firstCard.getShape();
         System.out.println(dealer.getName() + "카드: " + dealerFirstCardName);
     }

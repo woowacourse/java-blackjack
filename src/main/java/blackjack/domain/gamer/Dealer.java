@@ -14,8 +14,4 @@ public class Dealer extends Gamer {
     boolean canDraw() {
         return getCardsNumberSum() <= ADDITIONAL_DISTRIBUTE_STANDARD;
     }
-
-    public Card getFirstCard() {
-        return super.getCards().get(0);
-    }
 }
