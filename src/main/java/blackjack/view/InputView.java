@@ -17,8 +17,8 @@ public class InputView {
         return names;
     }
 
-    public static String getAnswerOfAdditionalDraw(String name) {
+    public static boolean getAnswerOfAdditionalDraw(String name) {
         System.out.println(name + "는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return SCANNER.nextLine();
+        return Answer.from(SCANNER.nextLine()).isYes();
     }
 }
