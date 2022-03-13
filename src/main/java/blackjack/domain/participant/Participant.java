@@ -6,8 +6,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldingCard;
 
 public abstract class Participant {
-    private final String name;
-    private final HoldingCard holdingCard;
+    protected final String name;
+    protected final HoldingCard holdingCard;
 
     public Participant(String name, HoldingCard holdingCard) {
         this.name = name;
