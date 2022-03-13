@@ -10,8 +10,7 @@ public class HoldingCard {
     private final List<Card> holdingCard;
 
     public HoldingCard(List<Card> cards) {
-        this.holdingCard = new ArrayList<>();
-        holdingCard.addAll(cards);
+        this.holdingCard = new ArrayList<>(cards);
     }
 
     public void add(Card card) {

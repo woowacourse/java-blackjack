@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static blackjack.domain.DrawCommand.*;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.HoldingCard;
 import blackjack.domain.participant.Dealer;
@@ -17,16 +18,22 @@ import java.util.stream.Collectors;
 public class BlackjackGame {
     private final Participants players;
     private final Participant dealer;
+    private final CardDeck cardDeck;
 
     public BlackjackGame(List<String> playersNames) {
-        this.dealer = new Dealer(List.of(CardDeck.drawCard()));
+        this.cardDeck = CardDeck.createNewCardDeck();
+        this.dealer = new Dealer(List.of(cardDeck.drawCard()));
         this.players = new Participants(createPlayers(playersNames));
     }
 
     private List<Participant> createPlayers(List<String> playersNames) {
         return playersNames.stream()
-                .map(playerName -> new Player(playerName.trim(), CardDeck.drawTwoCards()))
+                .map(playerName -> new Player(playerName.trim(), setPlayerInitCards()))
                 .collect(Collectors.toList());
+    }
+
+    private List<Card> setPlayerInitCards() {
+        return List.of(cardDeck.drawCard(), cardDeck.drawCard());
     }
 
     public boolean isAllPlayerFinished() {
@@ -36,7 +43,7 @@ public class BlackjackGame {
     public HoldingCard drawCurrentPlayer(DrawCommand drawCommand) {
         Participant currentPlayer = players.getCurrentPlayer();
         if (drawCommand == YES) {
-            currentPlayer.receiveCard(CardDeck.drawCard());
+            currentPlayer.receiveCard(cardDeck.drawCard());
         }
         if (drawCommand == NO || currentPlayer.isBust()) {
             players.skipTurn();
@@ -46,9 +53,9 @@ public class BlackjackGame {
 
     public int dealerFinishGame() {
         int dealerGainCard = 0;
-        dealer.receiveCard(CardDeck.drawCard());
+        dealer.receiveCard(cardDeck.drawCard());
         while (!dealer.isFinished()) {
-            dealer.receiveCard(CardDeck.drawCard());
+            dealer.receiveCard(cardDeck.drawCard());
             dealerGainCard++;
         }
         return dealerGainCard;
