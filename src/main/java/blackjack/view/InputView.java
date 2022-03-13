@@ -1,9 +1,13 @@
 package blackjack.view;
 
+import static blackjack.view.exceptionMessages.InputViewExceptionMessage.*;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+
+import blackjack.view.exceptionMessages.InputViewExceptionMessage;
 
 public class InputView {
 	private static final Scanner scanner = new Scanner(System.in);
@@ -27,7 +31,7 @@ public class InputView {
 
 	private void validateNullString(String names) {
 		if (names == null) {
-			throw new IllegalArgumentException("문자열의 입력이 NULL 이면 안됩니다.");
+			throw new IllegalArgumentException(NULL_STRING_EXCEPTION.getMessage());
 		}
 	}
 
@@ -35,7 +39,7 @@ public class InputView {
 		System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 		String decision = scanner.nextLine();
 		if (!YES_OR_NO.matcher(decision).matches()) {
-			throw new IllegalArgumentException("입력은 Y,N(소문자 가능)만 입력해주세요.");
+			throw new IllegalArgumentException(DECISION_INPUT_EXCEPTION.getMessage());
 		}
 		return decision;
 	}
