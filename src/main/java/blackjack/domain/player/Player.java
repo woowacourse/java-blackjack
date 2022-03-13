@@ -11,6 +11,8 @@ public interface Player {
 
     boolean isBlackjack();
 
+    boolean isHittable();
+
     void hit(Card card);
 
     Cards getShowCards();
