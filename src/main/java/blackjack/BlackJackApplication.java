@@ -8,6 +8,7 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.WinResult;
+import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -19,7 +20,7 @@ public class BlackJackApplication {
     public static void main(String[] args) {
         CardDeck deck = new CardDeck(new BlackJackCardsGenerator());
         Dealer dealer = createDealer(deck);
-        List<Player> players = createPlayers(inputPlayerNames(), deck);
+        Players players = createPlayers(inputPlayerNames(), deck);
         play(deck, dealer, players);
     }
 
@@ -38,10 +39,11 @@ public class BlackJackApplication {
         }
     }
 
-    private static List<Player> createPlayers(List<Name> playerNames, CardDeck deck) {
-        return playerNames.stream()
+    private static Players createPlayers(List<Name> playerNames, CardDeck deck) {
+        List<Player> players = playerNames.stream()
             .map(name -> createPlayer(deck, name))
             .collect(Collectors.toUnmodifiableList());
+        return new Players(players);
     }
 
     private static Player createPlayer(CardDeck deck, Name name) {
@@ -49,21 +51,23 @@ public class BlackJackApplication {
         return new Player(name, cards);
     }
 
-    private static void play(CardDeck deck, Dealer dealer, List<Player> players) {
+    private static void play(CardDeck deck, Dealer dealer, Players players) {
         alertStart(dealer, players);
         proceedPlayersTurn(players, deck);
         proceedDealer(dealer, deck);
         showResult(dealer, players);
     }
 
-    private static void alertStart(Dealer dealer, List<Player> players) {
-        OutputView.printStartMessage(dealer, players);
+    private static void alertStart(Dealer dealer, Players players) {
+        OutputView.printStartMessage(dealer, players.getValues());
         OutputView.printDealerFirstCard(dealer);
-        players.forEach(player -> OutputView.printParticipantCards(player, player.calculateScore()));
+        players.getValues()
+            .forEach(player -> OutputView.printParticipantCards(player, player.calculateScore()));
     }
 
-    private static void proceedPlayersTurn(List<Player> players, CardDeck deck) {
-        players.forEach(player -> proceedPlayer(player, deck));
+    private static void proceedPlayersTurn(Players players, CardDeck deck) {
+        players.getValues()
+            .forEach(player -> proceedPlayer(player, deck));
     }
 
     private static void proceedPlayer(Player player, CardDeck deck) {
@@ -100,11 +104,11 @@ public class BlackJackApplication {
         }
     }
 
-    private static void showResult(Dealer dealer, List<Player> players) {
+    private static void showResult(Dealer dealer, Players players) {
         OutputView.printCardResultMessage();
         OutputView.printParticipantCards(dealer, dealer.calculateScore());
-        players.forEach(
-            player -> OutputView.printParticipantCards(player, player.calculateScore()));
-        OutputView.printWinResult(new WinResult(dealer, players));
+        players.getValues()
+            .forEach(player -> OutputView.printParticipantCards(player, player.calculateScore()));
+        OutputView.printWinResult(new WinResult(dealer, players.getValues()));
     }
 }
