@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import static blackjack.domain.CardsTestDataGenerator.generateCards;
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.domain.card.Suit.*;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import blackjack.domain.CardsArgumentsProvider;
@@ -19,6 +19,14 @@ public class CardsTest {
     @Test
     void 카드들_생성() {
         assertDoesNotThrow(() -> new Cards(generateCards()));
+    }
+
+    @DisplayName("Cards는 2개가 아닌 다른 갯수의 카드를 활용하여 생성할 경우 예외를 던진다.")
+    @Test
+    void 카드들_생성_실패() {
+        assertThatThrownBy(() -> new Cards(List.of(Card.of(ACE, CLOVER))))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("카드의 개수는 2장이어야 합니다.");
     }
 
     @DisplayName("카드의 총점을 계산한다.")
