@@ -17,68 +17,51 @@ import blackjack.domain.participant.Player;
 public class GameResultTest {
 
     @Test
-    @DisplayName("승리 결과 도출")
-    void getWinResult() {
-        List<Card> dealerCards = List.of(new Card(Suit.DIAMOND, Denomination.FOUR),
-            new Card(Suit.CLOVER, Denomination.NINE),
-            new Card(Suit.DIAMOND, Denomination.EIGHT));
-        List<Card> playerCards = List.of(new Card(Suit.HEART, Denomination.TWO),
-            new Card(Suit.SPADE, Denomination.EIGHT),
+    @DisplayName("딜러가 버스트나도 이미 결정된 결과는 그대로여야함 - 패배 상태")
+    void getSameLoseResult() {
+        List<Card> dealerCards = List.of(new Card(Suit.DIAMOND, Denomination.THREE),
             new Card(Suit.CLOVER, Denomination.TEN));
+        List<Card> playerCards = List.of(new Card(Suit.HEART, Denomination.TEN),
+            new Card(Suit.SPADE, Denomination.JACK),
+            new Card(Suit.SPADE, Denomination.QUEEN));
 
         Player player = new Player("player");
-
         Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
+
         dealer.initCards(dealerCards);
         player.initCards(playerCards);
 
         GameResult gameResult = new GameResult(participants);
+        gameResult.evaluateWinningResult(dealer, false);
 
-        assertThat(gameResult.getDealerResult().get(WinningResult.WIN)).isEqualTo(1);
+        dealer.addCard(new Card(Suit.CLOVER, Denomination.KING));
+        gameResult.evaluateWinningResult(dealer, false);
+
+        assertThat(gameResult.getPlayerResult().get(player)).isEqualTo(WinningResult.LOSE);
     }
 
     @Test
-    @DisplayName("패배 결과 도출")
-    void getLoseResult() {
+    @DisplayName("딜러가 버스트나도 이미 결정된 결과는 그대로여야함 - 승리 상태")
+    void getSameWinResult() {
         List<Card> dealerCards = List.of(new Card(Suit.DIAMOND, Denomination.THREE),
-            new Card(Suit.CLOVER, Denomination.NINE),
-            new Card(Suit.DIAMOND, Denomination.EIGHT));
-        List<Card> playerCards = List.of(new Card(Suit.HEART, Denomination.TWO),
-            new Card(Suit.SPADE, Denomination.EIGHT),
-            new Card(Suit.CLOVER, Denomination.ACE));
+            new Card(Suit.CLOVER, Denomination.TEN));
+        List<Card> playerCards = List.of(new Card(Suit.HEART, Denomination.TEN),
+            new Card(Suit.SPADE, Denomination.ACE));
 
         Player player = new Player("player");
-
         Participants participants = new Participants(List.of(player));
         Dealer dealer = participants.getDealer();
+
         dealer.initCards(dealerCards);
         player.initCards(playerCards);
 
         GameResult gameResult = new GameResult(participants);
+        gameResult.evaluateWinningResult(dealer, false);
 
-        assertThat(gameResult.getDealerResult().get(WinningResult.LOSE)).isEqualTo(1);
-    }
+        dealer.addCard(new Card(Suit.CLOVER, Denomination.EIGHT));
+        gameResult.evaluateWinningResult(dealer, false);
 
-    @Test
-    @DisplayName("무승부 결과 도출")
-    void getDrawResult() {
-        List<Card> dealerCards = List.of(new Card(Suit.DIAMOND, Denomination.THREE),
-            new Card(Suit.CLOVER, Denomination.NINE),
-            new Card(Suit.DIAMOND, Denomination.EIGHT));
-        List<Card> playerCards = List.of(new Card(Suit.HEART, Denomination.THREE),
-            new Card(Suit.SPADE, Denomination.NINE),
-            new Card(Suit.CLOVER, Denomination.EIGHT));
-
-        Player player = new Player("player");
-
-        Participants participants = new Participants(List.of(player));
-        Dealer dealer = participants.getDealer();
-        dealer.initCards(dealerCards);
-        player.initCards(playerCards);
-
-        GameResult gameResult = new GameResult(participants);
-
-        assertThat(gameResult.getDealerResult().get(WinningResult.DRAW)).isEqualTo(1);
+        assertThat(gameResult.getPlayerResult().get(player)).isEqualTo(WinningResult.WIN);
     }
 }

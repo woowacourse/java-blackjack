@@ -13,9 +13,16 @@ public class GameResult {
 
     public GameResult(Participants participants) {
         playerResult = new HashMap<>();
-        Dealer dealer = participants.getDealer();
         for (Player player : participants.getPlayers()) {
-            playerResult.put(player, WinningResult.of(player, dealer));
+            playerResult.put(player, WinningResult.NONE);
+        }
+    }
+
+    public void evaluateWinningResult(Dealer dealer, boolean isBlackjack) {
+        for (Player player : playerResult.keySet()) {
+            if (playerResult.get(player) == WinningResult.NONE) {
+                playerResult.put(player, WinningResult.of(player, dealer, isBlackjack));
+            }
         }
     }
 

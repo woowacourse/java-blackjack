@@ -15,6 +15,10 @@ public class ParticipantCards {
         this.cards = new ArrayList<>(cards);
     }
 
+    public boolean isBlackjack() {
+        return cards.get(0).getPoint() + cards.get(1).getPoint() == 21;
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }

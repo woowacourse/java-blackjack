@@ -16,9 +16,10 @@ public class BlackjackController {
 
     public void run() {
         BlackjackGame blackjackGame = new BlackjackGame(createParticipants());
-        dealInitialCards(blackjackGame);
-        dealMoreCards(blackjackGame);
-        printResult(blackjackGame.getParticipants());
+        GameResult gameResult = new GameResult(blackjackGame.getParticipants());
+        dealInitialCards(blackjackGame, gameResult);
+        dealMoreCards(blackjackGame, gameResult);
+        printResult(blackjackGame.getParticipants(), gameResult);
     }
 
     private Participants createParticipants() {
@@ -27,14 +28,17 @@ public class BlackjackController {
             .collect(Collectors.toList()));
     }
 
-    private void dealInitialCards(BlackjackGame blackjackGame) {
+    private void dealInitialCards(BlackjackGame blackjackGame, GameResult gameResult) {
         blackjackGame.initCards();
+        gameResult.evaluateWinningResult(blackjackGame.getParticipants().getDealer(), true);
         OutputView.printInitialCardInformation(blackjackGame.getParticipants());
     }
 
-    private void dealMoreCards(BlackjackGame blackjackGame) {
+    private void dealMoreCards(BlackjackGame blackjackGame, GameResult gameResult) {
         dealMoreCardsToPlayers(blackjackGame);
+        gameResult.evaluateWinningResult(blackjackGame.getParticipants().getDealer(), false);
         dealMoreCardsToDealer(blackjackGame);
+        gameResult.evaluateWinningResult(blackjackGame.getParticipants().getDealer(), false);
     }
 
     private void dealMoreCardsToPlayers(BlackjackGame blackjackGame) {
@@ -69,10 +73,8 @@ public class BlackjackController {
         }
     }
 
-    private void printResult(Participants participants) {
+    private void printResult(Participants participants, GameResult gameResult) {
         OutputView.printCardsAndPoint(participants);
-
-        GameResult gameResult = new GameResult(participants);
 
         Map<WinningResult, Integer> dealerResult = gameResult.getDealerResult();
         Map<Player, WinningResult> playerResult = gameResult.getPlayerResult();

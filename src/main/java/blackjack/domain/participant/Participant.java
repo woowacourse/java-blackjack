@@ -22,6 +22,10 @@ public class Participant {
         this.cards = new ParticipantCards(new ArrayList<>(cards));
     }
 
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
     public void addCard(Card card) {
         cards.addCard(card);
     }
