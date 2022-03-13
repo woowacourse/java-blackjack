@@ -26,13 +26,13 @@ public class CardDeck {
     }
 
     public Card draw() {
-        validateCards();
+        checkCardExist();
         Card card = cards.get(0);
         cards.remove(0);
         return card;
     }
 
-    private void validateCards() {
+    private void checkCardExist() {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 더 이상 뽑을 수 있는 카드가 없습니다.");
         }
