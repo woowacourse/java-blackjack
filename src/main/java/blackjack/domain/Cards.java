@@ -16,15 +16,16 @@ public class Cards {
 
     public int calculateTotalScore() {
         int totalScore = 0;
+
         for (Card card : value) {
             totalScore = card.getSumScore(totalScore);
         }
-
         return ConvertCloseBlackJack(totalScore);
     }
 
     private int ConvertCloseBlackJack(int totalScore) {
         int convertScore = totalScore;
+
         for (int i = 0; i < countAce(); i++) {
             convertScore = calculateAceScore(convertScore);
         }
@@ -42,11 +43,10 @@ public class Cards {
         if ((score + BONUS_ACE_ADD_SCORE) > BLACKJACK_SCORE) {
             return score;
         }
-
         return score + BONUS_ACE_ADD_SCORE;
     }
 
-    public void combine(Card card) {
+    public void add(Card card) {
         value.add(card);
     }
 

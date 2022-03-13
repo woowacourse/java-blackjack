@@ -19,7 +19,7 @@ public abstract class Gamer {
     }
 
     public void combine(Card card) {
-        cards.combine(card);
+        cards.add(card);
     }
 
     public boolean isBust() {

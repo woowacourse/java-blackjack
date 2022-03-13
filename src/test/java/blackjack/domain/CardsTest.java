@@ -35,7 +35,7 @@ public class CardsTest {
     void 카드_추가() {
         Cards cards = new Cards(generateCards());
 
-        cards.combine(Card.of(KING, DIAMOND));
+        cards.add(Card.of(KING, DIAMOND));
 
         assertThat(cards.getValue().size()).isEqualTo(3);
     }
