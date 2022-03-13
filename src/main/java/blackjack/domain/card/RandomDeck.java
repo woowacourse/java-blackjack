@@ -32,7 +32,7 @@ public class RandomDeck implements Deck {
         cards.clear();
         for (CardNumber number : CardNumber.values()) {
             Arrays.stream(Type.values())
-                    .forEach(type -> cards.add(new Card(number, type)));
+                    .forEach(type -> cards.add(Card.of(number, type)));
         }
         Collections.shuffle(cards);
     }

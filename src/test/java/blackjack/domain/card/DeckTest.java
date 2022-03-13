@@ -12,7 +12,7 @@ public class DeckTest {
     void pick_card() {
         Deck fixDeck = new FixDeck();
         Card pickedCard = fixDeck.pick();
-        Card card = new Card(CardNumber.TEN, Type.SPADE);
+        Card card = Card.of(CardNumber.TEN, Type.SPADE);
 
         assertThat(pickedCard).isEqualTo(card);
     }

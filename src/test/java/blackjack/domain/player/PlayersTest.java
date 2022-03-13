@@ -33,8 +33,8 @@ public class PlayersTest {
         Cards akiCards = aki.getCards();
         List<Card> cards = akiCards.get();
 
-        assertThat(cards.get(0)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
-        assertThat(cards.get(1)).isEqualTo(new Card(CardNumber.TEN, Type.SPADE));
+        assertThat(cards.get(0)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
+        assertThat(cards.get(1)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
     }
 
     @Test

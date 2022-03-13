@@ -24,8 +24,8 @@ public class DealerTest {
     @DisplayName("isValidRange 메서드는 카드의 총합이 17이상인지 검사한다.")
     void validate_range() {
         Player dealer = new Dealer();
-        dealer.hit(new Card(CardNumber.SEVEN, Type.CLOVER));
-        dealer.hit(new Card(CardNumber.TEN, Type.SPADE));
+        dealer.hit(Card.of(CardNumber.SEVEN, Type.CLOVER));
+        dealer.hit(Card.of(CardNumber.TEN, Type.SPADE));
 
         assertThat(dealer.isValidRange()).isFalse();
     }
@@ -34,22 +34,22 @@ public class DealerTest {
     @DisplayName("hit 메서드는 입력받은 카드를 카드뭉치에 저장한다.")
     void hit_test() {
         Player player = new Dealer();
-        player.hit(new Card(CardNumber.EIGHT, Type.CLOVER));
-        player.hit(new Card(CardNumber.FIVE, Type.SPADE));
-        player.hit(new Card(CardNumber.TEN, Type.DIAMOND));
+        player.hit(Card.of(CardNumber.EIGHT, Type.CLOVER));
+        player.hit(Card.of(CardNumber.FIVE, Type.SPADE));
+        player.hit(Card.of(CardNumber.TEN, Type.DIAMOND));
         List<Card> cards = player.getCards().get();
 
-        assertThat(cards.get(0)).isEqualTo(new Card(CardNumber.EIGHT, Type.CLOVER));
-        assertThat(cards.get(1)).isEqualTo(new Card(CardNumber.FIVE, Type.SPADE));
-        assertThat(cards.get(2)).isEqualTo(new Card(CardNumber.TEN, Type.DIAMOND));
+        assertThat(cards.get(0)).isEqualTo(Card.of(CardNumber.EIGHT, Type.CLOVER));
+        assertThat(cards.get(1)).isEqualTo(Card.of(CardNumber.FIVE, Type.SPADE));
+        assertThat(cards.get(2)).isEqualTo(Card.of(CardNumber.TEN, Type.DIAMOND));
     }
 
     @Test
     @DisplayName("Dealer 클래스가 가진 카드의 점수를 계산하여 반환한다.")
     void get_score() {
         Player player = new Dealer();
-        player.hit(new Card(CardNumber.EIGHT, Type.CLOVER));
-        player.hit(new Card(CardNumber.THREE, Type.SPADE));
+        player.hit(Card.of(CardNumber.EIGHT, Type.CLOVER));
+        player.hit(Card.of(CardNumber.THREE, Type.SPADE));
 
         assertThat(player.getScore()).isEqualTo(11);
     }
@@ -58,8 +58,8 @@ public class DealerTest {
     @DisplayName("Ace 가진 카드의 총합이 21을 넘지 않으면 Ace는 11로 계산한다.")
     void ace_calculate_11() {
         Player player = new Dealer();
-        player.hit(new Card(CardNumber.TEN, Type.CLOVER));
-        player.hit(new Card(CardNumber.ACE, Type.SPADE));
+        player.hit(Card.of(CardNumber.TEN, Type.CLOVER));
+        player.hit(Card.of(CardNumber.ACE, Type.SPADE));
 
         assertThat(player.getScore()).isEqualTo(21);
     }
@@ -68,9 +68,9 @@ public class DealerTest {
     @DisplayName("Ace 가진 카드의 총합이 21을 넘으면 Ace는 1로 계산한다.")
     void ace_calculate_1() {
         Player player = new Dealer();
-        player.hit(new Card(CardNumber.TEN, Type.CLOVER));
-        player.hit(new Card(CardNumber.THREE, Type.HEART));
-        player.hit(new Card(CardNumber.ACE, Type.SPADE));
+        player.hit(Card.of(CardNumber.TEN, Type.CLOVER));
+        player.hit(Card.of(CardNumber.THREE, Type.HEART));
+        player.hit(Card.of(CardNumber.ACE, Type.SPADE));
 
         assertThat(player.getScore()).isEqualTo(14);
     }
