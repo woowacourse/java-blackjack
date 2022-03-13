@@ -20,7 +20,8 @@ class FinishedTest {
     @Test
     @DisplayName("턴이 종료된 상태에서 카드를 더 받으려 하면 예외를 발생시킨다.")
     void drawException() {
-        assertThatThrownBy(() -> state.draw(Card.of(CardPattern.SPADE, CardNumber.TWO)))
+        final Card card = Card.of(CardPattern.SPADE, CardNumber.TWO);
+        assertThatThrownBy(() -> state.draw(card))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("턴이 종료 된 플레이어는 카드를 받을 수 없습니다.");
     }
