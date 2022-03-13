@@ -5,7 +5,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.strategy.ManualCardStrategy;
-import blackjack.domain.result.WinningResult;
+import blackjack.domain.result.PlayerResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -73,7 +73,7 @@ class DealerTest {
             dealer.drawCard(deck);
         }
 
-        assertThat(dealer.judgeWinner(new Player("sun"))).isEqualTo(WinningResult.WIN);
+        assertThat(dealer.judgeWinner(new Player("sun"))).isEqualTo(PlayerResult.WIN);
     }
 
     private static Stream<Arguments> provideForDealerLoseByBurst() {
@@ -94,7 +94,7 @@ class DealerTest {
     @MethodSource("provideForDealerCalculateWinningResultTest")
     @DisplayName("딜러는 승패를 결정한다.")
     void dealerCalculateWinningResultTest(final List<Card> initializedCards,
-                                          final WinningResult expectedWinningResult) {
+                                          final PlayerResult expectedPlayerResult) {
         final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
         manualCardStrategy.initCards(initializedCards);
         final Deck deck = Deck.generate(manualCardStrategy);
@@ -106,8 +106,8 @@ class DealerTest {
             dealer.drawCard(deck);
         }
 
-        final WinningResult actualWinningResult = dealer.judgeWinner(player);
-        assertThat(actualWinningResult).isEqualTo(expectedWinningResult);
+        final PlayerResult actualPlayerResult = dealer.judgeWinner(player);
+        assertThat(actualPlayerResult).isEqualTo(expectedPlayerResult);
     }
 
     private static Stream<Arguments> provideForDealerCalculateWinningResultTest() {
@@ -119,7 +119,7 @@ class DealerTest {
                                 new Card(CardPattern.DIAMOND, CardNumber.TWO),
                                 new Card(CardPattern.DIAMOND, CardNumber.THREE)
                         ),
-                        WinningResult.LOSS
+                        PlayerResult.LOSS
                 ),
                 Arguments.of(
                         List.of(
@@ -129,7 +129,7 @@ class DealerTest {
                                 new Card(CardPattern.DIAMOND, CardNumber.JACK),
                                 new Card(CardPattern.DIAMOND, CardNumber.QUEEN)
                         ),
-                        WinningResult.WIN
+                        PlayerResult.WIN
                 )
         );
     }

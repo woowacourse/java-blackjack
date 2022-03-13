@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.WinningResult;
+import blackjack.domain.result.PlayerResult;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,15 +27,15 @@ public class Dealer extends Participant {
         return calculateScore() < DEALER_MIN_SCORE;
     }
 
-    public WinningResult judgeWinner(final Player player) {
+    public PlayerResult judgeWinner(final Player player) {
         if (player.isBust()) {
-            return WinningResult.LOSS;
+            return PlayerResult.LOSS;
         }
         if (this.isBust()) {
-            return WinningResult.WIN;
+            return PlayerResult.WIN;
         }
 
-        return WinningResult.calculateResult(player.calculateScore(), this.calculateScore());
+        return PlayerResult.calculateResult(player.calculateScore(), this.calculateScore());
     }
 
     @Override

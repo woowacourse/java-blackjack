@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.MatchResult;
-import blackjack.domain.result.WinningResult;
+import blackjack.domain.result.PlayerResult;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,11 +32,11 @@ public class Players {
     }
 
     public MatchResult judgeWinners(Dealer dealer) {
-        final Map<String, WinningResult> winningResults = new HashMap<>();
+        final Map<String, PlayerResult> winningResults = new HashMap<>();
         for (final Player player : players) {
             final String playerName = player.getName();
-            final WinningResult winningResult = dealer.judgeWinner(player);
-            winningResults.put(playerName, winningResult);
+            final PlayerResult playerResult = dealer.judgeWinner(player);
+            winningResults.put(playerName, playerResult);
         }
         return new MatchResult(winningResults);
     }
