@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.game.winningstrategy.BlackjackWinningStrategy;
+import blackjack.domain.game.winningstrategy.FinalWinningStrategy;
+import blackjack.domain.game.winningstrategy.PlayingWinningStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -33,10 +36,11 @@ public class GameResultTest {
         player.initCards(playerCards);
 
         GameResult gameResult = new GameResult(participants);
-        gameResult.evaluateWinningResult(dealer, false);
+        gameResult.evaluateWinningResult(dealer, new BlackjackWinningStrategy());
+        gameResult.evaluateWinningResult(dealer, new PlayingWinningStrategy());
 
         dealer.addCard(new Card(Suit.CLOVER, Denomination.KING));
-        gameResult.evaluateWinningResult(dealer, false);
+        gameResult.evaluateWinningResult(dealer, new FinalWinningStrategy());
 
         assertThat(gameResult.getPlayerResult().get(player)).isEqualTo(WinningResult.LOSE);
     }
@@ -57,10 +61,10 @@ public class GameResultTest {
         player.initCards(playerCards);
 
         GameResult gameResult = new GameResult(participants);
-        gameResult.evaluateWinningResult(dealer, false);
+        gameResult.evaluateWinningResult(dealer, new BlackjackWinningStrategy());
 
         dealer.addCard(new Card(Suit.CLOVER, Denomination.EIGHT));
-        gameResult.evaluateWinningResult(dealer, false);
+        gameResult.evaluateWinningResult(dealer, new FinalWinningStrategy());
 
         assertThat(gameResult.getPlayerResult().get(player)).isEqualTo(WinningResult.WIN);
     }

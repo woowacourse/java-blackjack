@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import java.util.HashMap;
 import java.util.Map;
 
+import blackjack.domain.game.winningstrategy.WinningStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -18,12 +19,16 @@ public class GameResult {
         }
     }
 
-    public void evaluateWinningResult(Dealer dealer, boolean isBlackjack) {
+    public void evaluateWinningResult(Dealer dealer, WinningStrategy winningStrategy) {
         for (Player player : playerResult.keySet()) {
             if (playerResult.get(player) == WinningResult.NONE) {
-                playerResult.put(player, WinningResult.of(player, dealer, isBlackjack));
+                playerResult.put(player, winningStrategy.getResult(dealer, player));
             }
         }
+    }
+
+    public boolean isPlayerTurnEnd(Player player) {
+        return playerResult.get(player) != WinningResult.NONE;
     }
 
     public Map<Player, WinningResult> getPlayerResult() {

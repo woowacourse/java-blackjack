@@ -7,6 +7,10 @@ import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
 import blackjack.domain.game.TurnManager;
 import blackjack.domain.game.WinningResult;
+import blackjack.domain.game.winningstrategy.BlackjackWinningStrategy;
+import blackjack.domain.game.winningstrategy.FinalWinningStrategy;
+import blackjack.domain.game.winningstrategy.PlayingWinningStrategy;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
@@ -30,22 +34,24 @@ public class BlackjackController {
 
     private void dealInitialCards(BlackjackGame blackjackGame, GameResult gameResult) {
         blackjackGame.initCards();
-        gameResult.evaluateWinningResult(blackjackGame.getParticipants().getDealer(), true);
+        Dealer dealer = blackjackGame.getParticipants().getDealer();
+        gameResult.evaluateWinningResult(dealer, new BlackjackWinningStrategy());
         OutputView.printInitialCardInformation(blackjackGame.getParticipants());
     }
 
     private void dealMoreCards(BlackjackGame blackjackGame, GameResult gameResult) {
-        dealMoreCardsToPlayers(blackjackGame);
-        gameResult.evaluateWinningResult(blackjackGame.getParticipants().getDealer(), false);
+        Dealer dealer = blackjackGame.getParticipants().getDealer();
+        dealMoreCardsToPlayers(blackjackGame, gameResult);
+        gameResult.evaluateWinningResult(dealer, new PlayingWinningStrategy());
         dealMoreCardsToDealer(blackjackGame);
-        gameResult.evaluateWinningResult(blackjackGame.getParticipants().getDealer(), false);
+        gameResult.evaluateWinningResult(dealer, new FinalWinningStrategy());
     }
 
-    private void dealMoreCardsToPlayers(BlackjackGame blackjackGame) {
-        TurnManager turnManager = new TurnManager(blackjackGame.getParticipants().getPlayers());
+    private void dealMoreCardsToPlayers(BlackjackGame blackjackGame, GameResult gameResult) {
+        TurnManager turnManager = new TurnManager(blackjackGame.getParticipants().getPlayers(), gameResult);
         while (!turnManager.isEndAllTurn()) {
             dealMoreCardsToPlayer(blackjackGame, turnManager);
-            turnManager.turnToNext();
+            turnManager.turnToNext(gameResult);
         }
     }
 

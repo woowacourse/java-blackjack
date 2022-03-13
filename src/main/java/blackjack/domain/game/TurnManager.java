@@ -13,9 +13,12 @@ public class TurnManager {
     private final List<Player> players;
     private int turnIndex;
 
-    public TurnManager(List<Player> players) {
+    public TurnManager(List<Player> players, GameResult gameResult) {
         turnIndex = DEFAULT_TURN_INDEX;
         this.players = new ArrayList<>(players);
+        while (!isEndAllTurn() && gameResult.isPlayerTurnEnd(getCurrentPlayer())) {
+            turnIndex++;
+        }
     }
 
     public boolean isEndAllTurn() {
@@ -33,8 +36,11 @@ public class TurnManager {
         }
     }
 
-    public void turnToNext() {
-        if (turnIndex < players.size()) {
+    public void turnToNext(GameResult gameResult) {
+        if (!isEndAllTurn()) {
+            turnIndex++;
+        }
+        while (!isEndAllTurn() && gameResult.isPlayerTurnEnd(getCurrentPlayer())) {
             turnIndex++;
         }
     }

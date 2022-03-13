@@ -10,11 +10,14 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.game.winningstrategy.BlackjackWinningStrategy;
+import blackjack.domain.game.winningstrategy.FinalWinningStrategy;
+import blackjack.domain.game.winningstrategy.PlayingWinningStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 
-public class WinningResultTest {
+public class WinningStrategyTest {
 
     @Test
     @DisplayName("딜러가 블랙잭인 경우 플레이어가 블랙잭이 아닌 이상 패배")
@@ -31,7 +34,8 @@ public class WinningResultTest {
         dealer.initCards(dealerCards);
         player.initCards(playerCards);
 
-        assertThat(WinningResult.of(player, dealer, true)).isEqualTo(WinningResult.LOSE);
+        assertThat(new BlackjackWinningStrategy().getResult(dealer, player))
+            .isEqualTo(WinningResult.LOSE);
     }
 
     @Test
@@ -49,7 +53,8 @@ public class WinningResultTest {
         dealer.initCards(dealerCards);
         player.initCards(playerCards);
 
-        assertThat(WinningResult.of(player, dealer, true)).isEqualTo(WinningResult.DRAW);
+        assertThat(new BlackjackWinningStrategy().getResult(dealer, player))
+            .isEqualTo(WinningResult.DRAW);
     }
 
     @Test
@@ -67,7 +72,8 @@ public class WinningResultTest {
         dealer.initCards(dealerCards);
         player.initCards(playerCards);
 
-        assertThat(WinningResult.of(player, dealer, true)).isEqualTo(WinningResult.WIN);
+        assertThat(new BlackjackWinningStrategy().getResult(dealer, player))
+            .isEqualTo(WinningResult.WIN);
     }
 
     @Test
@@ -86,7 +92,8 @@ public class WinningResultTest {
         dealer.initCards(dealerCards);
         player.initCards(playerCards);
 
-        assertThat(WinningResult.of(player, dealer, false)).isEqualTo(WinningResult.LOSE);
+        assertThat(new PlayingWinningStrategy().getResult(dealer, player))
+            .isEqualTo(WinningResult.LOSE);
     }
 
     @Test
@@ -105,7 +112,8 @@ public class WinningResultTest {
         dealer.initCards(dealerCards);
         player.initCards(playerCards);
 
-        assertThat(WinningResult.of(player, dealer, false)).isEqualTo(WinningResult.WIN);
+        assertThat(new FinalWinningStrategy().getResult(dealer, player))
+            .isEqualTo(WinningResult.WIN);
     }
 
     @Test
@@ -123,7 +131,8 @@ public class WinningResultTest {
         dealer.initCards(dealerCards);
         player.initCards(playerCards);
 
-        assertThat(WinningResult.of(player, dealer, false)).isEqualTo(WinningResult.WIN);
+        assertThat(new FinalWinningStrategy().getResult(dealer, player))
+            .isEqualTo(WinningResult.WIN);
     }
 
     @Test
@@ -141,7 +150,8 @@ public class WinningResultTest {
         dealer.initCards(dealerCards);
         player.initCards(playerCards);
 
-        assertThat(WinningResult.of(player, dealer, false)).isEqualTo(WinningResult.LOSE);
+        assertThat(new FinalWinningStrategy().getResult(dealer, player))
+            .isEqualTo(WinningResult.LOSE);
     }
 
     @Test
@@ -159,6 +169,7 @@ public class WinningResultTest {
         dealer.initCards(dealerCards);
         player.initCards(playerCards);
 
-        assertThat(WinningResult.of(player, dealer, false)).isEqualTo(WinningResult.DRAW);
+        assertThat(new FinalWinningStrategy().getResult(dealer, player))
+            .isEqualTo(WinningResult.DRAW);
     }
 }
