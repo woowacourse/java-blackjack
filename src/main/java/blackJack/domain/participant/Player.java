@@ -1,5 +1,7 @@
 package blackJack.domain.participant;
 
+import blackJack.domain.result.WinOrLose;
+
 public class Player extends Participant {
 
     private static final String DEALER_NAME = "딜러";
@@ -20,5 +22,9 @@ public class Player extends Participant {
     @Override
     public boolean hasNextTurn() {
         return this.getScore() <= BLACK_JACK;
+    }
+
+    public WinOrLose getMatchResult(Participant participant) {
+        return WinOrLose.calculateWinOrLose(getScore(), participant.getScore());
     }
 }
