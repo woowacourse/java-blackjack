@@ -39,16 +39,15 @@ public class BlackjackController {
         }
         blackjack.receiveOneMoreCard(player);
         OutputView.printPlayerCards(player);
-        moreHit(blackjack, player);
+        moreHit(blackjack, player, command);
     }
 
-    private void moreHit(Blackjack blackjack, Player player) {
-        Command command;
-        do {
+    private void moreHit(Blackjack blackjack, Player player, Command command) {
+        while (blackjack.canHit(player, command)) {
             command = Command.find(InputView.inputCommand(player));
             blackjack.receiveOneMoreCard(player);
             OutputView.printPlayerCards(player);
-        } while (blackjack.canHit(player, command));
+        }
     }
 
     private void hitDealer(Blackjack blackjack) {
