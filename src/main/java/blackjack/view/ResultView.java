@@ -26,14 +26,17 @@ public class ResultView {
     private static final String PRINT_RESULTS_DELIMITER = ": ";
     private static final String SPACE_DELIMITER = " ";
 
-    public static void printInitCard(Player dealer, Players players) {
-        System.out.println(String.format(PRINT_INIT_CARD_FORMAT, printPlayersName(players)));
+    public static void printInitCard(Players players) {
+        Player dealer = players.getDealer();
+        List<Player> participants = players.getParticipants();
+
+        System.out.println(String.format(PRINT_INIT_CARD_FORMAT, printParticipantsName(participants)));
         printInitDealerCard(dealer);
-        printGamersCard(players);
+        printParticipantsCard(participants);
     }
 
-    private static String printPlayersName(Players players) {
-        return players.get().stream()
+    private static String printParticipantsName(List<Player> participants) {
+        return participants.stream()
                 .map(Player::getName)
                 .map(Name::get)
                 .collect(Collectors.joining(CARD_DELIMITER));
@@ -45,14 +48,14 @@ public class ResultView {
                 getNumberAndType(dealerCards.get(0)));
     }
 
-    private static void printGamersCard(Players players) {
-        for (Player player : players.get()) {
-            printGamerCard(player);
+    private static void printParticipantsCard(List<Player> participants) {
+        for (Player participant : participants) {
+            printPlayerCard(participant);
         }
         System.out.println();
     }
 
-    public static void printGamerCard(Player player) {
+    public static void printPlayerCard(Player player) {
         String cards = player.getCards().get().stream()
                 .map(ResultView::getNumberAndType)
                 .collect(Collectors.joining(CARD_DELIMITER));
@@ -68,11 +71,12 @@ public class ResultView {
         System.out.println(PRINT_DEALER_HIT_MESSAGE);
     }
 
-    public static void printCardsResults(Player dealer, Players players) {
-        System.out.println();
+    public static void printCardsResults(Players players) {
+        Player dealer = players.getDealer();
+        List<Player> participants = players.getParticipants();
+
         printResult(dealer);
-        players.get()
-                .forEach(ResultView::printResult);
+        participants.forEach(ResultView::printResult);
         System.out.println();
     }
 

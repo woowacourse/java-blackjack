@@ -1,30 +1,52 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Deck;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Players {
 
-    private static final int MAX_GAMER = 10;
-    private static final String TOO_MANY_GAMER_ERROR_MESSAGE = "최대 플레이어 수는 " + MAX_GAMER + "명 입니다.";
-    private static final String DUPLICATE_NAME_ERROR_MESSAGE = "플레이어의 이름이 중복되었습니다.";
+    private static final int MAX_GAMER = 8;
+    private static final String NULL_PARTICIPANT_ERROR_MESSAGE = "참가자로 null이 입력되었습니다..";
     private static final String SAME_DEALER_NAME_ERROR_MESSAGE = "플레이어의 이름가 딜러면 안된다.";
-    private static final String DEALER_NAME = "딜러";
+    private static final String PLAYER_SIZE_ERROR_MESSAGE = "플레이어 수는 1명 이상 " + MAX_GAMER + "명 이하여야 합니다.";
+    private static final String DUPLICATE_NAME_ERROR_MESSAGE = "플레이어의 이름이 중복되었습니다.";
+    private static final String NO_SUCH_DEALER_ERROR_MESSAGE = "딜러가 없습니다.";
 
     private final List<Player> players;
 
-    public Players(List<Player> players) {
-        validateSize(players);
-        validateDuplicateName(players);
-        validateSameDealerName(players);
+    public Players(List<Player> participants) {
+        Dealer dealer = new Dealer();
+        validateNull(participants);
+        validateHasDealerName(dealer, participants);
+        validateSize(participants);
+        validateDuplicateName(participants);
 
+        List<Player> players = new ArrayList<>(List.of(dealer));
+        players.addAll(participants);
         this.players = players;
     }
 
+    private void validateNull(List<Player> participants) {
+        if (participants == null) {
+            throw new NullPointerException(NULL_PARTICIPANT_ERROR_MESSAGE);
+        }
+    }
+
+    private void validateHasDealerName(Dealer dealer, List<Player> participants) {
+        boolean hasSameDealerName = participants.stream()
+                .anyMatch(participant -> participant.getName().equals(dealer.getName()));
+
+        if (hasSameDealerName) {
+            throw new IllegalArgumentException(SAME_DEALER_NAME_ERROR_MESSAGE);
+        }
+    }
+
     private void validateSize(List<Player> players) {
-        if (players.size() > MAX_GAMER) {
-            throw new IllegalArgumentException(TOO_MANY_GAMER_ERROR_MESSAGE);
+        if (players.isEmpty() || MAX_GAMER < players.size()) {
+            throw new IllegalArgumentException(PLAYER_SIZE_ERROR_MESSAGE);
         }
     }
 
@@ -39,15 +61,6 @@ public class Players {
         }
     }
 
-    private void validateSameDealerName(List<Player> players) {
-        boolean hasSameDealerName = players.stream()
-                .anyMatch(gamer -> gamer.getName().get().equals(DEALER_NAME));
-
-        if (hasSameDealerName) {
-            throw new IllegalArgumentException(SAME_DEALER_NAME_ERROR_MESSAGE);
-        }
-    }
-
     public void dealCards(Deck deck) {
         for (Player player : players) {
             player.hit(deck.pick());
@@ -57,6 +70,19 @@ public class Players {
 
     public List<Player> get() {
         return players;
+    }
+
+    public Player getDealer() {
+        return players.stream()
+                .filter(Player::isDealer)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(NO_SUCH_DEALER_ERROR_MESSAGE));
+    }
+
+    public List<Player> getParticipants() {
+        return players.stream()
+                .filter(player -> !player.isDealer())
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Override

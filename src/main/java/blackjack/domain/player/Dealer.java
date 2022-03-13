@@ -10,6 +10,11 @@ public class Dealer extends AbstractPlayer implements Player {
     }
 
     @Override
+    public boolean isDealer() {
+        return true;
+    }
+
+    @Override
     public boolean isValidRange() {
         return getScore() < MAX_SCORE;
     }

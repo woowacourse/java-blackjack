@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.player.Dealer;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -25,71 +24,66 @@ public class BlackjackController {
         List<String> names = InputView.requestNames();
         Deck deck = new RandomDeck();
 
-        Player dealer = createDealer(deck);
         Players players = createPlayers(names, deck);
-        ResultView.printInitCard(dealer, players);
+        ResultView.printInitCard(players);
 
-        play(deck, dealer, players);
-        printResults(dealer, players);
-    }
-
-    private Player createDealer(Deck deck) {
-        Player dealer = new Dealer();
-        dealer.hit(deck.pick());
-        dealer.hit(deck.pick());
-        return dealer;
+        play(players, deck);
+        printResults(players);
     }
 
     private Players createPlayers(List<String> names, Deck deck) {
-        Players players = new Players(names.stream()
+        List<Player> participants = names.stream()
                 .map(Name::new)
                 .map(Participant::new)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+
+        Players players = new Players(participants);
         players.dealCards(deck);
         return players;
     }
 
-    private void play(Deck deck, Player dealer, Players players) {
-        takeTurns(players, deck);
-        takeDealerCards(dealer, deck);
+    private void play(Players players, Deck deck) {
+        takeParticipantTurns(players.getParticipants(), deck);
+        takeDealerCards(players.getDealer(), deck);
     }
 
-    private void takeTurns(Players players, Deck deck) {
-        players.get()
-                .forEach(gamer -> takePlayerCards(gamer, deck));
+    private void takeParticipantTurns(List<Player> participants, Deck deck) {
+        participants.forEach(participant -> takeParticipantCards(participant, deck));
     }
 
-    private void takePlayerCards(Player player, Deck deck) {
+    private void takeParticipantCards(Player player, Deck deck) {
         if (canHit(player)) {
             player.hit(deck.pick());
-            ResultView.printGamerCard(player);
-            takePlayerCards(player, deck);
+            ResultView.printPlayerCard(player);
+            takeParticipantCards(player, deck);
         }
     }
 
     private boolean canHit(Player player) {
-        String hitOrStayAnswer = InputView.requestHitOrStay(player.getName());
-        return player.isValidRange()
-                && hitOrStayAnswer.equals(HIT_ANSWER);
+        if (!player.isValidRange()) {
+            return false;
+        }
+        return InputView.requestHitOrStay(player.getName()).equals(HIT_ANSWER);
     }
 
-    private void takeDealerCards(Player player, Deck deck) {
-        while (player.isValidRange()) {
+    private void takeDealerCards(Player dealer, Deck deck) {
+        while (dealer.isValidRange()) {
             ResultView.printDealerHitMessage();
-            player.hit(deck.pick());
+            dealer.hit(deck.pick());
         }
     }
 
-    private void printResults(Player dealer, Players players) {
-        ResultView.printCardsResults(dealer, players);
-        ResultView.printOutcomeResults(calculateOutcomeResults(dealer, players));
+    private void printResults(Players players) {
+        ResultView.printCardsResults(players);
+        ResultView.printOutcomeResults(calculateOutcomeResults(players));
     }
 
-    private Results calculateOutcomeResults(Player dealer, Players players) {
+    private Results calculateOutcomeResults(Players players) {
+        Player dealer = players.getDealer();
         OutcomeResults dealerResult = new OutcomeResults();
         Map<Player, OutcomeResults> results = new LinkedHashMap<>();
 
-        for (Player player : players.get()) {
+        for (Player player : players.getParticipants()) {
             results.put(player, new OutcomeResults());
             results.get(player).increase(Outcome.compare(player, dealer));
             dealerResult.increase(Outcome.compare(dealer, player));

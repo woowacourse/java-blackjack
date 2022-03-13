@@ -11,6 +11,8 @@ public interface Player {
 
     boolean isBLACKJACK();
 
+    boolean isDealer();
+
     Name getName();
 
     Cards getCards();

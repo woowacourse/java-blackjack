@@ -44,6 +44,11 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
+    public boolean isDealer() {
+        return false;
+    }
+
+    @Override
     public Name getName() {
         return name;
     }
