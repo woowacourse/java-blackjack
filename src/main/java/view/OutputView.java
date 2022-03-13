@@ -16,7 +16,7 @@ public class OutputView {
     private static final String COMMA = ", ";
     private static final String HAND_OUT_FORMAT = "%s와 %s에게 2장의 카드를 나누었습니다.";
     private static final String STATUS_FORMAT = "%s: %s";
-    private static final String DEALER_HIT_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String DEALER_HIT_CARD_MESSAGE = "딜러는 16이하라 %d장의 카드를 더 받았습니다.";
     private static final String CARDS_SCORE_MESSAGE = "%s - 결과: %d";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
     private static final String RECORD_FORMAT = "%d승 %d무 %d패";
@@ -79,9 +79,10 @@ public class OutputView {
         }
     }
 
-    public void showDealerHitCardMessage() {
+    public void showDealerHitCardMessage(int count) {
         System.out.print(System.lineSeparator());
-        System.out.println(DEALER_HIT_CARD_MESSAGE);
+        System.out.printf(DEALER_HIT_CARD_MESSAGE, count);
+        System.out.print(System.lineSeparator());
     }
 
     public void showResult(ResultDto resultDto, List<String> names, List<Result> results) {

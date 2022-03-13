@@ -56,10 +56,12 @@ public class BlackJackController {
     }
 
     private void hitCardByDealer(Dealer dealer, Deck deck) {
-        if (dealer.canDrawCard()) {
+        int hitCount = 0;
+        while (dealer.canDrawCard()) {
+            hitCount++;
             dealer.hit(deck.handOut());
-            outputView.showDealerHitCardMessage();
         }
+        outputView.showDealerHitCardMessage(hitCount);
     }
 
     private void showFinalTurn(Players players, Dealer dealer) {
