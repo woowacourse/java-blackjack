@@ -16,9 +16,4 @@ public class Dealer extends Player {
         playingCards.addCard(cardDeck.pop());
         return playingCards.getCardSum() > GET_CARD_UPPER_BOUND;
     }
-
-    @Override
-    public void receiveCard(CardDeck cardDeck) {
-        playingCards.addCard(cardDeck.pop());
-    }
 }

@@ -17,11 +17,6 @@ public class Gambler extends Player {
     }
 
     @Override
-    public void receiveCard(final CardDeck cardDeck) {
-        playingCards.addCard(cardDeck.addCard());
-    }
-
-    @Override
     public int getSumOfCards() {
         return super.getSumOfCards();
     }

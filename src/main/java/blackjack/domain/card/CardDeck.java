@@ -15,12 +15,8 @@ public class CardDeck {
         this.playingCards = playingCards;
     }
 
-    public PlayingCard addCard() {
-        return playingCards.pop();
-    }
-
     public void drawTo(Player player) {
-        player.getCard(playingCards.pop());
+        player.receiveCard(playingCards.pop());
     }
 
     public PlayingCard pop() {

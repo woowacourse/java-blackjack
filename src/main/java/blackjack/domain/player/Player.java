@@ -15,11 +15,9 @@ public abstract class Player {
         this.name = name;
     }
 
-    public void getCard(final PlayingCard playingCard) {
+    public void receiveCard(final PlayingCard playingCard) {
         playingCards.addCard(playingCard);
     }
-
-    public abstract void receiveCard(CardDeck cardDeck);
 
     public abstract boolean isFinished(final CardDeck cardDeck);
 
