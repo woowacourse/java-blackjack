@@ -7,11 +7,11 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import blackjack.domain.Game;
+import blackjack.domain.PlayStatus;
 import blackjack.domain.Record;
 import blackjack.domain.RecordFactory;
 import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.PlayStatus;
 import blackjack.domain.card.deckstrategy.RandomDeck;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;

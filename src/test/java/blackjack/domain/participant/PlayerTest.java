@@ -11,10 +11,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import blackjack.domain.NoShuffleDeck;
+import blackjack.domain.PlayStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.PlayStatus;
 
 class PlayerTest {
 

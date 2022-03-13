@@ -2,10 +2,10 @@ package blackjack.domain.participant;
 
 import java.util.List;
 
+import blackjack.domain.PlayStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.PlayStatus;
 
 public class Dealer extends Participant {
 

@@ -1,13 +1,13 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.PlayStatus.*;
+import static blackjack.domain.PlayStatus.*;
 
 import java.util.Set;
 
+import blackjack.domain.PlayStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.PlayStatus;
 
 public abstract class Participant {
 

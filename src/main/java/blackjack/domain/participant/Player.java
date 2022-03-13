@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.PlayStatus;
+import blackjack.domain.PlayStatus;
 
 public class Player extends Participant {
 

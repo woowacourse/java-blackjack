@@ -11,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.PlayStatus;
 import blackjack.domain.participant.Player;
 
 public class GameTest {

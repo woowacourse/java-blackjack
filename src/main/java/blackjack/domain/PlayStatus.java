@@ -1,11 +1,11 @@
-package blackjack.domain.card;
+package blackjack.domain;
 
 public enum PlayStatus {
     BUST,
     HIT,
     STAY;
 
-    public static final int BUST_SCORE = 21;
+    static final int BUST_SCORE = 21;
 
     public static PlayStatus hitOrBust(int sum) {
         if (sum > BUST_SCORE) {

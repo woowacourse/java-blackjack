@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import blackjack.domain.card.PlayStatus;
+import blackjack.domain.PlayStatus;
 
 public class InputView {
 

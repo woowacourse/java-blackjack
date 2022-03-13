@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.card.PlayStatus.*;
+import static blackjack.domain.PlayStatus.*;
 
 import java.util.Arrays;
 

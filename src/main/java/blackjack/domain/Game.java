@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.PlayStatus;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
