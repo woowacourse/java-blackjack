@@ -1,12 +1,12 @@
 package blackjack.domain.dto;
 
-import java.util.List;
+import java.util.Map;
 
 public class DealerResultDto {
 	private String name;
-	private List<String> outcome;
+	private Map<String, Integer> outcome;
 
-	public DealerResultDto(String name, List<String> outcome) {
+	public DealerResultDto(String name, Map<String, Integer> outcome) {
 		this.name = name;
 		this.outcome = outcome;
 	}
@@ -15,7 +15,7 @@ public class DealerResultDto {
 		return name;
 	}
 
-	public List<String> getOutcome() {
+	public Map<String, Integer> getOutcome() {
 		return outcome;
 	}
 }
