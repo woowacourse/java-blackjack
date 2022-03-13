@@ -12,7 +12,7 @@ public class CardDto {
         this.symbolName = symbolName;
     }
 
-    public static CardDto of(final Card card) {
+    public static CardDto from(final Card card) {
         return new CardDto(card.getNumberName(), card.getSymbolName());
     }
 

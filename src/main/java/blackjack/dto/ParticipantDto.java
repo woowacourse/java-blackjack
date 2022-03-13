@@ -14,9 +14,9 @@ public class ParticipantDto {
         this.cardDtos = cardDtos;
     }
 
-    public static ParticipantDto of(Participant participant) {
+    public static ParticipantDto from(Participant participant) {
         final List<CardDto> cardDtos = participant.getCards().getValue().stream()
-                .map(CardDto::of)
+                .map(CardDto::from)
                 .collect(Collectors.toList());
         return new ParticipantDto(participant.getName(), cardDtos);
     }

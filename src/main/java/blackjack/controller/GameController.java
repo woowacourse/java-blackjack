@@ -34,12 +34,12 @@ public class GameController {
     }
 
     public void prepare() {
-        dealerService.prepare();
-        playerService.prepare();
+        dealerService.prepareGame();
+        playerService.prepareGame();
 
-        OutputView.printPrepareResult(playerService.findAllNames());
+        OutputView.printAssignmentResult(playerService.findAllNames());
         OutputView.printDealerFirstCard(dealerService.findFirstCard());
-        playerService.findAllPlayers().forEach(OutputView::printPlayerCards);
+        playerService.findAllPlayers().forEach(OutputView::printCards);
     }
 
     public void progressPlayerTurns() {
@@ -48,7 +48,7 @@ public class GameController {
             final Status status = InputView.getHitOrStay(playerName);
 
             final ParticipantDto dto = playerService.progressTurn(playerName, status);
-            OutputView.printPlayerCards(dto);
+            OutputView.printCards(dto);
         }
     }
 
@@ -58,21 +58,21 @@ public class GameController {
     }
 
     public void endGame() {
-        getAllCards();
-        getAllRecord();
+        printAllCards();
+        printAllRecords();
     }
 
-    private void getAllCards() {
+    private void printAllCards() {
         final List<ParticipantResultDto> dto = playerService.findAllResult();
         dto.add(0, dealerService.getResult());
 
         OutputView.breakLine();
-        dto.forEach(OutputView::printParticipantCards);
+        dto.forEach(OutputView::printCardsAndScore);
     }
 
-    private void getAllRecord() {
+    private void printAllRecords() {
         final List<PlayerRecordDto> playerRecordDtos = playerService.getRecord(dealerService.getScore());
-        final DealerRecordDto dealerRecordDto = DealerRecordDto.of(playerRecordDtos);
+        final DealerRecordDto dealerRecordDto = DealerRecordDto.from(playerRecordDtos);
 
         OutputView.printDealerRecord(dealerRecordDto);
         playerRecordDtos.forEach(OutputView::printPlayerRecord);

@@ -1,7 +1,6 @@
 package blackjack.dto;
 
 import blackjack.domain.participant.Participant;
-import java.util.List;
 
 public class ParticipantResultDto {
 
@@ -13,16 +12,12 @@ public class ParticipantResultDto {
         this.score = score;
     }
 
-    public static ParticipantResultDto of(Participant participant) {
-        return new ParticipantResultDto(ParticipantDto.of(participant), participant.getScore());
+    public static ParticipantResultDto from(Participant participant) {
+        return new ParticipantResultDto(ParticipantDto.from(participant), participant.getScore());
     }
 
-    public String getName() {
-        return participantDto.getName();
-    }
-
-    public List<CardDto> getCardDtos() {
-        return participantDto.getCardDtos();
+    public ParticipantDto getParticipantDto() {
+        return participantDto;
     }
 
     public int getScore() {

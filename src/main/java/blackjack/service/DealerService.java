@@ -16,12 +16,12 @@ public class DealerService {
         this.dealer = new Dealer();
     }
 
-    public void prepare() {
+    public void prepareGame() {
         dealer.prepareGame(deck);
     }
 
     public CardDto findFirstCard() {
-        return CardDto.of(dealer.openFirstCard());
+        return CardDto.from(dealer.openFirstCard());
     }
 
     public DealerTurnResultDto progressTurn() {
@@ -38,7 +38,7 @@ public class DealerService {
     }
 
     public ParticipantResultDto getResult() {
-        return ParticipantResultDto.of(dealer);
+        return ParticipantResultDto.from(dealer);
     }
 
     public int getScore() {

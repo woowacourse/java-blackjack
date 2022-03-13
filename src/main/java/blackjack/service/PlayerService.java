@@ -21,7 +21,7 @@ public class PlayerService {
         this.players = new Players(playerNames);
     }
 
-    public void prepare() {
+    public void prepareGame() {
         players.prepareGame(deck);
     }
 
@@ -31,7 +31,7 @@ public class PlayerService {
 
     public List<ParticipantDto> findAllPlayers() {
         return players.getValue().stream()
-                .map(ParticipantDto::of)
+                .map(ParticipantDto::from)
                 .collect(Collectors.toList());
     }
 
@@ -52,12 +52,12 @@ public class PlayerService {
             player.stay();
         }
 
-        return ParticipantDto.of(player);
+        return ParticipantDto.from(player);
     }
 
     public List<ParticipantResultDto> findAllResult() {
         return players.getValue().stream()
-                .map(ParticipantResultDto::of)
+                .map(ParticipantResultDto::from)
                 .collect(Collectors.toList());
     }
 

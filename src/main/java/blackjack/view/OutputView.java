@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 
 public class OutputView {
 
-    public static void printPrepareResult(List<String> names) {
+    public static void printAssignmentResult(List<String> names) {
         System.out.printf(System.lineSeparator() + "딜러와 %s에게 2장의 카드를 나누어주었습니다." + System.lineSeparator(),
                 String.join(", ", names));
     }
@@ -23,22 +23,31 @@ public class OutputView {
         System.out.println("딜러: " + cardDto.getNumberName() + cardDto.getSymbolName());
     }
 
-    public static void printPlayerCards(ParticipantDto dto) {
-        List<String> list = dto.getCardDtos().stream()
-                .map(card -> card.getNumberName() + card.getSymbolName())
-                .collect(Collectors.toList());
+    public static void printCards(ParticipantDto dto) {
+        System.out.println(dto.getName() + "카드: " + toCardMessage(dto));
+    }
 
-        System.out.println(dto.getName() + "카드: " + String.join(", ", list));
+    public static void printCardsAndScore(ParticipantResultDto dto) {
+        final ParticipantDto participantDto = dto.getParticipantDto();
+
+        System.out.println(participantDto.getName() + "카드: " + toCardMessage(participantDto)
+                + " - 결과: " + dto.getScore());
+    }
+
+    private static String toCardMessage(final ParticipantDto dto) {
+        return dto.getCardDtos().stream()
+                .map(card -> card.getNumberName() + card.getSymbolName())
+                .collect(Collectors.joining(", "));
     }
 
     public static void printDealerTurnResult(final DealerTurnResultDto dealerTurnResultDto) {
-        final int count = dealerTurnResultDto.getCount();
-        if (count == 0) {
+        final int drawCount = dealerTurnResultDto.getCount();
+        if (drawCount == 0) {
             printDealerNotDrawMessage();
             return;
         }
 
-        IntStream.range(0, count)
+        IntStream.range(0, drawCount)
                 .forEach(i -> printDealerDrawMessage());
     }
 
@@ -48,15 +57,6 @@ public class OutputView {
 
     private static void printDealerNotDrawMessage() {
         System.out.println(System.lineSeparator() + "딜러가 16초과여서 카드를 받지않았습니다.");
-    }
-
-    public static void printParticipantCards(ParticipantResultDto dto) {
-        List<String> list = dto.getCardDtos().stream()
-                .map(card -> card.getNumberName() + card.getSymbolName())
-                .collect(Collectors.toList());
-
-        System.out.println(dto.getName() + "카드: " + String.join(", ", list)
-                + " - 결과: " + dto.getScore());
     }
 
     public static void printDealerRecord(DealerRecordDto dto) {

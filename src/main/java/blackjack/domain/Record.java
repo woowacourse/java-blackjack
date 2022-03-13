@@ -31,7 +31,7 @@ public enum Record {
                 .orElseThrow();
     }
 
-    public static Record fromOpposite(final String name) {
+    public static Record fromOppositeName(final String name) {
         if (name.equals(WIN.getName())) {
             return LOSS;
         }

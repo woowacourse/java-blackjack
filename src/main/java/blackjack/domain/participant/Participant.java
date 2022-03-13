@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Name;
-import blackjack.domain.card.Deck;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Status;
 import java.util.stream.IntStream;
 

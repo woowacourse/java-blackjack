@@ -13,10 +13,10 @@ public class DealerRecordDto {
         this.map = map;
     }
 
-    public static DealerRecordDto of(final List<PlayerRecordDto> dtos) {
+    public static DealerRecordDto from(final List<PlayerRecordDto> dtos) {
         final Map<Record, Integer> map = new HashMap<>();
         for (PlayerRecordDto dto : dtos) {
-            final Record record = Record.fromOpposite(dto.getRecord().getName());
+            final Record record = Record.fromOppositeName(dto.getRecord().getName());
             map.put(record, map.getOrDefault(record, 0) + 1);
         }
 

@@ -41,7 +41,7 @@ class RecordTest {
     @CsvSource(value = {"승:LOSS", "무:PUSH", "패:WIN"}, delimiter = ':')
     void fromOpposite(String playerRecordName, Record dealerRecord) {
         // when
-        final Record actual = Record.fromOpposite(playerRecordName);
+        final Record actual = Record.fromOppositeName(playerRecordName);
 
         // then
         assertThat(actual).isEqualTo(dealerRecord);
