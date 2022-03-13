@@ -76,13 +76,11 @@ public class PlayersTest {
     @MethodSource("provideForCompareCardTotalTest")
     @DisplayName("각 플레이어는 딜러와의 승패를 계산한다.")
     void compareCardSum(final List<String> names,
-                        final List<Card> initializedCards,
+                        final List<Card> dealerCards,
+                        final List<Card> playersCards,
                         final Map<String, PlayerResult> expectedWinningResults) {
-        manualCardStrategy.initCards(initializedCards);
-        final Deck deck = Deck.generate(manualCardStrategy);
-
-        final Dealer dealer = Dealer.startWithTwoCards(deck);
-        final Players players = Players.startWithTwoCards(names, deck);
+        final Dealer dealer = Dealer.startWithTwoCards(new Deck(dealerCards));
+        final Players players = Players.startWithTwoCards(names, new Deck(playersCards));
 
         final Map<String, PlayerResult> actualWinningResults = players.judgeWinners(dealer).getPlayerResult();
         assertThat(actualWinningResults).isEqualTo(expectedWinningResults);
@@ -94,7 +92,9 @@ public class PlayersTest {
                         List.of("sun"),
                         List.of(
                                 new Card(CardPattern.DIAMOND, CardNumber.KING),
-                                new Card(CardPattern.DIAMOND, CardNumber.TEN),
+                                new Card(CardPattern.DIAMOND, CardNumber.TEN)
+                        ),
+                        List.of(
                                 new Card(CardPattern.DIAMOND, CardNumber.EIGHT),
                                 new Card(CardPattern.DIAMOND, CardNumber.NINE)
                         ),
@@ -104,7 +104,9 @@ public class PlayersTest {
                         List.of("sun", "if"),
                         List.of(
                                 new Card(CardPattern.SPADE, CardNumber.NINE),
-                                new Card(CardPattern.HEART, CardNumber.EIGHT),
+                                new Card(CardPattern.HEART, CardNumber.EIGHT)
+                        ),
+                        List.of(
                                 new Card(CardPattern.SPADE, CardNumber.TEN),
                                 new Card(CardPattern.SPADE, CardNumber.EIGHT),
                                 new Card(CardPattern.HEART, CardNumber.TEN),

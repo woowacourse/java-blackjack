@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import blackjack.domain.card.strategy.CardStrategy;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,12 +11,12 @@ public class Deck {
 
     private final List<Card> cards;
 
-    private Deck(final List<Card> cards) {
-        validateDuplicateCard(cards);
-        this.cards = cards;
+    public Deck(final List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+        validateDuplicateCard(this.cards);
     }
 
-    private static void validateDuplicateCard(final List<Card> cards) {
+    private void validateDuplicateCard(final List<Card> cards) {
         final Set<Card> validCards = new HashSet<>(cards);
         if (validCards.size() != cards.size()) {
             throw new IllegalArgumentException("중복된 카드는 존재할 수 없습니다.");

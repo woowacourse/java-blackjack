@@ -36,8 +36,7 @@ class DealerTest {
     @MethodSource("provideForStartWithDrawCardTest")
     @DisplayName("딜러의 카드 점수에 따라 카드 뽑기 가능 여부를 반환한다.")
     void dealerUnderMinimumTotal(final List<Card> initializedCards, final boolean canDraw) {
-        manualCardStrategy.initCards(initializedCards);
-        Deck deck = Deck.generate(manualCardStrategy);
+        Deck deck = new Deck(initializedCards);
         final Dealer dealer = Dealer.startWithTwoCards(deck);
 
         assertThat(dealer.isPossibleToDraw()).isEqualTo(canDraw);
@@ -65,11 +64,10 @@ class DealerTest {
     @MethodSource("provideForDealerLoseByBurst")
     @DisplayName("딜러의 카드 합이 버스트일 경우 패배한다.")
     void dealerLoseByBurst(List<Card> initializedCards) {
-        final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
-        manualCardStrategy.initCards(initializedCards);
-        final Deck deck = Deck.generate(manualCardStrategy);
+        final Deck deck = new Deck(initializedCards);
         final Dealer dealer = Dealer.startWithTwoCards(deck);
-        while(dealer.isPossibleToDraw()) {
+
+        while (dealer.isPossibleToDraw()) {
             dealer.drawCard(deck);
         }
 
@@ -93,15 +91,16 @@ class DealerTest {
     @ParameterizedTest
     @MethodSource("provideForDealerCalculateWinningResultTest")
     @DisplayName("딜러는 승패를 결정한다.")
-    void dealerCalculateWinningResultTest(final List<Card> initializedCards,
+    void dealerCalculateWinningResultTest(final List<Card> dealerCards,
+                                          final List<Card> playersCards,
                                           final PlayerResult expectedPlayerResult) {
-        final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
-        manualCardStrategy.initCards(initializedCards);
-        final Deck deck = Deck.generate(manualCardStrategy);
-        final Dealer dealer = Dealer.startWithTwoCards(deck);
+        final Deck dealerDeck = new Deck(dealerCards);
+        final Deck playersDeck = new Deck(playersCards);
+
+        final Dealer dealer = Dealer.startWithTwoCards(dealerDeck);
         final Player player = new Player("if");
-        player.drawCard(deck);
-        player.drawCard(deck);
+        player.drawCard(playersDeck);
+        player.drawCard(playersDeck);
 
         final PlayerResult actualPlayerResult = dealer.judgeWinner(player);
         assertThat(actualPlayerResult).isEqualTo(expectedPlayerResult);
@@ -112,7 +111,9 @@ class DealerTest {
                 Arguments.of(
                         List.of(
                                 new Card(CardPattern.DIAMOND, CardNumber.KING),
-                                new Card(CardPattern.DIAMOND, CardNumber.JACK),
+                                new Card(CardPattern.DIAMOND, CardNumber.JACK)
+                        ),
+                        List.of(
                                 new Card(CardPattern.DIAMOND, CardNumber.TWO),
                                 new Card(CardPattern.DIAMOND, CardNumber.THREE)
                         ),
@@ -122,7 +123,9 @@ class DealerTest {
                         List.of(
                                 new Card(CardPattern.DIAMOND, CardNumber.FOUR),
                                 new Card(CardPattern.DIAMOND, CardNumber.THREE),
-                                new Card(CardPattern.DIAMOND, CardNumber.KING),
+                                new Card(CardPattern.DIAMOND, CardNumber.KING)
+                        ),
+                        List.of(
                                 new Card(CardPattern.DIAMOND, CardNumber.JACK),
                                 new Card(CardPattern.DIAMOND, CardNumber.QUEEN)
                         ),
