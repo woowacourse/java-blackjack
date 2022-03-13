@@ -6,6 +6,7 @@ import domain.participant.Player;
 import domain.participant.Players;
 import domain.participant.Result;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -78,22 +79,23 @@ public class OutputView {
         System.out.println(DEALER_HIT_CARD_MESSAGE);
     }
 
-    public void showResult(List<Integer> dealerResult, List<String> playerNames,
+    public void showResult(Map<Result, Integer> dealerResult, List<String> playerNames,
         List<Result> playerResult) {
         System.out.println(FINAL_RESULT_MESSAGE);
         showDealerResult(dealerResult);
         showPlayersResult(playerNames, playerResult);
     }
 
-    private void showDealerResult(List<Integer> dealerResult) {
-        System.out.printf(DEALER_MESSAGE, dealerResult.get(0), dealerResult.get(1),
-            dealerResult.get(2));
+    private void showDealerResult(Map<Result, Integer> dealerResult) {
+        System.out.printf(DEALER_MESSAGE, dealerResult.get(Result.WIN),
+            dealerResult.get(Result.DRAW), dealerResult.get(Result.LOSE));
         System.out.print(System.lineSeparator());
     }
 
     private void showPlayersResult(List<String> playerNames, List<Result> playerResult) {
         for (int idx = 0; idx < playerNames.size(); idx++) {
-            System.out.println(playerNames.get(idx) + DELIMITER + showPlayerResult(playerResult.get(idx)));
+            System.out.println(
+                playerNames.get(idx) + DELIMITER + showPlayerResult(playerResult.get(idx)));
         }
     }
 

@@ -43,10 +43,6 @@ public class Players {
             .collect(Collectors.toList());
     }
 
-    public int getSize() {
-        return players.size();
-    }
-
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }

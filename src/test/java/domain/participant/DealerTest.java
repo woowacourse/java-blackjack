@@ -58,6 +58,6 @@ class DealerTest {
     void checkResultTest() {
         List<Result> playerResult = Arrays.asList(Result.WIN,Result.LOSE, Result.WIN, Result.DRAW);
 
-        assertThat(dealer.checkResult(playerResult)).containsExactly(1,1,2);
+        assertThat(dealer.checkResult(playerResult).values()).contains(1,1,2);
     }
 }

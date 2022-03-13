@@ -1,7 +1,8 @@
 package domain.participant;
 
-import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class Dealer extends Participant {
 
@@ -12,13 +13,14 @@ public class Dealer extends Participant {
         super(NAME);
     }
 
-    public List<Integer> checkResult(List<Result> playersResult) {
+    public Map<Result, Integer> checkResult(List<Result> playersResult) {
+        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
 
-        int winCount = countTargetResult(playersResult, Result.LOSE);
-        int loseCount = countTargetResult(playersResult, Result.WIN);
-        int drawCount = playersResult.size() - winCount - loseCount;
+        for (Result result : Result.values()) {
+            dealerResult.put(result.reverseResult(), countTargetResult(playersResult, result));
+        }
 
-        return Arrays.asList(winCount, drawCount, loseCount);
+        return dealerResult;
     }
 
     private int countTargetResult(List<Result> playersResult, Result targetResult) {
