@@ -17,7 +17,7 @@ import java.util.Map;
 public class BlackjackGame {
 
     public void run() {
-        Player dealer = new Dealer();
+        Dealer dealer = new Dealer();
         Deck deck = new Deck();
         Players players = Players.fromNames(InputView.inputPlayerName());
         initHit(dealer, players, deck);
@@ -87,11 +87,8 @@ public class BlackjackGame {
         OutputView.printPresentStatus(nowTurnPlayer);
     }
 
-    private void dealerHit(Player dealer, Deck deck) {
-        if (!(dealer instanceof Dealer)) {
-            throw new RuntimeException("딜러의 구현체가 Dealer가 맞는지 확인.");
-        }
-        while (((Dealer) dealer).checkHitFlag()) {
+    private void dealerHit(Dealer dealer, Deck deck) {
+        while (dealer.checkHitFlag()) {
             dealer.hit(deck.draw());
         }
     }
