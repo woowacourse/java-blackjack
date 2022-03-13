@@ -27,30 +27,30 @@ public class BlackJackGameResult {
     }
 
     public Map<MatchResult, Integer> calculateDealerResult() {
-        final Map<MatchResult, Integer> dealerGameScore = getWinOrLose();
+        final Map<MatchResult, Integer> dealerGameResult = getDealerMatchResult();
 
         for (MatchResult value : gameResult.values()) {
-            dealerGameScore.computeIfPresent(value, (k, v) -> v + 1);
+            dealerGameResult.computeIfPresent(value, (k, v) -> v + 1);
         }
-        swapResult(dealerGameScore);
+        swapResult(dealerGameResult);
 
-        return dealerGameScore;
+        return dealerGameResult;
     }
 
-    private Map<MatchResult, Integer> getWinOrLose() {
-        final Map<MatchResult, Integer> dealerGameScore = new EnumMap<>(MatchResult.class);
+    private Map<MatchResult, Integer> getDealerMatchResult() {
+        final Map<MatchResult, Integer> dealerGameResult = new EnumMap<>(MatchResult.class);
 
         for (MatchResult value : MatchResult.values()) {
-            dealerGameScore.put(value, 0);
+            dealerGameResult.put(value, 0);
         }
 
-        return dealerGameScore;
+        return dealerGameResult;
     }
 
-    private void swapResult(Map<MatchResult, Integer> dealerGameScore) {
-        final int loseCounts = dealerGameScore.get(MatchResult.WIN);
-        dealerGameScore.put(MatchResult.WIN, dealerGameScore.get(MatchResult.LOSE));
-        dealerGameScore.put(MatchResult.LOSE, loseCounts);
+    private void swapResult(Map<MatchResult, Integer> dealerGameResult) {
+        final int loseCounts = dealerGameResult.get(MatchResult.WIN);
+        dealerGameResult.put(MatchResult.WIN, dealerGameResult.get(MatchResult.LOSE));
+        dealerGameResult.put(MatchResult.LOSE, loseCounts);
     }
 
     public Map<Player, MatchResult> getGameResult() {

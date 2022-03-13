@@ -26,7 +26,7 @@ public class BlackJackGame {
 
     public void distributeCard(Participant participant, int count) {
         for (int i = 0; i < count; i++) {
-            participant.receiveCard(deck.getCard());
+            participant.hit(deck.getCard());
         }
     }
 

@@ -9,7 +9,7 @@ import java.util.Objects;
 public abstract class Participant {
 
     private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
-    private static final String ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
+    private static final String ERROR_MESSAGE_HIT_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
 
     public static final int STANDARD_SCORE_OF_CHANGE_ACE = 11;
     private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 11;
@@ -29,16 +29,16 @@ public abstract class Participant {
         }
     }
 
-    abstract boolean hasNextTurn();
+    abstract boolean canHit();
 
-    public void receiveCard(Card card) {
-        validateReceiveDuplicatedCard(card);
+    public void hit(Card card) {
+        validateHitDuplicatedCard(card);
         cards.add(card);
     }
 
-    private void validateReceiveDuplicatedCard(Card card) {
+    private void validateHitDuplicatedCard(Card card) {
         if (cards.contains(card)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD);
+            throw new IllegalArgumentException(ERROR_MESSAGE_HIT_DUPLICATED_CARD);
         }
     }
 

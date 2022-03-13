@@ -19,7 +19,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean hasNextTurn() {
+    public boolean canHit() {
         return !MatchResult.isBurst(this.getScore());
     }
 

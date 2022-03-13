@@ -23,7 +23,7 @@ public class BlackJackController {
         doPlayerGame(blackJackGame);
         doDealerGame(blackJackGame);
         OutputView.printGameResult(blackJackGame.getParticipants());
-        OutputView.printWinOrLoseResult(blackJackGame.getDealer(),
+        OutputView.printFinalMatchResult(blackJackGame.getDealer(),
                 BlackJackGameResult.ofGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers()));
     }
 
@@ -48,25 +48,25 @@ public class BlackJackController {
     }
 
     private void doEachPlayerTurn(BlackJackGame blackJackGame, Player player) {
-        while (player.hasNextTurn() && getOneMoreCard(player)) {
+        while (player.canHit() && isHitCard(player)) {
             blackJackGame.distributeCard(player, ADDITIONAL_CARD_COUNT);
             OutputView.printNowHoldCardInfo(player);
         }
     }
 
-    private boolean getOneMoreCard(Player player) {
+    private boolean isHitCard(Player player) {
         try {
             String choice = InputView.inputOneMoreCard(player.getName());
             return YesOrNo.YES == YesOrNo.find(choice);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
-            return getOneMoreCard(player);
+            return isHitCard(player);
         }
     }
 
     private void doDealerGame(BlackJackGame blackJackGame) {
         Dealer dealer = blackJackGame.getDealer();
-        while (dealer.hasNextTurn()) {
+        while (dealer.canHit()) {
             blackJackGame.distributeCard(dealer, ADDITIONAL_CARD_COUNT);
         }
         OutputView.printDealerReceiveCardCount(blackJackGame.getDealer());

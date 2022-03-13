@@ -38,7 +38,7 @@ public class ParticipantsTest {
     @DisplayName("플레이어의 카드 합계 계산 테스트")
     void calculateScore() {
         Participant participant = new Player("rookie");
-        participant.receiveCard(Card.from(Symbol.CLOVER, Denomination.EIGHT));
+        participant.hit(Card.from(Symbol.CLOVER, Denomination.EIGHT));
 
         assertThat(participant.getScore()).isEqualTo(8);
     }
@@ -47,8 +47,8 @@ public class ParticipantsTest {
     @DisplayName("플레이어의 카드에 Ace가 11로 되는 경우 합계 계산 테스트")
     void calculateScoreWithAceEleven() {
         Participant participant = new Player("rookie");
-        participant.receiveCard(Card.from(Symbol.CLOVER, Denomination.ACE));
-        participant.receiveCard(Card.from(Symbol.CLOVER, Denomination.JACK));
+        participant.hit(Card.from(Symbol.CLOVER, Denomination.ACE));
+        participant.hit(Card.from(Symbol.CLOVER, Denomination.JACK));
 
         assertThat(participant.getScore()).isEqualTo(21);
     }
@@ -57,9 +57,9 @@ public class ParticipantsTest {
     @DisplayName("플레이어의 카드에 Ace가 1로 되는 경우 합계 계산 테스트")
     void calculateScoreWithAceOne() {
         Participant participant = new Player("rookie");
-        participant.receiveCard(Card.from(Symbol.CLOVER, Denomination.ACE));
-        participant.receiveCard(Card.from(Symbol.CLOVER, Denomination.JACK));
-        participant.receiveCard(Card.from(Symbol.CLOVER, Denomination.EIGHT));
+        participant.hit(Card.from(Symbol.CLOVER, Denomination.ACE));
+        participant.hit(Card.from(Symbol.CLOVER, Denomination.JACK));
+        participant.hit(Card.from(Symbol.CLOVER, Denomination.EIGHT));
 
         assertThat(participant.getScore()).isEqualTo(19);
     }
@@ -68,10 +68,10 @@ public class ParticipantsTest {
     @DisplayName("플레이어의 카드에 Ace가 여러개인 경우 계산 테스트")
     void calculateScoreWithAceCountThree() {
         Participant participant = new Player("rookie");
-        participant.receiveCard(Card.from(Symbol.CLOVER, Denomination.ACE));
-        participant.receiveCard(Card.from(Symbol.HEART, Denomination.ACE));
-        participant.receiveCard(Card.from(Symbol.DIAMOND, Denomination.ACE));
-        participant.receiveCard(Card.from(Symbol.SPADE, Denomination.EIGHT));
+        participant.hit(Card.from(Symbol.CLOVER, Denomination.ACE));
+        participant.hit(Card.from(Symbol.HEART, Denomination.ACE));
+        participant.hit(Card.from(Symbol.DIAMOND, Denomination.ACE));
+        participant.hit(Card.from(Symbol.SPADE, Denomination.EIGHT));
 
         assertThat(participant.getScore()).isEqualTo(21);
     }
@@ -82,9 +82,9 @@ public class ParticipantsTest {
         Card card1 = Card.from(Symbol.CLOVER, Denomination.ACE);
         Card card2 = Card.from(Symbol.CLOVER, Denomination.ACE);
         Participant participant = new Player("rookie");
-        participant.receiveCard(card1);
+        participant.hit(card1);
 
-        assertThatThrownBy(() -> participant.receiveCard(card2))
+        assertThatThrownBy(() -> participant.hit(card2))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 카드는 받을 수 없습니다.");
     }

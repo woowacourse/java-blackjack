@@ -27,8 +27,8 @@ public class OutputView {
             NEWLINE.concat("%s는 %d장의 카드를 더 받았습니다.").concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT =
             "%s 카드: %s - 결과: %d".concat(NEWLINE);
-    private static final String OUTPUT_MESSAGE_WIN_OR_LOSE = "## 최종 승패";
-    private static final String OUTPUT_MESSAGE_WIN_OR_LOSE_INFO = "%s: %s".concat(NEWLINE);
+    private static final String OUTPUT_MESSAGE_FINAL_MATCH_RESULT = "## 최종 승패";
+    private static final String OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO = "%s: %s".concat(NEWLINE);
 
     public static void printErrorMessage(RuntimeException error) {
         System.out.println(error.getMessage());
@@ -91,21 +91,21 @@ public class OutputView {
                 participant.getScore());
     }
 
-    public static void printWinOrLoseResult(Dealer dealer, BlackJackGameResult blackGameResult) {
-        System.out.println(NEWLINE.concat(OUTPUT_MESSAGE_WIN_OR_LOSE));
-        Map<MatchResult, Integer> winOrLoseIntegerMap = blackGameResult.calculateDealerResult();
-        String winOrLoseInfo = getWinOrLoseInfo(winOrLoseIntegerMap);
+    public static void printFinalMatchResult(Dealer dealer, BlackJackGameResult blackGameResult) {
+        System.out.println(NEWLINE.concat(OUTPUT_MESSAGE_FINAL_MATCH_RESULT));
+        Map<MatchResult, Integer> MatchResultIntegerMap = blackGameResult.calculateDealerResult();
+        String matchResult = getFinalMatchResult(MatchResultIntegerMap);
 
-        System.out.printf(OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, dealer.getName(), winOrLoseInfo);
+        System.out.printf(OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO, dealer.getName(), matchResult);
         blackGameResult.getGameResult().forEach((key, value) -> System.out.printf(
-                OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, key.getName(), value.getResult()));
+                OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO, key.getName(), value.getResult()));
     }
 
-    private static String getWinOrLoseInfo(Map<MatchResult, Integer> winOrLoseInfo) {
-        List<String> winOrLoseEssentialInfo = winOrLoseInfo.entrySet().stream()
+    private static String getFinalMatchResult(Map<MatchResult, Integer> matchResultIntegerMap) {
+        List<String> matchResult = matchResultIntegerMap.entrySet().stream()
                 .filter(resultCount -> resultCount.getValue() > 0)
                 .map(resultCount -> resultCount.getValue() + resultCount.getKey().getResult())
                 .collect(Collectors.toUnmodifiableList());
-        return String.join(JOINING_DELIMITER_SPACE, winOrLoseEssentialInfo);
+        return String.join(JOINING_DELIMITER_SPACE, matchResult);
     }
 }

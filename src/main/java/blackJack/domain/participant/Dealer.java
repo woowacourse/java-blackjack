@@ -10,7 +10,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean hasNextTurn() {
+    public boolean canHit() {
         return this.getScore() <= DEALER_MAXIMUM_RECEIVE_CARD_SCORE;
     }
 }
