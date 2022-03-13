@@ -21,7 +21,6 @@ public class DeckTest {
     @Test
     @DisplayName("Deck에 카드가 남아있지 않을 시 오류 발생")
     void pickCardFail() {
-
         Deck deck = new Deck();
         for (int i = 0; i <52; i++) {
             Card card = deck.pickCard();
@@ -29,7 +28,6 @@ public class DeckTest {
 
         assertThatThrownBy(deck::pickCard).isInstanceOf(IllegalArgumentException.class)
             .hasMessage("[ERROR] 카드를 모두 사용하였습니다.");
-
     }
 
 }

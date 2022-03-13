@@ -46,8 +46,10 @@ public class Participants {
 
     public List<Participant> getParticipants() {
         List<Participant> participants = new ArrayList<>();
+
         participants.add(dealer);
         participants.addAll(players);
+
         return Collections.unmodifiableList(participants);
     }
 

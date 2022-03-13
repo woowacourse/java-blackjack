@@ -21,8 +21,10 @@ public class InputView {
 
     public static List<String> inputPlayerName() {
         System.out.println(INPUT_PLAYER_NAME_MESSAGE);
+
         List<String> playerNames = Arrays.asList(scanner.nextLine().split(SPLIT_REGEX));
         validatePlayerNames(playerNames);
+
         return playerNames;
     }
 

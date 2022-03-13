@@ -93,8 +93,10 @@ public class OutputView {
         Map<Player, WinningResult> playerResult) {
         System.out.println(PARTICIPANT_WINNING_RESULT_MESSAGE);
         System.out.print(DEALER_DIRECTION);
+
         dealerResult.forEach((key, value) -> System.out.print(BLANK_FORMAT + value + key.getResult()));
         System.out.println();
+
         playerResult.forEach(
             (key, value) -> System.out.println(
                 key.getName() + RESULT_DELIMITER + value.getResult()));

@@ -20,6 +20,7 @@ public class ParticipantCards {
     public int calculateScore() {
         int totalScore = cards.stream().mapToInt(Card::getPoint).sum();
         int aceCount = getAceCount();
+
         if (aceCount != NO_COUNT) {
             return calculateScoreWithAce(aceCount, totalScore);
         }

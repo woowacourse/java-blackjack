@@ -11,10 +11,8 @@ public class CardTest {
     @Test
     @DisplayName("카드 생성")
     void createCard() {
-
         assertThatCode(() -> new Card(Suit.DIAMOND, Denomination.ACE))
             .doesNotThrowAnyException();
-
     }
 
     @Test

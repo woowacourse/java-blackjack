@@ -55,6 +55,7 @@ public class BlackjackController {
 
     private boolean isPlayerWantMoreCards(Player player, Deck deck) {
         boolean cardPrintFlag = false;
+
         while (isPlayerHit(player) && !isBurst(player)) {
             player.receiveCard(deck.pickCard());
             OutputView.printPlayerCardInformation(player);
@@ -84,7 +85,6 @@ public class BlackjackController {
     }
 
     private void printResult(Participants participants) {
-
         OutputView.printCardsAndPoint(participants);
 
         BlackjackGame blackjackGame = new BlackjackGame(participants);
