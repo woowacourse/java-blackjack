@@ -1,20 +1,19 @@
 package blackjack.domain.player;
 
-import java.util.List;
-
 import blackjack.domain.card.Card;
+import java.util.List;
 
 public interface Player {
 
-	int PLAYER_SETTING_CARD_SIZE = 2;
+    int PLAYER_SETTING_CARD_SIZE = 2;
 
-	void receiveCard(final Card card);
+    void receiveCard(final Card card);
 
-	List<Card> openCards();
+    List<Card> openCards();
 
-	List<Card> showCards();
+    List<Card> showCards();
 
-	int calculateResult();
+    int calculateResult();
 
-	boolean isReceivable();
+    boolean isReceivable();
 }

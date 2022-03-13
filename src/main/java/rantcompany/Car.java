@@ -2,14 +2,14 @@ package rantcompany;
 
 public abstract class Car {
 
-	abstract double getDistancePerLiter();
+    abstract double getDistancePerLiter();
 
-	abstract double getTripDistance();
+    abstract double getTripDistance();
 
-	abstract String getName();
+    abstract String getName();
 
-	double getChargeQuantity() {
-		return getTripDistance() / getDistancePerLiter();
-	}
+    double getChargeQuantity() {
+        return getTripDistance() / getDistancePerLiter();
+    }
 
 }
