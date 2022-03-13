@@ -44,8 +44,8 @@ class ApplicationTest extends NsTest {
         assertShuffleTest(
                 () -> {
                     run("ori", "n");
-                    assertThat(output()).contains("딜러와 ori에게 2장을 나누었습니다.\n"
-                            + "딜러: K하트\n"
+                    assertThat(output()).contains("딜러와 ori에게 2장을 나누었습니다.%n"
+                            + "딜러: K하트%n"
                             + "ori 카드: K스페이드, Q스페이드");
                 },
                 Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN),
@@ -58,8 +58,8 @@ class ApplicationTest extends NsTest {
         assertShuffleTest(
                 () -> {
                     run("ori", "y");
-                    assertThat(output()).contains("## 최종 승패\n"
-                            + "딜러: 1승\n"
+                    assertThat(output()).contains("## 최종 승패%n"
+                            + "딜러: 1승%n"
                             + "ori: 패");
                 },
                 Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN),
@@ -74,8 +74,8 @@ class ApplicationTest extends NsTest {
         assertShuffleTest(
                 () -> {
                     run("ori", "n");
-                    assertThat(output()).contains("## 최종 승패\n"
-                            + "딜러: 1무\n"
+                    assertThat(output()).contains("## 최종 승패%n"
+                            + "딜러: 1무%n"
                             + "ori: 무");
                 },
                 Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, A),
@@ -88,8 +88,8 @@ class ApplicationTest extends NsTest {
         assertShuffleTest(
                 () -> {
                     run("ori", "n");
-                    assertThat(output()).contains("## 최종 승패\n"
-                            + "딜러: 1패\n"
+                    assertThat(output()).contains("## 최종 승패%n"
+                            + "딜러: 1패%n"
                             + "ori: 승");
                 },
                 Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, A),
@@ -103,8 +103,8 @@ class ApplicationTest extends NsTest {
         assertShuffleTest(
                 () -> {
                     run("ori", "n");
-                    assertThat(output()).contains("## 최종 승패\n"
-                            + "딜러: 1패\n"
+                    assertThat(output()).contains("## 최종 승패%n"
+                            + "딜러: 1패%n"
                             + "ori: 승");
                 },
                 Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, SEVEN),
@@ -118,8 +118,8 @@ class ApplicationTest extends NsTest {
         assertShuffleTest(
                 () -> {
                     run("ori", "y", "n");
-                    assertThat(output()).contains("## 최종 승패\n"
-                            + "딜러: 1승\n"
+                    assertThat(output()).contains("## 최종 승패%n"
+                            + "딜러: 1승%n"
                             + "ori: 패");
                 },
                 Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, SEVEN),
