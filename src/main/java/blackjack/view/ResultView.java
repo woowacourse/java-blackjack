@@ -32,7 +32,7 @@ public class ResultView {
         Player dealer = players.getDealer();
         List<Player> participants = players.getParticipants();
 
-        System.out.println(String.format(PRINT_INIT_CARD_FORMAT, printParticipantsName(participants)));
+        System.out.printf(PRINT_INIT_CARD_FORMAT + System.lineSeparator(), printParticipantsName(participants));
         printInitDealerCard(dealer);
         printParticipantsCard(participants);
     }

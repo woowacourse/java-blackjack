@@ -36,10 +36,10 @@ public class Players {
     }
 
     private void validateHasDealerName(Dealer dealer, List<Player> participants) {
-        boolean hasSameDealerName = participants.stream()
+        boolean hasDealerName = participants.stream()
                 .anyMatch(participant -> participant.getName().equals(dealer.getName()));
 
-        if (hasSameDealerName) {
+        if (hasDealerName) {
             throw new IllegalArgumentException(SAME_DEALER_NAME_ERROR_MESSAGE);
         }
     }
