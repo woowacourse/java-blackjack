@@ -19,7 +19,6 @@ import blackjack.dto.GamerDto;
 public class BlackJackGame {
 
 	private static final int INIT_DISTRIBUTION_COUNT = 2;
-	public static final int ADDITIONAL_DISTRIBUTE_STANDARD = 16;
 	private static final int DEFAULT_COUNT = 0;
 	private static final int INCREASE_COUNT = 1;
 

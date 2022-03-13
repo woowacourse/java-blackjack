@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.Card;
 
 public class Gamers {
 
 	private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
 	private static final String NOT_EXIST_PLAYER_ERROR = "플레이어가 존재하지 않습니다.";
+
+	private static final int ADDITIONAL_DISTRIBUTE_STANDARD = 16;
 
 	private final Dealer dealer;
 	private final List<Player> players;
@@ -50,7 +51,7 @@ public class Gamers {
 	}
 
 	public boolean checkDealerDrawPossible() {
-		return !dealer.isOverThan(BlackJackGame.ADDITIONAL_DISTRIBUTE_STANDARD);
+		return !dealer.isOverThan(ADDITIONAL_DISTRIBUTE_STANDARD);
 	}
 
 	public Player findPlayerByName(String name) {
