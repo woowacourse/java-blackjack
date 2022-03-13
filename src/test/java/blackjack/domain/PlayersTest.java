@@ -11,7 +11,7 @@ public class PlayersTest {
     @Test
     @DisplayName("참가자의 이름이 중복인 경우 확인")
     void duplicateTest() {
-        Assertions.assertThatThrownBy(() -> Players.fromNames(List.of("a", "a")))
+        Assertions.assertThatThrownBy(() -> Players.fromNames(List.of("a", "a"), (p) -> HitFlag.Y))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("참가자 이름은 중복될 수 없습니다.");
     }

@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.HitFlag;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
@@ -23,4 +24,6 @@ public interface Player {
     String getName();
 
     Cards getCards();
+
+    HitFlag checkHitFlag();
 }

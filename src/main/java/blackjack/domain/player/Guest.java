@@ -1,15 +1,19 @@
 package blackjack.domain.player;
 
+import blackjack.domain.HitFlag;
 import blackjack.domain.WinDrawLose;
 import blackjack.domain.card.Cards;
+import blackjack.domain.strategy.HitStrategy;
 import java.util.ArrayList;
 
 public class Guest extends AbstractPlayer {
 
     private WinDrawLose winDrawLose;
+    private final HitStrategy hitStrategy;
 
-    public Guest(String name) {
+    public Guest(String name, HitStrategy hitStrategy) {
         super(name, new Cards(new ArrayList<>()));
+        this.hitStrategy = hitStrategy;
     }
 
     @Override
@@ -35,5 +39,10 @@ public class Guest extends AbstractPlayer {
     @Override
     public String getWinDrawLoseString() {
         return winDrawLose.getName();
+    }
+
+    @Override
+    public HitFlag checkHitFlag() {
+        return hitStrategy.getHitFlag(this);
     }
 }

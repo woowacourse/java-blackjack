@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.HitFlag;
 import blackjack.domain.WinDrawLose;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
@@ -46,7 +47,11 @@ public class Dealer extends AbstractPlayer {
                 .collect(Collectors.joining(WIN_DRAW_LOSE_RESULT_DELIMITER));
     }
 
-    public boolean checkHitFlag() {
-        return getCards().calculateScore() <= HIT_FLAG_SCORE;
+    @Override
+    public HitFlag checkHitFlag() {
+        if (getCards().calculateScore() <= HIT_FLAG_SCORE) {
+            return HitFlag.Y;
+        }
+        return HitFlag.N;
     }
 }

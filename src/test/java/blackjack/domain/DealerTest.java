@@ -15,7 +15,7 @@ public class DealerTest {
     void checkHitAddCardTest() {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
-        while (dealer.checkHitFlag()) {
+        while (dealer.checkHitFlag() == HitFlag.Y) {
             dealer.hit(deck.draw());
         }
         int dealerScore = dealer.getCards().calculateScore();

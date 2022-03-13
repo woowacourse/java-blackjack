@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import java.util.List;
@@ -21,18 +22,20 @@ public enum WinDrawLose {
         return name;
     }
 
-    public static void judge(Player dealer, Players players) {
-        playerBust(dealer, players);
-        List<Player> playerList = extractNonBustPlayers(players);
+    public static void judge(Players players) {
+        Player dealer = players.findDealer();
+        List<Player> guests = players.getGuests();
+        playerBust(dealer, guests);
+        List<Player> nonBustedGuests = extractNonBustPlayers(guests);
         if (dealer.isBust()) {
-            playerList.forEach(Player::win);
+            nonBustedGuests.forEach(Player::win);
             return;
         }
-        calculateWinDrawLose(dealer, playerList);
+        calculateWinDrawLose(dealer, nonBustedGuests);
     }
 
-    private static void playerBust(Player dealer, Players players) {
-        players.getPlayers().stream()
+    private static void playerBust(Player dealer, List<Player> guests) {
+        guests.stream()
                 .filter(Player::isBust)
                 .forEach(player -> {
                     dealer.win();
@@ -40,8 +43,8 @@ public enum WinDrawLose {
                 });
     }
 
-    private static List<Player> extractNonBustPlayers(Players players) {
-        return players.getPlayers().stream()
+    private static List<Player> extractNonBustPlayers(List<Player> guests) {
+        return guests.stream()
                 .filter(player -> !player.isBust())
                 .collect(Collectors.toList());
     }

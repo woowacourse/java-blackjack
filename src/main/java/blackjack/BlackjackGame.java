@@ -4,7 +4,6 @@ import blackjack.domain.HitFlag;
 import blackjack.domain.WinDrawLose;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
@@ -13,83 +12,64 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
+    private static final int INIT_DRAW_COUNT = 2;
+
     public void run() {
-        Dealer dealer = new Dealer();
         Deck deck = new Deck();
-        Players players = Players.fromNames(InputView.inputPlayerName());
-        initHit(dealer, players, deck);
-        OutputView.printInitCard(getCardStatus(dealer, players));
+        Players players = Players.fromNames(InputView.inputPlayerName(),
+                (player) -> HitFlag.fromCommand(InputView.inputHitOrStand(player.getName())));
+        initHit(players, deck);
+        OutputView.printInitCard(getCardStatus(players));
         playersHit(players, deck);
-        dealerHit(dealer, deck);
-        OutputView.printHitResult(getHitResults(dealer, players));
-        OutputView.printResult(judgeWinDrawLose(dealer, players));
+        OutputView.printHitResult(getHitResults(players));
+        OutputView.printResult(judgeWinDrawLose(players));
     }
 
-    private List<Player> judgeWinDrawLose(Player dealer, Players players) {
-        WinDrawLose.judge(dealer, players);
-        List<Player> allPlayers = new ArrayList<>();
-        allPlayers.add(dealer);
-        allPlayers.addAll(players.getPlayers());
-        return allPlayers;
+    private List<Player> judgeWinDrawLose(Players players) {
+        WinDrawLose.judge(players);
+        return new ArrayList<>(players.getPlayers());
     }
 
-    private Map<String, Cards> getHitResults(Player dealer, Players players) {
+    private Map<String, Cards> getHitResults(Players players) {
         Map<String, Cards> result = new LinkedHashMap<>();
-        result.put(dealer.getName(), dealer.getCards());
         for (Player player : players.getPlayers()) {
             result.put(player.getName(), player.getCards());
         }
         return result;
     }
 
-    private Map<String, Cards> getCardStatus(Player dealer, Players players) {
-        Map<String, Cards> result = new LinkedHashMap<>();
-        result.put(dealer.getName(), dealer.getShowCards());
-        for (Player player : players.getPlayers()) {
-            result.put(player.getName(), player.getShowCards());
-        }
-        return result;
+    private Map<String, Cards> getCardStatus(Players players) {
+        return players.getPlayers()
+                .stream()
+                .collect(Collectors.toMap(Player::getName, Player::getShowCards));
     }
 
-    private void initHit(Player dealer, Players players, Deck deck) {
-        dealer.hit(deck.draw());
-        dealer.hit(deck.draw());
-        for (Player player : players.getPlayers()) {
-            player.hit(deck.draw());
-            player.hit(deck.draw());
-        }
+    private void initHit(Players players, Deck deck) {
+        players.initHit(deck, INIT_DRAW_COUNT);
     }
 
     private void playersHit(Players players, Deck deck) {
-        while (players.hasNext()) {
-            playerHit(players, deck);
+        for (Player player : players.getPlayers()) {
+            hitOrStand(player, deck);
         }
     }
 
-    private void playerHit(Players players, Deck deck) {
-        HitFlag flag = HitFlag.commandOf(InputView.inputHitOrStand(players.getNowPlayer().getName()));
-        if (flag.isStand()) {
-            players.next();
-            return;
+    private void hitOrStand(Player player, Deck deck) {
+        while (isNotBustOrBlackjack(player) && player.checkHitFlag() == HitFlag.Y) {
+            player.hit(deck.draw());
+            hitAndOutputResult(player);
         }
-        hitAndOutputResult(players, deck);
     }
 
-    private void hitAndOutputResult(Players players, Deck deck) {
-        Player nowTurnPlayer = players.getNowPlayer();
-        nowTurnPlayer.hit(deck.draw());
-        if (nowTurnPlayer.isBust()) {
-            players.next();
-        }
-        OutputView.printPresentStatus(nowTurnPlayer);
+    private boolean isNotBustOrBlackjack(Player player) {
+        return !(player.isBust() || player.isBlackjack());
     }
 
-    private void dealerHit(Dealer dealer, Deck deck) {
-        while (dealer.checkHitFlag()) {
-            dealer.hit(deck.draw());
-        }
+    private void hitAndOutputResult(Player player) {
+        OutputView.printPresentStatus(player);
     }
 }

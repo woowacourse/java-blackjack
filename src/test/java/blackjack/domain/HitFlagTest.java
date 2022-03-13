@@ -17,15 +17,15 @@ public class HitFlagTest {
             "n, true"
     })
     void inputTest(String input, boolean value) {
-        HitFlag hitFlag = HitFlag.commandOf(input);
-        assertThat(hitFlag.isStand()).isEqualTo(value);
+        HitFlag hitFlag = HitFlag.fromCommand(input);
+        assertThat(hitFlag == HitFlag.N).isEqualTo(value);
     }
 
     @ParameterizedTest
     @DisplayName("y 또는 n이 입력되었는지 확인")
     @ValueSource(strings = {"a", "b"})
     void inputErrorTest(String input) {
-        assertThatThrownBy(() -> HitFlag.commandOf(input))
+        assertThatThrownBy(() -> HitFlag.fromCommand(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("예는 y, 아니오는 n을 입력해 주세요.");
     }
