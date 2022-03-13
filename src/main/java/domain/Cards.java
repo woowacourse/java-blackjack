@@ -70,4 +70,8 @@ public final class Cards {
     public int getCardStatePower() {
         return getCardState().getStatePower();
     }
+
+    public int getCardsCount() {
+        return cards.size();
+    }
 }
