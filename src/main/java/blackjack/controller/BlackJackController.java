@@ -1,5 +1,9 @@
 package blackjack.controller;
 
+import blackjack.domain.Dealer;
+import blackjack.domain.DealerDrawable;
+import blackjack.domain.Deck;
+import blackjack.domain.Hand;
 import java.util.List;
 
 import blackjack.domain.RedrawChoice;
@@ -18,8 +22,11 @@ public class BlackJackController {
 		this.blackJackService = blackJackService;
 	}
 
+
+	public void initBlackJackGame(){
+		blackJackService.initBlackJackGame(new Deck(), new Dealer(new Hand(), DealerDrawable::chooseDraw));
+	}
 	public void addPlayers(List<String> names) {
-		blackJackService.initBlackJack();
 		blackJackService.joinPlayers(names);
 	}
 

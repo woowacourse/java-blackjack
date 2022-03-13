@@ -6,7 +6,6 @@ import java.util.ListIterator;
 import java.util.stream.Collectors;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.DealerDrawable;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.Outcome;
@@ -25,15 +24,15 @@ public class BlackJackService {
 	public static final int BUST = 0;
 	public static final int OPTIMIZED_WINNING_NUMBER = 21;
 
-	private List<Role> players;
-	private Role dealer;
 	private Deck deck;
+	private Role dealer;
+	private List<Role> players;
 	private ListIterator<Role> it;
 	private Role currentPlayer;
 
-	public void initBlackJack() {
-		deck = new Deck();
-		dealer = new Dealer(new Hand(), DealerDrawable::chooseDraw);
+	public void initBlackJackGame(Deck deck, Role dealer) {
+		this.deck = deck;
+		this.dealer = dealer;
 	}
 
 	public void joinPlayers(final List<String> names) {
