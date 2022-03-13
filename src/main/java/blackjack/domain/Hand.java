@@ -19,14 +19,6 @@ public class Hand {
 		cards.add(card);
 	}
 
-	public String getFinalScore() {
-		int score = calculateOptimalScore();
-		if (score == BlackJackService.BUST) {
-			return BlackJackService.BUST_MESSAGE;
-		}
-		return Integer.toString(score);
-	}
-
 	public int calculateOptimalScore() {
 		int totalScore = cards.stream()
 			.mapToInt(Card::getScore)
@@ -40,7 +32,7 @@ public class Hand {
 		return totalScore;
 	}
 
-	private boolean isBust(int totalScore) {
+	public boolean isBust(int totalScore) {
 		return totalScore > BlackJackService.OPTIMIZED_WINNING_NUMBER;
 	}
 

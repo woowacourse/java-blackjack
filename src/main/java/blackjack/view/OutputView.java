@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.service.BlackJackService;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,7 @@ public class OutputView {
 	private static final String CARD = "카드";
 	private static final String RECEIVED_ONE_MORE_CARD = "이하라 한장의 카드를 더 받았습니다.";
 	private static final String FAIL_TO_RECEIVE_ONE_MORE_CARD = "이상이라 카드를 더 받지 않았습니다.";
+	private static final String BUST_MESSAGE = "파산";
 
 	public static void printInitialStatus(final TableStatusDto dealerStatus, final List<TableStatusDto> playersStatus) {
 		printNames(dealerStatus, playersStatus);
@@ -75,13 +77,20 @@ public class OutputView {
 	private static void printDealerFinalResult(final DealerResultDto result) {
 		System.out.print(result.getName() + SPACE + CARD + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCards()));
-		System.out.println(RESULT + result.getTotalScore());
+		System.out.println(RESULT + printTotalScore(result.getTotalScore(), result.isBust()));
 	}
 
 	private static void printPlayerFinalResult(final PlayerResultDto result) {
 		System.out.print(result.getName() + CARD + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		System.out.print(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, result.getCards()));
-		System.out.println(RESULT + result.getTotalScore());
+		System.out.println(RESULT + printTotalScore(result.getTotalScore(), result.isBust()));
+	}
+
+	private static String printTotalScore(int score, boolean bust) {
+		if (bust) {
+			return BUST_MESSAGE;
+		}
+		return Integer.toString(score);
 	}
 
 	private static void printDealerOutcome(final DealerResultDto dealerResult) {
