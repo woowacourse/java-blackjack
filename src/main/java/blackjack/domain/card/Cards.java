@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Cards {
 
-    public static final int ACE_GAP = 10;
-    public static final int BLACK_JACK_SCORE = 21;
+    private static final int ACE_GAP = 10;
+    private static final int BLACK_JACK_SCORE = 21;
 
     private final List<Card> cards;
 

@@ -14,7 +14,7 @@ import blackjack.domain.result.Results;
 
 public class OutputView {
 
-    public static final String DRAW_CARD_MESSAGE = "%s와 %s에게 2장을 나누었습니다.\n";
+    private static final String DRAW_CARD_MESSAGE = "%s와 %s에게 2장을 나누었습니다.\n";
     private static final String CARD_INFORMATION_MESSAGE = "%s카드: %s";
     private static final String TOTAL_RESULT_MESSAGE = "## 최종 승패";
     private static final String DRAW_RESULT_MESSAGE = "%s - 결과: %d";
