@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +37,16 @@ public class CardDeckTest {
     }
 
     @Test
-    @DisplayName("카드가 다 떨어지면 새로 카드를 만든다.")
-    void createNewDeck() {
+    @DisplayName("카드가 다 떨어지면 더 이상 뽑을 수 없다.")
+    void notDraw() {
         // given
         CardDeck deck = new CardDeck(() -> new ArrayList<>(List.of(new Card(Pattern.CLOVER, Denomination.THREE))));
+        deck.draw();
 
         // then
-        assertThatNoException().isThrownBy(deck::drawDouble);
+        assertThatThrownBy(deck::draw)
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("[ERROR] 더 이상 뽑을 수 있는 카드가 없습니다.");
+
     }
 }

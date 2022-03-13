@@ -5,32 +5,26 @@ import java.util.List;
 
 public class CardDeck {
 
-    private List<Card> cards;
-    private final CardsGenerator generator;
+    private final List<Card> cards;
 
     public CardDeck(CardsGenerator generator) {
-        this.generator = generator;
-        initCards();
-    }
-
-    private void initCards() {
-        cards = generator.generate();
+        this.cards = generator.generate();
     }
 
     public Card draw() {
-        if (isEmpty()) {
-            initCards();
-        }
+        validateCards();
         Card card = cards.get(0);
         cards.remove(0);
         return card;
     }
 
-    public List<Card> drawDouble() {
-        return new ArrayList<>(List.of(draw(), draw()));
+    private void validateCards() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 더 이상 뽑을 수 있는 카드가 없습니다.");
+        }
     }
 
-    private boolean isEmpty() {
-        return cards.isEmpty();
+    public List<Card> drawDouble() {
+        return new ArrayList<>(List.of(draw(), draw()));
     }
 }
