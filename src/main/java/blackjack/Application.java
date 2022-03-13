@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.dto.DealerDto;
+import blackjack.dto.GamerMatchResultsDto;
 import blackjack.dto.GamersDto;
 import blackjack.model.BlackJackGame;
 import blackjack.view.InputView;
@@ -18,5 +19,6 @@ public class Application {
         blackJackGame.hitOrStayUntilPossible(InputView::inputHitOrStaySign, ResultView::printCurrentTurnHitResult);
 
         ResultView.printFinalScores(DealerDto.fromGame(blackJackGame), GamersDto.from(blackJackGame));
+        ResultView.printMatchResult(GamerMatchResultsDto.from(blackJackGame));
     }
 }

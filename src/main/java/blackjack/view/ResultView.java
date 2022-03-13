@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.dto.DealerDto;
 import blackjack.dto.GamerDto;
+import blackjack.dto.GamerMatchResultsDto;
 import blackjack.dto.GamersDto;
 
 import blackjack.dto.PlayerDto;
@@ -16,6 +17,7 @@ public class ResultView {
     private static final String GAMER_HIT_MESSAGE_FORMAT = "\n%s : %s\n";
     private static final String DEALER_HIT_MESSAGE_FORMAT = "\n%s는 16이하라 %d장의 카드를 더 받았습니다.\n";
     public static final String PLAYER_SCORE_MESSAGE_FORMAT = "\n%s 카드: %s - 결과: %d\n";
+    public static final String PLAYER_MATCH_MESSAGE_FORMAT = "\n%s: %s";
 
     public static void printStartCardsDistributionResult(DealerDto dealer, GamersDto gamers) {
         printDealerName(dealer.getName());
@@ -98,5 +100,11 @@ public class ResultView {
             cardJoiner.add(card);
         }
         System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, gamer.getName(), cardJoiner, gamer.getScore());
+    }
+
+    public static void printMatchResult(GamerMatchResultsDto gamerMatchResults) {
+        gamerMatchResults.getGamerMatchResults().forEach((name, result) -> {
+            System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, name, result);
+        });
     }
 }

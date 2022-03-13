@@ -35,5 +35,4 @@ public class Gamer extends Player {
     public boolean isImpossibleHit() {
         return cards.isOverLimitScore();
     }
-
 }

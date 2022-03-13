@@ -2,8 +2,11 @@ package blackjack.model.player;
 
 import blackjack.dto.GamerDto;
 import blackjack.dto.PlayerDto;
+import blackjack.model.MatchResult;
 import blackjack.model.card.CardDeck;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
@@ -54,6 +57,20 @@ public class Gamers {
     private boolean canHit(Player gamer) {
         return !gamer.isBlackJack() && !gamer.isImpossibleHit();
     }
+
+    public Map<String, MatchResult> getMatchResult(Player dealer) {
+        Map<String, MatchResult> gamerResults = new LinkedHashMap<>();
+        for (Player gamer : values) {
+            MatchResult result = match(dealer, gamer);
+            gamerResults.put(gamer.getName(), result);
+        }
+        return gamerResults;
+    }
+
+    private MatchResult match(Player dealer, Player gamer) {
+        return MatchResult.find(dealer, gamer);
+    }
+
 
     public List<Player> getValues() {
         return values;
