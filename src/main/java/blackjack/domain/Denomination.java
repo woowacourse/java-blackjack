@@ -17,6 +17,8 @@ public enum Denomination {
     KING(10, "K"),
     ;
 
+    public static final int BLACKJACK_SCORE = 21;
+
     private final int score;
     private final String name;
 

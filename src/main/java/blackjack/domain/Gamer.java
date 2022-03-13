@@ -1,10 +1,10 @@
 package blackjack.domain;
 
+import static blackjack.domain.Denomination.*;
+
 import java.util.List;
 
 public abstract class Gamer {
-
-    protected static final int PLAYING_STANDARD = 21;
 
     private final Name name;
     private final Cards cards;
@@ -23,7 +23,7 @@ public abstract class Gamer {
     }
 
     public boolean isBust() {
-        return getTotalScore() > PLAYING_STANDARD;
+        return getTotalScore() > BLACKJACK_SCORE;
     }
 
     public int getMinusScore(int targetScore) {

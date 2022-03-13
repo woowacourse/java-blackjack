@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static blackjack.domain.Denomination.*;
+
 import java.util.List;
 
 public class Player extends Gamer {
@@ -9,7 +11,7 @@ public class Player extends Gamer {
     }
 
     public boolean canHit() {
-        return getTotalScore() <= PLAYING_STANDARD;
+        return getTotalScore() <= BLACKJACK_SCORE;
     }
 
     @Override

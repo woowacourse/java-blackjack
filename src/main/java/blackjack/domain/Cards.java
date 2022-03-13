@@ -1,11 +1,12 @@
 package blackjack.domain;
 
+import static blackjack.domain.Denomination.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
 
-    private static final int BLACKJACK_SCORE = 21;
     private static final int BONUS_ACE_ADD_SCORE = 10;
 
     private final List<Card> value;
@@ -35,7 +36,7 @@ public class Cards {
     private Long countAce() {
         return value.stream()
                 .map(Card::getDenomination)
-                .filter(card -> Denomination.ACE.equals(card))
+                .filter(card -> ACE.equals(card))
                 .count();
     }
 
