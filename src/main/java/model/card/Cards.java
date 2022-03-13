@@ -13,13 +13,13 @@ public class Cards {
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
-        if (isDistinct(cards)) {
+        if (isDuplicated(cards)) {
             throw new IllegalArgumentException("중복된 카드를 받을 수 없습니다.");
         }
         this.cards = new ArrayList<>(cards);
     }
 
-    private boolean isDistinct(final List<Card> cards) {
+    private boolean isDuplicated(final List<Card> cards) {
         return cards.stream().distinct().count() != cards.size();
     }
 
