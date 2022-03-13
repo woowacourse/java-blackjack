@@ -1,21 +1,7 @@
 package blackjack.model;
 
-import static blackjack.model.Rank.ACE;
-import static blackjack.model.Rank.EIGHT;
-import static blackjack.model.Rank.FIVE;
-import static blackjack.model.Rank.FOUR;
-import static blackjack.model.Rank.JACK;
-import static blackjack.model.Rank.KING;
-import static blackjack.model.Rank.NINE;
-import static blackjack.model.Rank.QUEEN;
-import static blackjack.model.Rank.SEVEN;
-import static blackjack.model.Rank.SIX;
-import static blackjack.model.Rank.THREE;
-import static blackjack.model.Rank.TWO;
-import static blackjack.model.Suit.CLOVER;
-import static blackjack.model.Suit.DIAMOND;
-import static blackjack.model.Suit.HEART;
-import static blackjack.model.Suit.SPADE;
+import static blackjack.model.Rank.*;
+import static blackjack.model.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -31,6 +17,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class PlayerTest {
 
+    @ParameterizedTest
+    @MethodSource("provideDealerWinningCaseCards")
+    @DisplayName("딜러가 이기는 경우 판별 테스트")
+    void dealerIsWinner(Dealer dealer, Cards playerCards) {
+        assertThat(dealer.match(playerCards)).isEqualTo(Result.WIN);
+    }
+
     private static Stream<Arguments> provideDealerWinningCaseCards() {
         return Stream.of(
                 Arguments.of(new Dealer(new Card(EIGHT, DIAMOND), new Card(JACK, HEART)),
@@ -45,6 +38,13 @@ public class PlayerTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("provideDealerLosingCaseCards")
+    @DisplayName("딜러가 지는 경우 판별 테스트")
+    void dealerIsLoser(Dealer dealer, Cards playerCards) {
+        assertThat(dealer.match(playerCards)).isEqualTo(Result.LOSE);
+    }
+
     private static Stream<Arguments> provideDealerLosingCaseCards() {
         return Stream.of(
                 Arguments.of(new Dealer(new Card(SEVEN, CLOVER), new Card(EIGHT, HEART)),
@@ -54,6 +54,13 @@ public class PlayerTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("provideCardsForDealer")
+    @DisplayName("딜러 카드 발급 가능 여부 확인 테스트")
+    void dealerPossibleTakeCard(Dealer dealer, boolean expect) {
+        assertThat(dealer.isHittable()).isEqualTo(expect);
+    }
+
     private static Stream<Arguments> provideCardsForDealer() {
         return Stream.of(
                 Arguments.of(new Dealer(new Card(JACK, DIAMOND), new Card(SIX, CLOVER)), true),
@@ -61,6 +68,13 @@ public class PlayerTest {
                 Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(SIX, CLOVER)), false),
                 Arguments.of(new Dealer(new Card(ACE, DIAMOND), new Card(ACE, CLOVER)), false)
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePlayers")
+    @DisplayName("플레이어 점수 반환 테스트")
+    void gamerScore(Player player, int expect) {
+        assertThat(player.score().getValue()).isEqualTo(expect);
     }
 
     protected static Stream<Arguments> providePlayers() {
@@ -74,20 +88,6 @@ public class PlayerTest {
                         new Card(KING, DIAMOND)), 30),
                 Arguments.of(new Gamer("player", new Card(THREE, DIAMOND), new Card(TWO, DIAMOND)), 5)
         );
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideDealerWinningCaseCards")
-    @DisplayName("딜러가 이기는 경우 판별 테스트")
-    void dealerIsWinner(Dealer dealer, Cards playerCards) {
-        assertThat(dealer.match(playerCards)).isEqualTo(Result.WIN);
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideDealerLosingCaseCards")
-    @DisplayName("딜러가 지는 경우 판별 테스트")
-    void dealerIsLoser(Dealer dealer, Cards playerCards) {
-        assertThat(dealer.match(playerCards)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -106,26 +106,12 @@ public class PlayerTest {
                 .isEqualTo(Result.WIN);
     }
 
-    @ParameterizedTest
-    @MethodSource("provideCardsForDealer")
-    @DisplayName("딜러 카드 발급 가능 여부 확인 테스트")
-    void dealerPossibleTakeCard(Dealer dealer, boolean expect) {
-        assertThat(dealer.isHittable()).isEqualTo(expect);
-    }
-
     @Test
     @DisplayName("딜러 카드 발급")
     void takeCards() {
         Player dealer = new Dealer(new Card(JACK, DIAMOND), new Card(THREE, CLOVER));
         dealer.take(new Card(ACE, HEART));
         assertThat(dealer.score()).isEqualTo(new Score(14));
-    }
-
-    @ParameterizedTest
-    @MethodSource("providePlayers")
-    @DisplayName("플레이어 점수 반환 테스트")
-    void gamerScore(Player player, int expect) {
-        assertThat(player.score().getValue()).isEqualTo(expect);
     }
 
     @Test

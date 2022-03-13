@@ -22,6 +22,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class CardsTest {
 
+    @ParameterizedTest
+    @MethodSource("provideCards")
+    @DisplayName("최고의 카드 점수 계산")
+    void bestScore(Cards cards, int expect) {
+        assertThat(cards.bestScore()).isEqualTo(new Score(expect));
+    }
+
     protected static Stream<Arguments> provideCards() {
         return Stream.of(
                 Arguments.of(new Cards(new Card(ACE, SPADE), new Card(JACK, HEART)), 21),
@@ -35,6 +42,13 @@ public class CardsTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("provideMaxCards")
+    @DisplayName("최대 카드 점수 계산")
+    void maxScore(Cards cards, int expect) {
+        assertThat(cards.softHandScore()).isEqualTo(new Score(expect));
+    }
+
     protected static Stream<Arguments> provideMaxCards() {
         return Stream.of(
                 Arguments.of(new Cards(new Card(ACE, SPADE), new Card(JACK, HEART)), 21),
@@ -43,20 +57,6 @@ public class CardsTest {
                 Arguments.of(new Cards(new Card(ACE, DIAMOND), new Card(ACE, SPADE),
                         new Card(NINE, CLOVER)), 31)
         );
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideCards")
-    @DisplayName("최고의 카드 점수 계산")
-    void bestScore(Cards cards, int expect) {
-        assertThat(cards.bestScore()).isEqualTo(new Score(expect));
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideMaxCards")
-    @DisplayName("최대 카드 점수 계산")
-    void maxScore(Cards cards, int expect) {
-        assertThat(cards.softHandScore()).isEqualTo(new Score(expect));
     }
 
     @Test
