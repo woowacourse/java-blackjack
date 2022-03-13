@@ -24,4 +24,14 @@ public enum Result {
     public static Result of(Status from, Status to) {
         return Status.getResultOf(from, to);
     }
+
+    public Result getOpposite() {
+        if (this.equals(WIN)) {
+            return LOSE;
+        }
+        if (this.equals(LOSE)) {
+            return WIN;
+        }
+        return this;
+    }
 }

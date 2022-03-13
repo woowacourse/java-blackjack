@@ -37,16 +37,16 @@ public class BlackJackController {
 
     public void hitDealer() {
         if (service.canReceiveCard(DEALER_NAME)) {
-            service.hitParticipatorOf(DEALER_NAME);
+            service.hitDealer();
             OutputView.printHitDealer();
         }
     }
 
-    public void getCardsResults() {
-        OutputView.printResult(service.getAllCardsResults());
-    }
-
     public void match() {
         OutputView.printMatchResult(service.match());
+    }
+
+    public void getCardsResults() {
+        OutputView.printResult(service.getAllCardsAndSums());
     }
 }

@@ -22,4 +22,6 @@ public class Player extends Participator {
         }
         return this.cards.getResult(dealer.cards);
     }
+
+
 }

@@ -1,7 +1,9 @@
 package view;
 
+import dto.AllCardsAndSumDto;
 import dto.AllParticipatorsDto;
 import dto.ParticipatorDto;
+import dto.TotalResultDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,12 @@ public class OutputView {
     private static final String SUFFIX_INIT_MESSAGE = "에게 2장을 나누었습니다.";
     private static final String NAME_CARD_DELIMITER = ": ";
     private static final String DELIMITER = ", ";
+    private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String MATCH_RESULT_MESSAGE = "## 최종 승패";
+    private static final String DEALER_MATCH_MESSAGE = "딜러: ";
+    private static final String SPACE = " ";
+    private static final String CARD_MESSAGE = " 카드: ";
+    private static final String CARD_SUM_MESSAGE = " - 결과: ";
 
     public static void printInit(AllParticipatorsDto allParticipatorsDto) {
         List<ParticipatorDto> playersDto = allParticipatorsDto.getPlayersDto();
@@ -56,42 +64,44 @@ public class OutputView {
     }
 
     public static void printHitDealer() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(DEALER_HIT_MESSAGE);
 
     }
 
-    public static void printMatchResult(Map<String, String> results) {
-        System.out.println("## 최종 승패");
+    public static void printMatchResult(TotalResultDto totalResultDto) {
+        System.out.println(System.lineSeparator());
+        System.out.println(MATCH_RESULT_MESSAGE);
 
-        System.out.println(convertDealerMatchCountInLine(results));
-        for (Entry<String, String> entry : results.entrySet()) {
+        System.out.println(convertDealerMatchCountInLine(totalResultDto.getDealerMatchCount()));
+
+        Map<String, String> playerResults = totalResultDto.getPlayersMatchResult();
+        for (Entry<String, String> entry : playerResults.entrySet()) {
             System.out.println(entry.getKey() + NAME_CARD_DELIMITER + entry.getValue());
         }
     }
 
-    private static String convertDealerMatchCountInLine(Map<String, String> results) {
+    private static String convertDealerMatchCountInLine(Map<String, Long> results) {
         StringBuilder sb = new StringBuilder();
-        sb.append("딜러: ");
-        if (countOf(results, "LOSE") != 0) {
-            sb.append(countOf(results, "LOSE")).append("승 ");
-        }
-        if (countOf(results, "WIN") != 0) {
-            sb.append(countOf(results, "WIN")).append("패 ");
-        }
-        if (countOf(results, "DRAW") != 0) {
-            sb.append(countOf(results, "DRAW")).append("무");
+        sb.append(DEALER_MATCH_MESSAGE);
+        for (Entry<String, Long> entry : results.entrySet()) {
+            printEachResult(sb, entry);
         }
         return sb.toString();
     }
 
-    private static long countOf(Map<String, String> results, String target) {
-        return new ArrayList<>(results.values()).stream()
-                .filter(result -> result.equals(target))
-                .count();
+    private static void printEachResult(StringBuilder builder, Entry<String, Long> matchEntry) {
+        if (matchEntry.getValue() != 0) {
+            builder.append(matchEntry.getValue()).append(matchEntry.getKey()).append(SPACE);
+        }
     }
 
-    public static void printResult(Map<ParticipatorDto, Integer> result) {
-        for (Entry<ParticipatorDto, Integer> entry : result.entrySet()) {
+    public static void printResult(AllCardsAndSumDto allCardsResultDto) {
+        printResult(allCardsResultDto.getDealer(), allCardsResultDto.getDealerSum());
+        printPlayersResult(allCardsResultDto.getPlayerResults());
+    }
+
+    private static void printPlayersResult(Map<ParticipatorDto, Integer> playerResults) {
+        for (Entry<ParticipatorDto, Integer> entry : playerResults.entrySet()) {
             printResult(entry.getKey(), entry.getValue());
         }
     }
@@ -99,9 +109,9 @@ public class OutputView {
     private static void printResult(ParticipatorDto key, int value) {
         StringBuilder sb = new StringBuilder();
         sb.append(key.getName())
-                .append(" 카드: ")
+                .append(CARD_MESSAGE)
                 .append(convertCardsInLine(key.getCards()))
-                .append(" - 결과: ")
+                .append(CARD_SUM_MESSAGE)
                 .append(value);
         System.out.println(sb);
     }
