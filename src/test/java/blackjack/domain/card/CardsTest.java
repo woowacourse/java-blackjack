@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +39,7 @@ public class CardsTest {
     }
 
     @Test
-    @DisplayName("플레이어를 생성할 때 카드가 중복되면 예외가 발생한다.")
+    @DisplayName("Cards 생성시 카드가 중복되면 예외가 발생한다.")
     void duplicatedCards() {
         // given
         Card card1 = new Card(Pattern.DIAMOND, Denomination.THREE);
