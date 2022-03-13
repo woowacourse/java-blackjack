@@ -1,14 +1,10 @@
 package blackjack.domain.player;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import blackjack.domain.card.Drawable;
-import blackjack.domain.Score;
 import blackjack.domain.ScoreResult;
+import blackjack.domain.card.Drawable;
 
 public class Players {
 
@@ -37,17 +33,6 @@ public class Players {
     }
 
     public ScoreResult compete(Dealer dealer) {
-        Map<Score, Integer> dealerResult = new EnumMap<>(Score.class);
-        for (Score value : Score.values()) {
-            dealerResult.put(value, 0);
-        }
-        Map<String, Score> playerResults = new HashMap<>();
-
-        for (Player player : players) {
-            Score score = player.compete(dealer);
-            playerResults.put(player.getName(), score);
-            dealerResult.merge(Score.inverse(score), 1, Integer::sum);
-        }
-        return new ScoreResult(dealerResult, playerResults);
+        return ScoreResult.from(List.copyOf(players), dealer);
     }
 }
