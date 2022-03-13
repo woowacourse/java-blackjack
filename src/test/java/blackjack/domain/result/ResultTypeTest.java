@@ -22,7 +22,7 @@ class ResultTypeTest {
 		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
 		player.addCard(new Card(Denomination.EIGHT, Suit.CLOVER));
 		//when
-		ResultType resultType = ResultType.generateResultType(player, dealer);
+		ResultType resultType = ResultType.getMatchedResultType(player, dealer);
 		//then
 		assertThat(resultType).isEqualTo(ResultType.LOSE);
 	}
@@ -36,7 +36,7 @@ class ResultTypeTest {
 		dealer.addCard(new Card(Denomination.EIGHT, Suit.CLOVER));
 		player.addCard(new Card(Denomination.NINE, Suit.CLOVER));
 		//when
-		ResultType resultType = ResultType.generateResultType(player, dealer);
+		ResultType resultType = ResultType.getMatchedResultType(player, dealer);
 		//then
 		assertThat(resultType).isEqualTo(ResultType.WIN);
 	}
@@ -50,7 +50,7 @@ class ResultTypeTest {
 		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
 		player.addCard(new Card(Denomination.NINE, Suit.HEART));
 		//when
-		ResultType resultType = ResultType.generateResultType(player, dealer);
+		ResultType resultType = ResultType.getMatchedResultType(player, dealer);
 		//then
 		assertThat(resultType).isEqualTo(ResultType.DRAW);
 	}

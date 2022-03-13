@@ -14,7 +14,7 @@ public enum ResultType {
 		this.value = value;
 	}
 
-	public static ResultType generateResultType(final Player player, final Dealer dealer) {
+	public static ResultType getMatchedResultType(final Player player, final Dealer dealer) {
 		if (player.isBurst()) {
 			return LOSE;
 		}
