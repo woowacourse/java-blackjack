@@ -13,7 +13,7 @@ public abstract class Participant {
     private static final String ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
 
     private static final int BLACK_JACK = 21;
-    private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 1;
+    private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 11;
 
     private final String name;
     private final List<Card> cards;
@@ -44,12 +44,10 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        int score = calculateScore();
-        int countAce = countAce();
-
-        while (score > BLACK_JACK && countAce > 0) {
-            score -= Denomination.ACE.getScore() - OTHER_SCORE_OF_ACE_DENOMINATION;
-            countAce--;
+        final int score = calculateScore();
+        final int countAce = countAce();
+        if (countAce > 0 && score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore() <= BLACK_JACK) {
+            return score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore();
         }
         return score;
     }

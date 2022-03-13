@@ -13,7 +13,7 @@ public enum Denomination {
     JACK(10, "J"),
     QUEEN(10, "Q"),
     KING(10, "K"),
-    ACE(11, "A");
+    ACE(1, "A");
 
     private final int score;
     private final String denomination;
