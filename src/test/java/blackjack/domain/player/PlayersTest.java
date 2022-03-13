@@ -1,7 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import static org.assertj.core.api.Assertions.*;
 
+import blackjack.domain.HitFlag;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
