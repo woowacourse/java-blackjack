@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Cards implements Iterable<Card> {
 
-    private static final int TARGET_SCORE = 21;
+    public static final int BLACK_JACK_TARGET_SCORE = 21;
     private static final int DIFFERENCE_IN_ACE_SCORE = 10;
 
     private final List<Card> cards;
@@ -28,7 +28,7 @@ public class Cards implements Iterable<Card> {
     }
 
     private int changeAceScore(int totalScore) {
-        if (totalScore > TARGET_SCORE) {
+        if (totalScore > BLACK_JACK_TARGET_SCORE) {
             totalScore -= DIFFERENCE_IN_ACE_SCORE;
         }
         return totalScore;
