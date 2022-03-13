@@ -6,7 +6,6 @@ import java.util.Objects;
 import model.card.Card;
 import model.card.Cards;
 import model.cardGettable.CardsGettable;
-import model.cardGettable.EveryCardsGettable;
 
 public abstract class Participator {
     protected final Cards cards;

@@ -1,6 +1,7 @@
 package model;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import org.assertj.core.data.Index;
@@ -23,5 +24,11 @@ public class StatusTest {
         assertThat(statuses).contains(Status.STAND, Index.atIndex(2));
         assertThat(statuses).contains(Status.STAND, Index.atIndex(3));
         assertThat(statuses).contains(Status.BUST, Index.atIndex(4));
+    }
+
+    @Test
+    void checkInvalidStatus() {
+        assertThatThrownBy(() -> Status.of(0,22))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

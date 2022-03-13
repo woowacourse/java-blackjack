@@ -31,7 +31,7 @@ public class BlackJackController {
 
     private void hit(String name) {
         while (service.canReceiveCard(name) && InputView.inputHitResponse(name)) {
-            OutputView.printParticipatorHit(service.hitParticipatorOf(name));
+            OutputView.printParticipatorHit(service.hitPlayerOf(name));
         }
     }
 

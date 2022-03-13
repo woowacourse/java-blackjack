@@ -10,8 +10,6 @@ import dto.AllCardsAndSumDto;
 import dto.AllParticipatorsDto;
 import dto.ParticipatorDto;
 import dto.TotalResultDto;
-import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +79,7 @@ public class BlackJackService {
         return players.canReceiveCard(name);
     }
 
-    public ParticipatorDto hitParticipatorOf(String name) {
+    public ParticipatorDto hitPlayerOf(String name) {
         players.receiveCardTo(name, cardDeck);
         return toParticipatorDto(players.findByName(name));
     }

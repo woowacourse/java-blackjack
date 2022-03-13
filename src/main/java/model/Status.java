@@ -6,7 +6,7 @@ import java.util.function.BiPredicate;
 public enum Status {
     BLACKJACK(3, (cardCount, cardSum) -> cardCount == 2 && cardSum == 21),
     STAND(2, (cardCount, cardSum) -> (cardCount > 2 && cardSum <= 21) || (cardCount == 2 && cardSum < 21)),
-    BUST(1, (cardCount, cardSum) -> cardSum > 21);
+    BUST(1, (cardCount, cardSum) -> cardCount >= 2 && cardSum > 21);
 
     private final BiPredicate<Integer, Integer> predicate;
     private final int power;
