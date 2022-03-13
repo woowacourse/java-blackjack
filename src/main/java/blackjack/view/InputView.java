@@ -30,6 +30,6 @@ public class InputView {
 
     public static Choice getChoice(Participant participant) {
         System.out.println(participant.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return Choice.of(scanner.nextLine());
+        return Choice.from(scanner.nextLine());
     }
 }
