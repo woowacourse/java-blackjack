@@ -5,9 +5,13 @@ public class Card {
     private final Symbol symbol;
     private final Denomination denomination;
 
-    public Card(Symbol symbol, Denomination denomination) {
+    private Card(Symbol symbol, Denomination denomination) {
         this.symbol = symbol;
         this.denomination = denomination;
+    }
+
+    public static Card of(Symbol symbol, Denomination denomination){
+        return new Card(symbol, denomination);
     }
 
     public int getScore(){

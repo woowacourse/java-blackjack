@@ -27,10 +27,10 @@ class DealerTest {
     @Test
     @DisplayName("16이 넘은 상태에서 카드를 뽑을 경우 에러를 발생시킨다.")
     void hitCardOverLimitError() {
-        dealer.hit(new Card(Symbol.SPADE, Denomination.EIGHT));
-        dealer.hit(new Card(Symbol.SPADE, Denomination.NINE));
+        dealer.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
+        dealer.hit(Card.of(Symbol.SPADE, Denomination.NINE));
 
-        assertThatThrownBy(() ->  dealer.hit(new Card(Symbol.SPADE, Denomination.ACE)))
+        assertThatThrownBy(() ->  dealer.hit(Card.of(Symbol.SPADE, Denomination.ACE)))
             .isInstanceOf(IllegalStateException.class)
             .hasMessage(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
     }
@@ -38,8 +38,8 @@ class DealerTest {
     @Test
     @DisplayName("숫자가 16이 넘는 경우 False를 반환한다.")
     void canDrawCardFalseTest() {
-        dealer.hit(new Card(Symbol.SPADE, Denomination.EIGHT));
-        dealer.hit(new Card(Symbol.SPADE, Denomination.NINE));
+        dealer.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
+        dealer.hit(Card.of(Symbol.SPADE, Denomination.NINE));
 
         assertThat(dealer.canDrawCard()).isFalse();
     }
@@ -47,8 +47,8 @@ class DealerTest {
     @Test
     @DisplayName("숫자가 16이 넘지 않는 경우 True를 반환한다.")
     void canDrawCardTrueTest() {
-        dealer.hit(new Card(Symbol.SPADE, Denomination.EIGHT));
-        dealer.hit(new Card(Symbol.SPADE, Denomination.FIVE));
+        dealer.hit(Card.of(Symbol.SPADE, Denomination.EIGHT));
+        dealer.hit(Card.of(Symbol.SPADE, Denomination.FIVE));
 
         assertThat(dealer.canDrawCard()).isTrue();
     }

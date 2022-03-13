@@ -18,21 +18,21 @@ public class Deck {
         deck = tmpCards;
     }
 
-    public static Deck of(){
+    public static Deck of() {
         return new Deck();
     }
 
     private void addCard(Symbol symbol, LinkedList<Card> tmpCards) {
         for (Denomination denomination : Denomination.values()) {
-            tmpCards.add(new Card(symbol, denomination));
+            tmpCards.add(Card.of(symbol, denomination));
         }
     }
 
-    public List<Card> handOutInitialTurn(){
+    public List<Card> handOutInitialTurn() {
         return Arrays.asList(handOut(), handOut());
     }
 
-    public Card handOut(){
+    public Card handOut() {
         return deck.pop();
     }
 }
