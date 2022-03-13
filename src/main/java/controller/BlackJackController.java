@@ -18,9 +18,9 @@ public class BlackJackController {
         Players players = createPlayers();
         Dealer dealer = new Dealer();
         Deck deck = Deck.of();
+
         initialTurn(players, dealer, deck);
-        hitCardByPlayers(players, deck);
-        hitCardByDealer(dealer,deck);
+        hitCard(players, dealer, deck);
         showFinalTurn(players, dealer);
         showResult(players, dealer);
     }
@@ -39,6 +39,11 @@ public class BlackJackController {
         players.runInitialTurn(deck);
         dealer.hitInitialTurn(deck);
         outputView.showInitialTurnStatus(players, dealer);
+    }
+
+    private void hitCard(Players players, Dealer dealer, Deck deck) {
+        hitCardByPlayers(players, deck);
+        hitCardByDealer(dealer, deck);
     }
 
 
@@ -68,7 +73,7 @@ public class BlackJackController {
 
     private void showResult(Players players, Dealer dealer) {
         List<Result> playersResult = players.checkResults(dealer);
-        
+
         outputView.showResult(dealer.checkResult(playersResult), players.toNames(),
             players.checkResults(dealer));
     }
