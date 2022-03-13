@@ -4,11 +4,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cards {
+
     public static final int ACE_GAP = 10;
     public static final int BLACK_JACK_SCORE = 21;
+
     private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    public Cards(final List<Card> cards) {
         this.cards = cards;
     }
 
@@ -37,5 +39,9 @@ public class Cards {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public Card getFirstCard() {
+        return cards.get(0);
     }
 }

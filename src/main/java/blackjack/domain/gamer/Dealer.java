@@ -10,24 +10,32 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Dealer extends Gamer {
-    private static final String DEALER_NAME = "딜러";
-    private static final int HIT_FLAG_SCORE = 16;
-    private static final String WIN_DRAW_LOSE_RESULT_DELIMITER = " ";
 
-    private static final Dealer dealer = new Dealer();
+    private static final int DRAWABLE_NUMBER = 16;
+    private static final String CAN_NOT_DRAWABLE_ERROR_MESSAGE = "%s 카드의 합이 %d을 초과했기 때문에 카드를 뽑을 수 없습니다.";
+    private static final String WIN_DRAW_LOSE_RESULT_DELIMITER = " ";
 
     private final Map<WinDrawLose, Integer> winDrawLose = new EnumMap<>(WinDrawLose.class);
 
-    private Dealer() {
-        super(DEALER_NAME, new Cards(new ArrayList<>()));
-    }
-
-    public static Dealer init() {
-        return dealer;
+    public Dealer(final Cards cards) {
+        super("딜러", cards);
     }
 
     public boolean checkHitFlag() {
-        return getCards().calculateScore() <= HIT_FLAG_SCORE;
+        return getCards().calculateScore() <= DRAWABLE_NUMBER;
+    }
+
+    @Override
+    public void drawCard(Card card) {
+        if (!canDraw()) {
+            throw new IllegalArgumentException(String.format(CAN_NOT_DRAWABLE_ERROR_MESSAGE, name, DRAWABLE_NUMBER));
+        }
+        cards.add(card);
+    }
+
+    @Override
+    public boolean canDraw() {
+        return calculateScore() <= DRAWABLE_NUMBER;
     }
 
     @Override

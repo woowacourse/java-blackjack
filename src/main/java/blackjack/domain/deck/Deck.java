@@ -1,9 +1,12 @@
 package blackjack.domain.deck;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
@@ -23,6 +26,12 @@ public class Deck {
         return Arrays.stream(Denomination.values())
             .flatMap(denomination -> Arrays.stream(Suit.values())
                 .map(suit -> new Card(denomination, suit)))
+            .collect(Collectors.toList());
+    }
+
+    public List<Card> drawStartCards() {
+        return IntStream.range(0, 2)
+            .mapToObj(i -> draw())
             .collect(Collectors.toList());
     }
 

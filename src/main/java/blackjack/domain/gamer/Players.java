@@ -12,25 +12,15 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(List<Player> players) {
-        this.players = players;
+    public Players(List<Player> names) {
+        validateDuplicate(names);
+        players = names;
     }
 
-    public static Players fromNames(List<String> names) {
-        validate(names);
-        return new Players(toPlayers(names));
-    }
+    private void validateDuplicate(List<Player> names) {
+        Set<Player> duplicateNames = new HashSet<>(names);
 
-    private static List<Player> toPlayers(List<String> names) {
-        return names.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
-    }
-
-    private static void validate(List<String> names) {
-        Set<String> nameSet = new HashSet<>(names);
-
-        if (names.size() != nameSet.size()) {
+        if (names.size() != duplicateNames.size()) {
             throw new IllegalArgumentException(PLAYER_NAME_DUPLICATE_ERROR_MESSAGE);
         }
     }
