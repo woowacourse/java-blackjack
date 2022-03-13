@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
 import blackjack.domain.user.User;
 import java.util.Arrays;
 import java.util.List;
@@ -23,14 +21,14 @@ public enum Result {
     );
 
     private final String name;
-    private final BiPredicate<Player, Dealer> biPredicate;
+    private final BiPredicate<User, User> biPredicate;
 
-    Result(String name, BiPredicate<Player, Dealer> biPredicate) {
+    Result(String name, BiPredicate<User, User> biPredicate) {
         this.name = name;
         this.biPredicate = biPredicate;
     }
 
-    public static Map<String, Result> getMap(List<Player> players, Dealer dealer) {
+    public static Map<String, Result> getMap(List<User> players, User dealer) {
         return players.stream()
                 .collect(Collectors.toMap(
                         User::getName,
@@ -38,7 +36,7 @@ public enum Result {
                 ));
     }
 
-    private static Result findResult(Player player, Dealer dealer) {
+    private static Result findResult(User player, User dealer) {
         return Arrays.stream(values())
                 .filter(value -> value.biPredicate.test(player, dealer))
                 .findAny()

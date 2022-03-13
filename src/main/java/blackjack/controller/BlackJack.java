@@ -4,7 +4,7 @@ import blackjack.domain.Result;
 import blackjack.domain.card.Deck;
 import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import blackjack.domain.user.Dealer;
-import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
 import blackjack.dto.UserDto;
 import blackjack.dto.UsersDto;
@@ -58,16 +58,17 @@ public class BlackJack {
     }
 
     private void drawAdditionalCard(Users users, Deck deck) {
-        List<Player> players = users.getPlayers();
+        List<User> players = users.getPlayers();
+        User dealer = users.getDealer();
 
-        for (Player player : players) {
+        for (User player : players) {
             drawCardPerPlayer(deck, player);
         }
 
-        drawDealerCard(deck, users.getDealer());
+        drawDealerCard(deck, dealer);
     }
 
-    private void drawCardPerPlayer(Deck deck, Player player) {
+    private void drawCardPerPlayer(Deck deck, User player) {
         try {
             drawPlayerCardByYes(deck, player);
         } catch(IllegalArgumentException e) {
@@ -77,14 +78,14 @@ public class BlackJack {
         }
     }
 
-    private void drawPlayerCardByYes(Deck deck, Player player) {
+    private void drawPlayerCardByYes(Deck deck, User player) {
         while (player.isDrawable() && inputView.inputWhetherToDrawCard(UserDto.from(player))) {
             player.drawCard(deck);
             outputView.printCards(UserDto.from(player));
         }
     }
 
-    private void drawDealerCard(Deck deck, Dealer dealer) {
+    private void drawDealerCard(Deck deck, User dealer) {
         if (dealer.isDrawable()) {
             dealer.drawCard(deck);
             outputView.printDealer();
@@ -92,12 +93,12 @@ public class BlackJack {
     }
 
     private void printFinalResult(Users users) {
-        Dealer dealer = users.getDealer();
-        List<Player> players = users.getPlayers();
+        User dealer = users.getDealer();
+        List<User> players = users.getPlayers();
 
         outputView.printWithScore(UserDto.from(dealer), dealer.getScore());
 
-        for (Player player : players) {
+        for (User player : players) {
             outputView.printWithScore(UserDto.from(player), player.getScore());
         }
 

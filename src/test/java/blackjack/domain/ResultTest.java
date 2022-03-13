@@ -16,6 +16,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.user.User;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Map;
@@ -30,12 +31,12 @@ class ResultTest {
         //given
         Deck deck = initDeck();
 
-        List<Player> players = List.of(
+        List<User> players = List.of(
                 Player.from("pobi"),
                 Player.from("jason")
         );
 
-        for (Player player : players) {
+        for (User player : players) {
             player.drawInitCards(deck);
             player.calculate();
         }
