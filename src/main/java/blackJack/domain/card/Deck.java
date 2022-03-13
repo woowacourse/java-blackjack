@@ -1,28 +1,20 @@
 package blackJack.domain.card;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 public class Deck {
 
-    private final LinkedList<Card> deck;
+    private static final LinkedList<Card> deck;
 
-    public Deck() {
-        deck = new LinkedList<>();
-        initDeck();
+    static {
+        deck = Arrays.stream(Symbol.values())
+                .flatMap(symbol -> Arrays.stream(Denomination.values())
+                        .map(denomination -> new Card(symbol, denomination)))
+                .collect(Collectors.toCollection(LinkedList::new));
         Collections.shuffle(deck);
-    }
-
-    private void initDeck() {
-        for (Symbol symbol : Symbol.values()) {
-            initDeckBySymbol(symbol);
-        }
-    }
-
-    private void initDeckBySymbol(Symbol symbol) {
-        for (Denomination denomination : Denomination.values()) {
-            deck.add(new Card(symbol, denomination));
-        }
     }
 
     public Card getCard() {
