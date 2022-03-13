@@ -41,7 +41,7 @@ public class Player extends User {
 
     @Override
     public boolean isDrawable() {
-        int sumPoint = cards.sumPoint();
+        int sumPoint = cards.getSumPoint();
 
         return sumPoint < BLACKJACK_NUMBER;
     }

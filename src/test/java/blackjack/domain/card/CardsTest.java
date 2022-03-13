@@ -26,7 +26,7 @@ public class CardsTest {
         cards.add(new Card(HEART, KING));
 
         //when
-        int score = cards.sumPoint();
+        int score = cards.getScore();
 
         //then
         Assertions.assertThat(score).isEqualTo(15);
@@ -42,7 +42,7 @@ public class CardsTest {
         cards.add(new Card(DIAMOND, ACE));
 
         //when
-        int score = cards.sumPoint();
+        int score = cards.getScore();
 
         //then
         Assertions.assertThat(score).isEqualTo(16);
@@ -61,7 +61,7 @@ public class CardsTest {
         cards.add(new Card(CLOVER, KING));
 
         //when
-        int score = cards.sumPoint();
+        int score = cards.getScore();
 
         //then
         Assertions.assertThat(score).isEqualTo(14);
@@ -78,7 +78,7 @@ public class CardsTest {
         cards.add(new Card(CLOVER, NINE));
 
         //when
-        int score = cards.sumPoint();
+        int score = cards.getScore();
 
         //then
         Assertions.assertThat(score).isEqualTo(21);
@@ -98,7 +98,7 @@ public class CardsTest {
         cards.add(new Card(CLOVER, ACE));
 
         //when
-        int score = cards.sumPoint();
+        int score = cards.getScore();
 
         //then
         Assertions.assertThat(score).isEqualTo(21);

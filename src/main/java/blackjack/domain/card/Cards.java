@@ -27,22 +27,27 @@ public class Cards {
         return Collections.unmodifiableList(cards.subList(0, size));
     }
 
-    public int sumPoint() {
-        int aceCount = countAce(cards);
-
-        if (aceCount > 0) {
-            return sumWithAce(aceCount, cards);
+    public int getScore() {
+        if (isContainsAce(cards)) {
+            return sumWithAce(cards);
         }
 
-        return cards.stream()
-                .mapToInt(Card::getPoint)
-                .sum();
+        return getSumPoint();
     }
 
-    private int sumWithAce(int aceCount, List<Card> cards) {
+    private boolean isContainsAce(List<Card> cards) {
+        return cards.stream()
+                .anyMatch(card -> card.isAce());
+    }
+
+    private int sumWithAce(List<Card> cards) {
+        int aceCount = Math.toIntExact(cards.stream()
+                .filter(Card::isAce).count());
+
         int sum = cards.stream()
                 .mapToInt(Card::getPoint)
                 .sum();
+        
         return calculateWithAce(sum, aceCount);
     }
 
@@ -56,11 +61,6 @@ public class Cards {
         }
 
         return sum;
-    }
-
-    private int countAce(List<Card> cards) {
-        return Math.toIntExact(cards.stream()
-                .filter(Card::isAce).count());
     }
 
     public int getSumPoint() {

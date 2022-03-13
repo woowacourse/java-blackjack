@@ -40,7 +40,7 @@ public abstract class User {
     }
 
     public void calculate() {
-        score = cards.sumPoint();
+        score = cards.getScore();
         validateNegative(score);
     }
 
