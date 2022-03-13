@@ -60,7 +60,6 @@ public class BlackJack {
 	}
 
 	public void calculateResult() {
-		result.clear();
 		players.forEach(player -> result.put(player, isWin(player)));
 	}
 
