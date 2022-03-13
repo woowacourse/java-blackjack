@@ -1,15 +1,13 @@
 package BlackJack.domain;
 
-import BlackJack.domain.Card.Card;
-import BlackJack.domain.Card.CardFactory;
 import BlackJack.domain.Card.Cards;
 import BlackJack.domain.User.Dealer;
-import BlackJack.domain.User.Player;
 import BlackJack.domain.User.Players;
+import BlackJack.domain.User.User;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Queue;
 
 import static BlackJack.domain.Card.CardFactory.CARD_CACHE;
 
@@ -38,7 +36,11 @@ public class Game {
         players.checkPlayersBlackJack();
     }
 
+    public Dealer getDealer() {
+        return dealer;
+    }
 
-
-
+    public Players getPlayers() {
+        return players;
+    }
 }

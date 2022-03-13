@@ -6,6 +6,7 @@ import BlackJack.domain.Result;
 import BlackJack.domain.User.Dealer;
 import BlackJack.domain.User.Player;
 import BlackJack.domain.User.Players;
+import BlackJack.domain.User.User;
 import BlackJack.dto.DealerResultDto;
 import BlackJack.dto.PlayerResultDto;
 import BlackJack.dto.UserDto;
@@ -21,6 +22,9 @@ public class BlackjackController {
         List<String> inputPlayerNames = InputView.inputPlayerNames();
         Game game = new Game(inputPlayerNames,new Dealer());
         game.handOutInitCard();
+        OutputView.printDrawMessage(inputPlayerNames);
+        OutputView.printTotalUserCards(convertToListDto(game.getDealer(), game.getPlayers()));
+
         game.checkPlayerAndDealerIsBlackJack();
 
 //        Dealer dealer = new Dealer(CardFactory.drawTwoCards());
@@ -69,14 +73,14 @@ public class BlackjackController {
 //
 //
 //
-//    private List<UserDto> convertToListDto(Dealer dealer, List<Player> players) {
-//        List<UserDto> userDtos = new ArrayList<>();
-//        userDtos.add(UserDto.from(dealer));
-//        for (Player player : players) {
-//            userDtos.add(UserDto.from(player));
-//        }
-//        return userDtos;
-//    }
+    private List<UserDto> convertToListDto(Dealer dealer, Players players) {
+        List<UserDto> userDtos = new ArrayList<>();
+        userDtos.add(UserDto.from(dealer));
+        for (Player player : players.getPlayers()) {
+            userDtos.add(UserDto.from(player));
+        }
+        return userDtos;
+    }
 
 //    public void addCard(Player player) {
 //        while (InputView.askOneMoreCard(UserDto.from(player))) {

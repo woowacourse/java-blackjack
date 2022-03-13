@@ -24,4 +24,8 @@ public class Players {
             player.checkBlackJack();
         }
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }
