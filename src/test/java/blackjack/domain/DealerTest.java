@@ -20,4 +20,15 @@ public class DealerTest {
         int dealerScore = dealer.getCards().calculateScore();
         assertThat(dealerScore > 16).isTrue();
     }
+
+    @Test
+    @DisplayName("딜러가 카드를 한장만 보여주는지 확인")
+    void showDealerCards() {
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer();
+        dealer.hit(deck.draw());
+        dealer.hit(deck.draw());
+        assertThat(dealer.getShowCards().getCards().size())
+                .isEqualTo(1);
+    }
 }
