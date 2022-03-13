@@ -69,7 +69,7 @@ public class OutputView {
     }
 
     public static void printDealerWinResult(String dealerName, Map<Judgement, Integer> dealerResult) {
-        System.out.printf("딜러: %s", createDealerWinResultString(dealerResult));
+        System.out.printf("%s: %s", dealerName, createDealerWinResultString(dealerResult));
         System.out.println();
     }
 
