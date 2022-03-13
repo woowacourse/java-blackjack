@@ -22,6 +22,7 @@ public class OutputView {
     private static final String SPACE = " ";
     private static final String CARD_MESSAGE = " 카드: ";
     private static final String CARD_SUM_MESSAGE = " - 결과: ";
+    private static final String ERROR_MESSAGE = "[ERROR] ";
 
     public static void printInit(AllParticipatorsDto allParticipatorsDto) {
         List<ParticipatorDto> playersDto = allParticipatorsDto.getPlayersDto();
@@ -117,6 +118,6 @@ public class OutputView {
     }
 
     public static void printException(String message) {
-        System.out.println("[ERROR] " + message);
+        System.out.println(ERROR_MESSAGE + message);
     }
 }

@@ -6,7 +6,7 @@ import java.util.function.BiPredicate;
 public enum Result {
     WIN((from, to) -> from > to),
     LOSE((from, to) -> from < to),
-    DRAW((from, to) -> from == to);
+    DRAW((from, to) -> from.equals(to));
 
     private final BiPredicate<Integer, Integer> resultCriteria;
 
