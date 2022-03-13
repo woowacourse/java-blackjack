@@ -1,5 +1,7 @@
 package model;
 
+import static model.Dealer.DEALER_NAME;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,8 +15,15 @@ public abstract class Participator {
     private final String name;
 
     public Participator(String name) {
+        checkNameIsNullOrEmpty(name);
         this.cards = new Cards(new ArrayList<>());
         this.name = name;
+    }
+
+    private void checkNameIsNullOrEmpty(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("이름 입력 실패 : 이름이 빈값이나 공백이 될 수 없습니다.");
+        }
     }
 
     public void receiveCard(Card card) {

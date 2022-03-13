@@ -9,6 +9,7 @@ import static model.card.CardSuit.DIAMOND;
 import static model.card.CardSuit.HEART;
 import static model.card.CardSuit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,9 @@ import model.card.CardFace;
 import model.card.Cards;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class PlayerTest {
 
@@ -25,6 +29,15 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         player = new Player("클레이");
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {"딜러"})
+    void invalidNameCreate(String name) {
+        assertThatThrownBy(() -> new Player(name))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith("이름 입력 실패 :");
     }
 
     @Test

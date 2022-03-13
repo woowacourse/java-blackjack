@@ -115,4 +115,8 @@ public class OutputView {
                 .append(value);
         System.out.println(sb);
     }
+
+    public static void printException(String message) {
+        System.out.println("[ERROR] " + message);
+    }
 }
