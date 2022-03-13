@@ -39,7 +39,7 @@ class DealerTest {
         Deck deck = new Deck(initializedCards);
         final Dealer dealer = Dealer.startWithTwoCards(deck);
 
-        assertThat(dealer.isPossibleToDraw()).isEqualTo(canDraw);
+        assertThat(dealer.shouldDraw()).isEqualTo(canDraw);
     }
 
     private static Stream<Arguments> provideForStartWithDrawCardTest() {
@@ -67,7 +67,7 @@ class DealerTest {
         final Deck deck = new Deck(initializedCards);
         final Dealer dealer = Dealer.startWithTwoCards(deck);
 
-        while (dealer.isPossibleToDraw()) {
+        while (dealer.shouldDraw()) {
             dealer.drawCard(deck);
         }
 

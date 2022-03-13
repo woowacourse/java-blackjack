@@ -53,7 +53,7 @@ public class BlackjackGame {
     }
 
     private void proceedDealerTurn(final Deck deck, final Dealer dealer) {
-        while (dealer.isPossibleToDraw()) {
+        while (dealer.shouldDraw()) {
             dealer.drawCard(deck);
             outputView.printMessageOfDealerDrawCard();
         }
