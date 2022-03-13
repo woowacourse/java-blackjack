@@ -9,14 +9,10 @@ import java.util.List;
 public class CardsTestDataGenerator {
 
     public static List<Card> generateCards() {
-        return List.of(Card.of(ACE, CLOVER), Card.of(KING, DIAMOND));
+        return List.of(Card.of(ACE, CLOVER), Card.of(TWO, DIAMOND));
     }
 
-    public static List<Card> generateTotalScoreGraterThan21Cards() {
-        return List.of(Card.of(JACK, CLOVER), Card.of(QUEEN, CLOVER), Card.of(TWO, DIAMOND));
-    }
-
-    public static List<Card> generateTotalScoreNotMoreThan21Cards() {
+    public static List<Card> generateBlackjack() {
         return List.of(Card.of(JACK, CLOVER), Card.of(ACE, CLOVER));
     }
 

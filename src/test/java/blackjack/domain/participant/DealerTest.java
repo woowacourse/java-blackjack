@@ -1,6 +1,9 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.CardsTestDataGenerator.*;
+import static blackjack.domain.CardsTestDataGenerator.generateBlackjack;
+import static blackjack.domain.CardsTestDataGenerator.generateCards;
+import static blackjack.domain.CardsTestDataGenerator.generateTotalScoreGraterThan17Cards;
+import static blackjack.domain.CardsTestDataGenerator.generateTotalScoreNotMoreThan16Cards;
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.domain.GameResult.*;
 import static blackjack.domain.card.Suit.*;
@@ -67,11 +70,10 @@ public class DealerTest {
     @DisplayName("딜러만 버스트 일 경우 패배한다.")
     @Test
     void 딜러_승패_여부_버스트_패() {
-        List<Card> bustCards = generateTotalScoreGraterThan21Cards();
-        List<Card> normalCards = generateTotalScoreNotMoreThan21Cards();
+        Dealer dealer = new Dealer(generateBlackjack());
+        dealer.append(Card.of(KING, SPADE));
 
-        Dealer dealer = new Dealer(bustCards);
-        Player player = new Player("sudal", normalCards);
+        Player player = new Player("sudal", generateBlackjack());
 
         GameResult gameResult = dealer.decideResult(player.getTotalScore());
 
@@ -81,11 +83,11 @@ public class DealerTest {
     @DisplayName("딜러, 플레이어 모두 버스트일 경우 승리한다.")
     @Test
     void 딜러_승패_여부_둘다_버스트_승() {
-        List<Card> bustValueByDealer = generateTotalScoreGraterThan21Cards();
-        List<Card> bustValueByPlayer = generateTotalScoreGraterThan21Cards();
+        Dealer dealer = new Dealer(generateBlackjack());
+        dealer.append(Card.of(KING, SPADE));
 
-        Dealer dealer = new Dealer(bustValueByDealer);
-        Player player = new Player("sudal", bustValueByPlayer);
+        Player player = new Player("sudal", generateBlackjack());
+        player.append(Card.of(KING, HEART));
 
         GameResult gameResult = dealer.decideResult(player.getTotalScore());
 
@@ -95,11 +97,9 @@ public class DealerTest {
     @DisplayName("플레이어만 버스트이면 승리한다.")
     @Test
     void 딜러_승패_여부_버스트_승() {
-        List<Card> minValueCards = generateTotalScoreNotMoreThan16Cards();
-        List<Card> maxValueCards = generateTotalScoreGraterThan21Cards();
-
-        Dealer dealer = new Dealer(minValueCards);
-        Player player = new Player("sudal", maxValueCards);
+        Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
+        Player player = new Player("sudal", generateBlackjack());
+        player.append(Card.of(KING, SPADE));
 
         GameResult gameResult = dealer.decideResult(player.getTotalScore());
 
@@ -109,11 +109,8 @@ public class DealerTest {
     @DisplayName("딜러보다 플레이어의 점수가 높으면 패배한다.")
     @Test
     void 딜러_승패_여부_점수_패() {
-        List<Card> minValueCards = generateTotalScoreNotMoreThan16Cards();
-        List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
-
-        Dealer dealer = new Dealer(minValueCards);
-        Player player = new Player("sudal", maxValueCards);
+        Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
+        Player player = new Player("sudal", generateTotalScoreGraterThan17Cards());
 
         GameResult gameResult = dealer.decideResult(player.getTotalScore());
 
@@ -123,11 +120,8 @@ public class DealerTest {
     @DisplayName("딜러가 플레이어보다 점수가 높으면 승리한다.")
     @Test
     void 플레이어_승패_여부_점수_승() {
-        List<Card> minValueCards = generateTotalScoreNotMoreThan16Cards();
-        List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
-
-        Dealer dealer = new Dealer(maxValueCards);
-        Player player = new Player("sudal", minValueCards);
+        Dealer dealer = new Dealer(generateTotalScoreGraterThan17Cards());
+        Player player = new Player("sudal", generateTotalScoreNotMoreThan16Cards());
 
         GameResult gameResult = dealer.decideResult(player.getTotalScore());
 
@@ -137,11 +131,8 @@ public class DealerTest {
     @DisplayName("딜러와 플레이어 점수가 같으면 무.")
     @Test
     void 딜러_승패_여부_점수_무() {
-        List<Card> tieValueByPlayer = generateCards();
-        List<Card> tieValueByDealer = generateCards();
-
-        Dealer dealer = new Dealer(tieValueByDealer);
-        Player player = new Player("sudal", tieValueByPlayer);
+        Dealer dealer = new Dealer(generateCards());
+        Player player = new Player("sudal", generateCards());
 
         GameResult gameResult = dealer.decideResult(player.getTotalScore());
 

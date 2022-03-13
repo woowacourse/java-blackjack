@@ -29,7 +29,7 @@ public class PlayerTest {
     @Test
     void 플레이어_게임_지속_가능() {
         String name = "mat";
-        List<Card> cards = generateTotalScoreNotMoreThan21Cards();
+        List<Card> cards = generateBlackjack();
         Player player = new Player(name, cards);
 
         assertThat(player.isDrawable()).isTrue();
@@ -38,9 +38,8 @@ public class PlayerTest {
     @DisplayName("플레이어의 총 점수가 21점을 초과하는 경우 hit가 불가능하다.")
     @Test
     void 플레이어_게임_지속_불가능() {
-        String name = "sudal";
-        List<Card> cards = generateTotalScoreGraterThan21Cards();
-        Player player = new Player(name, cards);
+        Player player = new Player("sudal", generateBlackjack());
+        player.append(Card.of(ACE, SPADE));
 
         assertThat(player.isDrawable()).isFalse();
     }
@@ -70,11 +69,10 @@ public class PlayerTest {
     @DisplayName("딜러가 버스트 일 경우 플레이어가 승리한다.")
     @Test
     void 플레이어_승패_여부_버스트_승() {
-        List<Card> bustCards = generateTotalScoreGraterThan21Cards();
-        List<Card> normalCards = generateTotalScoreNotMoreThan21Cards();
+        Dealer dealer = new Dealer(generateBlackjack());
+        dealer.append(Card.of(KING, SPADE));
 
-        Dealer dealer = new Dealer(bustCards);
-        Player player = new Player("sudal", normalCards);
+        Player player = new Player("sudal", generateBlackjack());
 
         GameResult gameResult = player.decideResult(dealer.getTotalScore());
 
@@ -84,12 +82,11 @@ public class PlayerTest {
     @DisplayName("플레이어와 딜러 모두 버스트일 경우 패배한다.")
     @Test
     void 플레이어_승패_여부_둘다_버스트_패() {
-        List<Card> dealerByBustValue = generateTotalScoreGraterThan21Cards();
+        Dealer dealer = new Dealer(generateBlackjack());
+        dealer.append(Card.of(KING, SPADE));
 
-        List<Card> playerByBustValue = generateTotalScoreGraterThan21Cards();
-
-        Dealer dealer = new Dealer(dealerByBustValue);
-        Player player = new Player("sudal", playerByBustValue);
+        Player player = new Player("sudal", generateBlackjack());
+        player.append(Card.of(KING, HEART));
 
         GameResult gameResult = player.decideResult(dealer.getTotalScore());
 
@@ -99,11 +96,9 @@ public class PlayerTest {
     @DisplayName("플레이어만 버스트이면 패배한다.")
     @Test
     void 플레이어_승패_여부_버스트_패() {
-        List<Card> minValueCards = generateTotalScoreNotMoreThan21Cards();
-        List<Card> maxValueCards = generateTotalScoreGraterThan21Cards();
-
-        Dealer dealer = new Dealer(minValueCards);
-        Player player = new Player("sudal", maxValueCards);
+        Dealer dealer = new Dealer(generateBlackjack());
+        Player player = new Player("sudal", generateBlackjack());
+        player.append(Card.of(KING, HEART));
 
         GameResult gameResult = player.decideResult(dealer.getTotalScore());
 
@@ -113,11 +108,8 @@ public class PlayerTest {
     @DisplayName("플레이어가 딜러보다 점수가 높으면 승리한다.")
     @Test
     void 플레이어_승패_여부_점수_승() {
-        List<Card> minValueCards = generateTotalScoreNotMoreThan16Cards();
-        List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
-
-        Dealer dealer = new Dealer(minValueCards);
-        Player player = new Player("sudal", maxValueCards);
+        Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
+        Player player = new Player("sudal", generateTotalScoreGraterThan17Cards());
 
         GameResult gameResult = player.decideResult(dealer.getTotalScore());
 
@@ -127,11 +119,8 @@ public class PlayerTest {
     @DisplayName("플레이어가 딜러보다 점수가 낮으면 패배.")
     @Test
     void 플레이어_승패_여부_점수_패() {
-        List<Card> minValueCards = generateTotalScoreNotMoreThan16Cards();
-        List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
-
-        Dealer dealer = new Dealer(maxValueCards);
-        Player player = new Player("sudal", minValueCards);
+        Dealer dealer = new Dealer(generateTotalScoreGraterThan17Cards());
+        Player player = new Player("sudal", generateTotalScoreNotMoreThan16Cards());
 
         GameResult gameResult = player.decideResult(dealer.getTotalScore());
 
@@ -141,11 +130,8 @@ public class PlayerTest {
     @DisplayName("플레이어와 딜러가 점수가 같으면 무.")
     @Test
     void 플레이어_승패_여부_점수_무() {
-        List<Card> tieValueByPlayer = generateCards();
-        List<Card> tieValueByDealer = generateCards();
-
-        Dealer dealer = new Dealer(tieValueByDealer);
-        Player player = new Player("sudal", tieValueByPlayer);
+        Dealer dealer = new Dealer(generateCards());
+        Player player = new Player("sudal", generateCards());
 
         GameResult gameResult = player.decideResult(dealer.getTotalScore());
 

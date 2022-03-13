@@ -40,7 +40,7 @@ public class DenominationTest {
     void 점수_더하기() {
         Denomination three = THREE;
 
-        int result = addScore(three, 10);
+        int result = three.addScore(10);
 
         assertThat(result).isEqualTo(13);
     }
@@ -49,7 +49,7 @@ public class DenominationTest {
     @ParameterizedTest
     @ArgumentsSource(DenominationArgumentsProvider.class)
     void 점수_계산(int beforeScore, Denomination denomination, int afterScore) {
-        int result = addScore(denomination, beforeScore);
+        int result = denomination.addScore(beforeScore);
 
         assertThat(result).isEqualTo(afterScore);
     }
