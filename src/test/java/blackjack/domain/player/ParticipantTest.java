@@ -17,18 +17,20 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class ParticipantTest {
 
-    public Deck deck;
+    private Deck deck;
+    private List<Card> initCards;
 
     @BeforeEach
     void setup() {
         deck = new Deck(new DeckCardGenerator());
+        initCards = List.of(deck.draw(), deck.draw());
     }
 
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("참여자 이름은 비어있을 수 없다")
     void checkNameNullOrEmpty(String name) {
-        assertThatThrownBy(() -> new Participant(deck.makeInitCards(), name))
+        assertThatThrownBy(() -> new Participant(initCards, name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름은 비어있을 수 없습니다.");
     }
@@ -36,14 +38,14 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자는 시작시 카드를 2장 받는다.")
     void checkParticipantCardSize() {
-        Participant participant = new Participant(deck.makeInitCards(), "pobi");
+        Participant participant = new Participant(initCards, "pobi");
         assertThat(participant.getCards().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("참가자는 추가로 카드를 받을 수 있다.")
     void addParticipantCard() {
-        Participant participant = new Participant(deck.makeInitCards(), "pobi");
+        Participant participant = new Participant(initCards, "pobi");
         int size = participant.getCards().size();
         participant.addCard(deck.draw());
         assertThat(participant.getCards().size()).isEqualTo(size + 1);
@@ -62,8 +64,8 @@ class ParticipantTest {
         return Stream.of(
                 Arguments.of(
                         List.of(
-                        new Card(Type.SPADE, Score.EIGHT),
-                        new Card(Type.HEART, Score.EIGHT)),
+                                new Card(Type.SPADE, Score.EIGHT),
+                                new Card(Type.HEART, Score.EIGHT)),
                         true
                 ),
                 Arguments.of(

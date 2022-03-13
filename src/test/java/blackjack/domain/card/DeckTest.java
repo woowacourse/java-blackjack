@@ -15,14 +15,11 @@ public class DeckTest {
     @Test
     @DisplayName("덱에서 카드를 가져올 수 있다.")
     void drawCard() {
-        Deck deck = new Deck(new CardGenerator() {
-            @Override
-            public Stack<Card> randomGenerate() {
-                List<Card> cards = List.of(new Card(Type.CLOVER, Score.KING));
-                Stack<Card> bunchOfCards = new Stack<>();
-                bunchOfCards.addAll(cards);
-                return bunchOfCards;
-            }
+        Deck deck = new Deck(() -> {
+            List<Card> cards = List.of(new Card(Type.CLOVER, Score.KING));
+            Stack<Card> bunchOfCards = new Stack<>();
+            bunchOfCards.addAll(cards);
+            return bunchOfCards;
         });
         Card card = deck.draw();
 
@@ -30,17 +27,10 @@ public class DeckTest {
     }
 
     @Test
-    @DisplayName("초기에 전달받는 카드는 2장이다.")
-    void returnDistributeCards() {
-        List<Card> cards = new Deck(new DeckCardGenerator()).makeInitCards();
-
-        assertThat(cards.size()).isEqualTo(2);
-    }
-
-    @Test
     @DisplayName("초기에 전달받는 카드는 중복일 수 없다.")
     void notRedundantCards() {
-        List<Card> cards = new Deck(new DeckCardGenerator()).makeInitCards();
+        Deck deck = new Deck(new DeckCardGenerator());
+        List<Card> cards = List.of(deck.draw(), deck.draw());
 
         assertThat(new HashSet<>(cards).size()).isEqualTo(2);
     }
@@ -66,14 +56,11 @@ public class DeckTest {
     @Test
     @DisplayName("이미 뽑은 카드는 다시 뽑힐 수 없다.")
     void drawDifferentCard() {
-        Deck deck = new Deck(new CardGenerator() {
-            @Override
-            public Stack<Card> randomGenerate() {
-                List<Card> cards = List.of(new Card(Type.CLOVER, Score.KING), new Card(Type.DIAMOND, Score.SIX));
-                Stack<Card> bunchOfCards = new Stack<>();
-                bunchOfCards.addAll(cards);
-                return bunchOfCards;
-            }
+        Deck deck = new Deck(() -> {
+            List<Card> cards = List.of(new Card(Type.CLOVER, Score.KING), new Card(Type.DIAMOND, Score.SIX));
+            Stack<Card> bunchOfCards = new Stack<>();
+            bunchOfCards.addAll(cards);
+            return bunchOfCards;
         });
         Card card1 = deck.draw();
         Card card2 = deck.draw();

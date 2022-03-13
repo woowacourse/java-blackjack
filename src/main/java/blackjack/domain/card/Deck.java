@@ -13,14 +13,6 @@ public class Deck {
         this.bunchOfCards = cardGenerator.randomGenerate();
     }
 
-    public List<Card> makeInitCards() {
-        List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < INIT_DISTRIBUTE_SIZE; i++) {
-            cards.add(draw());
-        }
-        return cards;
-    }
-
     public Card draw() {
         return bunchOfCards.pop();
     }

@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.DeckCardGenerator;
 import blackjack.domain.player.Dealer;
@@ -10,10 +11,13 @@ import blackjack.domain.result.Judge;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Blackjack {
+
+    private static final int INIT_CARD_SIZE = 2;
 
     public void play() {
         final Deck deck = new Deck(new DeckCardGenerator());
@@ -29,12 +33,20 @@ public class Blackjack {
 
     private List<Player> createParticipants(final List<String> names, final Deck deck) {
         return names.stream()
-                .map(name -> new Participant(deck.makeInitCards(), name))
+                .map(name -> new Participant(makeInitCards(deck), name))
                 .collect(Collectors.toList());
     }
 
     private Dealer createDealer(final Deck deck) {
-        return new Dealer(deck.makeInitCards());
+        return new Dealer(makeInitCards(deck));
+    }
+
+    private List<Card> makeInitCards(final Deck deck) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < INIT_CARD_SIZE; i++) {
+            cards.add(deck.draw());
+        }
+        return cards;
     }
 
     private void decideGetMoreCard(final Players players, final Deck deck) {
