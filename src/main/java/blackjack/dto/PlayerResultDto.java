@@ -15,14 +15,14 @@ public class PlayerResultDto {
 	private final int totalScore;
 	private final boolean bust;
 	private final Outcome competeResult;
-    
+
 	private PlayerResultDto(final String name, final Hand hand, final Outcome competeResult) {
 		this.name = name;
 		this.cards = hand.getCards().stream()
 				.map(Card::getInformation)
 				.collect(Collectors.toList());
 		this.totalScore = hand.calculateOptimalScore();
-		this.bust = hand.isBust(totalScore);
+		this.bust = hand.isBustScore(totalScore);
 		this.competeResult = competeResult;
 	}
 

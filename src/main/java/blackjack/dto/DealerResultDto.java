@@ -23,10 +23,10 @@ public class DealerResultDto {
 				.map(Card::getInformation)
 				.collect(Collectors.toList());
 		this.totalScore = hand.calculateOptimalScore();
-		this.bust = hand.isBust(totalScore);
+		this.bust = hand.isBustScore(totalScore);
 		this.competeResult = competeResult;
 	}
-    
+
 	public static DealerResultDto from(final Role dealer, final Map<Outcome, Long> competeResult) {
 		return new DealerResultDto(dealer.getName(), dealer.getHand(), competeResult);
 	}

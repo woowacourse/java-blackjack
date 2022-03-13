@@ -43,6 +43,16 @@ class HandTest {
 		assertThat(hand.hasAce()).isEqualTo(expectedHasAce);
 	}
 
+	@DisplayName("패가 파산 했는지 확인")
+	@ParameterizedTest(name = "{index} {displayName} score={0} expectedIsBustScore={1}")
+	@CsvSource(value = {"0, true", "1, false", "21, false", "22, true"})
+	void check_Is_Bust_Score(int score, boolean expectedIsBustScore) {
+		final Hand hand = new Hand();
+		hand.isBustScore(score);
+
+		assertThat(hand.isBustScore(score)).isEqualTo(expectedIsBustScore);
+	}
+
 	@DisplayName("현재 패에 가지고 있는 최적의 점수 계산 확인")
 	@ParameterizedTest(name = "{index} {displayName} cards={0}")
 	@MethodSource("getHandAndScore")
