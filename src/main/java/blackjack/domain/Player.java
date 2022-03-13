@@ -9,16 +9,16 @@ public class Player extends Gamer {
     }
 
     @Override
-    public GameResult createResult(int dealerScore) {
-        if (getTotalScore() > PLAYING_STANDARD) {
+    public GameResult createResult(Gamer dealer) {
+        if (isBust()) {
             return GameResult.LOSE;
         }
 
-        if (dealerScore > PLAYING_STANDARD) {
+        if (dealer.isBust()) {
             return GameResult.WIN;
         }
 
-        return GameResult.of(getTotalScore() - dealerScore);
+        return GameResult.of(dealer.getMinusScore(getTotalScore()));
     }
 
     public boolean isPlaying() {

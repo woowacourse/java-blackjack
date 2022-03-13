@@ -84,12 +84,12 @@ public class Application {
     private static Map<String, GameResultDto> createPlayerResult(Players players, Dealer dealer) {
         return players.getValue().stream()
                 .collect(toMap(player -> player.getName(),
-                        player -> GameResultDto.from(player.createResult(dealer.getTotalScore()))));
+                        player -> GameResultDto.from(player.createResult(dealer))));
     }
 
     private static Map<GameResultDto, Long> createDealerResult(Players players, Dealer dealer) {
         return players.getValue().stream()
-                .collect(groupingBy(player -> GameResultDto.from(dealer.createResult(player.getTotalScore())),
+                .collect(groupingBy(player -> GameResultDto.from(dealer.createResult(player)),
                         counting()));
     }
 

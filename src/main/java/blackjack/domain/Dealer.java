@@ -17,17 +17,17 @@ public class Dealer extends Gamer {
     }
 
     @Override
-    public GameResult createResult(int playerScore) {
+    public GameResult createResult(Gamer player) {
 
-        if (playerScore > PLAYING_STANDARD) {
+        if (player.isBust()) {
             return GameResult.WIN;
         }
 
-        if (getTotalScore() > PLAYING_STANDARD) {
+        if (isBust()) {
             return GameResult.LOSE;
         }
 
-        return GameResult.of(getTotalScore() - playerScore);
+        return GameResult.of(player.getMinusScore(getTotalScore()));
     }
 }
 

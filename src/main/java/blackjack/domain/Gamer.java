@@ -22,7 +22,15 @@ public abstract class Gamer {
         cards.combine(card);
     }
 
-    abstract GameResult createResult(int targetScore);
+    public boolean isBust() {
+        return getTotalScore() > PLAYING_STANDARD;
+    }
+
+    public int getMinusScore(int targetScore) {
+        return targetScore - getTotalScore();
+    }
+
+    abstract GameResult createResult(Gamer gamer);
 
     public String getName() {
         return name.getValue();
@@ -31,4 +39,5 @@ public abstract class Gamer {
     public Cards getCards() {
         return cards;
     }
+
 }
