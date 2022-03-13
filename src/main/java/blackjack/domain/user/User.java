@@ -31,21 +31,9 @@ public abstract class User {
         cards.add(deck.drawCard());
     }
 
-    public abstract List<Card> showInitCards();
-
-    public abstract boolean isDrawable();
-
-    public String getName(){
-        return name;
-    }
-
     public void calculate() {
         score = cards.getScore();
         validateNegative(score);
-    }
-
-    public int getScore() {
-        return score;
     }
 
     private void validateNegative(int score) {
@@ -72,5 +60,17 @@ public abstract class User {
         }
 
         return false;
+    }
+
+    public abstract List<Card> showInitCards();
+
+    public abstract boolean isDrawable();
+
+    public int getScore() {
+        return score;
+    }
+
+    public String getName(){
+        return name;
     }
 }
