@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import static blackjack.domain.card.PlayStatus.*;
 
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
@@ -15,7 +16,7 @@ public abstract class Participant {
     protected PlayStatus playStatus;
 
     public Participant() {
-        this.cards = new Cards(new LinkedHashSet<>());
+        this.cards = new Cards(Set.of());
         this.playStatus = HIT;
     }
 

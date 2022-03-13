@@ -17,7 +17,7 @@ public class InputView {
         String text = scanner.nextLine();
         return Stream.of(text.split(",", -1))
             .map(String::trim)
-            .collect(Collectors.toList());
+            .collect(Collectors.toUnmodifiableList());
     }
 
     public static PlayStatus requestHitOrStay(String name) {

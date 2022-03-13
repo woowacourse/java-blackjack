@@ -20,9 +20,9 @@ public class Game {
     public Game(CardDeck cardDeck, List<String> playerNames) {
         this.cardDeck = cardDeck;
         this.dealer = new Dealer();
-        this.players = playerNames.stream()
+        this.players = List.copyOf(playerNames).stream()
             .map(Player::new)
-            .collect(Collectors.toList());
+            .collect(Collectors.toUnmodifiableList());
         init();
     }
 

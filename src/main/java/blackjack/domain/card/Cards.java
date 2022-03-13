@@ -3,13 +3,14 @@ package blackjack.domain.card;
 import static blackjack.domain.card.CardNumber.*;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Cards {
     private final Set<Card> value;
 
     public Cards(Set<Card> value) {
-        this.value = new LinkedHashSet<>(value);
+        this.value = new LinkedHashSet<>(List.copyOf(value));
     }
 
     public void add(Card card) {
@@ -45,7 +46,7 @@ public class Cards {
     }
 
     public Set<Card> getValue() {
-        return value;
+        return Set.copyOf(value);
     }
 
     @Override

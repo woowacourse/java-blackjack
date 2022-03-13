@@ -33,6 +33,6 @@ public class RecordFactory {
     }
 
     public Map<Record, Integer> getDealerRecord() {
-        return dealerRecord;
+        return Map.copyOf(dealerRecord);
     }
 }
