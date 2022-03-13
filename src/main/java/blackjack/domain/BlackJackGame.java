@@ -7,8 +7,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.DrawStrategy;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
@@ -24,20 +23,20 @@ public class BlackJackGame {
 	private static final int DEFAULT_COUNT = 0;
 	private static final int INCREASE_COUNT = 1;
 
-	private final CardFactory cardFactory;
+	private final DrawStrategy drawStrategy;
 	private final Gamers gamers;
 
-	private BlackJackGame(List<String> names) {
-		this.cardFactory = new CardFactory(Card.getCards());
+	private BlackJackGame(List<String> names, DrawStrategy drawStrategy) {
+		this.drawStrategy = drawStrategy;
 		this.gamers = new Gamers(names);
 
 		for (int i = 0; i < INIT_DISTRIBUTION_COUNT; i++) {
-			gamers.giveCardToAllGamers(cardFactory::draw);
+			gamers.giveCardToAllGamers(this.drawStrategy::draw);
 		}
 	}
 
-	public static BlackJackGame start(List<String> names) {
-		return new BlackJackGame(names);
+	public static BlackJackGame start(List<String> names, DrawStrategy drawStrategy) {
+		return new BlackJackGame(names, drawStrategy);
 	}
 
 	public void askHitOrStay(Function<String, Boolean> answerReceiver, Consumer<GamerDto> cardsSender) {
@@ -50,7 +49,7 @@ public class BlackJackGame {
 		Function<String, Boolean> answerReceiver,
 		Consumer<GamerDto> cardsSender) {
 		while (!isBust(name) && answerReceiver.apply(name)) {
-			gamers.giveCardToPlayer(name, cardFactory::draw);
+			gamers.giveCardToPlayer(name, drawStrategy::draw);
 			cardsSender.accept(getPlayerDto(name));
 		}
 	}
@@ -62,7 +61,7 @@ public class BlackJackGame {
 	public int distributeAdditionalToDealer() {
 		int count = 0;
 		while (gamers.checkDealerDrawPossible()) {
-			gamers.giveCardToDealer(cardFactory::draw);
+			gamers.giveCardToDealer(drawStrategy::draw);
 			count++;
 		}
 		return count;

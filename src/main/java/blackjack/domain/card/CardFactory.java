@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class CardFactory {
+public class CardFactory implements DrawStrategy{
 
     private static final String EMPTY_CARD_ERROR = "남은 카드가 존재하지 않습니다.";
 
@@ -15,6 +15,7 @@ public class CardFactory {
         Collections.shuffle(this.deck);
     }
 
+    @Override
     public Card draw() {
         validateEmptyDeck();
         return deck.pop();
