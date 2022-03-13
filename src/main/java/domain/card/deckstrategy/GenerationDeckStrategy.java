@@ -1,9 +1,9 @@
 package domain.card.deckstrategy;
 
-import java.util.List;
+import java.util.Queue;
 
 import domain.card.Card;
 
 public interface GenerationDeckStrategy {
-	List<Card> generateCardsForBlackJack();
+	Queue<Card> generateCardsForBlackJack();
 }

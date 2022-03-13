@@ -4,8 +4,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -110,8 +112,8 @@ public class PlayersTest {
 		class TestGenerationDeckStrategy implements GenerationDeckStrategy {
 
 			@Override
-			public List<Card> generateCardsForBlackJack() {
-				return new ArrayList<Card>(Arrays.asList(new Card(Rank.RANK_4, Suit.CLOVER)));
+			public Queue<Card> generateCardsForBlackJack() {
+				return new LinkedList<>(Arrays.asList(new Card(Rank.RANK_4, Suit.CLOVER)));
 			}
 		}
 		Deck deck = Deck.from(new TestGenerationDeckStrategy());
