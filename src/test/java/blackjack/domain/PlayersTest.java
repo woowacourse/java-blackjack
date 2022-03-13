@@ -32,4 +32,13 @@ public class PlayersTest {
                     .isEqualTo(2);
         }
     }
+
+    @Test
+    @DisplayName("Players를 초기화하면 딜러를 잘 가지고 있는지 확인")
+    void findDealerTest() {
+        Players players = Players.fromNames(List.of("a", "b"), (p) -> HitFlag.Y);
+        Player dealer = players.findDealer();
+        assertThat(dealer instanceof Dealer)
+                .isTrue();
+    }
 }
