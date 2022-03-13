@@ -2,9 +2,11 @@ package blackjack.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -31,14 +33,22 @@ class DealerTest {
 		final Hand drawWithoutAce = CreateHand.create(CardMockFactory.of("6클로버"), CardMockFactory.of("K클로버"));
 
 		return Stream.of(
-			Arguments.of(matchOptimalCase, false, true),
-			Arguments.of(randomDrawWithAce, false, false),
-			Arguments.of(randomDrawWithAce, true, true),
-			Arguments.of(drawWithAce, true, false),
-			Arguments.of(notDrawWithoutAce, false, true),
-			Arguments.of(drawWithoutAce, true, false)
+				Arguments.of(matchOptimalCase, false, true),
+				Arguments.of(randomDrawWithAce, false, false),
+				Arguments.of(randomDrawWithAce, true, true),
+				Arguments.of(drawWithAce, true, false),
+				Arguments.of(notDrawWithoutAce, false, true),
+				Arguments.of(drawWithoutAce, true, false)
 		);
 	}
 
+	@Test
+	@DisplayName("딜러의 패 오픈 전략 확인")
+	void check_Open_Hand() {
+		final Hand hand = CreateHand.create(CardMockFactory.of("A클로버"), CardMockFactory.of("K클로버"));
+		Role dealer = new Dealer(hand, DealerDrawable::chooseDraw);
+		List<Card> expectedOpenCards = List.of(CardMockFactory.of("A클로버"));
+		assertThat(dealer.openHand()).isEqualTo(expectedOpenCards);
+	}
 }
 
