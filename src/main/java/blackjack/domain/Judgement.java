@@ -4,19 +4,19 @@ public enum Judgement {
 
     WIN("승") {
         @Override
-        Judgement getOpposite() {
+        public Judgement getOpposite() {
             return LOSE;
         }
     },
     DRAW("무") {
         @Override
-        Judgement getOpposite() {
+        public Judgement getOpposite() {
             return DRAW;
         }
     },
     LOSE("패") {
         @Override
-        Judgement getOpposite() {
+        public Judgement getOpposite() {
             return WIN;
         }
     };
@@ -27,7 +27,7 @@ public enum Judgement {
         this.name = name;
     }
 
-    abstract Judgement getOpposite();
+    abstract public Judgement getOpposite();
 
     public String getName() {
         return name;
