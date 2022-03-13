@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.player.Player;
+
 public enum Outcome {
 
     WIN("승"),

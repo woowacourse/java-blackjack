@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.player.Player;
 import java.util.Map;
 
 public class Results {
