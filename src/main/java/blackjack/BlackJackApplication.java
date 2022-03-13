@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.controller.BlackJackController;
-import blackjack.controller.dto.GamerDto;
+import blackjack.domain.gamer.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -13,13 +13,13 @@ public class BlackJackApplication {
         List<String> names = InputView.getNames();
         BlackJackController controller = new BlackJackController(names);
 
-        OutputView.printFirstCards(controller.getDealerDto(), controller.getPlayerDtos());
+        OutputView.printFirstCards(controller.getDealer(), controller.getPlayers());
 
         drawAdditionalCard(names, controller);
 
-        OutputView.printAdditionalDrawDealer(controller.getDealerAdditionalCardCount());
-        OutputView.printFinalCards(controller.getDealerDto(), controller.getPlayerDtos());
-        OutputView.printFinalResult(controller.getGamerResult());
+        OutputView.printAdditionalDrawDealer(controller.distributeAdditionalToDealer());
+        OutputView.printFinalCards(controller.getDealer(), controller.getPlayers());
+        OutputView.printFinalResult(controller.createResult());
     }
 
     private static void drawAdditionalCard(List<String> names, BlackJackController controller) {
@@ -30,8 +30,8 @@ public class BlackJackApplication {
 
     private static void drawCardToPlayer(BlackJackController controller, String name) {
         while (controller.isDrawPossible(name, InputView::getAnswerOfAdditionalDraw)) {
-            controller.requestPlayerDrawCard(name);
-            GamerDto playerDtoByName = controller.findPlayerByName(name);
+            controller.distributeCardToPlayer(name);
+            Player playerDtoByName = controller.findPlayerByName(name);
             OutputView.printPlayerCard(playerDtoByName);
         }
     }

@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static blackjack.domain.BlackJackGame.MAX_CARD_VALUE;
+import static blackjack.controller.BlackJackController.MAX_CARD_VALUE;
 
 public class Gamer {
 
@@ -61,7 +61,11 @@ public class Gamer {
         return ace.getValue();
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.getValue();
+    }
+
+    public int getCardsSize() {
+        return cards.size();
     }
 }

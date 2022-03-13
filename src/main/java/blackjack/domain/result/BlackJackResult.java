@@ -3,7 +3,7 @@ package blackjack.domain.result;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-import static blackjack.domain.BlackJackGame.MAX_CARD_VALUE;
+import static blackjack.controller.BlackJackController.MAX_CARD_VALUE;
 
 public enum BlackJackResult {
 

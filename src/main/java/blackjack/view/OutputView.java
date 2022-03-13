@@ -1,8 +1,10 @@
 package blackjack.view;
 
-import blackjack.controller.dto.GameResultDto;
-import blackjack.controller.dto.GamerDto;
 import blackjack.domain.card.Card;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.result.BlackJackReferee;
 import blackjack.domain.result.BlackJackResult;
 
 import java.util.List;
@@ -11,37 +13,37 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void printFirstCards(GamerDto dealer, List<GamerDto> players) {
+    public static void printFirstCards(Dealer dealer, List<Player> players) {
         printGamers(dealer, players);
         printDealerFirstCard(dealer);
         printPlayerFirstCards(players);
     }
 
-    private static void printGamers(GamerDto dealer, List<GamerDto> players) {
+    private static void printGamers(Dealer dealer, List<Player> players) {
         String names = players.stream()
-                .map(GamerDto::getName)
+                .map(Gamer::getName)
                 .collect(Collectors.joining(", "));
-        System.out.printf("%s와 %s에게 %d장을 나누었습니다.\n", dealer.getName(), names, dealer.getCardSize());
+        System.out.printf("%s와 %s에게 %d장을 나누었습니다.\n", dealer.getName(), names, dealer.getCardsSize());
     }
 
-    private static void printDealerFirstCard(GamerDto dealer) {
+    private static void printDealerFirstCard(Dealer dealer) {
         Card firstCard = dealer.getFirstCard();
         String dealerFirstCardName = firstCard.getName() + firstCard.getShape();
         System.out.println(dealer.getName() + "카드: " + dealerFirstCardName);
     }
 
-    private static void printPlayerFirstCards(List<GamerDto> players) {
-        for (GamerDto player : players) {
+    private static void printPlayerFirstCards(List<Player> players) {
+        for (Player player : players) {
             printPlayerCard(player);
         }
         System.out.println();
     }
 
-    public static void printPlayerCard(GamerDto player) {
+    public static void printPlayerCard(Player player) {
         System.out.println(player.getName() + "카드: " + getCardNames(player));
     }
 
-    private static String getCardNames(GamerDto gamer) {
+    private static String getCardNames(Gamer gamer) {
         return gamer.getCards().stream()
                 .map(card -> card.getName() + card.getShape())
                 .collect(Collectors.joining(", "));
@@ -56,28 +58,28 @@ public class OutputView {
         System.out.println("딜러는 17이상이라 카드를 더 받지 않았습니다.\n");
     }
 
-    public static void printFinalCards(GamerDto dealer, List<GamerDto> players) {
+    public static void printFinalCards(Dealer dealer, List<Player> players) {
         printDealerFinalCards(dealer);
         printPlayerFinalCards(players);
     }
 
-    private static void printDealerFinalCards(GamerDto dealer) {
+    private static void printDealerFinalCards(Dealer dealer) {
         System.out.printf("%s카드: %s- 결과: %d\n",
-                dealer.getName(), getCardNames(dealer), dealer.getCardNumberSum());
+                dealer.getName(), getCardNames(dealer), dealer.getCardsNumberSum());
     }
 
-    private static void printPlayerFinalCards(List<GamerDto> players) {
-        for (GamerDto player : players) {
+    private static void printPlayerFinalCards(List<Player> players) {
+        for (Player player : players) {
             System.out.printf("%s카드: %s- 결과: %d\n",
-                    player.getName(), getCardNames(player), player.getCardNumberSum());
+                    player.getName(), getCardNames(player), player.getCardsNumberSum());
         }
         System.out.println();
     }
 
-    public static void printFinalResult(GameResultDto gameResultDto) {
+    public static void printFinalResult(BlackJackReferee blackJackReferee) {
         System.out.println("## 최종 승패");
-        printFinalDealerResult(gameResultDto.getDealerResult());
-        printFinalPlayerResult(gameResultDto.getPlayerResults());
+        printFinalDealerResult(blackJackReferee.getDealerResult());
+        printFinalPlayerResult(blackJackReferee.getPlayerResult());
     }
 
     private static void printFinalDealerResult(Map<BlackJackResult, Integer> dealerResult) {

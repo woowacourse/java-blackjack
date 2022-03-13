@@ -30,7 +30,7 @@ public class BlackJackReferee {
     private void addResults(List<Player> players, Dealer dealer) {
         for (Player player : players) {
             BlackJackResult result = player.match(dealer);
-            playerResults.put(player.getName().getValue(), result);
+            playerResults.put(player.getName(), result);
             dealerResult.merge(result.getReverse(), INCREASE_COUNT, Integer::sum);
         }
     }

@@ -1,5 +1,7 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.card.Card;
+
 public class Dealer extends Gamer{
 
     private static final String NAME = "딜러";
@@ -10,5 +12,9 @@ public class Dealer extends Gamer{
 
     public boolean isOverThan(int number) {
         return getCardsNumberSum() > number;
+    }
+
+    public Card getFirstCard() {
+        return super.getCards().get(0);
     }
 }
