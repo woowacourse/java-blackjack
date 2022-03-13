@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.player.Gamer;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ public class GamerTest {
     @Test
     @DisplayName("게이머 첫 2장 카드 공개")
     void gamerOpenCards() {
-        Gamer gamer = new Gamer("pobi", new Card(QUEEN, CLOVER), new Card(FIVE, HEART));
+        Gamer gamer = new Gamer("pobi", List.of(new Card(QUEEN, CLOVER), new Card(FIVE, HEART)));
         assertThat(gamer.openCards()).hasSize(2);
         assertThat(gamer.openCards()).contains(new Card(QUEEN, CLOVER), new Card(FIVE, HEART));
     }
@@ -22,21 +23,21 @@ public class GamerTest {
     @Test
     @DisplayName("게이머 20이하일 경우 카드 발급 가능")
     void gamerCardTake() {
-        Gamer gamer = new Gamer("pobi", new Card(QUEEN, CLOVER), new Card(KING, SPADE));
+        Gamer gamer = new Gamer("pobi", List.of(new Card(QUEEN, CLOVER), new Card(KING, SPADE)));
         assertThat(gamer.isHittable()).isTrue();
     }
 
     @Test
     @DisplayName("게이머 21이상일 경우 카드 발급 불가능")
     void gamerCardCantTake() {
-        Gamer gamer = new Gamer("pobi", new Card(QUEEN, CLOVER), new Card(ACE, SPADE));
+        Gamer gamer = new Gamer("pobi", List.of(new Card(QUEEN, CLOVER), new Card(ACE, SPADE)));
         assertThat(gamer.isHittable()).isFalse();
     }
 
     @Test
     @DisplayName("게이머 카드 발급")
     void gamerTakeCards() {
-        Gamer dealer = new Gamer("gamer", new Card(JACK, DIAMOND), new Card(QUEEN, CLOVER));
+        Gamer dealer = new Gamer("gamer", List.of(new Card(JACK, DIAMOND), new Card(QUEEN, CLOVER)));
         dealer.take(new Card(ACE, HEART));
         assertThat(dealer.score()).isEqualTo(new Score(21));
     }
@@ -44,7 +45,7 @@ public class GamerTest {
     @Test
     @DisplayName("게이머 카드 발급 실패")
     void gamerTakeInvalidCard() {
-        Gamer dealer = new Gamer("gamer", new Card(JACK, DIAMOND), new Card(ACE, HEART));
+        Gamer dealer = new Gamer("gamer", List.of(new Card(JACK, DIAMOND), new Card(ACE, HEART)));
         assertThatThrownBy(() -> dealer.take(new Card(FOUR, HEART)))
                 .isInstanceOf(IllegalStateException.class);
     }

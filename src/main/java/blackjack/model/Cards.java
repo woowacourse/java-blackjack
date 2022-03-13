@@ -2,10 +2,9 @@ package blackjack.model;
 
 import static java.util.function.Predicate.not;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public final class Cards {
 
@@ -14,9 +13,8 @@ public final class Cards {
 
     private final List<Card> cards;
 
-    public Cards(Card card1, Card card2, Card... cards) {
-        this.cards = Stream.concat(Stream.concat(Stream.of(card1), Stream.of(card2)), List.of(cards).stream())
-                .collect(Collectors.toList());
+    public Cards(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public List<Card> getEachCard() {

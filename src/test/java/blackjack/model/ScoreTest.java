@@ -9,15 +9,16 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 public class ScoreTest {
 
-    @ParameterizedTest(name = "입력값 : {1}")
+    @ParameterizedTest(name = "[{index}] 입력값 : {1}")
     @CsvSource({"22,True", "21,False", "17,False"})
-    void 버스트_발생(int scoreValue, boolean expect) {
+    @DisplayName("버스트 발생 테스트")
+    void bustTest(int scoreValue, boolean expect) {
         assertThat(new Score(scoreValue).isBust()).isEqualTo(expect);
     }
 
     @ParameterizedTest
-    @DisplayName("less than 테스트")
     @CsvSource({"7,8,True", "8,7,False", "8,8,False"})
+    @DisplayName("less than 테스트")
     void compareLessThan(int input1, int input2, boolean expect) {
         Score score1 = new Score(input1);
         Score score2 = new Score(input2);

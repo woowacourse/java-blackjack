@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Dealer extends Player {
 
-    public Dealer(Card card1, Card card2, Card... cards) {
-        super("딜러", new Cards(card1, card2, cards));
+    public Dealer(List<Card> cards) {
+        super("딜러", new Cards(cards));
     }
 
     public Result match(Cards cards) {

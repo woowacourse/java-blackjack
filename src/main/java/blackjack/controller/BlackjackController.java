@@ -3,12 +3,8 @@ package blackjack.controller;
 import blackjack.model.Card;
 import blackjack.model.CardDeck;
 import blackjack.model.Result;
-import blackjack.model.dto.CardDTO;
-import blackjack.model.dto.PlayerDTO;
-import blackjack.model.dto.PlayersDTO;
-import blackjack.model.player.Dealer;
-import blackjack.model.player.Gamer;
-import blackjack.model.player.Player;
+import blackjack.model.dto.*;
+import blackjack.model.player.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -29,7 +25,7 @@ public class BlackjackController {
     }
 
     private Dealer createDealer(CardDeck cardDeck) {
-        return new Dealer(cardDeck.selectCard(), cardDeck.selectCard());
+        return new Dealer(List.of(cardDeck.selectCard(), cardDeck.selectCard()));
     }
 
     private List<String> names() {
@@ -50,7 +46,7 @@ public class BlackjackController {
     }
 
     private Gamer createEachGamer(String name, CardDeck cardDeck) {
-        return new Gamer(name, cardDeck.selectCard(), cardDeck.selectCard());
+        return new Gamer(name, List.of(cardDeck.selectCard(), cardDeck.selectCard()));
     }
 
     private PlayersDTO createGamersDto(List<Gamer> gamers) {
