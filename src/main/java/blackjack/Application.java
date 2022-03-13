@@ -17,6 +17,7 @@ public class Application {
 
         Game game = startGame(inputView, resultView);
         playEntries(inputView, resultView, game);
+        inputView.closeInput();
         playDealer(resultView, game);
         showResults(resultView, game);
     }

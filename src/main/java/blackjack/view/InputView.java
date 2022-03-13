@@ -45,4 +45,8 @@ public class InputView {
         }
         throw new IllegalArgumentException(ERROR_NO_SUCH_SIGN);
     }
+
+    public void closeInput() {
+        scanner.close();
+    }
 }
