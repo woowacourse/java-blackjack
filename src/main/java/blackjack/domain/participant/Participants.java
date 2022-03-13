@@ -18,10 +18,6 @@ public class Participants {
         this.participants = new ArrayList<>();
     }
 
-    public List<Participant> getParticipants() {
-        return Collections.unmodifiableList(participants);
-    }
-
     public void addDealer() {
         this.participants.add(new Dealer());
     }
