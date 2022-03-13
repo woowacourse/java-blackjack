@@ -8,15 +8,15 @@ import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
-public class CardGeneratorTest {
+public class CardDeckTest {
 
     @Test
     void cardGenerate() {
-        CardGenerator cardGenerator = new CardGenerator();
+        CardDeck cardDeck = new CardDeck();
         Set<Card> set = new HashSet<>();
 
         for (int i = 0; i < 52; i++) {
-            Card card = cardGenerator.generate();
+            Card card = cardDeck.selectCard();
             if (set.contains(card)) {
                 fail();
             }
@@ -24,6 +24,6 @@ public class CardGeneratorTest {
         }
 
         assertThat(set).hasSize(52);
-        assertThatThrownBy(cardGenerator::generate).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(cardDeck::selectCard).isInstanceOf(IllegalStateException.class);
     }
 }

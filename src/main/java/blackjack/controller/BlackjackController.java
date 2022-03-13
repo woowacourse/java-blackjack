@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.model.Card;
-import blackjack.model.CardGenerator;
+import blackjack.model.CardDeck;
 import blackjack.model.Result;
 import blackjack.model.dto.CardDTO;
 import blackjack.model.dto.PlayerDTO;
@@ -20,16 +20,16 @@ import java.util.stream.Collectors;
 public class BlackjackController {
 
     public void play() {
-        CardGenerator cardGenerator = new CardGenerator();
-        Dealer dealer = createDealer(cardGenerator);
-        List<Gamer> gamers = createGamers(names(), cardGenerator);
+        CardDeck cardDeck = new CardDeck();
+        Dealer dealer = createDealer(cardDeck);
+        List<Gamer> gamers = createGamers(names(), cardDeck);
         OutputView.printOpenCard(createPlayerDto(dealer, dealer.openCards()), createGamersDto(gamers));
-        takeCards(cardGenerator, dealer, gamers);
+        takeCards(cardDeck, dealer, gamers);
         displayResult(dealer, gamers);
     }
 
-    private Dealer createDealer(CardGenerator cardGenerator) {
-        return new Dealer(cardGenerator.generate(), cardGenerator.generate());
+    private Dealer createDealer(CardDeck cardDeck) {
+        return new Dealer(cardDeck.selectCard(), cardDeck.selectCard());
     }
 
     private List<String> names() {
@@ -43,14 +43,14 @@ public class BlackjackController {
         return names;
     }
 
-    private List<Gamer> createGamers(List<String> names, CardGenerator cardGenerator) {
+    private List<Gamer> createGamers(List<String> names, CardDeck cardDeck) {
         return names.stream()
-                .map(name -> createEachGamer(name, cardGenerator))
+                .map(name -> createEachGamer(name, cardDeck))
                 .collect(Collectors.toList());
     }
 
-    private Gamer createEachGamer(String name, CardGenerator cardGenerator) {
-        return new Gamer(name, cardGenerator.generate(), cardGenerator.generate());
+    private Gamer createEachGamer(String name, CardDeck cardDeck) {
+        return new Gamer(name, cardDeck.selectCard(), cardDeck.selectCard());
     }
 
     private PlayersDTO createGamersDto(List<Gamer> gamers) {
@@ -69,23 +69,23 @@ public class BlackjackController {
         return new PlayerDTO(player.getName(), player.score().getValue(), cards);
     }
 
-    private void takeCards(CardGenerator cardGenerator, Dealer dealer, List<Gamer> gamers) {
+    private void takeCards(CardDeck cardDeck, Dealer dealer, List<Gamer> gamers) {
         for (Gamer gamer : gamers) {
-            takeGamerCard(gamer, cardGenerator);
+            takeGamerCard(gamer, cardDeck);
         }
-        takeDealerCard(dealer, cardGenerator);
+        takeDealerCard(dealer, cardDeck);
     }
 
-    private void takeGamerCard(Gamer gamer, CardGenerator cardGenerator) {
+    private void takeGamerCard(Gamer gamer, CardDeck cardDeck) {
         while (gamer.isHittable() && isKeepTakeCard(gamer)) {
-            gamer.take(cardGenerator.generate());
+            gamer.take(cardDeck.selectCard());
             OutputView.printCard(createPlayerDto(gamer, gamer.getCards().getEachCard()));
         }
     }
 
-    private void takeDealerCard(Dealer dealer, CardGenerator cardGenerator) {
+    private void takeDealerCard(Dealer dealer, CardDeck cardDeck) {
         while (dealer.isHittable()) {
-            dealer.take(cardGenerator.generate());
+            dealer.take(cardDeck.selectCard());
             OutputView.printDealerTakeCardMessage();
         }
     }
