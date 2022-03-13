@@ -1,5 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -8,11 +11,11 @@ public abstract class Gamer {
     private static final int MAX_SCORE = 21;
     private static final int BLACKJACK_CARD_COUNT = 2;
 
-    private final Name name;
+    private final PlayerName playerName;
     private final Cards cards;
 
-    public Gamer(Name name) {
-        this.name = name;
+    public Gamer(PlayerName playerName) {
+        this.playerName = playerName;
         this.cards = new Cards(new ArrayList<>());
     }
 
@@ -33,8 +36,8 @@ public abstract class Gamer {
                 || cards.containsCardNumber(CardNumber.KING);
     }
 
-    public Name getName() {
-        return name;
+    public PlayerName getName() {
+        return playerName;
     }
 
     public Cards getCards() {
@@ -58,18 +61,18 @@ public abstract class Gamer {
             return false;
         }
         Gamer gamer = (Gamer) o;
-        return Objects.equals(name, gamer.name) && Objects.equals(cards, gamer.cards);
+        return Objects.equals(playerName, gamer.playerName) && Objects.equals(cards, gamer.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cards);
+        return Objects.hash(playerName, cards);
     }
 
     @Override
     public String toString() {
         return "Gamer{" +
-                "name=" + name +
+                "name=" + playerName +
                 ", cards=" + cards +
                 '}';
     }

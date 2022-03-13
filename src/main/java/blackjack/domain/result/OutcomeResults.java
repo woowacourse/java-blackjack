@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import java.util.EnumMap;
 import java.util.Map;

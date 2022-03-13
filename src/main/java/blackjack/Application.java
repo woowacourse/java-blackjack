@@ -1,3 +1,5 @@
+package blackjack;
+
 import blackjack.controller.BlackjackController;
 
 public class Application {

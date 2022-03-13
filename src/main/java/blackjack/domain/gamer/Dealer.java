@@ -1,8 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
 public class Dealer extends Gamer {
 
-    private static final Name DEALER_NAME = new Name("딜러");
+    private static final PlayerName DEALER_NAME = new PlayerName("딜러");
     private static final int MAX_SCORE = 17;
     private static final int WIN = 1;
     private static final int DRAW = 0;

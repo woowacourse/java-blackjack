@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.gamer;
 
 public class Player extends Gamer {
 
@@ -7,8 +7,8 @@ public class Player extends Gamer {
     private static final int DRAW = 0;
     private static final int LOSE = -1;
 
-    public Player(Name name) {
-        super(name);
+    public Player(PlayerName playerName) {
+        super(playerName);
     }
 
     @Override

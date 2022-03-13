@@ -1,12 +1,12 @@
 package blackjack.view;
 
-import blackjack.domain.Gamer;
-import blackjack.domain.Name;
-import blackjack.domain.Gamers;
-import blackjack.domain.Card;
-import blackjack.domain.Outcome;
-import blackjack.domain.OutcomeResults;
-import blackjack.domain.Results;
+import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.PlayerName;
+import blackjack.domain.gamer.Gamers;
+import blackjack.domain.card.Card;
+import blackjack.domain.result.Outcome;
+import blackjack.domain.result.OutcomeResults;
+import blackjack.domain.result.Results;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,7 +35,7 @@ public class ResultView {
     private static String printPlayersName(Gamers gamers) {
         return gamers.get().stream()
                 .map(Gamer::getName)
-                .map(Name::get)
+                .map(PlayerName::get)
                 .collect(Collectors.joining(CARD_DELIMITER));
     }
 
@@ -61,7 +61,7 @@ public class ResultView {
     }
 
     private static String getNumberAndType(Card card) {
-        return card.getCardNumber().getNumber() + card.getType().getName();
+        return card.getCardNumber().getNumber() + card.getType().getType();
     }
 
     public static void printDealerHitMessage() {

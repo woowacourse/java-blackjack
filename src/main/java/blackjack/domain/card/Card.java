@@ -1,23 +1,23 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.Objects;
 
 public class Card {
 
     private final CardNumber cardNumber;
-    private final Type type;
+    private final CardType cardType;
 
-    public Card(CardNumber cardNumber, Type type) {
+    public Card(CardNumber cardNumber, CardType cardType) {
         this.cardNumber = cardNumber;
-        this.type = type;
+        this.cardType = cardType;
     }
 
     public CardNumber getCardNumber() {
         return cardNumber;
     }
 
-    public Type getType() {
-        return type;
+    public CardType getType() {
+        return cardType;
     }
 
     @Override
@@ -29,19 +29,19 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return cardNumber == card.cardNumber && type == card.type;
+        return cardNumber == card.cardNumber && cardType == card.cardType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardNumber, type);
+        return Objects.hash(cardNumber, cardType);
     }
 
     @Override
     public String toString() {
         return "Card{" +
                 "number=" + cardNumber +
-                ", type=" + type +
+                ", cardType=" + cardType +
                 '}';
     }
 }

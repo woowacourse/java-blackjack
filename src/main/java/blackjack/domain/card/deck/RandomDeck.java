@@ -1,5 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.card.deck;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardType;
+import blackjack.domain.card.deck.Deck;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,7 +29,7 @@ public class RandomDeck implements Deck {
     private void init() {
         cards = new ArrayList<>();
         for (CardNumber number : CardNumber.values()) {
-            Arrays.stream(Type.values())
+            Arrays.stream(CardType.values())
                     .forEach(type -> cards.add(new Card(number, type)));
         }
     }

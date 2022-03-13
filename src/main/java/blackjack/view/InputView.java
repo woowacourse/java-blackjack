@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.Name;
+import blackjack.domain.gamer.PlayerName;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -27,8 +27,8 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static String requestHitOrStay(Name name) {
-        System.out.println(name.get() + REQUEST_HIT_OR_STAY_MESSAGE);
+    public static String requestHitOrStay(PlayerName playerName) {
+        System.out.println(playerName.get() + REQUEST_HIT_OR_STAY_MESSAGE);
         String answer = toLowerCase(readLine());
         validateHitOrStayAnswer(answer);
 

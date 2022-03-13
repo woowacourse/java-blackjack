@@ -1,15 +1,15 @@
 package blackjack.controller;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
-import blackjack.domain.Gamer;
-import blackjack.domain.Gamers;
-import blackjack.domain.Name;
-import blackjack.domain.OutcomeResults;
-import blackjack.domain.Player;
-import blackjack.domain.RandomDeck;
-import blackjack.domain.Outcome;
-import blackjack.domain.Results;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.card.deck.Deck;
+import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Gamers;
+import blackjack.domain.gamer.PlayerName;
+import blackjack.domain.result.OutcomeResults;
+import blackjack.domain.gamer.Player;
+import blackjack.domain.card.deck.RandomDeck;
+import blackjack.domain.result.Outcome;
+import blackjack.domain.result.Results;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.LinkedHashMap;
@@ -42,7 +42,7 @@ public class BlackjackController {
 
     private Gamers createPlayers(List<String> names, Deck deck) {
         Gamers gamers = new Gamers(names.stream()
-                .map(Name::new)
+                .map(PlayerName::new)
                 .map(Player::new)
                 .collect(Collectors.toList()));
         gamers.initCards(deck);
