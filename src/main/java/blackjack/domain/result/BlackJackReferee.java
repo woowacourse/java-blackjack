@@ -1,6 +1,7 @@
 package blackjack.domain.result;
 
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
 
 import java.util.Collections;

@@ -1,9 +1,9 @@
 package blackjack.domain;
 
+import blackjack.controller.BlackJackController;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import blackjack.controller.BlackJackController;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
@@ -66,13 +66,13 @@ class BlackJackControllerTest {
     }
 
     @Test
-    @DisplayName("이름을 입력 받아, 해당 플레이어가 카드 총 합이 21이 넘는 버스트 상태인지 확인한다.")
+    @DisplayName("이름을 입력 받아, 해당 플레이어가 카드를 더 뽑을 수 있는 상태인지 확인한다.")
     void isBurst() {
         BlackJackController blackJackController = new BlackJackController(List.of("pobi", "jason"));
         Player pobi = blackJackController.findPlayerByName("pobi");
         pobi.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.KING));
         pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.KING));
         pobi.addCard(Card.getInstance(CardShape.HEART, CardNumber.KING));
-        assertThat(blackJackController.isBurst("pobi")).isEqualTo(true);
+        assertThat(blackJackController.isDrawPossible("pobi", s -> "y")).isEqualTo(false);
     }
 }

@@ -17,9 +17,14 @@ public class BlackJackApplication {
 
         drawAdditionalCard(names, controller);
 
-        OutputView.printAdditionalDrawDealer(controller.distributeAdditionalToDealer());
+        printAddtionalDrawDealr(controller);
         OutputView.printFinalCards(controller.getDealer(), controller.getPlayers());
         OutputView.printFinalResult(controller.createResult());
+    }
+
+    private static void printAddtionalDrawDealr(BlackJackController controller) {
+        controller.distributeAdditionalToDealer();
+        OutputView.printAdditionalDrawDealer(controller.getDealerCardSize());
     }
 
     private static void drawAdditionalCard(List<String> names, BlackJackController controller) {

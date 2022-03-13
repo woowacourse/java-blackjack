@@ -8,7 +8,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static blackjack.controller.BlackJackController.MAX_CARD_VALUE;
+import static blackjack.domain.gamer.Gamers.MAX_CARD_VALUE;
+
 
 public class Gamer {
 
