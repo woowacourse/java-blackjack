@@ -3,7 +3,6 @@ package model.card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import model.Result;
 import model.Status;
 
 public class Cards {

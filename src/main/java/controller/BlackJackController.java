@@ -28,7 +28,7 @@ public class BlackJackController {
         boolean requestDoneSuccessful;
         do {
             requestDoneSuccessful = tryRequest(request);
-        } while(!requestDoneSuccessful);
+        } while (!requestDoneSuccessful);
     }
 
     private boolean tryRequest(Runnable request) {

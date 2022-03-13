@@ -28,7 +28,7 @@ public class StatusTest {
 
     @Test
     void checkInvalidStatus() {
-        assertThatThrownBy(() -> Status.of(0,22))
+        assertThatThrownBy(() -> Status.of(0, 22))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

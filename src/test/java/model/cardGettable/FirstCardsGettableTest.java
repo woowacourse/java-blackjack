@@ -1,6 +1,6 @@
 package model.cardGettable;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import model.card.Card;

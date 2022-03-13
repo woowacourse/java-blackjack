@@ -1,7 +1,5 @@
 package model;
 
-import static model.Dealer.DEALER_NAME;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,8 +9,8 @@ import model.cardGettable.CardsGettable;
 
 public abstract class Participator {
     protected final Cards cards;
-    protected CardsGettable cardsGettableStrategy;
     private final String name;
+    protected CardsGettable cardsGettableStrategy;
 
     public Participator(String name) {
         checkNameIsNullOrEmpty(name);
