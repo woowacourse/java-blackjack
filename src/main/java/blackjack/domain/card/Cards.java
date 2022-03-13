@@ -37,7 +37,7 @@ public class Cards {
 
     private boolean containsAce(List<Card> cards) {
         return cards.stream()
-                .anyMatch(card -> card.isAce());
+                .anyMatch(Card::isAce);
     }
 
     private int sumWithAce() {
