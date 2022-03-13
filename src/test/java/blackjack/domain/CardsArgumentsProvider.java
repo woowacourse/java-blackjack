@@ -1,7 +1,7 @@
 package blackjack.domain;
 
-import static blackjack.domain.Denomination.*;
-import static blackjack.domain.Suit.*;
+import static blackjack.domain.card.Denomination.*;
+import static blackjack.domain.card.Suit.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import blackjack.domain.card.Card;

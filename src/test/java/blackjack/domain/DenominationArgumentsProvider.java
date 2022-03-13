@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.Denomination.*;
+import static blackjack.domain.card.Denomination.*;
 import static org.junit.jupiter.params.provider.Arguments.*;
 
 import java.util.stream.Stream;

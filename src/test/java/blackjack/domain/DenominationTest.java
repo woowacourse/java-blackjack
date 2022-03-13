@@ -1,8 +1,9 @@
 package blackjack.domain;
 
-import static blackjack.domain.Denomination.*;
+import static blackjack.domain.card.Denomination.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.card.Denomination;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
