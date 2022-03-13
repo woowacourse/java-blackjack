@@ -2,8 +2,10 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.DeckGeneratorImpl;
 import blackjack.domain.card.Score;
 import blackjack.domain.card.Type;
+import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,8 +26,11 @@ class ParticipantTest {
     @NullAndEmptySource
     @DisplayName("참여자 이름은 비어있을 수 없다")
     void checkNameNullOrEmpty(String name) {
-        Deck deck = new Deck();
-        assertThatThrownBy(() -> new Participant(deck.initDistributeCard(), name))
+        Deck deck = new Deck(new DeckGeneratorImpl());
+        List<Card> initCards = new ArrayList<>();
+        initCards.add(deck.draw());
+        initCards.add(deck.draw());
+        assertThatThrownBy(() -> new Participant(initCards, name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름은 비어있을 수 없습니다.");
     }
@@ -33,16 +38,22 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자는 시작시 카드를 2장 받는다.")
     void checkParticipantCardSize() {
-        Deck deck = new Deck();
-        Participant participant = new Participant(deck.initDistributeCard(), "pobi");
+        Deck deck = new Deck(new DeckGeneratorImpl());
+        List<Card> initCards = new ArrayList<>();
+        initCards.add(deck.draw());
+        initCards.add(deck.draw());
+        Participant participant = new Participant(initCards, "pobi");
         assertThat(participant.getCards().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("참가자는 추가로 카드를 받을 수 있다.")
     void addParticipantCard() {
-        Deck deck = new Deck();
-        Participant participant = new Participant(deck.initDistributeCard(), "pobi");
+        Deck deck = new Deck(new DeckGeneratorImpl());
+        List<Card> initCards = new ArrayList<>();
+        initCards.add(deck.draw());
+        initCards.add(deck.draw());
+        Participant participant = new Participant(initCards, "pobi");
         int size = participant.getCards().size();
         participant.addCard(deck.draw());
         assertThat(participant.getCards().size()).isEqualTo(size + 1);

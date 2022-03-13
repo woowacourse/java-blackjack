@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int INIT_DISTRIBUTE_SIZE = 2;
+
     private final List<Card> cards;
 
     public Cards(final List<Card> cards) {
@@ -13,14 +15,24 @@ public class Cards {
         addCards(cards);
     }
 
+    public static List<Card> createInitCards(Deck deck) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i< INIT_DISTRIBUTE_SIZE; i++){
+            cards.add(deck.draw());
+        }
+        return cards;
+    }
+
     private void validateInitCards(final List<Card> cards) {
-        if (cards == null || cards.size() != Deck.INIT_DISTRIBUTE_SIZE) {
+        if (cards == null || cards.size() != INIT_DISTRIBUTE_SIZE) {
             throw new IllegalArgumentException("[ERROR] 잘못 배분된 카드입니다.");
         }
     }
 
     private void addCards(final List<Card> cards) {
-        cards.forEach(this::addCard);
+        for (Card card : cards) {
+            addCard(card);
+        }
     }
 
     public void addCard(final Card card) {
@@ -39,13 +51,13 @@ public class Cards {
     }
 
     public int calculateMaxScore() {
-        if (isContainsAce()) {
+        if (containsAce()) {
             return calculateScoreByAceOne() + Score.getDifferenceAcesScore();
         }
         return calculateScoreByAceOne();
     }
 
-    private boolean isContainsAce() {
+    private boolean containsAce() {
         return cards.stream().anyMatch(card -> card.isScoreAce());
     }
 

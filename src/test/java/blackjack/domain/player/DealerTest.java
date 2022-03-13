@@ -2,8 +2,10 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.DeckGeneratorImpl;
 import blackjack.domain.card.Score;
 import blackjack.domain.card.Type;
+import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,8 +22,12 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 시작시 카드를 2장 받는다.")
     void checkParticipantCardSize() {
-        Deck deck = new Deck();
-        Dealer dealer = new Dealer(deck.initDistributeCard());
+        Deck deck = new Deck(new DeckGeneratorImpl());
+        List<Card> initCards = new ArrayList<>();
+        initCards.add(deck.draw());
+        initCards.add(deck.draw());
+        Dealer dealer = new Dealer(initCards);
+
         assertThat(dealer.getCards().size()).isEqualTo(2);
     }
 

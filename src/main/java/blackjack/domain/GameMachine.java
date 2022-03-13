@@ -1,7 +1,10 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.DeckGenerator;
+import blackjack.domain.card.DeckGeneratorImpl;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Players;
@@ -16,7 +19,7 @@ public class GameMachine {
 
     public GameMachine(final List<String> names) {
         validationNames(names);
-        this.deck = new Deck();
+        this.deck = new Deck(new DeckGeneratorImpl());
         this.players = new Players(createParticipants(names), createDealer());
     }
 
@@ -28,12 +31,12 @@ public class GameMachine {
 
     public List<Participant> createParticipants(final List<String> names) {
         return names.stream()
-                .map(name -> new Participant(deck.initDistributeCard(), name))
+                .map(name -> new Participant(Cards.createInitCards(deck), name))
                 .collect(Collectors.toList());
     }
 
     private Dealer createDealer() {
-        return new Dealer(deck.initDistributeCard());
+        return new Dealer(Cards.createInitCards(deck));
     }
 
     public Card playDraw() {
