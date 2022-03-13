@@ -18,16 +18,16 @@ public class CardDeck {
         for (Face face : Face.values()) {
             init(face, cards);
         }
-    }
-
-    private static void init(final Face face, final List<Card> cards) {
-        for (Suit suit : Suit.values()) {
-            cards.add(new Card(suit, face));
-        }
-
+        
         Collections.shuffle(cards);
 
         cardDeck.addAll(cards);
+    }
+
+    private static void init(final Face face, final List<Card> cards) {
+        for (final Suit suit : Suit.values()) {
+            cards.add(new Card(suit, face));
+        }
     }
 
     private CardDeck() {
