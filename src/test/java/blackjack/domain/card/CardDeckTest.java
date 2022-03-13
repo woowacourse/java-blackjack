@@ -8,9 +8,8 @@ import org.junit.jupiter.api.Test;
 public class CardDeckTest {
 
 	@Test
-	@DisplayName("pickCard 에서 카드를 잘 뽑는지")
-	void PickCard_Return_Only_One() {
-		assertThat(CardDeck.pick()).isInstanceOf(Card.class);
+	@DisplayName("하나의 덱에서 연속으로 뽑은 두 장의 카드는 서로 다른 카드이다")
+	void pickDifferentTwoCards() {
+		assertThat(CardDeck.pick()).isNotEqualTo(CardDeck.pick());
 	}
-
 }
