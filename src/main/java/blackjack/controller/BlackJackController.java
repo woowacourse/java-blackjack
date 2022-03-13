@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
+import blackjack.domain.gamer.Gamers;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.result.BlackJackReferee;
 
@@ -25,6 +26,7 @@ public class BlackJackController {
     private final Deck deck;
     private final List<Player> players;
     private final Dealer dealer;
+    private final Gamers gamers;
 
     public BlackJackController(List<String> names) {
         validateDuplicationNames(names);
@@ -33,6 +35,8 @@ public class BlackJackController {
         this.players = names.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
+        gamers = new Gamers(names);
+        gamers.distributeFirstCards(deck);
         distributeFirstCards();
     }
 
