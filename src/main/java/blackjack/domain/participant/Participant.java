@@ -4,14 +4,22 @@ import static blackjack.domain.card.HoldingCard.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldingCard;
+import java.util.List;
 
 public abstract class Participant {
     protected final String name;
     protected final HoldingCard holdingCard;
 
-    public Participant(String name, HoldingCard holdingCard) {
+    public Participant(String name, List<Card> cards) {
+        validateEmptyName(name);
         this.name = name;
-        this.holdingCard = holdingCard;
+        this.holdingCard = new HoldingCard(cards);
+    }
+
+    private void validateEmptyName(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 빈 이름이 있습니다.");
+        }
     }
 
     public void receiveCard(Card card) {

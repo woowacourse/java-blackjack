@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.HoldingCard;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -9,7 +8,7 @@ public class Dealer extends Participant {
     private static final String DEALER = "딜러";
 
     public Dealer(List<Card> cards) {
-        super(DEALER, new HoldingCard(cards));
+        super(DEALER, cards);
     }
 
     public boolean isFinished() {
