@@ -68,10 +68,7 @@ public final class BlackJackGame {
     }
 
     private void hitDealer() {
-        if (dealer.canReceiveCard()) {
-            dealer.receiveCard(CardDeck.draw());
-            OutputView.printDealerHit();
-        }
+        OutputView.printDealerHit(dealer.hit());
     }
 
     private void showCardsTotal() {

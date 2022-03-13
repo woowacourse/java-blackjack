@@ -4,6 +4,7 @@ import domain.HitThreshold;
 import domain.GameResult;
 import domain.GameState;
 import domain.card.Card;
+import domain.card.CardDeck;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -24,6 +25,14 @@ public final class Dealer extends Participant {
 
     public Map<String, List<GameResult>> getGameResultWithName(final List<GameResult> playersResult) {
         return new LinkedHashMap<>(Map.of(name, GameResult.reverse(playersResult)));
+    }
+
+    public boolean hit() {
+        if (canReceiveCard()) {
+            receiveCard(CardDeck.draw());
+            return true;
+        }
+        return false;
     }
 
     @Override

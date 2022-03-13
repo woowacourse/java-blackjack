@@ -62,8 +62,10 @@ public class OutputView {
         System.out.println(content);
     }
 
-    public static void printDealerHit() {
-        print(DEALER_HIT_MESSAGE);
+    public static void printDealerHit(final boolean doHit) {
+        if (doHit) {
+            print(DEALER_HIT_MESSAGE);
+        }
     }
 
     public static void printCardsWithTotalScore(final CardsWithTotalScore cardsWithTotalScore) {

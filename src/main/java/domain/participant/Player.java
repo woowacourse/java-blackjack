@@ -1,7 +1,7 @@
 package domain.participant;
 
-import domain.HitThreshold;
 import domain.GameResult;
+import domain.HitThreshold;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
