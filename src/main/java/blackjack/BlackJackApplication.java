@@ -2,9 +2,9 @@ package blackjack;
 
 import blackjack.domain.HitRequest;
 import blackjack.domain.Judgement;
+import blackjack.domain.card.CardFactory;
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Name;
-import blackjack.domain.card.BlackJackCardsGenerator;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class BlackJackApplication {
 
     public static void main(String[] args) {
-        CardDeck deck = new CardDeck(new BlackJackCardsGenerator());
+        CardDeck deck = new CardDeck(CardFactory.createBlackJackCards());
         Dealer dealer = createDealer(deck);
         Players players = createPlayers(inputPlayerNames(), deck);
         play(deck, dealer, players);

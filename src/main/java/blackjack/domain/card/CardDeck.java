@@ -2,13 +2,27 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CardDeck {
 
     private final List<Card> cards;
 
-    public CardDeck(CardsGenerator generator) {
-        this.cards = generator.generate();
+    public CardDeck(List<Card> cards) {
+        cards = new ArrayList<>(cards);
+        validateNull(cards);
+        validateDistinct(cards);
+        this.cards = cards;
+    }
+
+    private void validateNull(List<Card> cards) {
+        Objects.requireNonNull(cards, "[ERROR] 카드는 null일 수 없습니다.");
+    }
+
+    private void validateDistinct(List<Card> cards) {
+        if (cards.stream().distinct().count() != cards.size()) {
+            throw new IllegalArgumentException("[ERROR] 카드는 중복될 수 없습니다.");
+        }
     }
 
     public Card draw() {
