@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.FixDeck;
+import blackjack.domain.card.JustTenSpadeDeck;
 import blackjack.domain.card.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class PlayersTest {
     void init_cards_players() {
         Player aki = new Participant(new Name("aki"));
         Players players = new Players(List.of(aki));
-        players.dealCards(new FixDeck());
+        players.dealCards(new JustTenSpadeDeck());
         Cards akiCards = aki.getCards();
         List<Card> cards = akiCards.get();
 

@@ -65,7 +65,8 @@
 - [ ] 컨벤션을 잘 지켰는지 전체적으로 다시 확인해보자
     - [x] `isBLACKJACK()`을 `isBlackjack()`으로 수정했다.
 - [ ] 이름이 의도를 잘 나타내는지 다시 확인해보자(클래스, 메서드, 변수 등). 명시적으로 변경해볼 수 있으면 해보자.
-    - `FixDeck`을 확인하려면 그 안에 들어가서 값을 확인해야할 것 같다.
+    - [x] `FixDeck`을 확인하려면 그 안에 들어가서 값을 확인해야할 것 같다.
+        - `FixDeck`는 10 스페이드만을 리턴하는 클래스였다. 그래서 이름을 `JustTenSpadeDeck`으로 수정했다.
     - [x] 클래스 이름만 보면 `Gamer`, `Player`, `Dealer`의 관계가 혼란스러울 것 같다.
         - 인터페이스 : `Gamer` -> `Player`
         - 추상 클래스 : `AbstractGamer` -> `AbstractPlayer`
