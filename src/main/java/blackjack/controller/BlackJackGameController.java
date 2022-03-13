@@ -11,8 +11,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackGameController {
-	private static final String NO_UPPERCASE = "N";
-	private static final String NO_LOWERCASE = "n";
+	private static final String NO = "n";
 	private final InputView inputView;
 	private final OutputView outputView;
 
@@ -76,7 +75,7 @@ public class BlackJackGameController {
 
 	private boolean decideHitOrStay(Player player) {
 		String decision = inputDecision(player);
-		if (decision.equals(NO_UPPERCASE) || decision.equals(NO_LOWERCASE)) {
+		if (decision.equalsIgnoreCase(NO)) {
 			return false;
 		}
 		return true;
