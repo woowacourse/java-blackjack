@@ -11,14 +11,14 @@ public class Name {
 		this.name = blankRemovedName;
 	}
 
-	private void validateEmptyName(String name) {
-		if (name == null || name.isEmpty()) {
-			throw new IllegalArgumentException(EMPTY_NAME_EXCEPTION.getMessage());
-		}
-	}
-
 	private String removeBlank(final String name) {
 		return name.trim();
+	}
+
+	private void validateEmptyName(String name) {
+		if (name.isEmpty()) {
+			throw new IllegalArgumentException(EMPTY_NAME_EXCEPTION.getMessage());
+		}
 	}
 
 	public String getName() {
