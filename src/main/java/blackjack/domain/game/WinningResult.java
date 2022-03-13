@@ -13,6 +13,16 @@ public enum WinningResult {
         this.result = result;
     }
 
+    public WinningResult reverse() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return this;
+    }
+
     public String getResult() {
         return result;
     }

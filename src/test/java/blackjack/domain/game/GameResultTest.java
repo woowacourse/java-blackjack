@@ -36,11 +36,11 @@ public class GameResultTest {
         player.initCards(playerCards);
 
         GameResult gameResult = new GameResult(participants);
-        gameResult.evaluateWinningResult(dealer, new BlackjackWinningStrategy());
-        gameResult.evaluateWinningResult(dealer, new PlayingWinningStrategy());
+        gameResult.update(new BlackjackWinningStrategy());
+        gameResult.update(new PlayingWinningStrategy());
 
         dealer.addCard(new Card(Suit.CLOVER, Denomination.KING));
-        gameResult.evaluateWinningResult(dealer, new FinalWinningStrategy());
+        gameResult.update(new FinalWinningStrategy());
 
         assertThat(gameResult.getPlayerResult().get(player)).isEqualTo(WinningResult.LOSE);
     }
@@ -61,10 +61,10 @@ public class GameResultTest {
         player.initCards(playerCards);
 
         GameResult gameResult = new GameResult(participants);
-        gameResult.evaluateWinningResult(dealer, new BlackjackWinningStrategy());
+        gameResult.update(new BlackjackWinningStrategy());
 
         dealer.addCard(new Card(Suit.CLOVER, Denomination.EIGHT));
-        gameResult.evaluateWinningResult(dealer, new FinalWinningStrategy());
+        gameResult.update(new FinalWinningStrategy());
 
         assertThat(gameResult.getPlayerResult().get(player)).isEqualTo(WinningResult.WIN);
     }

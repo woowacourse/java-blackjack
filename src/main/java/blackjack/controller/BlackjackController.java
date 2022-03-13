@@ -10,7 +10,6 @@ import blackjack.domain.game.WinningResult;
 import blackjack.domain.game.winningstrategy.BlackjackWinningStrategy;
 import blackjack.domain.game.winningstrategy.FinalWinningStrategy;
 import blackjack.domain.game.winningstrategy.PlayingWinningStrategy;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
@@ -34,17 +33,15 @@ public class BlackjackController {
 
     private void dealInitialCards(BlackjackGame blackjackGame, GameResult gameResult) {
         blackjackGame.initCards();
-        Dealer dealer = blackjackGame.getParticipants().getDealer();
-        gameResult.evaluateWinningResult(dealer, new BlackjackWinningStrategy());
+        gameResult.update(new BlackjackWinningStrategy());
         OutputView.printInitialCardInformation(blackjackGame.getParticipants());
     }
 
     private void dealMoreCards(BlackjackGame blackjackGame, GameResult gameResult) {
-        Dealer dealer = blackjackGame.getParticipants().getDealer();
         dealMoreCardsToPlayers(blackjackGame, gameResult);
-        gameResult.evaluateWinningResult(dealer, new PlayingWinningStrategy());
+        gameResult.update(new PlayingWinningStrategy());
         dealMoreCardsToDealer(blackjackGame);
-        gameResult.evaluateWinningResult(dealer, new FinalWinningStrategy());
+        gameResult.update(new FinalWinningStrategy());
     }
 
     private void dealMoreCardsToPlayers(BlackjackGame blackjackGame, GameResult gameResult) {
