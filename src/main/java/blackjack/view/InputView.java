@@ -6,6 +6,9 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private InputView() {
+    }
+
     private static final String NAME_DELIMITER = ",";
 
     private static final Scanner scanner = new Scanner(System.in);
