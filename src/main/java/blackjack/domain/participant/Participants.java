@@ -36,12 +36,6 @@ public class Participants {
                 .collect(Collectors.toList());
     }
 
-    public List<String> getUserNames() {
-        return getUsers().stream()
-                .map(User::getName)
-                .collect(Collectors.toList());
-    }
-
     public Dealer getDealer() {
         return (Dealer) participants.stream()
                 .filter(Participant::isDealer)
