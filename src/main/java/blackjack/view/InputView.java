@@ -14,9 +14,15 @@ public class InputView {
     private static final String SIGN_TRUE = "y";
     private static final String SIGN_FALSE = "n";
 
+    private final Scanner scanner;
+
+    public InputView() {
+        this.scanner = new Scanner(System.in);
+    }
+
     public List<String> askEntryNames() {
         System.out.println(QUESTION_NAME);
-        String namesInput = new Scanner(System.in).nextLine();
+        String namesInput = scanner.nextLine();
         return splitNames(namesInput);
     }
 
@@ -26,7 +32,7 @@ public class InputView {
 
     public boolean askForHit(EntryDTO entry) {
         System.out.printf(FORMAT_HIT, entry.getName(), SIGN_TRUE, SIGN_FALSE);
-        String input = new Scanner(System.in).nextLine();
+        String input = scanner.nextLine();
         return isInputTrue(input.trim());
     }
 
