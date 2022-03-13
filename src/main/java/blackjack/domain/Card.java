@@ -1,9 +1,8 @@
 package blackjack.domain;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,17 +14,9 @@ public class Card {
     private final Suit suit;
 
     static {
-        Set<Card> cards = Arrays.stream(Denomination.values())
-                .flatMap(denomination -> createCards(denomination).stream())
-                .collect(toSet());
-
-        VALUES = Collections.unmodifiableSet(cards);
-    }
-
-    private static Set<Card> createCards(Denomination denomination) {
-        return Arrays.stream(Suit.values())
-                .map(suit -> new Card(denomination, suit))
-                .collect(toSet());
+        VALUES = Arrays.stream(Denomination.values())
+                .flatMap(denomination -> Arrays.stream(Suit.values()).map(suit -> new Card(denomination, suit)))
+                .collect(toUnmodifiableSet());
     }
 
     private Card(Denomination denomination, Suit suit) {
@@ -34,7 +25,6 @@ public class Card {
     }
 
     public static Card of(Denomination denomination, Suit suit) {
-
         return VALUES.stream()
                 .filter(card -> card.isSame(denomination, suit))
                 .findFirst()
