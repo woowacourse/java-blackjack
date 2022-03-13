@@ -24,13 +24,14 @@ public enum Record {
 		this.dealerRecord = dealerRecord;
 	}
 
-	public static void of (Dealer dealer, List<Player> players) {
+	public static ResultDto of (Dealer dealer, List<Player> players) {
 		Map<String, String> playerRecords = PlayerRecord.of(dealer,players);
 		Map<String, Integer> dealerRecords = DealerRecord.of(dealer, players);
 
 		PlayerResultDto playerResultDto = new PlayerResultDto(playerRecords);
 		DealerResultDto dealerResultDto = new DealerResultDto(dealer.getName(), dealerRecords);
-		ResultDto resultDto = new ResultDto(dealerResultDto, playerResultDto);
+
+		return new ResultDto(dealerResultDto, playerResultDto);
 	}
 
 	public static int compare(Person person1, Person person2) {

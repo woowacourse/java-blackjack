@@ -77,12 +77,22 @@ public class OutputView {
 	public static void printResult(ResultDto resultDto) {
 		System.out.println();
 		System.out.println(RESULT_MESSAGE);
-
-		DealerResultDto dealerResultDto = resultDto.getDealerResultDto();
-		System.out.print(dealerResultDto.getName() + COLON);
-		System.out.println(String.join(BLANK, dealerResultDto.getOutcome()));
-
+		printDealerResult(resultDto.getDealerResultDto());
 		printPlayerResult(resultDto.getPlayerResultDto());
+	}
+
+	private static void printDealerResult(DealerResultDto dealerResultDto) {
+		System.out.print(dealerResultDto.getName() + COLON);
+
+		Map<String, Integer> outcome = dealerResultDto.getOutcome();
+		outcome.keySet()
+			.forEach(record -> printNotZeroRecordForDealer(outcome, record));
+	}
+
+	private static void printNotZeroRecordForDealer(Map<String, Integer> outcome, String record) {
+		if(outcome.get(record) > 0) {
+			System.out.println(outcome.get(record) + record + BLANK);
+		}
 	}
 
 	private static void printPlayerResult(PlayerResultDto playerResultDto) {
