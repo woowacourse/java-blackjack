@@ -1,13 +1,12 @@
 package blackjack.model;
 
 import blackjack.dto.DealerDto;
-
 import blackjack.dto.PlayerDto;
 import blackjack.model.card.CardDeck;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Gamers;
 import blackjack.model.player.Player;
-import java.util.LinkedHashMap;
+import java.net.PortUnreachableException;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -56,6 +55,10 @@ public class BlackJackGame {
 
     public Map<String, MatchResult> getGamerMatchResults() {
         return gamers.getMatchResult(dealer);
+    }
+
+    public Map<MatchResult, Integer> getDealerMatchResult() {
+        return gamers.getDealerMatchResult(dealer);
     }
 
     public Player getDealer() {

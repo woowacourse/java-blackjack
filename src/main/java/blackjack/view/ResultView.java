@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.dto.DealerDto;
+import blackjack.dto.DealerMatchResultsDto;
 import blackjack.dto.GamerDto;
 import blackjack.dto.GamerMatchResultsDto;
 import blackjack.dto.GamersDto;
@@ -102,9 +103,18 @@ public class ResultView {
         System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, gamer.getName(), cardJoiner, gamer.getScore());
     }
 
-    public static void printMatchResult(GamerMatchResultsDto gamerMatchResults) {
+    public static void printMatchResult(DealerMatchResultsDto dealerMatchResults,
+                                        GamerMatchResultsDto gamerMatchResults) {
+        printDealerMatchResult(dealerMatchResults);
         gamerMatchResults.getGamerMatchResults().forEach((name, result) -> {
             System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, name, result);
         });
+    }
+
+    private static void printDealerMatchResult(DealerMatchResultsDto dealerMatchResults) {
+        StringJoiner matchResultJoiner = new StringJoiner(" ");
+        dealerMatchResults.getDealerMatchResults()
+                .forEach((result, count) -> matchResultJoiner.add(count + result));
+        System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, dealerMatchResults.getName(), matchResultJoiner);
     }
 }

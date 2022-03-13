@@ -67,6 +67,22 @@ public class Gamers {
         return gamerResults;
     }
 
+    public Map<MatchResult, Integer> getDealerMatchResult(Player dealer) {
+        Map<MatchResult, Integer> dealerMatchResults = new LinkedHashMap<>();
+        initDealerMatchResults(dealerMatchResults);
+        for (Player gamer : values) {
+            MatchResult result = match(dealer, gamer);
+            dealerMatchResults.merge(result, 1, Integer::sum);
+        }
+        return dealerMatchResults;
+    }
+
+    private void initDealerMatchResults(Map<MatchResult, Integer> dealerResults) {
+        for (MatchResult matchResult : MatchResult.values()) {
+            dealerResults.put(matchResult, 0);
+        }
+    }
+
     private MatchResult match(Player dealer, Player gamer) {
         return MatchResult.find(dealer, gamer);
     }
