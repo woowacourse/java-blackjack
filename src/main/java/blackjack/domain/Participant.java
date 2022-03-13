@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
@@ -63,7 +61,7 @@ public class Participant {
 		return name;
 	}
 
-	public List<Card> getCards() {
-		return cards.getCards();
+	public Cards getCards() {
+		return this.cards;
 	}
 }

@@ -1,7 +1,14 @@
 package blackjack.view;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import blackjack.domain.Participant;
+import blackjack.domain.card.Card;
 import blackjack.domain.dto.BlackJackDto;
+import blackjack.domain.dto.CardsDto;
+import blackjack.domain.dto.ParticipantDto;
 
 public class ResultView {
 
@@ -15,27 +22,36 @@ public class ResultView {
 
 	public static void showStartingStatus(BlackJackDto blackJackDto) {
 		String[] playerNames = blackJackDto.getPlayers().stream()
-			.map(Participant::getName)
+			.map(ParticipantDto::from)
+			.map(ParticipantDto::getName)
 			.toArray(String[]::new);
 
 		System.out.printf(MESSAGE_HAND_OUT_CARD, String.join(NAME_DELIMITER, playerNames));
-		System.out.println(blackJackDto.getDealerOpenCard());
+
+		ParticipantDto participantDto = ParticipantDto.from(blackJackDto.getDealer());
+		CardsDto cardsDto = CardsDto.from(participantDto.getCards());
+		System.out.println(participantDto.getName() + ": " + cardsDto.getCards().get(0).getName());
 
 		for (Participant player : blackJackDto.getPlayers()) {
-			showEachPlayerCurrentStatus(blackJackDto, player);
+			showEachPlayerCurrentStatus(player);
 		}
 		System.out.println();
 	}
 
-	public static void showEachPlayerCurrentStatus(BlackJackDto blackJackDto, Participant participant) {
-		System.out.println(getEachPlayerStatus(blackJackDto, participant));
+	public static void showEachPlayerCurrentStatus(Participant participant) {
+		System.out.println(getEachPlayerStatus(ParticipantDto.from(participant)));
 		if (participant.isOverMaxScore()) {
 			System.out.println(MESSAGE_SCORE_OVER_21);
 		}
 	}
 
-	private static String getEachPlayerStatus(BlackJackDto blackJackDto, Participant participant) {
-		return blackJackDto.getPlayerCardStatus(participant);
+	private static String getEachPlayerStatus(ParticipantDto participantDto) {
+		CardsDto cardsDto = CardsDto.from(participantDto.getCards());
+		List<String> playerCardStatus = cardsDto.getCards().stream()
+			.map(Card::getName)
+			.collect(Collectors.toList());
+
+		return participantDto.getName() + ": " + String.join(", ", playerCardStatus);
 	}
 
 	public static void showWhetherDealerReceivedOrNot(Boolean isReceived) {
@@ -50,15 +66,36 @@ public class ResultView {
 	public static void showFinalStatus(BlackJackDto blackJackDto) {
 		System.out.println();
 		Participant dealer = blackJackDto.getDealer();
-		System.out.println(getEachPlayerStatus(blackJackDto, dealer) + RESULT_DELIMITER + dealer.getScore());
+		System.out.println(getEachPlayerStatus(ParticipantDto.from(dealer)) + RESULT_DELIMITER + dealer.getScore());
 		for (Participant player : blackJackDto.getPlayers()) {
-			System.out.println(getEachPlayerStatus(blackJackDto, player) + RESULT_DELIMITER + player.getScore());
+			System.out.println(getEachPlayerStatus(ParticipantDto.from(player)) + RESULT_DELIMITER + player.getScore());
 		}
 	}
 
 	public static void showResult(BlackJackDto blackJackDto) {
 		System.out.println(MESSAGE_FINAL_RESULT);
-		System.out.println(blackJackDto.getDealerResult());
-		blackJackDto.getPlayersResult().forEach(System.out::println);
+
+		Map<Participant, Boolean> result = blackJackDto.getResult();
+
+		int loseCount = (int)result.values().stream()
+			.filter(value -> value)
+			.count();
+		int winCount = result.size() - loseCount;
+
+		ParticipantDto participantDto = ParticipantDto.from(blackJackDto.getDealer());
+		System.out.println(participantDto.getName() + ": " + winCount + "승 " + loseCount + "패 ");
+
+		List<String> playersResults = result.keySet().stream()
+			.map(ParticipantDto::from)
+			.map(player -> player.getName() + ": " + decodeResult(result.get(player)))
+			.collect(Collectors.toList());
+		playersResults.forEach(System.out::println);
+	}
+
+	private static String decodeResult(Boolean isWin) {
+		if (isWin) {
+			return "승 ";
+		}
+		return "패 ";
 	}
 }
