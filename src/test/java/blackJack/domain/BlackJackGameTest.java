@@ -29,7 +29,7 @@ class BlackJackGameTest {
         Participants participants = new Participants(new Dealer(), List.of(player1, player2));
 
         BlackJackGame blackJackGame = new BlackJackGame(participants);
-        blackJackGame.firstCardDispensing();
+        blackJackGame.initDistributeCards();
 
         assertThat(player1.getCards().size()).isEqualTo(2);
     }

@@ -14,11 +14,9 @@ import blackJack.view.OutputView;
 
 public class BlackJackController {
 
-    private static final int ADDITIONAL_CARD_COUNT = 1;
-
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(getParticipants());
-        blackJackGame.firstCardDispensing();
+        blackJackGame.initDistributeCards();
         OutputView.printInitCardResult(blackJackGame.getParticipants());
 
         doPlayerGame(blackJackGame);
@@ -50,7 +48,7 @@ public class BlackJackController {
 
     private void doEachPlayerTurn(BlackJackGame blackJackGame, Player player) {
         while (player.hasNextTurn() && getOneMoreCard(player)) {
-            blackJackGame.distributeCard(player, ADDITIONAL_CARD_COUNT);
+            blackJackGame.distributeCard(player);
             OutputView.printNowHoldCardInfo(player);
         }
     }
@@ -68,7 +66,7 @@ public class BlackJackController {
     private void doDealerGame(BlackJackGame blackJackGame) {
         Dealer dealer = blackJackGame.getDealer();
         while (dealer.hasNextTurn()) {
-            blackJackGame.distributeCard(dealer, ADDITIONAL_CARD_COUNT);
+            blackJackGame.distributeCard(dealer);
         }
         OutputView.printDealerReceiveCardCount(blackJackGame.getDealer());
     }

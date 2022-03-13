@@ -1,5 +1,6 @@
 package blackJack.domain.participant;
 
+import blackJack.domain.card.Deck;
 import java.util.HashSet;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class Participants {
 
     private static final int MINIMUM_COUNT = 1;
     private static final int MAXIMUM_COUNT = 7;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final Dealer dealer;
     private final List<Player> players;
@@ -30,6 +32,19 @@ public class Participants {
     private void validatePlayerCount(List<Player> players) {
         if (players.size() < MINIMUM_COUNT || players.size() > MAXIMUM_COUNT) {
             throw new IllegalArgumentException(ERROR_MESSAGE_PLAYER_COUNT);
+        }
+    }
+
+    public void distributeCards(Deck deck) {
+        distributeTwoCard(dealer, deck);
+        for (Player player : players) {
+            distributeTwoCard(player, deck);
+        }
+    }
+
+    private void distributeTwoCard(Participant participant, Deck deck) {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            participant.receiveCard(deck.getCard());
         }
     }
 

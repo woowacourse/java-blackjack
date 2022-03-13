@@ -10,8 +10,6 @@ import blackJack.domain.participant.Player;
 
 public class BlackJackGame {
 
-    private static final int INITIAL_CARD_COUNT = 2;
-
     private final Deck deck;
     private final Participants participants;
 
@@ -20,15 +18,12 @@ public class BlackJackGame {
         this.participants = participants;
     }
 
-    public void firstCardDispensing() {
-        distributeCard(participants.getDealer(), INITIAL_CARD_COUNT);
-        participants.getPlayers().forEach(player -> distributeCard(player, INITIAL_CARD_COUNT));
+    public void initDistributeCards() {
+        participants.distributeCards(deck);
     }
 
-    public void distributeCard(Participant participant, int count) {
-        for (int i = 0; i < count; i++) {
-            participant.receiveCard(deck.getCard());
-        }
+    public void distributeCard(Participant participant) {
+        participant.receiveCard(deck.getCard());
     }
 
     public Participants getParticipants() {
