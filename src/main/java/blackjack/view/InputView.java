@@ -1,8 +1,8 @@
 package blackjack.view;
 
+import camp.nextstep.edu.missionutils.Console;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class InputView {
@@ -12,21 +12,19 @@ public class InputView {
 
     private static final String PLAYER_NAME_DELIMITER = ",";
 
-    private static final Scanner scanner = new Scanner(System.in);
-
     private InputView() {
         throw new AssertionError();
     }
 
     public static List<String> inputPlayerNames() {
         System.out.println(INPUT_PLAYER_NAMES_MESSAGE);
-        return Arrays.stream(scanner.nextLine().split(PLAYER_NAME_DELIMITER))
+        return Arrays.stream(Console.readLine().split(PLAYER_NAME_DELIMITER))
                 .map(String::trim)
                 .collect(Collectors.toUnmodifiableList());
     }
 
     public static String inputHitCommand(final String playerName) {
         System.out.printf(INPUT_HIT_COMMAND_MESSAGE, playerName);
-        return scanner.nextLine();
+        return Console.readLine();
     }
 }

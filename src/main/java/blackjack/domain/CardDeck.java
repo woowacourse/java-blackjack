@@ -1,9 +1,9 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Card;
+import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
@@ -21,8 +21,7 @@ public class CardDeck {
 
     public static CardDeck createNewCardDek() {
         List<Card> cards = Card.createNewCards();
-        Collections.shuffle(cards);
-        return new CardDeck(new ArrayDeque<>(cards));
+        return new CardDeck(new ArrayDeque<>(Randoms.shuffle(cards)));
     }
 
     public List<Card> provideFirstHitCards() {
