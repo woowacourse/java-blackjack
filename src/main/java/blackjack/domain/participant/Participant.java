@@ -12,7 +12,7 @@ public abstract class Participant {
     protected final Cards cards;
     private final Name name;
 
-    public Participant(Name name) {
+    protected Participant(Name name) {
         this.cards = new Cards(new ArrayList<>());
         this.name = name;
     }

@@ -7,7 +7,7 @@ import java.util.List;
 public class Dealer extends Participant {
 
     private static final int MAX_ACE_NUMBER = 11;
-    private static final int MAX_RECEIVABLE_SCORE = 17;
+    private static final int RECEIVABLE_SCORE_THRESHOLD = 17;
     private static final int BUST_THRESHOLD = 21;
     private static final Name DEFAULT_NAME = new Name("딜러");
 
@@ -21,7 +21,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isReceivable() {
-        return calculateBestScore() < MAX_RECEIVABLE_SCORE;
+        return calculateBestScore() < RECEIVABLE_SCORE_THRESHOLD;
     }
 
     @Override
