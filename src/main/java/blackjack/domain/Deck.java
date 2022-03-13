@@ -7,8 +7,7 @@ import java.util.Set;
 public class Deck {
 
     private static final int HAS_NOT_ACE = 0;
-    private static final int ACE_ELEVEN = 11;
-    private static final int MINUS_ACE_SELF_SIZE = 1;
+    private static final int ACE_ELEVEN_POSSIBLE = 10;
 
     private final Set<Card> deck = new LinkedHashSet<>();
 
@@ -17,29 +16,23 @@ public class Deck {
     }
 
     public int sumPoints() {
-        int sumWithoutAce = deck.stream()
-                .filter(card -> !isAce(card))
+        int points = deck.stream()
                 .mapToInt(this::getCardPoint)
                 .sum();
-
-        int aceCount = countAces();
-        if (aceCount == HAS_NOT_ACE) {
-            return sumWithoutAce;
-        }
-        return calculateAcePoint(sumWithoutAce, aceCount);
-    }
-
-    private int countAces() {
-        return (int) deck.stream()
+        int aceCount = (int) deck.stream()
                 .filter(this::isAce)
                 .count();
+        if (aceCount == HAS_NOT_ACE) {
+            return points;
+        }
+        return calculateAcePoint(points);
     }
 
-    private int calculateAcePoint(int sumWithoutAce, int aceCount) {
-        if (sumWithoutAce + aceCount + (ACE_ELEVEN - MINUS_ACE_SELF_SIZE) <= Match.MAX_WINNER_POINT) {
-            return sumWithoutAce + aceCount + (ACE_ELEVEN - MINUS_ACE_SELF_SIZE);
+    private int calculateAcePoint(int points) {
+        if (points + ACE_ELEVEN_POSSIBLE <= Match.MAX_WINNER_POINT) {
+            return points + ACE_ELEVEN_POSSIBLE;
         }
-        return sumWithoutAce + aceCount;
+        return points;
     }
 
     private boolean isAce(Card card) {
