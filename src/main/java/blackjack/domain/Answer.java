@@ -15,7 +15,7 @@ public enum Answer {
 
 	public static Answer of(final String input) {
 		return Arrays.stream(values())
-			.filter(value -> value.getAnswer().equals(input))
+			.filter(value -> value.getAnswer().equals(input.toLowerCase()))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 응답입니다."));
 	}
