@@ -15,7 +15,7 @@ public enum ResultType {
 	}
 
 	public static ResultType getMatchedResultType(final Player player, final Dealer dealer) {
-		if (player.isBurst()) {
+		if (player.isBust()) {
 			return LOSE;
 		}
 		if (dealer.compare(player) == 0) {

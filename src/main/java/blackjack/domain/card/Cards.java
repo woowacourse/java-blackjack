@@ -24,10 +24,6 @@ public class Cards {
 		if (hasAce()) {
 			this.score = Score.from(calculateOptimalScoreWithAce());
 		}
-		if (this.score.isBustScore()) {
-			this.score = this.score.setToMinusOne();
-		}
-
 	}
 
 	private int calculateOptimalScoreWithAce() {
@@ -41,7 +37,7 @@ public class Cards {
 	private int generateOptimalScore(final int scoreWithoutAce, final List<Integer> possible) {
 		int optimalScore = scoreWithoutAce;
 		List<Integer> collect = possible.stream()
-			.filter(each -> each + scoreWithoutAce <= MAX_SCORE)
+			.filter(each -> each + scoreWithoutAce <= BUST_THRESHOLD)
 			.collect(Collectors.toList());
 		for (int possibleScore : collect) {
 			optimalScore = Math.max(optimalScore, possibleScore + scoreWithoutAce);
@@ -85,14 +81,6 @@ public class Cards {
 	public boolean isBust() {
 		return score.hasBustState();
 	}
-
-	// public boolean hasHigherScore(final Cards otherCards) {
-	// 	return this.score.isBiggerThan(otherCards.score);
-	// }
-	//
-	// public boolean isEqualScoreWith(final Cards otherCards) {
-	// 	return this.score.equals(otherCards.score);
-	// }
 
 	public int compare(final Cards otherCards) {
 		return this.score.compareTo(otherCards.score);

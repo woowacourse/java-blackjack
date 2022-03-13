@@ -35,7 +35,7 @@ class GamerTest {
 		gamer.addCard(new Card(Denomination.TWO, Suit.SPADE));
 		//then
 		// System.out.println(gamer.getScore());
-		assertThat(gamer.isBurst()).isTrue();
+		assertThat(gamer.isBust()).isTrue();
 	}
 
 	@Test

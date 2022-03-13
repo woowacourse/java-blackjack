@@ -1,21 +1,20 @@
 package blackjack.domain.user;
 
-import static blackjack.domain.exceptionMessages.UserExceptionMessage.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Score implements Comparable<Score> {
+	private static final int BUST_STATE_SCORE = -1;
 	public static final int INITIAL_SCORE = 0;
 	public static final int ELEVEN_ACE_SCORE = 11;
-	public static final int MAX_SCORE = 21;
 	private static final int HIT_THRESHOLD = 17;
+	public static final int BUST_THRESHOLD = 21;
 	private static final Map<Integer, Score> scores = new HashMap<>();
 
 	static {
-		IntStream.rangeClosed(-1, 32)
+		IntStream.rangeClosed(BUST_STATE_SCORE, BUST_THRESHOLD)
 			.forEach(number -> scores.put(number, new Score(number)));
 	}
 
@@ -26,30 +25,26 @@ public class Score implements Comparable<Score> {
 	}
 
 	public static Score from(final int score) {
-		if (score < -1 || score > 32) {
-			throw new IllegalArgumentException(SCORE_RANGE_EXCEPTION.getMessage());
+		if (hasGreaterThanBustThreshold(score)) {
+			return scores.get(BUST_STATE_SCORE);
 		}
 		return scores.get(score);
+	}
+
+	private static boolean hasGreaterThanBustThreshold(final int score) {
+		return score > BUST_THRESHOLD;
 	}
 
 	public Score addBy(final int number) {
 		return Score.from(this.score + number);
 	}
 
-	public Score setToMinusOne() {
-		return Score.from(-1);
-	}
-
 	public int getScore() {
 		return score;
 	}
 
-	public boolean isBustScore() {
-		return this.score > MAX_SCORE;
-	}
-
 	public boolean hasBustState() {
-		return this.score < 0;
+		return this.score <= BUST_STATE_SCORE;
 	}
 
 	public boolean isHit() {

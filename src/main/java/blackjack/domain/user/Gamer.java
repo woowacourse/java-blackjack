@@ -32,7 +32,7 @@ public class Gamer {
 		return this.cards.getScore();
 	}
 
-	public boolean isBurst() {
+	public boolean isBust() {
 		return this.cards.isBust();
 	}
 
