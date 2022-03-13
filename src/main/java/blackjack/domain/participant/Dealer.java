@@ -15,12 +15,6 @@ public class Dealer extends Participant {
         super();
     }
 
-    void init(List<Card> rawCards) {
-        for (Card rawCard : rawCards) {
-            cards.add(rawCard);
-        }
-    }
-
     public DrawCount drawCards(CardDeck cardDeck) {
         int count = 0;
         while (getStatus() == PlayStatus.HIT && getScore() <= HIT_CONDITION) {
