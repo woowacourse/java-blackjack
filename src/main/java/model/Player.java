@@ -1,5 +1,7 @@
 package model;
 
+import static model.card.Cards.BLACK_JACK_SCORE;
+
 import model.cardGettable.EveryCardsGettable;
 
 public class Player extends Participator {
@@ -11,7 +13,7 @@ public class Player extends Participator {
 
     @Override
     public boolean canReceiveCard() {
-        return cards.canReceiveCard();
+        return cards.getSum() < BLACK_JACK_SCORE;
     }
 
     public Result matchWith(Dealer dealer) {

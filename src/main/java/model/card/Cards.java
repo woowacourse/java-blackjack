@@ -6,9 +6,8 @@ import model.Result;
 import model.Status;
 
 public class Cards {
-    private static final int BLACK_JACK_SCORE = 21;
+    public static final int BLACK_JACK_SCORE = 21;
     private static final int SCORE_GAP_PER_ACE = 10;
-    private static final int DEALER_CRITERIA_HIT_SCORE = 16;
 
     private final List<Card> cards;
 
@@ -21,10 +20,6 @@ public class Cards {
 
     private boolean isDuplicated(final List<Card> cards) {
         return cards.stream().distinct().count() != cards.size();
-    }
-
-    public boolean canReceiveCard() {
-        return getSum() < BLACK_JACK_SCORE;
     }
 
     public int getSum() {
@@ -40,13 +35,13 @@ public class Cards {
 
     private int getMinimumSum() {
         return cards.stream()
-                .mapToInt(card -> card.getCardScore())
+                .mapToInt(Card::getCardScore)
                 .sum();
     }
 
     private int countAce() {
         return (int) cards.stream()
-                .filter(card -> card.isAceCard())
+                .filter(Card::isAceCard)
                 .count();
     }
 
@@ -55,10 +50,6 @@ public class Cards {
             throw new IllegalArgumentException("중복된 카드를 받을 수 없습니다.");
         }
         cards.add(card);
-    }
-
-    public boolean canReceiveCardForDealer() {
-        return getSum() <= DEALER_CRITERIA_HIT_SCORE;
     }
 
     public Card getFirstCard() {

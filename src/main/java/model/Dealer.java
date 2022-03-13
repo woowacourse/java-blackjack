@@ -4,6 +4,7 @@ import model.cardGettable.EveryCardsGettable;
 import model.cardGettable.FirstCardsGettable;
 
 public class Dealer extends Participator {
+    private static final int DEALER_CRITERIA_HIT_SCORE = 16;
     public static final String DEALER_NAME = "딜러";
 
     public Dealer() {
@@ -17,6 +18,6 @@ public class Dealer extends Participator {
 
     @Override
     public boolean canReceiveCard() {
-        return cards.canReceiveCardForDealer();
+        return cards.getSum() <= DEALER_CRITERIA_HIT_SCORE;
     }
 }
