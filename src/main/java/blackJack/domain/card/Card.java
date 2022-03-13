@@ -33,6 +33,10 @@ public class Card {
         }
     }
 
+    public boolean isAce() {
+        return denomination == Denomination.ACE;
+    }
+
     public static List<Card> newCards() {
         return new LinkedList<>(CARDS);
     }
@@ -46,10 +50,6 @@ public class Card {
 
     public String getSymbolName() {
         return symbol.getName();
-    }
-
-    public Denomination getDenomination() {
-        return denomination;
     }
 
     public int getScore() {

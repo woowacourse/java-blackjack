@@ -60,7 +60,7 @@ public abstract class Participant {
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.getDenomination() == Denomination.ACE);
+                .anyMatch(Card::isAce);
     }
 
     public List<Card> getCards() {
