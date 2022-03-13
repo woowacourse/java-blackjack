@@ -13,12 +13,12 @@ public class HitFlagTest {
     @ParameterizedTest
     @DisplayName("올바른 입력값이 들어온 경우 확인")
     @CsvSource(value = {
-            "y, false",
-            "n, true"
+            "y, true",
+            "n, false"
     })
     void inputTest(String input, boolean value) {
         HitFlag hitFlag = HitFlag.fromCommand(input);
-        assertThat(hitFlag == HitFlag.N).isEqualTo(value);
+        assertThat(hitFlag == HitFlag.Y).isEqualTo(value);
     }
 
     @ParameterizedTest
