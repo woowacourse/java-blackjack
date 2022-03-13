@@ -1,6 +1,8 @@
 package domain.card;
 
 import java.util.Objects;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 public final class Card {
     private final Suit suit;
@@ -38,10 +40,7 @@ public final class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
-                "suit=" + suit +
-                ", face=" + face +
-                '}';
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
 
     public Face getFace() {
