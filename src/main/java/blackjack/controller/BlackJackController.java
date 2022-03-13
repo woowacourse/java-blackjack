@@ -15,7 +15,7 @@ import java.util.List;
 
 public class BlackJackController {
 
-    public static final int INIT_DISTRIBUTE_NUM = 2;
+    private static final int INIT_DISTRIBUTE_NUM = 2;
 
     public void play() {
         Users users = new Users(InputView.inputUsersName());
