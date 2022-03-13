@@ -35,7 +35,7 @@ public class InputView {
 
     private static void validateHitOrStayInput(String text) {
         List<String> textAllow = List.of("Y", "y", "N", "n");
-        if (!textAllow.contains(text.trim())) {
+        if (!textAllow.contains(text)) {
             throw new IllegalArgumentException("y, n 이외의 값이 입력되었습니다.");
         }
     }
