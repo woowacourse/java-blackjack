@@ -42,10 +42,6 @@ public class RecordFactory {
         return playerRecord;
     }
 
-    public Map<String, Record> getAllPlayerRecord() {
-        return playerRecord;
-    }
-
     private Record createRecord(int score) {
         if (dealerScore > MAX_SCORE) {
             return getRecordWhenDealerBust(score);
@@ -75,6 +71,10 @@ public class RecordFactory {
     }
 
     public Map<Record, Integer> getDealerRecord() {
-        return dealerRecord;
+        return new HashMap<>(dealerRecord);
+    }
+
+    public Map<String, Record> getAllPlayerRecord() {
+        return new LinkedHashMap<>(playerRecord);
     }
 }

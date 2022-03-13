@@ -10,7 +10,7 @@ import static blackjack.domain.card.CardSymbol.DIAMOND;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Deck;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -24,10 +24,10 @@ class DealerTest {
     @ParameterizedTest
     @DisplayName("딜러가 카드를 뽑아야하는지 확인한다.")
     @MethodSource("provideCardFactory")
-    void canDrawCard(CardFactory cardFactory, boolean expected) {
+    void canDrawCard(Deck deck, boolean expected) {
         // give
         final Dealer dealer = new Dealer();
-        dealer.prepareGame(cardFactory);
+        dealer.prepareGame(deck);
 
         // when
         final boolean actual = dealer.canDrawCard();
@@ -38,8 +38,8 @@ class DealerTest {
 
     private static Stream<Arguments> provideCardFactory() {
         return Stream.of(
-                Arguments.of(CardFactory.createBy(List.of(new Card(DIAMOND, TEN), new Card(DIAMOND, SEVEN))), false),
-                Arguments.of(CardFactory.createBy(List.of(new Card(DIAMOND, TEN), new Card(DIAMOND, SIX))), true)
+                Arguments.of(Deck.createBy(List.of(new Card(DIAMOND, TEN), new Card(DIAMOND, SEVEN))), false),
+                Arguments.of(Deck.createBy(List.of(new Card(DIAMOND, TEN), new Card(DIAMOND, SIX))), true)
         );
     }
 
@@ -50,10 +50,10 @@ class DealerTest {
         final Card firstCard = new Card(CLUB, KING);
         final Card secondCard = new Card(DIAMOND, QUEEN);
 
-        final CardFactory cardFactory = CardFactory.createBy(List.of(secondCard, firstCard));
+        final Deck deck = Deck.createBy(List.of(secondCard, firstCard));
 
         final Dealer dealer = new Dealer();
-        dealer.prepareGame(cardFactory);
+        dealer.prepareGame(deck);
 
         // when
         final Card actual = dealer.openFirstCard();

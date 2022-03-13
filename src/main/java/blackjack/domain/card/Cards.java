@@ -55,7 +55,7 @@ public class Cards {
     }
 
     public Set<Card> getValue() {
-        return value;
+        return new LinkedHashSet<>(value);
     }
 
     @Override

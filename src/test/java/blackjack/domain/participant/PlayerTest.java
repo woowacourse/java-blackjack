@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Status;
 import java.util.List;
@@ -53,9 +53,9 @@ class PlayerTest {
         final Player player = new Player("pobi");
         final List<Card> cards = List.of(new Card(DIAMOND, cardNumber), new Card(DIAMOND, QUEEN),
                 new Card(DIAMOND, JACK));
-        final CardFactory cardFactory = CardFactory.createBy(cards);
+        final Deck deck = Deck.createBy(cards);
         IntStream.range(0, 3)
-                .mapToObj(i -> cardFactory)
+                .mapToObj(i -> deck)
                 .forEach(player::hit);
 
         // when
@@ -73,7 +73,7 @@ class PlayerTest {
         final List<Card> cards = List.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, KING));
 
         // when
-        player.prepareGame(CardFactory.createBy(cards));
+        player.prepareGame(Deck.createBy(cards));
         final int actual = player.getScore();
 
         // then

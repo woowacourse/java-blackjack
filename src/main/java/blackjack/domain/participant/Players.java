@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Deck;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +9,7 @@ public class Players {
 
     private static final int PLAYER_COUNT_LOWER_BOUND = 2;
     private static final int PLAYER_COUNT_UPPER_BOUND = 8;
+
     private final List<Player> value;
 
     public Players(final List<String> names) {
@@ -41,8 +43,8 @@ public class Players {
         }
     }
 
-    public void prepareGame(final CardFactory cardFactory) {
-        value.forEach(player -> player.prepareGame(cardFactory));
+    public void prepareGame(final Deck deck) {
+        value.forEach(player -> player.prepareGame(deck));
     }
 
     public boolean isDrawablePlayerExist() {
@@ -71,6 +73,6 @@ public class Players {
     }
 
     public List<Player> getValue() {
-        return value;
+        return new ArrayList<>(value);
     }
 }

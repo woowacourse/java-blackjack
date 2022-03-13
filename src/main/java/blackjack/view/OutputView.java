@@ -38,7 +38,7 @@ public class OutputView {
             return;
         }
 
-        IntStream.rangeClosed(0, count)
+        IntStream.range(0, count)
                 .forEach(i -> printDealerDrawMessage());
     }
 

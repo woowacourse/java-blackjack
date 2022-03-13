@@ -15,7 +15,10 @@ public class GameController {
     public void play() {
         final Casino casino = crateCasino();
         prepare(casino);
-        progressTurn(casino);
+
+        progressPlayerTurns(casino);
+        progressDealerTurn(casino);
+
         endGame(casino);
     }
 
@@ -33,10 +36,10 @@ public class GameController {
 
         OutputView.printInitResult(casino.getPlayersNames());
         OutputView.printDealerFirstCard(casino.findDealerFirstCard());
-        casino.findAllParticipants().forEach(OutputView::printPlayerCards);
+        casino.findAllPlayers().forEach(OutputView::printPlayerCards);
     }
 
-    private void progressTurn(final Casino casino) {
+    private void progressPlayerTurns(final Casino casino) {
         while (casino.isPlayerTurn()) {
             final String playerName = casino.findDrawablePlayerName();
             final Status status = InputView.getHitOrStay(playerName);
@@ -44,12 +47,16 @@ public class GameController {
             final ParticipantDto dto = casino.progressPlayerTurn(playerName, status);
             OutputView.printPlayerCards(dto);
         }
+    }
+
+    private void progressDealerTurn(final Casino casino) {
         final DealerTurnResultDto dealerTurnResultDto = casino.progressDealerTurn();
         OutputView.printDealerTurnResult(dealerTurnResultDto);
     }
 
     private void endGame(final Casino casino) {
         final List<ParticipantResultDto> resultDtos = casino.getAllResult();
+        OutputView.breakLine();
         resultDtos.forEach(OutputView::printParticipantCards);
 
         final RecordDto recordDto = casino.getAllRecord();

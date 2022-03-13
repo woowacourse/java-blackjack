@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Name;
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Status;
 import java.util.stream.IntStream;
@@ -20,9 +20,9 @@ public abstract class Participant {
         this.status = Status.HIT;
     }
 
-    public void prepareGame(CardFactory cardFactory) {
+    public void prepareGame(Deck deck) {
         IntStream.range(0, INITIAL_CARD_COUNT)
-                .mapToObj(i -> cardFactory.drawCard())
+                .mapToObj(i -> deck.drawCard())
                 .forEach(cards::add);
     }
 
@@ -34,8 +34,8 @@ public abstract class Participant {
         return cards.sumValue();
     }
 
-    public void hit(CardFactory cardFactory) {
-        cards.add(cardFactory.drawCard());
+    public void hit(Deck deck) {
+        cards.add(deck.drawCard());
 
         if (cards.getStatus() == Status.BUST) {
             status = Status.BUST;

@@ -1,7 +1,7 @@
 package blackjack.service;
 
 import blackjack.domain.RecordFactory;
-import blackjack.domain.card.CardFactory;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -16,19 +16,19 @@ import java.util.stream.Collectors;
 
 public class Casino {
 
-    private final CardFactory cardFactory;
+    private final Deck deck;
     private final Dealer dealer;
     private final Players players;
 
     public Casino(final List<String> playerNames) {
-        this.cardFactory = CardFactory.create();
+        this.deck = Deck.create();
         this.dealer = new Dealer();
         this.players = new Players(playerNames);
     }
 
     public void prepareParticipants() {
-        dealer.prepareGame(cardFactory);
-        players.prepareGame(cardFactory);
+        dealer.prepareGame(deck);
+        players.prepareGame(deck);
     }
 
     public List<String> getPlayersNames() {
@@ -39,13 +39,10 @@ public class Casino {
         return CardDto.of(dealer.openFirstCard());
     }
 
-    public List<ParticipantDto> findAllParticipants() {
-        final List<ParticipantDto> list = players.getValue().stream()
+    public List<ParticipantDto> findAllPlayers() {
+        return players.getValue().stream()
                 .map(ParticipantDto::of)
                 .collect(Collectors.toList());
-        list.add(0, ParticipantDto.of(dealer));
-
-        return list;
     }
 
     public boolean isPlayerTurn() {
@@ -59,7 +56,7 @@ public class Casino {
     public ParticipantDto progressPlayerTurn(final String playerName, final Status status) {
         final Player player = players.findByName(playerName);
         if (status == Status.HIT) {
-            player.hit(cardFactory);
+            player.hit(deck);
         }
         if (status == Status.STAY) {
             player.stay();
@@ -75,7 +72,7 @@ public class Casino {
 
         int count = 0;
         do {
-            dealer.hit(cardFactory);
+            dealer.hit(deck);
             count++;
         } while (dealer.canDrawCard());
 

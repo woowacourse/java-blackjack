@@ -6,29 +6,29 @@ import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-public class CardFactory {
+public class Deck {
 
     private final Stack<Card> deck;
 
-    private CardFactory(Stack<Card> deck) {
+    private Deck(Stack<Card> deck) {
         this.deck = deck;
     }
 
-    public static CardFactory createBy(final List<Card> cards) {
+    public static Deck createBy(final List<Card> cards) {
         final Stack<Card> deck = new Stack<>();
         deck.addAll(cards);
 
-        return new CardFactory(deck);
+        return new Deck(deck);
     }
 
-    public static CardFactory create() {
+    public static Deck create() {
         final List<Card> list = createAllCards();
         Collections.shuffle(list);
 
         final Stack<Card> deck = new Stack<>();
         deck.addAll(list);
 
-        return new CardFactory(deck);
+        return new Deck(deck);
     }
 
     private static List<Card> createAllCards() {
@@ -45,9 +45,5 @@ public class CardFactory {
 
     public Card drawCard() {
         return deck.pop();
-    }
-
-    public int getRemainAmount() {
-        return deck.size();
     }
 }
