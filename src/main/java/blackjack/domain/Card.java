@@ -26,12 +26,12 @@ public class Card {
 
     public static Card of(Denomination denomination, Suit suit) {
         return VALUES.stream()
-                .filter(card -> card.isSame(denomination, suit))
+                .filter(card -> card.hasSame(denomination, suit))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."));
     }
 
-    private boolean isSame(Denomination denomination, Suit suit) {
+    private boolean hasSame(Denomination denomination, Suit suit) {
         return this.denomination == denomination && this.suit == suit;
     }
 
