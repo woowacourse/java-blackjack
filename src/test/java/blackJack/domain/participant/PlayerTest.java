@@ -62,7 +62,7 @@ class PlayerTest {
         Player player = new Player("rookie");
         player.receiveCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
 
-        assertThat(player.getScore()).isEqualTo(8);
+        assertThat(player.calculateFinalScore()).isEqualTo(8);
     }
 
     @Test
@@ -72,7 +72,7 @@ class PlayerTest {
         player.receiveCard(new Card(Symbol.CLOVER, Denomination.ACE));
         player.receiveCard(new Card(Symbol.CLOVER, Denomination.JACK));
 
-        assertThat(player.getScore()).isEqualTo(21);
+        assertThat(player.calculateFinalScore()).isEqualTo(21);
     }
 
     @Test
@@ -83,7 +83,7 @@ class PlayerTest {
         player.receiveCard(new Card(Symbol.CLOVER, Denomination.JACK));
         player.receiveCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
 
-        assertThat(player.getScore()).isEqualTo(19);
+        assertThat(player.calculateFinalScore()).isEqualTo(19);
     }
 
     @Test
@@ -95,7 +95,7 @@ class PlayerTest {
         player.receiveCard(new Card(Symbol.DIAMOND, Denomination.ACE));
         player.receiveCard(new Card(Symbol.SPADE, Denomination.EIGHT));
 
-        assertThat(player.getScore()).isEqualTo(21);
+        assertThat(player.calculateFinalScore()).isEqualTo(21);
     }
 
     @Test

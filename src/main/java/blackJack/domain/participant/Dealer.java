@@ -11,6 +11,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean hasNextTurn() {
-        return this.getScore() <= DEALER_MAXIMUM_RECEIVE_CARD_SCORE;
+        return this.calculateFinalScore() <= DEALER_MAXIMUM_RECEIVE_CARD_SCORE;
     }
 }

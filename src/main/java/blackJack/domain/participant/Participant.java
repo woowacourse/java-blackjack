@@ -9,12 +9,11 @@ import java.util.Objects;
 
 public abstract class Participant {
 
+    public static final int BLACK_JACK_CARD_COUNT = 2;
     private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
     private static final String ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
-
     private static final int BLACK_JACK = 21;
     private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 11;
-
     private final String name;
     private final List<Card> cards;
 
@@ -43,7 +42,11 @@ public abstract class Participant {
         }
     }
 
-    public int getScore() {
+    public boolean isBlackJack() {
+        return cards.size() == BLACK_JACK_CARD_COUNT && calculateFinalScore() == BLACK_JACK;
+    }
+
+    public int calculateFinalScore() {
         final int score = calculateScore();
         if (hasAce() && score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore() <= BLACK_JACK) {
             return score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore();
@@ -51,6 +54,8 @@ public abstract class Participant {
         return score;
     }
 
+    // TODO
+    // Cards 일급컬렉션을 만들어보자
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);

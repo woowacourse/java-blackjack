@@ -89,7 +89,7 @@ public class OutputView {
                 .map(card -> card.getDenominationName() + card.getSymbolName())
                 .collect(Collectors.joining(JOINING_DELIMITER_COMMA));
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT, participant.getName(), playerCardsInfo,
-                participant.getScore());
+                participant.calculateFinalScore());
     }
 
     public static void printWinDrawLoseResult(Dealer dealer, BlackJackGameResult blackGameResult) {
