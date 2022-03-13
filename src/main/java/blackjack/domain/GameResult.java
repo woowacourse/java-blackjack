@@ -11,11 +11,11 @@ public enum GameResult {
         this.result = result;
     }
 
-    public static GameResult compare(int score, int targetScore) {
-        if (score > targetScore) {
+    public static GameResult compare(int score, int comparedScore) {
+        if (score > comparedScore) {
             return WIN;
         }
-        if (score < targetScore) {
+        if (score < comparedScore) {
             return LOSE;
         }
         return DRAW;
