@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,6 +9,8 @@ import java.util.stream.Stream;
 public class CardDeck {
 
     private static final List<Card> cards;
+
+    private List<Card> deck;
 
     static {
         cards = Stream.of(Denomination.values())
@@ -18,17 +21,20 @@ public class CardDeck {
     }
 
     public CardDeck() {
-        Collections.shuffle(cards);
+        deck = new ArrayList<>(cards);
+        Collections.shuffle(deck);
     }
 
-    public Card getCard(final int index) {
-        checkIndex(index);
-        return cards.get(index);
+    public Card getCard() {
+        checkDeckEmpty();
+        Card card = deck.get(0);
+        deck.remove(0);
+        return card;
     }
 
-    private void checkIndex(int index) {
-        if (index >= cards.size()) {
-            throw new IndexOutOfBoundsException("[ERROR] 카드 덱의 범위를 넘어갔습니다.");
+    private void checkDeckEmpty() {
+        if (deck.isEmpty()) {
+            deck = new ArrayList<>(cards);
         }
     }
 }
