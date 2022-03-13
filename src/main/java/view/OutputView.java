@@ -58,7 +58,7 @@ public class OutputView {
         return String.join(CARD_OR_NAME_DELIMITER, CardConvertor.convertToString(cards));
     }
 
-    private static void print(final String content) {
+    public static void print(final String content) {
         System.out.println(content);
     }
 

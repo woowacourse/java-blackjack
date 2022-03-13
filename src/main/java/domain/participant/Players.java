@@ -1,9 +1,7 @@
-package domain;
+package domain.participant;
 
+import domain.GameResult;
 import domain.card.Card;
-import domain.card.CardDeck;
-import domain.participant.Dealer;
-import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,12 +16,6 @@ public final class Players {
                 .stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
-    }
-
-    public void receiveCard() {
-        for (final Player player : players) {
-            player.receiveCard(CardDeck.draw());
-        }
     }
 
     public Map<String, GameResult> calculateGameResult(final Dealer dealer) {
@@ -53,5 +45,11 @@ public final class Players {
 
     public List<Player> getPlayers() {
         return new ArrayList<>(players);
+    }
+
+    public void drawCard() {
+        for (final Player player : players) {
+            player.drawCard();
+        }
     }
 }

@@ -1,12 +1,14 @@
-package domain;
+package domain.card;
 
-import domain.card.Card;
+import domain.GameResult;
+import domain.HitThreshold;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class Cards {
     private static final int MAXIMUM_SUM_VALUE = 21;
     private static final int DIFFERENCE_MAX_MIN_SUM_VALUE = 10;
+    private static final String CAN_NOT_ADD_CARD_MESSAGE = "카드를 더 이상 받을 수 없습니다.";
 
     private final List<Card> cards = new ArrayList<>();
     private final HitThreshold threshold;
@@ -15,11 +17,32 @@ public final class Cards {
         this.threshold = threshold;
     }
 
-    public void add(final Card card) {
-        cards.add(card);
+    public boolean add(final Card card, boolean... request) {
+        if (request.length == 0) {
+            return addWithoutRequest(card);
+        }
+        if (request[0]) {
+            checkCanAddCard();
+            return addWithoutRequest(card);
+        }
+        return false;
     }
 
-    public boolean canAddCard() {
+    private boolean addWithoutRequest(final Card card) {
+        if (canAddCard()) {
+            cards.add(card);
+            return true;
+        }
+        return false;
+    }
+
+    private void checkCanAddCard() {
+        if (!canAddCard()) {
+            throw new IllegalArgumentException(CAN_NOT_ADD_CARD_MESSAGE);
+        }
+    }
+
+    boolean canAddCard() {
         return threshold.canAdd(calculateSum());
     }
 

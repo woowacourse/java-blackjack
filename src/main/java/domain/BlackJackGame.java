@@ -1,9 +1,9 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import domain.participant.Players;
 import dto.CardsWithTotalScore;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -36,8 +36,8 @@ public final class BlackJackGame {
 
     private void initCards() {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            dealer.receiveCard(CardDeck.draw());
-            players.receiveCard();
+            dealer.drawCard();
+            players.drawCard();
         }
     }
 
@@ -50,15 +50,22 @@ public final class BlackJackGame {
 
     private void hit() {
         for (final Player player : players.getPlayers()) {
-            hitPlayer(player);
+            catchHitPlayerException(player);
         }
         hitDealer();
     }
 
+    private void catchHitPlayerException(final Player player) {
+        try {
+            hitPlayer(player);
+        } catch (IllegalArgumentException e) {
+            OutputView.print(e.getMessage());
+        }
+    }
+
     private void hitPlayer(final Player player) {
         int printCount = 0;
-        while (player.canReceiveCard() && InputView.inputTryToHit(player.getName())) {
-            player.receiveCard(CardDeck.draw());
+        while (player.drawCard(InputView.inputTryToHit(player.getName()))) {
             OutputView.printCardsWithName(player.getCardsWithName());
             printCount++;
         }
@@ -68,7 +75,7 @@ public final class BlackJackGame {
     }
 
     private void hitDealer() {
-        OutputView.printDealerHit(dealer.hit());
+        OutputView.printDealerHit(dealer.drawCard());
     }
 
     private void showCardsTotal() {

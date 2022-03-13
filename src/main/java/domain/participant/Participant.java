@@ -1,8 +1,9 @@
 package domain.participant;
 
-import domain.Cards;
 import domain.HitThreshold;
 import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.Cards;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,20 +17,16 @@ public abstract class Participant {
         this.name = name;
     }
 
-    public void receiveCard(final Card card) {
-        cards.add(card);
-    }
-
-    public boolean canReceiveCard() {
-        return cards.canAddCard();
-    }
-
-    public Map<String, List<Card>> getCardsWithName() {
-        return new LinkedHashMap<>(Map.of(name, getCards()));
+    public boolean drawCard(boolean... response) {
+        return cards.add(CardDeck.draw(), response);
     }
 
     protected List<Card> getCards() {
         return cards.getCards();
+    }
+
+    public Map<String, List<Card>> getCardsWithName() {
+        return new LinkedHashMap<>(Map.of(name, getCards()));
     }
 
     public Map<String, Integer> getTotalScoreWithName() {
