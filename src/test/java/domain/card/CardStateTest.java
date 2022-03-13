@@ -1,14 +1,14 @@
-package domain;
+package domain.card;
 
-import static domain.CardState.BLACKJACK;
-import static domain.CardState.BUST;
-import static domain.CardState.STAND;
 import static domain.MockCard.CLUB_ACE_CARD;
 import static domain.MockCard.HEART_TEN_CARD;
 import static domain.MockCard.SPADE_NINE_CARD;
+import static domain.card.CardState.BLACKJACK;
+import static domain.card.CardState.BUST;
+import static domain.card.CardState.STAND;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
+import domain.HitThreshold;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +27,7 @@ public class CardStateTest {
     public static Stream<Arguments> provideCardAndState() {
         return Stream.of(
                 Arguments.of(generateCards(CLUB_ACE_CARD, HEART_TEN_CARD), BLACKJACK),
-                Arguments.of(generateCards(CLUB_ACE_CARD, HEART_TEN_CARD, HEART_TEN_CARD), STAND),
+                Arguments.of(generateCards(HEART_TEN_CARD, HEART_TEN_CARD, CLUB_ACE_CARD), STAND),
                 Arguments.of(generateCards(CLUB_ACE_CARD, SPADE_NINE_CARD), STAND),
                 Arguments.of(generateCards(SPADE_NINE_CARD, HEART_TEN_CARD, SPADE_NINE_CARD), BUST),
                 Arguments.of(generateCards(CLUB_ACE_CARD, CLUB_ACE_CARD, HEART_TEN_CARD, HEART_TEN_CARD), BUST)

@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import static domain.GameResult.DRAW;
 import static domain.GameResult.LOSE;
@@ -8,9 +8,8 @@ import static domain.MockCard.HEART_TEN_CARD;
 import static domain.MockCard.SPADE_NINE_CARD;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.Face;
-import domain.card.Suit;
+import domain.GameResult;
+import domain.HitThreshold;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;

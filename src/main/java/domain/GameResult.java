@@ -1,5 +1,6 @@
 package domain;
 
+import domain.card.Cards;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiPredicate;
@@ -11,7 +12,7 @@ public enum GameResult {
     LOSE((a, b) -> a.isBust() || compareCardStatePower(a, b) < 0 || (isBothStand(a, b) && compareCardScore(a, b) < 0));
 
     private static final String CANNOT_FIND_GAME_RESULT_MESSAGE = "게임결과를 찾을 수 없습니다.";
-    
+
     private final BiPredicate<Cards, Cards> biPredicate;
 
     GameResult(final BiPredicate<Cards, Cards> biPredicate) {

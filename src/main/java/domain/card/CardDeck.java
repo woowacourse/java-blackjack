@@ -18,7 +18,7 @@ public class CardDeck {
         for (Face face : Face.values()) {
             init(face, cards);
         }
-        
+
         Collections.shuffle(cards);
 
         cardDeck.addAll(cards);
