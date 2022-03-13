@@ -18,10 +18,10 @@ public enum ResultType {
 		if (player.isBurst()) {
 			return LOSE;
 		}
-		if (dealer.hasEqualScore(player)) {
+		if (dealer.compare(player) == 0) {
 			return DRAW;
 		}
-		if (dealer.hasHigherScore(player)) {
+		if (dealer.compare(player) > 0) {
 			return LOSE;
 		}
 		return WIN;

@@ -86,12 +86,16 @@ public class Cards {
 		return score.hasBustState();
 	}
 
-	public boolean hasHigherScore(final Cards otherCards) {
-		return this.score.isBiggerThan(otherCards.score);
-	}
+	// public boolean hasHigherScore(final Cards otherCards) {
+	// 	return this.score.isBiggerThan(otherCards.score);
+	// }
+	//
+	// public boolean isEqualScoreWith(final Cards otherCards) {
+	// 	return this.score.equals(otherCards.score);
+	// }
 
-	public boolean isEqualScoreWith(final Cards otherCards) {
-		return this.score.equals(otherCards.score);
+	public int compare(final Cards otherCards) {
+		return this.score.compareTo(otherCards.score);
 	}
 
 	public boolean isHit() {

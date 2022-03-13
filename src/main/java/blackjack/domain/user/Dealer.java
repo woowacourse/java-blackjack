@@ -7,12 +7,8 @@ public class Dealer extends Gamer {
 		super(DEALER_NAME);
 	}
 
-	public boolean hasHigherScore(final Gamer gamer) {
-		return this.cards.hasHigherScore(gamer.cards);
-	}
-
-	public boolean hasEqualScore(final Gamer gamer) {
-		return this.cards.isEqualScoreWith(gamer.cards);
+	public int compare(final Gamer gamer) {
+		return this.cards.compare(gamer.cards);
 	}
 
 	public boolean isHit() {

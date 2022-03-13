@@ -20,7 +20,7 @@ public class DealerTest {
 		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
 		player.addCard(new Card(Denomination.FIVE, Suit.CLOVER));
 		//then
-		assertThat(dealer.hasHigherScore(player)).isTrue();
+		assertThat(dealer.compare(player)).isGreaterThan(0);
 	}
 
 	@Test
@@ -33,7 +33,7 @@ public class DealerTest {
 		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
 		player.addCard(new Card(Denomination.TEN, Suit.CLOVER));
 		//then
-		assertThat(dealer.hasHigherScore(player)).isFalse();
+		assertThat(dealer.compare(player)).isLessThan(0);
 	}
 
 	@Test
@@ -46,6 +46,6 @@ public class DealerTest {
 		dealer.addCard(new Card(Denomination.NINE, Suit.CLOVER));
 		player.addCard(new Card(Denomination.NINE, Suit.HEART));
 		//then
-		assertThat(dealer.hasEqualScore(player)).isTrue();
+		assertThat(dealer.compare(player)).isEqualTo(0);
 	}
 }
