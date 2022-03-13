@@ -1,9 +1,5 @@
 package blackjack.domain;
 
-import static blackjack.domain.Record.LOSS;
-import static blackjack.domain.Record.PUSH;
-import static blackjack.domain.Record.WIN;
-
 import blackjack.domain.participant.Player;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -13,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class RecordFactory {
 
-    private static final int MAX_SCORE = 21;
+    public static final int MAX_SCORE = 21;
 
     private final int dealerScore;
     private final Map<Record, Integer> dealerRecord;
@@ -36,34 +32,10 @@ public class RecordFactory {
     }
 
     private Record compareScore(int score) {
-        final Record playerRecord = createRecord(score);
+        final Record playerRecord = Record.of(dealerScore, score);
         updateDealerRecord(playerRecord.getOppositeName());
 
         return playerRecord;
-    }
-
-    private Record createRecord(int score) {
-        if (dealerScore > MAX_SCORE) {
-            return getRecordWhenDealerBust(score);
-        }
-
-        if (score > MAX_SCORE || score < dealerScore) {
-            return LOSS;
-        }
-
-        if (dealerScore == score) {
-            return PUSH;
-        }
-
-        return WIN;
-    }
-
-    private Record getRecordWhenDealerBust(int score) {
-        if (score > MAX_SCORE) {
-            return LOSS;
-        }
-
-        return WIN;
     }
 
     private void updateDealerRecord(Record record) {
