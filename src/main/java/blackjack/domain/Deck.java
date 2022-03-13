@@ -22,10 +22,13 @@ public class Deck {
 			.forEach(number -> Stream.of(Type.values())
 				.forEach(type -> cards.add(new Card(number, type)))
 			);
-		Collections.shuffle(cards);
 	}
 
 	public List<Card> getCards() {
 		return this.cards;
+	}
+
+	public void shuffleDeck() {
+		Collections.shuffle(cards);
 	}
 }
