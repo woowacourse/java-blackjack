@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
-    private static final int INIT_DRAW_COUNT = 2;
+    public static final int INIT_CARD_SIZE = 2;
 
     public void run() {
         Deck deck = new Deck();
@@ -26,12 +26,7 @@ public class BlackjackGame {
         OutputView.printInitCard(getCardStatus(players));
         playersHit(players, deck);
         OutputView.printHitResult(getHitResults(players));
-        OutputView.printResult(judgeWinDrawLose(players));
-    }
-
-    private List<Player> judgeWinDrawLose(Players players) {
-        WinDrawLose.judge(players);
-        return new ArrayList<>(players.getPlayers());
+        OutputView.printResult(WinDrawLose.judge(players.findDealer(), players.getGuests()));
     }
 
     private Map<String, Cards> getHitResults(Players players) {
@@ -49,7 +44,7 @@ public class BlackjackGame {
     }
 
     private void initHit(Players players, Deck deck) {
-        players.initHit(deck, INIT_DRAW_COUNT);
+        players.initHit(deck, INIT_CARD_SIZE);
     }
 
     private void playersHit(Players players, Deck deck) {
@@ -59,14 +54,14 @@ public class BlackjackGame {
     }
 
     private void hitOrStand(Player player, Deck deck) {
-        while (isNotBustOrBlackjack(player) && player.checkHitFlag() == HitFlag.Y) {
+        while (isNotBustOrMaxScore(player) && player.checkHitFlag() == HitFlag.Y) {
             player.hit(deck.draw());
             hitAndOutputResult(player);
         }
     }
 
-    private boolean isNotBustOrBlackjack(Player player) {
-        return !(player.isBust() || player.isBlackjack());
+    private boolean isNotBustOrMaxScore(Player player) {
+        return !(player.isBust() || player.isMaxScore());
     }
 
     private void hitAndOutputResult(Player player) {

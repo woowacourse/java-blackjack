@@ -1,9 +1,10 @@
 package blackjack.domain;
 
-import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public enum WinDrawLose {
@@ -22,59 +23,132 @@ public enum WinDrawLose {
         return name;
     }
 
-    public static void judge(Players players) {
-        Player dealer = players.findDealer();
-        List<Player> guests = players.getGuests();
-        playerBust(dealer, guests);
-        List<Player> nonBustedGuests = extractNonBustPlayers(guests);
+    public static Map<Player, Map<WinDrawLose, Integer>> judge(Player dealer, List<Player> guests) {
+        Map<Player, Map<WinDrawLose, Integer>> result = initResult(dealer, guests);
+        guests = loseBustGuests(dealer, guests, result);
         if (dealer.isBust()) {
-            nonBustedGuests.forEach(Player::win);
-            return;
+            return winNotBustedGuests(result, dealer, guests);
         }
-        calculateWinDrawLose(dealer, nonBustedGuests);
+        if (dealer.isBlackjack()) {
+            return drawOrLoseGuests(dealer, guests, result);
+        }
+        guests = winBlackjackGuests(dealer, guests, result);
+        return calculateWinDrawLose(dealer, guests, result);
     }
 
-    private static void playerBust(Player dealer, List<Player> guests) {
+    private static Map<Player, Map<WinDrawLose, Integer>> drawOrLoseGuests
+            (Player dealer, List<Player> guests,
+             Map<Player, Map<WinDrawLose, Integer>> result) {
+        guests = drawBlackjackGuests(dealer, guests, result);
+        loseNotBlackjackGuests(dealer, guests, result);
+        return result;
+    }
+
+    private static Map<Player, Map<WinDrawLose, Integer>> initResult(Player dealer, List<Player> guests) {
+        Map<Player, Map<WinDrawLose, Integer>> result = new LinkedHashMap<>();
+        result.put(dealer, new EnumMap<>(WinDrawLose.class));
+        for (Player player : guests) {
+            result.put(player, new EnumMap<>(WinDrawLose.class));
+        }
+        return result;
+    }
+
+    private static List<Player> winBlackjackGuests(Player dealer, List<Player> guests,
+                                                   Map<Player, Map<WinDrawLose, Integer>> result) {
+        guests.stream()
+                .filter(Player::isBlackjack)
+                .forEach(guest -> {
+                    result.get(dealer).merge(LOSE, 1, Integer::sum);
+                    result.get(guest).merge(WIN, 1, Integer::sum);
+                });
+
+        return notBlackjackGuests(guests);
+    }
+
+    private static void loseNotBlackjackGuests(Player dealer, List<Player> guests,
+                                               Map<Player, Map<WinDrawLose, Integer>> result) {
+        guests.forEach(guest -> {
+            result.get(dealer).merge(WIN, 1, Integer::sum);
+            result.get(guest).merge(LOSE, 1, Integer::sum);
+        });
+    }
+
+    private static List<Player> drawBlackjackGuests(Player dealer, List<Player> guests,
+                                                    Map<Player, Map<WinDrawLose, Integer>> result) {
+        guests.stream()
+                .filter(Player::isBlackjack)
+                .forEach(guest -> {
+                    result.get(dealer).merge(DRAW, 1, Integer::sum);
+                    result.get(guest).merge(DRAW, 1, Integer::sum);
+                });
+
+        return notBlackjackGuests(guests);
+    }
+
+    private static List<Player> notBlackjackGuests(List<Player> guests) {
+        return guests.stream()
+                .filter(guest -> !guest.isBlackjack())
+                .collect(Collectors.toList());
+    }
+
+    private static Map<Player, Map<WinDrawLose, Integer>> winNotBustedGuests(
+            Map<Player, Map<WinDrawLose, Integer>> result, Player dealer,
+            List<Player> nonBustedGuests) {
+        for (Player guest : nonBustedGuests) {
+            result.get(guest).merge(WIN, 1, Integer::sum);
+            result.get(dealer).merge(LOSE, 1, Integer::sum);
+        }
+
+        return result;
+    }
+
+    private static List<Player> loseBustGuests(Player dealer, List<Player> guests,
+                                               Map<Player, Map<WinDrawLose, Integer>> result) {
         guests.stream()
                 .filter(Player::isBust)
-                .forEach(player -> {
-                    dealer.win();
-                    player.lose();
+                .forEach(guest -> {
+                    result.get(dealer).merge(WIN, 1, Integer::sum);
+                    result.get(guest).merge(LOSE, 1, Integer::sum);
                 });
+
+        return extractNotBustGuests(guests);
     }
 
-    private static List<Player> extractNonBustPlayers(List<Player> guests) {
+    private static List<Player> extractNotBustGuests(List<Player> guests) {
         return guests.stream()
                 .filter(player -> !player.isBust())
                 .collect(Collectors.toList());
     }
 
-    private static void calculateWinDrawLose(Player dealer, List<Player> playerList) {
-        playerList.forEach(player -> {
-            checkDealerWin(dealer, player);
-            checkDraw(dealer, player);
-            checkPlayerWin(dealer, player);
+    private static Map<Player, Map<WinDrawLose, Integer>> calculateWinDrawLose(Player dealer, List<Player> guests,
+                                                                               Map<Player, Map<WinDrawLose, Integer>> result) {
+        guests.forEach(guest -> {
+            checkDealerWin(dealer, guest, result);
+            checkDraw(dealer, guest, result);
+            checkPlayerWin(dealer, guest, result);
         });
+
+        return result;
     }
 
-    private static void checkDealerWin(Player dealer, Player player) {
-        if (dealer.getCards().calculateScore() > player.getCards().calculateScore()) {
-            dealer.win();
-            player.lose();
+    private static void checkDealerWin(Player dealer, Player guest, Map<Player, Map<WinDrawLose, Integer>> result) {
+        if (dealer.getCards().calculateScore() > guest.getCards().calculateScore()) {
+            result.get(dealer).merge(WIN, 1, Integer::sum);
+            result.get(guest).merge(LOSE, 1, Integer::sum);
         }
     }
 
-    private static void checkDraw(Player dealer, Player player) {
-        if (dealer.getCards().calculateScore() == player.getCards().calculateScore()) {
-            dealer.draw();
-            player.draw();
+    private static void checkDraw(Player dealer, Player guest, Map<Player, Map<WinDrawLose, Integer>> result) {
+        if (dealer.getCards().calculateScore() == guest.getCards().calculateScore()) {
+            result.get(dealer).merge(DRAW, 1, Integer::sum);
+            result.get(guest).merge(DRAW, 1, Integer::sum);
         }
     }
 
-    private static void checkPlayerWin(Player dealer, Player player) {
-        if (dealer.getCards().calculateScore() < player.getCards().calculateScore()) {
-            dealer.lose();
-            player.win();
+    private static void checkPlayerWin(Player dealer, Player guest, Map<Player, Map<WinDrawLose, Integer>> result) {
+        if (dealer.getCards().calculateScore() < guest.getCards().calculateScore()) {
+            result.get(dealer).merge(LOSE, 1, Integer::sum);
+            result.get(guest).merge(WIN, 1, Integer::sum);
         }
     }
 }

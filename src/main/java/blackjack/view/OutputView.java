@@ -1,8 +1,8 @@
 package blackjack.view;
 
+import blackjack.domain.WinDrawLose;
 import blackjack.domain.card.Cards;
 import blackjack.domain.player.Player;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -14,6 +14,7 @@ public class OutputView {
     private static final String HIT_RESULT_MESSAGE = "%s: %s - 결과: %d";
     private static final String CARD_JOINING_DELIMITER = ", ";
     private static final String STATUS_DELIMITER = ": ";
+    private static final String WIN_DRAW_LOSE_RESULT_DELIMITER = " ";
 
     public static void printInitCard(Map<String, Cards> cardStatus) {
         cardStatus.forEach((key, value) -> System.out.println(key + STATUS_DELIMITER + joinCardString(value)));
@@ -43,11 +44,17 @@ public class OutputView {
                 .collect(Collectors.joining(CARD_JOINING_DELIMITER));
     }
 
-    public static void printResult(List<Player> allPlayers) {
+    public static void printResult(Map<Player, Map<WinDrawLose, Integer>> allPlayers) {
         System.out.println();
         System.out.println(TOTAL_RESULT_MESSAGE);
         allPlayers.forEach(
-                player -> System.out.printf(WIN_DRAW_LOSE_STATUS_MESSAGE + "\n", player.getName(),
-                        player.getWinDrawLoseString()));
+                (player, winDrawLoseMap) -> System.out.printf(WIN_DRAW_LOSE_STATUS_MESSAGE + "\n", player.getName(),
+                        getWinDrawLoseString(winDrawLoseMap)));
+    }
+
+    private static String getWinDrawLoseString(Map<WinDrawLose, Integer> winDrawLoseResult) {
+        return winDrawLoseResult.entrySet().stream()
+                .map(set -> set.getValue() + set.getKey().getName())
+                .collect(Collectors.joining(WIN_DRAW_LOSE_RESULT_DELIMITER));
     }
 }
