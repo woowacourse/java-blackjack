@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayersTest {
 
@@ -74,5 +76,33 @@ class PlayersTest {
 
         // then
         assertThat(actual.getName()).isEqualTo("rick");
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"rick", "pobi", "jason"})
+    @DisplayName("이름으로 플레이어를 찾는다.")
+    void findByName(String target) {
+        // give
+        final Players players = new Players(List.of("rick", "pobi", "jason"));
+
+        // when
+        final Player actual = players.findByName(target);
+
+        // then
+        assertThat(actual.getName()).isEqualTo(target);
+    }
+
+    @Test
+    @DisplayName("모든 플레이어들의 이름을 반환한다.")
+    void getNames() {
+        // give
+        final List<String> names = List.of("rick", "pobi", "jason");
+        final Players players = new Players(names);
+
+        // when
+        final List<String> actual = players.getNames();
+
+        // then
+        assertThat(actual).isEqualTo(List.of("rick", "pobi", "jason"));
     }
 }
