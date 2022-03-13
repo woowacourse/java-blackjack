@@ -26,4 +26,13 @@ public class ParticipantsTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참가자의 이름은 중복될 수 없습니다.");
     }
+
+    @Test
+    @DisplayName("참가자가 8명 초과인 경우 예외를 발생시킨다.")
+    void throwExceptionWhenPlayerNumberBiggerThan8() {
+        List<String> names = List.of("엘리", "배카라", "이브", "알렉스", "알린", "네오", "바니", "썬", "아스피");
+        assertThatThrownBy(() -> new Participants(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 참가자는 1명 이상, 8명 이하여야합니다.");
+    }
 }

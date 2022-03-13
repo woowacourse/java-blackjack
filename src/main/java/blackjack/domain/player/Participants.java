@@ -6,10 +6,13 @@ import java.util.stream.Collectors;
 
 public class Participants implements Iterable<Participant> {
 
+    public static final int MIN_PLAYER_NUMBER = 1;
+    public static final int MAX_PLAYER_NUMBER = 8;
     private final List<Participant> participants;
 
     public Participants(final List<String> names) {
         checkNonNull(names);
+        checkNumberOfPlayer(names);
         checkDuplicatedNames(names);
 
         participants = names.stream()
@@ -20,6 +23,14 @@ public class Participants implements Iterable<Participant> {
     private void checkNonNull(List<String> names) {
         if (names == null || names.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 한 명 이상의 참가자를 입력해주세요.");
+        }
+    }
+
+    private void checkNumberOfPlayer(List<String> names) {
+        int numberOfPlayer = names.size();
+
+        if (numberOfPlayer < MIN_PLAYER_NUMBER || numberOfPlayer > MAX_PLAYER_NUMBER) {
+            throw new IllegalArgumentException("[ERROR] 참가자는 1명 이상, 8명 이하여야합니다.");
         }
     }
 
