@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackJackReferee {
-
     private static final int DEFAULT_COUNT = 0;
     private static final int INCREASE_COUNT = 1;
 

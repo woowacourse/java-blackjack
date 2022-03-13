@@ -7,7 +7,6 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackJackApplication {
-
     public static void main(String[] args) {
         List<String> names = InputView.getNames();
         BlackJackGame blackJackGame = new BlackJackGame(names);

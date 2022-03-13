@@ -1,7 +1,6 @@
 package blackjack;
 
 import blackjack.domain.Answer;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamers;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 
 public class BlackJackGame {
-
     private final Deck deck;
     private final Gamers gamers;
 

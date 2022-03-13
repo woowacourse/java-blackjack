@@ -8,9 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 public abstract class Gamer {
-
     public static final int MAX_CARD_VALUE = 21;
 
     private final Name name;

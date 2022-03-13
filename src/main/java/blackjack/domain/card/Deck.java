@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Deck {
-
     private final LinkedList<Card> deck;
 
     public Deck() {

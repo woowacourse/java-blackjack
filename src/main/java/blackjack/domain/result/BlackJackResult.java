@@ -12,7 +12,6 @@ import static blackjack.domain.gamer.Gamers.INIT_DISTRIBUTION_COUNT;
 
 
 public enum BlackJackResult {
-
     WIN("승", (player, dealer) ->
             (isBlackJack(player) && !isBlackJack(dealer)
                     || player.getCardsNumberSum() <= MAX_CARD_VALUE

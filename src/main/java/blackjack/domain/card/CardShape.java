@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 public enum CardShape {
-
     HEART("하트"),
     SPADE("스페이드"),
     CLOVER("클로버"),

@@ -3,7 +3,6 @@ package blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
-
     private final CardShape cardShape;
     private final CardNumber cardNumber;
 

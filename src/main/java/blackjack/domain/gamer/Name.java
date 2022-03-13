@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Name {
     private static final String BLANK_NAME_ERROR = "이름은 공백이 될 수 없습니다.";
+
     private final String name;
 
     public Name(String name) {
