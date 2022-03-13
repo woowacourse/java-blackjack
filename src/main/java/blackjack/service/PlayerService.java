@@ -8,7 +8,9 @@ import blackjack.domain.participant.Players;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ParticipantResultDto;
 import blackjack.dto.RecordDto;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PlayerService {
@@ -62,7 +64,15 @@ public class PlayerService {
     }
 
     public RecordDto getAllRecord(final int dealerScore) {
-        final RecordFactory factory = new RecordFactory(dealerScore, players.getValue());
+        final Map<String, Integer> playerResult = players.getValue().stream()
+                .collect(Collectors.toMap(
+                        Player::getName,
+                        Player::getScore,
+                        (a, b) -> b,
+                        LinkedHashMap::new
+                ));
+
+        final RecordFactory factory = new RecordFactory(dealerScore, playerResult);
         return RecordDto.of(factory.getDealerRecord(), factory.getAllPlayerRecord());
     }
 }

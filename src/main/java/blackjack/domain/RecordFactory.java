@@ -1,15 +1,12 @@
 package blackjack.domain;
 
-import blackjack.domain.participant.Player;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class RecordFactory {
 
-    public static final int MAX_SCORE = 21;
     private static final Map<Record, Record> oppositeValue;
 
     static {
@@ -25,20 +22,19 @@ public class RecordFactory {
     private final Map<Record, Integer> dealerRecord;
     private final Map<String, Record> playerRecord;
 
-    public RecordFactory(final int dealerScore, final List<Player> players) {
+    public RecordFactory(final int dealerScore, final Map<String, Integer> playerResult) {
         this.dealerScore = dealerScore;
         this.dealerRecord = new HashMap<>();
-        this.playerRecord = toMap(players);
+        this.playerRecord = toRecordMap(playerResult);
     }
 
-    private Map<String, Record> toMap(final List<Player> players) {
-        return players.stream()
+    private Map<String, Record> toRecordMap(final Map<String, Integer> playerResult) {
+        return playerResult.keySet().stream()
                 .collect(Collectors.toMap(
-                        Player::getName, player -> compareScore(player.getScore()), (a, b) -> b, LinkedHashMap::new));
-    }
-
-    Record getPlayerRecord(int score) {
-        return compareScore(score);
+                        key -> key,
+                        key -> compareScore(playerResult.get(key)),
+                        (a, b) -> b,
+                        LinkedHashMap::new));
     }
 
     private Record compareScore(int score) {

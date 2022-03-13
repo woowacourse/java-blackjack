@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Cards {
 
-    private static final int MAX_SCORE = 21;
+    public static final int MAX_SCORE = 21;
     private static final int UPGRADE_AMOUNT = 10;
 
     private final Set<Card> value;

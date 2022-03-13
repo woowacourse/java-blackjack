@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.domain.RecordFactory.MAX_SCORE;
+import static blackjack.domain.card.Cards.MAX_SCORE;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
