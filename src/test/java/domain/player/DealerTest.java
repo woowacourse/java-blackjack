@@ -33,7 +33,7 @@ class DealerTest {
         int expected = 10;
 
         // when
-        int actual = rich.getPlayResult();
+        int actual = rich.getScore();
 
         // then
         assertThat(actual).isEqualTo(expected);

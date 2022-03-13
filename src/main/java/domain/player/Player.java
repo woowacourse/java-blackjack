@@ -1,16 +1,11 @@
 package domain.player;
 
-import static java.util.Collections.unmodifiableList;
-
 import domain.card.Card;
 import domain.card.Cards;
-import domain.util.ScoreUtil;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
-    private static final int BUST_CRITERIA = 21;
-    private static final int BLACK_JACK = 21;
-
     private final String name;
     private final Cards cards;
 
@@ -27,20 +22,20 @@ public abstract class Player {
         cards.addCard(card);
     }
 
-    public int getPlayResult() {
-        return ScoreUtil.getScore(cards.getCards());
+    public int getScore() {
+        return cards.getScore();
     }
 
     public boolean isBust() {
-        return getPlayResult() > BUST_CRITERIA;
+        return cards.isBust();
     }
 
     public boolean isBlackJack() {
-        return getPlayResult() == BLACK_JACK;
+        return cards.isBlackJack();
     }
 
     public List<Card> getCards() {
-        return unmodifiableList(cards.getCards());
+        return new ArrayList<>(cards.getCards());
     }
 
     @Override

@@ -1,8 +1,8 @@
 package dto;
 
 import domain.card.Card;
+import domain.card.Cards;
 import domain.player.Player;
-import domain.util.ScoreUtil;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +38,11 @@ public class PlayerDto {
     }
 
     public int getScore() {
-        return ScoreUtil.getScore(cards);
+        Cards cardsForScore = new Cards();
+        for (Card card : cards) {
+            cardsForScore.addCard(card);
+        }
+
+        return cardsForScore.getScore();
     }
 }

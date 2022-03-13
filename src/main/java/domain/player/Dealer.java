@@ -1,7 +1,5 @@
 package domain.player;
 
-import domain.util.ScoreUtil;
-
 public class Dealer extends Player {
     private static final int MORE_CARD_CRITERIA = 16;
     private static final String DEFAULT_DEALER_NAME = "딜러";
@@ -15,6 +13,6 @@ public class Dealer extends Player {
     }
 
     public boolean isUnderSixteen() {
-        return ScoreUtil.getScore(getCards()) <= MORE_CARD_CRITERIA;
+        return getScore() <= MORE_CARD_CRITERIA;
     }
 }

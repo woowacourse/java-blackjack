@@ -6,9 +6,9 @@ import java.util.function.BiPredicate;
 
 public enum MatchResult {
     WIN("승", (dealer, gambler) ->
-            !gambler.isBust() && (dealer.isBust() || dealer.getPlayResult() < gambler.getPlayResult())),
-    LOSE("패", (dealer, gambler) -> gambler.isBust() || (dealer.getPlayResult() > gambler.getPlayResult())),
-    DRAW("무", (dealer, gambler) -> !gambler.isBust() && dealer.getPlayResult() == gambler.getPlayResult()),
+            !gambler.isBust() && (dealer.isBust() || dealer.getScore() < gambler.getScore())),
+    LOSE("패", (dealer, gambler) -> gambler.isBust() || (dealer.getScore() > gambler.getScore())),
+    DRAW("무", (dealer, gambler) -> !gambler.isBust() && dealer.getScore() == gambler.getScore()),
     NO_MATCH("판정오류", (dealer, gambler) -> false);
 
     private final BiPredicate<Player, Player> judge;
