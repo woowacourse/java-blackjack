@@ -48,16 +48,12 @@ public class Card {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_NOT_EXIST_CARD));
     }
 
-    public String getSymbolName() {
-        return symbol.getName();
+    public String getCardInfo() {
+        return denomination.getDenomination() + symbol.getName();
     }
 
     public int getScore() {
         return denomination.getScore();
-    }
-
-    public String getDenominationName() {
-        return denomination.getDenomination();
     }
 
     @Override

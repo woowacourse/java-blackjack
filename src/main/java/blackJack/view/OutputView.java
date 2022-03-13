@@ -52,8 +52,7 @@ public class OutputView {
 
     private static void printInitHoldCardMessage(Dealer dealer, List<Player> players) {
         Card firstDealerCard = dealer.getCards().get(0);
-        String dealerCardInfo = firstDealerCard.getDenominationName() + firstDealerCard.getSymbolName();
-        System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, dealer.getName(), dealerCardInfo);
+        System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, dealer.getName(), firstDealerCard.getCardInfo());
 
         for (Player player : players) {
             printNowHoldCardInfo(player);
@@ -62,7 +61,7 @@ public class OutputView {
 
     public static void printNowHoldCardInfo(Player player) {
         String playerCardsInfo = player.getCards().stream()
-                .map(card -> card.getDenominationName() + card.getSymbolName())
+                .map(Card::getCardInfo)
                 .collect(Collectors.joining(JOINING_DELIMITER_COMMA));
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_HOLD_CARD, player.getName(), playerCardsInfo);
     }
@@ -85,7 +84,7 @@ public class OutputView {
 
     private static void printParticipantGameResult(Participant participant) {
         String playerCardsInfo = participant.getCards().stream()
-                .map(card -> card.getDenominationName() + card.getSymbolName())
+                .map(Card::getCardInfo)
                 .collect(Collectors.joining(JOINING_DELIMITER_COMMA));
         System.out.printf(OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT, participant.getName(), playerCardsInfo,
                 participant.getScore());
