@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.Gamer;
+import blackjack.domain.Player;
 import blackjack.domain.Name;
-import blackjack.domain.Gamers;
+import blackjack.domain.Players;
 import blackjack.domain.Card;
 import blackjack.domain.Outcome;
 import blackjack.domain.OutcomeResults;
@@ -26,38 +26,38 @@ public class ResultView {
     private static final String PRINT_RESULTS_DELIMITER = ": ";
     private static final String SPACE_DELIMITER = " ";
 
-    public static void printInitCard(Gamer dealer, Gamers gamers) {
-        System.out.println(String.format(PRINT_INIT_CARD_FORMAT, printPlayersName(gamers)));
+    public static void printInitCard(Player dealer, Players players) {
+        System.out.println(String.format(PRINT_INIT_CARD_FORMAT, printPlayersName(players)));
         printInitDealerCard(dealer);
-        printGamersCard(gamers);
+        printGamersCard(players);
     }
 
-    private static String printPlayersName(Gamers gamers) {
-        return gamers.get().stream()
-                .map(Gamer::getName)
+    private static String printPlayersName(Players players) {
+        return players.get().stream()
+                .map(Player::getName)
                 .map(Name::get)
                 .collect(Collectors.joining(CARD_DELIMITER));
     }
 
-    private static void printInitDealerCard(Gamer dealer) {
+    private static void printInitDealerCard(Player dealer) {
         List<Card> dealerCards = dealer.getCards().get();
         System.out.printf((PRINT_INIT_DEALER_CARDS_FORMAT) + System.lineSeparator(),
                 getNumberAndType(dealerCards.get(0)));
     }
 
-    private static void printGamersCard(Gamers gamers) {
-        for (Gamer gamer : gamers.get()) {
-            printGamerCard(gamer);
+    private static void printGamersCard(Players players) {
+        for (Player player : players.get()) {
+            printGamerCard(player);
         }
         System.out.println();
     }
 
-    public static void printGamerCard(Gamer gamer) {
-        String cards = gamer.getCards().get().stream()
+    public static void printGamerCard(Player player) {
+        String cards = player.getCards().get().stream()
                 .map(ResultView::getNumberAndType)
                 .collect(Collectors.joining(CARD_DELIMITER));
 
-        System.out.printf(PRINT_GAMER_CARDS_FORMAT + System.lineSeparator(), gamer.getName().get(), cards);
+        System.out.printf(PRINT_GAMER_CARDS_FORMAT + System.lineSeparator(), player.getName().get(), cards);
     }
 
     private static String getNumberAndType(Card card) {
@@ -68,7 +68,7 @@ public class ResultView {
         System.out.println(PRINT_DEALER_HIT_MESSAGE);
     }
 
-    public static void printCardsResults(Gamer dealer, Gamers players) {
+    public static void printCardsResults(Player dealer, Players players) {
         System.out.println();
         printResult(dealer);
         players.get()
@@ -76,7 +76,7 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void printResult(Gamer dealer) {
+    private static void printResult(Player dealer) {
         String cards = dealer.getCards().get().stream()
                 .map(ResultView::getNumberAndType)
                 .collect(Collectors.joining(CARD_DELIMITER));
@@ -91,9 +91,9 @@ public class ResultView {
         OutcomeResults dealerResult = results.getDealerResult();
         printDealerOutcomeState(dealerResult);
 
-        Map<Gamer, OutcomeResults> outcomeResults = results.getPlayerResults();
-        for (Gamer gamer : outcomeResults.keySet()) {
-            printPlayerOutcomeState(gamer, outcomeResults.get(gamer));
+        Map<Player, OutcomeResults> outcomeResults = results.getPlayerResults();
+        for (Player player : outcomeResults.keySet()) {
+            printPlayerOutcomeState(player, outcomeResults.get(player));
         }
     }
 
@@ -107,11 +107,11 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void printPlayerOutcomeState(Gamer gamer, OutcomeResults outcomeResults) {
+    private static void printPlayerOutcomeState(Player player, OutcomeResults outcomeResults) {
         Map<Outcome, Integer> outcomes = outcomeResults.getOutcomes();
 
         for (Outcome outcome : outcomes.keySet()) {
-            System.out.print(gamer.getName().get() + PRINT_RESULTS_DELIMITER + outcome.get());
+            System.out.print(player.getName().get() + PRINT_RESULTS_DELIMITER + outcome.get());
         }
         System.out.println();
     }

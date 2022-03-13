@@ -1,52 +1,20 @@
 package blackjack.domain;
 
-public class Player extends AbstractGamer {
+public interface Player {
 
-    public Player(Name name) {
-        super(name);
-    }
+    void hit(Card card);
 
-    @Override
-    public boolean isValidRange() {
-        return getScore() < MAX_SCORE;
-    }
+    boolean isBust();
 
-    @Override
-    public int compareWinning(Gamer dealer) {
-        if (isBust()) {
-            return LOSE;
-        }
-        if (dealer.isBust()) {
-            return WIN;
-        }
-        return compareScore(dealer);
-    }
+    boolean isBLACKJACK();
 
-    private int compareScore(Gamer dealer) {
-        if (isBLACKJACK() && dealer.isBLACKJACK()) {
-            return DRAW;
-        }
-        if (dealer.isBLACKJACK()) {
-            return LOSE;
-        }
-        if (isBLACKJACK()) {
-            return WIN;
-        }
-        return getScore() - dealer.getScore();
-    }
+    Name getName();
 
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
+    Cards getCards();
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
+    int getScore();
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
+    boolean isValidRange();
+
+    int compareWinning(Player o);
 }

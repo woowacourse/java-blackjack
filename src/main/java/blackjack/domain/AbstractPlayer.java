@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public abstract class AbstractGamer implements Gamer {
+public abstract class AbstractPlayer implements Player {
 
     private static final int BLACKJACK_CARD_COUNT = 2;
 
@@ -15,7 +15,7 @@ public abstract class AbstractGamer implements Gamer {
     private final Name name;
     private final Cards cards;
 
-    public AbstractGamer(Name name) {
+    public AbstractPlayer(Name name) {
         this.name = name;
         this.cards = new Cards(new ArrayList<>());
     }
@@ -59,17 +59,17 @@ public abstract class AbstractGamer implements Gamer {
     public abstract boolean isValidRange();
 
     @Override
-    public abstract int compareWinning(Gamer o);
+    public abstract int compareWinning(Player o);
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AbstractGamer)) {
+        if (!(o instanceof AbstractPlayer)) {
             return false;
         }
-        AbstractGamer that = (AbstractGamer) o;
+        AbstractPlayer that = (AbstractPlayer) o;
         return Objects.equals(name, that.name) && Objects.equals(cards, that.cards);
     }
 
@@ -80,7 +80,7 @@ public abstract class AbstractGamer implements Gamer {
 
     @Override
     public String toString() {
-        return "AbstractGamer{" +
+        return "AbstractPlayer{" +
                 "name=" + name +
                 ", cards=" + cards +
                 '}';

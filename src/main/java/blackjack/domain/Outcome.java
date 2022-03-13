@@ -13,11 +13,11 @@ public enum Outcome {
         this.outcome = outcome;
     }
 
-    public static Outcome compare(Gamer gamer1, Gamer gamer2) {
-        if (gamer1.compareWinning(gamer2) > 0) {
+    public static Outcome compare(Player player1, Player player2) {
+        if (player1.compareWinning(player2) > 0) {
             return WIN;
         }
-        if (gamer1.compareWinning(gamer2) < 0) {
+        if (player1.compareWinning(player2) < 0) {
             return LOSE;
         }
         return DRAW;

@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-public class Dealer extends AbstractGamer {
+public class Dealer extends AbstractPlayer implements Player {
 
     private static final Name DEALER_NAME = new Name("딜러");
     private static final int MAX_SCORE = 17;
@@ -15,7 +15,7 @@ public class Dealer extends AbstractGamer {
     }
 
     @Override
-    public int compareWinning(Gamer player) {
+    public int compareWinning(Player player) {
         if (player.isBust()) {
             return WIN;
         }
@@ -25,7 +25,7 @@ public class Dealer extends AbstractGamer {
         return compareScore(player);
     }
 
-    private int compareScore(Gamer player) {
+    private int compareScore(Player player) {
         if (isBLACKJACK() && player.isBLACKJACK()) {
             return DRAW;
         }
