@@ -23,6 +23,7 @@ class BlackJackGameTest {
     void initDistribution() {
         BlackJackGame blackJackGame = new BlackJackGame(
             Arrays.asList("a", "b"), new CardFactory(Card.getCards()));
+        blackJackGame.start((a, b) -> {});
 
         GamerDto dealerDto = blackJackGame.getDealerDto();
         List<GamerDto> playerDtos = blackJackGame.getPlayerDtos();

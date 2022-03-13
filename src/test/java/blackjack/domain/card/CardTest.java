@@ -10,10 +10,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CardTest {
 
     @Test
-    @DisplayName("52개의 카드를 미리 Caching 한 후, 가져온다.")
-    void caching() {
-        List<Card> card = Card.getCards();
-        assertThat(card.size()).isEqualTo(52);
+    @DisplayName("Card 객체는 미리 52개의 Card 컬렉션을 가지고 있다.")
+    void getCards() {
+        List<Card> cards = Card.getCards();
+        assertThat(cards.size()).isEqualTo(52);
     }
 
     @Test
