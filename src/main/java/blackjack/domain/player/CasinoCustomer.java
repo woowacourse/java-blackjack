@@ -1,10 +1,8 @@
-package blackjack.domain.gamer;
+package blackjack.domain.player;
 
 import blackjack.domain.WinDrawLose;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CasinoCustomer extends AbstractPlayer {
 
