@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class BlackjackGame {
+public class BlackjackGameResult {
 
     private final Participants participants;
     private Map<Player, WinningResult> playerResult;
 
-    public BlackjackGame(Participants participants) {
+    public BlackjackGameResult(Participants participants) {
         this.participants = participants;
     }
 

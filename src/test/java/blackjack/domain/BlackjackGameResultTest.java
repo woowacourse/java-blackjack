@@ -7,12 +7,12 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackjackGameTest {
+public class BlackjackGameResultTest {
 
     @Test
     @DisplayName("블랙잭 게임 생성")
     void createBlackjackGame() {
-        assertThatCode(() -> new BlackjackGame(new Participants(
+        assertThatCode(() -> new BlackjackGameResult(new Participants(
             List.of(new Player("마루"), new Player("엔젤앤지")))))
             .doesNotThrowAnyException();
     }
@@ -34,10 +34,10 @@ public class BlackjackGameTest {
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
-        BlackjackGame blackjackGame = new BlackjackGame(participants);
-        blackjackGame.calculatePlayerResult();
+        BlackjackGameResult blackjackGameResult = new BlackjackGameResult(participants);
+        blackjackGameResult.calculatePlayerResult();
 
-        assertThat(blackjackGame.getDealerResult().get(WinningResult.WIN)).isEqualTo(1);
+        assertThat(blackjackGameResult.getDealerResult().get(WinningResult.WIN)).isEqualTo(1);
     }
 
     @Test
@@ -57,10 +57,10 @@ public class BlackjackGameTest {
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
-        BlackjackGame blackjackGame = new BlackjackGame(participants);
-        blackjackGame.calculatePlayerResult();
+        BlackjackGameResult blackjackGameResult = new BlackjackGameResult(participants);
+        blackjackGameResult.calculatePlayerResult();
 
-        assertThat(blackjackGame.getDealerResult().get(WinningResult.LOSE)).isEqualTo(1);
+        assertThat(blackjackGameResult.getDealerResult().get(WinningResult.LOSE)).isEqualTo(1);
     }
 
     @Test
@@ -80,10 +80,10 @@ public class BlackjackGameTest {
         dealer.receiveInitCards(dealerCards);
         player.receiveInitCards(playerCards);
 
-        BlackjackGame blackjackGame = new BlackjackGame(participants);
-        blackjackGame.calculatePlayerResult();
+        BlackjackGameResult blackjackGameResult = new BlackjackGameResult(participants);
+        blackjackGameResult.calculatePlayerResult();
 
-        assertThat(blackjackGame.getDealerResult().get(WinningResult.DRAW)).isEqualTo(1);
+        assertThat(blackjackGameResult.getDealerResult().get(WinningResult.DRAW)).isEqualTo(1);
     }
 
 }
