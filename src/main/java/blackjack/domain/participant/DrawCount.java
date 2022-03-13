@@ -1,8 +1,8 @@
-package blackjack.domain.card;
+package blackjack.domain.participant;
 
 import java.util.Arrays;
 
-public enum CardCount {
+public enum DrawCount {
 
     ZERO(0, "영"),
     ONE(1, "한"),
@@ -14,12 +14,12 @@ public enum CardCount {
     private final int value;
     private final String name;
 
-    CardCount(int value, String name) {
+    DrawCount(int value, String name) {
         this.value = value;
         this.name = name;
     }
 
-    public static CardCount of(int value) {
+    public static DrawCount of(int value) {
         return Arrays.stream(values())
             .filter(it -> it.value == value)
             .findFirst()

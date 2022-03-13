@@ -10,7 +10,7 @@ import blackjack.domain.Game;
 import blackjack.domain.PlayStatus;
 import blackjack.domain.Record;
 import blackjack.domain.RecordFactory;
-import blackjack.domain.card.CardCount;
+import blackjack.domain.participant.DrawCount;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.deckstrategy.RandomDeck;
 import blackjack.domain.participant.Player;
@@ -55,8 +55,8 @@ public class GameController {
     }
 
     private void drawDealerCards(Game game) {
-        CardCount cardCount = game.drawDealerCards();
-        OutputView.printDealerDrawCardCount(cardCount);
+        DrawCount drawCount = game.drawDealerCards();
+        OutputView.printDealerDrawCardCount(drawCount);
     }
 
     private void ParticipantsResult(Game game) {

@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.Record;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardCount;
+import blackjack.domain.participant.DrawCount;
 import blackjack.vo.ParticipantVo;
 
 public class OutputView {
@@ -31,15 +31,15 @@ public class OutputView {
         System.out.println(vo.getName() + "카드: " + String.join(", ", list));
     }
 
-    public static void printDealerDrawCardCount(CardCount cardCount) {
+    public static void printDealerDrawCardCount(DrawCount drawCount) {
         printEmptyLine();
-        System.out.println(getDealerDrawString(cardCount));
+        System.out.println(getDealerDrawString(drawCount));
         printEmptyLine();
     }
 
-    private static String getDealerDrawString(CardCount cardCount) {
-        if (cardCount.isDraw()) {
-            return "딜러는 16이하라 " + cardCount.getName() + "장의 카드를 더 받았습니다.";
+    private static String getDealerDrawString(DrawCount drawCount) {
+        if (drawCount.isDraw()) {
+            return "딜러는 16이하라 " + drawCount.getName() + "장의 카드를 더 받았습니다.";
         }
         return "딜러가 16초과여서 카드를 받지않았습니다.";
     }
