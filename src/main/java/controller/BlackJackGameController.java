@@ -1,5 +1,6 @@
-package domain;
+package controller;
 
+import domain.GameResult;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -13,7 +14,7 @@ import utils.GameResultConvertor;
 import view.InputView;
 import view.OutputView;
 
-public final class BlackJackGame {
+public final class BlackJackGameController {
     private static final int INIT_CARD_COUNT = 2;
 
     private Players players;
