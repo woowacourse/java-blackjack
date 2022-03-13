@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import domain.card.Card;
 import domain.result.WinOrLose;
@@ -15,10 +14,8 @@ public class Players {
 
 	private final List<Player> players;
 
-	public Players(List<Name> names, List<List<Card>> initCards) {
-		this.players = IntStream.range(0, names.size())
-			.mapToObj(i -> new Player(names.get(i), initCards.get(i)))
-			.collect(Collectors.toList());
+	public Players(List<Player> players) {
+		this.players = players;
 	}
 
 	public void addCardByName(Name name, Card card) {

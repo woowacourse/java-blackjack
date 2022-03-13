@@ -29,8 +29,6 @@ public class PlayersTest {
 	Card card_6 = new Card(Rank.RANK_SIX, Suit.CLOVER);
 	List<Card> cards_21 = new ArrayList<>(Arrays.asList(card_A, card_Q));
 	List<Card> cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
-	List<List<Card>> initCards = new ArrayList<>(Arrays.asList(cards_21, cards_BURST));
-	List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"));
 	Dealer dealerBlackJack = new Dealer(cards_21);
 
 	Players players;
@@ -38,7 +36,8 @@ public class PlayersTest {
 
 	@BeforeEach
 	void setUp() {
-		players = new Players(names, initCards);
+		players = new Players(
+			Arrays.asList(new Player(new Name("pobi"), cards_21), new Player(new Name("jason"), cards_BURST)));
 		dealer_17 = new Dealer(List.of(card_A, card_6));
 	}
 

@@ -14,6 +14,7 @@ import domain.card.Rank;
 import domain.card.Suit;
 import domain.participant.Dealer;
 import domain.participant.Name;
+import domain.participant.Player;
 import domain.participant.Players;
 
 public class ResultTest {
@@ -28,10 +29,9 @@ public class ResultTest {
 	List<Card> cards_15 = new ArrayList<>(Arrays.asList(card_9, card_6));
 	List<Card> cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
 	List<Card> cards_17 = new ArrayList<>(Arrays.asList(card_A, card_6));
-	List<List<Card>> initCards = new ArrayList<>(Arrays.asList(cards_20, cards_15, cards_BURST, cards_17));
-	List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"), new Name("woni"), new Name("gugu"));
-
-	Players players = new Players(names, initCards);
+	Players players = new Players(
+		Arrays.asList(new Player(new Name("pobi"), cards_20), new Player(new Name("jason"), cards_15),
+			new Player(new Name("woni"), cards_BURST), new Player(new Name("gugu"), cards_17)));
 	Dealer dealer_17 = new Dealer(List.of(card_A, card_6));
 	Dealer dealer_BURST = new Dealer(List.of(card_K, card_Q, card_2));
 

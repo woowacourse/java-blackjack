@@ -9,6 +9,7 @@ import domain.card.Deck;
 import domain.card.deckstrategy.GeneralGenerationDeckStrategy;
 import domain.participant.Dealer;
 import domain.participant.Name;
+import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.Result;
 import view.InputView;
@@ -16,15 +17,12 @@ import view.OutputView;
 
 public class Controller {
 
-	private static final String INPUT_NAMES_SPLIT_DELIMITER = ",";
-	private static final String NAME_DUPLICATE_ERROR_MESSAGE = "[Error] 이름은 중복일 수 없습니다.";
-
 	public void run() {
 		List<Name> names = makeNames();
 
 		Deck deck = Deck.from(new GeneralGenerationDeckStrategy());
 		Dealer dealer = new Dealer(deck.generateInitCards());
-		Players players = new Players(names, generateInitCardsForPlayers(names, deck));
+		Players players = new Players(makePlayers(names, deck));
 		printInitHands(names, dealer, players);
 
 		if (dealer.isMaxScore()) {
@@ -55,6 +53,13 @@ public class Controller {
 			.mapToObj(i -> deck.generateInitCards())
 			.collect(Collectors.toList());
 		return initCardForPlayers;
+	}
+
+	private List<Player> makePlayers(List<Name> names, Deck deck) {
+		List<Player> players = names.stream()
+			.map(name -> new Player(name, deck.generateInitCards()))
+			.collect(Collectors.toList());
+		return players;
 	}
 
 	private void printInitHands(List<Name> names, Dealer dealer, Players players) {
