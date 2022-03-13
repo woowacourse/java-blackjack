@@ -1,5 +1,9 @@
 package blackJack.domain.result;
 
+import blackJack.domain.participant.Dealer;
+import blackJack.domain.participant.Participant;
+import blackJack.domain.participant.Player;
+
 public enum WinDrawLose {
     WIN("승"),
     DRAW("무"),
@@ -12,28 +16,54 @@ public enum WinDrawLose {
         this.result = result;
     }
 
-    public static WinDrawLose calculateWinDrawLose(int playerScore, int dealerScore) {
-        if (overScore(playerScore)) {
-            return LOSE;
-        }
-        if (overScore(dealerScore)) {
-            return WIN;
-        }
-        return getWinDrawLose(playerScore, dealerScore);
+    public static WinDrawLose calculateWinDrawLose(Player player, Dealer dealer) {
+        WinDrawLose resultByBust = getWinLoseByBust(player, dealer);
+        if (resultByBust != null) return resultByBust;
+        WinDrawLose resultByBlackJack = getWinDrawByBlackJack(player, dealer);
+        if (resultByBlackJack != null) return resultByBlackJack;
+        return getWinDrawLoseByScore(player, dealer);
     }
 
-    private static WinDrawLose getWinDrawLose(int playerScore, int dealerScore) {
-        if (playerScore > dealerScore) {
+    private static WinDrawLose getWinLoseByBust(Player player, Dealer dealer) {
+        if (isBust(player)) {
+            return LOSE;
+        }
+        if (isBust(dealer)) {
             return WIN;
         }
-        if (playerScore == dealerScore) {
+        return null;
+    }
+
+    private static boolean isBust(Participant participant) {
+        return participant.calculateFinalScore() > BLACK_JACK;
+    }
+
+    private static WinDrawLose getWinDrawByBlackJack(Player player, Dealer dealer) {
+        if (getWinByBlackJack(player, dealer)) {
+            return WIN;
+        }
+        if (getDrawByBlackJack(player, dealer)) {
+            return DRAW;
+        }
+        return null;
+    }
+
+    private static boolean getWinByBlackJack(Player player, Dealer dealer) {
+        return player.isBlackJack() && !dealer.isBlackJack();
+    }
+
+    private static boolean getDrawByBlackJack(Player player, Dealer dealer) {
+        return player.isBlackJack() && dealer.isBlackJack();
+    }
+
+    private static WinDrawLose getWinDrawLoseByScore(Player player, Dealer dealer) {
+        if (player.calculateFinalScore() > dealer.calculateFinalScore()) {
+            return WIN;
+        }
+        if (player.calculateFinalScore() == dealer.calculateFinalScore()) {
             return DRAW;
         }
         return LOSE;
-    }
-
-    private static boolean overScore(int score) {
-        return score > BLACK_JACK;
     }
 
     public String getResult() {
