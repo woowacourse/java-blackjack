@@ -11,7 +11,7 @@ public class GameResponse {
     }
 
     public boolean isDealer(String name) {
-        return getName().equals(name);
+        return this.name.equals(name);
     }
 
     public String getName() {
