@@ -17,7 +17,7 @@
     - Statistic : MAX_POINT
   - `Cards` 클래스 내에서 현재 포인트가 MAX_POINT(21)이 넘는지 계산하는 함수 `isOverThanMaxPoint()`를 구현하여 중복 제거 
 - [x] `Statistic` 클래스에서 팩터리 메서드 외의 필드 및 멤버 함수도 static으로 설정한 이유
-- [ ] `Card` 구현 시에 캐싱 적용
+- [x] `Card` 구현 시에 캐싱 적용
 - [ ] `Card`에서 toString의 구현이 바뀌게 된다면 View의 출력에 미치는 영향
 - [ ] `giveCard()`메서드의 의미에 대해 (누가 누구에게 주는 것인가.)
 - [ ] `CardDeck`에서 `size()`메서드는 테스트에서만 사용됨.
