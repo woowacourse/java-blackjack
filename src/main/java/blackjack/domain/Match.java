@@ -10,7 +10,7 @@ public enum Match {
     DRAW("무", "무", Objects::equals),
     ;
 
-    static final int MAX_WINNER_POINT = 21;
+    public static final int MAX_WINNER_POINT = 21;
 
     private final String result;
     private final String oppositeResult;

@@ -2,6 +2,8 @@ package blackjack.domain;
 
 import java.util.List;
 
+import blackjack.controller.BlackjackController;
+
 public class BlackjackGame {
 
     private final Cards cards;
@@ -16,6 +18,14 @@ public class BlackjackGame {
         initCards();
     }
 
+    private void initPlayers(List<String> playerNames) {
+        blackjackPlayers = new Players();
+        blackjackPlayers.addPlayer(new Dealer());
+        for (String playerName : playerNames) {
+            blackjackPlayers.addPlayer(new Guest(playerName));
+        }
+    }
+
     private void initCards() {
         for (Player blackjackPlayer : blackjackPlayers.getPlayers()) {
             blackjackPlayer.addCard(cards.assignCard());
@@ -23,12 +33,35 @@ public class BlackjackGame {
         }
     }
 
-    private void initPlayers(List<String> playerNames) {
-        blackjackPlayers = new Players();
-        blackjackPlayers.addPlayer(new Dealer());
-        for (String playerName : playerNames) {
-            blackjackPlayers.addPlayer(new Guest(playerName));
+    public void turnPlayers(BlackjackController blackjackController) {
+        for (Player player : blackjackPlayers.getPlayers()) {
+            turnEachPlayerIfGuest(blackjackController, player);
         }
+    }
+
+    private void turnEachPlayerIfGuest(BlackjackController blackjackController, Player player) {
+        if (player.isDealer(Dealer.NAME)) {
+            return;
+        }
+
+        while(checkGetMoreCard(player) && blackjackController.receiveForGetMoreCard(player.getName())) {
+            addCard(player);
+            blackjackController.announcePresentCard(player);
+        }
+    }
+
+    public boolean checkGetMoreCard(Player player) {
+        return !player.isOverLimit(Match.MAX_WINNER_POINT);
+    }
+
+    public void turnDealer(BlackjackController blackjackController) {
+        Player dealer = blackjackPlayers.getDealer();
+        if (!dealer.isOverLimit(Dealer.MAX_POINT)) {
+            blackjackController.announceDealerCanGetMoreCard();
+            addCard(dealer);
+            return;
+        }
+        blackjackController.announceDealerCantGetMoreCard();
     }
 
     public void addCard(Player player) {

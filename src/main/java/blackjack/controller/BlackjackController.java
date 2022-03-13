@@ -16,12 +16,12 @@ public class BlackjackController {
         blackjackGame.initGames(receivePlayerNames());
 
         Players players = blackjackGame.getBlackjackPlayers();
-        printStartGame(players);
+        announceStartGame(players);
 
-        turnPlayers(blackjackGame, players);
-        turnDealer(blackjackGame, players);
+        blackjackGame.turnPlayers(this);
+        blackjackGame.turnDealer(this);
 
-        printResult(blackjackGame, players);
+        announceResult(blackjackGame, players);
     }
 
     private List<String> receivePlayerNames() {
@@ -36,71 +36,25 @@ public class BlackjackController {
         }
     }
 
-    private void printStartGame(Players players) {
+    private void announceStartGame(Players players) {
         OutputView.announceStartGame(players.getPlayers()
                 .stream()
                 .map(Player::getName)
                 .collect(Collectors.toList()));
+
         OutputView.announcePresentCards(toResponse(players));
     }
 
-    private void printResult(BlackjackGame blackjackGame, Players players) {
-        OutputView.announceResultCards(toResponse(players));
-        Results results = blackjackGame.calculateResult(players);
-        OutputView.announceResultWinner(results);
-    }
-
-    private void turnDealer(BlackjackGame blackjackGame, Players players) {
-        Player dealer = players.getDealer();
-        announceDealerCanGetMoreCard(blackjackGame, dealer);
-    }
-
-    private void turnPlayers(BlackjackGame blackjackGame, Players players) {
-        for (Player player : players.getPlayers()) {
-            turnEachPlayerIfGuest(blackjackGame, player);
-        }
-    }
-
-    private void turnEachPlayerIfGuest(BlackjackGame blackjackGame, Player player) {
-        if (player.isDealer(Dealer.NAME)) {
-            return;
-        }
-        while (checkGetMoreCard(player)) {
-            blackjackGame.addCard(player);
-            List<GameResponse> gameResponses = new ArrayList<>();
-            GameResponse gameResponse = new GameResponse(player.getName(), player.getDeck());
-            gameResponses.add(gameResponse);
-            OutputView.announcePresentCards(gameResponses);
-        }
-    }
-
-    private boolean checkGetMoreCard(Player player) {
-        if (player.isOverLimit(Dealer.MAX_POINT)) {
-            return false;
-        }
-        return receiveAnswerForGetMoreCard(player);
-    }
-
-    private boolean receiveAnswerForGetMoreCard(Player player) {
+    public boolean receiveForGetMoreCard(String name) {
         try {
-            String answer = InputView.requestMoreCard(player.getName());
+            String answer = InputView.requestMoreCard(name);
             InputValidator.inputBlank(answer);
             InputValidator.isAnswerFormat(answer);
-            return InputView.requestMoreCard(player.getName())
-                    .equals(InputValidator.MORE_CARD);
+            return answer.equals(InputValidator.MORE_CARD);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-        return checkGetMoreCard(player);
-    }
-
-    private void announceDealerCanGetMoreCard(BlackjackGame blackjackGame, Player dealer) {
-        if (!dealer.isOverLimit(Dealer.MAX_POINT)) {
-            OutputView.announceGetMoreCard(Dealer.MAX_POINT);
-            blackjackGame.addCard(dealer);
-            return;
-        }
-        OutputView.announceGetMoreCard(Dealer.EXCEED_POINT);
+        return receiveForGetMoreCard(name);
     }
 
     private List<GameResponse> toResponse(Players players) {
@@ -109,5 +63,26 @@ public class BlackjackController {
             gameResponses.add(new GameResponse(player.getName(), player.getDeck()));
         }
         return gameResponses;
+    }
+
+    public void announcePresentCard(Player player) {
+        List<GameResponse> gameResponses = new ArrayList<>();
+        GameResponse gameResponse = new GameResponse(player.getName(), player.getDeck());
+        gameResponses.add(gameResponse);
+        OutputView.announcePresentCards(gameResponses);
+    }
+
+    public void announceDealerCanGetMoreCard() {
+        OutputView.announceGetMoreCard(Dealer.MAX_POINT);
+    }
+
+    public void announceDealerCantGetMoreCard() {
+        OutputView.announceGetMoreCard(Dealer.EXCEED_POINT);
+    }
+
+    private void announceResult(BlackjackGame blackjackGame, Players players) {
+        OutputView.announceResultCards(toResponse(players));
+        Results results = blackjackGame.calculateResult(players);
+        OutputView.announceResultWinner(results);
     }
 }
