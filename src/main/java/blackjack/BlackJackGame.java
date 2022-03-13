@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack;
 
 import blackjack.domain.Answer;
 import blackjack.domain.card.Card;
@@ -11,13 +11,12 @@ import blackjack.domain.result.BlackJackReferee;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
-public class BlackJackController {
-
+public class BlackJackGame {
 
     private final Deck deck;
     private final Gamers gamers;
 
-    public BlackJackController(List<String> names) {
+    public BlackJackGame(List<String> names) {
         this.deck = new Deck(Card.getCards());
         gamers = new Gamers(names);
         gamers.distributeFirstCards(deck);
