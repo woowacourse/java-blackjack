@@ -10,11 +10,16 @@ public class HoldCards {
 
     private final List<Card> cards;
 
-    public HoldCards(Card first, Card second) {
+    private HoldCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public static HoldCards init(Card first, Card second) {
         validateDuplicate(first, second);
-        this.cards = new ArrayList<>();
-        this.cards.add(first);
-        this.cards.add(second);
+        List<Card> cards = new ArrayList<>();
+        cards.add(first);
+        cards.add(second);
+        return new HoldCards(cards);
     }
 
     public void addCard(Card card) {
@@ -36,14 +41,14 @@ public class HoldCards {
         return cards;
     }
 
-    private void validateDuplicate(Card card) {
-        if (cards.contains(card)) {
+    private static void validateDuplicate(Card first, Card second) {
+        if (first.equals(second)) {
             throw new IllegalArgumentException("카드가 중복될 수 없습니다.");
         }
     }
 
-    private void validateDuplicate(Card first, Card second) {
-        if (first.equals(second)) {
+    private void validateDuplicate(Card card) {
+        if (cards.contains(card)) {
             throw new IllegalArgumentException("카드가 중복될 수 없습니다.");
         }
     }
