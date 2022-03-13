@@ -10,8 +10,7 @@ import java.util.stream.Collectors;
 
 import static blackjack.domain.gamer.Gamers.MAX_CARD_VALUE;
 
-
-public class Gamer {
+public abstract class Gamer {
 
     private final Name name;
     private final List<Card> cards;
@@ -69,4 +68,6 @@ public class Gamer {
     public int getCardsSize() {
         return cards.size();
     }
+
+    abstract boolean canDraw();
 }

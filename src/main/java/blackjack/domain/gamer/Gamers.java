@@ -7,7 +7,6 @@ import java.util.*;
 public class Gamers {
     public static final int MAX_CARD_VALUE = 21;
     private static final int INIT_DISTRIBUTION_COUNT = 2;
-    private static final int ADDITIONAL_DISTRIBUTE_STANDARD = 16;
     private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
     private static final String NOT_EXIST_PLAYER_ERROR = "플레이어가 존재하지 않습니다.";
 
@@ -37,17 +36,13 @@ public class Gamers {
         gamer.addCard(deck.draw());
     }
 
-    public int distributeAdditionalToDealer(Deck deck) {
-        int count = 0;
-        while (!dealer.isOverThan(ADDITIONAL_DISTRIBUTE_STANDARD)) {
+    public void distributeAdditionalToDealer(Deck deck) {
+        while (dealer.canDraw()) {
             distributeCard(dealer, deck);
-            count++;
         }
-        return count;
     }
 
-
-    public Dealer findDealer() {
+    public Dealer getDealer() {
         return dealer;
     }
 
@@ -61,7 +56,7 @@ public class Gamers {
 
     public boolean isBurst(String name) {
         Player player = findPlayerByName(name);
-        return player.getCardsNumberSum() > MAX_CARD_VALUE;
+        return !player.canDraw();
     }
 
     public Player findPlayerByName(String name) {
@@ -71,7 +66,7 @@ public class Gamers {
                 .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PLAYER_ERROR));
     }
 
-    public List<Player> findPlayers() {
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 

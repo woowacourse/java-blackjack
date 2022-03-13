@@ -39,15 +39,15 @@ public class BlackJackGame {
     }
 
     public BlackJackReferee createResult() {
-        return new BlackJackReferee(gamers.findPlayers(), gamers.findDealer());
+        return new BlackJackReferee(gamers.getPlayers(), gamers.getDealer());
     }
 
     public Dealer getDealer() {
-        return gamers.findDealer();
+        return gamers.getDealer();
     }
 
     public List<Player> getPlayers() {
-        return gamers.findPlayers();
+        return gamers.getPlayers();
     }
 
     public Player findPlayerByName(String name) {

@@ -14,7 +14,7 @@ public class GamersTest {
     @DisplayName("플레이어 이름들을 입력 받아 생성한다.")
     void create() {
         Gamers gamers = new Gamers(List.of("더즈", "범고래"));
-        List<Player> players = gamers.findPlayers();
+        List<Player> players = gamers.getPlayers();
         assertThat(players.size()).isEqualTo(2);
     }
 
@@ -22,8 +22,8 @@ public class GamersTest {
     @DisplayName("플레이어와 딜러 각각 두 장의 카드를 뽑는다.")
     void distributeFirstCards() {
         Gamers gamers = new Gamers(List.of("더즈", "범고래"));
-        Dealer dealer = gamers.findDealer();
-        List<Player> players = gamers.findPlayers();
+        Dealer dealer = gamers.getDealer();
+        List<Player> players = gamers.getPlayers();
         Deck deck = new Deck(Card.getCards());
         gamers.distributeFirstCards(deck);
 
