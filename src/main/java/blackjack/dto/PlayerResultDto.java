@@ -1,8 +1,8 @@
 package blackjack.dto;
 
-import blackjack.domain.Dealer;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.GameResult;
-import blackjack.domain.Player;
+import blackjack.domain.participant.Player;
 
 public class PlayerResultDto {
 

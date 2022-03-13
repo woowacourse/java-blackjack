@@ -2,7 +2,7 @@ package blackjack.dto;
 
 import static java.util.stream.Collectors.*;
 
-import blackjack.domain.Dealer;
+import blackjack.domain.participant.Dealer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

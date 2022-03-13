@@ -2,7 +2,7 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Player;
+import blackjack.domain.participant.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

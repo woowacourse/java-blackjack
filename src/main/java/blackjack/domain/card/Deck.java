@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.domain.card.generator.CardsGenerator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;

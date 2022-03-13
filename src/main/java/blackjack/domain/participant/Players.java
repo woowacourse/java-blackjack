@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static java.util.stream.Collectors.toList;
 

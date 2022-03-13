@@ -6,6 +6,7 @@ import static blackjack.domain.card.Suit.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import blackjack.domain.card.generator.RandomCardsGenerator;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

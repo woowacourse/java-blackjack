@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static blackjack.domain.CardsTestDataGenerator.*;
 import static blackjack.domain.card.Denomination.*;
@@ -7,6 +7,8 @@ import static blackjack.domain.card.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import blackjack.domain.CardsArgumentsProvider;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;

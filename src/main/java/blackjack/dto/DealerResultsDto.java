@@ -4,9 +4,9 @@ import static java.util.stream.Collectors.*;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
-import blackjack.domain.Dealer;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.GameResult;
-import blackjack.domain.Players;
+import blackjack.domain.participant.Players;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;

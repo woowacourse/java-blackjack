@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static blackjack.domain.CardsTestDataGenerator.*;
 import static blackjack.domain.card.Denomination.*;
@@ -7,6 +7,8 @@ import static blackjack.domain.card.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import blackjack.domain.CardsArgumentsProvider;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
@@ -98,7 +100,6 @@ public class PlayerTest {
     @Test
     void 플레이어_승패_여부_버스트_패() {
         List<Card> minValueCards = generateTotalScoreNotMoreThan21Cards();
-        //22점
         List<Card> maxValueCards = generateTotalScoreGraterThan21Cards();
 
         Dealer dealer = new Dealer(minValueCards);
@@ -112,9 +113,7 @@ public class PlayerTest {
     @DisplayName("플레이어가 딜러보다 점수가 높으면 승리한다.")
     @Test
     void 플레이어_승패_여부_점수_승() {
-        //12점
         List<Card> minValueCards = generateTotalScoreNotMoreThan16Cards();
-        //18점
         List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
 
         Dealer dealer = new Dealer(minValueCards);
@@ -128,9 +127,7 @@ public class PlayerTest {
     @DisplayName("플레이어가 딜러보다 점수가 낮으면 패배.")
     @Test
     void 플레이어_승패_여부_점수_패() {
-        //12점
         List<Card> minValueCards = generateTotalScoreNotMoreThan16Cards();
-        //18점
         List<Card> maxValueCards = generateTotalScoreGraterThan17Cards();
 
         Dealer dealer = new Dealer(maxValueCards);
@@ -144,9 +141,7 @@ public class PlayerTest {
     @DisplayName("플레이어와 딜러가 점수가 같으면 무.")
     @Test
     void 플레이어_승패_여부_점수_무() {
-        //12점
         List<Card> tieValueByPlayer = generateCards();
-        //12점
         List<Card> tieValueByDealer = generateCards();
 
         Dealer dealer = new Dealer(tieValueByDealer);
