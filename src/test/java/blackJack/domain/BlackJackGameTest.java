@@ -20,41 +20,44 @@ class BlackJackGameTest {
     private Player player1;
     private Player player2;
     private Player player3;
-    private Participants participants;
+    private Dealer dealer;
 
     @BeforeEach
     void setUp() {
         player1 = new Player("kei");
         player2 = new Player("rookie");
         player3 = new Player("parang");
-        Dealer dealer = new Dealer();
-
-        player1.hit(Card.from(Symbol.SPADE, Denomination.EIGHT));
-        player2.hit(Card.from(Symbol.SPADE, Denomination.JACK));
-        player3.hit(Card.from(Symbol.SPADE, Denomination.ACE));
-        dealer.hit(Card.from(Symbol.SPADE, Denomination.NINE));
-
-        participants = new Participants(dealer, List.of(player1, player2, player3));
+        dealer = new Dealer();
     }
 
     @Test
     @DisplayName("BlackJackGame 생성 테스트")
     void createValidDealer() {
+        Participants participants = new Participants(dealer, List.of(player1, player2, player3));
+
         assertThat(new BlackJackGame(participants)).isNotNull();
     }
 
     @Test
     @DisplayName("게임 시작시 최초 카드 분배 기능 테스트")
     void firstCardDispensing() {
+        Participants participants = new Participants(dealer, List.of(player1, player2, player3));
         BlackJackGame blackJackGame = new BlackJackGame(participants);
+
         blackJackGame.firstCardDispensing();
 
-        assertThat(player1.getCards().size()).isEqualTo(3);
+        assertThat(player1.getCards().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("플레이어들의 승패 결과 테스트")
     void getPlayersGameResult() {
+        player1.hit(Card.from(Symbol.SPADE, Denomination.EIGHT));
+        player2.hit(Card.from(Symbol.SPADE, Denomination.JACK));
+        player3.hit(Card.from(Symbol.SPADE, Denomination.ACE));
+        dealer.hit(Card.from(Symbol.SPADE, Denomination.NINE));
+
+        Participants participants = new Participants(dealer, List.of(player1, player2, player3));
         BlackJackGame blackJackGame = new BlackJackGame(participants);
 
         assertThat(blackJackGame.getPlayersGameResult()).contains(
@@ -67,6 +70,12 @@ class BlackJackGameTest {
     @Test
     @DisplayName("딜러의 승패 결과 테스트")
     void getDealerGameResult() {
+        player1.hit(Card.from(Symbol.SPADE, Denomination.EIGHT));
+        player2.hit(Card.from(Symbol.SPADE, Denomination.JACK));
+        player3.hit(Card.from(Symbol.SPADE, Denomination.ACE));
+        dealer.hit(Card.from(Symbol.SPADE, Denomination.NINE));
+
+        Participants participants = new Participants(dealer, List.of(player1, player2, player3));
         BlackJackGame blackJackGame = new BlackJackGame(participants);
 
         assertThat(blackJackGame.getDealerGameResult()).contains(
