@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 public class BlackJackTest {
 
 	@Test
-	@DisplayName("참가자의 수가 8명을 초과하면 예외처리")
-	void Player_Number_Exceed_Exception() {
+	@DisplayName("참가자의 수가 8명을 초과하면 예외가 발생한다")
+	void playerNumberException_8() {
 		assertThatThrownBy(() -> {
 			List<String> playerNames = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h", "i");
 			BlackJack.createFrom(playerNames);
@@ -21,8 +21,8 @@ public class BlackJackTest {
 	}
 
 	@Test
-	@DisplayName("카드를 해당 플레이어에게 한장 나누어주는지")
-	void Hand_Out_Card_To() {
+	@DisplayName("카드를 목표 플레이어에게만 한 장 나누어 준다")
+	void handOutCardTo() {
 		List<String> playerNames = Arrays.asList("a", "b");
 		BlackJack blackJack = BlackJack.createFrom(playerNames);
 		blackJack.handOutCardTo(blackJack.getPlayers().get(0));
@@ -31,8 +31,8 @@ public class BlackJackTest {
 	}
 
 	@Test
-	@DisplayName("스타팅 카드를 두 장씩 배분하는지")
-	void Hand_Out_Two_Starting_Cards() {
+	@DisplayName("starting card는 2장씩 나누어준다")
+	void handOutStartingCards() {
 		List<String> playerNames = Arrays.asList("a", "b");
 		BlackJack blackJack = BlackJack.createFrom(playerNames);
 		blackJack.handOutStartingCards();

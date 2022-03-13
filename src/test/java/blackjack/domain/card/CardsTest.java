@@ -9,7 +9,7 @@ public class CardsTest {
 
 	@Test
 	@DisplayName("K클로버와 2하트가 손에 있으면 12를 반환하는지")
-	void Calculate_Correct_Summation_Of_K_And_2() {
+	void sumOfCards_K_2_12() {
 		Cards cards = new Cards();
 		cards.addCard(new Card(CardSymbol.CLOVER, CardValue.KING));
 		cards.addCard(new Card(CardSymbol.HEART, CardValue.TWO));
@@ -18,7 +18,7 @@ public class CardsTest {
 
 	@Test
 	@DisplayName("에이스를 11로 적용하는지")
-	void Select_Ace_Value_11() {
+	void useAceAs_11() {
 		Cards cards = new Cards();
 		cards.addCard(new Card(CardSymbol.CLOVER, CardValue.ACE));
 		cards.addCard(new Card(CardSymbol.HEART, CardValue.TWO));
@@ -28,7 +28,7 @@ public class CardsTest {
 
 	@Test
 	@DisplayName("에이스를 1로 적용하는지")
-	void Select_Ace_Value_1() {
+	void useAceAs_1() {
 		Cards cards = new Cards();
 		cards.addCard(new Card(CardSymbol.CLOVER, CardValue.ACE));
 		cards.addCard(new Card(CardSymbol.HEART, CardValue.EIGHT));

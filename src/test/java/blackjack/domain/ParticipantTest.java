@@ -10,8 +10,8 @@ import blackjack.domain.card.CardDeck;
 public class ParticipantTest {
 
 	@Test
-	@DisplayName("이름이 공백이면 예외 발생")
-	void Blank_Name_Exception() {
+	@DisplayName("이름이 공백이면 예외가 발생한다")
+	void nameException_Empty() {
 		assertThatThrownBy(() ->
 			Participant.createPlayer("")
 		).isInstanceOf(IllegalArgumentException.class)
@@ -19,8 +19,8 @@ public class ParticipantTest {
 	}
 
 	@Test
-	@DisplayName("이름에 특수문자가 포한되면 예외 발생")
-	void Unavailable_Name_Exception() {
+	@DisplayName("이름에 특수문자가 포한되면 예외가 발생한다")
+	void nameException_SpacialChar() {
 		assertThatThrownBy(() ->
 			Participant.createPlayer("@as!")
 		).isInstanceOf(IllegalArgumentException.class)
@@ -28,10 +28,10 @@ public class ParticipantTest {
 	}
 
 	@Test
-	@DisplayName("카드가 한장 추가되는지")
-	void Receive_Card() {
+	@DisplayName("카드를 한장 받으면, 플레이어의 카드가 한장 추가된다")
+	void receiveCard() {
 		Participant player = Participant.createPlayer("yaho");
-		player.receiveCard(CardDeck.pickCard());
+		player.receiveCard(CardDeck.pick());
 		assertThat(player.getCards().size()).isEqualTo(1);
 	}
 }
