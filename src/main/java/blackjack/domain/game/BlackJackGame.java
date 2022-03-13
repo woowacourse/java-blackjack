@@ -47,9 +47,9 @@ public class BlackJackGame {
     }
 
     public PlayerDto drawNextPlayer() {
-            final PlayerDto currentPlayer = players.getCurrentTurnPlayerInfo();
-            players.turnToNextPlayer();
-            return currentPlayer;
+        final PlayerDto currentPlayer = players.getCurrentTurnPlayerInfo();
+        players.turnToNextPlayer();
+        return currentPlayer;
     }
 
     public boolean isDealerTurnEnd() {
