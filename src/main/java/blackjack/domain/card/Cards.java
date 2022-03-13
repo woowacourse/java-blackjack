@@ -15,18 +15,6 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
-    public void add(Card card) {
-        cards.add(card);
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
-    public List<Card> getLimitedCard(int size) {
-        return Collections.unmodifiableList(cards.subList(0, size));
-    }
-
     public int getScore() {
         if (containsAce(cards)) {
             return sumWithAce();
@@ -54,5 +42,17 @@ public class Cards {
         return cards.stream()
                 .mapToInt(Card::getPoint)
                 .sum();
+    }
+
+    public void add(Card card) {
+        cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    public List<Card> getLimitedCard(int size) {
+        return Collections.unmodifiableList(cards.subList(0, size));
     }
 }
