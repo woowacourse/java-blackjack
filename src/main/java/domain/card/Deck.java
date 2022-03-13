@@ -7,26 +7,32 @@ import java.util.List;
 
 public class Deck {
 
-    private static final LinkedList<Card> CACHE = new LinkedList<>();
+    private final LinkedList<Card> deck;
 
-    static {
+    private Deck() {
+        LinkedList<Card> tmpCards = new LinkedList<>();
         for (Symbol symbol : Symbol.values()) {
-            addCard(symbol);
+            addCard(symbol, tmpCards);
         }
-        Collections.shuffle(CACHE);
+        Collections.shuffle(tmpCards);
+        deck = tmpCards;
     }
 
-    private static void addCard(Symbol symbol) {
+    public static Deck of(){
+        return new Deck();
+    }
+
+    private void addCard(Symbol symbol, LinkedList<Card> tmpCards) {
         for (Denomination denomination : Denomination.values()) {
-            CACHE.add(new Card(symbol, denomination));
+            tmpCards.add(new Card(symbol, denomination));
         }
     }
 
-    public static List<Card> handOutInitialTurn(){
+    public List<Card> handOutInitialTurn(){
         return Arrays.asList(handOut(), handOut());
     }
 
-    public static Card handOut(){
-        return CACHE.pop();
+    public Card handOut(){
+        return deck.pop();
     }
 }

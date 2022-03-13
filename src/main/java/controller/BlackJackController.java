@@ -17,9 +17,10 @@ public class BlackJackController {
     public void run() {
         Players players = createPlayers();
         Dealer dealer = new Dealer();
-        initialTurn(players, dealer);
-        hitCardByPlayers(players);
-        hitCardByDealer(dealer);
+        Deck deck = Deck.of();
+        initialTurn(players, dealer, deck);
+        hitCardByPlayers(players, deck);
+        hitCardByDealer(dealer,deck);
         showFinalTurn(players, dealer);
         showResult(players, dealer);
     }
@@ -34,29 +35,29 @@ public class BlackJackController {
         }
     }
 
-    private void initialTurn(Players players, Dealer dealer) {
-        players.runInitialTurn();
-        dealer.hitInitialTurn();
+    private void initialTurn(Players players, Dealer dealer, Deck deck) {
+        players.runInitialTurn(deck);
+        dealer.hitInitialTurn(deck);
         outputView.showInitialTurnStatus(players, dealer);
     }
 
 
-    private void hitCardByPlayers(Players players) {
+    private void hitCardByPlayers(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            hitCardByPlayer(player);
+            hitCardByPlayer(player, deck);
         }
     }
 
-    private void hitCardByPlayer(Player player) {
+    private void hitCardByPlayer(Player player, Deck deck) {
         while (player.canDrawCard() && inputView.inputMoreCardOrNot(player.getName())) {
-            player.hit(Deck.handOut());
+            player.hit(deck.handOut());
             outputView.showPlayerCardStatus(player);
         }
     }
 
-    private void hitCardByDealer(Dealer dealer) {
+    private void hitCardByDealer(Dealer dealer, Deck deck) {
         if (dealer.canDrawCard()) {
-            dealer.hit(Deck.handOut());
+            dealer.hit(deck.handOut());
             outputView.showDealerHitCardMessage();
         }
     }

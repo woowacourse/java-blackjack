@@ -31,8 +31,8 @@ public abstract class Participant implements Comparable<Participant> {
 
     public abstract boolean canDrawCard();
 
-    public void hitInitialTurn() {
-        cards.addCards(Deck.handOutInitialTurn());
+    public void hitInitialTurn(Deck deck) {
+        cards.addCards(deck.handOutInitialTurn());
     }
 
     public int calculateScore() {
