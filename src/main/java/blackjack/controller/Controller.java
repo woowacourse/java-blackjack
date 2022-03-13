@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
@@ -15,7 +14,7 @@ public class Controller {
 
     public void run() {
         CardDeck cardDeck = CardDeck.initShuffled();
-        Dealer dealer = new Dealer(new Name("딜러"));
+        Dealer dealer = new Dealer();
         Players players = Players.of(InputView.requestPlayerNames());
 
         initCardHand(cardDeck, dealer, players);

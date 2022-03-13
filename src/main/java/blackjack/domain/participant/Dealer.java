@@ -6,10 +6,11 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    public static final int MAX_RECEIVABLE_SCORE = 17;
+    private static final String DEALER_NAME = "딜러";
+    private static final int MAX_RECEIVABLE_SCORE = 17;
 
-    public Dealer(Name name) {
-        super(name);
+    public Dealer() {
+        super(new Name(DEALER_NAME));
     }
 
     @Override
