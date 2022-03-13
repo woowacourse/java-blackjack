@@ -18,7 +18,7 @@ public class Dealer extends Participant {
         int loseCount = countTargetResult(playersResult, Result.WIN);
         int drawCount = playersResult.size() - winCount - loseCount;
 
-        return ResultDto.of(winCount, drawCount, loseCount);
+        return ResultDto.of(NAME, winCount, drawCount, loseCount);
     }
 
     private int countTargetResult(List<Result> playersResult, Result targetResult) {

@@ -7,18 +7,24 @@ import java.util.EnumMap;
 public class ResultDto {
 
     private final EnumMap<Result, Integer> resultCounts;
+    private final String dealerName;
 
-    private ResultDto(EnumMap<Result, Integer> resultCounts) {
+    private ResultDto(String name, EnumMap<Result, Integer> resultCounts) {
+        this.dealerName = name;
         this.resultCounts = resultCounts;
     }
 
-    public static ResultDto of(int winCount, int drawCount, int loseCount) {
+    public static ResultDto of(String name, int winCount, int drawCount, int loseCount) {
         EnumMap<Result, Integer> resultCounts = new EnumMap<Result, Integer>(Result.class);
         resultCounts.put(Result.WIN, winCount);
         resultCounts.put(Result.DRAW, drawCount);
         resultCounts.put(Result.LOSE, loseCount);
 
-        return new ResultDto(resultCounts);
+        return new ResultDto(name, resultCounts);
+    }
+
+    public String getDealerName() {
+        return dealerName;
     }
 
     public int getWinCount() {

@@ -15,11 +15,11 @@ public class OutputView {
 
     private static final String COMMA = ", ";
     private static final String HAND_OUT_FORMAT = "%s와 %s에게 2장의 카드를 나누었습니다.";
-    private static final String RESULT_FORMAT = "%s: %s";
+    private static final String STATUS_FORMAT = "%s: %s";
     private static final String DEALER_HIT_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String CARDS_SCORE_MESSAGE = "%s - 결과: %d";
     private static final String FINAL_RESULT_MESSAGE = "## 최종 승패";
-    private static final String DEALER_MESSAGE = "딜러: %d승 %d무 %d패";
+    private static final String RECORD_FORMAT = "%d승 %d무 %d패";
     private static final String WIN_MESSAGE = "승";
     private static final String DRAW_MESSAGE = "무";
     private static final String LOSE_MESSAGE = "패";
@@ -39,7 +39,6 @@ public class OutputView {
         System.out.print(System.lineSeparator());
 
         showInitialDealerCardStatus(dealer);
-
         for (Player player : players.getPlayers()) {
             showPlayerCardStatus(player);
         }
@@ -51,20 +50,17 @@ public class OutputView {
     }
 
     private String showCardStatus(Participant participant) {
-        return makeCardStatus(participant.getName(), participant.getCards());
+        return String.format(STATUS_FORMAT, participant.getName(),
+            toString(participant.getCards()));
     }
 
     private void showInitialDealerCardStatus(Dealer dealer) {
-        String dealerCardStatus = makeCardStatus(dealer.getName(), dealer.getCards().subList(0, 1));
-        System.out.println(dealerCardStatus);
-
+        List<Card> card = dealer.getCards().subList(0, 1);
+        System.out.printf(STATUS_FORMAT, dealer.getName(), toString(card));
+        System.out.print(System.lineSeparator());
     }
 
-    private String makeCardStatus(String name, List<Card> cards) {
-        return String.format(RESULT_FORMAT, name, getDeck(cards));
-    }
-
-    private String getDeck(List<Card> cards) {
+    private String toString(List<Card> cards) {
         List<String> cardRepresentation = cards.stream()
             .map(card -> card.getDenomination() + card.getSymbol())
             .collect(Collectors.toList());
@@ -97,14 +93,15 @@ public class OutputView {
     }
 
     private void showDealerResult(ResultDto resultDto) {
-        System.out.printf(DEALER_MESSAGE, resultDto.getWinCount(), resultDto.getDrawCount(),
-            resultDto.getLoseCount());
+        String record = String.format(RECORD_FORMAT, resultDto.getWinCount(),
+            resultDto.getDrawCount(), resultDto.getLoseCount());
+        System.out.printf(STATUS_FORMAT, resultDto.getDealerName(), record);
         System.out.print(System.lineSeparator());
     }
 
     private void showPlayersResult(List<String> names, List<Result> results) {
         for (int i = 0; i < names.size(); i++) {
-            System.out.printf(RESULT_FORMAT, names.get(i), showPlayerResult(results.get(i)));
+            System.out.printf(STATUS_FORMAT, names.get(i), showPlayerResult(results.get(i)));
             System.out.print(System.lineSeparator());
         }
     }
