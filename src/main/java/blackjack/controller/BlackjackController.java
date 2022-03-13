@@ -1,11 +1,10 @@
 package blackjack.controller;
 
-import static blackjack.domain.participant.Dealer.DEALER_LIMIT_POINT;
-import static blackjack.domain.participant.Guest.GUEST_LIMIT_POINT;
-
 import blackjack.domain.machine.BlackjackGame;
 import blackjack.domain.machine.GameResponse;
 import blackjack.domain.machine.Hit;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Guest;
 import blackjack.domain.participant.Player;
 import blackjack.domain.machine.Results;
 import blackjack.view.InputView;
@@ -57,7 +56,7 @@ public class BlackjackController {
     }
 
     private boolean checkGetMoreCard(Player player) {
-        if (player.isOverLimit(GUEST_LIMIT_POINT)) {
+        if (player.isOverLimit(Guest.LIMIT_POINT)) {
             return false;
         }
         String userResponse = InputView.requestMoreCard(player.getName());
@@ -65,7 +64,7 @@ public class BlackjackController {
     }
 
     private void announceDealerCanGetMoreCard(BlackjackGame blackjackGame, Player dealer) {
-        if (!dealer.isOverLimit(DEALER_LIMIT_POINT)) {
+        if (!dealer.isOverLimit(Dealer.LIMIT_POINT)) {
             OutputView.announceDealerGetMoreCard();
             blackjackGame.addCard(dealer);
             return;

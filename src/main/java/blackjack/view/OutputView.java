@@ -1,11 +1,10 @@
 package blackjack.view;
 
-import static blackjack.domain.participant.Dealer.DEALER_NAME;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.machine.GameResponse;
 import blackjack.domain.machine.Match;
 import blackjack.domain.machine.MatchResult;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.machine.Results;
 import java.util.List;
@@ -37,7 +36,7 @@ public class OutputView {
 
     private static void printFirstStartCards(GameResponse gameResponse) {
         String playerName = gameResponse.getName();
-        if (playerName.equals(DEALER_NAME)) {
+        if (playerName.equals(Dealer.NAME)) {
             String cardOutputFormat = hideOneCard(gameResponse);
             System.out.printf(CARD_OUTPUT_FORMAT + NEW_LINE, playerName, cardOutputFormat);
             return;

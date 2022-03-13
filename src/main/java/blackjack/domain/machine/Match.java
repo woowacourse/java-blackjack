@@ -1,6 +1,6 @@
 package blackjack.domain.machine;
 
-import static blackjack.domain.participant.Guest.GUEST_LIMIT_POINT;
+import static blackjack.domain.participant.Guest.LIMIT_POINT;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
@@ -48,16 +48,16 @@ public enum Match {
     }
 
     private static boolean winPlayerCondition(Integer playerPoint, Integer dealerPoint) {
-        if (playerPoint > dealerPoint && playerPoint <= GUEST_LIMIT_POINT) {
+        if (playerPoint > dealerPoint && playerPoint <= LIMIT_POINT) {
             return true;
         }
-        return dealerPoint > GUEST_LIMIT_POINT && playerPoint <= GUEST_LIMIT_POINT;
+        return dealerPoint > LIMIT_POINT && playerPoint <= LIMIT_POINT;
     }
 
     private static boolean losePlayerCondition(Integer playerPoint, Integer dealerPoint) {
-        if (playerPoint < dealerPoint && dealerPoint <= GUEST_LIMIT_POINT) {
+        if (playerPoint < dealerPoint && dealerPoint <= LIMIT_POINT) {
             return true;
         }
-        return playerPoint > GUEST_LIMIT_POINT;
+        return playerPoint > LIMIT_POINT;
     }
 }

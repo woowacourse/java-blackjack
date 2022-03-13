@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.participant.Guest.GUEST_LIMIT_POINT;
-
+import blackjack.domain.participant.Guest;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -35,7 +34,7 @@ public class Deck {
     }
 
     private int calculateAcePoint(int sumWithoutAce, int aceCount) {
-        if (sumWithoutAce + aceCount + BONUS_ACE_POINT <= GUEST_LIMIT_POINT) {
+        if (sumWithoutAce + aceCount + BONUS_ACE_POINT <= Guest.LIMIT_POINT) {
             return sumWithoutAce + aceCount + BONUS_ACE_POINT;
         }
         return sumWithoutAce + aceCount;
