@@ -23,12 +23,12 @@ public class PlayersTest {
 		String lines = "pobi,jason,alpha";
 		List<String> strings = Arrays.asList(lines.split(","));
 		Players players = new Players(new Names(strings));
-		players.getPlayers().get(0).processCard(new Card(Number.TEN, Type.HEART));
-		players.getPlayers().get(0).processCard(new Card(Number.TEN, Type.CLOVER));
-		players.getPlayers().get(0).processCard(new Card(Number.TWO, Type.HEART));
-		players.getPlayers().get(1).processCard(new Card(Number.TEN, Type.SPADE));
-		players.getPlayers().get(1).processCard(new Card(Number.TEN, Type.DIAMOND));
-		players.getPlayers().get(1).processCard(new Card(Number.ACE, Type.HEART));
+		players.getPlayers().get(0).processCard(new Card(CardLetter.TEN, CardSuit.HEART));
+		players.getPlayers().get(0).processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+		players.getPlayers().get(0).processCard(new Card(CardLetter.TWO, CardSuit.HEART));
+		players.getPlayers().get(1).processCard(new Card(CardLetter.TEN, CardSuit.SPADE));
+		players.getPlayers().get(1).processCard(new Card(CardLetter.TEN, CardSuit.DIAMOND));
+		players.getPlayers().get(1).processCard(new Card(CardLetter.ACE, CardSuit.HEART));
 		assertThat(players.getBustPlayers().size()).isEqualTo(1);
 	}
 
@@ -37,12 +37,12 @@ public class PlayersTest {
 		String lines = "pobi,jason,alpha";
 		List<String> strings = Arrays.asList(lines.split(","));
 		Players players = new Players(new Names(strings));
-		players.getPlayers().get(0).processCard(new Card(Number.TEN, Type.HEART));
-		players.getPlayers().get(0).processCard(new Card(Number.TEN, Type.CLOVER));
-		players.getPlayers().get(0).processCard(new Card(Number.TWO, Type.HEART));
-		players.getPlayers().get(1).processCard(new Card(Number.TEN, Type.SPADE));
-		players.getPlayers().get(1).processCard(new Card(Number.TEN, Type.DIAMOND));
-		players.getPlayers().get(1).processCard(new Card(Number.ACE, Type.HEART));
+		players.getPlayers().get(0).processCard(new Card(CardLetter.TEN, CardSuit.HEART));
+		players.getPlayers().get(0).processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+		players.getPlayers().get(0).processCard(new Card(CardLetter.TWO, CardSuit.HEART));
+		players.getPlayers().get(1).processCard(new Card(CardLetter.TEN, CardSuit.SPADE));
+		players.getPlayers().get(1).processCard(new Card(CardLetter.TEN, CardSuit.DIAMOND));
+		players.getPlayers().get(1).processCard(new Card(CardLetter.ACE, CardSuit.HEART));
 		assertThat(players.getNotBustPlayers().size()).isEqualTo(2);
 	}
 
@@ -51,11 +51,11 @@ public class PlayersTest {
 		String lines = "pobi,jason";
 		List<String> strings = Arrays.asList(lines.split(","));
 		Players players = new Players(new Names(strings));
-		players.getPlayers().get(0).processCard(new Card(Number.TEN, Type.HEART));
-		players.getPlayers().get(0).processCard(new Card(Number.TEN, Type.CLOVER));
-		players.getPlayers().get(0).processCard(new Card(Number.TWO, Type.HEART));
-		players.getPlayers().get(1).processCard(new Card(Number.TEN, Type.SPADE));
-		players.getPlayers().get(1).processCard(new Card(Number.ACE, Type.HEART));
+		players.getPlayers().get(0).processCard(new Card(CardLetter.TEN, CardSuit.HEART));
+		players.getPlayers().get(0).processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+		players.getPlayers().get(0).processCard(new Card(CardLetter.TWO, CardSuit.HEART));
+		players.getPlayers().get(1).processCard(new Card(CardLetter.TEN, CardSuit.SPADE));
+		players.getPlayers().get(1).processCard(new Card(CardLetter.ACE, CardSuit.HEART));
 		assertThat(players.isAllPlayersBlackJackOrBust()).isTrue();
 	}
 }

@@ -27,9 +27,9 @@ public class ResultTest {
 	}
 	@Test
 	void dealer_bust() {
-		dealer.processCard(new Card(Number.QUEEN, Type.CLOVER));
-		dealer.processCard(new Card(Number.KING, Type.SPADE));
-		dealer.processCard(new Card(Number.TWO, Type.SPADE));
+		dealer.processCard(new Card(CardLetter.QUEEN, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.KING, CardSuit.SPADE));
+		dealer.processCard(new Card(CardLetter.TWO, CardSuit.SPADE));
 		setPlayerBlackJack(player1);
 		setPlayerBust(player2);
 		setPlayerBlackNormal(player3);
@@ -39,8 +39,8 @@ public class ResultTest {
 
 	@Test
 	void dealer_blackjack() {
-		dealer.processCard(new Card(Number.QUEEN, Type.CLOVER));
-		dealer.processCard(new Card(Number.ACE, Type.SPADE));
+		dealer.processCard(new Card(CardLetter.QUEEN, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.ACE, CardSuit.SPADE));
 		setPlayerBlackJack(player1);
 		setPlayerBust(player2);
 		setPlayerBlackNormal(player3);
@@ -50,8 +50,8 @@ public class ResultTest {
 
 	@Test
 	void dealer_normal() {
-		dealer.processCard(new Card(Number.QUEEN, Type.CLOVER));
-		dealer.processCard(new Card(Number.NINE, Type.SPADE));
+		dealer.processCard(new Card(CardLetter.QUEEN, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.NINE, CardSuit.SPADE));
 		setPlayerBlackJack(player1);
 		setPlayerBust(player2);
 		setPlayerBlackNormal(player3);
@@ -60,18 +60,18 @@ public class ResultTest {
 	}
 
 	private void setPlayerBust(Player player) {
-		player.processCard(new Card(Number.TEN, Type.SPADE));
-		player.processCard(new Card(Number.TEN, Type.DIAMOND));
-		player.processCard(new Card(Number.TWO, Type.HEART));
+		player.processCard(new Card(CardLetter.TEN, CardSuit.SPADE));
+		player.processCard(new Card(CardLetter.TEN, CardSuit.DIAMOND));
+		player.processCard(new Card(CardLetter.TWO, CardSuit.HEART));
 	}
 
 	private void setPlayerBlackJack(Player player) {
-		player.processCard(new Card(Number.TEN, Type.HEART));
-		player.processCard(new Card(Number.ACE, Type.DIAMOND));
+		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.ACE, CardSuit.DIAMOND));
 	}
 
 	private void setPlayerBlackNormal(Player player) {
-		player.processCard(new Card(Number.SIX, Type.HEART));
-		player.processCard(new Card(Number.FIVE, Type.DIAMOND));
+		player.processCard(new Card(CardLetter.SIX, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.FIVE, CardSuit.DIAMOND));
 	}
 }

@@ -39,5 +39,4 @@ public class Players {
 			.filter(player -> player.isBlackJack() || player.isBust())
 			.count();
 	}
-
 }

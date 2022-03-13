@@ -9,8 +9,8 @@ public class DealerTest {
 	void dealer_score_higher_than_player_score() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
-		dealer.processCard(new Card(Number.NINE, Type.CLOVER));
-		player.processCard(new Card(Number.FIVE, Type.CLOVER));
+		dealer.processCard(new Card(CardLetter.NINE, CardSuit.CLOVER));
+		player.processCard(new Card(CardLetter.FIVE, CardSuit.CLOVER));
 		assertThat(dealer.isWin(player)).isTrue();
 	}
 
@@ -18,8 +18,8 @@ public class DealerTest {
 	void dealer_score_lower_than_player_score() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
-		dealer.processCard(new Card(Number.NINE, Type.CLOVER));
-		player.processCard(new Card(Number.TEN, Type.CLOVER));
+		dealer.processCard(new Card(CardLetter.NINE, CardSuit.CLOVER));
+		player.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
 		assertThat(dealer.isLose(player)).isTrue();
 	}
 
@@ -27,8 +27,8 @@ public class DealerTest {
 	void dealer_score_equal_to_player_score() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
-		dealer.processCard(new Card(Number.NINE, Type.CLOVER));
-		player.processCard(new Card(Number.NINE, Type.HEART));
+		dealer.processCard(new Card(CardLetter.NINE, CardSuit.CLOVER));
+		player.processCard(new Card(CardLetter.NINE, CardSuit.HEART));
 		assertThat(dealer.isDraw(player)).isTrue();
 	}
 
@@ -36,10 +36,10 @@ public class DealerTest {
 	void dealer_and_player_blackjack() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
-		dealer.processCard(new Card(Number.TEN, Type.CLOVER));
-		dealer.processCard(new Card(Number.ACE, Type.CLOVER));
-		player.processCard(new Card(Number.TEN, Type.HEART));
-		player.processCard(new Card(Number.ACE, Type.HEART));
+		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.ACE, CardSuit.CLOVER));
+		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.ACE, CardSuit.HEART));
 		assertThat(dealer.isDraw(player)).isTrue();
 	}
 
@@ -47,10 +47,10 @@ public class DealerTest {
 	void dealer_blackjack() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
-		dealer.processCard(new Card(Number.TEN, Type.CLOVER));
-		dealer.processCard(new Card(Number.ACE, Type.CLOVER));
-		player.processCard(new Card(Number.TEN, Type.HEART));
-		player.processCard(new Card(Number.JACK, Type.HEART));
+		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.ACE, CardSuit.CLOVER));
+		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.JACK, CardSuit.HEART));
 		assertThat(dealer.isWin(player)).isTrue();
 	}
 
@@ -58,10 +58,10 @@ public class DealerTest {
 	void player_blackjack() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
-		dealer.processCard(new Card(Number.TEN, Type.CLOVER));
-		dealer.processCard(new Card(Number.JACK, Type.CLOVER));
-		player.processCard(new Card(Number.TEN, Type.HEART));
-		player.processCard(new Card(Number.ACE, Type.HEART));
+		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
+		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.ACE, CardSuit.HEART));
 		assertThat(dealer.isLose(player)).isTrue();
 	}
 
@@ -69,11 +69,11 @@ public class DealerTest {
 	void dealer_bust() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
-		dealer.processCard(new Card(Number.TEN, Type.CLOVER));
-		dealer.processCard(new Card(Number.JACK, Type.CLOVER));
-		dealer.processCard(new Card(Number.TWO, Type.CLOVER));
-		player.processCard(new Card(Number.TEN, Type.HEART));
-		player.processCard(new Card(Number.JACK, Type.HEART));
+		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.TWO, CardSuit.CLOVER));
+		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.JACK, CardSuit.HEART));
 		assertThat(dealer.isLose(player)).isTrue();
 	}
 }
