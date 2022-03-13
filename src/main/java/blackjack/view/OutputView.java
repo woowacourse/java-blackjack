@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Outcome;
 import blackjack.service.BlackJackService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +26,9 @@ public class OutputView {
 	private static final String RECEIVED_ONE_MORE_CARD = "이하라 한장의 카드를 더 받았습니다.";
 	private static final String FAIL_TO_RECEIVE_ONE_MORE_CARD = "이상이라 카드를 더 받지 않았습니다.";
 	private static final String BUST_MESSAGE = "파산";
+	private static final String VICTORY = "승";
+	private static final String DEFEAT = "패";
+	private static final String TIE = "무";
 
 	public static void printInitialStatus(final TableStatusDto dealerStatus, final List<TableStatusDto> playersStatus) {
 		printNames(dealerStatus, playersStatus);
@@ -96,7 +100,7 @@ public class OutputView {
 	private static void printDealerOutcome(final DealerResultDto dealerResult) {
 		System.out.print(dealerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		final String dealerOutcome = dealerResult.getCompeteResult().entrySet().stream()
-				.map(entry -> EMPTY + entry.getValue() + entry.getKey().getValue())
+				.map(entry -> EMPTY + entry.getValue() + printOutcome(entry.getKey()))
 				.collect(Collectors.joining(SPACE));
 		System.out.println(dealerOutcome);
 	}
@@ -104,7 +108,17 @@ public class OutputView {
 	private static void printPlayerOutcome(final List<PlayerResultDto> playerResults) {
 		for (PlayerResultDto playerResult : playerResults) {
 			System.out.print(playerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-			System.out.println(playerResult.getCompeteResult().getValue());
+			System.out.println(printOutcome(playerResult.getCompeteResult()));
 		}
+	}
+
+	private static String printOutcome(Outcome outcome) {
+		if (outcome == Outcome.VICTORY) {
+			return VICTORY;
+		}
+		if (outcome == Outcome.DEFEAT) {
+			return DEFEAT;
+		}
+		return TIE;
 	}
 }
