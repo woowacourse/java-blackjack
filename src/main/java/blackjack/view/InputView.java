@@ -24,14 +24,19 @@ public class InputView {
         System.out.println(name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
         String text = scanner.nextLine().trim();
-        if (!text.matches("[YyNn]")) {
-            throw new IllegalArgumentException("y, n 이외의 값이 입력되었습니다.");
-        }
+        validateHitOrStayInput(text);
 
         if (text.equalsIgnoreCase("y")) {
             return PlayStatus.HIT;
         }
 
         return PlayStatus.STAY;
+    }
+
+    private static void validateHitOrStayInput(String text) {
+        List<String> textAllow = List.of("Y", "y", "N", "n");
+        if (!textAllow.contains(text.trim())) {
+            throw new IllegalArgumentException("y, n 이외의 값이 입력되었습니다.");
+        }
     }
 }
