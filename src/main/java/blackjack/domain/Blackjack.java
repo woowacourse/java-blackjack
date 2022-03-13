@@ -11,12 +11,12 @@ public class Blackjack {
 	private static final String NO_PLAYER_ERROR = "[ERROR] 플레이어는 1명 이상이여야 합니다.";
 	private static final int NUMBER_OF_INIT_CARD = 2;
 
-	private final PlayerRepository playerRepository;
+	private final Players players;
 	private final Dealer dealer;
 
 	public Blackjack(List<String> playerNames) {
 		validateNames(playerNames);
-		this.playerRepository = new PlayerRepository(playerNames);
+		this.players = new Players(playerNames);
 		this.dealer = new Dealer();
 	}
 
@@ -34,11 +34,7 @@ public class Blackjack {
 	public void distributeInitialCards(NumberGenerator numberGenerator) {
 		for (int i = 0; i < NUMBER_OF_INIT_CARD; ++i) {
 			dealer.addCard(dealer.handOutCard(numberGenerator));
-
-			List<Player> players = playerRepository.findAll();
-			players.forEach(player -> player
-				.addCard(dealer.handOutCard(numberGenerator)));
-			playerRepository.saveAll(players);
+			players.addCards(dealer, numberGenerator);
 		}
 	}
 
@@ -52,26 +48,25 @@ public class Blackjack {
 	}
 
 	public boolean isDistributeMore() {
-		return !playerRepository.isEnd();
+		return !players.isEnd();
 	}
 
 	public Player getNextPlayer() {
-		Player player = playerRepository.findNextPlayer();
-		playerRepository.next();
+		Player player = players.findNextPlayer();
+		players.next();
 		return player;
 	}
 
 	public Player findPlayer(Player player) {
-		return playerRepository.findPlayer(player);
+		return players.findPlayer(player);
 	}
 
 	public void distributeAdditionalCardToPlayer(NumberGenerator numberGenerator, Player player) {
-		player.addCard(dealer.handOutCard(numberGenerator));
-		playerRepository.save(player);
+		players.addCard(dealer, player, numberGenerator);
 	}
 
 	public List<Player> getPlayers() {
-		return playerRepository.findAll();
+		return players.getPlayers();
 	}
 
 	public Dealer getDealer() {
@@ -79,6 +74,6 @@ public class Blackjack {
 	}
 
 	public ResultDto result() {
-		return Records.of(dealer, playerRepository.findAll());
+		return Records.of(dealer, players.getPlayers());
 	}
 }

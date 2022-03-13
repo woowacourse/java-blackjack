@@ -3,15 +3,13 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerRepository {
+import blackjack.domain.strategy.NumberGenerator;
+
+public class Players {
 	private final List<Player> players = new ArrayList<>();
 	private int playerIndex = 0;
 
-	public PlayerRepository(List<String> playerNames) {
-		addAll(playerNames);
-	}
-
-	private void addAll(List<String> playerNames) {
+	public Players(List<String> playerNames) {
 		playerNames.forEach(name -> players.add(new Player(name)));
 	}
 
@@ -19,7 +17,7 @@ public class PlayerRepository {
 		return players.get(findIndex(player));
 	}
 
-	public List<Player> findAll() {
+	public List<Player> getPlayers() {
 		return List.copyOf(players);
 	}
 
@@ -36,11 +34,13 @@ public class PlayerRepository {
 		return Player.copy(player);
 	}
 
-	public void saveAll(List<Player> players) {
-		players.forEach(this::save);
+	public void addCards(Dealer dealer, NumberGenerator numberGenerator) {
+		players.forEach(player -> player
+			.addCard(dealer.handOutCard(numberGenerator)));
 	}
 
-	public void save(Player player) {
+	public void addCard(Dealer dealer, Player player, NumberGenerator numberGenerator) {
+		player.addCard(dealer.handOutCard(numberGenerator));
 		players.set(findIndex(player), player);
 	}
 
