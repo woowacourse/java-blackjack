@@ -26,8 +26,8 @@ public class BlackJackTest {
 		List<String> playerNames = Arrays.asList("a", "b");
 		BlackJack blackJack = BlackJack.createFrom(playerNames);
 		blackJack.handOutCardTo(blackJack.getPlayers().get(0));
-		assertThat(blackJack.getPlayers().get(0).getCards().size()).isEqualTo(1);
-		assertThat(blackJack.getPlayers().get(1).getCards().size()).isEqualTo(0);
+		assertThat(blackJack.getPlayers().get(0).getCards().getCards().size()).isEqualTo(1);
+		assertThat(blackJack.getPlayers().get(1).getCards().getCards().size()).isEqualTo(0);
 	}
 
 	@Test
@@ -36,8 +36,8 @@ public class BlackJackTest {
 		List<String> playerNames = Arrays.asList("a", "b");
 		BlackJack blackJack = BlackJack.createFrom(playerNames);
 		blackJack.handOutStartingCards();
-		assertThat(blackJack.getDealer().getCards().size()).isEqualTo(2);
-		assertThat(blackJack.getPlayers().get(0).getCards().size()).isEqualTo(2);
-		assertThat(blackJack.getPlayers().get(1).getCards().size()).isEqualTo(2);
+		assertThat(blackJack.getDealer().getCards().getCards().size()).isEqualTo(2);
+		assertThat(blackJack.getPlayers().get(0).getCards().getCards().size()).isEqualTo(2);
+		assertThat(blackJack.getPlayers().get(1).getCards().getCards().size()).isEqualTo(2);
 	}
 }
