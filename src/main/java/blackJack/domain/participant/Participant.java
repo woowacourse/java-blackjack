@@ -62,7 +62,7 @@ public abstract class Participant {
 
     private int countAce() {
         return (int)cards.stream()
-            .filter(card -> card.getDenomination() == Denomination.ACE)
+            .filter(Card::isSameDenominationAsAce)
             .count();
     }
 

@@ -28,16 +28,16 @@ public class Card {
         }
     }
 
+    public boolean isSameDenominationAsAce() {
+        return denomination == Denomination.ACE;
+    }
+
     public static List<Card> createNewCards() {
         return new ArrayList<>(CARDS);
     }
 
     public String getSymbolName() {
         return symbol.getName();
-    }
-
-    public Denomination getDenomination() {
-        return denomination;
     }
 
     public int getScore() {
