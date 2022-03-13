@@ -19,7 +19,7 @@ public class BlackjackController {
 
         hit(blackjack);
 
-        OutputView.printCardResult(getCardResult(participants));
+        OutputView.printCardResult(blackjack.getCardResult(participants));
         OutputView.printGameResult(blackjack.getGameResult());
     }
 
@@ -39,10 +39,11 @@ public class BlackjackController {
         }
         blackjack.receiveOneMoreCard(player);
         OutputView.printPlayerCards(player);
-        moreHit(blackjack, player, command);
+        moreHit(blackjack, player);
     }
 
-    private void moreHit(Blackjack blackjack, Player player, Command command) {
+    private void moreHit(Blackjack blackjack, Player player) {
+        Command command;
         do {
             command = Command.find(InputView.inputCommand(player));
             blackjack.receiveOneMoreCard(player);
@@ -54,10 +55,5 @@ public class BlackjackController {
         if (blackjack.isDealerReceiveOneMoreCard()) {
             OutputView.printReceivingMoreCardOfDealer();
         }
-    }
-
-    private Map<Participant, Integer> getCardResult(List<Participant> participants) {
-        return participants.stream()
-                .collect(Collectors.toMap(participant -> participant, Participant::countCards));
     }
 }

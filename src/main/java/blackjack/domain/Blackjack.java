@@ -35,6 +35,11 @@ public class Blackjack {
         return command == Command.HIT && player.countCards() < BLACKJACK_NUMBER;
     }
 
+    public Map<Participant, Integer> getCardResult(List<Participant> participants) {
+        return participants.stream()
+                .collect(Collectors.toMap(participant -> participant, Participant::countCards));
+    }
+
     public Map<PlayerOutcome, List<Player>> getGameResult() {
         return players.getGameResult();
     }
