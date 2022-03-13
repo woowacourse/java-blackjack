@@ -27,45 +27,32 @@ public class Cards {
         return Collections.unmodifiableList(cards.subList(0, size));
     }
 
-    public int getSumPoint() {
-        return cards.stream()
-                .mapToInt(Card::getPoint)
-                .sum();
-    }
-
     public int getScore() {
-        if (isContainsAce(cards)) {
-            return sumWithAce(cards);
+        if (containsAce(cards)) {
+            return sumWithAce();
         }
 
         return getSumPoint();
     }
 
-    private boolean isContainsAce(List<Card> cards) {
+    private boolean containsAce(List<Card> cards) {
         return cards.stream()
                 .anyMatch(card -> card.isAce());
     }
 
-    private int sumWithAce(List<Card> cards) {
-        int aceCount = Math.toIntExact(cards.stream()
-                .filter(Card::isAce).count());
-
-        int sum = cards.stream()
-                .mapToInt(Card::getPoint)
-                .sum();
-        
-        return calculateWithAce(sum, aceCount);
-    }
-
-    private int calculateWithAce(int sum, int aceCount) {
-        if (aceCount == 0) {
-            return sum;
-        }
+    private int sumWithAce() {
+        int sum = getSumPoint();
 
         if (sum + ACE_POINT_DIFFERENCE <= BLACKJACK_NUMBER) {
-            return calculateWithAce(sum + ACE_POINT_DIFFERENCE, aceCount - 1);
+            sum = sum + ACE_POINT_DIFFERENCE;
         }
-
+        
         return sum;
+    }
+
+    public int getSumPoint() {
+        return cards.stream()
+                .mapToInt(Card::getPoint)
+                .sum();
     }
 }
