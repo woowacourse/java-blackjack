@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class BlackJackGame {
+public class BlackjackGame {
     private final Participants players;
     private final Participant dealer;
 
-    public BlackJackGame(List<String> playersNames) {
+    public BlackjackGame(List<String> playersNames) {
         this.dealer = new Dealer(List.of(CardDeck.drawCard()));
         this.players = new Participants(createPlayers(playersNames));
     }

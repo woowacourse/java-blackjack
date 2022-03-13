@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackJackGame;
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.DrawCommand;
 import blackjack.domain.GameMachine;
 import blackjack.domain.card.HoldingCard;
@@ -8,10 +8,10 @@ import blackjack.dto.ScoreResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackJackController {
+public class BlackjackController {
 
     public void run() {
-        BlackJackGame blackJackGame = initBlackJackGame();
+        BlackjackGame blackJackGame = initBlackJackGame();
         OutputView.printInitialCardStatus(blackJackGame.getParticipantsDto());
 
         runAllPlayersTurn(blackJackGame);
@@ -21,21 +21,21 @@ public class BlackJackController {
 
     }
 
-    private BlackJackGame initBlackJackGame() {
+    private BlackjackGame initBlackJackGame() {
         try {
-            return new BlackJackGame(InputView.askPlayerNames());
+            return new BlackjackGame(InputView.askPlayerNames());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return initBlackJackGame();
         }
     }
 
-    private void runAllPlayersTurn(BlackJackGame blackJackGame) {
+    private void runAllPlayersTurn(BlackjackGame blackJackGame) {
         runPlayerTurn(blackJackGame);
         runDealerTurn(blackJackGame);
     }
 
-    private void runPlayerTurn(BlackJackGame blackJackGame) {
+    private void runPlayerTurn(BlackjackGame blackJackGame) {
         if (blackJackGame.isAllPlayerFinished()) {
             return;
         }
@@ -45,7 +45,7 @@ public class BlackJackController {
         runPlayerTurn(blackJackGame);
     }
 
-    private void runDealerTurn(BlackJackGame blackJackGame) {
+    private void runDealerTurn(BlackjackGame blackJackGame) {
         int gainCardCount = blackJackGame.dealerFinishGame();
         OutputView.printDealerGainCardCount(gainCardCount);
     }

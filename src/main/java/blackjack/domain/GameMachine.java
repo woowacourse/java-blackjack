@@ -7,11 +7,11 @@ import java.util.Map;
 
 public class GameMachine {
 
-    public static List<ParticipantDto> createPlayerFinalCardsAndScore(BlackJackGame blackJackGame) {
+    public static List<ParticipantDto> createPlayerFinalCardsAndScore(BlackjackGame blackJackGame) {
         return blackJackGame.getParticipantsDto();
     }
 
-    public static ScoreResultDto createFinalScore(BlackJackGame blackJackGame) {
+    public static ScoreResultDto createFinalScore(BlackjackGame blackJackGame) {
         Map<GameResult, Integer> dealerResult = blackJackGame.getDealerResult();
         Map<String, GameResult> playersResult = blackJackGame.getPlayersResult();
         return ScoreResultDto.from(dealerResult, playersResult);
