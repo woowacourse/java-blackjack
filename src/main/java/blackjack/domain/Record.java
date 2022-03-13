@@ -24,8 +24,8 @@ public enum Record {
 		this.dealerRecord = dealerRecord;
 	}
 
-	public static ResultDto of (Dealer dealer, List<Player> players) {
-		Map<String, String> playerRecords = PlayerRecord.of(dealer,players);
+	public static ResultDto of(Dealer dealer, List<Player> players) {
+		Map<String, String> playerRecords = PlayerRecord.of(dealer, players);
 		Map<String, Integer> dealerRecords = DealerRecord.of(dealer, players);
 
 		PlayerResultDto playerResultDto = new PlayerResultDto(playerRecords);
@@ -34,7 +34,7 @@ public enum Record {
 		return new ResultDto(dealerResultDto, playerResultDto);
 	}
 
-	public static int compare(Person person1, Person person2) {
+	private static int compare(Person person1, Person person2) {
 		return Integer.compare(person1.score(), person2.score());
 	}
 
