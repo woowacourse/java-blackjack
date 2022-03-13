@@ -39,10 +39,6 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
-    }
-
     public void initHit(Deck deck, int initDrawCount) {
         for (Player player : players) {
             hitCount(deck, initDrawCount, player);
@@ -70,5 +66,9 @@ public class Players {
 
     private boolean isDealer(Player player) {
         return player instanceof Dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }
