@@ -33,14 +33,14 @@ public class BlackjackController {
     }
 
     private List<String> names() {
-        String namesText;
+        List<String> names;
         try {
-            namesText = InputView.inputNames();
+            names = InputView.inputNames();
         } catch (IllegalArgumentException exception) {
             System.out.println("[ERROR] " + exception.getMessage());
             return names();
         }
-        return List.of(namesText.split(","));
+        return names;
     }
 
     private List<Gamer> createGamers(List<String> names, CardGenerator cardGenerator) {

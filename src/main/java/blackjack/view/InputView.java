@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -14,11 +15,11 @@ public class InputView {
     private InputView() {
     }
 
-    public static String inputNames() throws IllegalArgumentException {
+    public static List<String> inputNames() throws IllegalArgumentException {
         System.out.println(REQUEST_PLAYER_NAME_MSG);
         String text = SCANNER.nextLine();
         validateNameFormat(text);
-        return text;
+        return List.of(text.split(","));
     }
 
     private static void validateNameFormat(String text) {
