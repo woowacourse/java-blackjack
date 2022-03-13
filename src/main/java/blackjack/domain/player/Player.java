@@ -20,6 +20,4 @@ public interface Player {
     int getScore();
 
     boolean isValidRange();
-
-    int compareWinning(Player o);
 }

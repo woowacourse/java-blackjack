@@ -10,10 +10,7 @@ public abstract class AbstractPlayer implements Player {
 
     private static final int BLACKJACK_CARD_COUNT = 2;
 
-    public static final int MAX_SCORE = 21;
-    public static final int WIN = 1;
-    public static final int DRAW = 0;
-    public static final int LOSE = -1;
+    private static final int MAX_SCORE = 21;
 
     private final Name name;
     private final Cards cards;
@@ -64,10 +61,9 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public abstract boolean isValidRange();
-
-    @Override
-    public abstract int compareWinning(Player o);
+    public boolean isValidRange() {
+        return getScore() < MAX_SCORE;
+    }
 
     @Override
     public boolean equals(Object o) {

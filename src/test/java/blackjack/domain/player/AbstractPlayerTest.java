@@ -21,11 +21,6 @@ public class AbstractPlayerTest {
             public boolean isValidRange() {
                 return false;
             }
-
-            @Override
-            public int compareWinning(Player o) {
-                return 0;
-            }
         };
     }
 

@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 
 public enum Outcome {
@@ -15,12 +16,42 @@ public enum Outcome {
         this.outcome = outcome;
     }
 
-    public static Outcome compare(Player player1, Player player2) {
-        if (player1.compareWinning(player2) > 0) {
+    public static Outcome match(Dealer dealer, Player player) {
+        if (checkWin(dealer, player)) {
             return WIN;
         }
-        if (player1.compareWinning(player2) < 0) {
+        if (checkLose(dealer, player)) {
             return LOSE;
+        }
+        return DRAW;
+    }
+
+    private static boolean checkWin(Player dealer, Player player) {
+        if (player.isBust() && !dealer.isBust()) {
+            return true;
+        }
+        if (dealer.isBLACKJACK() && !player.isBLACKJACK()) {
+            return true;
+        }
+        return !dealer.isBust() && dealer.getScore() > player.getScore();
+    }
+
+    private static boolean checkLose(Player dealer, Player player) {
+        if (!player.isBust() && dealer.isBust()) {
+            return true;
+        }
+        if (!dealer.isBLACKJACK() && player.isBLACKJACK()) {
+            return true;
+        }
+        return !dealer.isBust() && dealer.getScore() < player.getScore();
+    }
+
+    public Outcome not() {
+        if (this.equals(WIN)) {
+            return LOSE;
+        }
+        if (this.equals(LOSE)) {
+            return WIN;
         }
         return DRAW;
     }

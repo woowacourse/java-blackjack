@@ -20,30 +20,6 @@ public class Dealer extends AbstractPlayer implements Player {
     }
 
     @Override
-    public int compareWinning(Player player) {
-        if (player.isBust()) {
-            return WIN;
-        }
-        if (isBust()) {
-            return LOSE;
-        }
-        return compareScore(player);
-    }
-
-    private int compareScore(Player player) {
-        if (isBLACKJACK() && player.isBLACKJACK()) {
-            return DRAW;
-        }
-        if (isBLACKJACK()) {
-            return WIN;
-        }
-        if (player.isBLACKJACK()) {
-            return LOSE;
-        }
-        return getScore() - player.getScore();
-    }
-
-    @Override
     public boolean equals(Object o) {
         return super.equals(o);
     }

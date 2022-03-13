@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import blackjack.domain.player.Name;
@@ -84,9 +85,10 @@ public class BlackjackController {
         Map<Player, OutcomeResults> results = new LinkedHashMap<>();
 
         for (Player player : players.getParticipants()) {
+            Outcome outcome = Outcome.match((Dealer) dealer, player);
+            dealerResult.increase(outcome);
             results.put(player, new OutcomeResults());
-            results.get(player).increase(Outcome.compare(player, dealer));
-            dealerResult.increase(Outcome.compare(dealer, player));
+            results.get(player).increase(outcome.not());
         }
 
         return new Results(dealerResult, results);
