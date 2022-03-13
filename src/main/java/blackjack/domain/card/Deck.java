@@ -10,7 +10,7 @@ public class Deck {
     private final Stack<Card> bunchOfCards;
 
     public Deck(CardGenerator cardGenerator) {
-        this.bunchOfCards = cardGenerator.generate();
+        this.bunchOfCards = cardGenerator.randomGenerate();
     }
 
     public List<Card> makeInitCards() {

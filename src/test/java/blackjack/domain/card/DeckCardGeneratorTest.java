@@ -13,7 +13,7 @@ public class DeckCardGeneratorTest {
     @DisplayName("DeckCard는 52장이다.")
     void checkDeckCardSize() {
         DeckCardGenerator deckCardGenerator = new DeckCardGenerator();
-        Stack<Card> bunchOfCards = deckCardGenerator.generate();
+        Stack<Card> bunchOfCards = deckCardGenerator.randomGenerate();
 
         assertThat(bunchOfCards.size()).isEqualTo(52);
     }

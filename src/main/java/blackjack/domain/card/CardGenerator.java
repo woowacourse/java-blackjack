@@ -5,5 +5,5 @@ import java.util.Stack;
 @FunctionalInterface
 public interface CardGenerator {
 
-    Stack<Card> generate();
+    Stack<Card> randomGenerate();
 }

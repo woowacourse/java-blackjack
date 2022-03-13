@@ -17,7 +17,7 @@ public class DeckTest {
     void drawCard() {
         Deck deck = new Deck(new CardGenerator() {
             @Override
-            public Stack<Card> generate() {
+            public Stack<Card> randomGenerate() {
                 List<Card> cards = List.of(new Card(Type.CLOVER, Score.KING));
                 Stack<Card> bunchOfCards = new Stack<>();
                 bunchOfCards.addAll(cards);
@@ -68,7 +68,7 @@ public class DeckTest {
     void drawDifferentCard() {
         Deck deck = new Deck(new CardGenerator() {
             @Override
-            public Stack<Card> generate() {
+            public Stack<Card> randomGenerate() {
                 List<Card> cards = List.of(new Card(Type.CLOVER, Score.KING), new Card(Type.DIAMOND, Score.SIX));
                 Stack<Card> bunchOfCards = new Stack<>();
                 bunchOfCards.addAll(cards);

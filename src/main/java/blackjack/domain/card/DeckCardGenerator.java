@@ -8,7 +8,7 @@ import java.util.Stack;
 public class DeckCardGenerator implements CardGenerator {
 
     @Override
-    public Stack<Card> generate() {
+    public Stack<Card> randomGenerate() {
         List<Card> cards = makeCards();
         Collections.shuffle(cards);
         Stack<Card> deck = new Stack<>();
