@@ -24,11 +24,13 @@ public class OutputView {
     }
 
     public static void printPlayerCards(ParticipantVo vo) {
-        List<String> list = vo.getCards().stream()
+        System.out.println(vo.getName() + "카드: " + String.join(", ", getCardsStatus(vo)));
+    }
+
+    private static List<String> getCardsStatus(ParticipantVo vo) {
+        return vo.getCards().stream()
             .map(card -> card.getNumber().getName() + card.getSymbol().getName())
             .collect(Collectors.toList());
-
-        System.out.println(vo.getName() + "카드: " + String.join(", ", list));
     }
 
     public static void printDealerDrawCardCount(DrawCount drawCount) {
@@ -44,12 +46,8 @@ public class OutputView {
         return "딜러가 16초과여서 카드를 받지않았습니다.";
     }
 
-    public static void printParticipantCards(ParticipantVo vo) {
-        List<String> list = vo.getCards().stream()
-            .map(card -> card.getNumber().getName() + card.getSymbol().getName())
-            .collect(Collectors.toList());
-
-        System.out.println(vo.getName() + "카드: " + String.join(", ", list)
+    public static void printParticipantCardsWithScore(ParticipantVo vo) {
+        System.out.println(vo.getName() + "카드: " + String.join(", ", getCardsStatus(vo))
             + " - 결과: " + vo.getScore());
     }
 

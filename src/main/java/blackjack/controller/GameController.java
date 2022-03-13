@@ -60,9 +60,9 @@ public class GameController {
     }
 
     private void ParticipantsResult(Game game) {
-        OutputView.printParticipantCards(new ParticipantVo(game.getDealer()));
+        OutputView.printParticipantCardsWithScore(new ParticipantVo(game.getDealer()));
         for (Player player : game.getPlayers()) {
-            OutputView.printParticipantCards(new ParticipantVo(player));
+            OutputView.printParticipantCardsWithScore(new ParticipantVo(player));
         }
     }
 
