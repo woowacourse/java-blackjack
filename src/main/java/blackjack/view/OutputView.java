@@ -14,14 +14,15 @@ import blackjack.domain.result.Results;
 
 public class OutputView {
 
-    private static final String DRAW_CARD_MESSAGE = "%s와 %s에게 2장을 나누었습니다.\n";
+    private static final String DRAW_CARD_MESSAGE = "%s와 %s에게 2장을 나누었습니다.";
     private static final String CARD_INFORMATION_MESSAGE = "%s카드: %s";
     private static final String TOTAL_RESULT_MESSAGE = "## 최종 승패";
     private static final String DRAW_RESULT_MESSAGE = "%s - 결과: %d";
-    private static final String RESULT_STATUS_MESSAGE = "%s: %s\n";
+    private static final String RESULT_STATUS_MESSAGE = "%s: %s";
 
     public static void printInitCard(Dealer dealer, Players players) {
         System.out.printf(DRAW_CARD_MESSAGE, dealer.getName(), printNames(players));
+        System.out.println();
         System.out.println(printDealerCard(dealer));
         System.out.println(printPlayersCard(players));
         System.out.println();
@@ -84,8 +85,10 @@ public class OutputView {
 
     public static void printTotalResult(Map<Gamer, Results> gamerResult) {
         System.out.println("\n" + TOTAL_RESULT_MESSAGE);
-        gamerResult.forEach(((gamer, results) -> System.out.printf(RESULT_STATUS_MESSAGE, gamer.getName(),
-            resultsToString(gamer, results))));
+        gamerResult.forEach(((gamer, results) -> {
+            System.out.printf(RESULT_STATUS_MESSAGE, gamer.getName(), resultsToString(gamer, results));
+            System.out.println();
+        }));
     }
 
     private static String resultsToString(Gamer gamer, Results results) {
