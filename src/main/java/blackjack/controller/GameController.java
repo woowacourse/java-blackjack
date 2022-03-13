@@ -5,61 +5,57 @@ import blackjack.dto.DealerTurnResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ParticipantResultDto;
 import blackjack.dto.RecordDto;
-import blackjack.service.Casino;
+import blackjack.service.GameService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
 public class GameController {
 
-    public void play() {
-        final Casino casino = crateCasino();
-        prepare(casino);
+    private final GameService gameService;
 
-        progressPlayerTurns(casino);
-        progressDealerTurn(casino);
-
-        endGame(casino);
+    public GameController() {
+        this.gameService = initService();
     }
 
-    private Casino crateCasino() {
+    private GameService initService() {
         try {
-            return new Casino(InputView.getPlayerNames());
+            return new GameService(InputView.getPlayerNames());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-            return crateCasino();
+            return initService();
         }
     }
 
-    private void prepare(final Casino casino) {
-        casino.prepareParticipants();
+    public void prepare() {
+        gameService.prepareParticipants();
 
-        OutputView.printInitResult(casino.getPlayersNames());
-        OutputView.printDealerFirstCard(casino.findDealerFirstCard());
-        casino.findAllPlayers().forEach(OutputView::printPlayerCards);
+        OutputView.printInitResult(gameService.getPlayersNames());
+        OutputView.printDealerFirstCard(gameService.findDealerFirstCard());
+        gameService.findAllPlayers().forEach(OutputView::printPlayerCards);
     }
 
-    private void progressPlayerTurns(final Casino casino) {
-        while (casino.isPlayerTurn()) {
-            final String playerName = casino.findDrawablePlayerName();
+    public void progressPlayerTurns() {
+        while (gameService.isPlayerTurn()) {
+            final String playerName = gameService.findDrawablePlayerName();
             final Status status = InputView.getHitOrStay(playerName);
 
-            final ParticipantDto dto = casino.progressPlayerTurn(playerName, status);
+            final ParticipantDto dto = gameService.progressPlayerTurn(playerName, status);
             OutputView.printPlayerCards(dto);
         }
     }
 
-    private void progressDealerTurn(final Casino casino) {
-        final DealerTurnResultDto dealerTurnResultDto = casino.progressDealerTurn();
+    public void progressDealerTurn() {
+        final DealerTurnResultDto dealerTurnResultDto = gameService.progressDealerTurn();
         OutputView.printDealerTurnResult(dealerTurnResultDto);
     }
 
-    private void endGame(final Casino casino) {
-        final List<ParticipantResultDto> resultDtos = casino.getAllResult();
+    public void endGame() {
+        final List<ParticipantResultDto> resultDtos = gameService.getAllResult();
         OutputView.breakLine();
         resultDtos.forEach(OutputView::printParticipantCards);
 
-        final RecordDto recordDto = casino.getAllRecord();
+        final RecordDto recordDto = gameService.getAllRecord();
         OutputView.printRecord(recordDto);
     }
 }

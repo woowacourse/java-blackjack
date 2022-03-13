@@ -14,13 +14,13 @@ import blackjack.dto.RecordDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Casino {
+public class GameService {
 
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
 
-    public Casino(final List<String> playerNames) {
+    public GameService(final List<String> playerNames) {
         this.deck = Deck.create();
         this.dealer = new Dealer();
         this.players = new Players(playerNames);
