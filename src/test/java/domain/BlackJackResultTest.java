@@ -6,8 +6,8 @@ import static domain.MatchResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.card.Card;
 import domain.card.Denomination;
-import domain.card.PlayingCard;
 import domain.card.Suit;
 import domain.player.Dealer;
 import domain.player.Gambler;
@@ -54,18 +54,18 @@ public class BlackJackResultTest {
     }
 
     private void cardSetup(Dealer dealer, List<Gambler> gamblers) {
-        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.JACK));
-        dealer.addCard(PlayingCard.of(Suit.HEARTS, Denomination.THREE));
+        dealer.addCard(Card.of(Suit.SPADES, Denomination.JACK));
+        dealer.addCard(Card.of(Suit.HEARTS, Denomination.THREE));
 
-        gamblers.get(0).addCard(PlayingCard.of(Suit.SPADES, Denomination.JACK));
-        gamblers.get(0).addCard(PlayingCard.of(Suit.CLUBS, Denomination.TWO));
+        gamblers.get(0).addCard(Card.of(Suit.SPADES, Denomination.JACK));
+        gamblers.get(0).addCard(Card.of(Suit.CLUBS, Denomination.TWO));
 
-        gamblers.get(1).addCard(PlayingCard.of(Suit.CLUBS, Denomination.JACK));
-        gamblers.get(1).addCard(PlayingCard.of(Suit.CLUBS, Denomination.ACE));
+        gamblers.get(1).addCard(Card.of(Suit.CLUBS, Denomination.JACK));
+        gamblers.get(1).addCard(Card.of(Suit.CLUBS, Denomination.ACE));
 
-        gamblers.get(2).addCard(PlayingCard.of(Suit.CLUBS, Denomination.ACE));
-        gamblers.get(2).addCard(PlayingCard.of(Suit.CLUBS, Denomination.TEN));
-        gamblers.get(2).addCard(PlayingCard.of(Suit.SPADES, Denomination.ACE));
-        gamblers.get(2).addCard(PlayingCard.of(Suit.SPADES, Denomination.ACE));
+        gamblers.get(2).addCard(Card.of(Suit.CLUBS, Denomination.ACE));
+        gamblers.get(2).addCard(Card.of(Suit.CLUBS, Denomination.TEN));
+        gamblers.get(2).addCard(Card.of(Suit.SPADES, Denomination.ACE));
+        gamblers.get(2).addCard(Card.of(Suit.SPADES, Denomination.ACE));
     }
 }

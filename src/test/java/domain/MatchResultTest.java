@@ -2,8 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
 import domain.card.Denomination;
-import domain.card.PlayingCard;
 import domain.card.Suit;
 import domain.player.Dealer;
 import domain.player.Gambler;
@@ -24,9 +24,9 @@ class MatchResultTest {
                          MatchResult expected) {
         // given
         Dealer dealer = new Dealer();
-        dealer.addCard(PlayingCard.of(dealerSuit, dealerDenomination));
+        dealer.addCard(Card.of(dealerSuit, dealerDenomination));
         Gambler gambler = new Gambler("리차드");
-        gambler.addCard(PlayingCard.of(gamblerSuit, gamblerDenomination));
+        gambler.addCard(Card.of(gamblerSuit, gamblerDenomination));
 
         // when
         MatchResult actual = MatchResult.of(dealer, gambler);

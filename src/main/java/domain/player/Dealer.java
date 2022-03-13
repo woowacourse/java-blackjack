@@ -15,6 +15,6 @@ public class Dealer extends Player {
     }
 
     public boolean isUnderSixteen() {
-        return ScoreUtil.getScore(getPlayingCards()) <= MORE_CARD_CRITERIA;
+        return ScoreUtil.getScore(getCards()) <= MORE_CARD_CRITERIA;
     }
 }

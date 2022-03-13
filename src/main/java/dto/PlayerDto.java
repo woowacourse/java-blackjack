@@ -1,6 +1,6 @@
 package dto;
 
-import domain.card.PlayingCard;
+import domain.card.Card;
 import domain.player.Player;
 import domain.util.ScoreUtil;
 import java.util.List;
@@ -11,15 +11,15 @@ public class PlayerDto {
     private static final String CARD_NAME_JOIN_CHARACTER = ", ";
 
     private final String name;
-    private final List<PlayingCard> playingCards;
+    private final List<Card> cards;
 
-    private PlayerDto(String name, List<PlayingCard> playingCards) {
+    private PlayerDto(String name, List<Card> cards) {
         this.name = name;
-        this.playingCards = List.copyOf(playingCards);
+        this.cards = List.copyOf(cards);
     }
 
     public static PlayerDto from(Player player) {
-        return new PlayerDto(player.getName(), player.getPlayingCards());
+        return new PlayerDto(player.getName(), player.getCards());
     }
 
     public String getName() {
@@ -27,17 +27,17 @@ public class PlayerDto {
     }
 
     public String getFirstCardName() {
-        return playingCards.get(FIRST_CARD_INDEX)
+        return cards.get(FIRST_CARD_INDEX)
                 .getCardName();
     }
 
     public String getJoinedCardNames() {
-        return playingCards.stream()
-                .map(PlayingCard::getCardName)
+        return cards.stream()
+                .map(Card::getCardName)
                 .collect(Collectors.joining(CARD_NAME_JOIN_CHARACTER));
     }
 
     public int getScore() {
-        return ScoreUtil.getScore(playingCards);
+        return ScoreUtil.getScore(cards);
     }
 }

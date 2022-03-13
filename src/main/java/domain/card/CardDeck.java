@@ -13,44 +13,44 @@ import java.util.stream.Stream;
 public class CardDeck {
     private static final int INITIAL_SIZE = 52;
     private static final String CAN_NOT_SHUFFLE_USED_DECK = "사용중인 카드는 다시 섞을 수 없습니다.";
-    private static final List<PlayingCard> originalPlayingCards;
+    private static final List<Card> originalCards;
 
-    private final Deque<PlayingCard> playingCards;
+    private final Deque<Card> cards;
 
     static {
-        originalPlayingCards = List.copyOf(
+        originalCards = List.copyOf(
                 Arrays.stream(Suit.values())
-                        .flatMap(CardDeck::getPlayingCardStream)
+                        .flatMap(CardDeck::getCardStream)
                         .collect(toList())
         );
     }
 
-    private static Stream<PlayingCard> getPlayingCardStream(Suit suit) {
+    private static Stream<Card> getCardStream(Suit suit) {
         return Arrays.stream(Denomination.values())
-                .map(denomination -> PlayingCard.of(suit, denomination));
+                .map(denomination -> Card.of(suit, denomination));
     }
 
     private CardDeck() {
-        this.playingCards = new ArrayDeque<>(originalPlayingCards);
+        this.cards = new ArrayDeque<>(originalCards);
     }
 
     public static CardDeck newInstance() {
         return new CardDeck();
     }
 
-    public PlayingCard getCard() {
-        return playingCards.pop();
+    public Card getCard() {
+        return cards.pop();
     }
 
     public CardDeck shuffle() {
-        if (playingCards.size() != INITIAL_SIZE) {
+        if (cards.size() != INITIAL_SIZE) {
             throw new IllegalStateException(CAN_NOT_SHUFFLE_USED_DECK);
         }
 
-        playingCards.clear();
-        List<PlayingCard> newPlayingCards = new ArrayList<>(originalPlayingCards);
-        Collections.shuffle(newPlayingCards);
-        playingCards.addAll(newPlayingCards);
+        cards.clear();
+        List<Card> newCards = new ArrayList<>(originalCards);
+        Collections.shuffle(newCards);
+        cards.addAll(newCards);
         return this;
     }
 }

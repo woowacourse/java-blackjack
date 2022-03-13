@@ -6,16 +6,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class PlayingCardTest {
+class CardTest {
     @ParameterizedTest(name = "{0}+{1} - {2}")
     @CsvSource(value = {"SPADES;ACE;(1,11)스페이드", "HEARTS;SEVEN;7하트"}, delimiter = ';')
-    @DisplayName("플레잉카드 생성 테스트")
-    void createPlayingCard(Suit suit, Denomination denomination, String expected) {
+    @DisplayName("카드 생성 테스트")
+    void createCard(Suit suit, Denomination denomination, String expected) {
         // given
-        PlayingCard playingCard = PlayingCard.of(suit, denomination);
+        Card card = Card.of(suit, denomination);
 
         // when
-        String cardName = playingCard.getCardName();
+        String cardName = card.getCardName();
 
         // then
         assertThat(cardName).isEqualTo(expected);
@@ -23,13 +23,13 @@ class PlayingCardTest {
 
     @ParameterizedTest(name = "{0}-{1}")
     @CsvSource(value = {"SPADES,ACE", "HEARTS,SEVEN"})
-    @DisplayName("플레잉카드 동등성 테스트")
-    void playingCardEqualityTest(Suit suit, Denomination denomination) {
+    @DisplayName("카드 동등성 테스트")
+    void cardEqualityTest(Suit suit, Denomination denomination) {
         // given
-        PlayingCard playingCard = PlayingCard.of(suit, denomination);
-        PlayingCard anotherCard = PlayingCard.of(suit, denomination);
+        Card card = Card.of(suit, denomination);
+        Card anotherCard = Card.of(suit, denomination);
 
         // when & then
-        assertThat(playingCard).isEqualTo(anotherCard);
+        assertThat(card).isEqualTo(anotherCard);
     }
 }

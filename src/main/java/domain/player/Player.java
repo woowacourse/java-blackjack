@@ -2,8 +2,8 @@ package domain.player;
 
 import static java.util.Collections.unmodifiableList;
 
-import domain.card.PlayingCard;
-import domain.card.PlayingCards;
+import domain.card.Card;
+import domain.card.Cards;
 import domain.util.ScoreUtil;
 import java.util.List;
 
@@ -12,7 +12,7 @@ public abstract class Player {
     private static final int BLACK_JACK = 21;
 
     private final String name;
-    private final PlayingCards playingCards = new PlayingCards();
+    private final Cards cards = new Cards();
 
     protected Player(String name) {
         this.name = name;
@@ -22,12 +22,12 @@ public abstract class Player {
         return this.name;
     }
 
-    public void addCard(PlayingCard playingCard) {
-        playingCards.addCard(playingCard);
+    public void addCard(Card card) {
+        cards.addCard(card);
     }
 
     public int getPlayResult() {
-        return ScoreUtil.getScore(playingCards.getPlayingCards());
+        return ScoreUtil.getScore(cards.getCards());
     }
 
     public boolean isBust() {
@@ -38,15 +38,15 @@ public abstract class Player {
         return getPlayResult() == BLACK_JACK;
     }
 
-    public List<PlayingCard> getPlayingCards() {
-        return unmodifiableList(playingCards.getPlayingCards());
+    public List<Card> getCards() {
+        return unmodifiableList(cards.getCards());
     }
 
     @Override
     public String toString() {
         return "Player{" +
                 "name='" + name + '\'' +
-                ", playingCards=" + playingCards +
+                ", cards=" + cards +
                 '}';
     }
 }

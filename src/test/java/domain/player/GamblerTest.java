@@ -3,7 +3,7 @@ package domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Denomination;
-import domain.card.PlayingCard;
+import domain.card.Card;
 import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,9 +28,9 @@ class GamblerTest {
     void is_bust() {
         // given
         Gambler gambler = new Gambler("dolbum");
-        gambler.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
-        gambler.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
-        gambler.addCard(PlayingCard.of(Suit.CLUBS, Denomination.KING));
+        gambler.addCard(Card.of(Suit.HEARTS, Denomination.KING));
+        gambler.addCard(Card.of(Suit.SPADES, Denomination.KING));
+        gambler.addCard(Card.of(Suit.CLUBS, Denomination.KING));
 
         // when
         boolean isBust = gambler.isBust();

@@ -1,6 +1,6 @@
 package domain.util;
 
-import domain.card.PlayingCard;
+import domain.card.Card;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -13,29 +13,29 @@ public class ScoreUtil {
     private ScoreUtil() {
     }
 
-    public static int getScore(List<PlayingCard> playingCards) {
-        if (containsAce(playingCards)) {
-            return getOptimizedScore(playingCards);
+    public static int getScore(List<Card> cards) {
+        if (containsAce(cards)) {
+            return getOptimizedScore(cards);
         }
 
-        return playingCards.stream()
-                .mapToInt(ScoreUtil::getScoreByPlayingCard)
+        return cards.stream()
+                .mapToInt(ScoreUtil::getScoreByCard)
                 .sum();
     }
 
-    private static boolean containsAce(List<PlayingCard> playingCards) {
-        return playingCards.stream()
-                .anyMatch(PlayingCard::isAce);
+    private static boolean containsAce(List<Card> cards) {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
-    private static int getOptimizedScore(List<PlayingCard> playingCards) {
-        int preSum = playingCards.stream()
-                .filter(playingCard -> !playingCard.isAce())
-                .mapToInt(ScoreUtil::getScoreByPlayingCard)
+    private static int getOptimizedScore(List<Card> cards) {
+        int preSum = cards.stream()
+                .filter(card -> !card.isAce())
+                .mapToInt(ScoreUtil::getScoreByCard)
                 .sum();
 
-        int aceCount = (int) playingCards.stream()
-                .filter(PlayingCard::isAce)
+        int aceCount = (int) cards.stream()
+                .filter(Card::isAce)
                 .count();
 
         return calculateOptimizeScore(preSum, aceCount);
@@ -54,7 +54,7 @@ public class ScoreUtil {
                 .orElse(aceCount) + preSum;
     }
 
-    private static int getScoreByPlayingCard(PlayingCard playingCard) {
-        return playingCard.getScore();
+    private static int getScoreByCard(Card card) {
+        return card.getScore();
     }
 }

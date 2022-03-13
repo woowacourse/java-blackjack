@@ -2,8 +2,8 @@ package domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
 import domain.card.Denomination;
-import domain.card.PlayingCard;
 import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,8 +28,8 @@ class DealerTest {
     void supply_card() {
         // given
         Dealer rich = new Dealer("rich");
-        rich.addCard(PlayingCard.of(Suit.HEARTS, Denomination.FIVE));
-        rich.addCard(PlayingCard.of(Suit.SPADES, Denomination.FIVE));
+        rich.addCard(Card.of(Suit.HEARTS, Denomination.FIVE));
+        rich.addCard(Card.of(Suit.SPADES, Denomination.FIVE));
         int expected = 10;
 
         // when
@@ -44,8 +44,8 @@ class DealerTest {
     void checkIfSameOrLessThanSixteen() {
         // given
         Dealer dealer = new Dealer("rich");
-        dealer.addCard(PlayingCard.of(Suit.HEARTS, Denomination.FIVE));
-        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.FIVE));
+        dealer.addCard(Card.of(Suit.HEARTS, Denomination.FIVE));
+        dealer.addCard(Card.of(Suit.SPADES, Denomination.FIVE));
 
         // when
         boolean actual = dealer.isUnderSixteen();
@@ -59,8 +59,8 @@ class DealerTest {
     void checkIfSameOrGreaterThanSeventeen() {
         // given
         Dealer dealer = new Dealer("rich");
-        dealer.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
-        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
+        dealer.addCard(Card.of(Suit.HEARTS, Denomination.KING));
+        dealer.addCard(Card.of(Suit.SPADES, Denomination.KING));
 
         // when
         boolean actual = dealer.isUnderSixteen();
@@ -74,9 +74,9 @@ class DealerTest {
     void isBust() {
         // given
         Dealer dealer = new Dealer("rich");
-        dealer.addCard(PlayingCard.of(Suit.HEARTS, Denomination.KING));
-        dealer.addCard(PlayingCard.of(Suit.SPADES, Denomination.KING));
-        dealer.addCard(PlayingCard.of(Suit.CLUBS, Denomination.KING));
+        dealer.addCard(Card.of(Suit.HEARTS, Denomination.KING));
+        dealer.addCard(Card.of(Suit.SPADES, Denomination.KING));
+        dealer.addCard(Card.of(Suit.CLUBS, Denomination.KING));
 
         // when
         boolean isBust = dealer.isBust();

@@ -23,13 +23,13 @@ public class CardDeckTest {
         CardDeck cardDeck = CardDeck.newInstance();
 
         // when
-        PlayingCard clubsAce = cardDeck.getCard();
-        PlayingCard clubsTwo = cardDeck.getCard();
+        Card clubsAce = cardDeck.getCard();
+        Card clubsTwo = cardDeck.getCard();
 
         // then
         assertAll(
-                () -> assertThat(clubsAce).isEqualTo(PlayingCard.of(Suit.CLUBS, Denomination.ACE)),
-                () -> assertThat(clubsTwo).isEqualTo(PlayingCard.of(Suit.CLUBS, Denomination.TWO))
+                () -> assertThat(clubsAce).isEqualTo(Card.of(Suit.CLUBS, Denomination.ACE)),
+                () -> assertThat(clubsTwo).isEqualTo(Card.of(Suit.CLUBS, Denomination.TWO))
         );
     }
 
@@ -40,7 +40,7 @@ public class CardDeckTest {
         CardDeck cardDeck = CardDeck.newInstance();
 
         // when
-        PlayingCard card = cardDeck.getCard();
+        Card card = cardDeck.getCard();
 
         // then
         assertThatThrownBy(cardDeck::shuffle)

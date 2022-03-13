@@ -2,19 +2,19 @@ package domain.card;
 
 import java.util.Objects;
 
-public class PlayingCard {
+public class Card {
     private static final String ACE_SYMBOL = "A";
 
     private final Suit suit;
     private final Denomination denomination;
 
-    private PlayingCard(Suit suit, Denomination denomination) {
+    private Card(Suit suit, Denomination denomination) {
         this.suit = suit;
         this.denomination = denomination;
     }
 
-    public static PlayingCard of(Suit suit, Denomination denomination) {
-        return new PlayingCard(suit, denomination);
+    public static Card of(Suit suit, Denomination denomination) {
+        return new Card(suit, denomination);
     }
 
     public String getCardName() {
@@ -41,7 +41,7 @@ public class PlayingCard {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        PlayingCard that = (PlayingCard) o;
+        Card that = (Card) o;
         return suit == that.suit && denomination == that.denomination;
     }
 
@@ -52,7 +52,7 @@ public class PlayingCard {
 
     @Override
     public String toString() {
-        return "PlayingCard{" +
+        return "Card{" +
                 "suit=" + suit +
                 ", denomination=" + denomination +
                 '}';

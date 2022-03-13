@@ -7,7 +7,7 @@ import static domain.card.Suit.DIAMONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.card.PlayingCard;
+import domain.card.Card;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,10 +17,10 @@ class ScoreUtilTest {
     @DisplayName("점수 계산 테스트")
     void scoreResultTest() {
         // given
-        List<PlayingCard> cards = List.of(
-                PlayingCard.of(DIAMONDS, SEVEN),
-                PlayingCard.of(DIAMONDS, JACK),
-                PlayingCard.of(DIAMONDS, ACE)
+        List<Card> cards = List.of(
+                Card.of(DIAMONDS, SEVEN),
+                Card.of(DIAMONDS, JACK),
+                Card.of(DIAMONDS, ACE)
         );
 
         // when
