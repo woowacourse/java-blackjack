@@ -1,12 +1,18 @@
 package blackjack.view;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
 import blackjack.domain.Result;
+import blackjack.dto.CardDto;
 import blackjack.dto.UserDto;
 import blackjack.dto.UsersDto;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -16,7 +22,9 @@ public class OutputView {
         System.out.println(ERROR + errorMessage);
     }
     public void printInitCards(UsersDto usersDto) {
-        printInitNames(usersDto.getDealerName(), usersDto.getPlayerNames());
+        List<String> playerNames = usersDto.getPlayerNames();
+
+        printInitNames(usersDto.getDealerName(), String.join(", ", playerNames));
 
         usersDto.getAllUserDto().forEach(this::printInitCardsInfo);
         System.out.println();
@@ -27,11 +35,25 @@ public class OutputView {
     }
 
     private void printInitCardsInfo(UserDto userDto) {
-        System.out.printf("%s카드: %s\n", userDto.getUserName(), userDto.getInitCardsInfo());
+        List<CardDto> initCards = userDto.getInitCards();
+
+        List<String> cardInfo = getCardInfo(initCards);
+
+        System.out.printf("%s카드: %s\n", userDto.getUserName(), String.join(", ", cardInfo));
     }
 
     public void printCards(UserDto userDto) {
-        System.out.printf("%s카드: %s\n", userDto.getUserName(), userDto.getCardsInfo());
+        List<CardDto> cards = userDto.getCards();
+
+        List<String> cardInfo = getCardInfo(cards);
+
+        System.out.printf("%s카드: %s\n", userDto.getUserName(), String.join(", ", cardInfo));
+    }
+
+    private List<String> getCardInfo(List<CardDto> cards) {
+        return cards.stream()
+                .map(card -> card.getSymbol() + card.getSuitName())
+                .collect(toList());
     }
 
     public void printDealer() {
@@ -39,7 +61,11 @@ public class OutputView {
     }
 
     public void printWithScore(UserDto userDto, int score) {
-        System.out.printf("\n%s카드: %s - 결과: %d", userDto.getUserName(), userDto.getCardsInfo(), score);
+        List<CardDto> cards = userDto.getCards();
+
+        List<String> cardInfo = getCardInfo(cards);
+
+        System.out.printf("\n%s카드: %s - 결과: %d", userDto.getUserName(), String.join(", ", cardInfo), score);
     }
 
     public void printYield(Map<String, Result> map) {
@@ -53,13 +79,13 @@ public class OutputView {
 
     private String calculateDealerYield(Map<String, Result> map) {
         return map.values().stream()
-                .collect(Collectors.groupingBy(
-                        Result::reverseResult, TreeMap::new, Collectors.counting()
+                .collect(groupingBy(
+                        Result::reverseResult, TreeMap::new, counting()
                 ))
                 .entrySet()
                 .stream()
                 .map(entry -> entry.getValue() + entry.getKey().getName())
-                .collect(Collectors.joining(" "));
+                .collect(joining(" "));
     }
 
     private void printPlayerYield(Map<String, Result> map) {

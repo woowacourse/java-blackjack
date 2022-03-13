@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.user.Users;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class UsersDto {
@@ -25,10 +24,10 @@ public class UsersDto {
         return dealerDto.getUserName();
     }
 
-    public String getPlayerNames() {
+    public List<String> getPlayerNames() {
         return playersDto.stream()
                 .map(UserDto::getUserName)
-                .collect(Collectors.joining(", "));
+                .collect(toList());
     }
 
     public List<UserDto> getAllUserDto() {
