@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 public class NameTest {
 	@ParameterizedTest
 	@EmptySource
-	@DisplayName("이름이 빈 입력이거나 null인 경우 에러 발생")
+	@DisplayName("이름이 빈 입력인 경우 에러 발생")
 	void blank_or_null(String input) {
 		assertThatThrownBy(() -> new Name(input))
 			.isInstanceOf(IllegalArgumentException.class)

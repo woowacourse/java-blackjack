@@ -10,9 +10,25 @@ public class InputView {
 	private static final Pattern YES_OR_NO = Pattern.compile("^[ynYN]$");
 
 	public List<String> inputPlayerNames() {
+		final String names = inputNames();
+		return Arrays.asList(names.split(","));
+	}
+
+	private String inputNames() {
 		System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
 		String names = scanner.nextLine();
-		return Arrays.asList(names.split(","));
+		try {
+			validateNullString(names);
+			return names;
+		} catch (IllegalArgumentException exception) {
+			return inputNames();
+		}
+	}
+
+	private void validateNullString(String names) {
+		if (names == null) {
+			throw new IllegalArgumentException("문자열의 입력이 NULL 이면 안됩니다.");
+		}
 	}
 
 	public String inputYesOrNo(String name) {

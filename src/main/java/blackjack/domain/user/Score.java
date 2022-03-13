@@ -6,11 +6,12 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Score implements Comparable<Score> {
-	private static final int BUST_STATE_SCORE = -1;
 	public static final int INITIAL_SCORE = 0;
 	public static final int ELEVEN_ACE_SCORE = 11;
-	private static final int HIT_THRESHOLD = 17;
 	public static final int BUST_THRESHOLD = 21;
+
+	private static final int BUST_STATE_SCORE = -1;
+	private static final int HIT_THRESHOLD = 17;
 	private static final Map<Integer, Score> scores = new HashMap<>();
 
 	static {
