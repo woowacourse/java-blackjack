@@ -1,14 +1,14 @@
 package domain.participant;
 
-import static java.lang.Integer.compare;
-
 import domain.card.Card;
 import domain.card.Cards;
-import domain.card.Deck;
+import utils.ExceptionMessages;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import utils.ExceptionMessages;
+
+import static java.lang.Integer.compare;
 
 public abstract class Participant implements Comparable<Participant> {
 
@@ -31,8 +31,8 @@ public abstract class Participant implements Comparable<Participant> {
         cards.addCard(card);
     }
 
-    public void hitInitialTurn() {
-        cards.addCards(Deck.handOutInitialTurn());
+    public void hitInitialTurn(List<Card> cards) {
+        this.cards.addCards(cards);
     }
 
     public int calculateScore() {

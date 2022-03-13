@@ -3,6 +3,7 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utils.ExceptionMessages;
@@ -32,8 +33,9 @@ class PlayersTest {
     @DisplayName("첫 턴에서 모든 참가자가 카드를 두개씩 뽑는지 확인")
     void initialTurnTest(){
         Players players = Players.of("runa, kun");
+        Deck deck = Deck.initDeck();
 
-        players.runInitialTurn();
+        players.runInitialTurn(deck);
         int actual = (int)players.getPlayers().stream()
             .filter(participant -> participant.getCards().size() == 2)
             .count();

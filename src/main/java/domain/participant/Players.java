@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.card.Deck;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -24,9 +26,9 @@ public class Players {
         return new Players(players);
     }
 
-    public void runInitialTurn() {
+    public void runInitialTurn(Deck deck) {
         for (Player player : players) {
-            player.hitInitialTurn();
+            player.hitInitialTurn(deck.handOutInitialTurn());
         }
     }
 
