@@ -25,7 +25,7 @@ public class Dealer extends Participant {
     }
 
     public boolean isPossibleToDraw() {
-        return calculateScore() < DEALER_MIN_SCORE;
+        return !calculateScore().isOver(DEALER_MIN_SCORE);
     }
 
     public PlayerResult judgeWinner(final Player player) {

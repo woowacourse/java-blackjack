@@ -12,12 +12,12 @@ public enum PlayerResult {
         this.name = name;
     }
 
-    public static PlayerResult calculateResult(final int score, final int otherScore) {
-        if (score > otherScore) {
+    public static PlayerResult calculateResult(Score score, Score otherScore) {
+        if (score.compareTo(otherScore) > 0) {
             return WIN;
         }
-        if (score == otherScore) {
-            return DRAW;
+        if (score.compareTo(otherScore) == 0) {
+            return WIN;
         }
         return LOSS;
     }

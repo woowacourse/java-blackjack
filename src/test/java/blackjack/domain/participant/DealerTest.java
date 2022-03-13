@@ -63,7 +63,7 @@ class DealerTest {
 
     @ParameterizedTest()
     @MethodSource("provideForDealerLoseByBurst")
-    @DisplayName("플레이어의 카드 합이 버스트일 경우 패배한다.")
+    @DisplayName("딜러의 카드 합이 버스트일 경우 패배한다.")
     void dealerLoseByBurst(List<Card> initializedCards) {
         final ManualCardStrategy manualCardStrategy = new ManualCardStrategy();
         manualCardStrategy.initCards(initializedCards);
@@ -102,9 +102,6 @@ class DealerTest {
         final Player player = new Player("if");
         player.drawCard(deck);
         player.drawCard(deck);
-        while(dealer.isPossibleToDraw()) {
-            dealer.drawCard(deck);
-        }
 
         final PlayerResult actualPlayerResult = dealer.judgeWinner(player);
         assertThat(actualPlayerResult).isEqualTo(expectedPlayerResult);

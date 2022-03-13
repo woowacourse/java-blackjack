@@ -2,16 +2,15 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.Score;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Participant {
+import static blackjack.domain.result.Score.ACE_NUMBER;
+import static blackjack.domain.result.Score.BLACKJACK_NUMBER;
 
-    private static final int BLACKJACK_NUMBER = 21;
-    private static final int ACE_NUMBER = 1;
-    private static final int ALTERNATE_ACE_VALUE = 10;
+public abstract class Participant {
 
     private final String name;
     private final List<Card> cards;
@@ -28,19 +27,14 @@ public abstract class Participant {
         cards.add(deck.drawCard());
     }
 
-    protected int calculateScore() {
-        int totalSum = calculateWithoutAce();
+    protected Score calculateScore() {
+        Score score = Score.from(cards);
 
         if (hasAceCard()) {
-            totalSum = checkAceScore(totalSum);
+            score = score.calculateWithAce();
         }
-        return totalSum;
-    }
 
-    private int calculateWithoutAce() {
-        return cards.stream()
-                .mapToInt(Card::getNumber)
-                .sum();
+        return score;
     }
 
     private boolean hasAceCard() {
@@ -48,19 +42,12 @@ public abstract class Participant {
                 .anyMatch(card -> card.getNumber() == ACE_NUMBER);
     }
 
-    private int checkAceScore(int totalSum) {
-        if (totalSum + ALTERNATE_ACE_VALUE > BLACKJACK_NUMBER) {
-            return totalSum;
-        }
-        return totalSum + ALTERNATE_ACE_VALUE;
-    }
-
     public boolean isBust() {
-        return calculateScore() > BLACKJACK_NUMBER;
+        return calculateScore().isOver(BLACKJACK_NUMBER);
     }
 
     public int getScore() {
-        return calculateScore();
+        return calculateScore().getValue();
     }
 
     public List<Card> getCards() {
