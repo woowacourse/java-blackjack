@@ -2,16 +2,20 @@ package blackjack.domain;
 
 public class BlackjackGame {
 
+    private static final int INITIAL_CARD_NUMBER = 2;
+
     private final Players players;
-    private final Dealer dealer = new Dealer();
-    private final Drawable deck = new Deck();
+    private final Dealer dealer;
+    private final Drawable deck;
 
     public BlackjackGame(Players players) {
         this.players = players;
+        this.dealer = new Dealer();
+        this.deck = new Deck();
     }
 
-    public void drawCardTwice() {
-        for (int i = 0; i < 2; i++) {
+    public void drawStartingCard() {
+        for (int i = 0; i < INITIAL_CARD_NUMBER; i++) {
             players.drawAll(deck);
             dealer.drawCard(deck);
         }
@@ -29,6 +33,14 @@ public class BlackjackGame {
         return players.compete(dealer);
     }
 
+    public void drawPlayerCard() {
+        players.drawPlayerCard(deck);
+    }
+
+    public void proceedTurn() {
+        players.proceedTurn();
+    }
+
     public Players getPlayers() {
         return players;
     }
@@ -37,7 +49,19 @@ public class BlackjackGame {
         return dealer;
     }
 
-    public Drawable getDeck() {
-        return deck;
+    public String getNowTurnPlayerName() {
+        return getNowTurnPlayer().getName();
+    }
+
+    public Player getNowTurnPlayer() {
+        return players.getCurrentTurnPlayer();
+    }
+
+    public boolean isBustCurrentTurn() {
+        return players.isBustCurrentTurnPlayer();
+    }
+
+    public boolean isEndAllPlayersTurn() {
+        return players.hasNoNext();
     }
 }

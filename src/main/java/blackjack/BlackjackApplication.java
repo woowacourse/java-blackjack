@@ -1,5 +1,6 @@
 package blackjack;
 
+import static blackjack.view.InputView.requestDrawCommand;
 import static blackjack.view.OutputView.printDealerDrawMessage;
 import static blackjack.view.OutputView.printInitGameMessage;
 import static blackjack.view.OutputView.printOpenCard;
@@ -8,7 +9,6 @@ import static blackjack.view.OutputView.printPlayersResult;
 import static blackjack.view.OutputView.printResult;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.Drawable;
 import blackjack.domain.Name;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
@@ -30,7 +30,7 @@ public class BlackjackApplication {
     }
 
     private static void startSetting(BlackjackGame blackjackGame) {
-        blackjackGame.drawCardTwice();
+        blackjackGame.drawStartingCard();
 
         List<PlayerDto> playerDtos = toDto(blackjackGame.getPlayers());
         PlayerDto dealerDto = toDto(blackjackGame.getDealer());
@@ -39,8 +39,30 @@ public class BlackjackApplication {
     }
 
     private static void takeTurns(BlackjackGame blackjackGame) {
-        takeTurnsPlayers(blackjackGame.getPlayers(), blackjackGame.getDeck());
+        takeTurnPlayers(blackjackGame);
         takeTurnDealer(blackjackGame);
+    }
+
+    private static void takeTurnPlayers(BlackjackGame blackjackGame) {
+        Selection selection = Selection.YES;
+        while (selection == Selection.YES && !blackjackGame.isEndAllPlayersTurn()) {
+            selection = Selection.from(requestDrawCommand(blackjackGame.getNowTurnPlayerName()));
+            takeTurn(blackjackGame, selection);
+        }
+
+    }
+
+    private static void takeTurn(BlackjackGame blackjackGame, Selection selection) {
+        if (selection == Selection.NO) {
+            printPlayerCards(toDto(blackjackGame.getNowTurnPlayer()));
+            blackjackGame.proceedTurn();
+            return;
+        }
+        blackjackGame.drawPlayerCard();
+        printPlayerCards(toDto(blackjackGame.getNowTurnPlayer()));
+        if (blackjackGame.isBustCurrentTurn()) {
+            blackjackGame.proceedTurn();
+        }
     }
 
     private static void endGame(BlackjackGame blackjackGame) {
@@ -49,41 +71,11 @@ public class BlackjackApplication {
         printResult(result);
     }
 
-    private static void takeTurnsPlayers(Players players, Drawable deck) {
-        for (Player player : players.getValue()) {
-            takeTurn(player, deck);
-        }
-    }
-
-    private static void takeTurn(Player player, Drawable deck) {
-        Selection selection = Selection.YES;
-        while (selection == Selection.YES && !player.isBust()) {
-            selection = requestSelection(player);
-            draw(player, deck, selection);
-        }
-    }
-
-    private static Selection requestSelection(Player player) {
-        try {
-            return Selection.from(InputView.requestDrawCommand(toDto(player)));
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return requestSelection(player);
-        }
-    }
-
     private static void takeTurnDealer(BlackjackGame blackjackGame) {
         while (blackjackGame.checkDealerDrawable()) {
             printDealerDrawMessage();
             blackjackGame.drawDealerCard();
         }
-    }
-
-    private static void draw(Player player, Drawable deck, Selection selection) {
-        if (selection == Selection.YES) {
-            player.drawCard(deck);
-        }
-        printPlayerCards(toDto(player));
     }
 
     private static PlayerDto toDto(Player player) {

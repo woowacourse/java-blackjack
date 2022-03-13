@@ -36,7 +36,7 @@ public class PlayerTest {
         void returnFalse(CardNumber cardNumber, boolean expected) {
             Player player = new Player(new Name("roma"));
             MockDeck mockDeck = new MockDeck(List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK)
-                , Card.of(CardPattern.CLOVER, CardNumber.KING), Card.of(CardPattern.CLOVER, cardNumber)));
+                    , Card.of(CardPattern.CLOVER, CardNumber.KING), Card.of(CardPattern.CLOVER, cardNumber)));
             player.drawCard(mockDeck);
             player.drawCard(mockDeck);
             player.drawCard(mockDeck);
@@ -52,20 +52,39 @@ public class PlayerTest {
         @ParameterizedTest
         @CsvSource(value = {"FOUR|LOSE", "FIVE|DRAW", "SIX|WIN"}, delimiter = '|')
         @DisplayName("딜러와 점수를 비교하여 승부 결과를 반환한다.")
-        void returnFalse(CardNumber cardNumber, Score expected) {
+        void returnResult(CardNumber cardNumber, Score expected) {
             Player player = new Player("player");
             Dealer dealer = new Dealer();
-            MockDeck mockDeck = new MockDeck(List.of(Card.of(CardPattern.DIAMOND, cardNumber),
-                Card.of(CardPattern.DIAMOND, CardNumber.FIVE)));
+            MockDeck mockDeck = new MockDeck(List.of(
+                    Card.of(CardPattern.DIAMOND, cardNumber),
+                    Card.of(CardPattern.DIAMOND, CardNumber.FIVE)));
             player.drawCard(mockDeck);
             dealer.drawCard(mockDeck);
             Assertions.assertThat(player.compete(dealer)).isEqualTo(expected);
         }
 
+        @Test
+        @DisplayName("본인의 카드가 버스트일 때 항상 패배한다.")
+        void returnResultWithPlayerBust() {
+            Player player = new Player("player");
+            Dealer dealer = new Dealer();
+            MockDeck mockDeck = new MockDeck(List.of(
+                    Card.of(CardPattern.DIAMOND, CardNumber.TEN),
+                    Card.of(CardPattern.CLOVER, CardNumber.QUEEN),
+                    Card.of(CardPattern.CLOVER, CardNumber.TEN),
+                    Card.of(CardPattern.DIAMOND, CardNumber.FIVE)));
+            for (int i = 0; i < 3; i++) {
+                player.drawCard(mockDeck);
+            }
+            dealer.drawCard(mockDeck);
+
+            Assertions.assertThat(player.compete(dealer)).isEqualTo(Score.LOSE);
+        }
+
         @ParameterizedTest
         @CsvSource(value = {"TEN|DRAW", "ACE|WIN"}, delimiter = '|')
         @DisplayName("딜러가 버스트일 때 승부 결과를 반환한다.")
-        void returnResult(CardNumber cardNumber, Score expected) {
+        void returnResultWithDealerBust(CardNumber cardNumber, Score expected) {
             Player player = new Player("player");
             Dealer dealer = new Dealer();
             player.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TEN));

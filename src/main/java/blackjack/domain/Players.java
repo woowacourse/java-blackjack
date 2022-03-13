@@ -9,13 +9,15 @@ import java.util.Map;
 public class Players {
 
     private static final int CAPACITY = 8;
+    public static final int ONE_INDEX = 1;
 
     private final List<Player> players;
+    private int currentTurnIndex;
 
     public Players(List<Player> players) {
-        validateCapacity(players);
-
         this.players = new ArrayList<>(players);
+        this.currentTurnIndex = 0;
+        validateCapacity(players);
     }
 
     public void drawAll(Drawable drawable) {
@@ -28,10 +30,6 @@ public class Players {
         if (players.size() > CAPACITY) {
             throw new IllegalArgumentException("인원수는 8명을 넘을 수 없습니다.");
         }
-    }
-
-    public List<Player> getValue() {
-        return List.copyOf(players);
     }
 
     public ScoreResult compete(Dealer dealer) {
@@ -47,5 +45,32 @@ public class Players {
             dealerResult.merge(Score.inverse(score), 1, Integer::sum);
         }
         return new ScoreResult(dealerResult, playerResults);
+    }
+
+    public void drawPlayerCard(Drawable deck) {
+        getCurrentTurnPlayer().drawCard(deck);
+    }
+
+    public boolean isBustCurrentTurnPlayer() {
+        return getCurrentTurnPlayer().isBust();
+    }
+
+    public boolean hasNoNext() {
+        return currentTurnIndex + ONE_INDEX >= players.size();
+    }
+
+    public void proceedTurn() {
+        if (hasNoNext()) {
+            throw new IllegalStateException("proceed 할 수 없습니다.");
+        }
+        currentTurnIndex++;
+    }
+
+    public Player getCurrentTurnPlayer() {
+        return players.get(currentTurnIndex);
+    }
+
+    public List<Player> getValue() {
+        return List.copyOf(players);
     }
 }
