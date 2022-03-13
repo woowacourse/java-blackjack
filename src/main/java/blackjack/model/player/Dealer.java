@@ -13,21 +13,23 @@ import blackjack.model.cards.Score;
 import blackjack.model.cards.ScoreCards;
 import java.util.Map;
 
-public final class Dealer extends Player {
+public final class Dealer {
 
     private static final Name NAME = new Name("딜러");
     private static final Score HIT_BOUNDARY = new Score(17);
     private static final int OPEN_CARD_COUNT = 1;
 
     private final ScoreCards cards;
+    private final Player player;
+
 
     public Dealer(Card card1, Card card2, Card... cards) {
         this(Cards.of(card1, card2, cards));
     }
 
-    private Dealer(Cards ownCards) {
-        super(NAME, ownCards);
-        this.cards = Cards.maxScoreCards(ownCards);
+    private Dealer(Cards handCards) {
+        this.cards = Cards.maxScoreCards(handCards);
+        this.player = new Player(NAME, cards, OPEN_CARD_COUNT);
     }
 
     public Records matchAll(Players players) {
@@ -49,20 +51,49 @@ public final class Dealer extends Player {
     }
 
     private Result compareWith(Player player) {
-        if(player.lessScoreThan(this)) {
-            return LOSS;
-        } else if(player.moreScoreThan(this)) {
+        if(lessScoreThan(player)) {
             return WIN;
+        } else if(moreScoreThan(player)) {
+            return LOSS;
         }
         return DRAW;
     }
 
-    @Override
-    public Cards openCards() {
-        return cards().openedCards(OPEN_CARD_COUNT);
+    private boolean lessScoreThan(Player other) {
+        return score().lessThan(other.score());
     }
 
-    @Override
+    private boolean moreScoreThan(Player other) {
+        return score().moreThan(other.score());
+    }
+
+    public final Score score() {
+        return player.score();
+    }
+
+    public final Cards cards() {
+        return player.cards();
+    }
+
+    public final void take(Card card) {
+        if (!isHittable()) {
+            throw new IllegalStateException("카드를 더 이상 발급 받을 수 없습니다.");
+        }
+        player.take(card);
+    }
+
+    public final boolean isBust() {
+        return player.isBust();
+    }
+
+    public final Name name() {
+        return player.name();
+    }
+
+    public Cards openCards() {
+        return player.openCards();
+    }
+
     public boolean isHittable() {
         return cards.lessThan(HIT_BOUNDARY);
     }
