@@ -70,7 +70,7 @@ public class Controller {
 			blackjackResult.getDealerLoseCount());
 
 		for (Name name : names) {
-			OutputView.printPlayerResult(name.getName(), blackjackResult.getVersusOfPlayer(name).getResult());
+			OutputView.printPlayerResult(name.getName(), blackjackResult.getResultOfPlayer(name).getResult());
 		}
 	}
 
@@ -141,7 +141,7 @@ public class Controller {
 		);
 
 		for (Name name : names) {
-			OutputView.printPlayerResult(name.getName(), finalResult.getVersusOfPlayer(name).getResult());
+			OutputView.printPlayerResult(name.getName(), finalResult.getResultOfPlayer(name).getResult());
 		}
 	}
 }

@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import domain.card.Card;
-import domain.result.Versus;
+import domain.result.WinOrLose;
 
 public class Players {
 
@@ -58,17 +58,17 @@ public class Players {
 			.map((Player::isMaxScore)).findFirst().orElseThrow();
 	}
 
-	public Map<Name, Versus> getResultAtBlackJack(Participant other) {
+	public Map<Name, WinOrLose> getResultAtBlackJack(Participant other) {
 		if (!other.blackJack) {
 			throw new IllegalStateException(NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE);
 		}
-		Map<Name, Versus> map = new LinkedHashMap<>();
+		Map<Name, WinOrLose> map = new LinkedHashMap<>();
 		players.stream().forEach(player -> map.put(player.name, player.compareAtBlackJack(other)));
 		return map;
 	}
 
-	public Map<Name, Versus> getResultAtFinal(Participant other) {
-		Map<Name, Versus> map = new LinkedHashMap<>();
+	public Map<Name, WinOrLose> getResultAtFinal(Participant other) {
+		Map<Name, WinOrLose> map = new LinkedHashMap<>();
 		players.stream().forEach(player -> map.put(player.name, player.compareAtFinal(other)));
 		return map;
 	}

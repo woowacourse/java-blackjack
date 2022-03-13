@@ -3,7 +3,7 @@ package domain.participant;
 import java.util.List;
 
 import domain.card.Card;
-import domain.result.Versus;
+import domain.result.WinOrLose;
 
 public class Player extends Participant {
 
@@ -11,37 +11,37 @@ public class Player extends Participant {
 		super(name, hand);
 	}
 
-	public Versus compareAtBlackJack(Participant other) {
+	public WinOrLose compareAtBlackJack(Participant other) {
 		boolean isPlayerBlackJack = this.blackJack;
 		boolean isOtherBlackJack = other.blackJack;
 		if (isOtherBlackJack && isPlayerBlackJack) {
-			return Versus.DRAW;
+			return WinOrLose.DRAW;
 		}
 		if (!isOtherBlackJack && isPlayerBlackJack) {
-			return Versus.WIN;
+			return WinOrLose.WIN;
 		}
-		return Versus.LOSE;
+		return WinOrLose.LOSE;
 	}
 
-	public Versus compareAtFinal(Participant other) {
+	public WinOrLose compareAtFinal(Participant other) {
 		if (isBust()) {
-			return Versus.LOSE;
+			return WinOrLose.LOSE;
 		}
 		if (this.blackJack || other.isBust()) {
-			return Versus.WIN;
+			return WinOrLose.WIN;
 		}
 		return judgeVersus(other.getBestScore());
 	}
 
-	private Versus judgeVersus(int otherScore) {
+	private WinOrLose judgeVersus(int otherScore) {
 		int myScore = getBestScore();
 		if (myScore > otherScore) {
-			return Versus.WIN;
+			return WinOrLose.WIN;
 		}
 		if (myScore < otherScore) {
-			return Versus.LOSE;
+			return WinOrLose.LOSE;
 		}
-		return Versus.DRAW;
+		return WinOrLose.DRAW;
 	}
 
 	public boolean isNameMatch(Name name) {

@@ -41,37 +41,37 @@ public class ResultTest {
 	@Test
 	@DisplayName("딜러도 safe, 플레이어 safe, 플레이어 승")
 	void getVersusOfPlayer_Pobi() {
-		assertThat(result.getVersusOfPlayer(new Name("pobi")).getResult()).isEqualTo("승");
+		assertThat(result.getResultOfPlayer(new Name("pobi")).getResult()).isEqualTo("승");
 	}
 
 	@Test
 	@DisplayName("딜러도 safe, 플레이어 safe, 무승부")
 	void getVersusOfPlayer_Gugu() {
-		assertThat(result.getVersusOfPlayer(new Name("gugu")).getResult()).isEqualTo("무");
+		assertThat(result.getResultOfPlayer(new Name("gugu")).getResult()).isEqualTo("무");
 	}
 
 	@Test
 	@DisplayName("딜러도 safe, 플레이어 safe, 플레이어 패")
 	void getVersusOfPlayer_Jason() {
-		assertThat(result.getVersusOfPlayer(new Name("jason")).getResult()).isEqualTo("패");
+		assertThat(result.getResultOfPlayer(new Name("jason")).getResult()).isEqualTo("패");
 	}
 
 	@Test
 	@DisplayName("딜러도 safe, 플레이어 burst, 플레이어 패")
 	void getVersusOfPlayer_Woni() {
-		assertThat(result.getVersusOfPlayer(new Name("woni")).getResult()).isEqualTo("패");
+		assertThat(result.getResultOfPlayer(new Name("woni")).getResult()).isEqualTo("패");
 	}
 
 	@Test
 	@DisplayName("딜러도 burst, 플레이어 safe, 플레이어 승")
 	void getVersusOfPlayer_Pobi2() {
-		assertThat(result_dealer_burst.getVersusOfPlayer(new Name("pobi")).getResult()).isEqualTo("승");
+		assertThat(result_dealer_burst.getResultOfPlayer(new Name("pobi")).getResult()).isEqualTo("승");
 	}
 
 	@Test
 	@DisplayName("딜러도 burst, 플레이어 burst, 플레이어 패")
 	void getVersusOfPlayer_Woni2() {
-		assertThat(result_dealer_burst.getVersusOfPlayer(new Name("woni")).getResult()).isEqualTo("패");
+		assertThat(result_dealer_burst.getResultOfPlayer(new Name("woni")).getResult()).isEqualTo("패");
 	}
 
 	@Test

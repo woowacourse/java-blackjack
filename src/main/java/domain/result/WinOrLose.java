@@ -1,13 +1,13 @@
 package domain.result;
 
-public enum Versus {
+public enum WinOrLose {
 	WIN("승"),
 	DRAW("무"),
 	LOSE("패");
 
 	private final String result;
 
-	Versus(String result) {
+	WinOrLose(String result) {
 		this.result = result;
 	}
 

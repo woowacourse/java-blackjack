@@ -6,31 +6,31 @@ import domain.participant.Name;
 
 public class Result {
 
-	private final Map<Name, Versus> playerResults;
+	private final Map<Name, WinOrLose> playerResults;
 
-	public Result(Map<Name, Versus> playerResults) {
+	public Result(Map<Name, WinOrLose> playerResults) {
 		this.playerResults = Map.copyOf(playerResults);
 	}
 
-	public Versus getVersusOfPlayer(Name name) {
+	public WinOrLose getResultOfPlayer(Name name) {
 		return playerResults.get(name);
 	}
 
 	public int getDealerWinCount() {
 		return (int)playerResults.keySet().stream()
-			.filter(key -> playerResults.get(key) == Versus.LOSE)
+			.filter(key -> playerResults.get(key) == WinOrLose.LOSE)
 			.count();
 	}
 
 	public int getDealerDrawCount() {
 		return (int)playerResults.keySet().stream()
-			.filter(key -> playerResults.get(key) == Versus.DRAW)
+			.filter(key -> playerResults.get(key) == WinOrLose.DRAW)
 			.count();
 	}
 
 	public int getDealerLoseCount() {
 		return (int)playerResults.keySet().stream()
-			.filter(key -> playerResults.get(key) == Versus.WIN)
+			.filter(key -> playerResults.get(key) == WinOrLose.WIN)
 			.count();
 	}
 }

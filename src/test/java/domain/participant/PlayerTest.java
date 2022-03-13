@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.result.Versus;
+import domain.result.WinOrLose;
 
 public class PlayerTest {
 	List<Card> handForPlayer;
@@ -31,7 +31,7 @@ public class PlayerTest {
 		List<Card> handForDealer = new ArrayList<>(
 			List.of(new Card(Rank.RANK_JACK, Suit.CLOVER), new Card(Rank.RANK_ACE, Suit.CLOVER)));
 		Dealer dealer = new Dealer(handForDealer);
-		assertThat(player.compareAtBlackJack(dealer)).isEqualTo(Versus.LOSE);
+		assertThat(player.compareAtBlackJack(dealer)).isEqualTo(WinOrLose.LOSE);
 	}
 
 	@Test
@@ -40,7 +40,7 @@ public class PlayerTest {
 		List<Card> handForDealer = new ArrayList<>(
 			List.of(new Card(Rank.RANK_JACK, Suit.CLOVER), new Card(Rank.RANK_ACE, Suit.CLOVER)));
 		Dealer dealer = new Dealer(handForDealer);
-		assertThat(player.compareAtFinal(dealer)).isEqualTo(Versus.LOSE);
+		assertThat(player.compareAtFinal(dealer)).isEqualTo(WinOrLose.LOSE);
 	}
 
 	@Test

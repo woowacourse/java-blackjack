@@ -18,7 +18,7 @@ import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.card.deckstrategy.GenerationDeckStrategy;
-import domain.result.Versus;
+import domain.result.WinOrLose;
 
 public class PlayersTest {
 
@@ -93,17 +93,17 @@ public class PlayersTest {
 	@Test
 	@DisplayName("딜러가 블랙잭일 경우 결과 반환")
 	void getResultAtBlackJack() {
-		Map<Name, Versus> resultMap = players.getResultAtBlackJack(dealerBlackJack);
-		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(Versus.DRAW);
-		assertThat(resultMap.get(new Name("jason"))).isEqualTo(Versus.LOSE);
+		Map<Name, WinOrLose> resultMap = players.getResultAtBlackJack(dealerBlackJack);
+		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(WinOrLose.DRAW);
+		assertThat(resultMap.get(new Name("jason"))).isEqualTo(WinOrLose.LOSE);
 	}
 
 	@Test
 	@DisplayName("최종 게임 결과 반환")
 	void getResultAtFinal() {
-		Map<Name, Versus> resultMap = players.getResultAtFinal(dealer_17);
-		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(Versus.WIN);
-		assertThat(resultMap.get(new Name("jason"))).isEqualTo(Versus.LOSE);
+		Map<Name, WinOrLose> resultMap = players.getResultAtFinal(dealer_17);
+		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(WinOrLose.WIN);
+		assertThat(resultMap.get(new Name("jason"))).isEqualTo(WinOrLose.LOSE);
 	}
 
 	@Test
@@ -118,8 +118,8 @@ public class PlayersTest {
 		}
 		Deck deck = Deck.from(new TestGenerationDeckStrategy());
 		dealer_17.addCard(deck.draw());
-		Map<Name, Versus> resultMap = players.getResultAtFinal(dealer_17);
-		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(Versus.WIN);
-		assertThat(resultMap.get(new Name("jason"))).isEqualTo(Versus.LOSE);
+		Map<Name, WinOrLose> resultMap = players.getResultAtFinal(dealer_17);
+		assertThat(resultMap.get(new Name("pobi"))).isEqualTo(WinOrLose.WIN);
+		assertThat(resultMap.get(new Name("jason"))).isEqualTo(WinOrLose.LOSE);
 	}
 }
