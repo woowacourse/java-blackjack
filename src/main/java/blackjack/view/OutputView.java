@@ -14,6 +14,10 @@ public class OutputView {
     private OutputView() {
     }
 
+    public static void printGuideMessage(String message){
+        System.out.println(message);
+    }
+
     public static void printStartInfo(GamerDto dealer, List<GamerDto> players) {
         String names = players.stream()
                 .map(GamerDto::getName)

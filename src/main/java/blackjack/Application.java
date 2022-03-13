@@ -40,20 +40,20 @@ public class Application {
     }
 
     private static List<Card> getInitCards(Deck deck) {
-        return List.of(deck.draw(),deck.draw());
+        return List.of(deck.draw(), deck.draw());
     }
 
-    public static List<GamerDto> toPlayersDto(Players players) {
+    private static List<GamerDto> toPlayersDto(Players players) {
         return players.getValue().stream()
                 .map(GamerDto::from)
                 .collect(Collectors.toList());
     }
 
-    public static GamerDto toGamerDto(Gamer gamer) {
+    private static GamerDto toGamerDto(Gamer gamer) {
         return GamerDto.from(gamer);
     }
 
-    public static List<GamerDto> playPlayers(Deck deck, Players players) {
+    private static List<GamerDto> playPlayers(Deck deck, Players players) {
         players.getValue().forEach(player -> playing(deck, player));
         return toPlayersDto(players);
     }
@@ -73,7 +73,7 @@ public class Application {
         }
     }
 
-    public static GamerDto playDealer(Deck deck, Dealer dealer) {
+    private static GamerDto playDealer(Deck deck, Dealer dealer) {
         drawDealer(deck, dealer);
         return toGamerDto(dealer);
     }
