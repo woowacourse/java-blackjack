@@ -20,7 +20,7 @@ public class Player extends Participant {
 
     @Override
     public boolean hasNextTurn() {
-        return !WinOrLose.overBlackJackScore(this.getScore());
+        return !WinOrLose.isBurst(this.getScore());
     }
 
     public WinOrLose getMatchResult(Dealer dealer) {
@@ -28,10 +28,10 @@ public class Player extends Participant {
     }
 
     private WinOrLose calculateWinOrLose(int dealerScore) {
-        if (WinOrLose.overBlackJackScore(this.getScore())) {
+        if (WinOrLose.isBurst(this.getScore())) {
             return WinOrLose.LOSE;
         }
-        if (WinOrLose.overBlackJackScore(dealerScore)) {
+        if (WinOrLose.isBurst(dealerScore)) {
             return WinOrLose.WIN;
         }
         return getWinOrLose(dealerScore);

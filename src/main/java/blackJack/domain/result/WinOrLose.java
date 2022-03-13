@@ -13,7 +13,7 @@ public enum WinOrLose {
         this.result = result;
     }
 
-    public static boolean overBlackJackScore(int score) {
+    public static boolean isBurst(int score) {
         return score > BLACK_JACK;
     }
 
