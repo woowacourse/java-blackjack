@@ -9,6 +9,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.finished.Bust;
+import blackjack.domain.state.finished.Stay;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

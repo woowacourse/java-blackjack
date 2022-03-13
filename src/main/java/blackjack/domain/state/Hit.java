@@ -3,6 +3,8 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.game.GameOutcome;
+import blackjack.domain.state.finished.Bust;
+import blackjack.domain.state.finished.Stay;
 
 public class Hit extends Created {
 

@@ -1,7 +1,9 @@
-package blackjack.domain.state;
+package blackjack.domain.state.finished;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.Created;
+import blackjack.domain.state.State;
 
 public abstract class Finished extends Created {
 

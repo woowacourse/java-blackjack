@@ -4,9 +4,9 @@ import blackjack.domain.card.Cards;
 
 public abstract class Created implements State {
 
-    final Cards cards;
+    protected final Cards cards;
 
-    Created(final Cards cards) {
+    protected Created(final Cards cards) {
         this.cards = cards;
     }
 

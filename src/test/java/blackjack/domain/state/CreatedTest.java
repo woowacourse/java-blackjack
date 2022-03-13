@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.finished.Bust;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

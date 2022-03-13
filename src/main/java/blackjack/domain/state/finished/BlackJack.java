@@ -1,14 +1,15 @@
-package blackjack.domain.state;
+package blackjack.domain.state.finished;
 
 import static blackjack.domain.game.GameOutcome.DRAW;
 import static blackjack.domain.game.GameOutcome.WIN;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.game.GameOutcome;
+import blackjack.domain.state.State;
 
 public class BlackJack extends Finished {
 
-    BlackJack(final Cards cards) {
+    public BlackJack(final Cards cards) {
         super(cards);
     }
 
