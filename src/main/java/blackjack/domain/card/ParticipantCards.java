@@ -25,6 +25,10 @@ public class ParticipantCards {
         cards.add(card);
     }
 
+    public boolean isBust() {
+        return getScore() > BLACKJACK_THRESHOLD_NUMBER;
+    }
+
     public int getScore() {
         int score = 0;
         for (Card card : cards) {

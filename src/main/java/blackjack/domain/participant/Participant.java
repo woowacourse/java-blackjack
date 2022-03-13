@@ -9,8 +9,6 @@ import blackjack.domain.card.ParticipantCards;
 
 public class Participant {
 
-    private static final int BUST_THRESHOLD_NUMBER = 21;
-
     private final ParticipantName name;
     protected ParticipantCards cards;
 
@@ -31,7 +29,7 @@ public class Participant {
     }
 
     public boolean isBust() {
-        return getScore() > BUST_THRESHOLD_NUMBER;
+        return cards.isBust();
     }
 
     public int getScore() {
