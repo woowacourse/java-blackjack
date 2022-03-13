@@ -10,6 +10,15 @@ import org.junit.jupiter.api.Test;
 public class ParticipantsTest {
 
     @Test
+    @DisplayName("참가자의 이름이 null일 경우 예외를 발생시킨다.")
+    void throwExceptionWhenNull() {
+        List<String> names = null;
+        assertThatThrownBy(() -> new Participants(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 한 명 이상의 참가자를 입력해주세요.");
+    }
+
+    @Test
     @DisplayName("참가자의 이름이 중복될 경우 예외를 발생시킨다.")
     void throwExceptionWhenDuplicate() {
         List<String> names = List.of("엘리", "배카라", "배카라");

@@ -9,11 +9,18 @@ public class Participants implements Iterable<Participant> {
     private final List<Participant> participants;
 
     public Participants(final List<String> names) {
+        checkNonNull(names);
         checkDuplicatedNames(names);
 
         participants = names.stream()
                 .map(Participant::new)
                 .collect(Collectors.toList());
+    }
+
+    private void checkNonNull(List<String> names) {
+        if (names == null || names.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 한 명 이상의 참가자를 입력해주세요.");
+        }
     }
 
     private void checkDuplicatedNames(final List<String> names) {
