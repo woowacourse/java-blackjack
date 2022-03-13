@@ -8,12 +8,10 @@ import java.util.Map;
 public class RecordFactory {
 
     private final int dealerScore;
-    private final boolean isDealerBust;
     private final Map<Record, Integer> dealerRecord;
 
     public RecordFactory(int dealerScore) {
         this.dealerScore = dealerScore;
-        this.isDealerBust = dealerScore > BUST_SCORE;
         this.dealerRecord = new HashMap<>();
     }
 
@@ -25,7 +23,11 @@ public class RecordFactory {
     }
 
     private Record createRecord(int score) {
-        return Record.of(isDealerBust, dealerScore, score);
+        return Record.of(isDealerBust(), dealerScore, score);
+    }
+
+    private boolean isDealerBust() {
+        return dealerScore > BUST_SCORE;
     }
 
     private void updateDealerRecord(Record record) {
