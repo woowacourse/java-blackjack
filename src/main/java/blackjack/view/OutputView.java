@@ -1,16 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.machine.GameResponse;
 import blackjack.domain.machine.Match;
 import blackjack.domain.machine.MatchResult;
+import blackjack.domain.machine.Results;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.machine.Results;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -34,26 +31,6 @@ public class OutputView {
         }
     }
 
-    private static void printFirstStartCards(GameResponse gameResponse) {
-        String playerName = gameResponse.getName();
-        if (playerName.equals(Dealer.NAME)) {
-            String cardOutputFormat = hideOneCard(gameResponse);
-            System.out.printf(CARD_OUTPUT_FORMAT + NEW_LINE, playerName, cardOutputFormat);
-            return;
-        }
-        String cardOutputFormat = toCardOutputFormat(gameResponse);
-        System.out.printf(CARD_OUTPUT_FORMAT + NEW_LINE, playerName, cardOutputFormat);
-    }
-
-    private static String hideOneCard(GameResponse gameResponse) {
-        return gameResponse.getDeck()
-                .getCards()
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException(NO_CARDS_ERROR_MESSAGE))
-                .toString();
-    }
-
     public static void announceDealerGetMoreCard() {
         System.out.println(DEALER_GIVEN_ONE_MORE_CARD_MESSAGE);
     }
@@ -66,19 +43,10 @@ public class OutputView {
         for (GameResponse gameResponse : gameResponses) {
             String playerName = gameResponse.getName();
             String cardOutputFormat = toCardOutputFormat(gameResponse);
-            int totalPoint = gameResponse.getDeck().sumPoints();
-
+            int totalPoint = gameResponse.getTotalPoint();
             System.out.printf(CARD_OUTPUT_FORMAT + TOTAL_POINT_OUTPUT_FORMAT + NEW_LINE, playerName, cardOutputFormat,
                     totalPoint);
         }
-    }
-
-    private static String toCardOutputFormat(GameResponse gameResponse) {
-        return gameResponse.getDeck()
-                .getCards()
-                .stream()
-                .map(Card::toString)
-                .collect(Collectors.joining(COMMA_DELIMITER));
     }
 
     public static void announceResultWinner(Results results) {
@@ -89,11 +57,31 @@ public class OutputView {
         }
     }
 
+    private static String toCardOutputFormat(GameResponse gameResponse) {
+        return String.join(COMMA_DELIMITER, gameResponse.getDeck());
+    }
+
     private static String toMatchResultFormat(Map<Match, Integer> matchResult) {
         StringBuilder resultFormat = new StringBuilder();
         for (Match match : matchResult.keySet()) {
             resultFormat.append(matchResult.get(match)).append(match.getResult());
         }
         return resultFormat.toString();
+    }
+
+
+    private static void printFirstStartCards(GameResponse gameResponse) {
+        String playerName = gameResponse.getName();
+        if (playerName.equals(Dealer.NAME)) {
+            String cardOutputFormat = hideOneCard(gameResponse);
+            System.out.printf(CARD_OUTPUT_FORMAT + NEW_LINE, playerName, cardOutputFormat);
+            return;
+        }
+        String cardOutputFormat = toCardOutputFormat(gameResponse);
+        System.out.printf(CARD_OUTPUT_FORMAT + NEW_LINE, playerName, cardOutputFormat);
+    }
+
+    private static String hideOneCard(GameResponse gameResponse) {
+        return gameResponse.getDeck().get(0);
     }
 }
