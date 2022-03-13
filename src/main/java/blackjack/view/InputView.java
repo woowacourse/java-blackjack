@@ -29,16 +29,8 @@ public class InputView {
 
     public static String requestHitOrStay(Name name) {
         System.out.println(name.get() + REQUEST_HIT_OR_STAY_MESSAGE);
-        String answer = toLowerCase(readLine());
-        validateHitOrStayAnswer(answer);
 
-        return answer;
-    }
-
-    private static void validateHitOrStayAnswer(String answer) {
-        if (!answer.equals(HIT_ANSWER) && !answer.equals(STAY_ANSWER)) {
-            throw new IllegalArgumentException(ILLEGAL_HIT_OR_STAY_INPUT_ERROR_MESSAGE);
-        }
+        return toLowerCase(readLine());
     }
 
     private static String toLowerCase(String input) {

@@ -21,6 +21,8 @@ public class ResultView {
     private static final String PRINT_GAMER_CARDS_FORMAT = "%s카드: %s";
     private static final String PRINT_GAMER_RESULT_FORMAT = PRINT_GAMER_CARDS_FORMAT + " - 결과: %d";
 
+    private static final String ILLEGAL_HIT_OR_STAY_INPUT_ERROR_MESSAGE = "대답은 y 또는 n으로만 가능합니다.";
+
     private static final String DEALER_NAME = "딜러";
     private static final String CARD_DELIMITER = ", ";
     private static final String PRINT_RESULTS_DELIMITER = ": ";
@@ -118,5 +120,13 @@ public class ResultView {
             System.out.print(player.getName().get() + PRINT_RESULTS_DELIMITER + outcome.get());
         }
         System.out.println();
+    }
+
+    public static void printErrorNames(String message) {
+        System.out.println(message);
+    }
+
+    public static void printErrorHitOrStay() {
+        System.out.println(ILLEGAL_HIT_OR_STAY_INPUT_ERROR_MESSAGE);
     }
 }

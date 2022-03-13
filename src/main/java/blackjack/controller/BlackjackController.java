@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.HitOrStayAnswer;
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
@@ -19,28 +20,33 @@ import java.util.stream.Collectors;
 
 public class BlackjackController {
 
-    private static final String HIT_ANSWER = "y";
-
     public void run() {
-        List<String> names = InputView.requestNames();
         Deck deck = new RandomDeck();
 
-        Players players = createPlayers(names, deck);
+        Players players = createPlayers(deck);
         ResultView.printInitCard(players);
 
         play(players, deck);
         printResults(players);
     }
 
-    private Players createPlayers(List<String> names, Deck deck) {
-        List<Player> participants = names.stream()
+    private Players createPlayers(Deck deck) {
+        try {
+            List<Player> participants = toPlayers(InputView.requestNames());
+            Players players = new Players(participants);
+            players.dealCards(deck);
+            return players;
+        } catch (IllegalArgumentException e) {
+            ResultView.printErrorNames(e.getMessage());
+            return createPlayers(deck);
+        }
+    }
+
+    private List<Player> toPlayers(List<String> names) {
+        return names.stream()
                 .map(Name::new)
                 .map(Participant::new)
                 .collect(Collectors.toList());
-
-        Players players = new Players(participants);
-        players.dealCards(deck);
-        return players;
     }
 
     private void play(Players players, Deck deck) {
@@ -64,7 +70,20 @@ public class BlackjackController {
         if (!player.isValidRange()) {
             return false;
         }
-        return InputView.requestHitOrStay(player.getName()).equals(HIT_ANSWER);
+
+        String answer;
+        do {
+            answer = InputView.requestHitOrStay(player.getName());
+            printErrorIfNotContainsHitOrStay(answer);
+        } while (!HitOrStayAnswer.containsValue(answer));
+
+        return answer.equals(HitOrStayAnswer.HIT_ANSWER.get());
+    }
+
+    private void printErrorIfNotContainsHitOrStay(String answer) {
+        if (!HitOrStayAnswer.containsValue(answer)) {
+            ResultView.printErrorHitOrStay();
+        }
     }
 
     private void takeDealerCards(Player dealer, Deck deck) {
