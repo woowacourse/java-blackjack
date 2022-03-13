@@ -32,7 +32,7 @@ public class PlayerTest {
         List<Card> cards = generateTotalScoreNotMoreThan21Cards();
         Player player = new Player(name, cards);
 
-        assertThat(player.isPlaying()).isTrue();
+        assertThat(player.isDrawable()).isTrue();
     }
 
     @DisplayName("플레이어의 총 점수가 21점을 초과하는 경우 hit가 불가능하다.")
@@ -42,7 +42,7 @@ public class PlayerTest {
         List<Card> cards = generateTotalScoreGraterThan21Cards();
         Player player = new Player(name, cards);
 
-        assertThat(player.isPlaying()).isFalse();
+        assertThat(player.isDrawable()).isFalse();
     }
 
     @DisplayName("카드를 받아서 합칠 수 있다.")

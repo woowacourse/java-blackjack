@@ -44,7 +44,7 @@ public class Application {
 
     private static void playing(Deck deck, Player player) {
         PlayCommand playCommand = PlayCommand.YES;
-        while (player.isPlaying() && playCommand == PlayCommand.YES) {
+        while (player.isDrawable() && playCommand == PlayCommand.YES) {
             playCommand = InputView.getPlayCommand(player);
             drawCard(deck, player, playCommand);
         }
