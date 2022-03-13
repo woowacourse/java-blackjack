@@ -24,7 +24,7 @@ public class DeckTest {
 		for (int i = 0; i < 52; i++) {
 			deck.distributeCard();
 		}
-		assertThatThrownBy(() -> deck.distributeCard())
+		assertThatThrownBy(deck::distributeCard)
 			.isInstanceOf(IllegalStateException.class)
 			.hasMessageContaining("덱의 카드가 다 소진되었습니다.");
 	}

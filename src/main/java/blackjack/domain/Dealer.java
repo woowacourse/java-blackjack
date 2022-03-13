@@ -7,16 +7,23 @@ public class Dealer extends Gamer {
 		super(new Name("딜러"));
 	}
 
-	public boolean isHigher(Gamer gamer) {
-		return this.getScore() > gamer.getScore();
+	public boolean isWin(Gamer gamer) {
+		return (this.getScore() > gamer.getScore()) || (this.isBlackJack() && !gamer.isBlackJack());
 	}
 
-	public boolean isEqual(Gamer gamer) {
-		return this.getScore() == gamer.getScore();
+	public boolean isDraw(Gamer gamer) {
+		return this.getScore() == gamer.getScore() || (this.isBlackJack() && gamer.isBlackJack());
+	}
+
+	public boolean isLose(Gamer gamer) {
+		return this.isBust() || this.getScore() < gamer.getScore() || (!this.isBlackJack() && gamer.isBlackJack());
 	}
 
 	public boolean isHit() {
 		return this.getScore() < HIT_THRESHOLD;
 	}
 
+	public Card getRandomOneCard() {
+		return this.cards.getRandomCard();
+	}
 }

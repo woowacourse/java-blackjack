@@ -14,12 +14,12 @@ class GamerTest {
 	}
 
 	@Test
-	void isBurst() {
+	void isBust() {
 		Gamer gamer = new Dealer();
 		gamer.processCard(new Card(Number.TEN, Type.CLOVER));
 		gamer.processCard(new Card(Number.TEN, Type.HEART));
 		gamer.processCard(new Card(Number.TWO, Type.SPADE));
-		assertThat(gamer.isBurst()).isTrue();
+		assertThat(gamer.isBust()).isTrue();
 	}
 
 	@Test
@@ -28,7 +28,23 @@ class GamerTest {
 		gamer.processCard(new Card(Number.ACE, Type.HEART));
 		gamer.processCard(new Card(Number.ACE, Type.SPADE));
 		gamer.processCard(new Card(Number.NINE, Type.SPADE));
-		System.out.println(gamer.getScore());
 		assertThat(gamer.getScore()).isEqualTo(21);
+	}
+
+	@Test
+	void check_blackjack() {
+		Gamer gamer = new Player(new Name("pobi"));
+		gamer.processCard(new Card(Number.ACE, Type.HEART));
+		gamer.processCard(new Card(Number.TEN, Type.SPADE));
+		assertThat(gamer.isBlackJack()).isTrue();
+	}
+
+	@Test
+	void check_not_blackjack() {
+		Gamer gamer = new Player(new Name("pobi"));
+		gamer.processCard(new Card(Number.TEN, Type.SPADE));
+		gamer.processCard(new Card(Number.TEN, Type.CLOVER));
+		gamer.processCard(new Card(Number.ACE, Type.HEART));
+		assertThat(gamer.isBlackJack()).isFalse();
 	}
 }

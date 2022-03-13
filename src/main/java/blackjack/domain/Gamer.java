@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Gamer {
 	private static final int BUST_THRESHOLD = 21;
-	private final Cards cards = new Cards();
+	protected final Cards cards = new Cards();
 	protected final Name name;
 
 	public Gamer(Name name) {
@@ -29,15 +29,15 @@ public class Gamer {
 		return this.cards.getScore();
 	}
 
-	public boolean isBurst() {
+	public boolean isBust() {
 		return this.cards.getScore() > BUST_THRESHOLD;
-	}
-
-	public Card getRandomOneCard() {
-		return this.cards.getRandomCard();
 	}
 
 	public String getName() {
 		return this.name.getName();
+	}
+
+	public boolean isBlackJack() {
+		return this.cards.getCards().size() == 2 && this.getScore() == 21;
 	}
 }

@@ -11,19 +11,6 @@ public enum ResultType {
 		this.value = value;
 	}
 
-	public static ResultType generateResultType(Player player, Dealer dealer) {
-		if (player.isBurst()) {
-			return LOSE;
-		}
-		if (dealer.isEqual(player)) {
-			return DRAW;
-		}
-		if (dealer.isHigher(player)) {
-			return LOSE;
-		}
-		return WIN;
-	}
-
 	public String getValue() {
 		return value;
 	}

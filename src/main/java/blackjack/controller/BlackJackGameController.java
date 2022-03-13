@@ -25,8 +25,8 @@ public class BlackJackGameController {
 		Dealer dealer = new Dealer();
 		Deck deck = new Deck();
 		initializeCard(players, dealer, deck);
-		progressPlayerTurn(players, deck);
-		progressDealerTurn(dealer, deck);
+		progressPlayerTurn(players, dealer, deck);
+		progressDealerTurn(players, dealer, deck);
 		makeResult(players, dealer);
 	}
 
@@ -45,29 +45,29 @@ public class BlackJackGameController {
 		for (Player player : players.getPlayers()) {
 			outputView.displayAllCardAndScore(player);
 		}
-		Result result = new Result();
+		Result result = new Result(players);
 		outputView.displayNewLine();
 		outputView.displayResult(result, players, dealer);
 	}
 
-	private void progressDealerTurn(Dealer dealer, Deck deck) {
+	private void progressDealerTurn(Players players, Dealer dealer, Deck deck) {
 		if (dealer.isHit()) {
 			outputView.displayNewLine();
 		}
-		while (dealer.isHit() && !dealer.isBurst()) {
+		while (dealer.isHit() && !dealer.isBust() && !players.isAllPlayersBlackJackOrBust()) {
 			outputView.displayDealerUnderSevenTeen();
 			dealer.addCards(deck, 1);
 		}
 	}
 
-	private void progressPlayerTurn(Players players, Deck deck) {
-		for (Player player : players.getPlayers()) {
-			progressOnePlayer(deck, player);
+	private void progressPlayerTurn(Players players, Dealer dealer, Deck deck) {
+		if (!dealer.isBlackJack()) {
+			players.getPlayers().forEach(player -> progressOnePlayer(deck, player));
 		}
 	}
 
 	private void progressOnePlayer(Deck deck, Player player) {
-		while (!player.isBurst() && decideHitOrStay(player)) {
+		while (!player.isBust() && !player.isBlackJack() && decideHitOrStay(player)) {
 			player.addCards(deck, 1);
 			outputView.displayAllCard(player);
 		}

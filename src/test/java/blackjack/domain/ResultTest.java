@@ -13,55 +13,65 @@ public class ResultTest {
 	Players players;
 	Player player1;
 	Player player2;
+	Player player3;
 	Result result;
 	
 	@BeforeEach
 	void gamer_init() {
 		dealer = new Dealer();
-		players = new Players(new Names(List.of("pobi", "jason")));
-		result = new Result();
+		players = new Players(new Names(List.of("pobi", "jason", "alpha")));
+		result = new Result(players);
 		player1 = players.getPlayers().get(0);
 		player2 = players.getPlayers().get(1);
+		player3 = players.getPlayers().get(2);
 	}
 	@Test
-	void all_player_lose() {
+	void dealer_bust() {
 		dealer.processCard(new Card(Number.QUEEN, Type.CLOVER));
 		dealer.processCard(new Card(Number.KING, Type.SPADE));
-		player1.processCard(new Card(Number.TEN, Type.SPADE));
-		player1.processCard(new Card(Number.NINE, Type.DIAMOND));
-		player2.processCard(new Card(Number.TEN, Type.DIAMOND));
-		player2.processCard(new Card(Number.NINE, Type.SPADE));
+		dealer.processCard(new Card(Number.TWO, Type.SPADE));
+		setPlayerBlackJack(player1);
+		setPlayerBust(player2);
+		setPlayerBlackNormal(player3);
 		Map<Player, ResultType> gameResult = result.getResult(players, dealer);
-		for (Player player : gameResult.keySet()) {
-			assertThat(gameResult.get(player)).isEqualTo(ResultType.LOSE);
-		}
+		assertThat(gameResult.values()).containsSequence(ResultType.WIN, ResultType.LOSE, ResultType.WIN);
 	}
 
 	@Test
-	void all_player_win() {
+	void dealer_blackjack() {
 		dealer.processCard(new Card(Number.QUEEN, Type.CLOVER));
-		dealer.processCard(new Card(Number.NINE, Type.SPADE));
-		player1.processCard(new Card(Number.TEN, Type.SPADE));
-		player1.processCard(new Card(Number.TEN, Type.DIAMOND));
-		player2.processCard(new Card(Number.TEN, Type.HEART));
-		player2.processCard(new Card(Number.TEN, Type.CLOVER));
+		dealer.processCard(new Card(Number.ACE, Type.SPADE));
+		setPlayerBlackJack(player1);
+		setPlayerBust(player2);
+		setPlayerBlackNormal(player3);
 		Map<Player, ResultType> gameResult = result.getResult(players, dealer);
-		for (Player player : gameResult.keySet()) {
-			assertThat(gameResult.get(player)).isEqualTo(ResultType.WIN);
-		}
+		assertThat(gameResult.values()).containsSequence(ResultType.DRAW, ResultType.LOSE, ResultType.LOSE);
 	}
 
 	@Test
-	void all_player_draw() {
+	void dealer_normal() {
 		dealer.processCard(new Card(Number.QUEEN, Type.CLOVER));
 		dealer.processCard(new Card(Number.NINE, Type.SPADE));
-		player1.processCard(new Card(Number.TEN, Type.SPADE));
-		player1.processCard(new Card(Number.NINE, Type.DIAMOND));
-		player2.processCard(new Card(Number.TEN, Type.HEART));
-		player2.processCard(new Card(Number.NINE, Type.CLOVER));
+		setPlayerBlackJack(player1);
+		setPlayerBust(player2);
+		setPlayerBlackNormal(player3);
 		Map<Player, ResultType> gameResult = result.getResult(players, dealer);
-		for (Player player : gameResult.keySet()) {
-			assertThat(gameResult.get(player)).isEqualTo(ResultType.DRAW);
-		}
+		assertThat(gameResult.values()).containsSequence(ResultType.WIN, ResultType.LOSE, ResultType.LOSE);
+	}
+
+	private void setPlayerBust(Player player) {
+		player.processCard(new Card(Number.TEN, Type.SPADE));
+		player.processCard(new Card(Number.TEN, Type.DIAMOND));
+		player.processCard(new Card(Number.TWO, Type.HEART));
+	}
+
+	private void setPlayerBlackJack(Player player) {
+		player.processCard(new Card(Number.TEN, Type.HEART));
+		player.processCard(new Card(Number.ACE, Type.DIAMOND));
+	}
+
+	private void setPlayerBlackNormal(Player player) {
+		player.processCard(new Card(Number.SIX, Type.HEART));
+		player.processCard(new Card(Number.FIVE, Type.DIAMOND));
 	}
 }
