@@ -32,7 +32,7 @@ public class RecordTest {
 		Card card = dealer.handOutCard(intendedNumberGenerator);
 		dealer.addCard(card);
 
-		assertThat(Record.getRecordForBurst(player, dealer)).isEqualTo(Record.VICTORY);
+		assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.VICTORY);
 	}
 
 	@DisplayName("플레이어만 버스트일 경우 전적 테스트")
@@ -42,7 +42,7 @@ public class RecordTest {
 		Card card = dealer.handOutCard(intendedNumberGenerator);
 		player.addCard(card);
 
-		assertThat(Record.getRecordForBurst(player, dealer)).isEqualTo(Record.DEFEAT);
+		assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.DEFEAT);
 	}
 
 	@DisplayName("딜러, 플레이어 모두 버스트일 경우 전적 테스트")
@@ -56,13 +56,13 @@ public class RecordTest {
 		Card card2 = dealer.handOutCard(intendedNumberGenerator2);
 		dealer.addCard(card2);
 
-		assertThat(Record.getRecordForBurst(player, dealer)).isEqualTo(Record.DEFEAT);
+		assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.DEFEAT);
 	}
 
 	@DisplayName("버스트가 아닌 경우 무승부 전적 테스트")
 	@Test
 	void ordinaryDrawRecord() {
-		assertThat(Record.getOrdinaryRecord(player, dealer)).isEqualTo(Record.DRAW);
+		assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.DRAW);
 	}
 
 	@DisplayName("버스드가 아닌 경우 딜러 승리 전적 테스트")
@@ -78,7 +78,7 @@ public class RecordTest {
 		Card card2 = dealer.handOutCard(intendedNumberGenerator2);
 		dealer.addCard(card2);
 
-		assertThat(Record.getOrdinaryRecord(player, dealer)).isEqualTo(Record.DEFEAT);
+		assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.DEFEAT);
 	}
 
 	@DisplayName("버스드가 아닌 경우 플레이어 승리 전적 테스트")
@@ -94,6 +94,6 @@ public class RecordTest {
 		System.out.println(card2.getName());
 		dealer.addCard(card2);
 
-		assertThat(Record.getOrdinaryRecord(player, dealer)).isEqualTo(Record.VICTORY);
+		assertThat(Record.getRecord(player, dealer)).isEqualTo(Record.VICTORY);
 	}
 }

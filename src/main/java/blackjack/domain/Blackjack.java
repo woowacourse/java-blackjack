@@ -79,6 +79,6 @@ public class Blackjack {
 	}
 
 	public ResultDto result() {
-		return Record.of(dealer, playerRepository.findAll());
+		return Records.of(dealer, playerRepository.findAll());
 	}
 }
