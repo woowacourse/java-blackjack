@@ -12,10 +12,11 @@ public abstract class Player {
     private static final int BLACK_JACK = 21;
 
     private final String name;
-    private final Cards cards = new Cards();
+    private final Cards cards;
 
     protected Player(String name) {
         this.name = name;
+        this.cards = new Cards();
     }
 
     public String getName() {
