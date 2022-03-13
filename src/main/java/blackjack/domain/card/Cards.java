@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.domain.BlackJackGame;
+
 public class Cards {
 
 	private final List<Card> values;
@@ -53,11 +55,12 @@ public class Cards {
 	}
 
 	public boolean isBlackJack() {
-		return CardStatus.of(this).isBlackJack();
+		return this.size() == BlackJackGame.INIT_DISTRIBUTION_COUNT &&
+			this.sum() == BlackJackGame.MAX_CARD_VALUE;
 	}
 
 	public boolean isBust() {
-		return CardStatus.of(this).isBust();
+		return this.sum() > BlackJackGame.MAX_CARD_VALUE;
 	}
 
 	public boolean isGreaterThan(Cards cards) {
