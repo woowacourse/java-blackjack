@@ -1,40 +1,37 @@
 package blackjack.domain.card;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.*;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
 public class Card {
 
-    public static final Set<Card> VALUES;
+    public static final Set<Card> VALUES = createCards();
 
     private final Denomination denomination;
     private final Suit suit;
-
-    static {
-        Set<Card> cards = Arrays.stream(Denomination.values())
-                .flatMap(denomination -> createCards(denomination).stream())
-                .collect(toSet());
-
-        VALUES = Collections.unmodifiableSet(cards);
-    }
-
-    private static Set<Card> createCards(Denomination denomination) {
-        return Arrays.stream(Suit.values())
-                .map(suit -> new Card(denomination, suit))
-                .collect(toSet());
-    }
 
     private Card(Denomination denomination, Suit suit) {
         this.denomination = denomination;
         this.suit = suit;
     }
 
-    public static Card of(Denomination denomination, Suit suit) {
+    private static Set<Card> createCards() {
+        return Arrays.stream(Denomination.values())
+                .map(Card::createIntactCards)
+                .flatMap(Set::stream)
+                .collect(toUnmodifiableSet());
+    }
 
+    private static Set<Card> createIntactCards(Denomination denomination) {
+        return Arrays.stream(Suit.values())
+                .map(suit -> new Card(denomination, suit))
+                .collect(toSet());
+    }
+
+    public static Card of(Denomination denomination, Suit suit) {
         return VALUES.stream()
                 .filter(card -> card.isSame(denomination, suit))
                 .findFirst()
