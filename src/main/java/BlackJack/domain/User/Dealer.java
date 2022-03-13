@@ -13,13 +13,20 @@ public class Dealer extends User {
         super("딜러");
     }
 
-    public void checkBlackJack(){
+    public boolean checkBlackJack(){
         List<String> openCardNumber = Arrays.asList("10","K","J","Q");
         if(openCardNumber.contains(cards.getDeck().get(0).getNumber().getDenomination())){
-            if(cards.calculateScore() == 21){
-                this.result = Result.BLACKJACK;
-            }
+            return IsBlackJack();
         }
+        return false;
+    }
+
+    private boolean IsBlackJack() {
+        if(cards.calculateScore() == 21){
+            this.result = Result.BLACKJACK;
+            return true;
+        }
+        return false;
     }
 
 //    public Result compare(Player player) {
@@ -42,7 +49,7 @@ public class Dealer extends User {
 //        return dealerDrawCount;
 //    }
 
-    boolean checkPossibleAdd(int currentScore) {
-        return currentScore < DEALER_ADD_CARD_LIMIT;
+    public boolean checkPossibleAdd() {
+        return this.getScore() < DEALER_ADD_CARD_LIMIT;
     }
 }

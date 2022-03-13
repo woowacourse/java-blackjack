@@ -3,10 +3,7 @@ package BlackJack.domain;
 import BlackJack.domain.Card.Cards;
 import BlackJack.domain.User.Dealer;
 import BlackJack.domain.User.Players;
-import BlackJack.domain.User.User;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static BlackJack.domain.Card.CardFactory.CARD_CACHE;
@@ -26,7 +23,7 @@ public class Game {
 
     public void handOutInitCard(){
         for(int i = 0; i < HAND_OUT_COUNT; i++){
-            dealer.addCard(CARD_CACHE.poll());
+            dealer.initCard(CARD_CACHE.poll());
             players.recieveCard();
         }
     }
@@ -34,6 +31,16 @@ public class Game {
     public void checkPlayerAndDealerIsBlackJack(){
         dealer.checkBlackJack();
         players.checkPlayersBlackJack();
+    }
+
+    private Players playGame() {
+        players.addCard();
+        return players;
+    }
+
+    public Dealer checkDealerAddCard(){
+        dealer.addCard();
+        return dealer;
     }
 
     public Dealer getDealer() {

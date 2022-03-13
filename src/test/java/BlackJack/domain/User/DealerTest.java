@@ -16,21 +16,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
+    private Dealer dealer = new Dealer();
+
     @Test
     @DisplayName("딜러가 소지한 카드가 16 이하면 true를 반환한다.")
     void checkScoreWhenUnder16Test() {
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Shape.HEART, Number.JACK));
-        assertThat(dealer.checkPossibleAdd(dealer.getScore())).isEqualTo(true);
+        dealer.cards.add(new Card(Shape.HEART, Number.JACK));
+        assertThat(dealer.checkPossibleAdd()).isEqualTo(true);
     }
 
     @Test
     @DisplayName("딜러가 소지한 카드가 16 초과면 false를 반환한다.")
     void checkScoreWhenOver16Test() {
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Shape.HEART, Number.JACK));
-        dealer.addCard(new Card(Shape.HEART, Number.TEN));
-        assertThat(dealer.checkPossibleAdd(dealer.getScore())).isEqualTo(false);
+        dealer.cards.add(new Card(Shape.HEART, Number.JACK));
+        dealer.cards.add(new Card(Shape.HEART, Number.TEN));
+        assertThat(dealer.checkPossibleAdd()).isEqualTo(false);
+    }
+
+    @Test
+    @DisplayName("딜러가 블랙잭인지 확인한다.")
+    void checkBlackJack() {
+        dealer.cards.add(new Card(Shape.HEART, Number.JACK));
+        dealer.cards.add(new Card(Shape.HEART, Number.TEN));
+        dealer.cards.add(new Card(Shape.HEART, Number.ACE));
+        assertThat(dealer.checkBlackJack()).isEqualTo(true);
     }
 //
 //    @Test

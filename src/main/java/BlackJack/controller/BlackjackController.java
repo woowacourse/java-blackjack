@@ -26,6 +26,8 @@ public class BlackjackController {
         OutputView.printTotalUserCards(convertToListDto(game.getDealer(), game.getPlayers()));
 
         game.checkPlayerAndDealerIsBlackJack();
+        OutputView.printTotalResult(playGame(game.getDealer(), game.getPlayers()));
+
 
 //        Dealer dealer = new Dealer(CardFactory.drawTwoCards());
 //        List<Player> players = joinGame(inputPlayerNames);
@@ -59,20 +61,24 @@ public class BlackjackController {
 //        return resultPlayerDtos;
 //    }
 //
-//    private List<UserDto> playGame(Dealer dealer, List<Player> players) {
-//        for (Player player : players) {
-//            addCard(player);
-//        }
-//        while (dealer.checkScore()) {
-//            OutputView.printAddDealerCard();
-//            dealer.addCard();
-//        }
-//        return convertToListDto(dealer, players);
-//
-//    }
-//
-//
-//
+    private List<UserDto> playGame(Dealer dealer, Players players) {
+        for (Player player : players.getPlayers()) {
+            addCardPerPlayer(player);
+        }
+        while (dealer.checkPossibleAdd()) {
+            OutputView.printAddDealerCard();
+            dealer.addCard();
+        }
+        return convertToListDto(dealer, players);
+    }
+
+    private void addCardPerPlayer(Player player) {
+        while (InputView.askOneMoreCard(UserDto.from(player))) {
+            player.addCard();
+            OutputView.printPlayerCard(UserDto.from(player));
+        }
+    }
+
     private List<UserDto> convertToListDto(Dealer dealer, Players players) {
         List<UserDto> userDtos = new ArrayList<>();
         userDtos.add(UserDto.from(dealer));
@@ -81,12 +87,5 @@ public class BlackjackController {
         }
         return userDtos;
     }
-
-//    public void addCard(Player player) {
-//        while (InputView.askOneMoreCard(UserDto.from(player))) {
-//            player.addCard();
-//            OutputView.printPlayerCard(UserDto.from(player));
-//        }
-//    }
 
 }

@@ -15,13 +15,19 @@ public class Players {
 
     public void recieveCard() {
         for (Player player : players) {
-            player.addCard(CARD_CACHE.poll());
+            player.initCard(CARD_CACHE.poll());
         }
     }
 
     public void checkPlayersBlackJack() {
         for (Player player : players) {
             player.checkBlackJack();
+        }
+    }
+
+    public void addCard(){
+        for (Player player : players) {
+            player.addCard();
         }
     }
 
