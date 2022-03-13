@@ -33,6 +33,11 @@ public class Game {
         }
     }
 
+    public void checkPlayerAndDealerIsBlackJack(){
+        dealer.checkBlackJack();
+        players.checkPlayersBlackJack();
+    }
+
 
 
 

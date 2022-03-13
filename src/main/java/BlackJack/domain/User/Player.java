@@ -9,6 +9,10 @@ public class Player extends User {
         super(name);
     }
 
+    public void checkBlackJack(){
+        if(cards.calculateScore() == 21){
+            this.result = Result.BLACKJACK;
+        }
     }
 
     boolean checkPossibleAdd(int currentScore) {

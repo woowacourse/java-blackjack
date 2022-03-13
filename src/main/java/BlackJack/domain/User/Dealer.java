@@ -13,6 +13,12 @@ public class Dealer extends User {
         super("딜러");
     }
 
+    public void checkBlackJack(){
+        List<String> openCardNumber = Arrays.asList("10","K","J","Q");
+        if(openCardNumber.contains(cards.getDeck().get(0).getNumber().getDenomination())){
+            if(cards.calculateScore() == 21){
+                this.result = Result.BLACKJACK;
+            }
         }
     }
 
