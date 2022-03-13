@@ -5,7 +5,6 @@ import java.util.List;
 import blackjack.domain.RedrawChoice;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
-import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerTurnDto;
 import blackjack.dto.TableStatusDto;
 import blackjack.service.BlackJackService;
@@ -35,8 +34,8 @@ public class BlackJackController {
 		return blackJackService.whoseTurn();
 	}
 
-	public PlayerStatusDto drawPlayer(String answer) {
-		return blackJackService.drawPlayer(RedrawChoice.of(answer));
+	public TableStatusDto drawPlayer(String answer, String name) {
+		return blackJackService.drawPlayer(RedrawChoice.of(answer), name);
 	}
 
 	public DealerTurnDto drawDealer() {

@@ -2,7 +2,7 @@ package blackjack.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import blackjack.domain.DealerDrawable;
@@ -15,15 +15,12 @@ import blackjack.domain.role.Player;
 import blackjack.domain.role.Role;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
-import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.TableStatusDto;
 
 public class Roles {
 
 	private List<Role> players;
 	private Role dealer;
-	private ListIterator<Role> it;
-	private Role currentPlayer;
 
 	public void initDealer() {
 		dealer = new Dealer(new Hand(), DealerDrawable::chooseDraw);
@@ -57,36 +54,31 @@ public class Roles {
 		players = names.stream()
 			.map(name -> new Player(name, new Hand()))
 			.collect(Collectors.toList());
-		initPlayerIterator();
 	}
 
-	private void initPlayerIterator() {
-		it = players.listIterator();
-		nextPlayer();
-	}
-
-	public PlayerStatusDto drawPlayer(final Deck deck, final RedrawChoice answer) {
+	public TableStatusDto drawPlayer(final Deck deck, final RedrawChoice answer, final String name) {
+		final Role currentPlayer = findPlayer(name);
 		if (answer == RedrawChoice.NO) {
-			PlayerStatusDto status = PlayerStatusDto.from(false, hasNextPlayer(), currentPlayer);
-			nextPlayer();
+			TableStatusDto status = TableStatusDto.from(currentPlayer);
+			currentPlayer.stopDraw();
 			return status;
 		}
 		currentPlayer.draw(deck.draw(), 1);
-		PlayerStatusDto status = PlayerStatusDto.from(currentPlayer.canDraw(), hasNextPlayer(), currentPlayer);
-		if (!currentPlayer.canDraw()) {
-			nextPlayer();
-		}
-		return status;
+		return TableStatusDto.from(currentPlayer);
 	}
 
-	private void nextPlayer() {
-		if (hasNextPlayer()) {
-			currentPlayer = it.next();
-		}
+	private Role findPlayer(final String name) {
+		return players.stream()
+			.filter(player -> player.getName().equals(name))
+			.findFirst()
+			.orElseThrow(NoSuchElementException::new);
 	}
 
-	private boolean hasNextPlayer() {
-		return it.hasNext();
+	public Role getCurrentPlayer() {
+		return players.stream()
+			.filter(player -> player.canDraw() && player.wantDraw())
+			.findFirst()
+			.orElse(new Player("", new Hand()));
 	}
 
 	public FinalResultDto calculateFinalResult() {
@@ -100,10 +92,6 @@ public class Roles {
 
 	private Outcome judge(Role player) {
 		return Outcome.of(player.calculateFinalScore(), dealer.calculateFinalScore());
-	}
-
-	public Role getCurrentPlayer() {
-		return currentPlayer;
 	}
 
 }

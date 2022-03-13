@@ -3,9 +3,9 @@ package blackjack.domain.role;
 import java.util.EnumMap;
 import java.util.Map;
 
+import blackjack.domain.Outcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.Outcome;
 
 public abstract class Role {
 
@@ -15,9 +15,12 @@ public abstract class Role {
 	protected final Hand hand;
 	protected final Map<Outcome, Integer> competeResult;
 
+	private boolean drawMore;
+
 	public Role(final String name, final Hand hand) {
 		this.name = name;
 		this.hand = hand;
+		this.drawMore = true;
 		this.competeResult = new EnumMap<>(Outcome.class);
 	}
 
@@ -33,6 +36,10 @@ public abstract class Role {
 
 	public abstract boolean canDraw();
 
+	public void stopDraw() {
+		drawMore = false;
+	}
+
 	public void recordCompeteResult(Outcome outcome) {
 		competeResult.merge(outcome, COMPETE_COUNT, Integer::sum);
 	}
@@ -47,5 +54,9 @@ public abstract class Role {
 
 	public Map<Outcome, Integer> getCompeteResult() {
 		return new EnumMap<>(competeResult);
+	}
+
+	public boolean wantDraw() {
+		return drawMore;
 	}
 }

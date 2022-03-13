@@ -6,7 +6,6 @@ import blackjack.domain.RedrawChoice;
 import blackjack.domain.card.Deck;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
-import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerTurnDto;
 import blackjack.dto.TableStatusDto;
 
@@ -41,8 +40,8 @@ public class BlackJackService {
 		return PlayerTurnDto.from(roles.getCurrentPlayer());
 	}
 
-	public PlayerStatusDto drawPlayer(final RedrawChoice answer) {
-		return roles.drawPlayer(deck, answer);
+	public TableStatusDto drawPlayer(final RedrawChoice answer, final String name) {
+		return roles.drawPlayer(deck, answer, name);
 	}
 
 	public DealerTurnDto drawDealer() {
