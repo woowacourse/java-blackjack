@@ -11,9 +11,9 @@ public class Gamer {
 		this.name = name;
 	}
 
-	public void addCards(Deck deck, int times) {
+	public void addCards(int times) {
 		for (int i = 0; i < times; i++) {
-			processCard(deck.distributeCard());
+			processCard(Deck.distributeCard());
 		}
 	}
 

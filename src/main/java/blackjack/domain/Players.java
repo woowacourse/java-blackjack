@@ -18,8 +18,8 @@ public class Players {
 		return players;
 	}
 
-	public void addCardToAllPlayers(Deck deck, int times) {
-		players.forEach(player -> player.addCards(deck, times));
+	public void addCardToAllPlayers(int times) {
+		players.forEach(player -> player.addCards(times));
 	}
 
 	public List<Player> getBustPlayers() {

@@ -23,10 +23,10 @@ public class BlackJackGameController {
 	public void gameStart() {
 		Players players = generatePlayers();
 		Dealer dealer = new Dealer();
-		Deck deck = new Deck();
-		initializeCard(players, dealer, deck);
-		progressPlayerTurn(players, dealer, deck);
-		progressDealerTurn(players, dealer, deck);
+		Deck.generateDeck();
+		initializeCard(players, dealer);
+		progressPlayerTurn(players, dealer);
+		progressDealerTurn(players, dealer);
 		makeResult(players, dealer);
 	}
 
@@ -50,25 +50,25 @@ public class BlackJackGameController {
 		outputView.displayResult(result, players, dealer);
 	}
 
-	private void progressDealerTurn(Players players, Dealer dealer, Deck deck) {
+	private void progressDealerTurn(Players players, Dealer dealer) {
 		if (dealer.isHit()) {
 			outputView.displayNewLine();
 		}
 		while (dealer.isHit() && !dealer.isBust() && !players.isAllPlayersBlackJackOrBust()) {
 			outputView.displayDealerUnderSevenTeen();
-			dealer.addCards(deck, 1);
+			dealer.addCards(1);
 		}
 	}
 
-	private void progressPlayerTurn(Players players, Dealer dealer, Deck deck) {
+	private void progressPlayerTurn(Players players, Dealer dealer) {
 		if (!dealer.isBlackJack()) {
-			players.getPlayers().forEach(player -> progressOnePlayer(deck, player));
+			players.getPlayers().forEach(this::progressOnePlayer);
 		}
 	}
 
-	private void progressOnePlayer(Deck deck, Player player) {
+	private void progressOnePlayer(Player player) {
 		while (!player.isBust() && !player.isBlackJack() && decideHitOrStay(player)) {
-			player.addCards(deck, 1);
+			player.addCards(1);
 			outputView.displayAllCard(player);
 		}
 	}
@@ -87,10 +87,10 @@ public class BlackJackGameController {
 		}
 	}
 
-	private void initializeCard(Players players, Dealer dealer, Deck deck) {
-		deck.shuffleDeck();
-		dealer.addCards(deck, 2);
-		players.addCardToAllPlayers(deck, 2);
+	private void initializeCard(Players players, Dealer dealer) {
+		Deck.shuffleDeck();
+		dealer.addCards(2);
+		players.addCardToAllPlayers(2);
 		outputView.displayFirstDistribution(players, dealer);
 		outputView.displayDealerOneCard(dealer);
 		for (Player player : players.getPlayers()) {
