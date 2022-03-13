@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.CardFactory;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -46,10 +45,23 @@ public class Players {
         value.forEach(player -> player.prepareGame(cardFactory));
     }
 
-    public Optional<Player> findHitPlayer() {
+    public boolean isDrawablePlayerExist() {
+        return value.stream()
+                .anyMatch(Player::isHit);
+    }
+
+    public Player findHitPlayer() {
         return value.stream()
                 .filter(Player::isHit)
-                .findFirst();
+                .findFirst()
+                .orElseThrow();
+    }
+
+    public Player findByName(final String playerName) {
+        return value.stream()
+                .filter(player -> player.getName().equals(playerName))
+                .findFirst()
+                .orElseThrow();
     }
 
     public List<String> getNames() {

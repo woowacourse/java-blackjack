@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
@@ -47,5 +48,31 @@ class PlayersTest {
         assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("8명 까지만 참여할 수 있습니다.");
+    }
+
+    @Test
+    @DisplayName("카드를 뽑을 수 있는 플레이어가 존재하는지 확인한다.")
+    void isDrawablePlayerExist() {
+        // give
+        final Players players = new Players(List.of("rick", "pobi"));
+
+        // when
+        final boolean actual = players.isDrawablePlayerExist();
+
+        // then
+        assertThat(actual).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("카드를 뽑을 수 있는 플레이어를 찾는다.")
+    void findHitPlayer() {
+        // give
+        final Players players = new Players(List.of("rick", "pobi"));
+
+        // when
+        final Player actual = players.findHitPlayer();
+
+        // then
+        assertThat(actual.getName()).isEqualTo("rick");
     }
 }

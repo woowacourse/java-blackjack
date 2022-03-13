@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Status;
-import blackjack.domain.participant.Player;
 import blackjack.service.Casino;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -13,9 +12,9 @@ public class GameController {
         casino.prepareParticipants();
 
         while (casino.isPlayerTurn()) {
-            final Player player = casino.findDrawablePlayer();
-            final Status status = InputView.getHitOrStay(player.getName());
-            casino.progressPlayerTurn(player, status);
+            final String playerName = casino.findDrawablePlayerName();
+            final Status status = InputView.getHitOrStay(playerName);
+            casino.progressPlayerTurn(playerName, status);
         }
         casino.progressDealerTurn();
 

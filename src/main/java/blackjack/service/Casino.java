@@ -34,14 +34,15 @@ public class Casino {
     }
 
     public boolean isPlayerTurn() {
-        return players.findHitPlayer().isPresent();
+        return players.isDrawablePlayerExist();
     }
 
-    public Player findDrawablePlayer() {
-        return players.findHitPlayer().get();
+    public String findDrawablePlayerName() {
+        return players.findHitPlayer().getName();
     }
 
-    public void progressPlayerTurn(final Player player, final Status status) {
+    public void progressPlayerTurn(final String playerName, final Status status) {
+        final Player player = players.findByName(playerName);
         if (status == Status.HIT) {
             player.hit(cardFactory);
         }
