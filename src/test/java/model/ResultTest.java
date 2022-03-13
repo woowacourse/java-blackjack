@@ -18,7 +18,7 @@ public class ResultTest {
         assertThat(lose).isEqualTo(Result.LOSE);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} vs {1} is {2}")
     @CsvSource(value = {"BLACKJACK,BUST,WIN",
             "BLACKJACK,STAND,WIN",
             "STAND,BUST,WIN",

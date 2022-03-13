@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
+import model.cardGettable.CardsGettable;
+import model.cardGettable.EveryCardsGettable;
 
 public abstract class Participator {
     protected final Cards cards;
+    protected CardsGettable cardsGettableStrategy;
     private final String name;
 
     public Participator(String name) {
@@ -19,7 +22,7 @@ public abstract class Participator {
     }
 
     public List<Card> getCards() {
-        return new ArrayList<>(cards.getValue());
+        return new ArrayList<>(cardsGettableStrategy.getCards(cards));
     }
 
     public abstract boolean canReceiveCard();

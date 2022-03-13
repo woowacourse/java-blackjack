@@ -1,9 +1,12 @@
 package model;
 
+import model.cardGettable.EveryCardsGettable;
+
 public class Player extends Participator {
 
     public Player(String playerName) {
         super(playerName);
+        this.cardsGettableStrategy = new EveryCardsGettable();
     }
 
     @Override
