@@ -1,6 +1,7 @@
 package domain.participant;
 
-import java.util.Arrays;
+import dto.ResultDto;
+
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -12,13 +13,12 @@ public class Dealer extends Participant {
         super(NAME);
     }
 
-    public List<Integer> checkResult(List<Result> playersResult) {
-
+    public ResultDto checkResult(List<Result> playersResult) {
         int winCount = countTargetResult(playersResult, Result.LOSE);
         int loseCount = countTargetResult(playersResult, Result.WIN);
         int drawCount = playersResult.size() - winCount - loseCount;
 
-        return Arrays.asList(winCount, drawCount, loseCount);
+        return ResultDto.of(winCount, drawCount, loseCount);
     }
 
     private int countTargetResult(List<Result> playersResult, Result targetResult) {

@@ -5,6 +5,8 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.participant.Result;
+import dto.ResultDto;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,16 +80,16 @@ public class OutputView {
         System.out.println(DEALER_HIT_CARD_MESSAGE);
     }
 
-    public void showResult(List<Integer> dealerResult, List<String> playerNames,
-        List<Result> playerResult) {
+    public void showResult(ResultDto resultDto, List<String> playerNames,
+                           List<Result> playerResult) {
         System.out.println(FINAL_RESULT_MESSAGE);
-        showDealerResult(dealerResult);
+        showDealerResult(resultDto);
         showPlayersResult(playerNames, playerResult);
     }
 
-    private void showDealerResult(List<Integer> dealerResult) {
-        System.out.printf(DEALER_MESSAGE, dealerResult.get(0), dealerResult.get(1),
-            dealerResult.get(2));
+    private void showDealerResult(ResultDto resultDto) {
+        System.out.printf(DEALER_MESSAGE, resultDto.getWinCount(), resultDto.getDrawCount(),
+            resultDto.getLoseCount());
         System.out.print(System.lineSeparator());
     }
 
