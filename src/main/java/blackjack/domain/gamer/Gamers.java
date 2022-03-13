@@ -61,7 +61,7 @@ public class Gamers {
 	}
 
 	public boolean checkPlayerDrawPossible(String name) {
-		return findPlayerByName(name).isOverThan(BlackJackGame.MAX_CARD_VALUE);
+		return findPlayerByName(name).isBust();
 	}
 
 	public List<String> findPlayerNames() {

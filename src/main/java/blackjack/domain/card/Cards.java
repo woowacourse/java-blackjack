@@ -1,15 +1,16 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.BlackJackGame.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.domain.BlackJackGame;
-
 public class Cards {
+
+	private static final String NOT_ACE = "Ace 카드가 아닙니다.";
+
+	private static final int MAX_CARD_VALUE = 21;
+	private static final int CARD_SIZE_BLACKJACK = 2;
 
 	private final List<Card> values;
 
@@ -57,17 +58,17 @@ public class Cards {
 
 	private void validateNotAce(Card ace) {
 		if (!ace.isAce()) {
-			throw new IllegalArgumentException("Ace 카드가 아닙니다.");
+			throw new IllegalArgumentException(NOT_ACE);
 		}
 	}
 
 	public boolean isBlackJack() {
-		return this.size() == BlackJackGame.INIT_DISTRIBUTION_COUNT &&
-			this.sum() == BlackJackGame.MAX_CARD_VALUE;
+		return this.size() == CARD_SIZE_BLACKJACK &&
+			this.sum() == MAX_CARD_VALUE;
 	}
 
 	public boolean isBust() {
-		return this.sum() > BlackJackGame.MAX_CARD_VALUE;
+		return this.sum() > MAX_CARD_VALUE;
 	}
 
 	public boolean isGreaterThan(Cards cards) {

@@ -16,4 +16,8 @@ public class Player extends Gamer{
         return this.getName()
                 .isSame(name);
     }
+
+    public boolean isBust() {
+        return cards.isBust();
+    }
 }
