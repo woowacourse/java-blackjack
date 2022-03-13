@@ -45,17 +45,15 @@ public abstract class Participant {
 
     public int getScore() {
         final int score = calculateScore();
-        final int countAce = countAce();
-        if (countAce > 0 && score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore() <= BLACK_JACK) {
+        if (hasAce() && score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore() <= BLACK_JACK) {
             return score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore();
         }
         return score;
     }
 
-    private int countAce() {
-        return (int) cards.stream()
-                .filter(card -> card.getDenomination() == Denomination.ACE)
-                .count();
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     private int calculateScore() {
