@@ -6,18 +6,29 @@ import static model.card.CardFace.QUEEN;
 import static model.card.CardFace.TWO;
 import static model.card.CardSuit.CLOVER;
 import static model.card.CardSuit.DIAMOND;
+import static model.card.CardSuit.HEART;
 import static model.card.CardSuit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
+import java.util.List;
 import model.card.Card;
+import model.card.CardFace;
+import model.card.Cards;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
+    private Player player;
+
+    @BeforeEach
+    void setUp() {
+        player = new Player("클레이");
+    }
+
     @Test
     void getCard() {
-        Participator player = new Player("클레이");
         final Card firstCard = new Card(SPADE, ACE);
         final Card secondCard = new Card(SPADE, TWO);
 
@@ -28,13 +39,47 @@ public class PlayerTest {
     }
 
     @Test
+    void cannotReceiveCard() {
+        player.receiveCard(new Card(SPADE, CardFace.QUEEN));
+        player.receiveCard(new Card(HEART, CardFace.QUEEN));
+        player.receiveCard(new Card(DIAMOND, CardFace.QUEEN));
+
+        assertThat(player.canReceiveCard()).isFalse();
+    }
+
+    @Test
+    void canReceiveCard() {
+        player.receiveCard(new Card(SPADE, CardFace.QUEEN));
+        player.receiveCard(new Card(HEART, CardFace.QUEEN));
+
+        assertThat(player.canReceiveCard()).isTrue();
+    }
+
+    @Test
+    void canReceiveCardWithAce() {
+        player.receiveCard(new Card(SPADE, CardFace.EIGHT));
+        player.receiveCard(new Card(HEART, ACE));
+        player.receiveCard(new Card(DIAMOND, ACE));
+
+        assertThat(player.canReceiveCard()).isTrue();
+    }
+
+    @Test
+    void cannotReceiveCardWithAce() {
+        player.receiveCard(new Card(HEART, ACE));
+        player.receiveCard(new Card(DIAMOND, ACE));
+        player.receiveCard(new Card(SPADE, CardFace.NINE));
+
+        assertThat(player.canReceiveCard()).isFalse();
+    }
+
+    @Test
     void matchWithDealerBothBust() {
         Dealer dealer = new Dealer();
         dealer.cards.addCard(new Card(DIAMOND, QUEEN));
         dealer.cards.addCard(new Card(SPADE, QUEEN));
         dealer.cards.addCard(new Card(CLOVER, QUEEN));
 
-        Player player = new Player("klay");
         player.cards.addCard(new Card(DIAMOND, KING));
         player.cards.addCard(new Card(SPADE, KING));
         player.cards.addCard(new Card(CLOVER, KING));

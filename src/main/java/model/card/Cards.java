@@ -2,6 +2,7 @@ package model.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import model.Result;
 import model.Status;
 
@@ -52,8 +53,11 @@ public class Cards {
         cards.add(card);
     }
 
-    public Card getFirstCard() {
-        return cards.get(0);
+    public Optional<Card> getFirstCard() {
+        if (cards.isEmpty()) {
+            return Optional.ofNullable(null);
+        }
+        return Optional.of(cards.get(0));
     }
 
     public Result getResult(Cards other) {
