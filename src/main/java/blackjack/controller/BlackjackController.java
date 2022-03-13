@@ -51,7 +51,7 @@ public class BlackjackController {
     }
 
     private void hitDealer(Blackjack blackjack) {
-        if (blackjack.isDealerReceiveOneMoreCard()) {
+        while (blackjack.isDealerReceiveOneMoreCard()) {
             OutputView.printReceivingMoreCardOfDealer();
         }
     }
