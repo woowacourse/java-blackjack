@@ -78,6 +78,7 @@ public class BlackJackController {
     private void giveCardsToDealer(final BlackJackMachine blackJackMachine, final Dealer dealer) {
         while (dealer.canAddCard()) {
             blackJackMachine.giveCardToPlayer(dealer);
+            OutputView.printDealerGetCardMessage(dealer);
         }
         OutputView.printNewLine();
     }

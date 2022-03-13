@@ -48,7 +48,7 @@ public class OutputView {
     public static void printPlayerCards(final Player player) {
         final List<String> cards = new ArrayList<>();
         for (Card card : player.getCards()) {
-            cards.add(card.toString());
+            cards.add(card.getDenominationName() + card.getSuitName());
         }
         System.out.println(player.getName() + "카드: " + String.join(CARD_DELIMITER, cards));
     }

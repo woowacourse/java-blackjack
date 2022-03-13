@@ -22,4 +22,12 @@ public class Card {
     public String toString() {
         return denomination.getName() + suit.getName();
     }
+
+    public String getDenominationName() {
+        return denomination.getName();
+    }
+
+    public String getSuitName() {
+        return suit.getName();
+    }
 }
