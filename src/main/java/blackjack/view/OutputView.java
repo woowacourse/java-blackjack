@@ -56,6 +56,7 @@ public class OutputView {
     private static String makeFirstDistributeTitleString(CurrentCardsDto dealer, List<CurrentCardsDto> players) {
         StringBuilder title = new StringBuilder("\n");
         title.append(dealer.getName())
+                .append("와 ")
                 .append(players.stream().map(CurrentCardsDto::getName)
                         .collect(Collectors.joining(", ")))
                 .append("에게 2장을 나누었습니다.\n");
