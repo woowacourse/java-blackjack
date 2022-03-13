@@ -9,6 +9,9 @@ import blackjack.domain.card.PlayStatus;
 
 public class Dealer extends Participant {
 
+    private static final int HIT_CONDITION = 16;
+    private static final String NAME = "딜러";
+
     public Dealer() {
         super();
     }
@@ -21,7 +24,7 @@ public class Dealer extends Participant {
 
     public CardCount drawCards(CardDeck cardDeck) {
         int count = 0;
-        while (getStatus() == PlayStatus.HIT && getScore() <= 16) {
+        while (getStatus() == PlayStatus.HIT && getScore() <= HIT_CONDITION) {
             hit(cardDeck.drawCard());
             count++;
         }
@@ -34,6 +37,6 @@ public class Dealer extends Participant {
     }
 
     public String getName() {
-        return "딜러";
+        return NAME;
     }
 }
