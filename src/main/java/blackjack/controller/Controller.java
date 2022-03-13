@@ -18,19 +18,22 @@ public class Controller {
         Dealer dealer = new Dealer(new Name("딜러"));
         Players players = Players.of(InputView.requestPlayerNames());
 
+        initCardHand(cardDeck, dealer, players);
+        playBlackJack(cardDeck, dealer, players);
+        showResult(dealer, players);
+    }
+
+    private void initCardHand(CardDeck cardDeck, Dealer dealer, Players players) {
         dealer.receive(cardDeck.distribute(INITIAL_CARD_HAND));
         players.receive(cardDeck);
 
         OutputView.printInitCardHandStatus(dealer, players);
-
-        playBlackJack(cardDeck, dealer, players);
     }
 
     private void playBlackJack(CardDeck cardDeck, Dealer dealer, Players players) {
         playPlayersTurn(cardDeck, players);
+        OutputView.printEmptyLine();
         playDealerTurn(cardDeck, dealer);
-        OutputView.printFinalStatus(dealer, players);
-        OutputView.printFinalResult(dealer, players);
     }
 
     private void playPlayersTurn(CardDeck cardDeck, Players players) {
@@ -46,6 +49,10 @@ public class Controller {
         }
     }
 
+    private boolean isPlayable(Player player) {
+        return player.isReceivable() && InputView.requestDecision(player);
+    }
+
     private void playDealerTurn(CardDeck cardDeck, Dealer dealer) {
         while (dealer.isReceivable()) {
             OutputView.printDealerStatus();
@@ -53,7 +60,8 @@ public class Controller {
         }
     }
 
-    private boolean isPlayable(Player player) {
-        return player.isReceivable() && InputView.requestDecision(player);
+    private void showResult(Dealer dealer, Players players) {
+        OutputView.printFinalStatus(dealer, players);
+        OutputView.printFinalResult(dealer, players);
     }
 }

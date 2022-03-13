@@ -21,11 +21,15 @@ public class OutputView {
                         .map(player -> player.getName().getValue())
                         .collect(Collectors.joining(", ")));
 
-        printCardHandStatus(dealer);
+        printInitDealerCardHandStatus(dealer);
         for (Player player : readPlayers) {
             printCardHandStatus(player);
         }
-        System.out.println();
+        printEmptyLine();
+    }
+
+    private static void printInitDealerCardHandStatus(Dealer dealer) {
+        System.out.println(dealer.getName().getValue() + " 카드: " + dealer.getCards().getCardHand().get(0));
     }
 
     public static void printCardHandStatus(Participant participant) {
@@ -41,12 +45,11 @@ public class OutputView {
     }
 
     public static void printDealerStatus() {
-        System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printFinalStatus(Dealer dealer, Players players) {
-        System.out.println();
+        printEmptyLine();
         System.out.println(showCardHandStatus(dealer) + " 결과 - " + dealer.calculateBestScore());
         for (Player readPlayer : players.getPlayers()) {
             System.out.println(showCardHandStatus(readPlayer) + " 결과 - " + readPlayer.calculateBestScore());
@@ -54,7 +57,7 @@ public class OutputView {
     }
 
     public static void printFinalResult(Dealer dealer, Players players) {
-        System.out.println();
+        printEmptyLine();
         System.out.println("## 최종 승패");
         Map<Player, Boolean> resultCounter = players.judgeResult(dealer.calculateBestScore());
         System.out.println(dealer.getName().getValue() + ": " +
@@ -71,5 +74,9 @@ public class OutputView {
             return "승";
         }
         return "패";
+    }
+
+    public static void printEmptyLine() {
+        System.out.println();
     }
 }
