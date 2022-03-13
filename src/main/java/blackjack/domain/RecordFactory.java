@@ -4,7 +4,6 @@ import static blackjack.domain.Record.LOSS;
 import static blackjack.domain.Record.PUSH;
 import static blackjack.domain.Record.WIN;
 
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.HashMap;
 import java.util.LinkedHashMap;

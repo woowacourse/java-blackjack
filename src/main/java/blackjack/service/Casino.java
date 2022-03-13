@@ -6,9 +6,13 @@ import blackjack.domain.card.Status;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.view.OutputView;
-import blackjack.vo.ParticipantVo;
+import blackjack.dto.CardDto;
+import blackjack.dto.DealerTurnResultDto;
+import blackjack.dto.ParticipantDto;
+import blackjack.dto.ParticipantResultDto;
+import blackjack.dto.RecordDto;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Casino {
 
@@ -25,12 +29,23 @@ public class Casino {
     public void prepareParticipants() {
         dealer.prepareGame(cardFactory);
         players.prepareGame(cardFactory);
+    }
 
-        OutputView.printInitResult(players.getNames());
-        OutputView.printDealerFirstCard(dealer.openFirstCard());
-        players.getValue().stream()
-                .map(ParticipantVo::new)
-                .forEach(OutputView::printPlayerCards);
+    public List<String> getPlayersNames() {
+        return players.getNames();
+    }
+
+    public CardDto findDealerFirstCard() {
+        return CardDto.of(dealer.openFirstCard());
+    }
+
+    public List<ParticipantDto> findAllParticipants() {
+        final List<ParticipantDto> list = players.getValue().stream()
+                .map(ParticipantDto::of)
+                .collect(Collectors.toList());
+        list.add(0, ParticipantDto.of(dealer));
+
+        return list;
     }
 
     public boolean isPlayerTurn() {
@@ -41,7 +56,7 @@ public class Casino {
         return players.findHitPlayer().getName();
     }
 
-    public void progressPlayerTurn(final String playerName, final Status status) {
+    public ParticipantDto progressPlayerTurn(final String playerName, final Status status) {
         final Player player = players.findByName(playerName);
         if (status == Status.HIT) {
             player.hit(cardFactory);
@@ -50,29 +65,34 @@ public class Casino {
             player.stay();
         }
 
-        OutputView.printPlayerCards(new ParticipantVo(player));
+        return ParticipantDto.of(player);
     }
 
-    public void progressDealerTurn() {
+    public DealerTurnResultDto progressDealerTurn() {
         if (!dealer.canDrawCard()) {
-            OutputView.printDealerNotDrawMessage();
-            return;
+            return new DealerTurnResultDto(0);
         }
 
+        int count = 0;
         do {
             dealer.hit(cardFactory);
-            OutputView.printDealerDrawMessage();
+            count++;
         } while (dealer.canDrawCard());
+
+        return new DealerTurnResultDto(count);
     }
 
-    public void endGame() {
-        OutputView.breakLine();
-        OutputView.printParticipantCards(new ParticipantVo(dealer));
-        players.getValue().stream()
-                .map(ParticipantVo::new)
-                .forEach(OutputView::printParticipantCards);
+    public List<ParticipantResultDto> getAllResult() {
+        final List<ParticipantResultDto> list = players.getValue().stream()
+                .map(ParticipantResultDto::of)
+                .collect(Collectors.toList());
+        list.add(0, ParticipantResultDto.of(dealer));
 
+        return list;
+    }
+
+    public RecordDto getAllRecord() {
         final RecordFactory factory = new RecordFactory(dealer.getScore(), players.getValue());
-        OutputView.printRecord(factory.getDealerRecord(), factory.getAllPlayerRecord());
+        return RecordDto.of(factory.getDealerRecord(), factory.getAllPlayerRecord());
     }
 }
