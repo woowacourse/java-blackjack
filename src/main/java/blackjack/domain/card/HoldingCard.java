@@ -46,7 +46,7 @@ public class HoldingCard {
 
     private int getAceCount() {
         return (int) cards.stream()
-                .filter(card -> card.getNumber() == CardNumber.ACE.getNumber())
+                .filter(card -> card.getCardNumber() == CardNumber.ACE)
                 .count();
     }
 

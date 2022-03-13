@@ -14,11 +14,11 @@ public class Card {
         return number.getNumber();
     }
 
-    public String getOriginalNumber() {
-        return number.getOriginalName();
+    public CardNumber getCardNumber() {
+        return number;
     }
 
-    public String getCardType() {
-        return type.getName();
+    public CardType getType() {
+        return type;
     }
 }

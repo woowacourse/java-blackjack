@@ -6,6 +6,8 @@ import blackjack.domain.participant.Users;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.Result;
 import blackjack.domain.result.UserResult;
+import blackjack.view.cardview.OriginCardNumber;
+import blackjack.view.cardview.OriginalCardType;
 
 import java.util.List;
 import java.util.Map;
@@ -34,8 +36,8 @@ public class OutputView {
     private static String getHoldingCards(List<Card> cards) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Card card : cards) {
-            stringBuilder.append(card.getOriginalNumber())
-                    .append(card.getCardType())
+            stringBuilder.append(OriginCardNumber.getOriginalName(card.getCardNumber()))
+                    .append(OriginalCardType.getOriginalName(card.getType()))
                     .append(CARD_SEPARATOR);
         }
         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
