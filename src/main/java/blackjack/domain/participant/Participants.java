@@ -24,7 +24,14 @@ public class Participants {
     public Participants(final List<Participant> participants) {
         Objects.requireNonNull(participants, "participants는 null로 생성할 수 없습니다.");
         this.participants = new ArrayList<>(participants);
+        validateParticipantsSize(participants);
         validateDuplicationPlayers(this.participants);
+    }
+
+    private void validateParticipantsSize(final List<Participant> participants) {
+        if (participants.isEmpty()) {
+            throw new IllegalArgumentException("참가자는 0명이 될 수 없습니다.");
+        }
     }
 
     private void validateDuplicationPlayers(final List<Participant> participants) {

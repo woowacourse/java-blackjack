@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -38,6 +39,16 @@ class ParticipantsTest {
         assertThatThrownBy(() -> new Participants(participants))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름 간에 중복이 있으면 안됩니다.");
+    }
+
+    @Test
+    @DisplayName("참가자가 0명인 경우 예외를 발생시킨다.")
+    void createExceptionByEmptySize() {
+        final List<Participant> participants = new ArrayList<>();
+
+        assertThatThrownBy(() -> new Participants(participants))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("참가자는 0명이 될 수 없습니다.");
     }
 
     @Test
