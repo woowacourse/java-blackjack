@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import utils.ExceptionMessages;
 
-public class Participant implements Comparable<Participant> {
+public abstract class Participant implements Comparable<Participant> {
 
     protected static final int MAX_SCORE = 21;
 
@@ -22,16 +22,14 @@ public class Participant implements Comparable<Participant> {
         this.name = new Name(name);
     }
 
-    public boolean canDrawCard() {
-        return true;
-    }
-
     public void hit(Card card) {
         if (!canDrawCard()) {
             throw new IllegalStateException(ExceptionMessages.OVER_CARD_LIMIT_ERROR);
         }
         cards.addCard(card);
     }
+
+    public abstract boolean canDrawCard();
 
     public void hitInitialTurn() {
         cards.addCards(Deck.handOutInitialTurn());
