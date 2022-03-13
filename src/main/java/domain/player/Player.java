@@ -14,10 +14,6 @@ public abstract class Player {
         this.cards = new Cards();
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     public void addCard(Card card) {
         cards.addCard(card);
     }
@@ -32,6 +28,10 @@ public abstract class Player {
 
     public boolean isBlackJack() {
         return cards.isBlackJack();
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public List<Card> getCards() {
