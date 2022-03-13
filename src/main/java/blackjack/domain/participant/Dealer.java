@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
-import blackjack.dto.CurrentCardsDTO;
-import blackjack.dto.DealerResultDTO;
-import blackjack.dto.PlayerResultDTO;
+import blackjack.dto.CurrentCardsDto;
+import blackjack.dto.DealerResultDto;
+import blackjack.dto.PlayerResultDto;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,18 +20,18 @@ public class Dealer extends Participant {
         return getScore() <= BOUND_FOR_ADDITIONAL_CARD;
     }
 
-    public DealerResultDTO computeResult(List<PlayerResultDTO> totalPlayerResult) {
+    public DealerResultDto computeResult(List<PlayerResultDto> totalPlayerResult) {
         int loseCount = (int) totalPlayerResult.stream()
-                .filter(PlayerResultDTO::isWin)
+                .filter(PlayerResultDto::isWin)
                 .count();
         int winCount = totalPlayerResult.size() - loseCount;
 
-        return new DealerResultDTO(getName(), winCount, loseCount);
+        return new DealerResultDto(getName(), winCount, loseCount);
     }
 
     @Override
-    public CurrentCardsDTO generateCurrentCardsDTO() {
-        return new CurrentCardsDTO(getName(), Collections.unmodifiableList(getCards().subList(0, 1)));
+    public CurrentCardsDto generateCurrentCardsDTO() {
+        return new CurrentCardsDto(getName(), Collections.unmodifiableList(getCards().subList(0, 1)));
     }
 
 }

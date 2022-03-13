@@ -4,16 +4,14 @@ import blackjack.domain.card.Card;
 
 import java.util.List;
 
-public class TotalScoreDTO {
+public class CurrentCardsDto {
 
     private final String name;
     private final List<Card> cards;
-    private final int score;
 
-    public TotalScoreDTO(String name, List<Card> cards, int score) {
+    public CurrentCardsDto(String name, List<Card> cards) {
         this.name = name;
         this.cards = cards;
-        this.score = score;
     }
 
     public String getName() {
@@ -22,9 +20,5 @@ public class TotalScoreDTO {
 
     public List<Card> getCards() {
         return cards;
-    }
-
-    public int getScore() {
-        return score;
     }
 }

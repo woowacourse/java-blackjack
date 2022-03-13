@@ -65,17 +65,17 @@ public class BlackjackController {
         }
     }
 
-    private List<TotalScoreDTO> computeTotalScore() {
-        List<TotalScoreDTO> totalScoreDTOs = new ArrayList<>();
-        totalScoreDTOs.add(dealer.computeTotalScore());
-        totalScoreDTOs.addAll(players.computeTotalScore());
-        return totalScoreDTOs;
+    private List<TotalScoreDto> computeTotalScore() {
+        List<TotalScoreDto> totalScoreDtos = new ArrayList<>();
+        totalScoreDtos.add(dealer.computeTotalScore());
+        totalScoreDtos.addAll(players.computeTotalScore());
+        return totalScoreDtos;
     }
 
-    private TotalResultDTO computeTotalResult() {
-        List<PlayerResultDTO> playersResult = players.computeResult(dealer.getScore());
-        DealerResultDTO dealerResult = dealer.computeResult(playersResult);
-        return new TotalResultDTO(playersResult, dealerResult);
+    private TotalResultDto computeTotalResult() {
+        List<PlayerResultDto> playersResult = players.computeResult(dealer.getScore());
+        DealerResultDto dealerResult = dealer.computeResult(playersResult);
+        return new TotalResultDto(playersResult, dealerResult);
     }
 
 }

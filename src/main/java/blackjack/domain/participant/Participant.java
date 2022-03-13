@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.dto.CurrentCardsDTO;
-import blackjack.dto.TotalScoreDTO;
+import blackjack.dto.CurrentCardsDto;
+import blackjack.dto.TotalScoreDto;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,13 +26,13 @@ public class Participant {
         score += card.getValue();
     }
 
-    public CurrentCardsDTO generateCurrentCardsDTO() {
-        return new CurrentCardsDTO(name, Collections.unmodifiableList(cards));
+    public CurrentCardsDto generateCurrentCardsDTO() {
+        return new CurrentCardsDto(name, Collections.unmodifiableList(cards));
     }
 
-    public TotalScoreDTO computeTotalScore() {
+    public TotalScoreDto computeTotalScore() {
         this.endTurn();
-        return new TotalScoreDTO(name, Collections.unmodifiableList(cards), score);
+        return new TotalScoreDto(name, Collections.unmodifiableList(cards), score);
     }
 
     public int getScore() {

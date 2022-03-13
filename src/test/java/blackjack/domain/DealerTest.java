@@ -4,8 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Symbol;
 import blackjack.domain.participant.Dealer;
-import blackjack.dto.DealerResultDTO;
-import blackjack.dto.PlayerResultDTO;
+import blackjack.dto.DealerResultDto;
+import blackjack.dto.PlayerResultDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,12 +38,12 @@ class DealerTest {
     @Test
     @DisplayName("플레이어의 승리는 딜러의 패배로, 플레이어의 패배는 딜러의 승리로 계산한다.")
     void calculateTotalResult() {
-        List<PlayerResultDTO> playersResult = new ArrayList<>();
-        playersResult.add(new PlayerResultDTO("a", true));
-        playersResult.add(new PlayerResultDTO("b", true));
-        playersResult.add(new PlayerResultDTO("c", false));
+        List<PlayerResultDto> playersResult = new ArrayList<>();
+        playersResult.add(new PlayerResultDto("a", true));
+        playersResult.add(new PlayerResultDto("b", true));
+        playersResult.add(new PlayerResultDto("c", false));
 
-        DealerResultDTO dealerResult = new Dealer().computeResult(playersResult);
+        DealerResultDto dealerResult = new Dealer().computeResult(playersResult);
 
         assertThat(dealerResult.getWinCount()).isEqualTo(1);
         assertThat(dealerResult.getLoseCount()).isEqualTo(2);

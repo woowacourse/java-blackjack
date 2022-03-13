@@ -1,11 +1,11 @@
 package blackjack.dto;
 
-public class PlayerResultDTO {
+public class PlayerResultDto {
 
     private final String name;
     private final boolean isWin;
 
-    public PlayerResultDTO(String name, boolean isWin) {
+    public PlayerResultDto(String name, boolean isWin) {
         this.name = name;
         this.isWin = isWin;
     }

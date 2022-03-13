@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Players;
-import blackjack.dto.CurrentCardsDTO;
+import blackjack.dto.CurrentCardsDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,7 +41,7 @@ public class PlayersTest {
         Players players = new Players(new String[]{"a", "b", "c"});
         players.addForAllPlayers(new Deck());
 
-        for (CurrentCardsDTO currentCardsDTO : players.generateCurrentCardsDTO()) {
+        for (CurrentCardsDto currentCardsDTO : players.generateCurrentCardsDTO()) {
             assertThat(currentCardsDTO.getCards().size()).isEqualTo(1);
         }
     }

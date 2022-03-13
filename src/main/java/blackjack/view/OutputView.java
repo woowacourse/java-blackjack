@@ -18,17 +18,17 @@ public class OutputView {
         System.out.println(START_ERROR + message);
     }
 
-    public static void printFirstDistribute(CurrentCardsDTO dealer, List<CurrentCardsDTO> players) {
+    public static void printFirstDistribute(CurrentCardsDto dealer, List<CurrentCardsDto> players) {
         System.out.println(makeFirstDistributeTitleString(dealer, players));
 
-        for (CurrentCardsDTO player : players) {
+        for (CurrentCardsDto player : players) {
             printCurrentStatus(player);
         }
 
         System.out.println();
     }
 
-    public static void printCurrentStatus(CurrentCardsDTO dto) {
+    public static void printCurrentStatus(CurrentCardsDto dto) {
         System.out.println(makeCurrentCardToString(dto.getName(), dto.getCards()));
     }
 
@@ -37,26 +37,26 @@ public class OutputView {
                 + "이하라 카드를 1장 더 받았습니다.");
     }
 
-    public static void printTotalScore(List<TotalScoreDTO> totalScoreDTOs) {
+    public static void printTotalScore(List<TotalScoreDto> totalScoreDtos) {
         System.out.println();
-        for (TotalScoreDTO dto : totalScoreDTOs) {
+        for (TotalScoreDto dto : totalScoreDtos) {
             System.out.println(makeCurrentCardToString(dto.getName(), dto.getCards())
                     + " - 결과: " + dto.getScore());
         }
     }
 
-    public static void printTotalResult(TotalResultDTO totalResult) {
+    public static void printTotalResult(TotalResultDto totalResult) {
         System.out.println("\n## 최종 승패");
         printDealerResult(totalResult.getDealerResult());
-        for (PlayerResultDTO playerResult : totalResult.getTotalPlayerResult()) {
+        for (PlayerResultDto playerResult : totalResult.getTotalPlayerResult()) {
             printPlayerResult(playerResult);
         }
     }
 
-    private static String makeFirstDistributeTitleString(CurrentCardsDTO dealer, List<CurrentCardsDTO> players) {
+    private static String makeFirstDistributeTitleString(CurrentCardsDto dealer, List<CurrentCardsDto> players) {
         StringBuilder title = new StringBuilder("\n");
         title.append(dealer.getName())
-                .append(players.stream().map(CurrentCardsDTO::getName)
+                .append(players.stream().map(CurrentCardsDto::getName)
                         .collect(Collectors.joining(", ")))
                 .append("에게 2장을 나누었습니다.\n");
 
@@ -75,13 +75,13 @@ public class OutputView {
         return result.toString();
     }
 
-    private static void printDealerResult(DealerResultDTO dealerResult) {
+    private static void printDealerResult(DealerResultDto dealerResult) {
         System.out.println(dealerResult.getName() + ": "
                 + dealerResult.getWinCount() + "승 "
                 + dealerResult.getLoseCount() + "패");
     }
 
-    private static void printPlayerResult(PlayerResultDTO playerResult) {
+    private static void printPlayerResult(PlayerResultDto playerResult) {
         System.out.print(playerResult.getName() + ": ");
         if (playerResult.isWin()) {
             System.out.print("승\n");

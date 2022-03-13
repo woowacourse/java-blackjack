@@ -1,12 +1,12 @@
 package blackjack.dto;
 
-public class DealerResultDTO {
+public class DealerResultDto {
 
     private final String name;
     private final int winCount;
     private final int loseCount;
 
-    public DealerResultDTO(String name, int winCount, int loseCount) {
+    public DealerResultDto(String name, int winCount, int loseCount) {
         this.name = name;
         this.winCount = winCount;
         this.loseCount = loseCount;
