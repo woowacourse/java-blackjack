@@ -48,10 +48,17 @@ public class Cards {
 	}
 
 	private int selectAceValue(int sum, Card ace) {
-		if (ace.isAce() && ace.getValue() + sum > MAX_CARD_VALUE) {
+		validateNotAce(ace);
+		if (ace.getValue() + sum > MAX_CARD_VALUE) {
 			return CardNumber.LOWER_ACE_VALUE;
 		}
 		return ace.getValue();
+	}
+
+	private void validateNotAce(Card ace) {
+		if (!ace.isAce()) {
+			throw new IllegalArgumentException("Ace 카드가 아닙니다.");
+		}
 	}
 
 	public boolean isBlackJack() {
