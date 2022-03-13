@@ -1,11 +1,12 @@
 package blackjack.domain.card;
 
 import blackjack.domain.card.pattern.Denomination;
-import blackjack.domain.player.Gamer;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+
+    private final static int IN_GAME_MAX_POINT = 21;
 
     private final List<Card> cards;
 
@@ -40,7 +41,7 @@ public class Cards {
     }
 
     private int calculateAceAsSmallerStandard(int point, final Card card) {
-        if (card.isAce() && point > Gamer.LIMIT_GAMER_TOTAL_POINT) {
+        if (card.isAce() && point > IN_GAME_MAX_POINT) {
             point -= Denomination.ACE_INTERVAL;
         }
         return point;

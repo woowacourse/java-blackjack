@@ -1,12 +1,9 @@
 package blackjack.domain.player;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 public class Dealer implements Player {
 
@@ -44,16 +41,6 @@ public class Dealer implements Player {
     @Override
     public boolean isReceivable() {
         return calculateResult() <= DEALER_RECEIVE_STANDARD;
-    }
-
-    public Map<GameResult, Integer> calculateFinalResultBoard(
-        final Map<Gamer, GameResult> gamerResultBoard) {
-        Map<GameResult, Integer> enumMap = new EnumMap<>(GameResult.class);
-        for (GameResult gameResult : gamerResultBoard.values()) {
-            GameResult dealerGameResult = GameResult.convertToDealerResult(gameResult);
-            enumMap.put(dealerGameResult, enumMap.getOrDefault(dealerGameResult, 0) + 1);
-        }
-        return enumMap;
     }
 
 }

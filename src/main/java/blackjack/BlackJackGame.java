@@ -1,7 +1,5 @@
 package blackjack;
 
-import static blackjack.domain.player.Player.PLAYER_SETTING_CARD_SIZE;
-
 import blackjack.domain.Answer;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Deck;
@@ -15,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackJackGame {
+
+    private static final int PLAYER_SETTING_CARD_SIZE = 2;
 
     public void run() {
         Dealer dealer = new Dealer();
@@ -87,9 +87,10 @@ public class BlackJackGame {
 
     private static void printFinalMessage(final Dealer dealer, final Gamers gamers) {
         OutputView.printFinalResult(dealer, gamers.getGamers());
-        Map<Gamer, GameResult> gamerResultBoard = gamers.calculateFinalResultBoard(dealer);
+        Map<Gamer, GameResult> gamerResultBoard =
+            GameResult.calculateGamersFinalResultBoard(dealer, gamers.getGamers());
         OutputView.printFinalResultBoard(gamerResultBoard,
-            dealer.calculateFinalResultBoard(gamerResultBoard));
+            GameResult.calculateDealerFinalResultBoard(gamerResultBoard));
     }
 
 }

@@ -5,8 +5,6 @@ import java.util.List;
 
 public interface Player {
 
-    int PLAYER_SETTING_CARD_SIZE = 2;
-
     void receiveCard(final Card card);
 
     List<Card> openCards();

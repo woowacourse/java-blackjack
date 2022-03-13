@@ -8,6 +8,7 @@ import java.util.List;
 public class Gamer implements Player {
 
     public static final int LIMIT_GAMER_TOTAL_POINT = 21;
+    private static final int GAMER_OPEN_CARDS_SIZE = 2;
 
     private final String name;
     private final Cards cards;
@@ -49,7 +50,7 @@ public class Gamer implements Player {
 
     @Override
     public List<Card> openCards() {
-        return new ArrayList<>(cards.getCards().subList(0, PLAYER_SETTING_CARD_SIZE));
+        return new ArrayList<>(cards.getCards().subList(0, GAMER_OPEN_CARDS_SIZE));
     }
 
     @Override

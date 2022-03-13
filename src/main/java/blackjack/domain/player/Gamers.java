@@ -1,10 +1,7 @@
 package blackjack.domain.player;
 
-import blackjack.domain.GameResult;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,14 +26,6 @@ public class Gamers {
         if (names.size() != removalDuplicateNames.size()) {
             throw new IllegalArgumentException("[ERROR] 중복된 이름은 입력할 수 없습니다.");
         }
-    }
-
-    public Map<Gamer, GameResult> calculateFinalResultBoard(final Player dealer) {
-        int dealerResult = dealer.calculateResult();
-        return gamers.stream()
-            .collect(Collectors.toMap(gamer -> gamer,
-                gamer -> GameResult.findResult(dealerResult, gamer.calculateResult()),
-                (e1, e2) -> e1, LinkedHashMap::new));
     }
 
     public List<Gamer> getGamers() {

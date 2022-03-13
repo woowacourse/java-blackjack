@@ -1,8 +1,14 @@
 package blackjack.domain;
 
 import blackjack.domain.player.Gamer;
+import blackjack.domain.player.Player;
 import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BiPredicate;
+import java.util.stream.Collectors;
 
 public enum GameResult {
 
@@ -38,6 +44,25 @@ public enum GameResult {
             return GameResult.WIN;
         }
         return GameResult.DRAW;
+    }
+
+    public static Map<Gamer, GameResult> calculateGamersFinalResultBoard(final Player dealer,
+        final List<Gamer> gamers) {
+        int dealerResult = dealer.calculateResult();
+        return gamers.stream()
+            .collect(Collectors.toMap(gamer -> gamer,
+                gamer -> GameResult.findResult(dealerResult, gamer.calculateResult()),
+                (e1, e2) -> e1, LinkedHashMap::new));
+    }
+
+    public static Map<GameResult, Integer> calculateDealerFinalResultBoard(
+        final Map<Gamer, GameResult> gamerResultBoard) {
+        Map<GameResult, Integer> enumMap = new EnumMap<>(GameResult.class);
+        for (GameResult gameResult : gamerResultBoard.values()) {
+            GameResult dealerGameResult = GameResult.convertToDealerResult(gameResult);
+            enumMap.put(dealerGameResult, enumMap.getOrDefault(dealerGameResult, 0) + 1);
+        }
+        return enumMap;
     }
 
     public String getResult() {
