@@ -24,7 +24,12 @@ public class Deck {
 
 	private void setUpCardSuitByDenomination(final Denomination denomination) {
 		Stream.of(Suit.values())
-			.forEach(type -> cards.add(new Card(denomination, type)));
+			.forEach(type -> addCardToDeck(denomination, type));
+	}
+
+	private void addCardToDeck(Denomination denomination, Suit type) {
+		Card card = new Card(denomination, type);
+		cards.add(card);
 	}
 
 	public Card distributeCard() {
