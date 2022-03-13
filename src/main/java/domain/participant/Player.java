@@ -12,8 +12,8 @@ public class Player extends Participant {
 	}
 
 	public Versus compareAtBlackJack(Participant other) {
-		boolean isPlayerBlackJack = isBlackJack();
-		boolean isOtherBlackJack = other.isBlackJack();
+		boolean isPlayerBlackJack = this.blackJack;
+		boolean isOtherBlackJack = other.blackJack;
 		if (isOtherBlackJack && isPlayerBlackJack) {
 			return Versus.DRAW;
 		}

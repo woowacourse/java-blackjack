@@ -10,7 +10,7 @@ public class Participant {
 	protected static final String SHOW_HAND_FORMAT = "%s카드: %s";
 	protected static final String JOINING_DELIMITER = ", ";
 	protected static final String SHOW_HAND_AND_BEST_SCORE_DELIMITER = " - 결과 : ";
-	protected static final int BLACK_JACK_NUMBER = 21;
+	protected static final int MAX_SCORE = 21;
 	protected static final int ACE_COUNT_LOWER_BOUND = 0;
 	protected static final int ADDITIONAL_SCORE_ACE = 10;
 
@@ -21,7 +21,7 @@ public class Participant {
 	public Participant(Name name, List<Card> hand) {
 		this.name = name;
 		this.hand = new ArrayList<>(hand);
-		this.blackJack = isBlackJack();
+		this.blackJack = isMaxScore();
 	}
 
 	public void addCard(Card card) {
@@ -41,22 +41,22 @@ public class Participant {
 	}
 
 	public boolean isBust() {
-		return getMinScore() > BLACK_JACK_NUMBER;
+		return getMinScore() > MAX_SCORE;
 	}
 
 	protected int getMinScore() {
 		return hand.stream().mapToInt(Card::getPoint).sum();
 	}
 
-	public boolean isBlackJack() {
-		return getBestScore() == BLACK_JACK_NUMBER;
+	public boolean isMaxScore() {
+		return getBestScore() == MAX_SCORE;
 	}
 
 	public int getBestScore() {
 		int aceCount = getAceCount();
 		int bestScore = getMinScore();
 
-		while (aceCount > ACE_COUNT_LOWER_BOUND && bestScore + ADDITIONAL_SCORE_ACE <= BLACK_JACK_NUMBER) {
+		while (aceCount > ACE_COUNT_LOWER_BOUND && bestScore + ADDITIONAL_SCORE_ACE <= MAX_SCORE) {
 			bestScore += ADDITIONAL_SCORE_ACE;
 			aceCount--;
 		}

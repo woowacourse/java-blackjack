@@ -61,14 +61,14 @@ public class ParticipantTest {
 		assertThat(participant.isBust()).isTrue();
 	}
 
-	@ParameterizedTest(name = "손패가 블랙잭인지 확인하는 기능 - case : {0}, {1}, {2}")
+	@ParameterizedTest(name = "손패가 MAX SCORE인지 확인하는 기능 - case : {0}, {1}, {2}")
 	@CsvSource(value = {"RANK_A, RANK_A, RANK_9", "RANK_K, RANK_Q, RANK_A", "RANK_K, RANK_8, RANK_3"})
 	void isBlackJack(String input1, String input2, String input3) {
 		Card card1 = new Card(Rank.valueOf(input1), Suit.HEART);
 		Card card2 = new Card(Rank.valueOf(input2), Suit.SPADE);
 		Card card3 = new Card(Rank.valueOf(input3), Suit.CLOVER);
 		Participant participant = new Participant(new Name("pobi"), new ArrayList<>(List.of(card1, card2, card3)));
-		assertThat(participant.isBlackJack()).isTrue();
+		assertThat(participant.isMaxScore()).isTrue();
 	}
 
 	@Test()

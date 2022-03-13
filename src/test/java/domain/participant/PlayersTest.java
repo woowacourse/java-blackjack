@@ -85,7 +85,7 @@ public class PlayersTest {
 	@DisplayName("이름으로 플레이어가 블랙잭 인지 판별")
 	void isBlackJackByName() {
 		Name name = new Name("pobi");
-		assertThat(players.isBlackJackByName(name)).isTrue();
+		assertThat(players.isMaxScoreByName(name)).isTrue();
 	}
 
 	@Test

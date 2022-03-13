@@ -30,7 +30,7 @@ public class Controller {
 		Players players = new Players(names, generateInitCardsForPlayers(names, deck));
 		printInitHands(names, dealer, players);
 
-		if (dealer.isBlackJack()) {
+		if (dealer.isMaxScore()) {
 			printBlackJackResult(names, dealer, players);
 			return;
 		}
@@ -94,7 +94,7 @@ public class Controller {
 	}
 
 	private void askAndDrawForPlayer(Deck deck, Players players, Name name) {
-		boolean isKeepDraw = !(players.isBlackJackByName(name));
+		boolean isKeepDraw = !(players.isMaxScoreByName(name));
 
 		while (isKeepDraw && askDraw(name.getName())) {
 			players.addCardByName(name, deck.draw());
@@ -120,7 +120,7 @@ public class Controller {
 	}
 
 	private boolean checkBlackJackOrBust(Players players, Name name) {
-		if (players.isBlackJackByName(name)) {
+		if (players.isMaxScoreByName(name)) {
 			OutputView.printBlackJackMessage();
 			return false;
 		}

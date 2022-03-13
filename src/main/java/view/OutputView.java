@@ -7,7 +7,7 @@ public class OutputView {
 
 	private static final String BUST_MESSAGE = "[ Bust!!! ]";
 	private static final String INIT_MESSAGE_FORMAT = "\n딜러와 %s에게 2장의 나누었습니다.\n";
-	private static final String BLACK_JACK_MESSAGE = "[ Black Jack!!! ]";
+	private static final String MAX_SCORE_MESSAGE = "[ MAX SCORE!!! ]";
 	private static final String RESULT_TITLE_MESSAGE = "\n## 최종 승패";
 	private static final String DEALER_RESULT_MESSAGE_FORMAT = "딜러: %d승 %d무 %d패\n";
 	private static final String PLAYER_RESULT_MESSAGE_FORMAT = "%s: %s\n";
@@ -33,7 +33,7 @@ public class OutputView {
 	}
 
 	public static void printBlackJackMessage() {
-		System.out.println(BLACK_JACK_MESSAGE);
+		System.out.println(MAX_SCORE_MESSAGE);
 	}
 
 	public static void printResultTitle() {

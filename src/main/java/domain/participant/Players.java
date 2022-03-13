@@ -52,14 +52,14 @@ public class Players {
 			.map((Player::isBust)).findFirst().orElseThrow();
 	}
 
-	public boolean isBlackJackByName(Name name) {
+	public boolean isMaxScoreByName(Name name) {
 		return players.stream()
 			.filter(player -> player.isNameMatch(name))
-			.map((Player::isBlackJack)).findFirst().orElseThrow();
+			.map((Player::isMaxScore)).findFirst().orElseThrow();
 	}
 
 	public Map<Name, Versus> getResultAtBlackJack(Participant other) {
-		if (!other.isBlackJack()) {
+		if (!other.blackJack) {
 			throw new IllegalStateException(NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE);
 		}
 		Map<Name, Versus> map = new LinkedHashMap<>();
