@@ -38,7 +38,7 @@ public class TrumpCardPack {
 
     private void checkEmpty() {
         if (this.values.empty()) {
-            throw new RuntimeException(ERROR_EMPTY);
+            throw new IllegalArgumentException(ERROR_EMPTY);
         }
     }
 }
