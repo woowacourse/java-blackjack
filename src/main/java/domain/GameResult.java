@@ -11,7 +11,7 @@ public enum GameResult {
     LOSE((a, b) -> a.isBust() || compareCardStatePower(a, b) < 0 || (isBothStand(a, b) && compareCardScore(a, b) < 0));
 
     private static final String CANNOT_FIND_GAME_RESULT_MESSAGE = "게임결과를 찾을 수 없습니다.";
-
+    
     private final BiPredicate<Cards, Cards> biPredicate;
 
     GameResult(final BiPredicate<Cards, Cards> biPredicate) {
@@ -42,13 +42,12 @@ public enum GameResult {
     }
 
     public static List<GameResult> reverse(final List<GameResult> origin) {
-        return origin
-                .stream()
-                .map(GameResult::reverseOf)
+        return origin.stream()
+                .map(GameResult::reverseFrom)
                 .collect(Collectors.toList());
     }
 
-    private static GameResult reverseOf(final GameResult origin) {
+    private static GameResult reverseFrom(final GameResult origin) {
         if (origin == WIN) {
             return LOSE;
         }
