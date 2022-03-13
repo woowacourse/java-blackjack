@@ -4,11 +4,17 @@ import java.util.Collections;
 import java.util.Stack;
 
 public class CardDeck {
+    private static final CardDeck deck = new CardDeck();
+
     private final Stack<Card> cards;
 
-    public CardDeck() {
+    private CardDeck() {
         this.cards = createCards();
         Collections.shuffle(cards);
+    }
+
+    public static CardDeck getInstance() {
+        return deck;
     }
 
     private Stack<Card> createCards() {

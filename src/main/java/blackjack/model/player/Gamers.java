@@ -1,60 +1,62 @@
 package blackjack.model.player;
 
-import blackjack.model.card.Card;
+import blackjack.dto.GamerDto;
+import blackjack.dto.PlayerDto;
 import blackjack.model.card.CardDeck;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 public class Gamers {
     private static final int START_CARD_COUNT = 2;
+    private static final String HIT_SIGN = "y";
 
     private final List<Player> values;
-    private int gamerOrder = 0;
 
-    private Gamers(List<Gamer> gamers) {
-        this.values = List.copyOf(gamers);
-    }
-
-    public static Gamers from(List<String> names) {
-        List<Gamer> gamers = names.stream()
+    public Gamers(List<String> names) {
+        this.values = names.stream()
                 .map(Gamer::new)
                 .collect(Collectors.toList());
-        return new Gamers(gamers);
     }
 
-    public void giveCardsBy(CardDeck cardDeck) {
+    public void giveCardsToGamer() {
         for (Player gamer : values) {
-            giveCardsToGamerBy(cardDeck, gamer);
+            giveCardsTo(gamer);
         }
     }
 
-    private void giveCardsToGamerBy(CardDeck cardDeck, Player gamer) {
+    private void giveCardsTo(Player gamer) {
+        CardDeck deck = CardDeck.getInstance();
         for (int i = 0; i < START_CARD_COUNT; i++) {
-            gamer.receive(cardDeck.draw());
+            gamer.receive(deck.draw());
         }
     }
 
-    public boolean hasNeverHitOrStayGamer() {
-        return values.size() > gamerOrder;
+    public void hitOrStayToGamer(UnaryOperator<String> operator, Consumer<PlayerDto> consumer) {
+        for (Player gamer : values) {
+            hitOrStayTo(gamer, operator, consumer);
+        }
     }
 
-    public void hitCurrentGamerBy(CardDeck cardDeck) {
-        values.get(gamerOrder).hit(cardDeck.draw());
+    private void hitOrStayTo(Player gamer, UnaryOperator<String> operator, Consumer<PlayerDto> consumer) {
+        CardDeck deck = CardDeck.getInstance();
+        while (canHit(gamer) && isHitSign(operator.apply(gamer.getName()))) {
+            gamer.receive(deck.draw());
+            consumer.accept(GamerDto.from(gamer));
+        }
+    }
+
+    private boolean isHitSign(String apply) {
+        return apply.equals(HIT_SIGN);
+    }
+
+    private boolean canHit(Player gamer) {
+        return !gamer.isBlackJack() && !gamer.isImpossibleHit();
     }
 
     public List<Player> getValues() {
         return values;
     }
-
-    public Player getCurrentValue() {
-        return values.get(gamerOrder);
-    }
-
-    public boolean isCurrentGamerCanNotHit() {
-        return values.get(gamerOrder).isImpossibleHit();
-    }
-
-    public void readyNextGamer() {
-        gamerOrder += 1;
-    }
 }
+

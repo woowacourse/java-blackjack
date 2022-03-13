@@ -10,13 +10,9 @@ public class Gamer extends Player {
 
     public Gamer(String name) {
         super();
-        validate(name);
-        this.name = name;
-    }
-
-    private void validate(String name) {
         checkBlankIn(name);
         checkLengthOf(name);
+        this.name = name;
     }
 
     private void checkBlankIn(String name) {
@@ -30,4 +26,14 @@ public class Gamer extends Player {
             throw new IllegalArgumentException(ERROR_MAX_LENGTH);
         }
     }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public boolean isImpossibleHit() {
+        return cards.isOverLimitScore();
+    }
+
 }

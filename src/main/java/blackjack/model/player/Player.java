@@ -14,15 +14,15 @@ public abstract class Player {
         this.cards.add(card);
     }
 
-    public boolean isImpossibleHit() {
-        return this.cards.isTotalScoreOverLimit();
+    public boolean isBlackJack() {
+        return cards.isSameWithLimitScore() && cards.hasTwoCard();
     }
 
-    public void hit(Card card) {
-        this.cards.add(card);
-    }
-
-    public Cards getDeck() {
+    public Cards getCards() {
         return cards;
     }
+
+    public abstract String getName();
+
+    public abstract boolean isImpossibleHit();
 }

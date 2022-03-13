@@ -1,7 +1,6 @@
 package blackjack.model.card;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,18 +10,34 @@ public class Cards {
     private static final int SCORE_ADVANTAGE_CRITERIA = SCORE_LIMIT - SCORE_ACE_ADVANTAGE;
     private static final int FIRST_SIZE = 2;
 
-    private final List<Card> cards;
+    private final List<Card> values;
 
     public Cards(Card card1, Card card2) {
-        this.cards = new ArrayList<>();
+        this.values = new ArrayList<>();
     }
 
     public Cards() {
-        this.cards = new ArrayList<>();
+        this.values = new ArrayList<>();
     }
 
-    public boolean isTotalScoreOverLimit() {
+    public void add(Card card) {
+        this.values.add(card);
+    }
+
+    public boolean isOverLimitScore() {
         return sumScore() > SCORE_LIMIT;
+    }
+
+    public boolean isSameWithLimitScore() {
+        return sumScore() == SCORE_LIMIT;
+    }
+
+    public boolean hasTwoCard() {
+        return values.size() == 2;
+    }
+
+    public boolean isScoreOverThan(int otherScore) {
+        return sumScore() > otherScore;
     }
 
     public int sumScore() {
@@ -35,18 +50,14 @@ public class Cards {
     }
 
     private int sumCardNumbersTo(int score) {
-        for (Card card : cards) {
+        for (Card card : values) {
             score = card.sumNumberTo(score);
         }
         return score;
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
     private boolean hasAce() {
-        return cards.stream()
+        return values.stream()
                 .anyMatch(card -> card.hasSameNumber(TrumpNumber.ACE));
     }
 
@@ -58,7 +69,7 @@ public class Cards {
     }
 
     private int countAce() {
-        return (int) cards.stream()
+        return (int) values.stream()
                 .filter(card -> card.hasSameNumber(TrumpNumber.ACE))
                 .count();
     }
@@ -70,25 +81,7 @@ public class Cards {
         return 0;
     }
 
-    public void add(Card card) {
-        this.cards.add(card);
-    }
-
-    public boolean isScoreLessThan(int otherScore) {
-        return sumScore() < otherScore;
-    }
-
-    public String getFirstCardToString() {
-        return this.cards.toString();
-    }
-
-    public List<String> getCardsToString() {
-        return this.cards.stream()
-                .map(Card::toString)
-                .collect(Collectors.toList());
-    }
-
-    public int countAddedCards() {
-        return this.cards.size() - FIRST_SIZE;
+    public List<Card> getValues() {
+        return values;
     }
 }

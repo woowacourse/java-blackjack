@@ -9,12 +9,12 @@ public class Card {
         this.symbol = symbol;
     }
 
-    public TrumpNumber getNumber() {
-        return number;
+    public String getNumber() {
+        return number.getValueOfString();
     }
 
-    public TrumpSymbol getSymbol() {
-        return symbol;
+    public String getSymbol() {
+        return symbol.getValue();
     }
 
     public int sumNumberTo(int otherNumber) {
