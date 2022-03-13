@@ -1,6 +1,8 @@
 package blackjack.domain.result;
 
+import java.util.Collections;
 import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MatchResult {
@@ -10,7 +12,7 @@ public class MatchResult {
 
     public MatchResult(final Map<String, MatchStatus> resultOfPlayers) {
         this.resultOfDealer = calculateStatusCountsOfDealer(resultOfPlayers);
-        this.resultOfPlayers = resultOfPlayers;
+        this.resultOfPlayers = new LinkedHashMap<>(resultOfPlayers);
     }
 
     private Map<MatchStatus, Integer> calculateStatusCountsOfDealer(final Map<String, MatchStatus> playerResult) {
@@ -21,11 +23,11 @@ public class MatchResult {
     }
 
     public Map<MatchStatus, Integer> getResultOfDealer() {
-        return Map.copyOf(resultOfDealer);
+        return Collections.unmodifiableMap(new EnumMap<>(resultOfDealer));
     }
 
     public Map<String, MatchStatus> getResultOfPlayers() {
-        return Map.copyOf(resultOfPlayers);
+        return Collections.unmodifiableMap(new LinkedHashMap<>(resultOfPlayers));
     }
 
 }

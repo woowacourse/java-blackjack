@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,7 +44,7 @@ public class Players {
     }
 
     public MatchResult judgeWinners(final Dealer dealer) {
-        final Map<String, MatchStatus> matchStatuses = new HashMap<>();
+        final Map<String, MatchStatus> matchStatuses = new LinkedHashMap<>();
         for (final Player player : players) {
             final String playerName = player.getParticipantName();
             final MatchStatus matchStatus = dealer.judgeWinner(player);

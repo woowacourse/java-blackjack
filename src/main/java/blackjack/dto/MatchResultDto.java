@@ -1,5 +1,8 @@
 package blackjack.dto;
 
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import blackjack.domain.result.MatchResult;
@@ -12,8 +15,8 @@ public class MatchResultDto {
 
     private MatchResultDto(final Map<MatchStatus, Integer> resultOfDealer,
                            final Map<String, MatchStatus> resultOfPlayers) {
-        this.resultOfDealer = resultOfDealer;
-        this.resultOfPlayers = resultOfPlayers;
+        this.resultOfDealer = new EnumMap<>(resultOfDealer);
+        this.resultOfPlayers = new LinkedHashMap<>(resultOfPlayers);
     }
 
     public static MatchResultDto toDto(final MatchResult matchResult) {
@@ -21,11 +24,11 @@ public class MatchResultDto {
     }
 
     public Map<MatchStatus, Integer> getResultOfDealer() {
-        return resultOfDealer;
+        return Collections.unmodifiableMap(new EnumMap<>(resultOfDealer));
     }
 
     public Map<String, MatchStatus> getResultOfPlayers() {
-        return resultOfPlayers;
+        return Collections.unmodifiableMap(new LinkedHashMap<>(resultOfPlayers));
     }
 
 }
