@@ -33,7 +33,6 @@ public abstract class Participant {
         cards.add(card);
     }
 
-
     public abstract List<Card> openCards();
 
     public List<Card> getCards() {

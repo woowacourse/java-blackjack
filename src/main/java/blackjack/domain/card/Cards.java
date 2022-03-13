@@ -8,16 +8,12 @@ public class Cards {
 
     private static final int BLACKJACK_SCORE = 21;
 
-    private final Collection<Card> cards = new ArrayList<>();
+    private final Collection<Card> cards;
 
-    public static Cards of(List<Card> cards) {
-        if (cards.size() != 2) {
-            throw new IllegalArgumentException("첫 카드는 두장");
-        }
-        Cards instance = new Cards();
-        instance.add(cards.get(0));
-        instance.add(cards.get(1));
-        return instance;
+    public Cards(Card first, Card second) {
+        cards = new ArrayList<>();
+        cards.add(first);
+        cards.add(second);
     }
 
     public void add(Card card) {

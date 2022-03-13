@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.domain.card.Symbol.*;
+import static blackjack.domain.fixture.FixedSequenceDeck.generateDeck;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CardsTest {
@@ -12,9 +13,8 @@ class CardsTest {
     @Test
     @DisplayName("현재 점수를 계산한다")
     void testGetScore() {
-        Cards cards = new Cards();
-        cards.add(new Card(DIAMOND, SIX));
-        cards.add(new Card(DIAMOND, SEVEN));
+        Deck deck = generateDeck(new Card(DIAMOND, SIX), new Card(DIAMOND, SEVEN));
+        Cards cards = deck.initialDraw();
 
         assertThat(cards.calculateScore()).isEqualTo(13);
     }
@@ -22,20 +22,19 @@ class CardsTest {
     @Test
     @DisplayName("Ace를 11점으로 계산해도 21점을 초과하지 않는 경우 11점으로 계산한다")
     void testGetScoreWhenContainsAce1() {
-        Cards cards = new Cards();
-        cards.add(new Card(DIAMOND, ACE));
+        Deck deck = generateDeck(new Card(DIAMOND, ACE), new Card(DIAMOND, TWO));
+        Cards cards = deck.initialDraw();
 
-        assertThat(cards.calculateScore()).isEqualTo(11);
+        assertThat(cards.calculateScore()).isEqualTo(13);
     }
 
     @Test
     @DisplayName("Ace를 11점으로 계산했을 때 21점이 초과하는 경우 1점으로 계산한다")
     void testGetScoreWhenContainsAce2() {
-        Cards cards = new Cards();
-        cards.add(new Card(DIAMOND, ACE));
-        cards.add(new Card(SPADE, ACE));
-        cards.add(new Card(HEART, ACE));
-        cards.add(new Card(CLOVER, ACE));
+        Deck deck = generateDeck(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE),new Card(CLOVER, ACE));
+        Cards cards = deck.initialDraw();
+        cards.add(deck.draw());
+        cards.add(deck.draw());
 
         assertThat(cards.calculateScore()).isEqualTo(14);
     }
@@ -43,10 +42,9 @@ class CardsTest {
     @Test
     @DisplayName("Ace를 11점으로 계산했을 때 21점이 초과하는 경우 1점으로 계산한다. 순서에 영향을 받지 않아야한다")
     void testGetScoreWhenContainsAce3() {
-        Cards cards = new Cards();
-        cards.add(new Card(DIAMOND, ACE));
-        cards.add(new Card(SPADE, NINE));
-        cards.add(new Card(HEART, TWO));
+        Deck deck = generateDeck(new Card(DIAMOND, ACE), new Card(SPADE, NINE), new Card(HEART, TWO));
+        Cards cards = deck.initialDraw();
+        cards.add(deck.draw());
 
         assertThat(cards.calculateScore()).isEqualTo(12);
     }
@@ -55,13 +53,13 @@ class CardsTest {
     @DisplayName("21점을 초과하면 버스트이다")
     void testIsBust() {
         // given
-        Cards cards = new Cards();
-        cards.add(new Card(SPADE, JACK));
-        cards.add(new Card(SPADE, QUEEN));
+        Deck deck = generateDeck(new Card(SPADE, JACK), new Card(SPADE, QUEEN), new Card(SPADE, TWO));
+
+        Cards cards = deck.initialDraw();
 
         // when
         boolean expectedFalse = cards.isBust();
-        cards.add(new Card(SPADE, TWO));
+        cards.add(deck.draw());
         boolean expectedTrue = cards.isBust();
 
         // then

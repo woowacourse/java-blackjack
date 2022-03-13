@@ -1,7 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Cards;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.RandomDeck;
 import blackjack.domain.dto.Status;
 import blackjack.domain.player.*;
 
@@ -13,19 +12,19 @@ import static java.util.stream.Collectors.toMap;
 
 public class Game {
 
-    private final Deck deck;
+    private final RandomDeck deck;
     private final Players players;
     private final Dealer dealer;
 
     public Game(List<String> names) {
-        deck = new Deck();
+        deck = new RandomDeck();
         players = generatePlayers(names);
-        dealer = new Dealer(Cards.of(deck.initialDraw()));
+        dealer = new Dealer(deck.initialDraw());
     }
 
     private Players generatePlayers(List<String> names) {
         return new Players(names.stream()
-                .map(name -> new Player(name, Cards.of(deck.initialDraw())))
+                .map(name -> new Player(name, deck.initialDraw()))
                 .collect(toList()));
     }
 

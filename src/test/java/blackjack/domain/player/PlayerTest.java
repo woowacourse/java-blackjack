@@ -1,11 +1,10 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
+import blackjack.domain.fixture.FixedSequenceDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.domain.card.Symbol.CLOVER;
@@ -18,16 +17,17 @@ class PlayerTest {
     @Test
     @DisplayName("이름은 공백일 수 없다")
     void throwExceptionWhenNameLengthIsBlank() {
-        List<Card> initCards = List.of(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
-        assertThatThrownBy(() -> new Player(" ", Cards.of(initCards)))
+        Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
+
+        assertThatThrownBy(() -> new Player(" ", deck.initialDraw()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("이름은 6자를 초과할 수 없다")
     void throwExceptionWhenNameLengthOverMaxLength() {
-        List<Card> initCards = List.of(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
-        assertThatThrownBy(() -> new Player("1234567", Cards.of(initCards)))
+        Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
+        assertThatThrownBy(() -> new Player("1234567", deck.initialDraw()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -35,8 +35,8 @@ class PlayerTest {
     @DisplayName("hit이 가능한 상태라면 참을 반환한다.")
     void testIsAbleToHit1() {
         // given
-        List<Card> initCards = List.of(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
-        Player player = new Player("pobi", Cards.of(initCards));
+        Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
+        Player player = new Player("pobi", deck.initialDraw());
 
         // when
         boolean actual = player.isAbleToHit();
@@ -49,8 +49,8 @@ class PlayerTest {
     @DisplayName("블랙잭이면 더이상 hit을 할 수 없다.")
     void testIsAbleToHit2() {
         // given
-        List<Card> initCards = List.of(new Card(CLOVER, ACE), new Card(DIAMOND, JACK));
-        Player player = new Player("pobi", Cards.of(initCards));
+        Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, ACE), new Card(DIAMOND, JACK));
+        Player player = new Player("pobi", deck.initialDraw());
         // when
         boolean actual = player.isAbleToHit();
         // then
@@ -61,9 +61,9 @@ class PlayerTest {
     @DisplayName("버스트면 더이상 hit을 할 수 없다.")
     void testIsAbleToHit3() {
         // given
-        List<Card> initCards = List.of(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
-        Player player = new Player("pobi", Cards.of(initCards));
-        player.addCard(new Card(DIAMOND, SEVEN));
+        Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE), new Card(DIAMOND, SEVEN));
+        Player player = new Player("pobi", deck.initialDraw());
+        player.addCard(deck.draw());
 
         // when
         boolean actual = player.isAbleToHit();
@@ -76,8 +76,8 @@ class PlayerTest {
     @DisplayName("stay하면 더이상 hit을 할 수 없다.")
     void testIsAbleToHit4() {
         // given
-        List<Card> initCards = List.of(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
-        Player player = new Player("pobi", Cards.of(initCards));
+        Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
+        Player player = new Player("pobi", deck.initialDraw());
 
         // when
         player.stay();
@@ -90,8 +90,8 @@ class PlayerTest {
     @Test
     @DisplayName("첫 공개 카드는 두 장을 반환한다")
     void testOpenCards() {
-        List<Card> initCards = List.of(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
-        Player player = new Player("pobi", Cards.of(initCards));
+        Deck deck = FixedSequenceDeck.generateDeck(new Card(CLOVER, JACK), new Card(DIAMOND, FIVE));
+        Player player = new Player("pobi", deck.initialDraw());
 
         assertThat(player.openCards().size()).isEqualTo(2);
     }
