@@ -1,11 +1,12 @@
 package blackJack.domain.participant;
 
+import static blackJack.domain.card.Denomination.ACE_BONUS_VALUE;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import blackJack.domain.card.Card;
-import blackJack.domain.card.Denomination;
 
 public abstract class Participant {
 
@@ -13,7 +14,6 @@ public abstract class Participant {
     private static final String ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
 
     private static final int BLACK_JACK = 21;
-    private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 1;
 
     private final String name;
     private final List<Card> cards;
@@ -45,12 +45,11 @@ public abstract class Participant {
 
     public int getScore() {
         int score = calculateScore();
-        int countAce = countAce();
 
-        while (score > BLACK_JACK && countAce > 0) {
-            score -= Denomination.ACE.getScore() - OTHER_SCORE_OF_ACE_DENOMINATION;
-            countAce--;
+        if (hasDenominationAce() && score + ACE_BONUS_VALUE <= BLACK_JACK) {
+            score += ACE_BONUS_VALUE;
         }
+
         return score;
     }
 
@@ -60,10 +59,9 @@ public abstract class Participant {
                 .sum();
     }
 
-    private int countAce() {
-        return (int)cards.stream()
-            .filter(Card::isSameDenominationAsAce)
-            .count();
+    private boolean hasDenominationAce() {
+        return cards.stream()
+                .anyMatch(Card::isSameDenominationAsAce);
     }
 
     public List<Card> getCards() {
