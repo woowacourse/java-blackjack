@@ -1,8 +1,9 @@
 package blackjack.dto;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
+import blackjack.domain.Outcome;
 import blackjack.domain.role.Role;
 
 public class FinalResultDto {
@@ -10,15 +11,15 @@ public class FinalResultDto {
 	private final DealerResultDto dealerResults;
 	private final List<PlayerResultDto> playerResults;
 
-	private FinalResultDto(final Role dealer, final List<Role> players) {
-		this.dealerResults = DealerResultDto.from(dealer);
-		this.playerResults = players.stream()
-			.map(PlayerResultDto::from)
-			.collect(Collectors.toList());
+	private FinalResultDto(final Role dealer, final Map<Outcome, Integer> dealerResult,
+		final List<PlayerResultDto> playerResult) {
+		this.dealerResults = DealerResultDto.from(dealer, dealerResult);
+		this.playerResults = playerResult;
 	}
 
-	public static FinalResultDto from(final Role dealer, final List<Role> players) {
-		return new FinalResultDto(dealer, players);
+	public static FinalResultDto from(final Role dealer, final Map<Outcome, Integer> dealerResult,
+		final List<PlayerResultDto> playersResult) {
+		return new FinalResultDto(dealer, dealerResult, playersResult);
 	}
 
 	public DealerResultDto getDealerResults() {

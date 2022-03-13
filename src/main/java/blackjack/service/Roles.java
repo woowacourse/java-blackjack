@@ -1,7 +1,9 @@
 package blackjack.service;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -15,9 +17,13 @@ import blackjack.domain.role.Player;
 import blackjack.domain.role.Role;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
+import blackjack.dto.PlayerResultDto;
 import blackjack.dto.TableStatusDto;
 
 public class Roles {
+
+	private static final int COMPETE_COUNT = 1;
+	private static final String NO_PLAYER = "";
 
 	private List<Role> players;
 	private Role dealer;
@@ -78,20 +84,29 @@ public class Roles {
 		return players.stream()
 			.filter(player -> player.canDraw() && player.wantDraw())
 			.findFirst()
-			.orElse(new Player("", new Hand()));
+			.orElse(new Player(NO_PLAYER, new Hand()));
 	}
 
 	public FinalResultDto calculateFinalResult() {
+		final Map<Outcome, Integer> dealerResult = new EnumMap<>(Outcome.class);
+		final List<PlayerResultDto> playersResult = new ArrayList<>();
 		for (Role player : players) {
 			Outcome outcome = judge(player);
-			player.recordCompeteResult(outcome);
-			dealer.recordCompeteResult(outcome.getOppositeOutcome());
+			final Map<Outcome, Integer> playerResult = recordPlayerCompeteResult(outcome);
+			playersResult.add(PlayerResultDto.from(player, playerResult));
+			dealerResult.merge(outcome.getOppositeOutcome(), COMPETE_COUNT, Integer::sum);
 		}
-		return FinalResultDto.from(dealer, players);
+		return FinalResultDto.from(dealer, dealerResult, playersResult);
 	}
 
 	private Outcome judge(Role player) {
 		return Outcome.of(player.calculateFinalScore(), dealer.calculateFinalScore());
+	}
+
+	private Map<Outcome, Integer> recordPlayerCompeteResult(final Outcome outcome) {
+		final Map<Outcome, Integer> result = new EnumMap<>(Outcome.class);
+		result.merge(outcome, COMPETE_COUNT, Integer::sum);
+		return result;
 	}
 
 }

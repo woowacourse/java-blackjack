@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import blackjack.domain.Outcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.Outcome;
 import blackjack.domain.role.Role;
 
 public class PlayerResultDto {
@@ -28,8 +28,8 @@ public class PlayerResultDto {
 			.orElseThrow(NoSuchElementException::new);
 	}
 
-	public static PlayerResultDto from(final Role player) {
-		return new PlayerResultDto(player.getName(), player.getHand(), player.getCompeteResult());
+	public static PlayerResultDto from(final Role player, final Map<Outcome, Integer> result) {
+		return new PlayerResultDto(player.getName(), player.getHand(), result);
 	}
 
 	public String getName() {

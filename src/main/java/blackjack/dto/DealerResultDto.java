@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import blackjack.domain.Outcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
-import blackjack.domain.Outcome;
 import blackjack.domain.role.Role;
 
 public class DealerResultDto {
@@ -25,8 +25,8 @@ public class DealerResultDto {
 		this.competeResult = competeResult;
 	}
 
-	public static DealerResultDto from(final Role dealer) {
-		return new DealerResultDto(dealer.getName(), dealer.getHand(), dealer.getCompeteResult());
+	public static DealerResultDto from(final Role dealer, final Map<Outcome, Integer> result) {
+		return new DealerResultDto(dealer.getName(), dealer.getHand(), result);
 	}
 
 	public String getName() {
