@@ -14,7 +14,7 @@ public class BlackJackController {
         BlackJackGame blackJackGame = initBlackJackGame();
         OutputView.printInitialCardStatus(blackJackGame.getParticipantsDto());
 
-        blackJackGame = runAllPlayersTurn(blackJackGame);
+        runAllPlayersTurn(blackJackGame);
         OutputView.printPlayerFinalCards(GameMachine.createPlayerFinalCardsAndScore(blackJackGame));
         ScoreResultDto finalScore = GameMachine.createFinalScore(blackJackGame);
         OutputView.printFinalScore(finalScore);
@@ -23,17 +23,16 @@ public class BlackJackController {
 
     private BlackJackGame initBlackJackGame() {
         try {
-            return GameMachine.createBlackJackGame(InputView.askPlayerNames());
+            return new BlackJackGame(InputView.askPlayerNames());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return initBlackJackGame();
         }
     }
 
-    private BlackJackGame runAllPlayersTurn(BlackJackGame blackJackGame) {
+    private void runAllPlayersTurn(BlackJackGame blackJackGame) {
         runPlayerTurn(blackJackGame);
         runDealerTurn(blackJackGame);
-        return blackJackGame;
     }
 
     private void runPlayerTurn(BlackJackGame blackJackGame) {
@@ -53,7 +52,7 @@ public class BlackJackController {
 
     private DrawCommand askDrawCommand(String name) {
         try {
-            return GameMachine.createDrawCommand(InputView.askDrawCommand(name));
+            return DrawCommand.from(InputView.askDrawCommand(name));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return askDrawCommand(name);
