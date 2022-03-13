@@ -5,7 +5,7 @@ public class Name {
     private final String value;
 
     public Name(String value) {
-        this.value = value;
+        this.value = value.trim();
         validate(this.value);
     }
 
