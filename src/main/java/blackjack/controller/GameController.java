@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Status;
 import blackjack.dto.DealerRecordDto;
 import blackjack.dto.DealerTurnResultDto;
 import blackjack.dto.ParticipantDto;
@@ -11,6 +10,7 @@ import blackjack.service.DealerService;
 import blackjack.service.PlayerService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.PlayerAnswer;
 import java.util.List;
 
 public class GameController {
@@ -45,9 +45,9 @@ public class GameController {
     public void progressPlayerTurns() {
         while (playerService.isPlayerTurn()) {
             final String playerName = playerService.findDrawablePlayerName();
-            final Status status = InputView.getHitOrStay(playerName);
+            final PlayerAnswer playerAnswer = InputView.getHitOrStay(playerName);
 
-            final ParticipantDto dto = playerService.progressTurn(playerName, status);
+            final ParticipantDto dto = playerService.progressTurn(playerName, playerAnswer);
             OutputView.printCards(dto);
         }
     }

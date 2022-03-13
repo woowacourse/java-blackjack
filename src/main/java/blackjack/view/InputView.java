@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.card.Status;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -28,7 +27,7 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static Status getHitOrStay(final String playerName) {
+    public static PlayerAnswer getHitOrStay(final String playerName) {
         try {
             return requestHitOrStay(playerName);
         } catch (IllegalArgumentException e) {
@@ -37,18 +36,10 @@ public class InputView {
         }
     }
 
-    private static Status requestHitOrStay(String name) {
+    private static PlayerAnswer requestHitOrStay(String name) {
         System.out.println(System.lineSeparator() + name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
         final String text = scanner.nextLine().trim();
-        if (!text.matches("[Y,y,N,n]")) {
-            throw new IllegalArgumentException("y, n 이외의 값이 입력되었습니다.");
-        }
-
-        if (text.equalsIgnoreCase("y")) {
-            return Status.HIT;
-        }
-
-        return Status.STAY;
+        return PlayerAnswer.from(text);
     }
 }

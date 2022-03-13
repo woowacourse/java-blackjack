@@ -2,12 +2,12 @@ package blackjack.service;
 
 import blackjack.domain.Record;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Status;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ParticipantResultDto;
 import blackjack.dto.PlayerRecordDto;
+import blackjack.view.PlayerAnswer;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,12 +43,12 @@ public class PlayerService {
         return players.findHitPlayer().getName();
     }
 
-    public ParticipantDto progressTurn(final String playerName, final Status status) {
+    public ParticipantDto progressTurn(final String playerName, final PlayerAnswer playerAnswer) {
         final Player player = players.findByName(playerName);
-        if (status == Status.HIT) {
+        if (playerAnswer.isDraw()) {
             player.hit(deck);
         }
-        if (status == Status.STAY) {
+        if (!playerAnswer.isDraw()) {
             player.stay();
         }
 
