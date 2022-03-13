@@ -1,18 +1,19 @@
 package blackjack;
 
 import blackjack.domain.HitRequest;
+import blackjack.domain.Judgement;
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Name;
 import blackjack.domain.card.BlackJackCardsGenerator;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.WinResult;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackApplication {
@@ -55,7 +56,8 @@ public class BlackJackApplication {
         alertStart(dealer, players);
         proceedPlayersTurn(players, deck);
         proceedDealer(dealer, deck);
-        showResult(dealer, players);
+        showFinalScore(dealer, players);
+        showWinResult(dealer, players);
     }
 
     private static void alertStart(Dealer dealer, Players players) {
@@ -104,11 +106,20 @@ public class BlackJackApplication {
         }
     }
 
-    private static void showResult(Dealer dealer, Players players) {
+    private static void showFinalScore(Dealer dealer, Players players) {
         OutputView.printCardResultMessage();
         OutputView.printParticipantCards(dealer, dealer.calculateScore());
         players.getValues()
             .forEach(player -> OutputView.printParticipantCards(player, player.calculateScore()));
-        OutputView.printWinResult(new WinResult(dealer, players.getValues()));
+    }
+
+    private static void showWinResult(Dealer dealer, Players players) {
+        final Map<String, Judgement> playersResult = players.calculateJudgmentResult(dealer);
+        final Map<Judgement, Integer> dealerResult = playersResult.values().stream()
+            .collect(Collectors.toMap(Judgement::getOpposite, j -> 1, Integer::sum));
+
+        OutputView.printWinResultMessage();
+        OutputView.printDealerWinResult(dealer.getName(), dealerResult);
+        OutputView.printPlayersWinResult(playersResult);
     }
 }

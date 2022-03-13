@@ -1,19 +1,8 @@
 package blackjack.domain;
 
-import static blackjack.domain.Judgement.DRAW;
-import static blackjack.domain.Judgement.LOSE;
-import static blackjack.domain.Judgement.WIN;
-import static blackjack.domain.card.Denomination.ACE;
-import static blackjack.domain.card.Denomination.EIGHT;
-import static blackjack.domain.card.Denomination.FIVE;
-import static blackjack.domain.card.Denomination.NINE;
-import static blackjack.domain.card.Denomination.SIX;
-import static blackjack.domain.card.Denomination.TEN;
-import static blackjack.domain.card.Denomination.TWO;
-import static blackjack.domain.card.Pattern.CLOVER;
-import static blackjack.domain.card.Pattern.DIAMOND;
-import static blackjack.domain.card.Pattern.HEART;
-import static blackjack.domain.card.Pattern.SPADE;
+import static blackjack.domain.Judgement.*;
+import static blackjack.domain.card.Denomination.*;
+import static blackjack.domain.card.Pattern.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
