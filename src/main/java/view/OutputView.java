@@ -55,4 +55,8 @@ public class OutputView {
 	public static void printBlackJackResultTitle() {
 		System.out.println(BLACK_JACK_RESuLT_TITLE_MESSAGE);
 	}
+
+	public static void printErrorMessage(String message) {
+		System.out.println(message);
+	}
 }

@@ -1,14 +1,11 @@
 package controller;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.card.InitCards;
 import domain.card.deckstrategy.GeneralGenerationDeckStrategy;
 import domain.participant.Dealer;
 import domain.participant.Name;
@@ -23,10 +20,10 @@ public class Controller {
 	private static final String NAME_DUPLICATE_ERROR_MESSAGE = "[Error] 이름은 중복일 수 없습니다.";
 
 	public void run() {
-		List<Name> names = inputNames();
+		List<Name> names = makeNames();
 
 		Deck deck = Deck.from(new GeneralGenerationDeckStrategy());
-		Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
+		Dealer dealer = new Dealer(deck.generateInitCards());
 		Players players = new Players(names, generateInitCardsForPlayers(names, deck));
 		printInitHands(names, dealer, players);
 
@@ -41,25 +38,21 @@ public class Controller {
 		printFinalResult(names, dealer, players);
 	}
 
-	private List<Name> inputNames() {
-		String inputNames = InputView.inputNames();
-		List<Name> names = Arrays.stream(inputNames.split(INPUT_NAMES_SPLIT_DELIMITER))
-			.map(String::trim)
-			.map(Name::new)
-			.collect(Collectors.toList());
-		checkDuplicate(names);
-		return names;
-	}
-
-	private void checkDuplicate(List<Name> names) {
-		if (new HashSet<>(names).size() != names.size()) {
-			throw new IllegalArgumentException(NAME_DUPLICATE_ERROR_MESSAGE);
+	private List<Name> makeNames() {
+		try {
+			List<String> names = InputView.inputNames();
+			return names.stream()
+				.map(Name::new)
+				.collect(Collectors.toList());
+		} catch (IllegalArgumentException e) {
+			OutputView.printErrorMessage(e.getMessage());
+			return makeNames();
 		}
 	}
 
 	private List<List<Card>> generateInitCardsForPlayers(List<Name> names, Deck deck) {
 		List<List<Card>> initCardForPlayers = IntStream.range(0, names.size())
-			.mapToObj(i -> new InitCards(deck).getInitCards())
+			.mapToObj(i -> deck.generateInitCards())
 			.collect(Collectors.toList());
 		return initCardForPlayers;
 	}
