@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.DistributeResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.User;
@@ -7,8 +8,10 @@ import blackjack.domain.participant.Participants;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.Result;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.lang.System.lineSeparator;
 
@@ -25,15 +28,15 @@ public class OutputView {
     private static final String USER_RESULT_FORMAT = "%s: %s";
     public static final int DEALER_HIDE_INDEX = 0;
 
-    public static void printInitDistribute(Participants users, Dealer dealer) {
-        System.out.printf(lineSeparator() + INIT_DISTRIBUTE_FORMAT, String.join(CARD_SEPARATOR, users.getUserNames()));
-        printDealerData(dealer);
-
-        for (User user : users.getUsers()) {
-            printUserData(user);
-        }
-        System.out.print(lineSeparator());
-    }
+//    public static void printInitDistribute(Participants users, Dealer dealer) {
+//        System.out.printf(lineSeparator() + INIT_DISTRIBUTE_FORMAT, String.join(CARD_SEPARATOR, users.getUserNames()));
+//        printDealerData(dealer);
+//
+//        for (User user : users.getUsers()) {
+//            printUserData(user);
+//        }
+//        System.out.print(lineSeparator());
+//    }
 
     private static void printDealerData(Dealer dealer) {
         System.out.printf(lineSeparator() + DEALER_CARD_FORMAT + lineSeparator(),
@@ -93,5 +96,23 @@ public class OutputView {
 
     private static void printUserResult(User user, Result result) {
         System.out.printf(USER_RESULT_FORMAT + lineSeparator(), user.getName(), result.getName());
+    }
+
+    public static void printInitDistribute(List<DistributeResult> distributeResults) {
+        List<String> userNames = getUserNameExcludeDealer(distributeResults);
+        System.out.println(MessageFormat.format("딜러와 {0}에게 {1}장을 나누었습니다.",
+                String.join(", ", userNames),
+                distributeResults.size()));
+        for (DistributeResult distributeResult : distributeResults) {
+            System.out.println(distributeResult.getConcatNameAndCardsExcludeOneCard());
+        }
+    }
+
+    private static List<String> getUserNameExcludeDealer(List<DistributeResult> distributeResults) {
+        List<String> userNames = distributeResults.stream()
+                .map(DistributeResult::getName)
+                .skip(1)
+                .collect(Collectors.toList());
+        return userNames;
     }
 }

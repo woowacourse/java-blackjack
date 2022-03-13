@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import blackjack.domain.BlackJack;
+import blackjack.domain.DistributeResult;
 import blackjack.domain.card.CardGenerator;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
@@ -9,17 +11,26 @@ import blackjack.domain.result.DealerResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+
 public class BlackJackController {
 
     public void play() {
-        Participants users = new Participants(InputView.inputUsersName());
-        Dealer dealer = new Dealer();
-        Deck deck = new Deck(new CardGenerator());
-        initDistribute(deck, users, dealer);
+        BlackJack blackJack = new BlackJack(InputView.inputUsersName());
+        List<DistributeResult> distributeResults = blackJack.initDistribute();
+        OutputView.printInitDistribute(distributeResults);
 
-        playGame(users, dealer, deck);
-        OutputView.printFinalCard(users, dealer);
-        calculateResult(users, dealer);
+//        Participants users = new Participants(InputView.inputUsersName());
+//        Dealer dealer = new Dealer();
+//        Deck deck = new Deck(new CardGenerator());
+//        initDistribute(deck, users, dealer);
+//
+//        playGame(users, dealer, deck);
+//        OutputView.printFinalCard(users, dealer);
+//        calculateResult(users, dealer);
+
+
+
     }
 
     private void initDistribute(Deck deck, Participants users, Dealer dealer) {
@@ -27,7 +38,7 @@ public class BlackJackController {
             userDistribute(deck, users);
             dealer.receiveCard(deck.drawCard());
         }
-        OutputView.printInitDistribute(users, dealer);
+        //OutputView.printInitDistribute(users, dealer);
     }
 
     private void userDistribute(Deck deck, Participants users) {

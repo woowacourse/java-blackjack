@@ -29,6 +29,7 @@ public class User extends Participant{
         return ScoreCalculator.cardSum(cards) > BUST_STANDARD;
     }
 
+    @Override
     public String getName() {
         return name;
     }

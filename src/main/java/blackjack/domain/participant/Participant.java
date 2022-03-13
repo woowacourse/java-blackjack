@@ -15,6 +15,8 @@ public abstract class Participant {
 
     abstract public boolean isUser();
 
+    abstract public String getName();
+
     public Participant() {
         cards = new ArrayList<>();
     }

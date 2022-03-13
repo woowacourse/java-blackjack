@@ -21,4 +21,8 @@ public class Card {
     public String getCardType() {
         return type.getName();
     }
+
+    public String getCardText() {
+        return number.getOriginalName() + type.getName();
+    }
 }

@@ -1,5 +1,10 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.DistributeResult;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -9,14 +14,23 @@ public class Participants {
 
     private final List<Participant> participants;
 
-    public Participants(String[] users) {
-        this.participants = Arrays.stream(users)
-                .map(User::new)
-                .collect(Collectors.toList());
+    public Participants() {
+        this.participants = new ArrayList<>();
     }
 
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
+    }
+
+    public void addDealer() {
+        this.participants.add(new Dealer());
+    }
+
+    public void addUsers(String[] userName) {
+        List<User> users = Arrays.stream(userName)
+                .map(User :: new)
+                .collect(Collectors.toList());
+        this.participants.addAll(users);
     }
 
     public List<User> getUsers() {
@@ -37,5 +51,17 @@ public class Participants {
                 .filter(Participant::isDealer)
                 .findAny()
                 .orElseThrow(RuntimeException::new);
+    }
+
+    public void distributeCard(Deck deck) {
+        for (Participant participant : participants) {
+            participant.receiveCard(deck.drawCard());
+        }
+    }
+
+    public List<DistributeResult> getDistributeResult() {
+        return participants.stream()
+                .map(DistributeResult::new)
+                .collect(Collectors.toList());
     }
 }

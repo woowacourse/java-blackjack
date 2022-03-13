@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class DealerResult {
 
-    Map<Result, Integer> count;
+    private final Map<Result, Integer> count;
 
     public DealerResult(Participants users, Dealer dealer) {
         this.count = new EnumMap<>(Result.class);
