@@ -15,7 +15,7 @@ public class ResultTest {
 	Player player2;
 	Player player3;
 	Result result;
-	
+
 	@BeforeEach
 	void gamer_init() {
 		dealer = new Dealer();
@@ -25,6 +25,7 @@ public class ResultTest {
 		player2 = players.getPlayers().get(1);
 		player3 = players.getPlayers().get(2);
 	}
+
 	@Test
 	void dealer_bust() {
 		dealer.processCard(new Card(CardLetter.QUEEN, CardSuit.CLOVER));
