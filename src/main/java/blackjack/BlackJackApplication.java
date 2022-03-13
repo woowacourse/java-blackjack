@@ -9,9 +9,9 @@ import blackjack.view.OutputView;
 public class BlackJackApplication {
 
     public static void main(String[] args) {
-        BlackJackGame blackJackGame = BlackJackGame.start(InputView.getNames(), new CardFactory(Card.getCards()));
-        OutputView.printFirstCards(blackJackGame.getDealerDto(), blackJackGame.getPlayerDtos());
+        BlackJackGame blackJackGame = new BlackJackGame(InputView.getNames(), new CardFactory(Card.getCards()));
 
+        blackJackGame.start(OutputView::printFirstCards);
         blackJackGame.askPlayerHitOrStay(InputView::getAnswerOfAdditionalDraw, OutputView::printPlayerCard);
         OutputView.printAdditionalDrawDealer(blackJackGame.askDealerHitOrStay());
 

@@ -21,7 +21,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("딜러와 플레이어에게 게임 시작 시 2장씩 배분한다.")
     void initDistribution() {
-        BlackJackGame blackJackGame = BlackJackGame.start(
+        BlackJackGame blackJackGame = new BlackJackGame(
             Arrays.asList("a", "b"), new CardFactory(Card.getCards()));
 
         GamerDto dealerDto = blackJackGame.getDealerDto();
@@ -36,7 +36,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("딜러의 점수가 17이상일 때 까지 카드를 1장씩 받는다.")
     void dealerDistribution() {
-        BlackJackGame blackJackGame = BlackJackGame.start(List.of("name"), new CardFactory(Card.getCards()));
+        BlackJackGame blackJackGame = new BlackJackGame(List.of("name"), new CardFactory(Card.getCards()));
         blackJackGame.askDealerHitOrStay();
         GamerDto dealer = blackJackGame.getDealerDto();
         int cardNumberSum = dealer.getCardNumberSum();
@@ -46,7 +46,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어 카드 숫자 합과 딜러의 합이 같으면 무승부")
     void createResultDraw() {
-        BlackJackGame blackJackGame = BlackJackGame.start(
+        BlackJackGame blackJackGame = new BlackJackGame(
             List.of("name"), () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
 
         blackJackGame.askPlayerHitOrStay(answer -> false, dto -> {});
@@ -62,7 +62,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("플레이어가 버스트이면 패배")
     void createResultLose() {
-        BlackJackGame blackJackGame = BlackJackGame.start(
+        BlackJackGame blackJackGame = new BlackJackGame(
             List.of("name"), () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
 
         blackJackGame.askPlayerHitOrStay(answer -> true, dto -> {});

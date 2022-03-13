@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -23,20 +24,23 @@ public class BlackJackGame {
 	private static final int DEFAULT_COUNT = 0;
 	private static final int INCREASE_COUNT = 1;
 
-	private final DrawStrategy drawStrategy;
 	private final Gamers gamers;
+	private final DrawStrategy drawStrategy;
 
-	private BlackJackGame(List<String> names, DrawStrategy drawStrategy) {
-		this.drawStrategy = drawStrategy;
+	public BlackJackGame(List<String> names, DrawStrategy drawStrategy) {
 		this.gamers = new Gamers(names);
+		this.drawStrategy = drawStrategy;
+	}
 
+	public void start(BiConsumer<GamerDto, List<GamerDto>> gamerSender) {
+		giveFirstCards();
+		gamerSender.accept(getDealerDto(), getPlayerDtos());
+	}
+
+	private void giveFirstCards() {
 		for (int i = 0; i < INIT_DISTRIBUTION_COUNT; i++) {
 			gamers.giveCardToAllGamers(this.drawStrategy::draw);
 		}
-	}
-
-	public static BlackJackGame start(List<String> names, DrawStrategy drawStrategy) {
-		return new BlackJackGame(names, drawStrategy);
 	}
 
 	public void askPlayerHitOrStay(Function<String, Boolean> answerReceiver, Consumer<GamerDto> cardsSender) {
