@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.card.Deck;
 import java.util.Collections;
 import java.util.List;
 

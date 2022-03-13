@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static blackjack.domain.Denomination.*;
 import static blackjack.domain.Suit.*;

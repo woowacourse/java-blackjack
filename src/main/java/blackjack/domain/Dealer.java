@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import java.util.List;
 
 public class Dealer {
