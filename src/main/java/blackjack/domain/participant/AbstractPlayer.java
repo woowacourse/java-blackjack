@@ -27,4 +27,6 @@ public abstract class AbstractPlayer implements Player {
     public Deck getDeck() {
         return cards;
     }
+
+    public abstract boolean isDealer();
 }
