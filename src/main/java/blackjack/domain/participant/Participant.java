@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 public abstract class Participant {
 
-    public static final int INITIAL_CARD_HAND = 2;
-    public static final int ADDITIONAL_CARD_COUNT = 1;
     protected static final int ACE_ADDITIONAL_NUMBER = 10;
     protected static final int BUST_THRESHOLD = 21;
 

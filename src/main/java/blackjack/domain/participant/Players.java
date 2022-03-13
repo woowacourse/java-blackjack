@@ -1,8 +1,6 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.participant.Participant.INITIAL_CARD_HAND;
-
-import blackjack.domain.card.CardDeck;
+import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,9 +22,9 @@ public class Players {
                 .collect(Collectors.toList()));
     }
 
-    public void receive(CardDeck cardDeck) {
+    public void receive(Cards cards) {
         for (Player player : players) {
-            player.receive(cardDeck.distribute(INITIAL_CARD_HAND));
+            player.receive(cards);
         }
     }
 

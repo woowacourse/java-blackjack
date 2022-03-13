@@ -1,8 +1,5 @@
 package blackjack.controller;
 
-import static blackjack.domain.participant.Participant.ADDITIONAL_CARD_COUNT;
-import static blackjack.domain.participant.Participant.INITIAL_CARD_HAND;
-
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
@@ -12,6 +9,9 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class Controller {
+
+    private static final int INITIAL_CARD_HAND = 2;
+    private static final int ADDITIONAL_CARD_COUNT = 1;
 
     public void run() {
         CardDeck cardDeck = CardDeck.initShuffled();
@@ -25,7 +25,7 @@ public class Controller {
 
     private void initCardHand(CardDeck cardDeck, Dealer dealer, Players players) {
         dealer.receive(cardDeck.distribute(INITIAL_CARD_HAND));
-        players.receive(cardDeck);
+        players.receive(cardDeck.distribute(INITIAL_CARD_HAND));
 
         OutputView.printInitCardHandStatus(dealer, players);
     }
