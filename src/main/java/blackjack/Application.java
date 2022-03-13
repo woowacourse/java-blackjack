@@ -9,5 +9,4 @@ public class Application {
 		BlackJackGameController blackJackGameController = new BlackJackGameController(new InputView(), new OutputView());
 		blackJackGameController.gameStart();
 	}
-
 }
