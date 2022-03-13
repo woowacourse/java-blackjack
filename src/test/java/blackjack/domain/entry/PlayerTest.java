@@ -32,23 +32,26 @@ public class PlayerTest {
     @DisplayName("플레이어의 합이 높을 경우 승리를 반환한다.")
     void playerIsLoseByOver21() {
         Player player = new Player("jason", new HoldCards(Card.valueOf(Suit.SPADE, Number.KING), Card.valueOf(Suit.SPADE, Number.ACE)));
+        Dealer dealer = new Dealer( new HoldCards(Card.valueOf(Suit.SPADE, Number.KING), Card.valueOf(Suit.SPADE, Number.JACK)));
 
-        assertThat(player.match(20)).isEqualTo(PlayerOutcome.WIN);
+        assertThat(player.match(dealer)).isEqualTo(PlayerOutcome.WIN);
     }
 
     @Test
     @DisplayName("플레이어의 합이 낮을 경우 승리를 반환한다.")
     void playerIsWinByDealerOver21() {
         Player player = new Player("jason", new HoldCards(Card.valueOf(Suit.SPADE, Number.NINE), Card.valueOf(Suit.SPADE, Number.ACE)));
+        Dealer dealer = new Dealer( new HoldCards(Card.valueOf(Suit.SPADE, Number.KING), Card.valueOf(Suit.SPADE, Number.ACE)));
 
-        assertThat(player.match(21)).isEqualTo(PlayerOutcome.LOSE);
+        assertThat(player.match(dealer)).isEqualTo(PlayerOutcome.LOSE);
     }
 
     @Test
     @DisplayName("플레이어의 합과 같을 경우 무승부를 반환한다.")
     void playerIsDrawByDealerAndPlayerOver21() {
         Player player = new Player("jason", new HoldCards(Card.valueOf(Suit.SPADE, Number.KING), Card.valueOf(Suit.SPADE, Number.ACE)));
+        Dealer dealer = new Dealer( new HoldCards(Card.valueOf(Suit.SPADE, Number.KING), Card.valueOf(Suit.SPADE, Number.ACE)));
 
-        assertThat(player.match(21)).isEqualTo(PlayerOutcome.DRAW);
+        assertThat(player.match(dealer)).isEqualTo(PlayerOutcome.DRAW);
     }
 }

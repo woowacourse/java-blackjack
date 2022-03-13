@@ -27,7 +27,7 @@ public class Players {
 
     public Map<PlayerOutcome, List<Player>> getGameResult() {
         return players.stream()
-                .collect(Collectors.groupingBy(player -> player.match(dealer.countCards())));
+                .collect(Collectors.groupingBy(player -> player.match(dealer)));
     }
 
     public List<Participant> getParticipant() {
