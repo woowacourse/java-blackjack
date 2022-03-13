@@ -1,19 +1,18 @@
 package blackJack.domain.participant;
 
+import blackJack.domain.card.Card;
+import blackJack.domain.card.Denomination;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import blackJack.domain.card.Card;
-import blackJack.domain.card.Denomination;
 
 public abstract class Participant {
 
     private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
     private static final String ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
 
-    private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 11;
     public static final int STANDARD_SCORE_OF_CHANGE_ACE = 11;
+    private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 11;
 
     private final String name;
     private final List<Card> cards;
@@ -54,8 +53,8 @@ public abstract class Participant {
 
     private int calculateScore() {
         return cards.stream()
-            .mapToInt(Card::getScore)
-            .sum();
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     private boolean hasAce() {
@@ -73,11 +72,13 @@ public abstract class Participant {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (!(o instanceof Participant))
+        }
+        if (!(o instanceof Participant)) {
             return false;
-        Participant that = (Participant)o;
+        }
+        Participant that = (Participant) o;
         return Objects.equals(name, that.name);
     }
 

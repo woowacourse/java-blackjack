@@ -1,12 +1,11 @@
 package blackJack.domain.result;
 
+import blackJack.domain.participant.Dealer;
+import blackJack.domain.participant.Player;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import blackJack.domain.participant.Dealer;
-import blackJack.domain.participant.Player;
 
 public class BlackJackGameResult {
 

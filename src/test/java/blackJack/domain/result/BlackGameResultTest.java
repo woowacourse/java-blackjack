@@ -1,18 +1,16 @@
 package blackJack.domain.result;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import blackJack.domain.card.Card;
 import blackJack.domain.card.Denomination;
 import blackJack.domain.card.Symbol;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Player;
+import java.util.List;
+import java.util.Map;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class BlackGameResultTest {
 
@@ -30,7 +28,7 @@ class BlackGameResultTest {
         dealer.receiveCard(Card.from(Symbol.SPADE, Denomination.NINE));
 
         BlackJackGameResult blackJackGameResult =
-            BlackJackGameResult.ofGameResult(dealer, List.of(player1, player2, player3));
+                BlackJackGameResult.ofGameResult(dealer, List.of(player1, player2, player3));
 
         assertThat(blackJackGameResult.calculateDealerResult()).contains(
                 Map.entry(MatchResult.WIN, 1),

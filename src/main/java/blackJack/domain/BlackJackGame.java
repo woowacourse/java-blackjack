@@ -1,12 +1,11 @@
 package blackJack.domain;
 
-import java.util.List;
-
 import blackJack.domain.card.Deck;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
+import java.util.List;
 
 public class BlackJackGame {
 
