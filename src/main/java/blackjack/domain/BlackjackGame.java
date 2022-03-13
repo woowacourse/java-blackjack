@@ -5,23 +5,30 @@ import java.util.List;
 public class BlackjackGame {
 
     private final Cards cards;
-    private final Players blackjackPlayers;
+    private Players blackjackPlayers;
 
-    public BlackjackGame(List<String> playerNames) {
+    public BlackjackGame() {
         this.cards = new Cards(new CardShuffleMachine());
-        this.blackjackPlayers = new Players();
-        blackjackPlayers.addPlayer(new Dealer());
-        for (String playerName : playerNames) {
-            blackjackPlayers.addPlayer(new Guest(playerName));
-        }
     }
 
-    public Players initGames() {
+    public void initGames(List<String> playerNames) {
+        initPlayers(playerNames);
+        initCards();
+    }
+
+    private void initCards() {
         for (Player blackjackPlayer : blackjackPlayers.getPlayers()) {
             blackjackPlayer.addCard(cards.assignCard());
             blackjackPlayer.addCard(cards.assignCard());
         }
-        return blackjackPlayers;
+    }
+
+    private void initPlayers(List<String> playerNames) {
+        blackjackPlayers = new Players();
+        blackjackPlayers.addPlayer(new Dealer());
+        for (String playerName : playerNames) {
+            blackjackPlayers.addPlayer(new Guest(playerName));
+        }
     }
 
     public void addCard(Player player) {
@@ -58,5 +65,9 @@ public class BlackjackGame {
         Match dealerResult = result.getDealerResult();
         results.addResult(dealer, dealerResult);
         results.addResult(guest, result);
+    }
+
+    public Players getBlackjackPlayers() {
+        return blackjackPlayers;
     }
 }

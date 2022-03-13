@@ -12,9 +12,10 @@ import blackjack.view.OutputView;
 public class BlackjackController {
 
     public void playGame() {
-        BlackjackGame blackjackGame = new BlackjackGame(receivePlayerNames());
-        Players players = blackjackGame.initGames();
+        BlackjackGame blackjackGame = new BlackjackGame();
+        blackjackGame.initGames(receivePlayerNames());
 
+        Players players = blackjackGame.getBlackjackPlayers();
         printStartGame(players);
 
         turnPlayers(blackjackGame, players);
