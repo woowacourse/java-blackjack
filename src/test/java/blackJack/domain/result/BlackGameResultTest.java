@@ -33,9 +33,9 @@ class BlackGameResultTest {
             BlackJackGameResult.ofGameResult(dealer, List.of(player1, player2, player3));
 
         assertThat(blackJackGameResult.calculateDealerResult()).contains(
-                Map.entry(WinOrLose.WIN, 1),
-                Map.entry(WinOrLose.DRAW, 0),
-                Map.entry(WinOrLose.LOSE, 2)
+                Map.entry(MatchResult.WIN, 1),
+                Map.entry(MatchResult.DRAW, 0),
+                Map.entry(MatchResult.LOSE, 2)
         );
     }
 }

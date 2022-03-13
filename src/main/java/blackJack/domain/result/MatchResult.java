@@ -1,6 +1,6 @@
 package blackJack.domain.result;
 
-public enum WinOrLose {
+public enum MatchResult {
     WIN("승"),
     DRAW("무"),
     LOSE("패")
@@ -9,7 +9,7 @@ public enum WinOrLose {
     private static final int BLACK_JACK = 21;
     private final String result;
 
-    WinOrLose(String result) {
+    MatchResult(String result) {
         this.result = result;
     }
 

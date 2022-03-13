@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackJack.domain.card.Card;
 import blackJack.domain.card.Denomination;
 import blackJack.domain.card.Symbol;
-import blackJack.domain.result.WinOrLose;
+import blackJack.domain.result.MatchResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -68,7 +68,7 @@ class PlayerTest {
         dealer.receiveCard(Card.from(Symbol.SPADE, Denomination.ACE));
         dealer.receiveCard(Card.from(Symbol.CLOVER, Denomination.SEVEN));
 
-        assertThat(player.getMatchResult(dealer)).isEqualTo(WinOrLose.WIN);
+        assertThat(player.getMatchResult(dealer)).isEqualTo(MatchResult.WIN);
     }
 
     @Test
@@ -82,7 +82,7 @@ class PlayerTest {
         dealer.receiveCard(Card.from(Symbol.SPADE, Denomination.ACE));
         dealer.receiveCard(Card.from(Symbol.CLOVER, Denomination.EIGHT));
 
-        assertThat(player.getMatchResult(dealer)).isEqualTo(WinOrLose.DRAW);
+        assertThat(player.getMatchResult(dealer)).isEqualTo(MatchResult.DRAW);
     }
 
     @Test
@@ -96,7 +96,7 @@ class PlayerTest {
         dealer.receiveCard(Card.from(Symbol.SPADE, Denomination.ACE));
         dealer.receiveCard(Card.from(Symbol.CLOVER, Denomination.EIGHT));
 
-        assertThat(player.getMatchResult(dealer)).isEqualTo(WinOrLose.LOSE);
+        assertThat(player.getMatchResult(dealer)).isEqualTo(MatchResult.LOSE);
     }
 
     @Test
@@ -112,6 +112,6 @@ class PlayerTest {
         dealer.receiveCard(Card.from(Symbol.DIAMOND, Denomination.JACK));
         player.receiveCard(Card.from(Symbol.DIAMOND, Denomination.TWO));
 
-        assertThat(player.getMatchResult(dealer)).isEqualTo(WinOrLose.LOSE);
+        assertThat(player.getMatchResult(dealer)).isEqualTo(MatchResult.LOSE);
     }
 }

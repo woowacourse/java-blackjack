@@ -1,6 +1,6 @@
 package blackJack.domain.participant;
 
-import blackJack.domain.result.WinOrLose;
+import blackJack.domain.result.MatchResult;
 
 public class Player extends Participant {
 
@@ -20,30 +20,30 @@ public class Player extends Participant {
 
     @Override
     public boolean hasNextTurn() {
-        return !WinOrLose.isBurst(this.getScore());
+        return !MatchResult.isBurst(this.getScore());
     }
 
-    public WinOrLose getMatchResult(Dealer dealer) {
-        return calculateWinOrLose(dealer.getScore());
+    public MatchResult getMatchResult(Dealer dealer) {
+        return calculatePlayerMatchResult(dealer.getScore());
     }
 
-    private WinOrLose calculateWinOrLose(int dealerScore) {
-        if (WinOrLose.isBurst(this.getScore())) {
-            return WinOrLose.LOSE;
+    private MatchResult calculatePlayerMatchResult(int dealerScore) {
+        if (MatchResult.isBurst(this.getScore())) {
+            return MatchResult.LOSE;
         }
-        if (WinOrLose.isBurst(dealerScore)) {
-            return WinOrLose.WIN;
+        if (MatchResult.isBurst(dealerScore)) {
+            return MatchResult.WIN;
         }
-        return getWinOrLose(dealerScore);
+        return getMatchResult(dealerScore);
     }
 
-    private WinOrLose getWinOrLose(int dealerScore) {
+    private MatchResult getMatchResult(int dealerScore) {
         if (this.getScore() > dealerScore) {
-            return WinOrLose.WIN;
+            return MatchResult.WIN;
         }
         if (this.getScore() == dealerScore) {
-            return WinOrLose.DRAW;
+            return MatchResult.DRAW;
         }
-        return WinOrLose.LOSE;
+        return MatchResult.LOSE;
     }
 }
