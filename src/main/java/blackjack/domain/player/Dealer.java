@@ -1,7 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.player.Player;
-
 public class Dealer extends Player {
 
     private static final String NAME = "딜러";

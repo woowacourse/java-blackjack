@@ -23,23 +23,9 @@ public class BlackJackMachineTest {
 
         int totalScore = participant.getTotalScore();
 
-        blackJackMachine.giveCardToParticipant(participant, Choice.YES);
+        blackJackMachine.giveCardToPlayer(participant);
 
         Assertions.assertThat(participant.getTotalScore()).isGreaterThan(totalScore);
-    }
-
-    @Test
-    @DisplayName("참가자가 카드를 더 뽑지 않는다고 하면 카드를 주지 않는다.")
-    void giveCardToParticipantNo() {
-        Participant participant = new Participant("배카라");
-        participant.addCard(new Card(Denomination.THREE, Suit.SPADE));
-        participant.addCard(new Card(Denomination.ACE, Suit.HEART));
-
-        int totalScore = participant.getTotalScore();
-
-        blackJackMachine.giveCardToParticipant(participant, Choice.NO);
-
-        Assertions.assertThat(participant.getTotalScore()).isEqualTo(totalScore);
     }
 
     @Test
@@ -49,7 +35,9 @@ public class BlackJackMachineTest {
         dealer.addCard(new Card(Denomination.TWO, Suit.SPADE));
         dealer.addCard(new Card(Denomination.TWO, Suit.HEART));
 
-        blackJackMachine.giveCardToDealer(dealer);
+        while (dealer.canAddCard()) {
+            blackJackMachine.giveCardToPlayer(dealer);
+        }
 
         Assertions.assertThat(dealer.getTotalScore()).isGreaterThan(16);
     }

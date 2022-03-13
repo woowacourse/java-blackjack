@@ -21,4 +21,8 @@ public enum Choice {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] y 또는 n만 입력할 수 있습니다."));
     }
+
+    public boolean isYes() {
+        return this == YES;
+    }
 }

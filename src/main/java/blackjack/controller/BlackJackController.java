@@ -43,7 +43,8 @@ public class BlackJackController {
         OutputView.printInitialCards(dealer, participants);
     }
 
-    private void askAndGiveCardsToParticipants(final BlackJackMachine blackJackMachine, final Participants participants) {
+    private void askAndGiveCardsToParticipants(final BlackJackMachine blackJackMachine,
+                                               final Participants participants) {
         for (Participant participant : participants) {
             askAndGiveCardToParticipant(blackJackMachine, participant);
         }
@@ -51,12 +52,18 @@ public class BlackJackController {
     }
 
     private void askAndGiveCardToParticipant(final BlackJackMachine blackJackMachine, final Participant participant) {
-        Choice choice;
-        do {
-            choice = getChoice(participant);
-            blackJackMachine.giveCardToParticipant(participant, choice);
+        Choice choice = getChoice(participant);
+        if (choice.isYes() && participant.canAddCard()) {
+            blackJackMachine.giveCardToPlayer(participant);
             OutputView.printPlayerCards(participant);
-        } while (choice == Choice.YES && participant.canAddCard());
+            checkGiveAgain(blackJackMachine, participant);
+        }
+    }
+
+    private void checkGiveAgain(BlackJackMachine blackJackMachine, Participant participant) {
+        if (participant.canAddCard()) {
+            askAndGiveCardToParticipant(blackJackMachine, participant);
+        }
     }
 
     private Choice getChoice(final Participant participant) {
@@ -70,8 +77,7 @@ public class BlackJackController {
 
     private void giveCardsToDealer(final BlackJackMachine blackJackMachine, final Dealer dealer) {
         while (dealer.canAddCard()) {
-            blackJackMachine.giveCardToDealer(dealer);
-            OutputView.printDealerGetCardMessage(dealer);
+            blackJackMachine.giveCardToPlayer(dealer);
         }
         OutputView.printNewLine();
     }
