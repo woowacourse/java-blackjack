@@ -5,17 +5,15 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum MatchResult {
-    WIN("승", (dealer, gambler) ->
+    WIN((dealer, gambler) ->
             !gambler.isBust() && (dealer.isBust() || dealer.getScore() < gambler.getScore())),
-    LOSE("패", (dealer, gambler) -> gambler.isBust() || (dealer.getScore() > gambler.getScore())),
-    DRAW("무", (dealer, gambler) -> !gambler.isBust() && dealer.getScore() == gambler.getScore()),
-    NO_MATCH("판정오류", (dealer, gambler) -> false);
+    LOSE((dealer, gambler) -> gambler.isBust() || (dealer.getScore() > gambler.getScore())),
+    DRAW((dealer, gambler) -> !gambler.isBust() && dealer.getScore() == gambler.getScore()),
+    NO_MATCH((dealer, gambler) -> false);
 
     private final BiPredicate<Player, Player> judge;
-    private final String result;
 
-    MatchResult(String result, BiPredicate<Player, Player> judge) {
-        this.result = result;
+    MatchResult(BiPredicate<Player, Player> judge) {
         this.judge = judge;
     }
 
@@ -24,10 +22,6 @@ public enum MatchResult {
                 .filter(matchResult -> matchResult.judge.test(dealer, gambler))
                 .findAny()
                 .orElse(NO_MATCH);
-    }
-
-    public String getResult() {
-        return result;
     }
 
     public static MatchResult opposite(MatchResult matchResult) {

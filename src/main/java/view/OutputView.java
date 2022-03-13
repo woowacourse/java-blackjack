@@ -20,6 +20,9 @@ public class OutputView {
     private static final String COLON_FOR_JOINING_NAME_AND_CARD = ": ";
     private static final String RESULT_TITLE = "## 최종 승패";
     private static final String DEALER_RESULT_PRINT_TEMPLATE = "딜러: %d승 %d무 %d패%n";
+    private static final String STRING_FOR_WIN = "승";
+    private static final String STRING_FOR_LOSE = "패";
+    private static final String STRING_FOR_DRAW = "무";
 
     private OutputView() {
     }
@@ -78,6 +81,18 @@ public class OutputView {
     }
 
     public static void printSingleGamblerResult(String name, MatchResult matchResult) {
-        System.out.println(name + COLON_FOR_JOINING_NAME_AND_CARD + matchResult.getResult());
+        System.out.println(name + COLON_FOR_JOINING_NAME_AND_CARD + getStringByMatchResult(matchResult));
+    }
+
+    private static String getStringByMatchResult(MatchResult matchResult) {
+        if (matchResult == WIN) {
+            return STRING_FOR_WIN;
+        }
+
+        if (matchResult == LOSE) {
+            return STRING_FOR_LOSE;
+        }
+
+        return STRING_FOR_DRAW;
     }
 }
