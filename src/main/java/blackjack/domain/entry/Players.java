@@ -1,6 +1,7 @@
 package blackjack.domain.entry;
 
 import blackjack.domain.PlayerOutcome;
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
@@ -17,12 +18,12 @@ public class Players {
         this.players = players;
     }
 
-    public boolean isHitDealer(Deck deck) {
-        if (dealer.canHit()) {
-            dealer.addCard(deck.draw());
-            return true;
-        }
-        return false;
+    public boolean isHitDealer() {
+        return dealer.canHit();
+    }
+
+    public void hitDealer(Card card) {
+        dealer.addCard(card);
     }
 
     public Map<PlayerOutcome, List<Player>> getGameResult() {

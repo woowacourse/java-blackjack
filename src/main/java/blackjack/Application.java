@@ -51,8 +51,7 @@ public class Application {
     }
 
     private static void hitDealer(Blackjack blackjack) {
-        if (BlackjackController.canHitDealer(blackjack)) {
-            OutputView.printReceivingMoreCardOfDealer();
-        }
+        BlackjackController.hitDealer(blackjack);
+        OutputView.printReceivingMoreCardOfDealer();
     }
 }

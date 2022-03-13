@@ -26,11 +26,15 @@ public class Blackjack {
     }
 
     public boolean needMoreCardByDealer() {
-        return players.isHitDealer(deck);
+        return players.isHitDealer();
+    }
+
+    public void hitDealer() {
+        players.hitDealer(deck.draw());
     }
 
     public boolean canHit(Player player, Command command) {
-        return !player.hasBustCard() && command == Command.HIT;
+        return player.canHit() && command == Command.HIT;
     }
 
     public Map<PlayerOutcome, List<Player>> getGameResult() {

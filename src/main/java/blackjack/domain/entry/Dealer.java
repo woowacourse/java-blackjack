@@ -14,18 +14,19 @@ public class Dealer extends Participant {
         super(holdCards);
     }
 
+    @Override
     public boolean canHit() {
         return countCards() <= MORE_CARD_STANDARD;
     }
 
     @Override
-    public String getName() {
-        return NAME;
+    public List<Card> openCard() {
+        return Collections.singletonList(findFirstCard(getHoldCards()));
     }
 
     @Override
-    public List<Card> openCard() {
-        return Collections.singletonList(findFirstCard(getHoldCards()));
+    public String getName() {
+        return NAME;
     }
 
     private Card findFirstCard(HoldCards holdCards) {

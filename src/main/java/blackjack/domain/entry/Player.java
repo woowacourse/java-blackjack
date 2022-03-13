@@ -20,18 +20,19 @@ public class Player extends Participant {
         return PlayerOutcome.match(dealerTotal, countCards());
     }
 
-    public boolean hasBustCard() {
-        return getHoldCards().countBestNumber() > BLACKJACK_NUMBER;
-    }
-
     @Override
-    public String getName() {
-        return name;
+    public boolean canHit() {
+        return countCards() <= BLACKJACK_NUMBER;
     }
 
     @Override
     public List<Card> openCard() {
         HoldCards holdCards = getHoldCards();
         return List.copyOf(holdCards.getCards());
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

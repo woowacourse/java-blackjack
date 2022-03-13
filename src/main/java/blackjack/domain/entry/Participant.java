@@ -13,9 +13,11 @@ public abstract class Participant {
         this.holdCards = holdCards;
     }
 
-    public abstract String getName();
+    public abstract boolean canHit();
 
     public abstract List<Card> openCard();
+
+    public abstract String getName();
 
     public int countCards() {
         return holdCards.countBestNumber();

@@ -29,10 +29,6 @@ public class BlackjackController {
         }
     }
 
-    public static boolean canHitDealer(Blackjack blackjack) {
-        return blackjack.needMoreCardByDealer();
-    }
-
     public static Map<Participant, Integer> getCardResult(Blackjack blackjack) {
         List<Participant> participants = blackjack.getParticipant();
         return participants.stream()
@@ -41,5 +37,11 @@ public class BlackjackController {
 
     public static Map<PlayerOutcome, List<Player>> getGameResult(Blackjack blackjack) {
         return blackjack.getGameResult();
+    }
+
+    public static void hitDealer(Blackjack blackjack) {
+        while (blackjack.needMoreCardByDealer()) {
+            blackjack.hitDealer();
+        }
     }
 }
