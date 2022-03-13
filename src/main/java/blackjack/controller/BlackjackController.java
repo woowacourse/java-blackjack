@@ -10,7 +10,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackController {
 
@@ -26,10 +25,7 @@ public class BlackjackController {
     }
 
     private Participants createParticipants() {
-        List<String> playerNames = InputView.inputPlayerName();
-        return new Participants(playerNames.stream()
-            .map(Player::new)
-            .collect(Collectors.toList()));
+        return Participants.from(InputView.inputPlayerName());
     }
 
     private void handOutAndPrintInitialCards(Participants participants, Deck deck) {

@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Participants {
 
@@ -18,6 +19,12 @@ public class Participants {
     public Participants(List<Player> players) {
         validatePlayerNumber(players);
         this.players = new ArrayList<>(players);
+    }
+
+    public static Participants from(List<String> playerNames) {
+        return new Participants(playerNames.stream()
+            .map(Player::new)
+            .collect(Collectors.toList()));
     }
 
     public List<Player> getPlayers() {
