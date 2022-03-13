@@ -50,7 +50,7 @@ public class Gamers {
 	}
 
 	public boolean checkDealerDrawPossible() {
-		return !dealer.isOverThan(BlackJackGame.INIT_DISTRIBUTION_COUNT);
+		return !dealer.isOverThan(BlackJackGame.ADDITIONAL_DISTRIBUTE_STANDARD);
 	}
 
 	public Player findPlayerByName(String name) {

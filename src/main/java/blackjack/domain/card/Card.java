@@ -21,7 +21,7 @@ public class Card {
 
     private static void cacheCards(CardShape shape) {
         for (CardNumber number : CardNumber.values()) {
-            CARDS.put(number.getName() + shape.getName(), new Card(shape, number));
+            CARDS.put(makeCardKey(shape, number), new Card(shape, number));
         }
     }
 
@@ -31,7 +31,11 @@ public class Card {
     }
 
     public static Card getInstance(CardShape shape, CardNumber number) {
-        return CARDS.get(number.getName() + shape.getName());
+        return CARDS.get(makeCardKey(shape, number));
+    }
+
+    private static String makeCardKey(CardShape shape, CardNumber number) {
+        return number.getName() + shape.getName();
     }
 
     public boolean isAce() {
