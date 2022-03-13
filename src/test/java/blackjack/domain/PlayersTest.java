@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 import java.util.List;
@@ -40,5 +41,16 @@ public class PlayersTest {
         Player dealer = players.findDealer();
         assertThat(dealer instanceof Dealer)
                 .isTrue();
+    }
+
+    @Test
+    @DisplayName("Players가 딜러를 제외하고 게스트만 반환할 수 있는지 확인")
+    void getGuestsTest() {
+        Players players = Players.fromNames(List.of("a", "b"), (p) -> HitFlag.Y);
+        List<Player> guests = players.getGuests();
+        for (Player player : guests) {
+            assertThat(player instanceof Guest)
+                    .isTrue();
+        }
     }
 }
