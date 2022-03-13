@@ -23,7 +23,7 @@ public class ParticipantDto {
     }
 
     public static ParticipantDto toOpenAllCards(final Participant participant) {
-        return new ParticipantDto(participant.getName(), participant.openAllCards(), participant.getScore());
+        return new ParticipantDto(participant.getName(), participant.getCards(), participant.getScore());
     }
 
     public String getName() {

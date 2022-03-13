@@ -5,6 +5,7 @@ import blackjack.domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
 
@@ -12,8 +13,16 @@ public abstract class Participant {
     private static final int ACE_NUMBER = 1;
     private static final int ALTERNATE_ACE_VALUE = 10;
 
-    protected String name;
-    protected List<Card> cards = new ArrayList<>();
+    private final String name;
+    private final List<Card> cards;
+
+    protected Participant(String name, List<Card> cards) {
+        Objects.requireNonNull(name, "이름은 null일 수 없습니다.");
+        Objects.requireNonNull(cards, "카드는 null일 수 없습니다.");
+        this.name = name;
+        this.cards = cards;
+    }
+    abstract public List<Card> showFirstCards();
 
     public void drawCard(final Deck deck) {
         cards.add(deck.drawCard());
@@ -28,7 +37,7 @@ public abstract class Participant {
         return totalSum;
     }
 
-    protected int calculateWithoutAce() {
+    private int calculateWithoutAce() {
         return cards.stream()
                 .mapToInt(Card::getNumber)
                 .sum();
@@ -54,13 +63,11 @@ public abstract class Participant {
         return calculateScore();
     }
 
-    public List<Card> openAllCards() {
+    public List<Card> getCards() {
         return List.copyOf(cards);
     }
 
     public String getName() {
         return name;
     }
-
-    public abstract List<Card> showFirstCards();
 }

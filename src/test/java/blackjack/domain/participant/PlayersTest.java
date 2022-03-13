@@ -53,7 +53,7 @@ public class PlayersTest {
 
         final List<Card> actualCards = new ArrayList<>();
         for (Player player : actualPlayers) {
-            actualCards.addAll(player.openAllCards());
+            actualCards.addAll(player.getCards());
         }
         assertThat(actualCards).isEqualTo(initializedCards);
     }

@@ -2,14 +2,15 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Player extends Participant {
 
     public Player(final String name) {
+        super(name, new ArrayList<>());
         validatePlayerName(name);
-        this.name = name;
     }
 
     private static void validatePlayerName(final String name) {
@@ -20,6 +21,6 @@ public class Player extends Participant {
 
     @Override
     public List<Card> showFirstCards() {
-        return Collections.unmodifiableList(cards);
+        return Collections.unmodifiableList(getCards());
     }
 }

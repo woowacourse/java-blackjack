@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.PlayerResult;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Dealer extends Participant {
     public static final int DEALER_MIN_SCORE = 17;
 
     private Dealer() {
-        this.name = DEALER_NAME;
+        super(DEALER_NAME, new ArrayList<>());
     }
 
     public static Dealer startWithTwoCards(final Deck deck) {
@@ -40,7 +41,6 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> showFirstCards() {
-        return Collections.singletonList(cards.get(0));
+        return Collections.singletonList(getCards().get(0));
     }
-
 }

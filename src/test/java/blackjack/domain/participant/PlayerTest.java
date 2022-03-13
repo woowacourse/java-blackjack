@@ -43,7 +43,7 @@ class PlayerTest {
             participant.drawCard(deck);
         }
 
-        final List<Card> actualCards = participant.openAllCards();
+        final List<Card> actualCards = participant.getCards();
         assertThat(actualCards).isEqualTo(expectedCards);
     }
 

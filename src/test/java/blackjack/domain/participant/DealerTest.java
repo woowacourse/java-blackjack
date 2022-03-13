@@ -28,7 +28,7 @@ class DealerTest {
         Deck deck = Deck.generate(manualCardStrategy);
         final Dealer dealer = Dealer.startWithTwoCards(deck);
 
-        List<Card> cards = dealer.openAllCards();
+        List<Card> cards = dealer.getCards();
         assertThat(cards).isEqualTo(initializedCards.subList(0, 2));
     }
 
