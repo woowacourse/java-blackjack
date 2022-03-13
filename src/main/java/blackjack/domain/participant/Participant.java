@@ -48,12 +48,16 @@ public class Participant {
     }
 
     private void endTurn() {
-        int aceCount = (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
-
-        if (aceCount > 0 && score + ADDITIONAL_SCORE_FOR_ACE <= GOAL_SCORE) {
+        if (isContainAce() && isBetterToGiveMoreForAce()) {
             score += ADDITIONAL_SCORE_FOR_ACE;
         }
+    }
+
+    private boolean isContainAce() {
+        return cards.stream().filter(Card::isAce).count() > 0;
+    }
+
+    private boolean isBetterToGiveMoreForAce() {
+        return score + ADDITIONAL_SCORE_FOR_ACE <= GOAL_SCORE;
     }
 }
