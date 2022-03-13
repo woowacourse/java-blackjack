@@ -6,7 +6,7 @@ import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
 import blackJack.domain.result.BlackJackGameResult;
-import blackJack.domain.result.WinOrLose;
+import blackJack.domain.result.WinDrawLose;
 
 import java.util.List;
 import java.util.Map;
@@ -92,21 +92,21 @@ public class OutputView {
                 participant.getScore());
     }
 
-    public static void printWinOrLoseResult(Dealer dealer, BlackJackGameResult blackGameResult) {
+    public static void printWinDrawLoseResult(Dealer dealer, BlackJackGameResult blackGameResult) {
         System.out.println(NEWLINE.concat(OUTPUT_MESSAGE_WIN_OR_LOSE));
-        Map<WinOrLose, Integer> winOrLoseIntegerMap = blackGameResult.calculateDealerResult();
-        String winOrLoseInfo = getWinOrLoseInfo(winOrLoseIntegerMap);
+        Map<WinDrawLose, Integer> winDrawLoseIntegerMap = blackGameResult.calculateDealerResult();
+        String winDrawLoseInfo = getWinDrawLoseInfo(winDrawLoseIntegerMap);
 
-        System.out.printf(OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, dealer.getName(), winOrLoseInfo);
+        System.out.printf(OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, dealer.getName(), winDrawLoseInfo);
         blackGameResult.getGameResult().forEach((key, value) -> System.out.printf(
                 OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, key.getName(), value.getResult()));
     }
 
-    private static String getWinOrLoseInfo(Map<WinOrLose, Integer> winOrLoseInfo) {
-        List<String> winOrLoseEssentialInfo = winOrLoseInfo.entrySet().stream()
+    private static String getWinDrawLoseInfo(Map<WinDrawLose, Integer> winDrawLoseInfo) {
+        List<String> winDrawLoseEssentialInfo = winDrawLoseInfo.entrySet().stream()
                 .filter(resultCount -> resultCount.getValue() > 0)
                 .map(resultCount -> resultCount.getValue() + resultCount.getKey().getResult())
                 .collect(Collectors.toUnmodifiableList());
-        return String.join(JOINING_DELIMITER_SPACE, winOrLoseEssentialInfo);
+        return String.join(JOINING_DELIMITER_SPACE, winDrawLoseEssentialInfo);
     }
 }

@@ -24,7 +24,7 @@ public class BlackJackController {
         doPlayerGame(blackJackGame);
         doDealerGame(blackJackGame);
         OutputView.printGameResult(blackJackGame.getParticipants());
-        OutputView.printWinOrLoseResult(blackJackGame.getDealer(),
+        OutputView.printWinDrawLoseResult(blackJackGame.getDealer(),
                 BlackJackGameResult.ofGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers()));
     }
 

@@ -1,6 +1,6 @@
 package blackJack.domain.result;
 
-public enum WinOrLose {
+public enum WinDrawLose {
     WIN("승"),
     DRAW("무"),
     LOSE("패");
@@ -8,21 +8,21 @@ public enum WinOrLose {
     private static final int BLACK_JACK = 21;
     private final String result;
 
-    WinOrLose(String result) {
+    WinDrawLose(String result) {
         this.result = result;
     }
 
-    public static WinOrLose calculateWinOrLose(int playerScore, int dealerScore) {
+    public static WinDrawLose calculateWinDrawLose(int playerScore, int dealerScore) {
         if (overScore(playerScore)) {
             return LOSE;
         }
         if (overScore(dealerScore)) {
             return WIN;
         }
-        return getWinOrLose(playerScore, dealerScore);
+        return getWinDrawLose(playerScore, dealerScore);
     }
 
-    private static WinOrLose getWinOrLose(int playerScore, int dealerScore) {
+    private static WinDrawLose getWinDrawLose(int playerScore, int dealerScore) {
         if (playerScore > dealerScore) {
             return WIN;
         }
