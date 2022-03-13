@@ -7,7 +7,9 @@ import java.util.List;
 
 public class RandomDeck implements Deck {
 
-    private static List<Card> cards;
+    private static final String NOT_REMAIN_CARDS_ERROR_MESSAGE = "모든 카드를 사용했습니다.";
+
+    private final List<Card> cards = new ArrayList<>();
 
     public RandomDeck() {
         init();
@@ -15,18 +17,23 @@ public class RandomDeck implements Deck {
 
     @Override
     public Card pick() {
-        if (cards.isEmpty()) {
-            init();
-        }
-        Collections.shuffle(cards);
+        validateRemainCards();
+
         return cards.remove(cards.size() - 1);
     }
 
+    private void validateRemainCards() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException(NOT_REMAIN_CARDS_ERROR_MESSAGE);
+        }
+    }
+
     private void init() {
-        cards = new ArrayList<>();
+        cards.clear();
         for (CardNumber number : CardNumber.values()) {
             Arrays.stream(Type.values())
                     .forEach(type -> cards.add(new Card(number, type)));
         }
+        Collections.shuffle(cards);
     }
 }
