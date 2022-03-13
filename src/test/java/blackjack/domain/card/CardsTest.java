@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import static blackjack.domain.card.Denomination.ACE;
+import static blackjack.domain.card.Denomination.EIGHT;
 import static blackjack.domain.card.Denomination.FIVE;
 import static blackjack.domain.card.Denomination.KING;
 import static blackjack.domain.card.Denomination.NINE;
@@ -75,6 +76,26 @@ public class CardsTest {
         cards.add(new Card(SPADE, ACE));
         cards.add(new Card(DIAMOND, ACE));
         cards.add(new Card(CLOVER, NINE));
+
+        //when
+        int score = cards.sumPoint();
+
+        //then
+        Assertions.assertThat(score).isEqualTo(21);
+    }
+
+    @DisplayName("에이스가 여러개 있는 경우 유리하게 점수를 계산한다.")
+    @Test
+    public void testSumPointWithMultipleAce3() {
+        //given
+        Cards cards = new Cards();
+
+        cards.add(new Card(SPADE, FIVE));
+        cards.add(new Card(DIAMOND, FIVE));
+        cards.add(new Card(CLOVER, EIGHT));
+        cards.add(new Card(SPADE, ACE));
+        cards.add(new Card(DIAMOND, ACE));
+        cards.add(new Card(CLOVER, ACE));
 
         //when
         int score = cards.sumPoint();
