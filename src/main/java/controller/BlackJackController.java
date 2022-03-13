@@ -36,7 +36,7 @@ public class BlackJackController {
         printCardAndScore(dealer, gamblers);
     }
 
-    public void spreadCards(CardDeck cardDeck, Dealer dealer, Gamblers gamblers) {
+    private void spreadCards(CardDeck cardDeck, Dealer dealer, Gamblers gamblers) {
         gamblers.getGamblers()
                 .forEach(gambler -> gambler.addCard(cardDeck.getCard()));
         dealer.addCard(cardDeck.getCard());
