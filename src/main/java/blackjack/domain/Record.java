@@ -31,6 +31,16 @@ public enum Record {
                 .orElseThrow();
     }
 
+    public static Record fromOpposite(final String name) {
+        if (name.equals(WIN.getName())) {
+            return LOSS;
+        }
+        if (name.equals(LOSS.getName())) {
+            return WIN;
+        }
+        return PUSH;
+    }
+
     public String getName() {
         return name;
     }

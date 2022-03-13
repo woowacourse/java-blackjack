@@ -1,16 +1,14 @@
 package blackjack.service;
 
-import blackjack.domain.RecordFactory;
+import blackjack.domain.Record;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Status;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ParticipantResultDto;
-import blackjack.dto.RecordDto;
-import java.util.LinkedHashMap;
+import blackjack.dto.PlayerRecordDto;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PlayerService {
@@ -63,16 +61,9 @@ public class PlayerService {
                 .collect(Collectors.toList());
     }
 
-    public RecordDto getAllRecord(final int dealerScore) {
-        final Map<String, Integer> playerResult = players.getValue().stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        Player::getScore,
-                        (a, b) -> b,
-                        LinkedHashMap::new
-                ));
-
-        final RecordFactory factory = new RecordFactory(dealerScore, playerResult);
-        return RecordDto.of(factory.getDealerRecord(), factory.getAllPlayerRecord());
+    public List<PlayerRecordDto> getRecord(final int dealerScore) {
+        return players.getValue().stream()
+                .map(player -> PlayerRecordDto.of(player.getName(), Record.of(dealerScore, player.getScore())))
+                .collect(Collectors.toList());
     }
 }

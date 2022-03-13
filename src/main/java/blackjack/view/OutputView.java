@@ -2,13 +2,13 @@ package blackjack.view;
 
 import blackjack.domain.Record;
 import blackjack.dto.CardDto;
+import blackjack.dto.DealerRecordDto;
 import blackjack.dto.DealerTurnResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ParticipantResultDto;
-import blackjack.dto.RecordDto;
+import blackjack.dto.PlayerRecordDto;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -59,24 +59,21 @@ public class OutputView {
                 + " - 결과: " + dto.getScore());
     }
 
-    public static void printRecord(RecordDto dto) {
-        printDealerRecord(dto.getDealerRecord());
-        dto.getPlayerRecord().forEach(OutputView::printPlayerRecord);
-    }
-
-    private static void printDealerRecord(Map<Record, Integer> record) {
+    public static void printDealerRecord(DealerRecordDto dto) {
         System.out.println(System.lineSeparator() + "## 최종 승패");
 
         final StringBuilder builder = new StringBuilder();
         Arrays.stream(Record.values())
-                .filter(it -> record.getOrDefault(it, 0) != 0)
-                .forEach(it -> builder.append(record.get(it)).append(it.getName()));
+                .filter(it -> dto.getValue(it) != 0)
+                .forEach(it -> builder.append(" ")
+                        .append(dto.getValue(it))
+                        .append(it.getName()));
 
-        System.out.println("딜러: " + builder);
+        System.out.println("딜러:" + builder);
     }
 
-    private static void printPlayerRecord(String playerName, Record record) {
-        System.out.println(playerName + ": " + record.getName());
+    public static void printPlayerRecord(PlayerRecordDto dto) {
+        System.out.println(dto.getName() + ": " + dto.getRecord().getName());
     }
 
     public static void printError(final String message) {

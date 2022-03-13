@@ -2,10 +2,11 @@ package blackjack.controller;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Status;
+import blackjack.dto.DealerRecordDto;
 import blackjack.dto.DealerTurnResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ParticipantResultDto;
-import blackjack.dto.RecordDto;
+import blackjack.dto.PlayerRecordDto;
 import blackjack.service.DealerService;
 import blackjack.service.PlayerService;
 import blackjack.view.InputView;
@@ -57,12 +58,23 @@ public class GameController {
     }
 
     public void endGame() {
+        getAllCards();
+        getAllRecord();
+    }
+
+    private void getAllCards() {
         final List<ParticipantResultDto> dto = playerService.findAllResult();
         dto.add(0, dealerService.getResult());
-        final RecordDto recordDto = playerService.getAllRecord(dealerService.getScore());
 
         OutputView.breakLine();
         dto.forEach(OutputView::printParticipantCards);
-        OutputView.printRecord(recordDto);
+    }
+
+    private void getAllRecord() {
+        final List<PlayerRecordDto> playerRecordDtos = playerService.getRecord(dealerService.getScore());
+        final DealerRecordDto dealerRecordDto = DealerRecordDto.of(playerRecordDtos);
+
+        OutputView.printDealerRecord(dealerRecordDto);
+        playerRecordDtos.forEach(OutputView::printPlayerRecord);
     }
 }
