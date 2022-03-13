@@ -60,13 +60,4 @@ public class PlayerTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("카드를 뽑을 수 없습니다.");
     }
-
-    @Test
-    @DisplayName("참가자의 승무패 결과 확인")
-    void playerWinDrawLoseTest() {
-        Player player = new Player("pobi", new Cards(deck.drawStartCards()));
-        player.win();
-
-        assertThat(player.getWinDrawLoseString()).isEqualTo("승");
-    }
 }

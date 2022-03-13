@@ -1,6 +1,5 @@
 package blackjack.domain.gamer;
 
-import java.util.List;
 import java.util.Objects;
 
 import blackjack.domain.card.Card;
@@ -37,19 +36,9 @@ public abstract class Gamer {
         return cards.calculateScore() > 21;
     }
 
-    public boolean isBlackjack() {
-        return cards.calculateScore() == 21;
+    public boolean isDealer() {
+        return this instanceof Dealer;
     }
-
-    public abstract List<Card> getViewCard();
-
-    public abstract void win();
-
-    public abstract void draw();
-
-    public abstract void lose();
-
-    public abstract String getWinDrawLoseString();
 
     public Cards getCards() {
         return cards;

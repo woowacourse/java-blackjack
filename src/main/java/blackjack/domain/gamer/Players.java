@@ -1,10 +1,13 @@
 package blackjack.domain.gamer;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import blackjack.domain.result.Results;
 
 public class Players {
 
@@ -23,6 +26,10 @@ public class Players {
         if (names.size() != duplicateNames.size()) {
             throw new IllegalArgumentException(PLAYER_NAME_DUPLICATE_ERROR_MESSAGE);
         }
+    }
+
+    public void initGameResult(Map<Gamer, Results> gameResult) {
+        players.forEach(player -> gameResult.put(player, new Results(new ArrayList<>())));
     }
 
     public List<Player> getPlayers() {

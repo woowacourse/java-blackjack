@@ -28,13 +28,13 @@ public class Cards {
 
     private int calculateOneAceScore() {
         return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+            .mapToInt(Card::getScore)
+            .sum();
     }
 
     private boolean hasAce() {
         return cards.stream().
-                anyMatch(Card::isAce);
+            anyMatch(Card::isAce);
     }
 
     public List<Card> getCards() {

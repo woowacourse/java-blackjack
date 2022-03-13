@@ -22,6 +22,8 @@ public class BlackjackController {
         hitOrStandPlayers(players, deck);
         hitOrStandDealer(dealer, deck);
         OutputView.printDrawResult(dealer, players);
+
+        OutputView.printTotalResult(dealer.judgeResult(players));
     }
 
     private Deck initDeck() {
@@ -64,7 +66,7 @@ public class BlackjackController {
     private void hitOrStand(Player player, Deck deck) {
         while (InputView.inputHitOrStand(player)) {
             player.drawCard(deck.draw());
-            OutputView.printCard(player);
+            OutputView.printGamerDrawCard(player);
         }
     }
 
