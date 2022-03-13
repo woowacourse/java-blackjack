@@ -1,12 +1,14 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.ScoreCalculator;
-
 public class Dealer extends Participant {
 
     private static final int MIN_SUM_STANDARD = 16;
 
+    public Dealer() {
+        super("딜러");
+    }
+
     public boolean checkUnderSumStandard() {
-        return ScoreCalculator.cardSum(cards) <= MIN_SUM_STANDARD;
+        return holdingCard.cardSum() <= MIN_SUM_STANDARD;
     }
 }

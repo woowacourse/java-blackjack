@@ -45,7 +45,7 @@ public class BlackJackController {
     }
 
     private void playEachUser(User user, Deck deck) {
-        while (!user.checkBust() && InputView.inputMoreCard(user)) {
+        while (!user.getHoldingCard().checkBust() && InputView.inputMoreCard(user)) {
             user.receiveCard(deck.drawCard());
             OutputView.printUserData(user);
         }

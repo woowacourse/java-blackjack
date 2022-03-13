@@ -15,13 +15,13 @@ public class Users {
                 .collect(Collectors.toList());
     }
 
-    public List<User> getUsers() {
-        return Collections.unmodifiableList(users);
-    }
-
-    public List<String> getUserNames() { // user객체 안으로 이동
+    public List<String> getUserNames() {
         return users.stream()
                 .map(User::getName)
                 .collect(Collectors.toList());
+    }
+
+    public List<User> getUsers() {
+        return Collections.unmodifiableList(users);
     }
 }

@@ -1,29 +1,40 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.ScoreCalculator;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import blackjack.domain.card.HoldingCard;
 
 public abstract class Participant {
 
-    protected final List<Card> cards;
+    private static final String ERROR_INVALID_NAME = "[ERROR] 유저의 이름은 한 글자 이상이어야 합니다.";
 
-    public Participant() {
-        cards = new ArrayList<>();
+    protected final String name;
+    protected final HoldingCard holdingCard;
+
+    public Participant(String name) {
+        validateName(name);
+        this.name = name;
+        this.holdingCard = new HoldingCard();
+    }
+
+    private void validateName(String name) {
+        if (name.length() == 0) {
+            throw new IllegalArgumentException(ERROR_INVALID_NAME);
+        }
     }
 
     public void receiveCard(Card card) {
-        cards.add(card);
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        holdingCard.addCard(card);
     }
 
     public int getCardSum() {
-        return ScoreCalculator.cardSum(cards);
+        return holdingCard.cardSum();
+    }
+
+    public HoldingCard getHoldingCard() {
+        return holdingCard;
+    }
+
+    public String getName() {
+        return name;
     }
 }

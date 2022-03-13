@@ -37,11 +37,11 @@ public class OutputView {
 
     private static void printDealerData(Dealer dealer) {
         System.out.printf(lineSeparator() + DEALER_CARD_FORMAT + lineSeparator(),
-                getHoldingCards(dealer.getCards().subList(DEALER_HIDE_INDEX + 1, dealer.getCards().size())));
+                getHoldingCards(dealer.getHoldingCard().getCards().subList(DEALER_HIDE_INDEX + 1, dealer.getHoldingCard().getCards().size())));
     }
 
     public static void printUserData(User user) {
-        System.out.printf(USER_CARD_FORMAT + lineSeparator(), user.getName(), getHoldingCards(user.getCards()));
+        System.out.printf(USER_CARD_FORMAT + lineSeparator(), user.getName(), getHoldingCards(user.getHoldingCard().getCards()));
     }
 
     private static String getHoldingCards(List<Card> cards) {
@@ -68,11 +68,11 @@ public class OutputView {
 
     private static void printDealerDataContainsScore(Dealer dealer) {
         System.out.printf(lineSeparator() + DEALER_CARD_FORMAT + SCORE_FORMAT + lineSeparator(),
-                getHoldingCards(dealer.getCards()), dealer.getCardSum());
+                getHoldingCards(dealer.getHoldingCard().getCards()), dealer.getCardSum());
     }
 
     private static void printUserDataContainsScore(User user) {
-        System.out.printf(USER_CARD_FORMAT + SCORE_FORMAT, user.getName(), getHoldingCards(user.getCards()), user.getCardSum());
+        System.out.printf(USER_CARD_FORMAT + SCORE_FORMAT, user.getName(), getHoldingCards(user.getHoldingCard().getCards()), user.getCardSum());
         System.out.print(lineSeparator());
     }
 
