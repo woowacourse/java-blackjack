@@ -23,7 +23,7 @@ public enum CardCount {
         return Arrays.stream(values())
             .filter(it -> it.value == value)
             .findFirst()
-            .orElseThrow();
+            .orElseThrow(() -> new IllegalArgumentException("최대 뽑는 횟수 초과"));
     }
 
     public boolean isDraw() {
