@@ -34,25 +34,6 @@ public class Cards {
 		return optimalScore;
 	}
 
-	private int generateOptimalScore(final int scoreWithoutAce, final List<Integer> possible) {
-		int optimalScore = scoreWithoutAce;
-		List<Integer> collect = possible.stream()
-			.filter(each -> each + scoreWithoutAce <= BUST_THRESHOLD)
-			.collect(Collectors.toList());
-		for (int possibleScore : collect) {
-			optimalScore = Math.max(optimalScore, possibleScore + scoreWithoutAce);
-		}
-		return optimalScore;
-	}
-
-	private List<Integer> getPossibleAceScores(final int aceCnt) {
-		List<Integer> possibleScores = new ArrayList<>();
-		for (int i = 0; i <= aceCnt; i++) {
-			possibleScores.add(i + ELEVEN_ACE_SCORE * (aceCnt - i));
-		}
-		return possibleScores;
-	}
-
 	private int countAceCard() {
 		return (int)cards.stream()
 			.filter(Card::isAce)
@@ -66,7 +47,26 @@ public class Cards {
 			.sum();
 	}
 
-	public boolean hasAce() {
+	private List<Integer> getPossibleAceScores(final int aceCnt) {
+		List<Integer> possibleScores = new ArrayList<>();
+		for (int i = 0; i <= aceCnt; i++) {
+			possibleScores.add(i + ELEVEN_ACE_SCORE * (aceCnt - i));
+		}
+		return possibleScores;
+	}
+
+	private int generateOptimalScore(final int scoreWithoutAce, final List<Integer> possible) {
+		int optimalScore = scoreWithoutAce;
+		List<Integer> collect = possible.stream()
+			.filter(each -> each + scoreWithoutAce <= BUST_THRESHOLD)
+			.collect(Collectors.toList());
+		for (int possibleScore : collect) {
+			optimalScore = Math.max(optimalScore, possibleScore + scoreWithoutAce);
+		}
+		return optimalScore;
+	}
+
+	private boolean hasAce() {
 		return this.cards.stream().anyMatch(Card::isAce);
 	}
 
