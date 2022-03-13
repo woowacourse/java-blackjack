@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 public class Deck {
 
     private static final String DECK_EMPTY_ERROR = "[ERROR] 카드를 모두 사용하였습니다.";
+    private static final int FIRST = 0;
 
     private final List<Card> deck = new ArrayList<>();
 
@@ -21,7 +22,7 @@ public class Deck {
 
     public Card pickCard() {
         validateDeckSize();
-        return deck.remove(0);
+        return deck.remove(FIRST);
     }
 
     private void validateDeckSize() {

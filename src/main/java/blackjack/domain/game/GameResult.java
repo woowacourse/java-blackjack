@@ -10,8 +10,8 @@ import blackjack.domain.participant.Player;
 
 public class GameResult {
 
-    private Dealer dealer;
-    private Map<Player, WinningResult> playerResult;
+    private final Dealer dealer;
+    private final Map<Player, WinningResult> playerResult;
 
     public GameResult(Participants participants) {
         dealer = participants.getDealer();

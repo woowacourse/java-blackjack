@@ -8,7 +8,7 @@ import blackjack.domain.participant.Player;
 public class TurnManager {
 
     private static final int DEFAULT_TURN_INDEX = 0;
-    public static final String TURN_IS_END_MESSAGE = "턴이 종료되어 플레이어를 가져올 수 없습니다.";
+    private static final String TURN_IS_END_MESSAGE = "턴이 종료되어 플레이어를 가져올 수 없습니다.";
 
     private final List<Player> players;
     private int turnIndex;

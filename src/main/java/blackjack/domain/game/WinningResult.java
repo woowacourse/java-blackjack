@@ -7,7 +7,7 @@ public enum WinningResult {
     DRAW("무"),
     NONE("NONE");
 
-    private String result;
+    private final String result;
 
     WinningResult(String result) {
         this.result = result;

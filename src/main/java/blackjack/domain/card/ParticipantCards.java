@@ -6,7 +6,9 @@ import java.util.List;
 
 public class ParticipantCards {
 
-    private static final int BUST_THRESHOLD_NUMBER = 21;
+    private static final int FIRST = 0;
+    private static final int SECOND = 1;
+    private static final int BLACKJACK_THRESHOLD_NUMBER = 21;
     private static final int ACE_SCORE_DIFFERENCE = 10;
 
     private final List<Card> cards;
@@ -16,7 +18,7 @@ public class ParticipantCards {
     }
 
     public boolean isBlackjack() {
-        return cards.get(0).getPoint() + cards.get(1).getPoint() == 21;
+        return cards.get(FIRST).getPoint() + cards.get(SECOND).getPoint() == BLACKJACK_THRESHOLD_NUMBER;
     }
 
     public void addCard(Card card) {
@@ -34,7 +36,7 @@ public class ParticipantCards {
 
     private int calculateScoreAdvantageousWithAce(int score) {
         int aceCount = getAceCount();
-        while (aceCount-- > 0 && score > BUST_THRESHOLD_NUMBER) {
+        while (aceCount-- > 0 && score > BLACKJACK_THRESHOLD_NUMBER) {
             score -= ACE_SCORE_DIFFERENCE;
         }
         return score;
