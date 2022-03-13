@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Deck {
     private static final String NO_CARD_ERROR_MESSAGE = "더 이상 뽑을 수 있는 카드가 없습니다.";
@@ -31,7 +32,7 @@ public class Deck {
     public Card draw() {
         try {
             return cards.remove();
-        } catch (IndexOutOfBoundsException e) {
+        } catch (NoSuchElementException e) {
             throw new IllegalStateException(NO_CARD_ERROR_MESSAGE);
         }
     }

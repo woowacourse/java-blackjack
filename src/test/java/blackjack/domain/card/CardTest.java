@@ -17,7 +17,6 @@ public class CardTest {
         for (int i = 0; i < 52; i++) {
             deck.draw();
         }
-
         assertThatThrownBy(deck::draw)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("더 이상 뽑을 수 있는 카드가 없습니다.");

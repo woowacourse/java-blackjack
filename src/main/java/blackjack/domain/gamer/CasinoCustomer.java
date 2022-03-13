@@ -15,8 +15,8 @@ public class CasinoCustomer extends AbstractPlayer {
     }
 
     @Override
-    public List<Card> getViewCard() {
-        return getCards().getCards();
+    public Cards getShowCards() {
+        return getCards();
     }
 
     @Override

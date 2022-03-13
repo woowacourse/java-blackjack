@@ -2,10 +2,9 @@ package blackjack;
 
 import blackjack.domain.HitOrStand;
 import blackjack.domain.WinDrawLose;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.dto.CardDto;
-import blackjack.domain.dto.HitResultDto;
-import blackjack.domain.dto.WinDrawLoseDto;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.domain.gamer.Players;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
@@ -31,6 +29,32 @@ public class BlackjackGame {
         OutputView.printResult(judgeWinDrawLose(dealer, players));
     }
 
+    private List<Player> judgeWinDrawLose(Player dealer, Players players) {
+        WinDrawLose.judge(dealer, players);
+        List<Player> allPlayers = new ArrayList<>();
+        allPlayers.add(dealer);
+        allPlayers.addAll(players.getPlayers());
+        return allPlayers;
+    }
+
+    private Map<String, Cards> getHitResults(Player dealer, Players players) {
+        Map<String, Cards> result = new LinkedHashMap<>();
+        result.put(dealer.getName(), dealer.getCards());
+        for (Player player : players.getPlayers()) {
+            result.put(player.getName(), player.getCards());
+        }
+        return result;
+    }
+
+    private Map<String, Cards> getCardStatus(Player dealer, Players players) {
+        Map<String, Cards> result = new LinkedHashMap<>();
+        result.put(dealer.getName(), dealer.getShowCards());
+        for (Player player : players.getPlayers()) {
+            result.put(player.getName(), player.getShowCards());
+        }
+        return result;
+    }
+
     private void initHit(Player dealer, Players players, Deck deck) {
         dealer.hit(deck.draw());
         dealer.hit(deck.draw());
@@ -38,20 +62,6 @@ public class BlackjackGame {
             player.hit(deck.draw());
             player.hit(deck.draw());
         }
-    }
-
-    private Map<String, List<CardDto>> getCardStatus(Player dealer, Players players) {
-        Map<String, List<CardDto>> cardStatus = new LinkedHashMap<>();
-        addCardDto(cardStatus, dealer);
-        List<Player> playerList = players.getPlayers();
-        for (Player player : playerList) {
-            addCardDto(cardStatus, player);
-        }
-        return cardStatus;
-    }
-
-    private void addCardDto(Map<String, List<CardDto>> cardStatus, Player player) {
-        cardStatus.put(player.getName(), toListCardDto(player));
     }
 
     private void playersHit(Players players, Deck deck) {
@@ -75,15 +85,7 @@ public class BlackjackGame {
         if (nowTurnPlayer.isBust()) {
             players.next();
         }
-        OutputView.printPresentStatus(nowTurnPlayer.getName(), toListCardDto(nowTurnPlayer),
-                nowTurnPlayer.getCards().calculateScore(),
-                nowTurnPlayer.isBust());
-    }
-
-    private List<CardDto> toListCardDto(Player player) {
-        return player.getViewCard().stream()
-                .map(card -> new CardDto(card.getDenomination().getName(), card.getSuit().getName()))
-                .collect(Collectors.toList());
+        OutputView.printPresentStatus(nowTurnPlayer);
     }
 
     private void dealerHit(Player dealer, Deck deck) {
@@ -93,32 +95,5 @@ public class BlackjackGame {
         while (((Dealer) dealer).checkHitFlag()) {
             dealer.hit(deck.draw());
         }
-    }
-
-    private Map<String, HitResultDto> getHitResults(Player dealer, Players players) {
-        Map<String, HitResultDto> hitResult = new LinkedHashMap<>();
-        putHitResult(hitResult, dealer);
-        for (Player player : players.getPlayers()) {
-            putHitResult(hitResult, player);
-        }
-        return hitResult;
-    }
-
-    private void putHitResult(Map<String, HitResultDto> hitResult, Player player) {
-        hitResult.put(player.getName(), new HitResultDto(toListCardDto(player), player.getCards().calculateScore()));
-    }
-
-    private List<WinDrawLoseDto> judgeWinDrawLose(Player dealer, Players players) {
-        WinDrawLose.judge(dealer, players);
-        return makeWinDrawLoseDto(dealer, players);
-    }
-
-    private List<WinDrawLoseDto> makeWinDrawLoseDto(Player dealer, Players players) {
-        List<WinDrawLoseDto> winDrawLoseDtos = new ArrayList<>();
-        winDrawLoseDtos.add(new WinDrawLoseDto(dealer.getName(), dealer.getWinDrawLoseString()));
-        for (Player player : players.getPlayers()) {
-            winDrawLoseDtos.add(new WinDrawLoseDto(player.getName(), player.getWinDrawLoseString()));
-        }
-        return winDrawLoseDtos;
     }
 }

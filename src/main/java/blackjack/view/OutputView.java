@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.dto.CardDto;
-import blackjack.domain.dto.HitResultDto;
-import blackjack.domain.dto.WinDrawLoseDto;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.gamer.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,37 +16,39 @@ public class OutputView {
     private static final String CARD_JOINING_DELIMITER = ", ";
     private static final String STATUS_DELIMITER = ": ";
 
-    public static void printInitCard(Map<String, List<CardDto>> cardStatus) {
+    public static void printInitCard(Map<String, Cards> cardStatus) {
         cardStatus.forEach((key, value) -> System.out.println(key + STATUS_DELIMITER + joinCardString(value)));
     }
 
-    public static void printPresentStatus(String name, List<CardDto> cards, int score, boolean isBust) {
+    public static void printPresentStatus(Player player) {
         System.out.println();
         StringBuilder messageBuilder = new StringBuilder(
-                String.format(WIN_DRAW_LOSE_STATUS_MESSAGE, name, joinCardString(cards)));
-        if (isBust) {
-            messageBuilder.append(String.format(PLAYER_BUST_MESSAGE, name, score));
+                String.format(WIN_DRAW_LOSE_STATUS_MESSAGE, player.getName(), joinCardString(player.getCards())));
+        if (player.isBust()) {
+            messageBuilder.append(
+                    String.format(PLAYER_BUST_MESSAGE, player.getName(), player.getCards().calculateScore()));
         }
         System.out.println(messageBuilder);
     }
 
-    public static void printHitResult(Map<String, HitResultDto> hitResults) {
+    public static void printHitResult(Map<String, Cards> hitResults) {
         System.out.println();
-        hitResults.forEach((playerName, hitResult) -> System.out.printf(HIT_RESULT_MESSAGE + "\n", playerName,
-                joinCardString(hitResult.getCards()), hitResult.getScore()));
+        hitResults.forEach((playerName, cards) -> System.out.printf(HIT_RESULT_MESSAGE + "\n", playerName,
+                joinCardString(cards), cards.calculateScore()));
     }
 
-    private static String joinCardString(List<CardDto> cards) {
-        return cards.stream()
-                .map(card -> card.getDenomination() + card.getSuit())
+    private static String joinCardString(Cards cards) {
+        return cards.getCards()
+                .stream()
+                .map(card -> card.getDenomination().getName() + card.getSuit().getName())
                 .collect(Collectors.joining(CARD_JOINING_DELIMITER));
     }
 
-    public static void printResult(List<WinDrawLoseDto> winDrawLoseResults) {
+    public static void printResult(List<Player> allPlayers) {
         System.out.println();
         System.out.println(TOTAL_RESULT_MESSAGE);
-        winDrawLoseResults.forEach(
-                winDrawLoseDto -> System.out.printf(WIN_DRAW_LOSE_STATUS_MESSAGE + "\n", winDrawLoseDto.getName(),
-                        winDrawLoseDto.getWinDrawLoseString()));
+        allPlayers.forEach(
+                player -> System.out.printf(WIN_DRAW_LOSE_STATUS_MESSAGE + "\n", player.getName(),
+                        player.getWinDrawLoseString()));
     }
 }
