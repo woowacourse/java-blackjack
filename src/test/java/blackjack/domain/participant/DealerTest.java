@@ -49,7 +49,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(generateCards());
         Card card = Card.of(FIVE, SPADE);
 
-        dealer.combine(card);
+        dealer.append(card);
 
         assertThat(dealer.getCards().size()).isEqualTo(3);
     }

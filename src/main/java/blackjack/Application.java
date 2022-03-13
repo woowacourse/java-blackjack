@@ -52,7 +52,7 @@ public class Application {
 
     private static void drawCard(Deck deck, Player player, PlayCommand playCommand) {
         if (playCommand == PlayCommand.YES) {
-            player.combine(deck.draw());
+            player.append(deck.draw());
             OutputView.printPlayerCardInfo(PlayerDto.from(player));
         }
     }
@@ -60,7 +60,7 @@ public class Application {
     private static void drawDealer(Deck deck, Dealer dealer) {
         while (dealer.isDrawable()) {
             OutputView.printDealerDrawableInfo();
-            dealer.combine(deck.draw());
+            dealer.append(deck.draw());
         }
     }
 

@@ -53,7 +53,7 @@ public class PlayerTest {
         Player player = new Player(name, cards);
         Card card = Card.of(FIVE, SPADE);
 
-        player.combine(card);
+        player.append(card);
 
         assertThat(player.getCards().size()).isEqualTo(3);
     }

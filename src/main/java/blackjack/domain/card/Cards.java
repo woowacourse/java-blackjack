@@ -30,7 +30,7 @@ public class Cards {
         return totalScore;
     }
 
-    public void combine(Card card) {
+    public void append(Card card) {
         value.add(card);
     }
 

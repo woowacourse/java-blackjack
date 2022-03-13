@@ -21,8 +21,8 @@ public abstract class Participant {
         return cards.calculateTotalScore();
     }
 
-    public void combine(Card card) {
-        cards.combine(card);
+    public void append(Card card) {
+        cards.append(card);
     }
 
     public abstract boolean isDrawable();
