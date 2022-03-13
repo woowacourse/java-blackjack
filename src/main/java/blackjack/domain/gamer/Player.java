@@ -2,8 +2,6 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.result.BlackJackResult;
 
-import static blackjack.domain.gamer.Gamers.MAX_CARD_VALUE;
-
 public class Player extends Gamer{
 
     public Player(String name) {

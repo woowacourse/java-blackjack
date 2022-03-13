@@ -5,7 +5,6 @@ import blackjack.domain.card.Deck;
 import java.util.*;
 
 public class Gamers {
-    public static final int MAX_CARD_VALUE = 21;
     private static final int INIT_DISTRIBUTION_COUNT = 2;
     private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
     private static final String NOT_EXIST_PLAYER_ERROR = "플레이어가 존재하지 않습니다.";
@@ -22,6 +21,13 @@ public class Gamers {
         validateDuplicationNames(names);
         for (String name : names) {
             players.add(new Player(name));
+        }
+    }
+
+    private void validateDuplicationNames(List<String> names) {
+        Set<String> duplicationCheck = new HashSet<>(names);
+        if (duplicationCheck.size() != names.size()) {
+            throw new IllegalArgumentException(DUPLICATION_NAME_ERROR);
         }
     }
 
@@ -46,10 +52,6 @@ public class Gamers {
         return dealer;
     }
 
-    public int getDealerCardSize() {
-        return dealer.getCardsSize();
-    }
-
     public void distributeCardToPlayer(String name, Deck deck) {
         findPlayerByName(name).addCard(deck.draw());
     }
@@ -70,10 +72,7 @@ public class Gamers {
         return Collections.unmodifiableList(players);
     }
 
-    private void validateDuplicationNames(List<String> names) {
-        Set<String> duplicationCheck = new HashSet<>(names);
-        if (duplicationCheck.size() != names.size()) {
-            throw new IllegalArgumentException(DUPLICATION_NAME_ERROR);
-        }
+    public int getDealerCardSize() {
+        return dealer.getCardsSize();
     }
 }

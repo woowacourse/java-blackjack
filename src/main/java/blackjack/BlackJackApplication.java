@@ -10,18 +10,18 @@ public class BlackJackApplication {
 
     public static void main(String[] args) {
         List<String> names = InputView.getNames();
-        BlackJackGame controller = new BlackJackGame(names);
+        BlackJackGame blackJackGame = new BlackJackGame(names);
 
-        OutputView.printFirstCards(controller.getDealer(), controller.getPlayers());
+        OutputView.printFirstCards(blackJackGame.getDealer(), blackJackGame.getPlayers());
 
-        drawAdditionalCard(names, controller);
+        drawAdditionalCard(names, blackJackGame);
 
-        printAddtionalDrawDealr(controller);
-        OutputView.printFinalCards(controller.getDealer(), controller.getPlayers());
-        OutputView.printFinalResult(controller.createResult());
+        printAdditionalDrawDealer(blackJackGame);
+        OutputView.printFinalCards(blackJackGame.getDealer(), blackJackGame.getPlayers());
+        OutputView.printFinalResult(blackJackGame.createResult());
     }
 
-    private static void printAddtionalDrawDealr(BlackJackGame controller) {
+    private static void printAdditionalDrawDealer(BlackJackGame controller) {
         controller.distributeAdditionalToDealer();
         OutputView.printAdditionalDrawDealer(controller.getDealerCardSize());
     }
@@ -32,10 +32,10 @@ public class BlackJackApplication {
         }
     }
 
-    private static void drawCardToPlayer(BlackJackGame controller, String name) {
-        while (controller.isDrawPossible(name, InputView::getAnswerOfAdditionalDraw)) {
-            controller.distributeCardToPlayer(name);
-            Player playerDtoByName = controller.findPlayerByName(name);
+    private static void drawCardToPlayer(BlackJackGame blackJackGame, String name) {
+        while (blackJackGame.isDrawPossible(name, InputView::getAnswerOfAdditionalDraw)) {
+            blackJackGame.distributeCardToPlayer(name);
+            Player playerDtoByName = blackJackGame.findPlayerByName(name);
             OutputView.printPlayerCard(playerDtoByName);
         }
     }

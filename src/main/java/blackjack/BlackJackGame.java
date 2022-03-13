@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 
 public class BlackJackGame {
-
     private final Deck deck;
+
     private final Gamers gamers;
 
     public BlackJackGame(List<String> names) {
@@ -26,22 +26,6 @@ public class BlackJackGame {
         gamers.distributeAdditionalToDealer(deck);
     }
 
-    public int getDealerCardSize() {
-        return gamers.getDealerCardSize();
-    }
-
-    public void distributeCardToPlayer(String name) {
-        gamers.distributeCardToPlayer(name, deck);
-    }
-
-    public boolean isDrawPossible(String name, UnaryOperator<String> operator) {
-        return !gamers.isBurst(name) && Answer.from(operator.apply(name)).isYes();
-    }
-
-    public BlackJackReferee createResult() {
-        return new BlackJackReferee(gamers.getPlayers(), gamers.getDealer());
-    }
-
     public Dealer getDealer() {
         return gamers.getDealer();
     }
@@ -50,7 +34,23 @@ public class BlackJackGame {
         return gamers.getPlayers();
     }
 
+    public boolean isDrawPossible(String name, UnaryOperator<String> operator) {
+        return !gamers.isBurst(name) && Answer.from(operator.apply(name)).isYes();
+    }
+
+    public void distributeCardToPlayer(String name) {
+        gamers.distributeCardToPlayer(name, deck);
+    }
+
     public Player findPlayerByName(String name) {
         return gamers.findPlayerByName(name);
+    }
+
+    public int getDealerCardSize() {
+        return gamers.getDealerCardSize();
+    }
+
+    public BlackJackReferee createResult() {
+        return new BlackJackReferee(gamers.getPlayers(), gamers.getDealer());
     }
 }
