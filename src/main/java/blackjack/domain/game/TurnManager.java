@@ -46,4 +46,12 @@ public class TurnManager {
             turnIndex++;
         }
     }
+
+    public boolean isCurrentPlayerCanHit() {
+        return getCurrentPlayer().canHit();
+    }
+
+    public String getCurrentPlayerName() {
+        return getCurrentPlayer().getName();
+    }
 }

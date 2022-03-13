@@ -23,9 +23,13 @@ public class GameResult {
 
     public void update(WinningStrategy winningStrategy) {
         for (Player player : playerResult.keySet()) {
-            if (playerResult.get(player) == WinningResult.NONE) {
-                playerResult.put(player, winningStrategy.getResult(dealer, player));
-            }
+            changePlayerResult(player, winningStrategy);
+        }
+    }
+
+    private void changePlayerResult(Player player, WinningStrategy winningStrategy) {
+        if (playerResult.get(player) == WinningResult.NONE) {
+            playerResult.put(player, winningStrategy.getResult(dealer, player));
         }
     }
 

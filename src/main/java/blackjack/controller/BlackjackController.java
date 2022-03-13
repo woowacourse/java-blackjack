@@ -1,12 +1,10 @@
 package blackjack.controller;
 
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.GameResult;
 import blackjack.domain.game.TurnManager;
-import blackjack.domain.game.WinningResult;
 import blackjack.domain.game.winningstrategy.BlackjackWinningStrategy;
 import blackjack.domain.game.winningstrategy.FinalWinningStrategy;
 import blackjack.domain.game.winningstrategy.PlayingWinningStrategy;
@@ -18,8 +16,10 @@ import blackjack.view.OutputView;
 public class BlackjackController {
 
     public void run() {
-        BlackjackGame blackjackGame = new BlackjackGame(createParticipants());
-        GameResult gameResult = new GameResult(blackjackGame.getParticipants());
+        Participants participants = createParticipants();
+        BlackjackGame blackjackGame = new BlackjackGame(participants);
+        GameResult gameResult = new GameResult(participants);
+
         dealInitialCards(blackjackGame, gameResult);
         dealMoreCards(blackjackGame, gameResult);
         printResult(blackjackGame.getParticipants(), gameResult);
@@ -55,7 +55,7 @@ public class BlackjackController {
 
     private void dealMoreCardsToPlayer(BlackjackGame blackjackGame, TurnManager turnManager) {
         boolean printCheck = false;
-        while (canHitAndIsHit(turnManager)) {
+        while (checkCanHitAndInputHit(turnManager)) {
             blackjackGame.playPlayerTurn(turnManager);
             OutputView.printPlayerCardInformation(turnManager.getCurrentPlayer());
             printCheck = true;
@@ -65,9 +65,9 @@ public class BlackjackController {
         }
     }
 
-    private boolean canHitAndIsHit(TurnManager turnManager) {
-        Player currentPlayer = turnManager.getCurrentPlayer();
-        return currentPlayer.canHit() && InputView.inputPlayerHit(currentPlayer.getName());
+    private boolean checkCanHitAndInputHit(TurnManager turnManager) {
+        return turnManager.isCurrentPlayerCanHit()
+            && InputView.inputPlayerHit(turnManager.getCurrentPlayerName());
     }
 
     private void dealMoreCardsToDealer(BlackjackGame blackjackGame) {
@@ -79,11 +79,7 @@ public class BlackjackController {
 
     private void printResult(Participants participants, GameResult gameResult) {
         OutputView.printCardsAndPoint(participants);
-
-        Map<WinningResult, Integer> dealerResult = gameResult.getDealerResult();
-        Map<Player, WinningResult> playerResult = gameResult.getPlayerResult();
-
-        OutputView.printResult(dealerResult, playerResult);
+        OutputView.printResult(gameResult.getDealerResult(), gameResult.getPlayerResult());
     }
 }
 
