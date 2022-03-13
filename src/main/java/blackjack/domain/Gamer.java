@@ -37,5 +37,4 @@ public abstract class Gamer {
     public Cards getCards() {
         return cards;
     }
-
 }

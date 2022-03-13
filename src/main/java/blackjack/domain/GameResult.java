@@ -27,5 +27,4 @@ public enum GameResult {
     public String getValue() {
         return value;
     }
-
 }
