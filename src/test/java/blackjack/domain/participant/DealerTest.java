@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.NoShuffleDeck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.PlayStatus;
@@ -20,7 +21,7 @@ class DealerTest {
     void drawCards_BUST() {
         // give
         Dealer dealer = new Dealer();
-        CardDeck cardDeck = CardDeck.createNoShuffle();
+        CardDeck cardDeck = new CardDeck(new NoShuffleDeck());
         List<Card> cards = List.of(new Card(DIAMOND, QUEEN), new Card(CLUB, FIVE));
         dealer.init(cards);
 
@@ -37,7 +38,7 @@ class DealerTest {
     void drawCards_NOT_BUST() {
         // give
         Dealer dealer = new Dealer();
-        CardDeck cardDeck = CardDeck.createNoShuffle();
+        CardDeck cardDeck = new CardDeck(new NoShuffleDeck());
         dealer.init(cardDeck);
 
         // when
@@ -53,7 +54,7 @@ class DealerTest {
     void openCard() {
         // give
         Dealer dealer = new Dealer();
-        CardDeck cardDeck = CardDeck.createNoShuffle();
+        CardDeck cardDeck = new CardDeck(new NoShuffleDeck());
         dealer.init(cardDeck);
 
         // when

@@ -20,7 +20,7 @@ public class GameTest {
     @DisplayName("게임을 초기화 한다.")
     void initGame() {
         // give
-        Game game = new Game(CardDeck.createNoShuffle(), List.of("pobi", "rick"));
+        Game game = new Game(new CardDeck(new NoShuffleDeck()), List.of("pobi", "rick"));
 
         // when
         // final int actual = game.getRemainAmount();
@@ -34,7 +34,7 @@ public class GameTest {
     @DisplayName("모든 참가자에게 카드를 2장씩 분배한다.")
     void initParticipants() {
         // give
-        Game game = new Game(CardDeck.createNoShuffle(), List.of("pobi", "jason"));
+        Game game = new Game(new CardDeck(new NoShuffleDeck()), List.of("pobi", "jason"));
 
         // when
         List<Integer> actual = new ArrayList<>();
@@ -53,7 +53,7 @@ public class GameTest {
     @DisplayName("상태가 HIT이면 플레이어가 카드를 1장 뽑는다.")
     void drawCard_HIT(PlayStatus playStatus, int expected) {
         // give
-        Game game = new Game(CardDeck.createNoShuffle(), List.of("pobi"));
+        Game game = new Game(new CardDeck(new NoShuffleDeck()), List.of("pobi"));
         Player player = game.getPlayers().get(0);
 
         // when
@@ -68,7 +68,7 @@ public class GameTest {
     @DisplayName("딜러의 턴을 진행한다")
     void drawDealerCard() {
         // give
-        Game game = new Game(CardDeck.createNoShuffle(), List.of("pobi"));
+        Game game = new Game(new CardDeck(new NoShuffleDeck()), List.of("pobi"));
 
         // when
         game.drawDealerCards();
