@@ -14,6 +14,7 @@ public enum Match {
     ;
 
     private static final String NOTHING_MATCH_RESULT_MESSAGE = "결과를 찾을 수 없습니다.";
+
     private final String result;
     private final String oppositeResult;
     private final BiFunction<Integer, Integer, Boolean> expression;
@@ -50,19 +51,13 @@ public enum Match {
         if (playerPoint > dealerPoint && playerPoint <= GUEST_LIMIT_POINT) {
             return true;
         }
-        if (dealerPoint > GUEST_LIMIT_POINT && playerPoint <= GUEST_LIMIT_POINT) {
-            return true;
-        }
-        return false;
+        return dealerPoint > GUEST_LIMIT_POINT && playerPoint <= GUEST_LIMIT_POINT;
     }
 
     private static boolean losePlayerCondition(Integer playerPoint, Integer dealerPoint) {
         if (playerPoint < dealerPoint && dealerPoint <= GUEST_LIMIT_POINT) {
             return true;
         }
-        if (playerPoint > GUEST_LIMIT_POINT) {
-            return true;
-        }
-        return false;
+        return playerPoint > GUEST_LIMIT_POINT;
     }
 }

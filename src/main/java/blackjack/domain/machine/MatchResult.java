@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MatchResult {
+
     private final Map<Match, Integer> match = new LinkedHashMap<>();
 
     public MatchResult addMatchResult(Match result) {

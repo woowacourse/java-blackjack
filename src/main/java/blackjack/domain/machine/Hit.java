@@ -1,7 +1,5 @@
 package blackjack.domain.machine;
 
-import java.util.Arrays;
-
 public enum Hit {
 
     Y("y"),

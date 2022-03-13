@@ -8,6 +8,7 @@ import java.util.Set;
 public class Deck {
 
     private static final int BONUS_ACE_POINT = 10;
+
     private final Set<Card> cards = new LinkedHashSet<>();
 
     public void addCard(Card card) {
