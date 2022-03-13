@@ -2,9 +2,7 @@ package controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-import domain.card.Card;
 import domain.card.Deck;
 import domain.card.deckstrategy.GeneralGenerationDeckStrategy;
 import domain.participant.Dealer;
@@ -46,13 +44,6 @@ public class Controller {
 			OutputView.printErrorMessage(e.getMessage());
 			return makeNames();
 		}
-	}
-
-	private List<List<Card>> generateInitCardsForPlayers(List<Name> names, Deck deck) {
-		List<List<Card>> initCardForPlayers = IntStream.range(0, names.size())
-			.mapToObj(i -> deck.generateInitCards())
-			.collect(Collectors.toList());
-		return initCardForPlayers;
 	}
 
 	private List<Player> makePlayers(List<Name> names, Deck deck) {
