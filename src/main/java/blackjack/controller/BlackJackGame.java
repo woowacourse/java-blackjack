@@ -16,7 +16,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class BlackJackGame {
@@ -46,8 +45,9 @@ public class BlackJackGame {
     }
 
     public void spreadCards(List<Player> gamblers, Player dealer, CardDeck cardDeck) {
-        IntStream.range(DEFAULT_SPREAD_COUNT_START_INDEX, DEFAULT_SPREAD_COUNT_END_INDEX)
-            .forEach(i -> spreadCard(gamblers, dealer, cardDeck));
+        for (int i = DEFAULT_SPREAD_COUNT_START_INDEX; i < DEFAULT_SPREAD_COUNT_END_INDEX; i++) {
+            spreadCard(gamblers, dealer, cardDeck);
+        }
         printSpreadCards(dealer, gamblers);
     }
 
