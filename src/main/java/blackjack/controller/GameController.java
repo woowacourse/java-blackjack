@@ -12,6 +12,7 @@ import blackjack.domain.RecordFactory;
 import blackjack.domain.card.CardCount;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.PlayStatus;
+import blackjack.domain.card.deckstrategy.RandomDeck;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -31,7 +32,7 @@ public class GameController {
 
     private Game initPlay() {
         List<String> names = InputView.requestPlayerNames();
-        Game game = new Game(CardDeck.create(), names);
+        Game game = new Game(new CardDeck(new RandomDeck()), names);
 
         OutputView.printInitResult(names);
         OutputView.printDealerFirstCard(game.dealerFirstCard());
