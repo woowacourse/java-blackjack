@@ -17,17 +17,19 @@ public class Dealer extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Dealer dealer = (Dealer) o;
-
-        return cards != null ? cards.equals(dealer.cards) : dealer.cards == null;
+    public boolean isWin(Player guest, Player dealer) {
+        int points = cards.sumPoints();
+        if (guest.isLose(points) && points <= Match.MAX_WINNER_POINT) {
+            return true;
+        }
+        if (guest.isOverLimit() && points <= Match.MAX_WINNER_POINT) {
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public int hashCode() {
-        return cards != null ? cards.hashCode() : 0;
+    public boolean isDraw(Player guest) {
+        return cards.sumPoints() == guest.getDeck().sumPoints();
     }
 }

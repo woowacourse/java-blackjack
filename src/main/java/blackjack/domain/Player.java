@@ -8,6 +8,12 @@ public interface Player {
 
     boolean isDealer();
 
+    boolean isWin(Player guest, Player dealer);
+
+    boolean isLose(int point);
+
+    boolean isDraw(Player competitor);
+
     String getName();
 
     Deck getDeck();

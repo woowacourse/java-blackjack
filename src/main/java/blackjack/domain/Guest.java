@@ -15,17 +15,19 @@ public class Guest extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Guest guest = (Guest) o;
-
-        return cards != null ? cards.equals(guest.cards) : guest.cards == null;
+    public boolean isWin(Player guest, Player dealer) {
+        int points = cards.sumPoints();
+        if (dealer.isLose(points) && points <= Match.MAX_WINNER_POINT) {
+            return true;
+        }
+        if (dealer.isOverLimit() && points <= Match.MAX_WINNER_POINT) {
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public int hashCode() {
-        return cards != null ? cards.hashCode() : 0;
+    public boolean isDraw(Player dealer) {
+        return cards.sumPoints() == dealer.getDeck().sumPoints();
     }
 }

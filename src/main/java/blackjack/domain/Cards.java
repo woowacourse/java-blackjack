@@ -37,4 +37,19 @@ public class Cards {
             allCard.add(new Card(suit, symbol));
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cards cards1 = (Cards) o;
+
+        return cards != null ? cards.equals(cards1.cards) : cards1.cards == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return cards != null ? cards.hashCode() : 0;
+    }
 }

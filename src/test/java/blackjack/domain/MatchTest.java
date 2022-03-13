@@ -8,15 +8,21 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class MatchTest {
 
+
     @ParameterizedTest
-    @CsvSource(value = {
-            "21:20:WIN", "20:22:WIN",
-            "21:21:DRAW",
-            "22:20:LOSE", "20:21:LOSE", "23:22:LOSE", "23:23:LOSE", "23:24:LOSE"}
+    @CsvSource(value = {"SPADE:CLUB:ACE:JACK:WIN", "CLUB:SPADE:ACE:ACE:DRAW"}
             , delimiter = ':')
     @DisplayName("게스트 승무패 결정 로직 확인")
-    public void checkGuestFindWinner(int playerPoint, int dealerPoint, Match result) {
-        assertThat(Match.findWinner(playerPoint, dealerPoint)).isEqualTo(result);
+    public void checkGuestFindWinner(Suit suit, Suit secondSuit, Symbols symbol, Symbols secondSymbol, Match result) {
+        Player guest = new Guest("green");
+        guest.addCard(new Card(suit, symbol));
+        guest.addCard(new Card(secondSuit, secondSymbol));
+
+        Player dealer = new Dealer();
+        dealer.addCard(new Card(suit, secondSymbol));
+        dealer.addCard(new Card(secondSuit, secondSymbol));
+
+        assertThat(Match.findWinner(guest, dealer)).isEqualTo(result);
     }
 
     @ParameterizedTest
