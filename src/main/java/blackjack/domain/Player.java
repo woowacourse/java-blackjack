@@ -24,6 +24,6 @@ public class Player extends Gamer {
             return GameResult.WIN;
         }
 
-        return GameResult.of(dealer.getMinusScore(getTotalScore()));
+        return GameResult.of(getTotalScore(),dealer.getTotalScore());
     }
 }

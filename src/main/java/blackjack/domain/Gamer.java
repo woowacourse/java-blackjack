@@ -26,10 +26,6 @@ public abstract class Gamer {
         return getTotalScore() > BLACKJACK_SCORE;
     }
 
-    public int getMinusScore(int targetScore) {
-        return targetScore - getTotalScore();
-    }
-
     abstract GameResult createResult(Gamer gamer);
 
     abstract boolean canHit();
