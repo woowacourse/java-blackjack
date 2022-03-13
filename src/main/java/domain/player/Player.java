@@ -44,9 +44,10 @@ public abstract class Player {
 
     @Override
     public String toString() {
-        return "Player{" +
-                "name='" + name + '\'' +
-                ", cards=" + cards +
-                '}';
+        final StringBuilder sb = new StringBuilder("Player{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", cards=").append(cards);
+        sb.append('}');
+        return sb.toString();
     }
 }

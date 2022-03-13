@@ -52,9 +52,10 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
-                "suit=" + suit +
-                ", denomination=" + denomination +
-                '}';
+        final StringBuilder sb = new StringBuilder("Card{");
+        sb.append("suit=").append(suit);
+        sb.append(", denomination=").append(denomination);
+        sb.append('}');
+        return sb.toString();
     }
 }
