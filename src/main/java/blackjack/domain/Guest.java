@@ -2,9 +2,16 @@ package blackjack.domain;
 
 public class Guest extends AbstractPlayer implements Player {
 
+    public static final int MAX_POINT = 21;
+
     public Guest(String name) {
         this.cards = new Deck();
         this.name = name;
+    }
+
+    @Override
+    public boolean isOverLimit() {
+        return cards.sumPoints() > MAX_POINT;
     }
 
     @Override

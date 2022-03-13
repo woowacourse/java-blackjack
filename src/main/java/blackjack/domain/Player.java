@@ -4,7 +4,7 @@ public interface Player {
 
     void addCard(Card card);
 
-    boolean isOverLimit(int limit);
+    boolean isOverLimit();
 
     boolean isDealer();
 

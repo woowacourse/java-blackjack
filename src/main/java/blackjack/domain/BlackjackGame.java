@@ -51,12 +51,12 @@ public class BlackjackGame {
     }
 
     public boolean checkGetMoreCard(Player player) {
-        return !player.isOverLimit(Match.MAX_WINNER_POINT);
+        return !player.isOverLimit();
     }
 
     public void turnDealer(BlackjackController blackjackController) {
         Player dealer = blackjackPlayers.getDealer();
-        if (!dealer.isOverLimit(Dealer.MAX_POINT)) {
+        if (!dealer.isOverLimit()) {
             blackjackController.announceDealerCanGetMoreCard();
             addCard(dealer);
             return;

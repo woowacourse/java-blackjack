@@ -12,6 +12,11 @@ public class Dealer extends AbstractPlayer implements Player {
     }
 
     @Override
+    public boolean isOverLimit() {
+        return cards.sumPoints() > MAX_POINT;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
