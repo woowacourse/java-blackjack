@@ -15,6 +15,8 @@ import java.util.List;
 
 public class BlackJackController {
 
+    public static final int INIT_DISTRIBUTE_NUM = 2;
+
     public void play() {
         Users users = new Users(InputView.inputUsersName());
         Dealer dealer = new Dealer();
@@ -39,7 +41,7 @@ public class BlackJackController {
     }
 
     private void cardDistribute(Deck deck, Participant participant) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < INIT_DISTRIBUTE_NUM; i++) {
             participant.receiveCard(deck.drawCard());
         }
     }
@@ -64,7 +66,6 @@ public class BlackJackController {
             dealer.receiveCard(deck.drawCard());
         }
     }
-
 
     private void gameResult(Users users, Dealer dealer) {
         OutputView.printFinalCard(dealer.getDealerInfoWithScore(), users.getUsersInfoWithScore());
