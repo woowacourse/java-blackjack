@@ -36,7 +36,7 @@ public class Cards {
 
     private int addAceScore(int score) {
         long countAce = deck.stream()
-                .filter(card -> card.getNumber().getDenomination().equals("A"))
+                .filter(Card::containsAce)
                 .count();
 
         for (int i = 0; i < countAce; i++) {

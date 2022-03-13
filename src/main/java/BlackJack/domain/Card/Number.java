@@ -31,4 +31,7 @@ public enum Number {
         return value;
     }
 
+    public boolean isAce(){
+        return "A".equals(denomination);
+    }
 }

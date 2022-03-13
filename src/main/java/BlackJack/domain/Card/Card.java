@@ -18,4 +18,8 @@ public class Card {
         return number;
     }
 
+    public boolean containsAce(){
+        return number.isAce();
+    }
+
 }
