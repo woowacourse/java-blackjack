@@ -1,6 +1,7 @@
 package blackJack.domain.card;
 
 public enum Denomination {
+    ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),
@@ -12,8 +13,7 @@ public enum Denomination {
     TEN(10, "10"),
     JACK(10, "J"),
     QUEEN(10, "Q"),
-    KING(10, "K"),
-    ACE(11, "A");
+    KING(10, "K");
 
     private final int score;
     private final String denomination;
