@@ -1,8 +1,18 @@
 package blackJack.domain.card;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Card {
+
+    private static final List<Card> CARDS = new ArrayList<>();
+    
+    static {
+        for (Symbol value : Symbol.values()) {
+            createSymbolCards(value);
+        }
+    }
 
     private final Symbol symbol;
     private final Denomination denomination;
@@ -10,6 +20,16 @@ public class Card {
     public Card(Symbol symbol, Denomination denomination) {
         this.symbol = symbol;
         this.denomination = denomination;
+    }
+
+    private static void createSymbolCards(Symbol value) {
+        for (Denomination denomination : Denomination.values()) {
+            CARDS.add(new Card(value, denomination));
+        }
+    }
+
+    public static List<Card> createNewCards() {
+        return new ArrayList<>(CARDS);
     }
 
     public String getSymbolName() {
