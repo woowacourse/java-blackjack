@@ -11,10 +11,10 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackJackGameController {
-	private final InputView inputView;
-	private final OutputView outputView;
 	private static final String NO_UPPERCASE = "N";
 	private static final String NO_LOWERCASE = "n";
+	private final InputView inputView;
+	private final OutputView outputView;
 
 	public BlackJackGameController(InputView inputView, OutputView outputView) {
 		this.inputView = inputView;
