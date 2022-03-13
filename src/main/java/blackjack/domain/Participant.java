@@ -30,7 +30,7 @@ public abstract class Participant {
         return getScore() > BURST_THRESHOLD_NUMBER;
     }
 
-    public boolean isMoreThanThreshold() {
+    public boolean isMoreOrEqualThanThreshold() {
         return getScore() >= BURST_THRESHOLD_NUMBER;
     }
 
