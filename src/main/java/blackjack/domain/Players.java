@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -20,6 +19,6 @@ public class Players {
     }
 
     public List<Player> getValue() {
-        return Collections.unmodifiableList(value);
+        return List.copyOf(value);
     }
 }
