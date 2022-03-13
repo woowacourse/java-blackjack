@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.HitFlag;
 import blackjack.domain.card.Deck;
-import blackjack.domain.player.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

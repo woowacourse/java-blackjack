@@ -1,15 +1,11 @@
 package blackjack.domain.player;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.HitFlag;
 import blackjack.domain.card.Deck;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Guest;
-import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
