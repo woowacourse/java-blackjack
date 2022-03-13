@@ -8,7 +8,7 @@ public class FinalWinningStrategy implements WinningStrategy {
 
     @Override
     public WinningResult getResult(Dealer dealer, Player player) {
-        if (dealer.isBurst() || (dealer.getScore() < player.getScore())) {
+        if (dealer.isBust() || (dealer.getScore() < player.getScore())) {
             return WinningResult.WIN;
         }
         if (dealer.getScore() > player.getScore()) {

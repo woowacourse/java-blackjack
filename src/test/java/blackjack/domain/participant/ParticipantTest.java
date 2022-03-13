@@ -47,7 +47,7 @@ class ParticipantTest {
 
         participant.addCard(new Card(Suit.DIAMOND, Denomination.FIVE));
 
-        assertThat(participant.isBurst()).isTrue();
+        assertThat(participant.isBust()).isTrue();
     }
 
     @Test
@@ -58,6 +58,6 @@ class ParticipantTest {
         participant.initCards(List.of(new Card(Suit.DIAMOND, Denomination.TEN),
             new Card(Suit.HEART, Denomination.JACK)));
 
-        assertThat(participant.isBurst()).isFalse();
+        assertThat(participant.isBust()).isFalse();
     }
 }

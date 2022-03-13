@@ -29,8 +29,8 @@ public class GameResult {
         }
     }
 
-    public boolean isPlayerTurnEnd(Player player) {
-        return playerResult.get(player) != WinningResult.NONE;
+    public boolean isDealerBlackjack() {
+        return dealer.isBlackjack();
     }
 
     public Map<Player, WinningResult> getPlayerResult() {

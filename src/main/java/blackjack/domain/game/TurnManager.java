@@ -13,12 +13,13 @@ public class TurnManager {
     private final List<Player> players;
     private int turnIndex;
 
-    public TurnManager(List<Player> players, GameResult gameResult) {
-        turnIndex = DEFAULT_TURN_INDEX;
+    public TurnManager(List<Player> players, boolean isDealerBlackjack) {
         this.players = new ArrayList<>(players);
-        while (!isEndAllTurn() && gameResult.isPlayerTurnEnd(getCurrentPlayer())) {
-            turnIndex++;
+        if (isDealerBlackjack) {
+            turnIndex = players.size();
+            return;
         }
+        turnIndex = DEFAULT_TURN_INDEX;
     }
 
     public boolean isEndAllTurn() {
@@ -36,11 +37,12 @@ public class TurnManager {
         }
     }
 
-    public void turnToNext(GameResult gameResult) {
+    public void turnToNext() {
         if (!isEndAllTurn()) {
             turnIndex++;
         }
-        while (!isEndAllTurn() && gameResult.isPlayerTurnEnd(getCurrentPlayer())) {
+        while (!isEndAllTurn()
+            && (getCurrentPlayer().isBust() || getCurrentPlayer().isBlackjack())) {
             turnIndex++;
         }
     }

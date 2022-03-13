@@ -8,7 +8,7 @@ public class PlayingWinningStrategy implements WinningStrategy {
 
     @Override
     public WinningResult getResult(Dealer dealer, Player player) {
-        if (player.isBurst()) {
+        if (player.isBust()) {
             return WinningResult.LOSE;
         }
         return WinningResult.NONE;

@@ -7,6 +7,6 @@ public class Player extends Participant {
     }
 
     public boolean canHit() {
-        return !isBurst();
+        return !isBust();
     }
 }

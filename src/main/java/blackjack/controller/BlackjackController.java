@@ -45,10 +45,11 @@ public class BlackjackController {
     }
 
     private void dealMoreCardsToPlayers(BlackjackGame blackjackGame, GameResult gameResult) {
-        TurnManager turnManager = new TurnManager(blackjackGame.getParticipants().getPlayers(), gameResult);
+        TurnManager turnManager = new TurnManager(blackjackGame.getParticipants().getPlayers(),
+            gameResult.isDealerBlackjack());
         while (!turnManager.isEndAllTurn()) {
             dealMoreCardsToPlayer(blackjackGame, turnManager);
-            turnManager.turnToNext(gameResult);
+            turnManager.turnToNext();
         }
     }
 

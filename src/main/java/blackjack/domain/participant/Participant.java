@@ -30,7 +30,7 @@ public class Participant {
         cards.addCard(card);
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return getScore() > BUST_THRESHOLD_NUMBER;
     }
 
