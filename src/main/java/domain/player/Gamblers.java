@@ -2,6 +2,7 @@ package domain.player;
 
 import static java.util.stream.Collectors.joining;
 
+import domain.card.CardDeck;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,13 +23,19 @@ public class Gamblers {
         }
     }
 
-    public List<Gambler> getGamblers() {
-        return gamblers;
+    public void addCard(CardDeck cardDeck) {
+        for (Gambler gambler : this.gamblers) {
+            gambler.addCard(cardDeck.getCard());
+        }
     }
 
     public String getGamblerNames() {
         return gamblers.stream()
                 .map(Gambler::getName)
                 .collect(joining(GAMBLER_NAMES_JOIN_CHARACTER));
+    }
+
+    public List<Gambler> getGamblers() {
+        return gamblers;
     }
 }

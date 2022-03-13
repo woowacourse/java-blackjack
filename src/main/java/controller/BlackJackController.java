@@ -37,12 +37,10 @@ public class BlackJackController {
     }
 
     private void spreadCards(CardDeck cardDeck, Dealer dealer, Gamblers gamblers) {
-        gamblers.getGamblers()
-                .forEach(gambler -> gambler.addCard(cardDeck.getCard()));
+        gamblers.addCard(cardDeck);
         dealer.addCard(cardDeck.getCard());
 
-        gamblers.getGamblers()
-                .forEach(gambler -> gambler.addCard(cardDeck.getCard()));
+        gamblers.addCard(cardDeck);
         dealer.addCard(cardDeck.getCard());
 
         printCardsAfterInitialSpread(dealer, gamblers);
