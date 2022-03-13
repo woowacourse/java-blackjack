@@ -8,26 +8,24 @@ import static java.util.stream.Collectors.toUnmodifiableMap;
 import blackjack.model.blackjack.Records;
 import blackjack.model.blackjack.Result;
 import blackjack.model.card.Card;
-import blackjack.model.cards.Cards;
-import blackjack.model.cards.Score;
-import blackjack.model.cards.ScoreCards;
+import blackjack.model.score.MaxScoreCalculator;
+import blackjack.model.score.Score;
 import java.util.Map;
 
 public final class Dealer extends Player {
 
+    private static final MaxScoreCalculator CALCULATOR = new MaxScoreCalculator();
     private static final Name NAME = new Name("딜러");
     private static final Score HIT_BOUNDARY = new Score(17);
     private static final int OPEN_CARD_COUNT = 1;
 
-    private final ScoreCards cards;
 
     public Dealer(Card card1, Card card2, Card... cards) {
-        this(Cards.of(card1, card2, cards));
+        this(new Cards(card1, card2, cards));
     }
 
-    private Dealer(Cards ownCards) {
-        super(NAME, ownCards);
-        this.cards = Cards.maxScoreCards(ownCards);
+    private Dealer(Cards handCards) {
+        super(NAME, handCards);
     }
 
     public Records matchAll(Players players) {
@@ -64,6 +62,6 @@ public final class Dealer extends Player {
 
     @Override
     public boolean isHittable() {
-        return cards.lessThan(HIT_BOUNDARY);
+        return CALCULATOR.calculate(cards()).lessThan(HIT_BOUNDARY);
     }
 }

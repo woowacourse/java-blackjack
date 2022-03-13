@@ -1,25 +1,25 @@
 package blackjack.model.player;
 
 import blackjack.model.card.Card;
-import blackjack.model.cards.Cards;
-import blackjack.model.cards.Score;
-import blackjack.model.cards.ScoreCards;
+import blackjack.model.score.BestScoreCalculator;
+import blackjack.model.score.Score;
 
 public class Player {
 
+    private static final BestScoreCalculator CALCULATOR = new BestScoreCalculator();
     private static final Score HIT_BOUNDARY = new Score(21);
     private static final int OPEN_CARD_COUNT = 2;
 
-    private final ScoreCards cards;
+    private final Cards cards;
     private final Name name;
 
     public Player(Name name, Card card1, Card card2, Card... cards) {
-        this(name, Cards.of(card1, card2, cards));
+        this(name, new Cards(card1, card2, cards));
     }
 
     protected Player(Name name, Cards cards) {
         this.name = name;
-        this.cards = Cards.bestScoreCards(cards);
+        this.cards = cards;
     }
 
     public final Name name() {
@@ -31,7 +31,7 @@ public class Player {
     }
 
     public final Cards cards() {
-        return Cards.copyOf(cards);
+        return new Cards(cards);
     }
 
     public final void take(Card card) {
@@ -42,7 +42,7 @@ public class Player {
     }
 
     public final Score score() {
-        return cards.score();
+        return CALCULATOR.calculate(cards);
     }
 
     public final boolean isBust() {
@@ -58,6 +58,6 @@ public class Player {
     }
 
     public boolean isHittable() {
-        return cards.lessThan(HIT_BOUNDARY);
+        return CALCULATOR.calculate(cards).lessThan(HIT_BOUNDARY);
     }
 }
