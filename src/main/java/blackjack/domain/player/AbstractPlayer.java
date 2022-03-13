@@ -71,7 +71,7 @@ public abstract class AbstractPlayer implements Player {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AbstractPlayer)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         AbstractPlayer that = (AbstractPlayer) o;
@@ -85,7 +85,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public String toString() {
-        return "AbstractPlayer{" +
+        return "Player{" +
                 "name=" + name +
                 ", cards=" + cards +
                 '}';

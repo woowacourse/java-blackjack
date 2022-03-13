@@ -85,7 +85,13 @@
     - Gamer 인터페이스에서 `compareWinning`이라는 이름으로 int를 사용하고 있는데 상속받는 구현체에 따라 내용이 바뀌어야하는 점이 혼란스러울 수 있을 것 같다.
     - 판단 주체를 좀 더 명시적으로 변경해보면 어떨까요?
     - 승패를 판단하는 로직을 Outcome의 `match()`에서 하도록 수정했다.
-- [ ] 구현 클래스에 `equals`, `hashCode`, `toString`는 어떤 의미로 추가가된 것일까요?
+- [x] 구현 클래스에 `equals`, `hashCode`, `toString`는 어떤 의미로 추가가된 것일까요?
+    - `Dealer`와 `Participant`의 `equals`, `hashCode`, `toString`는 단순하게 `super`로 상위 `AbstractPlayer`의 메서드를 사용한다.
+    - 그래서 없어도 되는 메서드인 것 같다. 습관적으로 만들어서 재정의한 것 같다.
+    - equals에서 클래스를 비교하는 코드가 기존에는 `if (!(o instanceof AbstractPlayer))`로 되어있어서 `Dealer`와 `Participant`가 달라도 데이터가 같다면
+      equals가 참이 나왔다.
+    - `if (!(o instanceof AbstractPlayer))`를 `if (o == null || getClass() != o.getClass())`로 바꾸면서 구현 클래스가 다르다면 데이터가 같아도
+      equals가 거짓이 나오도록 수정했다.
 - [x] 52장의 카드가 있는 `RandomDeck`의 List<Card>는 왜 static일까요?
     - static을 제거하도록 수정
     - 처음 RandomDeck의 코드를 작성할 때는 pick함수를 static으로 작성하면서 `List<Card>`도 static으로 작성했다.

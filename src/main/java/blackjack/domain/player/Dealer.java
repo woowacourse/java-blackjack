@@ -18,19 +18,4 @@ public class Dealer extends AbstractPlayer implements Player {
     public boolean isValidRange() {
         return getScore() < MAX_SCORE;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }
