@@ -4,17 +4,17 @@ import blackjack.model.player.Player;
 import java.util.List;
 
 public class DeckDTO {
-    private List<String> cards;
+    private final List<TrumpCardDTO> cards;
 
-    private DeckDTO(List<String> cards) {
+    private DeckDTO(List<TrumpCardDTO> cards) {
         this.cards = cards;
     }
 
     public static DeckDTO from(Player player) {
-        return new DeckDTO(player.getDeckToString());
+        return new DeckDTO(TrumpCardDTO.from(player.getDeck()));
     }
 
-    public List<String> getCards() {
+    public List<TrumpCardDTO> getCards() {
         return cards;
     }
 }

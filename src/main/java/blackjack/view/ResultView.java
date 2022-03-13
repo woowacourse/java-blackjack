@@ -7,7 +7,9 @@ import blackjack.dto.PlayerDTO;
 import blackjack.dto.PlayersDTO;
 import blackjack.dto.ResultDTO;
 import blackjack.dto.ResultsDTO;
+import blackjack.dto.TrumpCardDTO;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResultView {
     private static final String FORMAT_MESSAGE_DECK_INITIALIZED = "%n딜러와 %s에게 2장의 카드를 나누었습니다.%n";
@@ -83,7 +85,13 @@ public class ResultView {
     }
 
     private String joinDeck(DeckDTO deck) {
-        return joinStrings(deck.getCards());
+        return joinCards(deck.getCards());
+    }
+
+    private String joinCards(List<TrumpCardDTO> cards) {
+        return joinStrings(cards.stream()
+                .map(card -> card.getNumber() + card.getSymbol())
+                .collect(Collectors.toList()));
     }
 
     private String joinStrings(List<String> strings) {

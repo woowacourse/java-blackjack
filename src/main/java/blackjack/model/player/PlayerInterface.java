@@ -1,5 +1,6 @@
 package blackjack.model.player;
 
+import blackjack.model.trumpcard.Deck;
 import blackjack.model.trumpcard.TrumpCard;
 import java.util.List;
 
@@ -12,5 +13,5 @@ public interface PlayerInterface {
 
     String getName();
 
-    List<String> getDeckToString();
+    Deck getDeck();
 }

@@ -1,9 +1,7 @@
 package blackjack.model.trumpcard;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Deck {
     private static final int SCORE_LIMIT = 21;
@@ -69,10 +67,8 @@ public class Deck {
         return sumScore() < otherScore;
     }
 
-    public List<String> getCardsToString() {
-        return this.cards.stream()
-                .map(TrumpCard::toString)
-                .collect(Collectors.toList());
+    public List<TrumpCard> getCards() {
+        return cards;
     }
 
     public int getSize() {

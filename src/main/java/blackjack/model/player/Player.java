@@ -37,7 +37,7 @@ public abstract class Player implements PlayerInterface {
     }
 
     @Override
-    public List<String> getDeckToString() {
-        return this.deck.getCardsToString();
+    public Deck getDeck() {
+        return this.deck;
     }
 }

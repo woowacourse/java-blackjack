@@ -1,7 +1,7 @@
 package blackjack.model.trumpcard;
 
 public enum TrumpNumber {
-    ACE(1, "A"),
+    ACE(1),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -11,22 +11,15 @@ public enum TrumpNumber {
     EIGHT(8),
     NINE(9),
     TEN(10),
-    JACK(10, "J"),
-    QUEEN(10, "Q"),
-    KING(10, "K"),
+    JACK(10),
+    QUEEN(10),
+    KING(10),
     ;
 
     private final int value;
-    private final String name;
-
-
-    TrumpNumber(int value, String name) {
-        this.value = value;
-        this.name = name;
-    }
 
     TrumpNumber(int value) {
-        this(value, null);
+        this.value = value;
     }
 
     public int sumTo(int otherValue) {
@@ -35,14 +28,5 @@ public enum TrumpNumber {
 
     public int getValue() {
         return this.value;
-    }
-
-
-    @Override
-    public String toString() {
-        if (this.name == null) {
-            return String.valueOf(this.value);
-        }
-        return this.name;
     }
 }
