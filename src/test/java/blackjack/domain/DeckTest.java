@@ -10,6 +10,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
+
 @DisplayName("Deck 태스트")
 class DeckTest {
 

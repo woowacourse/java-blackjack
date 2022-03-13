@@ -3,9 +3,9 @@ package blackjack.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import blackjack.domain.Card;
-import blackjack.domain.Hand;
-import blackjack.domain.Role;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
+import blackjack.domain.role.Role;
 
 public class TableStatusDto {
 

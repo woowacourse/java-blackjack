@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.factory.CardMockFactory;
 
 @DisplayName("Card 테스트")

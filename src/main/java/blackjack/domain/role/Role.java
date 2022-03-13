@@ -1,7 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.role;
 
 import java.util.EnumMap;
 import java.util.Map;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
+import blackjack.domain.Outcome;
 
 public abstract class Role {
 

@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import blackjack.domain.card.Suit;
+
 @DisplayName("Suit 테스트")
 class SuitTest {
 

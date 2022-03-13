@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.Role;
+import blackjack.domain.role.Role;
 
 public class PlayerStatusDto {
 

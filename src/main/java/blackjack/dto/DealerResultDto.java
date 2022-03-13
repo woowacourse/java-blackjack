@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import blackjack.domain.Card;
-import blackjack.domain.Hand;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import blackjack.domain.Outcome;
-import blackjack.domain.Role;
+import blackjack.domain.role.Role;
 
 public class DealerResultDto {
 
