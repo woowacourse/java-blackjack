@@ -1,6 +1,5 @@
 package blackJack.controller;
 
-import blackJack.domain.BlackJackGame;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
@@ -17,15 +16,15 @@ public class BlackJackController {
     private static final int ADDITIONAL_CARD_COUNT = 1;
 
     public void run() {
-        BlackJackGame blackJackGame = new BlackJackGame(getParticipants());
-        blackJackGame.firstCardDispensing();
-        OutputView.printInitCardResult(blackJackGame.getParticipants());
+        Participants participants = getParticipants();
+        participants.firstCardDispensing();
+        OutputView.printInitCardResult(participants);
 
-        doPlayerGame(blackJackGame);
-        doDealerGame(blackJackGame);
-        OutputView.printGameResult(blackJackGame.getParticipants());
-        OutputView.printWinDrawLoseResult(blackJackGame.getDealer(),
-                BlackJackGameResult.ofGameResult(blackJackGame.getDealer(), blackJackGame.getPlayers()));
+        doPlayerGame(participants);
+        doDealerGame(participants);
+        OutputView.printGameResult(participants);
+        OutputView.printWinDrawLoseResult(participants.getDealer(),
+                BlackJackGameResult.ofGameResult(participants.getDealer(), participants.getPlayers()));
     }
 
     private Participants getParticipants() {
@@ -41,16 +40,16 @@ public class BlackJackController {
         }
     }
 
-    private void doPlayerGame(BlackJackGame blackJackGame) {
-        List<Player> players = blackJackGame.getPlayers();
+    private void doPlayerGame(Participants participants) {
+        List<Player> players = participants.getPlayers();
         for (Player player : players) {
-            doEachPlayerTurn(blackJackGame, player);
+            doEachPlayerTurn(participants, player);
         }
     }
 
-    private void doEachPlayerTurn(BlackJackGame blackJackGame, Player player) {
+    private void doEachPlayerTurn(Participants participants, Player player) {
         while (player.hasNextTurn() && getOneMoreCard(player)) {
-            blackJackGame.distributeCard(player, ADDITIONAL_CARD_COUNT);
+            participants.distributeCard(player, ADDITIONAL_CARD_COUNT);
             OutputView.printNowHoldCardInfo(player);
         }
     }
@@ -65,11 +64,11 @@ public class BlackJackController {
         }
     }
 
-    private void doDealerGame(BlackJackGame blackJackGame) {
-        Dealer dealer = blackJackGame.getDealer();
+    private void doDealerGame(Participants participants) {
+        Dealer dealer = participants.getDealer();
         while (dealer.hasNextTurn()) {
-            blackJackGame.distributeCard(dealer, ADDITIONAL_CARD_COUNT);
+            participants.distributeCard(dealer, ADDITIONAL_CARD_COUNT);
         }
-        OutputView.printDealerReceiveCardCount(blackJackGame.getDealer());
+        OutputView.printDealerReceiveCardCount(participants.getDealer());
     }
 }

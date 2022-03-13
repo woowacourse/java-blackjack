@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ParticipantsTest {
@@ -29,5 +30,17 @@ public class ParticipantsTest {
         assertThatThrownBy(() -> new Participants(new Dealer(), players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 인원수는 1명 이상 7명 이하여야 합니다.");
+    }
+
+    @Test
+    @DisplayName("게임 시작시 최초 카드 분배 기능 테스트")
+    void firstCardDispensing() {
+        Player player1 = new Player("kei");
+        Player player2 = new Player("rookie");
+        Participants participants = new Participants(new Dealer(), List.of(player1, player2));
+
+        participants.firstCardDispensing();
+
+        assertThat(player1.getCards().size()).isEqualTo(2);
     }
 }

@@ -17,7 +17,7 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
-    public Card getCard() {
+    public static Card getCard() {
         return deck.pop();
     }
 }

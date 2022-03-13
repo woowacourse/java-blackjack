@@ -19,17 +19,4 @@ class BlackJackGameTest {
 
         assertThat(new BlackJackGame(participants)).isNotNull();
     }
-
-    @Test
-    @DisplayName("게임 시작시 최초 카드 분배 기능 테스트")
-    void firstCardDispensing() {
-        Player player1 = new Player("kei");
-        Player player2 = new Player("rookie");
-        Participants participants = new Participants(new Dealer(), List.of(player1, player2));
-
-        BlackJackGame blackJackGame = new BlackJackGame(participants);
-        blackJackGame.firstCardDispensing();
-
-        assertThat(player1.getCards().size()).isEqualTo(2);
-    }
 }
