@@ -3,6 +3,7 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Cards {
 
@@ -18,21 +19,18 @@ public class Cards {
 
     public int calculateScore() {
         int aceAmount = countAceAmount();
-        if (aceAmount != 0) {
+        if (aceAmount > 0) {
             return judgeAdvantageResult(aceAmount);
         }
         return calculateSum();
     }
 
     private int judgeAdvantageResult(int aceAmount) {
-        int result = calculateSum();
-
-        for (int aceCount = 1;
-            aceCount <= aceAmount && result + ACE_ADDITIONAL_VALUE <= BLACKJACK_MAX_VALUE_CRITERIA;
-            aceCount++) {
-            result += ACE_ADDITIONAL_VALUE;
-        }
-        return result;
+        return IntStream.range(1, aceAmount + 1)
+            .map(aceCount -> calculateSum() + aceCount * ACE_ADDITIONAL_VALUE)
+            .filter(result -> result < BLACKJACK_MAX_VALUE_CRITERIA)
+            .max()
+            .getAsInt();
     }
 
     public int calculateSum() {
