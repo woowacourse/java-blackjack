@@ -43,7 +43,7 @@ public class ResultView {
     }
 
     private static void printInitDealerCard(Player dealer) {
-        List<Card> dealerCards = dealer.getCards().get();
+        List<Card> dealerCards = dealer.getPlayerCards().get();
         System.out.printf((PRINT_INIT_DEALER_CARDS_FORMAT) + System.lineSeparator(),
                 getNumberAndType(dealerCards.get(0)));
     }
@@ -56,11 +56,11 @@ public class ResultView {
     }
 
     public static void printPlayerCard(Player player) {
-        String cards = player.getCards().get().stream()
+        String playerCards = player.getPlayerCards().get().stream()
                 .map(ResultView::getNumberAndType)
                 .collect(Collectors.joining(CARD_DELIMITER));
 
-        System.out.printf(PRINT_GAMER_CARDS_FORMAT + System.lineSeparator(), player.getName().get(), cards);
+        System.out.printf(PRINT_GAMER_CARDS_FORMAT + System.lineSeparator(), player.getName().get(), playerCards);
     }
 
     private static String getNumberAndType(Card card) {
@@ -81,11 +81,11 @@ public class ResultView {
     }
 
     private static void printResult(Player dealer) {
-        String cards = dealer.getCards().get().stream()
+        String playerCards = dealer.getPlayerCards().get().stream()
                 .map(ResultView::getNumberAndType)
                 .collect(Collectors.joining(CARD_DELIMITER));
 
-        System.out.printf(PRINT_GAMER_RESULT_FORMAT + System.lineSeparator(), dealer.getName().get(), cards,
+        System.out.printf(PRINT_GAMER_RESULT_FORMAT + System.lineSeparator(), dealer.getName().get(), playerCards,
                 dealer.getScore());
     }
 

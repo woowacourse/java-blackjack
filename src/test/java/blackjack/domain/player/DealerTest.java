@@ -37,11 +37,11 @@ public class DealerTest {
         player.hit(Card.of(CardNumber.EIGHT, Type.CLOVER));
         player.hit(Card.of(CardNumber.FIVE, Type.SPADE));
         player.hit(Card.of(CardNumber.TEN, Type.DIAMOND));
-        List<Card> cards = player.getCards().get();
+        List<Card> playerCards = player.getPlayerCards().get();
 
-        assertThat(cards.get(0)).isEqualTo(Card.of(CardNumber.EIGHT, Type.CLOVER));
-        assertThat(cards.get(1)).isEqualTo(Card.of(CardNumber.FIVE, Type.SPADE));
-        assertThat(cards.get(2)).isEqualTo(Card.of(CardNumber.TEN, Type.DIAMOND));
+        assertThat(playerCards.get(0)).isEqualTo(Card.of(CardNumber.EIGHT, Type.CLOVER));
+        assertThat(playerCards.get(1)).isEqualTo(Card.of(CardNumber.FIVE, Type.SPADE));
+        assertThat(playerCards.get(2)).isEqualTo(Card.of(CardNumber.TEN, Type.DIAMOND));
     }
 
     @Test

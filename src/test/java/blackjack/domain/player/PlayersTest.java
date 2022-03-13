@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.PlayerCards;
 import blackjack.domain.card.JustTenSpadeDeck;
 import blackjack.domain.card.Type;
 import java.util.ArrayList;
@@ -30,11 +30,11 @@ public class PlayersTest {
         Player aki = new Participant(new Name("aki"));
         Players players = new Players(List.of(aki));
         players.dealCards(new JustTenSpadeDeck());
-        Cards akiCards = aki.getCards();
-        List<Card> cards = akiCards.get();
+        PlayerCards akiPlayerCards = aki.getPlayerCards();
+        List<Card> playerCards = akiPlayerCards.get();
 
-        assertThat(cards.get(0)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
-        assertThat(cards.get(1)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
+        assertThat(playerCards.get(0)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
+        assertThat(playerCards.get(1)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
     }
 
     @Test

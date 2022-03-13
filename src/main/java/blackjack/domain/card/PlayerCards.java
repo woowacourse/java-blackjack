@@ -4,27 +4,27 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Cards {
+public class PlayerCards {
 
     private static final int ACE_ADDITIONAL_VALUE = 10;
     private static final int MAX_SCORE = 21;
 
-    private final List<Card> cards;
+    private final List<Card> playerCards;
 
-    public Cards(List<Card> cards) {
-        this.cards = cards;
+    public PlayerCards(List<Card> playerCards) {
+        this.playerCards = playerCards;
     }
 
     public void add(Card card) {
-        cards.add(card);
+        playerCards.add(card);
     }
 
     public List<Card> get() {
-        return Collections.unmodifiableList(cards);
+        return Collections.unmodifiableList(playerCards);
     }
 
     public int getTotalScore() {
-        int sum = cards.stream()
+        int sum = playerCards.stream()
                 .mapToInt(value -> value.getCardNumber().getValue())
                 .sum();
 
@@ -35,7 +35,7 @@ public class Cards {
     }
 
     private boolean hasAce() {
-        return cards.stream()
+        return playerCards.stream()
                 .anyMatch(card -> card.getCardNumber().equals(CardNumber.ACE));
     }
 
@@ -44,7 +44,7 @@ public class Cards {
     }
 
     public boolean containsCardNumber(CardNumber number) {
-        return cards.stream()
+        return playerCards.stream()
                 .anyMatch(card -> card.getCardNumber() == number);
     }
 
@@ -53,22 +53,22 @@ public class Cards {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Cards)) {
+        if (!(o instanceof PlayerCards)) {
             return false;
         }
-        Cards cards1 = (Cards) o;
-        return Objects.equals(cards, cards1.cards);
+        PlayerCards playerCards1 = (PlayerCards) o;
+        return Objects.equals(playerCards, playerCards1.playerCards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cards);
+        return Objects.hash(playerCards);
     }
 
     @Override
     public String toString() {
         return "Cards{" +
-                "cards=" + cards +
+                "playerCards=" + playerCards +
                 '}';
     }
 }

@@ -16,12 +16,7 @@ public class AbstractPlayerTest {
 
     @BeforeEach
     void setUp() {
-        abstractPlayer = new AbstractPlayer(new Name("aki")) {
-            @Override
-            public boolean isValidRange() {
-                return false;
-            }
-        };
+        abstractPlayer = new AbstractPlayer(new Name("aki"));
     }
 
     @Test
@@ -30,11 +25,11 @@ public class AbstractPlayerTest {
         abstractPlayer.hit(Card.of(CardNumber.EIGHT, Type.CLOVER));
         abstractPlayer.hit(Card.of(CardNumber.FIVE, Type.SPADE));
         abstractPlayer.hit(Card.of(CardNumber.TEN, Type.SPADE));
-        List<Card> cards = abstractPlayer.getCards().get();
+        List<Card> playerCards = abstractPlayer.getPlayerCards().get();
 
-        assertThat(cards.get(0)).isEqualTo(Card.of(CardNumber.EIGHT, Type.CLOVER));
-        assertThat(cards.get(1)).isEqualTo(Card.of(CardNumber.FIVE, Type.SPADE));
-        assertThat(cards.get(2)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
+        assertThat(playerCards.get(0)).isEqualTo(Card.of(CardNumber.EIGHT, Type.CLOVER));
+        assertThat(playerCards.get(1)).isEqualTo(Card.of(CardNumber.FIVE, Type.SPADE));
+        assertThat(playerCards.get(2)).isEqualTo(Card.of(CardNumber.TEN, Type.SPADE));
     }
 
     @Test

@@ -2,27 +2,27 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.PlayerCards;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public abstract class AbstractPlayer implements Player {
+public class AbstractPlayer implements Player {
 
     private static final int BLACKJACK_CARD_COUNT = 2;
 
     private static final int MAX_SCORE = 21;
 
     private final Name name;
-    private final Cards cards;
+    private final PlayerCards playerCards;
 
     public AbstractPlayer(Name name) {
         this.name = name;
-        this.cards = new Cards(new ArrayList<>());
+        this.playerCards = new PlayerCards(new ArrayList<>());
     }
 
     @Override
     public void hit(Card card) {
-        cards.add(card);
+        playerCards.add(card);
     }
 
     @Override
@@ -32,13 +32,13 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isBlackjack() {
-        if (!cards.containsCardNumber(CardNumber.ACE)) {
+        if (!playerCards.containsCardNumber(CardNumber.ACE)) {
             return false;
         }
-        if (cards.get().size() != BLACKJACK_CARD_COUNT) {
+        if (playerCards.get().size() != BLACKJACK_CARD_COUNT) {
             return false;
         }
-        return cards.getTotalScore() == MAX_SCORE;
+        return playerCards.getTotalScore() == MAX_SCORE;
     }
 
     @Override
@@ -52,13 +52,13 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public Cards getCards() {
-        return cards;
+    public PlayerCards getPlayerCards() {
+        return playerCards;
     }
 
     @Override
     public int getScore() {
-        return cards.getTotalScore();
+        return playerCards.getTotalScore();
     }
 
     @Override
@@ -75,19 +75,19 @@ public abstract class AbstractPlayer implements Player {
             return false;
         }
         AbstractPlayer that = (AbstractPlayer) o;
-        return Objects.equals(name, that.name) && Objects.equals(cards, that.cards);
+        return Objects.equals(name, that.name) && Objects.equals(playerCards, that.playerCards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cards);
+        return Objects.hash(name, playerCards);
     }
 
     @Override
     public String toString() {
         return "Player{" +
                 "name=" + name +
-                ", cards=" + cards +
+                ", playerCards=" + playerCards +
                 '}';
     }
 }

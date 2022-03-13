@@ -7,15 +7,15 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardsTest {
+public class PlayerCardsTest {
 
     @Test
-    @DisplayName("Cards 클래스는 Card 리스트를 입력받으면 정상적으로 생성된다.")
+    @DisplayName("PlayerCards 클래스는 Card 리스트를 입력받으면 정상적으로 생성된다.")
     void create_dealer() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(Card.of(CardNumber.TEN, Type.SPADE));
+        List<Card> playerCards = new ArrayList<>();
+        playerCards.add(Card.of(CardNumber.TEN, Type.SPADE));
 
-        assertThatCode(() -> new Cards(cards)).doesNotThrowAnyException();
+        assertThatCode(() -> new PlayerCards(playerCards)).doesNotThrowAnyException();
     }
 
     @Test
@@ -24,9 +24,9 @@ public class CardsTest {
         List<Card> newCards = new ArrayList<>();
         newCards.add(Card.of(CardNumber.ACE, Type.SPADE));
         newCards.add(Card.of(CardNumber.TEN, Type.SPADE));
-        Cards hasAceCards = new Cards(newCards);
+        PlayerCards hasAcePlayerCards = new PlayerCards(newCards);
 
-        assertThat(hasAceCards.getTotalScore()).isEqualTo(21);
+        assertThat(hasAcePlayerCards.getTotalScore()).isEqualTo(21);
     }
 
     @Test
@@ -35,9 +35,9 @@ public class CardsTest {
         List<Card> newCards = new ArrayList<>();
         newCards.add(Card.of(CardNumber.ACE, Type.SPADE));
         newCards.add(Card.of(CardNumber.TEN, Type.SPADE));
-        Cards hasAceCards = new Cards(newCards);
+        PlayerCards hasAcePlayerCards = new PlayerCards(newCards);
 
-        assertThat(hasAceCards.getTotalScore()).isEqualTo(21);
+        assertThat(hasAcePlayerCards.getTotalScore()).isEqualTo(21);
     }
 
     @Test
@@ -47,9 +47,9 @@ public class CardsTest {
         newCards.add(Card.of(CardNumber.TEN, Type.CLOVER));
         newCards.add(Card.of(CardNumber.THREE, Type.HEART));
         newCards.add(Card.of(CardNumber.ACE, Type.SPADE));
-        Cards hasAceCards = new Cards(newCards);
+        PlayerCards hasAcePlayerCards = new PlayerCards(newCards);
 
-        assertThat(hasAceCards.getTotalScore()).isEqualTo(14);
+        assertThat(hasAcePlayerCards.getTotalScore()).isEqualTo(14);
     }
 
     @Test
@@ -59,9 +59,9 @@ public class CardsTest {
         newCards.add(Card.of(CardNumber.TEN, Type.CLOVER));
         newCards.add(Card.of(CardNumber.THREE, Type.HEART));
         newCards.add(Card.of(CardNumber.ACE, Type.SPADE));
-        Cards cards = new Cards(newCards);
+        PlayerCards playerCards = new PlayerCards(newCards);
 
-        assertThat(cards.containsCardNumber(CardNumber.TEN)).isTrue();
-        assertThat(cards.containsCardNumber(CardNumber.KING)).isFalse();
+        assertThat(playerCards.containsCardNumber(CardNumber.TEN)).isTrue();
+        assertThat(playerCards.containsCardNumber(CardNumber.KING)).isFalse();
     }
 }
