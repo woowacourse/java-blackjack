@@ -27,11 +27,11 @@ public class Player {
     }
 
     public Cards openCards() {
-        return Cards.toUnmodifiable(cards.openedCards(OPEN_CARD_COUNT));
+        return cards.openedCards(OPEN_CARD_COUNT);
     }
 
     public final Cards cards() {
-        return Cards.toUnmodifiable(cards);
+        return Cards.copyOf(cards);
     }
 
     public final void take(Card card) {

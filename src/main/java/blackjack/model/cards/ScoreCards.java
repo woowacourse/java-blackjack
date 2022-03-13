@@ -1,8 +1,8 @@
 package blackjack.model.cards;
 
 import blackjack.model.card.Card;
-import java.util.Iterator;
-import java.util.stream.Stream;
+import java.util.Collection;
+import java.util.Objects;
 
 public abstract class ScoreCards implements Cards {
 
@@ -18,13 +18,8 @@ public abstract class ScoreCards implements Cards {
     }
 
     @Override
-    public Stream<Card> stream() {
-        return cards.stream();
-    }
-
-    @Override
-    public Iterator<Card> iterator() {
-        return cards.iterator();
+    public Collection<Card> values() {
+        return cards.values();
     }
 
     @Override
@@ -34,6 +29,16 @@ public abstract class ScoreCards implements Cards {
 
     public boolean lessThan(Score score) {
         return score().lessThan(score);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return cards.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
     }
 
     public abstract Score score();

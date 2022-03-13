@@ -1,22 +1,28 @@
 package blackjack.model.cards;
 
 import blackjack.model.card.Card;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 final class HandCards implements Cards{
 
-    private final List<Card> cards;
+    private final List<Card> values;
 
     HandCards(Card card1, Card card2, Card... cards) {
-        this.cards = concat(concat(card1, card2), cards)
+        this.values = concat(concat(card1, card2), cards)
             .collect(Collectors.toList());
     }
 
+    HandCards(Cards cards) {
+        this.values = List.copyOf(cards.values());
+    }
+
     private HandCards(List<Card> cards) {
-        this.cards = cards;
+        this.values = cards;
     }
 
     private Stream<Card> concat(Card card1, Card card2) {
@@ -28,22 +34,34 @@ final class HandCards implements Cards{
     }
 
     @Override
-    public Stream<Card> stream() {
-        return cards.stream();
+    public Collection<Card> values() {
+        return List.copyOf(values);
     }
 
     @Override
     public Cards openedCards(int count) {
-        return Cards.toUnmodifiable(new HandCards(cards.subList(0, count)));
+        return new HandCards(values.subList(0, count));
     }
 
     @Override
     public void take(Card card) {
-        cards.add(card);
+        values.add(card);
     }
 
     @Override
-    public Iterator<Card> iterator() {
-        return cards.iterator();
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || !(o instanceof Cards)) {
+            return false;
+        }
+        Cards cards = (Cards) o;
+        return Objects.equals(values(), cards.values());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(values);
     }
 }

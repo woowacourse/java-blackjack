@@ -1,22 +1,22 @@
 package blackjack.model.cards;
 
 import blackjack.model.card.Card;
-import java.util.stream.Stream;
+import java.util.Collection;
 
-public interface Cards extends Iterable<Card> {
+public interface Cards {
 
     Cards openedCards(int count);
 
     void take(Card card);
 
-    Stream<Card> stream();
+    Collection<Card> values();
 
     static HandCards of(Card card1, Card card2, Card... cards) {
         return new HandCards(card1, card2, cards);
     }
 
-    static ImmutableCards toUnmodifiable(Cards cards) {
-        return new ImmutableCards(cards);
+    static HandCards copyOf(Cards cards) {
+        return new HandCards(cards);
     }
 
     static BestScoreCards bestScoreCards(Cards cards) {

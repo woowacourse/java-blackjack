@@ -11,6 +11,7 @@ import blackjack.model.blackjack.Records;
 import blackjack.model.blackjack.Result;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
+import blackjack.model.cards.Cards;
 import blackjack.model.cards.Score;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -150,8 +151,8 @@ public class DealerTest {
     @DisplayName("딜러 카드 공개")
     void dealerOpenCard() {
         Dealer dealer = new Dealer(JACK, QUEEN);
-        assertThat(dealer.openCards()).hasSize(1);
-        assertThat(dealer.openCards()).contains(JACK);
+        assertThat(dealer.openCards().values()).hasSize(1);
+        assertThat(dealer.openCards().values()).contains(JACK);
     }
 
 }

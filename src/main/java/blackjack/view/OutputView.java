@@ -35,7 +35,7 @@ public class OutputView {
     }
 
     private static String formattedCardsText(Cards openCard) {
-        return openCard.stream()
+        return openCard.values().stream()
             .map(OutputView::cardText)
             .collect(Collectors.joining(", "));
     }
@@ -44,12 +44,8 @@ public class OutputView {
         return card.rank().symbol() + card.suit().symbol();
     }
 
-    public static void printCard(Player player) {
-        System.out.printf("%s: %s%n", player.name(), takenCards(player));
-    }
-
     private static String takenCards(Player player) {
-        return player.cards().stream()
+        return player.cards().values().stream()
             .map(OutputView::cardText)
             .collect(Collectors.joining(", "));
     }

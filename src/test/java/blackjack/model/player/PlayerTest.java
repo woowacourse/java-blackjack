@@ -50,8 +50,8 @@ public class PlayerTest {
     @DisplayName("게이머 첫 2장 카드 공개")
     void gamerOpenCards() {
         Player gamer = new Player(GAMER_NAME, QUEEN, FIVE);
-        assertThat(gamer.openCards()).hasSize(2);
-        assertThat(gamer.openCards()).contains(QUEEN, FIVE);
+        assertThat(gamer.openCards().values()).hasSize(2);
+        assertThat(gamer.openCards().values()).contains(QUEEN, FIVE);
     }
 
     @Test

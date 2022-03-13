@@ -18,7 +18,7 @@ final class BestScoreCards extends ScoreCards {
     }
 
     private boolean hasAce() {
-        return stream().anyMatch(Card::isAce);
+        return values().stream().anyMatch(Card::isAce);
     }
 
     private Score softHandScore() {
@@ -30,7 +30,7 @@ final class BestScoreCards extends ScoreCards {
     }
 
     private Score hardHandScore() {
-        int score = stream()
+        int score = values().stream()
             .mapToInt(Card::hardRank)
             .sum();
         return new Score(score);

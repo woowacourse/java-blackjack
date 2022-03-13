@@ -13,7 +13,7 @@ final class MaxScoreCards extends ScoreCards{
     }
 
     private int softHandScore() {
-        return stream()
+        return values().stream()
             .mapToInt(Card::softRank)
             .sum();
     }

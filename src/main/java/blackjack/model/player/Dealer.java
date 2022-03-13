@@ -59,7 +59,7 @@ public final class Dealer extends Player {
 
     @Override
     public Cards openCards() {
-        return Cards.toUnmodifiable(cards().openedCards(OPEN_CARD_COUNT));
+        return cards().openedCards(OPEN_CARD_COUNT);
     }
 
     @Override

@@ -57,20 +57,12 @@ public class CardsTest {
         );
     }
 
-    @Test
-    @DisplayName("불변 카드 상태 변경 시 예외 발생")
-    void immutableCards() {
-        Cards immutableCards = Cards.toUnmodifiable(Cards.of(ACE, JACK));
-        assertThatThrownBy(() -> immutableCards.take(ACE))
-            .isInstanceOf(UnsupportedOperationException.class);
-    }
 
     @Test
     @DisplayName("공개 카드 반환")
     void openCard() {
-        Cards cards = Cards.of(ACE, JACK);
+        Cards cards = Cards.of(ACE, JACK, QUEEN, KING);
         Cards openCards = cards.openedCards(2);
-        assertThat(openCards).hasSize(2);
-        assertThat(openCards).contains(ACE, JACK);
+        assertThat(openCards).isEqualTo(Cards.of(ACE, JACK));
     }
 }
