@@ -39,8 +39,8 @@ public class PlayerTest {
     protected static Stream<Arguments> providePlayers() {
         return Stream.of(
             Arguments.of(new Player(GAMER_NAME, ACE, JACK), 21),
-            Arguments.of(new Player(GAMER_NAME, ACE, JACK, KING), 21),
-            Arguments.of(new Player(GAMER_NAME, ACE, ACE, NINE), 21),
+            Arguments.of(new Dealer(ACE, JACK, KING), 21),
+            Arguments.of(new Dealer(ACE, ACE, NINE), 21),
             Arguments.of(new Player(GAMER_NAME, QUEEN, JACK, KING), 30),
             Arguments.of(new Player(GAMER_NAME, THREE, TWO), 5)
         );

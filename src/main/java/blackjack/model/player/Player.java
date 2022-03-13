@@ -12,16 +12,14 @@ public class Player {
 
     private final ScoreCards cards;
     private final Name name;
-    private final int openCardCount;
 
     public Player(Name name, Card card1, Card card2, Card... cards) {
-        this(name, Cards.of(card1, card2, cards), OPEN_CARD_COUNT);
+        this(name, Cards.of(card1, card2, cards));
     }
 
-    Player(Name name, Cards cards, int openCardCount) {
+    protected Player(Name name, Cards cards) {
         this.name = name;
         this.cards = Cards.bestScoreCards(cards);
-        this.openCardCount = openCardCount;
     }
 
     public final Name name() {
@@ -29,7 +27,7 @@ public class Player {
     }
 
     public Cards openCards() {
-        return cards.openedCards(openCardCount);
+        return cards.openedCards(OPEN_CARD_COUNT);
     }
 
     public final Cards cards() {
@@ -49,6 +47,14 @@ public class Player {
 
     public final boolean isBust() {
         return score().isBust();
+    }
+
+    protected final boolean lessScoreThan(Player other) {
+        return score().lessThan(other.score());
+    }
+
+    protected final boolean moreScoreThan(Player other) {
+        return score().moreThan(other.score());
     }
 
     public boolean isHittable() {
