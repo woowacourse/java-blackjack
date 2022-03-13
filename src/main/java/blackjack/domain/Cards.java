@@ -11,8 +11,7 @@ public class Cards {
     private final CardPickMachine cardPickMachine;
 
     public Cards(CardPickMachine cardPickMachine) {
-        this.cards = new ArrayList<>();
-        makeCards();
+        this.cards = makeCards();
         this.cardPickMachine = cardPickMachine;
     }
 
@@ -20,19 +19,22 @@ public class Cards {
         return cards.get(cardPickMachine.assignIndex());
     }
 
-    private void makeCards() {
+    private List<Card> makeCards() {
+        List<Card> allCard = new ArrayList<>();
         List<Suit> suits = Arrays.stream(Suit.values())
                 .collect(Collectors.toList());
         List<Rank> ranks = Arrays.stream(Rank.values())
                 .collect(Collectors.toList());
+
         for (Suit suit : suits) {
-            addRankForSuit(ranks, suit);
+            addRankForSuit(allCard, ranks, suit);
         }
+        return allCard;
     }
 
-    private void addRankForSuit(List<Rank> ranks, Suit suit) {
+    private void addRankForSuit(List<Card> allCard, List<Rank> ranks, Suit suit) {
         for (Rank rank : ranks) {
-            cards.add(new Card(suit, rank));
+            allCard.add(new Card(suit, rank));
         }
     }
 }

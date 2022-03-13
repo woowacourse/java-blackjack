@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -11,15 +10,15 @@ public class Deck {
     private static final int ACE_ELEVEN = 11;
     private static final int MINUS_ACE_SELF_SIZE = 1;
 
-    private final Set<Card> cards = new LinkedHashSet<>();
+    private final Set<Card> deck = new LinkedHashSet<>();
 
     public void addCard(Card card) {
-        cards.add(card);
+        deck.add(card);
     }
 
     public int sumPoints() {
-        int sumWithoutAce = cards.stream()
-                .filter(this::excludeAce)
+        int sumWithoutAce = deck.stream()
+                .filter(card -> !isAce(card))
                 .mapToInt(this::getCardPoint)
                 .sum();
 
@@ -31,8 +30,8 @@ public class Deck {
     }
 
     private int countAces() {
-        return (int) cards.stream()
-                .filter(card -> !excludeAce(card))
+        return (int) deck.stream()
+                .filter(this::isAce)
                 .count();
     }
 
@@ -43,8 +42,8 @@ public class Deck {
         return sumWithoutAce + aceCount;
     }
 
-    private boolean excludeAce(Card card) {
-        return !card.getRank().equals(Rank.ACE);
+    private boolean isAce(Card card) {
+        return card.getRank().equals(Rank.ACE);
     }
 
     private int getCardPoint(Card card) {
@@ -52,7 +51,7 @@ public class Deck {
     }
 
     public Set<Card> getCards() {
-        return Collections.unmodifiableSet(cards);
+        return Collections.unmodifiableSet(deck);
     }
 
     @Override
@@ -64,13 +63,13 @@ public class Deck {
             return false;
         }
 
-        Deck deck = (Deck) o;
+        Deck deck1 = (Deck) o;
 
-        return cards != null ? cards.equals(deck.cards) : deck.cards == null;
+        return deck != null ? deck.equals(deck1.deck) : deck1.deck == null;
     }
 
     @Override
     public int hashCode() {
-        return cards != null ? cards.hashCode() : HAS_NOT_ACE;
+        return deck != null ? deck.hashCode() : 0;
     }
 }
