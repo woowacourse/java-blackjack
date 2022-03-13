@@ -33,8 +33,25 @@ public class ResultView {
 
     public void printInitializedDecks(PlayersDTO players) {
         for (PlayerDTO player : players.getPlayers()) {
-            printDeck(player);
+            printFirstDeck(player);
         }
+    }
+
+    private void printFirstDeck(PlayerDTO player) {
+        if (player instanceof DealerDTO) {
+            printOnlyFirstCard((DealerDTO) player);
+            return;
+        }
+        printDeck(player);
+    }
+
+    private void printOnlyFirstCard(DealerDTO dealer) {
+        System.out.printf(FORMAT_DECK_INITIALIZED, dealer.getName(), getFirstCardToString(dealer.getDeck()));
+    }
+
+    private String getFirstCardToString(DeckDTO deck) {
+        TrumpCardDTO firstCard = deck.getCards().get(0);
+        return firstCard.getNumber() + firstCard.getSymbol();
     }
 
     public void printDeck(PlayerDTO player) {
