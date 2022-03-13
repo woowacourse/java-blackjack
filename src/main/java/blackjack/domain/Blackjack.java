@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Blackjack {
-    private static final int BLACKJACK_NUMBER = 21;
+    public static final int BLACKJACK_NUMBER = 21;
 
     private final Deck deck;
     private final Players players;

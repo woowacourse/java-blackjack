@@ -5,8 +5,6 @@ public enum PlayerOutcome {
     LOSE("패"),
     DRAW("무");
 
-    private static final int BLACK_JACK_NUMBER = 21;
-
     private String value;
 
     PlayerOutcome(String value) {
@@ -14,13 +12,13 @@ public enum PlayerOutcome {
     }
 
     public static PlayerOutcome match(int dealerTotal, int playerTotal) {
-        if (dealerTotal > BLACK_JACK_NUMBER && playerTotal > BLACK_JACK_NUMBER) {
+        if (dealerTotal > Blackjack.BLACKJACK_NUMBER && playerTotal > Blackjack.BLACKJACK_NUMBER) {
             return LOSE;
         }
-        if (dealerTotal > BLACK_JACK_NUMBER) {
+        if (dealerTotal > Blackjack.BLACKJACK_NUMBER) {
             return WIN;
         }
-        if (playerTotal > BLACK_JACK_NUMBER) {
+        if (playerTotal > Blackjack.BLACKJACK_NUMBER) {
             return LOSE;
         }
         return matchCards(dealerTotal, playerTotal);
