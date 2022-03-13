@@ -9,6 +9,7 @@ public class ParticipantCards {
     private final static int NO_COUNT = 0;
     private final static int BURST_THRESHOLD = 21;
     private final static int CONVERT_ACE_AMOUNT = 10;
+    private static final int FIRST_CARD_INDEX = 0;
 
     private final List<Card> cards;
 
@@ -27,6 +28,10 @@ public class ParticipantCards {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public Card getFirstCard() {
+        return cards.get(FIRST_CARD_INDEX);
     }
 
     private int getAceCount() {
@@ -49,4 +54,5 @@ public class ParticipantCards {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
 }

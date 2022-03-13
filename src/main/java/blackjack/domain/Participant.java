@@ -8,7 +8,7 @@ public abstract class Participant {
 
     private static final int BURST_THRESHOLD_NUMBER = 21;
 
-    private ParticipantCards participantCards;
+    ParticipantCards participantCards;
 
     public void receiveInitCards(List<Card> cards) {
         participantCards = new ParticipantCards(new ArrayList<>(cards));
