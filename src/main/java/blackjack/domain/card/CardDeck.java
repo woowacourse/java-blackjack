@@ -8,15 +8,14 @@ public class CardDeck {
 	private final static List<Card> deck = new ArrayList<>();
 
 	static {
-		for (CardType type : CardType.values()) {
-			generateCardWith(type);
+		for (CardSymbol symbol : CardSymbol.values()) {
+			generateCardWith(symbol);
 		}
 	}
 
-	private static void generateCardWith(CardType type) {
+	private static void generateCardWith(CardSymbol symbol) {
 		for (CardValue value : CardValue.values()) {
-			String key = value.getName().concat(type.getName());
-			deck.add(new Card(key, value.getValue()));
+			deck.addCard(new Card(symbol, value));
 		}
 	}
 
