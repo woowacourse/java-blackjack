@@ -34,6 +34,22 @@ public class OutputView {
         System.out.println();
     }
 
+    private static void printInitialDealerCardInformation(Dealer dealer) {
+        Card dealerFirstCard = dealer.getFirstCard();
+
+        System.out.printf(CARD_INFORMATION_FORMAT, dealer.getName(),
+            dealerFirstCard.getDenomination().getName() + dealerFirstCard.getSuit().getName());
+
+        System.out.println();
+    }
+
+    private static void printInitialPlayersCardInformation(List<Player> players) {
+        for (Player player : players) {
+            printCards(player);
+            System.out.println();
+        }
+    }
+
     public static void printPlayerCardInformation(Player player) {
         printCards(player);
         System.out.println();
@@ -65,6 +81,11 @@ public class OutputView {
         }
     }
 
+    private static void printPoint(Participant participant) {
+        System.out.printf(PARTICIPANT_POINT_RESULT, participant.getScore());
+        System.out.println();
+    }
+
     public static void printResult(Map<WinningResult, Integer> dealerResult,
         Map<Player, WinningResult> playerResult) {
         System.out.println(PARTICIPANT_WINNING_RESULT_MESSAGE);
@@ -74,26 +95,5 @@ public class OutputView {
         playerResult.forEach(
             (key, value) -> System.out.println(
                 key.getName() + RESULT_DELIMITER + value.getResult()));
-    }
-
-    private static void printInitialDealerCardInformation(Dealer dealer) {
-        Card dealerFirstCard = dealer.getFirstCard();
-
-        System.out.printf(CARD_INFORMATION_FORMAT, dealer.getName(),
-            dealerFirstCard.getDenomination().getName() + dealerFirstCard.getSuit().getName());
-
-        System.out.println();
-    }
-
-    private static void printInitialPlayersCardInformation(List<Player> players) {
-        for (Player player : players) {
-            printCards(player);
-            System.out.println();
-        }
-    }
-
-    private static void printPoint(Participant participant) {
-        System.out.printf(PARTICIPANT_POINT_RESULT, participant.getScore());
-        System.out.println();
     }
 }

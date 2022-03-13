@@ -23,6 +23,12 @@ public class InputView {
         return playerNames;
     }
 
+    private static void validatePlayerNames(List<String> playerNames) {
+        if (playerNames.isEmpty()) {
+            throw new IllegalArgumentException(PLAYER_NAME_INPUT_ERROR_MESSAGE);
+        }
+    }
+
     public static boolean inputPlayerHit(String playerName) {
         System.out.printf(INPUT_PLAYER_HIT_ASK_MESSAGE, playerName);
         String hitAnswer = scanner.nextLine();
@@ -31,12 +37,6 @@ public class InputView {
             return true;
         }
         return false;
-    }
-
-    private static void validatePlayerNames(List<String> playerNames) {
-        if (playerNames.isEmpty()) {
-            throw new IllegalArgumentException(PLAYER_NAME_INPUT_ERROR_MESSAGE);
-        }
     }
 
     private static void validateHitAnswer(String hitAnswer) {
