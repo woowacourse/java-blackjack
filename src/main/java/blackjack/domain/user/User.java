@@ -24,7 +24,7 @@ public abstract class User {
     }
 
     public List<Card> showCards() {
-        return cards.showCards();
+        return cards.getCards();
     }
 
     public void drawCard(Deck deck) {

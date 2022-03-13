@@ -19,12 +19,18 @@ public class Cards {
         cards.add(card);
     }
 
-    public List<Card> showCards() {
+    public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 
-    public List<Card> showLimitedCard(int size) {
+    public List<Card> getLimitedCard(int size) {
         return Collections.unmodifiableList(cards.subList(0, size));
+    }
+
+    public int getSumPoint() {
+        return cards.stream()
+                .mapToInt(Card::getPoint)
+                .sum();
     }
 
     public int getScore() {
@@ -61,11 +67,5 @@ public class Cards {
         }
 
         return sum;
-    }
-
-    public int getSumPoint() {
-        return cards.stream()
-                .mapToInt(Card::getPoint)
-                .sum();
     }
 }

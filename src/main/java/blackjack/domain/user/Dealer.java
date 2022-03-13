@@ -12,7 +12,6 @@ public class Dealer extends User {
         super("딜러");
     }
 
-
     @Override
     public boolean isDealer() {
         return true;
@@ -20,7 +19,7 @@ public class Dealer extends User {
 
     @Override
     public List<Card> showInitCards() {
-        return cards.showLimitedCard(INIT_COUNT);
+        return cards.getLimitedCard(INIT_COUNT);
     }
 
     @Override

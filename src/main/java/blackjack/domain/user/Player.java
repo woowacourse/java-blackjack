@@ -41,7 +41,7 @@ public class Player extends User {
 
     @Override
     public List<Card> showInitCards() {
-        return cards.showLimitedCard(INIT_COUNT);
+        return cards.getLimitedCard(INIT_COUNT);
     }
 
     @Override
