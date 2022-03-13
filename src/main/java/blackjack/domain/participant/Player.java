@@ -1,9 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Number;
-import java.util.List;
-
 public class Player extends Participant {
 
     private Player(Name name) {
@@ -21,25 +17,7 @@ public class Player extends Participant {
 
     @Override
     public int calculateBestScore() {
-        List<Card> cards = this.cards.getCardHand();
-
-        int sum = cards.stream()
-                .map(Card::getNumber)
-                .map(Number::getScore)
-                .reduce(0, Integer::sum);
-
-        for (Card card : cards) {
-            sum = getBest(sum, card);
-        }
-
-        return sum;
-    }
-
-    private int getBest(int sum, Card card) {
-        if (card.isAce() && sum + ACE_ADDITIONAL_NUMBER <= BUST_THRESHOLD) {
-            sum += ACE_ADDITIONAL_NUMBER;
-        }
-        return sum;
+        return cards.getBestPossible(cards.getLowestSum());
     }
 
     public boolean isWinner(int score) {

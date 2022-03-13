@@ -30,7 +30,7 @@ public class CardDeckTest {
         CardDeck cardDeck = CardDeck.initShuffled();
         Cards cards = cardDeck.distribute(2);
 
-        assertThat(cards.getSize()).isEqualTo(2);
+        assertThat(cards.getCardHand().size()).isEqualTo(2);
     }
 
     @DisplayName("1장 분배 테스트")
@@ -39,7 +39,7 @@ public class CardDeckTest {
         CardDeck cardDeck = CardDeck.initShuffled();
         Cards cards = cardDeck.distribute(1);
 
-        assertThat(cards.getSize()).isEqualTo(1);
+        assertThat(cards.getCardHand().size()).isEqualTo(1);
     }
 
     @DisplayName("53장 분배 실패 테스트")

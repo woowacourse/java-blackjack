@@ -1,5 +1,8 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.participant.Participant.ACE_ADDITIONAL_NUMBER;
+import static blackjack.domain.participant.Participant.BUST_THRESHOLD;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,11 +19,6 @@ public class Cards {
         this.cardHand = new ArrayList<>(cardHand);
     }
 
-    public Cards concat(Cards cards) {
-        cardHand.addAll(cards.getCardHand());
-        return new Cards(cardHand);
-    }
-
     private void validateDuplicate(List<Card> cards) {
         Set<Card> distinctCards = new HashSet<>(cards);
         if (distinctCards.size() != cards.size()) {
@@ -28,11 +26,45 @@ public class Cards {
         }
     }
 
-    public List<Card> getCardHand() {
-        return cardHand;
+    public void concat(Cards cards) {
+        cardHand.addAll(cards.getCardHand());
+        new Cards(cardHand);
     }
 
-    public int getSize() {
-        return cardHand.size();
+    public int getLowestSum() {
+        return cardHand.stream()
+                .map(Card::getNumber)
+                .map(Number::getScore)
+                .reduce(0, Integer::sum);
+    }
+
+    public int getBestPossible(int sum) {
+        for (Card card : cardHand) {
+            if (card.isAce() && sum + ACE_ADDITIONAL_NUMBER <= BUST_THRESHOLD) {
+                sum += ACE_ADDITIONAL_NUMBER;
+            }
+        }
+        return sum;
+    }
+
+    public int getHighestSum() {
+        int sum = cardHand.stream()
+                .map(Card::getNumber)
+                .map(number -> {
+                    if (number == Number.ACE) {
+                        return number.getScore() + ACE_ADDITIONAL_NUMBER;
+                    }
+                    return number.getScore();
+                })
+                .reduce(0, Integer::sum);
+
+        if (sum > BUST_THRESHOLD) {
+            return getLowestSum();
+        }
+        return sum;
+    }
+
+    public List<Card> getCardHand() {
+        return cardHand;
     }
 }
