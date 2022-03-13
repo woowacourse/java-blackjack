@@ -32,4 +32,8 @@ public enum Denomination {
     public int getValue() {
         return value;
     }
+
+    public boolean isAce() {
+        return this == ACE;
+    }
 }

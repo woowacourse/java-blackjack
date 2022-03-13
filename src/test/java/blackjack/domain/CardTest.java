@@ -16,4 +16,11 @@ public class CardTest {
         Card card = new Card(Denomination.THREE, Suit.DIAMOND);
         assertThat(card.toString()).isEqualTo("3다이아몬드");
     }
+
+    @Test
+    @DisplayName("카드가 Ace인지 확인한다.")
+    void checkAceCard() {
+        Card card = new Card(Denomination.ACE, Suit.DIAMOND);
+        assertThat(card.isAce()).isTrue();
+    }
 }
