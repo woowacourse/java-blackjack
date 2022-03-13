@@ -23,8 +23,4 @@ public class Deck {
         }
         return values.poll();
     }
-
-    public List<Card> getInitCards() {
-        return List.of(draw(), draw());
-    }
 }

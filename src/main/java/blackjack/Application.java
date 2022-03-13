@@ -21,7 +21,7 @@ public class Application {
 
     public static void main(String[] args) {
         Deck deck = new Deck(Card.VALUES);
-        Dealer dealer = new Dealer(deck.getInitCards());
+        Dealer dealer = new Dealer(getInitCards(deck));
         Players players = createPlayers(deck);
         OutputView.printStartInfo(toGamerDto(dealer), toPlayersDto(players));
 
@@ -34,9 +34,13 @@ public class Application {
 
     private static Players createPlayers(Deck deck) {
         List<Player> players = InputView.getNames().stream()
-                .map(name -> new Player(name, deck.getInitCards()))
+                .map(name -> new Player(name, getInitCards(deck)))
                 .collect(toList());
         return new Players(players);
+    }
+
+    private static List<Card> getInitCards(Deck deck) {
+        return List.of(deck.draw(),deck.draw());
     }
 
     public static List<GamerDto> toPlayersDto(Players players) {

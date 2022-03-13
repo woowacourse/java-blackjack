@@ -45,7 +45,7 @@ public class DeckTest {
     void 카드_두장_뽑기() {
         Deck deck = new Deck(Card.VALUES);
 
-        List<Card> cards = deck.getInitCards();
+        List<Card> cards = List.of(deck.draw(), deck.draw());
 
         assertThat(cards.size()).isEqualTo(2);
     }
