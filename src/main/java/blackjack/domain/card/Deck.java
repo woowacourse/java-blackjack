@@ -8,10 +8,6 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
-
 public class Deck {
 
 	public static final String EMPTY_DECK_ERROR = "드로우 가능한 카드가 더이상 없습니다.";
