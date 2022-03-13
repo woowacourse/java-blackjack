@@ -10,6 +10,14 @@ public class Card {
         this.symbols = symbols;
     }
 
+    public boolean isAce() {
+        return symbols.equals(Symbols.ACE);
+    }
+
+    public int sumPoint(int points) {
+        return points + symbols.getPoint();
+    }
+
     public Suit getSuit() {
         return suit;
     }

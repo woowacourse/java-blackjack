@@ -16,11 +16,9 @@ public class Deck {
     }
 
     public int sumPoints() {
-        int points = deck.stream()
-                .mapToInt(this::getCardPoint)
-                .sum();
+        int points = sumCardPoint();
         int aceCount = (int) deck.stream()
-                .filter(this::isAce)
+                .filter(Card::isAce)
                 .count();
         if (aceCount == HAS_NOT_ACE) {
             return points;
@@ -35,12 +33,12 @@ public class Deck {
         return points;
     }
 
-    private boolean isAce(Card card) {
-        return card.getRank().equals(Symbols.ACE);
-    }
-
-    private int getCardPoint(Card card) {
-        return card.getRank().getPoint();
+    private int sumCardPoint() {
+        int points = 0;
+        for (Card card : deck) {
+            points = card.sumPoint(points);
+        }
+        return points;
     }
 
     public Set<Card> getCards() {
