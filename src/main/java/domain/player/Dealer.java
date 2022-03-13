@@ -12,7 +12,12 @@ public class Dealer extends Player {
         super(name);
     }
 
-    public boolean isUnderSixteen() {
+    public boolean needMoreCard() {
         return getScore() <= MORE_CARD_CRITERIA;
+    }
+
+    @Override
+    public boolean isDealer() {
+        return true;
     }
 }

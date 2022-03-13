@@ -48,7 +48,7 @@ class DealerTest {
         dealer.addCard(Card.of(Suit.SPADES, Denomination.FIVE));
 
         // when
-        boolean actual = dealer.isUnderSixteen();
+        boolean actual = dealer.needMoreCard();
 
         // then
         assertThat(actual).isTrue();
@@ -63,7 +63,7 @@ class DealerTest {
         dealer.addCard(Card.of(Suit.SPADES, Denomination.KING));
 
         // when
-        boolean actual = dealer.isUnderSixteen();
+        boolean actual = dealer.needMoreCard();
 
         // then
         assertThat(actual).isFalse();
