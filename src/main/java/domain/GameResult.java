@@ -10,6 +10,8 @@ public enum GameResult {
     DRAW((a, b) -> isBothBlackJack(a, b) || (isBothStand(a, b) && compareCardScore(a, b) == 0)),
     LOSE((a, b) -> a.isBust() || compareCardStatePower(a, b) < 0 || (isBothStand(a, b) && compareCardScore(a, b) < 0));
 
+    private static final String CANNOT_FIND_GAME_RESULT_MESSAGE = "게임결과를 찾을 수 없습니다.";
+
     private final BiPredicate<Cards, Cards> biPredicate;
 
     GameResult(final BiPredicate<Cards, Cards> biPredicate) {
@@ -20,7 +22,7 @@ public enum GameResult {
         return Arrays.stream(GameResult.values())
                 .filter(gameResult -> gameResult.biPredicate.test(playerCards, dealerCards))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException(CANNOT_FIND_GAME_RESULT_MESSAGE));
     }
 
     private static int compareCardStatePower(final Cards playerCards, final Cards dealerCards) {
@@ -31,12 +33,12 @@ public enum GameResult {
         return playerCards.isStand() && dealerCards.isStand();
     }
 
-    private static int compareCardScore(final Cards playerCards, final Cards dealerCards) {
-        return playerCards.calculateSum() - dealerCards.calculateSum();
-    }
-
     private static boolean isBothBlackJack(final Cards playerCards, final Cards dealerCards) {
         return playerCards.isBlackJack() && dealerCards.isBlackJack();
+    }
+
+    private static int compareCardScore(final Cards playerCards, final Cards dealerCards) {
+        return playerCards.calculateSum() - dealerCards.calculateSum();
     }
 
     public static List<GameResult> reverse(final List<GameResult> origin) {
