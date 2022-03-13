@@ -3,10 +3,9 @@ package blackjack.domain.user;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.card.Deck;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Users {
 
@@ -36,6 +35,12 @@ public class Users {
         }
     }
 
+    public void calculateAllUser() {
+        for (User user : users) {
+            user.calculate();
+        }
+    }
+
     public void setInitCardsPerPlayer(Deck deck) {
         for (User user : users) {
             user.drawInitCards(deck);
@@ -43,19 +48,9 @@ public class Users {
     }
 
     public List<User> getPlayers() {
-        List<User> players = new ArrayList<>();
-
-        for (User user : users) {
-            checkPlayer(players, user);
-        }
-
-        return Collections.unmodifiableList(players);
-    }
-
-    private void checkPlayer(List<User> players, User user) {
-        if (user.isPlayer()) {
-            players.add(user);
-        }
+        return users.stream()
+                .filter(user -> !user.isDealer())
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public User getDealer() {
@@ -63,11 +58,5 @@ public class Users {
                 .filter(User::isDealer)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("딜러가 업습니다."));
-    }
-
-    public void calculateAllUser() {
-        for (User user : users) {
-            user.calculate();
-        }
     }
 }
