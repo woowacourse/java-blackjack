@@ -17,8 +17,10 @@ public abstract class Role {
 		this.competeResult = new EnumMap<>(Outcome.class);
 	}
 
-	public void draw(final Card card) {
-		hand.addCard(card);
+	public void draw(final Card card, final int theNumberOfCars) {
+		for (int i = 0; i < theNumberOfCars; i++) {
+			hand.addCard(card);
+		}
 	}
 
 	public int calculateFinalScore() {

@@ -49,17 +49,16 @@ public class BlackJackService {
 	}
 
 	public TableStatusDto distributeCardToDealer() {
-		dealer.draw(deck.draw());
+		dealer.draw(deck.draw(), 1);
 		final TableStatusDto dealerStatus = TableStatusDto.from(dealer);
-		dealer.draw(deck.draw());
+		dealer.draw(deck.draw(), 1);
 		return dealerStatus;
 	}
 
 	public List<TableStatusDto> distributeCardToPlayers() {
 		List<TableStatusDto> playerStatuses = new ArrayList<>();
 		for (Role player : players) {
-			player.draw(deck.draw());
-			player.draw(deck.draw());
+			player.draw(deck.draw(), 2);
 			playerStatuses.add(TableStatusDto.from(player));
 		}
 		return playerStatuses;
@@ -75,7 +74,7 @@ public class BlackJackService {
 			nextPlayer();
 			return status;
 		}
-		currentPlayer.draw(deck.draw());
+		currentPlayer.draw(deck.draw(), 1);
 		PlayerStatusDto status = PlayerStatusDto.from(currentPlayer.canDraw(), hasNextPlayer(), currentPlayer);
 		if (!currentPlayer.canDraw()) {
 			nextPlayer();
@@ -97,7 +96,7 @@ public class BlackJackService {
 		if (!dealer.canDraw()) {
 			return DealerTurnDto.from(dealer, false, Dealer.CAN_NOT_DRAW_STANDARD);
 		}
-		dealer.draw(deck.draw());
+		dealer.draw(deck.draw(), 1);
 		return DealerTurnDto.from(dealer, true, Dealer.CAN_DRAW_STANDARD);
 	}
 
