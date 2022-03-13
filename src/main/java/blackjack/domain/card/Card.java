@@ -28,7 +28,7 @@ public class Card {
                 .collect(Collectors.toList());
     }
 
-    public static List<Card> createNewCardDeck() {
+    public static List<Card> createCardDeck() {
         return new ArrayList<>(CACHE);
     }
 
@@ -37,7 +37,6 @@ public class Card {
                 .filter(card -> isEqual(cardNumber, cardSymbol, card))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 카드는 없습니다."));
-
     }
 
     private static boolean isEqual(final CardNumber cardNumber, final CardSymbol cardSymbol, final Card targetCard) {
