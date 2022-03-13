@@ -75,10 +75,7 @@ public class BlackJackGameController {
 
 	private boolean decideHitOrStay(Player player) {
 		String decision = inputDecision(player);
-		if (decision.equalsIgnoreCase(NO)) {
-			return false;
-		}
-		return true;
+		return !decision.equalsIgnoreCase(NO);
 	}
 
 	private String inputDecision(Player player) {
