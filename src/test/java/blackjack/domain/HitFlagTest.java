@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class HitOrStandTest {
+public class HitFlagTest {
 
     @ParameterizedTest
     @DisplayName("올바른 입력값이 들어온 경우 확인")
@@ -17,15 +17,15 @@ public class HitOrStandTest {
             "n, true"
     })
     void inputTest(String input, boolean value) {
-        HitOrStand hitOrStand = HitOrStand.valueOf(input);
-        assertThat(hitOrStand.isStand()).isEqualTo(value);
+        HitFlag hitFlag = HitFlag.commandOf(input);
+        assertThat(hitFlag.isStand()).isEqualTo(value);
     }
 
     @ParameterizedTest
     @DisplayName("y 또는 n이 입력되었는지 확인")
     @ValueSource(strings = {"a", "b"})
     void inputErrorTest(String input) {
-        assertThatThrownBy(() -> HitOrStand.valueOf(input))
+        assertThatThrownBy(() -> HitFlag.commandOf(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("예는 y, 아니오는 n을 입력해 주세요.");
     }

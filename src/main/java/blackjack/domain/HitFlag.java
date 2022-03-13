@@ -1,26 +1,25 @@
 package blackjack.domain;
 
-public class HitOrStand {
-
+public enum HitFlag {
+    Y(true),
+    N(false),
+    ;
     private static final String HIT_FLAG = "y";
     private static final String STAND_FLAG = "n";
     private static final String FLAG_INPUT_ERROR_MESSAGE = "예는 y, 아니오는 n을 입력해 주세요.";
 
-    private static final HitOrStand hit = new HitOrStand(true);
-    private static final HitOrStand stand = new HitOrStand(false);
-
     private final boolean value;
 
-    private HitOrStand(boolean value) {
+    HitFlag(boolean value) {
         this.value = value;
     }
 
-    public static HitOrStand valueOf(String input) {
+    public static HitFlag commandOf(String input) {
         validate(input);
         if (input.equals(HIT_FLAG)) {
-            return hit;
+            return HitFlag.Y;
         }
-        return stand;
+        return HitFlag.N;
     }
 
     private static void validate(String input) {

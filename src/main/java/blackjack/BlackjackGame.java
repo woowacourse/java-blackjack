@@ -1,8 +1,7 @@
 package blackjack;
 
-import blackjack.domain.HitOrStand;
+import blackjack.domain.HitFlag;
 import blackjack.domain.WinDrawLose;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gamer.Dealer;
@@ -71,7 +70,7 @@ public class BlackjackGame {
     }
 
     private void playerHit(Players players, Deck deck) {
-        HitOrStand flag = HitOrStand.valueOf(InputView.inputHitOrStand(players.getNowPlayer().getName()));
+        HitFlag flag = HitFlag.commandOf(InputView.inputHitOrStand(players.getNowPlayer().getName()));
         if (flag.isStand()) {
             players.next();
             return;
