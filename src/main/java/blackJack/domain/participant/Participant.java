@@ -2,6 +2,7 @@ package blackJack.domain.participant;
 
 import blackJack.domain.card.Card;
 import blackJack.domain.card.Denomination;
+import blackJack.domain.result.MatchResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -60,6 +61,16 @@ public abstract class Participant {
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public MatchResult getMatchResult(int otherParticipantScore) {
+        if (this.getScore() > otherParticipantScore) {
+            return MatchResult.WIN;
+        }
+        if (this.getScore() == otherParticipantScore) {
+            return MatchResult.DRAW;
+        }
+        return MatchResult.LOSE;
     }
 
     public List<Card> getCards() {

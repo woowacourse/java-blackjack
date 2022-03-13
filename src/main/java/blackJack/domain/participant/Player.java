@@ -36,14 +36,4 @@ public class Player extends Participant {
         }
         return getMatchResult(dealerScore);
     }
-
-    private MatchResult getMatchResult(int dealerScore) {
-        if (this.getScore() > dealerScore) {
-            return MatchResult.WIN;
-        }
-        if (this.getScore() == dealerScore) {
-            return MatchResult.DRAW;
-        }
-        return MatchResult.LOSE;
-    }
 }

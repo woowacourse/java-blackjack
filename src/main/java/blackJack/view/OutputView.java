@@ -1,11 +1,11 @@
 package blackJack.view;
 
+import blackJack.domain.BlackJackGame;
 import blackJack.domain.card.Card;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
-import blackJack.domain.result.BlackJackGameResult;
 import blackJack.domain.result.MatchResult;
 import java.util.List;
 import java.util.Map;
@@ -91,17 +91,17 @@ public class OutputView {
                 participant.getScore());
     }
 
-    public static void printFinalMatchResult(Dealer dealer, BlackJackGameResult blackGameResult) {
+    public static void printFinalMatchResult(BlackJackGame blackJackGame) {
         System.out.println(NEWLINE.concat(OUTPUT_MESSAGE_FINAL_MATCH_RESULT));
-        Map<MatchResult, Integer> MatchResultIntegerMap = blackGameResult.calculateDealerResult();
-        String matchResult = getFinalMatchResult(MatchResultIntegerMap);
+        Map<MatchResult, Integer> dealerGameResult = blackJackGame.getDealerGameResult();
+        String dealerGameResultToString = getDealerGameResultToString(dealerGameResult);
 
-        System.out.printf(OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO, dealer.getName(), matchResult);
-        blackGameResult.getGameResult().forEach((key, value) -> System.out.printf(
+        System.out.printf(OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO, blackJackGame.getDealer().getName(), dealerGameResultToString);
+        blackJackGame.getPlayersGameResult().forEach((key, value) -> System.out.printf(
                 OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO, key.getName(), value.getResult()));
     }
 
-    private static String getFinalMatchResult(Map<MatchResult, Integer> matchResultIntegerMap) {
+    private static String getDealerGameResultToString(Map<MatchResult, Integer> matchResultIntegerMap) {
         List<String> matchResult = matchResultIntegerMap.entrySet().stream()
                 .filter(resultCount -> resultCount.getValue() > 0)
                 .map(resultCount -> resultCount.getValue() + resultCount.getKey().getResult())
