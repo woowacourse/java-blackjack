@@ -1,16 +1,17 @@
 package BlackJack.domain.User;
 
-import BlackJack.domain.Card.CardFactory;
-import BlackJack.domain.Card.Cards;
+import BlackJack.domain.Result;
 
 public class Player extends User {
-    public Player(String name, Cards cards) {
-        super(name, cards);
+
+    private static final int PLAYER_ADD_CARD_LIMIT = 21;
+    public Player(String name) {
+        super(name);
     }
 
-    @Override
-    public void addCard() {
-        cards.add(CardFactory.drawOneCard());
     }
 
+    boolean checkPossibleAdd(int currentScore) {
+        return currentScore < PLAYER_ADD_CARD_LIMIT;
+    }
 }

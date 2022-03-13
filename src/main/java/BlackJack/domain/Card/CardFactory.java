@@ -1,33 +1,20 @@
 package BlackJack.domain.Card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class CardFactory {
 
-    static List<Card> CARD_CACHE = new ArrayList<>();
+    public static final LinkedList<Card> CARD_CACHE = new LinkedList<>();
 
     static {
         for (Shape shape : Shape.values()) {
-            for (Number number : Number.values()) {
-                CARD_CACHE.add(new Card(shape, number));
-            }
+            initCards(CARD_CACHE, shape);
         }
-        Collections.shuffle(CARD_CACHE);
-
     }
 
-    public static Cards drawTwoCards() {
-        List<Card> cards = CARD_CACHE.subList(0, 2);
-        CARD_CACHE = new ArrayList<>(CARD_CACHE.subList(2, CARD_CACHE.size()));
-        return new Cards(cards);
+    private static void initCards(LinkedList<Card> cards, Shape shape) {
+        for (Number number : Number.values()) {
+            cards.add(new Card(shape, number));
+        }
     }
-
-    public static Card drawOneCard() {
-        Card card = CARD_CACHE.get(0);
-        CARD_CACHE = new ArrayList<>(CARD_CACHE.subList(1, CARD_CACHE.size()));
-        return card;
-    }
-
 }

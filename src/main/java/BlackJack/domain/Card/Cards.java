@@ -1,5 +1,6 @@
 package BlackJack.domain.Card;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Cards {
@@ -8,6 +9,7 @@ public class Cards {
     private List<Card> deck;
 
     public Cards(List<Card> deck) {
+        Collections.shuffle(deck);
         this.deck = deck;
     }
 
