@@ -47,13 +47,13 @@ public class Cards {
     }
 
     public int calculateScoreByAceEleven() {
-        if (isContainsAce()) {
+        if (containsAce()) {
             return calculateScoreByAceOne() + Score.getDifferenceAcesScore();
         }
         return calculateScoreByAceOne();
     }
 
-    private boolean isContainsAce() {
+    private boolean containsAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
     }

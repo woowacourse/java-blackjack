@@ -1,7 +1,5 @@
 package blackjack.domain.result;
 
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
@@ -18,7 +16,7 @@ public class Judge {
 
         for (Player participant : players.getParticipants()) {
             boolean isDealerWin = compete(players.getDealer(), participant);
-            changeDealerResult(dealerResult, isDealerWin);
+            updateDealerResult(dealerResult, isDealerWin);
             participantResults.add(makeParticipantResult(participant, isDealerWin));
         }
         return new GameResult(dealerResult, participantResults);
@@ -32,7 +30,7 @@ public class Judge {
         return participantScore > MAX_SCORE || (dealerScore <= MAX_SCORE && dealerScore >= participantScore);
     }
 
-    private static void changeDealerResult(DealerResult dealerResult, boolean isDealerWin) {
+    private static void updateDealerResult(DealerResult dealerResult, boolean isDealerWin) {
         if (isDealerWin) {
             dealerResult.increaseWin();
             return;
