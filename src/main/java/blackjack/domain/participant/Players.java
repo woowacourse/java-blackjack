@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,12 +19,6 @@ public class Players {
         return new Players(playerNames.stream()
                 .map(Player::of)
                 .collect(Collectors.toList()));
-    }
-
-    public void receive(Cards cards) {
-        for (Player player : players) {
-            player.receive(cards);
-        }
     }
 
     public Map<Player, Boolean> judgeResult(int score) {

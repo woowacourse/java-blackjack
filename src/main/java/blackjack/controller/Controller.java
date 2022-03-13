@@ -24,8 +24,9 @@ public class Controller {
 
     private void initCardHand(CardDeck cardDeck, Dealer dealer, Players players) {
         dealer.receive(cardDeck.distribute(INITIAL_CARD_HAND));
-        players.receive(cardDeck.distribute(INITIAL_CARD_HAND));
-
+        for (Player player : players.getPlayers()) {
+            player.receive(cardDeck.distribute(INITIAL_CARD_HAND));
+        }
         OutputView.printInitCardHandStatus(dealer, players);
     }
 
