@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 public class Dealer extends Gamer {
+	private static final int HIT_THRESHOLD = 17;
+
 	public Dealer() {
 		super(new Name("딜러"));
 	}
@@ -14,7 +16,7 @@ public class Dealer extends Gamer {
 	}
 
 	public boolean isHit() {
-		return this.getScore() < 17;
+		return this.getScore() < HIT_THRESHOLD;
 	}
 
 }
