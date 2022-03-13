@@ -2,9 +2,8 @@ package blackjack.model.player;
 
 import blackjack.model.trumpcard.Deck;
 import blackjack.model.trumpcard.TrumpCard;
-import java.util.List;
 
-public abstract class Player implements PlayerInterface {
+public abstract class Player {
     private static final String ERROR_NULL = "[ERROR] 입력된 이름이 없습니다.";
 
     protected final String name;
@@ -26,17 +25,18 @@ public abstract class Player implements PlayerInterface {
         return deck.sumScore();
     }
 
-    @Override
     public void addCard(TrumpCard card) {
         this.deck.add(card);
     }
 
-    @Override
+    public boolean isBust() {
+        return this.deck.isBust();
+    }
+
     public String getName() {
         return this.name;
     }
 
-    @Override
     public Deck getDeck() {
         return this.deck;
     }

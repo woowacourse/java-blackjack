@@ -33,12 +33,6 @@ public class Dealer extends Player {
         return this.deck.getSize();
     }
 
-    @Override
-    public boolean isBust() {
-        return this.deck.isBust();
-    }
-
-    @Override
     public void hit(TrumpCard card) {
         if (canHit()) {
             this.deck.add(card);

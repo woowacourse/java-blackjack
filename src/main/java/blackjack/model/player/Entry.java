@@ -1,7 +1,5 @@
 package blackjack.model.player;
 
-import blackjack.model.trumpcard.TrumpCard;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class Entry extends Player {
@@ -49,15 +47,5 @@ public class Entry extends Player {
         if (Pattern.matches(REGEX_NAME_CONTAINS_SIGN, name)) {
             throw new IllegalArgumentException(ERROR_CONTAINS_SIGN);
         }
-    }
-
-    @Override
-    public boolean isBust() {
-        return this.deck.isBust();
-    }
-
-    @Override
-    public void hit(TrumpCard card) {
-        this.deck.add(card);
     }
 }

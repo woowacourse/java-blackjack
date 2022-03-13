@@ -1,13 +1,9 @@
 package blackjack.model.player;
 
-import blackjack.model.Game;
-import blackjack.model.Result;
 import blackjack.model.Results;
 import blackjack.model.trumpcard.TrumpCard;
-import blackjack.model.trumpcard.TrumpCardPack;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Entries {
@@ -41,13 +37,6 @@ public class Entries {
                 .count();
     }
 
-    public void giveFirstCards(TrumpCardPack trumpCardPack) {
-        for (Entry entry : values) {
-            entry.addCard(trumpCardPack.draw());
-            entry.addCard(trumpCardPack.draw());
-        }
-    }
-
     public void operateToEach(Consumer<? super Entry> consumer) {
         for (Entry entry : values) {
             consumer.accept(entry);
@@ -66,7 +55,7 @@ public class Entries {
     }
 
     public void addToCurrentEntry(TrumpCard card) {
-        getCurrentEntry().hit(card);
+        getCurrentEntry().addCard(card);
     }
 
     public boolean isCurrentEntryBust() {
