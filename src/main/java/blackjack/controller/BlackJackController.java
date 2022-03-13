@@ -56,6 +56,7 @@ public class BlackJackController {
         if (choice.isYes() && participant.canAddCard()) {
             blackJackMachine.giveCardToPlayer(participant);
             OutputView.printPlayerCards(participant);
+            OutputView.printNewLine();
             checkGiveAgain(blackJackMachine, participant);
         }
     }

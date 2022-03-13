@@ -42,6 +42,7 @@ public class OutputView {
     private static void printParticipantsCards(final Participants participants) {
         for (Participant participant : participants) {
             printPlayerCards(participant);
+            printNewLine();
         }
     }
 
@@ -50,7 +51,7 @@ public class OutputView {
         for (Card card : player.getCards()) {
             cards.add(card.getDenominationName() + card.getSuitName());
         }
-        System.out.println(player.getName() + "카드: " + String.join(CARD_DELIMITER, cards));
+        System.out.print(player.getName() + "카드: " + String.join(CARD_DELIMITER, cards));
     }
 
     public static void printDealerGetCardMessage(final Dealer dealer) {
@@ -58,11 +59,8 @@ public class OutputView {
     }
 
     public static void printTotalScore(final Player player, final int totalScore) {
-        final List<String> cards = new ArrayList<>();
-        for (Card card : player.getCards()) {
-            cards.add(card.toString());
-        }
-        System.out.println(player.getName() + "카드: " + String.join(CARD_DELIMITER, cards) + " - 결과: " + totalScore);
+        printPlayerCards(player);
+        System.out.println(" - 결과: " + totalScore);
     }
 
     public static void printResults(final Dealer dealer, final DealerResult dealerResult, final ParticipantResult results) {
