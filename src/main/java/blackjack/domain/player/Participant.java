@@ -28,30 +28,29 @@ public abstract class Participant {
         }
     }
 
+    public abstract List<Card> openCards();
 
     public void addCard(Card card) {
         cards.add(card);
     }
 
-    public abstract List<Card> openCards();
-
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return cards.toList();
     }
 
-    public boolean isBust() {
+    protected final boolean isBust() {
         return cards.isBust();
     }
 
-    public boolean isBlackjack() {
+    protected final boolean isBlackjack() {
         return cards.isBlackjack();
     }
 
-    public int getScore() {
+    public final int getScore() {
         return cards.calculateScore();
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
