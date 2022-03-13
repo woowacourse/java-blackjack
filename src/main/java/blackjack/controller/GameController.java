@@ -5,17 +5,16 @@ import blackjack.domain.participant.Player;
 import blackjack.service.Casino;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.List;
 
 public class GameController {
 
     public void play() {
-        final Casino casino = new Casino(getPlayerNames());
+        final Casino casino = crateCasino();
         casino.prepareParticipants();
 
         while (casino.isPlayerTurn()) {
             final Player player = casino.findDrawablePlayer();
-            final Status status = getHitOrStay(player);
+            final Status status = InputView.getHitOrStay(player.getName());
             casino.progressPlayerTurn(player, status);
         }
         casino.progressDealerTurn();
@@ -23,21 +22,12 @@ public class GameController {
         casino.endGame();
     }
 
-    private List<String> getPlayerNames() {
+    private Casino crateCasino() {
         try {
-            return InputView.requestPlayerNames();
+            return new Casino(InputView.getPlayerNames());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
-            return getPlayerNames();
-        }
-    }
-
-    private Status getHitOrStay(final Player player) {
-        try {
-            return InputView.requestHitOrStay(player.getName());
-        } catch (IllegalArgumentException e) {
-            OutputView.printError(e.getMessage());
-            return getHitOrStay(player);
+            return crateCasino();
         }
     }
 }

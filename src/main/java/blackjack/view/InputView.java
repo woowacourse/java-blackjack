@@ -10,7 +10,16 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static List<String> requestPlayerNames() {
+    public static List<String> getPlayerNames() {
+        try {
+            return requestPlayerNames();
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+            return getPlayerNames();
+        }
+    }
+
+    private static List<String> requestPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
 
         final String text = scanner.nextLine();
@@ -19,7 +28,16 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public static Status requestHitOrStay(String name) {
+    public static Status getHitOrStay(final String playerName) {
+        try {
+            return requestHitOrStay(playerName);
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e.getMessage());
+            return getHitOrStay(playerName);
+        }
+    }
+
+    private static Status requestHitOrStay(String name) {
         System.out.println(System.lineSeparator() + name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
         final String text = scanner.nextLine().trim();
