@@ -8,10 +8,22 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class RandomCardGenerator implements CardGenerator {
-    public Stack<PlayingCard> generate() {
-        return Arrays.stream(Suit.values())
+    static final Stack<PlayingCard> cardDeck;
+
+    static {
+        cardDeck = Arrays.stream(Suit.values())
             .flatMap(suit -> Arrays.stream(Denomination.values())
                 .map(denomination -> PlayingCard.of(suit, denomination)))
             .collect(Collectors.toCollection(Stack::new));
+    }
+
+    public Stack<PlayingCard> generate() {
+        return getCopiedDeck();
+    }
+
+    private Stack<PlayingCard> getCopiedDeck() {
+        final Stack<PlayingCard> copedDeck = new Stack<>();
+        copedDeck.addAll(cardDeck);
+        return copedDeck;
     }
 }
