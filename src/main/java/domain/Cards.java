@@ -60,7 +60,7 @@ public final class Cards {
     }
 
     public CardState getCardState() {
-        return CardState.of(this);
+        return CardState.from(this);
     }
 
     public List<Card> getCards() {
@@ -69,9 +69,5 @@ public final class Cards {
 
     public int getCardStatePower() {
         return getCardState().getStatePower();
-    }
-
-    public int getCardCount() {
-        return cards.size();
     }
 }
