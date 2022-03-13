@@ -32,8 +32,7 @@ class CardTest {
                 Arguments.of(Score.TEN, 10),
                 Arguments.of(Score.JACK, 10),
                 Arguments.of(Score.KING, 10),
-                Arguments.of(Score.QUEEN, 10),
-                Arguments.of(Score.ACE_ELEVEN, 11)
+                Arguments.of(Score.QUEEN, 10)
         );
     }
 

@@ -6,6 +6,7 @@ import java.util.List;
 public class Cards {
 
     private static final int MAX_SCORE = 21;
+    private static final int ANOTHER_ACE_SCORE = 10;
 
     private final List<Card> cards;
 
@@ -48,7 +49,7 @@ public class Cards {
 
     public int calculateScoreByAceEleven() {
         if (containsAce()) {
-            return calculateScoreByAceOne() + Score.getDifferenceAcesScore();
+            return calculateScoreByAceOne() + ANOTHER_ACE_SCORE;
         }
         return calculateScoreByAceOne();
     }
@@ -66,5 +67,9 @@ public class Cards {
 
     public List<Card> getCards() {
         return List.copyOf(this.cards);
+    }
+
+    public static int getMaxScore() {
+        return MAX_SCORE;
     }
 }

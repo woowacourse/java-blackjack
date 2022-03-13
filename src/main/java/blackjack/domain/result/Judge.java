@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import blackjack.domain.card.Cards;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
@@ -7,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Judge {
-
-    public static final int MAX_SCORE = 21;
 
     public static GameResult calculateGameResult(final Players players) {
         final DealerResult dealerResult = new DealerResult();
@@ -27,7 +26,7 @@ public class Judge {
     }
 
     private static boolean isDealerWin(final int dealerScore, final int participantScore) {
-        return participantScore > MAX_SCORE || (dealerScore <= MAX_SCORE && dealerScore >= participantScore);
+        return participantScore > Cards.getMaxScore() || (dealerScore <= Cards.getMaxScore() && dealerScore >= participantScore);
     }
 
     private static void updateDealerResult(DealerResult dealerResult, boolean isDealerWin) {

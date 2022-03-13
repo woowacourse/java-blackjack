@@ -7,7 +7,8 @@ public enum Type {
     SPADE("스페이드"),
     DIAMOND("다이아몬드"),
     CLOVER("클로버"),
-    HEART("하트");
+    HEART("하트"),
+    ;
 
     private final String name;
 
@@ -16,7 +17,7 @@ public enum Type {
     }
 
     public static List<Type> getTypeValues() {
-        return List.of(Type.values());
+        return List.of(values());
     }
 
     public String getName() {

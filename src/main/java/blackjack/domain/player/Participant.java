@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.result.Judge;
 import blackjack.domain.result.Result;
 
@@ -21,6 +22,6 @@ public class Participant extends Player {
 
     @Override
     public boolean acceptableCard() {
-        return cards.calculateScoreByAceOne() <= Judge.MAX_SCORE;
+        return cards.calculateScoreByAceOne() <= Cards.getMaxScore();
     }
 }

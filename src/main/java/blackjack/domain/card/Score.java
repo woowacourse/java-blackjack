@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,7 @@ public enum Score {
     JACK("J", 10),
     KING("K", 10),
     QUEEN("Q", 10),
-    ACE_ELEVEN("A", 11);
+    ;
 
     private final String symbol;
     private final int amount;
@@ -30,13 +31,7 @@ public enum Score {
     }
 
     public static List<Score> getScoreValues() {
-        return Arrays.stream(Score.values())
-                .filter(score -> score != Score.ACE_ELEVEN)
-                .collect(Collectors.toList());
-    }
-
-    public static int getDifferenceAcesScore() {
-        return Score.ACE_ELEVEN.getAmount() - Score.ACE.getAmount();
+        return List.of(values());
     }
 
     public String getSymbol() {
