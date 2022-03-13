@@ -2,30 +2,20 @@ package blackJack.domain.card;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class Deck {
 
-    private final LinkedList<Card> deck;
+    private final Queue<Card> deck;
 
     public Deck() {
-        deck = new LinkedList<>();
-        initDeck();
-        Collections.shuffle(deck);
-    }
-
-    private void initDeck() {
-        for (Symbol symbol : Symbol.values()) {
-            initDeckBySymbol(symbol);
-        }
-    }
-
-    private void initDeckBySymbol(Symbol symbol) {
-        for (Denomination denomination : Denomination.values()) {
-            deck.add(new Card(symbol, denomination));
-        }
+        List<Card> cards = Card.newCards();
+        Collections.shuffle(cards);
+        deck = new LinkedList<>(cards);
     }
 
     public Card getCard() {
-       return deck.pop();
+        return deck.poll();
     }
 }

@@ -21,7 +21,7 @@ public class DealerTest {
     @DisplayName("딜러의 카드 합계 계산 테스트")
     void calculateScore() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
+        dealer.receiveCard(Card.from(Symbol.CLOVER, Denomination.EIGHT));
 
         assertThat(dealer.getScore()).isEqualTo(8);
     }
@@ -30,8 +30,8 @@ public class DealerTest {
     @DisplayName("딜러의 카드 추가 분배가 불가능한 경우 테스트")
     void hasFalseDealerNextTurn() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.SEVEN));
-        dealer.receiveCard(new Card(Symbol.HEART, Denomination.JACK));
+        dealer.receiveCard(Card.from(Symbol.SPADE, Denomination.SEVEN));
+        dealer.receiveCard(Card.from(Symbol.HEART, Denomination.JACK));
 
         assertThat(dealer.hasNextTurn()).isFalse();
     }
@@ -40,8 +40,8 @@ public class DealerTest {
     @DisplayName("딜러의 카드 추가 분배가 가능한 경우 테스트")
     void hasTrueDealerNextTurn() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.SIX));
-        dealer.receiveCard(new Card(Symbol.HEART, Denomination.JACK));
+        dealer.receiveCard(Card.from(Symbol.SPADE, Denomination.SIX));
+        dealer.receiveCard(Card.from(Symbol.HEART, Denomination.JACK));
 
         assertThat(dealer.hasNextTurn()).isTrue();
     }
