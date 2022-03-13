@@ -1,26 +1,27 @@
-package blackjack.model.player;
+package blackjack.model.cards;
 
 import blackjack.model.card.Card;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Cards {
+final class HandCards implements Cards{
 
     private final List<Card> values;
 
-    public Cards(Card card1, Card card2, Card... cards) {
+    HandCards(Card card1, Card card2, Card... cards) {
         this.values = concat(concat(card1, card2), cards)
             .collect(Collectors.toList());
     }
 
-    public Cards(Cards cards) {
+    HandCards(Cards cards) {
         this.values = List.copyOf(cards.values());
     }
 
-    private Cards(List<Card> cards) {
+    private HandCards(List<Card> cards) {
         this.values = cards;
     }
 
@@ -32,14 +33,17 @@ public class Cards {
         return Stream.concat(cards1, List.of(cards2).stream());
     }
 
+    @Override
     public Collection<Card> values() {
         return List.copyOf(values);
     }
 
+    @Override
     public Cards openedCards(int count) {
-        return new Cards(values.subList(0, count));
+        return new HandCards(values.subList(0, count));
     }
 
+    @Override
     public void take(Card card) {
         values.add(card);
     }
