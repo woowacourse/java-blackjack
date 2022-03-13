@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.DeckGenerator;
 import blackjack.domain.card.DeckGeneratorImpl;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;

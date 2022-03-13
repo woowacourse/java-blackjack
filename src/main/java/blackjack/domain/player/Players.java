@@ -43,8 +43,9 @@ public class Players {
     }
 
     public void competeWithDealer() {
-        participants.forEach(player ->
-                dealer.compete(player));
+        for (Participant participant : participants) {
+            dealer.compete(participant);
+        }
     }
 
     public Dealer getDealer() {
