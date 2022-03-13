@@ -32,7 +32,7 @@ public class Players {
 
     private static List<Player> toPlayers(List<String> names) {
         return names.stream()
-                .map(CasinoCustomer::new)
+                .map(Guest::new)
                 .collect(Collectors.toList());
     }
 

@@ -4,11 +4,11 @@ import blackjack.domain.WinDrawLose;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 
-public class CasinoCustomer extends AbstractPlayer {
+public class Guest extends AbstractPlayer {
 
     private WinDrawLose winDrawLose;
 
-    public CasinoCustomer(String name) {
+    public Guest(String name) {
         super(name, new Cards(new ArrayList<>()));
     }
 
