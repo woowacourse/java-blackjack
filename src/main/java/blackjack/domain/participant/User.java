@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.result.Result;
 import blackjack.domain.result.UserResult;
 
 public class User extends Participant {
@@ -17,6 +18,10 @@ public class User extends Participant {
     }
 
     public UserResult getUserInfoWithResult(int dealerSum) {
-        return UserResult.of(name, holdingCard.cardSum(), dealerSum);
+        return new UserResult(name, checkResult(dealerSum));
+    }
+
+    private Result checkResult(int dealerSum) {
+        return Result.checkUserResult(holdingCard.cardSum(), dealerSum);
     }
 }
