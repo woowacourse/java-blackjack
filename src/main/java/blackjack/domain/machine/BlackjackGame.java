@@ -2,8 +2,11 @@ package blackjack.domain.machine;
 
 import blackjack.domain.card.CardShuffleMachine;
 import blackjack.domain.card.Cards;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Guest;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.view.InputView;
 import java.util.List;
 
 public class BlackjackGame {
@@ -17,8 +20,38 @@ public class BlackjackGame {
         blackjackPlayers.startWithTwoCards(cards);
     }
 
-    public void addCard(Player player) {
+
+    public boolean hasNextGuest() {
+        return blackjackPlayers.hasNextGuest();
+    }
+
+    public void turnGuest() {
+        blackjackPlayers.turnNextGuest();
+    }
+
+    public GameResponse addCardToPlayer() {
+        Player player = blackjackPlayers.getTurnPlayer();
         player.addCard(cards.assignCard());
+        return new GameResponse(player.getName(), player.getDeck());
+    }
+
+    public boolean checkGetMoreCard() {
+        Player player = blackjackPlayers.getTurnPlayer();
+        if (player.isOverLimit(Guest.LIMIT_POINT)) {
+            return false;
+        }
+        String userResponse = InputView.requestMoreCard(player.getName());
+        return Hit.isYes(userResponse);
+    }
+
+    public boolean canGetMoreCardToDealer() {
+        Player dealer = blackjackPlayers.getDealer();
+        return !dealer.isOverLimit(Dealer.LIMIT_POINT);
+    }
+
+    public void addCardToDealer() {
+        Player dealer = blackjackPlayers.getDealer();
+        dealer.addCard(cards.assignCard());
     }
 
     public Results calculateResult() {
@@ -31,16 +64,6 @@ public class BlackjackGame {
         return results;
     }
 
-    private void scorePlayers(Player dealer, Player guest, Results results) {
-        int playerPoint = guest.getDeck().sumPoints();
-        int dealerPoint = dealer.getDeck().sumPoints();
-
-        Match result = Match.findWinner(playerPoint, dealerPoint);
-        Match dealerResult = result.getDealerResult();
-        results.addResult(dealer, dealerResult);
-        results.addResult(guest, result);
-    }
-
     public List<String> getPlayerNames() {
         return blackjackPlayers.getNames();
     }
@@ -49,11 +72,13 @@ public class BlackjackGame {
         return blackjackPlayers.getPlayers();
     }
 
-    public List<Player> getGuests() {
-        return blackjackPlayers.getGuests();
-    }
+    private void scorePlayers(Player dealer, Player guest, Results results) {
+        int playerPoint = guest.getDeck().sumPoints();
+        int dealerPoint = dealer.getDeck().sumPoints();
 
-    public Player getDealer() {
-        return blackjackPlayers.getDealer();
+        Match result = Match.findWinner(playerPoint, dealerPoint);
+        Match dealerResult = result.getDealerResult();
+        results.addResult(dealer, dealerResult);
+        results.addResult(guest, result);
     }
 }

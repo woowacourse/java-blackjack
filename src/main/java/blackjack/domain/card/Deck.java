@@ -27,6 +27,10 @@ public class Deck {
         return calculateAcePoint(sumWithoutAce, aceCount);
     }
 
+    public Set<Card> getCards() {
+        return cards;
+    }
+
     private int countAces() {
         return (int) cards.stream()
                 .filter(card -> !excludeAce(card))
@@ -46,10 +50,6 @@ public class Deck {
 
     private int getCardPoint(Card card) {
         return card.getRank().getPoint();
-    }
-
-    public Set<Card> getCards() {
-        return cards;
     }
 
     @Override

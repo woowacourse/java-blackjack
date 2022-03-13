@@ -25,6 +25,10 @@ public class OutputView {
         System.out.println(String.join(COMMA_DELIMITER, playerNames) + DISTRIBUTE_TWO_CARDS_MESSAGE);
     }
 
+    public static void announcePresentCards(GameResponse gameResponse) {
+            printFirstStartCards(gameResponse);
+    }
+
     public static void announcePresentCards(List<GameResponse> gameResponses) {
         for (GameResponse gameResponse : gameResponses) {
             printFirstStartCards(gameResponse);
