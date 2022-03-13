@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
+import blackjack.domain.result.Result;
 import java.util.Map;
 
 public class DealerResult {

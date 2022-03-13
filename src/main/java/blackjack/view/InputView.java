@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Choice;
-import blackjack.domain.Participant;
+import blackjack.domain.player.Participant;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
