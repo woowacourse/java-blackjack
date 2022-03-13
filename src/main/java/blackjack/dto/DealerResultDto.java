@@ -15,20 +15,20 @@ public class DealerResultDto {
 	private final List<String> cards;
 	private final int totalScore;
 	private final boolean bust;
-	private final Map<Outcome, Integer> competeResult;
+	private final Map<Outcome, Long> competeResult;
 
-	private DealerResultDto(final String name, final Hand hand, final Map<Outcome, Integer> competeResult) {
+	private DealerResultDto(final String name, final Hand hand, final Map<Outcome, Long> competeResult) {
 		this.name = name;
 		this.cards = hand.getCards().stream()
-			.map(Card::getInformation)
-			.collect(Collectors.toList());
+				.map(Card::getInformation)
+				.collect(Collectors.toList());
 		this.totalScore = hand.calculateOptimalScore();
 		this.bust = hand.isBust(totalScore);
 		this.competeResult = competeResult;
 	}
-
-	public static DealerResultDto from(final Role dealer) {
-		return new DealerResultDto(dealer.getName(), dealer.getHand(), dealer.getCompeteResult());
+    
+	public static DealerResultDto from(final Role dealer, final Map<Outcome, Long> competeResult) {
+		return new DealerResultDto(dealer.getName(), dealer.getHand(), competeResult);
 	}
 
 	public String getName() {
@@ -47,7 +47,7 @@ public class DealerResultDto {
 		return bust;
 	}
 
-	public Map<Outcome, Integer> getCompeteResult() {
+	public Map<Outcome, Long> getCompeteResult() {
 		return competeResult;
 	}
 }

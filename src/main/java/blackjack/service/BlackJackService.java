@@ -1,5 +1,6 @@
 package blackjack.service;
 
+import blackjack.domain.Compete;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -8,7 +9,6 @@ import java.util.stream.Collectors;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
-import blackjack.domain.Outcome;
 import blackjack.domain.Player;
 import blackjack.domain.RedrawChoice;
 import blackjack.domain.Role;
@@ -22,7 +22,7 @@ public class BlackJackService {
 
 	public static final int BUST = 0;
 	public static final int OPTIMIZED_WINNING_NUMBER = 21;
-
+	
 	private Deck deck;
 	private Role dealer;
 	private List<Role> players;
@@ -36,8 +36,8 @@ public class BlackJackService {
 
 	public void joinPlayers(final List<String> names) {
 		players = names.stream()
-			.map(name -> new Player(name, new Hand()))
-			.collect(Collectors.toList());
+				.map(name -> new Player(name, new Hand()))
+				.collect(Collectors.toList());
 		initPlayerIterator();
 	}
 
@@ -100,15 +100,10 @@ public class BlackJackService {
 	}
 
 	public FinalResultDto calculateFinalResult() {
+		Compete compete = new Compete();
 		for (Role player : players) {
-			Outcome outcome = judge(player);
-			player.recordCompeteResult(outcome);
-			dealer.recordCompeteResult(outcome.getOppositeOutcome());
+			compete.judgeCompete(player, dealer);
 		}
-		return FinalResultDto.from(dealer, players);
-	}
-
-	private Outcome judge(Role player) {
-		return Outcome.of(player.calculateFinalScore(), dealer.calculateFinalScore());
+		return FinalResultDto.from(dealer, players, compete);
 	}
 }

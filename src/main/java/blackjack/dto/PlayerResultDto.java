@@ -1,8 +1,6 @@
 package blackjack.dto;
 
 import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import blackjack.domain.Card;
@@ -17,21 +15,19 @@ public class PlayerResultDto {
 	private final int totalScore;
 	private final boolean bust;
 	private final Outcome competeResult;
-
-	private PlayerResultDto(final String name, final Hand hand, final Map<Outcome, Integer> competeResult) {
+    
+	private PlayerResultDto(final String name, final Hand hand, final Outcome competeResult) {
 		this.name = name;
 		this.cards = hand.getCards().stream()
-			.map(Card::getInformation)
-			.collect(Collectors.toList());
+				.map(Card::getInformation)
+				.collect(Collectors.toList());
 		this.totalScore = hand.calculateOptimalScore();
 		this.bust = hand.isBust(totalScore);
-		this.competeResult = competeResult.keySet().stream()
-			.findFirst()
-			.orElseThrow(NoSuchElementException::new);
+		this.competeResult = competeResult;
 	}
 
-	public static PlayerResultDto from(final Role player) {
-		return new PlayerResultDto(player.getName(), player.getHand(), player.getCompeteResult());
+	public static PlayerResultDto from(final Role player, final Outcome competeResult) {
+		return new PlayerResultDto(player.getName(), player.getHand(), competeResult);
 	}
 
 	public String getName() {

@@ -33,8 +33,8 @@ public class OutputView {
 
 	private static void printNames(final TableStatusDto dealerStatus, final List<TableStatusDto> tableStatuses) {
 		final String playerNames = tableStatuses.stream()
-			.map(TableStatusDto::getRoleName)
-			.collect(Collectors.joining(OUTPUT_CONTEXT_DISTRIBUTOR));
+				.map(TableStatusDto::getRoleName)
+				.collect(Collectors.joining(OUTPUT_CONTEXT_DISTRIBUTOR));
 
 		final String message = dealerStatus.getRoleName() + WITH + playerNames + DISTRIBUTED_TWO_CARDS;
 		System.out.print("\n");
@@ -56,15 +56,15 @@ public class OutputView {
 		System.out.print("\n");
 		if (dealerTurn.isDraw()) {
 			System.out.println(
-				dealerTurn.getName() + IS + SPACE + dealerTurn.getStandard() + RECEIVED_ONE_MORE_CARD + "\n");
+					dealerTurn.getName() + IS + SPACE + dealerTurn.getStandard() + RECEIVED_ONE_MORE_CARD + "\n");
 			return;
 		}
 		System.out.println(
-			dealerTurn.getName() + IS + SPACE + dealerTurn.getStandard() + FAIL_TO_RECEIVE_ONE_MORE_CARD + "\n");
+				dealerTurn.getName() + IS + SPACE + dealerTurn.getStandard() + FAIL_TO_RECEIVE_ONE_MORE_CARD + "\n");
 	}
 
 	public static void printFinalResult(FinalResultDto finalResult) {
-		final DealerResultDto dealerResult = finalResult.getDealerResults();
+		final DealerResultDto dealerResult = finalResult.getDealerResult();
 		final List<PlayerResultDto> playerResult = finalResult.getPlayerResults();
 		printDealerFinalResult(dealerResult);
 		playerResult.forEach(OutputView::printPlayerFinalResult);
@@ -96,8 +96,8 @@ public class OutputView {
 	private static void printDealerOutcome(final DealerResultDto dealerResult) {
 		System.out.print(dealerResult.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
 		final String dealerOutcome = dealerResult.getCompeteResult().entrySet().stream()
-			.map(entry -> EMPTY + entry.getValue() + entry.getKey().getValue())
-			.collect(Collectors.joining(SPACE));
+				.map(entry -> EMPTY + entry.getValue() + entry.getKey().getValue())
+				.collect(Collectors.joining(SPACE));
 		System.out.println(dealerOutcome);
 	}
 
