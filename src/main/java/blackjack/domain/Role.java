@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public abstract class Role {
 
 	protected final String name;
@@ -19,6 +21,8 @@ public abstract class Role {
 	}
 
 	public abstract boolean canDraw();
+
+	public abstract List<Card> openHand();
 
 	public String getName() {
 		return name;

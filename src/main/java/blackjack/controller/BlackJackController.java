@@ -4,6 +4,8 @@ import blackjack.domain.Dealer;
 import blackjack.domain.DealerDrawable;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
+import blackjack.dto.DealerTableDto;
+import blackjack.dto.PlayerTableDto;
 import java.util.List;
 
 import blackjack.domain.RedrawChoice;
@@ -11,7 +13,6 @@ import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerTurnDto;
-import blackjack.dto.TableStatusDto;
 import blackjack.service.BlackJackService;
 
 public class BlackJackController {
@@ -22,19 +23,19 @@ public class BlackJackController {
 		this.blackJackService = blackJackService;
 	}
 
-
-	public void initBlackJackGame(){
+	public void initBlackJackGame() {
 		blackJackService.initBlackJackGame(new Deck(), new Dealer(new Hand(), DealerDrawable::chooseDraw));
 	}
+
 	public void addPlayers(List<String> names) {
 		blackJackService.joinPlayers(names);
 	}
 
-	public TableStatusDto distributeCardToDealer() {
+	public DealerTableDto distributeCardToDealer() {
 		return blackJackService.distributeCardToDealer();
 	}
 
-	public List<TableStatusDto> distributeCardToPlayers() {
+	public List<PlayerTableDto> distributeCardToPlayers() {
 		return blackJackService.distributeCardToPlayers();
 	}
 

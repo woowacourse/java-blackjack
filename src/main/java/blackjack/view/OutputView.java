@@ -1,7 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.Outcome;
-import blackjack.service.BlackJackService;
+import blackjack.dto.DealerTableDto;
+import blackjack.dto.PlayerTableDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,7 +10,6 @@ import blackjack.dto.DealerResultDto;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerResultDto;
-import blackjack.dto.TableStatusDto;
 
 public class OutputView {
 
@@ -30,30 +30,36 @@ public class OutputView {
 	private static final String DEFEAT = "패";
 	private static final String TIE = "무";
 
-	public static void printInitialStatus(final TableStatusDto dealerStatus, final List<TableStatusDto> playersStatus) {
-		printNames(dealerStatus, playersStatus);
-		printHand(dealerStatus, playersStatus);
+	public static void printInitialStatus(final DealerTableDto dealerTable,
+										  final List<PlayerTableDto> playersTable) {
+		printNames(dealerTable, playersTable);
+		printHand(dealerTable, playersTable);
 	}
 
-	private static void printNames(final TableStatusDto dealerStatus, final List<TableStatusDto> tableStatuses) {
-		final String playerNames = tableStatuses.stream()
-				.map(TableStatusDto::getRoleName)
+	private static void printNames(final DealerTableDto dealerTable, final List<PlayerTableDto> playersTable) {
+		final String playerNames = playersTable.stream()
+				.map(PlayerTableDto::getRoleName)
 				.collect(Collectors.joining(OUTPUT_CONTEXT_DISTRIBUTOR));
 
-		final String message = dealerStatus.getRoleName() + WITH + playerNames + DISTRIBUTED_TWO_CARDS;
+		final String message = dealerTable.getRoleName() + WITH + playerNames + DISTRIBUTED_TWO_CARDS;
 		System.out.print("\n");
 		System.out.println(message);
 	}
 
-	private static void printHand(TableStatusDto dealerStatus, List<TableStatusDto> playersStatus) {
-		printPersonalHand(dealerStatus);
-		playersStatus.forEach(OutputView::printPersonalHand);
+	private static void printHand(DealerTableDto dealerTable, List<PlayerTableDto> playersTable) {
+		printDealerHand(dealerTable);
+		playersTable.forEach(OutputView::printPlayerHand);
 		System.out.print("\n");
 	}
 
-	public static void printPersonalHand(final TableStatusDto status) {
-		System.out.print(status.getRoleName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, status.getCards()));
+	private static void printDealerHand(final DealerTableDto dealerTable) {
+		System.out.print(dealerTable.getRoleName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
+		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, dealerTable.getCards()));
+	}
+
+	public static void printPlayerHand(final PlayerTableDto playerTable) {
+		System.out.print(playerTable.getRoleName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
+		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, playerTable.getCards()));
 	}
 
 	public static void printDealerStatus(DealerTurnDto dealerTurn) {

@@ -1,14 +1,11 @@
 package blackjack;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.DealerDrawable;
-import blackjack.domain.Deck;
-import blackjack.domain.Hand;
+import blackjack.dto.DealerTableDto;
+import blackjack.dto.PlayerTableDto;
 import java.util.List;
 
 import blackjack.controller.BlackJackController;
 import blackjack.dto.PlayerStatusDto;
-import blackjack.dto.TableStatusDto;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -21,14 +18,14 @@ public class BlackJackApplication {
 		controller.initBlackJackGame();
 		controller.addPlayers(InputView.requestPlayerName());
 
-		TableStatusDto dealerStatus = controller.distributeCardToDealer();
-		List<TableStatusDto> playersStatus = controller.distributeCardToPlayers();
-		OutputView.printInitialStatus(dealerStatus, playersStatus);
+		DealerTableDto dealerTable = controller.distributeCardToDealer();
+		List<PlayerTableDto> playersTable = controller.distributeCardToPlayers();
+		OutputView.printInitialStatus(dealerTable, playersTable);
 
 		while (true) {
 			String answer = InputView.drawOneMoreCard(controller.getWhoseTurn());
 			PlayerStatusDto playerStatus = controller.drawPlayer(answer);
-			OutputView.printPersonalHand(playerStatus.getTableStatusDto());
+			OutputView.printPlayerHand(playerStatus.getTableStatusDto());
 			if (playerStatus.isDraw()) {
 				continue;
 			}

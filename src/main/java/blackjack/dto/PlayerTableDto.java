@@ -4,23 +4,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.Card;
-import blackjack.domain.Hand;
 import blackjack.domain.Role;
 
-public class TableStatusDto {
+public class PlayerTableDto {
 
 	private final String roleName;
 	private final List<String> cards;
 
-	private TableStatusDto(final String roleName, final Hand hand) {
+	private PlayerTableDto(final String roleName, final List<Card> cards) {
 		this.roleName = roleName;
-		cards = hand.getCards().stream()
-			.map(Card::getInformation)
-			.collect(Collectors.toList());
+		this.cards = cards.stream()
+				.map(Card::getInformation)
+				.collect(Collectors.toList());
 	}
 
-	public static TableStatusDto from(final Role role) {
-		return new TableStatusDto(role.getName(), role.getHand());
+	public static PlayerTableDto from(final Role role) {
+		return new PlayerTableDto(role.getName(), role.openHand());
 	}
 
 	public String getRoleName() {

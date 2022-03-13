@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 import blackjack.service.BlackJackService;
@@ -9,6 +10,7 @@ public class Dealer extends Role {
 	public static final int CAN_NOT_DRAW_STANDARD = 17;
 	public static final int CAN_DRAW_STANDARD = 16;
 
+	private static final int openCard = 0;
 	private static final String DEALER_NAME = "딜러";
 
 	private final Supplier<Boolean> drawable;
@@ -30,5 +32,11 @@ public class Dealer extends Role {
 			return false;
 		}
 		return drawable.get();
+	}
+
+	@Override
+	public List<Card> openHand() {
+		List<Card> cards = hand.getCards();
+		return List.of(cards.get(openCard));
 	}
 }

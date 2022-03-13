@@ -1,6 +1,8 @@
 package blackjack.service;
 
 import blackjack.domain.Compete;
+import blackjack.dto.DealerTableDto;
+import blackjack.dto.PlayerTableDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -16,13 +18,12 @@ import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerStatusDto;
 import blackjack.dto.PlayerTurnDto;
-import blackjack.dto.TableStatusDto;
 
 public class BlackJackService {
 
 	public static final int BUST = 0;
 	public static final int OPTIMIZED_WINNING_NUMBER = 21;
-	
+
 	private Deck deck;
 	private Role dealer;
 	private List<Role> players;
@@ -46,19 +47,18 @@ public class BlackJackService {
 		nextPlayer();
 	}
 
-	public TableStatusDto distributeCardToDealer() {
+	public DealerTableDto distributeCardToDealer() {
 		dealer.draw(deck.draw());
-		final TableStatusDto dealerStatus = TableStatusDto.from(dealer);
 		dealer.draw(deck.draw());
-		return dealerStatus;
+		return DealerTableDto.from(dealer);
 	}
 
-	public List<TableStatusDto> distributeCardToPlayers() {
-		List<TableStatusDto> playerStatuses = new ArrayList<>();
+	public List<PlayerTableDto> distributeCardToPlayers() {
+		List<PlayerTableDto> playerStatuses = new ArrayList<>();
 		for (Role player : players) {
 			player.draw(deck.draw());
 			player.draw(deck.draw());
-			playerStatuses.add(TableStatusDto.from(player));
+			playerStatuses.add(PlayerTableDto.from(player));
 		}
 		return playerStatuses;
 	}
