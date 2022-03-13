@@ -37,7 +37,7 @@ class BlackJackGameTest {
     @DisplayName("딜러의 점수가 17이상일 때 까지 카드를 1장씩 받는다.")
     void dealerDistribution() {
         BlackJackGame blackJackGame = BlackJackGame.start(List.of("name"), new CardFactory(Card.getCards()));
-        blackJackGame.distributeAdditionalToDealer();
+        blackJackGame.askDealerHitOrStay();
         GamerDto dealer = blackJackGame.getDealerDto();
         int cardNumberSum = dealer.getCardNumberSum();
         assertThat(cardNumberSum).isGreaterThan(16);
@@ -49,7 +49,7 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = BlackJackGame.start(
             List.of("name"), () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
 
-        blackJackGame.askHitOrStay(answer -> false, dto -> {});
+        blackJackGame.askPlayerHitOrStay(answer -> false, dto -> {});
         GameResultDto result = blackJackGame.createResult();
 
         Map<BlackJackResult, Integer> dealerResult = result.getDealerResult();
@@ -65,7 +65,7 @@ class BlackJackGameTest {
         BlackJackGame blackJackGame = BlackJackGame.start(
             List.of("name"), () -> Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
 
-        blackJackGame.askHitOrStay(answer -> true, dto -> {});
+        blackJackGame.askPlayerHitOrStay(answer -> true, dto -> {});
         GameResultDto result = blackJackGame.createResult();
 
         Map<BlackJackResult, Integer> dealerResult = result.getDealerResult();

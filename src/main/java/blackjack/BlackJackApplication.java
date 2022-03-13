@@ -12,8 +12,8 @@ public class BlackJackApplication {
         BlackJackGame blackJackGame = BlackJackGame.start(InputView.getNames(), new CardFactory(Card.getCards()));
         OutputView.printFirstCards(blackJackGame.getDealerDto(), blackJackGame.getPlayerDtos());
 
-        blackJackGame.askHitOrStay(InputView::getAnswerOfAdditionalDraw, OutputView::printPlayerCard);
-        OutputView.printAdditionalDrawDealer(blackJackGame.distributeAdditionalToDealer());
+        blackJackGame.askPlayerHitOrStay(InputView::getAnswerOfAdditionalDraw, OutputView::printPlayerCard);
+        OutputView.printAdditionalDrawDealer(blackJackGame.askDealerHitOrStay());
 
         OutputView.printFinalCards(blackJackGame.getDealerDto(), blackJackGame.getPlayerDtos());
         OutputView.printFinalResult(blackJackGame.createResult());

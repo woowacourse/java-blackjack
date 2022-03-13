@@ -39,7 +39,7 @@ public class BlackJackGame {
 		return new BlackJackGame(names, drawStrategy);
 	}
 
-	public void askHitOrStay(Function<String, Boolean> answerReceiver, Consumer<GamerDto> cardsSender) {
+	public void askPlayerHitOrStay(Function<String, Boolean> answerReceiver, Consumer<GamerDto> cardsSender) {
 		for (String name : gamers.findPlayerNames()) {
 			hitOrStay(name, answerReceiver, cardsSender);
 		}
@@ -58,7 +58,7 @@ public class BlackJackGame {
 		return gamers.checkPlayerDrawPossible(name);
 	}
 
-	public int distributeAdditionalToDealer() {
+	public int askDealerHitOrStay() {
 		int count = 0;
 		while (gamers.checkDealerDrawPossible()) {
 			gamers.giveCardToDealer(drawStrategy::draw);
