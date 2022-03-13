@@ -31,14 +31,6 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("참가자의 승무패 결과 확인")
-    void playerWinDrawLoseTest() {
-        Guest player = new Guest("pobi", (p) -> HitFlag.Y);
-        player.win();
-        assertThat(player.getWinDrawLoseString()).isEqualTo("승");
-    }
-
-    @Test
     @DisplayName("버스트 체크")
     void checkBustTest() {
         Deck deck = new Deck();

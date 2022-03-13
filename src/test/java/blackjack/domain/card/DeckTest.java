@@ -8,7 +8,7 @@ import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardTest {
+public class DeckTest {
 
     @Test
     @DisplayName("더 이상 뽑을 수 있는 카드가 없는 경우 확인")
