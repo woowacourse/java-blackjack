@@ -2,9 +2,11 @@ package blackjack.domain.user;
 
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.Result;
 import blackjack.domain.card.Deck;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -48,6 +50,32 @@ public class Users {
         }
     }
 
+    public void drawAdditionalCard(Consumer<User> consumerPlayer, Consumer<User> consumerDealer) {
+        List<User> players = getPlayers();
+
+        for (User player : players) {
+            consumerPlayer.accept(player);
+        }
+
+        consumerDealer.accept(getDealer());
+    }
+
+    public void printResult(Consumer<User> consumer) {
+        User dealer = getDealer();
+
+        List<User> players = getPlayers();
+
+        consumer.accept(dealer);
+
+        for (User player : players) {
+            consumer.accept(player);
+        }
+    }
+
+    public Map<String, Result> getYield() {
+        return Result.getMap(getPlayers(), getDealer());
+    }
+
     public List<User> getPlayers() {
         return users.stream()
                 .filter(user -> !user.isDealer())
@@ -59,15 +87,5 @@ public class Users {
                 .filter(User::isDealer)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("딜러가 업습니다."));
-    }
-
-    public void drawAdditionalCard(Consumer<User> consumerPlayer, Consumer<User> consumerDealer) {
-        List<User> players = getPlayers();
-
-        for (User player : players) {
-            consumerPlayer.accept(player);
-        }
-
-        consumerDealer.accept(getDealer());
     }
 }

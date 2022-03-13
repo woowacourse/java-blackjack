@@ -1,12 +1,13 @@
 package blackjack.controller;
 
+import static blackjack.dto.UserDto.from;
+
 import blackjack.domain.Result;
 import blackjack.domain.card.Deck;
 import blackjack.domain.strategy.ShuffledDeckGenerateStrategy;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.User;
 import blackjack.domain.user.Users;
-import blackjack.dto.UserDto;
 import blackjack.dto.UsersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -77,9 +78,9 @@ public class BlackJack {
     }
 
     private void drawPlayerCardByYes(User player, Deck deck) {
-        while (player.isDrawable() && inputView.inputWhetherToDrawCard(UserDto.from(player))) {
+        while (player.isDrawable() && inputView.inputWhetherToDrawCard(from(player))) {
             player.drawCard(deck);
-            outputView.printCards(UserDto.from(player));
+            outputView.printCards(from(player));
         }
     }
 
@@ -91,16 +92,12 @@ public class BlackJack {
     }
 
     private void printFinalResult(Users users) {
-        User dealer = users.getDealer();
-        List<User> players = users.getPlayers();
+        Consumer<User> consumer = user -> outputView.printWithScore(from(user), user.getScore());
 
-        outputView.printWithScore(UserDto.from(dealer), dealer.getScore());
+        users.printResult(consumer);
 
-        for (User player : players) {
-            outputView.printWithScore(UserDto.from(player), player.getScore());
-        }
+        Map<String, Result> yield = users.getYield();
 
-        Map<String, Result> map = Result.getMap(players, dealer);
-        outputView.printYield(map);
+        outputView.printYield(yield);
     }
 }
