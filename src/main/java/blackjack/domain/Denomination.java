@@ -28,12 +28,12 @@ public enum Denomination {
         this.name = name;
     }
 
-    public static int addScore(Denomination denomination, int score) {
-        if (denomination == ACE) {
+    public int addScore(int score) {
+        if (this == ACE) {
             return calculateAceScore(score);
         }
 
-        return denomination.score + score;
+        return this.score + score;
     }
 
     private static int calculateAceScore(int score) {

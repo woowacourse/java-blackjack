@@ -45,6 +45,10 @@ public class Card {
         return this.denomination == denomination && this.suit == suit;
     }
 
+    public int getSumScore(int totalScore) {
+        return denomination.addScore(totalScore);
+    }
+
     public Denomination getDenomination() {
         return denomination;
     }

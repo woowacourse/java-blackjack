@@ -15,7 +15,7 @@ public class Cards {
     public int calculateTotalScore() {
         int totalScore = 0;
         for (Card card : value) {
-            totalScore = Denomination.addScore(card.getDenomination(), totalScore);
+            totalScore = card.getSumScore(totalScore);
         }
 
         return totalScore;
