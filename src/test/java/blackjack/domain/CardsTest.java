@@ -46,4 +46,11 @@ public class CardsTest {
     void 카드_점수_계산(Cards cards, int totalScore) {
         assertThat(cards.calculateTotalScore()).isEqualTo(totalScore);
     }
+
+    @DisplayName("Cards가 주어지면 1과 11 둘 중 하나를 사용하여 블랙잭 점수에 가깝게 계산하여 반환한다.")
+    @ParameterizedTest
+    @ArgumentsSource(AceIncludeCardsArgumentsProvider.class)
+    void ACE_카드를_포함한_점수_계산(Cards cards, int totalScore) {
+        assertThat(cards.calculateTotalScore()).isEqualTo(totalScore);
+    }
 }

@@ -17,9 +17,6 @@ public enum Denomination {
     KING(10, "K"),
     ;
 
-    private static final int BLACKJACK_SCORE = 21;
-    private static final int BONUS_ACE_SCORE = 11;
-
     private final int score;
     private final String name;
 
@@ -29,19 +26,7 @@ public enum Denomination {
     }
 
     public int addScore(int score) {
-        if (this == ACE) {
-            return calculateAceScore(score);
-        }
-
         return this.score + score;
-    }
-
-    private static int calculateAceScore(int score) {
-        if ((score + BONUS_ACE_SCORE) > BLACKJACK_SCORE) {
-            return score + ACE.score;
-        }
-
-        return score + BONUS_ACE_SCORE;
     }
 
     public int getScore() {

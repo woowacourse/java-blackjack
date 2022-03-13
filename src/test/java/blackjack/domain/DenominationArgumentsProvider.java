@@ -13,7 +13,7 @@ public class DenominationArgumentsProvider implements ArgumentsProvider {
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
-                arguments(10, ACE, 21),
+                arguments(10, ACE, 11),
                 arguments(11, ACE, 12),
                 arguments(10, SEVEN, 17),
                 arguments(22, ACE, 23),

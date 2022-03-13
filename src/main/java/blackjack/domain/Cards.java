@@ -6,6 +6,9 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int BONUS_ACE_ADD_SCORE = 10;
+
     private final List<Card> value;
 
     public Cards(List<Card> cards) {
@@ -18,7 +21,30 @@ public class Cards {
             totalScore = card.getSumScore(totalScore);
         }
 
-        return totalScore;
+        return ConvertCloseBlackJack(totalScore);
+    }
+
+    private int ConvertCloseBlackJack(int totalScore) {
+        int convertScore = totalScore;
+        for (int i = 0; i < countAce(); i++) {
+            convertScore = calculateAceScore(convertScore);
+        }
+        return convertScore;
+    }
+
+    private Long countAce() {
+        return value.stream()
+                .map(Card::getDenomination)
+                .filter(card -> Denomination.ACE.equals(card))
+                .count();
+    }
+
+    private int calculateAceScore(int score) {
+        if ((score + BONUS_ACE_ADD_SCORE) > BLACKJACK_SCORE) {
+            return score;
+        }
+
+        return score + BONUS_ACE_ADD_SCORE;
     }
 
     public void combine(Card card) {
