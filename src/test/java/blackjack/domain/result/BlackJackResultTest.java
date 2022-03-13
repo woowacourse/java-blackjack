@@ -1,6 +1,12 @@
 package blackjack.domain.result;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
+import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Player;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -8,19 +14,39 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackJackResultTest {
 
-    @ParameterizedTest
-    @CsvSource(value = {"21:20:WIN", "20:21:LOSE", "21:21:DRAW", "22:22:LOSE", "21:22:WIN"}, delimiter = ':')
+    @Test
     @DisplayName("플레이어와 딜러의 점수를 입력 받아, 둘 다 버스트가 아니면서 플레이어가 승리")
-    void of(int player, int dealer, String result) {
+    void of() {
+        Player player = new Player("범고래");
+        Dealer dealer = new Dealer();
+        player.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.ACE));
+        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.JACK));
         BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
-        assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf(result));
+        assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("WIN"));
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"21:20:LOSE", "20:21:WIN", "21:21:DRAW", "22:22:WIN", "21:22:LOSE"}, delimiter = ':')
+    @Test
     @DisplayName("Result 결과 값의 반대 결과를 반환한다.")
-    void getReverse(int player, int dealer, String result) {
+    void getReverse() {
+        Player player = new Player("범고래");
+        Dealer dealer = new Dealer();
+        player.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.ACE));
+        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.JACK));
         BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
-        assertThat(blackJackResult.getReverse()).isEqualTo(BlackJackResult.valueOf(result));
+        assertThat(blackJackResult.getReverse()).isEqualTo(BlackJackResult.valueOf("LOSE"));
+    }
+
+    @Test
+    @DisplayName("점수가 21점으로 같아도, 블랙잭이면 승리한다.")
+    void blackJack() {
+        Player player = new Player("범고래");
+        Dealer dealer = new Dealer();
+        player.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.ACE));
+        player.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.JACK));
+        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.JACK));
+        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.FIVE));
+        dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.SIX));
+        BlackJackResult blackJackResult = BlackJackResult.of(player, dealer);
+        assertThat(blackJackResult).isEqualTo(BlackJackResult.valueOf("WIN"));
     }
 }

@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 
 public class BlackJackGame {
-    private final Deck deck;
 
+    private final Deck deck;
     private final Gamers gamers;
 
     public BlackJackGame(List<String> names) {

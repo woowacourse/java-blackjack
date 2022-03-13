@@ -9,9 +9,7 @@ public class Player extends Gamer{
     }
 
     public BlackJackResult match(Dealer dealer) {
-        int playerPoint = getCardsNumberSum();
-        int dealerPoint = dealer.getCardsNumberSum();
-        return BlackJackResult.of(playerPoint, dealerPoint);
+        return BlackJackResult.of(this, dealer);
     }
 
     public boolean isSameName(String name) {

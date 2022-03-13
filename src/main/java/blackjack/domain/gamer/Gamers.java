@@ -5,7 +5,7 @@ import blackjack.domain.card.Deck;
 import java.util.*;
 
 public class Gamers {
-    private static final int INIT_DISTRIBUTION_COUNT = 2;
+    public static final int INIT_DISTRIBUTION_COUNT = 2;
     private static final String DUPLICATION_NAME_ERROR = "중복된 이름이 존재합니다.";
     private static final String NOT_EXIST_PLAYER_ERROR = "플레이어가 존재하지 않습니다.";
 
