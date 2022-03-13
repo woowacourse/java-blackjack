@@ -12,6 +12,11 @@ public class Player extends User {
         super(name);
     }
 
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
+
     public static Player from(String name) {
         validateName(name);
         return new Player(name);

@@ -12,6 +12,12 @@ public class Dealer extends User {
         super("딜러");
     }
 
+
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
+
     @Override
     public List<Card> showInitCards() {
         return cards.showLimitedCard(INIT_COUNT);

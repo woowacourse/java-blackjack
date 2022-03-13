@@ -46,21 +46,7 @@ public abstract class User {
         return score > BLACKJACK_NUMBER;
     }
 
-    public boolean isDealer() {
-        if (this instanceof Dealer) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public boolean isPlayer() {
-        if (this instanceof Player) {
-            return true;
-        }
-
-        return false;
-    }
+    public abstract boolean isDealer();
 
     public abstract List<Card> showInitCards();
 
