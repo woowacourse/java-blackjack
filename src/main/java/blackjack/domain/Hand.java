@@ -3,9 +3,10 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import blackjack.service.BlackJackService;
-
 public class Hand {
+
+	public static final int BUST = 0;
+	public static final int OPTIMIZED_WINNING_NUMBER = 21;
 
 	private static final int ACE_AS_ELEVEN = 10;
 
@@ -24,7 +25,7 @@ public class Hand {
 				.mapToInt(Card::getScore)
 				.sum();
 		if (isBust(totalScore)) {
-			return BlackJackService.BUST;
+			return BUST;
 		}
 		if (hasAce()) {
 			return getOptimizedScore(totalScore, totalScore + ACE_AS_ELEVEN);
@@ -33,7 +34,7 @@ public class Hand {
 	}
 
 	public boolean isBust(int totalScore) {
-		return totalScore > BlackJackService.OPTIMIZED_WINNING_NUMBER;
+		return totalScore > OPTIMIZED_WINNING_NUMBER;
 	}
 
 	public boolean hasAce() {

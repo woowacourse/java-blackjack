@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.service.BlackJackService;
 import java.util.List;
 
 public class Player extends Role {
@@ -12,7 +11,7 @@ public class Player extends Role {
 	@Override
 	public boolean canDraw() {
 		final int score = hand.calculateOptimalScore();
-		return BlackJackService.BUST < score && score <= BlackJackService.OPTIMIZED_WINNING_NUMBER;
+		return Hand.BUST < score && score <= Hand.OPTIMIZED_WINNING_NUMBER;
 	}
 
 	@Override

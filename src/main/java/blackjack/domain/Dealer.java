@@ -3,8 +3,6 @@ package blackjack.domain;
 import java.util.List;
 import java.util.function.Supplier;
 
-import blackjack.service.BlackJackService;
-
 public class Dealer extends Role {
 
 	public static final int CAN_NOT_DRAW_STANDARD = 17;
@@ -22,7 +20,7 @@ public class Dealer extends Role {
 
 	@Override
 	public boolean canDraw() {
-		if (hand.calculateOptimalScore() >= BlackJackService.OPTIMIZED_WINNING_NUMBER) {
+		if (hand.calculateOptimalScore() >= Hand.OPTIMIZED_WINNING_NUMBER) {
 			return false;
 		}
 		if (hand.calculateOptimalScore() <= CAN_DRAW_STANDARD) {
