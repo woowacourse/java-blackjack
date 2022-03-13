@@ -1,7 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.participant.User;
-
 import java.util.Scanner;
 
 import static java.lang.System.lineSeparator;

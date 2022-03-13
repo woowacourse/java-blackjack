@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.DistributeResult;
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.DistributeResult;
 import blackjack.domain.result.UserResult;
 
 import java.util.ArrayList;

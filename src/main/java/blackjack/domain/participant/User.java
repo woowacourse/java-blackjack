@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.result.Result;
 import blackjack.domain.result.ScoreCalculator;
 
-public class User extends Participant{
+public class User extends Participant {
 
     private static final String ERROR_INVALID_NAME = "[ERROR] 유저의 이름은 한 글자 이상이어야 합니다.";
     private static final int BUST_STANDARD = 21;
