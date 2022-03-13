@@ -15,8 +15,9 @@ public class Deck {
 
     public List<Card> makeInitCards() {
         List<Card> cards = new ArrayList<>();
-        IntStream.range(0, INIT_DISTRIBUTE_SIZE)
-                .forEach(i -> cards.add(draw()));
+        for (int i = 0; i < INIT_DISTRIBUTE_SIZE; i++) {
+            cards.add(draw());
+        }
         return cards;
     }
 

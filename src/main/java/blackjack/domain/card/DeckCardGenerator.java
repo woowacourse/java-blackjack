@@ -18,14 +18,15 @@ public class DeckCardGenerator implements CardGenerator {
 
     private List<Card> makeCards() {
         List<Card> cards = new ArrayList<>();
-        Type.getTypeValues()
-                .forEach(type -> makeCardByScore(cards, type));
+        for (Type type : Type.getTypeValues()) {
+            makeCardByScore(cards, type);
+        }
         return cards;
     }
 
     private void makeCardByScore(final List<Card> cards, final Type type) {
-        Score.getScoreValues().stream()
-                .map(score -> new Card(type, score))
-                .forEach(cards::add);
+        for (Score score : Score.getScoreValues()) {
+            cards.add(new Card(type, score));
+        }
     }
 }
