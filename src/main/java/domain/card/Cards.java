@@ -7,8 +7,8 @@ import java.util.List;
 public class Cards {
 
     private static final String ACE_LETTER = "A";
-    private static final int ACE_ADDITIONAL_VALUE = 10;
-    private static final int BLACKJACK_MAX_VALUE_CRITERIA = 21;
+    private static final int ACE_ADDITION = 10;
+    private static final int MAX_SCORE = 21;
 
     private final List<Card> cards;
 
@@ -24,27 +24,36 @@ public class Cards {
         return calculateSum();
     }
 
-    private int judgeAdvantageResult(int aceAmount) {
-        int result = calculateSum();
+    private int countAceAmount() {
+        return (int) cards.stream()
+                .filter(card -> card.getDenomination().equals(ACE_LETTER))
+                .count();
+    }
 
-        for (int aceCount = 1;
-            aceCount <= aceAmount && result + ACE_ADDITIONAL_VALUE <= BLACKJACK_MAX_VALUE_CRITERIA;
-            aceCount++) {
-            result += ACE_ADDITIONAL_VALUE;
+    private int judgeAdvantageResult(int aceAmount) {
+        List<Integer> sumOfCases = new ArrayList<>();
+        for (int aceCount = 1; aceCount <= aceAmount; aceCount++) {
+            sumOfCases.add(sumAceAddition(calculateSum(), aceCount));
         }
-        return result;
+
+        return sumOfCases.stream()
+                .mapToInt(x -> x)
+                .max()
+                .orElse(calculateSum());
+    }
+
+    private int sumAceAddition(int sum, int aceCount) {
+        int sumWithElevenAce = sum + aceCount * ACE_ADDITION;
+        if (sumWithElevenAce > MAX_SCORE) {
+            return sum;
+        }
+        return sumWithElevenAce;
     }
 
     public int calculateSum() {
         return cards.stream()
-            .mapToInt(Card::getScore)
-            .sum();
-    }
-
-    private int countAceAmount() {
-        return (int) cards.stream()
-            .filter(card -> card.getDenomination().equals(ACE_LETTER))
-            .count();
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     public void addCard(Card card) {
