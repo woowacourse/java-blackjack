@@ -29,8 +29,6 @@ public class CardsTest {
                 .hasMessage("중복된 카드를 받을 수 없습니다.");
     }
 
-
-
     @Test
     void getSum() {
         final Card card1 = new Card(HEART, ACE);
@@ -39,48 +37,5 @@ public class CardsTest {
         final Cards cards = new Cards(List.of(card1, card2, card3));
 
         assertThat(cards.getSum()).isEqualTo(21);
-    }
-
-    @Test
-    void match() {
-        final Card card1 = new Card(HEART, ACE);
-        final Card card2 = new Card(DIAMOND, ACE);
-        final Card card3 = new Card(SPADE, CardFace.NINE);
-        final Cards bigger = new Cards(List.of(card1, card2, card3));
-
-        final Card card4 = new Card(SPADE, CardFace.EIGHT);
-        final Card card5 = new Card(HEART, ACE);
-        final Card card6 = new Card(DIAMOND, ACE);
-        final Cards smaller = new Cards(List.of(card4, card5, card6));
-
-        assertThat(bigger.getResult(smaller)).isEqualTo(Result.WIN);
-    }
-
-    @Test
-    void loseMatch() {
-        final Card card4 = new Card(SPADE, CardFace.EIGHT);
-        final Card card5 = new Card(HEART, ACE);
-        final Card card6 = new Card(DIAMOND, ACE);
-        final Cards notBust = new Cards(List.of(card4, card5, card6));
-
-        final Card card1 = new Card(HEART, CardFace.KING);
-        final Card card2 = new Card(DIAMOND, CardFace.JACK);
-        final Card card3 = new Card(SPADE, CardFace.QUEEN);
-        final Cards bust = new Cards(List.of(card1, card2, card3));
-        assertThat(bust.getResult(notBust)).isEqualTo(Result.LOSE);
-    }
-
-    @Test
-    void drawMatch() {
-        final Card card1 = new Card(HEART, CardFace.KING);
-        final Card card2 = new Card(DIAMOND, CardFace.JACK);
-        final Card card3 = new Card(SPADE, CardFace.QUEEN);
-        final Cards bust = new Cards(List.of(card1, card2, card3));
-
-        final Card card4 = new Card(SPADE, CardFace.KING);
-        final Card card5 = new Card(HEART, CardFace.JACK);
-        final Card card6 = new Card(DIAMOND, CardFace.QUEEN);
-        final Cards otherBust = new Cards(List.of(card4, card5, card6));
-        assertThat(bust.getResult(otherBust)).isEqualTo(Result.DRAW);
     }
 }

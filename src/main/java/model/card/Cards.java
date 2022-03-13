@@ -60,23 +60,16 @@ public class Cards {
         return Optional.of(cards.get(0));
     }
 
-    public Result getResult(Cards other) {
-        if (isBothStand(this, other)) {
-            return Result.of(this.getSum(), other.getSum());
-        }
-        return Result.of(this.getStatus(), other.getStatus());
-    }
-
-    private boolean isBothStand(Cards from, Cards to) {
-        return from.getStatus().isStand() && to.getStatus().isStand();
-    }
-
-    private Status getStatus() {
+    public Status getStatus() {
         return Status.of(cards.size(), getSum());
     }
 
     public boolean isBusted() {
-        return getStatus().isBusted();
+        return getStatus().equals(Status.BUST);
+    }
+
+    public boolean isStand() {
+        return getStatus().equals(Status.STAND);
     }
 
     public List<Card> getValue() {

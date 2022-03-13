@@ -4,7 +4,6 @@ import dto.AllCardsAndSumDto;
 import dto.AllParticipatorsDto;
 import dto.ParticipatorDto;
 import dto.TotalResultDto;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -66,11 +65,10 @@ public class OutputView {
 
     public static void printHitDealer() {
         System.out.println(DEALER_HIT_MESSAGE);
-
     }
 
     public static void printMatchResult(TotalResultDto totalResultDto) {
-        System.out.println(System.lineSeparator());
+        System.out.print(System.lineSeparator());
         System.out.println(MATCH_RESULT_MESSAGE);
 
         System.out.println(convertDealerMatchCountInLine(totalResultDto.getDealerMatchCount()));

@@ -25,9 +25,6 @@ public class Player extends Participator {
     }
 
     public Result matchWith(Dealer dealer) {
-        if (dealer.cards.isBusted() && this.cards.isBusted()) {
-            return Result.LOSE;
-        }
-        return this.cards.getResult(dealer.cards);
+        return Result.of(this.cards, dealer.cards);
     }
 }

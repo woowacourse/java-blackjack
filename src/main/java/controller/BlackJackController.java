@@ -4,7 +4,6 @@ import static model.Dealer.DEALER_NAME;
 
 import dto.AllParticipatorsDto;
 import java.util.List;
-import java.util.function.Supplier;
 import service.BlackJackService;
 import view.InputView;
 import view.OutputView;
@@ -21,24 +20,24 @@ public class BlackJackController {
         requestUntilValid(() -> initGame());
         requestUntilValid(() -> hitPlayers());
         requestUntilValid(() -> hitDealer());
-        requestUntilValid(() -> match());
         requestUntilValid(() -> getCardsResults());
+        requestUntilValid(() -> getMatchResults());
     }
 
     private void requestUntilValid(Runnable request) {
-        boolean isInvalidRequest;
+        boolean requestDoneSuccessful;
         do {
-            isInvalidRequest = execute(request);
-        } while(isInvalidRequest);
+            requestDoneSuccessful = tryRequest(request);
+        } while(!requestDoneSuccessful);
     }
 
-    private boolean execute(Runnable request) {
+    private boolean tryRequest(Runnable request) {
         try {
             request.run();
-            return false;
+            return true;
         } catch (IllegalArgumentException exception) {
             OutputView.printException(exception.getMessage());
-            return true;
+            return false;
         }
     }
 
@@ -68,7 +67,7 @@ public class BlackJackController {
         }
     }
 
-    private void match() {
+    private void getMatchResults() {
         OutputView.printMatchResult(service.match());
     }
 
