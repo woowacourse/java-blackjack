@@ -38,9 +38,6 @@ public class OutputView {
 	public void displayAllCardAndScore(Gamer gamer) {
 		String joinedCardsInfo = String.join(DELIMITER, generateAllCardStrings(gamer));
 		String scoreString = String.valueOf(gamer.getScore());
-		if (BUST_STATUS_TO_STRING.equals(scoreString)) {
-			scoreString = "버스트";
-		}
 		System.out.println(gamer.getName() + "카드: " + joinedCardsInfo + " - 결과: " + scoreString);
 	}
 
