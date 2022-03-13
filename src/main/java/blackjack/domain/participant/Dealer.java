@@ -11,14 +11,13 @@ public class Dealer extends Participant {
         return ScoreCalculator.cardSum(cards) <= MIN_SUM_STANDARD;
     }
 
-    @Override
-    public boolean isDealer() {
-        return true;
+    public Dealer() {
+        super(DEALER_NAME);
     }
 
     @Override
-    public String getName() {
-        return DEALER_NAME;
+    public boolean isDealer() {
+        return true;
     }
 
     @Override

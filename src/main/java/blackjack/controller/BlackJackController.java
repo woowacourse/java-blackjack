@@ -1,13 +1,11 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJack;
-import blackjack.domain.DistributeResult;
-import blackjack.domain.card.CardGenerator;
-import blackjack.domain.card.Deck;
+import blackjack.domain.result.DistributeResult;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.User;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.UserResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -15,64 +13,51 @@ import java.util.List;
 
 public class BlackJackController {
 
+    public static final String DEALER_NAME = "딜러";
+    BlackJack blackJack;
+
     public void play() {
-        BlackJack blackJack = new BlackJack(InputView.inputUsersName());
+        String[] userNames = InputView.inputUsersName();
+        blackJack = new BlackJack(userNames);
+        initDistribute();
+        playGameEachParticipant(userNames);
+        printGameScore();
+        printFinalResult();
+    }
+
+    private void printFinalResult() {
+        DealerResult dealerResult = blackJack.calculateDealerResult();
+        List<UserResult> userResult = blackJack.calculateUserResult();
+        OutputView.printFinalResult(dealerResult, userResult);
+    }
+
+    private void printGameScore() {
+        OutputView.printFinalCardWithScore(blackJack.getCardResults());
+    }
+
+    private void initDistribute() {
         List<DistributeResult> distributeResults = blackJack.initDistribute();
         OutputView.printInitDistribute(distributeResults);
-
-//        Participants users = new Participants(InputView.inputUsersName());
-//        Dealer dealer = new Dealer();
-//        Deck deck = new Deck(new CardGenerator());
-//        initDistribute(deck, users, dealer);
-//
-//        playGame(users, dealer, deck);
-//        OutputView.printFinalCard(users, dealer);
-//        calculateResult(users, dealer);
-
-
-
     }
 
-    private void initDistribute(Deck deck, Participants users, Dealer dealer) {
-        for (int i = 0; i < 2; i++) {
-            userDistribute(deck, users);
-            dealer.receiveCard(deck.drawCard());
+    private void playGameEachParticipant(String[] userNames) {
+        for (String userName : userNames) {
+            playEachUser(userName);
         }
-        //OutputView.printInitDistribute(users, dealer);
+        playDealer();
     }
 
-    private void userDistribute(Deck deck, Participants users) {
-        for (User user : users.getUsers()) {
-            user.receiveCard(deck.drawCard());
-        }
-    }
-
-    private void playGame(Participants users, Dealer dealer, Deck deck) {
-        for (User user : users.getUsers()) {
-            playEachUser(user, deck);
-        }
-
-        playDealer(dealer, deck);
-    }
-
-    private void playDealer(Dealer dealer, Deck deck) {
-        while (dealer.checkUnderSumStandard()) {
+    private void playDealer() {
+        while (blackJack.checkDealerUnderSumStandard() && blackJack.checkLimit(DEALER_NAME)) {
             OutputView.printDealerDraw();
-            dealer.receiveCard(deck.drawCard());
+            blackJack.playGameOnePlayer(DEALER_NAME);
         }
     }
 
-    private void playEachUser(User user, Deck deck) {
-        while (!user.checkBust() && InputView.inputMoreCard(user)) {
-            user.receiveCard(deck.drawCard());
-            OutputView.printUserData(user);
+    private void playEachUser(String userName) {
+        while (blackJack.checkLimit(userName) && InputView.inputMoreCard(userName)) {
+            DistributeResult distributeResult = blackJack.playGameOnePlayer(userName);
+            OutputView.printUserData(distributeResult);
         }
-    }
-
-    private void calculateResult(Participants users, Dealer dealer) {
-        DealerResult result = new DealerResult(users, dealer);
-        int dealerSum = dealer.getCardSum();
-
-        OutputView.printFinalScore(result, users, dealerSum);
     }
 }

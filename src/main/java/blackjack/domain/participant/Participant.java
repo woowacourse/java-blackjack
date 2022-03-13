@@ -10,15 +10,23 @@ import java.util.List;
 public abstract class Participant {
 
     protected final List<Card> cards;
+    protected final String name;
 
     abstract public boolean isDealer();
 
     abstract public boolean isUser();
 
-    abstract public String getName();
-
-    public Participant() {
+    public Participant(String name) {
+        this.name = name;
         cards = new ArrayList<>();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public boolean checkName(String name) {
+        return this.name.equals(name);
     }
 
     public void receiveCard(Card card) {
@@ -32,4 +40,5 @@ public abstract class Participant {
     public int getCardSum() {
         return ScoreCalculator.cardSum(cards);
     }
+
 }

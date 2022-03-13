@@ -22,8 +22,8 @@ public class InputView {
         return scanner.nextLine().split(REGEX);
     }
 
-    public static boolean inputMoreCard(User user) {
-        System.out.printf(INPUT_MORE_CARD_FORMAT, user.getName());
+    public static boolean inputMoreCard(String userName) {
+        System.out.printf(INPUT_MORE_CARD_FORMAT, userName);
         return isContinue(scanner.nextLine());
     }
 

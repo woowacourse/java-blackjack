@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.DistributeResult;
-import blackjack.domain.card.Card;
+import blackjack.domain.result.DistributeResult;
 import blackjack.domain.card.Deck;
+import blackjack.domain.result.UserResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +28,7 @@ public class Participants {
 
     public void addUsers(String[] userName) {
         List<User> users = Arrays.stream(userName)
-                .map(User :: new)
+                .map(User::new)
                 .collect(Collectors.toList());
         this.participants.addAll(users);
     }
@@ -40,7 +40,7 @@ public class Participants {
                 .collect(Collectors.toList());
     }
 
-    public List<String> getUserNames() { // user객체 안으로 이동
+    public List<String> getUserNames() {
         return getUsers().stream()
                 .map(User::getName)
                 .collect(Collectors.toList());
@@ -62,6 +62,21 @@ public class Participants {
     public List<DistributeResult> getDistributeResult() {
         return participants.stream()
                 .map(DistributeResult::new)
+                .collect(Collectors.toList());
+    }
+
+    public Participant getUserByName(String name) {
+        return participants.stream()
+                .filter(participant -> participant.checkName(name))
+                .findAny()
+                .orElseThrow(RuntimeException::new);
+    }
+
+    public List<UserResult> getUserResults() {
+        int dealerScore = getDealer().getCardSum();
+        return participants.stream()
+                .filter(Participant::isUser)
+                .map(p -> new UserResult(p, dealerScore))
                 .collect(Collectors.toList());
     }
 }

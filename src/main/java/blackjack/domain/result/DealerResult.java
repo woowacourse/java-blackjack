@@ -12,14 +12,14 @@ public class DealerResult {
 
     private final Map<Result, Integer> count;
 
-    public DealerResult(Participants users, Dealer dealer) {
+    public DealerResult(Participants participants) {
         this.count = new EnumMap<>(Result.class);
-        calculateFinalCount(users, dealer);
+        calculateFinalCount(participants);
     }
 
-    private void calculateFinalCount(Participants users, Dealer dealer) {
-        int dealerSum = dealer.getCardSum();
-        for (User user : users.getUsers()) {
+    private void calculateFinalCount(Participants participants) {
+        int dealerSum = participants.getDealer().getCardSum();
+        for (User user : participants.getUsers()) {
             Result userResult = user.checkResult(dealerSum);
             addCount(Result.swap(userResult));
         }
