@@ -2,6 +2,7 @@ package blackJack.domain.participant;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Participants {
 
@@ -31,6 +32,16 @@ public class Participants {
         if (players.size() < MINIMUM_COUNT || players.size() > MAXIMUM_COUNT) {
             throw new IllegalArgumentException(ERROR_MESSAGE_PLAYER_COUNT);
         }
+    }
+
+    public static Participants newInstanceByPlayerNames(List<String> playerNames) {
+        return new Participants(new Dealer(), getPlayers(playerNames));
+    }
+
+    private static List<Player> getPlayers(List<String> playerNames) {
+        return playerNames.stream()
+                .map(Player::new)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public Dealer getDealer() {

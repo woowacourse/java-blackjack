@@ -27,11 +27,7 @@ public class BlackJackController {
 
     private Participants getParticipants() {
         try {
-            List<String> playerNames = InputView.inputPlayerNames();
-            List<Player> players = playerNames.stream()
-                    .map(Player::new)
-                    .collect(Collectors.toUnmodifiableList());
-            return new Participants(new Dealer(), players);
+            return Participants.newInstanceByPlayerNames(InputView.inputPlayerNames());
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return getParticipants();
