@@ -8,6 +8,10 @@ public class Player extends Gamer {
         super(name, cards);
     }
 
+    public boolean canHit() {
+        return getTotalScore() <= PLAYING_STANDARD;
+    }
+
     @Override
     public GameResult createResult(Gamer dealer) {
         if (isBust()) {
@@ -19,9 +23,5 @@ public class Player extends Gamer {
         }
 
         return GameResult.of(dealer.getMinusScore(getTotalScore()));
-    }
-
-    public boolean isPlaying() {
-        return getTotalScore() <= PLAYING_STANDARD;
     }
 }

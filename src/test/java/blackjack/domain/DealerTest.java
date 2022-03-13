@@ -27,7 +27,7 @@ public class DealerTest {
         List<Card> cards = generateTotalScoreNotMoreThan16Cards();
         Dealer dealer = new Dealer(cards);
 
-        assertThat(dealer.isDrawable()).isTrue();
+        assertThat(dealer.canHit()).isTrue();
     }
 
     @DisplayName("딜러의 점수가 17점을 초과한 경우 카드를 받을 수 없다.")
@@ -36,7 +36,7 @@ public class DealerTest {
         List<Card> cards = generateTotalScoreGraterThan17Cards();
         Dealer dealer = new Dealer(cards);
 
-        assertThat(dealer.isDrawable()).isFalse();
+        assertThat(dealer.canHit()).isFalse();
     }
 
     @DisplayName("카드를 받아서 합칠 수 있다.")
@@ -45,7 +45,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(generateCards());
         Card card = Card.of(FIVE, SPADE);
 
-        dealer.combine(card);
+        dealer.add(card);
 
         assertThat(dealer.getCards().getValue().size()).isEqualTo(3);
     }

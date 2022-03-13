@@ -60,7 +60,7 @@ public class Application {
 
     private static void playing(Deck deck, Player player) {
         PlayCommand playCommand = PlayCommand.YES;
-        while (player.isPlaying() && playCommand == PlayCommand.YES) {
+        while (player.canHit() && playCommand == PlayCommand.YES) {
             playCommand = InputView.getPlayCommand(player);
             drawCard(deck, player, playCommand);
         }
@@ -68,7 +68,7 @@ public class Application {
 
     private static void drawCard(Deck deck, Player player, PlayCommand playCommand) {
         if (playCommand == PlayCommand.YES) {
-            player.combine(deck.draw());
+            player.add(deck.draw());
             OutputView.printPlayerCardInfo(toGamerDto(player));
         }
     }
@@ -79,9 +79,9 @@ public class Application {
     }
 
     private static void drawDealer(Deck deck, Dealer dealer) {
-        while (dealer.isDrawable()) {
+        while (dealer.canHit()) {
             OutputView.printDealerDrawableInfo();
-            dealer.combine(deck.draw());
+            dealer.add(deck.draw());
         }
     }
 

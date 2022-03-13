@@ -12,13 +12,12 @@ public class Dealer extends Gamer {
         super(DEALER_NAME, cards);
     }
 
-    public boolean isDrawable() {
+    public boolean canHit() {
         return getTotalScore() <= DRAWABLE_LIMIT_VALUE;
     }
 
     @Override
     public GameResult createResult(Gamer player) {
-
         if (player.isBust()) {
             return GameResult.WIN;
         }

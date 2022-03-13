@@ -28,7 +28,7 @@ public class PlayerTest {
         List<Card> cards = generateTotalScoreNotMoreThan21Cards();
         Player player = new Player(name, cards);
 
-        assertThat(player.isPlaying()).isTrue();
+        assertThat(player.canHit()).isTrue();
     }
 
     @DisplayName("플레이어의 총 점수가 21점을 초과하는 경우 hit가 불가능하다.")
@@ -38,7 +38,7 @@ public class PlayerTest {
         List<Card> cards = generateTotalScoreGraterThan21Cards();
         Player player = new Player(name, cards);
 
-        assertThat(player.isPlaying()).isFalse();
+        assertThat(player.canHit()).isFalse();
     }
 
     @DisplayName("카드를 받아서 합칠 수 있다.")
@@ -49,7 +49,7 @@ public class PlayerTest {
         Player player = new Player(name, cards);
         Card card = Card.of(FIVE, SPADE);
 
-        player.combine(card);
+        player.add(card);
 
         assertThat(player.getCards().getValue().size()).isEqualTo(3);
     }

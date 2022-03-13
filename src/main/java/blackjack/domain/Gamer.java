@@ -18,7 +18,7 @@ public abstract class Gamer {
         return cards.calculateTotalScore();
     }
 
-    public void combine(Card card) {
+    public void add(Card card) {
         cards.add(card);
     }
 
@@ -31,6 +31,8 @@ public abstract class Gamer {
     }
 
     abstract GameResult createResult(Gamer gamer);
+
+    abstract boolean canHit();
 
     public String getName() {
         return name.getValue();
