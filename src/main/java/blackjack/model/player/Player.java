@@ -23,8 +23,6 @@ public abstract class Player {
         return cards;
     }
 
-    public abstract List<Card> openCards();
-
     public void take(Card card) {
         if (!isHittable()) {
             throw new IllegalStateException("카드를 더 이상 발급 받을 수 없습니다.");
@@ -35,6 +33,8 @@ public abstract class Player {
     public Score score() {
         return cards.bestScore();
     }
+
+    public abstract List<Card> openCards();
 
     public abstract boolean isHittable();
 }
