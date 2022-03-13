@@ -12,6 +12,10 @@ public class Card {
         this.score = score;
     }
 
+    public boolean isScoreAce() {
+        return score == Score.ACE;
+    }
+
     public Score getScore() {
         return score;
     }

@@ -46,7 +46,7 @@ public class Cards {
     }
 
     private boolean isContainsAce() {
-        return cards.stream().anyMatch(card -> card.getScore() == Score.ACE);
+        return cards.stream().anyMatch(card -> card.isScoreAce());
     }
 
     public List<Card> getCards() {
