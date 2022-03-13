@@ -12,6 +12,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class BlackJack {
 
@@ -58,34 +59,31 @@ public class BlackJack {
     }
 
     private void drawAdditionalCard(Users users, Deck deck) {
-        List<User> players = users.getPlayers();
-        User dealer = users.getDealer();
+        Consumer<User> consumerPlayer = user -> drawCardPerPlayer(user, deck);
 
-        for (User player : players) {
-            drawCardPerPlayer(deck, player);
-        }
+        Consumer<User> consumerDealer = user -> drawDealerCard(user, deck);
 
-        drawDealerCard(deck, dealer);
+        users.drawAdditionalCard(consumerPlayer, consumerDealer);
     }
 
-    private void drawCardPerPlayer(Deck deck, User player) {
+    private void drawCardPerPlayer(User player, Deck deck) {
         try {
-            drawPlayerCardByYes(deck, player);
+            drawPlayerCardByYes(player, deck);
         } catch(IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
 
-            drawCardPerPlayer(deck, player);
+            drawCardPerPlayer(player, deck);
         }
     }
 
-    private void drawPlayerCardByYes(Deck deck, User player) {
+    private void drawPlayerCardByYes(User player, Deck deck) {
         while (player.isDrawable() && inputView.inputWhetherToDrawCard(UserDto.from(player))) {
             player.drawCard(deck);
             outputView.printCards(UserDto.from(player));
         }
     }
 
-    private void drawDealerCard(Deck deck, User dealer) {
+    private void drawDealerCard(User dealer, Deck deck) {
         if (dealer.isDrawable()) {
             dealer.drawCard(deck);
             outputView.printDealer();

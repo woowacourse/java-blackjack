@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 import blackjack.domain.card.Deck;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Users {
@@ -58,5 +59,15 @@ public class Users {
                 .filter(User::isDealer)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("딜러가 업습니다."));
+    }
+
+    public void drawAdditionalCard(Consumer<User> consumerPlayer, Consumer<User> consumerDealer) {
+        List<User> players = getPlayers();
+
+        for (User player : players) {
+            consumerPlayer.accept(player);
+        }
+
+        consumerDealer.accept(getDealer());
     }
 }
