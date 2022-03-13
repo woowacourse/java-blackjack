@@ -2,11 +2,19 @@ package domain.card;
 
 public enum Rank {
 
-	RANK_A("A", 1),
-	RANK_2("2", 2), RANK_3("3", 3), RANK_4("4", 4),
-	RANK_5("5", 5), RANK_6("6", 6), RANK_7("7", 7),
-	RANK_8("8", 8), RANK_9("9", 9), RANK_10("10", 10),
-	RANK_J("J", 10), RANK_Q("Q", 10), RANK_K("K", 10);
+	RANK_ACE("A", 1),
+	RANK_TWO("2", 2),
+	RANK_THREE("3", 3),
+	RANK_FOUR("4", 4),
+	RANK_FIVE("5", 5),
+	RANK_SIX("6", 6),
+	RANK_SEVEN("7", 7),
+	RANK_EIGHT("8", 8),
+	RANK_NINE("9", 9),
+	RANK_TEN("10", 10),
+	RANK_JACK("J", 10),
+	RANK_QUEEN("Q", 10),
+	RANK_KNIGHT("K", 10);
 
 	private final String rank;
 	private final int point;
@@ -22,5 +30,9 @@ public enum Rank {
 
 	public int getPoint() {
 		return point;
+	}
+
+	public boolean isAce() {
+		return this == RANK_ACE;
 	}
 }

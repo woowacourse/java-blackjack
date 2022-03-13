@@ -21,7 +21,7 @@ public class PlayerTest {
 	@BeforeEach
 	void setUp() {
 		handForPlayer = new ArrayList<>(
-			List.of(new Card(Rank.RANK_8, Suit.CLOVER), new Card(Rank.RANK_A, Suit.CLOVER)));
+			List.of(new Card(Rank.RANK_EIGHT, Suit.CLOVER), new Card(Rank.RANK_ACE, Suit.CLOVER)));
 		player = new Player(new Name("pobi"), handForPlayer);
 	}
 
@@ -29,7 +29,7 @@ public class PlayerTest {
 	@DisplayName("블랙잭 발생 시 승패 판단")
 	void compareAtBlackJack() {
 		List<Card> handForDealer = new ArrayList<>(
-			List.of(new Card(Rank.RANK_J, Suit.CLOVER), new Card(Rank.RANK_A, Suit.CLOVER)));
+			List.of(new Card(Rank.RANK_JACK, Suit.CLOVER), new Card(Rank.RANK_ACE, Suit.CLOVER)));
 		Dealer dealer = new Dealer(handForDealer);
 		assertThat(player.compareAtBlackJack(dealer)).isEqualTo(Versus.LOSE);
 	}
@@ -38,7 +38,7 @@ public class PlayerTest {
 	@DisplayName("최종 결과를 위한 승패 판단")
 	void compareAtFinal() {
 		List<Card> handForDealer = new ArrayList<>(
-			List.of(new Card(Rank.RANK_J, Suit.CLOVER), new Card(Rank.RANK_A, Suit.CLOVER)));
+			List.of(new Card(Rank.RANK_JACK, Suit.CLOVER), new Card(Rank.RANK_ACE, Suit.CLOVER)));
 		Dealer dealer = new Dealer(handForDealer);
 		assertThat(player.compareAtFinal(dealer)).isEqualTo(Versus.LOSE);
 	}

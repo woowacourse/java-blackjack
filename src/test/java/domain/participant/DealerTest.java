@@ -20,14 +20,14 @@ public class DealerTest {
 
 	@BeforeEach
 	void setup() {
-		card1 = new Card(Rank.RANK_J, Suit.SPADE);
-		card2 = new Card(Rank.RANK_A, Suit.CLOVER);
+		card1 = new Card(Rank.RANK_JACK, Suit.SPADE);
+		card2 = new Card(Rank.RANK_ACE, Suit.CLOVER);
 	}
 
 	@Test
 	@DisplayName("딜러가 손패를 더 받아야 하는 경우")
 	void isEnoughCard_False() {
-		Card card = new Card(Rank.RANK_5, Suit.HEART);
+		Card card = new Card(Rank.RANK_FIVE, Suit.HEART);
 		Dealer dealer = new Dealer(new ArrayList<>(List.of(card, card1, card2)));
 		assertThat(dealer.isEnoughCard()).isFalse();
 	}
@@ -35,7 +35,7 @@ public class DealerTest {
 	@Test
 	@DisplayName("딜러가 손패를 더 안 받아야 하는 경우")
 	void isEnoughCard_True() {
-		Card card = new Card(Rank.RANK_6, Suit.HEART);
+		Card card = new Card(Rank.RANK_SIX, Suit.HEART);
 		Dealer dealer = new Dealer(new ArrayList<>(List.of(card, card1, card2)));
 		assertThat(dealer.isEnoughCard()).isTrue();
 	}

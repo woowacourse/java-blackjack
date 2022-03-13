@@ -25,10 +25,10 @@ public class ParticipantTest {
 
 	@BeforeEach
 	void setUp() {
-		card1 = new Card(Rank.RANK_K, Suit.HEART);
-		card2 = new Card(Rank.RANK_A, Suit.SPADE);
-		card3 = new Card(Rank.RANK_A, Suit.CLOVER);
-		card4 = new Card(Rank.RANK_8, Suit.CLOVER);
+		card1 = new Card(Rank.RANK_KNIGHT, Suit.HEART);
+		card2 = new Card(Rank.RANK_ACE, Suit.SPADE);
+		card3 = new Card(Rank.RANK_ACE, Suit.CLOVER);
+		card4 = new Card(Rank.RANK_EIGHT, Suit.CLOVER);
 	}
 
 	@Test

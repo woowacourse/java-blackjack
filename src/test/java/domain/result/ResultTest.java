@@ -18,12 +18,12 @@ import domain.participant.Players;
 
 public class ResultTest {
 
-	Card card_A = new Card(Rank.RANK_A, Suit.CLOVER);
-	Card card_2 = new Card(Rank.RANK_2, Suit.CLOVER);
-	Card card_Q = new Card(Rank.RANK_Q, Suit.CLOVER);
-	Card card_K = new Card(Rank.RANK_K, Suit.CLOVER);
-	Card card_6 = new Card(Rank.RANK_6, Suit.CLOVER);
-	Card card_9 = new Card(Rank.RANK_9, Suit.CLOVER);
+	Card card_A = new Card(Rank.RANK_ACE, Suit.CLOVER);
+	Card card_2 = new Card(Rank.RANK_TWO, Suit.CLOVER);
+	Card card_Q = new Card(Rank.RANK_QUEEN, Suit.CLOVER);
+	Card card_K = new Card(Rank.RANK_KNIGHT, Suit.CLOVER);
+	Card card_6 = new Card(Rank.RANK_SIX, Suit.CLOVER);
+	Card card_9 = new Card(Rank.RANK_NINE, Suit.CLOVER);
 	List<Card> cards_20 = new ArrayList<>(Arrays.asList(card_A, card_9));
 	List<Card> cards_15 = new ArrayList<>(Arrays.asList(card_9, card_6));
 	List<Card> cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));

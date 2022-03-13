@@ -22,11 +22,11 @@ import domain.result.Versus;
 
 public class PlayersTest {
 
-	Card card_A = new Card(Rank.RANK_A, Suit.CLOVER);
-	Card card_2 = new Card(Rank.RANK_2, Suit.CLOVER);
-	Card card_Q = new Card(Rank.RANK_Q, Suit.CLOVER);
-	Card card_K = new Card(Rank.RANK_K, Suit.CLOVER);
-	Card card_6 = new Card(Rank.RANK_6, Suit.CLOVER);
+	Card card_A = new Card(Rank.RANK_ACE, Suit.CLOVER);
+	Card card_2 = new Card(Rank.RANK_TWO, Suit.CLOVER);
+	Card card_Q = new Card(Rank.RANK_QUEEN, Suit.CLOVER);
+	Card card_K = new Card(Rank.RANK_KNIGHT, Suit.CLOVER);
+	Card card_6 = new Card(Rank.RANK_SIX, Suit.CLOVER);
 	List<Card> cards_21 = new ArrayList<>(Arrays.asList(card_A, card_Q));
 	List<Card> cards_BURST = new ArrayList<>(Arrays.asList(card_K, card_Q, card_2));
 	List<List<Card>> initCards = new ArrayList<>(Arrays.asList(cards_21, cards_BURST));
@@ -66,7 +66,7 @@ public class PlayersTest {
 	@DisplayName("이름으로 플레이어 카드 추가")
 	void addCardByName() {
 		Name name = new Name("pobi");
-		players.addCardByName(name, new Card(Rank.RANK_A, Suit.DIAMOND));
+		players.addCardByName(name, new Card(Rank.RANK_ACE, Suit.DIAMOND));
 		assertThat(players.showHandByName(name)).isEqualTo("pobi카드: A클로버, Q클로버, A다이아몬드");
 	}
 
@@ -113,7 +113,7 @@ public class PlayersTest {
 
 			@Override
 			public Queue<Card> generateCardsForBlackJack() {
-				return new LinkedList<>(Arrays.asList(new Card(Rank.RANK_4, Suit.CLOVER)));
+				return new LinkedList<>(Arrays.asList(new Card(Rank.RANK_FOUR, Suit.CLOVER)));
 			}
 		}
 		Deck deck = Deck.from(new TestGenerationDeckStrategy());
