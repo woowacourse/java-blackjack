@@ -19,8 +19,9 @@ public abstract class User {
     }
 
     public void drawInitCards(Deck deck) {
-        cards.add(deck.drawCard());
-        cards.add(deck.drawCard());
+        deck.drawInitCards()
+                .stream()
+                .forEach(cards::add);
     }
 
     public List<Card> showCards() {
