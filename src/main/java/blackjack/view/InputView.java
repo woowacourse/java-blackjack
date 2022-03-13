@@ -14,24 +14,20 @@ public class InputView {
 	private static final String CHOICE_NO = "n";
 	private static final String ERROR_MESSAGE_ILLEGAL_CHOICE_FORMAT = "[ERROR] y 또는 n 으로 입력해야 합니다.";
 
-	public static void terminate() {
-		scanner.close();
-	}
-
-	public static List<String> askPlayerNameInput() {
+	public static List<String> askPlayerName() {
 		System.out.println(MESSAGE_ASK_PARTICIPANTS);
 		String input = scanner.nextLine();
 		return Arrays.asList(input.split(NAME_DELIMITER));
 	}
 
-	public static Boolean askAdditionalCardInput(String name) {
+	public static Boolean askAdditionalCard(String name) {
 		System.out.printf(MESSAGE_ASK_ADDITIONAL_CARD_CHOICE, name);
 		try {
 			String input = scanner.nextLine().toLowerCase(Locale.ROOT);
 			checkValidChoice(input);
 			return input.equals(CHOICE_YES);
 		} catch (IllegalArgumentException e) {
-			return askAdditionalCardInput(name);
+			return askAdditionalCard(name);
 		}
 	}
 

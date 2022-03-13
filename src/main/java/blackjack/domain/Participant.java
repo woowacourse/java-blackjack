@@ -50,7 +50,7 @@ public class Participant {
 	}
 
 	public Boolean isOverMaxScore() {
-		return getScore() >= MAX_SCORE;
+		return getScore() > MAX_SCORE;
 	}
 
 	public int getScore() {

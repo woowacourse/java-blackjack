@@ -55,8 +55,8 @@ public class BlackJack {
 		participant.receiveCard(CardDeck.pick());
 	}
 
-	public boolean isDealerNeedAdditionalCard() {
-		return dealer.getScore() <= DEALER_ADDITIONAL_CARD_STANDARD;
+	public boolean isDealerEnough() {
+		return dealer.getScore() > DEALER_ADDITIONAL_CARD_STANDARD;
 	}
 
 	public void calculateResult() {
