@@ -23,18 +23,18 @@ public class Cards {
         List<Card> allCard = new ArrayList<>();
         List<Suit> suits = Arrays.stream(Suit.values())
                 .collect(Collectors.toList());
-        List<Rank> ranks = Arrays.stream(Rank.values())
+        List<Symbols> symbols = Arrays.stream(Symbols.values())
                 .collect(Collectors.toList());
 
         for (Suit suit : suits) {
-            addRankForSuit(allCard, ranks, suit);
+            addRankForSuit(allCard, symbols, suit);
         }
         return allCard;
     }
 
-    private void addRankForSuit(List<Card> allCard, List<Rank> ranks, Suit suit) {
-        for (Rank rank : ranks) {
-            allCard.add(new Card(suit, rank));
+    private void addRankForSuit(List<Card> allCard, List<Symbols> symbols, Suit suit) {
+        for (Symbols symbol : symbols) {
+            allCard.add(new Card(suit, symbol));
         }
     }
 }

@@ -43,7 +43,7 @@ public class Deck {
     }
 
     private boolean isAce(Card card) {
-        return card.getRank().equals(Rank.ACE);
+        return card.getRank().equals(Symbols.ACE);
     }
 
     private int getCardPoint(Card card) {

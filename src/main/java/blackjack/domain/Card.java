@@ -3,19 +3,19 @@ package blackjack.domain;
 public class Card {
 
     private final Suit suit;
-    private final Rank rank;
+    private final Symbols symbols;
 
-    public Card(Suit suit, Rank rank) {
+    public Card(Suit suit, Symbols symbols) {
         this.suit = suit;
-        this.rank = rank;
+        this.symbols = symbols;
     }
 
     public Suit getSuit() {
         return suit;
     }
 
-    public Rank getRank() {
-        return rank;
+    public Symbols getRank() {
+        return symbols;
     }
 
     @Override
@@ -26,13 +26,13 @@ public class Card {
         Card card = (Card) o;
 
         if (suit != card.suit) return false;
-        return rank == card.rank;
+        return symbols == card.symbols;
     }
 
     @Override
     public int hashCode() {
         int result = suit != null ? suit.hashCode() : 0;
-        result = 31 * result + (rank != null ? rank.hashCode() : 0);
+        result = 31 * result + (symbols != null ? symbols.hashCode() : 0);
         return result;
     }
 }

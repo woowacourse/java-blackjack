@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-public enum Rank {
+public enum Symbols {
     ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -19,7 +19,7 @@ public enum Rank {
     private final int point;
     private final String value;
 
-    Rank(int point, String value) {
+    Symbols(int point, String value) {
         this.point = point;
         this.value = value;
     }
