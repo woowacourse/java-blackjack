@@ -4,7 +4,6 @@ import blackjack.domain.BlackJackMachine;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.Choice;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.result.DealerResult;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Participants;
 import blackjack.domain.result.ParticipantResult;
@@ -93,7 +92,6 @@ public class BlackJackController {
 
     private void decideResults(final Dealer dealer, final Participants participants) {
         final ParticipantResult participantResult = new ParticipantResult(dealer, participants);
-        final DealerResult dealerResult = new DealerResult(participantResult.getDealerResult());
-        OutputView.printResults(dealer, dealerResult, participantResult);
+        OutputView.printResults(dealer, participantResult);
     }
 }

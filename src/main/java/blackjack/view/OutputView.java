@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.result.DealerResult;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Participants;
 import blackjack.domain.player.Player;
@@ -63,14 +62,13 @@ public class OutputView {
         System.out.println(" - 결과: " + totalScore);
     }
 
-    public static void printResults(final Dealer dealer, final DealerResult dealerResult, final ParticipantResult results) {
+    public static void printResults(final Dealer dealer, final ParticipantResult results) {
         System.out.println("\n## 최종 승패");
-        printDealerResult(dealer, dealerResult);
+        printDealerResult(dealer, results.getDealerResult());
         printParticipantsResult(results);
     }
 
-    private static void printDealerResult(final Dealer dealer, final DealerResult result) {
-        final Map<Result, Integer> dealerResult = result.getResult();
+    private static void printDealerResult(final Dealer dealer, final Map<Result, Integer> dealerResult) {
 
         final String dealerResultString = dealerResult.entrySet()
                 .stream()

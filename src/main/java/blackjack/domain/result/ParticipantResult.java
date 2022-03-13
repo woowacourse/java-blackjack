@@ -9,23 +9,20 @@ import java.util.Map;
 
 public class ParticipantResult {
 
-    private final Map<Participant, Result> participantResult;
+    private final Map<Participant, Result> results;
 
     public ParticipantResult(final Dealer dealer, final Participants participants) {
-        participantResult = new LinkedHashMap<>();
-        decideResults(dealer, participants);
+        results = getResults(dealer, participants);
     }
 
-    private void decideResults(final Dealer dealer, final Participants participants) {
-        decideParticipantsResult(dealer, participants);
-    }
-
-    private void decideParticipantsResult(final Dealer dealer, final Participants participants) {
+    private Map<Participant, Result> getResults(final Dealer dealer, final Participants participants) {
+        Map<Participant, Result> results = new LinkedHashMap<>();
         final int dealerScore = dealer.getTotalScore();
         for (Participant participant : participants) {
             final int participantScore = participant.getTotalScore();
-            participantResult.put(participant, Result.decide(dealerScore, participantScore));
+            results.put(participant, Result.decide(dealerScore, participantScore));
         }
+        return results;
     }
 
     public Map<Result, Integer> getDealerResult() {
@@ -37,13 +34,13 @@ public class ParticipantResult {
     }
 
     private int countDealerResult(final Result result) {
-        return (int) participantResult.values()
+        return (int) results.values()
                 .stream()
                 .filter(value -> value == result)
                 .count();
     }
 
     public Map<Participant, Result> getParticipantResult() {
-        return participantResult;
+        return results;
     }
 }
