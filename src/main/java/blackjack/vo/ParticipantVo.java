@@ -18,7 +18,7 @@ public class ParticipantVo {
     }
 
     public Set<Card> getCards() {
-        return participant.getCards().getValue();
+        return participant.getCards();
     }
 
     public int getScore() {

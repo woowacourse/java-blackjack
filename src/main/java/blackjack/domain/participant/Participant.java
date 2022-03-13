@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import static blackjack.domain.card.PlayStatus.*;
 
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import blackjack.domain.card.Card;
@@ -44,7 +43,7 @@ public abstract class Participant {
 
     public abstract String getName();
 
-    public Cards getCards() {
-        return cards;
+    public Set<Card> getCards() {
+        return cards.getValue();
     }
 }
