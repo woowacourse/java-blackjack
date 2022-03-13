@@ -81,13 +81,13 @@ public class Controller {
 	}
 
 	private void drawForDealer(Deck deck, Dealer dealer, Players players) {
-		if (!players.isAllBust()) {
+		if (!players.checkAllBust()) {
 			drawForDealer(deck, dealer);
 		}
 	}
 
 	private void askAndDrawForPlayer(Deck deck, Players players, Name name) {
-		boolean isKeepDraw = !(players.isMaxScoreByName(name));
+		boolean isKeepDraw = !(players.checkMaxScoreByName(name));
 
 		while (isKeepDraw && askDraw(name.getName())) {
 			players.addCardByName(name, deck.draw());
@@ -113,11 +113,11 @@ public class Controller {
 	}
 
 	private boolean checkBlackJackOrBust(Players players, Name name) {
-		if (players.isMaxScoreByName(name)) {
+		if (players.checkMaxScoreByName(name)) {
 			OutputView.printBlackJackMessage();
 			return false;
 		}
-		if (players.isBustByName(name)) {
+		if (players.checkBustByName(name)) {
 			OutputView.printBustMessage();
 			return false;
 		}

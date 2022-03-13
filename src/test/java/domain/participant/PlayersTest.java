@@ -74,20 +74,20 @@ public class PlayersTest {
 	@DisplayName("이름으로 플레이어가 Bust 인지 판별")
 	void isBustByName() {
 		Name name = new Name("jason");
-		assertThat(players.isBustByName(name)).isTrue();
+		assertThat(players.checkBustByName(name)).isTrue();
 	}
 
 	@Test
 	@DisplayName("모든 플레이어가 Bust 인지 판별")
 	void isBustAllBust() {
-		assertThat(players.isAllBust()).isFalse();
+		assertThat(players.checkAllBust()).isFalse();
 	}
 
 	@Test
 	@DisplayName("이름으로 플레이어가 블랙잭 인지 판별")
 	void isBlackJackByName() {
 		Name name = new Name("pobi");
-		assertThat(players.isMaxScoreByName(name)).isTrue();
+		assertThat(players.checkMaxScoreByName(name)).isTrue();
 	}
 
 	@Test

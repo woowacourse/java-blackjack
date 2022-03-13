@@ -39,20 +39,20 @@ public class Players {
 		return players.stream().map(Player::showHandAndBestScore).collect(Collectors.toList());
 	}
 
-	public boolean isAllBust() {
+	public boolean checkAllBust() {
 		long count = players.stream()
 			.filter(Player::isBust)
 			.count();
 		return count == players.size();
 	}
 
-	public boolean isBustByName(Name name) {
+	public boolean checkBustByName(Name name) {
 		return players.stream()
 			.filter(player -> player.isNameMatch(name))
 			.map((Player::isBust)).findFirst().orElseThrow();
 	}
 
-	public boolean isMaxScoreByName(Name name) {
+	public boolean checkMaxScoreByName(Name name) {
 		return players.stream()
 			.filter(player -> player.isNameMatch(name))
 			.map((Player::isMaxScore)).findFirst().orElseThrow();
