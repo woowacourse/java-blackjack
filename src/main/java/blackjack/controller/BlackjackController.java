@@ -12,7 +12,7 @@ import blackjack.view.OutputView;
 public class BlackjackController {
 
     public void playGame() {
-        BlackjackGame blackjackGame = receivePlayerNames();
+        BlackjackGame blackjackGame = new BlackjackGame(receivePlayerNames());
         Players players = blackjackGame.initGames();
 
         printStartGame(players);
@@ -23,12 +23,12 @@ public class BlackjackController {
         printResult(blackjackGame, players);
     }
 
-    private BlackjackGame receivePlayerNames() {
+    private List<String> receivePlayerNames() {
         try {
             List<String> names = InputView.inputPlayerNames();
             InputValidator.inputListBlank(names);
             InputValidator.hasDuplicateName(names);
-            return new BlackjackGame(names);
+            return names;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return receivePlayerNames();
