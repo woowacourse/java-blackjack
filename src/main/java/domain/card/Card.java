@@ -1,5 +1,7 @@
 package domain.card;
 
+import java.util.Objects;
+
 public class Card {
 
     private final Symbol symbol;
@@ -24,25 +26,14 @@ public class Card {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-
-        if (symbol != card.symbol) {
-            return false;
-        }
-        return denomination == card.denomination;
+        return symbol == card.symbol && denomination == card.denomination;
     }
 
     @Override
     public int hashCode() {
-        int result = symbol != null ? symbol.hashCode() : 0;
-        result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
-        return result;
+        return Objects.hash(symbol, denomination);
     }
 }
