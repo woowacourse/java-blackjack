@@ -14,10 +14,21 @@ public class Gamer implements Player {
 	private final Cards cards;
 
 	public Gamer(final String name) {
-		checkEmptyName(name);
-		checkBannedName(name);
+		checkName(name);
 		this.name = name;
 		cards = new Cards();
+	}
+
+	private void checkName(final String name) {
+		checkNullName(name);
+		checkEmptyName(name);
+		checkBannedName(name);
+	}
+
+	private void checkNullName(final String name) {
+		if (name == null) {
+			throw new IllegalArgumentException("[ERROR] Gamer의 이름은 null일 수 없습니다.");
+		}
 	}
 
 	private void checkEmptyName(final String name) {
