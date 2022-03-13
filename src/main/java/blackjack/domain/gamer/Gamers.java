@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import blackjack.domain.BlackJackGame;
 import blackjack.domain.card.Card;
 
 public class Gamers {
@@ -48,8 +49,8 @@ public class Gamers {
 		player.addCard(deck.get());
 	}
 
-	public boolean checkDealerOverThan(int standard) {
-		return dealer.isOverThan(standard);
+	public boolean checkDealerDrawPossible() {
+		return !dealer.isOverThan(BlackJackGame.INIT_DISTRIBUTION_COUNT);
 	}
 
 	public Player findPlayerByName(String name) {
@@ -59,8 +60,8 @@ public class Gamers {
 			.orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_PLAYER_ERROR));
 	}
 
-	public boolean checkPlayerOverThan(String name, int standard) {
-		return findPlayerByName(name).isOverThan(standard);
+	public boolean checkPlayerDrawPossible(String name) {
+		return findPlayerByName(name).isOverThan(BlackJackGame.MAX_CARD_VALUE);
 	}
 
 	public List<String> findPlayerNames() {

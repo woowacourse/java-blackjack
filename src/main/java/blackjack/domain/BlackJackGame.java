@@ -56,12 +56,12 @@ public class BlackJackGame {
 	}
 
 	private boolean isBust(String name) {
-		return gamers.checkPlayerOverThan(name, MAX_CARD_VALUE);
+		return gamers.checkPlayerDrawPossible(name);
 	}
 
 	public int distributeAdditionalToDealer() {
 		int count = 0;
-		while (!gamers.checkDealerOverThan(ADDITIONAL_DISTRIBUTE_STANDARD)) {
+		while (gamers.checkDealerDrawPossible()) {
 			gamers.giveCardToDealer(cardFactory::draw);
 			count++;
 		}
