@@ -1,16 +1,18 @@
 package domain.card;
 
-import static java.util.Collections.shuffle;
 import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import java.util.stream.Stream;
 
 public class CardDeck {
+    private static final int INITIAL_SIZE = 52;
+    private static final String CAN_NOT_SHUFFLE_USED_DECK = "사용중인 카드는 다시 섞을 수 없습니다.";
     private static final List<PlayingCard> originalPlayingCards;
 
     private final Deque<PlayingCard> playingCards;
@@ -29,10 +31,7 @@ public class CardDeck {
     }
 
     private CardDeck() {
-        List<PlayingCard> newPlayingCards = new ArrayList<>(originalPlayingCards);
-        shuffle(newPlayingCards);
-
-        this.playingCards = new ArrayDeque<>(newPlayingCards);
+        this.playingCards = new ArrayDeque<>(originalPlayingCards);
     }
 
     public static CardDeck newInstance() {
@@ -41,5 +40,17 @@ public class CardDeck {
 
     public PlayingCard getCard() {
         return playingCards.pop();
+    }
+
+    public CardDeck shuffle() {
+        if (playingCards.size() != INITIAL_SIZE) {
+            throw new IllegalStateException(CAN_NOT_SHUFFLE_USED_DECK);
+        }
+
+        playingCards.clear();
+        List<PlayingCard> newPlayingCards = new ArrayList<>(originalPlayingCards);
+        Collections.shuffle(newPlayingCards);
+        playingCards.addAll(newPlayingCards);
+        return this;
     }
 }

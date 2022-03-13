@@ -16,7 +16,7 @@ public class BlackJackController {
     public void start() {
         Gamblers gamblers = setupGamblers();
         Dealer dealer = new Dealer();
-        CardDeck cardDeck = CardDeck.newInstance();
+        CardDeck cardDeck = CardDeck.newInstance().shuffle();
 
         playGame(gamblers, dealer, cardDeck);
         OutputView.printResult(BlackJackResult.of(dealer, gamblers));
