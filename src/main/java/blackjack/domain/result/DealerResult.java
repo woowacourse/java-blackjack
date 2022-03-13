@@ -1,35 +1,30 @@
 package blackjack.domain.result;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.User;
-import blackjack.domain.participant.Users;
-
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 public class DealerResult {
 
-    private final Map<Result, Integer> count;
+    private final Map<Result, Integer> result;
 
-    public DealerResult(Users users, Dealer dealer) {
-        this.count = new EnumMap<>(Result.class);
-        calculateFinalCount(users, dealer);
+    public DealerResult(List<UserResult> userResults) {
+        this.result = new EnumMap<>(Result.class);
+        calculateFinalCount(userResults);
     }
 
-    private void calculateFinalCount(Users users, Dealer dealer) {
-        int dealerSum = dealer.getCardSum();
-        for (User user : users.getUsers()) {
-            Result userResult = user.checkResult(dealerSum);
-            addCount(Result.swap(userResult));
+    private void calculateFinalCount(List<UserResult> userResults) {
+        for (UserResult userResult : userResults) {
+            addCount(Result.swap(userResult.getResult()));
         }
     }
 
     private void addCount(Result result) {
-        count.put(result, count.getOrDefault(result, 0) + 1);
+        this.result.put(result, this.result.getOrDefault(result, 0) + 1);
     }
 
-    public Map<Result, Integer> getCount() {
-        return Collections.unmodifiableMap(count);
+    public Map<Result, Integer> getResult() {
+        return Collections.unmodifiableMap(result);
     }
 }

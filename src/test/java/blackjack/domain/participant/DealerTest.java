@@ -17,7 +17,7 @@ class DealerTest {
         dealer.receiveCard(new Card(CardNumber.EIGHT, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
 
-        assertThat(dealer.checkUnderSumStandard()).isFalse();
+        assertThat(dealer.checkUnderScoreStandard()).isFalse();
     }
 
     @Test
@@ -27,6 +27,6 @@ class DealerTest {
         dealer.receiveCard(new Card(CardNumber.SIX, CardType.CLOVER));
         dealer.receiveCard(new Card(CardNumber.QUEEN, CardType.CLOVER));
 
-        assertThat(dealer.checkUnderSumStandard()).isTrue();
+        assertThat(dealer.checkUnderScoreStandard()).isTrue();
     }
 }

@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.result.UserResult;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -23,5 +25,17 @@ public class Users {
 
     public List<User> getUsers() {
         return Collections.unmodifiableList(users);
+    }
+
+    public List<ParticipantDto> getUsersInfoWithScore() {
+        return users.stream()
+                .map(User::getUserInfoWithScore)
+                .collect(Collectors.toList());
+    }
+
+    public List<UserResult> getUsersInfoWithResult(int dealerSum) {
+        return users.stream()
+                .map(user -> user.getUserInfoWithResult(dealerSum))
+                .collect(Collectors.toList());
     }
 }

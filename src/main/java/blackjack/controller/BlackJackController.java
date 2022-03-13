@@ -3,11 +3,15 @@ package blackjack.controller;
 import blackjack.domain.card.CardGenerator;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.User;
 import blackjack.domain.participant.Users;
 import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.UserResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.List;
 
 public class BlackJackController {
 
@@ -18,21 +22,25 @@ public class BlackJackController {
         initDistribute(deck, users, dealer);
 
         playGame(users, dealer, deck);
-        OutputView.printFinalCard(users, dealer);
-        calculateResult(users, dealer);
+        gameResult(users, dealer);
     }
 
     private void initDistribute(Deck deck, Users users, Dealer dealer) {
-        for (int i = 0; i < 2; i++) {
-            userDistribute(deck, users);
-            dealer.receiveCard(deck.drawCard());
+        OutputView.printInitDistribute(users);
+
+        cardDistribute(deck, dealer);
+        OutputView.printParticipantCards(dealer.getDealerInfoWithoutHiddenCard());
+
+        for (User user : users.getUsers()) {
+            cardDistribute(deck, user);
+            OutputView.printParticipantCards(user.getUserInfo());
         }
-        OutputView.printInitDistribute(users, dealer);
+        OutputView.printLineSeparators();
     }
 
-    private void userDistribute(Deck deck, Users users) {
-        for (User user : users.getUsers()) {
-            user.receiveCard(deck.drawCard());
+    private void cardDistribute(Deck deck, Participant participant) {
+        for (int i = 0; i < 2; i++) {
+            participant.receiveCard(deck.drawCard());
         }
     }
 
@@ -40,28 +48,30 @@ public class BlackJackController {
         for (User user : users.getUsers()) {
             playEachUser(user, deck);
         }
-
         playDealer(dealer, deck);
     }
 
     private void playEachUser(User user, Deck deck) {
         while (!user.getHoldingCard().checkBust() && InputView.inputMoreCard(user)) {
             user.receiveCard(deck.drawCard());
-            OutputView.printUserData(user);
+            OutputView.printParticipantCards(user.getUserInfo());
         }
     }
 
     private void playDealer(Dealer dealer, Deck deck) {
-        while (dealer.checkUnderSumStandard()) {
+        while (dealer.checkUnderScoreStandard()) {
             OutputView.printDealerDraw();
             dealer.receiveCard(deck.drawCard());
         }
     }
 
-    private void calculateResult(Users users, Dealer dealer) {
-        DealerResult result = new DealerResult(users, dealer);
-        int dealerSum = dealer.getCardSum();
 
-        OutputView.printFinalScore(result, users, dealerSum);
+    private void gameResult(Users users, Dealer dealer) {
+        OutputView.printFinalCard(dealer.getDealerInfoWithScore(), users.getUsersInfoWithScore());
+
+        List<UserResult> userResults = users.getUsersInfoWithResult(dealer.getHoldingCard().cardSum());
+        DealerResult dealerResult = new DealerResult(userResults);
+
+        OutputView.printFinalResult(dealerResult, userResults);
     }
 }

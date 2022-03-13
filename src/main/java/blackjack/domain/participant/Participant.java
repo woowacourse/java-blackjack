@@ -26,10 +26,6 @@ public abstract class Participant {
         holdingCard.addCard(card);
     }
 
-    public int getCardSum() {
-        return holdingCard.cardSum();
-    }
-
     public HoldingCard getHoldingCard() {
         return holdingCard;
     }
