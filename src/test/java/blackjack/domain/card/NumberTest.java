@@ -1,45 +1,28 @@
 package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.ParameterizedTest.ARGUMENTS_PLACEHOLDER;
+import static org.junit.jupiter.params.ParameterizedTest.DISPLAY_NAME_PLACEHOLDER;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class NumberTest {
 
     @DisplayName("카드 이름 테스트")
-    @Test
-    void getNameTest() {
-        assertThat(Number.ACE.getName()).isEqualTo("A");
-        assertThat(Number.TWO.getName()).isEqualTo("2");
-        assertThat(Number.THREE.getName()).isEqualTo("3");
-        assertThat(Number.FOUR.getName()).isEqualTo("4");
-        assertThat(Number.FIVE.getName()).isEqualTo("5");
-        assertThat(Number.SIX.getName()).isEqualTo("6");
-        assertThat(Number.SEVEN.getName()).isEqualTo("7");
-        assertThat(Number.EIGHT.getName()).isEqualTo("8");
-        assertThat(Number.NINE.getName()).isEqualTo("9");
-        assertThat(Number.TEN.getName()).isEqualTo("10");
-        assertThat(Number.JACK.getName()).isEqualTo("J");
-        assertThat(Number.QUEEN.getName()).isEqualTo("Q");
-        assertThat(Number.KING.getName()).isEqualTo("K");
+    @ParameterizedTest(name = DISPLAY_NAME_PLACEHOLDER + " [" + ARGUMENTS_PLACEHOLDER + "]")
+    @CsvSource(value = {"ACE, A", "TWO, 2", "THREE, 3", "FOUR, 4", "FIVE, 5", "SIX, 6", "SEVEN, 7", "EIGHT, 8",
+            "NINE, 9", "TEN, 10", "JACK, J", "QUEEN, Q", "KING, K"})
+    void getName_AllNumbers_ReturnExactName(Number number, String name) {
+        assertThat(number.getName()).isEqualTo(name);
     }
 
     @DisplayName("카드 점수 테스트")
-    @Test
-    void getScoreTest() {
-        assertThat(Number.ACE.getScore()).isEqualTo(1);
-        assertThat(Number.TWO.getScore()).isEqualTo(2);
-        assertThat(Number.THREE.getScore()).isEqualTo(3);
-        assertThat(Number.FOUR.getScore()).isEqualTo(4);
-        assertThat(Number.FIVE.getScore()).isEqualTo(5);
-        assertThat(Number.SIX.getScore()).isEqualTo(6);
-        assertThat(Number.SEVEN.getScore()).isEqualTo(7);
-        assertThat(Number.EIGHT.getScore()).isEqualTo(8);
-        assertThat(Number.NINE.getScore()).isEqualTo(9);
-        assertThat(Number.TEN.getScore()).isEqualTo(10);
-        assertThat(Number.JACK.getScore()).isEqualTo(10);
-        assertThat(Number.QUEEN.getScore()).isEqualTo(10);
-        assertThat(Number.KING.getScore()).isEqualTo(10);
+    @ParameterizedTest(name = DISPLAY_NAME_PLACEHOLDER + " [" + ARGUMENTS_PLACEHOLDER + "]")
+    @CsvSource(value = {"ACE, 1", "TWO, 2", "THREE, 3", "FOUR, 4", "FIVE, 5", "SIX, 6", "SEVEN, 7", "EIGHT, 8",
+            "NINE, 9", "TEN, 10", "JACK, 10", "QUEEN, 10", "KING, 10"})
+    void getScore_AllNumbers_ReturnExactScore(Number number, int score) {
+        assertThat(number.getScore()).isEqualTo(score);
     }
 }
