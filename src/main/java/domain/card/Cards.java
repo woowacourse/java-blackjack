@@ -26,7 +26,7 @@ public class Cards {
     }
 
     private int judgeAdvantageResult(int aceAmount) {
-        return IntStream.range(1, aceAmount + 1)
+        return IntStream.range(0, aceAmount + 1)
             .map(aceCount -> calculateSum() + aceCount * ACE_ADDITIONAL_VALUE)
             .filter(result -> result < BLACKJACK_MAX_VALUE_CRITERIA)
             .max()
