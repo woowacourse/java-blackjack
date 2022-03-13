@@ -21,8 +21,8 @@ public class Hand {
 
 	public int calculateOptimalScore() {
 		int totalScore = cards.stream()
-			.mapToInt(Card::getScore)
-			.sum();
+				.mapToInt(Card::getScore)
+				.sum();
 		if (isBust(totalScore)) {
 			return BlackJackService.BUST;
 		}
@@ -38,8 +38,7 @@ public class Hand {
 
 	public boolean hasAce() {
 		return cards.stream()
-			.mapToInt(Card::getScore)
-			.anyMatch(score -> score == Denomination.ACE.getScore());
+				.anyMatch(Card::isAce);
 	}
 
 	private int getOptimizedScore(final int aceAsOneScore, final int aceAsElevenScore) {

@@ -12,6 +12,10 @@ public class Card implements Comparable<Card> {
 		this.denomination = denomination;
 	}
 
+	public boolean isAce() {
+		return denomination.getScore() == Denomination.ACE.getScore();
+	}
+
 	public String getInformation() {
 		return denomination.getName() + suit.getName();
 	}
@@ -27,7 +31,7 @@ public class Card implements Comparable<Card> {
 		} else if (!(o instanceof Card)) {
 			return false;
 		}
-		Card card = (Card)o;
+		Card card = (Card) o;
 		return suit == card.suit && denomination == card.denomination;
 	}
 
