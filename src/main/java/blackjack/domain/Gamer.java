@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.List;
 
 public class Gamer {
+	private static final int BUST_THRESHOLD = 21;
 	private final Cards cards = new Cards();
 	protected final Name name;
 
@@ -29,7 +30,7 @@ public class Gamer {
 	}
 
 	public boolean isBurst() {
-		return this.cards.getScore() < 0;
+		return this.cards.getScore() > BUST_THRESHOLD;
 	}
 
 	public Card getRandomOneCard() {
