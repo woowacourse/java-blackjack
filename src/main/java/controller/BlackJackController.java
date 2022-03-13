@@ -88,7 +88,7 @@ public class BlackJackController {
     private void playForDealer(Dealer dealer, CardDeck cardDeck) {
         OutputView.printLineSeparator();
 
-        while (dealer.isUnderSixteen()) {
+        while (dealer.needMoreCard()) {
             dealer.addCard(cardDeck.getCard());
             OutputView.printDealerAddCard(dealer);
         }

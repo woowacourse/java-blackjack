@@ -13,6 +13,8 @@ public abstract class Player {
         this.name = name;
         this.cards = new Cards();
     }
+    
+    public abstract boolean isDealer();
 
     public void addCard(Card card) {
         cards.addCard(card);
