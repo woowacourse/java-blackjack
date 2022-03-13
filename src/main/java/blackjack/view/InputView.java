@@ -2,7 +2,10 @@ package blackjack.view;
 
 import blackjack.domain.participant.User;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import static java.lang.System.lineSeparator;
 
@@ -17,9 +20,10 @@ public class InputView {
     private static final String DISAGREE = "n";
 
 
-    public static String[] inputUsersName() {
+    public static List<String> inputUsersName() {
         System.out.println(INPUT_USERNAME_GUIDE);
-        return scanner.nextLine().split(USERNAME_SEPARATOR);
+        return Arrays.stream(scanner.nextLine().split(USERNAME_SEPARATOR))
+                .collect(Collectors.toList());
     }
 
     public static boolean inputMoreCard(User user) {
