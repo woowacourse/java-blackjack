@@ -48,11 +48,7 @@ public class OutputView {
 	}
 
 	private String convertCardToString(Card card) {
-		String cardNumber = String.valueOf(card.getNumber());
-		if (card.isAce()) {
-			cardNumber = ACE_NUMBER_TO_STRING;
-		}
-		return cardNumber + card.getType();
+		return card.getCardName() + card.getType();
 	}
 
 	public void displayDealerUnderSevenTeen() {

@@ -3,24 +3,28 @@ package blackjack.domain;
 import java.util.Objects;
 
 public class Card {
-	private final Number number;
-	private final Type type;
+	private final CardLetter cardLetter;
+	private final CardSuit cardSuit;
 
-	public Card(Number number, Type type) {
-		this.number = number;
-		this.type = type;
+	public Card(CardLetter cardLetter, CardSuit cardSuit) {
+		this.cardLetter = cardLetter;
+		this.cardSuit = cardSuit;
 	}
 
-	public int getNumber() {
-		return number.getValue();
+	public int getScore() {
+		return cardLetter.getLetterScore();
+	}
+
+	public String getCardName() {
+		return cardLetter.getCardName();
 	}
 
 	public String getType() {
-		return type.getValue();
+		return cardSuit.getValue();
 	}
 
 	public boolean isAce() {
-		return number == Number.ACE;
+		return cardLetter == CardLetter.ACE;
 	}
 
 	@Override
@@ -32,11 +36,11 @@ public class Card {
 			return false;
 		}
 		Card card = (Card) o;
-		return number == card.number && type == card.type;
+		return cardLetter == card.cardLetter && cardSuit == card.cardSuit;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(number, type);
+		return Objects.hash(cardLetter, cardSuit);
 	}
 }
