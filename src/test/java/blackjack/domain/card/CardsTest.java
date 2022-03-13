@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class CardsTest {
 
 	@Test
-	@DisplayName("K클로버와 2하트가 손에 있으면 12를 반환하는지")
+	@DisplayName("K클로버와 2하트가 손에 있으면 12를 반환한다")
 	void sumOfCards_K_2_12() {
 		Cards cards = new Cards();
 		cards.addCard(new Card(CardSymbol.CLOVER, CardValue.KING));
@@ -17,7 +17,7 @@ public class CardsTest {
 	}
 
 	@Test
-	@DisplayName("에이스를 11로 적용하는지")
+	@DisplayName("총 합이 11 이하이면, ACE 를 11 로 계산한다")
 	void useAceAs_11() {
 		Cards cards = new Cards();
 		cards.addCard(new Card(CardSymbol.CLOVER, CardValue.ACE));
@@ -27,7 +27,7 @@ public class CardsTest {
 	}
 
 	@Test
-	@DisplayName("에이스를 1로 적용하는지")
+	@DisplayName("총 합이 12 이상이면, ACE 를 1 로 계산한다")
 	void useAceAs_1() {
 		Cards cards = new Cards();
 		cards.addCard(new Card(CardSymbol.CLOVER, CardValue.ACE));
