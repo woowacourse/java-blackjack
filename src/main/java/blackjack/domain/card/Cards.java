@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Cards {
 
-    public static final String DUPLICATE_EXCEPTION_MESSAGE = "카드 패에 중복된 카드가 존재할 수 없습니다.";
+    private static final String DUPLICATE_EXCEPTION_MESSAGE = "카드 패에 중복된 카드가 존재할 수 없습니다.";
 
     private final List<Card> cardHand;
 
