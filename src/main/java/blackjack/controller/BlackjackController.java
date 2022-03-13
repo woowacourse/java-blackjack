@@ -6,7 +6,6 @@ import blackjack.domain.machine.Hit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Guest;
 import blackjack.domain.participant.Player;
-import blackjack.domain.machine.Results;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -27,10 +26,8 @@ public class BlackjackController {
     }
 
     private void printResult(BlackjackGame blackjackGame) {
-        List<Player> players = blackjackGame.getPlayers();
-        OutputView.announceResultCards(toResponse(players));
-        Results results = blackjackGame.calculateResult(players);
-        OutputView.announceResultWinner(results);
+        OutputView.announceResultCards(toResponse(blackjackGame.getPlayers()));
+        OutputView.announceResultWinner(blackjackGame.calculateResult());
     }
 
     private void turnDealer(BlackjackGame blackjackGame) {

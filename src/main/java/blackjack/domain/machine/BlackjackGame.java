@@ -5,11 +5,8 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class BlackjackGame {
-
-    private static final String CANNOT_FIND_DEALER_MESSAGE = "딜러를 찾을 수 없습니다.";
 
     private final Cards cards;
     private final Players blackjackPlayers;
@@ -24,23 +21,14 @@ public class BlackjackGame {
         player.addCard(cards.assignCard());
     }
 
-    public Results calculateResult(List<Player> players) {
+    public Results calculateResult() {
         Results results = new Results();
-        Player dealer = players.stream()
-                .filter(Player::isDealer)
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException(CANNOT_FIND_DEALER_MESSAGE));
-        for (Player player : players) {
-            scoreResultIfGuest(dealer, player, results);
+        Player dealer = blackjackPlayers.getDealer();
+        List<Player> guests = blackjackPlayers.getGuests();
+        for (Player player : guests) {
+            scorePlayers(dealer, player, results);
         }
         return results;
-    }
-
-    private void scoreResultIfGuest(Player dealer, Player player, Results results) {
-        if (player.isDealer()) {
-            return;
-        }
-        scorePlayers(dealer, player, results);
     }
 
     private void scorePlayers(Player dealer, Player guest, Results results) {
