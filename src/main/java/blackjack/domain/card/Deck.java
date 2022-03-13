@@ -1,20 +1,15 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Set;
 
 public class Deck {
 
     private final Queue<Card> values;
 
-    public Deck(Set<Card> values) {
-        LinkedList<Card> cards = new LinkedList<>(values);
-        Collections.shuffle(cards);
-
-        this.values = cards;
+    public Deck(CardsGenerator cardsGenerator) {
+        this.values = new LinkedList<>(cardsGenerator.generate());
     }
 
     public Card draw() {

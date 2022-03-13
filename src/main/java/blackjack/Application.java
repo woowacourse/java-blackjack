@@ -2,11 +2,11 @@ package blackjack;
 
 import static java.util.stream.Collectors.*;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.card.Deck;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.domain.card.RandomCardsGenerator;
 import blackjack.dto.DealerDto;
 import blackjack.dto.DealerResultsDto;
 import blackjack.dto.PlayerDto;
@@ -19,7 +19,7 @@ import java.util.List;
 public class Application {
 
     public static void main(String[] args) {
-        Deck deck = new Deck(Card.VALUES);
+        Deck deck = new Deck(new RandomCardsGenerator());
         Dealer dealer = new Dealer(deck.getInitCards());
 
         List<String> names = InputView.getNames();
