@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Name;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GamerDto {
@@ -25,7 +26,7 @@ public class GamerDto {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return new ArrayList<>(cards);
     }
 
     public int getCardSize() {
