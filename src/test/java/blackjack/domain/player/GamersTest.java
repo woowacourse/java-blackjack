@@ -23,12 +23,32 @@ public class GamersTest {
     }
 
     @Test
-    @DisplayName("딜러와 결과를 비교한다")
-    void compareResultWithDealer() {
+    @DisplayName("딜러와 결과를 비교한다 - 패배")
+    void compareLoseResultWithDealer() {
         Gamer gamer = new Gamer("huni", new Bet(1000));
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         Gamers gamers = new Gamers(List.of(gamer));
 
         assertThat(gamers.compareResult(11).get(gamer).getAmount()).isEqualTo(-1000);
+    }
+
+    @Test
+    @DisplayName("딜러와 결과를 비교한다 - 승리")
+    void compareWinResultWithDealer() {
+        Gamer gamer = new Gamer("huni", new Bet(1000));
+        gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
+        Gamers gamers = new Gamers(List.of(gamer));
+
+        assertThat(gamers.compareResult(9).get(gamer).getAmount()).isEqualTo(1000);
+    }
+
+    @Test
+    @DisplayName("딜러와 결과를 비교한다 - 무승부")
+    void compareDrawResultWithDealer() {
+        Gamer gamer = new Gamer("huni", new Bet(1000));
+        gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
+        Gamers gamers = new Gamers(List.of(gamer));
+
+        assertThat(gamers.compareResult(10).get(gamer).getAmount()).isEqualTo(0);
     }
 }
