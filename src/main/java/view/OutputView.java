@@ -13,14 +13,14 @@ public class OutputView {
     private static final String SHOW_DEALER_ONE_HAND_FORMAT = "딜러: %s\n";
     private static final String SHOW_HAND_FORMAT = "%s 카드: %s\n";
     private static final String STATUS_FORMAT = "%s 카드: %s - 결과 : %d\n";
-    private static final String BUST_MESSAGE = "[ Bust!!! ]";
+    private static final String BUST_MESSAGE = "[ 🧨💥🧨 Bust!!! 💣💥💣 ]";
     private static final String MAX_SCORE_MESSAGE = "[ SCORE IS 21 ]";
     private static final String RESULT_TITLE_MESSAGE = "\n## 최종 승패";
     private static final String DEALER_RESULT_MESSAGE_FORMAT = "딜러: %d승 %d무 %d패\n";
     private static final String PLAYER_RESULT_MESSAGE_FORMAT = "%s: %s\n";
     private static final String DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DEALER_BLACK_JACK_MESSAGE = "\n== DEALER IS BLACK JACK ==";
-    private static final String PLAYER_IS_BLACK_JACK_MESSAGE = "\n== %s IS BLACK JACK ==\n";
+    private static final String PLAYER_IS_BLACK_JACK_MESSAGE = "\n💵🤑💵 %s IS BLACK JACK 🎰🤑🎰\n";
 
     public static void printParticipantInitHands(Dealer dealer, Players players) {
         printInitHandsMessage(players.getNames());
