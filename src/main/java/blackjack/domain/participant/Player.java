@@ -1,6 +1,9 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
+import java.util.Collections;
+import java.util.Set;
 
 public class Player extends Participant {
 
@@ -44,6 +47,11 @@ public class Player extends Participant {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public Set<Card> getInitialOpenCards() {
+       return Collections.unmodifiableSet(cardBundle.getCards());
     }
 
     @Override

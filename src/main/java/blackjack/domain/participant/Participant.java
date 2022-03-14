@@ -34,6 +34,8 @@ public abstract class Participant {
 
     public abstract String getName();
 
+    public abstract Set<Card> getInitialOpenCards();
+
     public Set<Card> getCards() {
         return Collections.unmodifiableSet(cardBundle.getCards());
     }

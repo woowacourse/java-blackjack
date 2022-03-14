@@ -27,7 +27,7 @@ public class ParticipantCardsDto {
 
     public static ParticipantCardsDto ofInitialDealer(Dealer dealer) {
         String name = dealer.getName();
-        Set<Card> openCardInfo = Set.of(dealer.getOpenCard());
+        Set<Card> openCardInfo = dealer.getInitialOpenCards();
         Score score = dealer.getCurrentScore();
 
         return new ParticipantCardsDto(name, openCardInfo, score);

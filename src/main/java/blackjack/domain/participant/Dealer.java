@@ -3,11 +3,12 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.game.Score;
+import java.util.Set;
 
 public class Dealer extends Participant {
 
     public static final String UNIQUE_NAME = "딜러";
-    private static final String EMPTY_CARD_BUNDLE_EXCEPTION_MESSAGE = "딜러는 카드를 최소 2장의 카드를 지니고 있어야 합니다.";
+    private static final String EMPTY_CARD_BUNDLE_EXCEPTION_MESSAGE = "딜러는 최소 2장의 카드를 지니고 있어야 합니다.";
 
     private Dealer(final CardBundle cardBundle) {
         super(cardBundle);
@@ -28,11 +29,14 @@ public class Dealer extends Participant {
         return UNIQUE_NAME;
     }
 
-    public Card getOpenCard() {
-        return cardBundle.getCards()
+    @Override
+    public Set<Card> getInitialOpenCards() {
+        Card openCard = cardBundle.getCards()
                 .stream()
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(EMPTY_CARD_BUNDLE_EXCEPTION_MESSAGE));
+
+        return Set.of(openCard);
     }
 
     @Override

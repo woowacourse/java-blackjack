@@ -94,4 +94,13 @@ public class DealerTest {
 
         assertThat(actual).isTrue();
     }
+
+    @DisplayName("딜러의 getInitialOpenCards 메서드는 초기에 받은 카드 중 한 장이 담긴 컬렉션을 반환한다.")
+    @Test
+    void getInitialOpenCards() {
+        Set<Card> actual = dealer.getInitialOpenCards();
+
+        assertThat(actual).containsAnyElementsOf(dealer.getCards());
+        assertThat(actual.size()).isEqualTo(1);
+    }
 }

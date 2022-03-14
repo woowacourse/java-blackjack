@@ -112,4 +112,13 @@ public class PlayerTest {
 
         assertThat(actual).isTrue();
     }
+
+    @DisplayName("플레이어의 getInitialOpenCards 메서드는 초기에 받은 두 장의 카드가 담긴 컬렉션을 반환한다.")
+    @Test
+    void getInitialOpenCards() {
+        Set<Card> actual = player.getInitialOpenCards();
+
+        assertThat(actual).containsExactlyInAnyOrder(CLOVER4, CLOVER5);
+        assertThat(actual.size()).isEqualTo(2);
+    }
 }
