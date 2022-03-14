@@ -15,11 +15,22 @@ public class Blackjack {
         this.players = new Players(playerNames);
     }
 
-    public List<Card> distributeInitialCards(NumberGenerator numberGenerator) {
-        return IntStream.range(0, INITIAL_CARD_NUMBER)
-                .boxed()
-                .map(index -> distributeCard(numberGenerator))
-                .collect(Collectors.toList());
+    private void distributeCard(NumberGenerator numberGenerator, List<Player> players) {
+        for (Player player : players) {
+            player.addCard(dealer.handOutCard(numberGenerator));
+        }
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
+
+    public void distributeInitialCards(NumberGenerator numberGenerator) {
+        List<Player> playersToGetAdditionalCard = players.playersAbleToGetAdditionalCard();
+        playersToGetAdditionalCard.add(dealer);
+        for (int i = 0; i < INITIAL_CARD_NUMBER; ++i) {
+            distributeCard(numberGenerator, playersToGetAdditionalCard);
+        }
     }
 
     public void distributeInitialCardsToDealer(NumberGenerator numberGenerator) {

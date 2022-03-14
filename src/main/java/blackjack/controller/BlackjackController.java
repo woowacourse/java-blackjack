@@ -10,14 +10,6 @@ import java.util.Map;
 
 public class BlackjackController {
 
-    private void controlInitFlow(Blackjack blackjack, Players players, RandomNumberGenerator randomNumberGenerator) {
-        blackjack.distributeInitialCardsToDealer(randomNumberGenerator);
-        for (String playerName : players.namesAbleToGetAdditionalCard()) {
-            blackjack.distributeInitialCards(randomNumberGenerator)
-                    .forEach(card -> players.addCardToPlayers(Map.of(playerName, card)));
-        }
-    }
-
     private void controlAdditionalCardFlow(Blackjack blackjack, Players players, RandomNumberGenerator randomNumberGenerator) {
         for (String playerName : players.namesAbleToGetAdditionalCard()) {
             while (!players.isPlayerBurst(playerName) && InputView.askAdditionalCard(playerName)) {
@@ -33,7 +25,7 @@ public class BlackjackController {
         Blackjack blackjack = new Blackjack(playerNames);
         Players players = new Players(playerNames);
 
-        controlInitFlow(blackjack, players, randomNumberGenerator);
+        blackjack.distributeInitialCards(new RandomNumberGenerator());
         OutputView.printInitStatus(blackjack.getDealer(), players.getPlayers());
 
 

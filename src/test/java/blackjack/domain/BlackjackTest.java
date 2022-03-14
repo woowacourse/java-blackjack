@@ -21,8 +21,11 @@ public class BlackjackTest {
     @DisplayName("처음 두장 나눠주는 기능 테스트")
     @Test
     void distributeInitialCardsTest() {
-        List<Card> cards = blackjack.distributeInitialCards(intendedNumberGenerator);
-        assertThat(cards.size()).isEqualTo(2);
+        blackjack.distributeInitialCards(intendedNumberGenerator);
+        int playerCardNum = blackjack.getPlayers().getPlayers().get(0).getMyCards().size();
+        int dealerCardNum = blackjack.getDealer().getMyCards().size();
+
+        assertThat(playerCardNum == 2 && dealerCardNum == 2).isTrue();
     }
 
     @DisplayName("딜러에게 처음 두장 나눠주는 기능 테스트")
