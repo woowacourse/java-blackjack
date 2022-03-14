@@ -7,25 +7,24 @@ import java.util.LinkedList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class CardFactoryTest {
+class DeckTest {
 
 	@Test
 	@DisplayName("카드 1장 반환 확인")
 	void pickCard() {
-		CardFactory cardFactory = new CardFactory(Card.getCards());
+		Deck deck = new Deck(Card.getCards());
 
-		cardFactory.draw();
+		deck.draw();
 
-		assertThat(cardFactory.getSize()).isEqualTo(51);
+		assertThat(deck.getSize()).isEqualTo(51);
 	}
 
 	@Test
 	@DisplayName("카드가 없을 때 뽑으면 에러를 발생시킨다.")
 	void validateEmptyDeck() {
-		CardFactory cardFactory = new CardFactory(new LinkedList<>());
-		assertThatThrownBy(() -> {
-			cardFactory.draw();
-		}).isInstanceOf(IllegalStateException.class)
+		Deck deck = new Deck(new LinkedList<>());
+		assertThatThrownBy(deck::draw)
+			.isInstanceOf(IllegalStateException.class)
 			.hasMessageContaining("카드가 존재하지 않습니다.");
 	}
 }

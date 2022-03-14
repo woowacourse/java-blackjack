@@ -2,10 +2,9 @@ package blackjack.domain.gamer;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.DrawStrategy;
 
 public class Gamers {
 
@@ -34,20 +33,20 @@ public class Gamers {
 		}
 	}
 
-	public void giveCardToAllGamers(Supplier<Card> deck) {
-		dealer.addCard(deck.get());
+	public void giveCardToAllGamers(DrawStrategy deck) {
+		dealer.addCard(deck.draw());
 		for (Player player : players) {
-			player.addCard(deck.get());
+			player.addCard(deck.draw());
 		}
 	}
 
-	public void giveCardToDealer(Supplier<Card> deck) {
-		dealer.addCard(deck.get());
+	public void giveCardToDealer(DrawStrategy deck) {
+		dealer.addCard(deck.draw());
 	}
 
-	public void giveCardToPlayer(String name, Supplier<Card> deck) {
+	public void giveCardToPlayer(String name, DrawStrategy deck) {
 		Player player = findPlayerByName(name);
-		player.addCard(deck.get());
+		player.addCard(deck.draw());
 	}
 
 	public boolean checkDealerDrawPossible() {

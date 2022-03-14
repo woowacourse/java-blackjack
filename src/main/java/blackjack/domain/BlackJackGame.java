@@ -23,11 +23,11 @@ public class BlackJackGame {
 	private static final int INCREASE_COUNT = 1;
 
 	private final Gamers gamers;
-	private final DrawStrategy drawStrategy;
+	private final DrawStrategy deck;
 
-	public BlackJackGame(List<String> names, DrawStrategy drawStrategy) {
+	public BlackJackGame(List<String> names, DrawStrategy deck) {
 		this.gamers = new Gamers(names);
-		this.drawStrategy = drawStrategy;
+		this.deck = deck;
 	}
 
 	public void start(BiConsumer<GamerDto, List<GamerDto>> gamerSender) {
@@ -37,7 +37,7 @@ public class BlackJackGame {
 
 	private void giveFirstCards() {
 		for (int i = 0; i < INIT_DISTRIBUTION_COUNT; i++) {
-			gamers.giveCardToAllGamers(this.drawStrategy::draw);
+			gamers.giveCardToAllGamers(this.deck);
 		}
 	}
 
@@ -51,7 +51,7 @@ public class BlackJackGame {
 		Function<String, Boolean> answerReceiver,
 		Consumer<GamerDto> cardsSender) {
 		while (!isBust(name) && answerReceiver.apply(name)) {
-			gamers.giveCardToPlayer(name, drawStrategy::draw);
+			gamers.giveCardToPlayer(name, deck);
 			cardsSender.accept(getPlayerDto(name));
 		}
 	}
@@ -63,7 +63,7 @@ public class BlackJackGame {
 	public int askDealerHitOrStay() {
 		int count = 0;
 		while (gamers.checkDealerDrawPossible()) {
-			gamers.giveCardToDealer(drawStrategy::draw);
+			gamers.giveCardToDealer(deck);
 			count++;
 		}
 		return count;

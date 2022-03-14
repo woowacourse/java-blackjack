@@ -4,13 +4,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class CardFactory implements DrawStrategy{
+public class Deck implements DrawStrategy{
 
     private static final String EMPTY_CARD_ERROR = "남은 카드가 존재하지 않습니다.";
 
     private final Stack<Card> deck = new Stack<>();
 
-    public CardFactory(List<Card> deck) {
+    public Deck(List<Card> deck) {
         this.deck.addAll(deck);
         Collections.shuffle(this.deck);
     }
