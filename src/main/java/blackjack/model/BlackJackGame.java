@@ -18,9 +18,9 @@ public class BlackJackGame {
     private final Player dealer;
     private final Gamers gamers;
 
-    public BlackJackGame(List<String> names) {
+    public BlackJackGame(List<String> gamerNames) {
         this.dealer = new Dealer();
-        this.gamers = new Gamers(names);
+        this.gamers = new Gamers(gamerNames);
     }
 
     public void giveStartCards() {

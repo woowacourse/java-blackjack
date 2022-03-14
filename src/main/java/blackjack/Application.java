@@ -7,12 +7,10 @@ import blackjack.dto.GamersDto;
 import blackjack.model.BlackJackGame;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
-import java.util.List;
 
 public class Application {
     public static void main(String[] args) {
-        List<String> names = InputView.inputNames();
-        BlackJackGame blackJackGame = new BlackJackGame(names);
+        BlackJackGame blackJackGame = new BlackJackGame(InputView.inputPlayerNames());
 
         blackJackGame.giveStartCards();
         ResultView.printStartCardsDistributionResult(DealerDto.fromGame(blackJackGame), GamersDto.from(blackJackGame));
