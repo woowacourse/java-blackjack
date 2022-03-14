@@ -1,7 +1,7 @@
 package blackjack.domain.card;
 
-import static blackjack.constant.Rule.DIFFERENCE_IN_ACE_SCORE;
-import static blackjack.constant.Rule.WINNING_SCORE;
+import static blackjack.domain.Rule.DIFFERENCE_IN_ACE_SCORE;
+import static blackjack.domain.Rule.WINNING_SCORE;
 
 import java.util.ArrayList;
 import java.util.Iterator;

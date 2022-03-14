@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import static blackjack.constant.Rule.DEALER_HIT_STANDARD_SCORE;
+import static blackjack.domain.Rule.DEALER_HIT_STANDARD_SCORE;
 
 public class Dealer extends Player {
 

@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
-import static blackjack.constant.Rule.MAX_PARTICIPANTS_SIZE;
-import static blackjack.constant.Rule.MIN_PARTICIPANTS_SIZE;
+import static blackjack.domain.Rule.MAX_PARTICIPANTS_SIZE;
+import static blackjack.domain.Rule.MIN_PARTICIPANTS_SIZE;
 
 import java.util.Iterator;
 import java.util.List;

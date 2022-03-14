@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-import static blackjack.constant.Rule.WINNING_SCORE;
+import static blackjack.domain.Rule.WINNING_SCORE;
 
 import java.util.Arrays;
 import java.util.Objects;
