@@ -87,11 +87,13 @@ public class OutputView {
 		Map<String, Integer> outcome = dealerResultDto.getOutcome();
 		outcome.keySet()
 			.forEach(record -> printNotZeroRecordForDealer(outcome, record));
+
+		System.out.println();
 	}
 
 	private static void printNotZeroRecordForDealer(Map<String, Integer> outcome, String record) {
 		if(outcome.get(record) > 0) {
-			System.out.println(outcome.get(record) + record + BLANK);
+			System.out.print(outcome.get(record) + record + BLANK);
 		}
 	}
 
