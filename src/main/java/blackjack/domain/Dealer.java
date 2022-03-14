@@ -8,7 +8,7 @@ public class Dealer extends Participant {
 
     private final String name = DEALER_NAME;
 
-    public boolean isHit() {
+    public boolean isAvailableToHit() {
         return getScore() <= HIT_THRESHOLD;
     }
 

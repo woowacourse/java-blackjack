@@ -2,6 +2,8 @@ package blackjack.domain;
 
 public class Player extends Participant {
 
+    private static final int HIT_THRESHOLD_NUMBER = 21;
+
     private static final String DEALER_NAME = "딜러";
 
     private static final String PLAYER_NAME_EMPTY_ERROR_MESSAGE = "[ERROR] 플레이어 이름에 빈 값이 올 수 없습니다.";
@@ -21,6 +23,14 @@ public class Player extends Participant {
 
     public boolean isWin(Dealer dealer) {
         return getScore() > dealer.getScore();
+    }
+
+    public boolean isAvailableToHit() {
+        return getScore() < HIT_THRESHOLD_NUMBER;
+    }
+
+    public String getName() {
+        return name;
     }
 
     private void validateName(String name) {
@@ -48,7 +58,4 @@ public class Player extends Participant {
         }
     }
 
-    public String getName() {
-        return name;
-    }
 }

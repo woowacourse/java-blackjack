@@ -55,7 +55,7 @@ public class BlackjackController {
     private boolean isPlayerWantMoreCards(Player player, Deck deck) {
         boolean cardPrintFlag = false;
 
-        while (!isBust(player) && isPlayerHit(player)) {
+        while (isAvailableToHit(player) && isPlayerWantToHit(player)) {
             player.receiveCard(deck.pickCard());
             OutputView.printPlayerCardInformation(player);
             cardPrintFlag = true;
@@ -63,21 +63,21 @@ public class BlackjackController {
         return cardPrintFlag;
     }
 
-    private boolean isBust(Player player) {
-        if (player.isMoreOrEqualThanThreshold()) {
-            OutputView.printPlayerHitImpossibleMessage();
-            return true;
+    private boolean isAvailableToHit(Player player) {
+        if (!player.isAvailableToHit()) {
+            OutputView.printPlayerHitImpossibleMessage(player.getName());
+            return false;
         }
-        return false;
+        return true;
     }
 
-    private boolean isPlayerHit(Player player) {
+    private boolean isPlayerWantToHit(Player player) {
         return InputView.inputPlayerHit(player.getName()).equals("y");
     }
 
 
     private void handOutMoreCardsToDealer(Dealer dealer, Deck deck) {
-        while (dealer.isHit()) {
+        while (dealer.isAvailableToHit()) {
             OutputView.printDealerHitMessage();
             dealer.receiveCard(deck.pickCard());
         }
