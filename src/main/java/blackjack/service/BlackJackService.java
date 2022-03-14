@@ -5,7 +5,6 @@ import java.util.List;
 import blackjack.domain.RedrawChoice;
 import blackjack.domain.card.Deck;
 import blackjack.domain.role.Role;
-import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
 
 public class BlackJackService {
@@ -43,7 +42,7 @@ public class BlackJackService {
 		return roles.drawPlayer(deck, answer, name);
 	}
 
-	public DealerTurnDto drawDealer() {
+	public Role drawDealer() {
 		return roles.drawDealer(deck);
 	}
 

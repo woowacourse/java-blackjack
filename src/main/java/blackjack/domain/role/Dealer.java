@@ -7,8 +7,8 @@ import blackjack.service.BlackJackService;
 
 public class Dealer extends Role {
 
-	public static final int CAN_NOT_DRAW_STANDARD = 17;
-	public static final int CAN_DRAW_STANDARD = 16;
+	// public static final int CAN_NOT_DRAW_STANDARD = 17;
+	private static final int CAN_DRAW_STANDARD = 16;
 
 	private static final String DEALER_NAME = "딜러";
 
@@ -31,5 +31,10 @@ public class Dealer extends Role {
 			return false;
 		}
 		return drawable.get();
+	}
+
+	@Override
+	public int getDrawStandard() {
+		return CAN_DRAW_STANDARD;
 	}
 }

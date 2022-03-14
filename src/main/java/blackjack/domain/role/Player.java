@@ -14,4 +14,9 @@ public class Player extends Role {
 		final int score = hand.calculateOptimalScore();
 		return BlackJackService.BUST < score && score <= BlackJackService.OPTIMIZED_WINNING_NUMBER;
 	}
+
+	@Override
+	public int getDrawStandard() {
+		return BlackJackService.OPTIMIZED_WINNING_NUMBER - 1;
+	}
 }

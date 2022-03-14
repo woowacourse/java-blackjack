@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import blackjack.domain.role.Role;
 import blackjack.dto.DealerResultDto;
-import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerResultDto;
 
@@ -50,15 +49,15 @@ public class OutputView {
 		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, roleStatus.getCardsInformation()));
 	}
 
-	public static void printDealerStatus(DealerTurnDto dealerTurn) {
+	public static void printDealerStatus(final Role dealer) {
 		System.out.print("\n");
-		if (dealerTurn.isDraw()) {
+		if (dealer.wantDraw()) {
 			System.out.println(
-				dealerTurn.getName() + IS + SPACE + dealerTurn.getStandard() + RECEIVED_ONE_MORE_CARD + "\n");
+				dealer.getName() + IS + SPACE + dealer.getDrawStandard() + RECEIVED_ONE_MORE_CARD + "\n");
 			return;
 		}
 		System.out.println(
-			dealerTurn.getName() + IS + SPACE + dealerTurn.getStandard() + FAIL_TO_RECEIVE_ONE_MORE_CARD + "\n");
+			dealer.getName() + IS + SPACE + (dealer.getDrawStandard() + 1) + FAIL_TO_RECEIVE_ONE_MORE_CARD + "\n");
 	}
 
 	public static void printFinalResult(FinalResultDto finalResult) {

@@ -15,7 +15,6 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.role.Dealer;
 import blackjack.domain.role.Player;
 import blackjack.domain.role.Role;
-import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerResultDto;
 
@@ -45,12 +44,18 @@ public class Roles {
 		return players;
 	}
 
-	public DealerTurnDto drawDealer(final Deck deck) {
+	public Role drawDealer(final Deck deck) {
+		// if (!dealer.canDraw()) {
+		// 	return DealerTurnDto.from(dealer, false, Dealer.CAN_NOT_DRAW_STANDARD);
+		// }
+		// dealer.draw(deck.draw(), 1);
+		// return DealerTurnDto.from(dealer, true, Dealer.CAN_DRAW_STANDARD);
 		if (!dealer.canDraw()) {
-			return DealerTurnDto.from(dealer, false, Dealer.CAN_NOT_DRAW_STANDARD);
+			dealer.stopDraw();
+			return dealer;
 		}
 		dealer.draw(deck.draw(), 1);
-		return DealerTurnDto.from(dealer, true, Dealer.CAN_DRAW_STANDARD);
+		return dealer;
 	}
 
 	public void joinPlayers(final List<String> names) {

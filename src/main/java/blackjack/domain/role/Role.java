@@ -30,6 +30,8 @@ public abstract class Role {
 
 	public abstract boolean canDraw();
 
+	public abstract int getDrawStandard();
+
 	public void stopDraw() {
 		drawMore = false;
 	}
