@@ -47,7 +47,7 @@ public class BlackJack {
 
     public boolean checkDealerUnderSumStandard() {
         Participant participant = participants.getUserByName(DEALER_NAME);
-        Dealer dealer = (Dealer)participant;
+        Dealer dealer = (Dealer) participant;
         return dealer.checkUnderSumStandard();
     }
 
