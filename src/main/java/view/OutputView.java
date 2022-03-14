@@ -66,7 +66,7 @@ public class OutputView {
     public static void printResult(BlackJackResult blackJackResult) {
         System.out.println(System.lineSeparator() + RESULT_TITLE);
         printDealerResult(blackJackResult);
-        blackJackResult.getPlayerResult()
+        blackJackResult.getGamblerResult()
                 .forEach(OutputView::printSingleGamblerResult);
     }
 

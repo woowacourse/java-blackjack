@@ -39,7 +39,7 @@ public class BlackJackResultTest {
 
         // when
         Map<MatchResult, Long> dealerResult = blackJackResult.getDealerResult();
-        Map<String, MatchResult> playerResult = blackJackResult.getPlayerResult();
+        Map<String, MatchResult> playerResult = blackJackResult.getGamblerResult();
 
         // then
         assertAll(

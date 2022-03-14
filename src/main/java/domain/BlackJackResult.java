@@ -13,19 +13,14 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class BlackJackResult {
-    private final Map<String, MatchResult> playerResult;
-    private final Map<MatchResult, Long> dealerResult;
+    private final Map<String, MatchResult> gamblerResult;
 
-    private BlackJackResult(Map<String, MatchResult> playerResult, Map<MatchResult, Long> dealerResult) {
-        this.playerResult = unmodifiableMap(playerResult);
-        this.dealerResult = unmodifiableMap(dealerResult);
+    private BlackJackResult(Map<String, MatchResult> gamblerResult) {
+        this.gamblerResult = unmodifiableMap(gamblerResult);
     }
 
     public static BlackJackResult of(Dealer dealer, Gamblers gamblers) {
-        Map<String, MatchResult> playerResult = getPlayerResult(dealer, gamblers);
-        Map<MatchResult, Long> dealerResult = getDealerResult(playerResult);
-
-        return new BlackJackResult(playerResult, dealerResult);
+        return new BlackJackResult(getPlayerResult(dealer, gamblers));
     }
 
     private static Map<String, MatchResult> getPlayerResult(Dealer dealer, Gamblers gamblers) {
@@ -34,18 +29,14 @@ public class BlackJackResult {
                 .collect(toMap(Player::getName, gambler -> MatchResult.of(dealer, gambler)));
     }
 
-    private static Map<MatchResult, Long> getDealerResult(Map<String, MatchResult> playerResult) {
-        return playerResult.values()
-                .stream()
-                .map(MatchResult::opposite)
-                .collect(groupingBy(identity(), () -> new EnumMap<>(MatchResult.class), counting()));
-    }
-
-    public Map<String, MatchResult> getPlayerResult() {
-        return playerResult;
+    public Map<String, MatchResult> getGamblerResult() {
+        return gamblerResult;
     }
 
     public Map<MatchResult, Long> getDealerResult() {
-        return dealerResult;
+        return gamblerResult.values()
+                .stream()
+                .map(MatchResult::opposite)
+                .collect(groupingBy(identity(), () -> new EnumMap<>(MatchResult.class), counting()));
     }
 }
