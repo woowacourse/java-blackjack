@@ -11,7 +11,7 @@ public class Players {
 	private static final String NO_PLAYER_ERROR = "[ERROR] 플레이어는 1명 이상이여야 합니다.";
 
 	private final List<Player> players = new ArrayList<>();
-	private int playerIndex = 0;
+	private int turn = 0;
 
 	public Players(List<String> playerNames) {
 		validateNames(playerNames);
@@ -38,7 +38,7 @@ public class Players {
 	}
 
 	public boolean isEnd() {
-		return !(playerIndex < players.size());
+		return !(turn < players.size());
 	}
 
 	public boolean isPlayerBurst(Player player) {
@@ -46,11 +46,11 @@ public class Players {
 	}
 
 	public void next() {
-		playerIndex++;
+		turn++;
 	}
 
 	public Player findNextPlayer() {
-		Player player = players.get(playerIndex);
+		Player player = players.get(turn);
 		return Player.copy(player);
 	}
 
