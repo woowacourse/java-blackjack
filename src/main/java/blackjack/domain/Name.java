@@ -8,7 +8,6 @@ public class Name {
 
     public Name(String value) {
         validateBlank(value);
-
         this.value = value;
     }
 

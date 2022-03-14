@@ -15,6 +15,10 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
+    public void add(Card card) {
+        cards.add(card);
+    }
+
     public int getTotalNumber() {
         boolean containAce = cards.stream()
             .anyMatch(Card::isAce);
@@ -33,10 +37,6 @@ public class Cards {
             return totalNumberInAce11;
         }
         return totalNumber;
-    }
-
-    public void add(Card card) {
-        cards.add(card);
     }
 
     public List<Card> getCards() {

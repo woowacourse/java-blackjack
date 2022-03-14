@@ -39,7 +39,7 @@ public class Card {
         return new LinkedList<>(cachingCard);
     }
 
-    public boolean isContain(CardPattern pattern, CardNumber number) {
+    private boolean isContain(CardPattern pattern, CardNumber number) {
         return this.pattern.equals(pattern) && this.number.equals(number);
     }
 

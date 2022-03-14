@@ -20,23 +20,21 @@ public class Players {
         validateCapacity(players);
     }
 
-    public void drawAll(Drawable drawable) {
-        for (Player player : players) {
-            player.drawCard(drawable);
-        }
-    }
-
     private void validateCapacity(List<Player> players) {
         if (players.size() > CAPACITY) {
             throw new IllegalArgumentException("인원수는 8명을 넘을 수 없습니다.");
         }
     }
 
+    public void drawAll(Drawable drawable) {
+        for (Player player : players) {
+            player.drawCard(drawable);
+        }
+    }
+
     public ScoreResult compete(Dealer dealer) {
         Map<Score, Integer> dealerResult = new EnumMap<>(Score.class);
-        for (Score value : Score.values()) {
-            dealerResult.put(value, 0);
-        }
+        initDealerResult(dealerResult);
         Map<String, Score> playerResults = new HashMap<>();
 
         for (Player player : players) {
@@ -45,6 +43,12 @@ public class Players {
             dealerResult.merge(Score.inverse(score), 1, Integer::sum);
         }
         return new ScoreResult(dealerResult, playerResults);
+    }
+
+    private void initDealerResult(Map<Score, Integer> dealerResult) {
+        for (Score value : Score.values()) {
+            dealerResult.put(value, 0);
+        }
     }
 
     public void drawPlayerCard(Drawable deck) {
