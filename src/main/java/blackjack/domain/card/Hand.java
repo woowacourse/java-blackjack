@@ -1,6 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.MatchResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +15,7 @@ public class Hand {
 
     private List<Card> cards = new ArrayList<>();
 
-    public void add(Card... cards) {
+    public void addAll(Card... cards) {
         this.cards.addAll(List.of(cards));
     }
 

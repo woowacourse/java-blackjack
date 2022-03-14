@@ -1,8 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Suit;
+import blackjack.domain.card.strategy.CardsGenerateStrategy;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -16,16 +14,8 @@ public class Deck {
 
     private final LinkedList<Card> cards;
 
-    public Deck(List<Card> cards) {
-        this.cards = new LinkedList<>(cards);
-    }
-
-    public static Deck createFixedCards() {
-        List<Card> cards = Arrays.stream(Suit.values())
-                .flatMap(suit -> Arrays.stream(Denomination.values())
-                        .map(denomination -> new Card(denomination, suit)))
-                        .collect(Collectors.toList());
-        return new Deck(cards);
+    public Deck(CardsGenerateStrategy cardsGenerateStrategy) {
+        this.cards = cardsGenerateStrategy.generate();
     }
 
     public void shuffleCards() {

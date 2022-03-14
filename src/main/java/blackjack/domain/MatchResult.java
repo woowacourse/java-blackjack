@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Hand;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 

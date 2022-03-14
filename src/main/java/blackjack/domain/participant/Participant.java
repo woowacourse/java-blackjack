@@ -1,11 +1,11 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Hand;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Card;
 import java.util.List;
 import java.util.Objects;
 
-public class Participant {
+abstract class Participant {
 
     protected Name name;
     protected final Hand cardHand = new Hand();
@@ -27,7 +27,7 @@ public class Participant {
     }
 
     public void receiveCard(Card card) {
-        cardHand.add(card);
+        cardHand.addAll(card);
     }
 
     public boolean isBust() {

@@ -1,17 +1,18 @@
 package blackjack.domain.participant;
 
-import static blackjack.utils.CardCreationUtil.createCardList;
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.domain.card.Suit.*;
+import static blackjack.utils.CardCreationUtil.createCardList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.Deck;
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -38,17 +39,20 @@ public class DealerTest {
     @ParameterizedTest
     @MethodSource("supplyDealerCardNotMoreThen16")
     @DisplayName("딜러는 카드의 수가 16이하 일 때 한 장의 카드를 더 받는다")
-    void dealerReceiveCard(List<Card> cards) {
-        Dealer dealer = new Dealer(new Deck(cards));
+    void dealerReceiveCard(LinkedList<Card> cards) {
+
+        Dealer dealer = new Dealer();
+
         for (Card card : cards) {
-            dealer.selfDraw();
+            dealer.receiveCard(card);
         }
 
-        Assertions.assertThat(dealer.shouldReceive()).isTrue();
+        assertThat(dealer.shouldReceive()).isTrue();
     }
 
     private static Stream<Arguments> supplyDealerCardNotMoreThen16() {
         return Stream.of(
+                Arguments.of(createCardList(JACK, SIX)),
                 Arguments.of(createCardList(JACK, SIX)),
                 Arguments.of(createCardList(ACE, ACE, FOUR)),
                 Arguments.of(createCardList(JACK, ACE, ACE, TWO)),
@@ -59,13 +63,15 @@ public class DealerTest {
     @ParameterizedTest
     @MethodSource("supplyDealerCardMoreThen17")
     @DisplayName("딜러는 카드의 수가 17이상일 떄 카드를 받을 수 없다")
-    void dealerCannotReceiveCard(List<Card> cards) {
-        Dealer dealer = new Dealer(new Deck(cards));
+    void dealerCannotReceiveCard(LinkedList<Card> cards) {
+
+        Dealer dealer = new Dealer();
+
         for (Card card : cards) {
-            dealer.selfDraw();
+            dealer.receiveCard(card);
         }
 
-        Assertions.assertThat(dealer.shouldReceive()).isFalse();
+        assertThat(dealer.shouldReceive()).isFalse();
     }
 
     private static Stream<Arguments> supplyDealerCardMoreThen17() {
@@ -84,11 +90,15 @@ public class DealerTest {
     void openDealerCard() {
         List<Card> cards = new ArrayList<>();
         Card excepted = new Card(JACK, DIAMOND);
-        cards.add(excepted);
-        cards.add(new Card(ACE, DIAMOND));
+        Card card = new Card(ACE, DIAMOND);
 
-        Deck deck = new Deck(cards);
-        Dealer dealer = new Dealer(deck);
+        cards.add(excepted);
+        cards.add(card);
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(excepted);
+        dealer.receiveCard(card);
+
         dealer.selfDraw();
         dealer.selfDraw();
 
@@ -121,10 +131,10 @@ public class DealerTest {
         cards.add(excepted);
         cards.add(new Card(ACE, DIAMOND));
 
-        Dealer dealer = new Dealer(new Deck(cards));
+        Dealer dealer = new Dealer(new Deck(new RandomCardsGenerateStrategy()));
         Player player = new Player("승팡");
 
         dealer.giveCard(player);
-        assertThat(player.getCards()).containsExactly(excepted);
+        assertThat(player.getCards().size()).isEqualTo(1);
     }
 }

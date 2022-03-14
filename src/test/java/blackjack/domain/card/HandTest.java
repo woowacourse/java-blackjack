@@ -1,7 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import static blackjack.utils.CardCreationUtil.createHand;
 import static blackjack.domain.card.Denomination.*;
+import static blackjack.utils.HandCreationUtil.createHand;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.stream.Stream;

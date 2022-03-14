@@ -1,8 +1,9 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.Deck;
+import blackjack.domain.card.Deck;
 import blackjack.domain.MatchResult;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
 import java.util.EnumMap;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class Dealer extends Participant {
     private final EnumMap<MatchResult, Integer> matchResultScores = new EnumMap(MatchResult.class);
 
     public Dealer() {
-        this(Deck.createFixedCards());
+        this(new Deck(new RandomCardsGenerateStrategy()));
     }
 
     public Dealer(Deck deck) {
@@ -44,7 +45,7 @@ public class Dealer extends Participant {
     }
 
     public void selfDraw() {
-        cardHand.add(drawCard());
+        cardHand.addAll(drawCard());
     }
 
     public boolean shouldReceive() {
