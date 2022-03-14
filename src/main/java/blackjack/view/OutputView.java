@@ -2,6 +2,8 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.GameResult;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardSymbol;
 import blackjack.domain.card.HoldingCard;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.ScoreResultDto;
@@ -70,8 +72,12 @@ public class OutputView {
 
     private static String showCards(List<Card> cards) {
         return cards.stream()
-                .map(Card::toString)
+                .map(card -> showCard(card.getNumber(), card.getSymbol()))
                 .collect(Collectors.joining(COMMA_DELIMITER));
+    }
+
+    private static String showCard(final CardNumber cardNumber, final CardSymbol cardSymbol) {
+        return cardNumber.getCardNumberName() + cardSymbol.getSymbolName();
     }
 
     public static void printDealerGainCardCount(int count) {

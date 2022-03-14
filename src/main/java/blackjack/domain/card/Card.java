@@ -43,16 +43,19 @@ public class Card {
         return targetCard.number == cardNumber && targetCard.symbol == cardSymbol;
     }
 
-    public int getCardNumberValue() {
-        return number.getCardNumberValue();
-    }
-
     public boolean isAce() {
         return number == CardNumber.ACE;
     }
 
-    @Override
-    public String toString() {
-        return number.toString() + symbol.toString();
+    public int getCardNumberValue() {
+        return number.getCardNumberValue();
+    }
+
+    public CardNumber getNumber() {
+        return number;
+    }
+
+    public CardSymbol getSymbol() {
+        return symbol;
     }
 }

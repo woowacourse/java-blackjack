@@ -28,8 +28,7 @@ public enum CardNumber {
         return cardNumberValue;
     }
 
-    @Override
-    public String toString() {
+    public String getCardNumberName() {
         return cardNumberName;
     }
 }
