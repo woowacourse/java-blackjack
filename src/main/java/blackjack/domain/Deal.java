@@ -16,12 +16,12 @@ public class Deal {
     public List<Card> dealInit() {
         List<Card> givenCards = new ArrayList<>();
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            givenCards.add(cards.dealCard());
+            givenCards.add(cards.drawCard());
         }
         return givenCards;
     }
 
-    public Card deal() {
-        return cards.dealCard();
+    public Card draw() {
+        return cards.drawCard();
     }
 }

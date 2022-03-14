@@ -24,7 +24,7 @@ public class Cards {
         }
     }
 
-    public Card dealCard() {
+    public Card drawCard() {
         return cards.remove(0);
     }
 

@@ -34,7 +34,7 @@ public class DealerTest {
         Dealer dealer = new Dealer();
         dealer.dealInit(cards);
 
-        final boolean given = dealer.isPossibleToDraw();
+        final boolean given = dealer.canDraw();
         assertThat(given).isTrue();
     }
 
@@ -46,7 +46,7 @@ public class DealerTest {
         Dealer dealer = new Dealer();
         dealer.dealInit(cards);
 
-        final boolean given = dealer.isPossibleToDraw();
+        final boolean given = dealer.canDraw();
         assertThat(given).isFalse();
     }
 
@@ -92,7 +92,7 @@ public class DealerTest {
         List<Card> dealerCards = new ArrayList<>(List.of(threeSpade, threeSpade, queenSpade));
         dealer.dealInit(dealerCards);
 
-        final boolean received = dealer.isPossibleToDraw();
+        final boolean received = dealer.canDraw();
         assertThat(received).isTrue();
     }
 
@@ -102,7 +102,7 @@ public class DealerTest {
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade, threeSpade, queenSpade));
         dealer.dealInit(dealerCards);
 
-        final boolean received = dealer.isPossibleToDraw();
+        final boolean received = dealer.canDraw();
         assertThat(received).isFalse();
     }
 }

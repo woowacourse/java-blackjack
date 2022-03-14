@@ -76,7 +76,7 @@ public class PlayerTest {
 
         player.dealInit(cards);
 
-        assertThat(player.isPossibleToDraw()).isTrue();
+        assertThat(player.canDraw()).isTrue();
     }
 
     @DisplayName("플레이어의 카드 합이 21 이상일 경우 카드를 받지 못하는 것을 확인한다.")
@@ -86,6 +86,6 @@ public class PlayerTest {
 
         player.dealInit(cards);
 
-        assertThat(player.isPossibleToDraw()).isFalse();
+        assertThat(player.canDraw()).isFalse();
     }
 }

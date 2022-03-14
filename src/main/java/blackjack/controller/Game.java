@@ -56,28 +56,32 @@ public class Game {
     }
 
     private void drawPlayer(final Player player, final Deal deal) {
-        while (player.isPossibleToDraw() && isToHit(player)) {
-            player.hit(deal.deal());
+        while (isDrawing(player)) {
+            player.hit(deal.draw());
             OutputView.printCard(player.getName(), player.getCards());
             OutputView.printNewLine();
         }
         OutputView.printNewLine();
     }
 
-    private boolean isToHit(final Player player) {
+    private boolean isDrawing(Player player) {
+        return player.canDraw() && hitOrStay(player);
+    }
+
+    private boolean hitOrStay(final Player player) {
         try {
             OutputView.printTakeCardInstruction(player.getName());
             String input = InputView.inputTakeCardAnswer();
             return player.answer(input);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
-            return isToHit(player);
+            return hitOrStay(player);
         }
     }
 
     private void drawDealer(final Dealer dealer, final Deal deal) {
-        while (dealer.isPossibleToDraw()) {
-            dealer.hit(deal.deal());
+        while (dealer.canDraw()) {
+            dealer.hit(deal.draw());
             OutputView.printDrawDealerCardMessage(Dealer.getName(), Dealer.RECEIVED_MAXIMUM);
         }
         OutputView.printNewLine();

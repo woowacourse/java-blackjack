@@ -67,7 +67,7 @@ public class Player extends Human {
     }
 
     @Override
-    public boolean isPossibleToDraw() {
+    public boolean canDraw() {
         return cards.isUnderBlackjack();
     }
 }

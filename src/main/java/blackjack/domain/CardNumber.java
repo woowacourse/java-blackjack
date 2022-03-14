@@ -20,6 +20,7 @@ public enum CardNumber {
     ;
 
     public static final int ACE_MAXIMUM = 11;
+    public static final int ACE_EXTRA_NUMBER = 10;
 
     private final String name;
     private final int number;
@@ -42,7 +43,7 @@ public enum CardNumber {
     private static int addAceExtraNumber(final List<CardNumber> cardNumbers, int total) {
         int aceCount = getAceCount(cardNumbers);
         while (aceCount-- > 0 && total <= ACE_MAXIMUM) {
-            total += ACE_MAXIMUM - ACE.number;
+            total += ACE_EXTRA_NUMBER;
         }
         return total;
     }

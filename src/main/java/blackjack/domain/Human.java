@@ -14,5 +14,5 @@ public abstract class Human {
 
     abstract boolean isBust();
 
-    abstract boolean isPossibleToDraw();
+    abstract boolean canDraw();
 }
