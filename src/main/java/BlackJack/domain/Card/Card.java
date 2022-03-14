@@ -18,7 +18,7 @@ public class Card {
         return number;
     }
 
-    public boolean containsAce(){
+    public boolean isAce(){
         return number.isAce();
     }
 
