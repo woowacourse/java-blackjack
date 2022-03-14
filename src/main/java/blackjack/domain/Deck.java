@@ -17,7 +17,7 @@ public class Deck {
 
 	public static void generateDeck() {
 		cards = new Stack<>();
-		Stream.of(CardLetter.values())
+		Stream.of(CardDenomination.values())
 			.forEach(cardLetter -> Stream.of(CardSuit.values())
 				.forEach(type -> cards.add(new Card(cardLetter, type)))
 			);

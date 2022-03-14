@@ -23,11 +23,11 @@ public class PlayersTest {
 		String lines = "pobi,jason";
 		List<String> strings = Arrays.asList(lines.split(","));
 		Players players = new Players(new Names(strings));
-		players.getPlayers().get(0).processCard(new Card(CardLetter.TEN, CardSuit.HEART));
-		players.getPlayers().get(0).processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
-		players.getPlayers().get(0).processCard(new Card(CardLetter.TWO, CardSuit.HEART));
-		players.getPlayers().get(1).processCard(new Card(CardLetter.TEN, CardSuit.SPADE));
-		players.getPlayers().get(1).processCard(new Card(CardLetter.ACE, CardSuit.HEART));
+		players.getPlayers().get(0).processCard(new Card(CardDenomination.TEN, CardSuit.HEART));
+		players.getPlayers().get(0).processCard(new Card(CardDenomination.TEN, CardSuit.CLOVER));
+		players.getPlayers().get(0).processCard(new Card(CardDenomination.TWO, CardSuit.HEART));
+		players.getPlayers().get(1).processCard(new Card(CardDenomination.TEN, CardSuit.SPADE));
+		players.getPlayers().get(1).processCard(new Card(CardDenomination.ACE, CardSuit.HEART));
 		assertThat(players.isAllPlayersBlackJackOrBust()).isTrue();
 	}
 }

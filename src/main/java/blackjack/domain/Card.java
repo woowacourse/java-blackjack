@@ -1,20 +1,20 @@
 package blackjack.domain;
 
 public class Card {
-	private final CardLetter cardLetter;
+	private final CardDenomination cardDenomination;
 	private final CardSuit cardSuit;
 
-	public Card(CardLetter cardLetter, CardSuit cardSuit) {
-		this.cardLetter = cardLetter;
+	public Card(CardDenomination cardDenomination, CardSuit cardSuit) {
+		this.cardDenomination = cardDenomination;
 		this.cardSuit = cardSuit;
 	}
 
 	public int getScore() {
-		return cardLetter.getLetterScore();
+		return cardDenomination.getLetterScore();
 	}
 
 	public String getCardName() {
-		return cardLetter.getCardName();
+		return cardDenomination.getCardName();
 	}
 
 	public String getType() {
@@ -22,6 +22,6 @@ public class Card {
 	}
 
 	public boolean isAce() {
-		return cardLetter == CardLetter.ACE;
+		return cardDenomination == CardDenomination.ACE;
 	}
 }

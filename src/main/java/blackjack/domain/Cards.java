@@ -28,7 +28,7 @@ public class Cards {
 	}
 
 	private int calculateOneAce(int score) {
-		int diff = ACE_SPECIAL_SCORE - CardLetter.ACE.getLetterScore();
+		int diff = ACE_SPECIAL_SCORE - CardDenomination.ACE.getLetterScore();
 		if (score + diff <= BUST_THRESHOLD) {
 			return diff;
 		}
