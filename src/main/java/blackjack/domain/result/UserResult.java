@@ -4,8 +4,8 @@ import blackjack.domain.participant.Participant;
 
 public class UserResult {
 
-    String userName;
-    Result result;
+    private final String userName;
+    private final Result result;
 
     public UserResult(Participant participant, int dealerScore) {
         this.userName = participant.getName();
