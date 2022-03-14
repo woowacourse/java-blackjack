@@ -9,7 +9,6 @@ import BlackJack.dto.PlayerResultsDto;
 import BlackJack.dto.UserDto;
 import BlackJack.view.InputView;
 import BlackJack.view.OutputView;
-import FuelInjection.Car;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ public class BlackjackController {
         CardFactory cardFactory = new CardFactory();
         List<String> inputPlayerNames = InputView.inputPlayerNames();
         Dealer dealer = new Dealer(cardFactory.initCards());
-        Players players = Players.join(inputPlayerNames, cardFactory.initCards());
+        Players players = Players.create(inputPlayerNames, cardFactory.initCards());
         OutputView.printDrawMessage(inputPlayerNames);
         OutputView.printTotalUserCards(convertToUserDtos(dealer, players));
 
