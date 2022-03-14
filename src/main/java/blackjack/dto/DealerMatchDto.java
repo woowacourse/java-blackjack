@@ -15,7 +15,7 @@ public class DealerMatchDto {
     private final String name;
 
     private DealerMatchDto(Map<ResultType, ResultCount> matchResult, String name) {
-        this.matchResult = matchResult;
+        this.matchResult = Map.copyOf(matchResult);
         this.name = name;
     }
 

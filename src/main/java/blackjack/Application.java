@@ -12,7 +12,8 @@ public class Application {
 
     public static void main(String[] args) {
         BlackjackGame blackjackGame = blackjackController.initializeGame(InputView.requestPlayerNamesInput());
-        OutputView.printInitialParticipantsCards(blackjackGame);
+
+        blackjackController.printInitialHand(blackjackGame);
 
         List<Player> players = blackjackGame.getParticipants();
         for (Player player : players) {
@@ -23,7 +24,7 @@ public class Application {
             OutputView.printDealerExtraCardInfo();
         }
 
-        OutputView.printAllCardsAndScore(blackjackGame);
+        blackjackController.printFinalHandAndScore(blackjackGame);
         blackjackController.printDealerMatchDto(blackjackGame);
         blackjackController.printPlayersMatchDto(blackjackGame);
     }

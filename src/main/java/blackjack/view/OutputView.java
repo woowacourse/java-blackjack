@@ -1,20 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.ResultCount;
 import blackjack.domain.game.ResultType;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
 import blackjack.dto.DealerMatchDto;
+import blackjack.dto.ParticipantDto;
 import blackjack.dto.PlayerMatchDto;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -23,53 +16,58 @@ public class OutputView {
 
     private static final String JOIN_DELIMITER = ", ";
     private static final String COLON_SEPARATOR = ": ";
+    private static final String WHITE_SPACE = " ";
+
     private static final String INITIAL_CARD_DISTRIBUTION_MESSAGE = NEW_LINE + "딜러와 %s에게 2장의 카드를 나누었습니다." + NEW_LINE;
-    private static final String DEALER_INITIAL_CARD_FORMAT = "딜러: %s" + NEW_LINE;
-    private static final String PLAYER_CARDS_FORMAT = "%s 카드: %s";
-    private static final String PARTICIPANT_CARDS_AND_SCORE_FORMAT = NEW_LINE + "%s 카드: %s - 결과: %d";
+    private static final String NAME_AND_HAND_FORMAT = "%s 카드: %s" + NEW_LINE;
     private static final String PLAYER_BUST_MESSAGE = "버스트! 21을 초과하였습니다!";
     private static final String DEALER_EXTRA_CARD_MESSAGE = NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String FINAL_RESULT_MESSAGE = NEW_LINE + "## 최종 승패";
+    private static final String PLAYER_MATCH_RESULT_FORMAT = "%s: %s" + NEW_LINE;
+    private static final String PARTICIPANT_HAND_AND_SCORE_FORMAT = "%s 카드: %s - 결과: %d" + NEW_LINE;
 
-    // TODO: DTO 로 변경
-    public static void printInitialParticipantsCards(BlackjackGame blackjackGame) {
-        StringBuilder builder = new StringBuilder();
+    public static void printInitialDistributionInfo(List<ParticipantDto> playerDtos) {
+        String names = playerDtos.stream()
+                .map(ParticipantDto::getName)
+                .collect(Collectors.joining(JOIN_DELIMITER));
 
-        builder.append(getParticipantsCardCountInfo(blackjackGame))
-                .append(getDealerCardInfo(blackjackGame.getDealer()));
-
-        List<Player> players = blackjackGame.getParticipants();
-        for (Player player : players) {
-            builder.append(getParticipantCardsInfo(player))
-                    .append(NEW_LINE);
-        }
-
-        print(builder.toString());
+        System.out.printf(INITIAL_CARD_DISTRIBUTION_MESSAGE, names);
     }
 
-    public static void printPlayerCardsInfo(Player player) {
-        print(getParticipantCardsInfo(player));
+    public static void printInitialDealerHand(ParticipantDto dealerDto) {
+        System.out.printf(NAME_AND_HAND_FORMAT, dealerDto.getName(), dealerDto.getHandDto().getFirstCard());
+    }
+
+    public static void printInitialPlayersHand(List<ParticipantDto> playerDtos) {
+        playerDtos.forEach(OutputView::printSingleHand);
+        printNewLine();
+    }
+
+    public static void printSingleHand(ParticipantDto dto) {
+        String name = dto.getName();
+        String cards = String.join(JOIN_DELIMITER, dto.getHandDto().getCards());
+
+        System.out.printf(NAME_AND_HAND_FORMAT, name, cards);
     }
 
     public static void printPlayerBustInfo() {
-        print(PLAYER_BUST_MESSAGE);
+        System.out.println(PLAYER_BUST_MESSAGE);
     }
 
     public static void printDealerExtraCardInfo() {
-        print(DEALER_EXTRA_CARD_MESSAGE);
+        System.out.println(DEALER_EXTRA_CARD_MESSAGE);
     }
 
-    // TODO: DTO 로 변경
-    public static void printAllCardsAndScore(BlackjackGame blackjackGame) {
-        List<Participant> participants = new ArrayList<>(List.of(blackjackGame.getDealer()));
-        participants.addAll(blackjackGame.getParticipants());
+    public static void printHandAndScore(List<ParticipantDto> participantDtos) {
+        participantDtos.forEach(OutputView::printSingleHandAndScore);
+    }
 
-        StringBuilder builder = new StringBuilder();
-        for (Participant participant : participants) {
-            builder.append(getParticipantCardsAndScore(participant));
-        }
+    private static void printSingleHandAndScore(ParticipantDto dto) {
+        String name = dto.getName();
+        String cards = String.join(JOIN_DELIMITER, dto.getHandDto().getCards());
+        int score = dto.getHandDto().getScore();
 
-        print(builder.toString());
+        System.out.printf(PARTICIPANT_HAND_AND_SCORE_FORMAT, name, cards, score);
     }
 
     public static void printDealerMatchResult(DealerMatchDto dealerMatchDto) {
@@ -80,7 +78,7 @@ public class OutputView {
                 .entrySet()
                 .forEach(OutputView::printSingleDealerMatchResult);
 
-        System.out.println();
+        printNewLine();
     }
 
     private static void printSingleDealerMatchResult(Entry<ResultType, ResultCount> entrySet) {
@@ -88,57 +86,22 @@ public class OutputView {
         String resultTypeName = entrySet.getKey().getDisplayName();
 
         if (resultCount > 0) {
-            System.out.print(resultCount + resultTypeName + " ");
+            System.out.print(resultCount + resultTypeName + WHITE_SPACE);
         }
     }
 
     public static void printPlayerMatchResults(Collection<PlayerMatchDto> playerMatchDtos) {
-        playerMatchDtos.forEach(
-                OutputView::printSinglePlayerMatchResult
-        );
+        playerMatchDtos.forEach(OutputView::printSinglePlayerMatchResult);
     }
 
     private static void printSinglePlayerMatchResult(PlayerMatchDto playerMatchDto) {
         String name = playerMatchDto.getName();
         String matchResult = playerMatchDto.getMatchResult().getDisplayName();
 
-        System.out.println(name + COLON_SEPARATOR + matchResult);
+        System.out.printf(PLAYER_MATCH_RESULT_FORMAT, name, matchResult);
     }
 
-    private static String getParticipantsCardCountInfo(BlackjackGame blackjackGame) {
-        String playerNames = mapAndJoinString(blackjackGame.getParticipants(), Player::getName);
-        return String.format(INITIAL_CARD_DISTRIBUTION_MESSAGE, playerNames);
-    }
-
-    private static String getDealerCardInfo(Dealer dealer) {
-        Card dealerCard = dealer.getOpenCard();
-        return String.format(DEALER_INITIAL_CARD_FORMAT, dealerCard.getName());
-    }
-
-    private static String getParticipantCardsInfo(Player player) {
-        String playerCards = getCardsInfo(player.getCardBundle().getCards());
-        return String.format(PLAYER_CARDS_FORMAT, player.getName(), playerCards);
-    }
-
-    private static String getParticipantCardsAndScore(Participant participant) {
-        String participantName = participant.getName();
-        String cards = getCardsInfo(participant.getCardBundle().getCards());
-        int score = participant.getCurrentScore().toInt();
-
-        return String.format(PARTICIPANT_CARDS_AND_SCORE_FORMAT, participantName, cards, score);
-    }
-
-    private static String getCardsInfo(Set<Card> cards) {
-        return mapAndJoinString(cards, Card::getName);
-    }
-
-    private static <T> String mapAndJoinString(Collection<T> collection, Function<T, String> function) {
-        return collection.stream()
-                .map(function)
-                .collect(Collectors.joining(JOIN_DELIMITER));
-    }
-
-    private static void print(String text) {
-        System.out.println(text);
+    private static void printNewLine() {
+        System.out.println();
     }
 }

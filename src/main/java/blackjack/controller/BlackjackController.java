@@ -6,15 +6,30 @@ import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.DealerMatchDto;
+import blackjack.dto.ParticipantDto;
 import blackjack.dto.PlayerMatchDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
     public BlackjackGame initializeGame(List<String> playerNames) {
         return new BlackjackGame(new CardDeck(), playerNames);
+    }
+
+    // TODO: 추후 participants 에 dealer 가 포함되는 구조로 개선되면 수정 필요
+    public void printInitialHand(BlackjackGame game) {
+        ParticipantDto dealerDto = ParticipantDto.from(game.getDealer());
+        List<ParticipantDto> playerDtos = game.getParticipants()
+                .stream()
+                .map(ParticipantDto::from)
+                .collect(Collectors.toList());
+
+        OutputView.printInitialDistributionInfo(playerDtos);
+        OutputView.printInitialDealerHand(dealerDto);
+        OutputView.printInitialPlayersHand(playerDtos);
     }
 
     // TODO: 2 depth 수정하기
@@ -24,10 +39,21 @@ public class BlackjackController {
                 return;
             }
             player.receiveCard(game.popCard());
-            OutputView.printPlayerCardsInfo(player);
+            OutputView.printSingleHand(ParticipantDto.from(player));
         }
 
         OutputView.printPlayerBustInfo();
+    }
+
+    // TODO: 추후 participants 에 dealer 가 포함되는 구조로 개선되면 수정 필요
+    public void printFinalHandAndScore(BlackjackGame game) {
+        List<ParticipantDto> participants = new ArrayList<>(List.of(ParticipantDto.from(game.getDealer())));
+        participants.addAll(game.getParticipants()
+                .stream()
+                .map(ParticipantDto::from)
+                .collect(Collectors.toList()));
+
+        OutputView.printHandAndScore(participants);
     }
 
     public void printDealerMatchDto(BlackjackGame game) {
