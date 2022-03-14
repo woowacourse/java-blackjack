@@ -1,6 +1,8 @@
 package blackjack.domain.card;
 
+import blackjack.domain.CardDeck;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -22,6 +24,10 @@ public class Cards {
         if (cards.size() != BLACKJACK_CARD_SIZE) {
             throw new IllegalArgumentException("카드 2장으로 생성해야 합니다.");
         }
+    }
+
+    public static Cards createByCardDeck(final CardDeck cardDeck) {
+        return new Cards(Arrays.asList(cardDeck.provideCard(), cardDeck.provideCard()));
     }
 
     public int calculateScore() {

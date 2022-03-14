@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
@@ -24,9 +25,10 @@ public class BlackjackBoard {
 
     public static BlackjackBoard createGame(final List<String> playerNames) {
         Objects.requireNonNull(playerNames, "blackjackgame은 null이 들어올 수 없습니다.");
+
         final CardDeck cardDeck = CardDeck.createNewCardDek();
         final Participants players = Participants.createByPlayerNames(playerNames, cardDeck);
-        final Participant dealer = Dealer.createNewDealer(cardDeck.provideFirstHitCards());
+        final Participant dealer = Dealer.createNewDealer(Cards.createByCardDeck(cardDeck));
         return new BlackjackBoard(cardDeck, dealer, players);
     }
 

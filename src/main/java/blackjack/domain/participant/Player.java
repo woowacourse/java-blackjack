@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
+import java.util.Objects;
 
 public class Player extends AbstractParticipant {
 
@@ -12,8 +13,9 @@ public class Player extends AbstractParticipant {
         super(name, cards, gameStatus);
     }
 
-    public static Player createNewPlayer(final String name, final List<Card> cards) {
-        return new Player(name, new Cards(cards), GameStatus.RUNNING);
+    public static Player createNewPlayer(final String name, final Cards cards) {
+        Objects.requireNonNull(cards, "cards는 null이 들어올 수 없습니다.");
+        return new Player(name, cards, GameStatus.RUNNING);
     }
 
     @Override

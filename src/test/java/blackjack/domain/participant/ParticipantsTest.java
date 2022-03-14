@@ -30,10 +30,10 @@ class ParticipantsTest {
     @Test
     @DisplayName("중복된 이름들로 생성 시 예외를 발생시킨다.")
     void createExceptionByDuplication() {
-        final Participant firstplayer = Player
-                .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
-        final Participant secondplayer = Player
-                .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Participant firstplayer =
+                Player.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Participant secondplayer =
+                Player.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final List<Participant> participants = Arrays.asList(firstplayer, secondplayer);
 
         assertThatThrownBy(() -> new Participants(participants))
@@ -54,8 +54,8 @@ class ParticipantsTest {
     @Test
     @DisplayName("현재 턴의 플레이어가 버스트될 경우 다음 플레이어로 턴을 넘긴다.")
     void hitCurrentPlayerIsBust() {
-        final Participant participant = Player
-                .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Participant participant =
+                Player.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Participants participants = new Participants(Collections.singletonList(participant));
         participants.hitCurrentParticipant(Card.of(SPADE, JACK));
 
@@ -91,8 +91,8 @@ class ParticipantsTest {
     @Test
     @DisplayName("모든 턴이 종료되었을 때 현재 플레이어 정보를 반환하려하면 예외가 발생한다.")
     void getCurrentTurnPlayerCardExceptionByEndAllTurn() {
-        final Participant participant = Player
-                .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Participant participant =
+                Player.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Participants participants = new Participants(Collections.singletonList(participant));
         participants.turnToNextParticipant();
 
@@ -104,8 +104,8 @@ class ParticipantsTest {
     @Test
     @DisplayName("모든 턴이 종료되었을 때 현재 플레이어 이름 반환하려하면 예외가 발생한다.")
     void getCurrentTurnPlayerNameExceptionByEndAllTurn() {
-        final Participant participant = Player
-                .createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
+        final Participant participant =
+                Player.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
         final Participants participants = new Participants(Collections.singletonList(participant));
         participants.turnToNextParticipant();
 

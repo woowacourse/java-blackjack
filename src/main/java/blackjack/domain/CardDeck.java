@@ -3,14 +3,11 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
 
 public class CardDeck {
-
-    private static final int FIRST_HIT_CARD_SIZE = 2;
 
     private final Queue<Card> cards;
 
@@ -22,17 +19,6 @@ public class CardDeck {
     public static CardDeck createNewCardDek() {
         List<Card> cards = Card.createNewCards();
         return new CardDeck(new ArrayDeque<>(Randoms.shuffle(cards)));
-    }
-
-    public List<Card> provideFirstHitCards() {
-        validateEnoughDeckSize();
-        return Arrays.asList(cards.poll(), cards.poll());
-    }
-
-    private void validateEnoughDeckSize() {
-        if (cards.size() < FIRST_HIT_CARD_SIZE) {
-            throw new IllegalStateException("남은 카드가 2장 미만입니다.");
-        }
     }
 
     public Card provideCard() {

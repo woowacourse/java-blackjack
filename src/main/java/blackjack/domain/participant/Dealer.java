@@ -2,7 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends AbstractParticipant {
@@ -15,16 +14,14 @@ public class Dealer extends AbstractParticipant {
         super(name, cards, gameStatus);
     }
 
-    public static Dealer createNewDealer(final List<Card> cards) {
-        final Cards ownCards = new Cards(new ArrayList<>(cards));
-
-        if (ownCards.isBlackJack()) {
-            return new Dealer(NAME, ownCards, GameStatus.BLACKJACK);
+    public static Dealer createNewDealer(final Cards cards) {
+        if (cards.isBlackJack()) {
+            return new Dealer(NAME, cards, GameStatus.BLACKJACK);
         }
-        if (ownCards.calculateMaxScore() >= DEALER_LIMIT_SCORE) {
-            return new Dealer(NAME, ownCards, GameStatus.FINISHED);
+        if (cards.calculateMaxScore() >= DEALER_LIMIT_SCORE) {
+            return new Dealer(NAME, cards, GameStatus.FINISHED);
         }
-        return new Dealer(NAME, ownCards, GameStatus.RUNNING);
+        return new Dealer(NAME, cards, GameStatus.RUNNING);
     }
 
     @Override

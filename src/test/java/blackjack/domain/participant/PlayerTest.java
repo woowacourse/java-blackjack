@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
-import java.util.List;
+import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -23,7 +23,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
 
-    private List<Card> cards;
+    private Cards cards;
 
     @BeforeEach
     void setup() {
@@ -44,10 +44,17 @@ class PlayerTest {
     @ValueSource(strings = {"", " "})
     @DisplayName("플레이어의 이름에 공백이 들어올 경우 예외가 발생해야 한다.")
     void createExceptionByEmpty(String input) {
-        assertThatThrownBy(() -> Player
-                .createNewPlayer(input, cards))
+        assertThatThrownBy(() -> Player.createNewPlayer(input, cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 이름은 공백이 들어올 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("cards가 null이 들어올 경우 예외가 발생해야 한다.")
+    void createNewPlayerExeptionByNullCards() {
+        assertThatThrownBy(() -> Player.createNewPlayer("player", null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("cards는 null이 들어올 수 없습니다.");
     }
 
     @Nested

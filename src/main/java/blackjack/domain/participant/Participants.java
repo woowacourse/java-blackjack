@@ -5,6 +5,7 @@ import static java.util.Map.entry;
 import blackjack.domain.CardDeck;
 import blackjack.domain.GameOutcome;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.dto.OutComeResult;
 import blackjack.dto.ParticipantCards;
 import blackjack.dto.ParticipantScoreResult;
@@ -59,7 +60,7 @@ public class Participants {
     }
 
     private static Player createPlayer(final String name, final CardDeck cardDeck) {
-        return Player.createNewPlayer(name, cardDeck.provideFirstHitCards());
+        return Player.createNewPlayer(name, Cards.createByCardDeck(cardDeck));
     }
 
     public List<ParticipantCards> getFirstCards() {
