@@ -1,42 +1,37 @@
 package domain;
 
 import static java.util.Collections.unmodifiableMap;
-import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toMap;
 
 import domain.player.Dealer;
+import domain.player.Gambler;
 import domain.player.Gamblers;
-import domain.player.Player;
-import java.util.EnumMap;
+import dto.ResultDto;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackJackResult {
-    private final Map<String, MatchResult> gamblerResult;
+    private final Map<String, ResultDto> blackjackResult;
 
-    private BlackJackResult(Map<String, MatchResult> gamblerResult) {
-        this.gamblerResult = unmodifiableMap(gamblerResult);
+    private BlackJackResult(Map<String, ResultDto> blackjackResult) {
+        this.blackjackResult = unmodifiableMap(blackjackResult);
     }
 
     public static BlackJackResult of(Dealer dealer, Gamblers gamblers) {
-        return new BlackJackResult(getPlayerResult(dealer, gamblers));
+        return new BlackJackResult(getBlackjackResult(dealer, gamblers));
     }
 
-    private static Map<String, MatchResult> getPlayerResult(Dealer dealer, Gamblers gamblers) {
-        return gamblers.getGamblers()
-                .stream()
-                .collect(toMap(Player::getName, gambler -> MatchResult.of(dealer, gambler)));
+    private static Map<String, ResultDto> getBlackjackResult(Dealer dealer, Gamblers gamblers) {
+        Map<String, ResultDto> blackjackResult = new LinkedHashMap<>();
+        blackjackResult.put(dealer.getName(), ResultDto.of(dealer, gamblers.getGamblers()));
+
+        for (Gambler gambler : gamblers.getGamblers()) {
+            blackjackResult.put(gambler.getName(), ResultDto.of(gambler, dealer));
+        }
+
+        return blackjackResult;
     }
 
-    public Map<String, MatchResult> getGamblerResult() {
-        return gamblerResult;
-    }
-
-    public Map<MatchResult, Long> getDealerResult() {
-        return gamblerResult.values()
-                .stream()
-                .map(MatchResult::opposite)
-                .collect(groupingBy(identity(), () -> new EnumMap<>(MatchResult.class), counting()));
+    public Map<String, ResultDto> getBlackjackResult() {
+        return blackjackResult;
     }
 }

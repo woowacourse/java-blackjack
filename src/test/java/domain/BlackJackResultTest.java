@@ -11,6 +11,7 @@ import domain.card.Suit;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
+import dto.ResultDto;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,22 +39,24 @@ public class BlackJackResultTest {
         BlackJackResult blackJackResult = BlackJackResult.of(dealer, new Gamblers(gamblers));
 
         // when
-        Map<MatchResult, Long> dealerResult = blackJackResult.getDealerResult();
-        Map<String, MatchResult> playerResult = blackJackResult.getGamblerResult();
+        Map<String, ResultDto> blackjackResult = blackJackResult.getBlackjackResult();
+        ResultDto dealerResultDto = blackjackResult.get("딜러");
+        ResultDto pobiResultDto = blackjackResult.get("포비");
+        ResultDto dolbumResultDto = blackjackResult.get("돌범");
+        ResultDto richardResultDto = blackjackResult.get("리차드");
 
         // then
         assertAll(
-                () -> assertThat(dealerResult.get(WIN)).isEqualTo(1),
-                () -> assertThat(dealerResult.get(LOSE)).isEqualTo(2),
-                () -> assertThat(playerResult.get("포비")).isEqualTo(LOSE),
-                () -> assertThat(playerResult.get("돌범")).isEqualTo(WIN),
-                () -> assertThat(playerResult.get("리차드")).isEqualTo(WIN)
+                () -> assertThat(dealerResultDto.getMatchResults()).isEqualTo(List.of(WIN, LOSE, LOSE)),
+                () -> assertThat(pobiResultDto.getMatchResults()).isEqualTo(List.of(LOSE)),
+                () -> assertThat(dolbumResultDto.getMatchResults()).isEqualTo(List.of(WIN)),
+                () -> assertThat(richardResultDto.getMatchResults()).isEqualTo(List.of(WIN))
         );
     }
 
     private void cardSetup(Dealer dealer, List<Gambler> gamblers) {
         dealer.addCard(Card.of(Suit.SPADES, Denomination.JACK));
-        dealer.addCard(Card.of(Suit.HEARTS, Denomination.THREE)); // 13
+        dealer.addCard(Card.of(Suit.HEARTS, Denomination.THREE));
 
         gamblers.get(0).addCard(Card.of(Suit.SPADES, Denomination.JACK));
         gamblers.get(0).addCard(Card.of(Suit.CLUBS, Denomination.TWO));
@@ -63,7 +66,5 @@ public class BlackJackResultTest {
 
         gamblers.get(2).addCard(Card.of(Suit.CLUBS, Denomination.ACE));
         gamblers.get(2).addCard(Card.of(Suit.CLUBS, Denomination.TEN));
-        gamblers.get(2).addCard(Card.of(Suit.SPADES, Denomination.ACE));
-        gamblers.get(2).addCard(Card.of(Suit.SPADES, Denomination.ACE));
     }
 }
