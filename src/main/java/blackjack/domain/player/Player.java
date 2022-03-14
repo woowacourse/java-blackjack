@@ -16,6 +16,8 @@ public abstract class Player {
         this.name = name;
     }
 
+    public abstract boolean acceptableCard();
+
     public int calculateFinalScore() {
         return cards.calculateFinalScore();
     }
@@ -23,8 +25,6 @@ public abstract class Player {
     public void addCard(final Card card) {
         cards.addCard(card);
     }
-
-    public abstract boolean acceptableCard();
 
     public List<Card> getCards() {
         return this.cards.getCards();
