@@ -45,16 +45,12 @@ public class InputView {
     static boolean hasNoDuplication(final String input) {
         final List<String> parsedInput = getSplitAndTrim(input);
         final int beforeCount = parsedInput.size();
-        final int afterCount = (int) parsedInput.stream()
-                .distinct()
-                .count();
+        final int afterCount = (int) parsedInput.stream().distinct().count();
         return beforeCount == afterCount;
     }
 
     private static List<String> getSplitAndTrim(final String input) {
-        return Arrays.stream(input.split(NAME_OR_CARD_DELIMITER))
-                .map(String::trim)
-                .collect(Collectors.toList());
+        return Arrays.stream(input.split(NAME_OR_CARD_DELIMITER)).map(String::trim).collect(Collectors.toList());
     }
 
     public static boolean inputTryToHit(final String name) {
@@ -69,11 +65,7 @@ public class InputView {
     }
 
     private static void printPlayerHitIntro(final String name) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append(name)
-                .append(HIT_SUFFIX_MESSAGE);
-        print(stringBuilder.toString());
+        print(name + HIT_SUFFIX_MESSAGE);
     }
 
     private static boolean isYOrN(final String response) {
