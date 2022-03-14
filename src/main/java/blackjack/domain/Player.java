@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,8 +13,8 @@ public class Player {
 
     private static final String ACE = "A";
 
-    private String name;
-    private List<Card> myCards;
+    private final String name;
+    private final List<Card> myCards;
 
     public Player(String name) {
         this.name = name;
@@ -25,7 +26,7 @@ public class Player {
     }
 
     public List<Card> getMyCards() {
-        return myCards;
+        return Collections.unmodifiableList(myCards);
     }
 
     public String getName() {

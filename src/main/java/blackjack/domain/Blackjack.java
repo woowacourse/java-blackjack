@@ -12,7 +12,7 @@ public class Blackjack {
     private static final int INITIAL_CARD_NUMBER = 2;
 
     private final Dealer dealer;
-    private Players players;
+    private final Players players;
     private Player player;
 
     public Blackjack(List<String> playerNames) {

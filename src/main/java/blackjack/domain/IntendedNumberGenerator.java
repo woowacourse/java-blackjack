@@ -7,7 +7,7 @@ public class IntendedNumberGenerator implements NumberGenerator {
 
     private static final String INTENDED_NUMBER_GENERATOR_OUT_OF_BOUND_EXCEPTION = "[ERROR] 숫자 생성기 인덱스 초과";
     private int index = 0;
-    private List<Integer> numbers;
+    private final List<Integer> numbers;
 
     public IntendedNumberGenerator(List<Integer> numbers) {
         Objects.nonNull(numbers);

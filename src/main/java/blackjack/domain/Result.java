@@ -8,8 +8,8 @@ public enum Result {
     DRAW("무", number -> number == 0),
     LOSE("패", number -> number > 0);
 
-    private String name;
-    private Function<Integer, Boolean> expression;
+    private final String name;
+    private final Function<Integer, Boolean> expression;
 
     Result(String name, Function<Integer, Boolean> expression) {
         this.name = name;

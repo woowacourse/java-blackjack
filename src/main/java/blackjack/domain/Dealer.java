@@ -7,7 +7,7 @@ public class Dealer extends Player {
     private static final int BUST_CONDITION = 22;
     private static final int LOSE_SCORE = 0;
 
-    private Deck deck;
+    private final Deck deck;
 
     public Dealer() {
         super(NAME);
