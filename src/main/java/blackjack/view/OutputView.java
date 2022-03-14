@@ -12,6 +12,9 @@ import blackjack.dto.ParticipantDto;
 
 public class OutputView {
 
+    private OutputView() {
+    }
+
     public static void printInitResult(List<String> names) {
         printEmptyLine();
         System.out.printf("딜러와 %s에게 2장의 카드를 나누어주었습니다.",
