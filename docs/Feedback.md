@@ -11,14 +11,17 @@
 - [ ] GameResult 내의 `WIN`을 나타내는 문자열은 어느 영역의 관심사인가
     - 다른 언어권에게 제공해야한다면 어떻게 배워야할까?
 - [x] `MAX_POINT`라는 상수가 여러 곳에 선언되어 있다.(최대 점수가 21의 의미하는 숫자로 사용함.)
-  - 사용 클래스
-    - Cards : MAX_POINT
-    - Player : AVAILABLE_POINT_FOR_ADD_CARD
-    - Statistic : MAX_POINT
-  - `Cards` 클래스 내에서 현재 포인트가 MAX_POINT(21)이 넘는지 계산하는 함수 `isOverThanMaxPoint()`를 구현하여 중복 제거 
+    - 사용 클래스
+        - Cards : MAX_POINT
+        - Player : AVAILABLE_POINT_FOR_ADD_CARD
+        - Statistic : MAX_POINT
+    - `Cards` 클래스 내에서 현재 포인트가 MAX_POINT(21)이 넘는지 계산하는 함수 `isOverThanMaxPoint()`를 구현하여 중복 제거
 - [x] `Statistic` 클래스에서 팩터리 메서드 외의 필드 및 멤버 함수도 static으로 설정한 이유
 - [x] `Card` 구현 시에 캐싱 적용
-- [ ] `Card`에서 toString의 구현이 바뀌게 된다면 View의 출력에 미치는 영향
+    - `List<Card> CACHE` 필드를 생성하여 52장의 카드를 담고 있는 List 생성
+- [x] `Card`에서 toString의 구현이 바뀌게 된다면 View의 출력에 미치는 영향
+  - getter를 이용하여 Denomination, Symbol 정보 반환
+  - 출력 로직 view에 구현 및 getter 사용하여 정보 반환
 - [ ] `giveCard()`메서드의 의미에 대해 (누가 누구에게 주는 것인가.)
 - [ ] `CardDeck`에서 `size()`메서드는 테스트에서만 사용됨.
 - [ ] `CardDeckGenerator`에서 카드를 생성할 때 어떤 규칙을 사용하는가.

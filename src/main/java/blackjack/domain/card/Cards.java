@@ -57,10 +57,13 @@ public class Cards {
             .count();
     }
 
-    @Override
-    public String toString() {
+    public String gerCardList() {
         return cards.stream()
-            .map(Card::toString)
+            .map(card -> card.getDenomination().getInitial() + card.getSymbol().getSymbolName())
             .collect(Collectors.joining(JOIN_DELIMITER));
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }

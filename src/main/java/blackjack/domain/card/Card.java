@@ -44,9 +44,4 @@ public class Card {
     public Symbol getSymbol() {
         return symbol;
     }
-
-    @Override
-    public String toString() {
-        return denomination.getInitial() + symbol.getSymbolName();
-    }
 }
