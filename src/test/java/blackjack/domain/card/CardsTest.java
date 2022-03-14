@@ -1,5 +1,9 @@
 package blackjack.domain.card;
 
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+>>>>>>> step1
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +21,15 @@ public class CardsTest {
     @Test
     @DisplayName("카드를 추가할 떄 null을 전달하면 예외를 발생한다.")
     void thrownExceptionWhenGivenNull() {
+<<<<<<< HEAD
         Cards cards = new Cards(new Deck().initDistributeCard());
+=======
+        Deck deck = new Deck(new DeckGeneratorImpl());
+        List<Card> initCards = new ArrayList<>();
+        initCards.add(deck.draw());
+        initCards.add(deck.draw());
+        Cards cards = new Cards(initCards);
+>>>>>>> step1
         assertThatThrownBy(() -> cards.addCard(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 올바른 카드를 입력해주세요.");

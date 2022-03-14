@@ -38,9 +38,15 @@ public class OutputView {
     }
 
     private static void printParticipantsInfo(final List<Participant> participants) {
+<<<<<<< HEAD
         participants.forEach(
                 participant -> System.out.println(makePlayerCardInfo(participant))
         );
+=======
+        for (Participant participant : participants) {
+            System.out.println(makePlayerCardInfo(participant));
+        }
+>>>>>>> step1
         System.out.println();
     }
 

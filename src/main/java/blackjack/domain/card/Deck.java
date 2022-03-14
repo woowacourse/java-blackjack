@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.*;
+<<<<<<< HEAD
 import java.util.stream.IntStream;
 
 public class Deck {
@@ -43,6 +44,15 @@ public class Deck {
         IntStream.range(0, INIT_DISTRIBUTE_SIZE)
                 .forEach(i -> cards.add(draw()));
         return cards;
+=======
+
+public class Deck {
+
+    private final Stack<Card> deck;
+
+    public Deck(DeckGenerator deckGenerator) {
+        deck = deckGenerator.generate();
+>>>>>>> step1
     }
 
     public Card draw() {

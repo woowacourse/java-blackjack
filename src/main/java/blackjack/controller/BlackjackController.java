@@ -51,10 +51,17 @@ public class BlackjackController {
     }
 
     private boolean isNotOverMaxScore(final Player participant) {
+<<<<<<< HEAD
         if (participant.acceptableCard()) {
             OutputView.printParticipantOverMaxScore(participant.getName());
         }
         return !participant.acceptableCard();
+=======
+        if (!participant.acceptableCard()) {
+            OutputView.printParticipantOverMaxScore(participant.getName());
+        }
+        return participant.acceptableCard();
+>>>>>>> step1
     }
 
     private void decideOneMoreCard(final GameMachine gameMachine) {

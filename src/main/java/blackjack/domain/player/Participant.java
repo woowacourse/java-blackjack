@@ -12,6 +12,10 @@ public class Participant extends Player {
 
     @Override
     public boolean acceptableCard() {
+<<<<<<< HEAD
         return getScoreByAceOne() > MAX_SCORE;
+=======
+        return getScoreByAceOne() <= MAX_SCORE;
+>>>>>>> step1
     }
 }
