@@ -1,7 +1,6 @@
 package BlackJack.domain.User;
 
 import BlackJack.domain.Card.CardFactory;
-import BlackJack.domain.Card.Cards;
 import BlackJack.domain.Result;
 
 import java.util.ArrayList;
