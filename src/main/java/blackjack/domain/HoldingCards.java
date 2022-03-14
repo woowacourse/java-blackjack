@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HoldingCards {
-    private static final int BLACK_JACK_SCORE = 21;
+    private static final int FULL_SCORE = 21;
+    private static final int BLACK_JACK_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -17,15 +18,15 @@ public class HoldingCards {
     }
 
     public boolean isBust() {
-        return calculateTotal() > BLACK_JACK_SCORE;
+        return calculateTotal() > FULL_SCORE;
     }
 
     private boolean isBlackJack() {
-        return calculateTotal() == BLACK_JACK_SCORE;
+        return calculateTotal() == FULL_SCORE && cards.size() == BLACK_JACK_CARD_COUNT;
     }
 
-    public boolean isBlackJackOrBust() {
-        return isBlackJack() || isBust();
+    public boolean isFullScoreOrBust() {
+        return calculateTotal() == FULL_SCORE || isBust();
     }
 
     public int calculateTotal() {
@@ -38,7 +39,7 @@ public class HoldingCards {
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.getCardNumberValue() == CardNumber.ACE.getCardNumberValue());
+                .anyMatch(Card::isAce);
     }
 
     private int sum() {
