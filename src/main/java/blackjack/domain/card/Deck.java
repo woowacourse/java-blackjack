@@ -22,7 +22,7 @@ public class Deck {
 
     private final LinkedList<Card> cards;
 
-    public Deck(List<Card> cards) {
+    private Deck(List<Card> cards) {
         this.cards = new LinkedList<>(cards);
     }
 

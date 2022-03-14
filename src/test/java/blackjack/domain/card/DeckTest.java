@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import static blackjack.domain.TestCardFixture.aceCard;
 import static org.assertj.core.api.Assertions.*;
 
+import blackjack.domain.StubDeck;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +35,7 @@ class DeckTest {
     @DisplayName("카드가 모두 소진되었을 때 예외를 발생한다")
     void cardEmptyException() {
         List<Card> cards = List.of(aceCard);
-        Deck deck = new Deck(cards);
+        StubDeck deck = new StubDeck(cards);
         deck.draw();
 
         assertThatThrownBy(deck::draw)
