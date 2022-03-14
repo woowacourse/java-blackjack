@@ -71,6 +71,7 @@ public class PlayerTest {
     void 플레이어_승패_여부_버스트_승() {
         Dealer dealer = new Dealer(generateBlackjack());
         dealer.append(Card.of(KING, SPADE));
+        dealer.append(Card.of(JACK, HEART));
 
         Player player = new Player("sudal", generateBlackjack());
 
@@ -84,9 +85,11 @@ public class PlayerTest {
     void 플레이어_승패_여부_둘다_버스트_패() {
         Dealer dealer = new Dealer(generateBlackjack());
         dealer.append(Card.of(KING, SPADE));
+        dealer.append(Card.of(JACK, HEART));
 
         Player player = new Player("sudal", generateBlackjack());
         player.append(Card.of(KING, HEART));
+        player.append(Card.of(JACK, SPADE));
 
         GameResult gameResult = player.decideResult(dealer.getTotalScore());
 
@@ -96,9 +99,10 @@ public class PlayerTest {
     @DisplayName("플레이어만 버스트이면 패배한다.")
     @Test
     void 플레이어_승패_여부_버스트_패() {
-        Dealer dealer = new Dealer(generateBlackjack());
+        Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
         Player player = new Player("sudal", generateBlackjack());
-        player.append(Card.of(KING, HEART));
+        player.append(Card.of(KING, SPADE));
+        player.append(Card.of(JACK, SPADE));
 
         GameResult gameResult = player.decideResult(dealer.getTotalScore());
 

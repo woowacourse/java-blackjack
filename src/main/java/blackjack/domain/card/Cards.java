@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Cards {
@@ -22,6 +23,8 @@ public class Cards {
     }
 
     public int calculateTotalScore() {
+        value.sort(Comparator.naturalOrder());
+
         int totalScore = 0;
         for (Card card : value) {
             totalScore = card.calculateScore(totalScore);

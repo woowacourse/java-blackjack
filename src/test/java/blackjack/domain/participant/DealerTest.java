@@ -72,6 +72,7 @@ public class DealerTest {
     void 딜러_승패_여부_버스트_패() {
         Dealer dealer = new Dealer(generateBlackjack());
         dealer.append(Card.of(KING, SPADE));
+        dealer.append(Card.of(JACK, HEART));
 
         Player player = new Player("sudal", generateBlackjack());
 
@@ -85,9 +86,11 @@ public class DealerTest {
     void 딜러_승패_여부_둘다_버스트_승() {
         Dealer dealer = new Dealer(generateBlackjack());
         dealer.append(Card.of(KING, SPADE));
+        dealer.append(Card.of(JACK, HEART));
 
         Player player = new Player("sudal", generateBlackjack());
         player.append(Card.of(KING, HEART));
+        player.append(Card.of(JACK, SPADE));
 
         GameResult gameResult = dealer.decideResult(player.getTotalScore());
 
@@ -100,6 +103,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
         Player player = new Player("sudal", generateBlackjack());
         player.append(Card.of(KING, SPADE));
+        player.append(Card.of(JACK, SPADE));
 
         GameResult gameResult = dealer.decideResult(player.getTotalScore());
 

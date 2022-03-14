@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import java.util.Objects;
 
-public class Card {
+public class Card implements Comparable<Card> {
 
     private final Denomination denomination;
     private final Suit suit;
@@ -29,6 +29,11 @@ public class Card {
     }
 
     @Override
+    public int compareTo(Card o) {
+        return Integer.compare(o.denomination.getScore(), denomination.getScore());
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -43,5 +48,13 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(denomination, suit);
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "denomination=" + denomination +
+                ", suit=" + suit +
+                '}';
     }
 }

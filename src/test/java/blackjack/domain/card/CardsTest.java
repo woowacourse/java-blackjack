@@ -35,8 +35,9 @@ public class CardsTest {
         List<Card> cardValues = List.of(Card.of(JACK, CLOVER), Card.of(ACE, DIAMOND));
 
         Cards cards = new Cards(cardValues);
+        cards.append(Card.of(FIVE, SPADE));
 
-        assertThat(cards.calculateTotalScore()).isEqualTo(21);
+        assertThat(cards.calculateTotalScore()).isEqualTo(16);
     }
 
     @DisplayName("카드 List에 카드를 추가한다.")
