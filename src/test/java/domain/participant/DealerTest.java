@@ -1,13 +1,12 @@
 package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static utils.TestUtil.getCards;
 
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Number;
 import domain.card.Suit;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,14 +33,6 @@ public class DealerTest {
                 Arguments.arguments("합계 17인 경우 true", getCards(Number.SEVEN, Number.QUEEN), true),
                 Arguments.arguments("합계 15인 경우 false", getCards(Number.QUEEN, Number.FIVE), false)
         );
-    }
-
-    private static Cards getCards(Number... arguments) {
-        List<Card> list = new ArrayList<>();
-        for (Number number : arguments) {
-            list.add(new Card(number, Suit.CLOVER));
-        }
-        return new Cards(list);
     }
 
     @Test

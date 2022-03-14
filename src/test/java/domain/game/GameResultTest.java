@@ -1,16 +1,13 @@
 package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static utils.TestUtil.getCards;
 
-import domain.card.Card;
-import domain.card.Cards;
 import domain.card.Number;
-import domain.card.Suit;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -71,13 +68,5 @@ class GameResultTest {
                         2
                 )
         );
-    }
-
-    private static Cards getCards(Number... arguments) {
-        List<Card> list = new ArrayList<>();
-        for (Number number : arguments) {
-            list.add(new Card(number, Suit.CLOVER));
-        }
-        return new Cards(list);
     }
 }
