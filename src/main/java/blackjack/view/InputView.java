@@ -18,15 +18,15 @@ public class InputView {
         return toNames(SCANNER.nextLine().trim());
     }
 
-    private static List<String> toNames(String names) {
-        return Arrays.stream(names.split(NAME_DELIMITER))
-                .map(String::trim)
-                .collect(Collectors.toList());
-    }
-
     public static String inputCommand(String name) {
         System.out.println(MessageFormat.format("{0}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
         return validateCommand(SCANNER.nextLine().trim().toLowerCase());
+    }
+
+    private static List<String> toNames(String names) {
+        return Arrays.stream(names.split(NAME_DELIMITER))
+            .map(String::trim)
+            .collect(Collectors.toList());
     }
 
     private static String validateCommand(String command) {

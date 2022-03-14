@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.card.CardNumber.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.stream.Stream;
@@ -13,29 +14,29 @@ class CardNumberTest {
     @MethodSource("getNumbers")
     @DisplayName("21에 가장 가까운 수를 구한다")
     void sumCard(int total, List<CardNumber> cardNumbers) {
-        int expected = CardNumber.sum(cardNumbers);
+        int expected = sum(cardNumbers);
 
         assertThat(expected).isEqualTo(total);
     }
 
     static Stream<Arguments> getNumbers() {
         return Stream.of(
-                Arguments.of(16, List.of(CardNumber.THREE, CardNumber.FIVE, CardNumber.EIGHT)),
-                Arguments.of(30, List.of(CardNumber.KING, CardNumber.QUEEN, CardNumber.JACK)),
+                Arguments.of(16, List.of(THREE, FIVE, EIGHT)),
+                Arguments.of(30, List.of(KING, QUEEN, JACK)),
 
-                Arguments.of(13, List.of(CardNumber.ACE, CardNumber.TWO)),
-                Arguments.of(21, List.of(CardNumber.ACE, CardNumber.TEN)),
-                Arguments.of(21, List.of(CardNumber.ACE, CardNumber.ACE, CardNumber.NINE)),
-                Arguments.of(12, List.of(CardNumber.ACE, CardNumber.ACE, CardNumber.TEN)),
+                Arguments.of(13, List.of(ACE, TWO)),
+                Arguments.of(21, List.of(ACE, TEN)),
+                Arguments.of(21, List.of(ACE, ACE, NINE)),
+                Arguments.of(12, List.of(ACE, ACE, TEN)),
 
-                Arguments.of(18, List.of(CardNumber.ACE, CardNumber.SEVEN, CardNumber.KING)),
-                Arguments.of(20, List.of(CardNumber.ACE, CardNumber.ACE, CardNumber.EIGHT)),
-                Arguments.of(21, List.of(CardNumber.ACE, CardNumber.ACE, CardNumber.ACE, CardNumber.EIGHT)),
-                Arguments.of(21, List.of(CardNumber.ACE, CardNumber.ACE, CardNumber.NINE)),
+                Arguments.of(18, List.of(ACE, SEVEN, KING)),
+                Arguments.of(20, List.of(ACE, ACE, EIGHT)),
+                Arguments.of(21, List.of(ACE, ACE, ACE, EIGHT)),
+                Arguments.of(21, List.of(ACE, ACE, NINE)),
 
-                Arguments.of(12, List.of(CardNumber.ACE, CardNumber.ACE)),
-                Arguments.of(13, List.of(CardNumber.ACE, CardNumber.ACE, CardNumber.ACE)),
-                Arguments.of(14, List.of(CardNumber.ACE, CardNumber.ACE, CardNumber.ACE, CardNumber.ACE))
+                Arguments.of(12, List.of(ACE, ACE)),
+                Arguments.of(13, List.of(ACE, ACE, ACE)),
+                Arguments.of(14, List.of(ACE, ACE, ACE, ACE))
         );
     }
 }

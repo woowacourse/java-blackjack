@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import static blackjack.domain.card.CardNumber.*;
+import static blackjack.domain.card.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -45,7 +47,7 @@ public class DeckTest {
     @DisplayName("카드가 중복될 경우 예외를 발생한다.")
     void throwExceptionDuplicateCard() {
         List<Card> cards = Card.createDeck();
-        cards.add(Card.valueOf(Suit.SPADE, CardNumber.ACE));
+        cards.add(Card.valueOf(SPADE, ACE));
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Deck.of(cards))
@@ -56,7 +58,7 @@ public class DeckTest {
     @DisplayName("52장이 아닐경우 예외를 발생한다.")
     void throwExceptionCardSize() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Deck.of(Collections.singletonList(Card.valueOf(Suit.SPADE, CardNumber.ACE))))
+                .isThrownBy(() -> Deck.of(Collections.singletonList(Card.valueOf(SPADE, ACE))))
                 .withMessage("카드는 52장으로 생성되어야 합니다.");
     }
 

@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackTable {
-
     private final Deck deck;
     private final Players players;
 
