@@ -32,7 +32,7 @@ public class BlackjackController {
     }
 
     public void playGame(BlackjackGame game) {
-        InitialDistributionDto dto = new InitialDistributionDto(game.getDealer(), game.getPlayers());
+        InitialDistributionDto dto = new InitialDistributionDto(game.getParticipants());
 
         if (game.isBlackjackDealer()) {
             printDealerBlackjackInfo(dto);
