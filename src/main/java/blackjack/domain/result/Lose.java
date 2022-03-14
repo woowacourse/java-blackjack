@@ -4,7 +4,7 @@ public class Lose implements Result {
 
     @Override
     public int calculateBet(final int amount) {
-        if (amount < 0) {
+        if (amount < Draw.DEFAULT_BET) {
             return amount;
         }
         return -amount;

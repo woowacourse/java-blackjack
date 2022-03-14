@@ -6,10 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
-import blackjack.domain.result.CompareResult;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,11 +29,6 @@ public class GamersTest {
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         Gamers gamers = new Gamers(List.of(gamer));
 
-        Map<Player, CompareResult> expected = new HashMap<>();
-        expected.put(gamer, CompareResult.LOSE);
-
-        assertThat(gamers.compareResult(11)).isEqualTo(expected);
-
-
+        assertThat(gamers.compareResult(11).get(gamer).getAmount()).isEqualTo(-1000);
     }
 }

@@ -12,7 +12,6 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
-import blackjack.domain.result.CompareResult;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;

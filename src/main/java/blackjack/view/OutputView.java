@@ -7,7 +7,6 @@ import blackjack.domain.player.Bet;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
-import blackjack.domain.result.CompareResult;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +20,6 @@ public class OutputView {
     private static final String PRINT_DEALER_RECEIVE_CARD = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
     private static final String PRINT_DEALER_NOT_RECEIVE_CARD = "\n딜러는 17이상이라 한장의 카드를 더 받지 못했습니다.\n";
     private static final String PRINT_FINAL_CARD_RESULT = "%s카드: %s - 결과: %d\n";
-    private static final String PRINT_BLANK = " ";
 
     public static void printOpenCards(final Player dealer, final List<Gamer> gamers) {
         StringBuilder stringBuilder = new StringBuilder();

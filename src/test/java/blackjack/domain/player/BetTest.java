@@ -51,4 +51,10 @@ public class BetTest {
         bet.calculateBenefit(new Lose());
         assertThat(bet.getAmount()).isEqualTo(-1000);
     }
+
+    @Test
+    @DisplayName("동일한 객체인지 비교한다")
+    void equals() {
+        assertThat(new Bet(1000)).isEqualTo(new Bet(1000));
+    }
 }
