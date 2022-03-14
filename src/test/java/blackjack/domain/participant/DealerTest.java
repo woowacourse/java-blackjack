@@ -4,11 +4,8 @@ import static blackjack.domain.card.Denomination.*;
 import static blackjack.domain.card.Suit.*;
 import static blackjack.utils.CardCreationUtil.createCardList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,14 +23,6 @@ public class DealerTest {
     void create() {
         Dealer dealer = new Dealer();
         assertThat(dealer).isNotNull();
-    }
-
-    @Test
-    @DisplayName("딜러가 카드를 정상적으로 주는지 확인")
-    void drawCard() {
-        Dealer dealer = new Dealer();
-        Card card = dealer.drawCard();
-        assertThat(card).isNotNull();
     }
 
     @ParameterizedTest
@@ -99,42 +88,6 @@ public class DealerTest {
         dealer.receiveCard(excepted);
         dealer.receiveCard(card);
 
-        dealer.selfDraw();
-        dealer.selfDraw();
-
         assertThat(dealer.getOpenCard()).isEqualTo(excepted);
-    }
-
-    @Test
-    @DisplayName("플레이어들에게 2장씩 기본 카드 세팅을 해주는 확인")
-    void drawCardToPlayers() {
-        List<Player> players = new ArrayList<>();
-        Player playerA = new Player("승팡");
-        Player playerB = new Player("필즈");
-        players.add(playerA);
-        players.add(playerB);
-
-        Dealer dealer = new Dealer();
-
-        dealer.drawCardToPlayers(players);
-        assertAll(
-                () -> assertThat(playerA.getCards().size()).isEqualTo(2),
-                () -> assertThat(playerB.getCards().size()).isEqualTo(2)
-        );
-    }
-
-    @Test
-    @DisplayName("플레이어에게 카드 한장을 정상적으로 주는지 확인")
-    void giveCard() {
-        List<Card> cards = new ArrayList<>();
-        Card excepted = new Card(JACK, DIAMOND);
-        cards.add(excepted);
-        cards.add(new Card(ACE, DIAMOND));
-
-        Dealer dealer = new Dealer(new Deck(new RandomCardsGenerateStrategy()));
-        Player player = new Player("승팡");
-
-        dealer.giveCard(player);
-        assertThat(player.getCards().size()).isEqualTo(1);
     }
 }

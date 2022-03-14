@@ -12,7 +12,6 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.EnumMap;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,7 +41,7 @@ class BlackJackControllerTest extends BlackJackController {
         Player player = createPlayerWithDenominations("User A", JACK, NINE);
 
         // when
-        decideGameScore(dealer, List.of(player));
+        decideGameScore();
         Integer dealerMatchResultScore = dealer.getMatchResultScore(WIN);
         MatchResult playerMatchResult = player.getResult();
 
@@ -59,7 +58,7 @@ class BlackJackControllerTest extends BlackJackController {
         Player player = createPlayerWithDenominations("user A", QUEEN, TEN);
 
         // when
-        decideGameScore(dealer, List.of(player));
+        decideGameScore();
         Integer dealerMatchResultScore = dealer.getMatchResultScore(LOSE);
         MatchResult playerMatchResult = player.getResult();
 
@@ -76,7 +75,7 @@ class BlackJackControllerTest extends BlackJackController {
         Player player = createPlayerWithDenominations("user a", JACK, NINE);
 
         // when
-        decideGameScore(dealer, List.of(player));
+        decideGameScore();
         Integer dealerMatchResultScore = dealer.getMatchResultScore(LOSE);
         MatchResult playerMatchResult = player.getResult();
 
@@ -95,7 +94,7 @@ class BlackJackControllerTest extends BlackJackController {
         Player player = createPlayerWithDenominations("user b", QUEEN, TEN, TWO);
 
         // when
-        decideGameScore(dealer, List.of(player));
+        decideGameScore();
         EnumMap<MatchResult, Integer> dealerResultScores = dealer.getMatchResultScores();
         MatchResult playerMatchResult = player.getResult();
 
@@ -114,7 +113,7 @@ class BlackJackControllerTest extends BlackJackController {
         Player player = createPlayerWithDenominations("user a", JACK, TWO);
 
         // when
-        decideGameScore(dealer, List.of(player));
+        decideGameScore();
         Integer dealerMatchResultScore = dealer.getMatchResultScore(DRAW);
         MatchResult playerMatchResult = player.getResult();
 
@@ -133,7 +132,7 @@ class BlackJackControllerTest extends BlackJackController {
         Player player = createPlayerWithDenominations("user a", JACK, TWO, QUEEN);
 
         // when
-        decideGameScore(dealer, List.of(player));
+        decideGameScore();
         Integer dealerMatchResultCount = dealer.getMatchResultScores().get(MatchResult.DRAW);
         MatchResult playerMatchResult = player.getResult();
 
@@ -154,7 +153,7 @@ class BlackJackControllerTest extends BlackJackController {
         Player playerC = createPlayerWithDenominations("user c", THREE, SIX); // 9
 
         // when
-        decideGameScore(dealer, List.of(playerA, playerB, playerC));
+        decideGameScore();
 
         // then
         assertAll(

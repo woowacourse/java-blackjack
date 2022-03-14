@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import blackjack.domain.card.Deck;
+import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
@@ -11,20 +13,22 @@ public class BlackJackController {
 
     private static final String Y = "Y";
 
-    public void run() {
-        Dealer dealer = new Dealer();
-        List<Player> players = getPlayers();
-        initiateCard(dealer, players);
+    private Deck deck = new Deck(new RandomCardsGenerateStrategy());
+    private Dealer dealer = new Dealer();
+    private List<Player> players = createPlayers();
 
-        takeMoreCardPlayerTurnForAllPlayers(dealer, players);
-        takeOneMoreCardDuringDealerTurn(dealer);
+    public void run() {
+        initiateParticipantsHand();
+
+        takeMoreCardPlayerTurnForAllPlayers();
+        takeOneMoreCardDuringDealerTurn();
         OutputView.printParticipantScore(dealer, players);
 
-        decideGameScore(dealer, players);
+        decideGameScore();
         OutputView.printBlackjackGameResult(dealer, players);
     }
 
-    private static List<Player> getPlayers() {
+    private List<Player> createPlayers() {
         List<Player> players = new ArrayList<>();
         String participantsNames = InputView.inputParticipantsNames();
         for (String participantName : participantsNames.split(",")) {
@@ -33,34 +37,37 @@ public class BlackJackController {
         return players;
     }
 
-    private static void initiateCard(Dealer dealer, List<Player> players) {
-        dealer.shuffleCards();
-        dealer.drawCardHandFirstTurn();
-        dealer.drawCardToPlayers(players);
+    private void initiateParticipantsHand() {
+        dealer.receiveCard(deck.draw());
+        dealer.receiveCard(deck.draw());
+        for (Player player : players) {
+            player.receiveCard(deck.draw());
+            player.receiveCard(deck.draw());
+        }
         OutputView.printGiveCardsToParticipants(dealer, players);
     }
 
-    private static void takeMoreCardPlayerTurnForAllPlayers(Dealer dealer, List<Player> players) {
+    private void takeMoreCardPlayerTurnForAllPlayers() {
         for (Player player : players) {
-            takeMoreCardPlayerTurnForPlayer(dealer, player);
+            takeMoreCardPlayerTurnForPlayer(player);
         }
     }
 
-    private static void takeMoreCardPlayerTurnForPlayer(Dealer dealer, Player player) {
-        while (InputView.inputOneMoreCard(player).equalsIgnoreCase(Y) && !player.isBust()) {
-            dealer.giveCard(player);
+    private void takeMoreCardPlayerTurnForPlayer(Player player) {
+        while (!player.isBust() && InputView.inputOneMoreCard(player).equalsIgnoreCase(Y)) {
+            player.receiveCard(deck.draw());
             OutputView.showPlayerHand(player);
         }
     }
 
-    private static void takeOneMoreCardDuringDealerTurn(Dealer dealer) {
+    private void takeOneMoreCardDuringDealerTurn() {
         while (dealer.shouldReceive()) {
             OutputView.printDealerOneMoreCard();
-            dealer.selfDraw();
+            dealer.receiveCard(deck.draw());
         }
     }
 
-    void decideGameScore(Dealer dealer, List<Player> players) {
+    void decideGameScore() {
         for (Player player : players) {
             player.decideMatchResult(dealer);
             dealer.decideMatchResult(player);

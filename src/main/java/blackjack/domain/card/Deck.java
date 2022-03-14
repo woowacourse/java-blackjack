@@ -1,12 +1,10 @@
 package blackjack.domain.card;
 
 import blackjack.domain.card.strategy.CardsGenerateStrategy;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 public class Deck {
 
@@ -16,10 +14,6 @@ public class Deck {
 
     public Deck(CardsGenerateStrategy cardsGenerateStrategy) {
         this.cards = cardsGenerateStrategy.generate();
-    }
-
-    public void shuffleCards() {
-        Collections.shuffle(cards);
     }
 
     public Card draw() {

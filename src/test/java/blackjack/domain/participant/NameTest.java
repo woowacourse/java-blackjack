@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import static blackjack.domain.participant.Name.*;
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.regex.Pattern;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

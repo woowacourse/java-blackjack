@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 public class FixedCardsGenerateStrategy implements CardsGenerateStrategy {
 
-    private LinkedList<Card> cards = new LinkedList<>();
+    private LinkedList<Card> cards;
 
     public FixedCardsGenerateStrategy(Denomination... denominations) {
         LinkedList<Card> cards = Arrays.stream(denominations)

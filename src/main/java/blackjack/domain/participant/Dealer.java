@@ -1,32 +1,20 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Deck;
 import blackjack.domain.MatchResult;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.strategy.RandomCardsGenerateStrategy;
 import java.util.EnumMap;
-import java.util.List;
 
 public class Dealer extends Participant {
 
     private static final int DEALER_CARD_PIVOT = 17;
     private static final String DEALER_NAME = "딜러";
 
-    private final Deck deck;
+
     private final EnumMap<MatchResult, Integer> matchResultScores = new EnumMap(MatchResult.class);
 
     public Dealer() {
-        this(new Deck(new RandomCardsGenerateStrategy()));
-    }
-
-    public Dealer(Deck deck) {
-        this.deck = deck;
         super.name = new Name(DEALER_NAME);
         initResultScores();
-    }
-
-    public void shuffleCards() {
-        deck.shuffleCards();
     }
 
     private void initResultScores() {
@@ -35,36 +23,12 @@ public class Dealer extends Participant {
         }
     }
 
-    public Card drawCard() {
-        return deck.draw();
-    }
-
-    public void drawCardHandFirstTurn() {
-        selfDraw();
-        selfDraw();
-    }
-
-    public void selfDraw() {
-        cardHand.addAll(drawCard());
-    }
-
     public boolean shouldReceive() {
         return cardHand.getScore() < DEALER_CARD_PIVOT;
     }
 
     public Card getOpenCard() {
         return cardHand.getCards().get(0);
-    }
-
-    public void drawCardToPlayers(List<Player> players) {
-        for (Player player : players) {
-            giveCard(player);
-            giveCard(player);
-        }
-    }
-
-    public void giveCard(Player player) {
-        player.receiveCard(drawCard());
     }
 
     public EnumMap<MatchResult, Integer> getMatchResultScores() {
