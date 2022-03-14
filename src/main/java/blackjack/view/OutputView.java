@@ -13,8 +13,6 @@ import blackjack.domain.Player;
 import blackjack.domain.ResultType;
 
 public class OutputView {
-	private static final String BUST_STATUS_TO_STRING = "-1";
-	private static final String ACE_NUMBER_TO_STRING = "A";
 	private static final String DELIMITER = ", ";
 
 	public void displayDealerOneCard(Dealer dealer) {

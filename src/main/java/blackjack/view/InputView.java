@@ -8,11 +8,12 @@ import java.util.regex.Pattern;
 public class InputView {
 	private static final Scanner scanner = new Scanner(System.in);
 	private static final Pattern YES_OR_NO = Pattern.compile("^[ynYN]$");
+	private static final String DELIMITER = ",";
 
 	public List<String> inputPlayerNames() {
 		System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
 		String names = scanner.nextLine();
-		return Arrays.asList(names.split(","));
+		return Arrays.asList(names.split(DELIMITER));
 	}
 
 	public String inputYesOrNo(String name) {
