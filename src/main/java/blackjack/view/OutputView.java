@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
-import blackjack.domain.Person;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.dto.DealerResultDto;
 import blackjack.domain.dto.PlayerResultDto;
@@ -25,7 +25,7 @@ public class OutputView {
 	public static void printInitStatus(Dealer dealer, List<Player> players) {
 		System.out.println();
 		List<String> playerNames = players.stream()
-			.map(Person::getName)
+			.map(Participant::getName)
 			.collect(Collectors.toList());
 
 		System.out.println(dealer.getName() + DEALER_PLAYERS_DELIMITER

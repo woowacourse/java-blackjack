@@ -46,7 +46,7 @@ public class BlackjackTest {
 	@DisplayName("플레이어, 딜러 카드 두장 분배 테스트")
 	@Test
 	void distributeInit() {
-		Person dealer = blackjack.getDealer();
+		Participant dealer = blackjack.getDealer();
 		List<Player> players = blackjack.getPlayers();
 
 		Set<Integer> checker = new HashSet<>();

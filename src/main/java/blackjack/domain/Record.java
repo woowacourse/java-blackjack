@@ -34,8 +34,8 @@ public enum Record {
 			.orElse(null));
 	}
 
-	private static int compare(Person person1, Person person2) {
-		return Integer.compare(person1.score(), person2.score());
+	private static int compare(Participant participant1, Participant participant2) {
+		return Integer.compare(participant1.score(), participant2.score());
 	}
 
 	private static boolean isBurst(Player player, Dealer dealer) {

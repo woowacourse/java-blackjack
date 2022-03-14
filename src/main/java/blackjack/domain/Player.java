@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.Objects;
 
-public class Player extends Person {
+public class Player extends Participant {
 
 	public Player(String name) {
 		super(name);
