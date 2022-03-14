@@ -1,8 +1,8 @@
 package blackjack.domain.card;
 
-import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
@@ -19,7 +19,7 @@ public class CardDeck {
     public static CardDeck generate() {
         List<Card> cards = Card.cards();
         Collections.shuffle(cards);
-        return new CardDeck(new ArrayDeque<>(cards));
+        return new CardDeck(new LinkedList<>(cards));
     }
 
     public List<Card> provideInitCards() {
