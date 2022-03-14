@@ -25,11 +25,15 @@ public class ScoreCalculator {
     private static int adjustSum(int sum, List<Card> cards) {
         int aceCount = getAceCount(cards);
 
-        while (sum > BUST_STANDARD && aceCount > 0) {
+        while (checkBustAndAceCount(sum, aceCount)) {
             sum -= ACE_DIFFERENCE;
             aceCount -= 1;
         }
         return sum;
+    }
+
+    private static boolean checkBustAndAceCount(int sum, int aceCount) {
+        return sum > BUST_STANDARD && aceCount > 0;
     }
 
     private static int getAceCount(List<Card> cards) {

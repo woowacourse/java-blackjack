@@ -46,16 +46,24 @@ public class BlackJackController {
     }
 
     private void playDealer() {
-        while (blackJack.checkDealerUnderSumStandard() && blackJack.checkLimit(DEALER_NAME)) {
+        while (checkDealerDrawMoreCard()) {
             OutputView.printDealerDraw();
             blackJack.playGameOnePlayer(DEALER_NAME);
         }
     }
 
+    private boolean checkDealerDrawMoreCard() {
+        return blackJack.checkDealerUnderSumStandard() && blackJack.checkLimit(DEALER_NAME);
+    }
+
     private void playEachUser(String userName) {
-        while (blackJack.checkLimit(userName) && InputView.inputMoreCard(userName)) {
+        while (checkUserDrawMoreCard(userName)) {
             DistributeResult distributeResult = blackJack.playGameOnePlayer(userName);
             OutputView.printUserData(distributeResult);
         }
+    }
+
+    private boolean checkUserDrawMoreCard(String userName) {
+        return blackJack.checkLimit(userName) && InputView.inputMoreCard(userName);
     }
 }
