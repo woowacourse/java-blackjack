@@ -33,7 +33,7 @@ public class CardDistributor {
     }
 
     private boolean isEmpty() {
-        return deck == null || deck.isEmpty();
+        return deck.isEmpty();
     }
 
     @Override
