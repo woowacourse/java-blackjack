@@ -16,7 +16,7 @@ public class BlackjackGame {
     }
 
     public void run() {
-        printFirstHitCard();
+        printFirstDrawCard();
         runAllPlayerTurn();
         printAllResults();
     }
@@ -26,7 +26,7 @@ public class BlackjackGame {
         return BlackjackBoard.createGame(playerNames);
     }
 
-    private void printFirstHitCard() {
+    private void printFirstDrawCard() {
         OutputView.showPlayersFirstCards(blackjackBoard.getDealerFirstCard(), blackjackBoard.getPlayersFirstCards());
     }
 
