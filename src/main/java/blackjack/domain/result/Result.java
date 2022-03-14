@@ -6,10 +6,10 @@ import java.util.function.BiPredicate;
 
 public enum Result {
 
+    LOSE("패", (player, dealer) -> player.isBust() || dealer.isWin(player)
+        || (!player.isBlackjack() && dealer.isBlackjack())),
     WIN("승", ((player, dealer) -> (!player.isBust() && dealer.isBust()) || player.isWin(dealer) || (
         player.isBlackjack() && !dealer.isBlackjack()))),
-    LOSE("패", (player, dealer) -> player.isBust() || dealer.isWin(player)
-        || !player.isBlackjack() && dealer.isBlackjack()),
     DRAW("무", (player, dealer) -> !player.isWin(dealer) && !dealer.isWin(player));
 
     private final String name;

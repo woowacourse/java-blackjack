@@ -63,7 +63,11 @@ class ResultTest {
                 new Player(new Name("seung"), createCardHand(aceCard, sevenCard, threeCard)),
                 new Dealer(createCardHand(aceCard, jackCard)), LOSE),
             Arguments.of(new Player(new Name("seung"), createCardHand(twoCard, tenCard)),
-                new Dealer(createCardHand(aceCard, sevenCard)), LOSE)
+                new Dealer(createCardHand(aceCard, sevenCard)), LOSE),
+            Arguments.of(new Player(new Name("seung"), createCardHand(twoCard, tenCard, tenCard)),
+                new Dealer(createCardHand(aceCard, sevenCard)), LOSE),
+            Arguments.of(new Player(new Name("seung"), createCardHand(tenCard, tenCard, threeCard)),
+                new Dealer(createCardHand(aceCard, sevenCard, tenCard)), LOSE)
         );
     }
 }
