@@ -20,6 +20,11 @@ public class BlackJackController {
         BlackJackDto blackJackDto = BlackJackDto.from(blackJack);
 
         startGame(blackJack, blackJackDto);
+
+        for (Participant player : blackJack.getPlayers()) {
+            player.betMoney(inputView.askBettingAmount(player.getName()));
+        }
+
         decidePlayersReceivingAdditionalCard(blackJack, blackJackDto);
         decideDealerReceivingAdditionalCard(blackJack, blackJackDto);
         finishGame(blackJack, blackJackDto);

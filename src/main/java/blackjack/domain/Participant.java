@@ -16,6 +16,7 @@ public class Participant {
 
     private final String name;
     private final Cards cards;
+    private int betting;
 
     private Participant(String name) {
         this.name = name;
@@ -48,6 +49,10 @@ public class Participant {
         }
     }
 
+    public void betMoney(int betting) {
+        this.betting = betting;
+    }
+
     public void receiveCard(Card card) {
         cards.addCard(card);
     }
@@ -66,5 +71,9 @@ public class Participant {
 
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    public int getBetting() {
+        return betting;
     }
 }
