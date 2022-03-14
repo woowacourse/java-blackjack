@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class ScoreTest {
 
@@ -50,6 +52,17 @@ public class ScoreTest {
         assertThat(newScore.toInt()).isEqualTo(25);
     }
 
+    @DisplayName("incrementOneAce 메서드는 다른 Score 인스턴스를 받아 에이스 한 개를 1점 대신 11점으로 간주한 점수로 변환하여 반환한다.")
+    @Test
+    void incrementOneAce() {
+        Score score = Score.valueOf(10);
+
+        Score actual = score.incrementOneAce();
+        Score expected = Score.valueOf(20);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
     @DisplayName("각 Score 인스턴스의 크기를 비교할 수 있다.")
     @Nested
     class CompareToTest {
@@ -84,6 +97,60 @@ public class ScoreTest {
             int actual = score.compareTo(biggerScore);
 
             assertThat(actual).isNegative();
+        }
+    }
+
+    @DisplayName("isBlackjackScore 테스트")
+    @Nested
+    class IsBlackjackScoreTest {
+
+        @DisplayName("isBlackjackScore 메서드는 21점일 때 true를 반환한다.")
+        @Test
+        void isBlackjackScore_trueOn21() {
+            Score score = Score.valueOf(21);
+
+            boolean actual = score.isBlackjackScore();
+
+            assertThat(actual).isTrue();
+        }
+
+        @DisplayName("isBlackjackScore 메서드는 21점이 아닐 때 false를 반환한다.")
+        @ParameterizedTest(name = "[{index}] 점수: {0}")
+        @ValueSource(ints = {19, 20, 22})
+        void isBlackjackScore_falseOnNot21(int scoreValue) {
+            Score score = Score.valueOf(scoreValue);
+
+            boolean actual = score.isBlackjackScore();
+
+            assertThat(actual).isFalse();
+        }
+    }
+
+
+    @DisplayName("isBustScore 테스트")
+    @Nested
+    class IsBustScoreTest {
+
+        @DisplayName("isBustScore 메서드는 21점을 초과했을 때 true를 반환한다.")
+        @ParameterizedTest(name = "[{index}] 점수: {0}")
+        @ValueSource(ints = {22, 23, 24})
+        void isBustScore_trueOnOver21(int scoreValue) {
+            Score score = Score.valueOf(scoreValue);
+
+            boolean actual = score.isBustScore();
+
+            assertThat(actual).isTrue();
+        }
+
+        @DisplayName("isBustScore 메서드는 21점 이하일 때 false를 반환한다.")
+        @ParameterizedTest(name = "[{index}] 점수: {0}")
+        @ValueSource(ints = {19, 20, 21})
+        void isBustScore_falseOn21OrUnder(int scoreValue) {
+            Score score = Score.valueOf(scoreValue);
+
+            boolean actual = score.isBustScore();
+
+            assertThat(actual).isFalse();
         }
     }
 }

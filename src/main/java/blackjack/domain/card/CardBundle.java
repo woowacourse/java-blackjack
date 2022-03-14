@@ -42,7 +42,7 @@ public class CardBundle {
             return defaultScore;
         }
         Score maxScore = defaultScore.incrementOneAce();
-        if (maxScore.toInt() <= Score.BLACKJACK) {
+        if (!maxScore.isBustScore()) {
             return maxScore;
         }
         return defaultScore;
@@ -63,7 +63,7 @@ public class CardBundle {
     }
 
     public boolean isBlackjackScore() {
-        return getScore().toInt() == Score.BLACKJACK;
+        return getScore().isBlackjackScore();
     }
 
     public boolean isBlackjack() {
@@ -74,7 +74,7 @@ public class CardBundle {
     }
 
     public boolean isBust() {
-        return getScore().toInt() > Score.BLACKJACK;
+        return getScore().isBustScore();
     }
 
     @Override

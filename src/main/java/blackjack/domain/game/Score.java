@@ -39,6 +39,14 @@ public class Score implements Comparable<Score> {
         return ScoreCache.getCache(replacedValue);
     }
 
+    public boolean isBlackjackScore() {
+        return this.value == BLACKJACK;
+    }
+
+    public boolean isBustScore() {
+        return this.value > BLACKJACK;
+    }
+
     public int toInt() {
         return value;
     }
