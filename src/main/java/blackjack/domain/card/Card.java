@@ -35,6 +35,19 @@ public class Card {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."));
     }
 
+    private static Stream<Card> toCard(Suit suit) {
+        return Arrays.stream(CardNumber.values())
+            .map(number -> new Card(suit, number));
+    }
+
+    private boolean containNumber(CardNumber cardNumber) {
+        return this.cardNumber == cardNumber;
+    }
+
+    private boolean containSuit(Suit suit) {
+        return this.suit == suit;
+    }
+
     public CardNumber getNumber() {
         return this.cardNumber;
     }
@@ -58,18 +71,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(suit, cardNumber);
-    }
-
-    private static Stream<Card> toCard(Suit suit) {
-        return Arrays.stream(CardNumber.values())
-                .map(number -> new Card(suit, number));
-    }
-
-    private boolean containNumber(CardNumber cardNumber) {
-        return this.cardNumber == cardNumber;
-    }
-
-    private boolean containSuit(Suit suit) {
-        return this.suit == suit;
     }
 }

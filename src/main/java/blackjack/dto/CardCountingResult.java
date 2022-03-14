@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CardCountingResult {
-
     private final String name;
     private final List<String> cards;
     private final int count;

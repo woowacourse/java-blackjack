@@ -36,10 +36,6 @@ public class HoldCards {
         return Optional.ofNullable(cards.get(FIRST_CARD));
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
     private void validateDuplicate(Card card) {
         if (cards.contains(card)) {
             throw new IllegalArgumentException("카드가 중복될 수 없습니다.");
@@ -50,5 +46,9 @@ public class HoldCards {
         if (first.equals(second)) {
             throw new IllegalArgumentException("카드가 중복될 수 없습니다.");
         }
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }

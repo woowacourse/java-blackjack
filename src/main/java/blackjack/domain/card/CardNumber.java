@@ -32,10 +32,6 @@ public enum CardNumber {
         return calculateBestNumber(sumTotal(cardNumbers), countAce(cardNumbers));
     }
 
-    public String getName() {
-        return name;
-    }
-
     private static int sumTotal(List<CardNumber> cardNumbers) {
         return cardNumbers.stream()
             .mapToInt(number -> number.value)
@@ -60,5 +56,9 @@ public enum CardNumber {
             total = total + SUM_HIDDEN_ACE;
         }
         return total;
+    }
+
+    public String getName() {
+        return name;
     }
 }
