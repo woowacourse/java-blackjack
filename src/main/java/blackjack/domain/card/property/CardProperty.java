@@ -9,8 +9,8 @@ public class CardProperty {
         this.number = number;
     }
 
-    public boolean isA() {
-        return number.isA();
+    public boolean isAce() {
+        return number.isAce();
     }
 
     public CardShape getShape() {

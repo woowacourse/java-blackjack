@@ -22,7 +22,7 @@ class DealerTest {
         dealer.addCard(new Card(CardShape.HEART, CardNumber.Q));
         dealer.addCard(card);
 
-        dealer.addCard(new Card(CardShape.HEART, CardNumber.A));
+        dealer.addCard(new Card(CardShape.HEART, CardNumber.ACE));
         assertThat(dealer.getCardGroupSum()).isEqualTo(result);
     }
 

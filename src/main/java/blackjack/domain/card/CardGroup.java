@@ -51,7 +51,7 @@ public class CardGroup {
 
     private int countA() {
         return (int) cards.stream()
-                .filter(Card::isA)
+                .filter(Card::isAce)
                 .count();
     }
 

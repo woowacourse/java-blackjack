@@ -1,7 +1,7 @@
 package blackjack.domain.card.property;
 
 public enum CardNumber {
-    A("A", 1),
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -24,8 +24,8 @@ public enum CardNumber {
         this.number = number;
     }
 
-    public boolean isA() {
-        return this.equals(A);
+    public boolean isAce() {
+        return this.equals(ACE);
     }
 
     public String getName() {

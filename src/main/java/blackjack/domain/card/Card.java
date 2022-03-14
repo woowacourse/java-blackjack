@@ -20,8 +20,8 @@ public class Card {
         isOpen = false;
     }
 
-    public boolean isA() {
-        return cardProperty.isA();
+    public boolean isAce() {
+        return cardProperty.isAce();
     }
 
     public boolean isOpen() {
