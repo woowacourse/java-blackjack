@@ -2,5 +2,5 @@ package blackjack.domain.result;
 
 public interface Result {
 
-    int calculateBet(int amount);
+    int calculateBet(final int amount);
 }
