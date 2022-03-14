@@ -3,8 +3,6 @@ package BlackJack.domain.User;
 import BlackJack.domain.Card.CardFactory;
 import BlackJack.domain.Result;
 
-import static BlackJack.domain.Card.Cards.BUST_LINE;
-
 public class Dealer extends User {
 
     private static final int DEALER_ADD_CARD_LIMIT = 16;
@@ -21,15 +19,23 @@ public class Dealer extends User {
     }
 
     public Result compare(Player player) {
-        if (player.getScore() > BUST_LINE || (this.getScore() > player.getScore() && this.getScore() <= BUST_LINE)) {
+        if (isWin(player)) {
             return Result.LOSE;
         }
-        if (this.getScore() > BUST_LINE || this.getScore() < player.getScore() && player.getScore() <= BUST_LINE) {
+        if (isLose(player)) {
             dealerLoseCount++;
             return Result.WIN;
         }
         dealerDrawCount++;
         return Result.DRAW;
+    }
+
+    private boolean isWin(Player player) {
+        return player.isBust() || (this.isGreaterScoreThan(player) && !this.isBust());
+    }
+
+    private boolean isLose(Player player) {
+        return this.isBust() || (player.isGreaterScoreThan(this) && !player.isBust());
     }
 
     public int getDealerLoseCount() {

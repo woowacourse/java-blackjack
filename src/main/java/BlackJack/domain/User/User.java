@@ -30,6 +30,10 @@ public abstract class User {
     public boolean isBust(){
         return cards.calculateScore() > BUST_LINE;
     }
+
+    public boolean isGreaterScoreThan(User user){
+        return this.cards.calculateScore() > user.cards.calculateScore();
+    }
     abstract public void addCard(CardFactory cardFactory);
 
 
