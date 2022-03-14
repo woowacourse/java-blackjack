@@ -1,6 +1,6 @@
 package blackJack.domain.result;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import blackJack.domain.card.Card;
 import blackJack.domain.card.Denomination;
@@ -49,7 +49,7 @@ class WinOrLoseTest {
     }
 
     @Test
-    @DisplayName("플레이어의 점수가 14, 딜러의 점수가 20여서 플레이어가 승리하는 경우")
+    @DisplayName("플레이어의 점수가 14, 딜러의 점수가 20여서 플레이어가 패배하는 경우")
     void calculatePlayerScoreLose() {
         player.receiveCard(new Card(Symbol.SPADE, Denomination.ACE));
         player.receiveCard(new Card(Symbol.SPADE, Denomination.THREE));
@@ -90,6 +90,43 @@ class WinOrLoseTest {
         player.receiveCard(new Card(Symbol.HEART, Denomination.JACK));
         dealer.receiveCard(new Card(Symbol.SPADE, Denomination.ACE));
         dealer.receiveCard(new Card(Symbol.SPADE, Denomination.JACK));
+
+        assertThat(WinDrawLose.calculatePlayerWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.LOSE);
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트, 딜러의 점수가 20점이여서 플레이어가 패배하는 경우")
+    void calculatePlayerBustAndDealerScoreLose() {
+        player.receiveCard(new Card(Symbol.HEART, Denomination.KING));
+        player.receiveCard(new Card(Symbol.HEART, Denomination.EIGHT));
+        player.receiveCard(new Card(Symbol.HEART, Denomination.JACK));
+        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.TEN));
+        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.JACK));
+
+        assertThat(WinDrawLose.calculatePlayerWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.LOSE);
+    }
+
+    @Test
+    @DisplayName("플레이어의 점수가 20점, 딜러가 버스트여서 플레이어가 승리하는 경우")
+    void calculatePlayerScoreAndDealerBustWinner() {
+        player.receiveCard(new Card(Symbol.HEART, Denomination.KING));
+        player.receiveCard(new Card(Symbol.HEART, Denomination.TEN));
+        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.TEN));
+        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.SIX));
+        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.KING));
+
+        assertThat(WinDrawLose.calculatePlayerWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트, 딜러도 버스트여서 플레이어가 패배하는 경우")
+    void calculatePlayerBustAndDealerBustLose() {
+        player.receiveCard(new Card(Symbol.HEART, Denomination.KING));
+        player.receiveCard(new Card(Symbol.HEART, Denomination.EIGHT));
+        player.receiveCard(new Card(Symbol.HEART, Denomination.JACK));
+        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.TEN));
+        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.SIX));
+        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.KING));
 
         assertThat(WinDrawLose.calculatePlayerWinDrawLose(player, dealer)).isEqualTo(WinDrawLose.LOSE);
     }
