@@ -8,7 +8,7 @@ import blackjack.domain.game.Score;
 public abstract class Participant {
 
     protected final String name;
-    protected Hand hand;
+    protected final Hand hand;
 
     protected Participant(final String name, final Hand hand) {
         this.name = name;
