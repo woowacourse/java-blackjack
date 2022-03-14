@@ -1,6 +1,5 @@
 package domain;
 
-import static domain.MatchResult.DRAW;
 import static domain.MatchResult.LOSE;
 import static domain.MatchResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,17 +44,16 @@ public class BlackJackResultTest {
         // then
         assertAll(
                 () -> assertThat(dealerResult.get(WIN)).isEqualTo(1),
-                () -> assertThat(dealerResult.get(DRAW)).isEqualTo(1),
-                () -> assertThat(dealerResult.get(LOSE)).isEqualTo(1),
+                () -> assertThat(dealerResult.get(LOSE)).isEqualTo(2),
                 () -> assertThat(playerResult.get("포비")).isEqualTo(LOSE),
                 () -> assertThat(playerResult.get("돌범")).isEqualTo(WIN),
-                () -> assertThat(playerResult.get("리차드")).isEqualTo(DRAW)
+                () -> assertThat(playerResult.get("리차드")).isEqualTo(WIN)
         );
     }
 
     private void cardSetup(Dealer dealer, List<Gambler> gamblers) {
         dealer.addCard(Card.of(Suit.SPADES, Denomination.JACK));
-        dealer.addCard(Card.of(Suit.HEARTS, Denomination.THREE));
+        dealer.addCard(Card.of(Suit.HEARTS, Denomination.THREE)); // 13
 
         gamblers.get(0).addCard(Card.of(Suit.SPADES, Denomination.JACK));
         gamblers.get(0).addCard(Card.of(Suit.CLUBS, Denomination.TWO));

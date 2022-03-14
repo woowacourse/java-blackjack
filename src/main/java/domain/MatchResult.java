@@ -6,9 +6,15 @@ import java.util.function.BiPredicate;
 
 public enum MatchResult {
     WIN((dealer, gambler) ->
-            !gambler.isBust() && (dealer.isBust() || dealer.getScore() < gambler.getScore())),
-    LOSE((dealer, gambler) -> gambler.isBust() || (dealer.getScore() > gambler.getScore())),
-    DRAW((dealer, gambler) -> !gambler.isBust() && dealer.getScore() == gambler.getScore()),
+            !gambler.isBust() &&
+                    (dealer.isBust() || dealer.getScore() < gambler.getScore()
+                            || (!dealer.isBlackJack() && gambler.isBlackJack()))),
+    LOSE((dealer, gambler) ->
+            gambler.isBust()
+                    || (dealer.getScore() > gambler.getScore())
+                    || (!gambler.isBlackJack() && dealer.isBlackJack())),
+    DRAW((dealer, gambler) -> !gambler.isBust() && dealer.getScore() == gambler.getScore() &&
+            (gambler.isBlackJack() && dealer.isBlackJack() || !gambler.isBlackJack() && !dealer.isBlackJack())),
     NO_MATCH((dealer, gambler) -> false);
 
     private final BiPredicate<Player, Player> judge;
