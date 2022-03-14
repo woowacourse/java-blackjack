@@ -3,7 +3,6 @@ package blackjack.domain;
 import blackjack.domain.strategy.CardGenerator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Queue;
 
 public class CardDeck {
@@ -15,11 +14,18 @@ public class CardDeck {
     }
 
     public Card drawCard() {
-        return cardDeck.poll();
+        return pollOneCard();
     }
 
     public List<Card> drawTwoCards() {
-        return List.of(Objects.requireNonNull(cardDeck.poll()), Objects.requireNonNull(cardDeck.poll()));
+        return List.of(pollOneCard(), pollOneCard());
+    }
+
+    private Card pollOneCard() {
+        if (cardDeck.isEmpty()) {
+            throw new NullPointerException("[ERROR] 카드를 모두 소진했습니다.");
+        }
+        return cardDeck.poll();
     }
 
 }
