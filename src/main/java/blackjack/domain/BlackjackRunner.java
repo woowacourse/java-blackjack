@@ -32,20 +32,20 @@ public class BlackjackRunner {
         OutputView.printGameResult(DealerResultsDto.of(players, dealer), createPlayerResult(players, dealer));
     }
 
-    private static List<PlayerDto> toPlayersDto(List<Player> players) {
+    private List<PlayerDto> toPlayersDto(List<Player> players) {
         return players.stream()
                 .map(PlayerDto::from)
                 .collect(toList());
     }
 
-    private static void playing(Deck deck, Player player) {
+    private void playing(Deck deck, Player player) {
         if (player.isDrawable()) {
             drawCard(deck, player);
             playing(deck, player);
         }
     }
 
-    private static void drawCard(Deck deck, Player player) {
+    private void drawCard(Deck deck, Player player) {
         PlayCommand playCommand = InputView.getPlayCommand(player);
 
         if (playCommand.isYes()) {
@@ -54,14 +54,14 @@ public class BlackjackRunner {
         }
     }
 
-    private static void drawDealer(Deck deck, Dealer dealer) {
+    private void drawDealer(Deck deck, Dealer dealer) {
         if (dealer.isDrawable()) {
             dealer.append(deck.draw());
             OutputView.printDealerDrawableInfo();
         }
     }
 
-    private static List<PlayerResultDto> createPlayerResult(Players players, Dealer dealer) {
+    private List<PlayerResultDto> createPlayerResult(Players players, Dealer dealer) {
         return players.getValue()
                 .stream()
                 .map(player -> PlayerResultDto.of(player, dealer))
