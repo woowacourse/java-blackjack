@@ -9,7 +9,9 @@ import blackjack.view.OutputView;
 public class BlackJackApplication {
 
     public static void main(String[] args) {
-        BlackJackGame blackJackGame = new BlackJackGame(InputView.askNames(), new Deck(Card.getCards()));
+        BlackJackGame blackJackGame = new BlackJackGame(InputView.askNames(),
+            s-> 1,
+            new Deck(Card.getCards()));
 
         blackJackGame.start(OutputView::printFirstCards);
         blackJackGame.askPlayerHitOrStay(InputView::askHitOrStay, OutputView::printPlayerCard);

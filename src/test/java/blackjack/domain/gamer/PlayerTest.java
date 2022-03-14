@@ -19,7 +19,7 @@ class PlayerTest {
         dealer.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.NINE));
         dealer.addCard(Card.getInstance(CardShape.DIAMOND, CardNumber.EIGHT));
 
-        Player pobi = new Player("pobi");
+        Player pobi = new Player("pobi", 1);
         pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.TWO));
         pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.EIGHT));
         pobi.addCard(Card.getInstance(CardShape.CLOVER, CardNumber.ACE));
@@ -30,7 +30,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어와 이름이 같다면 True를 반환한다.")
     void isSameName() {
-        Player player1 = new Player("더즈");
+        Player player1 = new Player("더즈", 1);
         assertThat(player1.isSameName("더즈")).isTrue();
     }
 }

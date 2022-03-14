@@ -4,8 +4,11 @@ import blackjack.domain.result.BlackJackResult;
 
 public class Player extends Gamer{
 
-    public Player(String name) {
+    private final Money money;
+
+    public Player(String name, int money) {
         super(name);
+        this.money = new Money(money);
     }
 
     public BlackJackResult match(Dealer dealer) {

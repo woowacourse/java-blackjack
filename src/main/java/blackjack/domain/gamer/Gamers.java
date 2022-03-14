@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import blackjack.domain.card.DrawStrategy;
@@ -16,11 +17,11 @@ public class Gamers {
 	private final Dealer dealer;
 	private final List<Player> players;
 
-	public Gamers(List<String> names) {
+	public Gamers(List<String> names, Function<String, Integer> moneyProvider) {
 		validateDuplicationNames(names);
 		this.dealer = new Dealer();
 		this.players = names.stream()
-			.map(Player::new)
+			.map(name -> new Player(name, moneyProvider.apply(name)))
 			.collect(Collectors.toList());
 	}
 
