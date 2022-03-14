@@ -32,7 +32,7 @@ public class Players {
         }
     }
 
-    public ScoreResult compete(Dealer dealer) {
+    public ScoreResult compete(Player dealer) {
         Map<Score, Integer> dealerResult = new EnumMap<>(Score.class);
         initDealerResult(dealerResult);
         Map<String, Score> playerResults = new HashMap<>();

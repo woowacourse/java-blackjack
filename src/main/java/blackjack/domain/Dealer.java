@@ -9,6 +9,20 @@ public class Dealer extends Player {
         super(NAME);
     }
 
+    @Override
+    public Score compete(Player player) {
+        if (player.isBust()) {
+            return Score.WIN;
+        }
+
+        if (this.isBust()) {
+            return Score.LOSE;
+        }
+
+        return Score.compare(this.getTotalNumber(), player.getTotalNumber());
+    }
+
+    @Override
     public boolean isDrawable() {
         return getTotalNumber() <= DRAWABLE_BOUND;
     }

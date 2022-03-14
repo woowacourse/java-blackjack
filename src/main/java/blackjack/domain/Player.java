@@ -34,15 +34,19 @@ public class Player {
         return Score.compare(this.getTotalNumber(), player.getTotalNumber());
     }
 
+    private Score getScoreWithBust() {
+        if (this.isBust()) {
+            return Score.LOSE;
+        }
+        return Score.WIN;
+    }
+
     public boolean isBust() {
         return getTotalNumber() > BLACKJACK_NUMBER;
     }
 
-    private Score getScoreWithBust() {
-        if (this.isBust()) {
-            return Score.DRAW;
-        }
-        return Score.WIN;
+    public boolean isDrawable() {
+        return !isBust();
     }
 
     public int getTotalNumber() {

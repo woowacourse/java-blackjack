@@ -77,7 +77,7 @@ public class PlayerTest {
         }
 
         @ParameterizedTest
-        @CsvSource(value = {"TEN|DRAW", "ACE|WIN"}, delimiter = '|')
+        @CsvSource(value = {"TEN|LOSE", "ACE|WIN"}, delimiter = '|')
         @DisplayName("딜러가 버스트일 때 승부 결과를 반환한다.")
         void returnResultWithDealerBust(CardNumber cardNumber, Score expected) {
             Player player = new Player("player");

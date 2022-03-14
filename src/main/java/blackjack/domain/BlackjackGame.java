@@ -5,7 +5,7 @@ public class BlackjackGame {
     private static final int INITIAL_CARD_NUMBER = 2;
 
     private final Players players;
-    private final Dealer dealer;
+    private final Player dealer;
     private final Drawable drawable;
 
     public BlackjackGame(Players players, Drawable drawable) {
@@ -46,7 +46,7 @@ public class BlackjackGame {
     }
 
     public Dealer getDealer() {
-        return dealer;
+        return (Dealer) dealer;
     }
 
     public String getNowTurnPlayerName() {
