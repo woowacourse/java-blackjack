@@ -5,7 +5,6 @@ import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participant;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
-import blackJack.domain.result.BlackJackGameResult;
 import blackJack.domain.result.WinDrawLose;
 
 import java.util.List;
@@ -89,17 +88,16 @@ public class OutputView {
                 participant.getScore());
     }
 
-    public static void printWinDrawLoseResult(Dealer dealer, BlackJackGameResult blackGameResult) {
+    public static void printWinDrawLoseResult(Dealer dealer, Map<WinDrawLose, Integer> dealerResult, Map<Player, WinDrawLose> playersResult) {
         System.out.println(NEWLINE.concat(OUTPUT_MESSAGE_WIN_OR_LOSE));
-        Map<WinDrawLose, Integer> winDrawLoseIntegerMap = blackGameResult.calculateDealerResult();
-        String winDrawLoseInfo = getWinDrawLoseInfo(winDrawLoseIntegerMap);
+        String dealerGameResult = getDealerGameResult(dealerResult);
 
-        System.out.printf(OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, dealer.getName(), winDrawLoseInfo);
-        blackGameResult.getGameResult().forEach((key, value) -> System.out.printf(
+        System.out.printf(OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, dealer.getName(), dealerGameResult);
+        playersResult.forEach((key, value) -> System.out.printf(
                 OUTPUT_MESSAGE_WIN_OR_LOSE_INFO, key.getName(), value.getResult()));
     }
 
-    private static String getWinDrawLoseInfo(Map<WinDrawLose, Integer> winDrawLoseInfo) {
+    private static String getDealerGameResult(Map<WinDrawLose, Integer> winDrawLoseInfo) {
         List<String> winDrawLoseEssentialInfo = winDrawLoseInfo.entrySet().stream()
                 .filter(resultCount -> resultCount.getValue() > 0)
                 .map(resultCount -> resultCount.getValue() + resultCount.getKey().getResult())

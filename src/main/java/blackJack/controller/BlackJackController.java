@@ -5,7 +5,6 @@ import blackJack.domain.card.Deck;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Participants;
 import blackJack.domain.participant.Player;
-import blackJack.domain.result.BlackJackGameResult;
 import blackJack.domain.result.YesOrNo;
 import blackJack.view.InputView;
 import blackJack.view.OutputView;
@@ -18,13 +17,14 @@ public class BlackJackController {
     public void run() {
         final Participants participants = getParticipants();
         final BlackJackGame blackJackGame = new BlackJackGame(participants);
-        participants.firstCardDispensing();
+        blackJackGame.firstCardDispensing();
         OutputView.printInitCardResult(participants);
 
         final List<Player> players = playersTurn(participants);
         final Dealer dealer = dealerTurn(blackJackGame);
         OutputView.printGameResult(dealer, players);
-        OutputView.printWinDrawLoseResult(dealer, BlackJackGameResult.ofGameResult(dealer, players));
+        OutputView.printWinDrawLoseResult(
+                dealer, blackJackGame.calculateDealerResult(), blackJackGame.calculatePlayersResult());
     }
 
     private Participants getParticipants() {
