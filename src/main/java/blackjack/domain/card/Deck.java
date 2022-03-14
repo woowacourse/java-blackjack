@@ -39,6 +39,6 @@ public class Deck {
 	}
 
 	public Deque<Card> getCards() {
-		return this.deck;
+		return new ArrayDeque<>(this.deck);
 	}
 }

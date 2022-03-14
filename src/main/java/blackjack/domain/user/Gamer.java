@@ -1,5 +1,7 @@
 package blackjack.domain.user;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import blackjack.domain.card.Card;
@@ -25,7 +27,7 @@ public class Gamer {
 	}
 
 	public List<Card> getCards() {
-		return this.cards.getCards();
+		return Collections.unmodifiableList(this.cards.getCards());
 	}
 
 	public int getScore() {

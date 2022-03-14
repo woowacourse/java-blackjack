@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,6 @@ public class Result {
 		final Map<Player, ResultType> gameResult = new HashMap<>();
 		players.stream()
 			.forEach(player -> gameResult.put(player, ResultType.getMatchedResultType(player, dealer)));
-		return gameResult;
+		return Collections.unmodifiableMap(gameResult);
 	}
 }
