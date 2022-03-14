@@ -34,7 +34,7 @@ public class Score implements Comparable<Score> {
     }
 
     public boolean isLessOrEqualThan(int score) {
-        return this.value < score;
+        return this.value <= score;
     }
 
     public int getValue() {
