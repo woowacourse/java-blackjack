@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Random;
 
 public class Cards {
-	private final List<Card> cards = new ArrayList<>();
 	private static final int BUST_THRESHOLD = 21;
 	private static final int ACE_SPECIAL_SCORE = 11;
+	private final List<Card> cards = new ArrayList<>();
 	private int score = 0;
 
 	public void addCard(Card card) {
