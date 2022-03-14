@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.dto.DealerResultDto;
 import blackjack.domain.dto.PlayerResultDto;
 import blackjack.domain.dto.ResultDto;
+import blackjack.domain.machine.Blackjack;
+import blackjack.domain.machine.Records;
 
 public class RecordsTest {
 	private ResultDto dto;

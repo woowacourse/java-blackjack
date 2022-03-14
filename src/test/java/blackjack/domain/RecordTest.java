@@ -8,6 +8,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.machine.Blackjack;
+import blackjack.domain.machine.Card;
+import blackjack.domain.machine.Record;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+
 public class RecordTest {
 	private Blackjack blackjack;
 	private Player player;

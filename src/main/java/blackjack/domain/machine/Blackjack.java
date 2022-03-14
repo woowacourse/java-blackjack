@@ -1,8 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.machine;
 
 import java.util.List;
 
 import blackjack.domain.dto.ResultDto;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.domain.strategy.NumberGenerator;
 
 public class Blackjack {

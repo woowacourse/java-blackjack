@@ -1,7 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.machine;
 
 import java.util.Arrays;
 import java.util.Objects;
+
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 
 public enum Record {
 	VICTORY("승", 1, "패"),

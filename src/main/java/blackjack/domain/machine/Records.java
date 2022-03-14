@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.machine;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import blackjack.domain.dto.DealerResultDto;
 import blackjack.domain.dto.PlayerResultDto;
 import blackjack.domain.dto.ResultDto;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 public class Records {
 

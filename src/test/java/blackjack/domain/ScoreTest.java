@@ -7,6 +7,9 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.domain.machine.Card;
+import blackjack.domain.machine.Score;
+
 public class ScoreTest {
 
 	@DisplayName("패에 A가 없을 경우 계산 테스트")

@@ -1,7 +1,7 @@
 package blackjack.controller;
 
-import blackjack.domain.Blackjack;
-import blackjack.domain.Player;
+import blackjack.domain.machine.Blackjack;
+import blackjack.domain.participant.Player;
 import blackjack.domain.strategy.RandomNumberGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.machine.Card;
+import blackjack.domain.machine.Cards;
 import blackjack.domain.strategy.NumberGenerator;
 
 public class Dealer extends Participant {

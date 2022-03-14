@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import blackjack.domain.machine.Card;
+import blackjack.domain.participant.Player;
+
 public class PlayerTest {
 
 	@DisplayName("카드 받는 기능 테스트")
