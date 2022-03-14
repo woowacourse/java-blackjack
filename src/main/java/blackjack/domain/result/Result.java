@@ -2,11 +2,13 @@ package blackjack.domain.result;
 
 import java.util.Arrays;
 
+import static blackjack.domain.card.HoldingCards.BUST_STANDARD;
+
 public enum Result {
 
-    // 21은 Bust 발생 기준점 입니다.
-    LOSE("패", (userScore, dealerScore) -> userScore > 21 || (dealerScore <= 21 && userScore < dealerScore)),
-    WIN("승", (userScore, dealerScore) -> dealerScore > 21 || userScore > dealerScore),
+    LOSE("패", (userScore, dealerScore) -> userScore > BUST_STANDARD ||
+            (dealerScore <= BUST_STANDARD && userScore < dealerScore)),
+    WIN("승", (userScore, dealerScore) -> dealerScore > BUST_STANDARD || userScore > dealerScore),
     DRAW("무", (userScore, dealerScore) -> userScore == dealerScore);
 
     private final String name;

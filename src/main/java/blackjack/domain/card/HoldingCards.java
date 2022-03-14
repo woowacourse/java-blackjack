@@ -6,7 +6,7 @@ import java.util.List;
 
 public class HoldingCards {
 
-    private static final int BUST_STANDARD = 21;
+    public static final int BUST_STANDARD = 21;
     private static final int ACE_DIFFERENCE = 10;
 
     private final List<Card> cards;
