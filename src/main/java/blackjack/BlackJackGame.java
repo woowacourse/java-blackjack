@@ -1,7 +1,7 @@
 package blackjack;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.Name;
-import blackjack.domain.WinResult;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -98,6 +98,6 @@ public class BlackJackGame {
         OutputView.printCardResultMessage();
         OutputView.printParticipantCards(new ParticipantResponse(dealer));
         players.forEach(player -> OutputView.printParticipantCards(new ParticipantResponse(player)));
-        OutputView.printWinResult(WinResult.of(dealer, players));
+        OutputView.printWinResult(GameResult.of(dealer, players));
     }
 }

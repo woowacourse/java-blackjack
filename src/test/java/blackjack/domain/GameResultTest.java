@@ -21,7 +21,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class WinResultTest {
+public class GameResultTest {
 
     @Test
     @DisplayName("승패 결과를 Map에 저장한다")
@@ -37,9 +37,9 @@ public class WinResultTest {
         Map<Outcome, Integer> outcomeMap = createOutcomeMap(1, 1, 1);
 
         // when
-        WinResult winResult = WinResult.of(dealer, players);
-        Map<Outcome, Integer> dealerResult = winResult.getDealerResult();
-        Map<String, Outcome> playersResult = winResult.getPlayersResult();
+        GameResult gameResult = GameResult.of(dealer, players);
+        Map<Outcome, Integer> dealerResult = gameResult.getDealerResult();
+        Map<String, Outcome> playersResult = gameResult.getPlayersResult();
 
         // then
         assertAll(

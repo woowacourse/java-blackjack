@@ -1,7 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.Outcome;
-import blackjack.domain.WinResult;
 import blackjack.domain.card.Card;
 import blackjack.dto.ParticipantInitialResponse;
 import blackjack.dto.ParticipantResponse;
@@ -60,10 +60,10 @@ public class OutputView {
         System.out.printf("%n## 최종 카드%n");
     }
 
-    public static void printWinResult(WinResult winResult) {
+    public static void printWinResult(GameResult gameResult) {
         System.out.printf("%n## 최종 승패%n");
-        printDealerWinResult(winResult.getDealerResult());
-        printPlayersWinResult(winResult.getPlayersResult());
+        printDealerWinResult(gameResult.getDealerResult());
+        printPlayersWinResult(gameResult.getPlayersResult());
     }
 
     private static void printDealerWinResult(Map<Outcome, Integer> dealerResult) {
