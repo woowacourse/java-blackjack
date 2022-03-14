@@ -12,11 +12,11 @@ public class Gamer {
 
 	public void addCards(int times) {
 		for (int i = 0; i < times; i++) {
-			processCard(Deck.distributeCard());
+			addCard(Deck.distributeCard());
 		}
 	}
 
-	public void processCard(Card card) {
+	public void addCard(Card card) {
 		this.cards.addCard(card);
 	}
 
