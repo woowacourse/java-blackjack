@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Card {
 
-    public static final String ERROR_MESSAGE_NOT_EXIST_CARD = "존재하지 않는 카드입니다.";
+    private static final String ERROR_MESSAGE_NOT_EXIST_CARD = "존재하지 않는 카드입니다.";
 
     private static final List<Card> CARDS = List.copyOf(initCards());
 

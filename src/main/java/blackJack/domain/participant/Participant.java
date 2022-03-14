@@ -10,7 +10,7 @@ import java.util.Objects;
 public abstract class Participant {
 
     private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
-    public static final String DEALER_NAME = "딜러";
+    protected static final String DEALER_NAME = "딜러";
 
     public static final int STANDARD_SCORE_OF_CHANGE_ACE = 11;
     private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 11;
@@ -45,7 +45,7 @@ public abstract class Participant {
         return score;
     }
 
-    public MatchResult getMatchResult(int otherParticipantScore) {
+    protected MatchResult getMatchResult(int otherParticipantScore) {
         if (this.getScore() > otherParticipantScore) {
             return MatchResult.WIN;
         }
