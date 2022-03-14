@@ -9,6 +9,9 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 public class PlayerTest {
 
@@ -62,6 +65,16 @@ public class PlayerTest {
         assertThat(player.match(new Dealer(HoldCards
             .initTwoCards(Card.valueOf(Suit.HEART, CardNumber.KING), Card.valueOf(Suit.HEART, CardNumber.ACE)))))
             .isEqualTo(PlayerOutcome.DRAW);
+    }
+
+    @ParameterizedTest
+    @EmptySource
+    @DisplayName("플레이어의 이름이 딜러인 경우 예외를 발생한다.")
+    void throwExceptionContainsBlackName(String name) {
+        assertThatIllegalArgumentException()
+            .isThrownBy(() -> new Player(name, HoldCards
+                .initTwoCards(Card.valueOf(Suit.SPADE, CardNumber.KING), Card.valueOf(Suit.SPADE, CardNumber.ACE))))
+            .withMessage("플레이어의 이름은 공백이 될 수 없습니다.");
     }
 
     @Test

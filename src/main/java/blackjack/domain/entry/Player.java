@@ -38,6 +38,9 @@ public class Player extends Participant {
     }
 
     private void validateName(String name) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("플레이어의 이름은 공백이 될 수 없습니다.");
+        }
         if (name.equals(Dealer.NAME)) {
             throw new IllegalArgumentException("플레이어의 이름에는 딜러가 포함될 수 없습니다.");
         }
