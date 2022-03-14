@@ -39,6 +39,15 @@
   * 플레이어는 딜러를 기준으로 승패를 출력한다.
 
 
+## 블랙잭 용어 정리
+* 힛(Hit)
+  * 처음 2장의 상태에서 카드를 더 뽑는 것을 의미한다. 
+  * 21이 되지 않는 한 원하는 만큼 카드를 더 뽑을 수 있다.
+* Dealer's hit rule
+  * 딜러의 카드의 합이 21을 초과하여 버스트가 되어버린 경우
+* 버스트(Bust)
+  * 카드 총합이 21을 넘는 경우 이를 Bust라고 한다.
+  
 ## 우아한테크코스 코드리뷰
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
