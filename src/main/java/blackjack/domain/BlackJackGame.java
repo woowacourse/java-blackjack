@@ -5,6 +5,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
+import blackjack.domain.result.CompareResult;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,16 @@ public class BlackJackGame {
     public BlackJackGame(final Player dealer, final Gamers gamers) {
         this.dealer = dealer;
         this.gamers = gamers;
+    }
+
+    private static CompareResult convertToDealerResult(final CompareResult compareResult) {
+        if (compareResult == CompareResult.WIN) {
+            return CompareResult.LOSE;
+        }
+        if (compareResult == CompareResult.LOSE) {
+            return CompareResult.WIN;
+        }
+        return CompareResult.DRAW;
     }
 
     public void handOutStartingCards(final Deck deck) {
@@ -46,16 +57,6 @@ public class BlackJackGame {
             enumMap.put(dealerCompareResult, enumMap.getOrDefault(dealerCompareResult, 0) + COUNT_UNIT);
         }
         return enumMap;
-    }
-
-    private static CompareResult convertToDealerResult(final CompareResult compareResult) {
-        if (compareResult == CompareResult.WIN) {
-            return CompareResult.LOSE;
-        }
-        if (compareResult == CompareResult.LOSE) {
-            return CompareResult.WIN;
-        }
-        return CompareResult.DRAW;
     }
 
     public Player getDealer() {

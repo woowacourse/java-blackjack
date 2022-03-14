@@ -3,7 +3,6 @@ package blackjack.view;
 import static java.util.stream.Collectors.toList;
 
 import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -36,7 +35,7 @@ public class InputView {
         try {
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
-            throw new NumberFormatException ("[ERROR] 베팅금은 숫자만 입력 가능합니다.");
+            throw new NumberFormatException("[ERROR] 베팅금은 숫자만 입력 가능합니다.");
         }
     }
 

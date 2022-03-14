@@ -3,10 +3,10 @@ package blackjack.domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.CompareResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.result.CompareResult;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,7 @@ public class GamersTest {
     void duplicateGamerNameException() {
         assertThatThrownBy(() ->
                 new Gamers(List.of(new Gamer("huni", new Bet(1000)),
-                new Gamer("huni", new Bet(1000)))))
+                        new Gamer("huni", new Bet(1000)))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 중복된 이름은 입력할 수 없습니다.");
     }

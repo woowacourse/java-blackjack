@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import blackjack.domain.player.Gamer;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public enum CompareResult {
         this.predicate = predicate;
     }
 
-    public static CompareResult findResult(final int dealerResult, final int gamerResult) {
+    public static CompareResult findCompareResult(final int dealerResult, final int gamerResult) {
         return Arrays.stream(values())
                 .filter((result) -> result.predicate.test(dealerResult, gamerResult))
                 .findFirst()
