@@ -41,7 +41,7 @@ class PlayerTest {
     @DisplayName("카드를 받을 수 있다.")
     void draw() {
         final Player player = Player.newInstance("user", new ArrayList<>());
-        final Card card = Card.cards().get(0);
+        final Card card = Card.getAllCards().get(0);
         player.draw(card);
         assertThat(player.getCards()).containsExactly(card);
     }

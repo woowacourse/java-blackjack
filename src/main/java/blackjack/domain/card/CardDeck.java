@@ -17,7 +17,7 @@ public class CardDeck {
     }
 
     public static CardDeck generate() {
-        List<Card> cards = Card.cards();
+        List<Card> cards = Card.getAllCards();
         Collections.shuffle(cards);
         return new CardDeck(new LinkedList<>(cards));
     }

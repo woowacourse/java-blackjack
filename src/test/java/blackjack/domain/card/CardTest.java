@@ -11,7 +11,7 @@ class CardTest {
     @Test
     @DisplayName("카드 52장을 반환할 수 있다.")
     void cards() {
-        final List<Card> cards = Card.cards();
+        final List<Card> cards = Card.getAllCards();
         final int distinctCount = (int) cards.stream()
                 .distinct()
                 .count();

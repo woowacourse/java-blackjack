@@ -41,7 +41,7 @@ public class Card {
                 .collect(Collectors.toList());
     }
 
-    public static List<Card> cards() {
+    public static List<Card> getAllCards() {
         return new ArrayList<>(BASIC_CARDS);
     }
 
