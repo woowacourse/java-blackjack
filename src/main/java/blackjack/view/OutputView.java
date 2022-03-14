@@ -13,17 +13,17 @@ import java.util.Map;
 public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
-    public static final String PLAYER_MATCH_RESULT_MESSAGE = "%s: %s" + NEW_LINE;
-    public static final String PLAYER_SCORE_MESSAGE = "%s카드: %s - 결과: %d" + NEW_LINE;
-    public static final String DEALER_SCORE_MESSAGE = NEW_LINE + "%s 카드: %s - 결과: %d" + NEW_LINE;
-    public static final String DEALER_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
-    public static final String GIVE_CARDS_TO_PLAYERS_MESSAGE = NEW_LINE + "딜러와 %s에게 2장의 카드를 나누었습니다." + NEW_LINE;
-    public static final String GIVE_CARDS_TO_DEALER_MESSAGE = "%s: %s" + NEW_LINE;
-    public static final String PLAYER_CARD_MESSAGE = "%s카드: %s" + NEW_LINE;
-    public static final String COMMA_DELIMITER = ", ";
-    public static final String SPACE_DELIMINATOR = " ";
-    public static final String BLACKJACK_GAME_RESULT_MESSAGE = "## 최종 승패";
-    public static final String DEALER_MATCH_RESULT_MESSAGE = "딜러: ";
+    private static final String PLAYER_MATCH_RESULT_MESSAGE = "%s: %s" + NEW_LINE;
+    private static final String PLAYER_SCORE_MESSAGE = "%s카드: %s - 결과: %d" + NEW_LINE;
+    private static final String DEALER_SCORE_MESSAGE = NEW_LINE + "%s 카드: %s - 결과: %d" + NEW_LINE;
+    private static final String DEALER_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
+    private static final String GIVE_CARDS_TO_PLAYERS_MESSAGE = NEW_LINE + "딜러와 %s에게 2장의 카드를 나누었습니다." + NEW_LINE;
+    private static final String GIVE_CARDS_TO_DEALER_MESSAGE = "%s: %s" + NEW_LINE;
+    private static final String PLAYER_CARD_MESSAGE = "%s카드: %s" + NEW_LINE;
+    private static final String COMMA_DELIMITER = ", ";
+    private static final String SPACE_DELIMINATOR = " ";
+    private static final String BLACKJACK_GAME_RESULT_MESSAGE = "## 최종 승패";
+    private static final String DEALER_MATCH_RESULT_MESSAGE = "딜러: ";
 
     public static void printGiveCardsToParticipants(Dealer dealer, List<Player> players) {
         out.printf(GIVE_CARDS_TO_PLAYERS_MESSAGE, getPlayerNames(players));
