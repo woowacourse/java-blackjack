@@ -66,17 +66,12 @@ public class Blackjack {
         }
     }
 
-    public int distributeCardToDealerUntilHit(NumberGenerator numberGenerator) {
-        int count = 0;
-        while (dealer.isHit()) {
-            distributeCardToDealer(numberGenerator);
-            ++count;
+    public boolean additionalCardToDealer(NumberGenerator numberGenerator) {
+        if (dealer.isHit()) {
+            dealer.addCard(dealer.handOutCard(numberGenerator));
+            return true;
         }
-        return count;
-    }
-
-    private void distributeCardToDealer(NumberGenerator numberGenerator) {
-        dealer.addCard(dealer.handOutCard(numberGenerator));
+        return false;
     }
 
     public Dealer getDealer() {

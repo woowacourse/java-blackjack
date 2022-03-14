@@ -26,7 +26,9 @@ public class BlackjackController {
             OutputView.printCards(turnPlayer);
         }
 
-        OutputView.printDealerAdditionalCard(blackjack.distributeCardToDealerUntilHit(randomNumberGenerator));
+        if (blackjack.additionalCardToDealer(randomNumberGenerator)) {
+            OutputView.printDealerAdditionalCard();
+        }
 
         OutputView.printCardsAndScores(blackjack.getDealer(), blackjack.getPlayers().getPlayers());
         OutputView.printResults(blackjack.results(blackjack.getPlayers().getPlayers()));

@@ -66,10 +66,17 @@ public class BlackjackTest {
         assertThat(blackjack.cycleIsOver()).isFalse();
     }
 
-    @DisplayName("딜러가 hit할때까지 나눠주는 기능 테스트")
+    @DisplayName("딜러가 hit이면 카드 한장 더 주는지 테스트")
     @Test
     void distributeCardToDealerUntilHitTest() {
-        int numberOfAddedCards = blackjack.distributeCardToDealerUntilHit(intendedNumberGenerator);
-        assertThat(numberOfAddedCards).isEqualTo(4);
+        blackjack.distributeInitialCards(new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6)));
+        assertThat(blackjack.additionalCardToDealer(new IntendedNumberGenerator(List.of(7)))).isTrue();
+    }
+
+    @DisplayName("딜러가 hit이 아니면 카드 안주는지 테스트")
+    @Test
+    void distributeCardToDealerUntilHitTest2() {
+        blackjack.distributeInitialCards(new IntendedNumberGenerator(List.of(1, 2, 0, 4, 5, 9)));
+        assertThat(blackjack.additionalCardToDealer(new IntendedNumberGenerator(List.of(7)))).isFalse();
     }
 }
