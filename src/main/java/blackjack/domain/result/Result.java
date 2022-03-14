@@ -28,15 +28,15 @@ public enum Result {
         Map<Gamer, Result> judgeResult = new LinkedHashMap<>();
         Result judge = Arrays.stream(Result.values())
             .filter(result -> result.biPredicate.test(dealer, player))
-            .findAny()
-            .get();
+            .findFirst()
+            .orElseThrow();
 
-        judgeResult.put(dealer, judge.revert());
+        judgeResult.put(dealer, judge.reverse());
         judgeResult.put(player, judge);
         return judgeResult;
     }
 
-    private Result revert() {
+    private Result reverse() {
         if (this == WIN) {
             return LOSE;
         }
