@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
+    private static final String DELIMITER = ",";
+
     private final List<Participant> players;
     private final Participant dealer;
 
@@ -20,7 +22,7 @@ public class BlackjackGame {
     }
 
     public static BlackjackGame create(String inputNames) {
-        List<Participant> players = Arrays.stream(inputNames.split(","))
+        List<Participant> players = Arrays.stream(inputNames.split(DELIMITER))
             .map(playerName -> new Player(playerName.trim()))
             .collect(Collectors.toList());
         return new BlackjackGame(players, new Dealer());
