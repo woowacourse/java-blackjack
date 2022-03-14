@@ -8,14 +8,14 @@ public enum Rule {
     INSTANCE;
 
     public Outcome judgeOutcome(Player player, Dealer dealer) {
-        if (!player.isBust() && dealer.isBust() || player.isBlackJack() && !dealer.isBlackJack()) {
+        if (player.isBust() || !player.isBlackJack() && dealer.isBlackJack()) {
+            return Outcome.LOSE;
+        }
+        if (dealer.isBust() || player.isBlackJack() && !dealer.isBlackJack()) {
             return Outcome.WIN;
         }
         if (player.isBlackJack() && dealer.isBlackJack()) {
             return Outcome.DRAW;
-        }
-        if (player.isBust() || !player.isBlackJack() && dealer.isBlackJack()) {
-            return Outcome.LOSE;
         }
         return judgeOutcomeByScore(player.getScore(), dealer.getScore());
     }
