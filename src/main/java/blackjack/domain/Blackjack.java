@@ -8,9 +8,11 @@ import java.util.stream.IntStream;
 public class Blackjack {
     private static final int INITIAL_CARD_NUMBER = 2;
     private final Dealer dealer;
+    private Players players;
 
-    public Blackjack() {
+    public Blackjack(List<String> playerNames) {
         this.dealer = new Dealer();
+        this.players = new Players(playerNames);
     }
 
     public List<Card> distributeInitialCards(NumberGenerator numberGenerator) {

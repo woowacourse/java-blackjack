@@ -30,7 +30,7 @@ public class BlackjackController {
     public void run() {
         RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
         List<String> playerNames = InputView.getPlayerNames();
-        Blackjack blackjack = new Blackjack();
+        Blackjack blackjack = new Blackjack(playerNames);
         Players players = new Players(playerNames);
 
         controlInitFlow(blackjack, players, randomNumberGenerator);
