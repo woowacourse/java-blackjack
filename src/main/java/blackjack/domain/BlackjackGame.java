@@ -6,18 +6,18 @@ public class BlackjackGame {
 
     private final Players players;
     private final Dealer dealer;
-    private final Drawable deck;
+    private final Drawable drawable;
 
-    public BlackjackGame(Players players) {
+    public BlackjackGame(Players players, Drawable drawable) {
         this.players = players;
         this.dealer = new Dealer();
-        this.deck = new Deck();
+        this.drawable = drawable;
     }
 
     public void drawStartingCard() {
         for (int i = 0; i < INITIAL_CARD_NUMBER; i++) {
-            players.drawAll(deck);
-            dealer.drawCard(deck);
+            players.drawAll(drawable);
+            dealer.drawCard(drawable);
         }
     }
 
@@ -26,7 +26,7 @@ public class BlackjackGame {
     }
 
     public void drawDealerCard() {
-        dealer.drawCard(deck);
+        dealer.drawCard(drawable);
     }
 
     public ScoreResult makeResults() {
@@ -34,7 +34,7 @@ public class BlackjackGame {
     }
 
     public void drawPlayerCard() {
-        players.drawPlayerCard(deck);
+        players.drawPlayerCard(drawable);
     }
 
     public void proceedTurn() {

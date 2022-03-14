@@ -16,7 +16,7 @@ class BlackjackGameTest {
     void drawStartingCard() {
         Player roma = new Player("roma");
         Player tonic = new Player("tonic");
-        BlackjackGame blackjackGame = new BlackjackGame(new Players(List.of(roma, tonic)));
+        BlackjackGame blackjackGame = new BlackjackGame(new Players(List.of(roma, tonic)), new Deck());
 
         blackjackGame.drawStartingCard();
         Dealer dealer = blackjackGame.getDealer();

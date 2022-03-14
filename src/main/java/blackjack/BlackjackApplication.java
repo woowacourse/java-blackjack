@@ -9,6 +9,7 @@ import static blackjack.view.OutputView.printPlayersResult;
 import static blackjack.view.OutputView.printResult;
 
 import blackjack.domain.BlackjackGame;
+import blackjack.domain.Deck;
 import blackjack.domain.Name;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 public class BlackjackApplication {
 
     public static void main(String[] args) {
-        BlackjackGame blackjackGame = new BlackjackGame(requestPlayers());
+        BlackjackGame blackjackGame = new BlackjackGame(requestPlayers(), new Deck());
 
         startSetting(blackjackGame);
         takeTurns(blackjackGame);
