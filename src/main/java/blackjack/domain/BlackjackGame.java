@@ -16,8 +16,8 @@ public class BlackjackGame {
     private final Cards cards;
     private Players blackjackPlayers;
 
-    public BlackjackGame() {
-        this.cards = new Cards(new CardShuffleMachine());
+    public BlackjackGame(Cards cards) {
+        this.cards = cards;
     }
 
     public void initGames(List<String> playerNames) {

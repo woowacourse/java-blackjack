@@ -1,12 +1,10 @@
 package blackjack.domain;
 
+import blackjack.domain.card.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Suit;
-import blackjack.domain.card.Symbol;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
@@ -40,7 +38,7 @@ class BlackjackGameTest {
         dealer.addCard(new Card(Suit.DIAMOND, Symbol.TEN));
         players.addPlayer(dealer);
 
-        BlackjackGame blackjackGame = new BlackjackGame();
+        BlackjackGame blackjackGame = new BlackjackGame(new Cards(new CardShuffleMachine()));
         Results results = blackjackGame.calculateResult(players);
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);
@@ -61,7 +59,7 @@ class BlackjackGameTest {
         dealer.addCard(new Card(Suit.DIAMOND, Symbol.SEVEN));
         players.addPlayer(dealer);
 
-        BlackjackGame blackjackGame = new BlackjackGame();
+        BlackjackGame blackjackGame = new BlackjackGame(new Cards(new CardShuffleMachine()));
         Results results = blackjackGame.calculateResult(players);
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);
