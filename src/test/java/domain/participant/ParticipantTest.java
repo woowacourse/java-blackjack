@@ -34,14 +34,14 @@ public class ParticipantTest {
     @Test
     @DisplayName("자신의 손패를 문자열로 반환하는 기능")
     void showHand() {
-        Participant participant = new Participant(new Name("pobi"), new ArrayList<>(List.of(card1, card2)));
+        Participant participant = new Player(new Name("pobi"), new ArrayList<>(List.of(card1, card2)));
         assertThat(participant.showHand()).isEqualTo("K하트, A스페이드");
     }
 
     @Test
     @DisplayName("손패에 새로운 카드를 추가하는 기능")
     void addCard() {
-        Participant participant = new Participant(new Name("pobi"), new ArrayList<>(List.of(card1, card2)));
+        Participant participant = new Player(new Name("pobi"), new ArrayList<>(List.of(card1, card2)));
         participant.addCard(card4);
         assertThat(participant.showHand()).isEqualTo("K하트, A스페이드, 8클로버");
     }
@@ -50,7 +50,7 @@ public class ParticipantTest {
     @EnumSource(mode = EnumSource.Mode.EXCLUDE, names = {"RANK_A"})
     void isBurst(Rank rank) {
         Card card = new Card(rank, Suit.HEART);
-        Participant participant = new Participant(new Name("pobi"), new ArrayList<>(List.of(card, card1, card1)));
+        Participant participant = new Player(new Name("pobi"), new ArrayList<>(List.of(card, card1, card1)));
         assertThat(participant.isBust()).isTrue();
     }
 
@@ -60,14 +60,14 @@ public class ParticipantTest {
         Card card1 = new Card(Rank.valueOf(input1), Suit.HEART);
         Card card2 = new Card(Rank.valueOf(input2), Suit.SPADE);
         Card card3 = new Card(Rank.valueOf(input3), Suit.CLOVER);
-        Participant participant = new Participant(new Name("pobi"), new ArrayList<>(List.of(card1, card2, card3)));
+        Participant participant = new Player(new Name("pobi"), new ArrayList<>(List.of(card1, card2, card3)));
         assertThat(participant.isMaxScore()).isTrue();
     }
 
     @Test()
     @DisplayName("베스트 스코어 계산하는 기능")
     void getBestScore() {
-        Participant participant = new Participant(new Name("pobi"),
+        Participant participant = new Player(new Name("pobi"),
                 new ArrayList<>(List.of(card1, card2, card3, card4)));
         assertThat(participant.getBestScore()).isEqualTo(20);
     }

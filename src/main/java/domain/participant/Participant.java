@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import domain.card.Card;
 
-public class Participant {
+public abstract class Participant {
 
     protected static final String JOINING_DELIMITER = ", ";
     protected static final int BLACK_JACK_NUMBER = 21;
