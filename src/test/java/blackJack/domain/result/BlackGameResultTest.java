@@ -2,7 +2,7 @@ package blackJack.domain.result;
 
 import blackJack.domain.card.Card;
 import blackJack.domain.card.Denomination;
-import blackJack.domain.card.Symbol;
+import blackJack.domain.card.Suit;
 import blackJack.domain.participant.Dealer;
 import blackJack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
@@ -23,10 +23,10 @@ class BlackGameResultTest {
         Player player3 = new Player("parang");
         Dealer dealer = new Dealer();
 
-        player1.receiveCard(new Card(Symbol.SPADE, Denomination.EIGHT));
-        player2.receiveCard(new Card(Symbol.SPADE, Denomination.JACK));
-        player3.receiveCard(new Card(Symbol.SPADE, Denomination.ACE));
-        dealer.receiveCard(new Card(Symbol.SPADE, Denomination.NINE));
+        player1.receiveCard(new Card(Suit.SPADE, Denomination.EIGHT));
+        player2.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
+        player3.receiveCard(new Card(Suit.SPADE, Denomination.ACE));
+        dealer.receiveCard(new Card(Suit.SPADE, Denomination.NINE));
 
         BlackJackGameResult blackJackGameResult =
                 BlackJackGameResult.ofGameResult(dealer, List.of(player1, player2, player3));

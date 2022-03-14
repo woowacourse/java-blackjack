@@ -1,18 +1,18 @@
 package blackJack.domain.card;
 
-public enum Symbol {
+public enum Suit {
     SPADE("스페이드"),
     DIAMOND("다이아몬드"),
     HEART("하트"),
     CLOVER("클로버");
 
-    private final String symbol;
+    private final String suit;
 
-    Symbol(String symbol) {
-        this.symbol = symbol;
+    Suit(String suit) {
+        this.suit = suit;
     }
 
     public String getName() {
-        return symbol;
+        return suit;
     }
 }

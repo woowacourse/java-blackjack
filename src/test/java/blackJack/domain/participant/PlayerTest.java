@@ -2,7 +2,7 @@ package blackJack.domain.participant;
 
 import blackJack.domain.card.Card;
 import blackJack.domain.card.Denomination;
-import blackJack.domain.card.Symbol;
+import blackJack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -39,9 +39,9 @@ class PlayerTest {
     @DisplayName("플레이어의 카드 추가 분배가 불가능한 경우 테스트")
     void hasFalsePlayerNextTurn() {
         Player player = new Player("kei");
-        player.receiveCard(new Card(Symbol.SPADE, Denomination.JACK));
-        player.receiveCard(new Card(Symbol.HEART, Denomination.JACK));
-        player.receiveCard(new Card(Symbol.SPADE, Denomination.TWO));
+        player.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
+        player.receiveCard(new Card(Suit.HEART, Denomination.JACK));
+        player.receiveCard(new Card(Suit.SPADE, Denomination.TWO));
 
         assertThat(player.hasNextTurn()).isFalse();
     }
@@ -50,8 +50,8 @@ class PlayerTest {
     @DisplayName("플레이어의 카드 추가 분배가 가능한 경우 테스트")
     void hasTruePlayerNextTurn() {
         Player player = new Player("kei");
-        player.receiveCard(new Card(Symbol.SPADE, Denomination.JACK));
-        player.receiveCard(new Card(Symbol.HEART, Denomination.JACK));
+        player.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
+        player.receiveCard(new Card(Suit.HEART, Denomination.JACK));
 
         assertThat(player.hasNextTurn()).isTrue();
     }

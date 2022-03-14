@@ -18,8 +18,8 @@ public class CardsTest {
     @Test
     @DisplayName("중복된 카드를 받는 경우 예외 발생 테스트")
     void receiveDuplicatedCard() {
-        Card card1 = new Card(Symbol.CLOVER, Denomination.ACE);
-        Card card2 = new Card(Symbol.CLOVER, Denomination.ACE);
+        Card card1 = new Card(Suit.CLOVER, Denomination.ACE);
+        Card card2 = new Card(Suit.CLOVER, Denomination.ACE);
         cards.receiveCard(card1);
 
         assertThatThrownBy(() -> cards.receiveCard(card2))
@@ -30,8 +30,8 @@ public class CardsTest {
     @Test
     @DisplayName("블랙잭 판단 확인 테스트")
     void isBlackJack() {
-        cards.receiveCard(new Card(Symbol.CLOVER, Denomination.ACE));
-        cards.receiveCard(new Card(Symbol.CLOVER, Denomination.JACK));
+        cards.receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
+        cards.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
 
         assertThat(cards.isBlackJack()).isTrue();
     }
@@ -39,9 +39,9 @@ public class CardsTest {
     @Test
     @DisplayName("버스트 판단 확인 테스트")
     void isBust() {
-        cards.receiveCard(new Card(Symbol.DIAMOND, Denomination.JACK));
-        cards.receiveCard(new Card(Symbol.CLOVER, Denomination.JACK));
-        cards.receiveCard(new Card(Symbol.SPADE, Denomination.JACK));
+        cards.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
+        cards.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
+        cards.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
 
         assertThat(cards.isBust()).isTrue();
     }
@@ -49,8 +49,8 @@ public class CardsTest {
     @Test
     @DisplayName("카드에 Ace가 11로 되는 경우 합계 계산 테스트")
     void calculateScoreWithAceEleven() {
-        cards.receiveCard(new Card(Symbol.CLOVER, Denomination.ACE));
-        cards.receiveCard(new Card(Symbol.CLOVER, Denomination.JACK));
+        cards.receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
+        cards.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
 
         assertThat(cards.calculateFinalScore()).isEqualTo(21);
     }
@@ -58,9 +58,9 @@ public class CardsTest {
     @Test
     @DisplayName("카드에 Ace가 1로 되는 경우 합계 계산 테스트")
     void calculateScoreWithAceOne() {
-        cards.receiveCard(new Card(Symbol.CLOVER, Denomination.ACE));
-        cards.receiveCard(new Card(Symbol.CLOVER, Denomination.JACK));
-        cards.receiveCard(new Card(Symbol.CLOVER, Denomination.EIGHT));
+        cards.receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
+        cards.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
+        cards.receiveCard(new Card(Suit.CLOVER, Denomination.EIGHT));
 
         assertThat(cards.calculateFinalScore()).isEqualTo(19);
     }
@@ -68,10 +68,10 @@ public class CardsTest {
     @Test
     @DisplayName("카드에 Ace가 여러개인 경우 계산 테스트")
     void calculateScoreWithAceCountThree() {
-        cards.receiveCard(new Card(Symbol.CLOVER, Denomination.ACE));
-        cards.receiveCard(new Card(Symbol.HEART, Denomination.ACE));
-        cards.receiveCard(new Card(Symbol.DIAMOND, Denomination.ACE));
-        cards.receiveCard(new Card(Symbol.SPADE, Denomination.EIGHT));
+        cards.receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
+        cards.receiveCard(new Card(Suit.HEART, Denomination.ACE));
+        cards.receiveCard(new Card(Suit.DIAMOND, Denomination.ACE));
+        cards.receiveCard(new Card(Suit.SPADE, Denomination.EIGHT));
 
         assertThat(cards.calculateFinalScore()).isEqualTo(21);
     }
@@ -79,7 +79,7 @@ public class CardsTest {
     @Test
     @DisplayName("ACE 카드 보유 여부 테스트")
     void hasAce() {
-        cards.receiveCard(new Card(Symbol.CLOVER, Denomination.ACE));
+        cards.receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
 
         assertThat(cards.hasAce()).isTrue();
     }

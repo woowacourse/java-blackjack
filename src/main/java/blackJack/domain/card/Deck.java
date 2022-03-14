@@ -10,9 +10,9 @@ public class Deck {
     private static final LinkedList<Card> deck;
 
     static {
-        deck = Arrays.stream(Symbol.values())
-                .flatMap(symbol -> Arrays.stream(Denomination.values())
-                        .map(denomination -> new Card(symbol, denomination)))
+        deck = Arrays.stream(Suit.values())
+                .flatMap(suit -> Arrays.stream(Denomination.values())
+                        .map(denomination -> new Card(suit, denomination)))
                 .collect(Collectors.toCollection(LinkedList::new));
         Collections.shuffle(deck);
     }
