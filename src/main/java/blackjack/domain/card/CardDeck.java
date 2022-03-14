@@ -1,20 +1,37 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CardDeck {
 
-    private List<Card> cards;
-    private final CardsGenerator generator;
+    private final List<Card> cards;
 
-    public CardDeck(CardsGenerator generator) {
-        this.generator = generator;
-        initCards();
+    public CardDeck(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
-    private void initCards() {
-        cards = generator.generate();
+    public CardDeck() {
+        this(initCards());
+    }
+
+    private static List<Card> initCards() {
+        List<Card> cards = Arrays.stream(Pattern.values())
+                .map(CardDeck::createCardsBy)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        Collections.shuffle(cards);
+        return cards;
+    }
+
+    private static List<Card> createCardsBy(Pattern pattern) {
+        return Arrays.stream(Denomination.values())
+                .map(denomination -> new Card(pattern, denomination))
+                .collect(Collectors.toList());
     }
 
     public Card draw() {

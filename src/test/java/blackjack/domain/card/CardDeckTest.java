@@ -14,33 +14,35 @@ public class CardDeckTest {
     @DisplayName("카드 뭉치에서 카드를 한 장 뽑아서 준다.")
     void drawCard() {
         // given
-        CardDeck deck = new CardDeck(new BlackJackCardsGenerator());
+        Card card = new Card(Pattern.DIAMOND, Denomination.TWO);
+        List<Card> cards = List.of(card);
+        CardDeck deck = new CardDeck(cards);
 
         // when
         Card actual = deck.draw();
 
         // then
-        assertThat(actual).isNotNull();
+        assertThat(actual).isEqualTo(card);
     }
 
     @Test
     @DisplayName("두 장의 카드를 한번에 뽑을 수 있다.")
     void drawDouble() {
         // given
-        CardDeck deck = new CardDeck(new BlackJackCardsGenerator());
+        CardDeck deck = new CardDeck();
 
         // when
-        List<Card> cards = deck.drawDouble();
+        List<Card> actual = deck.drawDouble();
 
         // then
-        assertThat(cards.size()).isEqualTo(2);
+        assertThat(actual.size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("카드가 다 떨어지면 예외가 발생한다.")
     void createNewDeck() {
         // given
-        CardDeck deck = new CardDeck(Collections::emptyList);
+        CardDeck deck = new CardDeck(Collections.emptyList());
 
         // then
         assertThatThrownBy(deck::draw).isInstanceOf(IllegalStateException.class)

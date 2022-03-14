@@ -2,7 +2,6 @@ package blackjack;
 
 import blackjack.domain.Name;
 import blackjack.domain.WinResult;
-import blackjack.domain.card.BlackJackCardsGenerator;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 public class BlackJackGame {
 
     public void play() {
-        CardDeck deck = new CardDeck(new BlackJackCardsGenerator());
+        CardDeck deck = new CardDeck();
         Dealer dealer = new Dealer(deck.drawDouble());
         List<Player> players = createPlayers(inputPlayerNames(), deck);
         proceed(deck, dealer, players);
