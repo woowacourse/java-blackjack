@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack.domain;
 
 import static java.util.stream.Collectors.toList;
 
@@ -16,7 +16,7 @@ import blackjack.view.OutputView;
 import blackjack.view.PlayCommand;
 import java.util.List;
 
-public class BlackjackController {
+public class BlackjackRunner {
 
     public void run() {
         Deck deck = new Deck(new RandomCardsGenerator());
