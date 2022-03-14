@@ -47,7 +47,9 @@ public final class Cards {
     }
 
     public int calculateSum() {
-        final int minimumSum = cards.stream().mapToInt(Card::getScore).sum();
+        final int minimumSum = cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
         final int maximumSum = calculateMaximumSum(minimumSum);
         if (maximumSum > MAXIMUM_SUM_VALUE) {
             return minimumSum;
@@ -63,7 +65,8 @@ public final class Cards {
     }
 
     private boolean hasAce() {
-        return cards.stream().anyMatch(Card::isAceCard);
+        return cards.stream()
+                .anyMatch(Card::isAceCard);
     }
 
     public GameResult calculateGameResult(final Cards other) {

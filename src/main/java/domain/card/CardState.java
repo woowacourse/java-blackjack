@@ -21,8 +21,7 @@ public enum CardState {
     }
 
     public static CardState from(final Cards cards) {
-        return Arrays
-                .stream(CardState.values())
+        return Arrays.stream(CardState.values())
                 .filter(cardState -> cardState.predicate.test(cards))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(CANNOT_FIND_CARD_STATE_MESSAGE));

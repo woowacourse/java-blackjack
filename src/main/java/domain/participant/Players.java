@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.GameResult;
 import domain.card.Card;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,8 +13,7 @@ public final class Players {
     private final List<Player> players;
 
     public Players(final List<String> names) {
-        this.players = names
-                .stream()
+        this.players = names.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
     }

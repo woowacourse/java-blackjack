@@ -1,16 +1,10 @@
 package domain.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Queue;
+import java.util.*;
 
 public class CardDeck {
     private static final String NO_CARD_LEFT_MESSAGE = "모든 카드가 소진됐습니다. 게임을 재시작 해주세요.";
-
-    private final static Queue<Card> cardDeck = new LinkedList<>();
+    private static final Queue<Card> cardDeck = new LinkedList<>();
 
     static {
         final List<Card> cards = new ArrayList<>();

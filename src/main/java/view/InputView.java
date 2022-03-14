@@ -45,13 +45,14 @@ public class InputView {
     static boolean hasNoDuplication(final String input) {
         final List<String> parsedInput = getSplitAndTrim(input);
         final int beforeCount = parsedInput.size();
-        final int afterCount = (int) parsedInput.stream().distinct().count();
+        final int afterCount = (int) parsedInput.stream()
+                .distinct()
+                .count();
         return beforeCount == afterCount;
     }
 
     private static List<String> getSplitAndTrim(final String input) {
-        return Arrays
-                .stream(input.split(NAME_OR_CARD_DELIMITER))
+        return Arrays.stream(input.split(NAME_OR_CARD_DELIMITER))
                 .map(String::trim)
                 .collect(Collectors.toList());
     }

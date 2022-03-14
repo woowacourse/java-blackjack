@@ -54,7 +54,9 @@ public class GameResultConvertor {
                                final String standard,
                                final List<String> parsedGameResults) {
         if (candidates.contains(standard)) {
-            final int count = (int) candidates.stream().filter(string -> string.equals(standard)).count();
+            final int count = (int) candidates.stream()
+                    .filter(string -> string.equals(standard))
+                    .count();
             final StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(count).append(standard);
             parsedGameResults.add(stringBuilder.toString());

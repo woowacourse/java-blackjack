@@ -19,7 +19,9 @@ public class CardDeckTest {
             cards.add(CardDeck.draw());
         }
 
-        int actualCount = (int) cards.stream().distinct().count();
+        int actualCount = (int) cards.stream()
+                .distinct()
+                .count();
         int expectedCount = cards.size();
         assertThat(actualCount).isEqualTo(expectedCount);
     }
