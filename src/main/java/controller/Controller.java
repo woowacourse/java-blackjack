@@ -20,18 +20,20 @@ public class Controller {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = new Players(names, generateInitCardsForPlayers(names, deck));
+
         OutputView.printParticipantInitHands(names, dealer, players);
 
         if (dealer.isBlackJack) {
-            OutputView.printDealerBlackJackResult(names, dealer, players);
+            OutputView.printDealerBlackJackMessage();
+            OutputView.printResult(names, new Result(players.getResultAtDealerBlackJack(dealer)));
             return;
         }
-        printBlackJackPlayer(names, players);
+        OutputView.printPlayerIsBlackJackMessage(names, players);
 
         drawForPlayers(names, deck, players);
         drawForDealer(deck, dealer, players);
         OutputView.printStatuses(names, dealer, players);
-        printFinalResult(names, dealer, players);
+        OutputView.printResult(names, new Result(players.getResultAtFinal(dealer)));
     }
 
     private List<List<Card>> generateInitCardsForPlayers(List<Name> names, Deck deck) {
@@ -39,12 +41,6 @@ public class Controller {
                 .mapToObj(i -> new InitCards(deck).getInitCards())
                 .collect(Collectors.toList());
         return initCardForPlayers;
-    }
-
-    private void printBlackJackPlayer(List<Name> names, Players players) {
-        for (Name name : names) {
-            OutputView.printPlayerBlackJackMessage(name, players);
-        }
     }
 
     private void drawForPlayers(List<Name> names, Deck deck, Players players) {
@@ -72,19 +68,6 @@ public class Controller {
         while (dealer.isNeedToDraw()) {
             OutputView.printDealerDrawMessage();
             dealer.addCard(deck.draw());
-        }
-    }
-
-    private void printFinalResult(List<Name> names, Dealer dealer, Players players) {
-        Result finalResult = new Result(players.getResultAtFinal(dealer));
-        OutputView.printResultTitle();
-        OutputView.printDealerResult(
-                finalResult.getDealerWinCount(),
-                finalResult.getDealerDrawCount(),
-                finalResult.getDealerLoseCount()
-        );
-        for (Name name : names) {
-            OutputView.printPlayerResult(name.getName(), finalResult.getVersusOfPlayer(name).getResult());
         }
     }
 }

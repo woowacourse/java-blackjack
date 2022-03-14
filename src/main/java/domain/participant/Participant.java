@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import domain.card.Card;
 
 public class Participant {
+
     protected static final String JOINING_DELIMITER = ", ";
     protected static final int BLACK_JACK_NUMBER = 21;
     protected static final int ACE_COUNT_LOWER_BOUND = 0;

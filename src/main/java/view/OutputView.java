@@ -20,7 +20,7 @@ public class OutputView {
     private static final String PLAYER_RESULT_MESSAGE_FORMAT = "%s: %s\n";
     private static final String DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DEALER_BLACK_JACK_MESSAGE = "\n== DEALER IS BLACK JACK ==";
-    public static final String PLAYER_IS_BLACK_JACK_MESSAGE = "\n== %s IS BLACK JACK ==\n";
+    private static final String PLAYER_IS_BLACK_JACK_MESSAGE = "\n== %s IS BLACK JACK ==\n";
 
     public static void printParticipantInitHands(List<Name> names, Dealer dealer, Players players) {
         printInitHandsMessage(names);
@@ -40,16 +40,32 @@ public class OutputView {
         System.out.printf(SHOW_HAND_FORMAT, name.getName(), players.showHandByName(name));
     }
 
+    public static void printDealerBlackJackMessage() {
+        System.out.println(DEALER_BLACK_JACK_MESSAGE);
+    }
+
+    public static void printPlayerIsBlackJackMessage(List<Name> names, Players players) {
+        for (Name name : names) {
+            OutputView.printIfPlayerIsBlackJackMessage(name, players);
+        }
+    }
+
+    private static void printIfPlayerIsBlackJackMessage(Name name, Players players) {
+        if (players.isMaxScoreByName(name)) {
+            System.out.printf(PLAYER_IS_BLACK_JACK_MESSAGE, name.getName());
+        }
+    }
+
     public static boolean printIfMaxScoreOrBust(Players players, Name name) {
         if (players.isMaxScoreByName(name)) {
             System.out.println(MAX_SCORE_MESSAGE);
-            return false;
+            return true;
         }
         if (players.isBustByName(name)) {
             System.out.println(BUST_MESSAGE);
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public static void printDealerDrawMessage() {
@@ -68,39 +84,27 @@ public class OutputView {
         }
     }
 
-    public static void printDealerBlackJackResult(List<Name> names, Dealer dealer, Players players) {
-        Result dealerBlackjackResult = new Result(players.getResultAtDealerBlackJack(dealer));
-        OutputView.printDealerBlackJackMessage();
+    public static void printResult(List<Name> names, Result result) {
         OutputView.printResultTitle();
         OutputView.printDealerResult(
-                dealerBlackjackResult.getDealerWinCount(),
-                dealerBlackjackResult.getDealerDrawCount(),
-                dealerBlackjackResult.getDealerLoseCount()
+                result.getDealerWinCount(),
+                result.getDealerDrawCount(),
+                result.getDealerLoseCount()
         );
         for (Name name : names) {
-            OutputView.printPlayerResult(name.getName(), dealerBlackjackResult.getVersusOfPlayer(name).getResult());
+            OutputView.printPlayerResult(name.getName(), result.getVersusOfPlayer(name).getResult());
         }
     }
 
-    public static void printDealerBlackJackMessage() {
-        System.out.println(DEALER_BLACK_JACK_MESSAGE);
-    }
-
-    public static void printPlayerBlackJackMessage(Name name, Players players) {
-        if (players.isMaxScoreByName(name)) {
-            System.out.printf(PLAYER_IS_BLACK_JACK_MESSAGE, name.getName());
-        }
-    }
-
-    public static void printResultTitle() {
+    private static void printResultTitle() {
         System.out.println(RESULT_TITLE_MESSAGE);
     }
 
-    public static void printDealerResult(int winCount, int drawCount, int loseCount) {
+    private static void printDealerResult(int winCount, int drawCount, int loseCount) {
         System.out.printf(DEALER_RESULT_MESSAGE_FORMAT, winCount, drawCount, loseCount);
     }
 
-    public static void printPlayerResult(String name, String result) {
+    private static void printPlayerResult(String name, String result) {
         System.out.printf(PLAYER_RESULT_MESSAGE_FORMAT, name, result);
     }
 
