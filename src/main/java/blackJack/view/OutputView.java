@@ -74,10 +74,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGameResult(Participants participants) {
-        Dealer dealer = participants.getDealer();
-        List<Player> players = participants.getPlayers();
-
+    public static void printGameResult(Dealer dealer, List<Player> players) {
         printParticipantGameResult(dealer);
         for (Player player : players) {
             printParticipantGameResult(player);
