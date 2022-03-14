@@ -79,6 +79,14 @@ public class PlayersTest {
         assertThat(players.nextPlayer(players.firstPlayer()).isSameName("jason")).isTrue();
     }
 
+    @DisplayName("다음 플레이어 없을때 가져오면 null리턴 하는지 테스트")
+    @Test
+    void nextPlayerTest2() {
+        Players players = new Players(List.of("pobi", "jason"));
+        Player player = players.nextPlayer(players.firstPlayer());
+        assertThat(players.nextPlayer(player)).isNull();
+    }
+
     @DisplayName("다음 플레이어 있을때 true 리턴하는지 확인하는 테스트")
     @Test
     void hasNextPlayerTest() {

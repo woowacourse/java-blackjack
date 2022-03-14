@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -60,7 +61,7 @@ public class Players {
 
     public Player nextPlayer(Player player) {
         if (!hasNextPlayer(player)) {
-            return firstPlayer();
+            return null;
         }
         return players.get(players.indexOf(player) + NEXT_GAP);
     }
