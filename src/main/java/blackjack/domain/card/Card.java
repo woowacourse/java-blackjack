@@ -20,7 +20,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return denomination == Denomination.ACE;
+        return Denomination.isAce(denomination);
     }
 
     public int getScore() {

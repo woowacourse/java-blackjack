@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BlackJackController {
 
-    public static final String Y = "Y";
+    private static final String Y = "Y";
 
     public void run() {
         Dealer dealer = new Dealer();
