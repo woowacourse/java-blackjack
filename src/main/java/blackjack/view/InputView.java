@@ -23,11 +23,7 @@ public class InputView {
 
         String answer = scanner.nextLine();
         validateIsYesOrNo(answer);
-        if(answer.equals(POSITIVE_ANSWER)) {
-            return true;
-        }
-
-        return false;
+        return answer.equals(POSITIVE_ANSWER);
     }
 
     private static void validateIsYesOrNo(String answer) {
