@@ -12,6 +12,8 @@ public class InputView {
     private static final String ONE_MORE_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
     private static final String DELIMITER = ",";
     private static final String INPUT_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String ONE_MORE_CARD = "y";
+    private static final String STOP_CARD = "n";
 
     private static String input() {
         Scanner scanner = new Scanner(System.in);
@@ -32,11 +34,11 @@ public class InputView {
         System.out.printf(ONE_MORE_CARD_MESSAGE, playerName);
         String input = input();
         validateYesOrNo(input);
-        return "y".equals(input);
+        return ONE_MORE_CARD.equals(input);
     }
 
     private static void validateYesOrNo(String input) {
-        if (!input.equals("y") && !input.equals("n")) {
+        if (!input.equals(ONE_MORE_CARD) && !input.equals(STOP_CARD)) {
             throw new IllegalArgumentException(INPUT_IS_WRONG_FORMAT);
         }
     }
