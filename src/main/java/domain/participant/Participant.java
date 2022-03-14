@@ -5,7 +5,6 @@ import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.Cards;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,11 +25,11 @@ public abstract class Participant {
         return cards.getCards();
     }
 
-    public Map<String, List<Card>> getCardsWithName() {
-        return new LinkedHashMap<>(Map.of(name, getCards()));
+    public Map<String, List<Card>> getNameWithCards() {
+        return Map.of(name, getCards());
     }
 
     public Map<String, Integer> getTotalScoreWithName() {
-        return new LinkedHashMap<>(Map.of(name, cards.calculateSum()));
+        return Map.of(name, cards.calculateSum());
     }
 }

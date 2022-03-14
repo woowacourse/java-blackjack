@@ -16,6 +16,6 @@ public final class Player extends Participant {
     }
 
     public Map<String, GameResult> getGameResultWithName(final Participant other) {
-        return new LinkedHashMap<>(Map.of(name, cards.calculateGameResult(other.cards)));
+        return Map.of(name, cards.calculateGameResult(other.cards));
     }
 }
