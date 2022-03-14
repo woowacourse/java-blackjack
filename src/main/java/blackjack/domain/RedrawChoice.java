@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public enum RedrawChoice {
 	YES("y"),
@@ -14,8 +15,9 @@ public enum RedrawChoice {
 	}
 
 	public static RedrawChoice of(String choice) {
+		final String lowercaseChoice = choice.toLowerCase(Locale.ROOT);
 		return Arrays.stream(values())
-			.filter(redrawChoice -> choice.equals(redrawChoice.getValue()))
+			.filter(redrawChoice -> lowercaseChoice.equals(redrawChoice.getValue()))
 			.findAny()
 			.orElseThrow(IllegalArgumentException::new);
 	}

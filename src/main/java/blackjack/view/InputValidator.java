@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public class InputValidator {
 
@@ -47,7 +48,8 @@ public class InputValidator {
 	}
 
 	private static void validateProperChoice(String input) {
-		if (!input.equals(CHOICE_YES) && !input.equals(CHOICE_NO)) {
+		final String inputLowercase = input.toLowerCase(Locale.ROOT);
+		if (!inputLowercase.equals(CHOICE_YES) && !inputLowercase.equals(CHOICE_NO)) {
 			throw new IllegalArgumentException(PROPER_CHOICE_ERROR);
 		}
 	}
