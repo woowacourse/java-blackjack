@@ -11,6 +11,14 @@ public class Player extends Participant {
         super(name, hand);
     }
 
+    @Override
+    public boolean isNeedToDraw() {
+        if (isBlackJack() || isMaxScore() || isBust()) {
+            return false;
+        }
+        return true;
+    }
+
     public Versus compareAtDealerBlackJack() {
         if (this.isBlackJack()) {
             return Versus.DRAW;

@@ -56,16 +56,13 @@ public class OutputView {
         }
     }
 
-    public static boolean printIfMaxScoreOrBust(Players players, Name name) {
+    public static void printIfMaxScoreOrBust(Players players, Name name) {
         if (players.isMaxScoreByName(name)) {
             System.out.println(MAX_SCORE_MESSAGE);
-            return true;
         }
         if (players.isBustByName(name)) {
             System.out.println(BUST_MESSAGE);
-            return true;
         }
-        return false;
     }
 
     public static void printDealerDrawMessage() {

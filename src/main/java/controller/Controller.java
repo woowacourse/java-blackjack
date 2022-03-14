@@ -48,11 +48,10 @@ public class Controller {
     }
 
     private void drawForPlayer(Name name, Deck deck, Players players) {
-        boolean isMaxScoreOrBust = false;
-        while (!players.isBlackJackByName(name) && !isMaxScoreOrBust && InputView.inputAskDraw(name.getName())) {
+        while (players.isNeedToDrawByName(name) && InputView.inputAskDraw(name.getName())) {
             players.addCardByName(name, deck.draw());
             OutputView.printPlayerHand(name, players);
-            isMaxScoreOrBust = OutputView.printIfMaxScoreOrBust(players, name);
+            OutputView.printIfMaxScoreOrBust(players, name);
         }
     }
 

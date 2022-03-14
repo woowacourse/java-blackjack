@@ -14,11 +14,12 @@ public class Dealer extends Participant {
         super(new Name(DEALER_NAME), hand);
     }
 
-    public Card getFirstHand() {
-        return getHand().get(FIRST_CARD_INDEX);
-    }
-
+    @Override
     public boolean isNeedToDraw() {
         return calculateBestScore() <= STANDARD_OF_ENOUGH_CARD;
+    }
+
+    public Card getFirstHand() {
+        return getHand().get(FIRST_CARD_INDEX);
     }
 }

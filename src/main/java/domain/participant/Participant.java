@@ -27,6 +27,8 @@ public abstract class Participant {
         hand.add(card);
     }
 
+    public abstract boolean isNeedToDraw();
+
     public String showHand() {
         return String.join(
                 JOINING_DELIMITER,

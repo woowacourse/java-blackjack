@@ -73,12 +73,12 @@ public class Players {
         return bustPlayerCount != players.size();
     }
 
-    public boolean isBlackJackByName(Name name) {
-        return findByName(name).isBlackJack();
-    }
-
     public boolean isMaxScoreByName(Name name) {
         return findByName(name).isMaxScore();
+    }
+
+    public boolean isNeedToDrawByName(Name name) {
+        return findByName(name).isNeedToDraw();
     }
 
     public Result getResultAtDealerBlackJack(Dealer dealer) {
