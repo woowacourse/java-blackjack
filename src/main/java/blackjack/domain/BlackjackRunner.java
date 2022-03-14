@@ -7,9 +7,7 @@ import blackjack.domain.card.generator.RandomCardsGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.DealerDto;
 import blackjack.dto.DealerResultsDto;
-import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayerResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -23,19 +21,13 @@ public class BlackjackRunner {
         Dealer dealer = new Dealer(deck.getInitCards());
         Players players = new Players(deck, InputView.getNames());
 
-        OutputView.printStartInfo(DealerDto.from(dealer), toPlayersDto(players.getValue()));
+        OutputView.printStart(dealer, players.getValue());
 
         players.getValue().forEach(player -> playing(deck, player));
         drawDealer(deck, dealer);
 
-        OutputView.printResultInfo(DealerDto.from(dealer), toPlayersDto(players.getValue()));
+        OutputView.printResult(dealer, players.getValue());
         OutputView.printGameResult(DealerResultsDto.of(players, dealer), createPlayerResult(players, dealer));
-    }
-
-    private List<PlayerDto> toPlayersDto(List<Player> players) {
-        return players.stream()
-                .map(PlayerDto::from)
-                .collect(toList());
     }
 
     private void playing(Deck deck, Player player) {
@@ -50,14 +42,14 @@ public class BlackjackRunner {
 
         if (playCommand.isYes()) {
             player.append(deck.draw());
-            OutputView.printPlayerCardInfo(PlayerDto.from(player));
+            OutputView.printPlayerCard(player);
         }
     }
 
     private void drawDealer(Deck deck, Dealer dealer) {
         if (dealer.isDrawable()) {
             dealer.append(deck.draw());
-            OutputView.printDealerDrawableInfo();
+            OutputView.printDealerDrawable();
         }
     }
 

@@ -1,11 +1,11 @@
 package blackjack.view;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.joining;
 
-import blackjack.dto.CardDto;
-import blackjack.dto.DealerDto;
+import blackjack.domain.card.Card;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.dto.DealerResultsDto;
-import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayerResultDto;
 import java.util.List;
 
@@ -14,57 +14,56 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printStartInfo(DealerDto dealerDto, List<PlayerDto> players) {
+    public static void printStart(Dealer dealer, List<Player> players) {
         System.out.println("\n딜러와 " + generateNames(players) + "에게 2장씩 나누었습니다.");
-        printDealerCardInfo(dealerDto);
+        printDealerCard(dealer);
 
-        players.forEach(OutputView::printPlayerCardInfo);
+        players.forEach(OutputView::printPlayerCard);
         System.out.println();
     }
 
-    private static String generateNames(List<PlayerDto> players) {
+    private static String generateNames(List<Player> players) {
         return players.stream()
-                .map(PlayerDto::getName)
+                .map(Player::getName)
                 .collect(joining(", "));
     }
 
-    private static void printDealerCardInfo(DealerDto dealerDto) {
-        System.out.println(dealerDto.getName() + " 카드: " + cardInfo(dealerDto.getCards().get(0)));
+    private static void printDealerCard(Dealer dealer) {
+        System.out.println(dealer.getName() + " 카드: " + generateCard(dealer.getCards().get(0)));
     }
 
-    public static void printPlayerCardInfo(PlayerDto playerDto) {
-        String cardsInfo = generateCardsInfo(playerDto.getCards());
-        System.out.println(playerDto.getName() + " 카드: " + cardsInfo);
+    public static void printPlayerCard(Player player) {
+        System.out.println(player.getName() + " 카드: " + generateCards(player.getCards()));
     }
 
-    public static void printDealerDrawableInfo() {
+    public static void printDealerDrawable() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printResultInfo(DealerDto dealerDto, List<PlayerDto> players) {
+    public static void printResult(Dealer dealer, List<Player> players) {
         System.out.println();
-        printDealerResultInfo(dealerDto);
-        players.forEach(OutputView::printPlayerResultInfo);
+        printDealerResult(dealer);
+        players.forEach(OutputView::printPlayerResult);
     }
 
-    private static void printDealerResultInfo(DealerDto dealerDto) {
-        String cardsInfo = generateCardsInfo(dealerDto.getCards());
-        System.out.println("딜러: " + cardsInfo + " - 결과: " + dealerDto.getTotalScore());
+    private static void printDealerResult(Dealer dealer) {
+        String cardsInfo = generateCards(dealer.getCards());
+        System.out.println("딜러: " + cardsInfo + " - 결과: " + dealer.getTotalScore());
     }
 
-    private static void printPlayerResultInfo(PlayerDto playerDto) {
-        String cardsInfo = generateCardsInfo(playerDto.getCards());
-        System.out.println(playerDto.getName() + ": " + cardsInfo + " - 결과: " + playerDto.getTotalScore());
+    private static void printPlayerResult(Player player) {
+        String cardsInfo = generateCards(player.getCards());
+        System.out.println(player.getName() + ": " + cardsInfo + " - 결과: " + player.getTotalScore());
     }
 
-    private static String generateCardsInfo(List<CardDto> cards) {
+    private static String generateCards(List<Card> cards) {
         return cards.stream()
-                .map(OutputView::cardInfo)
+                .map(OutputView::generateCard)
                 .collect(joining(", "));
     }
 
-    private static String cardInfo(CardDto cardDto) {
-        return cardDto.getDenomination() + cardDto.getSuit();
+    private static String generateCard(Card card) {
+        return card.getDenomination().getName() + card.getSuit().getName();
     }
 
     public static void printGameResult(DealerResultsDto dealerResults, List<PlayerResultDto> playerResults) {
