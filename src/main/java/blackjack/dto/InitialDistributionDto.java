@@ -1,5 +1,6 @@
 package blackjack.dto;
 
+import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.participant.Participant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,9 +10,15 @@ import java.util.stream.Collectors;
 public class InitialDistributionDto {
 
     private final List<ParticipantCardsDto> participantsInfo = new ArrayList<>();
+    private final boolean isGameOver;
 
-    public InitialDistributionDto(List<Participant> participants) {
+    private InitialDistributionDto(List<Participant> participants, boolean isGameOver) {
         participants.forEach(this::initParticipantInfo);
+        this.isGameOver = isGameOver;
+    }
+
+    public static InitialDistributionDto of(BlackjackGame game) {
+        return new InitialDistributionDto(game.getParticipants(), game.isBlackjackDealer());
     }
 
     private void initParticipantInfo(Participant participant) {
@@ -30,10 +37,15 @@ public class InitialDistributionDto {
                 .collect(Collectors.toUnmodifiableList());
     }
 
+    public boolean getIsGameOver() {
+        return isGameOver;
+    }
+
     @Override
     public String toString() {
         return "InitialDistributionDto{" +
                 "participantsInfo=" + participantsInfo +
+                ", isGameOver=" + isGameOver +
                 '}';
     }
 }
