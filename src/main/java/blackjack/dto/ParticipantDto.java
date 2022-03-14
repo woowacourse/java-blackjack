@@ -1,15 +1,15 @@
-package blackjack.vo;
+package blackjack.dto;
 
 import java.util.Set;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Participant;
 
-public class ParticipantVo {
+public class ParticipantDto {
 
     private final Participant participant;
 
-    public ParticipantVo(Participant participant) {
+    public ParticipantDto(Participant participant) {
         this.participant = participant;
     }
 

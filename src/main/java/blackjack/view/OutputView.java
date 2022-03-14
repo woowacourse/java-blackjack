@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import blackjack.domain.Record;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.DrawCount;
-import blackjack.vo.ParticipantVo;
+import blackjack.dto.ParticipantDto;
 
 public class OutputView {
 
@@ -23,11 +23,11 @@ public class OutputView {
         System.out.println("딜러: " + card.getNumber().getName() + card.getSymbol().getName());
     }
 
-    public static void printPlayerCards(ParticipantVo vo) {
+    public static void printPlayerCards(ParticipantDto vo) {
         System.out.println(vo.getName() + "카드: " + String.join(", ", getCardsStatus(vo)));
     }
 
-    private static List<String> getCardsStatus(ParticipantVo vo) {
+    private static List<String> getCardsStatus(ParticipantDto vo) {
         return vo.getCards().stream()
             .map(card -> card.getNumber().getName() + card.getSymbol().getName())
             .collect(Collectors.toList());
@@ -46,7 +46,7 @@ public class OutputView {
         return "딜러가 16초과여서 카드를 받지않았습니다.";
     }
 
-    public static void printParticipantCardsWithScore(ParticipantVo vo) {
+    public static void printParticipantCardsWithScore(ParticipantDto vo) {
         System.out.println(vo.getName() + "카드: " + String.join(", ", getCardsStatus(vo))
             + " - 결과: " + vo.getScore());
     }

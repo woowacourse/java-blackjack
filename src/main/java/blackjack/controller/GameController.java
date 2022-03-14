@@ -10,13 +10,13 @@ import blackjack.domain.Game;
 import blackjack.domain.PlayStatus;
 import blackjack.domain.Record;
 import blackjack.domain.RecordFactory;
-import blackjack.domain.participant.DrawCount;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.deckstrategy.RandomDeck;
+import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Player;
+import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.vo.ParticipantVo;
 
 public class GameController {
 
@@ -37,7 +37,7 @@ public class GameController {
         OutputView.printInitResult(names);
         OutputView.printDealerFirstCard(game.dealerFirstCard());
         for (Player player : game.getPlayers()) {
-            OutputView.printPlayerCards(new ParticipantVo(player));
+            OutputView.printPlayerCards(new ParticipantDto(player));
         }
         OutputView.printEmptyLine();
         return game;
@@ -50,7 +50,7 @@ public class GameController {
 
             game.drawPlayerCard(player, hitOrStay);
 
-            OutputView.printPlayerCards(new ParticipantVo(player));
+            OutputView.printPlayerCards(new ParticipantDto(player));
         }
     }
 
@@ -60,9 +60,9 @@ public class GameController {
     }
 
     private void ParticipantsResult(Game game) {
-        OutputView.printParticipantCardsWithScore(new ParticipantVo(game.getDealer()));
+        OutputView.printParticipantCardsWithScore(new ParticipantDto(game.getDealer()));
         for (Player player : game.getPlayers()) {
-            OutputView.printParticipantCardsWithScore(new ParticipantVo(player));
+            OutputView.printParticipantCardsWithScore(new ParticipantDto(player));
         }
     }
 
