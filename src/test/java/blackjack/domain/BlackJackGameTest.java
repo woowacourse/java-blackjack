@@ -73,7 +73,7 @@ public class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(dealer, new Gamers(List.of(judy, huni)));
 
         //when
-        int dealerResult = blackJackGame.calculateDealerResultBoard();
+        int dealerResult = blackJackGame.calculateDealerResultBoard(blackJackGame.calculateResultBoard());
         assertThat(dealerResult).isEqualTo(0);
     }
 }

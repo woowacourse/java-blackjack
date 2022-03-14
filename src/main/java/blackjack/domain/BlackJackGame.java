@@ -41,8 +41,8 @@ public class BlackJackGame {
         return gamers.compareResult(dealer.calculateResult());
     }
 
-    public int calculateDealerResultBoard() {
-        return -calculateResultBoard().values()
+    public int calculateDealerResultBoard(final Map<Player, Bet> resultBoard) {
+        return -resultBoard.values()
                 .stream()
                 .mapToInt(Bet::getAmount)
                 .sum();
