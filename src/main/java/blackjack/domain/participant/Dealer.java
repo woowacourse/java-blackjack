@@ -15,7 +15,7 @@ public class Dealer extends Participant {
         this(DEALER_NAME, hand);
     }
 
-    public Dealer(Name name, Hand hand) {
+    private Dealer(Name name, Hand hand) {
         super(name, hand);
     }
 
