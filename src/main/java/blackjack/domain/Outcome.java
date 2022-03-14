@@ -11,12 +11,12 @@ public enum Outcome {
 	TIE("무", "TIE", gapScore -> gapScore == 0);
 
 	private final String value;
-	private final String oppositeValue;
+	private final String counterpartRoleValue;
 	private final Predicate<Integer> competeStander;
 
-	Outcome(final String value, final String oppositeValue, final Predicate<Integer> competeStander) {
+	Outcome(final String value, final String counterpartRoleValue, final Predicate<Integer> competeStander) {
 		this.value = value;
-		this.oppositeValue = oppositeValue;
+		this.counterpartRoleValue = counterpartRoleValue;
 		this.competeStander = competeStander;
 	}
 
@@ -36,7 +36,7 @@ public enum Outcome {
 		return value;
 	}
 
-	public Outcome getOppositeOutcome() {
-		return Outcome.valueOf(oppositeValue);
+	public Outcome getCounterpartRoleOutcome() {
+		return Outcome.valueOf(counterpartRoleValue);
 	}
 }

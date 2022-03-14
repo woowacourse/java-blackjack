@@ -94,7 +94,7 @@ public class Roles {
 			Outcome outcome = judge(player);
 			final Map<Outcome, Integer> playerResult = recordPlayerCompeteResult(outcome);
 			playersResult.add(PlayerResultDto.from(player, playerResult));
-			dealerResult.merge(outcome.getOppositeOutcome(), COMPETE_COUNT, Integer::sum);
+			dealerResult.merge(outcome.getCounterpartRoleOutcome(), COMPETE_COUNT, Integer::sum);
 		}
 		return FinalResultDto.from(dealer, dealerResult, playersResult);
 	}
