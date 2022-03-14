@@ -7,7 +7,7 @@ public enum ParticipantStatus {
     RUNNING,
     BUST,
     BLACKJACK,
-    FINISHED,
+    STAND,
     ;
 
     public boolean isFinishedGame() {

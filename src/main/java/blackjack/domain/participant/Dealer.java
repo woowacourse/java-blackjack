@@ -19,7 +19,7 @@ public class Dealer extends AbstractParticipant {
             return new Dealer(NAME, cards, ParticipantStatus.BLACKJACK);
         }
         if (cards.calculateMaxScore() >= DEALER_LIMIT_SCORE) {
-            return new Dealer(NAME, cards, ParticipantStatus.FINISHED);
+            return new Dealer(NAME, cards, ParticipantStatus.STAND);
         }
         return new Dealer(NAME, cards, ParticipantStatus.RUNNING);
     }

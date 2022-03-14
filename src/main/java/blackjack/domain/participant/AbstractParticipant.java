@@ -43,7 +43,7 @@ public abstract class AbstractParticipant implements Participant {
     private void refreshParticipantStatus() {
         participantStatus = participantStatus.refreshStatus(cards);
         if (isDealer() && isEnd()) {
-            participantStatus = ParticipantStatus.FINISHED;
+            participantStatus = ParticipantStatus.STAND;
         }
     }
 
@@ -55,7 +55,7 @@ public abstract class AbstractParticipant implements Participant {
     @Override
     public void changeFinishStatus() {
         if (canHit()) {
-            participantStatus = ParticipantStatus.FINISHED;
+            participantStatus = ParticipantStatus.STAND;
         }
     }
 
