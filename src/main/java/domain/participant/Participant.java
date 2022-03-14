@@ -4,6 +4,7 @@ import domain.HitThreshold;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.Cards;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,7 @@ public abstract class Participant {
     protected final Cards cards;
     protected final String name;
 
-    public Participant(final HitThreshold canAddCardThreshold, final String name) {
+    protected Participant(final HitThreshold canAddCardThreshold, final String name) {
         this.cards = new Cards(canAddCardThreshold);
         this.name = name;
     }
