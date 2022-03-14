@@ -39,9 +39,9 @@ class CardsTest {
 
     private static Stream<Arguments> provideCards() {
         return Stream.of(
-                Arguments.of(Set.of(new Card(DIAMOND, ACE), new Card(DIAMOND, TEN)), 21),
-                Arguments.of(Set.of(new Card(DIAMOND, TWO), new Card(DIAMOND, THREE)), 5),
-                Arguments.of(Set.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, JACK)), 20)
+                Arguments.of(Set.of(Card.of(DIAMOND, ACE), Card.of(DIAMOND, TEN)), 21),
+                Arguments.of(Set.of(Card.of(DIAMOND, TWO), Card.of(DIAMOND, THREE)), 5),
+                Arguments.of(Set.of(Card.of(DIAMOND, QUEEN), Card.of(DIAMOND, JACK)), 20)
         );
     }
 
@@ -50,8 +50,8 @@ class CardsTest {
     @DisplayName("합산한 값이 21을 초과하면 BUST를 반환한다.")
     void isBust1(CardNumber cardNumber, Status expected) {
         // give
-        final Cards cards = new Cards(Set.of(new Card(DIAMOND, JACK), new Card(DIAMOND, FIVE),
-                new Card(DIAMOND, cardNumber)));
+        final Cards cards = new Cards(Set.of(Card.of(DIAMOND, JACK), Card.of(DIAMOND, FIVE),
+                Card.of(DIAMOND, cardNumber)));
 
         // when
         final Status actual = cards.getStatus();
@@ -73,17 +73,17 @@ class CardsTest {
 
     private static Stream<Arguments> provideSource() {
         return Stream.of(
-                Arguments.of(new Cards(Set.of(new Card(DIAMOND, ACE),
-                        new Card(CLUB, TEN),
-                        new Card(CLUB, FIVE))), 16),
-                Arguments.of(new Cards(Set.of(new Card(DIAMOND, ACE),
-                        new Card(CLUB, ACE),
-                        new Card(SPADE, ACE),
-                        new Card(HEART, ACE))), 14),
-                Arguments.of(new Cards(Set.of(new Card(DIAMOND, ACE),
-                        new Card(CLUB, ACE),
-                        new Card(SPADE, ACE),
-                        new Card(HEART, TEN))), 13)
+                Arguments.of(new Cards(Set.of(Card.of(DIAMOND, ACE),
+                        Card.of(CLUB, TEN),
+                        Card.of(CLUB, FIVE))), 16),
+                Arguments.of(new Cards(Set.of(Card.of(DIAMOND, ACE),
+                        Card.of(CLUB, ACE),
+                        Card.of(SPADE, ACE),
+                        Card.of(HEART, ACE))), 14),
+                Arguments.of(new Cards(Set.of(Card.of(DIAMOND, ACE),
+                        Card.of(CLUB, ACE),
+                        Card.of(SPADE, ACE),
+                        Card.of(HEART, TEN))), 13)
         );
     }
 }

@@ -38,8 +38,8 @@ class DealerTest {
 
     private static Stream<Arguments> provideCardFactory() {
         return Stream.of(
-                Arguments.of(Deck.createBy(List.of(new Card(DIAMOND, TEN), new Card(DIAMOND, SEVEN))), false),
-                Arguments.of(Deck.createBy(List.of(new Card(DIAMOND, TEN), new Card(DIAMOND, SIX))), true)
+                Arguments.of(Deck.createBy(List.of(Card.of(DIAMOND, TEN), Card.of(DIAMOND, SEVEN))), false),
+                Arguments.of(Deck.createBy(List.of(Card.of(DIAMOND, TEN), Card.of(DIAMOND, SIX))), true)
         );
     }
 
@@ -47,8 +47,8 @@ class DealerTest {
     @DisplayName("처음 받은 카드 중에 한 장의 카드를 공개한다.")
     void openCard() {
         // give
-        final Card firstCard = new Card(CLUB, KING);
-        final Card secondCard = new Card(DIAMOND, QUEEN);
+        final Card firstCard = Card.of(CLUB, KING);
+        final Card secondCard = Card.of(DIAMOND, QUEEN);
 
         final Deck deck = Deck.createBy(List.of(secondCard, firstCard));
 

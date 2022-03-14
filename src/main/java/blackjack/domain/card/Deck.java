@@ -1,10 +1,8 @@
 package blackjack.domain.card;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
-import java.util.stream.Collectors;
 
 public class Deck {
 
@@ -22,25 +20,13 @@ public class Deck {
     }
 
     public static Deck create() {
-        final List<Card> list = createAllCards();
+        final List<Card> list = Card.getAllCards();
         Collections.shuffle(list);
 
         final Stack<Card> deck = new Stack<>();
         deck.addAll(list);
 
         return new Deck(deck);
-    }
-
-    private static List<Card> createAllCards() {
-        return Arrays.stream(CardSymbol.values())
-                .flatMap(symbol -> createCardsBySymbol(symbol).stream())
-                .collect(Collectors.toList());
-    }
-
-    private static List<Card> createCardsBySymbol(CardSymbol symbol) {
-        return Arrays.stream(CardNumber.values())
-                .map(cardNumber -> new Card(symbol, cardNumber))
-                .collect(Collectors.toList());
     }
 
     public Card drawCard() {

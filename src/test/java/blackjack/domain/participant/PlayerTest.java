@@ -51,8 +51,8 @@ class PlayerTest {
     void returnBust(CardNumber cardNumber, Status expected) {
         // give
         final Player player = new Player("pobi");
-        final List<Card> cards = List.of(new Card(DIAMOND, cardNumber), new Card(DIAMOND, QUEEN),
-                new Card(DIAMOND, JACK));
+        final List<Card> cards = List.of(Card.of(DIAMOND, cardNumber), Card.of(DIAMOND, QUEEN),
+                Card.of(DIAMOND, JACK));
         final Deck deck = Deck.createBy(cards);
         IntStream.range(0, 3)
                 .mapToObj(i -> deck)
@@ -70,7 +70,7 @@ class PlayerTest {
     void init() {
         // give
         final Player player = new Player("pobi");
-        final List<Card> cards = List.of(new Card(DIAMOND, QUEEN), new Card(DIAMOND, KING));
+        final List<Card> cards = List.of(Card.of(DIAMOND, QUEEN), Card.of(DIAMOND, KING));
 
         // when
         player.prepareGame(Deck.createBy(cards));
