@@ -62,11 +62,15 @@ public class CardBundle {
         return aceCount > 0;
     }
 
+    public boolean isBlackjackScore() {
+        return getScore().toInt() == Score.BLACKJACK;
+    }
+
     public boolean isBlackjack() {
         if (cards.size() != BLACKJACK_CARD_SIZE) {
             return false;
         }
-        return getScore().toInt() == Score.BLACKJACK;
+        return isBlackjackScore();
     }
 
     public boolean isBust() {

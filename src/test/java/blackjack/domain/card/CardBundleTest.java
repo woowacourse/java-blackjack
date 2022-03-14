@@ -128,31 +128,6 @@ public class CardBundleTest {
         }
     }
 
-    @DisplayName("isBust 메서드 테스트")
-    @Nested
-    class IsBustTest {
-
-        @DisplayName("점수가 21을 넘지 않으면 false를 반환한다.")
-        @Test
-        void isBust_returnFalseOn21OrLess() {
-            CardBundle cardBundleOf21 = generateCardBundleOf(CLOVER_ACE, CLOVER_KING);
-
-            boolean actual = cardBundleOf21.isBust();
-
-            assertThat(actual).isFalse();
-        }
-
-        @DisplayName("점수가 21을 넘으면 true를 반환한다.")
-        @Test
-        void isBust_returnTrueOnOver21() {
-            CardBundle cardBundleOver21 = generateCardBundleOf(CLOVER8, CLOVER10, CLOVER_KING);
-
-            boolean actual = cardBundleOver21.isBust();
-
-            assertThat(actual).isTrue();
-        }
-    }
-
     @DisplayName("isBlackjack 메서드 테스트")
     @Nested
     class IsBlackjackTest {
@@ -185,6 +160,66 @@ public class CardBundleTest {
             boolean actual = twoCardsOf20.isBlackjack();
 
             assertThat(actual).isFalse();
+        }
+    }
+
+    @DisplayName("isBlackjackScore 메서드 테스트")
+    @Nested
+    class IsBlackjackScoreTest {
+
+        @DisplayName("점수가 21이면서 두 장의 카드로 구성된 경우 true를 반환한다.")
+        @Test
+        void isBlackjackScore_returnTrueOnBlackjack() {
+            CardBundle twoCardsOf21 = generateCardBundleOf(CLOVER_ACE, CLOVER_KING);
+
+            boolean actual = twoCardsOf21.isBlackjackScore();
+
+            assertThat(actual).isTrue();
+        }
+
+        @DisplayName("점수가 21이지만 3장 이상으로 구성된 경우에도 true를 반환한다.")
+        @Test
+        void isBlackjackScore_returnTrueOn21NonBlackjack() {
+            CardBundle twoCardsOf21 = generateCardBundleOf(CLOVER3, CLOVER8, CLOVER_KING);
+
+            boolean actual = twoCardsOf21.isBlackjackScore();
+
+            assertThat(actual).isTrue();
+        }
+
+        @DisplayName("점수가 21이 아니면 false를 반환한다.")
+        @Test
+        void isBlackjackScore_returnFalseIfNot21() {
+            CardBundle twoCardsOf20 = generateCardBundleOf(CLOVER10, CLOVER_KING);
+
+            boolean actual = twoCardsOf20.isBlackjackScore();
+
+            assertThat(actual).isFalse();
+        }
+    }
+
+    @DisplayName("isBust 메서드 테스트")
+    @Nested
+    class IsBustTest {
+
+        @DisplayName("점수가 21을 넘지 않으면 false를 반환한다.")
+        @Test
+        void isBust_returnFalseOn21OrLess() {
+            CardBundle cardBundleOf21 = generateCardBundleOf(CLOVER_ACE, CLOVER_KING);
+
+            boolean actual = cardBundleOf21.isBust();
+
+            assertThat(actual).isFalse();
+        }
+
+        @DisplayName("점수가 21을 넘으면 true를 반환한다.")
+        @Test
+        void isBust_returnTrueOnOver21() {
+            CardBundle cardBundleOver21 = generateCardBundleOf(CLOVER8, CLOVER10, CLOVER_KING);
+
+            boolean actual = cardBundleOver21.isBust();
+
+            assertThat(actual).isTrue();
         }
     }
 }
