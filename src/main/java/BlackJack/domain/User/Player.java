@@ -9,14 +9,8 @@ public class Player extends User {
         super(name);
     }
 
-    public boolean checkBlackJack(){
-        if(cards.calculateScore() == 21){
-            this.result = Result.BLACKJACK;
-        }
-        return true;
-    }
-
-    public boolean checkPossibleAdd() {
+    public boolean isPossibleToAdd() {
         return this.getScore() < PLAYER_ADD_CARD_LIMIT;
     }
+
 }

@@ -22,7 +22,7 @@ public abstract class User {
     }
 
     public void addCard(){
-        if(checkPossibleAdd()){
+        if(isPossibleToAdd()){
             Card card = CARD_CACHE.poll();
             this.cards.add(card);
             return;
@@ -34,9 +34,7 @@ public abstract class User {
         this.cards.add(card);
     }
 
-    public abstract boolean checkPossibleAdd();
-
-    public abstract boolean checkBlackJack();
+    public abstract boolean isPossibleToAdd();
 
     public String getName() {
         return name;

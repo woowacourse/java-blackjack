@@ -25,9 +25,10 @@ public class BlackjackController {
         Game game = new Game(inputPlayerNames,new Dealer());
         game.handOutInitCard();
         OutputView.printDrawMessage(inputPlayerNames);
-        OutputView.printTotalUserCards(convertToListDto(game.getDealer(), game.getPlayers()));
+        OutputView.printTotalUserCards(convertToToTalUserDto(game.getDealer(), game.getPlayers()));
 
-        game.checkPlayerAndDealerIsBlackJack();
+        checkDealerIsBlackJack(game);
+
         OutputView.printTotalResult(playGame(game.getDealer(), game.getPlayers()));
 
         makeResults(game);
@@ -57,11 +58,11 @@ public class BlackjackController {
         for (Player player : players.getPlayers()) {
             addCardPerPlayer(player);
         }
-        while (dealer.checkPossibleAdd()) {
+        while (dealer.isPossibleToAdd()) {
             OutputView.printAddDealerCard();
             dealer.addCard();
         }
-        return convertToListDto(dealer, players);
+        return convertToToTalUserDto(dealer, players);
     }
 
     private void addCardPerPlayer(Player player) {
