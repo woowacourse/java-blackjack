@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.Answer;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -53,6 +54,11 @@ public class Gamer extends Player {
 
     public boolean isHit(final Answer answer) {
         return answer == Answer.YES;
+    }
+
+    public Bet calculateCurrentBet(final Result result) {
+        bet.calculateBenefit(result);
+        return bet;
     }
 
     @Override

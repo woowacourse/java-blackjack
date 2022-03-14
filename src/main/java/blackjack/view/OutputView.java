@@ -3,6 +3,7 @@ package blackjack.view;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.player.Bet;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Player;
@@ -83,25 +84,14 @@ public class OutputView {
                 player.calculateResult());
     }
 
-    public static void printFinalResultBoard(final Map<CompareResult, Integer> dealerResultBoard,
-                                             final Map<Player, CompareResult> gamerResultBoard) {
+    public static void printFinalResultBoard(final int dealerResult,
+                                             final Map<Player, Bet> gamerResultBoard) {
         System.out.println("\n## 최종 승패");
         System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
-                joinDealerString(dealerResultBoard));
+                dealerResult);
         gamerResultBoard.forEach((key, value) -> System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE,
                 key.getName(),
-                value.getResult()));
-    }
-
-    private static String joinDealerString(final Map<CompareResult, Integer> dealerResultBoard) {
-        return dealerResultBoard.entrySet().stream()
-                .map(board -> dealerResultToString(board.getKey(),
-                        board.getValue()))
-                .collect(joining(PRINT_BLANK));
-    }
-
-    private static String dealerResultToString(final CompareResult compareResult, final int value) {
-        return value + compareResult.getResult();
+                value.getAmount()));
     }
 
     public static void printErrorMessage(final String message) {
