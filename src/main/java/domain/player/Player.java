@@ -39,12 +39,13 @@ public abstract class Player {
         return cards.isBlackJack();
     }
 
-    protected MatchResult getMatchResultAfterBustCheck(Player dealer) {
-        if (!hasHigherScoreIgnoreBust(dealer)) {
-            return MatchResult.LOSE;
-        }
-        if (hasHigherScoreIgnoreBust(dealer) || winByBlackJack(dealer)) {
+    protected MatchResult getMatchResultAfterBustCheck(Player another) {
+        if (hasHigherScoreIgnoreBust(another) || winByBlackJack(another)) {
             return MatchResult.WIN;
+        }
+
+        if (another.hasHigherScoreIgnoreBust(this) || another.winByBlackJack(this)) {
+            return MatchResult.LOSE;
         }
 
         return MatchResult.DRAW;
