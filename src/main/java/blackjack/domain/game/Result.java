@@ -3,7 +3,7 @@ package blackjack.domain.game;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Winner {
+public class Result {
 
     private final List<Player> winners = new ArrayList<>();
     private final List<Player> losers = new ArrayList<>();

@@ -11,11 +11,11 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class WinnerTest {
+class ResultTest {
 
     private Dealer dealer;
     private Player player;
-    private Winner winner;
+    private Result result;
     private Card twoSpade;
     private Card threeSpade;
     private Card queenSpade;
@@ -24,7 +24,7 @@ class WinnerTest {
     void init() {
         dealer = new Dealer();
         player = new Player("pobi");
-        winner = new Winner();
+        result = new Result();
         twoSpade = Card.of(CardNumber.TWO, CardShape.SPADE);
         threeSpade = Card.of(CardNumber.THREE, CardShape.SPADE);
         queenSpade = Card.of(CardNumber.QUEEN, CardShape.SPADE);
@@ -36,9 +36,9 @@ class WinnerTest {
         dealer.drawInitCards(List.of(twoSpade, twoSpade));
         player.drawInitCards(List.of(twoSpade, threeSpade));
 
-        winner.compete(dealer, player);
+        result.compete(dealer, player);
 
-        assertThat(winner.contains(player)).isTrue();
+        assertThat(result.contains(player)).isTrue();
     }
 
     @DisplayName("플레이어의 값이 적을 경우 비교하여 승자를 확인한다.")
@@ -47,9 +47,9 @@ class WinnerTest {
         dealer.drawInitCards(List.of(twoSpade, threeSpade));
         player.drawInitCards(List.of(twoSpade, twoSpade));
 
-        winner.compete(dealer, player);
+        result.compete(dealer, player);
 
-        assertThat(winner.contains(player)).isFalse();
+        assertThat(result.contains(player)).isFalse();
     }
 
     @DisplayName("딜러의 값과 플레이어의 값이 같을 경우 승자를 확인한다.")
@@ -58,9 +58,9 @@ class WinnerTest {
         dealer.drawInitCards(List.of(twoSpade, twoSpade));
         player.drawInitCards(List.of(twoSpade, twoSpade));
 
-        winner.compete(dealer, player);
+        result.compete(dealer, player);
 
-        assertThat(winner.contains(player)).isFalse();
+        assertThat(result.contains(player)).isFalse();
     }
 
     @DisplayName("플레이어의 카드합이 21을 넘길 경우 승자에 포함되지 않는 것을 확인한다.")
@@ -69,9 +69,9 @@ class WinnerTest {
         dealer.drawInitCards(List.of(twoSpade, twoSpade));
         player.drawInitCards(List.of(queenSpade, queenSpade, twoSpade));
 
-        winner.compete(dealer, player);
+        result.compete(dealer, player);
 
-        assertThat(winner.contains(player)).isFalse();
+        assertThat(result.contains(player)).isFalse();
     }
 
     @DisplayName("플레이어가 21을 초과하지 않았을 때 딜러가 21을 초과할 경우 승자를 확인한다.")
@@ -80,8 +80,8 @@ class WinnerTest {
         dealer.drawInitCards(List.of(queenSpade, queenSpade, queenSpade));
         player.drawInitCards(List.of(twoSpade, twoSpade, twoSpade));
 
-        winner.compete(dealer, player);
+        result.compete(dealer, player);
 
-        assertThat(winner.contains(player)).isTrue();
+        assertThat(result.contains(player)).isTrue();
     }
 }

@@ -7,7 +7,7 @@ import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Human;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
-import blackjack.domain.game.Winner;
+import blackjack.domain.game.Result;
 import blackjack.view.Enter;
 import blackjack.view.Enterable;
 import blackjack.view.InputView;
@@ -115,12 +115,12 @@ public class Blackjack {
     private void showWinner(final Dealer dealer, final Players players) {
         openScore(dealer, players);
 
-        Winner winner = new Winner();
+        Result result = new Result();
         for (Player player : players.getPlayers()) {
-            winner.compete(dealer, player);
+            result.compete(dealer, player);
         }
         OutputView.printResultTitle();
-        showResult(dealer, winner, players);
+        showResult(dealer, result, players);
     }
 
     private void openScore(final Dealer dealer, final Players players) {
@@ -131,11 +131,11 @@ public class Blackjack {
         OutputView.printNewLine();
     }
 
-    private void showResult(final Dealer dealer, final Winner winner, final Players players) {
-        OutputView.printDealerResult(dealer.getName(), winner.numberOfLosers(), winner.numberOfWinners());
+    private void showResult(final Dealer dealer, final Result result, final Players players) {
+        OutputView.printDealerResult(dealer.getName(), result.numberOfLosers(), result.numberOfWinners());
 
         for (Player player : players.getPlayers()) {
-            OutputView.printPlayerResult(player.getName(), winner.contains(player));
+            OutputView.printPlayerResult(player.getName(), result.contains(player));
         }
     }
 }

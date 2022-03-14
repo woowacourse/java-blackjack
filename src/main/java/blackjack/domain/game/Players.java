@@ -20,7 +20,7 @@ public class Players {
         }
     }
 
-    private List<String> trimNames(String input) {
+    private List<String> trimNames(final String input) {
         return Arrays.stream(input.split(DELIMITER, -1))
                 .map(String::trim)
                 .collect(Collectors.toList());
