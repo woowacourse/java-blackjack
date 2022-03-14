@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class HoldingCard {
+public class HoldingCards {
 
     private static final int BUST_STANDARD = 21;
     private static final int ACE_DIFFERENCE = 10;
 
     private final List<Card> cards;
 
-    public HoldingCard() {
+    public HoldingCards() {
         this.cards = new ArrayList<>();
     }
 

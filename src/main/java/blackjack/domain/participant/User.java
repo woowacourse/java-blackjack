@@ -10,11 +10,11 @@ public class User extends Participant {
     }
 
     public ParticipantDto getUserInfo() {
-        return ParticipantDto.of(name, holdingCard.getCards());
+        return ParticipantDto.of(name, holdingCards.getCards());
     }
 
     public ParticipantDto getUserInfoWithScore() {
-        return ParticipantDto.of(name, holdingCard.getCards(), holdingCard.cardSum());
+        return ParticipantDto.of(name, holdingCards.getCards(), holdingCards.cardSum());
     }
 
     public UserResult getUserInfoWithResult(int dealerSum) {
@@ -22,6 +22,6 @@ public class User extends Participant {
     }
 
     private Result checkResult(int dealerSum) {
-        return Result.checkUserResult(holdingCard.cardSum(), dealerSum);
+        return Result.checkUserResult(holdingCards.cardSum(), dealerSum);
     }
 }

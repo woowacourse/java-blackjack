@@ -1,19 +1,19 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.HoldingCard;
+import blackjack.domain.card.HoldingCards;
 
 public abstract class Participant {
 
     private static final String ERROR_INVALID_NAME = "[ERROR] 유저의 이름은 한 글자 이상이어야 합니다.";
 
     protected final String name;
-    protected final HoldingCard holdingCard;
+    protected final HoldingCards holdingCards;
 
     public Participant(String name) {
         validateName(name);
         this.name = name;
-        this.holdingCard = new HoldingCard();
+        this.holdingCards = new HoldingCards();
     }
 
     private void validateName(String name) {
@@ -23,11 +23,11 @@ public abstract class Participant {
     }
 
     public void receiveCard(Card card) {
-        holdingCard.addCard(card);
+        holdingCards.addCard(card);
     }
 
-    public HoldingCard getHoldingCard() {
-        return holdingCard;
+    public HoldingCards getHoldingCards() {
+        return holdingCards;
     }
 
     public String getName() {

@@ -54,7 +54,7 @@ public class BlackJackController {
     }
 
     private void playEachUser(User user, Deck deck) {
-        while (!user.getHoldingCard().checkBust() && InputView.inputMoreCard(user)) {
+        while (!user.getHoldingCards().checkBust() && InputView.inputMoreCard(user)) {
             user.receiveCard(deck.drawCard());
             OutputView.printParticipantCards(user.getUserInfo());
         }
@@ -70,7 +70,7 @@ public class BlackJackController {
     private void gameResult(Users users, Dealer dealer) {
         OutputView.printFinalCard(dealer.getDealerInfoWithScore(), users.getUsersInfoWithScore());
 
-        List<UserResult> userResults = users.getUsersInfoWithResult(dealer.getHoldingCard().cardSum());
+        List<UserResult> userResults = users.getUsersInfoWithResult(dealer.getHoldingCards().cardSum());
         DealerResult dealerResult = new DealerResult(userResults);
 
         OutputView.printFinalResult(dealerResult, userResults);

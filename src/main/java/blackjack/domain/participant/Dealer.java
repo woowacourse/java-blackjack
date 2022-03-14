@@ -11,14 +11,14 @@ public class Dealer extends Participant {
     }
 
     public boolean checkUnderScoreStandard() {
-        return holdingCard.cardSum() <= MIN_SCORE_STANDARD;
+        return holdingCards.cardSum() <= MIN_SCORE_STANDARD;
     }
 
     public ParticipantDto getDealerInfoWithoutHiddenCard() {
-        return ParticipantDto.of(name, holdingCard.getCards().subList(WITHOUT_HIDDEN_CARD_INDEX, holdingCard.getCards().size()));
+        return ParticipantDto.of(name, holdingCards.getCards().subList(WITHOUT_HIDDEN_CARD_INDEX, holdingCards.getCards().size()));
     }
 
     public ParticipantDto getDealerInfoWithScore() {
-        return ParticipantDto.of(name, holdingCard.getCards(), holdingCard.cardSum());
+        return ParticipantDto.of(name, holdingCards.getCards(), holdingCards.cardSum());
     }
 }
