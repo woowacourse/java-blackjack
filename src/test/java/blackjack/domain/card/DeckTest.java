@@ -33,7 +33,7 @@ public class DeckTest {
     @DisplayName("카드덱에서 카드를 한장 뽑는다.")
     @Test
     void 카드_뽑기_정상() {
-        Card card = Card.of(ACE, DIAMOND);
+        Card card = new Card(ACE, DIAMOND);
         Deck deck = new Deck(() -> List.of(card));
 
         Card drawCard = deck.draw();

@@ -16,13 +16,13 @@ public class CardTest {
     @DisplayName("하나의 Denomination 과 하나의 Suit 를 활용하여 생성한다.")
     @Test
     void 카드_생성_정상() {
-        Assertions.assertDoesNotThrow(() -> Card.of(ACE, SPADE));
+        Assertions.assertDoesNotThrow(() -> new Card(ACE, SPADE));
     }
 
     @DisplayName("현재 점수를 기반으로 현재 끗수의 숫자를 더해 반환한다.")
     @Test
     void 점수_더하기() {
-        Card card = Card.of(THREE, HEART);
+        Card card = new Card(THREE, HEART);
 
         int result = card.calculateScore(10);
 
@@ -33,7 +33,7 @@ public class CardTest {
     @ParameterizedTest
     @ArgumentsSource(DenominationArgumentsProvider.class)
     void 점수_계산(int beforeScore, Denomination denomination, int afterScore) {
-        Card card = Card.of(denomination, HEART);
+        Card card = new Card(denomination, HEART);
         int result = card.calculateScore(beforeScore);
 
         assertThat(result).isEqualTo(afterScore);

@@ -7,13 +7,9 @@ public class Card implements Comparable<Card> {
     private final Denomination denomination;
     private final Suit suit;
 
-    private Card(Denomination denomination, Suit suit) {
+    public Card(Denomination denomination, Suit suit) {
         this.denomination = denomination;
         this.suit = suit;
-    }
-
-    public static Card of(Denomination denomination, Suit suit) {
-        return new Card(denomination, suit);
     }
 
     public int calculateScore(int score) {

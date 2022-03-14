@@ -24,7 +24,7 @@ public class CardsTest {
     @DisplayName("Cards는 2개가 아닌 다른 갯수의 카드를 활용하여 생성할 경우 예외를 던진다.")
     @Test
     void 카드들_생성_실패() {
-        assertThatThrownBy(() -> new Cards(List.of(Card.of(ACE, CLOVER))))
+        assertThatThrownBy(() -> new Cards(List.of(new Card(ACE, CLOVER))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("카드의 개수는 2장이어야 합니다.");
     }
@@ -32,10 +32,10 @@ public class CardsTest {
     @DisplayName("카드의 총점을 계산한다.")
     @Test
     void 카드_총점_계산() {
-        List<Card> cardValues = List.of(Card.of(JACK, CLOVER), Card.of(ACE, DIAMOND));
+        List<Card> cardValues = List.of(new Card(JACK, CLOVER), new Card(ACE, DIAMOND));
 
         Cards cards = new Cards(cardValues);
-        cards.append(Card.of(FIVE, SPADE));
+        cards.append(new Card(FIVE, SPADE));
 
         assertThat(cards.calculateTotalScore()).isEqualTo(16);
     }
@@ -45,7 +45,7 @@ public class CardsTest {
     void 카드_추가() {
         Cards cards = new Cards(generateCards());
 
-        cards.append(Card.of(KING, DIAMOND));
+        cards.append(new Card(KING, DIAMOND));
 
         assertThat(cards.getValue().size()).isEqualTo(3);
     }

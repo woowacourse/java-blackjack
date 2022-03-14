@@ -39,7 +39,7 @@ public class PlayerTest {
     @Test
     void 플레이어_게임_지속_불가능() {
         Player player = new Player("sudal", generateBlackjack());
-        player.append(Card.of(ACE, SPADE));
+        player.append(new Card(ACE, SPADE));
 
         assertThat(player.isDrawable()).isFalse();
     }
@@ -50,7 +50,7 @@ public class PlayerTest {
         String name = "mat";
         List<Card> cards = generateCards();
         Player player = new Player(name, cards);
-        Card card = Card.of(FIVE, SPADE);
+        Card card = new Card(FIVE, SPADE);
 
         player.append(card);
 
@@ -70,8 +70,8 @@ public class PlayerTest {
     @Test
     void 플레이어_승패_여부_버스트_승() {
         Dealer dealer = new Dealer(generateBlackjack());
-        dealer.append(Card.of(KING, SPADE));
-        dealer.append(Card.of(JACK, HEART));
+        dealer.append(new Card(KING, SPADE));
+        dealer.append(new Card(JACK, HEART));
 
         Player player = new Player("sudal", generateBlackjack());
 
@@ -84,12 +84,12 @@ public class PlayerTest {
     @Test
     void 플레이어_승패_여부_둘다_버스트_패() {
         Dealer dealer = new Dealer(generateBlackjack());
-        dealer.append(Card.of(KING, SPADE));
-        dealer.append(Card.of(JACK, HEART));
+        dealer.append(new Card(KING, SPADE));
+        dealer.append(new Card(JACK, HEART));
 
         Player player = new Player("sudal", generateBlackjack());
-        player.append(Card.of(KING, HEART));
-        player.append(Card.of(JACK, SPADE));
+        player.append(new Card(KING, HEART));
+        player.append(new Card(JACK, SPADE));
 
         GameResult gameResult = player.decideResult(dealer.getTotalScore());
 
@@ -101,8 +101,8 @@ public class PlayerTest {
     void 플레이어_승패_여부_버스트_패() {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
         Player player = new Player("sudal", generateBlackjack());
-        player.append(Card.of(KING, SPADE));
-        player.append(Card.of(JACK, SPADE));
+        player.append(new Card(KING, SPADE));
+        player.append(new Card(JACK, SPADE));
 
         GameResult gameResult = player.decideResult(dealer.getTotalScore());
 

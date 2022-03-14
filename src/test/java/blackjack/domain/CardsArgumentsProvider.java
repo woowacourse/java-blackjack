@@ -17,12 +17,12 @@ public class CardsArgumentsProvider implements ArgumentsProvider {
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
-                arguments(new Cards(List.of(Card.of(NINE, CLOVER), Card.of(EIGHT, DIAMOND))), 17),
-                arguments(new Cards(List.of(Card.of(KING, SPADE), Card.of(ACE, CLOVER))), 21),
-                arguments(new Cards(List.of(Card.of(SEVEN, CLOVER), Card.of(KING, SPADE))), 17),
-                arguments(new Cards(List.of(Card.of(ACE, CLOVER), Card.of(ACE, SPADE))), 12),
-                arguments(new Cards(List.of(Card.of(ACE, CLOVER), Card.of(KING, SPADE))), 21),
-                arguments(new Cards(List.of(Card.of(ACE, CLOVER), Card.of(THREE, HEART))), 14)
+                arguments(new Cards(List.of(new Card(NINE, CLOVER), new Card(EIGHT, DIAMOND))), 17),
+                arguments(new Cards(List.of(new Card(KING, SPADE), new Card(ACE, CLOVER))), 21),
+                arguments(new Cards(List.of(new Card(SEVEN, CLOVER), new Card(KING, SPADE))), 17),
+                arguments(new Cards(List.of(new Card(ACE, CLOVER), new Card(ACE, SPADE))), 12),
+                arguments(new Cards(List.of(new Card(ACE, CLOVER), new Card(KING, SPADE))), 21),
+                arguments(new Cards(List.of(new Card(ACE, CLOVER), new Card(THREE, HEART))), 14)
         );
     }
 }

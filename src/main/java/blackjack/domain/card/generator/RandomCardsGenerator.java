@@ -25,7 +25,7 @@ public class RandomCardsGenerator implements CardsGenerator {
 
     private static Set<Card> createIntactCards(Denomination denomination) {
         return Arrays.stream(Suit.values())
-                .map(suit -> Card.of(denomination, suit))
+                .map(suit -> new Card(denomination, suit))
                 .collect(toSet());
     }
 

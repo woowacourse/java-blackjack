@@ -1,9 +1,6 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.CardsTestDataGenerator.generateBlackjack;
-import static blackjack.domain.CardsTestDataGenerator.generateCards;
-import static blackjack.domain.CardsTestDataGenerator.generateTotalScoreGraterThan17Cards;
-import static blackjack.domain.CardsTestDataGenerator.generateTotalScoreNotMoreThan16Cards;
+import static blackjack.domain.CardsTestDataGenerator.*;
 import static blackjack.domain.card.Denomination.*;
 import static blackjack.domain.GameResult.*;
 import static blackjack.domain.card.Suit.*;
@@ -50,7 +47,7 @@ public class DealerTest {
     @Test
     void 카드_합침() {
         Dealer dealer = new Dealer(generateCards());
-        Card card = Card.of(FIVE, SPADE);
+        Card card = new Card(FIVE, SPADE);
 
         dealer.append(card);
 
@@ -71,8 +68,8 @@ public class DealerTest {
     @Test
     void 딜러_승패_여부_버스트_패() {
         Dealer dealer = new Dealer(generateBlackjack());
-        dealer.append(Card.of(KING, SPADE));
-        dealer.append(Card.of(JACK, HEART));
+        dealer.append(new Card(KING, SPADE));
+        dealer.append(new Card(JACK, HEART));
 
         Player player = new Player("sudal", generateBlackjack());
 
@@ -85,12 +82,12 @@ public class DealerTest {
     @Test
     void 딜러_승패_여부_둘다_버스트_승() {
         Dealer dealer = new Dealer(generateBlackjack());
-        dealer.append(Card.of(KING, SPADE));
-        dealer.append(Card.of(JACK, HEART));
+        dealer.append(new Card(KING, SPADE));
+        dealer.append(new Card(JACK, HEART));
 
         Player player = new Player("sudal", generateBlackjack());
-        player.append(Card.of(KING, HEART));
-        player.append(Card.of(JACK, SPADE));
+        player.append(new Card(KING, HEART));
+        player.append(new Card(JACK, SPADE));
 
         GameResult gameResult = dealer.decideResult(player.getTotalScore());
 
@@ -102,8 +99,8 @@ public class DealerTest {
     void 딜러_승패_여부_버스트_승() {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
         Player player = new Player("sudal", generateBlackjack());
-        player.append(Card.of(KING, SPADE));
-        player.append(Card.of(JACK, SPADE));
+        player.append(new Card(KING, SPADE));
+        player.append(new Card(JACK, SPADE));
 
         GameResult gameResult = dealer.decideResult(player.getTotalScore());
 
