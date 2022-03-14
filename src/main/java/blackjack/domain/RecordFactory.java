@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import static blackjack.domain.PlayStatus.*;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +25,7 @@ public class RecordFactory {
     }
 
     private boolean isDealerBust() {
-        return dealerScore > BUST_SCORE;
+        return PlayStatus.isBust(dealerScore);
     }
 
     private void updateDealerRecord(Record record) {

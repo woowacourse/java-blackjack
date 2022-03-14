@@ -5,7 +5,7 @@ public enum PlayStatus {
     HIT,
     STAY;
 
-    static final int BUST_SCORE = 21;
+    private static final int BUST_SCORE = 21;
 
     public static PlayStatus hitOrBust(int sum) {
         if (sum > BUST_SCORE) {
@@ -13,5 +13,9 @@ public enum PlayStatus {
         }
 
         return HIT;
+    }
+
+    public static boolean isBust(int score) {
+        return score > BUST_SCORE;
     }
 }
