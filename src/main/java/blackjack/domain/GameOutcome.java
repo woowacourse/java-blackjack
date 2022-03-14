@@ -55,7 +55,8 @@ public enum GameOutcome {
     private static GameOutcome calculateOutcome(final int score, final int compareScore) {
         if (score > compareScore) {
             return WIN;
-        } else if (score < compareScore) {
+        }
+        if (score < compareScore) {
             return LOSE;
         }
         return DRAW;
@@ -71,7 +72,8 @@ public enum GameOutcome {
     public GameOutcome reverse() {
         if (this == WIN) {
             return LOSE;
-        } else if (this == LOSE) {
+        }
+        if (this == LOSE) {
             return WIN;
         }
         return DRAW;
