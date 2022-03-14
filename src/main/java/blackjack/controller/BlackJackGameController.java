@@ -41,20 +41,13 @@ public class BlackJackGameController {
 		}
 	}
 
-	private void makeResult(Players players, Dealer dealer) {
-		outputView.displayAllCardAndScore(dealer.getName(), dealer.getScore(), dealer.getCards());
-		for (Player player : players.getPlayers()) {
-			outputView.displayAllCardAndScore(player.getName(), player.getScore(), player.getCards());
-		}
-		Result result = new Result();
-		Map<Player, ResultType> gameResult = result.getResult(players.getPlayers(), dealer);
-		outputView.displayResult(gameResult);
-	}
-
-	private void progressDealerTurn(Dealer dealer, Deck deck) {
-		while (dealer.isHit() && !dealer.isBust()) {
-			outputView.displayDealerUnderSevenTeen();
-			dealer.addCard(deck.distributeCard());
+	private void initializeCard(Players players, Dealer dealer, Deck deck) {
+		dealer.addTwoCards(deck);
+		players.addCardToAllPlayers(deck);
+		outputView.displayFirstDistribution(players.getPlayers());
+		outputView.displayOneCard(dealer.getCards().get(0));
+		for (Player player : players.getPlayers()){
+			outputView.displayAllCard(player.getName(), player.getCards());
 		}
 	}
 
@@ -89,14 +82,20 @@ public class BlackJackGameController {
 		}
 	}
 
-	private void initializeCard(Players players, Dealer dealer, Deck deck) {
-		dealer.addTwoCards(deck);
-		players.addCardToAllPlayers(deck);
-		outputView.displayFirstDistribution(players.getPlayers());
-		outputView.displayOneCard(dealer.getCards().get(0));
-		for (Player player : players.getPlayers()){
-			outputView.displayAllCard(player.getName(), player.getCards());
+	private void progressDealerTurn(Dealer dealer, Deck deck) {
+		while (dealer.isHit() && !dealer.isBust()) {
+			outputView.displayDealerUnderSevenTeen();
+			dealer.addCard(deck.distributeCard());
 		}
 	}
 
+	private void makeResult(Players players, Dealer dealer) {
+		outputView.displayAllCardAndScore(dealer.getName(), dealer.getScore(), dealer.getCards());
+		for (Player player : players.getPlayers()) {
+			outputView.displayAllCardAndScore(player.getName(), player.getScore(), player.getCards());
+		}
+		Result result = new Result();
+		Map<Player, ResultType> gameResult = result.getResult(players.getPlayers(), dealer);
+		outputView.displayResult(gameResult);
+	}
 }
