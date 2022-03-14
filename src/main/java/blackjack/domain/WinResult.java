@@ -25,7 +25,7 @@ public class WinResult {
 
         initDealerResult(dealerResult);
         for (Player player : players) {
-            Outcome playerOutcome = Rule.INSTANCE.judgeOutcome(player, dealer);
+            Outcome playerOutcome = Outcome.judge(player, dealer);
             playersResult.put(player.getName(), playerOutcome);
             dealerResult.merge(playerOutcome.getOpposite(), 1, Integer::sum);
         }

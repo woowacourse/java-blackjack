@@ -27,9 +27,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class RuleTest {
+public class OutcomeTest {
 
     @ParameterizedTest
     @MethodSource("provideForNoOneBust")
@@ -39,7 +40,7 @@ public class RuleTest {
         Player player = createPlayer(NINE);
 
         // when
-        Outcome actual = Rule.INSTANCE.judgeOutcome(player, dealer);
+        Outcome actual = Outcome.judge(player, dealer);
 
         // then
         assertThat(actual).isEqualTo(playerOutcome);
@@ -65,7 +66,7 @@ public class RuleTest {
         player.hit(deck);
 
         // when
-        Outcome actual = Rule.INSTANCE.judgeOutcome(player, dealer);
+        Outcome actual = Outcome.judge(player, dealer);
 
         // then
         assertThat(actual).isEqualTo(LOSE);
@@ -88,7 +89,7 @@ public class RuleTest {
         Player player = createPlayer(TEN);
 
         // when
-        Outcome actual = Rule.INSTANCE.judgeOutcome(player, dealer);
+        Outcome actual = Outcome.judge(player, dealer);
 
         // then
         assertThat(actual).isEqualTo(WIN);
@@ -104,7 +105,7 @@ public class RuleTest {
         player.hit(new CardDeck(() -> new ArrayList<>(List.of(new Card(HEART, ACE)))));
 
         // when
-        Outcome actual = Rule.INSTANCE.judgeOutcome(player, dealer);
+        Outcome actual = Outcome.judge(player, dealer);
 
         // then
         assertThat(actual).isEqualTo(LOSE);
@@ -119,10 +120,25 @@ public class RuleTest {
         Player player = createPlayer(ACE);
 
         // when
-        Outcome actual = Rule.INSTANCE.judgeOutcome(player, dealer);
+        Outcome actual = Outcome.judge(player, dealer);
 
         // then
         assertThat(actual).isEqualTo(DRAW);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"WIN,LOSE", "DRAW,DRAW", "LOSE,WIN"})
+    @DisplayName("승무패의 반대를 반환한다")
+    void returnOpposite(String inputName, String expectedName) {
+        // given
+        Outcome outcome = Outcome.valueOf(inputName);
+        Outcome expected = Outcome.valueOf(expectedName);
+
+        // when
+        Outcome actual = outcome.getOpposite();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 
     private static Dealer createDealer(Denomination denomination2) {
