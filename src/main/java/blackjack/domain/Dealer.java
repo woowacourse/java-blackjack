@@ -7,7 +7,7 @@ public class Dealer extends Participant {
     private static final int DEALER_MIN_TOTAL = 17;
 
     public Dealer(List<Card> cards) {
-        super(DEALER_NAME,new HoldingCard(cards));
+        super(DEALER_NAME,new HoldingCards(cards));
     }
 
     public Card showFirstCard() {

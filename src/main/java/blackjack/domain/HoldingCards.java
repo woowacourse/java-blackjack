@@ -3,16 +3,17 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HoldingCard {
+public class HoldingCards {
     private static final int BLACK_JACK_SCORE = 21;
-    private final List<Card> holdingCard;
 
-    public HoldingCard(List<Card> cards) {
-        this.holdingCard = new ArrayList<>(cards);
+    private final List<Card> cards;
+
+    public HoldingCards(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public void add(Card card) {
-        holdingCard.add(card);
+        cards.add(card);
     }
 
     public boolean isBust() {
@@ -36,21 +37,21 @@ public class HoldingCard {
     }
 
     private boolean hasAce() {
-        return holdingCard.stream()
+        return cards.stream()
                 .anyMatch(card -> card.getCardNumberValue() == CardNumber.ACE.getCardNumberValue());
     }
 
     private int sum() {
-        return holdingCard.stream()
+        return cards.stream()
                 .mapToInt(Card::getCardNumberValue)
                 .sum();
     }
 
-    public List<Card> getHoldingCard() {
-        return holdingCard;
+    public List<Card> getCards() {
+        return cards;
     }
 
     public Card getFirstCard() {
-        return holdingCard.get(0);
+        return cards.get(0);
     }
 }

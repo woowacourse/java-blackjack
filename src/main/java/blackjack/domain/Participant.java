@@ -4,27 +4,27 @@ import java.util.List;
 
 public abstract class Participant {
     private String name;
-    private HoldingCard holdingCard;
+    private HoldingCards holdingCards;
 
-    public Participant(String name, HoldingCard holdingCard) {
+    public Participant(String name, HoldingCards holdingCards) {
         this.name = name;
-        this.holdingCard = holdingCard;
+        this.holdingCards = holdingCards;
     }
 
     void receiveCard(Card card){
-        holdingCard.add(card);
+        holdingCards.add(card);
     };
 
     List<Card> showCards(){
-        return holdingCard.getHoldingCard();
+        return holdingCards.getCards();
     };
 
     public String getName() {
         return name;
     }
 
-    public HoldingCard getHoldingCard() {
-        return holdingCard;
+    public HoldingCards getHoldingCard() {
+        return holdingCards;
     }
 
     public abstract boolean isFinished();

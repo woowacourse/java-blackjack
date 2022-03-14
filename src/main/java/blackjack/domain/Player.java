@@ -6,7 +6,7 @@ public class Player extends Participant {
     private boolean finish = false;
 
     public Player(String name, List<Card> cards) {
-        super(name, new HoldingCard(cards));
+        super(name, new HoldingCards(cards));
         validateEmptyName(name);
     }
 

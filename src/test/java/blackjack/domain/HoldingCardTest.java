@@ -13,9 +13,9 @@ class HoldingCardTest {
     void over21_isBust() {
         List<Card> cards = new ArrayList<>(
                 List.of(new Card(CardNumber.QUEEN, Symbol.CLOVER), new Card(CardNumber.JACK, Symbol.CLOVER)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        holdingCard.add(new Card(CardNumber.FIVE, Symbol.CLOVER));
-        Assertions.assertThat(holdingCard.isBust()).isTrue();
+        HoldingCards holdingCards = new HoldingCards(cards);
+        holdingCards.add(new Card(CardNumber.FIVE, Symbol.CLOVER));
+        Assertions.assertThat(holdingCards.isBust()).isTrue();
     }
 
     @Test
@@ -23,9 +23,9 @@ class HoldingCardTest {
     void under21_isNotBust() {
         List<Card> cards = new ArrayList<>(
                 List.of(new Card(CardNumber.EIGHT, Symbol.CLOVER), new Card(CardNumber.SEVEN, Symbol.CLOVER)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        holdingCard.add(new Card(CardNumber.SIX, Symbol.CLOVER));
-        Assertions.assertThat(holdingCard.isBust()).isFalse();
+        HoldingCards holdingCards = new HoldingCards(cards);
+        holdingCards.add(new Card(CardNumber.SIX, Symbol.CLOVER));
+        Assertions.assertThat(holdingCards.isBust()).isFalse();
     }
 
     @Test
@@ -33,9 +33,9 @@ class HoldingCardTest {
     void under21withAce_isNotBust() {
         List<Card> cards = new ArrayList<>(
                 List.of(new Card(CardNumber.JACK, Symbol.CLOVER), new Card(CardNumber.KING, Symbol.CLOVER)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        holdingCard.add(new Card(CardNumber.ACE, Symbol.CLOVER));
-        Assertions.assertThat(holdingCard.isBust()).isFalse();
+        HoldingCards holdingCards = new HoldingCards(cards);
+        holdingCards.add(new Card(CardNumber.ACE, Symbol.CLOVER));
+        Assertions.assertThat(holdingCards.isBust()).isFalse();
     }
 
     @Test
@@ -43,10 +43,10 @@ class HoldingCardTest {
     void under21withAce_isBust() {
         List<Card> cards = new ArrayList<>(
                 List.of(new Card(CardNumber.JACK, Symbol.CLOVER), new Card(CardNumber.KING, Symbol.CLOVER)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        holdingCard.add(new Card(CardNumber.ACE, Symbol.CLOVER));
-        holdingCard.add(new Card(CardNumber.ACE, Symbol.SPADE));
-        Assertions.assertThat(holdingCard.isBust()).isTrue();
+        HoldingCards holdingCards = new HoldingCards(cards);
+        holdingCards.add(new Card(CardNumber.ACE, Symbol.CLOVER));
+        holdingCards.add(new Card(CardNumber.ACE, Symbol.SPADE));
+        Assertions.assertThat(holdingCards.isBust()).isTrue();
     }
 
     @Test
@@ -55,8 +55,8 @@ class HoldingCardTest {
         List<Card> cards = new ArrayList<>(
                 List.of(new Card(CardNumber.ACE, Symbol.CLOVER), new Card(CardNumber.ACE, Symbol.SPADE),
                         new Card(CardNumber.ACE, Symbol.HEART), new Card(CardNumber.ACE, Symbol.DIAMOND)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        int result = holdingCard.calculateTotal();
+        HoldingCards holdingCards = new HoldingCards(cards);
+        int result = holdingCards.calculateTotal();
         Assertions.assertThat(result).isEqualTo(14);
     }
 
@@ -66,9 +66,9 @@ class HoldingCardTest {
         List<Card> cards = new ArrayList<>(
                 List.of(new Card(CardNumber.ACE, Symbol.CLOVER), new Card(CardNumber.ACE, Symbol.SPADE),
                         new Card(CardNumber.ACE, Symbol.HEART), new Card(CardNumber.ACE, Symbol.DIAMOND)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        holdingCard.add(new Card(CardNumber.SEVEN, Symbol.DIAMOND));
-        int result = holdingCard.calculateTotal();
+        HoldingCards holdingCards = new HoldingCards(cards);
+        holdingCards.add(new Card(CardNumber.SEVEN, Symbol.DIAMOND));
+        int result = holdingCards.calculateTotal();
         Assertions.assertThat(result).isEqualTo(21);
     }
 
@@ -78,10 +78,10 @@ class HoldingCardTest {
         List<Card> cards = new ArrayList<>(
                 List.of(new Card(CardNumber.ACE, Symbol.CLOVER), new Card(CardNumber.ACE, Symbol.SPADE),
                         new Card(CardNumber.ACE, Symbol.HEART), new Card(CardNumber.ACE, Symbol.DIAMOND)));
-        HoldingCard holdingCard = new HoldingCard(cards);
-        holdingCard.add(new Card(CardNumber.SEVEN, Symbol.DIAMOND));
-        holdingCard.add(new Card(CardNumber.TEN, Symbol.DIAMOND));
-        int result = holdingCard.calculateTotal();
+        HoldingCards holdingCards = new HoldingCards(cards);
+        holdingCards.add(new Card(CardNumber.SEVEN, Symbol.DIAMOND));
+        holdingCards.add(new Card(CardNumber.TEN, Symbol.DIAMOND));
+        int result = holdingCards.calculateTotal();
         Assertions.assertThat(result).isEqualTo(21);
     }
 }
