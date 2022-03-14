@@ -16,15 +16,14 @@ public class CardsTest {
     }
 
     @Test
-    @DisplayName("중복된 카드를 받는 경우 예외 발생 테스트")
+    @DisplayName("중복된 카드를 받는 경우가 존재하지 않는지 테스트")
     void receiveDuplicatedCard() {
         Card card1 = new Card(Suit.CLOVER, Denomination.ACE);
         Card card2 = new Card(Suit.CLOVER, Denomination.ACE);
         cards.receiveCard(card1);
+        cards.receiveCard(card2);
 
-        assertThatThrownBy(() -> cards.receiveCard(card2))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("중복된 카드는 받을 수 없습니다.");
+        assertThat(cards.getCards().size()).isEqualTo(1);
     }
 
     @Test

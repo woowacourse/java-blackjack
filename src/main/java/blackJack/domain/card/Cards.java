@@ -1,29 +1,23 @@
 package blackJack.domain.card;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Cards {
     private static final int BLACK_JACK_CARD_COUNT = 2;
     private static final int BLACK_JACK = 21;
     private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 11;
-    private static final String ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
 
-    private final List<Card> cards;
+    private final Set<Card> cards;
 
     public Cards() {
-        cards = new ArrayList<>();
+        cards = new HashSet<>();
     }
 
     public void receiveCard(Card card) {
-        validateReceiveDuplicatedCard(card);
         cards.add(card);
-    }
-
-    private void validateReceiveDuplicatedCard(Card card) {
-        if (cards.contains(card)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD);
-        }
     }
 
     public boolean isBlackJack() {
@@ -54,6 +48,7 @@ public class Cards {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return cards.stream()
+                .collect(Collectors.toUnmodifiableList());
     }
 }
