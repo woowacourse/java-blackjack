@@ -1,5 +1,6 @@
 package blackjack.domain.player;
 
+import blackjack.domain.DrawStatus;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
@@ -16,6 +17,10 @@ public class Player extends Participant {
 
     public GameResult findResult(int dealerScore) {
         return GameResult.findPlayerResult(calculateScore(), dealerScore);
+    }
+
+    public boolean isHit(DrawStatus drawStatus) {
+        return drawStatus == DrawStatus.YES;
     }
 
     @Override
