@@ -10,8 +10,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import blackjack.domain.NoShuffleDeck;
 import blackjack.domain.PlayStatus;
+import blackjack.domain.TestDeck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardNumber;
@@ -77,7 +77,7 @@ class PlayerTest {
     @DisplayName("게임준비를 위해 가진 카드를 초기화한다.")
     void init() {
         // give
-        CardDeck cardDeck = new CardDeck(new NoShuffleDeck());
+        CardDeck cardDeck = new CardDeck(new TestDeck());
         Player player = new Player("pobi");
 
         // when
@@ -85,7 +85,7 @@ class PlayerTest {
         int actual = player.getScore();
 
         // then
-        assertThat(actual).isEqualTo(20);
+        assertThat(actual).isEqualTo(15);
     }
 
     @Test

@@ -1,21 +1,16 @@
 package blackjack.domain;
 
-import static blackjack.domain.card.CardNumber.*;
-import static blackjack.domain.card.CardSymbol.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.deckstrategy.DeckStrategy;
 import blackjack.domain.participant.Player;
 
 public class GameTest {
@@ -79,17 +74,5 @@ public class GameTest {
 
         // then
         assertThat(actual).isEqualTo(25);
-    }
-
-    private static class TestDeck implements DeckStrategy {
-        @Override
-        public Stack<Card> create() {
-            Stack<Card> cards = new Stack<>();
-            cards.addAll(List.of(
-                new Card(DIAMOND, JACK), new Card(DIAMOND, TEN),
-                new Card(DIAMOND, KING), new Card(DIAMOND, QUEEN),
-                new Card(DIAMOND, QUEEN), new Card(CLUB, FIVE))); // start, Dealer
-            return cards;
-        }
     }
 }

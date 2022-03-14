@@ -5,14 +5,14 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.NoShuffleDeck;
+import blackjack.domain.card.deckstrategy.RandomDeck;
 
 public class CardDeckTest {
 
     @Test
     @DisplayName("객체가 생성되면 52장의 카드를 갖는다.")
     void initDeck() {
-        CardDeck cardDeck = new CardDeck(new NoShuffleDeck());
+        CardDeck cardDeck = new CardDeck(new RandomDeck());
 
         assertThatCode(() -> {
             for (int i = 0; i < 52; i++) {
@@ -25,7 +25,7 @@ public class CardDeckTest {
     @DisplayName("카드를 한 장 만들어서 반환한다.")
     void createCard() {
         // give
-        CardDeck cardDeck = new CardDeck(new NoShuffleDeck());
+        CardDeck cardDeck = new CardDeck(new RandomDeck());
 
         // when
         Card card = cardDeck.drawCard();

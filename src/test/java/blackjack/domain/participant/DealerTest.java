@@ -10,8 +10,8 @@ import java.util.Stack;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.NoShuffleDeck;
 import blackjack.domain.PlayStatus;
+import blackjack.domain.TestDeck;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.deckstrategy.DeckStrategy;
@@ -39,7 +39,7 @@ class DealerTest {
     void drawCards_NOT_BUST() {
         // give
         Dealer dealer = new Dealer();
-        CardDeck cardDeck = new CardDeck(new NoShuffleDeck());
+        CardDeck cardDeck = new CardDeck(new TestNoBustDeck());
         dealer.init(cardDeck);
 
         // when
@@ -65,12 +65,12 @@ class DealerTest {
         assertThat(actual).isEqualTo(new Card(CLUB, FIVE));
     }
 
-    private static class TestDeck implements DeckStrategy {
+    private static class TestNoBustDeck implements DeckStrategy {
         @Override
         public Stack<Card> create() {
             Stack<Card> cards = new Stack<>();
-            cards.addAll(List.of(new Card(DIAMOND, KING), new Card(DIAMOND, QUEEN),
-                new Card(DIAMOND, QUEEN), new Card(CLUB, FIVE)));
+            cards.addAll(List.of(
+                new Card(DIAMOND, QUEEN), new Card(CLUB, SEVEN))); // start, Dealer
             return cards;
         }
     }
