@@ -1,10 +1,9 @@
 package blackjack.view;
 
-import blackjack.model.blackjack.Result;
 import blackjack.model.blackjack.Records;
+import blackjack.model.blackjack.Result;
 import blackjack.model.card.Card;
 import blackjack.model.cards.Cards;
-import blackjack.model.cards.TakableCards;
 import blackjack.model.cards.Score;
 import blackjack.model.player.Name;
 import blackjack.model.player.Player;
