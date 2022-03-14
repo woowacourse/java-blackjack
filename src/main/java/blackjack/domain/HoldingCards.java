@@ -52,7 +52,7 @@ public class HoldingCards {
         return cards;
     }
 
-    public Card getFirstCard() {
+    public Card pickFirstCard() {
         return cards.get(0);
     }
 }
