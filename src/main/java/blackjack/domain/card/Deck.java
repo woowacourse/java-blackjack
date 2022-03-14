@@ -7,25 +7,32 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Deck {
+
+    private static final List<Card> CARDS_CACHE = createAllCards();
 
     private final Deque<Card> cards;
 
     public Deck() {
-        cards = shuffleCards(createCards());
+        cards = copyAndShuffleCards();
     }
 
-    private Deque<Card> shuffleCards(List<Card> cards) {
-        Collections.shuffle(cards);
-        return new ArrayDeque<>(cards);
+    private Deque<Card> copyAndShuffleCards() {
+        Collections.shuffle(CARDS_CACHE);
+        return new ArrayDeque<>(List.copyOf(CARDS_CACHE));
     }
 
-    private List<Card> createCards() {
+    private static List<Card> createAllCards() {
         return stream(Suit.values())
-                .flatMap(suit -> stream(Denomination.values())
-                        .map(denomination -> new Card(suit, denomination)))
+                .flatMap(Deck::createCardStreamPerSuit)
                 .collect(Collectors.toList());
+    }
+
+    private static Stream<Card> createCardStreamPerSuit(Suit suit) {
+        return stream(Denomination.values())
+                .map(denomination -> new Card(suit, denomination));
     }
 
     public Card drawCard() {
