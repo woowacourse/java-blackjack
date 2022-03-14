@@ -5,8 +5,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.HoldCards;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
-
 import blackjack.dto.FirstTurnCards;
+import blackjack.dto.PlayerCardResult;
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
@@ -20,16 +20,17 @@ public class OutputView {
     public static void printFirstTurnCards(List<FirstTurnCards> firstTurnCards) {
         System.out.println(MessageFormat.format("딜러와 {0}에게 2장의 카드를 나누었습니다.", toName(firstTurnCards)));
         firstTurnCards.stream()
-            .map(OutputView::printCard)
+            .map(firstTurnCard -> printPlayerCard(firstTurnCard.getPlayerName(), firstTurnCard.getCards()))
             .forEach(System.out::println);
         System.out.println();
     }
 
-    public static void printPlayerCards(Participant participant) {
-        System.out.println(getPlayerCard(participant));
+    public static void printPlayerCards(PlayerCardResult playerCardResult) {
+        System.out.println(printPlayerCard(playerCardResult.getPlayerName(), playerCardResult.getCards()));
     }
 
     public static void printReceivingMoreCardOfDealer() {
+        System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         System.out.println();
     }
@@ -59,8 +60,8 @@ public class OutputView {
             .collect(Collectors.joining(NAME_DELIMITER));
     }
 
-    private static String printCard(FirstTurnCards cards) {
-        return MessageFormat.format("{0}카드: {1}", cards.getPlayerName(), String.join(NAME_DELIMITER, cards.getCards()));
+    private static String printPlayerCard(String playerName, List<String> cardNames) {
+        return MessageFormat.format("{0}카드: {1}", playerName, String.join(NAME_DELIMITER, cardNames));
     }
 
     private static String getPlayerCard(Participant participant) {

@@ -4,11 +4,11 @@ import blackjack.domain.card.Card;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FirstTurnCards {
+public class PlayerCardResult {
     private final String playerName;
     private final List<String> cards;
 
-    public FirstTurnCards(String playerName, List<Card> cards) {
+    public PlayerCardResult(String playerName, List<Card> cards) {
         this.playerName = playerName;
         this.cards = toName(cards);
     }

@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.domain.BlackjackTable;
 import blackjack.domain.Command;
 import blackjack.domain.entry.Player;
+import blackjack.dto.PlayerCardResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -32,7 +33,7 @@ public class BlackjackGame {
     private void hitPlayer(BlackjackTable blackjackTable, Player player) {
         Command command = Command.find(InputView.inputCommand(player.getName()));
         if (command == Command.STAY) {
-            OutputView.printPlayerCards(player);
+            OutputView.printPlayerCards(toPlayerCard(player));
             return;
         }
         moreHit(blackjackTable, player, command);
@@ -41,7 +42,7 @@ public class BlackjackGame {
     private void moreHit(BlackjackTable blackjackTable, Player player, Command command) {
         while (blackjackTable.canHit(player, command)) {
             blackjackTable.hit(player);
-            OutputView.printPlayerCards(player);
+            OutputView.printPlayerCards(toPlayerCard(player));
             command = Command.find(InputView.inputCommand(player.getName()));
         }
     }
@@ -51,5 +52,9 @@ public class BlackjackGame {
             blackjackTable.hitDealer();
         }
         OutputView.printReceivingMoreCardOfDealer();
+    }
+
+    private PlayerCardResult toPlayerCard(Player player) {
+        return new PlayerCardResult(player.getName(), player.getHoldCards().getCards());
     }
 }
