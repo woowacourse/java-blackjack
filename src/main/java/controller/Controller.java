@@ -1,11 +1,5 @@
 package controller;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.InitCards;
@@ -13,16 +7,16 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
 import domain.result.Result;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import view.InputView;
 import view.OutputView;
 
 public class Controller {
 
-    private static final String INPUT_NAMES_SPLIT_DELIMITER = ",";
-    private static final String NAME_DUPLICATE_ERROR_MESSAGE = "[Error] 이름은 중복일 수 없습니다.";
-
     public void run() {
-        List<Name> names = inputNames();
+        List<Name> names = InputView.inputNames();
         Deck deck = new Deck();
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = new Players(names, generateInitCardsForPlayers(names, deck));
@@ -38,22 +32,6 @@ public class Controller {
         drawForDealer(deck, dealer, players);
         OutputView.printStatuses(names, dealer, players);
         printFinalResult(names, dealer, players);
-    }
-
-    private List<Name> inputNames() {
-        String inputNames = InputView.inputNames();
-        List<Name> names = Arrays.stream(inputNames.split(INPUT_NAMES_SPLIT_DELIMITER))
-                .map(String::trim)
-                .map(Name::new)
-                .collect(Collectors.toList());
-        checkDuplicate(names);
-        return names;
-    }
-
-    private void checkDuplicate(List<Name> names) {
-        if (new HashSet<>(names).size() != names.size()) {
-            throw new IllegalArgumentException(NAME_DUPLICATE_ERROR_MESSAGE);
-        }
     }
 
     private List<List<Card>> generateInitCardsForPlayers(List<Name> names, Deck deck) {
