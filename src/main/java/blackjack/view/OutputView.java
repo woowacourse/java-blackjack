@@ -59,7 +59,7 @@ public class OutputView {
     public static void printFinalResult(Dealer dealer, Players players) {
         printEmptyLine();
         System.out.println("## 최종 승패");
-        Map<Player, Boolean> resultCounter = players.judgeResult(dealer.calculateBestScore());
+        Map<Player, Boolean> resultCounter = players.judgeResult(dealer);
         System.out.println(dealer.getName().getValue() + ": " +
                 resultCounter.values().stream()
                         .filter(Predicate.not(Boolean::booleanValue)).count() + "승 " +

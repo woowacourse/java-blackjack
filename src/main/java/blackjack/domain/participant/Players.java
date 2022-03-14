@@ -21,10 +21,10 @@ public class Players {
                 .collect(Collectors.toList()));
     }
 
-    public Map<Player, Boolean> judgeResult(int score) {
+    public Map<Player, Boolean> judgeResult(Dealer dealer) {
         Map<Player, Boolean> result = new HashMap<>();
         for (Player player : players) {
-            result.put(player, player.isWinner(score));
+            result.put(player, player.isWinner(dealer.calculateBestScore()));
         }
         return result;
     }
