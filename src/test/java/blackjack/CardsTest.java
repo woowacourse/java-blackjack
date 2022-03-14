@@ -36,12 +36,31 @@ public class CardsTest {
     @DisplayName("9클로버, A클로버 점수에 Ace Advantage가 반영된다")
     @Test
     void sumCardScore_9clover_Aclover() {
-        Card card1 = new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER);
-        Card card2 = new Card(TrumpNumber.ACE, TrumpSymbol.CLOVER);
         Cards cards = new Cards();
-        cards.add(card1);
-        cards.add(card2);
+        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
+        cards.add(new Card(TrumpNumber.ACE, TrumpSymbol.CLOVER));
 
         assertThat(cards.sumScore()).isEqualTo(20);
+    }
+
+    @DisplayName("두장의 카드를 가지고 있으면 true를 반환합니다.")
+    @Test
+    void hasTwoCard_true() {
+        Cards cards = new Cards();
+        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
+        cards.add(new Card(TrumpNumber.ACE, TrumpSymbol.CLOVER));
+
+        assertThat(cards.hasTwoCard()).isTrue();
+    }
+
+    @DisplayName("카드를 두장보다 많이 가지고 있으면 false를 반환합니다.")
+    @Test
+    void hasTwoCard_false() {
+        Cards cards = new Cards();
+        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
+        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
+        cards.add(new Card(TrumpNumber.NINE, TrumpSymbol.CLOVER));
+
+        assertThat(cards.hasTwoCard()).isFalse();
     }
 }

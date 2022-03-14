@@ -48,14 +48,15 @@ public class Gamers {
         }
     }
 
+    private boolean canHit(Player gamer) {
+        return !gamer.isBlackJack() && !gamer.isImpossibleHit();
+    }
+
     private boolean isHitSign(Player gamer, Predicate<String> predicate) {
         return predicate.test(gamer.getName());
     }
 
-    private boolean canHit(Player gamer) {
-        return !gamer.isBlackJack() && !gamer.isImpossibleHit();
-    }
-/*
+    /*
     public Map<String, MatchResult> getMatchResult(Player dealer) {
         Map<String, MatchResult> gamerResults = new LinkedHashMap<>();
         for (Player gamer : values) {
