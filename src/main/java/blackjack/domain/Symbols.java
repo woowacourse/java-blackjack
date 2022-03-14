@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 public enum Symbols {
+
     ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
