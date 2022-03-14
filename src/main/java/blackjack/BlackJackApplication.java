@@ -6,6 +6,8 @@ import blackjack.view.OutputView;
 
 import java.util.List;
 
+import static blackjack.domain.gamer.Gamer.INIT_DISTRIBUTION_COUNT;
+
 public class BlackJackApplication {
     public static void main(String[] args) {
         List<String> names = InputView.getNames();
@@ -22,7 +24,7 @@ public class BlackJackApplication {
 
     private static void printAdditionalDrawDealer(BlackJackGame controller) {
         controller.distributeAdditionalToDealer();
-        OutputView.printAdditionalDrawDealer(controller.getDealerCardSize());
+        OutputView.printAdditionalDrawDealer(controller.getDealerCardSize() - INIT_DISTRIBUTION_COUNT);
     }
 
     private static void drawAdditionalCard(List<String> names, BlackJackGame controller) {

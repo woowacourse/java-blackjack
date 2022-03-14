@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static blackjack.domain.gamer.Gamer.INIT_DISTRIBUTION_COUNT;
+
 public class OutputView {
 
     public static void printFirstCards(Dealer dealer, List<Player> players) {
@@ -51,7 +53,7 @@ public class OutputView {
 
     public static void printAdditionalDrawDealer(int count) {
         System.out.println();
-        if (count != 0) {
+        if (count > 0) {
             System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n\n", count);
             return;
         }
