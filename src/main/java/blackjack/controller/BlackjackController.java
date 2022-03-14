@@ -69,7 +69,7 @@ public class BlackjackController {
     }
 
     private void decideOneMoreCard(final GameMachine gameMachine) {
-        if (gameMachine.isDealerGetCard()) {
+        if (gameMachine.isDealerGetAdditionalCard()) {
             OutputView.printDealerAcceptCard();
             return;
         }

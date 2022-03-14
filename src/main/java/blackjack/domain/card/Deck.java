@@ -6,7 +6,7 @@ public class Deck {
 
     private final Stack<Card> deck;
 
-    public Deck(DeckGenerator deckGenerator) {
+    public Deck(CardGenerator deckGenerator) {
         deck = deckGenerator.generate();
     }
 

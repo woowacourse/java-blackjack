@@ -13,7 +13,7 @@ public class DeckTest {
     @Test
     @DisplayName("덱에서 카드를 한 장 반환한다.")
     void drawCard() {
-        Deck deck = new Deck(new DeckGenerator(){
+        Deck deck = new Deck(new CardGenerator(){
             @Override
             public Stack<Card> generate() {
                 List<Card> cards = new ArrayList<>();
@@ -31,7 +31,7 @@ public class DeckTest {
     @Test
     @DisplayName("덱에서 draw된 카드는 서로 다르다.")
     void drawDifferentCard() {
-        Deck deck = new Deck(new DeckGeneratorImpl());
+        Deck deck = new Deck(new RandomGenerator());
         Card card1 = deck.draw();
         Card card2 = deck.draw();
 

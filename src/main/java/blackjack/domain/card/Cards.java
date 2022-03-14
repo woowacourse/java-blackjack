@@ -46,15 +46,15 @@ public class Cards {
         }
     }
 
-    public int calculateScoreByAceOne() {
+    public int calculateScore() {
         return cards.stream().mapToInt(card -> card.getScore().getAmount()).sum();
     }
 
     public int calculateMaxScore() {
         if (containsAce()) {
-            return calculateScoreByAceOne() + Score.getDifferenceAcesScore();
+            return calculateScore() + Score.getDifferenceAcesScore();
         }
-        return calculateScoreByAceOne();
+        return calculateScore();
     }
 
     private boolean containsAce() {

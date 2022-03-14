@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.DeckGeneratorImpl;
+import blackjack.domain.card.RandomGenerator;
 import blackjack.domain.card.Score;
 import blackjack.domain.card.Type;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ class ParticipantTest {
     @NullAndEmptySource
     @DisplayName("참여자 이름은 비어있을 수 없다")
     void checkNameNullOrEmpty(String name) {
-        Deck deck = new Deck(new DeckGeneratorImpl());
+        Deck deck = new Deck(new RandomGenerator());
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());
@@ -38,7 +38,7 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자는 시작시 카드를 2장 받는다.")
     void checkParticipantCardSize() {
-        Deck deck = new Deck(new DeckGeneratorImpl());
+        Deck deck = new Deck(new RandomGenerator());
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());
@@ -49,7 +49,7 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자는 추가로 카드를 받을 수 있다.")
     void addParticipantCard() {
-        Deck deck = new Deck(new DeckGeneratorImpl());
+        Deck deck = new Deck(new RandomGenerator());
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());

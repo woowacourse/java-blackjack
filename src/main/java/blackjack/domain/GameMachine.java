@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.DeckGeneratorImpl;
+import blackjack.domain.card.RandomGenerator;
 import blackjack.domain.player.Bet;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
@@ -21,7 +21,7 @@ public class GameMachine {
     public GameMachine(final List<String> names, final HashMap<String, Bet> bets) {
         validationNames(names);
         validationbets(bets);
-        this.deck = new Deck(new DeckGeneratorImpl());
+        this.deck = new Deck(new RandomGenerator());
         this.players = new Players(createParticipants(names, bets), createDealer());
     }
 
@@ -51,7 +51,7 @@ public class GameMachine {
         return deck.draw();
     }
 
-    public boolean isDealerGetCard() {
+    public boolean isDealerGetAdditionalCard() {
         if (players.getDealer().acceptableCard()) {
             players.addDealerCard(deck.draw());
             return true;

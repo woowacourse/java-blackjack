@@ -8,13 +8,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class DeckGeneratorImplTest {
+class RandomGeneratorTest {
 
     @ParameterizedTest
     @MethodSource("getCombinationOfCard")
     @DisplayName("덱에 카드가 포함되어 있는지 확인한다.")
     void checkContainsCard(Card card) {
-        Stack<Card> deck = new DeckGeneratorImpl().generate();
+        Stack<Card> deck = new RandomGenerator().generate();
 
         assertThat(deck.contains(card)).isTrue();
     }

@@ -74,7 +74,7 @@ public abstract class Player {
     }
 
     protected int getScoreByAceOne() {
-        return cards.calculateScoreByAceOne();
+        return cards.calculateScore();
     }
 
     protected int getScoreByAceEleven() {

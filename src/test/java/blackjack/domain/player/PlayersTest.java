@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.DeckGeneratorImpl;
+import blackjack.domain.card.RandomGenerator;
 import java.util.ArrayList;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +21,7 @@ class PlayersTest {
     @MethodSource("participantListBySuccess")
     @DisplayName("참가자는 2~8명 사이이다. (성공)")
     void checkParticipantNumberBySuccess(List<Participant> participants) {
-        Deck deck = new Deck(new DeckGeneratorImpl());
+        Deck deck = new Deck(new RandomGenerator());
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());
@@ -30,7 +30,7 @@ class PlayersTest {
     }
 
     private static Stream<List<Player>> participantListBySuccess() {
-        Deck deck = new Deck(new DeckGeneratorImpl());
+        Deck deck = new Deck(new RandomGenerator());
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());
@@ -56,7 +56,7 @@ class PlayersTest {
     @MethodSource("participantListByFail")
     @DisplayName("참가자는 2~8명 사이이다. (실패)")
     void checkParticipantNumber(List<Participant> participants) {
-        Deck deck = new Deck(new DeckGeneratorImpl());
+        Deck deck = new Deck(new RandomGenerator());
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());
@@ -68,7 +68,7 @@ class PlayersTest {
     }
 
     private static Stream<List<Player>> participantListByFail() {
-        Deck deck = new Deck(new DeckGeneratorImpl());
+        Deck deck = new Deck(new RandomGenerator());
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());
@@ -94,7 +94,7 @@ class PlayersTest {
     @Test
     @DisplayName("참가자 이름은 중복될 수 없다.")
     void thrownExceptionWhenNamesDuplicated() {
-        Deck deck = new Deck(new DeckGeneratorImpl());
+        Deck deck = new Deck(new RandomGenerator());
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());

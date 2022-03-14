@@ -18,7 +18,7 @@ public class CardsTest {
     @Test
     @DisplayName("카드를 추가할 떄 null을 전달하면 예외를 발생한다.")
     void thrownExceptionWhenGivenNull() {
-        Deck deck = new Deck(new DeckGeneratorImpl());
+        Deck deck = new Deck(new RandomGenerator());
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());
@@ -49,7 +49,7 @@ public class CardsTest {
         ));
         cards.addCard(new Card(Type.CLOVER, Score.THREE));
 
-        assertThat(cards.calculateScoreByAceOne()).isEqualTo(6);
+        assertThat(cards.calculateScore()).isEqualTo(6);
     }
 
     @ParameterizedTest

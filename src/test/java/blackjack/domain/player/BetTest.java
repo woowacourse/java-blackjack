@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.DeckGeneratorImpl;
+import blackjack.domain.card.RandomGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +15,7 @@ class BetTest {
     @Test
     @DisplayName("승리시 1.5배를 얻는다.")
     void checkParticipantWinProfit(){
-        Deck deck = new Deck(new DeckGeneratorImpl());
+        Deck deck = new Deck(new RandomGenerator());
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());
@@ -29,7 +29,7 @@ class BetTest {
     @Test
     @DisplayName("패배시 배팅돈을 모두 잃는다.")
     void checkParticipantLoseProfit(){
-        Deck deck = new Deck(new DeckGeneratorImpl());
+        Deck deck = new Deck(new RandomGenerator());
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());

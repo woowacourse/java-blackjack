@@ -2,7 +2,7 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.DeckGeneratorImpl;
+import blackjack.domain.card.RandomGenerator;
 import blackjack.domain.card.Score;
 import blackjack.domain.card.Type;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 시작시 카드를 2장 받는다.")
     void checkParticipantCardSize() {
-        Deck deck = new Deck(new DeckGeneratorImpl());
+        Deck deck = new Deck(new RandomGenerator());
         List<Card> initCards = new ArrayList<>();
         initCards.add(deck.draw());
         initCards.add(deck.draw());
