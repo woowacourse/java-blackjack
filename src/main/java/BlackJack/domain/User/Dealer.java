@@ -13,8 +13,8 @@ public class Dealer extends User {
     private int dealerLoseCount = 0;
     private int dealerDrawCount = 0;
 
-    public Dealer(Cards cards) {
-        super("딜러", cards);
+    public Dealer(CardFactory cardFactory) {
+        super("딜러", cardFactory.initCards());
     }
 
     public boolean checkScore() {
