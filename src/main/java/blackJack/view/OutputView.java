@@ -26,7 +26,7 @@ public class OutputView {
             NEWLINE.concat("%s는 %d장의 카드를 더 받았습니다.").concat(NEWLINE);
     private static final String OUTPUT_MESSAGE_PARTICIPANT_GAME_RESULT =
             "%s 카드: %s - 결과: %d".concat(NEWLINE);
-    private static final String OUTPUT_MESSAGE_FINAL_MATCH_RESULT = "## 최종 승패";
+    private static final String OUTPUT_MESSAGE_FINAL_MATCH_RESULT = NEWLINE.concat("## 최종 승패");
     private static final String OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO = "%s: %s".concat(NEWLINE);
 
     public static void printErrorMessage(RuntimeException error) {
@@ -86,12 +86,12 @@ public class OutputView {
     }
 
     public static void printFinalMatchResult(BlackJackGame blackJackGame) {
-        System.out.println(NEWLINE.concat(OUTPUT_MESSAGE_FINAL_MATCH_RESULT));
         Map<MatchResult, Integer> dealerGameResult = blackJackGame.getDealerGameResult();
         String dealerGameResultToString = getDealerGameResultToString(dealerGameResult);
 
-        System.out.printf(OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO, blackJackGame.getDealer().getName(),
-                dealerGameResultToString);
+        System.out.println(OUTPUT_MESSAGE_FINAL_MATCH_RESULT);
+        System.out.printf(OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO,
+                blackJackGame.getDealer().getName(), dealerGameResultToString);
         blackJackGame.getPlayersGameResult().forEach((key, value) -> System.out.printf(
                 OUTPUT_MESSAGE_FINAL_MATCH_RESULT_INFO, key.getName(), value.getResult()));
     }

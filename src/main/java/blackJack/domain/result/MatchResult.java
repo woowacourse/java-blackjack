@@ -6,6 +6,7 @@ public enum MatchResult {
     LOSE("패");
 
     private static final int BLACK_JACK = 21;
+
     private final String result;
 
     MatchResult(String result) {
