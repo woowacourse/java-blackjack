@@ -84,7 +84,7 @@ public class ParticipantResultTest {
                 Arguments.of(
                         new Card(Denomination.ACE, Suit.CLOVER), new Card(Denomination.TEN, Suit.HEART),
                         new Card(Denomination.TEN, Suit.SPADE), new Card(Denomination.ACE, Suit.HEART),
-                        Result.DRAW
+                        Result.LOSE
                 )
         );
     }

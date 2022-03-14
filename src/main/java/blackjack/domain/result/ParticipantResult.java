@@ -15,12 +15,9 @@ public class ParticipantResult {
     }
 
     private Map<Participant, Result> decideResult(final Dealer dealer, final Participants participants) {
-        final int dealerScore = dealer.getTotalScore();
-
         Map<Participant, Result> result = new LinkedHashMap<>();
         for (Participant participant : participants) {
-            final int participantScore = participant.getTotalScore();
-            result.put(participant, Result.decide(dealerScore, participantScore));
+            result.put(participant, Result.of(dealer, participant));
         }
         return result;
     }

@@ -42,6 +42,26 @@ public abstract class Player {
         return cards.calculateTotalScore();
     }
 
+    public boolean isBust() {
+        return State.from(this) == State.BUST;
+    }
+
+    public boolean isNotBust() {
+        return !isBust();
+    }
+
+    public boolean isBlackjack() {
+        return State.from(this) == State.BLACKJACK;
+    }
+
+    public boolean isNotBlackjack() {
+        return !isBlackjack();
+    }
+
+    public int getCardsSize() {
+        return cards.getSize();
+    }
+
     public String getName() {
         return name;
     }

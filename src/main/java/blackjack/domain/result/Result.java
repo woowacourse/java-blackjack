@@ -1,34 +1,32 @@
 package blackjack.domain.result;
 
-import static blackjack.domain.Rule.WINNING_SCORE;
-
+import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participant;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.function.BiPredicate;
 
 public enum Result {
 
-    WIN("승", (dealerScore, participantScore) ->
-            participantScore <= WINNING_SCORE.getValue() &&
-                    (dealerScore < participantScore || dealerScore > WINNING_SCORE.getValue())),
-    DRAW("무승부", (dealerScore, participantScore) ->
-            participantScore <= WINNING_SCORE.getValue() &&
-                    Objects.equals(dealerScore, participantScore)),
-    LOSE("패", (dealerScore, participantScore) ->
-            participantScore > WINNING_SCORE.getValue() ||
-                    (dealerScore > participantScore && dealerScore <= WINNING_SCORE.getValue()));
-
+    WIN("승", (dealer, participant) ->
+            participant.isNotBust() &&
+                    (participant.getTotalScore() > dealer.getTotalScore() || dealer.isBust())),
+    DRAW("무승부", (dealer, participant) ->
+            dealer.isNotBlackjack() &&
+                    participant.isNotBust() && dealer.getTotalScore() == participant.getTotalScore()),
+    LOSE("패", (dealer, participant) ->
+            dealer.isBlackjack() || participant.isBust() ||
+                    (dealer.isNotBust() && dealer.getTotalScore() > participant.getTotalScore()));
     private final String name;
-    private final BiPredicate<Integer, Integer> condition;
+    private final BiPredicate<Dealer, Participant> condition;
 
-    Result(final String name, final BiPredicate<Integer, Integer> condition) {
+    Result(final String name, final BiPredicate<Dealer, Participant> condition) {
         this.name = name;
         this.condition = condition;
     }
 
-    public static Result decide(final int dealerScore, final int participantScore) {
+    public static Result of(final Dealer dealer, final Participant participant) {
         return Arrays.stream(Result.values())
-                .filter(result -> result.condition.test(dealerScore, participantScore))
+                .filter(result -> result.condition.test(dealer, participant))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 승패를 가릴 수 없는 경우입니다."));
     }

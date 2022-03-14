@@ -44,6 +44,10 @@ public class Cards implements Iterable<Card> {
         cards.add(card);
     }
 
+    public int getSize() {
+        return cards.size();
+    }
+
     @Override
     public Iterator<Card> iterator() {
         return cards.iterator();
