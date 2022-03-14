@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
-    public static final int BLACK_JACK_TARGET_NUMBER = 21;
-    private static final int BLACK_JACK_SIZE = 2;
+    public static final int BLACKJACK_TARGET_NUMBER = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -19,7 +19,7 @@ public class Cards {
     }
 
     private void validateCardsSize(final List<Card> cards) {
-        if (cards.size() != BLACK_JACK_SIZE) {
+        if (cards.size() != BLACKJACK_CARD_SIZE) {
             throw new IllegalArgumentException("카드 2장으로 생성해야 합니다.");
         }
     }
@@ -57,10 +57,10 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return calculateScore() > BLACK_JACK_TARGET_NUMBER;
+        return calculateScore() > BLACKJACK_TARGET_NUMBER;
     }
 
     public boolean isBlackJack() {
-        return cards.size() == BLACK_JACK_SIZE && calculateScore() == BLACK_JACK_TARGET_NUMBER;
+        return cards.size() == BLACKJACK_CARD_SIZE && calculateScore() == BLACKJACK_TARGET_NUMBER;
     }
 }

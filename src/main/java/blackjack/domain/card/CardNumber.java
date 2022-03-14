@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.Cards.BLACK_JACK_TARGET_NUMBER;
+import static blackjack.domain.card.Cards.BLACKJACK_TARGET_NUMBER;
 
 import java.util.Arrays;
 import java.util.List;
@@ -70,7 +70,7 @@ public enum CardNumber {
     }
 
     private static boolean isLowerThanBlackjackTargetNumber(final int sumCount) {
-        return sumCount <= BLACK_JACK_TARGET_NUMBER;
+        return sumCount <= BLACKJACK_TARGET_NUMBER;
     }
 
     public static int calculateMaxScore(final List<CardNumber> numbers) {

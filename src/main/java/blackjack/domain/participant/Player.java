@@ -28,6 +28,6 @@ public class Player extends AbstractParticipant {
 
     @Override
     boolean isEnd() {
-        return super.calculateScore() > Cards.BLACK_JACK_TARGET_NUMBER;
+        return super.calculateScore() > Cards.BLACKJACK_TARGET_NUMBER;
     }
 }
