@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameOutcome;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.List;
@@ -76,18 +75,6 @@ public abstract class AbstractParticipant implements Participant {
             return cards.calculateMaxScore();
         }
         return cards.calculateScore();
-    }
-
-    @Override
-    public GameOutcome fight(final Participant participant) {
-        validateFightGame(participant);
-        return GameOutcome.calculateOutcome(this, participant);
-    }
-
-    private void validateFightGame(final Participant participant) {
-        if (this.canHit() || participant.canHit()) {
-            throw new IllegalStateException("턴이 종료되지 않아 비교할 수 없습니다.");
-        }
     }
 
     @Override

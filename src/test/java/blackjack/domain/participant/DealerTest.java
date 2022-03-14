@@ -29,7 +29,7 @@ class DealerTest {
     @DisplayName("딜러의 카드가 17이상일 때 카드를 추가하면 예외가 발생해야 한다.")
     void hitExceptionByLimitDealerScore() {
         final Cards cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN));
-        final Participant dealer = Dealer.createNewDealer(cards);
+        final Dealer dealer = Dealer.createNewDealer(cards);
 
         assertThatThrownBy(() -> dealer.hit(Card.of(SPADE, A)))
                 .isInstanceOf(IllegalStateException.class)
@@ -40,7 +40,7 @@ class DealerTest {
     @DisplayName("딜러는 첫번째 카드 반환 시 1장의 카드만 반환해야 한다.")
     void firstCards() {
         final Cards cards = createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN));
-        final Participant dealer = Dealer.createNewDealer(cards);
+        final Dealer dealer = Dealer.createNewDealer(cards);
 
         assertThat(dealer.firstCards()).isEqualTo(Collections.singletonList(Card.of(SPADE, TEN)));
     }
@@ -49,7 +49,7 @@ class DealerTest {
     @DisplayName("딜러가 게임을 직접 종료하려하면 예외가 발생해야 한다.")
     void changeFinishStatusException() {
         final Cards cards = createCards(Card.of(SPADE, TWO), Card.of(SPADE, SEVEN));
-        final Participant dealer = Dealer.createNewDealer(cards);
+        final Dealer dealer = Dealer.createNewDealer(cards);
 
         assertThatThrownBy(() -> dealer.changeFinishStatus())
                 .isInstanceOf(IllegalStateException.class)
@@ -60,7 +60,7 @@ class DealerTest {
     @MethodSource("createCardHit")
     @DisplayName("딜러의 hit 가능여부를 반환할 수 있다.")
     void canHit(final List<Card> cards, final boolean expected) {
-        final Participant dealer = Dealer.createNewDealer(new Cards(cards));
+        final Dealer dealer = Dealer.createNewDealer(new Cards(cards));
         assertThat(dealer.canHit()).isEqualTo(expected);
     }
 

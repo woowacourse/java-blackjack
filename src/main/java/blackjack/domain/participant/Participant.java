@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameOutcome;
 import blackjack.domain.card.Card;
 import java.util.List;
 
@@ -15,8 +14,6 @@ public interface Participant {
     void changeFinishStatus();
 
     int calculateResultScore();
-
-    GameOutcome fight(final Participant participant);
 
     boolean isBlackJack();
 

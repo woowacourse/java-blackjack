@@ -2,8 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Players;
 import blackjack.dto.OutComeResult;
 import blackjack.dto.ParticipantCards;
 import blackjack.dto.ParticipantScoreResult;
@@ -14,10 +13,10 @@ import java.util.Objects;
 public class BlackjackBoard {
 
     private final CardDeck cardDeck;
-    private final Participant dealer;
-    private final Participants players;
+    private final Dealer dealer;
+    private final Players players;
 
-    private BlackjackBoard(final CardDeck cardDeck, final Participant dealer, final Participants players) {
+    private BlackjackBoard(final CardDeck cardDeck, final Dealer dealer, final Players players) {
         this.cardDeck = cardDeck;
         this.dealer = dealer;
         this.players = players;
@@ -27,8 +26,8 @@ public class BlackjackBoard {
         Objects.requireNonNull(playerNames, "blackjackgame은 null이 들어올 수 없습니다.");
 
         final CardDeck cardDeck = CardDeck.createNewCardDek();
-        final Participants players = Participants.createByPlayerNames(playerNames, cardDeck);
-        final Participant dealer = Dealer.createNewDealer(Cards.createByCardDeck(cardDeck));
+        final Players players = Players.createByPlayerNames(playerNames, cardDeck);
+        final Dealer dealer = Dealer.createNewDealer(Cards.createByCardDeck(cardDeck));
         return new BlackjackBoard(cardDeck, dealer, players);
     }
 

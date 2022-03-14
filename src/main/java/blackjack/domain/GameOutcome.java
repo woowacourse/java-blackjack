@@ -1,6 +1,7 @@
 package blackjack.domain;
 
-import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 public enum GameOutcome {
 
@@ -15,18 +16,7 @@ public enum GameOutcome {
         this.printValue = printValue;
     }
 
-    public static GameOutcome calculateOutcome(final Participant player, final Participant dealer) {
-        validateDealer(dealer);
-        return calculateOutcomeCase(player, dealer);
-    }
-
-    private static void validateDealer(final Participant dealer) {
-        if (!dealer.isDealer()) {
-            throw new IllegalStateException("딜러가 아닌 사람과 비교할 수 없습니다.");
-        }
-    }
-
-    private static GameOutcome calculateOutcomeCase(final Participant player, final Participant dealer) {
+    public static GameOutcome calculateOutcome(final Player player, final Dealer dealer) {
         if (player.isBust()) {
             return LOSE;
         }
@@ -42,7 +32,7 @@ public enum GameOutcome {
         return calculateOutcome(player.calculateResultScore(), dealer.calculateResultScore());
     }
 
-    private static GameOutcome playerInBlackJack(final Participant dealer) {
+    private static GameOutcome playerInBlackJack(final Dealer dealer) {
         if (dealer.isBlackJack()) {
             return DRAW;
         }
