@@ -10,11 +10,15 @@ public class HoldCards {
 
     private final List<Card> cards;
 
-    public HoldCards(Card first, Card second) {
+    private HoldCards(Card first, Card second) {
         validateDuplicate(first, second);
         this.cards = new ArrayList<>();
         this.cards.add(first);
         this.cards.add(second);
+    }
+
+    public static HoldCards initTwoCards(Card card, Card otherCard) {
+        return new HoldCards(card, otherCard);
     }
 
     public void addCard(Card card) {

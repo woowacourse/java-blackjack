@@ -13,7 +13,7 @@ class DealerTest {
     @Test
     @DisplayName("두장의 카드를 지급받아 카드의 합을 계산한다.")
     void getTwoCards() {
-        Dealer dealer = new Dealer(new HoldCards(Card.valueOf(Suit.SPADE, CardNumber.KING), Card.valueOf(Suit.SPADE, CardNumber.ACE)));
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(Card.valueOf(Suit.SPADE, CardNumber.KING), Card.valueOf(Suit.SPADE, CardNumber.ACE)));
 
         assertThat(dealer.countCards()).isEqualTo(21);
     }
@@ -21,7 +21,7 @@ class DealerTest {
     @Test
     @DisplayName("보유한 카드의 합이 16이하인지 판단한다.")
     void shouldHaveMoreCard() {
-        Dealer dealer = new Dealer(new HoldCards(Card.valueOf(Suit.SPADE, CardNumber.EIGHT), Card.valueOf(Suit.HEART, CardNumber.EIGHT)));
+        Dealer dealer = new Dealer(HoldCards.initTwoCards(Card.valueOf(Suit.SPADE, CardNumber.EIGHT), Card.valueOf(Suit.HEART, CardNumber.EIGHT)));
 
         assertThat(dealer.canHit()).isTrue();
     }

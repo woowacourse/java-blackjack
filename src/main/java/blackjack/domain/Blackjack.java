@@ -50,12 +50,12 @@ public class Blackjack {
     }
 
     private Dealer createDealer() {
-        return new Dealer(new HoldCards(deck.draw(), deck.draw()));
+        return new Dealer(HoldCards.initTwoCards(deck.draw(), deck.draw()));
     }
 
     private List<Player> toPlayers(List<String> names) {
         return names.stream()
-                .map(name -> new Player(name, new HoldCards(deck.draw(), deck.draw())))
+                .map(name -> new Player(name, HoldCards.initTwoCards(deck.draw(), deck.draw())))
                 .collect(Collectors.toList());
     }
 }
