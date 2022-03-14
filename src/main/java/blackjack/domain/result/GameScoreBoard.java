@@ -24,7 +24,7 @@ public class GameScoreBoard {
         Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
         Map<String, String> playerResult = new TreeMap<>();
         for (Participant player : players) {
-            Result playerGameScore = player.compareMatchResult(dealer.getCardTotalScore());
+            Result playerGameScore = Result.findResult(player, dealer);
             Result dealerGameScore = playerGameScore.reverse();
             dealerResult.put(dealerGameScore, dealerResult.getOrDefault(dealerGameScore, 0) + 1);
             playerResult.put(player.getName(), playerGameScore.getName());

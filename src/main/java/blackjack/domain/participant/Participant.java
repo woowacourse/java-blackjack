@@ -24,6 +24,10 @@ public abstract class Participant {
 
     public abstract boolean shouldReceive();
 
+    public boolean isWin(Participant participant) {
+        return this.cardHand.compareScore(participant.cardHand);
+    }
+
     public Result compareMatchResult(int dealerCardScore) {
         if (cardHand.getScore() < dealerCardScore || cardHand.isBust()) {
             return Result.LOSE;

@@ -50,6 +50,10 @@ public class Hand {
             .count());
     }
 
+    public boolean compareScore(Hand other) {
+        return this.getScore() > other.getScore();
+    }
+
     public boolean isBust() {
         return getScore() > BLACKJACK_SYMBOL_SCORE;
     }
