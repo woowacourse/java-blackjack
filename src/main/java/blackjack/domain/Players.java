@@ -1,10 +1,7 @@
 package blackjack.domain;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -18,34 +15,8 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public Player convertToPlayer(String name) {
-        return players.stream()
-                .filter(player -> player.isSameName(name))
-                .findFirst()
-                .orElseThrow();
-    }
-
-    public void addCardToPlayers(Map<String, Card> cardForPlayers) {
-        for (Entry<String, Card> entry : cardForPlayers.entrySet()) {
-            convertToPlayer(entry.getKey()).addCard(entry.getValue());
-        }
-    }
-
-    public List<String> namesAbleToGetAdditionalCard() {
-        return players.stream()
-                .filter(player -> !player.isBurst())
-                .map(Player::getName)
-                .collect(Collectors.toList());
-    }
-
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
-    }
-
-    public List<Player> playersAbleToGetAdditionalCard() {
-        return players.stream()
-                .filter(player -> !player.isBurst())
-                .collect(Collectors.toList());
     }
 
     public Player firstPlayer() {

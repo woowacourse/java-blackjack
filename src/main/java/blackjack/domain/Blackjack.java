@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import blackjack.controller.BlackjackController;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -19,12 +17,6 @@ public class Blackjack {
         this.dealer = new Dealer();
         this.players = new Players(playerNames);
         this.turnPlayer = players.firstPlayer();
-    }
-
-    private void distributeCard(NumberGenerator numberGenerator, List<Player> players) {
-        for (Player player : players) {
-            player.addCard(dealer.handOutCard(numberGenerator));
-        }
     }
 
     private void updateTurnPlayer() {

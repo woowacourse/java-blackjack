@@ -51,14 +51,6 @@ public class Player {
         return rawScore() > MAX_SCORE;
     }
 
-    public boolean isSameName(String name) {
-        return this.name.equals(name);
-    }
-
-    public boolean containCard(Card card) {
-        return myCards.contains(card);
-    }
-
     public boolean containAceCard() {
         List<String> cardNames = myCards.stream()
                 .map(Card::getName)
