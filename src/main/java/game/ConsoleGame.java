@@ -5,6 +5,7 @@ import domain.game.GameResult;
 import domain.participant.Command;
 import domain.participant.Name;
 import domain.participant.Participant;
+import domain.participant.Participants;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -14,10 +15,11 @@ public class ConsoleGame {
     public void run() {
         BlackJackGame blackJackGame = createBlackJackGame();
 
-        Participant dealer = blackJackGame.findDealer();
-        List<Participant> players = blackJackGame.findPlayers();
+        Participants participants = blackJackGame.getParticipants();
+        Participant dealer = participants.findDealer();
+        List<Participant> players = participants.findPlayers();
 
-        OutputView.printInitialCards(dealer, players);
+        OutputView.printInitialCards(participants.findDealer(), participants.findPlayers());
 
         playPlayersTurn(blackJackGame, players);
         playDealerTurn(blackJackGame, dealer);
