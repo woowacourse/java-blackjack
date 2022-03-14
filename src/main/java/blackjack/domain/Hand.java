@@ -32,15 +32,17 @@ public class Hand {
     }
 
     private int getIncludingAceSum() {
-        int aceCount = getAceCount();
-        int excludingAceSum = getExcludingAceSum();
-        int sum = excludingAceSum + aceCount * ACE_UPPER_SCORE;
-
-        while (sum > BLACKJACK_SYMBOL_SCORE && aceCount > 0) {
-            sum -= ACE_SCORE_DIFFERENCE;
-            aceCount--;
+        int sum = getSum() + ACE_SCORE_DIFFERENCE;
+        if (sum <= BLACKJACK_SYMBOL_SCORE) {
+            return sum;
         }
-        return sum;
+        return sum - ACE_SCORE_DIFFERENCE;
+    }
+
+    private int getSum() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     private int getExcludingAceSum() {
