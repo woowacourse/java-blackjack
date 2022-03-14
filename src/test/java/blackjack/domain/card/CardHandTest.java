@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfBlackjack;
+import static blackjack.fixture.CardBundleGenerator.getCardBundleOfFifteen;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfNonBlackjackTwentyOne;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTen;
 import static blackjack.fixture.CardBundleGenerator.getCardBundleOfTwenty;
@@ -25,9 +26,9 @@ public class CardHandTest {
     @Nested
     class OfInitialTest {
 
-        @DisplayName("초기 패가 21 미만인 경우 isFinished 메서드 호출시 false가 반환된다.")
+        @DisplayName("플레이어 상태 전략 사용시, 초기 패가 21 미만인 경우 isFinished 메서드 호출시 false가 반환된다.")
         @Test
-        void init_canHitStateOnUnder21() {
+        void initWithPlayerStrategy_canHitStateOnUnder21() {
             CardHand cardHand = CardHand.of(getCardBundleOfTwenty(), playerStateStrategy);
 
             boolean actual = cardHand.isFinished();
@@ -35,24 +36,37 @@ public class CardHandTest {
             assertThat(actual).isFalse();
         }
 
-        @DisplayName("초기 패가 블랙잭인 경우 isBlackjack 메서드 호출시 true가 반환된다.")
+        @DisplayName("딜러 상태 전략 사용시, 초기 패가 17 미만인 경우 isFinished 메서드 호출시 false가 반환된다.")
+        @Test
+        void initWithDealerStrategy_canHitStateOnUnder17() {
+            CardHand cardHand = CardHand.of(getCardBundleOfFifteen(), dealerStateStrategy);
+
+            boolean actual = cardHand.isFinished();
+
+            assertThat(actual).isFalse();
+        }
+
+        @DisplayName("어떤 전략이든 초기 패가 블랙잭인 경우 isBlackjack 메서드 호출시 true가 반환된다.")
         @Test
         void init_blackjackOnBlackjack() {
-            CardHand cardHand = CardHand.of(getCardBundleOfBlackjack(), playerStateStrategy);
+            CardHand playerCardHand = CardHand.of(getCardBundleOfBlackjack(), playerStateStrategy);
+            CardHand dealerCardHand = CardHand.of(getCardBundleOfBlackjack(), dealerStateStrategy);
 
-            boolean actual = cardHand.isBlackjack();
+            boolean playerActual = playerCardHand.isBlackjack();
+            boolean dealerActual = dealerCardHand.isBlackjack();
 
-            assertThat(actual).isTrue();
+            assertThat(playerActual).isTrue();
+            assertThat(dealerActual).isTrue();
         }
     }
 
-    @DisplayName("hit 메서드 호출시 패에 카드 한 장을 추가하며, 자동으로 상태가 변경된다.")
+    @DisplayName("hit 메서드 호출시 패에 카드 한 장을 추가하며, 자동으로 상태가 업데이트된다.")
     @Nested
     class HitInitialTest {
 
-        @DisplayName("21 미만의 패를 지닌 경우, hit 메서드를 호출할 수 있다.")
+        @DisplayName("플레이어 상태 전략 사용시, 21 미만의 패를 지닌 경우 hit 메서드를 호출할 수 있다.")
         @Test
-        void hit_canHitUnder21_becomesBust() {
+        void hitWithPlayerStrategy_canHitUnder21_becomesBust() {
             CardHand cardHand = CardHand.of(getCardBundleOfTwenty(), playerStateStrategy);
 
             cardHand.hit(CLOVER2, playerStateStrategy);
@@ -62,7 +76,7 @@ public class CardHandTest {
             assertThat(cardHand.isBust()).isTrue();
         }
 
-        @DisplayName("21의 패를 지닌 경우, hit 메서드를 호출하려는 경우 예외가 발생한다.")
+        @DisplayName("플레이어 상태 전략 사용시, 21의 패를 지녔을 때 hit 메서드를 호출하려는 경우 예외가 발생한다.")
         @Test
         void hit_throwsExceptionOn21() {
             CardHand cardHand = CardHand.of(getCardBundleOfNonBlackjackTwentyOne(), playerStateStrategy);
@@ -85,10 +99,9 @@ public class CardHandTest {
                     .withMessage("이미 카드 패가 확정된 참여자입니다.");
         }
 
-
-        @DisplayName("패가 21 미만인 동안에는 hit 메서드를 반복적으로 호출할 수 있다.")
+        @DisplayName("플레이어 상태 전략 사용시, 패가 21 미만인 동안에는 hit 메서드를 반복적으로 호출할 수 있다.")
         @Test
-        void hit_canHitAgainUnder21() {
+        void hitWithPlayerStrategy_canHitAgainUnder21() {
             CardHand cardHand = CardHand.of(getCardBundleOfTen(), playerStateStrategy);
 
             cardHand.hit(CLOVER2, playerStateStrategy);
@@ -96,6 +109,18 @@ public class CardHandTest {
             cardHand.hit(CLOVER5, playerStateStrategy);
 
             assertThat(cardHand.getScore()).isEqualTo(Score.valueOf(20));
+            assertThat(cardHand.isFinished()).isFalse();
+        }
+
+        @DisplayName("딜러 상태 전략 사용시, 패가 17 미만인 동안에는 hit 메서드를 반복적으로 호출할 수 있다.")
+        @Test
+        void hitWithDealerStrategy_canHitAgainUnder21() {
+            CardHand cardHand = CardHand.of(getCardBundleOfTen(), dealerStateStrategy);
+
+            cardHand.hit(CLOVER2, playerStateStrategy);
+            cardHand.hit(CLOVER3, playerStateStrategy);
+
+            assertThat(cardHand.getScore()).isEqualTo(Score.valueOf(15));
             assertThat(cardHand.isFinished()).isFalse();
         }
     }
@@ -106,7 +131,7 @@ public class CardHandTest {
 
         @DisplayName("21 미만의 패를 지닌 경우, stay 메서드를 호출할 수 있다.")
         @Test
-        void stay_canHitUnder21_becomesStay() {
+        void stay_canStayUnder21_becomesStay() {
             CardHand cardHand = CardHand.of(getCardBundleOfTwenty(), playerStateStrategy);
 
             cardHand.stay();
