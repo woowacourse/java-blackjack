@@ -2,8 +2,11 @@ package blackjack.domain.card;
 
 import blackjack.domain.card.pattern.Denomination;
 import blackjack.domain.card.pattern.Suit;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class Deck {
 
@@ -18,16 +21,16 @@ public class Deck {
     public static Deck initializeDeck() {
         Stack<Card> cards = new Stack<>();
         for (Suit suit : Suit.values()) {
-            pushCard(cards, suit);
+            cards.addAll(createCardsByDenominationValue(suit));
         }
         Collections.shuffle(cards);
         return new Deck(cards);
     }
 
-    private static void pushCard(final Stack<Card> cards, final Suit suit) {
-        for (Denomination denomination : Denomination.values()) {
-            cards.push(new Card(suit, denomination));
-        }
+    private static List<Card> createCardsByDenominationValue(final Suit suit) {
+        return Arrays.stream(Denomination.values())
+            .map(denomination -> new Card(suit, denomination))
+            .collect(Collectors.toList());
     }
 
     public Card draw() {
