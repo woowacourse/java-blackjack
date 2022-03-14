@@ -50,4 +50,9 @@ public class Dealer extends Gamer {
 	public Card getRandomOneCard() {
 		return this.cards.getRandomCard();
 	}
+
+	@Override
+	public boolean canAddCards() {
+		return !this.isBust() && !this.isBlackJack() && this.isHit();
+	}
 }

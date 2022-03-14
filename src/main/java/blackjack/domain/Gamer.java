@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class Gamer {
+public abstract class Gamer {
 	protected final Cards cards = new Cards();
 	protected final Name name;
 
@@ -13,6 +13,8 @@ public class Gamer {
 	public void addCards(List<Card> cards) {
 		cards.forEach(this.cards::addCard);
 	}
+
+	public abstract boolean canAddCards();
 
 	public List<Card> getCards() {
 		return this.cards.getCards();
