@@ -17,7 +17,7 @@ public class BlackjackGame {
     public void drawStartingCard() {
         for (int i = 0; i < INITIAL_CARD_NUMBER; i++) {
             players.drawAll(drawable);
-            dealer.drawCard(drawable);
+            dealer.drawCard(drawable.draw());
         }
     }
 
@@ -26,7 +26,7 @@ public class BlackjackGame {
     }
 
     public void drawDealerCard() {
-        dealer.drawCard(drawable);
+        dealer.drawCard(drawable.draw());
     }
 
     public ScoreResult makeResults() {

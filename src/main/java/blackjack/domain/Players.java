@@ -28,7 +28,7 @@ public class Players {
 
     public void drawAll(Drawable drawable) {
         for (Player player : players) {
-            player.drawCard(drawable);
+            player.drawCard(drawable.draw());
         }
     }
 
@@ -51,8 +51,8 @@ public class Players {
         }
     }
 
-    public void drawPlayerCard(Drawable deck) {
-        getCurrentTurnPlayer().drawCard(deck);
+    public void drawPlayerCard(Drawable drawable) {
+        getCurrentTurnPlayer().drawCard(drawable.draw());
     }
 
     public boolean isBustCurrentTurnPlayer() {

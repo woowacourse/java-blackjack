@@ -23,8 +23,8 @@ public class DealerTest {
             Dealer dealer = new Dealer();
             MockDeck mockDeck = new MockDeck(
                 List.of(Card.of(CardPattern.CLOVER, CardNumber.TEN), Card.of(CardPattern.CLOVER, cardNumber)));
-            dealer.drawCard(mockDeck);
-            dealer.drawCard(mockDeck);
+            dealer.drawCard(mockDeck.draw());
+            dealer.drawCard(mockDeck.draw());
 
             Assertions.assertThat(dealer.isDrawable()).isEqualTo(expected);
         }

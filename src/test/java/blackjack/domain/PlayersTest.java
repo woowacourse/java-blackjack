@@ -50,11 +50,11 @@ public class PlayersTest {
             MockDeck mockDeck = new MockDeck(List.of(
                     Card.of(CardPattern.DIAMOND, CardNumber.NINE),
                     Card.of(CardPattern.DIAMOND, CardNumber.TEN),
-                    Card.of(CardPattern.DIAMOND, CardNumber.ACE),
-                    Card.of(CardPattern.SPADE, CardNumber.TEN)));
+                    Card.of(CardPattern.DIAMOND, CardNumber.ACE)
+            ));
             players.drawAll(mockDeck);
             Dealer dealer = new Dealer();
-            dealer.drawCard(mockDeck);
+            dealer.drawCard(Card.of(CardPattern.SPADE, CardNumber.TEN));
             ScoreResult result = players.compete(dealer);
 
             assertAll(

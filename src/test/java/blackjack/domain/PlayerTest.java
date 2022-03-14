@@ -21,7 +21,7 @@ public class PlayerTest {
         @DisplayName("Card를 자신의 패에 추가한다.")
         void addCard() {
             Player player = new Player(new Name("roma"));
-            player.drawCard(new MockDeck(List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK))));
+            player.drawCard(Card.of(CardPattern.CLOVER, CardNumber.JACK));
             Assertions.assertThat(player.getTotalNumber()).isEqualTo(10);
         }
     }
@@ -35,11 +35,9 @@ public class PlayerTest {
         @DisplayName("패의 합이 21이 넘는지 유무를 알려준다.")
         void returnFalse(CardNumber cardNumber, boolean expected) {
             Player player = new Player(new Name("roma"));
-            MockDeck mockDeck = new MockDeck(List.of(Card.of(CardPattern.CLOVER, CardNumber.JACK)
-                    , Card.of(CardPattern.CLOVER, CardNumber.KING), Card.of(CardPattern.CLOVER, cardNumber)));
-            player.drawCard(mockDeck);
-            player.drawCard(mockDeck);
-            player.drawCard(mockDeck);
+            player.drawCard(Card.of(CardPattern.CLOVER, CardNumber.JACK));
+            player.drawCard(Card.of(CardPattern.CLOVER, CardNumber.KING));
+            player.drawCard(Card.of(CardPattern.CLOVER, cardNumber));
 
             Assertions.assertThat(player.isBust()).isEqualTo(expected);
         }
@@ -55,11 +53,8 @@ public class PlayerTest {
         void returnResult(CardNumber cardNumber, Score expected) {
             Player player = new Player("player");
             Dealer dealer = new Dealer();
-            MockDeck mockDeck = new MockDeck(List.of(
-                    Card.of(CardPattern.DIAMOND, cardNumber),
-                    Card.of(CardPattern.DIAMOND, CardNumber.FIVE)));
-            player.drawCard(mockDeck);
-            dealer.drawCard(mockDeck);
+            player.drawCard(Card.of(CardPattern.DIAMOND, cardNumber));
+            dealer.drawCard(Card.of(CardPattern.DIAMOND, CardNumber.FIVE));
             Assertions.assertThat(player.compete(dealer)).isEqualTo(expected);
         }
 
@@ -71,12 +66,12 @@ public class PlayerTest {
             MockDeck mockDeck = new MockDeck(List.of(
                     Card.of(CardPattern.DIAMOND, CardNumber.TEN),
                     Card.of(CardPattern.CLOVER, CardNumber.QUEEN),
-                    Card.of(CardPattern.CLOVER, CardNumber.TEN),
-                    Card.of(CardPattern.DIAMOND, CardNumber.FIVE)));
+                    Card.of(CardPattern.CLOVER, CardNumber.TEN)
+            ));
             for (int i = 0; i < 3; i++) {
-                player.drawCard(mockDeck);
+                player.drawCard(mockDeck.draw());
             }
-            dealer.drawCard(mockDeck);
+            dealer.drawCard(Card.of(CardPattern.DIAMOND, CardNumber.FIVE));
 
             Assertions.assertThat(player.compete(dealer)).isEqualTo(Score.LOSE);
         }
@@ -87,13 +82,13 @@ public class PlayerTest {
         void returnResultWithDealerBust(CardNumber cardNumber, Score expected) {
             Player player = new Player("player");
             Dealer dealer = new Dealer();
-            player.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-            player.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-            player.drawCard(() -> Card.of(CardPattern.DIAMOND, cardNumber));
+            player.drawCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
+            player.drawCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
+            player.drawCard(Card.of(CardPattern.DIAMOND, cardNumber));
 
-            dealer.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-            dealer.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TEN));
-            dealer.drawCard(() -> Card.of(CardPattern.DIAMOND, CardNumber.TWO));
+            dealer.drawCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
+            dealer.drawCard(Card.of(CardPattern.DIAMOND, CardNumber.TEN));
+            dealer.drawCard(Card.of(CardPattern.DIAMOND, CardNumber.TWO));
 
             Assertions.assertThat(player.compete(dealer)).isEqualTo(expected);
         }

@@ -18,8 +18,8 @@ public class Player {
         this.cards = new Cards();
     }
 
-    public void drawCard(Drawable drawable) {
-        cards.add(drawable.draw());
+    public void drawCard(Card card) {
+        cards.add(card);
     }
 
     public Score compete(Player player) {
