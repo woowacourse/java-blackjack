@@ -6,7 +6,6 @@ import blackjack.model.card.CardDeck;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Gamers;
 import blackjack.model.player.Player;
-import java.net.PortUnreachableException;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -23,7 +22,7 @@ public class BlackJackGame {
         this.gamers = new Gamers(gamerNames);
     }
 
-    public void giveStartCards() {
+    public void start() {
         giveCardsToDealer();
         giveCardsToGamers();
     }
@@ -38,7 +37,6 @@ public class BlackJackGame {
     private void giveCardsToGamers() {
         gamers.giveCardsToGamer();
     }
-
 
     public void hitOrStayUntilPossible(UnaryOperator<String> operator, Consumer<PlayerDto> consumer) {
         gamers.hitOrStayToGamer(operator, consumer);
@@ -67,5 +65,9 @@ public class BlackJackGame {
 
     public Gamers getGamers() {
         return gamers;
+    }
+
+    public List<Player> getGamers2() {
+        return gamers.getValues();
     }
 }

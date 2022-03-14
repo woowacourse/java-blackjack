@@ -7,7 +7,7 @@ public abstract class PlayerDto {
     protected final CardsDto cards;
 
     public PlayerDto(Player player) {
-        this.cards = CardsDto.from(player.getCards());
+        this.cards = CardsDto.from(player.getCards2());
     }
 
     public List<String> getCards() {

@@ -6,6 +6,7 @@ import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
 import blackjack.model.card.TrumpNumber;
 import blackjack.model.card.TrumpSymbol;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,16 +43,5 @@ public class CardsTest {
         cards.add(card2);
 
         assertThat(cards.sumScore()).isEqualTo(20);
-    }
-
-    @DisplayName("5하트, 6클로버, A클로버 점수에 Ace Advantage가 반영되지 않는다")
-    @Test
-    void sumCardScore_5heart_6clover_Aclover() {
-        Cards cards = new Cards();
-        cards.add(new Card(TrumpNumber.FIVE, TrumpSymbol.HEART));
-        cards.add(new Card(TrumpNumber.SIX, TrumpSymbol.CLOVER));
-        cards.add(new Card(TrumpNumber.ACE, TrumpSymbol.CLOVER));
-
-        assertThat(cards.sumScore()).isEqualTo(12);
     }
 }

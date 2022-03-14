@@ -12,12 +12,12 @@ public class Application {
     public static void main(String[] args) {
         BlackJackGame blackJackGame = new BlackJackGame(InputView.inputPlayerNames());
 
-        blackJackGame.giveStartCards();
-        ResultView.printStartCardsDistributionResult(DealerDto.fromGame(blackJackGame), GamersDto.from(blackJackGame));
+        blackJackGame.start();
+        ResultView.printStartResult(blackJackGame.getDealer(), blackJackGame.getGamers2());
 
         blackJackGame.hitOrStayUntilPossible(InputView::inputHitOrStaySign, ResultView::printCurrentTurnHitResult);
 
-        ResultView.printFinalScores(DealerDto.fromGame(blackJackGame), GamersDto.from(blackJackGame));
+        ResultView.printFinalScores(DealerDto.from(blackJackGame.getDealer()), GamersDto.from(blackJackGame));
         ResultView.printMatchResult(DealerMatchResultsDto.from(blackJackGame),
                 GamerMatchResultsDto.from(blackJackGame));
     }

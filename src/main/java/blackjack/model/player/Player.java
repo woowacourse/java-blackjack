@@ -3,6 +3,7 @@ package blackjack.model.player;
 import blackjack.model.MatchResult;
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
+import java.util.List;
 
 public abstract class Player {
     protected final Cards cards;
@@ -31,7 +32,11 @@ public abstract class Player {
         return cards.sumScore() == otherPlayer.cards.sumScore();
     }
 
-    public Cards getCards() {
+    public List<String> getCards() {
+        return cards.getValues();
+    }
+
+    public Cards getCards2() {
         return cards;
     }
 

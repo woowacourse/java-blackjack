@@ -3,6 +3,7 @@ package blackjack.model.card;
 import blackjack.model.CardScoreTotalizer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
     private static final int SCORE_LIMIT = 21;
@@ -37,7 +38,9 @@ public class Cards {
         return sumScore() > otherScore;
     }
 
-    public List<Card> getValues() {
-        return values;
+    public List<String> getValues() {
+        return values.stream()
+                .map(card -> card.getNumberOfString() + card.getSymbol())
+                .collect(Collectors.toUnmodifiableList());
     }
 }

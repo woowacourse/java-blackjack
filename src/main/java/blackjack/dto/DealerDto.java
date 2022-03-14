@@ -15,10 +15,6 @@ public class DealerDto extends PlayerDto {
         return new DealerDto(dealer);
     }
 
-    public static DealerDto fromGame(BlackJackGame blackJackGame) {
-        return new DealerDto(blackJackGame.getDealer());
-    }
-
     public String getName() {
         return name;
     }
