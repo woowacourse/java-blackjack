@@ -15,7 +15,8 @@ public class Dealer extends Participant {
         super(DEALER_NAME, cards);
     }
 
-    public List<Card> initCards() {
+    @Override
+    public List<Card> getInitCards() {
         return state.cards().firstCard();
     }
 

@@ -26,6 +26,11 @@ public class Player extends Participant {
     }
 
     @Override
+    public List<Card> getInitCards() {
+        return getCards();
+    }
+
+    @Override
     public List<Card> getCards() {
         return state.cards().values();
     }

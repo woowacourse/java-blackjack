@@ -16,13 +16,13 @@ public class BlackJackController {
     }
 
     public PlayerDto getInitDealerInfo() {
-        return PlayerDto.dealerToInitInfo(blackJackGame.getDealer());
+        return PlayerDto.from(blackJackGame.getDealer());
     }
 
     public List<PlayerDto> getInitPlayerInfo() {
         return blackJackGame.getInitPlayers()
                 .stream()
-                .map(PlayerDto::playerToInfo)
+                .map(PlayerDto::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -31,15 +31,15 @@ public class BlackJackController {
     }
 
     public PlayerDto getCurrentTurnPlayerInfo() {
-        return PlayerDto.playerToInfo(blackJackGame.getCurrentTurnPlayer());
+        return PlayerDto.from(blackJackGame.getCurrentTurnPlayer());
     }
 
     public PlayerDto drawNextPlayer() {
-        return PlayerDto.playerToInfo(blackJackGame.drawNextPlayer());
+        return PlayerDto.from(blackJackGame.drawNextPlayer());
     }
 
     public PlayerDto drawCurrentPlayer() {
-        return PlayerDto.playerToInfo(blackJackGame.drawCurrentPlayer());
+        return PlayerDto.from(blackJackGame.drawCurrentPlayer());
     }
 
     public boolean isDealerTurnEnd() {
