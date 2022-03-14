@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.player.Bet;
 import blackjack.domain.player.Player;
 
 import java.util.Arrays;
@@ -47,5 +48,39 @@ public class InputView {
             throw new IllegalArgumentException(String.format("[ERROR] %s 또는 %s으로 입력하세요.", YES, NO));
         }
         return input.equals(YES);
+    }
+
+    public static Bet responseBetAmount(String name) {
+        System.out.println();
+        System.out.println(name + "의 배팅 금액은?");
+        String input = scanner.nextLine();
+        int betAmount = validateBetAmount(input);
+        return convertBetAmountInput(betAmount);
+    }
+
+    private static int validateBetAmount(String input) {
+        validateName(input);
+        int betAmount = validateTransInteger(input);
+        validateRange(betAmount);
+
+        return betAmount;
+    }
+
+    private static int validateTransInteger(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("[ERROR] 양의 정수를 입력해주세요.");
+        }
+    }
+
+    private static void validateRange(int betAmount) {
+        if (betAmount < 0) {
+            throw new IllegalArgumentException("[ERROR] 양의 정수를 입력해주세요.");
+        }
+    }
+
+    private static Bet convertBetAmountInput(int betAmount) {
+        return new Bet(betAmount);
     }
 }

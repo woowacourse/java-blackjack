@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import java.util.Stack;
 
 @FunctionalInterface
-public interface DeckGenerator {
+public interface CardGenerator {
 
     Stack<Card> generate();
 }

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class DeckGeneratorImpl implements DeckGenerator {
+public class RandomGenerator implements CardGenerator {
 
     @Override
     public Stack<Card> generate() {

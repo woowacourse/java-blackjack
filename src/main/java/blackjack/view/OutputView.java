@@ -19,7 +19,7 @@ public class OutputView {
         final List<Participant> participants = players.getParticipants();
         final Dealer dealer = players.getDealer();
 
-        final String basicDistribute = "딜러와 %s에게 " + INIT_DISTRIBUTE_SIZE + "을 나누어주었습니다.";
+        final String basicDistribute = "딜러와 %s에게 " + INIT_DISTRIBUTE_SIZE + "장을 나누어주었습니다.";
         System.out.println();
         System.out.printf((basicDistribute) + "%n", String.join(DELIMITER, extractNames(participants)));
         printInitDealerInfo(dealer);
@@ -38,15 +38,9 @@ public class OutputView {
     }
 
     private static void printParticipantsInfo(final List<Participant> participants) {
-<<<<<<< HEAD
-        participants.forEach(
-                participant -> System.out.println(makePlayerCardInfo(participant))
-        );
-=======
         for (Participant participant : participants) {
             System.out.println(makePlayerCardInfo(participant));
         }
->>>>>>> step1
         System.out.println();
     }
 
@@ -88,27 +82,15 @@ public class OutputView {
     }
 
     public static void printResult(final Players players) {
-        System.out.println("## 최종 승패");
-        printDealerResult(players.getDealer());
-        printParticipantsResult(players.getParticipants());
-    }
-
-    private static void printDealerResult(final Player dealer) {
-        System.out.printf(dealer.getName() + ": %d승 %d패%n", dealer.getWinCount(),
-                dealer.getLoseCount());
-    }
-
-    private static void printParticipantsResult(final List<Participant> participants) {
-        participants.forEach(OutputView::printParticipantResult);
-    }
-
-    private static void printParticipantResult(final Player participant) {
-        System.out.print(participant.getName() + ": ");
-        if (participant.getWinCount() == 1) {
-            System.out.println("승");
-            return;
+        System.out.println("## 최종 수익");
+        printPlayerResult(players.getDealer());
+        for (Participant participant : players.getParticipants()) {
+            printPlayerResult(participant);
         }
-        System.out.println("패");
+    }
+
+    private static void printPlayerResult(final Player player) {
+        System.out.println(player.getName() + ": " + player.getBetProfit());
     }
 
     public static void printErrorMessage(String message) {

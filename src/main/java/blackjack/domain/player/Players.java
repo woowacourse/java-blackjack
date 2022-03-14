@@ -43,14 +43,10 @@ public class Players {
     }
 
     public void competeWithDealer() {
-<<<<<<< HEAD
-        participants.forEach(player ->
-                dealer.compete(player));
-=======
         for (Participant participant : participants) {
             dealer.compete(participant);
         }
->>>>>>> step1
+        dealer.calculateDealerProfit(participants);
     }
 
     public Dealer getDealer() {

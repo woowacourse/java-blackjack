@@ -12,13 +12,10 @@ public class Card {
         this.score = score;
     }
 
-<<<<<<< HEAD
-=======
     public boolean isScoreAce() {
         return score == Score.ACE;
     }
 
->>>>>>> step1
     public Score getScore() {
         return score;
     }
