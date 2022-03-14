@@ -28,7 +28,7 @@ public class CardsTest {
 		cards.pickCard(numberGenerator);
 
 		assertThatThrownBy(() -> cards.pickCard(numberGenerator))
-			.isInstanceOf(IndexOutOfBoundsException.class);
+				.isInstanceOf(IndexOutOfBoundsException.class);
 	}
 }
 
