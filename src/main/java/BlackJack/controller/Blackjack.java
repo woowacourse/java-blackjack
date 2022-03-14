@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class BlackjackController {
+public class Blackjack {
 
     public void run() {
         List<String> inputPlayerNames = InputView.inputPlayerNames();
