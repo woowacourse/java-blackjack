@@ -33,8 +33,4 @@ public enum CardRank {
     public Score getValue() {
         return value;
     }
-
-    public static int getAceValueDifference() {
-        return Score.ACE_HIGH_VALUE - ACE.getValue().toInt() ;
-    }
 }

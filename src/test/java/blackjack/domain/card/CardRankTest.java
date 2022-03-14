@@ -67,12 +67,4 @@ public class CardRankTest {
 
         assertThat(actual).isEqualTo(expected);
     }
-
-    @DisplayName("getAceValueDifference 메서드는 에이스의 가능한 값들(1과 11)의 차인 10을 반환한다.")
-    @Test
-    void getAceValueDifference() {
-        int actual = CardRank.getAceValueDifference();
-
-        assertThat(actual).isEqualTo(10);
-    }
 }

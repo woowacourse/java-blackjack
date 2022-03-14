@@ -1,13 +1,12 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.CardRank;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class Score implements Comparable<Score> {
 
-    public static final int ACE_HIGH_VALUE = 11;
+    private static final int ACE_VALUE_DIFF = 11 - 1;
     public static final int DEALER_EXTRA_CARD_LIMIT = 16;
     public static final int BLACKJACK = 21;
     private static final String NEGATIVE_SCORE_NOT_ALLOWED_EXCEPTION = "점수는 음수가 될 수 없습니다!";
@@ -35,7 +34,7 @@ public class Score implements Comparable<Score> {
     }
 
     public Score incrementOneAce() {
-        int replacedValue = this.value + CardRank.getAceValueDifference();
+        int replacedValue = this.value + ACE_VALUE_DIFF;
         return ScoreCache.getCache(replacedValue);
     }
 
