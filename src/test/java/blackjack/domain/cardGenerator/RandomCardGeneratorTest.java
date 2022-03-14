@@ -3,7 +3,7 @@ package blackjack.domain.cardGenerator;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.PlayingCard;
-import java.util.Stack;
+import java.util.Deque;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +15,8 @@ class RandomCardGeneratorTest {
     void copied_stack() {
         //given
         final RandomCardGenerator randomCardGenerator = new RandomCardGenerator();
-        final Stack<PlayingCard> deckFirst = randomCardGenerator.generate();
-        final Stack<PlayingCard> deckSecond = randomCardGenerator.generate();
+        final Deque<PlayingCard> deckFirst = randomCardGenerator.generate();
+        final Deque<PlayingCard> deckSecond = randomCardGenerator.generate();
 
         //when
         deckFirst.pop();

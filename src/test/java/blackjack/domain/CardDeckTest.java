@@ -8,7 +8,8 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.Suit;
 import blackjack.domain.cardGenerator.RandomCardGenerator;
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ public class CardDeckTest {
         //given
         final PlayingCard expectedCard = new PlayingCard(Suit.CLUBS, Denomination.FIVE);
 
-        Stack<PlayingCard> playingCards = new Stack<>();
+        Deque<PlayingCard> playingCards = new ArrayDeque<>();
         playingCards.push(expectedCard);
 
         //when

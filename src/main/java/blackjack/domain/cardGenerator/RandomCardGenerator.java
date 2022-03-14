@@ -3,29 +3,34 @@ package blackjack.domain.cardGenerator;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.Suit;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Stack;
+import java.util.Deque;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class RandomCardGenerator implements CardGenerator {
-    static final Stack<PlayingCard> cardDeck;
+    static final List<PlayingCard> cardDeck;
 
     static {
         cardDeck = Arrays.stream(Suit.values())
-            .flatMap(suit -> Arrays.stream(Denomination.values())
-                .map(denomination -> PlayingCard.of(suit, denomination)))
-            .collect(Collectors.toCollection(Stack::new));
+            .flatMap(RandomCardGenerator::getPlayingCardStream)
+            .collect(Collectors.toList());
     }
 
-    public Stack<PlayingCard> generate() {
-        return getCopiedDeck();
+    private static Stream<PlayingCard> getPlayingCardStream(final Suit suit) {
+        return Arrays.stream(Denomination.values())
+            .map(denomination -> PlayingCard.of(suit, denomination));
     }
 
-    private Stack<PlayingCard> getCopiedDeck() {
-        final Stack<PlayingCard> copedDeck = new Stack<>();
-        copedDeck.addAll(cardDeck);
+    public Deque<PlayingCard> generate() {
+        return getCopiedShuffleDeck();
+    }
+
+    private Deque<PlayingCard> getCopiedShuffleDeck() {
         Collections.shuffle(cardDeck);
-        return copedDeck;
+        return new ArrayDeque<>(cardDeck);
     }
 }

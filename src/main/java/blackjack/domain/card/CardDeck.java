@@ -2,11 +2,11 @@ package blackjack.domain.card;
 
 import blackjack.domain.cardGenerator.CardGenerator;
 import blackjack.domain.player.Player;
-import java.util.Stack;
+import java.util.Deque;
 
 public class CardDeck {
 
-    private final Stack<PlayingCard> playingCards;
+    private final Deque<PlayingCard> playingCards;
 
     public CardDeck(final CardGenerator cardGenerator) {
         this.playingCards = cardGenerator.generate();
