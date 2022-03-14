@@ -11,10 +11,6 @@ public class Cards {
 
     private final List<Card> cards = new ArrayList<>();
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public void generate() {
         for (CardNumber cardNumber : CardNumber.values()) {
             selectCardShape(cardNumber);
@@ -28,7 +24,7 @@ public class Cards {
         }
     }
 
-    public Card giveCard() {
+    public Card dealCard() {
         return cards.remove(0);
     }
 
@@ -57,6 +53,10 @@ public class Cards {
 
     public List<String> getDealerInitCard() {
         return List.of(cards.get(0).getName());
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     public List<String> getAllCards() {

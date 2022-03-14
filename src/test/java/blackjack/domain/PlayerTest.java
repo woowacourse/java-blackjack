@@ -14,19 +14,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
-
-    private CardMachine cardMachine = new CardMachine();
     private Player player;
 
     private Card aceSpade;
-    private Card threeSpade;
     private Card queenSpade;
 
     @BeforeEach
     void before() {
         player = new Player("woowahan");
         aceSpade = new Card(CardNumber.ACE, CardShape.SPADE);
-        threeSpade = new Card(CardNumber.THREE, CardShape.SPADE);
         queenSpade = new Card(CardNumber.QUEEN, CardShape.SPADE);
     }
 
@@ -78,9 +74,9 @@ public class PlayerTest {
     void is_received_true() {
         List<Card> cards = new ArrayList<>(List.of(queenSpade, queenSpade));
 
-        player.receiveInitCard(cards);
+        player.dealInit(cards);
 
-        assertThat(player.isReceived()).isTrue();
+        assertThat(player.isPossibleToDraw()).isTrue();
     }
 
     @DisplayName("플레이어의 카드 합이 21 이상일 경우 카드를 받지 못하는 것을 확인한다.")
@@ -88,8 +84,8 @@ public class PlayerTest {
     void is_received_false() {
         List<Card> cards = new ArrayList<>(List.of(aceSpade, queenSpade, queenSpade));
 
-        player.receiveInitCard(cards);
+        player.dealInit(cards);
 
-        assertThat(player.isReceived()).isFalse();
+        assertThat(player.isPossibleToDraw()).isFalse();
     }
 }

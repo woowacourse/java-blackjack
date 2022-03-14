@@ -8,11 +8,11 @@ public abstract class Human {
 
     abstract int getTotal();
 
-    abstract void receiveInitCard(List<Card> initCards);
+    abstract void dealInit(List<Card> initCards);
 
-    abstract void receiveCard(Card card);
+    abstract void hit(Card card);
 
     abstract boolean isBust();
 
-    abstract boolean isReceived();
+    abstract boolean isPossibleToDraw();
 }

@@ -20,16 +20,13 @@ public enum CardNumber {
     ;
 
     public static final int ACE_MAXIMUM = 11;
+
     private final String name;
     private final int number;
 
     CardNumber(final String name, final int number) {
         this.name = name;
         this.number = number;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public static int getTotal(final List<CardNumber> cardNumbers) {
@@ -58,5 +55,9 @@ public enum CardNumber {
 
     private static boolean isEqualAce(CardNumber cardNumber) {
         return cardNumber.equals(ACE);
+    }
+
+    public String getName() {
+        return name;
     }
 }

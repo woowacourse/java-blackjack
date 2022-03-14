@@ -3,24 +3,25 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardMachine {
+public class Deal {
 
     private static final int INIT_CARD_COUNT = 2;
+
     private final Cards cards = new Cards();
 
-    public CardMachine() {
+    public Deal() {
         cards.generate();
     }
 
-    public List<Card> giveInitCard() {
+    public List<Card> dealInit() {
         List<Card> givenCards = new ArrayList<>();
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            givenCards.add(cards.giveCard());
+            givenCards.add(cards.dealCard());
         }
         return givenCards;
     }
 
-    public Card giveCard() {
-        return cards.giveCard();
+    public Card deal() {
+        return cards.dealCard();
     }
 }

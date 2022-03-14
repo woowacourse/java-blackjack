@@ -7,7 +7,7 @@ public class Winner {
 
     private final List<Player> winners = new ArrayList<>();
 
-    public void compare(final Dealer dealer, final Player player) {
+    public void decide(final Dealer dealer, final Player player) {
         if (player.isBust()) {
             return;
         }

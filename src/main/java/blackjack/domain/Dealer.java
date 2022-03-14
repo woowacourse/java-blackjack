@@ -9,12 +9,12 @@ public class Dealer extends Human {
 
     private final Cards cards = new Cards();
 
-    public static String getName() {
-        return name;
-    }
-
     public boolean compare(final Player player) {
         return getTotal() >= player.getTotal();
+    }
+
+    public static String getName() {
+        return name;
     }
 
     public List<String> getInitCard() {
@@ -32,12 +32,12 @@ public class Dealer extends Human {
     }
 
     @Override
-    public void receiveInitCard(final List<Card> initCards) {
+    public void dealInit(final List<Card> initCards) {
         cards.add(initCards);
     }
 
     @Override
-    public void receiveCard(final Card card) {
+    public void hit(final Card card) {
         cards.add(card);
     }
 
@@ -47,7 +47,7 @@ public class Dealer extends Human {
     }
 
     @Override
-    public boolean isReceived() {
+    public boolean isPossibleToDraw() {
         return cards.calculateTotal() <= RECEIVED_MAXIMUM;
     }
 }

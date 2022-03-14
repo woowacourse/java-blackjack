@@ -27,14 +27,14 @@ class WinnerTest {
     void bust_player() {
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade));
         Dealer dealer = new Dealer();
-        dealer.receiveInitCard(dealerCards);
+        dealer.dealInit(dealerCards);
 
         List<Card> playerCards = new ArrayList<>(List.of(queenSpade, queenSpade, twoSpade));
         Player player = new Player("pobi");
-        player.receiveInitCard(playerCards);
+        player.dealInit(playerCards);
 
         Winner winner = new Winner();
-        winner.compare(dealer, player);
+        winner.decide(dealer, player);
 
         assertThat(winner.contains(player)).isFalse();
     }
@@ -44,14 +44,14 @@ class WinnerTest {
     void winner_player() {
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade));
         Dealer dealer = new Dealer();
-        dealer.receiveInitCard(dealerCards);
+        dealer.dealInit(dealerCards);
 
         List<Card> playerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
         Player player = new Player("pobi");
-        player.receiveInitCard(playerCards);
+        player.dealInit(playerCards);
 
         Winner winner = new Winner();
-        winner.compare(dealer, player);
+        winner.decide(dealer, player);
 
         assertThat(winner.contains(player)).isTrue();
     }
@@ -61,14 +61,14 @@ class WinnerTest {
     void winner_dealer() {
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, threeSpade));
         Dealer dealer = new Dealer();
-        dealer.receiveInitCard(dealerCards);
+        dealer.dealInit(dealerCards);
 
         List<Card> playerCards = new ArrayList<>(List.of(twoSpade, twoSpade));
         Player player = new Player("pobi");
-        player.receiveInitCard(playerCards);
+        player.dealInit(playerCards);
 
         Winner winner = new Winner();
-        winner.compare(dealer, player);
+        winner.decide(dealer, player);
 
         assertThat(winner.contains(player)).isFalse();
     }
@@ -78,14 +78,14 @@ class WinnerTest {
     void equals_score() {
         List<Card> dealerCards = new ArrayList<>(List.of(twoSpade, twoSpade, twoSpade));
         Dealer dealer = new Dealer();
-        dealer.receiveInitCard(dealerCards);
+        dealer.dealInit(dealerCards);
 
         List<Card> playerCards = new ArrayList<>(List.of(twoSpade, twoSpade, twoSpade));
         Player player = new Player("pobi");
-        player.receiveInitCard(playerCards);
+        player.dealInit(playerCards);
 
         Winner winner = new Winner();
-        winner.compare(dealer, player);
+        winner.decide(dealer, player);
 
         assertThat(winner.contains(player)).isFalse();
     }
@@ -95,14 +95,14 @@ class WinnerTest {
     void bust_dealer() {
         List<Card> dealerCards = new ArrayList<>(List.of(queenSpade, queenSpade, queenSpade));
         Dealer dealer = new Dealer();
-        dealer.receiveInitCard(dealerCards);
+        dealer.dealInit(dealerCards);
 
         List<Card> playerCards = new ArrayList<>(List.of(twoSpade, twoSpade, twoSpade));
         Player player = new Player("pobi");
-        player.receiveInitCard(playerCards);
+        player.dealInit(playerCards);
 
         Winner winner = new Winner();
-        winner.compare(dealer, player);
+        winner.decide(dealer, player);
 
         assertThat(winner.contains(player)).isTrue();
     }

@@ -7,23 +7,22 @@ import blackjack.view.OutputView;
 public class Game {
 
     public void run() {
-        OutputView.printPlayerNameInstruction();
-
-        CardMachine cardMachine = new CardMachine();
+        Deal deal = new Deal();
         Dealer dealer = new Dealer();
         Players players = createPlayers();
 
-        noticeInitCard(cardMachine, dealer, players);
-        openInitCard(dealer, players);
+        dealInitCards(deal, dealer, players);
+        openInitCards(dealer, players);
 
-        distributeCardToPlayers(players, cardMachine);
-        distributeCardToDealer(dealer, cardMachine);
+        drawPlayers(players, deal);
+        drawDealer(dealer, deal);
 
         openResult(dealer, players);
         win(dealer, players);
     }
 
     private Players createPlayers() {
+        OutputView.printPlayerNameInstruction();
         try {
             return new Players(InputView.inputPlayerName());
         } catch (IllegalArgumentException exception) {
@@ -32,15 +31,15 @@ public class Game {
         }
     }
 
-    private void noticeInitCard(CardMachine cardMachine, Dealer dealer, Players players) {
-        OutputView.printReceiveInitCardMessage(Dealer.getName(), players.getNames());
-        dealer.receiveInitCard(cardMachine.giveInitCard());
+    private void dealInitCards(Deal deal, Dealer dealer, Players players) {
+        OutputView.printDealCardMessage(Dealer.getName(), players.getNames());
+        dealer.dealInit(deal.dealInit());
         for (Player player : players.getPlayers()) {
-            player.receiveInitCard(cardMachine.giveInitCard());
+            player.dealInit(deal.dealInit());
         }
     }
 
-    private void openInitCard(Dealer dealer, Players players) {
+    private void openInitCards(Dealer dealer, Players players) {
         OutputView.printCard(Dealer.getName(), dealer.getInitCard());
         OutputView.printNewLine();
         for (Player player : players.getPlayers()) {
@@ -50,36 +49,36 @@ public class Game {
         OutputView.printNewLine();
     }
 
-    private void distributeCardToPlayers(final Players players, final CardMachine cardMachine) {
+    private void drawPlayers(final Players players, final Deal deal) {
         for (Player player : players.getPlayers()) {
-            distributeCardToPlayer(player, cardMachine);
+            drawPlayer(player, deal);
         }
     }
 
-    private void distributeCardToPlayer(final Player player, final CardMachine cardMachine) {
-        while (player.isReceived() && isReceived(player)) {
-            player.receiveCard(cardMachine.giveCard());
+    private void drawPlayer(final Player player, final Deal deal) {
+        while (player.isPossibleToDraw() && isToHit(player)) {
+            player.hit(deal.deal());
             OutputView.printCard(player.getName(), player.getCards());
             OutputView.printNewLine();
         }
         OutputView.printNewLine();
     }
 
-    private boolean isReceived(final Player player) {
+    private boolean isToHit(final Player player) {
         try {
             OutputView.printTakeCardInstruction(player.getName());
             String input = InputView.inputTakeCardAnswer();
             return player.answer(input);
         } catch (IllegalArgumentException exception) {
             OutputView.printExceptionMessage(exception.getMessage());
-            return isReceived(player);
+            return isToHit(player);
         }
     }
 
-    private void distributeCardToDealer(final Dealer dealer, final CardMachine cardMachine) {
-        while (dealer.isReceived()) {
-            dealer.receiveCard(cardMachine.giveCard());
-            OutputView.printTakeDealerCardsMessage(Dealer.getName(), Dealer.RECEIVED_MAXIMUM);
+    private void drawDealer(final Dealer dealer, final Deal deal) {
+        while (dealer.isPossibleToDraw()) {
+            dealer.hit(deal.deal());
+            OutputView.printDrawDealerCardMessage(Dealer.getName(), Dealer.RECEIVED_MAXIMUM);
         }
         OutputView.printNewLine();
     }
@@ -105,7 +104,7 @@ public class Game {
     private void win(final Dealer dealer, final Players players) {
         Winner winner = new Winner();
         for (Player player : players.getPlayers()) {
-            winner.compare(dealer, player);
+            winner.decide(dealer, player);
         }
         OutputView.printWinnerTitle();
         winDealer(winner, players);
