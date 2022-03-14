@@ -9,6 +9,8 @@ import blackjack.domain.PlayStatus;
 
 public class InputView {
 
+    private static final List<String> TEXT_ALLOW = List.of("Y", "y", "N", "n");
+
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> requestPlayerNames() {
@@ -34,8 +36,7 @@ public class InputView {
     }
 
     private static void validateHitOrStayInput(String text) {
-        List<String> textAllow = List.of("Y", "y", "N", "n");
-        if (!textAllow.contains(text)) {
+        if (!TEXT_ALLOW.contains(text)) {
             throw new IllegalArgumentException("y, n 이외의 값이 입력되었습니다.");
         }
     }
