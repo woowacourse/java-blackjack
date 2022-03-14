@@ -29,8 +29,7 @@ public final class Players {
     public Map<String, List<Card>> getCardsWithName() {
         final Map<String, List<Card>> cardsWithNameTotal = new LinkedHashMap<>();
         for (final Player player : players) {
-            assert player.getCardsWithName() != null;
-            cardsWithNameTotal.putAll(player.getCardsWithName());
+            cardsWithNameTotal.putAll(player.getNameWithCards());
         }
         return cardsWithNameTotal;
     }

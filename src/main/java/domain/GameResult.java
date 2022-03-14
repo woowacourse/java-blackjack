@@ -42,13 +42,13 @@ public enum GameResult {
         return playerCards.calculateSum() - dealerCards.calculateSum();
     }
 
-    public static List<GameResult> reverse(final List<GameResult> origin) {
+    public static List<GameResult> reverseResults(final List<GameResult> origin) {
         return origin.stream()
-                .map(GameResult::reverseFrom)
+                .map(GameResult::reverseResults)
                 .collect(Collectors.toList());
     }
 
-    private static GameResult reverseFrom(final GameResult origin) {
+    private static GameResult reverseResults(final GameResult origin) {
         if (origin == WIN) {
             return LOSE;
         }

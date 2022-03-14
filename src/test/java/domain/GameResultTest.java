@@ -18,7 +18,7 @@ public class GameResultTest {
     @MethodSource("provideFinalGameResult")
     void reverseResult(List<GameResult> origin, List<GameResult> expected) {
 
-        assertThat(GameResult.reverse(origin)).isEqualTo(expected);
+        assertThat(GameResult.reverseResults(origin)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> provideFinalGameResult() {

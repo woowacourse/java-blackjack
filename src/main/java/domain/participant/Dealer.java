@@ -23,7 +23,7 @@ public final class Dealer extends Participant {
     }
 
     public Map<String, List<GameResult>> getGameResultWithName(final List<GameResult> playersResult) {
-        return Map.of(name, GameResult.reverse(playersResult));
+        return Map.of(name, GameResult.reverseResults(playersResult));
     }
 
     @Override
