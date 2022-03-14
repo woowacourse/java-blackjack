@@ -1,4 +1,4 @@
-package blackjack.dto;
+package blackjack.domain.game;
 
 import static blackjack.domain.game.GameOutcome.DRAW;
 import static blackjack.domain.game.GameOutcome.LOSE;
@@ -6,7 +6,6 @@ import static blackjack.domain.game.GameOutcome.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
-import blackjack.domain.game.GameOutcome;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
