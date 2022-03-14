@@ -35,16 +35,17 @@ public abstract class Participant {
         return hand.getScore().isGreaterThan(Score.BLACKJACK);
     }
 
+    // TODO: 조건식 단순화
     public ResultType compareWith(Participant other) {
         int playerScore = getCurrentScore().getValue();
         int otherScore = other.getCurrentScore().getValue();
 
-        if (playerScore > otherScore || !isBusted() && other.isBusted()) {
+        if ((playerScore > otherScore && !isBusted()) || (!isBusted() && other.isBusted())) {
             return ResultType.WIN;
         }
-        if (playerScore == otherScore || isBusted() && other.isBusted()) {
-            return ResultType.DRAW;
+        if ((playerScore < otherScore && !other.isBusted()) || (isBusted() && !other.isBusted())) {
+            return ResultType.LOSE;
         }
-        return ResultType.LOSE;
+        return ResultType.DRAW;
     }
 }
