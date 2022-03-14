@@ -50,7 +50,7 @@ public class BlackjackController {
             player.receiveCard(game.popCard());
             printPlayerCardsInfo(player);
         }
-        showPlayerBust(player);
+        showPlayerBust(player); // TODO: add 21, blackjack cases
     }
 
     private void showPlayerBust(Player player) {

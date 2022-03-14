@@ -41,7 +41,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canDraw() {
-        return !isBust();
+        return !isBust() && !cardBundle.isBlackjackScore();
     }
 
     @Override

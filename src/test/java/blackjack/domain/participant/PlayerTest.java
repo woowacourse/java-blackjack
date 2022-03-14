@@ -68,15 +68,15 @@ public class PlayerTest {
             assertThat(actual).isTrue();
         }
 
-        @DisplayName("점수가 21이면 true를 반환한다.")
+        @DisplayName("점수가 최고 점수인 21이면 false를 반환한다.")
         @Test
-        void canDraw_returnTrueOn21() {
+        void canDraw_returnFalseOn21() {
             player.receiveCard(CLOVER2);
             player.receiveCard(CLOVER10);
 
             boolean actual = player.canDraw();
 
-            assertThat(actual).isTrue();
+            assertThat(actual).isFalse();
         }
 
         @DisplayName("점수가 21을 초과하면 false를 반환한다.")
