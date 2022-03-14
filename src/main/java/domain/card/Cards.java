@@ -23,7 +23,7 @@ public class Cards {
         return sum() > BLACKJACK_VALUE;
     }
 
-    public boolean isBlackJack() {
+    public boolean isBlackjack() {
         return sum() == BLACKJACK_VALUE;
     }
 

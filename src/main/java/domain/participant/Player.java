@@ -10,7 +10,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isFinished() {
-        return cards.isBust() || cards.isBlackJack();
+        return cards.isBust() || cards.isBlackjack();
     }
 
     @Override

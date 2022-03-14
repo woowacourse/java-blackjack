@@ -1,6 +1,6 @@
 package game;
 
-import domain.game.BlackJackGame;
+import domain.game.BlackjackGame;
 import domain.game.GameResult;
 import domain.participant.Command;
 import domain.participant.Name;
@@ -13,39 +13,39 @@ import view.OutputView;
 public class ConsoleGame {
 
     public void run() {
-        BlackJackGame blackJackGame = createBlackJackGame();
+        BlackjackGame blackjackGame = createBlackjackGame();
 
-        Participants participants = blackJackGame.getParticipants();
+        Participants participants = blackjackGame.getParticipants();
         Participant dealer = participants.findDealer();
         List<Participant> players = participants.findPlayers();
 
         OutputView.printInitialCards(participants.findDealer(), participants.findPlayers());
 
-        playPlayersTurn(blackJackGame, players);
-        playDealerTurn(blackJackGame, dealer);
+        playPlayersTurn(blackjackGame, players);
+        playDealerTurn(blackjackGame, dealer);
 
-        showGameResult(blackJackGame, dealer, players);
+        showGameResult(blackjackGame, dealer, players);
     }
 
-    private BlackJackGame createBlackJackGame() {
+    private BlackjackGame createBlackjackGame() {
         try {
             List<Name> playerNames = InputView.inputPlayerNames();
-            return new BlackJackGame(playerNames);
+            return new BlackjackGame(playerNames);
         } catch (IllegalArgumentException e) {
             OutputView.printException(e);
-            return createBlackJackGame();
+            return createBlackjackGame();
         }
     }
 
-    private void playPlayersTurn(BlackJackGame blackJackGame, List<Participant> players) {
+    private void playPlayersTurn(BlackjackGame blackjackGame, List<Participant> players) {
         for (Participant player : players) {
-            playPlayerTurn(blackJackGame, player);
+            playPlayerTurn(blackjackGame, player);
         }
     }
 
-    private void playPlayerTurn(BlackJackGame blackJackGame, Participant player) {
+    private void playPlayerTurn(BlackjackGame blackjackGame, Participant player) {
         while (!player.isFinished() && !inputCommand(player).isStay()) {
-            blackJackGame.drawCard(player);
+            blackjackGame.drawCard(player);
             OutputView.printCards(player);
         }
     }
@@ -60,15 +60,15 @@ public class ConsoleGame {
         }
     }
 
-    private void playDealerTurn(BlackJackGame blackJackGame, Participant dealer) {
+    private void playDealerTurn(BlackjackGame blackjackGame, Participant dealer) {
         while (!dealer.isFinished()) {
             OutputView.printDealerDrawInfo();
-            blackJackGame.drawCard(dealer);
+            blackjackGame.drawCard(dealer);
         }
     }
 
-    private void showGameResult(BlackJackGame blackJackGame, Participant dealer, List<Participant> players) {
-        GameResult gameResult = blackJackGame.createGameResult();
+    private void showGameResult(BlackjackGame blackjackGame, Participant dealer, List<Participant> players) {
+        GameResult gameResult = blackjackGame.createGameResult();
         OutputView.printCardsResult(dealer, players);
         OutputView.printGameResult(gameResult);
     }

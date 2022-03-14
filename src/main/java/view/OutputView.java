@@ -2,7 +2,7 @@ package view;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.game.BlackJackGame;
+import domain.game.BlackjackGame;
 import domain.game.GameResult;
 import domain.game.MatchResult;
 import domain.participant.Dealer;
@@ -70,7 +70,7 @@ public class OutputView {
         Map<Participant, MatchResult> map = gameResult.getGameResult();
 
         System.out.printf("%n%s: %d승 %d무 %d패%n"
-                , BlackJackGame.DEALER_NAME
+                , BlackjackGame.DEALER_NAME
                 , gameResult.calculateDealerMatchResultCount(MatchResult.WIN)
                 , gameResult.calculateDealerMatchResultCount(MatchResult.PUSH)
                 , gameResult.calculateDealerMatchResultCount(MatchResult.LOSE)

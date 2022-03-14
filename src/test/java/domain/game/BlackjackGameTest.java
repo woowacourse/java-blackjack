@@ -9,16 +9,16 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackJackGameTest {
+public class BlackjackGameTest {
     @Test
     @DisplayName("게임 초기화 시 각 플레이어는 2장의 카드를 분배받는다.")
     void create() {
         // given
         List<Name> names = Arrays.asList(new Name("pobi"), new Name("jason"));
-        BlackJackGame blackJackGame = new BlackJackGame(names);
+        BlackjackGame blackjackGame = new BlackjackGame(names);
 
         // when
-        boolean match = blackJackGame
+        boolean match = blackjackGame
                 .getParticipants()
                 .findPlayers()
                 .stream()

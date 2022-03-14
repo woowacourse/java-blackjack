@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackJackGame {
+public class BlackjackGame {
 
     public static final String DEALER_NAME = "딜러";
     private static final int INIT_CARD_COUNT = 2;
@@ -20,7 +20,7 @@ public class BlackJackGame {
     private final Participants participants;
     private final CardDistributor cardDistributor = new CardDistributor();
 
-    public BlackJackGame(List<Name> names) {
+    public BlackjackGame(List<Name> names) {
         this.participants = new Participants(initializePlayers(new ArrayList<>(names)));
         this.participants.add(new Dealer(new Name(DEALER_NAME), drawInitialCards()));
     }
@@ -53,7 +53,7 @@ public class BlackJackGame {
 
     @Override
     public String toString() {
-        return "BlackJackGame{" +
+        return "BlackjackGame{" +
                 "participants=" + participants +
                 ", cardDistributor=" + cardDistributor +
                 '}';
