@@ -15,7 +15,9 @@ public enum Result {
                     participant.isNotBust() && dealer.getTotalScore() == participant.getTotalScore()),
     LOSE("패", (dealer, participant) ->
             dealer.isBlackjack() || participant.isBust() ||
-                    (dealer.isNotBust() && dealer.getTotalScore() > participant.getTotalScore()));
+                    (dealer.isNotBust() && dealer.getTotalScore() > participant.getTotalScore())),
+    ;
+
     private final String name;
     private final BiPredicate<Dealer, Participant> condition;
 
