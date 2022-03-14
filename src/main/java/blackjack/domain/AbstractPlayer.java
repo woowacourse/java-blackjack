@@ -11,6 +11,11 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
+    public boolean isBlackJack() {
+        return cards.sumBlackJack();
+    }
+
+    @Override
     public boolean isDealer() {
         return this.name.equals(Dealer.NAME);
     }
@@ -18,6 +23,11 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public boolean isLose(int point) {
         return point > cards.sumPoints();
+    }
+
+    @Override
+    public boolean isOverPointLimit() {
+        return cards.sumPoints() > Match.MAX_WINNER_POINT;
     }
 
     @Override

@@ -33,7 +33,7 @@ public class GuestTest {
         guest.addCard(new Card(Suit.SPADE, Symbols.JACK));
         guest.addCard(new Card(Suit.SPADE, Symbols.QUEEN));
         guest.addCard(new Card(Suit.SPADE, Symbols.TWO));
-        boolean overLimit = guest.isOverLimit();
+        boolean overLimit = guest.isOverPointLimit();
 
         assertThat(overLimit).isTrue();
     }
@@ -45,7 +45,7 @@ public class GuestTest {
         guest.addCard(new Card(Suit.SPADE, Symbols.JACK));
         guest.addCard(new Card(Suit.SPADE, Symbols.QUEEN));
         guest.addCard(new Card(Suit.SPADE, Symbols.ACE));
-        boolean overLimit = guest.isOverLimit();
+        boolean overLimit = guest.isOverPointLimit();
 
         assertThat(overLimit).isFalse();
     }

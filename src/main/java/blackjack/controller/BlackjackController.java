@@ -18,8 +18,10 @@ public class BlackjackController {
         Players players = blackjackGame.getBlackjackPlayers();
         announceStartGame(players);
 
-        blackjackGame.turnPlayers(this);
-        blackjackGame.turnDealer(this);
+        if (!blackjackGame.isNotDealerBlackJack()) {
+            blackjackGame.turnPlayers(this);
+            blackjackGame.turnDealer(this);
+        }
 
         announceResult(blackjackGame, players);
     }

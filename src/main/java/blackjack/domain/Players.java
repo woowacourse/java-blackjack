@@ -16,6 +16,15 @@ public class Players {
         players.add(player);
     }
 
+    public boolean isDealerBlackJack() {
+        Player dealer = players.stream()
+                .filter(Player::isDealer)
+                .findFirst()
+                .orElseThrow();
+
+        return dealer.isBlackJack();
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }

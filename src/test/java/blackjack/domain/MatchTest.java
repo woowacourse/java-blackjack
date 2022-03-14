@@ -8,9 +8,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class MatchTest {
 
-
     @ParameterizedTest
-    @CsvSource(value = {"SPADE:CLUB:ACE:JACK:WIN", "CLUB:SPADE:ACE:ACE:DRAW"}
+    @CsvSource(value = {"SPADE:CLUB:ACE:JACK:BLACKJACK", "CLUB:SPADE:ACE:ACE:DRAW"}
             , delimiter = ':')
     @DisplayName("게스트 승무패 결정 로직 확인")
     public void checkGuestFindWinner(Suit suit, Suit secondSuit, Symbols symbol, Symbols secondSymbol, Match result) {
@@ -26,7 +25,7 @@ class MatchTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"LOSE:WIN", "WIN:LOSE", "DRAW:DRAW"}, delimiter = ':')
+    @CsvSource(value = {"WIN:LOSE", "DRAW:DRAW"}, delimiter = ':')
     @DisplayName("딜러 승무패 결정 로직 확인")
     public void checkDealerFindWinner(Match guest, Match dealer) {
         assertThat(guest.getDealerResult()).isEqualTo(dealer);

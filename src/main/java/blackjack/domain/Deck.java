@@ -8,6 +8,7 @@ public class Deck {
 
     private static final int HAS_NOT_ACE = 0;
     private static final int ACE_ELEVEN_POSSIBLE = 10;
+    private static final int BLACKJACK_SIZE = 2;
 
     private final Set<Card> deck = new LinkedHashSet<>();
 
@@ -24,6 +25,10 @@ public class Deck {
             return points;
         }
         return calculateAcePoint(points);
+    }
+
+    public boolean sumBlackJack() {
+        return deck.size() == BLACKJACK_SIZE && sumPoints() == Match.MAX_WINNER_POINT;
     }
 
     private int calculateAcePoint(int points) {

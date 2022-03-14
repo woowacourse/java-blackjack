@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum Match {
+    BLACKJACK("승", "패", Match::isBlackjack),
     WIN("승", "패", Match::winPlayerCondition),
     LOSE("패", "승", Match::losePlayerCondition),
     DRAW("무", "무", Match::isDraw),
@@ -41,6 +42,10 @@ public enum Match {
 
     private boolean findOppositeResult(Match match) {
         return match.result.equals(this.oppositeResult);
+    }
+
+    private static boolean isBlackjack(Player guest, Player dealer) {
+        return guest.isBlackJack();
     }
 
     private static boolean winPlayerCondition(Player guest, Player dealer) {

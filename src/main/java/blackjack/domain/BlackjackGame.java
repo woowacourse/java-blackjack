@@ -33,6 +33,10 @@ public class BlackjackGame {
         }
     }
 
+    public boolean isNotDealerBlackJack() {
+        return blackjackPlayers.isDealerBlackJack();
+    }
+
     public void turnPlayers(BlackjackController blackjackController) {
         for (Player player : blackjackPlayers.getPlayers()) {
             turnEachPlayerIfGuest(blackjackController, player);
@@ -51,12 +55,12 @@ public class BlackjackGame {
     }
 
     public boolean checkGetMoreCard(Player player) {
-        return !player.isOverLimit();
+        return !player.isOverMoreCardLimit();
     }
 
     public void turnDealer(BlackjackController blackjackController) {
         Player dealer = blackjackPlayers.getDealer();
-        if (!dealer.isOverLimit()) {
+        if (!dealer.isOverMoreCardLimit()) {
             blackjackController.announceDealerCanGetMoreCard();
             addCard(dealer);
             return;
@@ -81,11 +85,11 @@ public class BlackjackGame {
         return results;
     }
 
-    private void scoreResultIfGuest(Player dealer, Player player, Results results) {
-        if (player.isDealer()) {
+    private void scoreResultIfGuest(Player dealer, Player guest, Results results) {
+        if (guest.isDealer()) {
             return;
         }
-        scorePlayers(dealer, player, results);
+        scorePlayers(dealer, guest, results);
     }
 
     private void scorePlayers(Player dealer, Player guest, Results results) {

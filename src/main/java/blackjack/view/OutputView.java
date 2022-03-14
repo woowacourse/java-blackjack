@@ -105,7 +105,7 @@ public class OutputView {
         for (Player player : results.getPlayers()) {
             MatchResult result = results.getResult(player);
             String matchResult = AccumulateMatchResult(result.getMatch());
-            System.out.println(player.getName() + RESULT_DELIMITER + matchResult);
+            System.out.println(player.getName() + RESULT_START_DELIMITER + matchResult);
         }
     }
 

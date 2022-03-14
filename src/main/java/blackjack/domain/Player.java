@@ -4,7 +4,11 @@ public interface Player {
 
     void addCard(Card card);
 
-    boolean isOverLimit();
+    boolean isBlackJack();
+
+    boolean isOverMoreCardLimit();
+
+    boolean isOverPointLimit();
 
     boolean isDealer();
 

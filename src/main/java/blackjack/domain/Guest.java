@@ -10,7 +10,7 @@ public class Guest extends AbstractPlayer implements Player {
     }
 
     @Override
-    public boolean isOverLimit() {
+    public boolean isOverMoreCardLimit() {
         return cards.sumPoints() > MAX_POINT;
     }
 
@@ -20,7 +20,7 @@ public class Guest extends AbstractPlayer implements Player {
         if (dealer.isLose(points) && points <= Match.MAX_WINNER_POINT) {
             return true;
         }
-        if (dealer.isOverLimit() && points <= Match.MAX_WINNER_POINT) {
+        if (dealer.isOverPointLimit() && points <= Match.MAX_WINNER_POINT) {
             return true;
         }
         return false;
