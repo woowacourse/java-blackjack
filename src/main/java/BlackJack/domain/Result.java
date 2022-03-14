@@ -8,6 +8,7 @@ public enum Result {
     DRAW("무"),
     LOSE("패");
 
+    public static final int WIN_SCORE = 21;
     private final String value;
 
     Result(String value) {
@@ -19,10 +20,10 @@ public enum Result {
     }
 
     public static Result judge(Dealer dealer, Player player) {
-        if (dealer.getScore() > 21 || dealer.getScore() < player.getScore() && player.getScore() <= 21) {
+        if (dealer.getScore() > WIN_SCORE || dealer.getScore() < player.getScore() && player.getScore() <= WIN_SCORE) {
             return Result.WIN;
         }
-        if (player.getScore() > 21 || (dealer.getScore() > player.getScore() && dealer.getScore() <= 21)) {
+        if (player.getScore() > WIN_SCORE || (dealer.getScore() > player.getScore() && dealer.getScore() <= WIN_SCORE)) {
             return Result.LOSE;
         }
         return Result.DRAW;
