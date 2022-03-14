@@ -1,7 +1,6 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.Judge;
 
 import java.util.List;
 import java.util.Set;
@@ -14,6 +13,7 @@ public class Players {
 
     private final List<Player> participants;
     private final Player dealer;
+    private int participantPointer = 0;
 
     public Players(final List<Player> participants, final Player dealer) {
         validateParticipants(participants);
@@ -48,5 +48,40 @@ public class Players {
 
     public List<Player> getParticipants() {
         return List.copyOf(participants);
+    }
+
+    public boolean isDealerAcceptableCard() {
+        return dealer.acceptableCard();
+    }
+
+    public void addParticipantCard(Card card) {
+        pointParticipant().addCard(card);
+    }
+
+    public boolean isPointParticipantAcceptableCard() {
+        return pointParticipant().acceptableCard();
+    }
+
+    public Player pointParticipant() {
+        if(isParticipantPointerEnd()) {
+            throw new RuntimeException("참가자를 불러올 수 없습니다.");
+        }
+        return participants.get(participantPointer);
+    }
+
+    public boolean isParticipantPointerEnd() {
+        return participantPointer == participants.size();
+    }
+
+    public void moveParticipantPointer() {
+        participantPointer++;
+    }
+
+    public void addDealerCard(Card card) {
+        dealer.addCard(card);
+    }
+
+    public String pointParticipantName() {
+        return pointParticipant().getName();
     }
 }

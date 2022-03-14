@@ -96,4 +96,5 @@ class PlayersTest {
                 .hasMessage("[ERROR] 참가자 이름은 중복될 수 없습니다.");
     }
 
+
 }

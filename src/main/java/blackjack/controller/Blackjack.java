@@ -50,29 +50,32 @@ public class Blackjack {
     }
 
     private void decideGetMoreCard(final Players players, final Deck deck) {
-        for (Player participant : players.getParticipants()) {
-            decideParticipantOneMoreCard(participant, deck);
-        }
-        decideDealerMoreCard(players.getDealer(), deck);
+        decideParticipantsOneMoreCard(players, deck);
+        decideDealerMoreCard(players, deck);
     }
-
-    private void decideParticipantOneMoreCard(final Player participant, final Deck deck) {
-        while (isNotOverMaxScore(participant) && InputView.oneMoreCard(participant)) {
-            participant.addCard(deck.draw());
-            OutputView.printPlayerCardInfo(participant);
+    private void decideParticipantsOneMoreCard(final Players players, final Deck deck) {
+        while(!players.isParticipantPointerEnd()) {
+            decideParticipantOneMoreCard(players, deck);
+            players.moveParticipantPointer();
         }
     }
-
-    private boolean isNotOverMaxScore(final Player participant) {
-        if (!participant.acceptableCard()) {
-            OutputView.printParticipantOverMaxScore(participant.getName());
+    private void decideParticipantOneMoreCard(final Players players, final Deck deck) {
+        while (isNotOverMaxScore(players) && InputView.oneMoreCard(players.pointParticipantName())) {
+            players.addParticipantCard(deck.draw());
+            OutputView.printPlayerCardInfo(players.pointParticipant());
         }
-        return participant.acceptableCard();
     }
 
-    private void decideDealerMoreCard(final Player dealer, final Deck deck) {
-        if (dealer.acceptableCard()) {
-            dealer.addCard(deck.draw());
+    private boolean isNotOverMaxScore(final Players players) {
+        if (!players.isPointParticipantAcceptableCard()) {
+            OutputView.printParticipantOverMaxScore(players.pointParticipantName());
+        }
+        return players.isPointParticipantAcceptableCard();
+    }
+
+    private void decideDealerMoreCard(final Players players, final Deck deck) {
+        if (players.isDealerAcceptableCard()) {
+            players.addDealerCard(deck.draw());
             OutputView.printDealerAcceptCard();
             return;
         }

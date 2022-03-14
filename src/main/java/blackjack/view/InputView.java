@@ -41,8 +41,8 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static boolean oneMoreCard(final Player participant) {
-        final String input = InputView.responseReceiveMoreCard(participant.getName());
+    public static boolean oneMoreCard(final String name) {
+        final String input = InputView.responseReceiveMoreCard(name);
         if (!input.equals(YES) && !input.equals(NO)) {
             throw new IllegalArgumentException(String.format("[ERROR] %s 또는 %s으로 입력하세요.", YES, NO));
         }

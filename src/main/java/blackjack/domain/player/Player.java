@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Player {
 
@@ -23,9 +24,7 @@ public abstract class Player {
         cards.addCard(card);
     }
 
-    public boolean acceptableCard() {
-        return false;
-    }
+    public abstract boolean acceptableCard();
 
     public List<Card> getCards() {
         return this.cards.getCards();
@@ -34,4 +33,5 @@ public abstract class Player {
     public String getName() {
         return this.name;
     }
+
 }
