@@ -3,8 +3,8 @@ package blackjack.controller;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.game.OutComeResult;
 import blackjack.domain.participant.Participant;
-import blackjack.dto.ParticipantDto;
-import blackjack.dto.PlayerFinalResultDto;
+import blackjack.dto.CurrentTurnParticipant;
+import blackjack.dto.GameResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,14 +15,14 @@ public class BlackJackController {
         blackJackGame = BlackJackGame.init(playerNames);
     }
 
-    public ParticipantDto getInitDealerInfo() {
-        return ParticipantDto.from(blackJackGame.getDealer());
+    public CurrentTurnParticipant getInitDealerInfo() {
+        return CurrentTurnParticipant.from(blackJackGame.getDealer());
     }
 
-    public List<ParticipantDto> getInitPlayerInfo() {
+    public List<CurrentTurnParticipant> getInitPlayerInfo() {
         return blackJackGame.getInitPlayers()
                 .stream()
-                .map(ParticipantDto::from)
+                .map(CurrentTurnParticipant::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -30,16 +30,16 @@ public class BlackJackController {
         return blackJackGame.isAllPlayersEnd();
     }
 
-    public ParticipantDto getCurrentTurnPlayerInfo() {
-        return ParticipantDto.from(blackJackGame.getCurrentTurnPlayer());
+    public CurrentTurnParticipant getCurrentTurnPlayerInfo() {
+        return CurrentTurnParticipant.from(blackJackGame.getCurrentTurnPlayer());
     }
 
-    public ParticipantDto drawNextPlayer() {
-        return ParticipantDto.from(blackJackGame.drawNextPlayer());
+    public CurrentTurnParticipant drawNextPlayer() {
+        return CurrentTurnParticipant.from(blackJackGame.drawNextPlayer());
     }
 
-    public ParticipantDto drawCurrentPlayer() {
-        return ParticipantDto.from(blackJackGame.drawCurrentPlayer());
+    public CurrentTurnParticipant drawCurrentPlayer() {
+        return CurrentTurnParticipant.from(blackJackGame.drawCurrentPlayer());
     }
 
     public boolean isDealerTurnEnd() {
@@ -54,10 +54,10 @@ public class BlackJackController {
         blackJackGame.stayDealer();
     }
 
-    public List<PlayerFinalResultDto> getPlayerResultInfos() {
+    public List<GameResult> getPlayerResultInfos() {
         final List<Participant> participants = blackJackGame.getParticipants();
         return participants.stream()
-                .map(PlayerFinalResultDto::from)
+                .map(GameResult::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 

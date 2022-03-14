@@ -5,8 +5,8 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.game.GameOutcome;
 import blackjack.domain.game.OutComeResult;
-import blackjack.dto.ParticipantDto;
-import blackjack.dto.PlayerFinalResultDto;
+import blackjack.dto.CurrentTurnParticipant;
+import blackjack.dto.GameResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,16 +32,17 @@ public class OutputView {
         throw new UnsupportedOperationException();
     }
 
-    public static void showGameInitInfo(final ParticipantDto dealerInfo, final List<ParticipantDto> participantDtos) {
-        System.out.printf(PROVIDE_INIT_CARD_TO_PLAYER_MESSAGE, dealerInfo.getName(), joinPlayerNames(participantDtos));
+    public static void showGameInitInfo(final CurrentTurnParticipant dealerInfo, final List<CurrentTurnParticipant> currentTurnParticipants) {
+        System.out.printf(PROVIDE_INIT_CARD_TO_PLAYER_MESSAGE, dealerInfo.getName(), joinPlayerNames(
+                currentTurnParticipants));
         System.out.printf(PROVIDED_CARD_TO_DEALER_INFO_MESSAGE,
                 dealerInfo.getName(), joinPlayerCardInfos(dealerInfo.getCards()));
-        participantDtos.forEach(OutputView::printPlayerCardInfo);
+        currentTurnParticipants.forEach(OutputView::printPlayerCardInfo);
     }
 
-    private static String joinPlayerNames(final List<ParticipantDto> participantDtos) {
-        return participantDtos.stream()
-                .map(ParticipantDto::getName)
+    private static String joinPlayerNames(final List<CurrentTurnParticipant> currentTurnParticipants) {
+        return currentTurnParticipants.stream()
+                .map(CurrentTurnParticipant::getName)
                 .collect(Collectors.joining(PLAYER_NAME_DELIMITER));
     }
 
@@ -55,22 +56,22 @@ public class OutputView {
         return number.getPrintValue() + pattern.getName();
     }
 
-    public static void printPlayerCardInfo(final ParticipantDto participantDto) {
+    public static void printPlayerCardInfo(final CurrentTurnParticipant currentTurnParticipant) {
         System.out.printf(PROVIDED_CARD_TO_PLAYER_INFO_MESSAGE,
-                participantDto.getName(), joinPlayerCardInfos(participantDto.getCards()));
+                currentTurnParticipant.getName(), joinPlayerCardInfos(currentTurnParticipant.getCards()));
     }
 
     public static void printDealerDraw() {
         System.out.println(PROVIDE_CARD_TO_DEALER_MESSAGE);
     }
 
-    public static void printResultPlayerInfos(final List<PlayerFinalResultDto> playerFinalResultDtos) {
-        playerFinalResultDtos.forEach(OutputView::printResultPlayerInfo);
+    public static void printResultPlayerInfos(final List<GameResult> gameResults) {
+        gameResults.forEach(OutputView::printResultPlayerInfo);
     }
 
-    private static void printResultPlayerInfo(final PlayerFinalResultDto playerFinalResultDto) {
-        System.out.printf(PLAYER_CARD_RESULT_AND_SCORE_MESSAGE, playerFinalResultDto.getName(),
-                joinPlayerCardInfos(playerFinalResultDto.getCards()), playerFinalResultDto.getScore());
+    private static void printResultPlayerInfo(final GameResult gameResult) {
+        System.out.printf(PLAYER_CARD_RESULT_AND_SCORE_MESSAGE, gameResult.getName(),
+                joinPlayerCardInfos(gameResult.getCards()), gameResult.getScore());
     }
 
     public static void printAllOutcomeResult(final OutComeResult outComeResult) {
