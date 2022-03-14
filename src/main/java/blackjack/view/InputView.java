@@ -29,18 +29,35 @@ public class InputView {
 		}
 	}
 
-	private void validateNullString(String names) {
+	private void validateNullString(final String names) {
 		if (names == null) {
 			throw new IllegalArgumentException(NULL_STRING_EXCEPTION.getMessage());
 		}
 	}
 
-	public String inputYesOrNo(String name) {
+	public boolean isHitDecision(final String name) {
+		final String decision = inputDecision(name);
+		if (decision.equals("N") || decision.equals("n")) {
+			return false;
+		}
+		return true;
+	}
+
+	private String inputDecision(final String name) {
 		System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 		String decision = scanner.nextLine();
+		try {
+			validateDecisionInput(decision);
+			return decision;
+		} catch (IllegalArgumentException exception) {
+			System.out.println(exception.getMessage());
+			return inputDecision(name);
+		}
+	}
+
+	private void validateDecisionInput(String decision) {
 		if (!YES_OR_NO.matcher(decision).matches()) {
 			throw new IllegalArgumentException(DECISION_INPUT_EXCEPTION.getMessage());
 		}
-		return decision;
 	}
 }

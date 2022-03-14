@@ -58,28 +58,14 @@ public class BlackJackGameController {
 	}
 
 	private void progressOnePlayer(Deck deck, Player player) {
-		while (!player.isBust() && decideHitOrStay(player)) {
+		while (!player.isBust() && decidePlayerHit(player)) {
 			player.addCard(deck.distributeCard());
 			outputView.displayAllCard(player.getName(), player.getCards());
 		}
 	}
 
-	private boolean decideHitOrStay(Player player) {
-		String decision = inputDecision(player);
-		if (decision.equals("N") || decision.equals("n")) {
-			return false;
-		}
-		return true;
-	}
-
-	private String inputDecision(Player player) {
-		try {
-			String decision = inputView.inputYesOrNo(player.getName());
-			return decision;
-		} catch (IllegalArgumentException exception) {
-			outputView.printException(exception.getMessage());
-			return inputDecision(player);
-		}
+	private boolean decidePlayerHit(Player player) {
+		return inputView.isHitDecision(player.getName());
 	}
 
 	private void progressDealerTurn(Dealer dealer, Deck deck) {
