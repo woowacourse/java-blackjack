@@ -27,10 +27,6 @@ public class Players {
     }
 
     public Map<PlayerOutcome, List<Player>> getGameResult() {
-        players.stream()
-            .map(player -> player.match(dealer));
-
-
         return players.stream()
                 .collect(Collectors.groupingBy(player -> player.match(dealer)));
     }
