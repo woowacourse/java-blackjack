@@ -3,6 +3,7 @@ package blackjack.view.cardview;
 import blackjack.domain.card.CardType;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 public enum OriginalCardType {
 
@@ -24,7 +25,7 @@ public enum OriginalCardType {
                 .filter(c -> c.getCardType() == cardType)
                 .map(OriginalCardType::getName)
                 .findAny()
-                .orElseThrow(NullPointerException::new);
+                .orElseThrow(NoSuchElementException::new);
     }
 
     private CardType getCardType() {

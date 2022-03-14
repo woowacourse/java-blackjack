@@ -3,6 +3,7 @@ package blackjack.view.cardview;
 import blackjack.domain.card.CardNumber;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 public enum OriginCardNumber {
 
@@ -33,7 +34,7 @@ public enum OriginCardNumber {
                 .filter(c -> c.getCardNumber() == cardNumber)
                 .map(OriginCardNumber::getname)
                 .findAny()
-                .orElseThrow(NullPointerException::new);
+                .orElseThrow(NoSuchElementException::new);
     }
 
     private CardNumber getCardNumber() {
