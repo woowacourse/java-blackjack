@@ -22,7 +22,7 @@ public class Players {
         this.players = players;
     }
 
-    public static Players fromNames(List<String> names, HitStrategy hitStrategy) {
+    public static Players fromNamesAndGeustHitStrategy(List<String> names, HitStrategy hitStrategy) {
         validate(names);
         List<Player> allPlayers = new ArrayList<>(toPlayers(names, hitStrategy));
         allPlayers.add(new Dealer());

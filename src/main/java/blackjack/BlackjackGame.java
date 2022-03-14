@@ -18,7 +18,7 @@ public class BlackjackGame {
 
     public void run() {
         Deck deck = new Deck();
-        Players players = Players.fromNames(InputView.inputPlayerName(),
+        Players players = Players.fromNamesAndGeustHitStrategy(InputView.inputPlayerName(),
                 (player) -> HitFlag.fromCommand(InputView.inputHitOrStand(player.getName())));
         players.initHit(deck, INIT_CARD_SIZE);
         OutputView.printInitCard(getCardStatus(players));
