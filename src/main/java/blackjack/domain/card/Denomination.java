@@ -1,5 +1,9 @@
 package blackjack.domain.card;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum Denomination {
 	ACE("A", 1),
 	TWO("2", 2),
@@ -24,6 +28,12 @@ public enum Denomination {
 		this.score = score;
 	}
 
+	public static List<Card> makeSuitSet(final Suit suit) {
+		return Arrays.stream(values())
+			.map(denomination -> new Card(suit, denomination))
+			.collect(Collectors.toList());
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -31,4 +41,5 @@ public enum Denomination {
 	public int getScore() {
 		return score;
 	}
+
 }

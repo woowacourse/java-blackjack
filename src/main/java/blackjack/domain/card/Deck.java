@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,11 +20,9 @@ public class Deck {
 
 	private List<Card> createDeck() {
 		List<Suit> suits = Arrays.asList(Suit.values());
-		List<Denomination> denominations = Arrays.asList(Denomination.values());
-
 		List<Card> newCards = suits.stream()
-			.flatMap(suit -> denominations.stream()
-				.map(denomination -> new Card(suit, denomination)))
+			.map(Denomination::makeSuitSet)
+			.flatMap(Collection::stream)
 			.collect(Collectors.toList());
 		Collections.shuffle(newCards);
 		return newCards;
