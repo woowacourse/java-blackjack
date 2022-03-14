@@ -15,11 +15,6 @@ public class CardGroup {
         cards.add(card);
     }
 
-    public void addTwoCards(Card firstCard, Card secondCard) {
-        cards.add(firstCard);
-        cards.add(secondCard);
-    }
-
     public boolean isBust() {
         return getSum() > BLACKJACK_NUMBER;
     }

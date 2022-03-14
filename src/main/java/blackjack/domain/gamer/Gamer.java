@@ -42,10 +42,6 @@ public class Gamer {
         return name.length() < MINIMUM_NAME_LENGTH || name.length() > MAXIMUM_NAME_LENGTH;
     }
 
-    public void addTwoCards(Card firstCard, Card secondCard) {
-        cardGroup.addTwoCards(firstCard, secondCard);
-    }
-
     public void addCard(Card card) {
         if (cardGroup.isBust()) {
             return;

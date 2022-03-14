@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 public class GamerGroup {
+    private static final int NUMBER_OF_INITIAL_CARDS = 2;
+
     private final Dealer dealer;
     private final PlayerGroup playerGroup;
 
@@ -23,14 +25,17 @@ public class GamerGroup {
     }
 
     public void addInitialCards(CardPack cardPack) {
-        playerGroup.addTwoCards(cardPack);
+        for (int i = 0; i < NUMBER_OF_INITIAL_CARDS; i++) {
+            playerGroup.addCardToAllPlayers(cardPack);
+        }
         addInitialDealerCards(cardPack);
     }
 
     private void addInitialDealerCards(CardPack cardPack) {
         Card card = cardPack.pickOne();
         card.close();
-        dealer.addTwoCards(card, cardPack.pickOne());
+        dealer.addCard(card);
+        dealer.addCard(cardPack.pickOne());
     }
 
     public int addCardToDealer(CardPack cardPack) {
