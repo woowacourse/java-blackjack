@@ -31,16 +31,20 @@ public abstract class Participant {
         return cardBundle;
     }
 
+    public boolean isBusted() {
+        return cardBundle.getScore().toInt() > Score.BLACKJACK;
+    }
+
     public ResultType compareWith(Participant other) {
         int playerScore = getCurrentScore().toInt();
         int otherScore = other.getCurrentScore().toInt();
 
-        if (playerScore > otherScore) {
+        if (playerScore > otherScore || !isBusted() && other.isBusted()) {
             return ResultType.WIN;
         }
-        if (playerScore < otherScore) {
-            return ResultType.LOSE;
+        if (playerScore == otherScore || isBusted() && other.isBusted()) {
+            return ResultType.DRAW;
         }
-        return ResultType.DRAW;
+        return ResultType.LOSE;
     }
 }
