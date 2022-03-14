@@ -34,14 +34,6 @@ public class Dealer extends Participant {
         return score.toInt() <= Score.DEALER_EXTRA_CARD_LIMIT;
     }
 
-    // TODO: handle NPE
-    public Card getOpenCard() {
-        return hand.getCards()
-                .stream()
-                .findFirst()
-                .get();
-    }
-
     @Override
     public String toString() {
         return "Dealer{" +
