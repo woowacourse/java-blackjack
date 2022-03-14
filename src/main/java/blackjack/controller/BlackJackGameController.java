@@ -1,14 +1,14 @@
 package blackjack.controller;
 
-import blackjack.domain.Names;
-
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
+import blackjack.domain.Name;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.Result;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.stream.Collectors;
 
 public class BlackJackGameController {
 	private static final int INIT_DISTRIBUTE_AMOUNT = 2;
@@ -33,7 +33,7 @@ public class BlackJackGameController {
 
 	private Players generatePlayers() {
 		try {
-			return new Players(new Names(inputView.inputPlayerNames()));
+			return new Players(inputView.inputPlayerNames().stream().map(Name::new).collect(Collectors.toList()));
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			return generatePlayers();

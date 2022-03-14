@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.Arrays;
 import java.util.List;
 
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ public class PlayersTest {
 	void check_empty_list() {
 		String lines = ",,,,";
 		List<String> strings = Arrays.asList(lines.split(","));
-		assertThatThrownBy(() -> new Players(new Names(strings)))
+		assertThatThrownBy(() -> new Players(strings.stream().map(Name::new).collect(Collectors.toList())))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -22,7 +23,7 @@ public class PlayersTest {
 	void check_all_player_blackjack_or_bust() {
 		String lines = "pobi,jason";
 		List<String> strings = Arrays.asList(lines.split(","));
-		Players players = new Players(new Names(strings));
+		Players players = new Players(strings.stream().map(Name::new).collect(Collectors.toList()));
 		players.getPlayers().get(0).addCards(
 			List.of(new Card(CardDenomination.TEN, CardSuit.HEART), new Card(CardDenomination.TEN, CardSuit.CLOVER),
 				new Card(CardDenomination.TWO, CardSuit.HEART)));

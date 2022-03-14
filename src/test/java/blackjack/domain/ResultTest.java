@@ -19,7 +19,7 @@ public class ResultTest {
 	@BeforeEach
 	void gamer_init() {
 		dealer = new Dealer();
-		players = new Players(new Names(List.of("pobi", "jason", "alpha")));
+		players = new Players(List.of(new Name("pobi"), new Name("jason"), new Name("alpha")));
 		result = new Result(players);
 		player1 = players.getPlayers().get(0);
 		player2 = players.getPlayers().get(1);
