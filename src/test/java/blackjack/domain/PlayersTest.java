@@ -50,4 +50,18 @@ public class PlayersTest {
         assertThat(players.namesAbleToGetAdditionalCard().size() == 1
                 && players.namesAbleToGetAdditionalCard().get(0) == "jason").isTrue();
     }
+
+    @DisplayName("카드를 더 받을 수 있는 플레이어 가져오는 기능 테스트")
+    @Test
+    void playersAbleToGetAdditionalCardTest() {
+        Players players = new Players(List.of("pobi", "jason"));
+        List<Player> playersAbleToGetCard = players.playersAbleToGetAdditionalCard();
+        playersAbleToGetCard.get(0).addCard(new Card("9다이아몬드", 9));
+        playersAbleToGetCard.get(0).addCard(new Card("9하트", 9));
+        playersAbleToGetCard.get(0).addCard(new Card("9클로버", 9));
+
+        playersAbleToGetCard.get(1).addCard(new Card("8다이아몬드", 8));
+
+        assertThat(players.playersAbleToGetAdditionalCard().get(0).isSameName("jason")).isTrue();
+    }
 }

@@ -38,6 +38,12 @@ public class Players {
         return players;
     }
 
+    public List<Player> playersAbleToGetAdditionalCard() {
+        return players.stream()
+                .filter(player -> !player.isBurst())
+                .collect(Collectors.toList());
+    }
+
     public boolean isPlayerBurst(String playerName) {
         return convertToPlayer(playerName).isBurst();
     }
