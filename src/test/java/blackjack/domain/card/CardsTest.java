@@ -10,6 +10,7 @@ import static blackjack.domain.card.Suit.DIAMOND;
 import static blackjack.domain.card.Suit.HEART;
 import static blackjack.domain.card.Suit.SPADE;
 
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,10 +21,12 @@ public class CardsTest {
     @Test
     public void testCalculateDefaultCondition() {
         //given
-        Cards cards = new Cards();
+        List<Card> initCards = List.of(
+                new Card(CLOVER, FIVE),
+                new Card(HEART, KING)
+        );
 
-        cards.add(new Card(CLOVER, FIVE));
-        cards.add(new Card(HEART, KING));
+        Cards cards = createCards(initCards);
 
         //when
         int score = cards.getScore();
@@ -36,10 +39,12 @@ public class CardsTest {
     @Test
     public void testSumPointWithAce() {
         //given
-        Cards cards = new Cards();
+        List<Card> initCards = List.of(
+                new Card(CLOVER, FIVE),
+                new Card(DIAMOND, ACE)
+        );
 
-        cards.add(new Card(CLOVER, FIVE));
-        cards.add(new Card(DIAMOND, ACE));
+        Cards cards = createCards(initCards);
 
         //when
         int score = cards.getScore();
@@ -52,13 +57,15 @@ public class CardsTest {
     @Test
     public void testSumPointWithMultipleAce() {
         //given
-        Cards cards = new Cards();
+        List<Card> initCards = List.of(
+                new Card(HEART, ACE),
+                new Card(CLOVER, ACE),
+                new Card(SPADE, ACE),
+                new Card(DIAMOND, ACE),
+                new Card(CLOVER, KING)
+        );
 
-        cards.add(new Card(HEART, ACE));
-        cards.add(new Card(CLOVER, ACE));
-        cards.add(new Card(SPADE, ACE));
-        cards.add(new Card(DIAMOND, ACE));
-        cards.add(new Card(CLOVER, KING));
+        Cards cards = createCards(initCards);
 
         //when
         int score = cards.getScore();
@@ -71,11 +78,13 @@ public class CardsTest {
     @Test
     public void testSumPointWithMultipleAce2() {
         //given
-        Cards cards = new Cards();
+        List<Card> initCards = List.of(
+                new Card(SPADE, ACE),
+                new Card(DIAMOND, ACE),
+                new Card(CLOVER, NINE)
+        );
 
-        cards.add(new Card(SPADE, ACE));
-        cards.add(new Card(DIAMOND, ACE));
-        cards.add(new Card(CLOVER, NINE));
+        Cards cards = createCards(initCards);
 
         //when
         int score = cards.getScore();
@@ -88,19 +97,31 @@ public class CardsTest {
     @Test
     public void testSumPointWithMultipleAce3() {
         //given
-        Cards cards = new Cards();
+        List<Card> initCards = List.of(
+                new Card(SPADE, FIVE),
+                new Card(DIAMOND, FIVE),
+                new Card(CLOVER, EIGHT),
+                new Card(SPADE, ACE),
+                new Card(DIAMOND, ACE),
+                new Card(CLOVER, ACE)
+        );
 
-        cards.add(new Card(SPADE, FIVE));
-        cards.add(new Card(DIAMOND, FIVE));
-        cards.add(new Card(CLOVER, EIGHT));
-        cards.add(new Card(SPADE, ACE));
-        cards.add(new Card(DIAMOND, ACE));
-        cards.add(new Card(CLOVER, ACE));
+        Cards cards = createCards(initCards);
 
         //when
         int score = cards.getScore();
 
         //then
         Assertions.assertThat(score).isEqualTo(21);
+    }
+
+    private Cards createCards(List<Card> initCards) {
+        Cards cards = new Cards();
+
+        for (Card initCard : initCards) {
+            cards.add(initCard);
+        }
+
+        return cards;
     }
 }

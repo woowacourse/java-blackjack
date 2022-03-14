@@ -42,7 +42,7 @@ public class PlayerTest {
     @Test
     public void testDrawCard() {
         //given
-        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
+        Deck deck = createDeck();
         Player player = Player.from("pobi");
 
         //when
@@ -57,7 +57,7 @@ public class PlayerTest {
     @Test
     public void testCardDrawable() {
         //given
-        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
+        Deck deck = createDeck();
         Player player = Player.from("pobi");
 
         //when
@@ -72,7 +72,7 @@ public class PlayerTest {
     @Test
     public void testShowInitCards() {
         //given
-        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
+        Deck deck = createDeck();
         Player player = Player.from("pobi");
 
         player.drawCard(deck);
@@ -85,4 +85,7 @@ public class PlayerTest {
         assertThat(cards.size()).isEqualTo(2);
     }
 
+    private Deck createDeck() {
+        return new Deck(new ShuffledDeckGenerateStrategy());
+    }
 }

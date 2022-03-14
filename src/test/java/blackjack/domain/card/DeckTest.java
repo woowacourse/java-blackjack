@@ -11,9 +11,9 @@ public class DeckTest {
 
     @DisplayName("기본 생성자로 덱을 생성한다.")
     @Test
-    public void createDeck() {
+    public void testCreateDeck() {
         //given & when
-        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
+        Deck deck = createDeck();
 
         //then
         assertThat(deck).isNotNull();
@@ -23,7 +23,7 @@ public class DeckTest {
     @Test
     public void testDrawCard() {
         //given
-        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
+        Deck deck = createDeck();
 
         //when
         Card firstCard = deck.drawCard();
@@ -37,7 +37,7 @@ public class DeckTest {
     @Test
     public void testDeckSize() {
         //given
-        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
+        Deck deck = createDeck();
 
         //when
         for (int i = 0; i < 52; i++) {
@@ -47,6 +47,10 @@ public class DeckTest {
         //then
         assertThatThrownBy(() -> deck.drawCard())
                 .isInstanceOf(IllegalStateException.class);
+    }
+
+    private Deck createDeck() {
+        return new Deck(new ShuffledDeckGenerateStrategy());
     }
 
 

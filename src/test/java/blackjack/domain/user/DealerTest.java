@@ -13,9 +13,9 @@ public class DealerTest {
 
     @DisplayName("딜러 생성 검증")
     @Test
-    public void createDealer() {
+    public void testCreateDealer() {
         //given & when
-        Dealer dealer = new Dealer();
+        Dealer dealer = createDealer();
 
         //then
         assertThat(dealer).isNotNull();
@@ -25,8 +25,8 @@ public class DealerTest {
     @Test
     public void testDrawCard() {
         //given
-        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
-        Dealer dealer = new Dealer();
+        Deck deck = createDeck();
+        Dealer dealer = createDealer();
 
         //when
         dealer.drawCard(deck);
@@ -40,8 +40,8 @@ public class DealerTest {
     @Test
     public void testShowInitCards() {
         //given
-        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
-        Dealer dealer = new Dealer();
+        Deck deck = createDeck();
+        Dealer dealer = createDealer();
 
         dealer.drawCard(deck);
         dealer.drawCard(deck);
@@ -55,8 +55,8 @@ public class DealerTest {
     @Test
     public void testDrawCardIfSumOfPointUnder16() {
         //given
-        Deck deck = new Deck(new ShuffledDeckGenerateStrategy());
-        Dealer dealer = new Dealer();
+        Deck deck = createDeck();
+        Dealer dealer = createDealer();
         //when
 
         while (sumPoint(dealer.showCards()) < 17) {
@@ -71,5 +71,13 @@ public class DealerTest {
         return cards.stream()
                 .mapToInt(Card::getPoint)
                 .sum();
+    }
+
+    private Deck createDeck() {
+        return new Deck(new ShuffledDeckGenerateStrategy());
+    }
+
+    private Dealer createDealer() {
+        return new Dealer();
     }
 }
