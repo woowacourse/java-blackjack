@@ -10,6 +10,7 @@ public class Cards {
     private static final String ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
 
     private static final int BLACK_JACK = 21;
+    private static final int BLACK_JACK_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -26,6 +27,10 @@ public class Cards {
         if (cards.contains(card)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD);
         }
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == BLACK_JACK_COUNT && addScore() == BLACK_JACK;
     }
 
     public int addScore() {

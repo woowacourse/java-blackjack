@@ -31,6 +31,10 @@ public abstract class Participant {
         cards.addCard(card);
     }
 
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
     public int getScore() {
         return cards.addScore();
     }
