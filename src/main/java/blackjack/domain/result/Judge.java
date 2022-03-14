@@ -50,5 +50,4 @@ public class Judge {
         }
         return participantResult;
     }
-
 }

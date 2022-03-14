@@ -37,16 +37,16 @@ public class Blackjack {
                 .collect(Collectors.toList());
     }
 
-    private Dealer createDealer(final Deck deck) {
-        return new Dealer(makeInitCards(deck));
-    }
-
     private List<Card> makeInitCards(final Deck deck) {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < INIT_CARD_SIZE; i++) {
             cards.add(deck.draw());
         }
         return cards;
+    }
+
+    private Dealer createDealer(final Deck deck) {
+        return new Dealer(makeInitCards(deck));
     }
 
     private void decideGetMoreCard(final Players players, final Deck deck) {
