@@ -62,6 +62,16 @@ public enum WinDrawLose {
         return LOSE;
     }
 
+    public static WinDrawLose swapResult(WinDrawLose result) {
+        if (result == WIN) {
+            return LOSE;
+        }
+        if (result == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
     public String getResult() {
         return result;
     }

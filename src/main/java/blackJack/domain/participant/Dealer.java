@@ -1,5 +1,7 @@
 package blackJack.domain.participant;
 
+import blackJack.domain.result.WinDrawLose;
+
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
@@ -7,6 +9,11 @@ public class Dealer extends Participant {
 
     public Dealer() {
         super(DEALER_NAME);
+    }
+
+    public WinDrawLose isWin(Player player) {
+        final WinDrawLose resultByPlayer = WinDrawLose.calculateWinDrawLose(player, this);
+        return WinDrawLose.swapResult(resultByPlayer);
     }
 
     @Override

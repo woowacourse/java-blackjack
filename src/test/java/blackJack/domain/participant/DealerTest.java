@@ -3,6 +3,7 @@ package blackJack.domain.participant;
 import blackJack.domain.card.Card;
 import blackJack.domain.card.Denomination;
 import blackJack.domain.card.Suit;
+import blackJack.domain.result.WinDrawLose;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +24,50 @@ public class DealerTest {
         dealer.receiveCard(new Card(Suit.CLOVER, Denomination.EIGHT));
 
         assertThat(dealer.getScore()).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("딜러가 플레이어를 이기는 상황 검증 테스트")
+    void isWin() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("kth990303");
+        dealer.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
+        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.NINE));
+        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.THREE));
+        player.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
+        player.receiveCard(new Card(Suit.CLOVER, Denomination.NINE));
+        player.receiveCard(new Card(Suit.CLOVER, Denomination.THREE));
+
+        assertThat(dealer.isWin(player)).isEqualTo(WinDrawLose.WIN);
+    }
+
+    @Test
+    @DisplayName("딜러가 플레이어와 무승부인 상황 검증 테스트")
+    void isDraw() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("kth990303");
+        dealer.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
+        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.NINE));
+        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.TWO));
+        player.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
+        player.receiveCard(new Card(Suit.CLOVER, Denomination.NINE));
+        player.receiveCard(new Card(Suit.CLOVER, Denomination.TWO));
+
+        assertThat(dealer.isWin(player)).isEqualTo(WinDrawLose.DRAW);
+    }
+
+    @Test
+    @DisplayName("딜러가 플레이어에게 지는 상황 검증 테스트")
+    void isLose() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("kth990303");
+        dealer.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
+        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.NINE));
+        dealer.receiveCard(new Card(Suit.CLOVER, Denomination.TWO));
+        player.receiveCard(new Card(Suit.CLOVER, Denomination.JACK));
+        player.receiveCard(new Card(Suit.CLOVER, Denomination.ACE));
+
+        assertThat(dealer.isWin(player)).isEqualTo(WinDrawLose.LOSE);
     }
 
     @Test
