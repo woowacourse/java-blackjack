@@ -21,7 +21,7 @@ public class Deck {
 
     public Card pickCard() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException(RUN_OUT_OF_CARDS_ERROR_MESSAGE);
+            throw new IndexOutOfBoundsException(RUN_OUT_OF_CARDS_ERROR_MESSAGE);
         }
         return cards.pop();
     }
