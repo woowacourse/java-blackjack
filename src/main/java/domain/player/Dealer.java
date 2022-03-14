@@ -40,10 +40,6 @@ public class Dealer extends Player {
         if (this.isBust()) {
             return MatchResult.LOSE;
         }
-        if (hasHigherScoreIgnoreBust(gambler) || winByBlackJack(gambler)) {
-            return MatchResult.WIN;
-        }
-
-        return MatchResult.DRAW;
+        return getMatchResultAfterBustCheck(gambler);
     }
 }

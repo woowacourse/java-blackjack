@@ -39,12 +39,15 @@ public abstract class Player {
         return cards.isBlackJack();
     }
 
-    public String getName() {
-        return this.name;
-    }
+    protected MatchResult getMatchResultAfterBustCheck(Player dealer) {
+        if (!hasHigherScoreIgnoreBust(dealer)) {
+            return MatchResult.LOSE;
+        }
+        if (hasHigherScoreIgnoreBust(dealer) || winByBlackJack(dealer)) {
+            return MatchResult.WIN;
+        }
 
-    public List<Card> getCards() {
-        return new ArrayList<>(cards.getCards());
+        return MatchResult.DRAW;
     }
 
     protected boolean hasHigherScoreIgnoreBust(Player another) {
@@ -53,6 +56,14 @@ public abstract class Player {
 
     protected boolean winByBlackJack(Player another) {
         return this.isBlackJack() && !another.isBlackJack();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public List<Card> getCards() {
+        return new ArrayList<>(cards.getCards());
     }
 
     @Override
