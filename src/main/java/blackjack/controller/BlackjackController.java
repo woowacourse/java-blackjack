@@ -10,6 +10,7 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackController {
+
     public void run() {
         BlackjackGame blackjackGame = new BlackjackGame(InputView.inputNames());
         List<Participant> participants = blackjackGame.getParticipant();
@@ -40,7 +41,7 @@ public class BlackjackController {
     }
 
     private void hitDealer(BlackjackGame blackjackGame) {
-        while (blackjackGame.isDealerReceiveOneMoreCard()) {
+        while (blackjackGame.canDealerHit()) {
             OutputView.printReceivingMoreCardOfDealer();
         }
     }

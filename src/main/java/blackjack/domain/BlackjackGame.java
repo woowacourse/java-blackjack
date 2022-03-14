@@ -33,7 +33,7 @@ public class BlackjackGame {
         player.putCard(deck.draw());
     }
 
-    public boolean isDealerReceiveOneMoreCard() {
+    public boolean canDealerHit() {
         return players.isDealerHit(deck);
     }
 

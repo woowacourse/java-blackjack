@@ -19,7 +19,7 @@ public enum Number {
     QUEEN(10, "Q"),
     KING(10, "K");
 
-    private static final int SUM_HIDDEN_ACE = -1 + 11;
+    private static final int SPECIAL_ACE = 11;
 
     private final int value;
     private final String name;
@@ -57,8 +57,8 @@ public enum Number {
     }
 
     private static int sumUnderBlackJackNumber(int total) {
-        if (total + SUM_HIDDEN_ACE <= BlackjackGame.BLACKJACK_NUMBER) {
-            total = total + SUM_HIDDEN_ACE;
+        if (total + SPECIAL_ACE - ACE.value <= BlackjackGame.BLACKJACK_NUMBER) {
+            total = total + SPECIAL_ACE - ACE.value;
         }
         return total;
     }
