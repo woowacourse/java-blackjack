@@ -37,7 +37,7 @@ public class Hand {
 
     public Score getScore() {
         Score defaultScore = calculateScoreBy(Card::getRankValue);
-        if (defaultScore.toInt() <= Score.BLACKJACK) {
+        if (defaultScore.isGreaterOrEqualThan(Score.BLACKJACK)) {
             return defaultScore;
         }
 

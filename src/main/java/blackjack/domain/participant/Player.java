@@ -20,7 +20,7 @@ public class Player extends Participant {
 
     public boolean canReceive() {
         Score score = hand.getScore();
-        return score.toInt() <= Score.BLACKJACK;
+        return score.isLessOrEqualThan(Score.BLACKJACK);
     }
 
     @Override

@@ -32,7 +32,7 @@ public abstract class Participant {
     }
 
     public boolean isBusted() {
-        return hand.getScore().toInt() > Score.BLACKJACK;
+        return hand.getScore().isGreaterThan(Score.BLACKJACK);
     }
 
     public ResultType compareWith(Participant other) {

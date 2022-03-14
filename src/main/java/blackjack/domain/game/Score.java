@@ -25,6 +25,18 @@ public class Score implements Comparable<Score> {
         return ScoreCache.getCache(addedValue);
     }
 
+    public boolean isGreaterThan(int score) {
+        return this.value > score;
+    }
+
+    public boolean isGreaterOrEqualThan(int score) {
+        return this.value >= score;
+    }
+
+    public boolean isLessOrEqualThan(int score) {
+        return this.value < score;
+    }
+
     public int toInt() {
         return value;
     }
