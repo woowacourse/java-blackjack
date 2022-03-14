@@ -4,7 +4,7 @@ import blackjack.domain.participant.Participant;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-public enum Result {
+public enum CardScoreResult {
 
     LOSE("패", (player, dealer) -> player.isBust() || dealer.isWin(player)
         || (!player.isBlackjack() && dealer.isBlackjack())),
@@ -15,20 +15,20 @@ public enum Result {
     private final String name;
     private final BiPredicate<Participant, Participant> biPredicate;
 
-    Result(String name,
+    CardScoreResult(String name,
         BiPredicate<Participant, Participant> biPredicate) {
         this.name = name;
         this.biPredicate = biPredicate;
     }
 
-    public static Result findResult(Participant player, Participant dealer) {
+    public static CardScoreResult findCardScoreResult(Participant player, Participant dealer) {
         return Arrays.stream(values())
             .filter(value -> value.biPredicate.test(player, dealer))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 결과를 찾을 수 없습니다."));
     }
 
-    public Result reverse() {
+    public CardScoreResult reverse() {
         if (LOSE == this) {
             return WIN;
         }

@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 import static blackjack.domain.TestCardFixture.*;
-import static blackjack.domain.result.Result.LOSE;
+import static blackjack.domain.result.CardScoreResult.LOSE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +10,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.GameScoreBoard;
-import blackjack.domain.result.Result;
+import blackjack.domain.result.CardScoreResult;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -91,8 +91,8 @@ class BlackjackGameTest {
         dealer.receiveCard(deck.draw());
 
         GameScoreBoard gameScoreBoard = blackjackGame.calculateGameScore();
-        Map<Result, Integer> dealerGameResult = gameScoreBoard.getDealerGameResult();
-        for (Entry<Result, Integer> dealerResult : dealerGameResult.entrySet()) {
+        Map<CardScoreResult, Integer> dealerGameResult = gameScoreBoard.getDealerGameResult();
+        for (Entry<CardScoreResult, Integer> dealerResult : dealerGameResult.entrySet()) {
             assertThat(dealerResult.getKey()).isEqualTo(LOSE);
         }
     }

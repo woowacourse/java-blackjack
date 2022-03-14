@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.result.GameScoreBoard;
-import blackjack.domain.result.Result;
+import blackjack.domain.result.CardScoreResult;
 import blackjack.domain.participant.Participant;
 import java.util.List;
 import java.util.Map;
@@ -84,8 +84,8 @@ public class OutputView {
 
     private static void printDealerGameResult(GameScoreBoard result) {
         out.print("딜러: ");
-        for (Entry<Result, Integer> dealerGameResult : result.getDealerGameResult().entrySet()) {
-            Result matchResult = dealerGameResult.getKey();
+        for (Entry<CardScoreResult, Integer> dealerGameResult : result.getDealerGameResult().entrySet()) {
+            CardScoreResult matchResult = dealerGameResult.getKey();
             out.printf(MATCH_RESULT_FORMAT, dealerGameResult.getValue(), matchResult.getName());
         }
         out.println();

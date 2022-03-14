@@ -2,7 +2,7 @@ package blackjack.domain.result;
 
 import static blackjack.domain.TestBlackjackUtils.createCardHand;
 import static blackjack.domain.TestCardFixture.*;
-import static blackjack.domain.result.Result.LOSE;
+import static blackjack.domain.result.CardScoreResult.LOSE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.participant.Dealer;
@@ -32,9 +32,9 @@ class GameScoreBoardTest {
     @DisplayName("딜러의 게임 승패를 잘 반환하는지 확인")
     void equalsDealerGameResult() {
         GameScoreBoard result = GameScoreBoard.recordGameScore(dealer, players);
-        Map<Result, Integer> dealerGameResult = result.getDealerGameResult();
+        Map<CardScoreResult, Integer> dealerGameResult = result.getDealerGameResult();
 
-        for (Entry<Result, Integer> dealerResult : dealerGameResult.entrySet()) {
+        for (Entry<CardScoreResult, Integer> dealerResult : dealerGameResult.entrySet()) {
             assertThat(dealerResult.getKey()).isEqualTo(LOSE);
         }
     }

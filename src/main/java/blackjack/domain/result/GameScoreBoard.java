@@ -9,21 +9,21 @@ import java.util.TreeMap;
 
 public class GameScoreBoard {
 
-    private final Map<Result, Integer> dealerGameResult;
+    private final Map<CardScoreResult, Integer> dealerGameResult;
     private final Map<String, String> playerGameResultMap;
 
-    public GameScoreBoard(Map<Result, Integer> dealerGameResult,
+    public GameScoreBoard(Map<CardScoreResult, Integer> dealerGameResult,
         Map<String, String> playerGameResultMap) {
         this.dealerGameResult = dealerGameResult;
         this.playerGameResultMap = playerGameResultMap;
     }
 
     public static GameScoreBoard recordGameScore(Participant dealer, List<Participant> players) {
-        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
+        Map<CardScoreResult, Integer> dealerResult = new EnumMap<>(CardScoreResult.class);
         Map<String, String> playerResult = new TreeMap<>();
         for (Participant player : players) {
-            Result playerGameScore = Result.findResult(player, dealer);
-            Result dealerGameScore = playerGameScore.reverse();
+            CardScoreResult playerGameScore = CardScoreResult.findCardScoreResult(player, dealer);
+            CardScoreResult dealerGameScore = playerGameScore.reverse();
             dealerResult.put(dealerGameScore, dealerResult.getOrDefault(dealerGameScore, 0) + 1);
             playerResult.put(player.getName(), playerGameScore.getName());
         }
@@ -34,7 +34,7 @@ public class GameScoreBoard {
         return Collections.unmodifiableMap(playerGameResultMap);
     }
 
-    public Map<Result, Integer> getDealerGameResult() {
+    public Map<CardScoreResult, Integer> getDealerGameResult() {
         return Collections.unmodifiableMap(dealerGameResult);
     }
 }

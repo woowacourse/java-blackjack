@@ -8,7 +8,7 @@ import static blackjack.domain.TestCardFixture.sevenCard;
 import static blackjack.domain.TestCardFixture.tenCard;
 import static blackjack.domain.TestCardFixture.threeCard;
 import static blackjack.domain.TestCardFixture.twoCard;
-import static blackjack.domain.result.Result.*;
+import static blackjack.domain.result.CardScoreResult.*;
 import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.participant.Dealer;
@@ -37,16 +37,16 @@ class ResultTest {
         "DRAW,무"
     })
     @DisplayName("결과가 정상적으로 반대로 뒤집어 지는지 확인")
-    void reversResult(Result result, String excepted) {
-        Result reverseResult = result.reverse();
+    void reversResult(CardScoreResult result, String excepted) {
+        CardScoreResult reverseResult = result.reverse();
         assertThat(reverseResult.getName()).isEqualTo(excepted);
     }
 
     @DisplayName("카드패의 승패 계산이 정확한지 확인")
     @ParameterizedTest
     @MethodSource("calculateCardHandResultTestCase")
-    void calculateCardHandResult(Player player, Dealer dealer, Result excepted) {
-        assertThat(Result.findResult(player, dealer)).isEqualTo(excepted);
+    void calculateCardHandResult(Player player, Dealer dealer, CardScoreResult excepted) {
+        assertThat(CardScoreResult.findCardScoreResult(player, dealer)).isEqualTo(excepted);
     }
 
     private static Stream<Arguments> calculateCardHandResultTestCase() {
