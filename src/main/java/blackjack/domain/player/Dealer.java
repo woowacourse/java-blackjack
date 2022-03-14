@@ -20,6 +20,11 @@ public class Dealer extends AbstractPlayer {
     }
 
     @Override
+    public boolean isHittable() {
+        return checkHitFlag() == HitFlag.Y;
+    }
+
+    @Override
     public HitFlag checkHitFlag() {
         if (getCards().calculateScore() <= HIT_FLAG_SCORE) {
             return HitFlag.Y;
