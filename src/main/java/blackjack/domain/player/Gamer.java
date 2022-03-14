@@ -43,7 +43,7 @@ public class Gamer extends Player {
 
     @Override
     public boolean isSatisfyReceiveCondition() {
-        return calculateResult() <= LIMIT_GAMER_TOTAL_POINT;
+        return calculateResult() < LIMIT_GAMER_TOTAL_POINT;
     }
 
     @Override

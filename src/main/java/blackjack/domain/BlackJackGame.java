@@ -23,16 +23,6 @@ public class BlackJackGame {
         this.gamers = gamers;
     }
 
-    private static CompareResult convertToDealerResult(final CompareResult compareResult) {
-        if (compareResult == CompareResult.WIN) {
-            return CompareResult.LOSE;
-        }
-        if (compareResult == CompareResult.LOSE) {
-            return CompareResult.WIN;
-        }
-        return CompareResult.DRAW;
-    }
-
     public void handOutStartingCards(final Deck deck) {
         dealStartingCards(dealer, deck);
         for (Gamer gamer : gamers.getGamers()) {
@@ -57,6 +47,16 @@ public class BlackJackGame {
             enumMap.put(dealerCompareResult, enumMap.getOrDefault(dealerCompareResult, 0) + COUNT_UNIT);
         }
         return enumMap;
+    }
+
+    private static CompareResult convertToDealerResult(final CompareResult compareResult) {
+        if (compareResult == CompareResult.WIN) {
+            return CompareResult.LOSE;
+        }
+        if (compareResult == CompareResult.LOSE) {
+            return CompareResult.WIN;
+        }
+        return CompareResult.DRAW;
     }
 
     public Player getDealer() {
