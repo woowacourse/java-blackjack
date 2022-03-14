@@ -5,14 +5,16 @@ import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.CardsWithTotalScore;
+import dto.CardsWithTotalScoreDto;
+import dto.NameWithCardsDto;
+import utils.GameResultConvertor;
+import view.InputView;
+import view.OutputView;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import utils.GameResultConvertor;
-import view.InputView;
-import view.OutputView;
 
 public final class BlackJackGameController {
     private static final int INIT_CARD_COUNT = 2;
@@ -32,7 +34,7 @@ public final class BlackJackGameController {
         dealer = new Dealer();
         players = new Players(names);
         initCards();
-        OutputView.printInitCardsResult(getCardsWithName());
+        OutputView.printInitCardsResult(new NameWithCardsDto(getNameWithCardsAllParticipant()));
     }
 
     private void initCards() {
@@ -42,11 +44,10 @@ public final class BlackJackGameController {
         }
     }
 
-    private Map<String, List<Card>> getCardsWithName() {
-        final Map<String, List<Card>> cardsWithNameTotal = dealer.getCardsWithName();
-        assert cardsWithNameTotal != null;
-        cardsWithNameTotal.putAll(players.getCardsWithName());
-        return cardsWithNameTotal;
+    private Map<String, List<Card>> getNameWithCardsAllParticipant() {
+        final Map<String, List<Card>> nameWithCardsAllParticipant = new LinkedHashMap<>(dealer.getNameWithCards());
+        nameWithCardsAllParticipant.putAll(players.getCardsWithName());
+        return nameWithCardsAllParticipant;
     }
 
     private void hit() {
@@ -66,13 +67,17 @@ public final class BlackJackGameController {
 
     private void hitPlayer(final Player player) {
         int printCount = 0;
-        while (player.drawCard(InputView.inputTryToHit(player.getName()))) {
-            OutputView.printCardsWithName(player.getCardsWithName());
+        while (player.drawCard(inputPlayerHitResponse(player))) {
+            OutputView.printCardsWithName(new NameWithCardsDto(player.getNameWithCards()));
             printCount++;
         }
         if (printCount == 0) {
-            OutputView.printCardsWithName(player.getCardsWithName());
+            OutputView.printCardsWithName(new NameWithCardsDto(player.getNameWithCards()));
         }
+    }
+
+    private boolean inputPlayerHitResponse(final Player player) {
+        return InputView.inputTryToHit(player.getName());
     }
 
     private void hitDealer() {
@@ -83,20 +88,18 @@ public final class BlackJackGameController {
         dealer.stopRunning();
         final Map<String, Integer> totalScoreWithName = new LinkedHashMap<>(dealer.getTotalScoreWithName());
         totalScoreWithName.putAll(players.getTotalScoreWithName());
-        final CardsWithTotalScore cardsWithTotalScore = new CardsWithTotalScore(getCardsWithName(), totalScoreWithName);
+        final CardsWithTotalScoreDto cardsWithTotalScore = new CardsWithTotalScoreDto(getNameWithCardsAllParticipant(), totalScoreWithName);
         OutputView.printCardsWithTotalScore(cardsWithTotalScore);
     }
 
     private void showGameResult() {
         final Map<String, GameResult> playersGameResults = players.calculateGameResult(dealer);
-        final Map<String, List<GameResult>> dealerGameResult = dealer.getGameResultWithName(
-                new ArrayList<>(playersGameResults.values()));
+        final Map<String, List<GameResult>> dealerGameResult = dealer.getGameResultWithName(new ArrayList<>(playersGameResults.values()));
         final Map<String, List<String>> gameResult = convertGameResultToString(dealerGameResult, playersGameResults);
         OutputView.printGameResultWithName(gameResult);
     }
 
-    private Map<String, List<String>> convertGameResultToString(final Map<String, List<GameResult>> dealerGameResult,
-                                                                final Map<String, GameResult> playersGameResults) {
+    private Map<String, List<String>> convertGameResultToString(final Map<String, List<GameResult>> dealerGameResult, final Map<String, GameResult> playersGameResults) {
         return GameResultConvertor.convertToString(dealerGameResult, playersGameResults);
     }
 }

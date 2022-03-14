@@ -1,12 +1,14 @@
 package view;
 
 import domain.card.Card;
-import dto.CardsWithTotalScore;
+import dto.CardsWithTotalScoreDto;
+import dto.NameWithCardsDto;
+import utils.CardConvertor;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import utils.CardConvertor;
 
 public class OutputView {
     private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
@@ -21,15 +23,14 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printInitCardsResult(final Map<String, List<Card>> cardsWithName) {
-        printInitCardsIntro(cardsWithName.keySet());
-        printCardsWithName(cardsWithName);
+    public static void printInitCardsResult(final NameWithCardsDto nameWithCards) {
+        printInitCardsIntro(nameWithCards.get().keySet());
+        printCardsWithName(nameWithCards);
     }
 
     private static void printInitCardsIntro(final Set<String> names) {
         final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append(String.join(CARD_OR_NAME_DELIMITER, names))
+        stringBuilder.append(String.join(CARD_OR_NAME_DELIMITER, names))
                 .append(INIT_CARD_SUFFIX_MESSAGE);
         print(stringBuilder.toString());
     }
@@ -37,8 +38,7 @@ public class OutputView {
     public static void printCardsWithName(final Map<String, List<Card>> cardsWithName, final int... score) {
         for (final Entry<String, List<Card>> entry : cardsWithName.entrySet()) {
             final StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder
-                    .append(entry.getKey())
+            stringBuilder.append(entry.getKey())
                     .append(NAME_SUFFIX)
                     .append(convertToString(entry.getValue()));
             addScore(stringBuilder, score);
@@ -48,8 +48,7 @@ public class OutputView {
 
     private static void addScore(final StringBuilder stringBuilder, final int[] score) {
         if (score.length != 0) {
-            stringBuilder
-                    .append(SCORE_PREFIX)
+            stringBuilder.append(SCORE_PREFIX)
                     .append(score[0]);
         }
     }
@@ -68,9 +67,20 @@ public class OutputView {
         }
     }
 
-    public static void printCardsWithTotalScore(final CardsWithTotalScore cardsWithTotalScore) {
-        for (final Entry<Map<String, List<Card>>, Integer> entry : cardsWithTotalScore.get().entrySet()) {
+    public static void printCardsWithTotalScore(final CardsWithTotalScoreDto cardsWithTotalScore) {
+        for (final Entry<NameWithCardsDto, Integer> entry : cardsWithTotalScore.get().entrySet()) {
             printCardsWithName(entry.getKey(), entry.getValue());
+        }
+    }
+
+    public static void printCardsWithName(final NameWithCardsDto nameWithCards, final int... score) {
+        for (final Entry<String, List<Card>> entry : nameWithCards.get().entrySet()) {
+            final StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(entry.getKey())
+                    .append(NAME_SUFFIX)
+                    .append(convertToString(entry.getValue()));
+            addScore(stringBuilder, score);
+            print(stringBuilder.toString());
         }
     }
 
@@ -78,8 +88,7 @@ public class OutputView {
         print(GAME_RESULT_INTRO_MESSAGE);
         for (final Entry<String, List<String>> entry : gameResult.entrySet()) {
             final StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder
-                    .append(entry.getKey())
+            stringBuilder.append(entry.getKey())
                     .append(NAME_AND_GAME_RESULT_DELIMITER)
                     .append(String.join(BLANK, entry.getValue()));
             print(stringBuilder.toString());
