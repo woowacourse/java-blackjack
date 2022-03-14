@@ -92,11 +92,20 @@ public class OutputView {
     public static void printResult(Map<WinningResult, Integer> dealerResult,
         Map<Player, WinningResult> playerResult) {
         System.out.println(PARTICIPANT_WINNING_RESULT_MESSAGE);
+
+        printDealerResult(dealerResult);
+        printPlayerResult(playerResult);
+    }
+
+    private static void printDealerResult(Map<WinningResult, Integer> dealerResult) {
         System.out.print(DEALER_DIRECTION);
 
         dealerResult.forEach((key, value) -> System.out.print(BLANK_FORMAT + value + key.getResult()));
-        System.out.println();
 
+        System.out.println();
+    }
+
+    private static void printPlayerResult(Map<Player, WinningResult> playerResult) {
         playerResult.forEach(
             (key, value) -> System.out.println(
                 key.getName() + RESULT_DELIMITER + value.getResult()));
