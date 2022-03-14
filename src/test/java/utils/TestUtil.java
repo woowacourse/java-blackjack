@@ -1,9 +1,9 @@
 package utils;
 
-import domain.card.Card;
-import domain.card.Cards;
-import domain.card.Number;
-import domain.card.Suit;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Number;
+import blackjack.domain.card.Suit;
 import java.util.ArrayList;
 import java.util.List;
 

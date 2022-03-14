@@ -1,4 +1,4 @@
-import game.ConsoleGame;
+import blackjack.game.ConsoleGame;
 
 public class Application {
     public static void main(String[] args) {
