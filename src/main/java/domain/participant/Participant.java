@@ -67,6 +67,10 @@ public class Participant {
 		return (int)hand.stream().filter(Card::isAce).count();
 	}
 
+	public Name getName() {
+		return name;
+	}
+
 	public boolean isBlackJack() {
 		return blackJack;
 	}

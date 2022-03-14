@@ -18,6 +18,10 @@ public class Players {
 		this.players = players;
 	}
 
+	public List<Name> getNames() {
+		return players.stream().map(Participant::getName).collect(Collectors.toList());
+	}
+
 	public void addCardByName(Name name, Card card) {
 		players.stream().filter(player -> player.isNameMatch(name)).forEach(player -> player.addCard(card));
 	}
