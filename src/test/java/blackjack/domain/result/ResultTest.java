@@ -15,10 +15,24 @@ public class ResultTest {
     }
 
     @Test
-    @DisplayName("버스트일 경우 베팅금을 모두 잃는다.")
-    void calculateBetByBust() {
+    @DisplayName("패배일 경우 베팅금을 모두 잃는다.")
+    void calculateBetByLose() {
         Result result = new Lose();
         assertThat(result.calculateBet(1000)).isEqualTo(-1000);
+    }
+
+    @Test
+    @DisplayName("승리 경우 베팅금을 그대로 받는다.")
+    void calculateBetByWin() {
+        Result result = new Win();
+        assertThat(result.calculateBet(1000)).isEqualTo(1000);
+    }
+
+    @Test
+    @DisplayName("무승부 경우 계산 결과 0원이다.")
+    void calculateBetByDraw() {
+        Result result = new Draw();
+        assertThat(result.calculateBet(1000)).isEqualTo(0);
     }
 
 }
