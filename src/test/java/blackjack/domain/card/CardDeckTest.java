@@ -1,9 +1,9 @@
 package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,12 +37,13 @@ public class CardDeckTest {
     }
 
     @Test
-    @DisplayName("카드가 다 떨어지면 새로 카드를 만든다.")
+    @DisplayName("카드가 다 떨어지면 예외가 발생한다.")
     void createNewDeck() {
         // given
-        CardDeck deck = new CardDeck(() -> new ArrayList<>(List.of(new Card(Pattern.CLOVER, Denomination.THREE))));
+        CardDeck deck = new CardDeck(Collections::emptyList);
 
         // then
-        assertThatNoException().isThrownBy(deck::drawDouble);
+        assertThatThrownBy(deck::draw).isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 카드 덱이 비어 있습니다.");
     }
 }

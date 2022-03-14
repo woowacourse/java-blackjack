@@ -18,8 +18,8 @@ public class CardDeck {
     }
 
     public Card draw() {
-        if (isEmpty()) {
-            initCards();
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("[ERROR] 카드 덱이 비어 있습니다.");
         }
         Card card = cards.get(0);
         cards.remove(0);
@@ -28,9 +28,5 @@ public class CardDeck {
 
     public List<Card> drawDouble() {
         return new ArrayList<>(List.of(draw(), draw()));
-    }
-
-    public boolean isEmpty() {
-        return cards.isEmpty();
     }
 }
