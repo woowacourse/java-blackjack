@@ -10,7 +10,6 @@ import static blackjack.testutil.CardFixtureGenerator.createCards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.CardDeck;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

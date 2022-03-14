@@ -1,7 +1,7 @@
 package blackjack.testutil;
 
-import blackjack.domain.CardDeck;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.Arrays;

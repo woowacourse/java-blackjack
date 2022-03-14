@@ -2,9 +2,9 @@ package blackjack.domain.participant;
 
 import static java.util.Map.entry;
 
-import blackjack.domain.CardDeck;
 import blackjack.domain.GameOutcome;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.Cards;
 import blackjack.dto.OutComeResult;
 import blackjack.dto.ParticipantCards;

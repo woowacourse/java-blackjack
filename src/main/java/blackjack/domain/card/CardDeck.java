@@ -1,6 +1,5 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayDeque;
 import java.util.List;
