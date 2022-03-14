@@ -8,6 +8,7 @@ final class MaxScoreCards extends ScoreCards{
         super(cards);
     }
 
+    @Override
     public Score score() {
         return new Score(softHandScore());
     }

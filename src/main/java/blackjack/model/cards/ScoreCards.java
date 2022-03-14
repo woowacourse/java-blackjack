@@ -13,31 +13,31 @@ public abstract class ScoreCards implements Cards {
     }
 
     @Override
-    public void take(Card card) {
+    public final void take(Card card) {
         cards.take(card);
     }
 
     @Override
-    public Collection<Card> values() {
+    public final Collection<Card> values() {
         return cards.values();
     }
 
     @Override
-    public Cards openedCards(int count) {
+    public final Cards openedCards(int count) {
         return cards.openedCards(count);
     }
 
-    public boolean lessThan(Score score) {
+    public final boolean lessThan(Score score) {
         return score().lessThan(score);
     }
 
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(Object o) {
         return cards.equals(o);
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(cards);
     }
 
