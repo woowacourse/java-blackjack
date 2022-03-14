@@ -26,7 +26,7 @@ public class DeckTest {
             Card card = deck.pickCard();
         }
 
-        assertThatThrownBy(deck::pickCard).isInstanceOf(IndexOutOfBoundsException.class)
+        assertThatThrownBy(deck::pickCard).isInstanceOf(IllegalStateException.class)
             .hasMessage("[ERROR] 카드를 모두 사용하였습니다.");
     }
 
