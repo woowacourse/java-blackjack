@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public final class Cards {
 
-    public static final int SOFT_HAND_ACE = 11;
-    public static final int HARD_HAND_ACE = 1;
+    public static final int ACE_WITH_RANK_ELEVEN = 11;
+    public static final int ACE_WITH_RANK_ONE = 1;
 
     private final List<Card> cards;
 
@@ -25,29 +25,22 @@ public final class Cards {
         cards.add(card);
     }
 
-    public Score softHandScore() {
-        int score = cards.stream()
-                .mapToInt(Card::softRank)
-                .sum();
-        return new Score(score);
-    }
-
-    public Score bestScore() {
-        return applySoftHandScore()
-                .filter(not(Score::isBust))
-                .orElse(hardHandScore());
-    }
-
-    private Score hardHandScore() {
+    private Score scoreByAceWithRankOne() {
         int score = cards.stream()
                 .mapToInt(Card::hardRank)
                 .sum();
         return new Score(score);
     }
 
-    private Optional<Score> applySoftHandScore() {
+    public Score bestScore() {
+        return applyAceWithRankEleven()
+                .filter(not(Score::isBust))
+                .orElse(scoreByAceWithRankOne());
+    }
+
+    private Optional<Score> applyAceWithRankEleven() {
         if (hasAce()) {
-            return Optional.of(hardHandScore().plus(diffSoftAndHardOfAce()));
+            return Optional.of(scoreByAceWithRankOne().plus(diffBetweenRankOfAce()));
         }
         return Optional.empty();
     }
@@ -56,7 +49,7 @@ public final class Cards {
         return cards.stream().anyMatch(Card::isAce);
     }
 
-    private Score diffSoftAndHardOfAce() {
-        return new Score(SOFT_HAND_ACE - HARD_HAND_ACE);
+    private Score diffBetweenRankOfAce() {
+        return new Score(ACE_WITH_RANK_ELEVEN - ACE_WITH_RANK_ONE);
     }
 }

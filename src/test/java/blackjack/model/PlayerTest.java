@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class PlayerTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] 점수 반환 테스트")
     @MethodSource("providePlayers")
     @DisplayName("플레이어 점수 반환 테스트")
     void gamerScore(Player player, int expect) {

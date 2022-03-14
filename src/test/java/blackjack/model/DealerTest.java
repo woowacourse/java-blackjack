@@ -71,7 +71,7 @@ public class DealerTest {
                 Arguments.of(new Dealer(List.of(new Card(JACK, DIAMOND), new Card(SIX, CLOVER))), true),
                 Arguments.of(new Dealer(List.of(new Card(JACK, DIAMOND), new Card(SEVEN, CLOVER))), false),
                 Arguments.of(new Dealer(List.of(new Card(ACE, DIAMOND), new Card(SIX, CLOVER))), false),
-                Arguments.of(new Dealer(List.of(new Card(ACE, DIAMOND), new Card(ACE, CLOVER))), false)
+                Arguments.of(new Dealer(List.of(new Card(ACE, DIAMOND), new Card(ACE, CLOVER))), true)
         );
     }
 
