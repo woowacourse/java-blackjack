@@ -25,10 +25,10 @@ public class ParticipantCardsDto {
         return new ParticipantCardsDto(name, cards, score);
     }
 
-    public static ParticipantCardsDto ofInitialDealer(Dealer dealer) {
-        String name = dealer.getName();
-        Set<Card> openCardInfo = dealer.getInitialOpenCards();
-        Score score = dealer.getCurrentScore();
+    public static ParticipantCardsDto ofInitial(Participant participant) {
+        String name = participant.getName();
+        Set<Card> openCardInfo = participant.getInitialOpenCards();
+        Score score = participant.getCurrentScore();
 
         return new ParticipantCardsDto(name, openCardInfo, score);
     }
