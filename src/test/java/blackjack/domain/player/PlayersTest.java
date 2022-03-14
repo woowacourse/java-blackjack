@@ -20,7 +20,7 @@ class PlayersTest {
 
     @BeforeEach
     void setup() {
-        deck = new Deck(new DeckCardGenerator());
+        deck = new Deck(new RandomCardGenerator());
         initCards = List.of(deck.draw(), deck.draw());
     }
 
@@ -33,7 +33,7 @@ class PlayersTest {
     }
 
     private static Stream<List<Player>> participantListBySuccess() {
-        Deck deck = new Deck(new DeckCardGenerator());
+        Deck deck = new Deck(new RandomCardGenerator());
         return Stream.of(
                 List.of(
                         new Participant(List.of(deck.draw(), deck.draw()), "pobi"),
@@ -64,7 +64,7 @@ class PlayersTest {
     }
 
     private static Stream<List<Player>> participantListByFail() {
-        Deck deck = new Deck(new DeckCardGenerator());
+        Deck deck = new Deck(new RandomCardGenerator());
         return Stream.of(
                 null,
                 List.of(

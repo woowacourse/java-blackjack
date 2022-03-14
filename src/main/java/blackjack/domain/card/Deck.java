@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class Deck {
 
@@ -10,7 +9,7 @@ public class Deck {
     private final Stack<Card> bunchOfCards;
 
     public Deck(CardGenerator cardGenerator) {
-        this.bunchOfCards = cardGenerator.randomGenerate();
+        this.bunchOfCards = cardGenerator.generate();
     }
 
     public Card draw() {

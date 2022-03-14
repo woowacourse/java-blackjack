@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.DeckCardGenerator;
+import blackjack.domain.card.RandomCardGenerator;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
@@ -20,7 +20,7 @@ public class Blackjack {
     private static final int INIT_CARD_SIZE = 2;
 
     public void play() {
-        final Deck deck = new Deck(new DeckCardGenerator());
+        final Deck deck = new Deck(new RandomCardGenerator());
         final List<Player> participants = createParticipants(InputView.responseNames(), deck);
         final Player dealer = createDealer(deck);
         final Players players = new Players(participants, dealer);

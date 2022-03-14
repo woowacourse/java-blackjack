@@ -22,7 +22,7 @@ class ParticipantTest {
 
     @BeforeEach
     void setup() {
-        deck = new Deck(new DeckCardGenerator());
+        deck = new Deck(new RandomCardGenerator());
         initCards = List.of(deck.draw(), deck.draw());
     }
 

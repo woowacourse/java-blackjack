@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class DeckCardGenerator implements CardGenerator {
+public class RandomCardGenerator implements CardGenerator {
 
     @Override
-    public Stack<Card> randomGenerate() {
+    public Stack<Card> generate() {
         List<Card> cards = makeCards();
         Collections.shuffle(cards);
         Stack<Card> deck = new Stack<>();

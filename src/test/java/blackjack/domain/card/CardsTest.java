@@ -19,7 +19,7 @@ public class CardsTest {
     @Test
     @DisplayName("카드를 추가할 떄 null을 전달하면 예외를 발생한다.")
     void thrownExceptionWhenGivenNull() {
-        Deck deck = new Deck(new DeckCardGenerator());
+        Deck deck = new Deck(new RandomCardGenerator());
         Cards cards = new Cards(List.of(deck.draw(), deck.draw()));
         assertThatThrownBy(() -> cards.addCard(null))
                 .isInstanceOf(IllegalArgumentException.class)

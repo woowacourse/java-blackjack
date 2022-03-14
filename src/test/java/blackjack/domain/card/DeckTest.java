@@ -29,7 +29,7 @@ public class DeckTest {
     @Test
     @DisplayName("초기에 전달받는 카드는 중복일 수 없다.")
     void notRedundantCards() {
-        Deck deck = new Deck(new DeckCardGenerator());
+        Deck deck = new Deck(new RandomCardGenerator());
         List<Card> cards = List.of(deck.draw(), deck.draw());
 
         assertThat(new HashSet<>(cards).size()).isEqualTo(2);
@@ -38,7 +38,7 @@ public class DeckTest {
     @Test
     @DisplayName("카드의 타입은 스페이드, 하트, 다이아몬드, 클로버이다.")
     void checkKindOfType() {
-        Card card = new Deck(new DeckCardGenerator()).draw();
+        Card card = new Deck(new RandomCardGenerator()).draw();
 
         assertThat(Type.getTypeValues().contains(card.getType()))
                 .isEqualTo(true);
@@ -47,7 +47,7 @@ public class DeckTest {
     @Test
     @DisplayName("카드의 점수는 2~10, ACE, KING, JACK, QUEEN 이다.")
     void checkKindOfScore() {
-        Card card = new Deck(new DeckCardGenerator()).draw();
+        Card card = new Deck(new RandomCardGenerator()).draw();
 
         assertThat(Score.getScoreValues().contains(card.getScore()))
                 .isEqualTo(true);
