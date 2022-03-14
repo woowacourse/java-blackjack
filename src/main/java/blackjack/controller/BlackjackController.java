@@ -8,8 +8,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackController {
     public void run() {
@@ -32,22 +30,13 @@ public class BlackjackController {
     }
 
     private void hitPlayer(Blackjack blackjack, Player player) {
-        Command command = Command.find(InputView.inputCommand(player));
-        if (command == Command.STAY) {
-            OutputView.printPlayerCards(player);
-            return;
-        }
-        blackjack.receiveOneMoreCard(player);
-        OutputView.printPlayerCards(player);
-        moreHit(blackjack, player, command);
-    }
+        Command command;
 
-    private void moreHit(Blackjack blackjack, Player player, Command command) {
-        while (blackjack.canHit(player, command)) {
+        do {
             command = Command.find(InputView.inputCommand(player));
-            blackjack.receiveOneMoreCard(player);
+            blackjack.isHitThenReceiveCard(player, command);
             OutputView.printPlayerCards(player);
-        }
+        } while (blackjack.canHit(player, command));
     }
 
     private void hitDealer(Blackjack blackjack) {
