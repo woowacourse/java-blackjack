@@ -11,19 +11,19 @@ public class Deck {
     private final LinkedList<Card> cards;
 
     public Deck() {
-        cards = createCards();
+        cards = createCardsEachSuit();
     }
 
-    private LinkedList<Card> createCards() {
+    private LinkedList<Card> createCardsEachSuit() {
         LinkedList<Card> cards = new LinkedList<>();
         for (Suit suit : Suit.values()) {
-            createSuitDenominations(cards, suit);
+            createCardsEachSuit(cards, suit);
         }
         Collections.shuffle(cards);
         return cards;
     }
 
-    private void createSuitDenominations(List<Card> cards, Suit suit) {
+    private void createCardsEachSuit(List<Card> cards, Suit suit) {
         for (Denomination denomination : Denomination.values()) {
             cards.add(new Card(denomination, suit));
         }
