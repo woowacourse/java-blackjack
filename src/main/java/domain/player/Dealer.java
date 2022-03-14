@@ -12,7 +12,8 @@ public class Dealer extends Player {
         super(name);
     }
 
-    public boolean needMoreCard() {
+    @Override
+    public boolean canGetMoreCard() {
         return getScore() <= MORE_CARD_CRITERIA;
     }
 

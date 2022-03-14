@@ -6,6 +6,11 @@ public class Gambler extends Player {
     }
 
     @Override
+    public boolean canGetMoreCard() {
+        return !isBust() && !isBlackJack();
+    }
+
+    @Override
     public boolean isDealer() {
         return false;
     }

@@ -74,10 +74,9 @@ public class BlackJackController {
             return;
         }
 
-        while (isHit) {
+        do {
             addCard(gambler, cardDeck);
-            isHit = !gambler.isBust() && !gambler.isBlackJack() && InputView.scanIsHit(gambler.getName());
-        }
+        } while (gambler.canGetMoreCard() && InputView.scanIsHit(gambler.getName()));
     }
 
     private void addCard(Gambler gambler, CardDeck cardDeck) {
@@ -88,7 +87,7 @@ public class BlackJackController {
     private void playForDealer(Dealer dealer, CardDeck cardDeck) {
         OutputView.printLineSeparator();
 
-        while (dealer.needMoreCard()) {
+        while (dealer.canGetMoreCard()) {
             dealer.addCard(cardDeck.getCard());
             OutputView.printDealerAddCard(dealer);
         }
