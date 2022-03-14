@@ -9,10 +9,10 @@ public enum Result {
     LOSE("패");
 
     public static final int WIN_SCORE = 21;
-    private final String value;
+    private final String printFormat;
 
     Result(String value) {
-        this.value = value;
+        this.printFormat = value;
     }
 
     public static Result judge(Dealer dealer, Player player) {
@@ -35,8 +35,8 @@ public enum Result {
         return Result.DRAW;
     }
 
-    public String getValue() {
-        return value;
+    public String getPrintFormat() {
+        return printFormat;
     }
 
 }

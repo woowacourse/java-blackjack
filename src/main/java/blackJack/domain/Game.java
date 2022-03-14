@@ -42,7 +42,7 @@ public class Game {
     }
 
     private void makeBlackjackResult() {
-        dealerScore.addResult(Result.WIN, 1);
+        dealerScore.addResult(Result.WIN, players.getPlayers().size());
         for (Player player : players.getPlayers()) {
             distinctBlackjackPlayerResult(player);
         }
