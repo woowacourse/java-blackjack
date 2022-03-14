@@ -7,6 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
+import blackjack.domain.player.Bet;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
@@ -22,8 +23,8 @@ public class BlackJackGameTest {
     @DisplayName("BlackJackGame의 Player에게 최초 카드 두장을 준다.")
     void initializeBlackJackGame() {
         BlackJackGame blackJackGame = new BlackJackGame(new Dealer(),
-                new Gamers(List.of(new Gamer("judy"),
-                        new Gamer("huni"))));
+                new Gamers(List.of(new Gamer("judy", new Bet(1000)),
+                        new Gamer("huni", new Bet(1000)))));
 
         Deck deck = Deck.init();
         blackJackGame.handOutStartingCards(deck);
@@ -38,10 +39,10 @@ public class BlackJackGameTest {
         Player dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.FIVE));
 
-        Gamer judy = new Gamer("judy");
+        Gamer judy = new Gamer("judy", new Bet(1000));
         judy.receiveCard(new Card(Suit.CLOVER, Denomination.SIX));
 
-        Gamer huni = new Gamer("huni");
+        Gamer huni = new Gamer("huni", new Bet(1000));
         huni.receiveCard(new Card(Suit.DIAMOND, Denomination.FOUR));
 
         BlackJackGame blackJackGame = new BlackJackGame(dealer, new Gamers(List.of(judy, huni)));
@@ -63,10 +64,10 @@ public class BlackJackGameTest {
         Player dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.DIAMOND, Denomination.FIVE));
 
-        Gamer judy = new Gamer("judy");
+        Gamer judy = new Gamer("judy", new Bet(1000));
         judy.receiveCard(new Card(Suit.CLOVER, Denomination.SIX));
 
-        Gamer huni = new Gamer("huni");
+        Gamer huni = new Gamer("huni", new Bet(1000));
         huni.receiveCard(new Card(Suit.DIAMOND, Denomination.FOUR));
 
         BlackJackGame blackJackGame = new BlackJackGame(dealer, new Gamers(List.of(judy, huni)));
