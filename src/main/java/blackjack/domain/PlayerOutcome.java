@@ -1,39 +1,26 @@
 package blackjack.domain;
 
-public enum PlayerOutcome {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+import java.util.Arrays;
+import java.util.function.BiPredicate;
 
-    private static final int BLACK_JACK_NUMBER = 21;
+public enum PlayerOutcome {
+    WIN("승", (player, dealer) -> player > dealer && player <= 21 || dealer > 21 && player <= 21),
+    LOSE("패", (player, dealer) -> player > 21 || dealer <= 21 && player < dealer),
+    DRAW("무", (player, dealer) -> player == dealer && player <= 21);
 
     private String value;
+    private BiPredicate<Integer, Integer> matcher;
 
-    PlayerOutcome(String value) {
+    PlayerOutcome(String value, BiPredicate<Integer, Integer> matcher) {
         this.value = value;
+        this.matcher = matcher;
     }
 
-    public static PlayerOutcome match(int dealerTotal, int playerTotal) {
-        if (dealerTotal > BLACK_JACK_NUMBER && playerTotal > BLACK_JACK_NUMBER) {
-            return LOSE;
-        }
-        if (dealerTotal > BLACK_JACK_NUMBER) {
-            return WIN;
-        }
-        if (playerTotal > BLACK_JACK_NUMBER) {
-            return LOSE;
-        }
-        return matchCards(dealerTotal, playerTotal);
-    }
-
-    private static PlayerOutcome matchCards(int dealerTotal, int playerTotal) {
-        if (dealerTotal < playerTotal) {
-            return WIN;
-        }
-        if (dealerTotal > playerTotal) {
-            return LOSE;
-        }
-        return DRAW;
+    public static PlayerOutcome match(int playerTotal, int dealerTotal) {
+        return Arrays.stream(PlayerOutcome.values())
+            .filter(outcome -> outcome.matcher.test(playerTotal, dealerTotal))
+            .findFirst()
+            .orElse(LOSE);
     }
 
     public String getValue() {

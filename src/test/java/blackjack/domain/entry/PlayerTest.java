@@ -37,16 +37,20 @@ public class PlayerTest {
         Player player = new Player("jason", HoldCards
             .initTwoCards(Card.valueOf(Suit.SPADE, CardNumber.KING), Card.valueOf(Suit.SPADE, CardNumber.ACE)));
 
-        assertThat(player.match(20)).isEqualTo(PlayerOutcome.WIN);
+        assertThat(player.match(new Dealer(HoldCards
+            .initTwoCards(Card.valueOf(Suit.SPADE, CardNumber.EIGHT), Card.valueOf(Suit.SPADE, CardNumber.ACE)))))
+            .isEqualTo(PlayerOutcome.WIN);
     }
 
     @Test
-    @DisplayName("플레이어의 합이 낮을 경우 승리를 반환한다.")
+    @DisplayName("플레이어의 합이 낮을 경우 패배를 반환한다.")
     void playerIsWinByDealerOver21() {
         Player player = new Player("jason", HoldCards
             .initTwoCards(Card.valueOf(Suit.SPADE, CardNumber.NINE), Card.valueOf(Suit.SPADE, CardNumber.ACE)));
 
-        assertThat(player.match(21)).isEqualTo(PlayerOutcome.LOSE);
+        assertThat(player.match(new Dealer(HoldCards
+            .initTwoCards(Card.valueOf(Suit.SPADE, CardNumber.KING), Card.valueOf(Suit.SPADE, CardNumber.ACE)))))
+            .isEqualTo(PlayerOutcome.LOSE);
     }
 
     @Test
@@ -55,7 +59,9 @@ public class PlayerTest {
         Player player = new Player("jason", HoldCards
             .initTwoCards(Card.valueOf(Suit.SPADE, CardNumber.KING), Card.valueOf(Suit.SPADE, CardNumber.ACE)));
 
-        assertThat(player.match(21)).isEqualTo(PlayerOutcome.DRAW);
+        assertThat(player.match(new Dealer(HoldCards
+            .initTwoCards(Card.valueOf(Suit.HEART, CardNumber.KING), Card.valueOf(Suit.HEART, CardNumber.ACE)))))
+            .isEqualTo(PlayerOutcome.DRAW);
     }
 
     @Test

@@ -17,8 +17,8 @@ public class Player extends Participant {
         this.name = name;
     }
 
-    public PlayerOutcome match(int dealerTotal) {
-        return PlayerOutcome.match(dealerTotal, countCards());
+    public PlayerOutcome match(Dealer dealer) {
+        return PlayerOutcome.match(countCards(), dealer.countCards());
     }
 
     @Override
