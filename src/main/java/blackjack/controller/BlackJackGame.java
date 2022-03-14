@@ -44,7 +44,7 @@ public class BlackJackGame {
             .collect(toList());
     }
 
-    public void spreadCards(List<Player> gamblers, Player dealer, CardDeck cardDeck) {
+    protected void spreadCards(List<Player> gamblers, Player dealer, CardDeck cardDeck) {
         for (int i = DEFAULT_SPREAD_COUNT_START_INDEX; i < DEFAULT_SPREAD_COUNT_END_INDEX; i++) {
             spreadCard(gamblers, dealer, cardDeck);
         }
