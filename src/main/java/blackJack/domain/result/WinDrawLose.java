@@ -53,10 +53,10 @@ public enum WinDrawLose {
     }
 
     private static WinDrawLose getWinDrawLoseByScore(Player player, Dealer dealer) {
-        if (player.calculateFinalScore() > dealer.calculateFinalScore()) {
+        if (player.getScore() > dealer.getScore()) {
             return WIN;
         }
-        if (player.calculateFinalScore() == dealer.calculateFinalScore()) {
+        if (player.getScore() == dealer.getScore()) {
             return DRAW;
         }
         return LOSE;

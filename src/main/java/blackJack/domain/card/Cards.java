@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Cards {
     private static final int BLACK_JACK_CARD_COUNT = 2;
+    private static final int BLACK_JACK = 21;
+    private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 11;
     private static final String ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
 
     private final List<Card> cards;
@@ -24,8 +26,20 @@ public class Cards {
         }
     }
 
-    public boolean isBlackJackPossibleCount() {
-        return cards.size() == BLACK_JACK_CARD_COUNT;
+    public boolean isBlackJack() {
+        return cards.size() == BLACK_JACK_CARD_COUNT && calculateFinalScore() == BLACK_JACK;
+    }
+
+    public boolean isBust() {
+        return calculateFinalScore() > BLACK_JACK;
+    }
+
+    public int calculateFinalScore() {
+        final int score = calculateScore();
+        if (hasAce() && score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore() <= BLACK_JACK) {
+            return score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore();
+        }
+        return score;
     }
 
     public boolean hasAce() {

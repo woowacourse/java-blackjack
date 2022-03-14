@@ -2,7 +2,6 @@ package blackJack.domain.participant;
 
 import blackJack.domain.card.Card;
 import blackJack.domain.card.Cards;
-import blackJack.domain.card.Denomination;
 
 import java.util.List;
 import java.util.Objects;
@@ -10,8 +9,6 @@ import java.util.Objects;
 public abstract class Participant {
 
     private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
-    private static final int BLACK_JACK = 21;
-    private static final int OTHER_SCORE_OF_ACE_DENOMINATION = 11;
 
     private final String name;
     private final Cards cards;
@@ -35,19 +32,15 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return cards.isBlackJackPossibleCount() && calculateFinalScore() == BLACK_JACK;
+        return cards.isBlackJack();
     }
 
     public boolean isBust() {
-        return calculateFinalScore() > BLACK_JACK;
+        return cards.isBust();
     }
 
-    public int calculateFinalScore() {
-        final int score = cards.calculateScore();
-        if (cards.hasAce() && score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore() <= BLACK_JACK) {
-            return score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore();
-        }
-        return score;
+    public int getScore() {
+        return cards.calculateFinalScore();
     }
 
     public String getName() {

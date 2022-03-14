@@ -19,6 +19,6 @@ public class Player extends Participant {
 
     @Override
     public boolean hasNextTurn() {
-        return this.calculateFinalScore() <= BLACK_JACK;
+        return !isBust();
     }
 }
