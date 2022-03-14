@@ -26,7 +26,7 @@ public class Gamers {
         }
     }
 
-    private void giveCardsTo(Player gamer) {
+    private void giveCardsTo(final Player gamer) {
         CardDeck deck = CardDeck.getInstance();
         for (int i = 0; i < START_CARD_COUNT; i++) {
             gamer.receive(deck.draw());

@@ -12,7 +12,7 @@ public abstract class Player {
         this.cards = new Cards();
     }
 
-    public void receive(Card card) {
+    public void receive(final Card card) {
         this.cards.add(card);
     }
 

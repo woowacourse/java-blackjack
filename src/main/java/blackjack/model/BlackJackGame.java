@@ -20,8 +20,8 @@ public class BlackJackGame {
     }
 
     public void start() {
-        giveCardsToDealer();
         giveCardsToGamers();
+        giveCardsToDealer();
     }
 
     private void giveCardsToDealer() {

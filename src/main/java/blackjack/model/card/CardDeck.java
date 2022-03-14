@@ -18,14 +18,14 @@ public class CardDeck {
     }
 
     private Stack<Card> createCards() {
-        Stack<Card> cards = new Stack<>();
+        final Stack<Card> cards = new Stack<>();
         for (TrumpSymbol symbol : TrumpSymbol.values()) {
             pushCardBySymbol(cards, symbol);
         }
         return cards;
     }
 
-    private void pushCardBySymbol(Stack<Card> cards, TrumpSymbol symbol) {
+    private void pushCardBySymbol(final Stack<Card> cards, TrumpSymbol symbol) {
         for (TrumpNumber number : TrumpNumber.values()) {
             cards.add(new Card(number, symbol));
         }
