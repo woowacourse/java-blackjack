@@ -59,7 +59,7 @@ public class Players {
     }
 
     public int getBestScoreByName(Name name) {
-        return findByName(name).getBestScore();
+        return findByName(name).calculateBestScore();
     }
 
     public boolean isBustByName(Name name) {

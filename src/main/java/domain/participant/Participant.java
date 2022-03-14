@@ -35,16 +35,16 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return getMinScore() > BLACK_JACK_NUMBER;
+        return calculateMinScore() > BLACK_JACK_NUMBER;
     }
 
     public boolean isMaxScore() {
-        return getBestScore() == BLACK_JACK_NUMBER;
+        return calculateBestScore() == BLACK_JACK_NUMBER;
     }
 
-    public int getBestScore() {
-        int aceCount = getAceCount();
-        int bestScore = getMinScore();
+    public int calculateBestScore() {
+        int aceCount = countAceCard();
+        int bestScore = calculateMinScore();
         while (aceCount > ACE_COUNT_LOWER_BOUND && bestScore + ADDITIONAL_SCORE_OF_ACE <= BLACK_JACK_NUMBER) {
             bestScore += ADDITIONAL_SCORE_OF_ACE;
             aceCount--;
@@ -52,11 +52,11 @@ public abstract class Participant {
         return bestScore;
     }
 
-    private int getMinScore() {
+    private int calculateMinScore() {
         return hand.stream().mapToInt(Card::getPoint).sum();
     }
 
-    private int getAceCount() {
+    private int countAceCard() {
         return (int) hand.stream().filter(Card::isAce).count();
     }
 

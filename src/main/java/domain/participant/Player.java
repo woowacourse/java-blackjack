@@ -25,11 +25,11 @@ public class Player extends Participant {
         if (this.isBlackJack() || other.isBust()) {
             return Versus.WIN;
         }
-        return judgeVersus(other.getBestScore());
+        return judgeVersus(other.calculateBestScore());
     }
 
     private Versus judgeVersus(int otherScore) {
-        int playerScore = getBestScore();
+        int playerScore = calculateBestScore();
         if (playerScore > otherScore) {
             return Versus.WIN;
         }

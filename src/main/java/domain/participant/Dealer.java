@@ -19,6 +19,6 @@ public class Dealer extends Participant {
     }
 
     public boolean isNeedToDraw() {
-        return getBestScore() <= STANDARD_OF_ENOUGH_CARD;
+        return calculateBestScore() <= STANDARD_OF_ENOUGH_CARD;
     }
 }

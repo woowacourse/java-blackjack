@@ -69,6 +69,6 @@ public class ParticipantTest {
     void getBestScore() {
         Participant participant = new Player(new Name("pobi"),
                 new ArrayList<>(List.of(card1, card2, card3, card4)));
-        assertThat(participant.getBestScore()).isEqualTo(20);
+        assertThat(participant.calculateBestScore()).isEqualTo(20);
     }
 }

@@ -74,7 +74,7 @@ public class OutputView {
 
     public static void printStatuses(Dealer dealer, Players players) {
         printNewLine();
-        System.out.printf(STATUS_FORMAT, "딜러", dealer.showHand(), dealer.getBestScore());
+        System.out.printf(STATUS_FORMAT, "딜러", dealer.showHand(), dealer.calculateBestScore());
         for (Name name : players.getNames()) {
             System.out.printf(
                     STATUS_FORMAT, name.getName(),

@@ -21,6 +21,7 @@ public class Controller {
         Players players = new Players(names, generateInitCardsForPlayers(names.size(), deck));
 
         OutputView.printParticipantInitHands(dealer, players);
+
         if (dealer.isBlackJack()) {
             OutputView.printDealerBlackJackMessage();
             OutputView.printResult(players.getNames(), players.getResultAtDealerBlackJack(dealer));
