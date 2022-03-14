@@ -55,6 +55,7 @@ public class Blackjack {
     }
 
     private void decideParticipantsMoreCard(final Players players, final Deck deck) {
+        players.initPointer();
         while (!players.isParticipantPointerEnd()) {
             decideParticipantMoreCard(players, deck);
             players.moveParticipantPointer();

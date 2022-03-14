@@ -1,6 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 import java.util.List;
 import java.util.Set;
@@ -42,6 +43,18 @@ public class Players {
         }
     }
 
+    public void initPointer() {
+        participantPointer = 0;
+    }
+
+    public boolean competeWithPointParticipant() {
+        return isDealerWin(dealer.calculateFinalScore(), pointParticipant().calculateFinalScore());
+    }
+
+    private boolean isDealerWin(int dealerScore, int participantScore) {
+        return participantScore > Cards.getMaxScore() || (dealerScore <= Cards.getMaxScore() && dealerScore >= participantScore);
+    }
+
     public Player getDealer() {
         return dealer;
     }
@@ -63,7 +76,7 @@ public class Players {
     }
 
     public Player pointParticipant() {
-        if(isParticipantPointerEnd()) {
+        if (isParticipantPointerEnd()) {
             throw new RuntimeException("참가자를 불러올 수 없습니다.");
         }
         return participants.get(participantPointer);
