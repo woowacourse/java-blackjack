@@ -50,13 +50,12 @@ public class BlackjackController {
         if (!cardPrintFlag) {
             OutputView.printPlayerCardInformation(player);
         }
-
     }
 
     private boolean isPlayerWantMoreCards(Player player, Deck deck) {
         boolean cardPrintFlag = false;
 
-        while (isPlayerHit(player) && !isBurst(player)) {
+        while (!isBurst(player) && isPlayerHit(player)) {
             player.receiveCard(deck.pickCard());
             OutputView.printPlayerCardInformation(player);
             cardPrintFlag = true;
