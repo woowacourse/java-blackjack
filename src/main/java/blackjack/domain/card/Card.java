@@ -47,6 +47,10 @@ public class Card {
         return number.getCardNumberValue();
     }
 
+    public boolean isAce() {
+        return number == CardNumber.ACE;
+    }
+
     @Override
     public String toString() {
         return number.toString() + symbol.toString();
