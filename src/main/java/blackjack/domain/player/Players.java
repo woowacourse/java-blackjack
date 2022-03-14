@@ -2,11 +2,14 @@ package blackjack.domain.player;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.strategy.HitStrategy;
+import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -53,6 +56,19 @@ public class Players {
     private void hitCount(Deck deck, int initDrawCount, Player player) {
         for (int i = 0; i < initDrawCount; i++) {
             player.hit(deck.draw());
+        }
+    }
+
+    public void playersHit(Deck deck, Consumer<Player> outputResultFunction) {
+        for (Player player : players) {
+            hitOrStand(player, deck, outputResultFunction);
+        }
+    }
+
+    private void hitOrStand(Player player, Deck deck, Consumer<Player> outputResultFunction) {
+        while (player.isHittable()) {
+            player.hit(deck.draw());
+            outputResultFunction.accept(player);
         }
     }
 

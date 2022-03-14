@@ -24,7 +24,7 @@ public class BlackjackGame {
                 (player) -> HitFlag.fromCommand(InputView.inputHitOrStand(player.getName())));
         players.initHit(deck, INIT_CARD_SIZE);
         OutputView.printInitCard(getCardStatus(players));
-        playersHit(players, deck);
+        players.playersHit(deck, OutputView::printPresentStatus);
         OutputView.printHitResult(getHitResults(players));
         OutputView.printResult(judgeResult(players.findDealer(), players.getGuests()));
     }
@@ -33,19 +33,6 @@ public class BlackjackGame {
         return players.getPlayers()
                 .stream()
                 .collect(Collectors.toMap(Player::getName, Player::getShowCards));
-    }
-
-    private void playersHit(Players players, Deck deck) {
-        for (Player player : players.getPlayers()) {
-            hitOrStand(player, deck);
-        }
-    }
-
-    private void hitOrStand(Player player, Deck deck) {
-        while (player.isHittable()) {
-            player.hit(deck.draw());
-            OutputView.printPresentStatus(player);
-        }
     }
 
     private Map<String, Cards> getHitResults(Players players) {
