@@ -7,6 +7,8 @@ import java.util.Objects;
 
 public class Cards {
 
+    private static final int BUST_STANDARD = 21;
+
     private static final int INITIAL_CARDS_SIZE = 2;
 
     private final List<Card> cards;
@@ -40,7 +42,22 @@ public class Cards {
     }
 
     public Score calculateScore() {
-        return Score.from(cards);
+        int score = calculateMinimumScore(cards);
+        if (containsAce(cards) && score + 10 <= BUST_STANDARD) {
+            return new Score(score + 10);
+        }
+        return new Score(score);
+    }
+
+    private int calculateMinimumScore(List<Card> cards) {
+        return cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+    }
+
+    private boolean containsAce(List<Card> cards) {
+        return cards.stream()
+                .anyMatch(card -> card.isSameValueWith(Denomination.ACE));
     }
 
     public List<Card> getCards() {
