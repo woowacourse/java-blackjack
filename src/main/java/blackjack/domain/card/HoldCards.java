@@ -23,7 +23,7 @@ public class HoldCards {
     }
 
     public int countBestNumber() {
-        return Number.sum(cards.stream()
+        return CardNumber.sum(cards.stream()
             .map(Card::getNumber)
             .collect(Collectors.toList()));
     }

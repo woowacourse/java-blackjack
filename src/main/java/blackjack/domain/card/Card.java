@@ -17,26 +17,26 @@ public class Card {
     }
 
     private final Suit suit;
-    private final Number number;
+    private final CardNumber cardNumber;
 
-    private Card(Suit suit, Number number) {
+    private Card(Suit suit, CardNumber cardNumber) {
         this.suit = suit;
-        this.number = number;
+        this.cardNumber = cardNumber;
     }
 
     public static List<Card> createDeck() {
         return new ArrayList<>(CACHE_CARDS);
     }
 
-    public static Card valueOf(Suit suit, Number number) {
+    public static Card valueOf(Suit suit, CardNumber cardNumber) {
         return CACHE_CARDS.stream()
-                .filter(card -> card.containSuit(suit) && card.containNumber(number))
+                .filter(card -> card.containSuit(suit) && card.containNumber(cardNumber))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."));
     }
 
-    public Number getNumber() {
-        return this.number;
+    public CardNumber getNumber() {
+        return this.cardNumber;
     }
 
     public Suit getSuit() {
@@ -52,21 +52,21 @@ public class Card {
             return false;
         }
         Card card = (Card) o;
-        return suit == card.suit && number == card.number;
+        return suit == card.suit && cardNumber == card.cardNumber;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(suit, number);
+        return Objects.hash(suit, cardNumber);
     }
 
     private static Stream<Card> toCard(Suit suit) {
-        return Arrays.stream(Number.values())
+        return Arrays.stream(CardNumber.values())
                 .map(number -> new Card(suit, number));
     }
 
-    private boolean containNumber(Number number) {
-        return this.number == number;
+    private boolean containNumber(CardNumber cardNumber) {
+        return this.cardNumber == cardNumber;
     }
 
     private boolean containSuit(Suit suit) {

@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import java.util.List;
 
-public enum Number {
+public enum CardNumber {
     ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -23,27 +23,27 @@ public enum Number {
     private final int value;
     private final String name;
 
-    Number(int value, String name) {
+    CardNumber(int value, String name) {
         this.value = value;
         this.name = name;
     }
 
-    public static int sum(List<Number> numbers) {
-        return calculateBestNumber(sumTotal(numbers), countAce(numbers));
+    public static int sum(List<CardNumber> cardNumbers) {
+        return calculateBestNumber(sumTotal(cardNumbers), countAce(cardNumbers));
     }
 
     public String getName() {
         return name;
     }
 
-    private static int sumTotal(List<Number> numbers) {
-        return numbers.stream()
+    private static int sumTotal(List<CardNumber> cardNumbers) {
+        return cardNumbers.stream()
             .mapToInt(number -> number.value)
             .sum();
     }
 
-    private static long countAce(List<Number> numbers) {
-        return numbers.stream()
+    private static long countAce(List<CardNumber> cardNumbers) {
+        return cardNumbers.stream()
             .filter(number -> number == ACE)
             .count();
     }

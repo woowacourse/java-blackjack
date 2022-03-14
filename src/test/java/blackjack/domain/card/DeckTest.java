@@ -45,7 +45,7 @@ public class DeckTest {
     @DisplayName("카드가 중복될 경우 예외를 발생한다.")
     void throwExceptionDuplicateCard() {
         List<Card> cards = Card.createDeck();
-        cards.add(Card.valueOf(Suit.SPADE, Number.ACE));
+        cards.add(Card.valueOf(Suit.SPADE, CardNumber.ACE));
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Deck.of(cards))
@@ -56,7 +56,7 @@ public class DeckTest {
     @DisplayName("52장이 아닐경우 예외를 발생한다.")
     void throwExceptionCardSize() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Deck.of(Collections.singletonList(Card.valueOf(Suit.SPADE, Number.ACE))))
+                .isThrownBy(() -> Deck.of(Collections.singletonList(Card.valueOf(Suit.SPADE, CardNumber.ACE))))
                 .withMessage("카드는 52장으로 생성되어야 합니다.");
     }
 

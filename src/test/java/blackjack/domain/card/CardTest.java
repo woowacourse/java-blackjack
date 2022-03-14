@@ -11,7 +11,7 @@ public class CardTest {
     @Test
     @DisplayName("스페이드 에이스를 생성한다.")
     void createSpadeAce() {
-        Card card = Card.valueOf(Suit.SPADE, Number.ACE);
+        Card card = Card.valueOf(Suit.SPADE, CardNumber.ACE);
 
         assertThat(card).isNotNull();
     }
@@ -19,17 +19,17 @@ public class CardTest {
     @Test
     @DisplayName("같은 모양과 숫자의 카드는 동일하다.")
     void equalsCardsHashcode() {
-        Card card = Card.valueOf(Suit.SPADE, Number.ACE);
+        Card card = Card.valueOf(Suit.SPADE, CardNumber.ACE);
 
-        assertThat(card.hashCode() == Card.valueOf(Suit.SPADE, Number.ACE).hashCode()).isTrue();
+        assertThat(card.hashCode() == Card.valueOf(Suit.SPADE, CardNumber.ACE).hashCode()).isTrue();
     }
 
     @Test
     @DisplayName("같은 모양과 숫자의 카드는 동등하다.")
     void equalsCard() {
-        Card card = Card.valueOf(Suit.SPADE, Number.ACE);
+        Card card = Card.valueOf(Suit.SPADE, CardNumber.ACE);
 
-        assertThat(card.equals(Card.valueOf(Suit.SPADE, Number.ACE))).isTrue();
+        assertThat(card.equals(Card.valueOf(Suit.SPADE, CardNumber.ACE))).isTrue();
     }
 
     @Test
