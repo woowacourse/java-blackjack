@@ -95,8 +95,13 @@ public class OutputView {
         print(DEALER_EXTRA_CARD_MESSAGE);
     }
 
-    public static void printAllCardsAndScore(final GameResultDto dto) {
-        print(getJoinedCardsAndScores(dto.getResults()) + NEW_LINE);
+    public static void printGameResult(final GameResultDto dto) {
+        final String message = getJoinedCardsAndScores(dto.getResults())
+                + NEW_LINE
+                + NEW_LINE
+                + getAllGameResults(dto);
+
+        print(message);
     }
 
     private static String getJoinedCardsAndScores(final List<ResultStatsDto> dtos) {
@@ -113,11 +118,9 @@ public class OutputView {
         return String.format(PARTICIPANT_CARDS_AND_SCORE_FORMAT, participantName, cards, score);
     }
 
-    public static void printGameResult(final GameResultDto dto) {
-        final String gameResultFullTexts = FINAL_RESULT_ANNOUNCEMENT_MESSAGE
+    private static String getAllGameResults(final GameResultDto dto) {
+        return FINAL_RESULT_ANNOUNCEMENT_MESSAGE
                 + getAllParticipantsGameResults(dto.getResults());
-
-        print(gameResultFullTexts);
     }
 
     private static String getAllParticipantsGameResults(final List<ResultStatsDto> dtos) {

@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import static blackjack.view.InputView.requestPlayerNamesInput;
-import static blackjack.view.OutputView.printAllCardsAndScore;
 import static blackjack.view.OutputView.printGameResult;
 import static blackjack.view.OutputView.printInitialDistributionAnnouncement;
 
@@ -47,7 +46,6 @@ public class BlackjackController {
         final ResultReferee referee = new ResultReferee(game.getDealer(), game.getPlayers());
         final GameResultDto dto = new GameResultDto(referee.getResults());
 
-        printAllCardsAndScore(dto);
         printGameResult(dto);
     }
 }
