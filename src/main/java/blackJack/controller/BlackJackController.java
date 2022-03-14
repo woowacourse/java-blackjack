@@ -16,11 +16,12 @@ public class BlackJackController {
 
     public void run() {
         final Participants participants = getParticipants();
-        final BlackJackGame blackJackGame = new BlackJackGame(participants);
+        final Deck deck = new Deck();
+        final BlackJackGame blackJackGame = new BlackJackGame(participants, deck);
         blackJackGame.firstCardDispensing();
         OutputView.printInitCardResult(participants);
 
-        final List<Player> players = playersTurn(participants);
+        final List<Player> players = playersTurn(participants, deck);
         final Dealer dealer = dealerTurn(blackJackGame);
         OutputView.printGameResult(dealer, players);
         OutputView.printWinDrawLoseResult(
@@ -40,17 +41,17 @@ public class BlackJackController {
         }
     }
 
-    private List<Player> playersTurn(Participants participants) {
+    private List<Player> playersTurn(Participants participants, Deck deck) {
         List<Player> players = participants.getPlayers();
         for (Player player : players) {
-            doEachPlayerTurn(player);
+            doEachPlayerTurn(player, deck);
         }
         return players;
     }
 
-    private void doEachPlayerTurn(Player player) {
+    private void doEachPlayerTurn(Player player, Deck deck) {
         while (player.hasNextTurn() && getOneMoreCard(player)) {
-            player.receiveCard(Deck.getCard());
+            player.receiveCard(deck.getCard());
             OutputView.printNowHoldCardInfo(player);
         }
     }

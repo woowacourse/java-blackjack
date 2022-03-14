@@ -1,6 +1,7 @@
 package blackJack.domain;
 
 import blackJack.domain.card.Card;
+import blackJack.domain.card.Deck;
 import blackJack.domain.card.Denomination;
 import blackJack.domain.card.Suit;
 import blackJack.domain.participant.Dealer;
@@ -24,7 +25,7 @@ class BlackJackGameTest {
 
     @Test
     @DisplayName("BlackJackGame 생성 테스트")
-    void createValidDealer() {
+    void createBlackJackGame() {
         assertThat(initializeBlackJackGame()).isNotNull();
     }
 
@@ -84,6 +85,6 @@ class BlackJackGameTest {
 
     private BlackJackGame initializeBlackJackGame() {
         Participants participants = new Participants(dealer, List.of(player1, player2, player3));
-        return new BlackJackGame(participants);
+        return new BlackJackGame(participants, new Deck());
     }
 }

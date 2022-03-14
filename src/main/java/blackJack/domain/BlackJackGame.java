@@ -17,9 +17,11 @@ public class BlackJackGame {
     private static final int INITIAL_CARD_COUNT = 2;
 
     private final Participants participants;
+    private final Deck deck;
 
-    public BlackJackGame(Participants participants) {
+    public BlackJackGame(Participants participants, Deck deck) {
         this.participants = participants;
+        this.deck = deck;
     }
 
     public void firstCardDispensing() {
@@ -29,14 +31,14 @@ public class BlackJackGame {
 
     public void distributeCard(Participant participant) {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            participant.receiveCard(Deck.getCard());
+            participant.receiveCard(deck.getCard());
         }
     }
 
     public Dealer doDealerGame() {
         Dealer dealer = participants.getDealer();
         while (dealer.hasNextTurn()) {
-            dealer.receiveCard(Deck.getCard());
+            dealer.receiveCard(deck.getCard());
         }
         return dealer;
     }

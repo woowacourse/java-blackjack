@@ -1,23 +1,21 @@
 package blackJack.domain.card;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Queue;
 
 public class Deck {
 
-    private static final LinkedList<Card> deck;
+    private final Queue<Card> deck;
 
-    static {
-        deck = Arrays.stream(Suit.values())
-                .flatMap(suit -> Arrays.stream(Denomination.values())
-                        .map(denomination -> new Card(suit, denomination)))
-                .collect(Collectors.toCollection(LinkedList::new));
-        Collections.shuffle(deck);
+    public Deck() {
+        List<Card> cards = Card.initializeDeck();
+        Collections.shuffle(cards);
+        deck = new LinkedList<>(cards);
     }
 
-    public static Card getCard() {
-        return deck.pop();
+    public Card getCard() {
+        return deck.poll();
     }
 }
