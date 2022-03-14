@@ -56,6 +56,10 @@ public class Score implements Comparable<Score> {
 		return this.score < HIT_THRESHOLD;
 	}
 
+	public boolean hasBlackJackScore() {
+		return this.score == BUST_THRESHOLD;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

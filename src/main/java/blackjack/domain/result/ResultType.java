@@ -18,6 +18,12 @@ public enum ResultType {
 		if (player.isBust()) {
 			return LOSE;
 		}
+		if (dealer.isBlackJack() && player.isBlackJack()){
+			return DRAW;
+		}
+		if (dealer.isBlackJack()) {
+			return LOSE;
+		}
 		if (dealer.compare(player) == 0) {
 			return DRAW;
 		}

@@ -25,6 +25,10 @@ public class Gamer {
 		addCard(deck.distributeCard());
 	}
 
+	public boolean isBlackJack() {
+		return this.cards.isBlackJack();
+	}
+
 	public List<Card> getCards() {
 		return Collections.unmodifiableList(this.cards.getCards());
 	}

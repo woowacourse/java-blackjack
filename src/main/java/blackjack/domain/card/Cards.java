@@ -91,4 +91,8 @@ public class Cards {
 	public boolean isHit() {
 		return this.score.isHit();
 	}
+
+	public boolean isBlackJack() {
+		return cards.size() == 2 && this.score.hasBlackJackScore();
+	}
 }

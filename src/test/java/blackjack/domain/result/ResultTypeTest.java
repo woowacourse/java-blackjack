@@ -54,4 +54,37 @@ class ResultTypeTest {
 		//then
 		assertThat(resultType).isEqualTo(ResultType.DRAW);
 	}
+
+	@Test
+	@DisplayName("딜러가 블랙잭이고 플레이어가 블랙잭이 아닌 21 점수인 경우 플레이어 패배")
+	void get_resultType_dealer_blackjack() {
+		//given
+		Dealer dealer = new Dealer();
+		Player player = new Player("pobi");
+		dealer.addCard(new Card(Denomination.ACE, Suit.CLOVER));
+		dealer.addCard(new Card(Denomination.JACK, Suit.HEART));
+		player.addCard(new Card(Denomination.ACE, Suit.HEART));
+		player.addCard(new Card(Denomination.EIGHT, Suit.HEART));
+		player.addCard(new Card(Denomination.TWO, Suit.HEART));
+		//when
+		ResultType resultType = ResultType.getMatchedResultType(player, dealer);
+		//given
+		assertThat(resultType).isEqualTo(ResultType.LOSE);
+	}
+
+	@Test
+	@DisplayName("딜러가 블랙잭이고 플레이어도 블랙잭인 경우 무승부")
+	void get_resultType_dealer_and_player_blackjack() {
+		//given
+		Dealer dealer = new Dealer();
+		Player player = new Player("pobi");
+		dealer.addCard(new Card(Denomination.ACE, Suit.CLOVER));
+		dealer.addCard(new Card(Denomination.JACK, Suit.HEART));
+		player.addCard(new Card(Denomination.ACE, Suit.HEART));
+		player.addCard(new Card(Denomination.QUEEN, Suit.HEART));
+		//when
+		ResultType resultType = ResultType.getMatchedResultType(player, dealer);
+		//given
+		assertThat(resultType).isEqualTo(ResultType.DRAW);
+	}
 }
