@@ -103,7 +103,7 @@ class DealerTest {
     @DisplayName("딜러는 참여자와 점수를 비교해 승패를 결정한다.")
     void calculateWinner(Participant participant, Dealer dealer, int result) {
         dealer.compete(participant);
-        assertThat(participant.getWinCount()).isEqualTo(result);
+        assertThat(participant.getBet().getProfit()).isEqualTo(result);
     }
 
     private static Stream<Arguments> participantAndResult() {
@@ -114,7 +114,7 @@ class DealerTest {
         Participant participant2 = new Participant(List.of(
                 new Card(Type.SPADE, Score.SIX),
                 new Card(Type.HEART, Score.SIX)), "zero", new Bet(1000));
-        participant.addCard(new Card(Type.HEART, Score.TWO));
+        participant2.addCard(new Card(Type.HEART, Score.TWO));
         Dealer dealer = new Dealer(List.of(
                 new Card(Type.SPADE, Score.TEN),
                 new Card(Type.HEART, Score.TEN)
@@ -133,7 +133,7 @@ class DealerTest {
                         ), "zero", new Bet(1000)), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
                                 new Card(Type.HEART, Score.EIGHT)
-                        )), 0),
+                        )), -1000),
                 Arguments.of(
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
@@ -141,7 +141,7 @@ class DealerTest {
                         ), "zero", new Bet(1000)), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
                                 new Card(Type.HEART, Score.EIGHT)
-                        )), 0),
+                        )), -1000),
                 Arguments.of(
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
@@ -149,7 +149,7 @@ class DealerTest {
                         ), "zero", new Bet(1000)), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.EIGHT),
                                 new Card(Type.HEART, Score.EIGHT)
-                        )), 1),
+                        )), 500),
                 Arguments.of(
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.JACK),
@@ -157,7 +157,7 @@ class DealerTest {
                         ), "zero", new Bet(1000)), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.JACK)
-                        )), 0),
+                        )), -1000),
                 Arguments.of(
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.ACE),
@@ -165,21 +165,22 @@ class DealerTest {
                         ), "zero", new Bet(1000)), new Dealer(List.of(
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.TEN)
-                        )), 0),
+                        )), -1000),
                 Arguments.of(
                         participant
                         , new Dealer(List.of(
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.JACK)
-                        )), 0),
+                        )), -1000),
                 Arguments.of(
                         new Participant(List.of(
                                 new Card(Type.SPADE, Score.ACE),
                                 new Card(Type.HEART, Score.TEN)
                         ), "zero", new Bet(1000)),
-                        dealer, 1),
-                Arguments.of(participant, dealer, 0),
-                Arguments.of(participant2, dealer2, 0)
+                        dealer, 500),
+                Arguments.of(participant, dealer, -1000),
+                Arguments.of(participant2, dealer2, -1000
+                )
         );
     }
 }

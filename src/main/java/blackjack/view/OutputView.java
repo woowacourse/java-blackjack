@@ -90,8 +90,6 @@ public class OutputView {
     }
 
     private static void printPlayerResult(final Player player) {
-//        System.out.printf(player.getName() + ": %d승 %d패%n", player.getWinCount(),
-//                player.getLoseCount());
         System.out.println(player.getName() + ": " + player.getBetProfit());
     }
 

@@ -46,7 +46,7 @@ public class Players {
         for (Participant participant : participants) {
             dealer.compete(participant);
         }
-        dealer.calculateFinalProfit(participants);
+        dealer.calculateDealerProfit(participants);
     }
 
     public Dealer getDealer() {

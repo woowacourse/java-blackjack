@@ -4,6 +4,9 @@ import java.util.List;
 
 public class Bet {
 
+    public static final double WIN = 1.5;
+    public static final double LOSE = -1.0;
+
     private final int betAmount;
     private int profit;
 
@@ -13,23 +16,17 @@ public class Bet {
     }
 
     public void win() {
-        this.profit = (int) (betAmount * 0.5);
+        this.profit = (int) (betAmount * WIN) - betAmount;
     }
 
     public void lose() {
-        this.profit = betAmount * -1;
+        this.profit = betAmount * (int) LOSE;
     }
 
-    public void calculatefinalProfit(List<Participant> participants){
-        int finalProfit = 0;
-        for (Participant participant : participants) {
-            finalProfit -= participant.getBetProfit();
+    public void calculateFinalProfit(List<Integer> profits){
+        for (Integer profit : profits) {
+            this.profit -= profit;
         }
-        this.profit = finalProfit;
-    }
-
-    public int getBetAmount() {
-        return betAmount;
     }
 
     public int getProfit() {

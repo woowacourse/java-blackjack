@@ -12,14 +12,12 @@ public abstract class Player {
 
     private final Cards cards;
     private final String name;
-    private final State state;
     private final Bet bet;
 
     Player(final List<Card> cards, final String name, final Bet bet) {
         validateCards(cards);
         validateName(name);
         this.cards = new Cards(cards);
-        this.state = new State();
         this.name = name;
         this.bet = bet;
     }
@@ -52,12 +50,10 @@ public abstract class Player {
     }
 
     public void win() {
-        state.win();
         bet.win();
     }
 
     public void lose() {
-        state.lose();
         bet.lose();
     }
 
@@ -67,14 +63,6 @@ public abstract class Player {
 
     public String getName() {
         return this.name;
-    }
-
-    public int getWinCount() {
-        return state.getWinCount();
-    }
-
-    public int getLoseCount() {
-        return state.getLoseCount();
     }
 
     public Bet getBet() {
