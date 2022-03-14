@@ -57,20 +57,12 @@ public abstract class Participant {
         return bestScore;
     }
 
-    private int calculateMinScoreOfHand() {
-        return hand.stream().mapToInt(Card::getPoint).sum();
-    }
-
     private int countAceCard() {
         return (int) hand.stream().filter(Card::isAce).count();
     }
 
-    public Name getName() {
-        return name;
-    }
-
-    protected List<Card> getHand() {
-        return hand;
+    private int calculateMinScoreOfHand() {
+        return hand.stream().mapToInt(Card::getPoint).sum();
     }
 
     public boolean isBlackJack() {
@@ -83,5 +75,13 @@ public abstract class Participant {
             return true;
         }
         return false;
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    protected List<Card> getHand() {
+        return hand;
     }
 }
