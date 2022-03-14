@@ -1,5 +1,6 @@
 package domain.game;
 
+import domain.card.Cards;
 import domain.participant.Participant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,8 +18,27 @@ public class GameResult {
 
     private void initialGameResult(List<Participant> players, Participant dealer) {
         for (Participant player : players) {
-            gameResult.put(player, player.playResult(dealer));
+            gameResult.put(player, playResult(player, dealer));
         }
+    }
+
+    private MatchResult playResult(Participant player, Participant dealer) {
+        Cards playerCards = player.getCards();
+        Cards dealerCards = dealer.getCards();
+
+        if (isFirstCardsLose(playerCards, dealerCards)) {
+            return MatchResult.LOSE;
+        }
+
+        if (isFirstCardsLose(dealerCards, playerCards)) {
+            return MatchResult.WIN;
+        }
+
+        return MatchResult.PUSH;
+    }
+
+    private boolean isFirstCardsLose(Cards cards1, Cards cards2) {
+        return cards1.isBust() || (!cards2.isBust() && cards1.sum() < cards2.sum());
     }
 
     public MatchResult getMatchResult(Participant player) {

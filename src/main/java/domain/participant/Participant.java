@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
-import domain.game.MatchResult;
 import java.util.Objects;
 
 public abstract class Participant {
@@ -16,20 +15,6 @@ public abstract class Participant {
     }
 
     public abstract boolean isFinished();
-
-    public MatchResult playResult(Participant participant) {
-        int thisSum = cards.sum();
-        int otherSum = participant.cards.sum();
-
-        if (thisSum == otherSum || (cards.isBust() && participant.cards.isBust())) {
-            return MatchResult.PUSH;
-        }
-        if (cards.isBust() || (!participant.cards.isBust() && thisSum < otherSum)) {
-            return MatchResult.LOSE;
-        }
-
-        return MatchResult.WIN;
-    }
 
     public void drawCard(Card card) {
         cards.add(card);
