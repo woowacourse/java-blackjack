@@ -56,7 +56,7 @@ public class Players {
 	}
 
 	public Map<Name, WinOrLose> getResultAtBlackJack(Participant other) {
-		if (!other.blackJack) {
+		if (!other.isBlackJack()) {
 			throw new IllegalStateException(NOT_BLACK_JACK_SITUATION_ERROR_MESSAGE);
 		}
 		Map<Name, WinOrLose> map = new LinkedHashMap<>();

@@ -23,7 +23,7 @@ public class Controller {
 		Players players = new Players(makePlayers(names, deck));
 		printInitHands(names, dealer, players);
 
-		if (dealer.isMaxScore()) {
+		if (dealer.isBlackJack()) {
 			printBlackJackResult(names, dealer, players);
 			return;
 		}

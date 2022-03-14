@@ -12,8 +12,8 @@ public class Player extends Participant {
 	}
 
 	public WinOrLose compareAtBlackJack(Participant other) {
-		boolean isPlayerBlackJack = this.blackJack;
-		boolean isOtherBlackJack = other.blackJack;
+		boolean isPlayerBlackJack = isBlackJack();
+		boolean isOtherBlackJack = other.isBlackJack();
 		if (isOtherBlackJack && isPlayerBlackJack) {
 			return WinOrLose.DRAW;
 		}
@@ -27,7 +27,7 @@ public class Player extends Participant {
 		if (isBust()) {
 			return WinOrLose.LOSE;
 		}
-		if (this.blackJack || other.isBust()) {
+		if (isBlackJack() || other.isBust()) {
 			return WinOrLose.WIN;
 		}
 		return judgeVersus(other.getBestScore());
