@@ -9,6 +9,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -108,7 +109,7 @@ public class BlackjackController {
     }
 
     private void printDealerRecord(Dealer dealer, List<Gamer> gamers) {
-        Map<String, Integer> result = new HashMap<>();
+        Map<String, Integer> result = new LinkedHashMap<>();
         for (Gamer gamer : gamers) {
             result.merge(dealer.match(gamer.getCards()).getSymbol(), 1, Integer::sum);
         }
