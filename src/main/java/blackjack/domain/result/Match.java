@@ -1,7 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import java.util.Arrays;
 import java.util.function.BiFunction;
+
+import blackjack.domain.player.Player;
 
 public enum Match {
 

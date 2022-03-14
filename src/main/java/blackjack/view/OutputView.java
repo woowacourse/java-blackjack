@@ -3,12 +3,12 @@ package blackjack.view;
 import java.util.List;
 import java.util.Map;
 
-import blackjack.domain.Card;
-import blackjack.domain.GameResponse;
-import blackjack.domain.Match;
-import blackjack.domain.MatchResult;
-import blackjack.domain.Player;
-import blackjack.domain.Results;
+import blackjack.domain.card.Card;
+import blackjack.domain.result.GameResponse;
+import blackjack.domain.result.Match;
+import blackjack.domain.result.MatchResult;
+import blackjack.domain.player.Player;
+import blackjack.domain.result.Results;
 
 public class OutputView {
 

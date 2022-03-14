@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.player;
+
+import blackjack.domain.card.Deck;
+import blackjack.domain.result.Match;
 
 public class Guest extends AbstractPlayer implements Player {
 

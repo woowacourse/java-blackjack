@@ -1,9 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+
+import blackjack.domain.player.Player;
 
 public class Results {
 

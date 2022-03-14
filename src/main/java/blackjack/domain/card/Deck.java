@@ -1,8 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import blackjack.domain.result.Match;
 
 public class Deck {
 
