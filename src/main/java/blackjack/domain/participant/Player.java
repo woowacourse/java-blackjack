@@ -20,22 +20,23 @@ public class Player extends Participant {
     }
 
     public MatchResult match(Dealer dealer) {
-        if (isDraw(dealer)) {
-            return MatchResult.DRAW;
-        }
         if (isWin(dealer)) {
             return MatchResult.WIN;
         }
-        return MatchResult.LOSE;
-    }
-
-    private boolean isDraw(Dealer dealer) {
-        return this.cards.isBust() && dealer.cards.isBust() || this.cards.sum() == dealer.cards.sum();
+        if (isLose(dealer)) {
+            return MatchResult.LOSE;
+        }
+        return MatchResult.DRAW;
     }
 
     private boolean isWin(Dealer dealer) {
-        return !this.cards.isBust()
-                && (dealer.getCards().isBust() || dealer.getCards().sum() < this.cards.sum());
+        return (this.cards.isBlackJack() && !dealer.cards.isBlackJack())
+                || (!this.cards.isBust() && (dealer.cards.isBust() || dealer.cards.sum() < this.cards.sum()));
+    }
+
+    private boolean isLose(Dealer dealer) {
+        return (dealer.cards.isBlackJack() && !this.cards.isBlackJack())
+                || (!dealer.cards.isBust() && (this.cards.isBust() || dealer.cards.sum() > this.cards.sum()));
     }
 
     @Override

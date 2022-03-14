@@ -29,8 +29,10 @@ public class PlayerTest {
 
     private static Stream<Arguments> provideParameters() {
         return Stream.of(
-                Arguments.arguments("합계 22인 경우 true", new Cards(getCardList(Denomination.TWO, Denomination.QUEEN, Denomination.KING)), true),
-                Arguments.arguments("합계 20인 경우 false", new Cards(getCardList(Denomination.QUEEN, Denomination.KING)), false)
+                Arguments.arguments("합계 22인 경우 true",
+                        new Cards(getCardList(Denomination.TWO, Denomination.QUEEN, Denomination.KING)), true),
+                Arguments.arguments("합계 20인 경우 false",
+                        new Cards(getCardList(Denomination.QUEEN, Denomination.KING)), false)
         );
     }
 
@@ -47,6 +49,17 @@ public class PlayerTest {
         Player player = new Player(new Name("name"), new Cards(getCardList(Denomination.QUEEN)));
         player.drawCard(Card.valueOf(Denomination.ACE, Suit.CLOVER));
         assertThat(player.getCards().getValue().size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러가 모두 블랙잭이면 DRAW")
+    void match_draw() {
+        Player player = new Player(new Name("name"),
+                new Cards(getCardList(Denomination.ACE, Denomination.JACK)));
+        Dealer dealer = new Dealer(new Name(Dealer.NAME),
+                new Cards(getCardList(Denomination.ACE, Denomination.QUEEN)));
+
+        assertThat(player.match(dealer)).isEqualTo(MatchResult.DRAW);
     }
 
     @Test
@@ -72,6 +85,17 @@ public class PlayerTest {
     }
 
     @Test
+    @DisplayName("플레이어가 블랙잭이고 딜러가 블랙잭이 아니면 WIN")
+    void match_win() {
+        Player player = new Player(new Name("name"),
+                new Cards(getCardList(Denomination.ACE, Denomination.JACK)));
+        Dealer dealer = new Dealer(new Name(Dealer.NAME),
+                new Cards(getCardList(Denomination.ACE, Denomination.TWO, Denomination.NINE)));
+
+        assertThat(player.match(dealer)).isEqualTo(MatchResult.WIN);
+    }
+
+    @Test
     @DisplayName("플레이어가 버스트가 아니고 딜러가 버스트이면 WIN")
     void match_win1() {
         Player player = new Player(new Name("name"),
@@ -91,6 +115,17 @@ public class PlayerTest {
                 new Cards(getCardList(Denomination.QUEEN)));
 
         assertThat(player.match(dealer)).isEqualTo(MatchResult.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭이 아니고 딜러가 블랙잭이면 LOSE")
+    void match_lose() {
+        Player player = new Player(new Name("name"),
+                new Cards(getCardList(Denomination.ACE, Denomination.TWO, Denomination.NINE)));
+        Dealer dealer = new Dealer(new Name(Dealer.NAME),
+                new Cards(getCardList(Denomination.ACE, Denomination.JACK)));
+
+        assertThat(player.match(dealer)).isEqualTo(MatchResult.LOSE);
     }
 
     @Test

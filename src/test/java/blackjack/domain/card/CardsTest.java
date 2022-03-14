@@ -62,4 +62,39 @@ public class CardsTest {
         List<Card> cardList = cards.getValue();
         assertThat(cardList.size()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("카드가 2장이고 합이 21이면 블랙잭이다.")
+    void is_blackjack() {
+        List<Card> list = new ArrayList<>();
+        list.add(Card.valueOf(Denomination.ACE, Suit.CLOVER));
+        list.add(Card.valueOf(Denomination.JACK, Suit.HEART));
+        Cards cards = new Cards(list);
+
+        assertThat(cards.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("합이 21이어도 카드가 2장 초과이면 블랙잭이 아니다.")
+    void is_not_blackjack() {
+        List<Card> list = new ArrayList<>();
+        list.add(Card.valueOf(Denomination.ACE, Suit.CLOVER));
+        list.add(Card.valueOf(Denomination.NINE, Suit.HEART));
+        list.add(Card.valueOf(Denomination.TWO, Suit.HEART));
+        Cards cards = new Cards(list);
+
+        assertThat(cards.isBlackJack()).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드 합이 21이 넘어가면 Bust이다.")
+    void is_bust() {
+        List<Card> list = new ArrayList<>();
+        list.add(Card.valueOf(Denomination.QUEEN, Suit.CLOVER));
+        list.add(Card.valueOf(Denomination.JACK, Suit.HEART));
+        list.add(Card.valueOf(Denomination.TWO, Suit.HEART));
+        Cards cards = new Cards(list);
+
+        assertThat(cards.isBust()).isTrue();
+    }
 }
