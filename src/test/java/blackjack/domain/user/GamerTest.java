@@ -34,7 +34,6 @@ class GamerTest {
 		gamer.addCard(new Card(Denomination.TEN, Suit.HEART));
 		gamer.addCard(new Card(Denomination.TWO, Suit.SPADE));
 		//then
-		// System.out.println(gamer.getScore());
 		assertThat(gamer.isBust()).isTrue();
 	}
 
@@ -48,6 +47,6 @@ class GamerTest {
 		gamer.addCard(new Card(Denomination.NINE, Suit.SPADE));
 		// when
 		// then
-		assertThat(gamer).extracting("score").isEqualTo(21);
+		assertThat(gamer.getScore()).isEqualTo(21);
 	}
 }
