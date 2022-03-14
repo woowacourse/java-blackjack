@@ -60,9 +60,12 @@ public class GamerTest {
     }
 
     @Test
-    @DisplayName("21이하 일 때 카드를 받을 수 있다.")
+    @DisplayName("21미만 일 때 카드를 받을 수 있다.")
     void checkReceivableConditionTrue() {
-        Gamer gamer = initGamer();
+        Gamer gamer = new Gamer("judy", new Bet(1000));
+        gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
+        gamer.receiveCard(new Card(Suit.HEART, Denomination.JACK));
+
         assertTrue(gamer.isSatisfyReceiveCondition());
     }
 
@@ -70,9 +73,6 @@ public class GamerTest {
     @DisplayName("21이상 일 때 카드를 받을 수 없다.")
     void checkReceivableConditionFalse() {
         Gamer gamer = initGamer();
-        gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
-        gamer.receiveCard(new Card(Suit.HEART, Denomination.JACK));
-
         assertFalse(gamer.isSatisfyReceiveCondition());
     }
 
