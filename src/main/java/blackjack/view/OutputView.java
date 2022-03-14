@@ -23,12 +23,12 @@ public class OutputView {
         System.out.println("딜러: " + card.getNumber().getName() + card.getSymbol().getName());
     }
 
-    public static void printPlayerCards(ParticipantDto vo) {
-        System.out.println(vo.getName() + "카드: " + String.join(", ", getCardsStatus(vo)));
+    public static void printPlayerCards(ParticipantDto dto) {
+        System.out.println(dto.getName() + "카드: " + String.join(", ", getCardsStatus(dto)));
     }
 
-    private static List<String> getCardsStatus(ParticipantDto vo) {
-        return vo.getCards().stream()
+    private static List<String> getCardsStatus(ParticipantDto dto) {
+        return dto.getCards().stream()
             .map(card -> card.getNumber().getName() + card.getSymbol().getName())
             .collect(Collectors.toList());
     }
@@ -46,9 +46,9 @@ public class OutputView {
         return "딜러가 16초과여서 카드를 받지않았습니다.";
     }
 
-    public static void printParticipantCardsWithScore(ParticipantDto vo) {
-        System.out.println(vo.getName() + "카드: " + String.join(", ", getCardsStatus(vo))
-            + " - 결과: " + vo.getScore());
+    public static void printParticipantCardsWithScore(ParticipantDto dto) {
+        System.out.println(dto.getName() + "카드: " + String.join(", ", getCardsStatus(dto))
+            + " - 결과: " + dto.getScore());
     }
 
     public static void printDealerRecord(Map<Record, Integer> record) {
