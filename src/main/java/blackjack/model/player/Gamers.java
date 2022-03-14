@@ -11,11 +11,10 @@ import java.util.stream.Collectors;
 
 public class Gamers {
     private static final int START_CARD_COUNT = 2;
-    private static final String HIT_SIGN = "y";
 
     private final List<Player> values;
 
-    public Gamers(List<String> names) {
+    public Gamers(final List<String> names) {
         this.values = names.stream()
                 .map(Gamer::new)
                 .collect(Collectors.toList());

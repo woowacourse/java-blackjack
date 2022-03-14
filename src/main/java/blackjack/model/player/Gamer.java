@@ -8,7 +8,7 @@ public class Gamer extends Player {
 
     private final String name;
 
-    public Gamer(String name) {
+    public Gamer(final String name) {
         super();
         checkBlankIn(name);
         checkLengthOf(name);

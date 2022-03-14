@@ -16,7 +16,7 @@ public class InputView {
 
     public static List<String> inputPlayerNames() {
         System.out.println(INPUT_PLAYER_NAMES);
-        String names = scanner.nextLine();
+        final String names = scanner.nextLine();
         return Arrays.asList(names.split(NAME_DELIMITER));
     }
 
