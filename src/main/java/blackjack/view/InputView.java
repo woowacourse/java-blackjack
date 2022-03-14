@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
-import blackjack.dto.PlayerTurnDto;
-
 public class InputView {
 
 	private static final Scanner scanner = new Scanner(System.in);
@@ -20,9 +18,9 @@ public class InputView {
 		return Arrays.asList(rawNames.split(NAME_DISTRIBUTOR));
 	}
 
-	public static String drawOneMoreCard(final PlayerTurnDto player) {
+	public static String drawOneMoreCard(final String playerName) {
 		return inputData(InputValidator::validateDrawChoice,
-			() -> System.out.println(player.getName() + DRAW_ONE_MORE_CARD));
+			() -> System.out.println(playerName + DRAW_ONE_MORE_CARD));
 	}
 
 	private static String inputData(final Consumer<String> validation, final InputMessage inputMessage) {

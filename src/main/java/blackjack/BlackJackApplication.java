@@ -4,7 +4,6 @@ import java.util.List;
 
 import blackjack.domain.RedrawChoice;
 import blackjack.domain.role.Role;
-import blackjack.dto.PlayerTurnDto;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -20,13 +19,12 @@ public class BlackJackApplication {
 		OutputView.printInitialStatus(dealerStatus, playersStatus);
 
 		while (true) {
-			PlayerTurnDto currentPlayer = blackJack.whoseTurn();
-			if (hasMorePlayer(currentPlayer)) {
+			final String currentPlayer = blackJack.whoseTurn();
+			if (currentPlayer.isEmpty()) {
 				break;
 			}
 			String answer = InputView.drawOneMoreCard(currentPlayer);
-			final Role playerStatus = blackJack.drawPlayer(RedrawChoice.of(answer),
-				currentPlayer.getName());
+			final Role playerStatus = blackJack.drawPlayer(RedrawChoice.of(answer), currentPlayer);
 			OutputView.printPersonalHand(playerStatus);
 		}
 		OutputView.printDealerStatus(blackJack.drawDealer());
@@ -34,7 +32,4 @@ public class BlackJackApplication {
 
 	}
 
-	private static boolean hasMorePlayer(PlayerTurnDto player) {
-		return player.getName().isEmpty();
-	}
 }

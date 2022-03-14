@@ -76,11 +76,12 @@ public class Roles {
 			.orElseThrow(NoSuchElementException::new);
 	}
 
-	public Role getCurrentPlayer() {
+	public String getCurrentPlayerName() {
 		return players.stream()
 			.filter(player -> player.canDraw() && player.wantDraw())
+			.map(Role::getName)
 			.findFirst()
-			.orElse(new Player(NO_PLAYER, new Hand()));
+			.orElse(NO_PLAYER);
 	}
 
 	public FinalResultDto calculateFinalResult() {

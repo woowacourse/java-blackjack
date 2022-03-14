@@ -7,7 +7,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.role.Role;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
-import blackjack.dto.PlayerTurnDto;
 
 public class BlackJackService {
 
@@ -36,8 +35,8 @@ public class BlackJackService {
 		return roles.distributeCardToPlayers(deck);
 	}
 
-	public PlayerTurnDto whoseTurn() {
-		return PlayerTurnDto.from(roles.getCurrentPlayer());
+	public String whoseTurn() {
+		return roles.getCurrentPlayerName();
 	}
 
 	public Role drawPlayer(final RedrawChoice answer, final String name) {
