@@ -17,7 +17,7 @@ public class BlackJackController {
     public void run() {
         Players players = createPlayers();
         Dealer dealer = new Dealer();
-        Deck deck = Deck.of();
+        Deck deck = Deck.getInstance();
 
         initialTurn(players, dealer, deck);
         hitCard(players, dealer, deck);

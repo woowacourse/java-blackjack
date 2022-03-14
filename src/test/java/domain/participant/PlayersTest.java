@@ -33,7 +33,7 @@ class PlayersTest {
     @DisplayName("첫 턴에서 모든 참가자가 카드를 두개씩 뽑는지 확인")
     void initialTurnTest(){
         Players players = Players.of("runa, kun");
-        Deck deck = Deck.of();
+        Deck deck = Deck.getInstance();
 
         players.runInitialTurn(deck);
         int actual = (int)players.getPlayers().stream()
