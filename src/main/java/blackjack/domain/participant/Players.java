@@ -13,12 +13,16 @@ public class Players {
         this.players = new LinkedList<>(players);
     }
 
-    public boolean isAllPlayerFinished() {
+    public boolean isAllFinished() {
         return this.players
                 .stream()
                 .allMatch(Player::isFinished);
     }
 
+    public boolean isPresentPlayerFinished() {
+        return getPresentPlayer().isFinished();
+    }
+    
     public void drawCardPresentPlayer(Card card) {
         players.peek().drawCard(card);
     }

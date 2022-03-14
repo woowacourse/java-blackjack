@@ -15,10 +15,6 @@ public class Player extends Participant {
         isStay = true;
     }
 
-    public boolean isStay() {
-        return isStay;
-    }
-
     public MatchResult match(Dealer dealer) {
         if (isWin(dealer)) {
             return MatchResult.WIN;
@@ -41,7 +37,11 @@ public class Player extends Participant {
 
     @Override
     public boolean isFinished() {
-        return cards.isBust() || cards.isBlackJack() || isStay();
+        return cards.isBust() || cards.isBlackJack() || isStay;
+    }
+
+    public boolean isStay() {
+        return isStay;
     }
 
     @Override

@@ -149,6 +149,4 @@ public class PlayerTest {
 
         assertThat(player.match(dealer)).isEqualTo(MatchResult.LOSE);
     }
-
-
 }

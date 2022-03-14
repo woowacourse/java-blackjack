@@ -22,7 +22,7 @@ public class OutputView {
 
     }
 
-    public static void printInitialCards(Dealer dealer, Players players) {
+    public static void printInitialCards(Players players, Dealer dealer) {
         System.out.printf("%n%s와 %s에게 2장의 카드를 나누었습니다.%n", dealer.getName(), getPlayerNames(players));
         System.out.printf("%s: %s%n", dealer.getName(), getCardName(dealer.getCards().getValue().get(0)));
         for (Player player : players.getPlayers()) {
