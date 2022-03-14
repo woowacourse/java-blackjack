@@ -7,7 +7,7 @@ import java.util.List;
 public class ParticipantCards {
 
     private final static int NO_COUNT = 0;
-    private final static int BURST_THRESHOLD = 21;
+    private final static int BUST_THRESHOLD = 21;
     private final static int CONVERT_ACE_AMOUNT = 10;
     private static final int FIRST_CARD_INDEX = 0;
 
@@ -48,7 +48,7 @@ public class ParticipantCards {
     }
 
     private boolean isNeedToConvertAceValue(int aceCount, int totalScore) {
-        return aceCount > NO_COUNT && totalScore > BURST_THRESHOLD;
+        return aceCount > NO_COUNT && totalScore > BUST_THRESHOLD;
     }
 
 

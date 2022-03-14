@@ -55,7 +55,7 @@ public class BlackjackController {
     private boolean isPlayerWantMoreCards(Player player, Deck deck) {
         boolean cardPrintFlag = false;
 
-        while (!isBurst(player) && isPlayerHit(player)) {
+        while (!isBust(player) && isPlayerHit(player)) {
             player.receiveCard(deck.pickCard());
             OutputView.printPlayerCardInformation(player);
             cardPrintFlag = true;
@@ -63,7 +63,7 @@ public class BlackjackController {
         return cardPrintFlag;
     }
 
-    private boolean isBurst(Player player) {
+    private boolean isBust(Player player) {
         if (player.isMoreOrEqualThanThreshold()) {
             OutputView.printPlayerHitImpossibleMessage();
             return true;

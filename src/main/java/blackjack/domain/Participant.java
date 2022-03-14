@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private static final int BURST_THRESHOLD_NUMBER = 21;
+    private static final int BUST_THRESHOLD_NUMBER = 21;
 
     ParticipantCards participantCards;
 
@@ -26,12 +26,12 @@ public abstract class Participant {
         return Collections.unmodifiableList(participantCards.getCards());
     }
 
-    public boolean isBurst() {
-        return getScore() > BURST_THRESHOLD_NUMBER;
+    public boolean isBust() {
+        return getScore() > BUST_THRESHOLD_NUMBER;
     }
 
     public boolean isMoreOrEqualThanThreshold() {
-        return getScore() >= BURST_THRESHOLD_NUMBER;
+        return getScore() >= BUST_THRESHOLD_NUMBER;
     }
 
     public abstract String getName();
