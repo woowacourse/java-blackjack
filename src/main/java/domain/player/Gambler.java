@@ -20,7 +20,7 @@ public class Gambler extends Player {
     }
 
     @Override
-    public List<Card> getInitialOpenCards() {
+    public List<Card> getOpenCards() {
         return new ArrayList<>(cards.getCards());
     }
 }

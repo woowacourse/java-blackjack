@@ -8,7 +8,7 @@ import domain.BlackJackResult;
 import domain.MatchResult;
 import domain.card.Card;
 import domain.player.Dealer;
-import dto.PlayerDto;
+import dto.OpenCardsDto;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,25 +26,22 @@ public class OutputView {
     private static final String STRING_FOR_LOSE = "패";
     private static final String STRING_FOR_DRAW = "무";
     private static final String CARD_NAME_JOIN_CHARACTER = ", ";
+    private static final String GAMBLER_NAME_DELIMITER = ", ";
 
 
     private OutputView() {
     }
 
-    public static void printSpreadAnnouncement(String dealerName, String playerNames) {
+    public static void printSpreadAnnouncement(String dealerName, List<String> gamblerNames) {
         System.out.println();
-        System.out.printf(INFO_FOR_INITIAL_SPREAD, dealerName, playerNames);
+        System.out.printf(INFO_FOR_INITIAL_SPREAD, dealerName, String.join(GAMBLER_NAME_DELIMITER, gamblerNames));
     }
 
-    public static void printSingleCardForDealer(PlayerDto dealerDto) {
-        System.out.println(dealerDto.getName() + COLON_FOR_JOINING_NAME_AND_CARD + dealerDto.getFirstCardName());
-    }
-
-    public static void printTwoCardsForGamblers(List<PlayerDto> playerDtos) {
-        playerDtos.forEach(
-                playerDto -> System.out.printf(
+    public static void printInitialOpenCards(List<OpenCardsDto> openCardsDtos) {
+        openCardsDtos.forEach(
+                openCardsDto -> System.out.printf(
                         INFO_CARD_STATUS_AFTER_INITIAL_SPREAD,
-                        playerDto.getName(), getJoinedCardNames(playerDto.getCards())
+                        openCardsDto.getName(), getJoinedCardNames(openCardsDto.getInitialOpenCards())
                 ));
     }
 
@@ -58,20 +55,21 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printCards(PlayerDto playerDto) {
+    public static void printCards(OpenCardsDto playerDto) {
         System.out.println(
-                playerDto.getName() + COLON_FOR_JOINING_NAME_AND_CARD + getJoinedCardNames(playerDto.getCards()));
+                playerDto.getName() + COLON_FOR_JOINING_NAME_AND_CARD + getJoinedCardNames(
+                        playerDto.getInitialOpenCards()));
     }
 
     public static void printDealerAddCard(Dealer dealer) {
         System.out.printf(INFO_FOR_DEALER_ADD_CARD, dealer.getName());
     }
 
-    public static void printCardAndScore(PlayerDto playerDto) {
+    public static void printCardAndScore(OpenCardsDto playerDto) {
         System.out.printf(INFO_PLAYER_CARD_AND_SCORE,
                 playerDto.getName(),
-                getJoinedCardNames(playerDto.getCards()),
-                playerDto.getScore());
+                getJoinedCardNames(playerDto.getInitialOpenCards()),
+                playerDto.getInitialOpenCards());
     }
 
     public static void printResult(BlackJackResult blackJackResult) {

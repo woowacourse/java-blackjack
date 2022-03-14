@@ -27,7 +27,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    public List<Card> getInitialOpenCards() {
+    public List<Card> getOpenCards() {
         return List.of(cards.getCards().get(FIRST_CARD_OPEN_INDEX));
     }
 }

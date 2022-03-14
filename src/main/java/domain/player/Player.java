@@ -18,7 +18,7 @@ public abstract class Player {
 
     public abstract boolean canGetMoreCard();
 
-    public abstract List<Card> getInitialOpenCards();
+    public abstract List<Card> getOpenCards();
 
     public void addCard(Card card) {
         cards.addCard(card);
