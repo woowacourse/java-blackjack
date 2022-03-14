@@ -9,13 +9,13 @@ public class Player extends AbstractParticipant {
 
     private static final int FIRST_HIT_CARD_SIZE = 2;
 
-    private Player(final String name, final Cards cards, final GameStatus gameStatus) {
-        super(name, cards, gameStatus);
+    private Player(final String name, final Cards cards, final ParticipantStatus participantStatus) {
+        super(name, cards, participantStatus);
     }
 
     public static Player createNewPlayer(final String name, final Cards cards) {
         Objects.requireNonNull(cards, "cards는 null이 들어올 수 없습니다.");
-        return new Player(name, cards, GameStatus.RUNNING);
+        return new Player(name, cards, ParticipantStatus.RUNNING);
     }
 
     @Override

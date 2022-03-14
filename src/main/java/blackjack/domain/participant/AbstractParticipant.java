@@ -10,15 +10,15 @@ public abstract class AbstractParticipant implements Participant {
 
     private final String name;
     private final Cards cards;
-    private GameStatus gameStatus;
+    private ParticipantStatus participantStatus;
 
-    AbstractParticipant(final String name, final Cards cards, final GameStatus gameStatus) {
+    AbstractParticipant(final String name, final Cards cards, final ParticipantStatus participantStatus) {
         Objects.requireNonNull(name, "플레이어의 이름은 null이 들어올 수 없습니다.");
         Objects.requireNonNull(cards, "보유 카드에는 null이 들어올 수 없습니다.");
         validateEmptyName(name);
         this.name = name;
         this.cards = cards;
-        this.gameStatus = gameStatus;
+        this.participantStatus = participantStatus;
     }
 
     private void validateEmptyName(final String name) {
@@ -31,7 +31,7 @@ public abstract class AbstractParticipant implements Participant {
     public void hit(final Card card) {
         validateCanHit();
         cards.addCard(card);
-        refreshGameStatus();
+        refreshParticipantStatus();
     }
 
     private void validateCanHit() {
@@ -40,22 +40,22 @@ public abstract class AbstractParticipant implements Participant {
         }
     }
 
-    private void refreshGameStatus() {
-        gameStatus = gameStatus.refreshStatus(cards);
+    private void refreshParticipantStatus() {
+        participantStatus = participantStatus.refreshStatus(cards);
         if (isDealer() && isEnd()) {
-            gameStatus = GameStatus.FINISHED;
+            participantStatus = ParticipantStatus.FINISHED;
         }
     }
 
     @Override
     public boolean canHit() {
-        return !gameStatus.isFinishedGame();
+        return !participantStatus.isFinishedGame();
     }
 
     @Override
     public void changeFinishStatus() {
         if (canHit()) {
-            gameStatus = GameStatus.FINISHED;
+            participantStatus = ParticipantStatus.FINISHED;
         }
     }
 

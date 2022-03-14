@@ -13,24 +13,24 @@ import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class GameStatusTest {
+class ParticipantStatusTest {
 
     @Test
     @DisplayName("카드 상태가 버스트라면 버스트 상태로 리프레시될 수 있다.")
     void refreshStatusByBust() {
-        final GameStatus gameStatus = GameStatus.RUNNING;
+        final ParticipantStatus participantStatus = ParticipantStatus.RUNNING;
         final Cards cards = createCards(Card.of(SPADE, KING), Card.of(SPADE, QUEEN));
         cards.addCard(Card.of(SPADE, JACK));
 
-        assertThat(gameStatus.refreshStatus(cards)).isEqualTo(GameStatus.BUST);
+        assertThat(participantStatus.refreshStatus(cards)).isEqualTo(ParticipantStatus.BUST);
     }
 
     @Test
     @DisplayName("카드 상태가 블랙잭이라면 블랙잭 상태로 리프레시될 수 있다.")
     void refreshStatusByBlackJack() {
-        final GameStatus gameStatus = GameStatus.RUNNING;
+        final ParticipantStatus participantStatus = ParticipantStatus.RUNNING;
         final Cards cards = createCards(Card.of(SPADE, KING), Card.of(SPADE, A));
 
-        assertThat(gameStatus.refreshStatus(cards)).isEqualTo(GameStatus.BLACKJACK);
+        assertThat(participantStatus.refreshStatus(cards)).isEqualTo(ParticipantStatus.BLACKJACK);
     }
 }

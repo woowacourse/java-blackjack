@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Cards;
 
-public enum GameStatus {
+public enum ParticipantStatus {
 
     RUNNING,
     BUST,
@@ -14,7 +14,7 @@ public enum GameStatus {
         return this != RUNNING;
     }
 
-    public GameStatus refreshStatus(final Cards cards) {
+    public ParticipantStatus refreshStatus(final Cards cards) {
         if (cards.isBust()) {
             return BUST;
         }
