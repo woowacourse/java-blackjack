@@ -8,7 +8,6 @@ import blackjack.dto.OutComeResult;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayerFinalResultDto;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -79,8 +78,8 @@ public class BlackJackGame {
     }
 
     public List<PlayerFinalResultDto> getPlayerResultInfos() {
-        final List<PlayerFinalResultDto> resultInfos =
-                new ArrayList<>(Collections.singletonList(PlayerFinalResultDto.from(dealer)));
+        final List<PlayerFinalResultDto> resultInfos = new ArrayList<>();
+        resultInfos.add(PlayerFinalResultDto.from(dealer));
         resultInfos.addAll(players.getResultPlayerInfo());
         return resultInfos;
     }
