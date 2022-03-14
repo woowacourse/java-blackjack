@@ -83,7 +83,7 @@ public class BlackJackGame {
     }
 
     private boolean canGamblerReceiveCard(final Player gambler, final CardDeck cardDeck) {
-        return isHit(gambler, cardDeck) && !gambler.isFinished() && !isBurst(gambler);
+        return isHit(gambler, cardDeck) && isNotBurst(gambler) && gambler.isNotFinished();
     }
 
     private boolean isHit(final Player gambler, final CardDeck cardDeck) {
@@ -98,7 +98,7 @@ public class BlackJackGame {
         return BlackJackCommand.from(inputView.scanHitOrStay(currentGamblerDto));
     }
 
-    private boolean isBurst(final Player player) {
+    private boolean isNotBurst(final Player player) {
         if (player.isBurst()) {
             outputView.printBurst(PlayerDto.from(player));
             return true;
@@ -114,7 +114,7 @@ public class BlackJackGame {
     }
 
     private boolean canDealerReceiveCard(final Dealer dealer) {
-        return !dealer.isFinished() && !isBurst(dealer);
+        return isNotBurst(dealer) && dealer.isNotFinished();
     }
 
     private void processResult(Players players) {

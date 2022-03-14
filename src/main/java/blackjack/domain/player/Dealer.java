@@ -11,7 +11,12 @@ public class Dealer extends Player {
     }
 
     @Override
-    public boolean isFinished() {
-        return playingCards.getCardSum() >= DEALER_GET_CARD_UPPER_BOUND;
+    public boolean isNotFinished() {
+        return playingCards.getCardSum() < DEALER_GET_CARD_UPPER_BOUND;
+    }
+
+    @Override
+    public boolean isDealer() {
+        return true;
     }
 }

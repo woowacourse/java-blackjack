@@ -32,14 +32,14 @@ public class Players {
 
     public Dealer getDealer() {
         return (Dealer) value.stream()
-            .filter(Dealer.class::isInstance)
+            .filter(Player::isDealer)
             .findAny()
             .orElseThrow( () -> new RuntimeException(NO_DEALER_MESSAGE));
     }
 
     public List<Player> getGamblers() {
         return value.stream()
-            .filter(Gambler.class::isInstance)
+            .filter(player -> !player.isDealer())
             .collect(Collectors.toList());
     }
 }

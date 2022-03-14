@@ -8,7 +8,12 @@ public class Gambler extends Player {
     }
 
     @Override
-    public boolean isFinished() {
-        return playingCards.getCardSum() >= GAMBLER_GET_CARD_UPPER_BOUND;
+    public boolean isNotFinished() {
+        return playingCards.getCardSum() < GAMBLER_GET_CARD_UPPER_BOUND;
+    }
+
+    @Override
+    public boolean isDealer() {
+        return false;
     }
 }

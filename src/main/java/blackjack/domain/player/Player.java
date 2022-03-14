@@ -19,10 +19,12 @@ public abstract class Player {
         playingCards.addCard(playingCard);
     }
 
-    public abstract boolean isFinished();
+    public abstract boolean isNotFinished();
+
+    public abstract boolean isDealer();
 
     public boolean isBurst() {
-        return playingCards.getCardSum() > BURST_NUMBER;
+        return playingCards.getCardSum() <= BURST_NUMBER;
     }
 
     public GameResult compare(final Player player) {
