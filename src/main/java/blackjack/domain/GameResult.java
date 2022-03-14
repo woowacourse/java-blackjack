@@ -1,21 +1,11 @@
 package blackjack.domain;
 
 public enum GameResult {
-    LOSE("패"),
-    DRAW("무"),
-    WIN("승");
+    LOSE,
+    DRAW,
+    WIN;
 
-    private final String result;
-
-    GameResult(String result) {
-        this.result = result;
-    }
-
-    public String getResult() {
-        return this.result;
-    }
-
-    public GameResult getDealerResult(){
+    public GameResult getDealerResult() {
         if (this.equals(GameResult.WIN)) {
             return GameResult.LOSE;
         }

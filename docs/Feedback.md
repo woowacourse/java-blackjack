@@ -8,8 +8,9 @@
 
 - [x] 상수의 의미를 생각하여 네이밍
     - GameController 내의 FIRST_QUESTION_FLAG
-- [ ] GameResult 내의 `WIN`을 나타내는 문자열은 어느 영역의 관심사인가
+- [x] GameResult 내의 `WIN`을 나타내는 문자열은 어느 영역의 관심사인가
     - 다른 언어권에게 제공해야한다면 어떻게 배워야할까?
+    - GameResult 내 결과를 의미하는 필드 제거 및 OutputView에 문자열 변환하는 함수 구현
 - [x] `MAX_POINT`라는 상수가 여러 곳에 선언되어 있다.(최대 점수가 21의 의미하는 숫자로 사용함.)
     - 사용 클래스
         - Cards : MAX_POINT

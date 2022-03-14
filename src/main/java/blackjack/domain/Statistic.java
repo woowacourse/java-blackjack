@@ -68,7 +68,7 @@ public class Statistic {
             .count();
     }
 
-    public String getGameResultByPlayer(Player player) {
-        return playerResult.get(player).getResult();
+    public GameResult getGameResultByPlayer(Player player) {
+        return playerResult.get(player);
     }
 }

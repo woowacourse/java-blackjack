@@ -8,26 +8,29 @@ import blackjack.domain.human.Dealer;
 import blackjack.domain.human.Human;
 import blackjack.domain.human.Player;
 import blackjack.domain.human.Players;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static final String DEALER_NO_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    public static final String TOTAL_RESULT_MASSAGE = "## 최종 승패";
-    public static final String DEALER_RESULT_PREFIX = "딜러: ";
-    public static final String COUNT_JOIN_DELIMITER = " ";
-    public static final String INIT_CARD_MESSAGE = "%s와 %s에게 2장의 카드를 나누었습니다.";
-    public static final String CARD_STATE_MESSAGE = "%s카드: %s";
-    public static final String POINT_STATE_MESSAGE = " - 결과 : %d";
-    public static final String PLAYER_RESULT_MESSAGE = "%s: %s";
+    private static final String DEALER_NO_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String TOTAL_RESULT_MASSAGE = "## 최종 승패";
+    private static final String DEALER_RESULT_PREFIX = "딜러: ";
+    private static final String COUNT_JOIN_DELIMITER = " ";
+    private static final String INIT_CARD_MESSAGE = "%s와 %s에게 2장의 카드를 나누었습니다.";
+    private static final String CARD_STATE_MESSAGE = "%s카드: %s";
+    private static final String POINT_STATE_MESSAGE = " - 결과 : %d";
+    private static final String PLAYER_RESULT_MESSAGE = "%s: %s";
     private static final String JOIN_DELIMITER = ", ";
+    private static final String KOREAN_RESULT_WIN = "승";
+    private static final String KOREAN_RESULT_LOSE = "패";
+    private static final String KOREAN_RESULT_DRAW = "무";
 
     public static void printInitCardState(Players players, Dealer dealer) {
         System.out.println();
         System.out.printf(INIT_CARD_MESSAGE, dealer.getName(), players.getPlayerNames());
         System.out.println();
     }
+
     //TODO: 휴먼 네이밍 수정
     public static void printHumanCardState(Human human) {
         System.out.printf(CARD_STATE_MESSAGE, human.getName(), gerCardList(human.getCards()));
@@ -67,7 +70,7 @@ public class OutputView {
         StringBuilder dealerResult = new StringBuilder(DEALER_RESULT_PREFIX);
         for (GameResult gameResult : GameResult.values()) {
             int resultCount = statistic.getCountByGameResult(gameResult);
-            String resultString = changeDealerResult(gameResult);
+            String resultString = changeGameResultToKorean(changeDealerResult(gameResult));
             dealerResult.append(resultCount + resultString + COUNT_JOIN_DELIMITER);
         }
         System.out.println(dealerResult);
@@ -75,8 +78,8 @@ public class OutputView {
 
     public static void printTotalResultByPlayer(Statistic statistic, Players players) {
         for (Player player : players.getPlayers()) {
-            String result = statistic.getGameResultByPlayer(player);
-            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(), result);
+            GameResult playerResult = statistic.getGameResultByPlayer(player);
+            System.out.printf(PLAYER_RESULT_MESSAGE, player.getName(), changeGameResultToKorean(playerResult));
             System.out.println();
         }
     }
@@ -88,7 +91,17 @@ public class OutputView {
             .collect(Collectors.joining(JOIN_DELIMITER));
     }
 
-    private static String changeDealerResult(GameResult gameResult) {
-        return gameResult.getDealerResult().getResult();
+    private static GameResult changeDealerResult(GameResult gameResult) {
+        return gameResult.getDealerResult();
+    }
+
+    private static String changeGameResultToKorean(GameResult gameResult) {
+        if (gameResult.equals(GameResult.WIN)) {
+            return KOREAN_RESULT_WIN;
+        }
+        if (gameResult.equals(GameResult.LOSE)) {
+            return KOREAN_RESULT_LOSE;
+        }
+        return KOREAN_RESULT_DRAW;
     }
 }

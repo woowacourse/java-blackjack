@@ -13,7 +13,6 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("NonAsciiCharacters")
 class StatisticTest {
 
     @Test
@@ -40,8 +39,8 @@ class StatisticTest {
 
         Statistic statistic = Statistic.of(dealer, players);
 
-        assertThat(statistic.getGameResultByPlayer(player1).equals("승") &&
-            statistic.getGameResultByPlayer(player2).equals("패"))
+        assertThat(statistic.getGameResultByPlayer(player1).equals(GameResult.WIN) &&
+            statistic.getGameResultByPlayer(player2).equals(GameResult.LOSE))
             .isTrue();
     }
 
@@ -70,8 +69,8 @@ class StatisticTest {
 
         Statistic statistic = Statistic.of(dealer, players);
 
-        assertThat(statistic.getGameResultByPlayer(player1).equals("패") &&
-            statistic.getGameResultByPlayer(player2).equals("패"))
+        assertThat(statistic.getGameResultByPlayer(player1).equals(GameResult.LOSE) &&
+            statistic.getGameResultByPlayer(player2).equals(GameResult.LOSE))
             .isTrue();
     }
 
@@ -107,10 +106,10 @@ class StatisticTest {
 
         Statistic statistic = Statistic.of(dealer, players);
 
-        assertThat(statistic.getGameResultByPlayer(player1).equals("패") &&
-            statistic.getGameResultByPlayer(player2).equals("패") &&
-            statistic.getGameResultByPlayer(player3).equals("무") &&
-            statistic.getGameResultByPlayer(player4).equals("승"))
+        assertThat(statistic.getGameResultByPlayer(player1).equals(GameResult.LOSE) &&
+            statistic.getGameResultByPlayer(player2).equals(GameResult.LOSE) &&
+            statistic.getGameResultByPlayer(player3).equals(GameResult.DRAW) &&
+            statistic.getGameResultByPlayer(player4).equals(GameResult.WIN))
             .isTrue();
     }
 }
