@@ -53,7 +53,7 @@ class PlayerTest {
     @DisplayName("cards가 null이 들어올 경우 예외가 발생해야 한다.")
     void createNewPlayerExeptionByNullCards() {
         assertThatThrownBy(() -> Player.createNewPlayer("player", null))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(NullPointerException.class)
                 .hasMessage("cards는 null이 들어올 수 없습니다.");
     }
 
