@@ -7,7 +7,7 @@ public class CardDeck {
     private static final String NO_CARD_ERROR_MESSAGE = "[ERROR] 남은 카드가 존재하지 않습니다.";
     private static final int LAST_INDEX = 1;
 
-    public List<Card> cards;
+    private List<Card> cards;
 
     private CardDeck(List<Card> cards) {
         this.cards = cards;
@@ -22,9 +22,5 @@ public class CardDeck {
             throw new ArrayIndexOutOfBoundsException(NO_CARD_ERROR_MESSAGE);
         }
         return cards.remove(cards.size() - LAST_INDEX);
-    }
-
-    public int size() {
-        return cards.size();
     }
 }

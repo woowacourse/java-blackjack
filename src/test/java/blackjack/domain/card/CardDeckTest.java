@@ -1,40 +1,29 @@
 package blackjack.domain.card;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NonAsciiCharacters")
 class CardDeckTest {
 
-    CardDeck cardDeck;
-
-    @BeforeEach
-    void init() {
-        cardDeck = CardDeckGenerator.generate();
-    }
-
     @Test
-    @DisplayName("카드덱 생성 테스트")
-    public void createCardTest() {
-//        CardDeck cardDeck = CardDeckGenerator.generate();
-        assertThat(cardDeck.size())
-            .isEqualTo(52);
-    }
-
-    @Test
-    @DisplayName("카드지급 후 남은 카드 테스트")
-    public void remainCardAmountTest() {
-        cardDeck.draw();
-        assertThat(cardDeck.size()).isEqualTo(51);
+    @DisplayName("CardDeck에서 카드 뽑는 기능이 정상 동작하는지")
+    void drawCardDeckTest() {
+        CardDeck cardDeck = CardDeckGenerator.generate();
+        Card card = cardDeck.draw();
+        Denomination denomination = card.getDenomination();
+        Symbol symbol = card.getSymbol();
+        assertThatCode(() -> Card.of(denomination, symbol))
+            .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("카드지급 범위초과 에러 테스트")
     public void giveCardIndexExceptionTest() {
+        CardDeck cardDeck = CardDeckGenerator.generate();
+
         for (int i = 0; i < 52; i++) {
             cardDeck.draw();
         }

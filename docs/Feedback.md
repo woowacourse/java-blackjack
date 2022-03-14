@@ -25,7 +25,8 @@
 - [x] `giveCard()`메서드의 의미에 대해 (누가 누구에게 주는 것인가.)
     - Players : giveCard -> distributeCard
     - Card : giveCard -> draw
-- [ ] `CardDeck`에서 `size()`메서드는 테스트에서만 사용됨.
+- [x] `CardDeck`에서 `size()`메서드는 테스트에서만 사용됨.
+    - 미사용 메서드 제거 및 테스트 코드 제거
 - [ ] `CardDeckGenerator`에서 카드를 생성할 때 어떤 규칙을 사용하는가.
 - [x] `Denomination`에서 `예외`를 던질 때 메세지를 담아서 보내기
     - orElseThrow()에서 IllegalArgumentException 발생하여 메세지 전달 하도록 수정
