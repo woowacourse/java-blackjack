@@ -22,8 +22,8 @@ public class BlackJackGame {
     private static final int DEFAULT_SPREAD_COUNT_START_INDEX = 0;
     private static final int DEFAULT_SPREAD_COUNT_END_INDEX = 2;
     private static final int BURST_CRITERIA = 21;
-    private static final int GAMBLER_GET_CARD_UPPER_BOUND = 16;
-    private static final int DEALER_GET_CARD_UPPER_BOUND = 21;
+    private static final int GAMBLER_GET_CARD_UPPER_BOUND = 21;
+    private static final int DEALER_GET_CARD_UPPER_BOUND = 16;
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
@@ -80,7 +80,7 @@ public class BlackJackGame {
 
     private void playGame(Player gambler, CardDeck cardDeck) {
         PlayerDto currentGamblerDto = PlayerDto.from(gambler);
-        while (isHit(currentGamblerDto) && !isBurst(gambler, cardDeck)) {
+        while (isHit(currentGamblerDto) && !isBurst(gambler, cardDeck, GAMBLER_GET_CARD_UPPER_BOUND)) {
             outputView.printCards(PlayerDto.from(gambler));
         }
         outputView.printCards(PlayerDto.from(gambler));
@@ -94,24 +94,20 @@ public class BlackJackGame {
         return BlackJackCommand.from(inputView.scanHitOrStay(currentGamblerDto));
     }
 
-    private boolean isBurst(final Player gambler, final CardDeck cardDeck) {
-        if (gambler.isFinished(cardDeck, GAMBLER_GET_CARD_UPPER_BOUND)) {
-            outputView.printBurst(PlayerDto.from(gambler));
+    private boolean isBurst(final Player player,
+                            final CardDeck cardDeck,
+                            final int getCardUpperBound) {
+        if (player.isFinished(cardDeck, getCardUpperBound)) {
+            outputView.printBurst(PlayerDto.from(player));
             return true;
         }
         return false;
     }
 
-    private void playGameForDealer(Player dealer, CardDeck cardDeck) {
+    private void playGameForDealer(Dealer dealer, CardDeck cardDeck) {
         while (!dealer.isFinished(cardDeck, DEALER_GET_CARD_UPPER_BOUND)) {
+            dealer.receiveCard(cardDeck.pop());
             outputView.printDealerAddCard(dealer);
-        }
-        checkDealerBurst(dealer);
-    }
-
-    private void checkDealerBurst(final Player dealer) {
-        if (dealer.getSumOfCards() > DEALER_GET_CARD_UPPER_BOUND) {
-            outputView.printBurst(PlayerDto.from(dealer));
         }
     }
 

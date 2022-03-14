@@ -30,8 +30,8 @@ public class Players {
         return value;
     }
 
-    public Player getDealer() {
-        return value.stream()
+    public Dealer getDealer() {
+        return (Dealer) value.stream()
             .filter(Dealer.class::isInstance)
             .findAny()
             .orElseThrow( () -> new RuntimeException(NO_DEALER_MESSAGE));

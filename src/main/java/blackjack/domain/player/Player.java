@@ -19,11 +19,7 @@ public abstract class Player {
         playingCards.addCard(playingCard);
     }
 
-    public boolean isFinished(final CardDeck cardDeck, final int limitedCardSum){
-        playingCards.addCard(cardDeck.pop());
-        return playingCards.getCardSum() > limitedCardSum;
-    }
-
+    public abstract boolean isFinished(final CardDeck cardDeck, final int getCardUpperBound);
 
     public GameResult compare(final Player player) {
         return GameResult.of(this.getSumOfCards(), player.getSumOfCards());
