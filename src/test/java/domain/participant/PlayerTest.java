@@ -42,10 +42,5 @@ public class PlayerTest {
 		Dealer dealer = new Dealer(handForDealer);
 		assertThat(player.compareAtFinal(dealer)).isEqualTo(WinOrLose.LOSE);
 	}
-
-	@Test
-	@DisplayName("본인 이름인지 확인")
-	void isNameMatch() {
-		assertThat(player.isNameMatch(new Name("pobi"))).isTrue();
-	}
+	
 }

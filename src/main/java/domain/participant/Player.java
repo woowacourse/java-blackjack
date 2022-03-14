@@ -43,8 +43,4 @@ public class Player extends Participant {
 		}
 		return WinOrLose.DRAW;
 	}
-
-	public boolean isNameMatch(Name name) {
-		return this.name.equals(name);
-	}
 }
