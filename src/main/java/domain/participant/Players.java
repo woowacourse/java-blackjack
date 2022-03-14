@@ -28,17 +28,17 @@ public class Players {
     public String showHandByName(Name name) {
         return players.stream()
                 .filter(player -> player.isNameMatch(name))
-                .map(Player::showHand).findFirst().orElseThrow();
+                .map(Player::showHand)
+                .findFirst()
+                .orElseThrow();
     }
 
-    public List<String> showHands() {
-        return players.stream().map(Player::showHand).collect(Collectors.toList());
-    }
-
-    public List<String> showStatuses() {
+    public int getBestScoreByName(Name name) {
         return players.stream()
-                .map(Player::showStatus)
-                .collect(Collectors.toList());
+                .filter(player -> player.isNameMatch(name))
+                .map(Player::getBestScore)
+                .findFirst()
+                .orElseThrow();
     }
 
     public boolean isBustByName(Name name) {

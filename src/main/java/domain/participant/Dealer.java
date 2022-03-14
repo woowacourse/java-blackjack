@@ -7,7 +7,6 @@ import domain.card.Card;
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
-    private static final String SHOW_ONE_HAND_FORMAT = "%s: %s";
     private static final int STANDARD_OF_ENOUGH_CARD = 16;
     private static final int FIRST_CARD_INDEX = 0;
 
@@ -15,8 +14,8 @@ public class Dealer extends Participant {
         super(new Name(DEALER_NAME), hand);
     }
 
-    public String showOneHand() {
-        return String.format(SHOW_ONE_HAND_FORMAT, name.getName(), hand.get(FIRST_CARD_INDEX));
+    public Card getFirstHand() {
+        return hand.get(FIRST_CARD_INDEX);
     }
 
     public boolean isEnoughCard() {

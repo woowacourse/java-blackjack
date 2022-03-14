@@ -26,7 +26,7 @@ public class Controller {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = new Players(names, generateInitCardsForPlayers(names, deck));
-        printInitHands(names, dealer, players);
+        OutputView.printInitHands(names, dealer, players);
 
         if (dealer.isBlackJack) {
             printDealerBlackJackResult(names, dealer, players);
@@ -36,7 +36,7 @@ public class Controller {
 
         drawForPlayers(names, deck, players);
         drawForDealer(deck, dealer, players);
-        OutputView.printParticipantStatus(dealer.showStatus(), players.showStatuses());
+        OutputView.printStatuses(names, dealer, players);
         printFinalResult(names, dealer, players);
     }
 
@@ -61,11 +61,6 @@ public class Controller {
                 .mapToObj(i -> new InitCards(deck).getInitCards())
                 .collect(Collectors.toList());
         return initCardForPlayers;
-    }
-
-    private void printInitHands(List<Name> names, Dealer dealer, Players players) {
-        OutputView.printInitMessage(names.stream().map(Name::getName).collect(Collectors.toList()));
-        OutputView.printParticipantStatus(dealer.showOneHand(), players.showHands());
     }
 
     private void printDealerBlackJackResult(List<Name> names, Dealer dealer, Players players) {
@@ -103,7 +98,7 @@ public class Controller {
         boolean isKeepDraw = true;
         while (isKeepDraw && inputAskDraw(name.getName())) {
             players.addCardByName(name, deck.draw());
-            OutputView.printHand(players.showHandByName(name));
+            OutputView.printPlayerHand(name, players);
             isKeepDraw = checkScore21OrBust(players, name);
         }
     }
