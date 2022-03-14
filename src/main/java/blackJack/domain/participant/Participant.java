@@ -1,8 +1,6 @@
 package blackJack.domain.participant;
 
-import static blackJack.domain.card.Denomination.ACE_BONUS_VALUE;
-
-import java.util.ArrayList;
+import blackJack.domain.card.Cards;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,17 +9,14 @@ import blackJack.domain.card.Card;
 public abstract class Participant {
 
     private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
-    private static final String ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD = "중복된 카드는 받을 수 없습니다.";
-
-    private static final int BLACK_JACK = 21;
 
     private final String name;
-    private final List<Card> cards;
+    private final Cards cards;
 
     public Participant(String name) {
         validateName(name);
         this.name = name;
-        this.cards = new ArrayList<>();
+        this.cards = new Cards();
     }
 
     private void validateName(String name) {
@@ -33,39 +28,15 @@ public abstract class Participant {
     abstract boolean hasNextTurn();
 
     public void receiveCard(Card card) {
-        validateReceiveDuplicatedCard(card);
-        cards.add(card);
-    }
-
-    private void validateReceiveDuplicatedCard(Card card) {
-        if (cards.contains(card)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_RECEIVE_DUPLICATED_CARD);
-        }
+        cards.addCard(card);
     }
 
     public int getScore() {
-        int score = calculateScore();
-
-        if (hasDenominationAce() && score + ACE_BONUS_VALUE <= BLACK_JACK) {
-            score += ACE_BONUS_VALUE;
-        }
-
-        return score;
-    }
-
-    private int calculateScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-    }
-
-    private boolean hasDenominationAce() {
-        return cards.stream()
-                .anyMatch(Card::isSameDenominationAsAce);
+        return cards.addScore();
     }
 
     public List<Card> getCards() {
-        return cards;
+        return cards.getCards();
     }
 
     public String getName() {
