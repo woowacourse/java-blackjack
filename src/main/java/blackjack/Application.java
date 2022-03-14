@@ -1,7 +1,6 @@
 package blackjack;
 
 import blackjack.model.BlackJackGame;
-import blackjack.model.MatchResult;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 

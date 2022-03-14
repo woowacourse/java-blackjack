@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import blackjack.model.MatchResult;
-import blackjack.model.Result;
+import blackjack.model.result.BlackJackGameResult;
+import blackjack.model.result.MatchResult;
 import blackjack.model.player.Player;
 import java.util.List;
 import java.util.Map;
@@ -88,16 +88,16 @@ public class ResultView {
         System.out.printf(PLAYER_SCORE_MESSAGE_FORMAT, dealer.getName(), cardJoiner, dealer.sumCardsScore());
     }
 
-    public static void printMatchResult(final MatchResult matchResult) {
-        printDealerMatchResult(matchResult.getDealerMatchResult());
-        matchResult.getGamersMatchResult().forEach((name, result) -> {
-            System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, name, result);
+    public static void printMatchResult(final BlackJackGameResult blackJackGameResult) {
+        printDealerMatchResult(blackJackGameResult.getDealerMatchResult());
+        blackJackGameResult.getGamersMatchResult().forEach((name, matchResult) -> {
+            System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, name, matchResult);
         });
     }
 
-    private static void printDealerMatchResult(Map<Result, Integer> dealerMatchResult) {
+    private static void printDealerMatchResult(Map<MatchResult, Integer> dealerMatchResult) {
         StringJoiner matchResultJoiner = new StringJoiner(" ");
-        dealerMatchResult.forEach((result, count) -> matchResultJoiner.add(count + result.getValue()));
+        dealerMatchResult.forEach((matchResult, count) -> matchResultJoiner.add(count + matchResult.getValue()));
         System.out.printf(PLAYER_MATCH_MESSAGE_FORMAT, "딜러", matchResultJoiner);
     }
 }

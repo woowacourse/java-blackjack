@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.TrumpNumber;
