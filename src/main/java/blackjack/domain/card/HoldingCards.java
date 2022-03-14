@@ -8,6 +8,7 @@ public class HoldingCards {
 
     public static final int BUST_STANDARD = 21;
     private static final int ACE_DIFFERENCE = 10;
+    private static final int WITHOUT_HIDDEN_CARD_INDEX = 1;
 
     private final List<Card> cards;
 
@@ -50,7 +51,11 @@ public class HoldingCards {
                 .count();
     }
 
-    public List<Card> getCards() {
+    public List<Card> getAllCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public List<Card> getCardsWithOutHiddenCard() {
+        return Collections.unmodifiableList(cards).subList(WITHOUT_HIDDEN_CARD_INDEX, cards.size());
     }
 }
