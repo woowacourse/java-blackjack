@@ -1,7 +1,9 @@
 package BlackJack.controller;
 
 import BlackJack.domain.Card.CardFactory;
+import BlackJack.domain.DealerScore;
 import BlackJack.domain.Game;
+import BlackJack.domain.PlayerScore;
 import BlackJack.domain.Result;
 import BlackJack.domain.User.Dealer;
 import BlackJack.domain.User.Player;
@@ -28,39 +30,29 @@ public class BlackjackController {
         game.checkPlayerAndDealerIsBlackJack();
         OutputView.printTotalResult(playGame(game.getDealer(), game.getPlayers()));
 
+        makeResults(game);
 
-//        Dealer dealer = new Dealer(CardFactory.drawTwoCards());
-//        List<Player> players = joinGame(inputPlayerNames);
-//        OutputView.printDrawMessage(inputPlayerNames);
-//        OutputView.printTotalUserCards(convertToListDto(dealer, players));
-//
-//        OutputView.printTotalResult(playGame(dealer, players));
-//
-//        List<PlayerResultDto> resultDtos = calculatePlayerResult(dealer, players);
-//        DealerResultDto dealerDto = calculateDealerResult(dealer, players);
-//        OutputView.printFinalResult(resultDtos, dealerDto);
+        OutputView.printFinalResult(
+                convertToPlayerResultDtos(game.getPlayerScore()),
+                convertToDealerResultDto(game.getDealerScore())
+        );
     }
 
-//    private DealerResultDto calculateDealerResult(Dealer dealer, List<Player> players) {
-//        int dealerLoseCount = dealer.getDealerLoseCount();
-//        int dealerDrawCount = dealer.getDealerDrawCount();
-//        DealerResultDto dealerDto = DealerResultDto.from(
-//                dealer.getName(),
-//                dealerLoseCount,
-//                dealerDrawCount,
-//                players.size() - (dealerLoseCount + dealerDrawCount));
-//        return dealerDto;
-//    }
-//
-//    private List<PlayerResultDto> calculatePlayerResult(Dealer dealer, List<Player> players) {
-//        List<PlayerResultDto> resultPlayerDtos = new ArrayList<>();
-//        for (Player player : players) {
-//            Result compare = dealer.compare(player);
-//            resultPlayerDtos.add(PlayerResultDto.from(player.getName(), compare));
-//        }
-//        return resultPlayerDtos;
-//    }
-//
+    private void makeResults(Game game) {
+        game.makePlayerResult();
+        game.makeDealerResult(game.getPlayerScore());
+    }
+
+    private void checkDealerIsBlackJack(Game game) {
+        if(game.checkDealerIsBlackJack()){
+            OutputView.printFinalResult(
+                convertToPlayerResultDtos(game.getPlayerScore()),
+                convertToDealerResultDto(game.getDealerScore())
+            );
+        }
+    }
+
+
     private List<UserDto> playGame(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
             addCardPerPlayer(player);
@@ -79,7 +71,7 @@ public class BlackjackController {
         }
     }
 
-    private List<UserDto> convertToListDto(Dealer dealer, Players players) {
+    private List<UserDto> convertToToTalUserDto(Dealer dealer, Players players) {
         List<UserDto> userDtos = new ArrayList<>();
         userDtos.add(UserDto.from(dealer));
         for (Player player : players.getPlayers()) {
@@ -88,4 +80,19 @@ public class BlackjackController {
         return userDtos;
     }
 
+    private DealerResultDto convertToDealerResultDto(DealerScore dealerScore) {
+        Integer lose = dealerScore.getDealerScore().get(Result.LOSE);
+        Integer draw = dealerScore.getDealerScore().get(Result.DRAW);
+        Integer win = dealerScore.getDealerScore().get(Result.WIN);
+        DealerResultDto dealerDto = DealerResultDto.from(lose, draw, win);
+        return dealerDto;
+    }
+
+    private List<PlayerResultDto> convertToPlayerResultDtos(PlayerScore playerScore) {
+        List<PlayerResultDto> resultPlayerDtos = new ArrayList<>();
+        for (Map.Entry<String, Result> resultEntry : playerScore.getPlayersScore().entrySet()) {
+            PlayerResultDto.from(resultEntry.getKey(), resultEntry.getValue());
+        }
+        return resultPlayerDtos;
+    }
 }

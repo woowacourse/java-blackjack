@@ -7,15 +7,15 @@ public class DealerResultDto {
     private int dealerDrawCount = 0;
     private int dealerWinCount = 0;
 
-    public DealerResultDto(String name, int dealerLoseCount, int dealerDrawCount, int dealerWinCount) {
-        this.name = name;
+    public DealerResultDto(int dealerLoseCount, int dealerDrawCount, int dealerWinCount) {
+        this.name = "딜러";
         this.dealerDrawCount = dealerDrawCount;
         this.dealerLoseCount = dealerLoseCount;
         this.dealerWinCount = dealerWinCount;
     }
 
-    public static DealerResultDto from(String name, int dealerLoseCount, int dealerDrawCount, int dealerWinCount) {
-        return new DealerResultDto(name, dealerLoseCount, dealerDrawCount, dealerWinCount);
+    public static DealerResultDto from(int dealerLoseCount, int dealerDrawCount, int dealerWinCount) {
+        return new DealerResultDto(dealerLoseCount, dealerDrawCount, dealerWinCount);
     }
 
     public String getName() {

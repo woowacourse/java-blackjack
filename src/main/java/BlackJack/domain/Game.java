@@ -2,9 +2,11 @@ package BlackJack.domain;
 
 import BlackJack.domain.Card.Cards;
 import BlackJack.domain.User.Dealer;
+import BlackJack.domain.User.Player;
 import BlackJack.domain.User.Players;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static BlackJack.domain.Card.CardFactory.CARD_CACHE;
 
@@ -14,6 +16,8 @@ public class Game {
     private final Players players;
     private final Dealer dealer;
     private final Cards cards;
+    private PlayerScore playerScore = new PlayerScore();
+    private DealerScore dealerScore = new DealerScore();
 
     public Game(List<String> playerNames, Dealer dealer) {
         this.players = new Players(playerNames);
@@ -41,6 +45,21 @@ public class Game {
     public Dealer checkDealerAddCard(){
         dealer.addCard();
         return dealer;
+    public void makePlayerResult() {
+        for (Player player : players.getPlayers()) {
+            playerScore.addResult(player,Result.judge(dealer,player));
+        }
+    }
+
+    public void makeDealerResult(PlayerScore playerScore){
+        List<Result> results = playerScore.getPlayersResult().values().stream().collect(Collectors.toUnmodifiableList());
+        for (Result value : Result.values()) {
+           dealerScore.addResult(value, getDealerResultCount(Result.reverse(value), results));
+        }
+    }
+
+    private int getDealerResultCount(Result result, List<Result> results) {
+        return (int) results.stream().filter((r) -> r.equals(result)).count();
     }
 
     public Dealer getDealer() {
@@ -49,5 +68,13 @@ public class Game {
 
     public Players getPlayers() {
         return players;
+    }
+
+    public DealerScore getDealerScore() {
+        return dealerScore;
+    }
+
+    public PlayerScore getPlayerScore() {
+        return playerScore;
     }
 }
