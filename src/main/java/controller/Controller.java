@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.card.Card;
 import domain.card.Deck;
 import domain.card.deckstrategy.GeneralGenerationDeckStrategy;
 import domain.participant.Dealer;
@@ -35,22 +34,6 @@ public class Controller {
 		printFinalResult(dealer, players);
 	}
 
-	private List<String> convertNamesToString(List<Name> names) {
-		return names.stream().map(Name::getName).collect(Collectors.toList());
-	}
-
-	private List<String> convertCardsToString(List<Card> cards) {
-		return cards.stream()
-			.map(Card::getCardInfo)
-			.collect(Collectors.toList());
-	}
-
-	private List<List<String>> convertCardsListToString(List<List<Card>> cardsList) {
-		return cardsList.stream()
-			.map(cards -> convertCardsToString(cards))
-			.collect(Collectors.toList());
-	}
-
 	private List<Name> makeNames() {
 		try {
 			List<String> names = InputView.inputNames();
@@ -71,14 +54,14 @@ public class Controller {
 	}
 
 	private void printInitHands(Dealer dealer, Players players) {
-		OutputView.printInitMessage(convertNamesToString(players.getNames()));
+		OutputView.printInitMessage(Converter.convertNamesToString(players.getNames()));
 		OutputView.printHand(
 			dealer.getName().getName(),
 			Arrays.asList(dealer.getOneHand().getCardInfo())
 		);
 
-		List<String> playerNames = convertNamesToString(players.getNames());
-		List<List<String>> playerCards = this.convertCardsListToString(players.getCardsOfAll());
+		List<String> playerNames = Converter.convertNamesToString(players.getNames());
+		List<List<String>> playerCards = Converter.convertCardsListToString(players.getCardsOfAll());
 
 		for (int i = 0; i < playerNames.size(); i++) {
 			OutputView.printHand(playerNames.get(i), playerCards.get(i));
@@ -145,12 +128,12 @@ public class Controller {
 	private void printHandAndResult(Dealer dealer, Players players) {
 		OutputView.printHandAndScore(
 			dealer.getName().getName(),
-			convertCardsToString(dealer.getHand()),
+			Converter.convertCardsToString(dealer.getHand()),
 			dealer.getBestScore()
 		);
 
-		List<String> names = convertNamesToString(players.getNames());
-		List<List<String>> cards = convertCardsListToString(players.getCardsOfAll());
+		List<String> names = Converter.convertNamesToString(players.getNames());
+		List<List<String>> cards = Converter.convertCardsListToString(players.getCardsOfAll());
 		List<Integer> scores = players.getScores();
 
 		for (int i = 0; i < names.size(); i++) {
@@ -172,4 +155,5 @@ public class Controller {
 			.forEach(
 				name -> OutputView.printPlayerResult(name.getName(), finalResult.getResultOfPlayer(name).getResult()));
 	}
+
 }
