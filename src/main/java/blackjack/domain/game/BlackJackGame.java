@@ -3,6 +3,7 @@ package blackjack.domain.game;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDistributor;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.DeckGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
@@ -14,15 +15,14 @@ import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
-    public static final String DEALER_NAME = "딜러";
     private static final int INITIAL_DRAW_CARD_COUNT = 2;
 
     private final Dealer dealer;
     private final Players players;
-    private final CardDistributor cardDistributor = new CardDistributor();
+    private final CardDistributor cardDistributor = new CardDistributor(new DeckGenerator());
 
     public BlackJackGame(List<Name> names) {
-        this.dealer = new Dealer(new Name(DEALER_NAME), drawInitialCards());
+        this.dealer = new Dealer(new Name(Dealer.NAME), drawInitialCards());
         this.players = initializePlayers(names);
     }
 

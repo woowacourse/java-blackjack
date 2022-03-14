@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
-import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.game.MatchResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,7 +54,7 @@ public class PlayerTest {
     void match_draw1() {
         Player player = new Player(new Name("name"),
                 new Cards(getCardList(Denomination.ACE, Denomination.ACE)));
-        Dealer dealer = new Dealer(new Name(BlackJackGame.DEALER_NAME),
+        Dealer dealer = new Dealer(new Name(Dealer.NAME),
                 new Cards(getCardList(Denomination.ACE, Denomination.ACE)));
 
         assertThat(player.match(dealer)).isEqualTo(MatchResult.DRAW);
@@ -66,7 +65,7 @@ public class PlayerTest {
     void match_draw2() {
         Player player = new Player(new Name("name"),
                 new Cards(getCardList(Denomination.QUEEN, Denomination.JACK, Denomination.KING)));
-        Dealer dealer = new Dealer(new Name(BlackJackGame.DEALER_NAME),
+        Dealer dealer = new Dealer(new Name(Dealer.NAME),
                 new Cards(getCardList(Denomination.QUEEN, Denomination.JACK, Denomination.KING)));
 
         assertThat(player.match(dealer)).isEqualTo(MatchResult.DRAW);
@@ -77,7 +76,7 @@ public class PlayerTest {
     void match_win1() {
         Player player = new Player(new Name("name"),
                 new Cards(getCardList(Denomination.QUEEN)));
-        Dealer dealer = new Dealer(new Name(BlackJackGame.DEALER_NAME),
+        Dealer dealer = new Dealer(new Name(Dealer.NAME),
                 new Cards(getCardList(Denomination.QUEEN, Denomination.JACK, Denomination.KING)));
 
         assertThat(player.match(dealer)).isEqualTo(MatchResult.WIN);
@@ -88,7 +87,7 @@ public class PlayerTest {
     void match_win2() {
         Player player = new Player(new Name("name"),
                 new Cards(getCardList(Denomination.QUEEN, Denomination.JACK)));
-        Dealer dealer = new Dealer(new Name(BlackJackGame.DEALER_NAME),
+        Dealer dealer = new Dealer(new Name(Dealer.NAME),
                 new Cards(getCardList(Denomination.QUEEN)));
 
         assertThat(player.match(dealer)).isEqualTo(MatchResult.WIN);
@@ -99,7 +98,7 @@ public class PlayerTest {
     void match_lose1() {
         Player player = new Player(new Name("name"),
                 new Cards(getCardList(Denomination.QUEEN, Denomination.JACK, Denomination.KING)));
-        Dealer dealer = new Dealer(new Name(BlackJackGame.DEALER_NAME),
+        Dealer dealer = new Dealer(new Name(Dealer.NAME),
                 new Cards(getCardList(Denomination.QUEEN)));
 
         assertThat(player.match(dealer)).isEqualTo(MatchResult.LOSE);
@@ -110,7 +109,7 @@ public class PlayerTest {
     void match_lose2() {
         Player player = new Player(new Name("name"),
                 new Cards(getCardList(Denomination.QUEEN)));
-        Dealer dealer = new Dealer(new Name(BlackJackGame.DEALER_NAME),
+        Dealer dealer = new Dealer(new Name(Dealer.NAME),
                 new Cards(getCardList(Denomination.QUEEN, Denomination.JACK)));
 
         assertThat(player.match(dealer)).isEqualTo(MatchResult.LOSE);

@@ -11,14 +11,14 @@ public class CardDistributorTest {
     @Test
     @DisplayName("생성 확인")
     void distribute() {
-        CardDistributor cardDistributor = new CardDistributor();
+        CardDistributor cardDistributor = new CardDistributor(new DeckGenerator());
         assertThatNoException().isThrownBy(cardDistributor::distribute);
     }
 
     @Test
     @DisplayName("카드가 다 소요되면 에러가 발생한다.")
     void failed() {
-        CardDistributor cardDistributor = new CardDistributor();
+        CardDistributor cardDistributor = new CardDistributor(new DeckGenerator());
         for (int i = 0; i < 52; i++) {
             cardDistributor.distribute();
         }

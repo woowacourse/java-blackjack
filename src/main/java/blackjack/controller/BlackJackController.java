@@ -40,14 +40,11 @@ public class BlackJackController {
             playPresentPlayer(blackJackGame);
             blackJackGame.passToNextPlayer();
         }
-        blackJackGame.passToNextPlayer();
     }
 
     private void playPresentPlayer(BlackJackGame blackJackGame) {
-        boolean canDraw = true;
-        while (!blackJackGame.isPresentPlayerFinished() && canDraw) {
-            canDraw = wantDraw(blackJackGame.getPresentPlayer());
-            blackJackGame.drawPresentPlayer(canDraw);
+        while (!blackJackGame.isPresentPlayerFinished()) {
+            blackJackGame.drawPresentPlayer(wantDraw(blackJackGame.getPresentPlayer()));
             OutputView.printCards(blackJackGame.getPresentPlayer());
         }
     }

@@ -4,6 +4,7 @@ import blackjack.domain.card.Cards;
 
 public class Dealer extends Participant {
 
+    public static final String NAME = "딜러";
     public static final int DRAW_STANDARD = 16;
 
     public Dealer(Name name, Cards cards) {

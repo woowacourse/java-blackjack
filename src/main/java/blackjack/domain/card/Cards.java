@@ -6,8 +6,9 @@ import java.util.List;
 
 public class Cards {
 
-    private static final int ACE_ADDITIONAL_VALUE = 10;
     private static final int BLACKJACK_COUNT = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
+    private static final int ACE_ADDITIONAL_VALUE = 10;
 
     private final List<Card> value;
 
@@ -24,22 +25,22 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return sum() == BLACKJACK_COUNT;
+        return value.size() == BLACKJACK_CARD_SIZE && sum() == BLACKJACK_COUNT;
     }
 
     public int sum() {
         int sum = value.stream()
-                .mapToInt(Card::toInt)
+                .mapToInt(Card::getDenominationValue)
                 .sum();
 
-        if (canAddAddtionalValue(sum)) {
+        if (canAddAdditionalValue(sum)) {
             sum += ACE_ADDITIONAL_VALUE;
         }
 
         return sum;
     }
 
-    private boolean canAddAddtionalValue(int sum) {
+    private boolean canAddAdditionalValue(int sum) {
         return hasAce() && !exceedBust(sum);
     }
 

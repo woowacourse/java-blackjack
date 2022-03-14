@@ -33,24 +33,24 @@ public class Card {
                 .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_ERROR));
     }
 
-    public static List<Card> generateDeck() {
+    public static List<Card> cache() {
         return new ArrayList<>(CACHE);
     }
 
-    public Denomination getDenomination() {
-        return denomination;
-    }
-
-    public Suit getSuit() {
-        return suit;
-    }
-
-    public int toInt() {
-        return this.denomination.getValue();
-    }
-
     public boolean isAce() {
-        return this.denomination == Denomination.ACE;
+        return denomination.isAce();
+    }
+
+    public String getSuitName() {
+        return suit.getName();
+    }
+
+    public String getDenominationName() {
+        return denomination.getName();
+    }
+
+    public int getDenominationValue() {
+        return this.denomination.getValue();
     }
 
     @Override

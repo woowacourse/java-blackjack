@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.game.GameResult;
 import blackjack.domain.game.MatchResult;
 import blackjack.domain.participant.Dealer;
@@ -46,7 +45,7 @@ public class OutputView {
     }
 
     private static String getCardName(Card card) {
-        return card.getDenomination().getName() + card.getSuit().getName();
+        return card.getDenominationName() + card.getSuitName();
     }
 
     public static void printCards(Player player) {
@@ -74,7 +73,7 @@ public class OutputView {
         Map<Player, MatchResult> map = gameResult.getGameResult();
 
         System.out.printf("%n%s: %d승 %d무 %d패%n",
-                BlackJackGame.DEALER_NAME, gameResult.getDealerWinCount(),
+                Dealer.NAME, gameResult.getDealerWinCount(),
                 gameResult.getDealerDrawCount(), gameResult.getDealerLoseCount());
 
         for (Player player : map.keySet()) {
