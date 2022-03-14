@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import blackjack.domain.dto.ResultDto;
 import blackjack.domain.strategy.NumberGenerator;
@@ -17,14 +16,14 @@ public class Blackjack {
 		this.dealer = new Dealer();
 	}
 
-	public void distributeInitialCards(NumberGenerator numberGenerator) {
+	public void dealInitialCards(NumberGenerator numberGenerator) {
 		for (int i = 0; i < NUMBER_OF_INIT_CARD; ++i) {
 			dealer.addCard(dealer.handOutCard(numberGenerator));
 			players.addCards(dealer, numberGenerator);
 		}
 	}
 
-	public boolean distributeAdditionalCardToDealer(NumberGenerator numberGenerator) {
+	public boolean dealAdditionalCardToDealer(NumberGenerator numberGenerator) {
 		if (dealer.isHit()) {
 			dealer.addCard(dealer.handOutCard(numberGenerator));
 			return true;
@@ -33,7 +32,7 @@ public class Blackjack {
 		return false;
 	}
 
-	public boolean isDistributeMore() {
+	public boolean isDealOneMore() {
 		return !players.isEnd();
 	}
 
@@ -47,7 +46,7 @@ public class Blackjack {
 		return players.findPlayer(player);
 	}
 
-	public void distributeAdditionalCardToPlayer(NumberGenerator numberGenerator, Player player) {
+	public void dealAdditionalCardToPlayer(NumberGenerator numberGenerator, Player player) {
 		players.addCard(dealer, player, numberGenerator);
 	}
 

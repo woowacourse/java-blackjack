@@ -24,7 +24,7 @@ public class BlackjackTest {
 		blackjack = new Blackjack(playerNames);
 		intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6));
 
-		blackjack.distributeInitialCards(intendedNumberGenerator);
+		blackjack.dealInitialCards(intendedNumberGenerator);
 	}
 
 	@DisplayName("아무 이름도 들어오지 않는 경우 에러 테스트")
@@ -62,7 +62,7 @@ public class BlackjackTest {
 	@Test
 	void distributeOneMoreCardDealer() {
 		NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(10));
-		blackjack.distributeAdditionalCardToDealer(numberGenerator);
+		blackjack.dealAdditionalCardToDealer(numberGenerator);
 		assertThat(blackjack.getDealer().getMyCards().size()).isEqualTo(3);
 	}
 
@@ -70,7 +70,7 @@ public class BlackjackTest {
 	@Test
 	void distributeOneMoreCardDealer2() {
 		NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(10, 4));
-		blackjack.distributeAdditionalCardToDealer(numberGenerator);
+		blackjack.dealAdditionalCardToDealer(numberGenerator);
 		assertThat(blackjack.getDealer().getMyCards().size()).isEqualTo(3);
 	}
 
@@ -79,7 +79,7 @@ public class BlackjackTest {
 	void distributeOneMoreCardPlayer() {
 		NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(10));
 		Player player = blackjack.getPlayers().get(0);
-		blackjack.distributeAdditionalCardToPlayer(numberGenerator, player);
+		blackjack.dealAdditionalCardToPlayer(numberGenerator, player);
 
 		assertThat(player.getMyCards().size()).isEqualTo(3);
 	}

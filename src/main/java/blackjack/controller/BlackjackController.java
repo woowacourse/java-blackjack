@@ -20,24 +20,24 @@ public class BlackjackController {
 	private void startBlackJack() {
 		List<String> playerNames = InputView.getPlayerNames();
 		blackjack = new Blackjack(playerNames);
-		blackjack.distributeInitialCards(RandomNumberGenerator.getInstance());
+		blackjack.dealInitialCards(RandomNumberGenerator.getInstance());
 
 		OutputView.printInitStatus(blackjack.getDealer(), blackjack.getPlayers());
 	}
 
 	private void progressBlackjack() {
-		while (blackjack.isDistributeMore()) {
+		while (blackjack.isDealOneMore()) {
 			askDistributingCard(blackjack.getNextPlayer());
 		}
 
-		if(blackjack.distributeAdditionalCardToDealer(RandomNumberGenerator.getInstance())) {
+		if(blackjack.dealAdditionalCardToDealer(RandomNumberGenerator.getInstance())) {
 			OutputView.printDealerAdditionalCard();
 		}
 	}
 
 	private void askDistributingCard(Player player) {
 		while (InputView.askAdditionalCard(player)) {
-			blackjack.distributeAdditionalCardToPlayer(RandomNumberGenerator.getInstance(), player);
+			blackjack.dealAdditionalCardToPlayer(RandomNumberGenerator.getInstance(), player);
 			OutputView.printCards(blackjack.findPlayer(player));
 		}
 	}

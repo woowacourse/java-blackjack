@@ -22,7 +22,7 @@ public class RecordsTest {
 		List<String> playerNames = List.of("범블비", "잉");
 		Blackjack blackjack = new Blackjack(playerNames);
 		IntendedNumberGenerator intendedNumberGenerator = new IntendedNumberGenerator(List.of(1, 2, 3, 11, 15, 9));
-		blackjack.distributeInitialCards(intendedNumberGenerator);
+		blackjack.dealInitialCards(intendedNumberGenerator);
 
 		//dealer: 12점, player: 7점(범블비), 14점(잉)
 		dto = Records.of(blackjack.getDealer(), blackjack.getPlayers());
