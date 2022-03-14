@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 	@Test
-	void dealer_score_higher_than_player_score() {
+	void dealer_normal_player_normal_higher_score() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(CardLetter.NINE, CardSuit.CLOVER));
@@ -18,7 +18,7 @@ public class DealerTest {
 	}
 
 	@Test
-	void dealer_score_lower_than_player_score() {
+	void dealer_normal_player_normal_lower_score() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(CardLetter.NINE, CardSuit.CLOVER));
@@ -30,7 +30,7 @@ public class DealerTest {
 	}
 
 	@Test
-	void dealer_score_equal_to_player_score() {
+	void dealer_normal_player_normal_equal_score() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(CardLetter.NINE, CardSuit.CLOVER));
@@ -42,7 +42,7 @@ public class DealerTest {
 	}
 
 	@Test
-	void dealer_and_player_blackjack() {
+	void dealer_blackjack_player_blackjack() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
@@ -56,7 +56,7 @@ public class DealerTest {
 	}
 
 	@Test
-	void dealer_blackjack() {
+	void dealer_blackjack_player_normal() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
@@ -71,7 +71,7 @@ public class DealerTest {
 	}
 
 	@Test
-	void player_blackjack() {
+	void dealer_normal_player_blackjack() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
@@ -86,7 +86,7 @@ public class DealerTest {
 	}
 
 	@Test
-	void dealer_bust_player_not_dust() {
+	void dealer_bust_player_normal() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
@@ -94,6 +94,21 @@ public class DealerTest {
 		dealer.processCard(new Card(CardLetter.TWO, CardSuit.CLOVER));
 		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
 		player.processCard(new Card(CardLetter.JACK, CardSuit.HEART));
+		boolean win = dealer.isWin(player);
+		boolean draw = dealer.isDraw(player);
+		boolean lose = dealer.isLose(player);
+		assertThat(!win && !draw && lose).isTrue();
+	}
+
+	@Test
+	void dealer_bust_player_blackjack() {
+		Dealer dealer = new Dealer();
+		Player player = new Player(new Name("pobi"));
+		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.TWO, CardSuit.CLOVER));
+		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.ACE, CardSuit.HEART));
 		boolean win = dealer.isWin(player);
 		boolean draw = dealer.isDraw(player);
 		boolean lose = dealer.isLose(player);
@@ -117,11 +132,26 @@ public class DealerTest {
 	}
 
 	@Test
-	void dealer_not_bust_player_bust() {
+	void dealer_normal_player_bust() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
 		dealer.processCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
+		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.JACK, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.TWO, CardSuit.HEART));
+		boolean win = dealer.isWin(player);
+		boolean draw = dealer.isDraw(player);
+		boolean lose = dealer.isLose(player);
+		assertThat(win && !draw && !lose).isTrue();
+	}
+
+	@Test
+	void dealer_blackjack_player_bust() {
+		Dealer dealer = new Dealer();
+		Player player = new Player(new Name("pobi"));
+		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.ACE, CardSuit.CLOVER));
 		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
 		player.processCard(new Card(CardLetter.JACK, CardSuit.HEART));
 		player.processCard(new Card(CardLetter.TWO, CardSuit.HEART));
