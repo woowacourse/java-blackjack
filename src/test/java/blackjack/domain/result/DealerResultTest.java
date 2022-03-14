@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DealerResultTest {
 
     @Test
-    @DisplayName("유저와 비교해서 딜러의 전적이 잘 계산되는지 확인한다.")
+    @DisplayName("딜러가 승리하는 경우 전적이 잘 계산되는지 확인한다.")
     public void calculateDealerWinResultTest() {
         Participants participants = new Participants();
         participants.addDealer();
@@ -22,7 +22,7 @@ public class DealerResultTest {
     }
 
     @Test
-    @DisplayName("유저와 비교해서 딜러의 전적이 잘 계산되는지 확인한다.")
+    @DisplayName("딜러가 패배하는 경우 전적이 잘 계산되는지 확인한다.")
     public void calculateDealerLoseResultTest() {
         Participants participants = new Participants();
         participants.addUsers(new String[]{"스폰지밥", "뚱이", "다람이"});
@@ -33,7 +33,7 @@ public class DealerResultTest {
     }
 
     @Test
-    @DisplayName("유저와 비교해서 딜러의 전적이 잘 계산되는지 확인한다.")
+    @DisplayName("딜러와 무승부인 경우 전적이 잘 계산되는지 확인한다.")
     public void calculateDealerDrawResultTest() {
         Participants participants = new Participants();
         participants.addDealer();

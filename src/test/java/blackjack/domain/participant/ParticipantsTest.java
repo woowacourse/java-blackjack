@@ -65,7 +65,7 @@ public class ParticipantsTest {
 
     @Test
     @DisplayName("딜러가 아닌 유저의 정보만을 가져올 수 있다.")
-    public void getUserResultTest() {
+    public void getUsersTest() {
         Participants participants = new Participants();
         participants.addDealer();
         participants.addUsers(new String[]{"pokemon", "yugioh"});
