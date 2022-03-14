@@ -1,4 +1,4 @@
-package blackjack.domain.game.dto;
+package blackjack.dto;
 
 import blackjack.domain.game.Referee;
 import blackjack.domain.game.ResultCount;

@@ -3,10 +3,10 @@ package blackjack.controller;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.dto.DealerMatchDto;
-import blackjack.domain.game.dto.PlayerMatchDto;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.DealerMatchDto;
+import blackjack.dto.PlayerMatchDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -17,6 +17,7 @@ public class BlackjackController {
         return new BlackjackGame(new CardDeck(), playerNames);
     }
 
+    // TODO: 2 depth 수정하기
     public void givePlayerCards(Player player, BlackjackGame game) {
         while (player.canReceive()) {
             if (!InputView.requestMorePlayerCardInput(player.getName())) {
