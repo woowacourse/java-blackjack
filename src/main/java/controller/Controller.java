@@ -39,9 +39,15 @@ public class Controller {
 		return names.stream().map(Name::getName).collect(Collectors.toList());
 	}
 
-	private List<List<String>> convertCardsToString(List<List<Card>> cardsList) {
+	private List<String> convertCardsToString(List<Card> cards) {
+		return cards.stream()
+			.map(Card::getCardInfo)
+			.collect(Collectors.toList());
+	}
+
+	private List<List<String>> convertCardsListToString(List<List<Card>> cardsList) {
 		return cardsList.stream()
-			.map(cards -> cards.stream().map(Card::getCardInfo).collect(Collectors.toList()))
+			.map(cards -> convertCardsToString(cards))
 			.collect(Collectors.toList());
 	}
 
@@ -66,10 +72,13 @@ public class Controller {
 
 	private void printInitHands(Dealer dealer, Players players) {
 		OutputView.printInitMessage(convertNamesToString(players.getNames()));
-		OutputView.printHand(dealer.getName().getName(), Arrays.asList(dealer.getOneHand().getCardInfo()));
+		OutputView.printHand(
+			dealer.getName().getName(),
+			Arrays.asList(dealer.getOneHand().getCardInfo())
+		);
 
 		List<String> playerNames = convertNamesToString(players.getNames());
-		List<List<String>> playerCards = convertCardsToString(players.getCardsOfAll());
+		List<List<String>> playerCards = this.convertCardsListToString(players.getCardsOfAll());
 
 		for (int i = 0; i < playerNames.size(); i++) {
 			OutputView.printHand(playerNames.get(i), playerCards.get(i));
@@ -81,8 +90,11 @@ public class Controller {
 		Result blackjackResult = new Result(players.getResultAtBlackJack(dealer));
 
 		OutputView.printResultTitle();
-		OutputView.printDealerResult(blackjackResult.getDealerWinCount(), blackjackResult.getDealerDrawCount(),
-			blackjackResult.getDealerLoseCount());
+		OutputView.printDealerResult(
+			blackjackResult.getDealerWinCount(),
+			blackjackResult.getDealerDrawCount(),
+			blackjackResult.getDealerLoseCount()
+		);
 
 		players.getNames().stream()
 			.forEach(name -> OutputView.printPlayerResult(name.getName(),
@@ -115,7 +127,7 @@ public class Controller {
 			OutputView.printMaxScoreMessage();
 			return false;
 		}
-		
+
 		if (players.checkBustByName(name)) {
 			OutputView.printBustMessage();
 			return false;
@@ -131,13 +143,14 @@ public class Controller {
 	}
 
 	private void printHandAndResult(Dealer dealer, Players players) {
-		OutputView.printHandAndScore(dealer.getName().getName(),
-			dealer.getHand().stream().map(Card::getCardInfo)
-				.collect(Collectors.toList()),
-			dealer.getBestScore());
+		OutputView.printHandAndScore(
+			dealer.getName().getName(),
+			convertCardsToString(dealer.getHand()),
+			dealer.getBestScore()
+		);
 
 		List<String> names = convertNamesToString(players.getNames());
-		List<List<String>> cards = convertCardsToString(players.getCardsOfAll());
+		List<List<String>> cards = convertCardsListToString(players.getCardsOfAll());
 		List<Integer> scores = players.getScores();
 
 		for (int i = 0; i < names.size(); i++) {
