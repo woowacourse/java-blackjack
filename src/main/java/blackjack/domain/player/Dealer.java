@@ -8,6 +8,7 @@ import java.util.List;
 public class Dealer extends AbstractPlayer {
     private static final String DEALER_NAME = "딜러";
     private static final int HIT_FLAG_SCORE = 16;
+    private static final int FIRST_CARD_INDEX = 0;
 
     public Dealer() {
         super(DEALER_NAME, new Cards(new ArrayList<>()));
@@ -15,7 +16,7 @@ public class Dealer extends AbstractPlayer {
 
     @Override
     public Cards getShowCards() {
-        return new Cards(List.of(getCards().getCardValues().get(0)));
+        return new Cards(List.of(getCards().getCardValues().get(FIRST_CARD_INDEX)));
     }
 
     @Override

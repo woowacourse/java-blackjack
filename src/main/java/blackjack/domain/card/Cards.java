@@ -1,12 +1,12 @@
 package blackjack.domain.card;
 
+import blackjack.BlackjackGame;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Cards {
     private static final int ACE_GAP = 10;
-    public static final int BLACK_JACK_SCORE = 21;
 
     private final List<Card> cards;
 
@@ -20,7 +20,7 @@ public class Cards {
 
     public int calculateScore() {
         int oneAceScore = calculateOneAceScore();
-        if (hasAce() && oneAceScore + ACE_GAP <= BLACK_JACK_SCORE) {
+        if (hasAce() && oneAceScore + ACE_GAP <= BlackjackGame.BLACK_JACK_SCORE) {
             return oneAceScore + ACE_GAP;
         }
         return oneAceScore;

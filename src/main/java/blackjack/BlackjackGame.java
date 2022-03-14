@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 public class BlackjackGame {
     public static final int INIT_CARD_SIZE = 2;
+    public static final int BLACK_JACK_SCORE = 21;
     private static final String WIN_DRAW_LOSE_RESULT_DELIMITER = " ";
 
     public void run() {
