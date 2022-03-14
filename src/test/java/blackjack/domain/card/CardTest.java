@@ -10,10 +10,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CardTest {
 
     @Test
-    @DisplayName("Card 객체는 미리 52개의 Card 컬렉션을 가지고 있다.")
+    @DisplayName("Card 객체는 52개의 서로 다른 Card를 가지고 있따.")
     void getCards() {
         List<Card> cards = Card.getCards();
-        assertThat(cards.size()).isEqualTo(52);
+        long count = cards.stream()
+            .distinct()
+            .count();
+        assertThat(count).isEqualTo(52);
     }
 
     @Test
