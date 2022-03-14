@@ -23,11 +23,6 @@ public class RentCompany {
 
     public String generateReport() {
         StringBuilder stringBuilder = new StringBuilder();
-
-    /*    cars.stream()
-                .map(car -> car.getData())
-                .map(stringBuilder::append);
-        */
         cars.forEach(car -> stringBuilder.append(car.getData() + NEW_LINE));
 
         return stringBuilder.toString();
