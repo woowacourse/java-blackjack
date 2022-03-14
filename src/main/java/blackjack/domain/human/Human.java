@@ -5,19 +5,29 @@ import blackjack.domain.card.Cards;
 
 public abstract class Human {
 
+    private final Cards cards;
+
+    public Human() {
+        this.cards = Cards.create();
+    }
+
     public abstract String getName();
 
-    public abstract void addCard(Card card);
-
-    public abstract Cards getCards();
-
     public abstract boolean isOneMoreCard();
+
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
+    public Cards getCards() {
+        return cards;
+    }
 
     public int getPoint() {
         return getCards().getPoint();
     }
 
-    public boolean isOverThanMaxPoint(){
+    public boolean isOverThanMaxPoint() {
         return getCards().isOverThanMaxPoint();
     }
 }
