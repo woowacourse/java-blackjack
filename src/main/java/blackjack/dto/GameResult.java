@@ -10,14 +10,10 @@ public class GameResult {
     private final List<Card> cards;
     private final int score;
 
-    private GameResult(final String name, final List<Card> cards, final int score) {
-        this.name = name;
-        this.cards = cards;
-        this.score = score;
-    }
-
-    public static GameResult from(final Participant participant) {
-        return new GameResult(participant.getName(), participant.getCards(), participant.calculateScore());
+    public GameResult(final Participant participant) {
+        this.name = participant.getName();
+        this.cards = participant.getCards();
+        this.score = participant.calculateScore();
     }
 
     public String getName() {

@@ -7,18 +7,17 @@ public class OutComeResult {
     private final Map<String, GameOutcome> playerResults;
     private final Map<GameOutcome, Integer> dealerResult;
 
-    private OutComeResult(final Map<String, GameOutcome> playerResults,
-                          final Map<GameOutcome, Integer> dealerResult) {
+    public OutComeResult(final Map<String, GameOutcome> playerResults) {
         this.playerResults = playerResults;
-        this.dealerResult = dealerResult;
+        this.dealerResult = convertToDealerResult(playerResults);
     }
 
-    public static OutComeResult from(final Map<String, GameOutcome> playerResults) {
+    private Map<GameOutcome, Integer> convertToDealerResult(final Map<String, GameOutcome> playerResults) {
         final Map<GameOutcome, Integer> dealerResult = GameOutcome.createResultFormat();
         for (final GameOutcome gameOutcome : playerResults.values()) {
             dealerResult.merge(gameOutcome.reverse(), 1, Integer::sum);
         }
-        return new OutComeResult(playerResults, dealerResult);
+        return dealerResult;
     }
 
     public Map<String, GameOutcome> getPlayerResults() {

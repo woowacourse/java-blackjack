@@ -12,17 +12,17 @@ public class BlackJackController {
     private final BlackJackGame blackJackGame;
 
     public BlackJackController(final List<String> playerNames) {
-        blackJackGame = BlackJackGame.init(playerNames);
+        blackJackGame = new BlackJackGame(playerNames);
     }
 
     public CurrentTurnParticipant getInitDealerInfo() {
-        return CurrentTurnParticipant.from(blackJackGame.getDealer());
+        return new CurrentTurnParticipant(blackJackGame.getDealer());
     }
 
     public List<CurrentTurnParticipant> getInitPlayerInfo() {
         return blackJackGame.getInitPlayers()
                 .stream()
-                .map(CurrentTurnParticipant::from)
+                .map(CurrentTurnParticipant::new)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -31,15 +31,15 @@ public class BlackJackController {
     }
 
     public CurrentTurnParticipant getCurrentTurnPlayerInfo() {
-        return CurrentTurnParticipant.from(blackJackGame.getCurrentTurnPlayer());
+        return new CurrentTurnParticipant(blackJackGame.getCurrentTurnPlayer());
     }
 
     public CurrentTurnParticipant drawNextPlayer() {
-        return CurrentTurnParticipant.from(blackJackGame.drawNextPlayer());
+        return new CurrentTurnParticipant(blackJackGame.drawNextPlayer());
     }
 
     public CurrentTurnParticipant drawCurrentPlayer() {
-        return CurrentTurnParticipant.from(blackJackGame.drawCurrentPlayer());
+        return new CurrentTurnParticipant(blackJackGame.drawCurrentPlayer());
     }
 
     public boolean isDealerTurnEnd() {
@@ -57,7 +57,7 @@ public class BlackJackController {
     public List<GameResult> getPlayerResultInfos() {
         final List<Participant> participants = blackJackGame.getParticipants();
         return participants.stream()
-                .map(GameResult::from)
+                .map(GameResult::new)
                 .collect(Collectors.toUnmodifiableList());
     }
 

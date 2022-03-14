@@ -15,7 +15,7 @@ class ParticipantTest {
     @NullSource
     @DisplayName("플레이어의 이름에 null이 들어오면 예외를 발생시킨다.")
     void createExceptionByNull(String input) {
-        assertThatThrownBy(() -> Player.newInstance(input, new ArrayList<>()))
+        assertThatThrownBy(() -> new Player(input, new ArrayList<>()))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("이름에는 null이 들어올 수 없습니다.");
     }
@@ -24,7 +24,7 @@ class ParticipantTest {
     @ValueSource(strings = {"", " "})
     @DisplayName("플레이어의 이름에 공백이 들어오면 예외를 발생시킨다.")
     void createExceptionByEmpty(String input) {
-        assertThatThrownBy(() -> Player.newInstance(input, new ArrayList<>()))
+        assertThatThrownBy(() -> new Player(input, new ArrayList<>()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름에는 공백이 들어올 수 없습니다.");
     }
@@ -32,7 +32,7 @@ class ParticipantTest {
     @Test
     @DisplayName("턴이 종료되지 않은 경우에 카드의 합을 계산하려하면 예외를 발생시킨다.")
     void calculateResultScoreExceptionByNotEndTurn() {
-        final Player player = Player.newInstance("user", new ArrayList<>());
+        final Player player = new Player("user", new ArrayList<>());
         assertThatThrownBy(player::calculateScore)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("턴이 종료되지 않아 카드의 합을 반환할 수 없습니다.");

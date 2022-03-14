@@ -9,16 +9,9 @@ public class CurrentTurnParticipant {
     private final String name;
     private final List<Card> cards;
 
-    private CurrentTurnParticipant(final String name, final List<Card> cards) {
-        this.name = name;
-        this.cards = cards;
-    }
-
-    public static CurrentTurnParticipant from(final Participant participant) {
-        return new CurrentTurnParticipant(
-                participant.getName(),
-                participant.getInitCards()
-        );
+    public CurrentTurnParticipant(final Participant participant) {
+        this.name = participant.getName();
+        this.cards = participant.getInitCards();
     }
 
     public String getName() {

@@ -16,7 +16,7 @@ class OutComeResultTest {
     @DisplayName("딜러의 승무패 결과를 반환한다.")
     void getDealerResult() {
         final Map<String, GameOutcome> playerResults = Map.of("a", WIN, "b", WIN);
-        final OutComeResult outComeResult = OutComeResult.from(playerResults);
+        final OutComeResult outComeResult = new OutComeResult(playerResults);
         assertThat(outComeResult.getDealerResult()).contains(entry(LOSE, 2), entry(WIN, 0), entry(DRAW, 0));
     }
 }

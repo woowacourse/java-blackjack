@@ -16,22 +16,15 @@ public class BlackJackGame {
     private final Dealer dealer;
     private final Players players;
 
-    private BlackJackGame(final CardDeck cardDeck, final Dealer dealer, final Players players) {
-        this.cardDeck = cardDeck;
-        this.dealer = dealer;
-        this.players = players;
+    public BlackJackGame(final List<String> playerNames) {
+        this.cardDeck = CardDeck.generate();
+        this.dealer = new Dealer(cardDeck.provideInitCards());
+        this.players = new Players(initPlayers(playerNames, cardDeck));
     }
 
-    public static BlackJackGame init(final List<String> playerNames) {
-        final CardDeck cardDeck = CardDeck.generate();
-        final Dealer dealer = new Dealer(cardDeck.provideInitCards());
-        final List<Player> players = initPlayers(playerNames, cardDeck);
-        return new BlackJackGame(cardDeck, dealer, new Players(players));
-    }
-
-    private static List<Player> initPlayers(final List<String> playerNames, final CardDeck cardDeck) {
+    private List<Player> initPlayers(final List<String> playerNames, final CardDeck cardDeck) {
         return playerNames.stream()
-                .map(name -> Player.newInstance(name, cardDeck.provideInitCards()))
+                .map(name -> new Player(name, cardDeck.provideInitCards()))
                 .collect(Collectors.toList());
     }
 
@@ -84,6 +77,6 @@ public class BlackJackGame {
 
     public OutComeResult getWinningResult() {
         final Map<String, GameOutcome> playerResults = players.calculateAllResults(dealer);
-        return OutComeResult.from(playerResults);
+        return new OutComeResult(playerResults);
     }
 }

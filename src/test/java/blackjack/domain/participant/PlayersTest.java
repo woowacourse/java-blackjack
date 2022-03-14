@@ -21,8 +21,8 @@ class PlayersTest {
     @Test
     @DisplayName("중복된 이름 값들로 객체를 생성하려 하면 예외를 발생시킨다.")
     void createExceptionByDuplication() {
-        final Player first = Player.newInstance("a", new ArrayList<>());
-        final Player second = Player.newInstance("a", new ArrayList<>());
+        final Player first = new Player("a", new ArrayList<>());
+        final Player second = new Player("a", new ArrayList<>());
         final List<Player> players = Arrays.asList(first, second);
 
         assertThatThrownBy(() -> new Players(players))
@@ -34,7 +34,7 @@ class PlayersTest {
     @DisplayName("현재 턴의 플레이어가 버스트 상태가 되면 다음 플레이어로 턴을 넘긴다.")
     void drawCurrentPlayerIsBust() {
         final Player player
-                = Player.newInstance("user", Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
+                = new Player("user", Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
         final Players players = new Players(Collections.singletonList(player));
         players.drawCurrentPlayer(Card.of(SPADE, JACK));
         assertTrue(players.isAllTurnEnd());
@@ -44,7 +44,7 @@ class PlayersTest {
     @DisplayName("모든 플레이어의 턴이 종료되었는데 현재 플레이어에게 카드를 지급하려하면 예외를 발생시킨다.")
     void drawCurrentPlayerExceptionByEndAllTurn() {
         final Player player
-                = Player.newInstance("user", Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
+                = new Player("user", Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
         final Players players = new Players(Collections.singletonList(player));
         players.drawCurrentPlayer(Card.of(SPADE, JACK));
 
@@ -57,7 +57,7 @@ class PlayersTest {
     @DisplayName("모든 턴이 종료되었을 때 다음 플레이어로 턴을 넘기려하면 예외를 발생시킨다.")
     void turnToNextPlayerExceptionByEndAllTurn() {
         final Player player
-                = Player.newInstance("user", Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
+                = new Player("user", Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
         final Players players = new Players(Collections.singletonList(player));
         players.turnToNextPlayer();
 
@@ -70,7 +70,7 @@ class PlayersTest {
     @DisplayName("모든 턴이 종료되었을 때 현재 플레이어 정보를 반환하려하면 예외가 발생한다.")
     void getCurrentTurnPlayerInfoExceptionByEndAllTurn() {
         final Player player
-                = Player.newInstance("user", Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
+                = new Player("user", Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
         final Players players = new Players(Collections.singletonList(player));
         players.turnToNextPlayer();
 
