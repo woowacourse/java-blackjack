@@ -11,7 +11,10 @@ public class DealerTest {
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(CardLetter.NINE, CardSuit.CLOVER));
 		player.processCard(new Card(CardLetter.FIVE, CardSuit.CLOVER));
-		assertThat(dealer.isWin(player)).isTrue();
+		boolean win = dealer.isWin(player);
+		boolean draw = dealer.isDraw(player);
+		boolean lose = dealer.isLose(player);
+		assertThat(win && !draw && !lose).isTrue();
 	}
 
 	@Test
@@ -20,7 +23,10 @@ public class DealerTest {
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(CardLetter.NINE, CardSuit.CLOVER));
 		player.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
-		assertThat(dealer.isLose(player)).isTrue();
+		boolean win = dealer.isWin(player);
+		boolean draw = dealer.isDraw(player);
+		boolean lose = dealer.isLose(player);
+		assertThat(!win & !draw & lose).isTrue();
 	}
 
 	@Test
@@ -29,7 +35,10 @@ public class DealerTest {
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(CardLetter.NINE, CardSuit.CLOVER));
 		player.processCard(new Card(CardLetter.NINE, CardSuit.HEART));
-		assertThat(dealer.isDraw(player)).isTrue();
+		boolean win = dealer.isWin(player);
+		boolean draw = dealer.isDraw(player);
+		boolean lose = dealer.isLose(player);
+		assertThat(!win && draw && !lose).isTrue();
 	}
 
 	@Test
@@ -40,7 +49,10 @@ public class DealerTest {
 		dealer.processCard(new Card(CardLetter.ACE, CardSuit.CLOVER));
 		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
 		player.processCard(new Card(CardLetter.ACE, CardSuit.HEART));
-		assertThat(dealer.isDraw(player)).isTrue();
+		boolean win = dealer.isWin(player);
+		boolean draw = dealer.isDraw(player);
+		boolean lose = dealer.isLose(player);
+		assertThat(!win && draw && !lose).isTrue();
 	}
 
 	@Test
@@ -50,8 +62,12 @@ public class DealerTest {
 		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
 		dealer.processCard(new Card(CardLetter.ACE, CardSuit.CLOVER));
 		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
-		player.processCard(new Card(CardLetter.JACK, CardSuit.HEART));
-		assertThat(dealer.isWin(player)).isTrue();
+		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.ACE, CardSuit.HEART));
+		boolean win = dealer.isWin(player);
+		boolean draw = dealer.isDraw(player);
+		boolean lose = dealer.isLose(player);
+		assertThat(win && !draw && !lose).isTrue();
 	}
 
 	@Test
@@ -60,13 +76,17 @@ public class DealerTest {
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
 		dealer.processCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.ACE, CardSuit.CLOVER));
 		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
 		player.processCard(new Card(CardLetter.ACE, CardSuit.HEART));
-		assertThat(dealer.isLose(player)).isTrue();
+		boolean win = dealer.isWin(player);
+		boolean draw = dealer.isDraw(player);
+		boolean lose = dealer.isLose(player);
+		assertThat(!win && !draw && lose).isTrue();
 	}
 
 	@Test
-	void dealer_bust() {
+	void dealer_bust_player_not_dust() {
 		Dealer dealer = new Dealer();
 		Player player = new Player(new Name("pobi"));
 		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
@@ -74,6 +94,40 @@ public class DealerTest {
 		dealer.processCard(new Card(CardLetter.TWO, CardSuit.CLOVER));
 		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
 		player.processCard(new Card(CardLetter.JACK, CardSuit.HEART));
-		assertThat(dealer.isLose(player)).isTrue();
+		boolean win = dealer.isWin(player);
+		boolean draw = dealer.isDraw(player);
+		boolean lose = dealer.isLose(player);
+		assertThat(!win && !draw && lose).isTrue();
+	}
+
+	@Test
+	void dealer_bust_player_bust() {
+		Dealer dealer = new Dealer();
+		Player player = new Player(new Name("pobi"));
+		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.TWO, CardSuit.CLOVER));
+		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.JACK, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.TWO, CardSuit.HEART));
+		boolean win = dealer.isWin(player);
+		boolean draw = dealer.isDraw(player);
+		boolean lose = dealer.isLose(player);
+		assertThat(win && !draw && !lose).isTrue();
+	}
+
+	@Test
+	void dealer_not_bust_player_bust() {
+		Dealer dealer = new Dealer();
+		Player player = new Player(new Name("pobi"));
+		dealer.processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
+		dealer.processCard(new Card(CardLetter.JACK, CardSuit.CLOVER));
+		player.processCard(new Card(CardLetter.TEN, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.JACK, CardSuit.HEART));
+		player.processCard(new Card(CardLetter.TWO, CardSuit.HEART));
+		boolean win = dealer.isWin(player);
+		boolean draw = dealer.isDraw(player);
+		boolean lose = dealer.isLose(player);
+		assertThat(win && !draw && !lose).isTrue();
 	}
 }

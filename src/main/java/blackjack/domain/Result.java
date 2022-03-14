@@ -15,13 +15,9 @@ public class Result {
 	}
 
 	public Map<Player, ResultType> getResult(Players players, Dealer dealer) {
-		insertInGameResult(players.getBustPlayers(), ResultType.LOSE);
-		insertInGameResult(players.getNotBustPlayers().stream().filter(dealer::isWin).collect(Collectors.toList()),
-			ResultType.LOSE);
-		insertInGameResult(players.getNotBustPlayers().stream().filter(dealer::isDraw).collect(Collectors.toList()),
-			ResultType.DRAW);
-		insertInGameResult(players.getNotBustPlayers().stream().filter(dealer::isLose).collect(Collectors.toList()),
-			ResultType.WIN);
+		players.getPlayers().stream().filter(dealer::isWin).forEach(player -> gameResult.put(player, ResultType.LOSE));
+		players.getPlayers().stream().filter(dealer::isDraw).forEach(player -> gameResult.put(player, ResultType.DRAW));
+		players.getPlayers().stream().filter(dealer::isLose).forEach(player -> gameResult.put(player, ResultType.WIN));
 		return gameResult;
 	}
 

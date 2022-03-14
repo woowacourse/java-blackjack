@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -20,18 +21,6 @@ public class Players {
 
 	public void addCardToAllPlayers(int times) {
 		players.forEach(player -> player.addCards(times));
-	}
-
-	public List<Player> getBustPlayers() {
-		return players.stream()
-			.filter(Gamer::isBust)
-			.collect(Collectors.toList());
-	}
-
-	public List<Player> getNotBustPlayers() {
-		return players.stream()
-			.filter(player -> !player.isBust())
-			.collect(Collectors.toList());
 	}
 
 	public boolean isAllPlayersBlackJackOrBust() {

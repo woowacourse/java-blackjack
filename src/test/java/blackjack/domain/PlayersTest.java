@@ -19,34 +19,6 @@ public class PlayersTest {
 	}
 
 	@Test
-	void check_busted_player_count() {
-		String lines = "pobi,jason,alpha";
-		List<String> strings = Arrays.asList(lines.split(","));
-		Players players = new Players(new Names(strings));
-		players.getPlayers().get(0).processCard(new Card(CardLetter.TEN, CardSuit.HEART));
-		players.getPlayers().get(0).processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
-		players.getPlayers().get(0).processCard(new Card(CardLetter.TWO, CardSuit.HEART));
-		players.getPlayers().get(1).processCard(new Card(CardLetter.TEN, CardSuit.SPADE));
-		players.getPlayers().get(1).processCard(new Card(CardLetter.TEN, CardSuit.DIAMOND));
-		players.getPlayers().get(1).processCard(new Card(CardLetter.ACE, CardSuit.HEART));
-		assertThat(players.getBustPlayers().size()).isEqualTo(1);
-	}
-
-	@Test
-	void check_not_busted_player_count() {
-		String lines = "pobi,jason,alpha";
-		List<String> strings = Arrays.asList(lines.split(","));
-		Players players = new Players(new Names(strings));
-		players.getPlayers().get(0).processCard(new Card(CardLetter.TEN, CardSuit.HEART));
-		players.getPlayers().get(0).processCard(new Card(CardLetter.TEN, CardSuit.CLOVER));
-		players.getPlayers().get(0).processCard(new Card(CardLetter.TWO, CardSuit.HEART));
-		players.getPlayers().get(1).processCard(new Card(CardLetter.TEN, CardSuit.SPADE));
-		players.getPlayers().get(1).processCard(new Card(CardLetter.TEN, CardSuit.DIAMOND));
-		players.getPlayers().get(1).processCard(new Card(CardLetter.ACE, CardSuit.HEART));
-		assertThat(players.getNotBustPlayers().size()).isEqualTo(2);
-	}
-
-	@Test
 	void check_all_player_blackjack_or_bust() {
 		String lines = "pobi,jason";
 		List<String> strings = Arrays.asList(lines.split(","));
