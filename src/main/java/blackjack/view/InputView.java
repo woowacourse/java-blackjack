@@ -34,9 +34,9 @@ public class InputView {
     public static int requestBettingMoney(final String name) {
         System.out.printf(REQUEST_PLAYER_BETTING_MESSAGE, name);
         try {
-            return scanner.nextInt();
-        } catch (InputMismatchException e) {
-            throw new InputMismatchException ("[ERROR] 베팅금은 숫자만 입력 가능합니다.");
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException ("[ERROR] 베팅금은 숫자만 입력 가능합니다.");
         }
     }
 

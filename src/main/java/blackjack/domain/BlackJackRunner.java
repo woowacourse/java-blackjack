@@ -3,6 +3,7 @@ package blackjack.domain;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.domain.card.Deck;
+import blackjack.domain.player.Bet;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
@@ -45,8 +46,17 @@ public class BlackJackRunner {
     private static Gamers toGamers() {
         List<String> names = InputView.requestPlayerName();
         return new Gamers(names.stream()
-                .map(Gamer::new)
+                .map(name -> new Gamer(name, toBet(name)))
                 .collect(toList()));
+    }
+
+    private static Bet toBet(final String name) {
+        try {
+            return new Bet(InputView.requestBettingMoney(name));
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            return toBet(name);
+        }
     }
 
     private static void dealsCard() {

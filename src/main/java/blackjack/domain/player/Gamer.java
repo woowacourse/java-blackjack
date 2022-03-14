@@ -14,12 +14,14 @@ public class Gamer extends Player {
     private static final int GAMER_OPEN_CARD_NUMBER = 2;
 
     private final String name;
+    private final Bet bet;
 
-    public Gamer(final String name) {
+    public Gamer(final String name, final Bet bet) {
         super(new Cards());
         checkEmptyName(name);
         checkBannedName(name);
         this.name = name;
+        this.bet = bet;
     }
 
     private void checkEmptyName(final String name) {

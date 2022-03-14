@@ -18,7 +18,9 @@ public class GamersTest {
     @Test
     @DisplayName("중복된 게이머 이름으로 에러가 발생한다.")
     void duplicateGamerNameException() {
-        assertThatThrownBy(() -> new Gamers(List.of(new Gamer("huni"), new Gamer("huni"))))
+        assertThatThrownBy(() ->
+                new Gamers(List.of(new Gamer("huni", new Bet(1000)),
+                new Gamer("huni", new Bet(1000)))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 중복된 이름은 입력할 수 없습니다.");
     }
@@ -26,7 +28,7 @@ public class GamersTest {
     @Test
     @DisplayName("딜러와 결과를 비교한다")
     void compareResultWithDealer() {
-        Gamer gamer = new Gamer("huni");
+        Gamer gamer = new Gamer("huni", new Bet(1000));
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         Gamers gamers = new Gamers(List.of(gamer));
 
