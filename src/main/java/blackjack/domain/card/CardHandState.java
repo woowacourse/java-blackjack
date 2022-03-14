@@ -1,18 +1,28 @@
 package blackjack.domain.card;
 
+import java.util.function.Predicate;
+
 public enum CardHandState {
 
-    CAN_HIT, STAY, MAX_SCORE, BLACKJACK, BUST;
+    CAN_HIT, STAY, BLACKJACK, BUST;
 
-    public static CardHandState of(CardBundle cards) {
+    public static CardHandState ofPlayer(CardBundle cards) {
+        return of(cards, CardBundle::isBlackjackScore);
+    }
+
+    public static CardHandState ofDealer(CardBundle cards) {
+        return of(cards, CardBundle::isDealerFinished);
+    }
+
+    private static CardHandState of(CardBundle cards, Predicate<CardBundle> stayStrategy) {
         if (cards.isBust()) {
             return BUST;
         }
         if (cards.isBlackjack()) {
             return BLACKJACK;
         }
-        if (cards.isBlackjackScore()) {
-            return MAX_SCORE;
+        if (stayStrategy.test(cards)) {
+            return STAY;
         }
         return CAN_HIT;
     }
@@ -21,8 +31,8 @@ public enum CardHandState {
         return this != CAN_HIT;
     }
 
-    public boolean isMaxScore() {
-        return this == MAX_SCORE;
+    public boolean isStay() {
+        return this == STAY;
     }
 
     public boolean isBlackjack() {

@@ -78,6 +78,10 @@ public class CardBundle {
         return score.isBustScore();
     }
 
+    public boolean isDealerFinished() {
+        return score.isDealerFinished();
+    }
+
     public List<Card> getCards() {
         return cards;
     }

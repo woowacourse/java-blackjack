@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import blackjack.domain.game.Score;
+import blackjack.strategy.CardHandStateStrategy;
 import java.util.List;
 
 public class CardHand {
@@ -10,19 +11,19 @@ public class CardHand {
     private CardBundle cardBundle;
     private CardHandState state;
 
-    private CardHand(final CardBundle cardBundle) {
+    private CardHand(final CardBundle cardBundle, CardHandStateStrategy stateStrategy) {
         this.cardBundle = cardBundle;
-        updateState();
+        this.state = stateStrategy.apply(cardBundle);
     }
 
-    public static CardHand of(final CardBundle cardBundle) {
-        return new CardHand(cardBundle);
+    public static CardHand of(final CardBundle cardBundle, final CardHandStateStrategy stateStrategy) {
+        return new CardHand(cardBundle, stateStrategy);
     }
 
-    public void hit(Card card) {
+    public void hit(Card card, CardHandStateStrategy stateStrategy) {
         validateNotFinished();
         this.cardBundle = cardBundle.addAndGenerate(card);
-        updateState();
+        this.state = stateStrategy.apply(cardBundle);
     }
 
     public void stay() {
@@ -48,10 +49,6 @@ public class CardHand {
 
     public boolean isBust() {
         return state.isBust();
-    }
-
-    private void updateState() {
-        this.state = CardHandState.of(cardBundle);
     }
 
     private void validateNotFinished() {

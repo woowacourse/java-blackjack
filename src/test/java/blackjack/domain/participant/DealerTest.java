@@ -76,7 +76,8 @@ public class DealerTest {
     @DisplayName("Dealer 인스턴스에는 CardBundle의 isBust 메서드가 구현되어있다.")
     @Test
     void isBust_implementationTest() {
-        dealer.receiveCard(CLOVER10);
+        CardBundle cardBundle = generateCardBundleOf(CLOVER6, CLOVER10);
+        dealer = Dealer.of(cardBundle);
         dealer.receiveCard(CLOVER_KING);
 
         boolean actual = dealer.isBust();

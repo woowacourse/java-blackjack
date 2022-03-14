@@ -11,11 +11,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import blackjack.domain.game.Score;
+import blackjack.strategy.CardHandStateStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class CardHandTest {
+
+    private final CardHandStateStrategy playerStateStrategy = CardHandState::ofPlayer;
+    private final CardHandStateStrategy dealerStateStrategy = CardHandState::ofDealer;
 
     @DisplayName("최초로 인스턴스 생성시, 자동으로 CAN_HIT 혹은 BLACKJACK 중 하나의 값으로 state가 초기화된다.")
     @Nested
@@ -24,7 +28,7 @@ public class CardHandTest {
         @DisplayName("초기 패가 21 미만인 경우 isFinished 메서드 호출시 false가 반환된다.")
         @Test
         void init_canHitStateOnUnder21() {
-            CardHand cardHand = CardHand.of(getCardBundleOfTwenty());
+            CardHand cardHand = CardHand.of(getCardBundleOfTwenty(), playerStateStrategy);
 
             boolean actual = cardHand.isFinished();
 
@@ -34,7 +38,7 @@ public class CardHandTest {
         @DisplayName("초기 패가 블랙잭인 경우 isBlackjack 메서드 호출시 true가 반환된다.")
         @Test
         void init_blackjackOnBlackjack() {
-            CardHand cardHand = CardHand.of(getCardBundleOfBlackjack());
+            CardHand cardHand = CardHand.of(getCardBundleOfBlackjack(), playerStateStrategy);
 
             boolean actual = cardHand.isBlackjack();
 
@@ -49,9 +53,9 @@ public class CardHandTest {
         @DisplayName("21 미만의 패를 지닌 경우, hit 메서드를 호출할 수 있다.")
         @Test
         void hit_canHitUnder21_becomesBust() {
-            CardHand cardHand = CardHand.of(getCardBundleOfTwenty());
+            CardHand cardHand = CardHand.of(getCardBundleOfTwenty(), playerStateStrategy);
 
-            cardHand.hit(CLOVER2);
+            cardHand.hit(CLOVER2, playerStateStrategy);
 
             assertThat(cardHand.getScore()).isEqualTo(Score.valueOf(22));
             assertThat(cardHand.isFinished()).isTrue();
@@ -61,23 +65,23 @@ public class CardHandTest {
         @DisplayName("21의 패를 지닌 경우, hit 메서드를 호출하려는 경우 예외가 발생한다.")
         @Test
         void hit_throwsExceptionOn21() {
-            CardHand cardHand = CardHand.of(getCardBundleOfNonBlackjackTwentyOne());
+            CardHand cardHand = CardHand.of(getCardBundleOfNonBlackjackTwentyOne(), playerStateStrategy);
 
             assertThat(cardHand.isFinished()).isTrue();
             assertThatExceptionOfType(IllegalArgumentException.class)
-                    .isThrownBy(() -> cardHand.hit(CLOVER2))
+                    .isThrownBy(() -> cardHand.hit(CLOVER2, playerStateStrategy))
                     .withMessage("이미 카드 패가 확정된 참여자입니다.");
         }
 
         @DisplayName("21의 패를 지닌 경우, hit 메서드를 호출하려는 경우 예외가 발생한다.")
         @Test
         void hit_throwsExceptionOnBlackjack() {
-            CardHand cardHand = CardHand.of(getCardBundleOfBlackjack());
+            CardHand cardHand = CardHand.of(getCardBundleOfBlackjack(), playerStateStrategy);
 
             assertThat(cardHand.isFinished()).isTrue();
             assertThat(cardHand.isBlackjack()).isTrue();
             assertThatExceptionOfType(IllegalArgumentException.class)
-                    .isThrownBy(() -> cardHand.hit(CLOVER2))
+                    .isThrownBy(() -> cardHand.hit(CLOVER2, playerStateStrategy))
                     .withMessage("이미 카드 패가 확정된 참여자입니다.");
         }
 
@@ -85,11 +89,11 @@ public class CardHandTest {
         @DisplayName("패가 21 미만인 동안에는 hit 메서드를 반복적으로 호출할 수 있다.")
         @Test
         void hit_canHitAgainUnder21() {
-            CardHand cardHand = CardHand.of(getCardBundleOfTen());
+            CardHand cardHand = CardHand.of(getCardBundleOfTen(), playerStateStrategy);
 
-            cardHand.hit(CLOVER2);
-            cardHand.hit(CLOVER3);
-            cardHand.hit(CLOVER5);
+            cardHand.hit(CLOVER2, playerStateStrategy);
+            cardHand.hit(CLOVER3, playerStateStrategy);
+            cardHand.hit(CLOVER5, playerStateStrategy);
 
             assertThat(cardHand.getScore()).isEqualTo(Score.valueOf(20));
             assertThat(cardHand.isFinished()).isFalse();
@@ -103,7 +107,7 @@ public class CardHandTest {
         @DisplayName("21 미만의 패를 지닌 경우, stay 메서드를 호출할 수 있다.")
         @Test
         void stay_canHitUnder21_becomesStay() {
-            CardHand cardHand = CardHand.of(getCardBundleOfTwenty());
+            CardHand cardHand = CardHand.of(getCardBundleOfTwenty(), playerStateStrategy);
 
             cardHand.stay();
 
@@ -116,7 +120,7 @@ public class CardHandTest {
         @DisplayName("이미 21 이상의 패를 지닌 상태에서 stay 메서드를 호출하려는 경우 예외가 발생한다.")
         @Test
         void stay_throwsExceptionOnAlreadyFinished21() {
-            CardHand cardHand = CardHand.of(getCardBundleOfNonBlackjackTwentyOne());
+            CardHand cardHand = CardHand.of(getCardBundleOfNonBlackjackTwentyOne(), playerStateStrategy);
 
             assertThat(cardHand.isFinished()).isTrue();
             assertThatExceptionOfType(IllegalArgumentException.class)
@@ -127,7 +131,7 @@ public class CardHandTest {
         @DisplayName("21 미만의 패를 지니더라도 stay 메서드를 여러 번 호출하는 경우 예외가 발생한다.")
         @Test
         void hit_throwsExceptionOnAlreadyStayState() {
-            CardHand cardHand = CardHand.of(getCardBundleOfTwenty());
+            CardHand cardHand = CardHand.of(getCardBundleOfTwenty(), playerStateStrategy);
 
             cardHand.stay();
 

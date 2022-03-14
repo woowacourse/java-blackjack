@@ -2,6 +2,8 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.card.CardHandState;
+import blackjack.strategy.CardHandStateStrategy;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,11 +12,12 @@ public class Player extends Participant {
     private static final int INITIAL_PLAYER_OPEN_CARDS_COUNT = 2;
     private static final String BLACK_NAME_INPUT_EXCEPTION_MESSAGE = "플레이어는 이름을 지녀야 합니다.";
     private static final String INVALID_PLAYER_NAME_EXCEPTION_MESSAGE = "플레이어의 이름은 딜러가 될 수 없습니다.";
+    private static final CardHandStateStrategy STATE_UPDATE_STRATEGY = CardHandState::ofPlayer;
 
     private final String name;
 
     private Player(final String name, final CardBundle cardBundle) {
-        super(cardBundle);
+        super(cardBundle, STATE_UPDATE_STRATEGY);
         this.name = name;
     }
 
@@ -41,8 +44,8 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean canDraw() {
-        return !isBust() && !cardBundle.isBlackjackScore();
+    public void receiveCard(Card card) {
+        cardHand.hit(card, STATE_UPDATE_STRATEGY);
     }
 
     @Override
@@ -52,7 +55,7 @@ public class Player extends Participant {
 
     @Override
     public List<Card> getInitialOpenCards() {
-       return cardBundle.getCards()
+       return cardHand.getCards()
                .stream()
                .limit(INITIAL_PLAYER_OPEN_CARDS_COUNT)
                .collect(Collectors.toUnmodifiableList());
@@ -61,7 +64,7 @@ public class Player extends Participant {
     @Override
     public String toString() {
         return "Player{" +
-                "cardBundle=" + cardBundle +
+                "cardHand=" + cardHand +
                 ", name='" + name + '\'' +
                 '}';
     }

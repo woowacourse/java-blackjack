@@ -21,23 +21,23 @@ public class CardHandleStateTest {
         @DisplayName("21 이하의 패는 CAN_HIT을 반환한다.")
         @Test
         void of_scoreUnder21ReturnsCanHit() {
-            CardHandState actual = CardHandState.of(getCardBundleOfTwenty());
+            CardHandState actual = CardHandState.ofPlayer(getCardBundleOfTwenty());
 
             assertThat(actual).isEqualTo(CardHandState.CAN_HIT);
         }
 
-        @DisplayName("블랙잭이 아닌 21의 패는 MAX_SCORE를 반환한다.")
+        @DisplayName("블랙잭이 아닌 21의 패는 STAY를 반환한다.")
         @Test
         void of_scoreOfNonBlackjack21ReturnsMaxScore() {
-            CardHandState actual = CardHandState.of(getCardBundleOfNonBlackjackTwentyOne());
+            CardHandState actual = CardHandState.ofPlayer(getCardBundleOfNonBlackjackTwentyOne());
 
-            assertThat(actual).isEqualTo(CardHandState.MAX_SCORE);
+            assertThat(actual).isEqualTo(CardHandState.STAY);
         }
 
         @DisplayName("블랙잭인 패는 BLACKJACK을 반환한다.")
         @Test
         void of_blackjackReturnsBlackjack() {
-            CardHandState actual = CardHandState.of(getCardBundleOfBlackjack());
+            CardHandState actual = CardHandState.ofPlayer(getCardBundleOfBlackjack());
 
             assertThat(actual).isEqualTo(CardHandState.BLACKJACK);
         }
@@ -45,7 +45,7 @@ public class CardHandleStateTest {
         @DisplayName("21을 초과하는 패는 BUST를 반환한다.")
         @Test
         void of_scoreOver21ReturnsBust() {
-            CardHandState actual = CardHandState.of(getCardBundleOfBust());
+            CardHandState actual = CardHandState.ofPlayer(getCardBundleOfBust());
 
             assertThat(actual).isEqualTo(CardHandState.BUST);
         }
@@ -53,7 +53,7 @@ public class CardHandleStateTest {
 
     @DisplayName("CAN_HIT 이외의 상태에서 isFinished 메서드를 호출하면 true를 반환한다.")
     @ParameterizedTest(name = "[{index}] {0} : false")
-    @ValueSource(strings = {"STAY", "MAX_SCORE", "BLACKJACK", "BUST"})
+    @ValueSource(strings = {"STAY", "BLACKJACK", "BUST"})
     void isFinished_returnFalseIfNotCanHit(String finishedState) {
         boolean actual = CardHandState.valueOf(finishedState)
                 .isFinished();
@@ -61,10 +61,10 @@ public class CardHandleStateTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("MAX_SCORE에서 isMaxScore 메서드를 호출하면 true를 반환한다.")
+    @DisplayName("STAY에서 isStay 메서드를 호출하면 true를 반환한다.")
     @Test
-    void isMaxScore() {
-        boolean actual = CardHandState.MAX_SCORE.isMaxScore();
+    void isStay() {
+        boolean actual = CardHandState.STAY.isStay();
 
         assertThat(actual).isTrue();
     }

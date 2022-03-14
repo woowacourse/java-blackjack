@@ -2,7 +2,8 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import blackjack.domain.game.Score;
+import blackjack.domain.card.CardHandState;
+import blackjack.strategy.CardHandStateStrategy;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,9 +11,10 @@ public class Dealer extends Participant {
 
     public static final String UNIQUE_NAME = "딜러";
     private static final int INITIAL_DEALER_OPEN_CARDS_COUNT = 1;
+    private static final CardHandStateStrategy STATE_UPDATE_STRATEGY = CardHandState::ofDealer;
 
     private Dealer(final CardBundle cardBundle) {
-        super(cardBundle);
+        super(cardBundle, STATE_UPDATE_STRATEGY);
     }
 
     public static Dealer of(final CardBundle cardBundle) {
@@ -20,9 +22,8 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean canDraw() {
-        Score score = cardBundle.getScore();
-        return score.toInt() <= Score.DEALER_EXTRA_CARD_LIMIT;
+    public void receiveCard(Card card) {
+        cardHand.hit(card, STATE_UPDATE_STRATEGY);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> getInitialOpenCards() {
-        return cardBundle.getCards()
+        return cardHand.getCards()
                 .stream()
                 .limit(INITIAL_DEALER_OPEN_CARDS_COUNT)
                 .collect(Collectors.toUnmodifiableList());
@@ -40,6 +41,6 @@ public class Dealer extends Participant {
 
     @Override
     public String toString() {
-        return "Dealer{" + "cardBundle=" + cardBundle + '}';
+        return "Dealer{" + "cardHand=" + cardHand + '}';
     }
 }

@@ -2,34 +2,35 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
+import blackjack.domain.card.CardHand;
 import blackjack.domain.game.Score;
-import java.util.Collections;
+import blackjack.strategy.CardHandStateStrategy;
 import java.util.List;
 
 public abstract class Participant {
 
-    protected CardBundle cardBundle;
+    protected CardHand cardHand;
 
-    protected Participant(final CardBundle cardBundle) {
-        this.cardBundle = cardBundle;
+    protected Participant(final CardBundle cardBundle, final CardHandStateStrategy stateStrategy) {
+        this.cardHand = CardHand.of(cardBundle, stateStrategy);
     }
 
-    public void receiveCard(Card card) {
-        cardBundle = cardBundle.addAndGenerate(card);
-    }
+    public abstract void receiveCard(Card card);
 
-    public abstract boolean canDraw();
+    public boolean canDraw() {
+        return !cardHand.isFinished();
+    }
 
     public Score getCurrentScore() {
-        return cardBundle.getScore();
+        return cardHand.getScore();
     }
 
     public boolean isBlackjack() {
-        return cardBundle.isBlackjack();
+        return cardHand.isBlackjack();
     }
 
     public boolean isBust() {
-        return cardBundle.isBust();
+        return cardHand.isBust();
     }
 
     public abstract String getName();
@@ -37,6 +38,6 @@ public abstract class Participant {
     public abstract List<Card> getInitialOpenCards();
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cardBundle.getCards());
+        return cardHand.getCards();
     }
 }
