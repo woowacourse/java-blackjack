@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class PlayingCards {
 
-    private static final int BLACKJACK = 21;
+    public static final int BLACKJACK = 21;
 
     private final List<Card> playingCards = new ArrayList<>();
 

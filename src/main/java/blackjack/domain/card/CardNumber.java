@@ -1,5 +1,7 @@
 package blackjack.domain.card;
 
+import blackjack.domain.game.PlayingCards;
+
 import java.util.List;
 
 public enum CardNumber {
@@ -40,7 +42,7 @@ public enum CardNumber {
 
     private static int addAceExtraNumber(final List<CardNumber> cardNumbers, int total) {
         int aceCount = getAceCount(cardNumbers);
-        while (aceCount-- > 0 && total + ACE_EXTRA_NUMBER <= 21) {
+        while (aceCount-- > 0 && total + ACE_EXTRA_NUMBER <= PlayingCards.BLACKJACK) {
             total += ACE_EXTRA_NUMBER;
         }
         return total;

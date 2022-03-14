@@ -20,15 +20,13 @@ public class Blackjack {
 
     private static final Enterable enterable = new Enter();
 
-    // TODO: 컨트롤러 역할 줄이기
     public void run() {
-        CardDeck cardDeck = new CardDeck();
         Dealer dealer = new Dealer();
 
         OutputView.printPlayerNameInstruction();
         Players players = createPlayers();
 
-        drawCards(cardDeck, dealer, players);
+        drawCards(dealer, players);
         showWinner(dealer, players);
     }
 
@@ -41,7 +39,10 @@ public class Blackjack {
         }
     }
 
-    private void drawCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
+    // TODO: draw 전략 패턴 적용해보기
+    private void drawCards(final Dealer dealer, final Players players) {
+        CardDeck cardDeck = new CardDeck();
+        // TODO: drawInitCards -> dealCards
         drawInitCards(cardDeck, dealer, players);
 
         drawCardToPlayers(players, cardDeck);
@@ -87,6 +88,7 @@ public class Blackjack {
     private void drawCardToPlayer(final Player player, final CardDeck cardDeck) {
         while (player.isDrawable() && isDrawing(player)) {
             player.drawCard(cardDeck.pick());
+            // TODO: 도메인 객체에 뷰 함수 전달?
             OutputView.printCards(player.getName(), getCards(player));
         }
     }
