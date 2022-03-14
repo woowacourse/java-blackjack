@@ -3,7 +3,6 @@ package blackjack;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.result.GameScoreBoard;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -22,7 +21,8 @@ public class Application {
         OutputView.printBlackjackGameResult(blackjackGame.calculateGameScore());
     }
 
-    private static void processDealerTurn(Participant dealer, Deck deck, BlackjackGame blackjackGame) {
+    private static void processDealerTurn(Participant dealer, Deck deck,
+        BlackjackGame blackjackGame) {
         while (blackjackGame.takeMoreCard(dealer, deck)) {
             OutputView.printDealerHandDrawMessage();
         }

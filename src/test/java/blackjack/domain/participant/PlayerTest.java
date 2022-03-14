@@ -62,7 +62,7 @@ class PlayerTest {
     @DisplayName("카드패의 총합이 정확한지 확인")
     void sumOfCardHand() {
         Player seung = new Player(new Name("seung"), createCardHand(aceCard, tenCard));
-        
+
         assertThat(seung.getCardTotalScore()).isEqualTo(21);
     }
 }

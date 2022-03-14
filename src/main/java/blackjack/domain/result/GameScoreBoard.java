@@ -1,8 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;

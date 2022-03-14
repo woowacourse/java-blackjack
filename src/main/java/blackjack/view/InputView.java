@@ -3,7 +3,6 @@ package blackjack.view;
 import static java.lang.System.out;
 
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
 import java.util.Locale;
 import java.util.Scanner;
 
