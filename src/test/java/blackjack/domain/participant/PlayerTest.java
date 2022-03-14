@@ -10,7 +10,7 @@ import static blackjack.domain.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardBundle;
+import blackjack.domain.card.Hand;
 import blackjack.domain.game.ResultType;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,8 +23,8 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        CardBundle cardBundle = CardBundle.of(CLOVER4, CLOVER5);
-        player = Player.of("hudi", cardBundle);
+        Hand hand = Hand.of(CLOVER4, CLOVER5);
+        player = Player.of("hudi", hand);
     }
 
     @DisplayName("Player 인스턴스가 생성된다.")
@@ -33,12 +33,12 @@ public class PlayerTest {
         assertThat(player).isNotNull();
     }
 
-    @DisplayName("Card 를 전달받아 CardBundle 에 추가할 수 있다.")
+    @DisplayName("Card 를 전달받아 Hand 에 추가할 수 있다.")
     @Test
     void receiveCard() {
         player.receiveCard(CLOVER6);
 
-        Set<Card> actual = player.getCardBundle().getCards();
+        Set<Card> actual = player.getHand().getCards();
 
         assertThat(actual).containsExactlyInAnyOrder(CLOVER4, CLOVER5, CLOVER6);
     }
@@ -79,7 +79,7 @@ public class PlayerTest {
     @Test
     void compareWith_returnsResultTypeWin() {
         // given
-        Player winPlayer = Player.of("hudi", CardBundle.of(CLOVER2, CLOVER3));
+        Player winPlayer = Player.of("hudi", Hand.of(CLOVER2, CLOVER3));
 
         // when
         ResultType actual = player.compareWith(winPlayer);
@@ -93,7 +93,7 @@ public class PlayerTest {
     @Test
     void compareWith_returnsResultTypeLose() {
         // given
-        Player winPlayer = Player.of("hudi", CardBundle.of(CLOVER5, CLOVER6));
+        Player winPlayer = Player.of("hudi", Hand.of(CLOVER5, CLOVER6));
 
         // when
         ResultType actual = player.compareWith(winPlayer);
@@ -107,7 +107,7 @@ public class PlayerTest {
     @Test
     void compareWith_returnsResultTypeDraw() {
         // given
-        Player winPlayer = Player.of("hudi", CardBundle.of(CLOVER3, CLOVER6));
+        Player winPlayer = Player.of("hudi", Hand.of(CLOVER3, CLOVER6));
 
         // when
         ResultType actual = player.compareWith(winPlayer);

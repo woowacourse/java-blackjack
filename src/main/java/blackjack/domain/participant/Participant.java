@@ -1,18 +1,18 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardBundle;
+import blackjack.domain.card.Hand;
 import blackjack.domain.game.ResultType;
 import blackjack.domain.game.Score;
 
 public abstract class Participant {
 
     protected final String name;
-    protected CardBundle cardBundle;
+    protected Hand hand;
 
-    protected Participant(final String name, final CardBundle cardBundle) {
+    protected Participant(final String name, final Hand hand) {
         this.name = name;
-        this.cardBundle = cardBundle;
+        this.hand = hand;
     }
 
     public abstract void receiveCard(Card card);
@@ -20,19 +20,19 @@ public abstract class Participant {
     public abstract boolean canReceive();
 
     public Score getCurrentScore() {
-        return cardBundle.getScore();
+        return hand.getScore();
     }
 
     public String getName() {
         return name;
     }
 
-    public CardBundle getCardBundle() {
-        return cardBundle;
+    public Hand getHand() {
+        return hand;
     }
 
     public boolean isBusted() {
-        return cardBundle.getScore().toInt() > Score.BLACKJACK;
+        return hand.getScore().toInt() > Score.BLACKJACK;
     }
 
     public ResultType compareWith(Participant other) {

@@ -22,7 +22,7 @@ public class HandDto {
     }
 
     private static List<String> getCards(Participant participant) {
-        return participant.getCardBundle()
+        return participant.getHand()
                 .getCards()
                 .stream()
                 .map(Card::getName)

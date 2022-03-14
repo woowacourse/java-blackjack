@@ -6,18 +6,18 @@ import java.util.Set;
 import java.util.function.Function;
 
 // TODO: 클래스명 변경
-public class CardBundle {
+public class Hand {
     private static final String NO_DUPLICATE_CARD_EXCEPTION_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
 
     private final Set<Card> cards;
 
-    private CardBundle(Set<Card> cards) {
+    private Hand(Set<Card> cards) {
         this.cards = cards;
     }
 
-    public static CardBundle of(Card card1, Card card2) {
+    public static Hand of(Card card1, Card card2) {
         Set<Card> initialCards = new HashSet<>(Set.of(card1, card2));
-        return new CardBundle(initialCards);
+        return new Hand(initialCards);
     }
 
     public void add(Card card) {
@@ -60,6 +60,8 @@ public class CardBundle {
 
     @Override
     public String toString() {
-        return "CardBundle{" + "cards=" + cards + '}';
+        return "Hand{" +
+                "cards=" + cards +
+                '}';
     }
 }

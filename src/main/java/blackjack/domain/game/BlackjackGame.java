@@ -1,8 +1,8 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardStack;
+import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.ArrayList;
@@ -21,13 +21,13 @@ public class BlackjackGame {
         validatePlayerNames(playerNames);
 
         this.cardDeck = cardDeck;
-        this.dealer = Dealer.of(initializeCardBundle());
+        this.dealer = Dealer.of(initializeHand());
         participants.addAll(initializePlayers(playerNames));
     }
 
     private List<Player> initializePlayers(List<String> playerNames) {
         return playerNames.stream()
-                .map(name -> Player.of(name, initializeCardBundle()))
+                .map(name -> Player.of(name, initializeHand()))
                 .collect(Collectors.toList());
     }
 
@@ -58,8 +58,8 @@ public class BlackjackGame {
         return participants;
     }
 
-    private CardBundle initializeCardBundle() {
-        return CardBundle.of(cardDeck.pop(), cardDeck.pop());
+    private Hand initializeHand() {
+        return Hand.of(cardDeck.pop(), cardDeck.pop());
     }
 
     @Override

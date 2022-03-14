@@ -6,7 +6,7 @@ import static blackjack.domain.fixture.CardRepository.CLOVER8;
 import static blackjack.domain.fixture.CardRepository.CLOVER9;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.CardBundle;
+import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.Map;
@@ -21,9 +21,9 @@ public class RefereeTest {
     void generateDealerResult() {
         // given
         Referee referee = new Referee();
-        Dealer dealer = Dealer.of(CardBundle.of(CLOVER9, CLOVER7));
-        Player winnerPlayer = Player.of("winner", CardBundle.of(CLOVER10, CLOVER7));
-        Player loserPlayer = Player.of("loser", CardBundle.of(CLOVER8, CLOVER7));
+        Dealer dealer = Dealer.of(Hand.of(CLOVER9, CLOVER7));
+        Player winnerPlayer = Player.of("winner", Hand.of(CLOVER10, CLOVER7));
+        Player loserPlayer = Player.of("loser", Hand.of(CLOVER8, CLOVER7));
 
         // when
         Map<ResultType, ResultCount> result = referee.generateDealerResult(dealer, Set.of(winnerPlayer, loserPlayer));
@@ -39,8 +39,8 @@ public class RefereeTest {
     void generatePlayerResult_returnsWin() {
         // given
         Referee referee = new Referee();
-        Player winnerPlayer = Player.of("winner", CardBundle.of(CLOVER10, CLOVER7));
-        Player loserPlayer = Player.of("loser", CardBundle.of(CLOVER8, CLOVER7));
+        Player winnerPlayer = Player.of("winner", Hand.of(CLOVER10, CLOVER7));
+        Player loserPlayer = Player.of("loser", Hand.of(CLOVER8, CLOVER7));
 
         // when
         ResultType actual = referee.generatePlayerResult(winnerPlayer, loserPlayer);
@@ -55,8 +55,8 @@ public class RefereeTest {
     void generatePlayerResult_returnsLose() {
         // given
         Referee referee = new Referee();
-        Player winnerPlayer = Player.of("winner", CardBundle.of(CLOVER10, CLOVER7));
-        Player loserPlayer = Player.of("loser", CardBundle.of(CLOVER8, CLOVER7));
+        Player winnerPlayer = Player.of("winner", Hand.of(CLOVER10, CLOVER7));
+        Player loserPlayer = Player.of("loser", Hand.of(CLOVER8, CLOVER7));
 
         // when
         ResultType actual = referee.generatePlayerResult(loserPlayer, winnerPlayer);
@@ -71,8 +71,8 @@ public class RefereeTest {
     void generatePlayerResult_returnsDraw() {
         // given
         Referee referee = new Referee();
-        Player player1 = Player.of("winner", CardBundle.of(CLOVER10, CLOVER7));
-        Player player2 = Player.of("loser", CardBundle.of(CLOVER9, CLOVER8));
+        Player player1 = Player.of("winner", Hand.of(CLOVER10, CLOVER7));
+        Player player2 = Player.of("loser", Hand.of(CLOVER9, CLOVER8));
 
         // when
         ResultType actual = referee.generatePlayerResult(player1, player2);
