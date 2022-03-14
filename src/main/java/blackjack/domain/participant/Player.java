@@ -1,10 +1,15 @@
 package blackjack.domain.participant;
 
+import static blackjack.view.OutputView.printPlayerBustInfo;
+import static blackjack.view.OutputView.printPlayerCardsInfo;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardHandState;
 import blackjack.strategy.CardHandStateStrategy;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class Player extends Participant {
@@ -44,13 +49,28 @@ public class Player extends Participant {
         }
     }
 
+    public void drawAllCards(Function<String, Boolean> drawOrStayChoice,
+                             Supplier<Card> cardSupplier) {
+        while (canDraw()) {
+            drawOrStay(drawOrStayChoice, cardSupplier);
+            printPlayerCardsInfo(this);
+        }
+        if (isBust()) {
+            printPlayerBustInfo();
+        }
+    }
+
+    private void drawOrStay(Function<String, Boolean> drawOrStayChoice, Supplier<Card> cardSupplier) {
+        if (drawOrStayChoice.apply(name)) {
+            receiveCard(cardSupplier.get());
+            return;
+        }
+        cardHand.stay();
+    }
+
     @Override
     public void receiveCard(Card card) {
         cardHand.hit(card, STATE_UPDATE_STRATEGY);
-    }
-
-    public void stay() {
-        cardHand.stay();
     }
 
     @Override
@@ -60,10 +80,10 @@ public class Player extends Participant {
 
     @Override
     public List<Card> getInitialOpenCards() {
-       return cardHand.getCards()
-               .stream()
-               .limit(INITIAL_PLAYER_OPEN_CARDS_COUNT)
-               .collect(Collectors.toUnmodifiableList());
+        return cardHand.getCards()
+                .stream()
+                .limit(INITIAL_PLAYER_OPEN_CARDS_COUNT)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Override

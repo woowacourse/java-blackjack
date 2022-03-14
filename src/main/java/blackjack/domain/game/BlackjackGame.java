@@ -10,6 +10,7 @@ import blackjack.strategy.CardBundleStrategy;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
@@ -55,6 +56,10 @@ public class BlackjackGame {
         if (playerNames.size() != new HashSet<>(playerNames).size()) {
             throw new IllegalArgumentException(DUPLICATE_PLAYER_NAMES_EXCEPTION_MESSAGE);
         }
+    }
+
+    public void distributeAllPlayerCards(Function<String, Boolean> drawOrStayChoice) {
+        getPlayers().forEach(player -> player.drawAllCards(drawOrStayChoice, this::popCard));
     }
 
     public boolean dealerCanDraw() {

@@ -16,6 +16,7 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.CardBundleStrategy;
 import java.util.List;
+import java.util.function.Function;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,10 +25,12 @@ public class BlackjackGameTest {
 
     private static final Card DRAWABLE_CARD = CLOVER_KING;
     private static final List<String> PLAYER_NAMES_LIST = List.of("player1", "player2");
-    private static final CardBundleStrategy prodStrategy = (cardStack) -> CardBundle.of(cardStack.pop(), cardStack.pop());
+    private static final CardBundleStrategy prodStrategy = (cardStack) -> CardBundle.of(cardStack.pop(),
+            cardStack.pop());
     private static final CardBundleStrategy cardBundleOfSixteenStrategy = (cardStack) -> getCardBundleOfSixteen();
     private static final CardBundleStrategy cardBundleOfSeventeenStrategy = (cardStack) -> getCardBundleOfSeventeen();
     private static final CardBundleStrategy cardBundleOfBlackjackStrategy = (cardStack) -> getCardBundleOfBlackjack();
+    private static final Function<String, Boolean> DRAW_CHOICE = (s) -> true;
 
     @DisplayName("생성자 테스트")
     @Nested
@@ -130,7 +133,7 @@ public class BlackjackGameTest {
     @Test
     void getParticipants_returnsListOfParticipantsWithDealerAtIndexZero() {
         BlackjackGame blackjackGame = new BlackjackGame(
-                new CardDeck(), List.of("p1","p2","p3"), cardBundleOfSixteenStrategy);
+                new CardDeck(), List.of("p1", "p2", "p3"), cardBundleOfSixteenStrategy);
 
         List<Participant> actual = blackjackGame.getParticipants();
 
@@ -138,6 +141,18 @@ public class BlackjackGameTest {
         for (int i = 1; i < actual.size(); i++) {
             assertThat(actual.get(i)).isInstanceOf(Player.class);
         }
+    }
+
+    @DisplayName("distributeAllPlayerCards 메서드 호출 후 모든 플레이어는 더 이상 드로우를 할 수 없게 된다.")
+    @Test
+    void distributeAllPlayerCards() {
+        BlackjackGame blackjackGame = new BlackjackGame(
+                new CardDeck(), List.of("p1", "p2", "p3"), prodStrategy);
+
+        blackjackGame.distributeAllPlayerCards(DRAW_CHOICE);
+
+        blackjackGame.getPlayers()
+                .forEach(player -> assertThat(player.isBust() || player.isBlackjack()).isTrue());
     }
 
     private static class CardsStub implements CardStack {

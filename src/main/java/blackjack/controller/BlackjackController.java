@@ -1,23 +1,20 @@
 package blackjack.controller;
 
-import static blackjack.view.InputView.requestMoreCardInput;
 import static blackjack.view.InputView.requestPlayerNamesInput;
 import static blackjack.view.OutputView.printAllCardsAndScore;
 import static blackjack.view.OutputView.printDealerExtraCardInfo;
 import static blackjack.view.OutputView.printGameResult;
 import static blackjack.view.OutputView.printInitialDistributionAnnouncement;
-import static blackjack.view.OutputView.printPlayerBustInfo;
-import static blackjack.view.OutputView.printPlayerCardsInfo;
 
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardStack;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.ResultReferee;
-import blackjack.domain.participant.Player;
-import blackjack.dto.InitialDistributionDto;
 import blackjack.dto.GameResultDto;
+import blackjack.dto.InitialDistributionDto;
 import blackjack.strategy.CardBundleStrategy;
+import blackjack.view.InputView;
 import java.util.List;
 
 public class BlackjackController {
@@ -40,23 +37,8 @@ public class BlackjackController {
     }
 
     private void distributeAllCards(BlackjackGame game) {
-        List<Player> players = game.getPlayers();
-        players.forEach(player -> drawAllPlayerCards(player, game));
+        game.distributeAllPlayerCards(InputView::requestMoreCardInput);
         drawDealerCards(game);
-    }
-
-    private void drawAllPlayerCards(Player player, BlackjackGame game) {
-        while (player.canDraw() && requestMoreCardInput(player.getName())) {
-            player.receiveCard(game.popCard());
-            printPlayerCardsInfo(player);
-        }
-        showPlayerBust(player); // TODO: add 21, blackjack cases
-    }
-
-    private void showPlayerBust(Player player) {
-        if (player.isBust()) {
-            printPlayerBustInfo();
-        }
     }
 
     private void drawDealerCards(BlackjackGame game) {

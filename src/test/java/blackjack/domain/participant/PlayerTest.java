@@ -17,12 +17,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
+
+    private static final Function<String, Boolean> STAY_CHOICE = (s) -> false;
+    private static final Supplier<Card> CARD_SUPPLIER = () -> CLOVER2;
 
     private Player player;
     private CardBundle cardBundle;
@@ -116,14 +121,14 @@ public class PlayerTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("플레이어가 명시적으로 stay 메서드를 호출한 경우, 버스트이나 블랙잭이 아니어도, hit 메서드를 호출했을 때 예외가 발생하게 된다.")
+    @DisplayName("플레이어가 stay를 선택하는 경우, 버스트이나 블랙잭이 아니어도, hit 메서드를 호출했을 때 예외가 발생하게 된다.")
     @Test
-    void stay() {
+    void drawAllCards_chooseToStay() {
         CardBundle cardBundle = generateCardBundleOf(CLOVER7, CLOVER10);
         Player player = Player.of("jeong", cardBundle);
         assertThat(player.canDraw()).isTrue();
 
-        player.stay();
+        player.drawAllCards(STAY_CHOICE, CARD_SUPPLIER);
 
         assertThat(player.canDraw()).isFalse();
         assertThatExceptionOfType(IllegalArgumentException.class)
