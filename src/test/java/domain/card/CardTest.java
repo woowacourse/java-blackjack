@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class CardTest {
     @ParameterizedTest(name = "{0}+{1} - {2}")
-    @CsvSource(value = {"SPADES;ACE;A스페이드", "HEARTS;SEVEN;7하트"}, delimiter = ';')
+    @CsvSource(value = {"SPADES;ACE;1스페이드", "HEARTS;SEVEN;7하트"}, delimiter = ';')
     @DisplayName("카드 생성 테스트")
     void createCard(Suit suit, Denomination denomination, String expected) {
         // given
