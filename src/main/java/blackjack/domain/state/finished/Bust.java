@@ -15,7 +15,7 @@ public class Bust extends Finished {
 
     @Override
     public GameOutcome compare(final State another) {
-        if (State.isSameState(another, Bust.class)) {
+        if (another.isSameStateWith(Bust.class)) {
             return DRAW;
         }
         return LOSE;

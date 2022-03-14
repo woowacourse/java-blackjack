@@ -15,7 +15,7 @@ public class BlackJack extends Finished {
 
     @Override
     public GameOutcome compare(final State another) {
-        if (State.isSameState(another, BlackJack.class)) {
+        if (another.isSameStateWith(BlackJack.class)) {
             return DRAW;
         }
         return WIN;

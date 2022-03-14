@@ -10,7 +10,13 @@ public abstract class Created implements State {
         this.cards = cards;
     }
 
+    @Override
     public Cards cards() {
         return cards;
+    }
+
+    @Override
+    public boolean isSameStateWith(final Class<? extends State> state) {
+        return this.getClass().equals(state);
     }
 }

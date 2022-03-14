@@ -17,14 +17,12 @@ public interface State {
 
     GameOutcome compare(final State another);
 
+    boolean isSameStateWith(final Class<? extends State> state);
+
     static State create(final Cards cards) {
         if (cards.isBlackJack()) {
             return new BlackJack(cards);
         }
         return new Hit(cards);
-    }
-
-    static boolean isSameState(State another, Class<? extends State> expectedState) {
-        return another.getClass().equals(expectedState);
     }
 }
