@@ -7,7 +7,7 @@ import java.util.Random;
 public class Cards {
 	private final List<Card> cards = new ArrayList<>();
 	private static final int BUST_THRESHOLD = 21;
-	private static final int ACE_SPECIAL_SCORE = 1;
+	private static final int ACE_SPECIAL_SCORE = 11;
 	private int score = 0;
 
 	public void addCard(Card card) {
@@ -16,21 +16,23 @@ public class Cards {
 	}
 
 	private void calculateScore() {
-		int score = 0;
-		for (Card card : cards) {
-			score += calculateOneCard(card, score);
+		int aceCount = (int) cards.stream().filter(Card::isAce)
+			.count();
+		int score = cards.stream()
+			.filter(card -> !card.isAce())
+			.mapToInt(Card::getScore).sum() + aceCount;
+		for (int i = 0; i < aceCount; i++) {
+			score += calculateOneAce(score);
 		}
 		this.score = score;
 	}
 
-	private int calculateOneCard(Card card, int score) {
-		if (!card.isAce()) {
-			return card.getScore();
+	private int calculateOneAce(int score) {
+		int diff = ACE_SPECIAL_SCORE - CardLetter.ACE.getLetterScore();
+		if (score + diff <= BUST_THRESHOLD) {
+			return diff;
 		}
-		if (score + card.getScore() > BUST_THRESHOLD) {
-			return ACE_SPECIAL_SCORE;
-		}
-		return card.getScore();
+		return 0;
 	}
 
 	public Card getRandomCard() {
