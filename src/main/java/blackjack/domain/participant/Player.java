@@ -1,13 +1,11 @@
 package blackjack.domain.participant;
 
-import static blackjack.view.OutputView.printPlayerBustInfo;
-import static blackjack.view.OutputView.printPlayerCardsInfo;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardHandState;
 import blackjack.strategy.CardHandStateStrategy;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -49,14 +47,20 @@ public class Player extends Participant {
         }
     }
 
-    public void drawAllCards(Function<String, Boolean> drawOrStayChoice,
-                             Supplier<Card> cardSupplier) {
+    public void drawAllCards(Function<String, Boolean> drawOrStayStrategy,
+                             Supplier<Card> cardSupplier,
+                             Consumer<Player> printInfo) {
+
+        announceBlackjackOrNot(printInfo);
         while (canDraw()) {
-            drawOrStay(drawOrStayChoice, cardSupplier);
-            printPlayerCardsInfo(this);
+            drawOrStay(drawOrStayStrategy, cardSupplier);
+            printInfo.accept(this);
         }
-        if (isBust()) {
-            printPlayerBustInfo();
+    }
+
+    private void announceBlackjackOrNot(Consumer<Player> printInfo) {
+        if (isBlackjack()) {
+            printInfo.accept(this);
         }
     }
 

@@ -15,6 +15,7 @@ import blackjack.dto.GameResultDto;
 import blackjack.dto.InitialDistributionDto;
 import blackjack.strategy.CardBundleStrategy;
 import blackjack.view.InputView;
+import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackController {
@@ -37,7 +38,9 @@ public class BlackjackController {
     }
 
     private void distributeAllCards(BlackjackGame game) {
-        game.distributeAllPlayerCards(InputView::requestMoreCardInput);
+        game.distributeAllPlayerCards(
+                InputView::requestMoreCardInput,
+                OutputView::printPlayerCardDistributionInfo);
         drawDealerCards(game);
     }
 

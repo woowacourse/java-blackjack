@@ -16,6 +16,7 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.CardBundleStrategy;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -25,12 +26,17 @@ public class BlackjackGameTest {
 
     private static final Card DRAWABLE_CARD = CLOVER_KING;
     private static final List<String> PLAYER_NAMES_LIST = List.of("player1", "player2");
-    private static final CardBundleStrategy prodStrategy = (cardStack) -> CardBundle.of(cardStack.pop(),
-            cardStack.pop());
+
+    private static final CardBundleStrategy prodStrategy =
+            (cardStack) -> CardBundle.of(cardStack.pop(), cardStack.pop());
     private static final CardBundleStrategy cardBundleOfSixteenStrategy = (cardStack) -> getCardBundleOfSixteen();
     private static final CardBundleStrategy cardBundleOfSeventeenStrategy = (cardStack) -> getCardBundleOfSeventeen();
     private static final CardBundleStrategy cardBundleOfBlackjackStrategy = (cardStack) -> getCardBundleOfBlackjack();
+
     private static final Function<String, Boolean> DRAW_CHOICE = (s) -> true;
+    private static final Consumer<Player> VIEW_STRATEGY = player -> {
+    };
+
 
     @DisplayName("생성자 테스트")
     @Nested
@@ -149,7 +155,7 @@ public class BlackjackGameTest {
         BlackjackGame blackjackGame = new BlackjackGame(
                 new CardDeck(), List.of("p1", "p2", "p3"), prodStrategy);
 
-        blackjackGame.distributeAllPlayerCards(DRAW_CHOICE);
+        blackjackGame.distributeAllPlayerCards(DRAW_CHOICE, VIEW_STRATEGY);
 
         blackjackGame.getPlayers()
                 .forEach(player -> assertThat(player.isBust() || player.isBlackjack()).isTrue());

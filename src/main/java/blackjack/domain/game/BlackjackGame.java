@@ -10,6 +10,7 @@ import blackjack.strategy.CardBundleStrategy;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -58,8 +59,11 @@ public class BlackjackGame {
         }
     }
 
-    public void distributeAllPlayerCards(Function<String, Boolean> drawOrStayChoice) {
-        getPlayers().forEach(player -> player.drawAllCards(drawOrStayChoice, this::popCard));
+    public void distributeAllPlayerCards(Function<String, Boolean> drawOrStayStrategy,
+                                         Consumer<Player> viewStrategy) {
+        for (Player player : getPlayers()) {
+            player.drawAllCards(drawOrStayStrategy, this::popCard, viewStrategy);
+        }
     }
 
     public boolean dealerCanDraw() {

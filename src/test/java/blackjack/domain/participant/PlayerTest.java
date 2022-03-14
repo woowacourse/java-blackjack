@@ -17,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,8 @@ public class PlayerTest {
 
     private static final Function<String, Boolean> STAY_CHOICE = (s) -> false;
     private static final Supplier<Card> CARD_SUPPLIER = () -> CLOVER2;
+    private static final Consumer<Player> VIEW_STRATEGY = player -> {
+    };
 
     private Player player;
     private CardBundle cardBundle;
@@ -128,7 +131,7 @@ public class PlayerTest {
         Player player = Player.of("jeong", cardBundle);
         assertThat(player.canDraw()).isTrue();
 
-        player.drawAllCards(STAY_CHOICE, CARD_SUPPLIER);
+        player.drawAllCards(STAY_CHOICE, CARD_SUPPLIER, VIEW_STRATEGY);
 
         assertThat(player.canDraw()).isFalse();
         assertThatExceptionOfType(IllegalArgumentException.class)
