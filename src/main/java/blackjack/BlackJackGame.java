@@ -16,14 +16,19 @@ public class BlackJackGame {
 
     private static final int PLAYER_SETTING_CARD_SIZE = 2;
 
+    private final Deck deck;
+
+    public BlackJackGame(Deck deck) {
+        this.deck = deck;
+    }
+
     public void run() {
         Dealer dealer = new Dealer();
         Gamers gamers = setGamers();
-        Deck deck = Deck.initializeDeck();
 
-        startAllPlayer(dealer, gamers.getGamers(), deck);
+        startAllPlayer(dealer, gamers.getGamers());
         OutputView.printOpenCards(gamers.getGamers(), dealer);
-        drawAdditionalCards(dealer, gamers, deck);
+        drawAdditionalCards(dealer, gamers);
 
         printFinalMessage(dealer, gamers);
     }
@@ -37,38 +42,38 @@ public class BlackJackGame {
         }
     }
 
-    private void startAllPlayer(final Player dealer, final List<Gamer> gamers, final Deck deck) {
-        setInitialCards(dealer, deck);
+    private void startAllPlayer(final Player dealer, final List<Gamer> gamers) {
+        setInitialCards(dealer);
         for (Gamer gamer : gamers) {
-            setInitialCards(gamer, deck);
+            setInitialCards(gamer);
         }
     }
 
-    private void setInitialCards(final Player player, final Deck deck) {
+    private void setInitialCards(final Player player) {
         for (int i = 0; i < PLAYER_SETTING_CARD_SIZE; i++) {
             player.receiveCard(deck.draw());
         }
     }
 
-    private void drawAdditionalCards(final Player dealer, final Gamers gamers, final Deck deck) {
+    private void drawAdditionalCards(final Player dealer, final Gamers gamers) {
         for (Gamer gamer : gamers.getGamers()) {
-            progressGamerAdditionalCard(deck, gamer);
+            progressGamerAdditionalCard(gamer, deck);
         }
-        progressDealerAdditionalCard(deck, dealer);
+        progressDealerAdditionalCard(dealer, deck);
     }
 
-    private static void progressGamerAdditionalCard(final Deck deck, final Gamer gamer) {
+    private void progressGamerAdditionalCard(final Gamer gamer, final Deck deck) {
         while (isReceivableCard(gamer)) {
             gamer.receiveCard(deck.draw());
             OutputView.printGamerCards(gamer);
         }
     }
 
-    private static boolean isReceivableCard(final Gamer gamer) {
+    private boolean isReceivableCard(final Gamer gamer) {
         return gamer.isReceivable() && isAnswerYes(gamer.getName());
     }
 
-    private static boolean isAnswerYes(final String name) {
+    private boolean isAnswerYes(final String name) {
         try {
             return Answer.isYes(InputView.requestAnswer(name));
         } catch (IllegalArgumentException exception) {
@@ -77,7 +82,7 @@ public class BlackJackGame {
         }
     }
 
-    private static void progressDealerAdditionalCard(final Deck deck, final Player dealer) {
+    private void progressDealerAdditionalCard(final Player dealer, final Deck deck) {
         boolean receivable = dealer.isReceivable();
         OutputView.printDealerReceive(receivable);
         if (receivable) {
