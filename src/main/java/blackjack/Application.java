@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.controller.BlackJackController;
-import blackjack.dto.PlayerDto;
+import blackjack.dto.ParticipantDto;
 import blackjack.view.input.DrawCommand;
 import blackjack.view.input.InputView;
 import blackjack.view.output.OutputView;
@@ -33,12 +33,12 @@ public class Application {
         while (!blackJackController.isAllPlayersEnd()) {
             final String command = InputView.inputDrawCommand(blackJackController.getCurrentTurnPlayerInfo());
             final DrawCommand drawCommand = DrawCommand.from(command);
-            final PlayerDto currentPlayerDto = checkCurrentPlayerDrawNew(blackJackController, drawCommand);
-            OutputView.printPlayerCardInfo(currentPlayerDto);
+            final ParticipantDto currentParticipantDto = checkCurrentPlayerDrawNew(blackJackController, drawCommand);
+            OutputView.printPlayerCardInfo(currentParticipantDto);
         }
     }
 
-    private static PlayerDto checkCurrentPlayerDrawNew(final BlackJackController blackJackController, final DrawCommand command) {
+    private static ParticipantDto checkCurrentPlayerDrawNew(final BlackJackController blackJackController, final DrawCommand command) {
         if (command.isNo()) {
             return blackJackController.drawNextPlayer();
         }

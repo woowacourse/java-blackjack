@@ -3,7 +3,7 @@ package blackjack.controller;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.game.OutComeResult;
 import blackjack.domain.participant.Participant;
-import blackjack.dto.PlayerDto;
+import blackjack.dto.ParticipantDto;
 import blackjack.dto.PlayerFinalResultDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,14 +15,14 @@ public class BlackJackController {
         blackJackGame = BlackJackGame.init(playerNames);
     }
 
-    public PlayerDto getInitDealerInfo() {
-        return PlayerDto.from(blackJackGame.getDealer());
+    public ParticipantDto getInitDealerInfo() {
+        return ParticipantDto.from(blackJackGame.getDealer());
     }
 
-    public List<PlayerDto> getInitPlayerInfo() {
+    public List<ParticipantDto> getInitPlayerInfo() {
         return blackJackGame.getInitPlayers()
                 .stream()
-                .map(PlayerDto::from)
+                .map(ParticipantDto::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -30,16 +30,16 @@ public class BlackJackController {
         return blackJackGame.isAllPlayersEnd();
     }
 
-    public PlayerDto getCurrentTurnPlayerInfo() {
-        return PlayerDto.from(blackJackGame.getCurrentTurnPlayer());
+    public ParticipantDto getCurrentTurnPlayerInfo() {
+        return ParticipantDto.from(blackJackGame.getCurrentTurnPlayer());
     }
 
-    public PlayerDto drawNextPlayer() {
-        return PlayerDto.from(blackJackGame.drawNextPlayer());
+    public ParticipantDto drawNextPlayer() {
+        return ParticipantDto.from(blackJackGame.drawNextPlayer());
     }
 
-    public PlayerDto drawCurrentPlayer() {
-        return PlayerDto.from(blackJackGame.drawCurrentPlayer());
+    public ParticipantDto drawCurrentPlayer() {
+        return ParticipantDto.from(blackJackGame.drawCurrentPlayer());
     }
 
     public boolean isDealerTurnEnd() {

@@ -5,7 +5,7 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.game.GameOutcome;
 import blackjack.domain.game.OutComeResult;
-import blackjack.dto.PlayerDto;
+import blackjack.dto.ParticipantDto;
 import blackjack.dto.PlayerFinalResultDto;
 import java.util.List;
 import java.util.Map;
@@ -32,16 +32,16 @@ public class OutputView {
         throw new UnsupportedOperationException();
     }
 
-    public static void showGameInitInfo(final PlayerDto dealerInfo, final List<PlayerDto> playerDtos) {
-        System.out.printf(PROVIDE_INIT_CARD_TO_PLAYER_MESSAGE, dealerInfo.getName(), joinPlayerNames(playerDtos));
+    public static void showGameInitInfo(final ParticipantDto dealerInfo, final List<ParticipantDto> participantDtos) {
+        System.out.printf(PROVIDE_INIT_CARD_TO_PLAYER_MESSAGE, dealerInfo.getName(), joinPlayerNames(participantDtos));
         System.out.printf(PROVIDED_CARD_TO_DEALER_INFO_MESSAGE,
                 dealerInfo.getName(), joinPlayerCardInfos(dealerInfo.getCards()));
-        playerDtos.forEach(OutputView::printPlayerCardInfo);
+        participantDtos.forEach(OutputView::printPlayerCardInfo);
     }
 
-    private static String joinPlayerNames(final List<PlayerDto> playerDtos) {
-        return playerDtos.stream()
-                .map(PlayerDto::getName)
+    private static String joinPlayerNames(final List<ParticipantDto> participantDtos) {
+        return participantDtos.stream()
+                .map(ParticipantDto::getName)
                 .collect(Collectors.joining(PLAYER_NAME_DELIMITER));
     }
 
@@ -55,9 +55,9 @@ public class OutputView {
         return number.getPrintValue() + pattern.getName();
     }
 
-    public static void printPlayerCardInfo(final PlayerDto playerDto) {
+    public static void printPlayerCardInfo(final ParticipantDto participantDto) {
         System.out.printf(PROVIDED_CARD_TO_PLAYER_INFO_MESSAGE,
-                playerDto.getName(), joinPlayerCardInfos(playerDto.getCards()));
+                participantDto.getName(), joinPlayerCardInfos(participantDto.getCards()));
     }
 
     public static void printDealerDraw() {
