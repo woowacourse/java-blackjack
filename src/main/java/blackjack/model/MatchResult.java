@@ -1,51 +1,54 @@
 package blackjack.model;
 
+import blackjack.model.player.Gamers;
 import blackjack.model.player.Player;
-import java.util.Arrays;
-import java.util.function.BiPredicate;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public enum MatchResult {
-    /*
-    WIN("승", (dealer, gamer) ->
-            dealer.isBlackJack() && !gamer.isBlackJack() || !dealer.isBust() && gamer.isBust()
-                    || !dealer.isBust() && dealer.isWinBy(gamer)
-    ),
-    LOSE("패", (dealer, gamer) ->
-            dealer.isBust() && !gamer.isBust() || !dealer.isBlackJack() && gamer.isBlackJack()
-                    || !dealer.isBust() && !dealer.isWinBy(gamer)),
-    DRAW("무", (dealer, gamer) ->
-            dealer.isBust() && gamer.isBust() || dealer.isBlackJack() && dealer.isBlackJack()
-                    || !dealer.isBust() && dealer.isDrawWith(gamer)),
-    ;
+public class MatchResult {
+    private final Map<String, Result> gamersMatchResult;
+    private final Map<Result, Integer> dealerMatchResult;
 
-    private final String value;
-    private final BiPredicate<Player, Player> biPredicate;
-
-    MatchResult(String value, BiPredicate<Player, Player> biPredicate) {
-        this.value = value;
-        this.biPredicate = biPredicate;
+    public MatchResult(Player dealer, Gamers gamers) {
+        this.gamersMatchResult = createGamersMatchResult(dealer, gamers);
+        this.dealerMatchResult = createDealerMatchResult(dealer, gamers);
     }
 
-    public static MatchResult find(Player dealer, Player gamer) {
-        return Arrays.stream(values())
-                .filter(result -> result.biPredicate.test(dealer, gamer))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 값이 없습니다."));
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public String getReversValue() {
-        if (value.equals(MatchResult.WIN.value)) {
-            return MatchResult.LOSE.value;
+    public Map<String, Result> createGamersMatchResult(Player dealer, Gamers gamers) {
+        Map<String, Result> gamersMatchResult = new LinkedHashMap<>();
+        for (Player gamer : gamers.getValues()) {
+            Result result = match(dealer, gamer);
+            gamersMatchResult.put(gamer.getName(), result);
         }
-        if (value.equals(MatchResult.LOSE.value)) {
-            return MatchResult.WIN.value;
-        }
-        return MatchResult.DRAW.value;
+        return gamersMatchResult;
     }
 
-     */
+    private Result match(Player dealer, Player gamer) {
+        return Result.findBy(dealer, gamer);
+    }
+
+    private Map<Result, Integer> createDealerMatchResult(Player dealer, Gamers gamers) {
+        Map<Result, Integer> dealerMatchResult = initDealerMatchResult();
+        for (Player gamer : gamers.getValues()) {
+            Result result = match(dealer, gamer);
+            dealerMatchResult.merge(result, 1, Integer::sum);
+        }
+        return dealerMatchResult;
+    }
+
+    private Map<Result, Integer> initDealerMatchResult() {
+        Map<Result, Integer> matchResult = new LinkedHashMap<>();
+        for (Result result : Result.values()) {
+            matchResult.put(result, 0);
+        }
+        return matchResult;
+    }
+
+    public Map<Result, Integer> getDealerMatchResult() {
+        return dealerMatchResult;
+    }
+
+    public Map<String, Result> getGamersMatchResult() {
+        return gamersMatchResult;
+    }
 }

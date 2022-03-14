@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.model.BlackJackGame;
+import blackjack.model.MatchResult;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 
@@ -14,9 +15,7 @@ public class Application {
         blackJackGame.hitOrStayUntilPossible(InputView::inputHitOrStaySign, ResultView::printCurrentTurnHitResult);
 
         ResultView.printFinalResult(blackJackGame.getDealer(), blackJackGame.getGamers());
-        /*
-        ResultView.printMatchResult(DealerMatchResultsDto.from(blackJackGame),
-                GamerMatchResultsDto.from(blackJackGame));
-        */
+
+        ResultView.printMatchResult(blackJackGame.createMatchResult());
     }
 }

@@ -28,6 +28,10 @@ public abstract class Player {
         return cards.sumScore();
     }
 
+    public boolean isBust() {
+        return cards.sumScore() > MAX_SCORE;
+    }
+
     public boolean isWinBy(Player otherPlayer) {
         return cards.sumScore() > otherPlayer.cards.sumScore();
     }
@@ -38,10 +42,6 @@ public abstract class Player {
 
     public List<String> getCards() {
         return cards.getValues();
-    }
-
-    public Cards getCards2() {
-        return cards;
     }
 
     public abstract String getName();

@@ -5,6 +5,7 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Gamers;
 import blackjack.model.player.Player;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -47,18 +48,15 @@ public class BlackJackGame {
         }
         consumer.accept(dealer);
     }
-/*
-    public Map<String, MatchResult> getGamerMatchResults() {
-        return gamers.getMatchResult(dealer);
+
+    public MatchResult createMatchResult() {
+        return new MatchResult(dealer, gamers);
     }
 
-    public Map<MatchResult, Integer> getDealerMatchResult() {
-        return gamers.getDealerMatchResult(dealer);
-    }
-*/
     public Player getDealer() {
         return dealer;
     }
+
     public List<Player> getGamers() {
         return gamers.getValues();
     }
