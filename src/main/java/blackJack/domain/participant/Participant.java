@@ -9,6 +9,7 @@ import blackJack.domain.card.Card;
 public abstract class Participant {
 
     private static final String ERROR_MESSAGE_BLANK_NAME = "플레이어의 이름이 존재하지 않습니다.";
+    private static final int BLACK_JACK = 21;
 
     private final String name;
     private final Cards cards;
@@ -33,6 +34,10 @@ public abstract class Participant {
 
     public boolean isBlackJack() {
         return cards.isBlackJack();
+    }
+
+    public boolean isBust() {
+        return getScore() > BLACK_JACK;
     }
 
     public int getScore() {
