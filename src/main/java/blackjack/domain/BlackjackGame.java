@@ -1,94 +1,57 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
+import blackjack.domain.player.Participant;
 import blackjack.domain.player.Player;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
+import blackjack.domain.player.Players;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackJackGame {
-
-    private static final int MIN_PLAYER_COUNT_TO_PLAY_GAME = 1;
-    private static final int MAX_PLAYER_COUNT_TO_PLAY_GAME = 8;
+public class BlackjackGame {
 
     private static final CardDeck CARD_DECK = CardDeckGenerator.createCardDeckByCardNumber();
 
-    public void run() {
-        List<Player> players = initializePlayers();
-        Dealer dealer = initializeDealer();
+    private final Players players;
+    private final Dealer dealer;
 
-        OutputView.printPlayerInitialCards(players, dealer);
-
-        playGame(players, dealer);
-
-        ParticipantResult participantResult = ParticipantResult.create(dealer.calculateScore(), players);
-        OutputView.printGameResult(participantResult.getDealerResultCount(), participantResult.getPlayerResults());
+    private BlackjackGame(final Players players, final Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
     }
 
-    private List<Player> initializePlayers() {
-        List<String> playerNames = InputView.requestPlayerNamesToPlayGame();
-        checkPlayerCountToPlayGame(playerNames.size());
-        checkDuplicatePlayerName(playerNames);
-        return playerNames.stream()
-                .map(name -> new Player(name, CARD_DECK.drawInitialCards()))
-                .collect(Collectors.toUnmodifiableList());
+    public static BlackjackGame create(final List<String> playerNames) {
+        return new BlackjackGame(setUpPlayers(playerNames), setUpDealer());
     }
 
-    private Dealer initializeDealer() {
-        return new Dealer(CARD_DECK.drawInitialCards());
+    private static Players setUpPlayers(final List<String> playerNames) {
+        return new Players(playerNames.stream()
+                .map(name -> new Player(name, drawInitialCards()))
+                .collect(Collectors.toUnmodifiableList()));
     }
 
-    private void checkPlayerCountToPlayGame(int playerCount) {
-        if (playerCount < MIN_PLAYER_COUNT_TO_PLAY_GAME || playerCount > MAX_PLAYER_COUNT_TO_PLAY_GAME) {
-            throw new IllegalArgumentException("게임을 하기 위한 플레이어 수는 1명이상 8명이하로 입력해주세요.");
-        }
+    private static Dealer setUpDealer() {
+        return new Dealer(drawInitialCards());
     }
 
-    private void checkDuplicatePlayerName(List<String> playerNames) {
-        boolean duplicated = playerNames.stream()
-                .distinct()
-                .count() != playerNames.size();
-
-        if (duplicated) {
-            throw new IllegalArgumentException("중복된 플레이어의 이름이 있습니다.");
-        }
+    private static Cards drawInitialCards() {
+        return CARD_DECK.drawInitialCards();
     }
 
-    private void playGame(final List<Player> players, final Dealer dealer) {
-        for (Player player : players) {
-            playPlayer(player);
-        }
-        playDealer(dealer);
-
-        OutputView.printAllPlayerCardStatus(players, dealer);
+    public void drawCardToParticipant(final Participant participant) {
+        participant.receiveCard(drawCard());
     }
 
-    private void playPlayer(Player player) {
-        if (player.isPossibleToReceiveCard()) {
-            DrawStatus drawStatus = requestDrawStatus(player);
-            if (drawStatus == DrawStatus.YES) {
-                player.receiveCard(CARD_DECK.drawCard());
-                OutputView.printPlayerCardStatus(player.getName(), player.getCards().getCards());
-                playPlayer(player);
-            } else {
-                OutputView.printPlayerCardStatus(player.getName(), player.getCards().getCards());
-            }
-        }
+    private Card drawCard() {
+        return CARD_DECK.drawCard();
     }
 
-    private DrawStatus requestDrawStatus(Player player) {
-        try {
-            return DrawStatus.from(InputView.requestDrawCardResponse(player.getName()));
-        } catch (IllegalArgumentException e) {
-            OutputView.printException(e);
-            return requestDrawStatus(player);
-        }
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 
-    private void playDealer(Dealer dealer) {
-        if (dealer.isPossibleToReceiveCard()) {
-            OutputView.printDealerDrawOneMoreCard();
-        }
+    public Dealer getDealer() {
+        return dealer;
     }
 }
