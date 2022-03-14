@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import blackjack.domain.DealerDrawable;
+import blackjack.domain.DealerDrawChoice;
 import blackjack.domain.Outcome;
 import blackjack.domain.RedrawChoice;
 import blackjack.domain.card.Deck;
@@ -29,7 +29,7 @@ public class Roles {
 	private Role dealer;
 
 	public void initDealer() {
-		dealer = new Dealer(new Hand(), DealerDrawable::chooseDraw);
+		dealer = new Dealer(new Hand(), DealerDrawChoice::chooseDraw);
 	}
 
 	public TableStatusDto distributeCardToDealer(final Deck deck) {

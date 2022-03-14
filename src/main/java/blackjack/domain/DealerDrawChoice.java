@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.Random;
 
-public class DealerDrawable {
+public class DealerDrawChoice {
 
 	private static final Random random = new Random();
 
