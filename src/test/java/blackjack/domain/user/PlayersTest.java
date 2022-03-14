@@ -5,7 +5,7 @@ import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.withSettings;
 
-import blackjack.domain.card.deck.FixDeck;
+import blackjack.domain.card.deck.OnlyTenSpadePickDeck;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ public class PlayersTest {
     void init_cards_players() {
         User aki = mock(User.class, withSettings().useConstructor(new UserName("aki")).defaultAnswer(CALLS_REAL_METHODS));
         Players players = new Players(List.of(aki));
-        players.takeInitHand(new FixDeck());
+        players.takeInitHand(new OnlyTenSpadePickDeck());
 
         assertThat(aki.getCards().get()).hasSize(2);
     }

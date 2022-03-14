@@ -1,5 +1,7 @@
 package blackjack.domain.user;
 
+import blackjack.domain.result.Outcome;
+
 public class Player extends User {
 
     private static final int TWENTY_ONE = 21;
@@ -17,41 +19,40 @@ public class Player extends User {
     }
 
     @Override
-    public int compare(User dealer) {
+    public Outcome determineWinner(User dealer) {
+        if (dealer.isBust() && isBust()) {
+            return Outcome.DRAW;
+        }
         if (isBust()) {
-            return LOSE;
+            return Outcome.LOSE;
         }
         if (dealer.isBust()) {
-            return WIN;
+            return Outcome.WIN;
+        }
+        if (isBlackjack() || dealer.isBlackjack()) {
+            return compareBlackjack(dealer);
         }
         return compareScore(dealer);
     }
 
-    private int compareScore(User dealer) {
+    private Outcome compareBlackjack(User dealer) {
         if (isBlackjack() && dealer.isBlackjack()) {
-            return DRAW;
-        }
-        if (dealer.isBlackjack()) {
-            return LOSE;
+            return Outcome.DRAW;
         }
         if (isBlackjack()) {
-            return WIN;
+            return Outcome.WIN;
         }
-        return getScore() - dealer.getScore();
+        return Outcome.LOSE;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
+    private Outcome compareScore(User dealer) {
+        int gap = getScore() - dealer.getScore();
+        if (gap > 0) {
+            return Outcome.WIN;
+        }
+        if (gap < 0) {
+            return Outcome.LOSE;
+        }
+        return Outcome.DRAW;
     }
 }

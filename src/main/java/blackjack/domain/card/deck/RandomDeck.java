@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RandomDeck implements Deck {
 
-    private static List<Card> cards;
+    private List<Card> cards;
 
     public RandomDeck() {
         init();

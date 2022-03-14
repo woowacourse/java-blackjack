@@ -53,11 +53,11 @@ public class ResultView {
     }
 
     public static void printHand(User user) {
-        String cards = user.getCards().get().stream()
+        String hand = user.getCards().get().stream()
                 .map(ResultView::getCardNumberAndType)
                 .collect(Collectors.joining(CARD_DELIMITER));
 
-        System.out.printf(PRINT_GAMER_CARDS_FORMAT + System.lineSeparator(), user.getName().get(), cards);
+        System.out.printf(PRINT_GAMER_CARDS_FORMAT + System.lineSeparator(), user.getName().get(), hand);
     }
 
     private static String getCardNumberAndType(Card card) {
@@ -78,11 +78,11 @@ public class ResultView {
     }
 
     private static void printResult(User dealer) {
-        String cards = dealer.getCards().get().stream()
+        String hand = dealer.getCards().get().stream()
                 .map(ResultView::getCardNumberAndType)
                 .collect(Collectors.joining(CARD_DELIMITER));
 
-        System.out.printf(PRINT_GAMER_RESULT_FORMAT + System.lineSeparator(), dealer.getName().get(), cards,
+        System.out.printf(PRINT_GAMER_RESULT_FORMAT + System.lineSeparator(), dealer.getName().get(), hand,
                 dealer.getScore());
     }
 

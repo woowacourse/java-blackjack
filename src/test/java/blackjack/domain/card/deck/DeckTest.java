@@ -14,8 +14,8 @@ public class DeckTest {
     @Test
     @DisplayName("pick 메서드는 Deck에서 카드를 한 장 뽑는다.")
     void pick_card() {
-        Deck fixDeck = new FixDeck();
-        Card pickedCard = fixDeck.pick();
+        Deck deck = new OnlyTenSpadePickDeck();
+        Card pickedCard = deck.pick();
         Card card = new Card(CardNumber.TEN, CardType.SPADE);
 
         assertThat(pickedCard).isEqualTo(card);
@@ -24,8 +24,8 @@ public class DeckTest {
     @Test
     @DisplayName("pickTwoCards 메서드는 카드를 두 장 뽑는다.")
     void pick_two_cards() {
-        Deck fixDeck = new FixDeck();
-        List<Card> twoCards = fixDeck.pickTwoCards();
+        Deck deck = new OnlyTenSpadePickDeck();
+        List<Card> twoCards = deck.pickTwoCards();
 
         assertThat(twoCards).hasSize(2);
     }

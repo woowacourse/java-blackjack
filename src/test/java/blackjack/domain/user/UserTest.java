@@ -8,7 +8,7 @@ import static org.mockito.Mockito.withSettings;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardType;
-import blackjack.domain.card.deck.FixDeck;
+import blackjack.domain.card.deck.OnlyTenSpadePickDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -19,7 +19,7 @@ public class UserTest {
     @DisplayName("takeInitHand 메서드는 2장의 카드를 뽑는다.")
     void take_init_hand() {
         User user = mock(User.class, withSettings().useConstructor(new UserName("aki")).defaultAnswer(CALLS_REAL_METHODS));
-        user.takeInitHand(new FixDeck());
+        user.takeInitHand(new OnlyTenSpadePickDeck());
 
         assertThat(user.getCards().get()).hasSize(2);
     }
@@ -42,11 +42,11 @@ public class UserTest {
         user.hit(new Card(CardNumber.EIGHT, CardType.CLOVER));
         user.hit(new Card(CardNumber.FIVE, CardType.SPADE));
         user.hit(new Card(CardNumber.TEN, CardType.SPADE));
-        List<Card> cards = user.getCards().get();
+        List<Card> hand = user.getCards().get();
 
-        assertThat(cards.get(0)).isEqualTo(new Card(CardNumber.EIGHT, CardType.CLOVER));
-        assertThat(cards.get(1)).isEqualTo(new Card(CardNumber.FIVE, CardType.SPADE));
-        assertThat(cards.get(2)).isEqualTo(new Card(CardNumber.TEN, CardType.SPADE));
+        assertThat(hand.get(0)).isEqualTo(new Card(CardNumber.EIGHT, CardType.CLOVER));
+        assertThat(hand.get(1)).isEqualTo(new Card(CardNumber.FIVE, CardType.SPADE));
+        assertThat(hand.get(2)).isEqualTo(new Card(CardNumber.TEN, CardType.SPADE));
     }
 
     @Test

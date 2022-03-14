@@ -1,8 +1,9 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.deck.Deck;
+import blackjack.domain.result.Outcome;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,21 +14,21 @@ public abstract class User {
     private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final UserName name;
-    private final Cards cards;
+    private final Hand hand;
 
     public User(UserName name) {
         this.name = name;
-        this.cards = new Cards(new ArrayList<>());
+        this.hand = new Hand(new ArrayList<>());
     }
 
     public void takeInitHand(Deck deck) {
         List<Card> newCards = deck.pickTwoCards();
-        cards.add(newCards.get(0));
-        cards.add(newCards.get(1));
+        hand.add(newCards.get(0));
+        hand.add(newCards.get(1));
     }
 
     public void hit(Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
     public boolean isBust() {
@@ -42,24 +43,24 @@ public abstract class User {
     }
 
     private int getCardSize() {
-        return cards.get().size();
+        return hand.get().size();
     }
 
     public UserName getName() {
         return name;
     }
 
-    public Cards getCards() {
-        return cards;
+    public Hand getCards() {
+        return hand;
     }
 
     public int getScore() {
-        return cards.getTotalScore();
+        return hand.getTotalScore();
     }
 
     public abstract boolean isValidRange();
 
-    public abstract int compare(User o);
+    public abstract Outcome determineWinner(User o);
 
     @Override
     public boolean equals(Object o) {
@@ -70,19 +71,19 @@ public abstract class User {
             return false;
         }
         User user = (User) o;
-        return Objects.equals(name, user.name) && Objects.equals(cards, user.cards);
+        return Objects.equals(name, user.name) && Objects.equals(hand, user.hand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cards);
+        return Objects.hash(name, hand);
     }
 
     @Override
     public String toString() {
-        return "Gamer{" +
+        return "User{" +
                 "name=" + name +
-                ", cards=" + cards +
+                ", hand=" + hand +
                 '}';
     }
 }

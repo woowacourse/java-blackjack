@@ -6,7 +6,7 @@ import blackjack.domain.card.CardType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FixDeck implements Deck {
+public class OnlyTenSpadePickDeck implements Deck {
 
     @Override
     public Card pick() {

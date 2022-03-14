@@ -3,27 +3,27 @@ package blackjack.domain.card;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
+public class Hand {
 
     private static final int ACE_ADDITIONAL_VALUE = 10;
-    private static final int MAX_SCORE = 21;
+    private static final int TWENTY_ONE = 21;
 
-    private final List<Card> cards;
+    private final List<Card> hand;
 
-    public Cards(List<Card> cards) {
-        this.cards = cards;
+    public Hand(List<Card> hand) {
+        this.hand = hand;
     }
 
     public void add(Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
     public List<Card> get() {
-        return Collections.unmodifiableList(cards);
+        return Collections.unmodifiableList(hand);
     }
 
     public int getTotalScore() {
-        int sum = cards.stream()
+        int sum = hand.stream()
                 .mapToInt(value -> value.getCardNumber().getValue())
                 .sum();
 
@@ -34,27 +34,15 @@ public class Cards {
     }
 
     private int countAce() {
-        return (int) cards.stream()
+        return (int) hand.stream()
                 .filter(card -> card.getCardNumber().equals(CardNumber.ACE))
                 .count();
     }
 
-    public boolean containsCardNumber(CardNumber number) {
-        return cards.stream()
-                .anyMatch(card -> card.getCardNumber() == number);
-    }
-
     private int getAceAdditionalValue(int sum) {
-        if (sum + ACE_ADDITIONAL_VALUE <= MAX_SCORE) {
+        if (sum + ACE_ADDITIONAL_VALUE <= TWENTY_ONE) {
             return ACE_ADDITIONAL_VALUE;
         }
         return 0;
-    }
-
-    @Override
-    public String toString() {
-        return "Cards{" +
-                "cards=" + cards +
-                '}';
     }
 }

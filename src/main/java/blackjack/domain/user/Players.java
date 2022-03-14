@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public class Players {
 
-    private static final int MAX_GAMER = 10;
-    private static final String TOO_MANY_GAMER_ERROR_MESSAGE = "최대 플레이어 수는 " + MAX_GAMER + "명 입니다.";
+    private static final int MAX_PLAYER = 10;
+    private static final String TOO_MANY_GAMER_ERROR_MESSAGE = "참여할 수 있는 플레이어 수는 1명 이상 " + MAX_PLAYER + "명 이하만 가능합니다.";
     private static final String DUPLICATE_NAME_ERROR_MESSAGE = "플레이어의 이름이 중복되었습니다.";
     private static final String SAME_DEALER_NAME_ERROR_MESSAGE = "플레이어의 이름가 딜러면 안된다.";
     private static final String DEALER_NAME = "딜러";
@@ -23,7 +23,7 @@ public class Players {
     }
 
     private void validateSize(List<User> users) {
-        if (users.size() > MAX_GAMER) {
+        if (users.size() > MAX_PLAYER || users.isEmpty()) {
             throw new IllegalArgumentException(TOO_MANY_GAMER_ERROR_MESSAGE);
         }
     }
@@ -56,29 +56,5 @@ public class Players {
 
     public List<User> get() {
         return users;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Players)) {
-            return false;
-        }
-        Players players1 = (Players) o;
-        return Objects.equals(users, players1.users);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(users);
-    }
-
-    @Override
-    public String toString() {
-        return "Gamers{" +
-                "gamers=" + users +
-                '}';
     }
 }

@@ -7,15 +7,15 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardsTest {
+public class HandTest {
 
     @Test
-    @DisplayName("Cards 클래스는 Card 리스트를 입력받으면 정상적으로 생성된다.")
+    @DisplayName("Hand 클래스는 Card 리스트를 입력받으면 정상적으로 생성된다.")
     void create_dealer() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(CardNumber.TEN, CardType.SPADE));
+        List<Card> hand = new ArrayList<>();
+        hand.add(new Card(CardNumber.TEN, CardType.SPADE));
 
-        assertThatCode(() -> new Cards(cards)).doesNotThrowAnyException();
+        assertThatCode(() -> new Hand(hand)).doesNotThrowAnyException();
     }
 
     @Test
@@ -24,7 +24,7 @@ public class CardsTest {
         List<Card> newCards = new ArrayList<>();
         newCards.add(new Card(CardNumber.ACE, CardType.SPADE));
         newCards.add(new Card(CardNumber.TEN, CardType.SPADE));
-        Cards hasAceCards = new Cards(newCards);
+        Hand hasAceCards = new Hand(newCards);
 
         assertThat(hasAceCards.getTotalScore()).isEqualTo(21);
     }
@@ -35,9 +35,9 @@ public class CardsTest {
         List<Card> newCards = new ArrayList<>();
         newCards.add(new Card(CardNumber.ACE, CardType.SPADE));
         newCards.add(new Card(CardNumber.TEN, CardType.SPADE));
-        Cards hasAceCards = new Cards(newCards);
+        Hand hasAceCardHand = new Hand(newCards);
 
-        assertThat(hasAceCards.getTotalScore()).isEqualTo(21);
+        assertThat(hasAceCardHand.getTotalScore()).isEqualTo(21);
     }
 
     @Test
@@ -47,21 +47,8 @@ public class CardsTest {
         newCards.add(new Card(CardNumber.TEN, CardType.CLOVER));
         newCards.add(new Card(CardNumber.THREE, CardType.HEART));
         newCards.add(new Card(CardNumber.ACE, CardType.SPADE));
-        Cards hasAceCards = new Cards(newCards);
+        Hand hasAceCardHand = new Hand(newCards);
 
-        assertThat(hasAceCards.getTotalScore()).isEqualTo(14);
-    }
-
-    @Test
-    @DisplayName("특정 CardNumber 보유 여부를 반환한다.")
-    void contains_card_number() {
-        List<Card> newCards = new ArrayList<>();
-        newCards.add(new Card(CardNumber.TEN, CardType.CLOVER));
-        newCards.add(new Card(CardNumber.THREE, CardType.HEART));
-        newCards.add(new Card(CardNumber.ACE, CardType.SPADE));
-        Cards cards = new Cards(newCards);
-
-        assertThat(cards.containsCardNumber(CardNumber.TEN)).isTrue();
-        assertThat(cards.containsCardNumber(CardNumber.KING)).isFalse();
+        assertThat(hasAceCardHand.getTotalScore()).isEqualTo(14);
     }
 }

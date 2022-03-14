@@ -1,12 +1,14 @@
 package blackjack.domain.user;
 
+import blackjack.domain.result.Outcome;
+
 public class Dealer extends User {
 
     private static final UserName DEALER_NAME = new UserName("딜러");
     private static final int SEVEN_TEEN = 17;
-    private static final int WIN = 1;
-    private static final int DRAW = 0;
-    private static final int LOSE = -1;
+//    private static final int WIN = 1;
+//    private static final int DRAW = 0;
+//    private static final int LOSE = -1;
 
     public Dealer() {
         super(DEALER_NAME);
@@ -18,41 +20,37 @@ public class Dealer extends User {
     }
 
     @Override
-    public int compare(User player) {
+    public Outcome determineWinner(User player) {
         if (player.isBust()) {
-            return WIN;
+            return Outcome.WIN;
         }
         if (isBust()) {
-            return LOSE;
+            return Outcome.LOSE;
+        }
+        if (isBlackjack() || player.isBlackjack()) {
+            return compareBlackjack(player);
         }
         return compareScore(player);
     }
 
-    private int compareScore(User player) {
+    private Outcome compareBlackjack(User player) {
         if (isBlackjack() && player.isBlackjack()) {
-            return DRAW;
+            return Outcome.DRAW;
         }
         if (isBlackjack()) {
-            return WIN;
+            return Outcome.WIN;
         }
-        if (player.isBlackjack()) {
-            return LOSE;
+        return Outcome.LOSE;
+    }
+
+    private Outcome compareScore(User player) {
+        int gap = getScore() - player.getScore();
+        if (gap > 0) {
+            return Outcome.WIN;
         }
-        return getScore() - player.getScore();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
+        if (gap < 0) {
+            return Outcome.LOSE;
+        }
+        return Outcome.DRAW;
     }
 }

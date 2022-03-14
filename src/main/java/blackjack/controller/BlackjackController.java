@@ -90,8 +90,8 @@ public class BlackjackController {
         Map<User, OutcomeResults> results = new LinkedHashMap<>();
         for (User player : players.get()) {
             results.put(player, new OutcomeResults());
-            results.get(player).increase(Outcome.compare(player, dealer));
-            dealerResult.increase(Outcome.compare(dealer, player));
+            results.get(player).increase(player.determineWinner(dealer));
+            dealerResult.increase(dealer.determineWinner(player));
         }
         return new Results(dealerResult, results);
     }
