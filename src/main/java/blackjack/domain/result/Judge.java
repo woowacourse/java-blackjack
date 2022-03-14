@@ -1,5 +1,7 @@
 package blackjack.domain.result;
 
+import blackjack.domain.card.Cards;
+import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
 import java.util.ArrayList;
@@ -10,29 +12,21 @@ public class Judge {
     public static GameResult calculateGameResult(final Players players) {
         final DealerResult dealerResult = new DealerResult();
         final List<ParticipantResult> participantResults = new ArrayList<>();
-
-        calculateDealerResult(dealerResult, players);
-        calculateParticipantsResult(participantResults, players);
+        for (Player participant : players.getParticipants()) {
+            boolean isDealerWin = compete(players.getDealer(), participant);
+            updateDealerResult(dealerResult, isDealerWin);
+            participantResults.add(makeParticipantResult(participant, isDealerWin));
+        }
 
         return new GameResult(dealerResult, participantResults);
     }
 
-    private static void calculateDealerResult(final DealerResult dealerResult, final Players players) {
-        players.initParticipantPointer();
-        while (!players.isParticipantPointerEnd()) {
-            boolean isDealerWin = players.competeWithPointParticipant();
-            updateDealerResult(dealerResult, isDealerWin);
-            players.moveParticipantPointer();
-        }
+    public static boolean compete(final Player dealer, final Player participant) {
+        return isDealerWin(dealer.calculateFinalScore(), participant.calculateFinalScore());
     }
 
-    private static void calculateParticipantsResult(final List<ParticipantResult> participantResults, final Players players) {
-        players.initParticipantPointer();
-        while (!players.isParticipantPointerEnd()) {
-            boolean isDealerWin = players.competeWithPointParticipant();
-            participantResults.add(makeParticipantResult(players.pointParticipantName(), isDealerWin));
-            players.moveParticipantPointer();
-        }
+    private static boolean isDealerWin(int dealerScore, int participantScore) {
+        return participantScore > Cards.getMaxScore() || (dealerScore <= Cards.getMaxScore() && dealerScore >= participantScore);
     }
 
     private static void updateDealerResult(DealerResult dealerResult, boolean isDealerWin) {
@@ -43,8 +37,8 @@ public class Judge {
         dealerResult.increaseLose();
     }
 
-    private static ParticipantResult makeParticipantResult(String participantName, boolean isDealerWin) {
-        ParticipantResult participantResult = new ParticipantResult(participantName);
+    private static ParticipantResult makeParticipantResult(Player participant, boolean isDealerWin) {
+        ParticipantResult participantResult = new ParticipantResult(participant.getName());
         if (!isDealerWin) {
             participantResult.makeWin();
         }

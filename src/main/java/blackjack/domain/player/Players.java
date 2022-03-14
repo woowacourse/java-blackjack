@@ -47,14 +47,6 @@ public class Players {
         participantPointer = 0;
     }
 
-    public boolean competeWithPointParticipant() {
-        return isDealerWin(dealer.calculateFinalScore(), pointParticipant().calculateFinalScore());
-    }
-
-    private boolean isDealerWin(int dealerScore, int participantScore) {
-        return participantScore > Cards.getMaxScore() || (dealerScore <= Cards.getMaxScore() && dealerScore >= participantScore);
-    }
-
     public boolean isDealerAcceptableCard() {
         return dealer.acceptableCard();
     }
