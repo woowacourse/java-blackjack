@@ -27,7 +27,7 @@ public class Card {
     }
 
     public String getName() {
-        return rank.getDisplayName() + symbol.getDisplayName();
+        return symbol.getDisplayName() + rank.getDisplayName();
     }
 
     @Override

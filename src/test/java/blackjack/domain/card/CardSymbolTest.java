@@ -22,7 +22,7 @@ public class CardSymbolTest {
     @Test
     void getDisplayName() {
         List<CardSymbol> symbols = List.of(CardSymbol.values());
-        List<String> names = List.of("하트", "스페이드", "다이아몬드", "클로버");
+        List<String> names = List.of("♥️", "♣️", "♦️", "♠️");
 
         for (int i = 0; i < SYMBOL_LENGTH; i++) {
             assertThat(symbols.get(i).getDisplayName())

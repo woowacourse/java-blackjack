@@ -42,7 +42,7 @@ public class CardTest {
         Card card = Card.of(CardRank.FIVE, CardSymbol.CLOVER);
 
         String actual = card.getName();
-        String expected = "5클로버";
+        String expected = "♠️5";
 
         assertThat(actual).isEqualTo(expected);
     }
