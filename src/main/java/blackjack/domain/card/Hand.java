@@ -32,7 +32,7 @@ public class Hand {
     }
 
     public Set<Card> getCards() {
-        return cards;
+        return Set.copyOf(cards);
     }
 
     public Score getScore() {

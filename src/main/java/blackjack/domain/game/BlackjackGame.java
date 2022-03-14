@@ -55,7 +55,7 @@ public class BlackjackGame {
     }
 
     public List<Player> getParticipants() {
-        return participants;
+        return List.copyOf(participants);
     }
 
     private Hand initializeHand() {

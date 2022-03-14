@@ -30,7 +30,7 @@ public class HandDto {
     }
 
     public List<String> getCards() {
-        return cards;
+        return List.copyOf(cards);
     }
 
     public String getFirstCard() {

@@ -5,6 +5,7 @@ import blackjack.domain.game.ResultCount;
 import blackjack.domain.game.ResultType;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public class DealerMatchDto {
     private final String name;
 
     private DealerMatchDto(Map<ResultType, ResultCount> matchResult, String name) {
-        this.matchResult = Map.copyOf(matchResult);
+        this.matchResult = matchResult;
         this.name = name;
     }
 
@@ -28,7 +29,7 @@ public class DealerMatchDto {
     }
 
     public Map<ResultType, ResultCount> getMatchResult() {
-        return matchResult;
+        return new EnumMap<>(matchResult);
     }
 
     @Override
