@@ -11,11 +11,7 @@ public class Card {
 		this.suit = suit;
 	}
 
-	public int getNumber() {
-		return denomination.getValue();
-	}
-
-	public String getType() {
+	public String getSuit() {
 		return suit.getValue();
 	}
 

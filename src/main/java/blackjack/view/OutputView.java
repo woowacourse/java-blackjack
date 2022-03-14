@@ -11,7 +11,7 @@ import blackjack.domain.result.ResultType;
 public class OutputView {
 	public void displayOneCard(final Card card) {
 		String cardNumber = convertCardNumberToString(card);
-		System.out.println("딜러: " + cardNumber + card.getType());
+		System.out.println("딜러: " + cardNumber + card.getSuit());
 	}
 
 	public void displayFirstDistribution(final List<Player> players) {
@@ -37,13 +37,13 @@ public class OutputView {
 
 	private List<String> generateAllCardStrings(final List<Card> cards) {
 		List<String> strings = cards.stream()
-			.map(card -> convertCardNumberToString(card) + card.getType())
+			.map(card -> convertCardNumberToString(card) + card.getSuit())
 			.collect(Collectors.toList());
 		return strings;
 	}
 
 	private String convertCardNumberToString(Card card) {
-		String cardNumber = String.valueOf(card.getNumber());
+		String cardNumber = String.valueOf(card.getScore());
 		if ("1".equals(cardNumber)) {
 			cardNumber = "A";
 		}
