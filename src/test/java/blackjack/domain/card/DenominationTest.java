@@ -11,21 +11,21 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SymbolTest {
+class DenominationTest {
 
     @Test
     @DisplayName("enum number size가 13개인지 확인")
     void checkValidateEnumNumberSize() {
-        List<Symbol> symbolValues = Arrays.stream(Symbol.values())
+        List<Denomination> denominationValues = Arrays.stream(Denomination.values())
                 .collect(Collectors.toList());
 
-        assertThat(symbolValues.size()).isEqualTo(13);
+        assertThat(denominationValues.size()).isEqualTo(13);
     }
 
     @ParameterizedTest
     @DisplayName("ace point 점수가 1인지 확인")
     @CsvSource(value = {"ACE:1", "KING:10"}, delimiter = ':')
-    void checkEnumNumberPoint(Symbol value, int point) {
+    void checkEnumNumberPoint(Denomination value, int point) {
         assertThat(value.getPoint()).isEqualTo(point);
     }
 }

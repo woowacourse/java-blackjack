@@ -30,15 +30,15 @@ class BlackjackGameTest {
     @DisplayName("딜러가 블랙잭인 경우 확인")
     void isDealerBlackjack() {
         Players players = new Players();
-        guest.addCard(new Card(Suit.SPADE, Symbol.EIGHT));
-        guest.addCard(new Card(Suit.SPADE, Symbol.SEVEN));
+        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.EIGHT));
+        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.SEVEN));
         players.addPlayer(guest);
 
-        dealer.addCard(new Card(Suit.DIAMOND, Symbol.ACE));
-        dealer.addCard(new Card(Suit.DIAMOND, Symbol.TEN));
+        dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
+        dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.TEN));
         players.addPlayer(dealer);
 
-        BlackjackGame blackjackGame = new BlackjackGame(new Cards(new CardShuffleMachine()));
+        BlackjackGame blackjackGame = new BlackjackGame(new PlayingCards(new PlayingPlayingCardShuffleMachine()));
         Results results = blackjackGame.calculateResult(players);
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);
@@ -50,16 +50,16 @@ class BlackjackGameTest {
     @DisplayName("플레이어가 블랙잭인 경우 확인")
     void isPlayerBlackjack() {
         Players players = new Players();
-        guest.addCard(new Card(Suit.SPADE, Symbol.ACE));
-        guest.addCard(new Card(Suit.SPADE, Symbol.TEN));
+        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
+        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.TEN));
         players.addPlayer(guest);
 
-        dealer.addCard(new Card(Suit.DIAMOND, Symbol.ACE));
-        dealer.addCard(new Card(Suit.DIAMOND, Symbol.THREE));
-        dealer.addCard(new Card(Suit.DIAMOND, Symbol.SEVEN));
+        dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
+        dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.THREE));
+        dealer.addCard(new PlayingCard(Suit.DIAMOND, Denomination.SEVEN));
         players.addPlayer(dealer);
 
-        BlackjackGame blackjackGame = new BlackjackGame(new Cards(new CardShuffleMachine()));
+        BlackjackGame blackjackGame = new BlackjackGame(new PlayingCards(new PlayingPlayingCardShuffleMachine()));
         Results results = blackjackGame.calculateResult(players);
         MatchResult guestResult = results.getResult(guest);
         MatchResult dealerResult = results.getResult(dealer);

@@ -6,9 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.Suit;
-import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
@@ -19,14 +19,14 @@ class MatchTest {
     @CsvSource(value = {"SPADE:CLUB:ACE:JACK:BLACKJACK", "CLUB:SPADE:ACE:ACE:DRAW"}
             , delimiter = ':')
     @DisplayName("게스트 승무패 결정 로직 확인")
-    public void checkGuestFindWinner(Suit suit, Suit secondSuit, Symbol symbol, Symbol secondSymbol, Match result) {
+    public void checkGuestFindWinner(Suit suit, Suit secondSuit, Denomination denomination, Denomination secondDenomination, Match result) {
         Player guest = new Guest("green");
-        guest.addCard(new Card(suit, symbol));
-        guest.addCard(new Card(secondSuit, secondSymbol));
+        guest.addCard(new PlayingCard(suit, denomination));
+        guest.addCard(new PlayingCard(secondSuit, secondDenomination));
 
         Player dealer = new Dealer();
-        dealer.addCard(new Card(suit, secondSymbol));
-        dealer.addCard(new Card(secondSuit, secondSymbol));
+        dealer.addCard(new PlayingCard(suit, secondDenomination));
+        dealer.addCard(new PlayingCard(secondSuit, secondDenomination));
 
         assertThat(Match.findWinner(guest, dealer)).isEqualTo(result);
     }

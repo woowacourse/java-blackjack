@@ -12,16 +12,16 @@ public class Deck {
     private static final int ACE_ELEVEN_POSSIBLE = 10;
     private static final int BLACKJACK_SIZE = 2;
 
-    private final Set<Card> deck = new LinkedHashSet<>();
+    private final Set<PlayingCard> deck = new LinkedHashSet<>();
 
-    public void addCard(Card card) {
-        deck.add(card);
+    public void addCard(PlayingCard playingCard) {
+        deck.add(playingCard);
     }
 
     public int sumPoints() {
         int points = sumCardPoint();
         int aceCount = (int) deck.stream()
-                .filter(Card::isAce)
+                .filter(PlayingCard::isAce)
                 .count();
         if (aceCount == HAS_NOT_ACE) {
             return points;
@@ -42,13 +42,13 @@ public class Deck {
 
     private int sumCardPoint() {
         int points = 0;
-        for (Card card : deck) {
-            points = card.sumPoint(points);
+        for (PlayingCard playingCard : deck) {
+            points = playingCard.sumPoint(points);
         }
         return points;
     }
 
-    public Set<Card> getCards() {
+    public Set<PlayingCard> getCards() {
         return Collections.unmodifiableSet(deck);
     }
 

@@ -6,25 +6,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CardsTest {
+class PlayingCardsTest {
 
-    private Cards cards;
+    private PlayingCards playingCards;
 
     @BeforeEach
     public void setUp() {
-        cards = new Cards(new AlwaysAscNumberMachine());
+        playingCards = new PlayingCards(new AlwaysAscNumberMachinePlaying());
     }
     @Test
     @DisplayName("Cards 객체 생성 확인")
     public void createCards() {
-        assertThat(cards).isInstanceOf(Cards.class);
+        assertThat(playingCards).isInstanceOf(PlayingCards.class);
     }
 
     @Test
     @DisplayName("Cards 반환 확인")
     public void checkCardReturn() {
-        Card card = cards.assignCard();
+        PlayingCard playingCard = playingCards.assignCard();
 
-        assertThat(card.getRank()).isEqualTo(Symbol.ACE);
+        assertThat(playingCard.getRank()).isEqualTo(Denomination.ACE);
     }
 }

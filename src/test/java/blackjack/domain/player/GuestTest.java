@@ -3,9 +3,9 @@ package blackjack.domain.player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.Suit;
-import blackjack.domain.card.Symbol;
+import blackjack.domain.card.Denomination;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,11 +22,11 @@ class GuestTest {
     @DisplayName("카드 받았는지 확인")
     public void checkAddCardToDeck() {
         Guest guest = new Guest("guest");
-        Card card = new Card(Suit.SPADE, Symbol.FOUR);
-        guest.addCard(card);
+        PlayingCard playingCard = new PlayingCard(Suit.SPADE, Denomination.FOUR);
+        guest.addCard(playingCard);
 
         Guest compareGuest = new Guest("compare_guest");
-        compareGuest.addCard(card);
+        compareGuest.addCard(playingCard);
         assertThat(guest).isEqualTo(compareGuest);
     }
 
@@ -34,9 +34,9 @@ class GuestTest {
     @DisplayName("덱의 카드가 21이 넘는지 확인")
     public void checkPlayerDeckOverLimit() {
         Guest guest = new Guest("guest");
-        guest.addCard(new Card(Suit.SPADE, Symbol.JACK));
-        guest.addCard(new Card(Suit.SPADE, Symbol.QUEEN));
-        guest.addCard(new Card(Suit.SPADE, Symbol.TWO));
+        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
+        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
+        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.TWO));
         boolean overLimit = guest.isOverPointLimit();
 
         assertThat(overLimit).isTrue();
@@ -46,9 +46,9 @@ class GuestTest {
     @DisplayName("덱의 카드가 21이 넘지 않는지 확인")
     public void checkPlayerDeckUnderLimit() {
         Guest guest = new Guest("guest");
-        guest.addCard(new Card(Suit.SPADE, Symbol.JACK));
-        guest.addCard(new Card(Suit.SPADE, Symbol.QUEEN));
-        guest.addCard(new Card(Suit.SPADE, Symbol.ACE));
+        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.JACK));
+        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.QUEEN));
+        guest.addCard(new PlayingCard(Suit.SPADE, Denomination.ACE));
         boolean overLimit = guest.isOverPointLimit();
 
         assertThat(overLimit).isFalse();

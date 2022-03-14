@@ -1,22 +1,22 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.Match;
 
 public abstract class AbstractPlayer implements Player {
 
-    protected Deck cards;
+    protected Deck playingCards;
     protected String name;
 
     @Override
-    public void addCard(Card card) {
-        cards.addCard(card);
+    public void addCard(PlayingCard playingCard) {
+        playingCards.addCard(playingCard);
     }
 
     @Override
     public boolean isBlackJack() {
-        return cards.sumBlackJack();
+        return playingCards.sumBlackJack();
     }
 
     @Override
@@ -26,12 +26,12 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isLose(int point) {
-        return point > cards.sumPoints();
+        return point > playingCards.sumPoints();
     }
 
     @Override
     public boolean isOverPointLimit() {
-        return cards.sumPoints() > Match.MAX_WINNER_POINT;
+        return playingCards.sumPoints() > Match.MAX_WINNER_POINT;
     }
 
     @Override
@@ -41,7 +41,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public Deck getDeck() {
-        return cards;
+        return playingCards;
     }
 
     @Override
@@ -51,11 +51,11 @@ public abstract class AbstractPlayer implements Player {
 
         AbstractPlayer that = (AbstractPlayer) o;
 
-        return cards != null ? cards.equals(that.cards) : that.cards == null;
+        return playingCards != null ? playingCards.equals(that.playingCards) : that.playingCards == null;
     }
 
     @Override
     public int hashCode() {
-        return cards != null ? cards.hashCode() : 0;
+        return playingCards != null ? playingCards.hashCode() : 0;
     }
 }

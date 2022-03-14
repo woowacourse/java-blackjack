@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-class AlwaysAscNumberMachine implements CardPickMachine {
+class AlwaysAscNumberMachinePlaying implements PlayingCardPickMachine {
 
     private final List<Integer> cardIndex;
 
-    public AlwaysAscNumberMachine() {
+    public AlwaysAscNumberMachinePlaying() {
         this.cardIndex = IntStream.range(0, 52)
                 .boxed()
                 .collect(Collectors.toList());

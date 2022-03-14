@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import blackjack.domain.*;
-import blackjack.domain.card.CardShuffleMachine;
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.PlayingPlayingCardShuffleMachine;
+import blackjack.domain.card.PlayingCards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -19,7 +19,7 @@ import blackjack.view.OutputView;
 public class BlackjackController {
 
     public void playGame() {
-        BlackjackGame blackjackGame = new BlackjackGame(new Cards(new CardShuffleMachine()));
+        BlackjackGame blackjackGame = new BlackjackGame(new PlayingCards(new PlayingPlayingCardShuffleMachine()));
         blackjackGame.initGames(receivePlayerNames());
 
         Players players = blackjackGame.getBlackjackPlayers();

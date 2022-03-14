@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-public interface CardPickMachine {
+public interface PlayingCardPickMachine {
 
     int assignIndex();
 }

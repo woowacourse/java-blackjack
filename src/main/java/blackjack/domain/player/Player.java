@@ -1,11 +1,11 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.Deck;
 
 public interface Player {
 
-    void addCard(Card card);
+    void addCard(PlayingCard playingCard);
 
     boolean isBlackJack();
 

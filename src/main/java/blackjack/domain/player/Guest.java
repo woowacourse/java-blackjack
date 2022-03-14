@@ -8,18 +8,18 @@ public class Guest extends AbstractPlayer implements Player {
     public static final int MAX_POINT = 21;
 
     public Guest(String name) {
-        this.cards = new Deck();
+        this.playingCards = new Deck();
         this.name = name;
     }
 
     @Override
     public boolean isOverMoreCardLimit() {
-        return cards.sumPoints() > MAX_POINT;
+        return playingCards.sumPoints() > MAX_POINT;
     }
 
     @Override
     public boolean isWin(Player guest, Player dealer) {
-        int points = cards.sumPoints();
+        int points = playingCards.sumPoints();
         if (dealer.isLose(points) && points <= Match.MAX_WINNER_POINT) {
             return true;
         }
@@ -31,6 +31,6 @@ public class Guest extends AbstractPlayer implements Player {
 
     @Override
     public boolean isDraw(Player dealer) {
-        return cards.sumPoints() == dealer.getDeck().sumPoints();
+        return playingCards.sumPoints() == dealer.getDeck().sumPoints();
     }
 }

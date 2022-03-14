@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class CardShuffleMachine implements CardPickMachine {
+public class PlayingPlayingCardShuffleMachine implements PlayingCardPickMachine {
 
     private static final List<Integer> cardIndex;
-    private static final int CARD_NUMBER = Suit.values().length * Symbol.values().length;
+    private static final int CARD_NUMBER = Suit.values().length * Denomination.values().length;
     private static final int POP = 0;
 
     static {

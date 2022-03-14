@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import java.util.List;
 
-import blackjack.domain.card.Cards;
+import blackjack.domain.card.PlayingCards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Guest;
 import blackjack.domain.player.Player;
@@ -11,11 +11,11 @@ import blackjack.domain.result.Results;
 
 public class BlackjackGame {
 
-    private final Cards cards;
+    private final PlayingCards playingCards;
     private Players blackjackPlayers;
 
-    public BlackjackGame(Cards cards) {
-        this.cards = cards;
+    public BlackjackGame(PlayingCards playingCards) {
+        this.playingCards = playingCards;
     }
 
     public void initGames(List<String> playerNames) {
@@ -33,8 +33,8 @@ public class BlackjackGame {
 
     private void initCards() {
         for (Player blackjackPlayer : blackjackPlayers.getPlayers()) {
-            blackjackPlayer.addCard(cards.assignCard());
-            blackjackPlayer.addCard(cards.assignCard());
+            blackjackPlayer.addCard(playingCards.assignCard());
+            blackjackPlayer.addCard(playingCards.assignCard());
         }
     }
 
@@ -73,7 +73,7 @@ public class BlackjackGame {
     }
 
     public void addCard(Player player) {
-        player.addCard(cards.assignCard());
+        player.addCard(playingCards.assignCard());
     }
 
     public Results calculateResult(Players players) {

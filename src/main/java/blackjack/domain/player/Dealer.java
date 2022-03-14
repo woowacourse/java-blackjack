@@ -10,18 +10,18 @@ public class Dealer extends AbstractPlayer implements Player {
     public static final int EXCEED_POINT = 17;
 
     public Dealer() {
-        this.cards = new Deck();
+        this.playingCards = new Deck();
         this.name = NAME;
     }
 
     @Override
     public boolean isOverMoreCardLimit() {
-        return cards.sumPoints() > MAX_POINT;
+        return playingCards.sumPoints() > MAX_POINT;
     }
 
     @Override
     public boolean isWin(Player guest, Player dealer) {
-        int points = cards.sumPoints();
+        int points = playingCards.sumPoints();
         if (guest.isLose(points) && points <= Match.MAX_WINNER_POINT) {
             return true;
         }
@@ -33,6 +33,6 @@ public class Dealer extends AbstractPlayer implements Player {
 
     @Override
     public boolean isDraw(Player guest) {
-        return cards.sumPoints() == guest.getDeck().sumPoints();
+        return playingCards.sumPoints() == guest.getDeck().sumPoints();
     }
 }

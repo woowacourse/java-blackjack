@@ -3,7 +3,7 @@ package blackjack.view;
 import java.util.List;
 import java.util.Map;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.card.PlayingCard;
 import blackjack.domain.result.GameResponse;
 import blackjack.domain.result.Match;
 import blackjack.domain.result.MatchResult;
@@ -51,9 +51,9 @@ public class OutputView {
     }
 
     private static void announcePresentGuestCards(GameResponse gameResponse, StringBuilder sb) {
-        for (Card card : gameResponse.getDeck().getCards()) {
-            sb.append(card.getRank().getValue())
-                    .append(card.getSuit().getName())
+        for (PlayingCard playingCard : gameResponse.getDeck().getCards()) {
+            sb.append(playingCard.getRank().getValue())
+                    .append(playingCard.getSuit().getName())
                     .append(RESULT_DELIMITER);
         }
         sb.deleteCharAt(sb.length() - DELETE_FINAL_DELIMITER);
@@ -61,9 +61,9 @@ public class OutputView {
     }
 
     private static void announcePresentDealerCards(GameResponse gameResponse, StringBuilder sb) {
-        for (Card card : gameResponse.getDeck().getCards()) {
-            sb.append(card.getRank().getValue())
-                    .append(card.getSuit().getName())
+        for (PlayingCard playingCard : gameResponse.getDeck().getCards()) {
+            sb.append(playingCard.getRank().getValue())
+                    .append(playingCard.getSuit().getName())
                     .append(RESULT_DELIMITER);
             break;
         }
@@ -92,9 +92,9 @@ public class OutputView {
         sb.append(gameResponse.getName())
                 .append(CARD_FORMAT)
                 .append(RESULT_START_DELIMITER);
-        for (Card card : gameResponse.getDeck().getCards()) {
-            sb.append(card.getRank().getValue())
-                    .append(card.getSuit().getName())
+        for (PlayingCard playingCard : gameResponse.getDeck().getCards()) {
+            sb.append(playingCard.getRank().getValue())
+                    .append(playingCard.getSuit().getName())
                     .append(RESULT_DELIMITER);
         }
         sb.deleteCharAt(sb.length() - DELETE_FINAL_DELIMITER);
