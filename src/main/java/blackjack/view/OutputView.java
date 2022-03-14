@@ -53,7 +53,7 @@ public class OutputView {
     }
 
     public static void printDealerHitMessage(ParticipantResponse dealer) {
-        System.out.printf("%n딜러는 16이하라 한 장의 카드를 더 받았습니다.%n");
+        System.out.printf("%n%s는 16이하라 한 장의 카드를 더 받았습니다.%n", dealer.getName());
     }
 
     public static void printCardResultMessage() {
