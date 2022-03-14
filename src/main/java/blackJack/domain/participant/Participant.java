@@ -54,6 +54,10 @@ public abstract class Participant {
         return name;
     }
 
+    public List<Card> getCards() {
+        return cards.getCards();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -62,10 +66,6 @@ public abstract class Participant {
             return false;
         Participant that = (Participant) o;
         return Objects.equals(name, that.name);
-    }
-
-    public List<Card> getCards() {
-        return cards.getCards();
     }
 
     @Override
