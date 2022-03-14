@@ -8,12 +8,19 @@ public class Cards {
 	private static final int BUST_THRESHOLD = 21;
 	private static final int ACE_SPECIAL_SCORE = 11;
 	private static final int INIT_DISTRIBUTE_AMOUNT = 2;
-	private final List<Card> cards = new ArrayList<>();
+	private final List<Card> cards;
 	private int score = 0;
+
+	public Cards(List<Card> cards) {
+		this.cards = cards;
+	}
+
+	public Cards() {
+		this(new ArrayList<>());
+	}
 
 	public void addCard(Card card) {
 		cards.add(card);
-		calculateScore();
 	}
 
 	private void calculateScore() {
@@ -45,6 +52,7 @@ public class Cards {
 	}
 
 	public int getScore() {
+		calculateScore();
 		return score;
 	}
 
