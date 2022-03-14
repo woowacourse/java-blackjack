@@ -3,7 +3,7 @@ package blackjack.domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.Result;
+import blackjack.domain.CompareResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Suit;
@@ -32,8 +32,8 @@ public class GamersTest {
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         Gamers gamers = new Gamers(List.of(gamer));
 
-        Map<Player, Result> expected = new HashMap<>();
-        expected.put(gamer, Result.LOSE);
+        Map<Player, CompareResult> expected = new HashMap<>();
+        expected.put(gamer, CompareResult.LOSE);
 
         assertThat(gamers.compareResult(11)).isEqualTo(expected);
 

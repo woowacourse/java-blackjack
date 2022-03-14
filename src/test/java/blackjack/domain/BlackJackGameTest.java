@@ -48,12 +48,12 @@ public class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(dealer, new Gamers(List.of(judy, huni)));
 
         //when
-        Map<Player, Result> gameResult = blackJackGame.calculateResultBoard();
+        Map<Player, CompareResult> gameResult = blackJackGame.calculateResultBoard();
 
         //then
         assertAll(
-                () -> assertThat(gameResult.get(judy)).isEqualTo(Result.WIN),
-                () -> assertThat(gameResult.get(huni)).isEqualTo(Result.LOSE)
+                () -> assertThat(gameResult.get(judy)).isEqualTo(CompareResult.WIN),
+                () -> assertThat(gameResult.get(huni)).isEqualTo(CompareResult.LOSE)
         );
     }
 
@@ -73,12 +73,12 @@ public class BlackJackGameTest {
         BlackJackGame blackJackGame = new BlackJackGame(dealer, new Gamers(List.of(judy, huni)));
 
         //when
-        Map<Result, Integer> dealerResult = blackJackGame.calculateDealerResultBoard();
+        Map<CompareResult, Integer> dealerResult = blackJackGame.calculateDealerResultBoard();
 
         //then
         assertAll(
-                () -> assertThat(dealerResult.get(Result.WIN)).isEqualTo(1),
-                () -> assertThat(dealerResult.get(Result.LOSE)).isEqualTo(1)
+                () -> assertThat(dealerResult.get(CompareResult.WIN)).isEqualTo(1),
+                () -> assertThat(dealerResult.get(CompareResult.LOSE)).isEqualTo(1)
         );
     }
 

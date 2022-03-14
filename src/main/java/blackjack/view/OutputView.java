@@ -2,7 +2,7 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.Result;
+import blackjack.domain.CompareResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
@@ -83,7 +83,7 @@ public class OutputView {
                 player.calculateResult());
     }
 
-    public static void printFinalResultBoard(final Map<Result, Integer> dealerResultBoard, final Map<Player, Result> gamerResultBoard) {
+    public static void printFinalResultBoard(final Map<CompareResult, Integer> dealerResultBoard, final Map<Player, CompareResult> gamerResultBoard) {
         System.out.println("\n## 최종 승패");
         System.out.printf(PRINT_DEFAULT_FORMAT_MESSAGE, Dealer.DEALER_NAME,
                 joinDealerString(dealerResultBoard));
@@ -92,15 +92,15 @@ public class OutputView {
                 value.getResult()));
     }
 
-    private static String joinDealerString(final Map<Result, Integer> dealerResultBoard) {
+    private static String joinDealerString(final Map<CompareResult, Integer> dealerResultBoard) {
         return dealerResultBoard.entrySet().stream()
                 .map(board -> dealerResultToString(board.getKey(),
                         board.getValue()))
                 .collect(joining(PRINT_BLANK));
     }
 
-    private static String dealerResultToString(final Result result, final int value) {
-        return value + result.getResult();
+    private static String dealerResultToString(final CompareResult compareResult, final int value) {
+        return value + compareResult.getResult();
     }
 
     public static void printErrorMessage(final String message) {

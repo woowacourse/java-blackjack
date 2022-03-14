@@ -35,27 +35,27 @@ public class BlackJackGame {
         }
     }
 
-    public Map<Player, Result> calculateResultBoard() {
+    public Map<Player, CompareResult> calculateResultBoard() {
         return gamers.compareResult(dealer.calculateResult());
     }
 
-    public Map<Result, Integer> calculateDealerResultBoard() {
-        Map<Result, Integer> enumMap = new EnumMap<>(Result.class);
-        for (Entry<Player, Result> gamerResultEntry : calculateResultBoard().entrySet()) {
-            Result dealerResult = convertToDealerResult(gamerResultEntry.getValue());
-            enumMap.put(dealerResult, enumMap.getOrDefault(dealerResult, 0) + COUNT_UNIT);
+    public Map<CompareResult, Integer> calculateDealerResultBoard() {
+        Map<CompareResult, Integer> enumMap = new EnumMap<>(CompareResult.class);
+        for (Entry<Player, CompareResult> gamerResultEntry : calculateResultBoard().entrySet()) {
+            CompareResult dealerCompareResult = convertToDealerResult(gamerResultEntry.getValue());
+            enumMap.put(dealerCompareResult, enumMap.getOrDefault(dealerCompareResult, 0) + COUNT_UNIT);
         }
         return enumMap;
     }
 
-    private static Result convertToDealerResult(final Result result) {
-        if (result == Result.WIN) {
-            return Result.LOSE;
+    private static CompareResult convertToDealerResult(final CompareResult compareResult) {
+        if (compareResult == CompareResult.WIN) {
+            return CompareResult.LOSE;
         }
-        if (result == Result.LOSE) {
-            return Result.WIN;
+        if (compareResult == CompareResult.LOSE) {
+            return CompareResult.WIN;
         }
-        return Result.DRAW;
+        return CompareResult.DRAW;
     }
 
     public Player getDealer() {
