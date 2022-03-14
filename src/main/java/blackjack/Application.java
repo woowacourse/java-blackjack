@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.game.BlackJackGame;
+import blackjack.controller.BlackJackController;
 import blackjack.dto.PlayerDto;
 import blackjack.view.input.DrawCommand;
 import blackjack.view.input.InputView;
@@ -11,37 +11,37 @@ public class Application {
 
     public static void main(final String[] args) {
         final List<String> playerNames = InputView.inputPlayerNames();
-        final BlackJackGame blackJackGame = BlackJackGame.init(playerNames);
-        OutputView.showGameInitInfo(blackJackGame.getInitDealerInfo(), blackJackGame.getInitPlayerInfo());
+        final BlackJackController blackJackController = new BlackJackController(playerNames);
+        OutputView.showGameInitInfo(blackJackController.getInitDealerInfo(), blackJackController.getInitPlayerInfo());
 
-        runPlayerTurn(blackJackGame);
-        runDealerTurn(blackJackGame);
+        runPlayerTurn(blackJackController);
+        runDealerTurn(blackJackController);
 
-        OutputView.printResultPlayerInfos(blackJackGame.getPlayerResultInfos());
-        OutputView.printAllOutcomeResult(blackJackGame.getWinningResult());
+        OutputView.printResultPlayerInfos(blackJackController.getPlayerResultInfos());
+        OutputView.printAllOutcomeResult(blackJackController.getWinningResult());
     }
 
-    private static void runDealerTurn(final BlackJackGame blackJackGame) {
-        while (!blackJackGame.isDealerTurnEnd()) {
-            blackJackGame.drawDealer();
+    private static void runDealerTurn(final BlackJackController blackJackController) {
+        while (!blackJackController.isDealerTurnEnd()) {
+            blackJackController.drawDealer();
             OutputView.printDealerDraw();
         }
-        blackJackGame.stayDealer();
+        blackJackController.stayDealer();
     }
 
-    private static void runPlayerTurn(final BlackJackGame blackJackGame) {
-        while (!blackJackGame.isAllPlayersEnd()) {
-            final String command = InputView.inputDrawCommand(blackJackGame.getCurrentTurnPlayerInfo());
+    private static void runPlayerTurn(final BlackJackController blackJackController) {
+        while (!blackJackController.isAllPlayersEnd()) {
+            final String command = InputView.inputDrawCommand(blackJackController.getCurrentTurnPlayerInfo());
             final DrawCommand drawCommand = DrawCommand.from(command);
-            final PlayerDto currentPlayerDto = checkCurrentPlayerDrawNew(blackJackGame, drawCommand);
+            final PlayerDto currentPlayerDto = checkCurrentPlayerDrawNew(blackJackController, drawCommand);
             OutputView.printPlayerCardInfo(currentPlayerDto);
         }
     }
 
-    private static PlayerDto checkCurrentPlayerDrawNew(final BlackJackGame blackJackGame, final DrawCommand command) {
+    private static PlayerDto checkCurrentPlayerDrawNew(final BlackJackController blackJackController, final DrawCommand command) {
         if (command.isNo()) {
-            return blackJackGame.drawNextPlayer();
+            return blackJackController.drawNextPlayer();
         }
-        return blackJackGame.drawCurrentPlayer();
+        return blackJackController.drawCurrentPlayer();
     }
 }

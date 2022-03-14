@@ -2,11 +2,9 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.OutComeResult;
-import blackjack.dto.PlayerDto;
-import blackjack.dto.PlayerFinalResultDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,12 +39,12 @@ public class BlackJackGame {
         return players.isAllTurnEnd();
     }
 
-    public PlayerDto drawCurrentPlayer() {
+    public Player drawCurrentPlayer() {
         return players.drawCurrentPlayer(cardDeck.provideCard());
     }
 
-    public PlayerDto drawNextPlayer() {
-        final PlayerDto currentPlayer = players.getCurrentTurnPlayerInfo();
+    public Player drawNextPlayer() {
+        final Player currentPlayer = players.getCurrentTurnPlayerInfo();
         players.turnToNextPlayer();
         return currentPlayer;
     }
@@ -65,23 +63,23 @@ public class BlackJackGame {
         }
     }
 
-    public PlayerDto getInitDealerInfo() {
-        return PlayerDto.dealerToInitInfo(dealer);
+    public Dealer getDealer() {
+        return dealer;
     }
 
-    public List<PlayerDto> getInitPlayerInfo() {
-        return players.getInitPlayerInfo();
+    public List<Player> getInitPlayers() {
+        return players.getInitPlayers();
     }
 
-    public PlayerDto getCurrentTurnPlayerInfo() {
+    public Player getCurrentTurnPlayer() {
         return players.getCurrentTurnPlayerInfo();
     }
 
-    public List<PlayerFinalResultDto> getPlayerResultInfos() {
-        final List<PlayerFinalResultDto> resultInfos = new ArrayList<>();
-        resultInfos.add(PlayerFinalResultDto.from(dealer));
-        resultInfos.addAll(players.getResultPlayerInfo());
-        return resultInfos;
+    public List<Participant> getParticipants() {
+        final List<Participant> participants = new ArrayList<>();
+        participants.add(dealer);
+        participants.addAll(players.getInitPlayers());
+        return participants;
     }
 
     public OutComeResult getWinningResult() {

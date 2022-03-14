@@ -2,8 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.GameOutcome;
-import blackjack.dto.PlayerDto;
-import blackjack.dto.PlayerFinalResultDto;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,10 +29,8 @@ public class Players {
                 .count();
     }
 
-    public List<PlayerDto> getInitPlayerInfo() {
-        return values.stream()
-                .map(PlayerDto::playerToInfo)
-                .collect(Collectors.toUnmodifiableList());
+    public List<Player> getInitPlayers() {
+        return values;
     }
 
     public void turnToNextPlayer() {
@@ -53,11 +49,11 @@ public class Players {
         return values.size() <= currentTurnIndex;
     }
 
-    public PlayerDto drawCurrentPlayer(final Card card) {
+    public Player drawCurrentPlayer(final Card card) {
         final Player currentPlayer = currentTurnPlayer();
         currentPlayer.draw(card);
         checkCanTurnNext(currentPlayer);
-        return PlayerDto.playerToInfo(currentPlayer);
+        return currentPlayer;
     }
 
     private Player currentTurnPlayer() {
@@ -71,14 +67,8 @@ public class Players {
         }
     }
 
-    public PlayerDto getCurrentTurnPlayerInfo() {
-        return PlayerDto.playerToInfo(currentTurnPlayer());
-    }
-
-    public List<PlayerFinalResultDto> getResultPlayerInfo() {
-        return values.stream()
-                .map(PlayerFinalResultDto::from)
-                .collect(Collectors.toUnmodifiableList());
+    public Player getCurrentTurnPlayerInfo() {
+        return currentTurnPlayer();
     }
 
     public Map<String, GameOutcome> calculateAllResults(final Dealer dealer) {

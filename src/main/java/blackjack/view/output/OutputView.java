@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardPattern;
 import blackjack.domain.game.GameOutcome;
-import blackjack.dto.OutComeResult;
+import blackjack.domain.game.OutComeResult;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayerFinalResultDto;
 import java.util.List;
