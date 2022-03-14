@@ -18,7 +18,7 @@ class FinishedTest {
     final State state = new Stay(cards);
 
     @Test
-    @DisplayName("턴이 종료된 상태에서 카드를 더 받으려 하면 예외를 발생시킨다.")
+    @DisplayName("턴이 종료된 상태에서 카드를 더 받으려하면 예외를 발생시킨다.")
     void drawException() {
         final Card card = Card.of(CardPattern.SPADE, CardNumber.TWO);
         assertThatThrownBy(() -> state.draw(card))

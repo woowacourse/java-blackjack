@@ -53,7 +53,7 @@ class CardsTest {
     }
 
     @Test
-    @DisplayName("생성 시 카드에는 null이 들어올 경우 예외를 발생해야 한다.")
+    @DisplayName("null으로 객체를 생성하려고 하면 예외를 발생시킨다.")
     void createNullException() {
         assertThatThrownBy(() -> new Cards(null))
                 .isInstanceOf(NullPointerException.class)
@@ -61,7 +61,7 @@ class CardsTest {
     }
 
     @Test
-    @DisplayName("카드들을 반환한다.")
+    @DisplayName("모든 카드들을 반환한다.")
     void getValues() {
         final List<Card> initialCards = Arrays.asList(Card.of(SPADE, TWO), Card.of(SPADE, THREE), Card.of(SPADE, TEN));
         final Cards cards = new Cards(initialCards);
@@ -69,7 +69,7 @@ class CardsTest {
     }
 
     @ParameterizedTest
-    @DisplayName("다른 카드를 받아 자신의 합을 기준으로 승패를 반환한다.")
+    @DisplayName("다른 카드를 받아 자신의 합을 기준으로 승무패를 반환한다.")
     @MethodSource("provideCardsAndExpectedHigher")
     void isHigherThan(final Cards another, final GameOutcome expected) {
         final Cards cards = new Cards(Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, SEVEN)));

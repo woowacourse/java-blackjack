@@ -13,7 +13,7 @@ class ParticipantTest {
 
     @ParameterizedTest
     @NullSource
-    @DisplayName("플레이어의 이름에 null이 들어올 경우 예외가 발생해야 한다.")
+    @DisplayName("플레이어의 이름에 null이 들어오면 예외를 발생시킨다.")
     void createExceptionByNull(String input) {
         assertThatThrownBy(() -> Player.newInstance(input, new ArrayList<>()))
                 .isInstanceOf(NullPointerException.class)
@@ -22,7 +22,7 @@ class ParticipantTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"", " "})
-    @DisplayName("플레이어의 이름에 공백이 들어올 경우 예외가 발생해야 한다.")
+    @DisplayName("플레이어의 이름에 공백이 들어오면 예외를 발생시킨다.")
     void createExceptionByEmpty(String input) {
         assertThatThrownBy(() -> Player.newInstance(input, new ArrayList<>()))
                 .isInstanceOf(IllegalArgumentException.class)

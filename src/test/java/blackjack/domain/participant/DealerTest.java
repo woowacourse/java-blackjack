@@ -60,7 +60,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("종료되지 않은 딜러가 모든 카드를 반환하려고 하는 경우 예외가 발생해야 한다.")
+    @DisplayName("종료되지 않은 딜러가 모든 카드를 반환하려고 하면 예외를 발생시킨다.")
     void getCardsException() {
         final Dealer dealer = new Dealer(
                 new ArrayList<>(Arrays.asList(Card.of(SPADE, TEN), Card.of(SPADE, SIX))));

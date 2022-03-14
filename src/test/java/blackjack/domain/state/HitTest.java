@@ -43,7 +43,7 @@ class HitTest {
     }
 
     @Test
-    @DisplayName("Running 상태에서 비교 결과를 반환하려고 하면 예외를 발생시킨다.")
+    @DisplayName("Hit 상태에서 비교 결과를 반환하려고 하면 예외를 발생시킨다.")
     void compareException() {
         final Cards cards = new Cards(new ArrayList<>());
         final State running = new Hit(cards);

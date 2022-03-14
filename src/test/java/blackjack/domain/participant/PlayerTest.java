@@ -23,14 +23,14 @@ class PlayerTest {
     class CanDraw {
 
         @Test
-        @DisplayName("가능한 경우 true를 반환한다.")
+        @DisplayName("가능하다면 true를 반환한다.")
         void canDraw() {
             final Player player = Player.newInstance("user", Arrays.asList(Card.of(SPADE, FIVE), Card.of(SPADE, KING)));
             assertTrue(player.canDraw());
         }
 
         @Test
-        @DisplayName("불가능한 경우 false를 반환한다.")
+        @DisplayName("불가능하다면 false를 반환한다.")
         void cannotDraw() {
             final Player player = Player.newInstance("user", Arrays.asList(Card.of(SPADE, A), Card.of(SPADE, KING)));
             assertFalse(player.canDraw());

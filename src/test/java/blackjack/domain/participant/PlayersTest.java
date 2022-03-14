@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 class PlayersTest {
 
     @Test
-    @DisplayName("중복된 이름들로 생성 시 예외를 발생시킨다.")
+    @DisplayName("중복된 이름 값들로 객체를 생성하려 하면 예외를 발생시킨다.")
     void createExceptionByDuplication() {
         final Player first = Player.newInstance("a", new ArrayList<>());
         final Player second = Player.newInstance("a", new ArrayList<>());
@@ -31,7 +31,7 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("현재 턴의 플레이어가 버스트될 경우 다음 플레이어로 턴을 넘긴다.")
+    @DisplayName("현재 턴의 플레이어가 버스트 상태가 되면 다음 플레이어로 턴을 넘긴다.")
     void drawCurrentPlayerIsBust() {
         final Player player
                 = Player.newInstance("user", Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
@@ -41,7 +41,7 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("모든 플레이어의 턴이 종료되었는데 드로우하려고하면 예외가 발생해야 한다.")
+    @DisplayName("모든 플레이어의 턴이 종료되었는데 현재 플레이어에게 카드를 지급하려하면 예외를 발생시킨다.")
     void drawCurrentPlayerExceptionByEndAllTurn() {
         final Player player
                 = Player.newInstance("user", Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));
@@ -54,7 +54,7 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("모든 턴이 종료되었을 때 턴 증가를 할 수 없다.")
+    @DisplayName("모든 턴이 종료되었을 때 다음 플레이어로 턴을 넘기려하면 예외를 발생시킨다.")
     void turnToNextPlayerExceptionByEndAllTurn() {
         final Player player
                 = Player.newInstance("user", Arrays.asList(Card.of(SPADE, KING), Card.of(SPADE, QUEEN)));

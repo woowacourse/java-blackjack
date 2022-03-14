@@ -1,30 +1,17 @@
 package blackjack.domain.game;
 
-import static blackjack.domain.game.GameOutcome.DRAW;
-import static blackjack.domain.game.GameOutcome.LOSE;
-import static blackjack.domain.game.GameOutcome.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class GameOutcomeTest {
 
-    @Test
-    @DisplayName("수가 크면 승을 반환받을 수 있다.")
-    void calculateWin() {
-        assertThat(GameOutcome.calculateOutcome(10, 5)).isEqualTo(WIN);
-    }
-
-    @Test
-    @DisplayName("수가 작으면 패를 반환받을 수 있다.")
-    void calculateLose() {
-        assertThat(GameOutcome.calculateOutcome(5, 10)).isEqualTo(LOSE);
-    }
-
-    @Test
-    @DisplayName("수가 같으면 무승부을 반환받을 수 있다.")
-    void calculateDraw() {
-        assertThat(GameOutcome.calculateOutcome(10, 10)).isEqualTo(DRAW);
+    @ParameterizedTest
+    @DisplayName("두 수를 받아 첫번째 수를 기준으로 값을 비교해 크다면 WIN, 작다면 LOST, 똑같다면 DRAW를 반환한다.")
+    @CsvSource({"10, 5, WIN", "5, 10, LOSE", "10, 10, DRAW"})
+    void calculateOutcome(int firstScore, int secondScore, GameOutcome expected) {
+        assertThat(GameOutcome.calculateOutcome(firstScore, secondScore)).isEqualTo(expected);
     }
 }
