@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Gambler extends Player {
+    private static final int MAXIMUM_SCORE = 21;
+
     public Gambler(String name) {
         super(name);
     }
@@ -17,7 +19,7 @@ public class Gambler extends Player {
 
     @Override
     public boolean canGetMoreCard() {
-        return !isBust() && !isBlackJack();
+        return !isBust() && getScore() < MAXIMUM_SCORE;
     }
 
     @Override
