@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 public class Player extends Participant {
 
@@ -50,8 +50,8 @@ public class Player extends Participant {
     }
 
     @Override
-    public Set<Card> getInitialOpenCards() {
-       return Collections.unmodifiableSet(cardBundle.getCards());
+    public List<Card> getInitialOpenCards() {
+       return Collections.unmodifiableList(cardBundle.getCards());
     }
 
     @Override

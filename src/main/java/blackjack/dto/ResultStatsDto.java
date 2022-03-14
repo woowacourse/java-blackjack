@@ -8,7 +8,6 @@ import blackjack.domain.game.Score;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ResultStatsDto {
@@ -41,7 +40,7 @@ public class ResultStatsDto {
         return participantCardsDto.getName();
     }
 
-    public Set<Card> getCards() {
+    public List<Card> getCards() {
         return participantCardsDto.getCards();
     }
 

@@ -4,22 +4,22 @@ import blackjack.domain.card.Card;
 import blackjack.domain.game.Score;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class ParticipantCardsDto {
 
     private final String name;
     private final CardsDto cardsDto;
 
-    private ParticipantCardsDto(String name, Set<Card> cards, Score score) {
+    private ParticipantCardsDto(String name, List<Card> cards, Score score) {
         this.name = name;
         this.cardsDto = new CardsDto(cards, score);
     }
 
     public static ParticipantCardsDto of(Participant participant) {
         String name = participant.getName();
-        Set<Card> cards = participant.getCards();
+        List<Card> cards = participant.getCards();
         Score score = participant.getCurrentScore();
 
         return new ParticipantCardsDto(name, cards, score);
@@ -27,7 +27,7 @@ public class ParticipantCardsDto {
 
     public static ParticipantCardsDto ofInitial(Participant participant) {
         String name = participant.getName();
-        Set<Card> openCardInfo = participant.getInitialOpenCards();
+        List<Card> openCardInfo = participant.getInitialOpenCards();
         Score score = participant.getCurrentScore();
 
         return new ParticipantCardsDto(name, openCardInfo, score);
@@ -41,7 +41,7 @@ public class ParticipantCardsDto {
         return name;
     }
 
-    public Set<Card> getCards() {
+    public List<Card> getCards() {
         return cardsDto.getCards();
     }
 

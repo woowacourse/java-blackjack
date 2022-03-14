@@ -1,8 +1,8 @@
 package blackjack.domain.card;
 
 import blackjack.domain.game.Score;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 public class CardBundle {
@@ -10,14 +10,14 @@ public class CardBundle {
     private static final String NO_DUPLICATE_CARD_EXCEPTION_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
     private static final int BLACKJACK_CARD_SIZE = 2;
 
-    private final Set<Card> cards;
+    private final List<Card> cards;
 
-    private CardBundle(Set<Card> cards) {
+    private CardBundle(List<Card> cards) {
         this.cards = cards;
     }
 
     public static CardBundle of(Card card1, Card card2) {
-        Set<Card> initialCards = new HashSet<>(Set.of(card1, card2));
+        List<Card> initialCards = new ArrayList<>(List.of(card1, card2));
         return new CardBundle(initialCards);
     }
 
@@ -32,7 +32,7 @@ public class CardBundle {
         }
     }
 
-    public Set<Card> getCards() {
+    public List<Card> getCards() {
         return cards;
     }
 

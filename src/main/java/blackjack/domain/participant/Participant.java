@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.game.Score;
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 public abstract class Participant {
 
@@ -34,9 +34,9 @@ public abstract class Participant {
 
     public abstract String getName();
 
-    public abstract Set<Card> getInitialOpenCards();
+    public abstract List<Card> getInitialOpenCards();
 
-    public Set<Card> getCards() {
-        return Collections.unmodifiableSet(cardBundle.getCards());
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cardBundle.getCards());
     }
 }

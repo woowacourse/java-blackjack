@@ -2,22 +2,22 @@ package blackjack.dto;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Score;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class CardsDto {
 
-    private final Set<Card> cards;
+    private final List<Card> cards;
     private final Score score;
 
-    public CardsDto(Set<Card> cards, Score score) {
-        this.cards = new HashSet<>(cards);
+    public CardsDto(List<Card> cards, Score score) {
+        this.cards = new ArrayList<>(cards);
         this.score = score;
     }
 
-    public Set<Card> getCards() {
-        return Collections.unmodifiableSet(cards);
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     public Score getScore() {

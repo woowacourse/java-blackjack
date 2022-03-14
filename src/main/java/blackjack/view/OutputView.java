@@ -8,7 +8,6 @@ import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.ResultStatsDto;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -141,7 +140,7 @@ public class OutputView {
         return count + resultDisplayName;
     }
 
-    private static String getCardsInfo(Set<Card> cards) {
+    private static String getCardsInfo(List<Card> cards) {
         return cards.stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(JOIN_DELIMITER));

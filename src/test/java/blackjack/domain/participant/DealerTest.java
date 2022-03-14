@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
-import java.util.Set;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -34,7 +34,7 @@ public class DealerTest {
     void receiveCard() {
         dealer.receiveCard(CLOVER6);
 
-        Set<Card> actual = dealer.getCards();
+        List<Card> actual = dealer.getCards();
 
         assertThat(actual).containsExactlyInAnyOrder(CLOVER4, CLOVER5, CLOVER6);
     }
@@ -98,9 +98,9 @@ public class DealerTest {
     @DisplayName("딜러의 getInitialOpenCards 메서드는 초기에 받은 카드 중 한 장이 담긴 컬렉션을 반환한다.")
     @Test
     void getInitialOpenCards() {
-        Set<Card> actual = dealer.getInitialOpenCards();
+        List<Card> actual = dealer.getInitialOpenCards();
 
-        assertThat(actual).containsAnyElementsOf(dealer.getCards());
+        assertThat(actual).containsExactly(CLOVER4);
         assertThat(actual.size()).isEqualTo(1);
     }
 }

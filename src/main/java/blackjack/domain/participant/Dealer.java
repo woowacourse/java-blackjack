@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.game.Score;
+import java.util.List;
 import java.util.Set;
 
 public class Dealer extends Participant {
@@ -30,13 +31,13 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public Set<Card> getInitialOpenCards() {
+    public List<Card> getInitialOpenCards() {
         Card openCard = cardBundle.getCards()
                 .stream()
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(EMPTY_CARD_BUNDLE_EXCEPTION_MESSAGE));
 
-        return Set.of(openCard);
+        return List.of(openCard);
     }
 
     @Override
