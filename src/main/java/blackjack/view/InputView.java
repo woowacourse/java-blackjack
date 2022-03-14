@@ -2,6 +2,7 @@ package blackjack.view;
 
 import static java.lang.System.out;
 
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.Locale;
 import java.util.Scanner;
@@ -18,7 +19,7 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static boolean inputOneMoreCard(Player player) {
+    public static boolean inputOneMoreCard(Participant player) {
         out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName());
         try {
             String input = SCANNER.nextLine().toLowerCase(Locale.ROOT);

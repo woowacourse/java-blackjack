@@ -25,19 +25,6 @@ public class Player extends Participant {
         return !cardHand.isBust() && !cardHand.isBlackjack() && cardHand.getScore() != BLACKJACK_SYMBOL_SCORE;
     }
 
-    public Result compareMatchResult(int dealerCardScore) {
-        if (cardHand.getScore() < dealerCardScore || cardHand.isBust()) {
-            return Result.LOSE;
-        }
-        if (dealerCardScore == cardHand.getScore()) {
-            return Result.DRAW;
-        }
-        if (dealerCardScore < cardHand.getScore()) {
-            return Result.WIN;
-        }
-        throw new IllegalArgumentException("[ERROR] 입력 값이 올바르지 않습니다.");
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

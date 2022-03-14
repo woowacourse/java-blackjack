@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.result.Result;
 import java.util.List;
 
 public abstract class Participant {
@@ -22,6 +23,19 @@ public abstract class Participant {
     }
 
     public abstract boolean shouldReceive();
+
+    public Result compareMatchResult(int dealerCardScore) {
+        if (cardHand.getScore() < dealerCardScore || cardHand.isBust()) {
+            return Result.LOSE;
+        }
+        if (dealerCardScore == cardHand.getScore()) {
+            return Result.DRAW;
+        }
+        if (dealerCardScore < cardHand.getScore()) {
+            return Result.WIN;
+        }
+        throw new IllegalArgumentException("[ERROR] 입력 값이 올바르지 않습니다.");
+    }
 
     public void receiveCard(Card card) {
         cardHand.add(card);
