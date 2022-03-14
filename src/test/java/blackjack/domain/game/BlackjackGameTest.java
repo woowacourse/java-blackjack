@@ -11,6 +11,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardStack;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.CardBundleStrategy;
 import java.util.List;
@@ -117,11 +119,25 @@ public class BlackjackGameTest {
     @Test
     void isBlackjackDealer_trueOnDealerBlackjack() {
         BlackjackGame blackjackGame = new BlackjackGame(
-                new CardsStub(), PLAYER_NAMES_LIST, cardBundleOfBlackjackStrategy);
+                new CardDeck(), PLAYER_NAMES_LIST, cardBundleOfBlackjackStrategy);
 
         boolean actual = blackjackGame.isBlackjackDealer();
 
         assertThat(actual).isTrue();
+    }
+
+    @DisplayName("getParticipants 메서드는 Dealer 인스턴스와 1명 이상의 Player 인스턴스로 구성된 컬렉션을 반환한다.")
+    @Test
+    void getParticipants_returnsListOfParticipantsWithDealerAtIndexZero() {
+        BlackjackGame blackjackGame = new BlackjackGame(
+                new CardDeck(), List.of("p1","p2","p3"), cardBundleOfSixteenStrategy);
+
+        List<Participant> actual = blackjackGame.getParticipants();
+
+        assertThat(actual.get(0)).isInstanceOf(Dealer.class);
+        for (int i = 1; i < actual.size(); i++) {
+            assertThat(actual.get(i)).isInstanceOf(Player.class);
+        }
     }
 
     private static class CardsStub implements CardStack {

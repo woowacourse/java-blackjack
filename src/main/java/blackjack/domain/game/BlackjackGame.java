@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardStack;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameParticipants;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.strategy.CardBundleStrategy;
 import java.util.Collections;
@@ -80,6 +81,10 @@ public class BlackjackGame {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(participants.getPlayers());
+    }
+
+    public List<Participant> getParticipants() {
+        return participants.getEveryone();
     }
 
     @Override
