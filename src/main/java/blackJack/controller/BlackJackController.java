@@ -30,8 +30,8 @@ public class BlackJackController {
 
     private Participants getParticipants() {
         try {
-            List<String> playerNames = InputView.inputPlayerNames();
-            List<Player> players = playerNames.stream()
+            final List<String> playerNames = InputView.inputPlayerNames();
+            final List<Player> players = playerNames.stream()
                     .map(Player::new)
                     .collect(Collectors.toUnmodifiableList());
             return new Participants(new Dealer(), players);
@@ -42,7 +42,7 @@ public class BlackJackController {
     }
 
     private List<Player> playersTurn(Participants participants, Deck deck) {
-        List<Player> players = participants.getPlayers();
+        final List<Player> players = participants.getPlayers();
         for (Player player : players) {
             doEachPlayerTurn(player, deck);
         }
@@ -58,7 +58,7 @@ public class BlackJackController {
 
     private boolean getOneMoreCard(Player player) {
         try {
-            String choice = InputView.inputOneMoreCard(player.getName());
+            final String choice = InputView.inputOneMoreCard(player.getName());
             return YesOrNo.YES == YesOrNo.find(choice);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);

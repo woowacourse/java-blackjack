@@ -36,7 +36,7 @@ public class BlackJackGame {
     }
 
     public Dealer doDealerGame() {
-        Dealer dealer = participants.getDealer();
+        final Dealer dealer = participants.getDealer();
         while (dealer.hasNextTurn()) {
             dealer.receiveCard(deck.getCard());
         }

@@ -15,10 +15,10 @@ public enum WinDrawLose {
     }
 
     public static WinDrawLose calculateWinDrawLose(Player player, Dealer dealer) {
-        WinDrawLose resultByBust = getWinLoseByBust(player, dealer);
+        final WinDrawLose resultByBust = getWinLoseByBust(player, dealer);
         if (resultByBust != null) return resultByBust;
 
-        WinDrawLose resultByBlackJack = getWinDrawByBlackJack(player, dealer);
+        final WinDrawLose resultByBlackJack = getWinDrawByBlackJack(player, dealer);
         if (resultByBlackJack != null) return resultByBlackJack;
 
         return getWinDrawLoseByScore(player, dealer);
