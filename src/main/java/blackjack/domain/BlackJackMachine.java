@@ -28,8 +28,6 @@ public class BlackJackMachine {
     }
 
     public void giveCardToPlayer(final Player player) {
-        if (player.canAddCard()) {
-            player.addCard(deck.getCard());
-        }
+        player.addCard(deck.getCard());
     }
 }
