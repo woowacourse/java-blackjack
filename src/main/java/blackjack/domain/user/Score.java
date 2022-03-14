@@ -36,6 +36,10 @@ public class Score implements Comparable<Score> {
 		return score > BUST_THRESHOLD;
 	}
 
+	public static Score initialScore() {
+		return scores.get(INITIAL_SCORE);
+	}
+
 	public Score addBy(final int number) {
 		return Score.from(this.score + number);
 	}

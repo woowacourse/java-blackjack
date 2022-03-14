@@ -15,7 +15,7 @@ public class Cards {
 
 	public Cards() {
 		this.cards = new ArrayList<>();
-		this.score = Score.from(INITIAL_SCORE);
+		this.score = Score.initialScore();
 	}
 
 	public void addCard(final Card card) {
