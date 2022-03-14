@@ -32,8 +32,15 @@ public class BlackjackController {
         OutputView.printInitialPlayersHand(playerDtos);
     }
 
+    public void giveCardsToAllPlayer(BlackjackGame game) {
+        List<Player> players = game.getParticipants();
+        for (Player player : players) {
+            givePlayerCards(player, game);
+        }
+    }
+
     // TODO: 2 depth 수정하기
-    public void givePlayerCards(Player player, BlackjackGame game) {
+    private void givePlayerCards(Player player, BlackjackGame game) {
         while (player.canReceive()) {
             if (!InputView.requestMorePlayerCardInput(player.getName())) {
                 return;
@@ -43,6 +50,12 @@ public class BlackjackController {
         }
 
         OutputView.printPlayerBustInfo();
+    }
+
+    public void giveExtraCardToDealerIfPossible(BlackjackGame game) {
+        if (game.giveCardToDealer()) {
+            OutputView.printDealerExtraCardInfo();
+        }
     }
 
     // TODO: 추후 participants 에 dealer 가 포함되는 구조로 개선되면 수정 필요
@@ -71,5 +84,6 @@ public class BlackjackController {
 
         OutputView.printPlayerMatchResults(playerMatchDtos);
     }
+
 }
 
