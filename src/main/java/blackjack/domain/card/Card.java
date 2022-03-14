@@ -40,7 +40,7 @@ public class Card {
     }
 
     public Suit getSuit() {
-        return suit;
+        return this.suit;
     }
 
     @Override

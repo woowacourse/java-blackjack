@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.Blackjack;
+import blackjack.domain.BlackjackTable;
 import blackjack.domain.Command;
 import blackjack.domain.PlayerOutcome;
 import blackjack.domain.entry.Participant;
@@ -11,37 +11,37 @@ import java.util.stream.Collectors;
 
 public class BlackjackController {
 
-    public static Blackjack createBlackjack(List<String> inputNames) {
-        return new Blackjack(inputNames);
+    public static BlackjackTable createBlackjack(List<String> inputNames) {
+        return new BlackjackTable(inputNames);
     }
 
-    public static List<Participant> getParticipants(Blackjack blackjack) {
-        return blackjack.getParticipant();
+    public static List<Participant> getParticipants(BlackjackTable blackjackTable) {
+        return blackjackTable.getParticipant();
     }
 
-    public static List<Player> getPlayers(Blackjack blackjack) {
-        return blackjack.getPlayers();
+    public static List<Player> getPlayers(BlackjackTable blackjackTable) {
+        return blackjackTable.getPlayers();
     }
 
-    public static void hitPlayer(Blackjack blackjack, Player player, Command command) {
-        if (blackjack.canHit(player, command)) {
-            blackjack.hit(player);
+    public static void hitPlayer(BlackjackTable blackjackTable, Player player, Command command) {
+        if (blackjackTable.canHit(player, command)) {
+            blackjackTable.hit(player);
         }
     }
 
-    public static Map<Participant, Integer> getCardResult(Blackjack blackjack) {
-        List<Participant> participants = blackjack.getParticipant();
+    public static Map<Participant, Integer> getCardResult(BlackjackTable blackjackTable) {
+        List<Participant> participants = blackjackTable.getParticipant();
         return participants.stream()
             .collect(Collectors.toMap(participant -> participant, Participant::countCards));
     }
 
-    public static Map<PlayerOutcome, List<Player>> getGameResult(Blackjack blackjack) {
-        return blackjack.getGameResult();
+    public static Map<PlayerOutcome, List<Player>> getGameResult(BlackjackTable blackjackTable) {
+        return blackjackTable.getGameResult();
     }
 
-    public static void hitDealer(Blackjack blackjack) {
-        while (blackjack.needMoreCardByDealer()) {
-            blackjack.hitDealer();
+    public static void hitDealer(BlackjackTable blackjackTable) {
+        while (blackjackTable.needMoreCardByDealer()) {
+            blackjackTable.hitDealer();
         }
     }
 }

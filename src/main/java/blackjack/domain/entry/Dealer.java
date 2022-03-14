@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Dealer extends Participant {
     private static final int MORE_CARD_STANDARD = 16;
-    private static final String NAME = "딜러";
+    protected static final String NAME = "딜러";
 
     public Dealer(HoldCards holdCards) {
         super(holdCards);

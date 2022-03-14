@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.domain.Blackjack;
+import blackjack.domain.BlackjackTable;
 import blackjack.domain.Command;
 import blackjack.domain.entry.Player;
 import blackjack.view.InputView;
@@ -12,46 +12,46 @@ import java.util.List;
 public class Application {
 
     public static void main(String[] args) {
-        Blackjack blackjack = BlackjackController.createBlackjack(InputView.inputNames());
-        OutputView.printPlayersDefaultCard(BlackjackController.getParticipants(blackjack));
+        BlackjackTable blackjackTable = BlackjackController.createBlackjack(InputView.inputNames());
+        OutputView.printPlayersDefaultCard(BlackjackController.getParticipants(blackjackTable));
 
-        hit(blackjack);
+        hit(blackjackTable);
 
-        OutputView.printCardResult(BlackjackController.getCardResult(blackjack));
-        OutputView.printGameResult(BlackjackController.getGameResult(blackjack));
+        OutputView.printCardResult(BlackjackController.getCardResult(blackjackTable));
+        OutputView.printGameResult(BlackjackController.getGameResult(blackjackTable));
     }
 
-    private static void hit(Blackjack blackjack) {
-        hitPlayers(blackjack);
-        hitDealer(blackjack);
+    private static void hit(BlackjackTable blackjackTable) {
+        hitPlayers(blackjackTable);
+        hitDealer(blackjackTable);
     }
 
-    private static void hitPlayers(Blackjack blackjack) {
-        List<Player> players = BlackjackController.getPlayers(blackjack);
+    private static void hitPlayers(BlackjackTable blackjackTable) {
+        List<Player> players = BlackjackController.getPlayers(blackjackTable);
         for (Player player : players) {
-            hitPlayer(blackjack, player);
+            hitPlayer(blackjackTable, player);
         }
     }
 
-    private static void hitPlayer(Blackjack blackjack, Player player) {
+    private static void hitPlayer(BlackjackTable blackjackTable, Player player) {
         Command command = Command.find(InputView.inputCommand(player.getName()));
         if (command == Command.STAY) {
             OutputView.printPlayerCards(player);
             return;
         }
-        moreHit(blackjack, player, command);
+        moreHit(blackjackTable, player, command);
     }
 
-    private static void moreHit(Blackjack blackjack, Player player, Command command) {
-        while (blackjack.canHit(player, command)) {
-            BlackjackController.hitPlayer(blackjack, player, command);
+    private static void moreHit(BlackjackTable blackjackTable, Player player, Command command) {
+        while (blackjackTable.canHit(player, command)) {
+            BlackjackController.hitPlayer(blackjackTable, player, command);
             OutputView.printPlayerCards(player);
             command = Command.find(InputView.inputCommand(player.getName()));
         }
     }
 
-    private static void hitDealer(Blackjack blackjack) {
-        BlackjackController.hitDealer(blackjack);
+    private static void hitDealer(BlackjackTable blackjackTable) {
+        BlackjackController.hitDealer(blackjackTable);
         OutputView.printReceivingMoreCardOfDealer();
     }
 }

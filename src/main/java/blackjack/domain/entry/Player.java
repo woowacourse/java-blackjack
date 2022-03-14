@@ -13,6 +13,7 @@ public class Player extends Participant {
 
     public Player(String name, HoldCards holdCards) {
         super(holdCards);
+        validateName(name);
         this.name = name;
     }
 
@@ -34,5 +35,11 @@ public class Player extends Participant {
     @Override
     public String getName() {
         return name;
+    }
+
+    private void validateName(String name) {
+        if (name.equals(Dealer.NAME)) {
+            throw new IllegalArgumentException("플레이어의 이름에는 딜러가 포함될 수 없습니다.");
+        }
     }
 }
