@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Participant {
+public abstract class Participant {
     protected final Cards cards;
     protected final String name;
 
