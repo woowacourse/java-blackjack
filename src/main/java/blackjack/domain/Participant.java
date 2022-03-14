@@ -3,11 +3,11 @@ package blackjack.domain;
 import java.util.List;
 
 public abstract class Participant {
-    private String name;
+    private Name name;
     private HoldingCards holdingCards;
 
     public Participant(String name, HoldingCards holdingCards) {
-        this.name = name;
+        this.name = new Name(name);
         this.holdingCards = holdingCards;
     }
 
@@ -20,7 +20,7 @@ public abstract class Participant {
     };
 
     public String getName() {
-        return name;
+        return this.name.name;
     }
 
     public HoldingCards getHoldingCard() {
@@ -28,4 +28,15 @@ public abstract class Participant {
     }
 
     public abstract boolean isFinished();
+
+    private class Name {
+        private final String name;
+
+        private Name(String name) {
+            if (name.isEmpty()) {
+                throw new IllegalArgumentException("[ERROR] 빈 이름!!");
+            }
+            this.name = name;
+        }
+    }
 }
