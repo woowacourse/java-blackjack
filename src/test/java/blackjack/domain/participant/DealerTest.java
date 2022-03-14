@@ -1,16 +1,24 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.CardsTestDataGenerator.*;
-import static blackjack.domain.card.Denomination.*;
-import static blackjack.domain.GameResult.*;
-import static blackjack.domain.card.Suit.*;
+import static blackjack.domain.CardsTestDataGenerator.generateBlackjack;
+import static blackjack.domain.CardsTestDataGenerator.generateCards;
+import static blackjack.domain.CardsTestDataGenerator.generateTotalScoreGraterThan17Cards;
+import static blackjack.domain.CardsTestDataGenerator.generateTotalScoreNotMoreThan16Cards;
+import static blackjack.domain.card.Denomination.FIVE;
+import static blackjack.domain.card.Denomination.JACK;
+import static blackjack.domain.card.Denomination.KING;
+import static blackjack.domain.card.Suit.HEART;
+import static blackjack.domain.card.Suit.SPADE;
+import static blackjack.domain.result.GameResult.LOSE;
+import static blackjack.domain.result.GameResult.TIE;
+import static blackjack.domain.result.GameResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import blackjack.domain.CardsArgumentsProvider;
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.GameResult;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -63,7 +71,6 @@ public class DealerTest {
         assertThat(dealer.getTotalScore()).isEqualTo(totalScore);
     }
 
-
     @DisplayName("딜러만 버스트 일 경우 패배한다.")
     @Test
     void 딜러_승패_여부_버스트_패() {
@@ -73,7 +80,7 @@ public class DealerTest {
 
         Player player = new Player("sudal", generateBlackjack());
 
-        GameResult gameResult = dealer.decideResult(player.getTotalScore());
+        GameResult gameResult = dealer.decideResult(player);
 
         assertThat(gameResult).isEqualTo(LOSE);
     }
@@ -89,7 +96,7 @@ public class DealerTest {
         player.append(new Card(KING, HEART));
         player.append(new Card(JACK, SPADE));
 
-        GameResult gameResult = dealer.decideResult(player.getTotalScore());
+        GameResult gameResult = dealer.decideResult(player);
 
         assertThat(gameResult).isEqualTo(WIN);
     }
@@ -102,7 +109,7 @@ public class DealerTest {
         player.append(new Card(KING, SPADE));
         player.append(new Card(JACK, SPADE));
 
-        GameResult gameResult = dealer.decideResult(player.getTotalScore());
+        GameResult gameResult = dealer.decideResult(player);
 
         assertThat(gameResult).isEqualTo(WIN);
     }
@@ -113,7 +120,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(generateTotalScoreNotMoreThan16Cards());
         Player player = new Player("sudal", generateTotalScoreGraterThan17Cards());
 
-        GameResult gameResult = dealer.decideResult(player.getTotalScore());
+        GameResult gameResult = dealer.decideResult(player);
 
         assertThat(gameResult).isEqualTo(LOSE);
     }
@@ -124,7 +131,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(generateTotalScoreGraterThan17Cards());
         Player player = new Player("sudal", generateTotalScoreNotMoreThan16Cards());
 
-        GameResult gameResult = dealer.decideResult(player.getTotalScore());
+        GameResult gameResult = dealer.decideResult(player);
 
         assertThat(gameResult).isEqualTo(WIN);
     }
@@ -135,7 +142,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(generateCards());
         Player player = new Player("sudal", generateCards());
 
-        GameResult gameResult = dealer.decideResult(player.getTotalScore());
+        GameResult gameResult = dealer.decideResult(player);
 
         assertThat(gameResult).isEqualTo(TIE);
     }

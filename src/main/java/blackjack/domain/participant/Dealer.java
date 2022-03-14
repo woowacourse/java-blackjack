@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
+import blackjack.domain.result.GameResult;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -19,15 +19,15 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public GameResult decideResult(int playerScore) {
-        if (playerScore > BLACKJACK_SCORE) {
+    public GameResult decideResult(Participant participant) {
+        if (participant.isBust()) {
             return GameResult.WIN;
         }
 
-        if (getTotalScore() > BLACKJACK_SCORE) {
+        if (isBust()) {
             return GameResult.LOSE;
         }
 
-        return GameResult.of(getTotalScore() - playerScore);
+        return GameResult.of(getTotalScore(), participant.getTotalScore());
     }
 }

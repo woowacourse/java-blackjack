@@ -1,8 +1,8 @@
 package blackjack.dto;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.GameResult;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.GameResult;
 
 public class PlayerResultDto {
 
@@ -15,7 +15,7 @@ public class PlayerResultDto {
     }
 
     public static PlayerResultDto of(Player player, Dealer dealer) {
-        GameResult gameResult = player.decideResult(dealer.getTotalScore());
+        GameResult gameResult = player.decideResult(dealer);
         return new PlayerResultDto(player.getName(), gameResult.getValue());
     }
 

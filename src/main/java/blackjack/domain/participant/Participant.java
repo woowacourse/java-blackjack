@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.result.GameResult;
 import java.util.List;
 
 public abstract class Participant {
@@ -25,9 +25,13 @@ public abstract class Participant {
         cards.append(card);
     }
 
+    protected boolean isBust() {
+        return cards.calculateTotalScore() > BLACKJACK_SCORE;
+    }
+
     public abstract boolean isDrawable();
 
-    public abstract GameResult decideResult(int score);
+    public abstract GameResult decideResult(Participant participant);
 
     public String getName() {
         return name.getValue();
