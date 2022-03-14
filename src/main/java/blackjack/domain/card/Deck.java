@@ -20,16 +20,14 @@ public class Deck {
 	}
 
 	private List<Card> setUpCards() {
-		List<Card> cards = new ArrayList<>();
-		Stream.of(Denomination.values())
-			.forEach(denomination -> cards.addAll(setUpCardSuitByDenomination(denomination)));
-		return cards;
+		return Stream.of(Denomination.values())
+			.flatMap(this::setUpCardSuitByDenomination)
+			.collect(Collectors.toList());
 	}
 
-	private List<Card> setUpCardSuitByDenomination(final Denomination denomination) {
+	private Stream<Card> setUpCardSuitByDenomination(final Denomination denomination) {
 		return Stream.of(Suit.values())
-			.map(suit -> new Card(denomination, suit))
-			.collect(Collectors.toList());
+			.map(suit -> new Card(denomination, suit));
 	}
 
 	public Card distributeCard() {
