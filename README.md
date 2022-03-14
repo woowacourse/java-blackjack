@@ -7,8 +7,8 @@
 ---
 
 ![Generic badge](https://img.shields.io/badge/Level1-blackjack-green.svg)
-![Generic badge](https://img.shields.io/badge/test-23_passed-blue.svg)
-![Generic badge](https://img.shields.io/badge/version-1.0.0-brightgreen.svg)
+![Generic badge](https://img.shields.io/badge/test-32_passed-blue.svg)
+![Generic badge](https://img.shields.io/badge/version-1.0.1-brightgreen.svg)
 
 > 우아한테크코스 웹 백엔드 4기, 블랙잭 - 상속, 인터페이스 저장소입니다.
 
