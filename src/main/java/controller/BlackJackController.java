@@ -7,7 +7,9 @@ import domain.card.CardDeck;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
-import dto.PlayerDto;
+import dto.CardsAndScoreDto;
+import dto.CardsDto;
+import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -19,6 +21,7 @@ public class BlackJackController {
         CardDeck cardDeck = CardDeck.newInstance().shuffle();
 
         playGame(gamblers, dealer, cardDeck);
+        printCardAndScore(dealer, gamblers);
         OutputView.printResult(BlackJackResult.of(dealer, gamblers));
     }
 
@@ -33,7 +36,6 @@ public class BlackJackController {
         spreadCards(cardDeck, dealer, gamblers);
         playForGamblers(gamblers, cardDeck);
         playForDealer(dealer, cardDeck);
-        printCardAndScore(dealer, gamblers);
     }
 
     private void spreadCards(CardDeck cardDeck, Dealer dealer, Gamblers gamblers) {
@@ -48,15 +50,18 @@ public class BlackJackController {
 
     private void printCardsAfterInitialSpread(Dealer dealer, Gamblers gamblers) {
         OutputView.printSpreadAnnouncement(dealer.getName(), gamblers.getGamblerNames());
-        OutputView.printSingleCardForDealer(PlayerDto.from(dealer));
-        OutputView.printTwoCardsForGamblers(getPlayerDtos(gamblers));
+        OutputView.printInitialOpenCards(getInitialOpenCardsDto(dealer, gamblers));
     }
 
-    private List<PlayerDto> getPlayerDtos(Gamblers gamblers) {
-        return gamblers.getGamblers()
-                .stream()
-                .map(PlayerDto::from)
-                .collect(toList());
+    private List<CardsDto> getInitialOpenCardsDto(Dealer dealer, Gamblers gamblers) {
+        List<CardsDto> cardsDtos = new ArrayList<>();
+        cardsDtos.add(CardsDto.from(dealer));
+
+        for (Gambler gambler : gamblers.getGamblers()) {
+            cardsDtos.add(CardsDto.from(gambler));
+        }
+
+        return cardsDtos;
     }
 
     private void playForGamblers(Gamblers gamblers, CardDeck cardDeck) {
@@ -70,18 +75,14 @@ public class BlackJackController {
     private void playSingleGamblerGame(Gambler gambler, CardDeck cardDeck) {
         boolean isHit = InputView.scanIsHit(gambler.getName());
         if (!isHit) {
-            OutputView.printCards(PlayerDto.from(gambler));
+            OutputView.printCards(CardsDto.from(gambler));
             return;
         }
 
         do {
-            addCard(gambler, cardDeck);
+            gambler.addCard(cardDeck.getCard());
+            OutputView.printCards(CardsDto.from(gambler));
         } while (gambler.canGetMoreCard() && InputView.scanIsHit(gambler.getName()));
-    }
-
-    private void addCard(Gambler gambler, CardDeck cardDeck) {
-        gambler.addCard(cardDeck.getCard());
-        OutputView.printCards(PlayerDto.from(gambler));
     }
 
     private void playForDealer(Dealer dealer, CardDeck cardDeck) {
@@ -94,12 +95,13 @@ public class BlackJackController {
     }
 
     private void printCardAndScore(Dealer dealer, Gamblers gamblers) {
-        OutputView.printLineSeparator();
-        OutputView.printCardAndScore(PlayerDto.from(dealer));
+        List<CardsAndScoreDto> cardsAndScoreDtos = new ArrayList<>();
+        cardsAndScoreDtos.add(CardsAndScoreDto.from(dealer));
 
-        gamblers.getGamblers()
-                .stream()
-                .map(PlayerDto::from)
-                .forEach(OutputView::printCardAndScore);
+        for (Gambler gambler : gamblers.getGamblers()) {
+            cardsAndScoreDtos.add(CardsAndScoreDto.from(gambler));
+        }
+
+        OutputView.printCardAndScoreDtos(cardsAndScoreDtos);
     }
 }
