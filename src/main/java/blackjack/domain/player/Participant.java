@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Participant extends Player {
 
-    public Participant(final List<Card> cards, final String name) {
-        super(cards, name);
+    public Participant(final String name) {
+        super(name);
         validateEmpty(name);
     }
 

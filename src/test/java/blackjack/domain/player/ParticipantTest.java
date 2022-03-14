@@ -18,34 +18,27 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 class ParticipantTest {
 
     private Deck deck;
-    private List<Card> initCards;
 
     @BeforeEach
     void setup() {
         deck = new Deck(new RandomCardGenerator());
-        initCards = List.of(deck.draw(), deck.draw());
     }
 
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("참여자 이름은 비어있을 수 없다")
     void checkNameNullOrEmpty(String name) {
-        assertThatThrownBy(() -> new Participant(initCards, name))
+        assertThatThrownBy(() -> new Participant(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 이름은 비어있을 수 없습니다.");
     }
 
     @Test
-    @DisplayName("참가자는 시작시 카드를 2장 받는다.")
-    void checkParticipantCardSize() {
-        Participant participant = new Participant(initCards, "pobi");
-        assertThat(participant.getCards().size()).isEqualTo(2);
-    }
-
-    @Test
     @DisplayName("참가자는 추가로 카드를 받을 수 있다.")
     void addParticipantCard() {
-        Participant participant = new Participant(initCards, "pobi");
+        Participant participant = new Participant("pobi");
+        participant.addCard(deck.draw());
+        participant.addCard(deck.draw());
         int size = participant.getCards().size();
         participant.addCard(deck.draw());
         assertThat(participant.getCards().size()).isEqualTo(size + 1);
@@ -55,8 +48,10 @@ class ParticipantTest {
     @MethodSource("notBurstCase")
     @DisplayName("참가자는 Burst가 되지 않으면 카드를 받을 수 있다.")
     void acceptCardWhenNotBurst(List<Card> cards, boolean acceptable) {
-        Participant participant = new Participant(cards, "pobi");
-
+        Participant participant = new Participant("pobi");
+        for (Card card : cards) {
+            participant.addCard(card);
+        }
         assertThat(participant.acceptableCard()).isEqualTo(acceptable);
     }
 
@@ -80,10 +75,10 @@ class ParticipantTest {
     @Test
     @DisplayName("참가자는 Burst가 되면 카드를 받을 수 없다.")
     void notAcceptCardWhenBurst() {
-        Participant participant = new Participant(List.of(
-                new Card(Type.SPADE, Score.EIGHT),
-                new Card(Type.HEART, Score.EIGHT)), "pobi");
-        participant.addCard(new Card(Type.DIAMOND, Score.SIX));
+        Participant participant = new Participant("pobi");
+        participant.addCard(new Card(Type.DIAMOND, Score.KING));
+        participant.addCard(new Card(Type.DIAMOND, Score.JACK));
+        participant.addCard(new Card(Type.DIAMOND, Score.TWO));
         assertThat(participant.acceptableCard()).isEqualTo(false);
     }
 }

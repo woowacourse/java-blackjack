@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,8 +12,8 @@ public abstract class Player {
     protected final Cards cards;
     private final String name;
 
-    Player(final List<Card> cards, final String name) {
-        this.cards = new Cards(cards);
+    Player(final String name) {
+        this.cards = new Cards();
         this.name = name;
     }
 

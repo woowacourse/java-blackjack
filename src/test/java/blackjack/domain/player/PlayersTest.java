@@ -28,7 +28,7 @@ class PlayersTest {
     @MethodSource("participantListBySuccess")
     @DisplayName("참가자는 2~8명 사이이다. (성공)")
     void checkParticipantNumberBySuccess(List<Player> participants) {
-        Dealer dealer = new Dealer(initCards);
+        Dealer dealer = new Dealer();
         assertDoesNotThrow(() -> new Players(participants, dealer));
     }
 
@@ -36,18 +36,18 @@ class PlayersTest {
         Deck deck = new Deck(new RandomCardGenerator());
         return Stream.of(
                 List.of(
-                        new Participant(List.of(deck.draw(), deck.draw()), "pobi"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "corinne")
+                        new Participant("pobi"),
+                        new Participant("corinne")
                 ),
                 List.of(
-                        new Participant(List.of(deck.draw(), deck.draw()), "1"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "2"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "3"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "4"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "5"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "6"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "7"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "8")
+                        new Participant("1"),
+                        new Participant("2"),
+                        new Participant("3"),
+                        new Participant("4"),
+                        new Participant("5"),
+                        new Participant("6"),
+                        new Participant("7"),
+                        new Participant("8")
                 )
         );
     }
@@ -56,7 +56,7 @@ class PlayersTest {
     @MethodSource("participantListByFail")
     @DisplayName("참가자는 2~8명 사이이다. (실패)")
     void checkParticipantNumber(List<Player> participants) {
-        Dealer dealer = new Dealer(initCards);
+        Dealer dealer = new Dealer();
 
         Assertions.assertThatThrownBy(() -> new Players(participants, dealer))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -68,18 +68,18 @@ class PlayersTest {
         return Stream.of(
                 null,
                 List.of(
-                        new Participant(List.of(deck.draw(), deck.draw()), "pobi")
+                        new Participant("pobi")
                 ),
                 List.of(
-                        new Participant(List.of(deck.draw(), deck.draw()), "1"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "2"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "3"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "4"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "5"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "6"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "7"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "8"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "9")
+                        new Participant("1"),
+                        new Participant("2"),
+                        new Participant("3"),
+                        new Participant("4"),
+                        new Participant("5"),
+                        new Participant("6"),
+                        new Participant("7"),
+                        new Participant("8"),
+                        new Participant("9")
                 )
         );
     }
@@ -87,10 +87,10 @@ class PlayersTest {
     @Test
     @DisplayName("참가자 이름은 중복될 수 없다.")
     void thrownExceptionWhenNamesDuplicated() {
-        Player dealer = new Dealer(initCards);
+        Player dealer = new Dealer();
         Assertions.assertThatThrownBy(() -> new Players(List.of(
-                        new Participant(List.of(deck.draw(), deck.draw()), "pobi"),
-                        new Participant(List.of(deck.draw(), deck.draw()), "pobi")
+                        new Participant("pobi"),
+                        new Participant("pobi")
                 ), dealer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 참가자 이름은 중복될 수 없습니다.");

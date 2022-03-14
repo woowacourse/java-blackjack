@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomCardGenerator;
 import blackjack.domain.player.Dealer;
@@ -11,7 +10,6 @@ import blackjack.domain.result.Judge;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,9 +19,7 @@ public class Blackjack {
 
     public void play() {
         final Deck deck = new Deck(new RandomCardGenerator());
-        final List<Player> participants = createParticipants(InputView.responseNames(), deck);
-        final Player dealer = createDealer(deck);
-        final Players players = new Players(participants, dealer);
+        final Players players = initPlayers(deck);
 
         OutputView.printPlayersInitCardInfo(players);
         decideGetMoreCard(players, deck);
@@ -31,22 +27,35 @@ public class Blackjack {
         OutputView.printGameResult(Judge.calculateGameResult(players));
     }
 
-    private List<Player> createParticipants(final List<String> names, final Deck deck) {
+    private Players initPlayers(final Deck deck) {
+        final List<Player> participants = createParticipants(InputView.responseNames());
+        final Player dealer = createDealer();
+        makeParticipantsInitCards(participants, deck);
+        makePlayerInitCards(dealer, deck);
+        return new Players(participants, dealer);
+    }
+
+    private List<Player> createParticipants(final List<String> names) {
         return names.stream()
-                .map(name -> new Participant(makeInitCards(deck), name))
+                .map(Participant::new)
                 .collect(Collectors.toList());
     }
 
-    private List<Card> makeInitCards(final Deck deck) {
-        List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < INIT_CARD_SIZE; i++) {
-            cards.add(deck.draw());
-        }
-        return cards;
+    private Dealer createDealer() {
+        return new Dealer();
     }
 
-    private Dealer createDealer(final Deck deck) {
-        return new Dealer(makeInitCards(deck));
+
+    private void makeParticipantsInitCards(final List<Player> participants, final Deck deck) {
+        for (Player participant : participants) {
+            makePlayerInitCards(participant, deck);
+        }
+    }
+
+    private void makePlayerInitCards(final Player player, final Deck deck) {
+        for (int i = 0; i < INIT_CARD_SIZE; i++) {
+            player.addCard(deck.draw());
+        }
     }
 
     private void decideGetMoreCard(final Players players, final Deck deck) {

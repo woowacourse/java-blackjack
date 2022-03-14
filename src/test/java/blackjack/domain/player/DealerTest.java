@@ -18,7 +18,9 @@ class DealerTest {
     @DisplayName("딜러는 시작시 카드를 2장 받는다.")
     void checkParticipantCardSize() {
         Deck deck = new Deck(new RandomCardGenerator());
-        Dealer dealer = new Dealer(List.of(deck.draw(), deck.draw()));
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Type.HEART, Score.SIX));
+        dealer.addCard(new Card(Type.SPADE, Score.TWO));
         assertThat(dealer.getCards().size()).isEqualTo(2);
     }
 
@@ -26,8 +28,10 @@ class DealerTest {
     @MethodSource("cardListAndAcceptable")
     @DisplayName("딜러는 자신의 점수가 16이하인지 확인한다.")
     void addParticipantCard(List<Card> cards, boolean acceptable) {
-        Dealer dealer = new Dealer(cards);
-
+        Dealer dealer = new Dealer();
+        for (Card card : cards) {
+            dealer.addCard(card);
+        }
         assertThat(dealer.acceptableCard()).isEqualTo(acceptable);
     }
 
