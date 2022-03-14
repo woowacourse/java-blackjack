@@ -6,6 +6,7 @@ public enum GameResult {
     LOSE("패"),
     DRAW("무");
 
+    private static final int BLACKJACK_MAX_SCORE = 21;
     private final String value;
 
     GameResult(String value) {
@@ -13,13 +14,13 @@ public enum GameResult {
     }
 
     public static GameResult findPlayerResult(int playerScore, int dealerScore) {
-        if (playerScore > 21 && dealerScore > 21) {
+        if (playerScore > BLACKJACK_MAX_SCORE && dealerScore > BLACKJACK_MAX_SCORE) {
             return DRAW;
         }
-        if (playerScore > 21) {
+        if (playerScore > BLACKJACK_MAX_SCORE) {
             return LOSE;
         }
-        if (dealerScore > 21) {
+        if (dealerScore > BLACKJACK_MAX_SCORE) {
             return WIN;
         }
         return compareScore(playerScore, dealerScore);
@@ -35,11 +36,11 @@ public enum GameResult {
         return DRAW;
     }
 
-    public static GameResult findDealerResult(GameResult dealerResult) {
-        if (dealerResult == WIN) {
+    public static GameResult findDealerResult(GameResult playerResult) {
+        if (playerResult == WIN) {
             return LOSE;
         }
-        if (dealerResult == LOSE) {
+        if (playerResult == LOSE) {
             return WIN;
         }
         return DRAW;

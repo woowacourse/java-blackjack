@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int BLACKJACK_MAX_SCORE = 21;
+    private static final int CHANGEABLE_SCORE_FOR_ACE_CARD = 10;
+
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
@@ -18,8 +21,8 @@ public class Cards {
     public int calculateScore() {
         int totalScore = getTotalScore();
         int countOfAce = getCountOfAce();
-        while (countOfAce-- > 0 && totalScore > 21) {
-            totalScore -= 10;
+        while (countOfAce-- > 0 && totalScore > BLACKJACK_MAX_SCORE) {
+            totalScore -= CHANGEABLE_SCORE_FOR_ACE_CARD;
         }
         return totalScore;
     }
