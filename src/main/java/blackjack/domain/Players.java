@@ -6,6 +6,8 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class Players {
+    private static final int FIRST_PLAYER_INDEX = 0;
+    private static final int NEXT_GAP = 1;
     private List<Player> players;
 
     public Players(List<String> playerNames) {
@@ -46,5 +48,20 @@ public class Players {
 
     public boolean isPlayerBurst(String playerName) {
         return convertToPlayer(playerName).isBurst();
+    }
+
+    public Player firstPlayer() {
+        return players.get(FIRST_PLAYER_INDEX);
+    }
+
+    public boolean hasNextPlayer(Player player) {
+        return !player.equals(players.get(players.size() - 1));
+    }
+
+    public Player nextPlayer(Player player) {
+        if (!hasNextPlayer(player)) {
+            return firstPlayer();
+        }
+        return players.get(players.indexOf(player) + NEXT_GAP);
     }
 }
