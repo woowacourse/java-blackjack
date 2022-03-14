@@ -42,19 +42,6 @@ public class BlackJackGameTest {
         assertThat(match).isFalse();
     }
 
-    @Test
-    @DisplayName("플레이어 카드 추가")
-    void player_card_add() {
-        // given
-        Participant player = blackJackGame.findPlayers().get(0);
-
-        // when
-        blackJackGame.drawCardByCommand(player, Command.HIT);
-
-        // then
-        assertThat(calculateCardsSize(player)).isEqualTo(3);
-    }
-
     private int calculateCardsSize(Participant participant) {
         return participant
                 .getCards()

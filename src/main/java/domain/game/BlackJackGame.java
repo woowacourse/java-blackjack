@@ -40,12 +40,6 @@ public class BlackJackGame {
         return new Cards(cards);
     }
 
-    public void drawCardByCommand(Participant participant, Command command) {
-        if (command == Command.HIT) {
-            drawCard(participant);
-        }
-    }
-
     public void drawCard(Participant participant) {
         int index = participants.indexOf(participant);
         Participant nowParticipant = participants.get(index);

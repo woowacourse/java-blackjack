@@ -42,11 +42,8 @@ public class ConsoleGame {
     }
 
     private void playPlayerTurn(BlackJackGame blackJackGame, Participant player) {
-        Command command = Command.HIT;
-
-        while (command != Command.STAY && !player.isFinished()) {
-            command = inputCommand(player);
-            blackJackGame.drawCardByCommand(player, command);
+        while (!player.isFinished() && !inputCommand(player).isStay()) {
+            blackJackGame.drawCard(player);
             OutputView.printCards(player);
         }
     }

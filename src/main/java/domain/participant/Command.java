@@ -22,4 +22,8 @@ public enum Command {
     public String getValue() {
         return value;
     }
+
+    public boolean isStay() {
+        return this == STAY;
+    }
 }
