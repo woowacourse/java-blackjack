@@ -84,7 +84,7 @@ public class DealerTest {
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("Dealer 인스턴스에는 CardBundle의 isBlackjack 메서드가 구현되어있다.")
+    @DisplayName("Dealer 인스턴스에는 Participant의 isBlackjack 메서드가 구현되어있다.")
     @Test
     void isBlackjack_implementationTest() {
         CardBundle cardBundle = generateCardBundleOf(CLOVER10, CLOVER_ACE);

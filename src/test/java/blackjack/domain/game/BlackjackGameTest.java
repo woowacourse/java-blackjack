@@ -1,8 +1,8 @@
 package blackjack.domain.game;
 
-import static blackjack.fixture.CardRepository.CLOVER10;
-import static blackjack.fixture.CardRepository.CLOVER6;
-import static blackjack.fixture.CardRepository.CLOVER7;
+import static blackjack.fixture.CardBundleGenerator.getCardBundleOfBlackjack;
+import static blackjack.fixture.CardBundleGenerator.getCardBundleOfSeventeen;
+import static blackjack.fixture.CardBundleGenerator.getCardBundleOfSixteen;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -23,8 +23,9 @@ public class BlackjackGameTest {
     private static final Card DRAWABLE_CARD = CLOVER_KING;
     private static final List<String> PLAYER_NAMES_LIST = List.of("player1", "player2");
     private static final CardBundleStrategy prodStrategy = (cardStack) -> CardBundle.of(cardStack.pop(), cardStack.pop());
-    private static final CardBundleStrategy cardBundleOfSixteenStrategy = (cardStack) -> CardBundle.of(CLOVER6, CLOVER10);
-    private static final CardBundleStrategy cardBundleOfSeventeenStrategy = (cardStack) -> CardBundle.of(CLOVER7, CLOVER10);
+    private static final CardBundleStrategy cardBundleOfSixteenStrategy = (cardStack) -> getCardBundleOfSixteen();
+    private static final CardBundleStrategy cardBundleOfSeventeenStrategy = (cardStack) -> getCardBundleOfSeventeen();
+    private static final CardBundleStrategy cardBundleOfBlackjackStrategy = (cardStack) -> getCardBundleOfBlackjack();
 
     @DisplayName("생성자 테스트")
     @Nested
@@ -110,6 +111,17 @@ public class BlackjackGameTest {
         Card actual = blackjackGame.popCard();
 
         assertThat(actual).isEqualTo(DRAWABLE_CARD);
+    }
+
+    @DisplayName("isBlackjackDealer 메서드는 Dealer 인스턴스의 isBlackjack 메서드를 호출한다.")
+    @Test
+    void isBlackjackDealer_trueOnDealerBlackjack() {
+        BlackjackGame blackjackGame = new BlackjackGame(
+                new CardsStub(), PLAYER_NAMES_LIST, cardBundleOfBlackjackStrategy);
+
+        boolean actual = blackjackGame.isBlackjackDealer();
+
+        assertThat(actual).isTrue();
     }
 
     private static class CardsStub implements CardStack {

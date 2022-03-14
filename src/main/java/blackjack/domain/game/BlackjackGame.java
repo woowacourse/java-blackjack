@@ -66,6 +66,10 @@ public class BlackjackGame {
         dealer.receiveCard(popCard());
     }
 
+    public boolean isBlackjackDealer() {
+        return participants.getDealer().isBlackjack();
+    }
+
     public Card popCard() {
         return cardDeck.pop();
     }

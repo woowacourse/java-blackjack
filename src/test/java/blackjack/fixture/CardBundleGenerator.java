@@ -6,6 +6,7 @@ import static blackjack.fixture.CardRepository.CLOVER3;
 import static blackjack.fixture.CardRepository.CLOVER4;
 import static blackjack.fixture.CardRepository.CLOVER5;
 import static blackjack.fixture.CardRepository.CLOVER6;
+import static blackjack.fixture.CardRepository.CLOVER7;
 import static blackjack.fixture.CardRepository.CLOVER8;
 import static blackjack.fixture.CardRepository.CLOVER_ACE;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
@@ -32,6 +33,14 @@ public class CardBundleGenerator {
 
     public static CardBundle getCardBundleOfFifteen() {
         return generateCardBundleOf(CLOVER5, CLOVER10);
+    }
+
+    public static CardBundle getCardBundleOfSixteen() {
+        return generateCardBundleOf(CLOVER6, CLOVER10);
+    }
+
+    public static CardBundle getCardBundleOfSeventeen() {
+        return generateCardBundleOf(CLOVER7, CLOVER10);
     }
 
     public static CardBundle getCardBundleOfTwenty() {
