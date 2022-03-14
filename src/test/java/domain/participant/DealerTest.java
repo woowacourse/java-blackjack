@@ -29,7 +29,7 @@ public class DealerTest {
     void isEnoughCard_False() {
         Card card = new Card(Rank.RANK_5, Suit.HEART);
         Dealer dealer = new Dealer(new ArrayList<>(List.of(card, card1, card2)));
-        assertThat(dealer.isNeedToDraw()).isFalse();
+        assertThat(dealer.isNeedToDraw()).isTrue();
     }
 
     @Test
@@ -37,13 +37,13 @@ public class DealerTest {
     void isEnoughCard_True() {
         Card card = new Card(Rank.RANK_6, Suit.HEART);
         Dealer dealer = new Dealer(new ArrayList<>(List.of(card, card1, card2)));
-        assertThat(dealer.isNeedToDraw()).isTrue();
+        assertThat(dealer.isNeedToDraw()).isFalse();
     }
 
     @Test
     @DisplayName("딜러의 첫번째 손패만 문자열로 반환하기")
     void showOneHand() {
         Dealer dealer = new Dealer(new ArrayList<>(List.of(card1, card2)));
-        assertThat(dealer.showOneHand()).isEqualTo("딜러: J스페이드");
+        assertThat(dealer.getFirstHand().toString()).isEqualTo("J스페이드");
     }
 }

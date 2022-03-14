@@ -35,14 +35,7 @@ public class ParticipantTest {
     @DisplayName("자신의 손패를 문자열로 반환하는 기능")
     void showHand() {
         Participant participant = new Participant(new Name("pobi"), new ArrayList<>(List.of(card1, card2)));
-        assertThat(participant.showHand()).isEqualTo("pobi카드: K하트, A스페이드");
-    }
-
-    @Test
-    @DisplayName("자신의 손패와 베스트 스코어를 문자열로 반환하는 기능")
-    void showHandAndBestScore() {
-        Participant participant = new Participant(new Name("pobi"), new ArrayList<>(List.of(card1, card2)));
-        assertThat(participant.showStatus()).isEqualTo("pobi카드: K하트, A스페이드 - 결과 : 21");
+        assertThat(participant.showHand()).isEqualTo("K하트, A스페이드");
     }
 
     @Test
@@ -50,7 +43,7 @@ public class ParticipantTest {
     void addCard() {
         Participant participant = new Participant(new Name("pobi"), new ArrayList<>(List.of(card1, card2)));
         participant.addCard(card4);
-        assertThat(participant.showHand()).isEqualTo("pobi카드: K하트, A스페이드, 8클로버");
+        assertThat(participant.showHand()).isEqualTo("K하트, A스페이드, 8클로버");
     }
 
     @ParameterizedTest(name = "손패가 버스트 되었는지 확인하는 기능 - case : {0}")

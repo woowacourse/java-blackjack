@@ -41,20 +41,7 @@ public class PlayersTest {
     @DisplayName("이름으로 플레이어 손패 반환")
     void showHandByName() {
         Name name = new Name("pobi");
-        assertThat(players.showHandByName(name)).isEqualTo("pobi카드: A클로버, Q클로버");
-    }
-
-    @Test
-    @DisplayName("모든 플레이어 손패 반환")
-    void showHands() {
-        assertThat(players.showHands()).isEqualTo(List.of("pobi카드: A클로버, Q클로버", "jason카드: K클로버, Q클로버, 2클로버"));
-    }
-
-    @Test
-    @DisplayName("모든 플레이어 손패와 베스트 스코어 반환")
-    void showHandsAndBestScores() {
-        assertThat(players.showStatuses()).isEqualTo(
-                List.of("pobi카드: A클로버, Q클로버 - 결과 : 21", "jason카드: K클로버, Q클로버, 2클로버 - 결과 : 22"));
+        assertThat(players.showHandByName(name)).isEqualTo("A클로버, Q클로버");
     }
 
     @Test
@@ -62,7 +49,7 @@ public class PlayersTest {
     void addCardByName() {
         Name name = new Name("pobi");
         players.addCardByName(name, new Card(Rank.RANK_A, Suit.DIAMOND));
-        assertThat(players.showHandByName(name)).isEqualTo("pobi카드: A클로버, Q클로버, A다이아몬드");
+        assertThat(players.showHandByName(name)).isEqualTo("A클로버, Q클로버, A다이아몬드");
     }
 
     @Test
@@ -75,7 +62,7 @@ public class PlayersTest {
     @Test
     @DisplayName("모든 플레이어가 Bust 인지 판별")
     void isBustAllBust() {
-        assertThat(players.isNotAllBust()).isFalse();
+        assertThat(players.isNotAllBust()).isTrue();
     }
 
     @Test

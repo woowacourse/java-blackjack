@@ -22,7 +22,6 @@ public class Controller {
         Players players = new Players(names, generateInitCardsForPlayers(names, deck));
 
         OutputView.printParticipantInitHands(names, dealer, players);
-
         if (dealer.isBlackJack()) {
             OutputView.printDealerBlackJackMessage();
             OutputView.printResult(names, new Result(players.getResultAtDealerBlackJack(dealer)));
@@ -45,11 +44,11 @@ public class Controller {
 
     private void drawForPlayers(List<Name> names, Deck deck, Players players) {
         for (Name name : names) {
-            askAndDrawForPlayer(name, deck, players);
+            drawForPlayer(name, deck, players);
         }
     }
 
-    private void askAndDrawForPlayer(Name name, Deck deck, Players players) {
+    private void drawForPlayer(Name name, Deck deck, Players players) {
         boolean isMaxScoreOrBust = false;
         while (!players.isBlackJackByName(name) && !isMaxScoreOrBust && InputView.inputAskDraw(name.getName())) {
             players.addCardByName(name, deck.draw());
