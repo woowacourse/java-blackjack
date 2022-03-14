@@ -4,7 +4,6 @@ import blackJack.domain.result.MatchResult;
 
 public class Player extends Participant {
 
-    private static final String DEALER_NAME = "딜러";
     private static final String ERROR_MESSAGE_PROHIBIT_NAME = "플레이어의 이름은 '딜러'일 수 없습니다.";
 
     public Player(String name) {
