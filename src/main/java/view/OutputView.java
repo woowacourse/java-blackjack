@@ -8,15 +8,18 @@ import static java.util.stream.Collectors.joining;
 import domain.BlackJackResult;
 import domain.MatchResult;
 import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Suit;
 import domain.player.Dealer;
 import dto.CardsAndScoreDto;
 import dto.CardsDto;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-    private static final String NEW_LINE = System.lineSeparator();
     private static final long ZERO_FOR_DEFAULT = 0L;
+    private static final String NEW_LINE = System.lineSeparator();
     private static final String INFO_FOR_INITIAL_SPREAD = "%s와 %s에게 2장을 나누었습니다." + NEW_LINE;
     private static final String INFO_FOR_DEALER_ADD_CARD = "%s는 16이하라 한장의 카드를 더 받았습니다." + NEW_LINE;
     private static final String INFO_PLAYER_CARD_AND_SCORE = "%s카드: %s - 결과: %d" + NEW_LINE;
@@ -29,7 +32,29 @@ public class OutputView {
     private static final String STRING_FOR_DRAW = "무";
     private static final String CARD_NAME_JOIN_CHARACTER = ", ";
     private static final String GAMBLER_NAME_DELIMITER = ", ";
+    private static final Map<Denomination, String> denominationName = new EnumMap<>(Denomination.class);
+    private static final Map<Suit, String> suitName = new EnumMap<>(Suit.class);
 
+    static {
+        denominationName.put(Denomination.KING, "K");
+        denominationName.put(Denomination.QUEEN, "Q");
+        denominationName.put(Denomination.JACK, "J");
+        denominationName.put(Denomination.ACE, "A");
+        denominationName.put(Denomination.TWO, "2");
+        denominationName.put(Denomination.THREE, "3");
+        denominationName.put(Denomination.FOUR, "4");
+        denominationName.put(Denomination.FIVE, "5");
+        denominationName.put(Denomination.SIX, "6");
+        denominationName.put(Denomination.SEVEN, "7");
+        denominationName.put(Denomination.EIGHT, "8");
+        denominationName.put(Denomination.NINE, "9");
+        denominationName.put(Denomination.TEN, "10");
+
+        suitName.put(Suit.CLUBS, "클로버");
+        suitName.put(Suit.DIAMONDS, "다이아몬드");
+        suitName.put(Suit.HEARTS, "하트");
+        suitName.put(Suit.SPADES, "스페이드");
+    }
 
     private OutputView() {
     }
@@ -49,8 +74,12 @@ public class OutputView {
 
     private static String getJoinedCardNames(List<Card> cards) {
         return cards.stream()
-                .map(Card::getCardName)
+                .map(OutputView::parseCardName)
                 .collect(joining(CARD_NAME_JOIN_CHARACTER));
+    }
+
+    private static String parseCardName(Card card) {
+        return denominationName.get(card.getDenomination()) + suitName.get(card.getSuit());
     }
 
     public static void printLineSeparator() {
