@@ -16,7 +16,7 @@ public class Controller {
 
     public void run() {
         List<Name> names = InputView.inputNames();
-        Deck deck = new Deck();
+        Deck deck = Deck.createDeckForBlackJack();
         Dealer dealer = new Dealer(new InitCards(deck).getInitCards());
         Players players = new Players(names, generateInitCardsForPlayers(names.size(), deck));
 
