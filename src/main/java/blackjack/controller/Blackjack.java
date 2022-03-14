@@ -50,16 +50,18 @@ public class Blackjack {
     }
 
     private void decideGetMoreCard(final Players players, final Deck deck) {
-        decideParticipantsOneMoreCard(players, deck);
+        decideParticipantsMoreCard(players, deck);
         decideDealerMoreCard(players, deck);
     }
-    private void decideParticipantsOneMoreCard(final Players players, final Deck deck) {
-        while(!players.isParticipantPointerEnd()) {
-            decideParticipantOneMoreCard(players, deck);
+
+    private void decideParticipantsMoreCard(final Players players, final Deck deck) {
+        while (!players.isParticipantPointerEnd()) {
+            decideParticipantMoreCard(players, deck);
             players.moveParticipantPointer();
         }
     }
-    private void decideParticipantOneMoreCard(final Players players, final Deck deck) {
+
+    private void decideParticipantMoreCard(final Players players, final Deck deck) {
         while (isNotOverMaxScore(players) && InputView.oneMoreCard(players.pointParticipantName())) {
             players.addParticipantCard(deck.draw());
             OutputView.printPlayerCardInfo(players.pointParticipant());
