@@ -16,6 +16,10 @@ public enum Rank {
         this.point = point;
     }
 
+    public boolean isAce() {
+        return rank.equals("A");
+    }
+
     public String getRank() {
         return rank;
     }
