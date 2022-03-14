@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 	private static final String NAME_ERROR = "[Error] 이름은 빈 값일 수 없습니다.";
 	private static final int CONDITION_BURST = 21;
 
