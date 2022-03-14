@@ -59,10 +59,9 @@ public class Players {
 		return map;
 	}
 
-	public List<List<String>> getCardsOfAll() {
+	public List<List<Card>> getCardsOfAll() {
 		return players.keySet().stream()
 			.map(name -> players.get(name).getHand())
-			.map(cards -> cards.stream().map(Card::getCardInfo).collect(Collectors.toList()))
 			.collect(Collectors.toList());
 	}
 

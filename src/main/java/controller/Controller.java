@@ -35,6 +35,16 @@ public class Controller {
 		printFinalResult(dealer, players);
 	}
 
+	private List<String> convertNamesToString(List<Name> names) {
+		return names.stream().map(Name::getName).collect(Collectors.toList());
+	}
+
+	private List<List<String>> convertCardsToString(List<List<Card>> cardsList) {
+		return cardsList.stream()
+			.map(cards -> cards.stream().map(Card::getCardInfo).collect(Collectors.toList()))
+			.collect(Collectors.toList());
+	}
+
 	private List<Name> makeNames() {
 		try {
 			List<String> names = InputView.inputNames();
@@ -55,13 +65,11 @@ public class Controller {
 	}
 
 	private void printInitHands(Dealer dealer, Players players) {
-		OutputView.printInitMessage(players.getNames().stream().map(Name::getName).collect(Collectors.toList()));
+		OutputView.printInitMessage(convertNamesToString(players.getNames()));
 		OutputView.printHand(dealer.getName().getName(), Arrays.asList(dealer.getOneHand().getCardInfo()));
 
-		List<String> playerNames = players.getNames().stream()
-			.map(Name::getName)
-			.collect(Collectors.toList());
-		List<List<String>> playerCards = players.getCardsOfAll();
+		List<String> playerNames = convertNamesToString(players.getNames());
+		List<List<String>> playerCards = convertCardsToString(players.getCardsOfAll());
 
 		for (int i = 0; i < playerNames.size(); i++) {
 			OutputView.printHand(playerNames.get(i), playerCards.get(i));
@@ -125,8 +133,8 @@ public class Controller {
 			dealer.getHand().stream().map(Card::getCardInfo)
 				.collect(Collectors.toList()),
 			dealer.getBestScore());
-		List<String> names = players.getNames().stream().map(Name::getName).collect(Collectors.toList());
-		List<List<String>> cards = players.getCardsOfAll();
+		List<String> names = convertNamesToString(players.getNames());
+		List<List<String>> cards = convertCardsToString(players.getCardsOfAll());
 		List<Integer> scores = players.getScores();
 
 		for (int i = 0; i < names.size(); i++) {
