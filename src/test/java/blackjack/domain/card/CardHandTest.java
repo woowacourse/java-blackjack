@@ -142,6 +142,17 @@ public class CardHandTest {
             assertThat(cardHand.isBust()).isFalse();
         }
 
+        @DisplayName("딜러 상태 전략 사용시 17 이상 21 이하의 패를 지닌 경우 stay 메서드를 호출하지 않아도 자동으로 STAY 상태가 된다.")
+        @Test
+        void automaticallyBecomesStayOnOver16WithDealerStrategy() {
+            CardHand cardHand = CardHand.of(getCardBundleOfTwenty(), dealerStateStrategy);
+
+            assertThat(cardHand.getScore()).isEqualTo(Score.valueOf(20));
+            assertThat(cardHand.isFinished()).isTrue();
+            assertThat(cardHand.isBlackjack()).isFalse();
+            assertThat(cardHand.isBust()).isFalse();
+        }
+
         @DisplayName("이미 21 이상의 패를 지닌 상태에서 stay 메서드를 호출하려는 경우 예외가 발생한다.")
         @Test
         void stay_throwsExceptionOnAlreadyFinished21() {

@@ -3,12 +3,15 @@ package blackjack.domain.participant;
 import static blackjack.fixture.CardBundleGenerator.generateCardBundleOf;
 import static blackjack.fixture.CardRepository.CLOVER10;
 import static blackjack.fixture.CardRepository.CLOVER2;
+import static blackjack.fixture.CardRepository.CLOVER3;
 import static blackjack.fixture.CardRepository.CLOVER4;
 import static blackjack.fixture.CardRepository.CLOVER5;
 import static blackjack.fixture.CardRepository.CLOVER6;
+import static blackjack.fixture.CardRepository.CLOVER7;
 import static blackjack.fixture.CardRepository.CLOVER_ACE;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
@@ -111,6 +114,23 @@ public class PlayerTest {
         boolean actual = player.isBlackjack();
 
         assertThat(actual).isTrue();
+    }
+
+    @DisplayName("플레이어가 명시적으로 stay 메서드를 호출한 경우, 버스트이나 블랙잭이 아니어도, hit 메서드를 호출했을 때 예외가 발생하게 된다.")
+    @Test
+    void stay() {
+        CardBundle cardBundle = generateCardBundleOf(CLOVER7, CLOVER10);
+        Player player = Player.of("jeong", cardBundle);
+        assertThat(player.canDraw()).isTrue();
+
+        player.stay();
+
+        assertThat(player.canDraw()).isFalse();
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> player.receiveCard(CLOVER3))
+                .withMessage("이미 카드 패가 확정된 참여자입니다.");
+        assertThat(player.isBlackjack()).isFalse();
+        assertThat(player.isBust()).isFalse();
     }
 
     @DisplayName("플레이어의 getInitialOpenCards 메서드는 초기에 받은 두 장의 카드가 담긴 컬렉션을 반환한다.")

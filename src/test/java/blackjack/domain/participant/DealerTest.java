@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import static blackjack.fixture.CardBundleGenerator.generateCardBundleOf;
 import static blackjack.fixture.CardRepository.CLOVER10;
+import static blackjack.fixture.CardRepository.CLOVER3;
 import static blackjack.fixture.CardRepository.CLOVER4;
 import static blackjack.fixture.CardRepository.CLOVER5;
 import static blackjack.fixture.CardRepository.CLOVER6;
@@ -10,6 +11,7 @@ import static blackjack.fixture.CardRepository.CLOVER8;
 import static blackjack.fixture.CardRepository.CLOVER_ACE;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardBundle;
@@ -94,6 +96,21 @@ public class DealerTest {
         boolean actual = dealer.isBlackjack();
 
         assertThat(actual).isTrue();
+    }
+
+    @DisplayName("딜러의 패가 17이상 21이하인 경우 버스트도, 블랙잭도 아니지만, hit 메서드를 호출하는 경우 예외가 발생한다.")
+    @Test
+    void dealerStayTest() {
+        CardBundle cardBundle = generateCardBundleOf(CLOVER7, CLOVER10);
+        Dealer dealer = Dealer.of(cardBundle);
+
+        assertThat(dealer.canDraw()).isFalse();
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> dealer.receiveCard(CLOVER3))
+                .withMessage("이미 카드 패가 확정된 참여자입니다.");
+
+        assertThat(dealer.isBlackjack()).isFalse();
+        assertThat(dealer.isBust()).isFalse();
     }
 
     @DisplayName("딜러의 getInitialOpenCards 메서드는 초기에 받은 카드 중 한 장이 담긴 컬렉션을 반환한다.")
