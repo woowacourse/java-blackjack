@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class AlwaysAscNumberMachine implements CardPickMachine {
+class AlwaysAscNumberMachine implements CardPickMachine {
 
     private final List<Integer> cardIndex;
 

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GuestTest {
+class GuestTest {
 
     @Test
     @DisplayName("guest 객체 생성 확인")

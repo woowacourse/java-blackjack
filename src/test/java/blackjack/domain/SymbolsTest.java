@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SymbolsTest {
+class SymbolsTest {
 
     @Test
     @DisplayName("enum number size가 13개인지 확인")

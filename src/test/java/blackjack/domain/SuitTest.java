@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SuitTest {
+class SuitTest {
 
     @Test
     @DisplayName("enum suit size가 4개인지 확인")
