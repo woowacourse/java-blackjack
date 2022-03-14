@@ -8,6 +8,7 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gamer;
 import blackjack.domain.player.Gamers;
 import blackjack.domain.player.Player;
+import blackjack.domain.result.BlackJackResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -73,6 +74,8 @@ public class BlackJackRunner {
     private static void progressGamerAdditionalCard(final Gamer gamer) {
         while (gamer.isSatisfyReceiveCondition() && gamer.isHit(toAnswer(gamer.getName()))) {
             gamer.receiveCard(deck.draw());
+            gamer.calculateCurrentBet(BlackJackResult.findBlackJackResult(gamer)
+                    .getResult());
             OutputView.printGamerCards(gamer);
         }
     }

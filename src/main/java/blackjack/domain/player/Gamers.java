@@ -1,9 +1,7 @@
 package blackjack.domain.player;
 
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.result.BlackJackResult;
 import blackjack.domain.result.CompareResult;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -28,18 +26,13 @@ public class Gamers {
     }
 
     public Map<Player, Bet> compareResult(final int dealerPoint) {
-        return filterRemainGamers().stream()
+        return gamers.stream()
                 .collect(toMap(gamer -> gamer,
                         gamer -> gamer.calculateCurrentBet(CompareResult.findCompareResult(dealerPoint, gamer.calculateResult()).getResult()),
                         (e1, e2) -> e1,
                         LinkedHashMap::new));
     }
 
-    private List<Gamer> filterRemainGamers() {
-        return gamers.stream()
-                .filter(gamer -> BlackJackResult.findBlackJackResult(gamer) == BlackJackResult.HIT)
-                .collect(toList());
-    }
 
     public List<Gamer> getGamers() {
         return List.copyOf(gamers);
