@@ -2,41 +2,42 @@ package blackjack.domain.card;
 
 import blackjack.domain.game.Score;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.function.Function;
 
 public class CardBundle {
 
-    private static final String NO_DUPLICATE_CARD_EXCEPTION_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
     private static final int BLACKJACK_CARD_SIZE = 2;
+    private static final String NO_DUPLICATE_CARD_EXCEPTION_MESSAGE = "중복된 카드는 존재할 수 없습니다.";
 
     private final List<Card> cards;
+    private final Score score;
 
     private CardBundle(List<Card> cards) {
-        this.cards = cards;
+        validateNoDuplicate(cards);
+        this.cards = Collections.unmodifiableList(cards);
+        this.score = getBestScore();
     }
 
     public static CardBundle of(Card card1, Card card2) {
-        List<Card> initialCards = new ArrayList<>(List.of(card1, card2));
-        return new CardBundle(initialCards);
+        return new CardBundle(List.of(card1, card2));
     }
 
-    public void add(Card card) {
-        validateNoDuplicate(card);
-        cards.add(card);
+    public CardBundle addAndGenerate(Card card) {
+        List<Card> addedCards = new ArrayList<>(cards);
+        addedCards.add(card);
+        return new CardBundle(addedCards);
     }
 
-    private void validateNoDuplicate(Card card) {
-        if (cards.contains(card)) {
+    private void validateNoDuplicate(List<Card> cards) {
+        if (cards.size() != new HashSet<>(cards).size()) {
             throw new IllegalArgumentException(NO_DUPLICATE_CARD_EXCEPTION_MESSAGE);
         }
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
-    public Score getScore() {
+    private Score getBestScore() {
         Score defaultScore = calculateScoreBy(Card::getRankValue);
         if (!containsAce()) {
             return defaultScore;
@@ -63,7 +64,7 @@ public class CardBundle {
     }
 
     public boolean isBlackjackScore() {
-        return getScore().isBlackjackScore();
+        return score.isBlackjackScore();
     }
 
     public boolean isBlackjack() {
@@ -74,11 +75,22 @@ public class CardBundle {
     }
 
     public boolean isBust() {
-        return getScore().isBustScore();
+        return score.isBustScore();
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public Score getScore() {
+        return score;
     }
 
     @Override
     public String toString() {
-        return "CardBundle{" + "cards=" + cards + '}';
+        return "CardBundle{" +
+                "cards=" + cards +
+                ", score=" + score +
+                '}';
     }
 }

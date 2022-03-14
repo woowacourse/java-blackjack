@@ -22,7 +22,7 @@ public class CardBundleGenerator {
         }
         CardBundle cardBundle = CardBundle.of(cards[0], cards[1]);
         for (int i = 2; i < cards.length; i++) {
-            cardBundle.add(cards[i]);
+            cardBundle = cardBundle.addAndGenerate(cards[i]);
         }
         return cardBundle;
     }

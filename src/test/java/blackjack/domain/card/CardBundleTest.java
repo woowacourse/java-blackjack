@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import static blackjack.fixture.CardBundleGenerator.generateCardBundleOf;
+import static blackjack.fixture.CardRepository.CLOVER10;
 import static blackjack.fixture.CardRepository.CLOVER2;
 import static blackjack.fixture.CardRepository.CLOVER3;
 import static blackjack.fixture.CardRepository.CLOVER4;
@@ -9,12 +10,12 @@ import static blackjack.fixture.CardRepository.CLOVER6;
 import static blackjack.fixture.CardRepository.CLOVER7;
 import static blackjack.fixture.CardRepository.CLOVER8;
 import static blackjack.fixture.CardRepository.CLOVER_ACE;
-import static blackjack.fixture.CardRepository.CLOVER10;
 import static blackjack.fixture.CardRepository.CLOVER_KING;
 import static blackjack.fixture.CardRepository.DIAMOND_ACE;
 import static blackjack.fixture.CardRepository.HEART_ACE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.game.Score;
 import org.junit.jupiter.api.DisplayName;
@@ -23,33 +24,53 @@ import org.junit.jupiter.api.Test;
 
 public class CardBundleTest {
 
-    @DisplayName("of 팩토리 메소드는 두 개의 카드를 받아 CardBundle 인스턴스를 생성한다.")
-    @Test
-    void of_initsNewCardBundleWithTwoCards() {
-        CardDeck cardDeck = new CardDeck();
-        CardBundle cardBundle = CardBundle.of(cardDeck.pop(), cardDeck.pop());
+    @DisplayName("of 팩토리 메소드는 두 장의 서로 다른 카드를 받아 인스턴스를 생성한다.")
+    @Nested
+    class OfTest {
 
-        assertThat(cardBundle).isNotNull();
+        @DisplayName("of 팩토리 메소드는 언제나 두 장의 카드를 제공받아 그대로 인스턴스를 생성한다.")
+        @Test
+        void of_onlyInitsWithTwoCards() {
+            CardBundle cardBundle = CardBundle.of(CLOVER2, CLOVER3);
+
+            assertThat(cardBundle.getCards()).containsExactly(CLOVER2, CLOVER3);
+            assertThat(cardBundle.getScore()).isEqualTo(Score.valueOf(5));
+        }
+
+        @DisplayName("of 팩토리 메소드에 서로 중복되는 카드를 제공하는 경우 예외가 발생한다.")
+        @Test
+        void of_duplicateCardsThrowsException() {
+            assertThatThrownBy(() -> CardBundle.of(CLOVER2, CLOVER2))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("중복된 카드는 존재할 수 없습니다.");
+        }
     }
 
-    @DisplayName("add 메서드로 새로운 카드를 추가할 수 있다.")
-    @Test
-    void add() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
-        cardBundle.add(CLOVER6);
+    @DisplayName("addAndGenerate 메서드는 카드를 한 장 추가한 새로운 카드 패 인스턴스를 반환한다.")
+    @Nested
+    class AddAndGenerateTest {
 
-        assertThat(cardBundle.getCards())
-                .contains(CLOVER4, CLOVER5, CLOVER6);
-    }
+        @DisplayName("addAndGenerate 메서드는 기존 카드 패를 변화시키지 않고 새로운 카드 패를 반환한다.")
+        @Test
+        void addAndGenerate_immutableCardBundle() {
+            CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
+            CardBundle addedCardBundle = cardBundle.addAndGenerate(CLOVER6);
 
-    @DisplayName("add 메서드로 중복된 카드를 추가하려고 하면 예외가 발생한다.")
-    @Test
-    void add_throwsExceptionOnDuplicateCard() {
-        CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
+            assertThat(cardBundle.getCards()).containsExactly(CLOVER4, CLOVER5);
+            assertThat(addedCardBundle.getCards())
+                    .containsExactly(CLOVER4, CLOVER5, CLOVER6);
+            assertThat(addedCardBundle.getScore())
+                    .isEqualTo(Score.valueOf(15));
+        }
 
-        assertThatExceptionOfType(RuntimeException.class)
-                .isThrownBy(() -> cardBundle.add(CLOVER5))
-                .withMessage("중복된 카드는 존재할 수 없습니다.");
+        @DisplayName("addAndGenerate 메서드에 기존 카드 패에 존재하는 카드를 입력하는 경우 예외가 발생한다.")
+        @Test
+        void addAndGenerate_duplicateCardsThrowsException() {
+            CardBundle cardBundle = generateCardBundleOf(CLOVER4, CLOVER5);
+            assertThatExceptionOfType(IllegalArgumentException.class)
+                    .isThrownBy(() -> cardBundle.addAndGenerate(CLOVER4))
+                    .withMessage("중복된 카드는 존재할 수 없습니다.");
+        }
     }
 
     @DisplayName("getScore 메서드는 에이스가 없을 때 각 카드가 지닌 값들을 그대로 합산하여 반환한다.")
@@ -108,7 +129,8 @@ public class CardBundleTest {
         @DisplayName("에이스 중 한 장이라도 11로 계산했을 때 21을 초과할 경우, 모든 에이스는 1로 계산한다.")
         @Test
         void getScore_allAceIs1IfSumCouldGoOver21() {
-            CardBundle cardBundle = generateCardBundleOf(CLOVER_ACE, HEART_ACE, DIAMOND_ACE, CLOVER8, CLOVER10);
+            CardBundle cardBundle =
+                    generateCardBundleOf(CLOVER_ACE, HEART_ACE, DIAMOND_ACE, CLOVER8, CLOVER10);
 
             Score actual = cardBundle.getScore();
             Score expected = Score.valueOf(21);
@@ -119,7 +141,8 @@ public class CardBundleTest {
         @DisplayName("에이스 중 한 장을 11로 계산했을 때 21 이내인 경우, 한 장은 11로, 나머지는 1로 계산한다.")
         @Test
         void getScore_onlyOneAceIs11IfSumIsNotOver21() {
-            CardBundle cardBundle = generateCardBundleOf(CLOVER_ACE, HEART_ACE, DIAMOND_ACE, CLOVER2, CLOVER3);
+            CardBundle cardBundle =
+                    generateCardBundleOf(CLOVER_ACE, HEART_ACE, DIAMOND_ACE, CLOVER2, CLOVER3);
 
             Score actual = cardBundle.getScore();
             Score expected = Score.valueOf(18);

@@ -8,14 +8,14 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected final CardBundle cardBundle;
+    protected CardBundle cardBundle;
 
     protected Participant(final CardBundle cardBundle) {
         this.cardBundle = cardBundle;
     }
 
     public void receiveCard(Card card) {
-        cardBundle.add(card);
+        cardBundle = cardBundle.addAndGenerate(card);
     }
 
     public abstract boolean canDraw();
