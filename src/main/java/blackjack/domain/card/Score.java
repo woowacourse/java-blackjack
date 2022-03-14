@@ -6,7 +6,9 @@ import java.util.Objects;
 public class Score {
 
     public static final int BLACKJACK = 21;
+
     private static final int ACE_POINT_DIFFERENCE = 10;
+    private static final int ZERO = 0;
 
     private int score;
 
@@ -16,18 +18,18 @@ public class Score {
     }
 
     public Score() {
-        this(0);
+        this(ZERO);
     }
 
     private void validatePositive(int score) {
-        if (score < 0) {
-            throw new IllegalArgumentException("점수는 0점 미만이 될 수 없습니다.");
+        if (score < ZERO) {
+            throw new IllegalArgumentException(String.format("점수는 %d점 미만이 될 수 없습니다.", ZERO));
         }
     }
 
     public static Score addUpPointToScore(List<Card> cards) {
         int aceCount = countAce(cards);
-        if (aceCount > 0) {
+        if (aceCount > ZERO) {
             return sumWithAce(aceCount, cards);
         }
         return new Score(
@@ -53,7 +55,7 @@ public class Score {
     }
 
     private static int findOptimalScore(int sum, int aceCount) {
-        if (aceCount == 0) {
+        if (aceCount == ZERO) {
             return sum;
         }
 
