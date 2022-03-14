@@ -16,7 +16,7 @@ public class HandDto {
 
     public static HandDto of(Participant participant) {
         List<String> cards = getCards(participant);
-        int score = participant.getCurrentScore().toInt();
+        int score = participant.getCurrentScore().getValue();
 
         return new HandDto(cards, score);
     }

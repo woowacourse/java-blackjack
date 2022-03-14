@@ -36,8 +36,8 @@ public abstract class Participant {
     }
 
     public ResultType compareWith(Participant other) {
-        int playerScore = getCurrentScore().toInt();
-        int otherScore = other.getCurrentScore().toInt();
+        int playerScore = getCurrentScore().getValue();
+        int otherScore = other.getCurrentScore().getValue();
 
         if (playerScore > otherScore || !isBusted() && other.isBusted()) {
             return ResultType.WIN;

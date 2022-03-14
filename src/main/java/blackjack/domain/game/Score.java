@@ -37,7 +37,7 @@ public class Score implements Comparable<Score> {
         return this.value < score;
     }
 
-    public int toInt() {
+    public int getValue() {
         return value;
     }
 

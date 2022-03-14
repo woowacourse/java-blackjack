@@ -82,7 +82,7 @@ public class OutputView {
     }
 
     private static void printSingleDealerMatchResult(Entry<ResultType, ResultCount> entrySet) {
-        int resultCount = entrySet.getValue().toInt();
+        int resultCount = entrySet.getValue().getValue();
         String resultTypeName = entrySet.getKey().getDisplayName();
 
         if (resultCount > 0) {

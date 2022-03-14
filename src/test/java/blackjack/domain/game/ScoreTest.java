@@ -33,7 +33,7 @@ public class ScoreTest {
 
         Score newScore = score.add(anotherScore);
 
-        assertThat(newScore.toInt()).isEqualTo(25);
+        assertThat(newScore.getValue()).isEqualTo(25);
     }
 
     @DisplayName("compareTo 는 각 점수 인스턴스의 크기를 비교한다.")

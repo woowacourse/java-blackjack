@@ -13,7 +13,7 @@ public class ResultCountTest {
     void constructor_initsWithZero() {
         ResultCount resultCount = new ResultCount();
 
-        int actual = resultCount.toInt();
+        int actual = resultCount.getValue();
 
         assertThat(actual).isZero();
     }
@@ -26,7 +26,7 @@ public class ResultCountTest {
         ResultCount resultCount = new ResultCount(input);
 
         // when
-        int actual = resultCount.toInt();
+        int actual = resultCount.getValue();
 
         // then
         assertThat(actual).isEqualTo(input);
@@ -52,7 +52,7 @@ public class ResultCountTest {
             resultCount.increment();
         }
 
-        int actual = resultCount.toInt();
+        int actual = resultCount.getValue();
 
         assertThat(actual).isEqualTo(3);
     }

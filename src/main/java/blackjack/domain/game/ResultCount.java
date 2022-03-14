@@ -6,6 +6,7 @@ public class ResultCount {
 
     private int value;
 
+    // TODO: 불변객체로 변경
     public ResultCount() {
         value = 0;
     }
@@ -14,7 +15,7 @@ public class ResultCount {
         this.value = value;
     }
 
-    public int toInt() {
+    public int getValue() {
         return value;
     }
 
