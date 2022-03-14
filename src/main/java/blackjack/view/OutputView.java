@@ -37,7 +37,7 @@ public class OutputView {
     }
 
     private static void printDealerCard(final Dealer dealer) {
-        final Card firstCard = dealer.getCards().iterator().next();
+        final Card firstCard = dealer.openFirstCard();
         System.out.println(dealer.getName() + COLON_AND_BLANK + firstCard.getDenominationName() + firstCard.getSuitName());
     }
 
