@@ -89,7 +89,7 @@ public class BlackJackGame {
     }
 
     private void proceedDealer(Dealer dealer, CardDeck deck) {
-        while (dealer.isHittable()) {
+        while (dealer.shouldHit()) {
             dealer.hit(deck);
             OutputView.printDealerHitMessage(new ParticipantResponse(dealer));
         }

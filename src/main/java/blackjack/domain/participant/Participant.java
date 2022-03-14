@@ -40,8 +40,6 @@ public abstract class Participant {
 
     abstract public List<Card> showInitialCards();
 
-    abstract public boolean isHittable();
-
     public List<Card> getCards() {
         return List.copyOf(cards.getCards());
     }

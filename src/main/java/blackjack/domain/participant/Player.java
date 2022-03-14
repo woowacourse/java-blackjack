@@ -18,7 +18,6 @@ public class Player extends Participant {
         return List.copyOf(getCards());
     }
 
-    @Override
     public boolean isHittable() {
         return getScore() < HIT_STANDARD;
     }
