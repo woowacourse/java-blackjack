@@ -25,21 +25,24 @@ public class BlackjackTest {
         blackjack.distributeInitialCards(intendedNumberGenerator);
         int playerCardNum = blackjack.getPlayers().getPlayers().get(0).getMyCards().size();
         int dealerCardNum = blackjack.getDealer().getMyCards().size();
-
+        System.out.println(playerCardNum);
+        System.out.println(dealerCardNum);
         assertThat(playerCardNum == 2 && dealerCardNum == 2).isTrue();
     }
 
     @DisplayName("addCondition이 true일때 현재 turn플레이어 카드 추가되는지 테스트")
     @Test
     void additionalCardToTurnPlayerTest() {
-        blackjack.addtionalCardToTurnPlayer(new IntendedNumberGenerator(List.of(1)), true);
+        blackjack.addtionalCardToPlayer(
+                new IntendedNumberGenerator(List.of(1)), blackjack.turnPlayer(), true);
         assertThat(blackjack.getPlayers().firstPlayer().getMyCards().size()).isEqualTo(1);
     }
 
     @DisplayName("addCondition이 false일때 turn플레이어 다음으로 넘어가는지 테스트")
     @Test
     void additionalCardToTurnPlayerTest2() {
-        blackjack.addtionalCardToTurnPlayer(new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6, 7)), false);
+        blackjack.addtionalCardToPlayer(
+                new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6, 7)), blackjack.turnPlayer(), false);
         assertThat(blackjack.turnPlayer().isSameName("jason")).isTrue();
     }
 
@@ -48,15 +51,17 @@ public class BlackjackTest {
     void additionalCardToTurnPlayerTest3() {
         NumberGenerator numberGenerator = new IntendedNumberGenerator(List.of(0, 1, 2, 9, 3, 4, 10));
         blackjack.distributeInitialCards(numberGenerator);
-        blackjack.addtionalCardToTurnPlayer(numberGenerator, true);
+        blackjack.addtionalCardToPlayer(numberGenerator, blackjack.turnPlayer(), true);
         assertThat(blackjack.turnPlayer().isSameName("jason")).isTrue();
     }
 
     @DisplayName("모든 플레이어가 turn플레이어로 한 번 다 돌았으면 true 리턴하는지 테스트")
     @Test
     void cycleIsOverTest() {
-        blackjack.addtionalCardToTurnPlayer(new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6, 7)), false);
-        blackjack.addtionalCardToTurnPlayer(new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6, 7)), false);
+        blackjack.addtionalCardToPlayer(
+                new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6, 7)), blackjack.turnPlayer(), false);
+        blackjack.addtionalCardToPlayer(
+                new IntendedNumberGenerator(List.of(1, 2, 3, 4, 5, 6, 7)), blackjack.turnPlayer(), false);
         assertThat(blackjack.cycleIsOver()).isTrue();
     }
 

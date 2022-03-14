@@ -48,10 +48,6 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
-    public boolean isPlayerBurst(String playerName) {
-        return convertToPlayer(playerName).isBurst();
-    }
-
     public Player firstPlayer() {
         return players.get(FIRST_PLAYER_INDEX);
     }

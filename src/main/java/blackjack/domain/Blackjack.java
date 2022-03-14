@@ -13,12 +13,12 @@ public class Blackjack {
 
     private final Dealer dealer;
     private final Players players;
-    private Player player;
+    private Player turnPlayer;
 
     public Blackjack(List<String> playerNames) {
         this.dealer = new Dealer();
         this.players = new Players(playerNames);
-        this.player = players.firstPlayer();
+        this.turnPlayer = players.firstPlayer();
     }
 
     private void distributeCard(NumberGenerator numberGenerator, List<Player> players) {
@@ -28,21 +28,22 @@ public class Blackjack {
     }
 
     private void updateTurnPlayer() {
-        player = players.nextPlayer(player);
+        turnPlayer = players.nextPlayer(turnPlayer);
     }
 
     public boolean cycleIsOver() {
-        return Objects.isNull(player);
+        if (Objects.isNull(turnPlayer)) {
+            turnPlayer = players.firstPlayer();
+            return true;
+        }
+        return false;
     }
 
     public Player turnPlayer() {
-        if (cycleIsOver()) {
-            player = players.firstPlayer();
-        }
-        return player;
+        return turnPlayer;
     }
 
-    public void addtionalCardToTurnPlayer(NumberGenerator numberGenerator, boolean addCondition) {
+    public void addtionalCardToPlayer(NumberGenerator numberGenerator, Player player, boolean addCondition) {
         if (!addCondition) {
             updateTurnPlayer();
             return;
@@ -59,10 +60,16 @@ public class Blackjack {
     }
 
     public void distributeInitialCards(NumberGenerator numberGenerator) {
-        List<Player> playersToGetAdditionalCard = players.playersAbleToGetAdditionalCard();
-        playersToGetAdditionalCard.add(dealer);
         for (int i = 0; i < INITIAL_CARD_NUMBER; ++i) {
-            distributeCard(numberGenerator, playersToGetAdditionalCard);
+            distributeCardToPlayers(numberGenerator);
+            additionalCardToDealer(numberGenerator);
+        }
+    }
+
+    private void distributeCardToPlayers(NumberGenerator numberGenerator) {
+        while (!cycleIsOver()) {
+            addtionalCardToPlayer(numberGenerator, turnPlayer(), true);
+            updateTurnPlayer();
         }
     }
 

@@ -21,8 +21,8 @@ public class BlackjackController {
 
         while (!blackjack.cycleIsOver()) {
             Player turnPlayer = blackjack.turnPlayer();
-            blackjack.addtionalCardToTurnPlayer(
-                    new RandomNumberGenerator(), InputView.askAdditionalCard(turnPlayer.getName()));
+            blackjack.addtionalCardToPlayer(
+                    new RandomNumberGenerator(), turnPlayer, InputView.askAdditionalCard(turnPlayer.getName()));
             OutputView.printCards(turnPlayer);
         }
 
