@@ -47,6 +47,10 @@ public class BlackjackGame {
         return CARD_DECK.drawCard();
     }
 
+    public ParticipantResult findGameResult() {
+        return ParticipantResult.create(dealer.calculateScore(), players.getPlayers());
+    }
+
     public List<Player> getPlayers() {
         return players.getPlayers();
     }

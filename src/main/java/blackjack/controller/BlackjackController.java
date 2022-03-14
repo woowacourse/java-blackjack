@@ -7,7 +7,6 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.List;
 
 public class BlackjackController {
 
@@ -66,13 +65,10 @@ public class BlackjackController {
         }
     }
 
-    private void announceGameResult(BlackjackGame blackjackGame) {
-        final Dealer dealer = blackjackGame.getDealer();
-        final List<Player> players = blackjackGame.getPlayers();
+    private void announceGameResult(final BlackjackGame blackjackGame) {
+        ParticipantResult participantResult = blackjackGame.findGameResult();
 
-        ParticipantResult participantResult = ParticipantResult.create(dealer.calculateScore(),
-                players);
-        outputView.printAllPlayerCardStatus(players, dealer);
+        outputView.printAllPlayerCardStatus(blackjackGame.getPlayers(), blackjackGame.getDealer());
         outputView.printGameResult(participantResult.getDealerResultCount(), participantResult.getPlayerResults());
     }
 }
