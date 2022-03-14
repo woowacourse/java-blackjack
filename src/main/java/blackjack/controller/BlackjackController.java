@@ -2,11 +2,12 @@ package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.DrawCommand;
-import blackjack.domain.GameMachine;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.HoldingCard;
 import blackjack.dto.ScoreResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -15,10 +16,8 @@ public class BlackjackController {
         OutputView.printInitialCardStatus(blackJackGame.getParticipantsDto());
 
         runAllPlayersTurn(blackJackGame);
-        OutputView.printPlayerFinalCards(GameMachine.createPlayerFinalCardsAndScore(blackJackGame));
-        ScoreResultDto finalScore = GameMachine.createFinalScore(blackJackGame);
-        OutputView.printFinalScore(finalScore);
-
+        OutputView.printPlayerFinalCards(blackJackGame.getParticipantsDto());
+        OutputView.printFinalScore(createFinalScore(blackJackGame));
     }
 
     private BlackjackGame initBlackJackGame() {
@@ -57,5 +56,11 @@ public class BlackjackController {
             OutputView.printErrorMessage(e);
             return askDrawCommand(name);
         }
+    }
+
+    private ScoreResultDto createFinalScore(BlackjackGame blackJackGame) {
+        Map<GameResult, Integer> dealerResult = blackJackGame.getDealerResult();
+        Map<String, GameResult> playersResult = blackJackGame.getPlayersResult();
+        return ScoreResultDto.from(dealerResult, playersResult);
     }
 }

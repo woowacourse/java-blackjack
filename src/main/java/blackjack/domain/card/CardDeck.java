@@ -7,7 +7,7 @@ import java.util.Queue;
 
 public class CardDeck {
 
-    private Queue<Card> cards;
+    private final Queue<Card> cards;
 
     private CardDeck(Queue<Card> cards) {
         this.cards = cards;
