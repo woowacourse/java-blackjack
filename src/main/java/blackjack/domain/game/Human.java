@@ -21,8 +21,8 @@ public abstract class Human {
         return playingCards.calculateTotal();
     }
 
-    public void drawInitCards(final List<Card> initCards) {
-        playingCards.add(initCards);
+    public void dealCards(final List<Card> cards) {
+        playingCards.add(cards);
     }
 
     public void drawCard(final Card card) {

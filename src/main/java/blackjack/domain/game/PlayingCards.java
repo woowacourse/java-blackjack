@@ -13,8 +13,8 @@ public class PlayingCards {
 
     private final List<Card> playingCards = new ArrayList<>();
 
-    public void add(final List<Card> initCards) {
-        playingCards.addAll(initCards);
+    public void add(final List<Card> cards) {
+        playingCards.addAll(cards);
     }
 
     public void add(final Card card) {

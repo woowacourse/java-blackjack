@@ -42,18 +42,17 @@ public class Blackjack {
     // TODO: draw 전략 패턴 적용해보기
     private void drawCards(final Dealer dealer, final Players players) {
         CardDeck cardDeck = new CardDeck();
-        // TODO: drawInitCards -> dealCards
-        drawInitCards(cardDeck, dealer, players);
+        dealCards(cardDeck, dealer, players);
 
         drawCardToPlayers(players, cardDeck);
         drawCardToDealer(dealer, cardDeck);
     }
 
-    private void drawInitCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
-        OutputView.printDrawInitCards(dealer.getName(), players.getNames());
-        dealer.drawInitCards(cardDeck.pickInit());
+    private void dealCards(final CardDeck cardDeck, final Dealer dealer, final Players players) {
+        OutputView.printDealCards(dealer.getName(), players.getNames());
+        dealer.dealCards(cardDeck.pickInit());
         for (Player player : players.getPlayers()) {
-            player.drawInitCards(cardDeck.pickInit());
+            player.dealCards(cardDeck.pickInit());
         }
         openInitCards(dealer, players);
     }

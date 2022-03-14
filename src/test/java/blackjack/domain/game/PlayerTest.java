@@ -36,7 +36,7 @@ public class PlayerTest {
     @DisplayName("플레이어의 카드 합이 21 미만일 경우 카드를 받는 것을 확인한다.")
     @Test
     void is_drawable_true() {
-        player.drawInitCards(List.of(queenSpade, queenSpade));
+        player.dealCards(List.of(queenSpade, queenSpade));
 
         assertThat(player.isDrawable()).isTrue();
     }
@@ -44,7 +44,7 @@ public class PlayerTest {
     @DisplayName("플레이어의 카드 합이 21 이상일 경우 카드를 받지 못하는 것을 확인한다.")
     @Test
     void is_drawable_false() {
-        player.drawInitCards(List.of(aceSpade, queenSpade, queenSpade));
+        player.dealCards(List.of(aceSpade, queenSpade, queenSpade));
 
         assertThat(player.isDrawable()).isFalse();
     }

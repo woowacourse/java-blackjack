@@ -33,8 +33,8 @@ class ResultTest {
     @DisplayName("플레이어의 값이 클 경우 비교하여 승자를 확인한다.")
     @Test
     void winner_player() {
-        dealer.drawInitCards(List.of(twoSpade, twoSpade));
-        player.drawInitCards(List.of(twoSpade, threeSpade));
+        dealer.dealCards(List.of(twoSpade, twoSpade));
+        player.dealCards(List.of(twoSpade, threeSpade));
 
         result.compete(dealer, player);
 
@@ -44,8 +44,8 @@ class ResultTest {
     @DisplayName("플레이어의 값이 적을 경우 비교하여 승자를 확인한다.")
     @Test
     void winner_dealer() {
-        dealer.drawInitCards(List.of(twoSpade, threeSpade));
-        player.drawInitCards(List.of(twoSpade, twoSpade));
+        dealer.dealCards(List.of(twoSpade, threeSpade));
+        player.dealCards(List.of(twoSpade, twoSpade));
 
         result.compete(dealer, player);
 
@@ -55,8 +55,8 @@ class ResultTest {
     @DisplayName("딜러의 값과 플레이어의 값이 같을 경우 승자를 확인한다.")
     @Test
     void equals_score() {
-        dealer.drawInitCards(List.of(twoSpade, twoSpade));
-        player.drawInitCards(List.of(twoSpade, twoSpade));
+        dealer.dealCards(List.of(twoSpade, twoSpade));
+        player.dealCards(List.of(twoSpade, twoSpade));
 
         result.compete(dealer, player);
 
@@ -66,8 +66,8 @@ class ResultTest {
     @DisplayName("플레이어의 카드합이 21을 넘길 경우 승자에 포함되지 않는 것을 확인한다.")
     @Test
     void bust_player() {
-        dealer.drawInitCards(List.of(twoSpade, twoSpade));
-        player.drawInitCards(List.of(queenSpade, queenSpade, twoSpade));
+        dealer.dealCards(List.of(twoSpade, twoSpade));
+        player.dealCards(List.of(queenSpade, queenSpade, twoSpade));
 
         result.compete(dealer, player);
 
@@ -77,8 +77,8 @@ class ResultTest {
     @DisplayName("플레이어가 21을 초과하지 않았을 때 딜러가 21을 초과할 경우 승자를 확인한다.")
     @Test
     void bust_dealer() {
-        dealer.drawInitCards(List.of(queenSpade, queenSpade, queenSpade));
-        player.drawInitCards(List.of(twoSpade, twoSpade, twoSpade));
+        dealer.dealCards(List.of(queenSpade, queenSpade, queenSpade));
+        player.dealCards(List.of(twoSpade, twoSpade, twoSpade));
 
         result.compete(dealer, player);
 
