@@ -8,6 +8,8 @@ public enum Symbol {
     DIAMOND("다이아몬드"),
     CLOVER("클로버");
 
+    private static final String SYMBOL_INPUT_ERROR_MESSAGE = "[ERROR] 존재하지 않는 모양입니다.";
+
     private final String symbolName;
 
     Symbol(String symbolName) {
@@ -18,7 +20,7 @@ public enum Symbol {
         return Arrays.stream(Symbol.values())
             .filter(value -> value.symbolName.equals(symbolNameInput))
             .findAny()
-            .orElseThrow();
+            .orElseThrow(() -> new IllegalArgumentException(SYMBOL_INPUT_ERROR_MESSAGE));
     }
 
     public String getSymbolName() {

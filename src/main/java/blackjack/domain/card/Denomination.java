@@ -17,6 +17,8 @@ public enum Denomination {
     QUEEN("Q", 10),
     KING("K", 10);
 
+    private static final String DENOMINATION_INPUT_ERROR_MESSAGE = "[ERROR] 존재하지 않는 끗수입니다.";
+
     private final String initial;
     private final int point;
 
@@ -29,7 +31,7 @@ public enum Denomination {
         return Arrays.stream(Denomination.values())
             .filter(value -> value.initial.equals(initialInput))
             .findAny()
-            .orElseThrow();
+            .orElseThrow(() -> new IllegalArgumentException(DENOMINATION_INPUT_ERROR_MESSAGE));
     }
 
     public String getInitial() {
