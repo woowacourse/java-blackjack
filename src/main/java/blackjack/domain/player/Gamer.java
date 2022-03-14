@@ -5,18 +5,14 @@ import blackjack.domain.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gamer implements Player {
+public class Gamer extends Player {
 
     public static final int LIMIT_GAMER_TOTAL_POINT = 21;
     private static final int GAMER_OPEN_CARDS_SIZE = 2;
 
-    private final String name;
-    private final Cards cards;
-
     public Gamer(final String name) {
+        super(name, new Cards());
         checkName(name);
-        this.name = name;
-        cards = new Cards();
     }
 
     private void checkName(final String name) {
@@ -44,32 +40,13 @@ public class Gamer implements Player {
     }
 
     @Override
-    public void receiveCard(final Card card) {
-        cards.save(card);
-    }
-
-    @Override
     public List<Card> openCards() {
         return new ArrayList<>(cards.getCards().subList(0, GAMER_OPEN_CARDS_SIZE));
     }
 
     @Override
-    public List<Card> showCards() {
-        return List.copyOf(cards.getCards());
-    }
-
-    @Override
-    public int calculateResult() {
-        return cards.calculateTotalPoint();
-    }
-
-    @Override
     public boolean isReceivable() {
         return calculateResult() < LIMIT_GAMER_TOTAL_POINT;
-    }
-
-    public String getName() {
-        return name;
     }
 
 }
