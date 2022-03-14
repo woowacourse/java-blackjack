@@ -13,11 +13,18 @@ public class Gamblers {
     private final List<Gambler> gamblers;
 
     public Gamblers(List<Gambler> gamblers) {
-        validateNullAndEmpty(gamblers);
+        validateNull(gamblers);
         this.gamblers = List.copyOf(gamblers);
+        validateEmpty(gamblers);
     }
 
-    private void validateNullAndEmpty(List<Gambler> gamblers) {
+    private void validateNull(List<Gambler> gamblers) {
+        if (Objects.isNull(gamblers)) {
+            throw new IllegalArgumentException(ERROR_NULL_OR_EMPTY_GAMBLERS);
+        }
+    }
+
+    private void validateEmpty(List<Gambler> gamblers) {
         if (Objects.isNull(gamblers) || gamblers.isEmpty()) {
             throw new IllegalArgumentException(ERROR_NULL_OR_EMPTY_GAMBLERS);
         }
