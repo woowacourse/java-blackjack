@@ -1,5 +1,8 @@
 package blackjack.controller;
 
+import static blackjack.view.InputView.*;
+import static blackjack.view.OutputView.*;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +18,6 @@ import blackjack.domain.card.deckstrategy.RandomDeck;
 import blackjack.domain.participant.DrawCount;
 import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantDto;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
 
 public class GameController {
 
@@ -31,38 +32,38 @@ public class GameController {
     }
 
     private Game initPlay() {
-        List<String> names = InputView.requestPlayerNames();
+        List<String> names = requestPlayerNames();
         Game game = new Game(new CardDeck(new RandomDeck()), names);
 
-        OutputView.printInitResult(names);
-        OutputView.printDealerFirstCard(game.dealerFirstCard());
+        printInitResult(names);
+        printDealerFirstCard(game.dealerFirstCard());
         for (Player player : game.getPlayers()) {
-            OutputView.printPlayerCards(new ParticipantDto(player));
+            printPlayerCards(new ParticipantDto(player));
         }
-        OutputView.printEmptyLine();
+        printEmptyLine();
         return game;
     }
 
     private void drawPlayerCards(Game game) {
         while (game.findHitPlayer().isPresent()) {
             Player player = game.findHitPlayer().get();
-            PlayStatus hitOrStay = InputView.requestHitOrStay(player.getName());
+            PlayStatus hitOrStay = requestHitOrStay(player.getName());
 
             game.drawPlayerCard(player, hitOrStay);
 
-            OutputView.printPlayerCards(new ParticipantDto(player));
+            printPlayerCards(new ParticipantDto(player));
         }
     }
 
     private void drawDealerCards(Game game) {
         DrawCount drawCount = game.drawDealerCards();
-        OutputView.printDealerDrawCardCount(drawCount);
+        printDealerDrawCardCount(drawCount);
     }
 
     private void ParticipantsResult(Game game) {
-        OutputView.printParticipantCardsWithScore(new ParticipantDto(game.getDealer()));
+        printParticipantCardsWithScore(new ParticipantDto(game.getDealer()));
         for (Player player : game.getPlayers()) {
-            OutputView.printParticipantCardsWithScore(new ParticipantDto(player));
+            printParticipantCardsWithScore(new ParticipantDto(player));
         }
     }
 
@@ -72,9 +73,9 @@ public class GameController {
             .collect(Collectors.toMap(Player::getName, player -> recordFactory.getPlayerRecord(player.getScore()),
                 (a, b) -> b, LinkedHashMap::new));
 
-        OutputView.printDealerRecord(recordFactory.getDealerRecord());
+        printDealerRecord(recordFactory.getDealerRecord());
         for (Entry<String, Record> entry : map.entrySet()) {
-            OutputView.printPlayerRecord(entry.getKey(), entry.getValue());
+            printPlayerRecord(entry.getKey(), entry.getValue());
         }
     }
 }
