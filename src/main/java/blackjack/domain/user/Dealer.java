@@ -1,9 +1,9 @@
-package blackjack.domain.gamer;
+package blackjack.domain.user;
 
-public class Dealer extends Gamer {
+public class Dealer extends User {
 
-    private static final PlayerName DEALER_NAME = new PlayerName("딜러");
-    private static final int MAX_SCORE = 17;
+    private static final UserName DEALER_NAME = new UserName("딜러");
+    private static final int SEVEN_TEEN = 17;
     private static final int WIN = 1;
     private static final int DRAW = 0;
     private static final int LOSE = -1;
@@ -14,11 +14,11 @@ public class Dealer extends Gamer {
 
     @Override
     public boolean isValidRange() {
-        return getScore() < MAX_SCORE;
+        return getScore() < SEVEN_TEEN;
     }
 
     @Override
-    public int compare(Gamer player) {
+    public int compare(User player) {
         if (player.isBust()) {
             return WIN;
         }
@@ -28,14 +28,14 @@ public class Dealer extends Gamer {
         return compareScore(player);
     }
 
-    private int compareScore(Gamer player) {
-        if (isBLACKJACK() && player.isBLACKJACK()) {
+    private int compareScore(User player) {
+        if (isBlackjack() && player.isBlackjack()) {
             return DRAW;
         }
-        if (isBLACKJACK()) {
+        if (isBlackjack()) {
             return WIN;
         }
-        if (player.isBLACKJACK()) {
+        if (player.isBlackjack()) {
             return LOSE;
         }
         return getScore() - player.getScore();

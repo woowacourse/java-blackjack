@@ -1,12 +1,12 @@
-package blackjack.domain.gamer;
+package blackjack.domain.user;
 
 import java.util.Objects;
 
-public class PlayerName {
+public class UserName {
 
     private final String name;
 
-    public PlayerName(String name) {
+    public UserName(String name) {
         validateEmptyName(name);
 
         this.name = name;
@@ -30,7 +30,7 @@ public class PlayerName {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        PlayerName playerName1 = (PlayerName) o;
+        UserName playerName1 = (UserName) o;
         return Objects.equals(name, playerName1.name);
     }
 

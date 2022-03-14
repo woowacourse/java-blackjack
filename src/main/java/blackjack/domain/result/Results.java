@@ -1,14 +1,14 @@
 package blackjack.domain.result;
 
-import blackjack.domain.gamer.Gamer;
+import blackjack.domain.user.User;
 import java.util.Map;
 
 public class Results {
 
     private final OutcomeResults dealerResult;
-    private final Map<Gamer, OutcomeResults> playerResults;
+    private final Map<User, OutcomeResults> playerResults;
 
-    public Results(OutcomeResults dealerResult, Map<Gamer, OutcomeResults> playerResults) {
+    public Results(OutcomeResults dealerResult, Map<User, OutcomeResults> playerResults) {
         this.dealerResult = dealerResult;
         this.playerResults = playerResults;
     }
@@ -17,7 +17,7 @@ public class Results {
         return dealerResult;
     }
 
-    public Map<Gamer, OutcomeResults> getPlayerResults() {
+    public Map<User, OutcomeResults> getPlayerResults() {
         return playerResults;
     }
 }

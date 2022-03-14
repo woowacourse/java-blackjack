@@ -1,12 +1,12 @@
 package blackjack.controller;
 
-import blackjack.domain.gamer.Dealer;
+import blackjack.domain.user.Dealer;
 import blackjack.domain.card.deck.Deck;
-import blackjack.domain.gamer.Gamer;
-import blackjack.domain.gamer.Gamers;
-import blackjack.domain.gamer.PlayerName;
+import blackjack.domain.user.User;
+import blackjack.domain.user.Players;
+import blackjack.domain.user.UserName;
 import blackjack.domain.result.OutcomeResults;
-import blackjack.domain.gamer.Player;
+import blackjack.domain.user.Player;
 import blackjack.domain.card.deck.RandomDeck;
 import blackjack.domain.result.Outcome;
 import blackjack.domain.result.Results;
@@ -19,75 +19,76 @@ import java.util.stream.Collectors;
 
 public class BlackjackController {
 
-    private static final String STAY_ANSWER = "n";
+    private static final String HIT = "y";
 
     public void run() {
-        List<String> names = InputView.requestNames();
+        List<String> names = InputView.inputPlayerNames();
         Deck deck = new RandomDeck();
 
-        Gamer dealer = createDealer(deck);
-        Gamers players = createPlayers(names, deck);
-        ResultView.printInitCard(dealer, players);
+        User dealer = createDealer();
+        Players players = createPlayers(names);
+        takeInitHand(dealer, players, deck);
 
         play(deck, dealer, players);
         printResults(dealer, players);
     }
 
-    private Gamer createDealer(Deck deck) {
-        Gamer dealer = new Dealer();
-        dealer.hit(deck.pick());
-        dealer.hit(deck.pick());
-        return dealer;
+    private User createDealer() {
+        return new Dealer();
     }
 
-    private Gamers createPlayers(List<String> names, Deck deck) {
-        Gamers gamers = new Gamers(names.stream()
-                .map(PlayerName::new)
+    private Players createPlayers(List<String> names) {
+        return new Players(names.stream()
+                .map(UserName::new)
                 .map(Player::new)
                 .collect(Collectors.toList()));
-        gamers.initCards(deck);
-        return gamers;
     }
 
-    private void play(Deck deck, Gamer dealer, Gamers players) {
+    private void takeInitHand(User dealer, Players players, Deck deck) {
+        dealer.takeInitHand(deck);
+        players.takeInitHand(deck);
+        ResultView.printInitHand(dealer, players);
+    }
+
+    private void play(Deck deck, User dealer, Players players) {
         takeTurns(players, deck);
         takeDealerCards(dealer, deck);
     }
 
-    private void takeTurns(Gamers gamers, Deck deck) {
-        gamers.get()
-                .forEach(gamer -> takePlayerCards(gamer, deck));
+    private void takeTurns(Players players, Deck deck) {
+        players.get()
+                .forEach(player -> takePlayerCards(player, deck));
     }
 
-    private void takePlayerCards(Gamer gamer, Deck deck) {
-        if (!gamer.isValidRange()) {
+    private void takePlayerCards(User user, Deck deck) {
+        if (!user.isValidRange()) {
             return;
         }
-        String answer = InputView.requestHitOrStay(gamer.getName());
-        if (answer.equals(STAY_ANSWER)) {
-            return;
+
+        String answer = InputView.inputHitOrStay(user.getName());
+        if (answer.equals(HIT)) {
+            user.hit(deck.pick());
+            ResultView.printHand(user);
+            takePlayerCards(user, deck);
         }
-        gamer.hit(deck.pick());
-        ResultView.printGamerCard(gamer);
-        takePlayerCards(gamer, deck);
     }
 
-    private void takeDealerCards(Gamer gamer, Deck deck) {
-        while (gamer.isValidRange()) {
+    private void takeDealerCards(User user, Deck deck) {
+        while (user.isValidRange()) {
             ResultView.printDealerHitMessage();
-            gamer.hit(deck.pick());
+            user.hit(deck.pick());
         }
     }
 
-    private void printResults(Gamer dealer, Gamers players) {
+    private void printResults(User dealer, Players players) {
         ResultView.printCardsResults(dealer, players);
         ResultView.printOutcomeResults(calculateOutcomeResults(dealer, players));
     }
 
-    private Results calculateOutcomeResults(Gamer dealer, Gamers players) {
+    private Results calculateOutcomeResults(User dealer, Players players) {
         OutcomeResults dealerResult = new OutcomeResults();
-        Map<Gamer, OutcomeResults> results = new LinkedHashMap<>();
-        for (Gamer player : players.get()) {
+        Map<User, OutcomeResults> results = new LinkedHashMap<>();
+        for (User player : players.get()) {
             results.put(player, new OutcomeResults());
             results.get(player).increase(Outcome.compare(player, dealer));
             dealerResult.increase(Outcome.compare(dealer, player));

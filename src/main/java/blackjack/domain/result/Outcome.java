@@ -1,6 +1,6 @@
 package blackjack.domain.result;
 
-import blackjack.domain.gamer.Gamer;
+import blackjack.domain.user.User;
 
 public enum Outcome {
 
@@ -15,7 +15,7 @@ public enum Outcome {
         this.outcome = outcome;
     }
 
-    public static Outcome compare(Gamer dealer, Gamer player) {
+    public static Outcome compare(User dealer, User player) {
         if (dealer.compare(player) > 0) {
             return WIN;
         }

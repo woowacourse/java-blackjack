@@ -1,4 +1,4 @@
-package blackjack.domain.gamer;
+package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,9 +20,19 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("isValidRange 메서드는 카드의 총합이 17이상인지 검사한다.")
-    void validate_range() {
-        Gamer dealer = new Dealer();
+    @DisplayName("isValidRange 메서드는 카드의 총합이 16 이하면 true를 반환한다.")
+    void validate_range_true() {
+        User dealer = new Dealer();
+        dealer.hit(new Card(CardNumber.SIX, CardType.CLOVER));
+        dealer.hit(new Card(CardNumber.TEN, CardType.SPADE));
+
+        assertThat(dealer.isValidRange()).isTrue();
+    }
+
+    @Test
+    @DisplayName("isValidRange 메서드는 카드의 총합이 17 이상이면 false를 반환한다.")
+    void validate_range_false() {
+        User dealer = new Dealer();
         dealer.hit(new Card(CardNumber.SEVEN, CardType.CLOVER));
         dealer.hit(new Card(CardNumber.TEN, CardType.SPADE));
 
@@ -32,11 +42,11 @@ public class DealerTest {
     @Test
     @DisplayName("dealer의 compare 메서드는 플레이어가 Bust라면 무조건 딜러가 승리했다고 판단한다.")
     void compare_player_bust() {
-        Gamer dealer = new Dealer();
+        User dealer = new Dealer();
         dealer.hit(new Card(CardNumber.SEVEN, CardType.CLOVER));
         dealer.hit(new Card(CardNumber.TEN, CardType.SPADE));
 
-        Gamer player = new Player(new PlayerName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(new Card(CardNumber.TEN, CardType.CLOVER));
         player.hit(new Card(CardNumber.TEN, CardType.SPADE));
         player.hit(new Card(CardNumber.TEN, CardType.DIAMOND));
@@ -47,12 +57,12 @@ public class DealerTest {
     @Test
     @DisplayName("dealer의 compare 메서드는 딜러 Bust라면 딜러가 패배했다고 판단한다.")
     void compare_dealer_bust() {
-        Gamer dealer = new Dealer();
+        User dealer = new Dealer();
         dealer.hit(new Card(CardNumber.SEVEN, CardType.CLOVER));
         dealer.hit(new Card(CardNumber.FIVE, CardType.SPADE));
         dealer.hit(new Card(CardNumber.TEN, CardType.DIAMOND));
 
-        Gamer player = new Player(new PlayerName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(new Card(CardNumber.TEN, CardType.CLOVER));
         player.hit(new Card(CardNumber.TEN, CardType.SPADE));
 
@@ -62,12 +72,12 @@ public class DealerTest {
     @Test
     @DisplayName("dealer의 compare 메서드는 딜러가 블랙잭이고 플레이어가 블랙잭이 아니라면 딜러가 이겼다고 판단한다.")
     void compare_dealer_blackjack() {
-        Gamer dealer = new Dealer();
+        User dealer = new Dealer();
         dealer.hit(new Card(CardNumber.ACE, CardType.CLOVER));
         dealer.hit(new Card(CardNumber.KING, CardType.SPADE));
 
-        Gamer player = new Player(new PlayerName("aki"));
-        player.hit(new Card(CardNumber.ACE, CardType.CLOVER));
+        User player = new Player(new UserName("aki"));
+        player.hit(new Card(CardNumber.TEN, CardType.CLOVER));
         player.hit(new Card(CardNumber.TEN, CardType.DIAMOND));
 
         assertThat(dealer.compare(player)).isPositive();
@@ -76,11 +86,11 @@ public class DealerTest {
     @Test
     @DisplayName("dealer의 compare 메서드는 플레이어가 블랙잭이고 딜러가 블랙잭이 아니라면 딜러가 졌다고 판단한다.")
     void compare_player_blackjack() {
-        Gamer dealer = new Dealer();
-        dealer.hit(new Card(CardNumber.ACE, CardType.CLOVER));
+        User dealer = new Dealer();
+        dealer.hit(new Card(CardNumber.TEN, CardType.CLOVER));
         dealer.hit(new Card(CardNumber.TEN, CardType.SPADE));
 
-        Gamer player = new Player(new PlayerName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(new Card(CardNumber.ACE, CardType.CLOVER));
         player.hit(new Card(CardNumber.JACK, CardType.DIAMOND));
 
@@ -90,11 +100,11 @@ public class DealerTest {
     @Test
     @DisplayName("dealer의 compare 메서드는 딜러와 플레이어 모두 블랙잭이라면 무승부라고 판단한다.")
     void compare_player_and_dealer_blackjack() {
-        Gamer dealer = new Dealer();
+        User dealer = new Dealer();
         dealer.hit(new Card(CardNumber.ACE, CardType.CLOVER));
         dealer.hit(new Card(CardNumber.KING, CardType.SPADE));
 
-        Gamer player = new Player(new PlayerName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(new Card(CardNumber.ACE, CardType.CLOVER));
         player.hit(new Card(CardNumber.JACK, CardType.DIAMOND));
 
@@ -104,12 +114,12 @@ public class DealerTest {
     @Test
     @DisplayName("dealer의 compare 메서드는 딜러와 플레이어의 점수를 비교하여 승무패를 판단한다.")
     void compare_player_and_dealer() {
-        Gamer dealer = new Dealer();
+        User dealer = new Dealer();
         dealer.hit(new Card(CardNumber.FIVE, CardType.CLOVER));
         dealer.hit(new Card(CardNumber.TEN, CardType.SPADE));
         dealer.hit(new Card(CardNumber.THREE, CardType.DIAMOND));
 
-        Gamer player = new Player(new PlayerName("aki"));
+        User player = new Player(new UserName("aki"));
         player.hit(new Card(CardNumber.SEVEN, CardType.CLOVER));
         player.hit(new Card(CardNumber.TEN, CardType.DIAMOND));
 
