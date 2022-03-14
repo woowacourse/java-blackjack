@@ -20,7 +20,7 @@ public class Cards {
 
     public int calculateScore() {
         int oneAceScore = calculateOneAceScore();
-        if (hasAce() && oneAceScore + ACE_GAP <= BlackjackGame.BLACK_JACK_SCORE) {
+        if (hasAce() && oneAceScore + ACE_GAP <= BlackjackGame.MAX_SCORE) {
             return oneAceScore + ACE_GAP;
         }
         return oneAceScore;

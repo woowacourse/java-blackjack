@@ -25,12 +25,12 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean isBust() {
-        return cards.calculateScore() > BlackjackGame.BLACK_JACK_SCORE;
+        return cards.calculateScore() > BlackjackGame.MAX_SCORE;
     }
 
     @Override
     public boolean isMaxScore() {
-        return cards.calculateScore() == BlackjackGame.BLACK_JACK_SCORE;
+        return cards.calculateScore() == BlackjackGame.MAX_SCORE;
     }
 
     @Override

@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class BlackjackGame {
     public static final int INIT_CARD_SIZE = 2;
-    public static final int BLACK_JACK_SCORE = 21;
+    public static final int MAX_SCORE = 21;
 
     public void run() {
         Deck deck = new Deck();
