@@ -92,7 +92,7 @@ public class OutputView {
 	}
 
 	private static void printNotZeroRecordForDealer(Map<String, Integer> outcome, String record) {
-		if(outcome.get(record) > 0) {
+		if (outcome.get(record) > 0) {
 			System.out.print(outcome.get(record) + record + BLANK);
 		}
 	}

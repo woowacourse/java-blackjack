@@ -24,7 +24,7 @@ public class Players {
 		}
 
 		List<String> duplicatedChecker = playerNames.stream().distinct().collect(Collectors.toList());
-		if(duplicatedChecker.size() != playerNames.size()) {
+		if (duplicatedChecker.size() != playerNames.size()) {
 			throw new IllegalArgumentException(DUPLICATED_ERROR);
 		}
 	}
