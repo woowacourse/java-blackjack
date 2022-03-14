@@ -15,7 +15,7 @@ public enum PlayStatus {
         return HIT;
     }
 
-    public static boolean isBust(int score) {
+    static boolean isBust(int score) {
         return score > BUST_SCORE;
     }
 }

@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.domain.participant;
 
 import static blackjack.domain.card.CardNumber.*;
 
@@ -10,25 +10,26 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import blackjack.domain.PlayStatus;
+import blackjack.domain.card.Card;
 
-public class Cards {
+class Cards {
     private static final int ACE_BIG = 11;
 
     private final Set<Card> value;
 
-    public Cards(Set<Card> value) {
+    Cards(Set<Card> value) {
         this.value = new LinkedHashSet<>(List.copyOf(value));
     }
 
-    public void add(Card card) {
+    void add(Card card) {
         value.add(card);
     }
 
-    public PlayStatus getStatus() {
+    PlayStatus getStatus() {
         return PlayStatus.hitOrBust(sum());
     }
 
-    public int sum() {
+    int sum() {
         return sumWithAce(value.stream()
             .mapToInt(Card::getNumberValue)
             .sum());
@@ -46,13 +47,13 @@ public class Cards {
             .anyMatch(Card::isAce);
     }
 
-    public Card findFirst() {
+    Card findFirst() {
         return value.stream()
             .findFirst()
             .orElseThrow(() -> new IllegalStateException("카드가 한 장도 없습니다."));
     }
 
-    public Set<Card> getValue() {
+    Set<Card> getValue() {
         return Set.copyOf(value);
     }
 

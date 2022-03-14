@@ -7,14 +7,13 @@ import java.util.Set;
 import blackjack.domain.PlayStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.Cards;
 
 public abstract class Participant {
 
     protected final Cards cards;
     protected PlayStatus playStatus;
 
-    public Participant() {
+    Participant() {
         this.cards = new Cards(Set.of());
         this.playStatus = HIT;
     }
@@ -24,7 +23,7 @@ public abstract class Participant {
         cards.add(cardDeck.drawCard());
     }
 
-    public PlayStatus getStatus() {
+    PlayStatus getStatus() {
         return playStatus;
     }
 

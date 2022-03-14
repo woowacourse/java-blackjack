@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.domain.participant;
 
 import static blackjack.domain.card.CardNumber.*;
 import static blackjack.domain.card.CardSymbol.*;
@@ -15,6 +15,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.domain.PlayStatus;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.participant.Cards;
 
 class CardsTest {
 
