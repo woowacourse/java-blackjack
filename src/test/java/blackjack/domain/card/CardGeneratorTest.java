@@ -11,9 +11,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardGeneratorTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} {displayName}")
     @EnumSource(value = CardType.class, names = {"DIAMOND", "SPADE", "HEART", "CLOVER"})
-    @DisplayName("모양별로 13개씩 카드가 만들어지는지 확인한다.")
+    @DisplayName("모양일 때 13개의 카드가 만들어지는지 확인한다.")
     public void generateThirteenCardForCardType(CardType cardType) {
         CardGenerator cardGenerator = new CardGenerator();
         List<Card> cards = cardGenerator.generate();
