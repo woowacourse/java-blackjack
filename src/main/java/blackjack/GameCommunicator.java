@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class GameCommunicator {
+
     private final BlackJackGame blackJackGame;
 
     public GameCommunicator(final List<String> playerNames) {
