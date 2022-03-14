@@ -17,11 +17,15 @@ public class Deck {
 
     private List<Card> generateCardsForBlackJack() {
         List<Card> cards = new ArrayList<>();
+        gatherCards(cards);
+        Collections.shuffle(cards);
+        return cards;
+    }
+
+    private void gatherCards(List<Card> cards) {
         Arrays.stream(Rank.values()).forEach(rank -> {
             Arrays.stream(Suit.values()).map(suit -> new Card(rank, suit)).forEach(cards::add);
         });
-        Collections.shuffle(cards);
-        return cards;
     }
 
     public Card draw() {

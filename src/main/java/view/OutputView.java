@@ -2,7 +2,6 @@ package view;
 
 import domain.participant.Dealer;
 import domain.participant.Name;
-import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.Result;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String INIT_MESSAGE_FORMAT = "\n딜러와 %s에게 2장의 나누었습니다.\n";
-    private static final String SHOW_ONE_HAND_FORMAT = "딜러: %s\n";
+    private static final String SHOW_DEALER_ONE_HAND_FORMAT = "딜러: %s\n";
     private static final String SHOW_HAND_FORMAT = "%s 카드: %s\n";
     private static final String STATUS_FORMAT = "%s 카드: %s - 결과 : %d\n";
     private static final String BUST_MESSAGE = "[ Bust!!! ]";
@@ -23,24 +22,23 @@ public class OutputView {
     private static final String DEALER_BLACK_JACK_MESSAGE = "\n== DEALER IS BLACK JACK ==";
     public static final String PLAYER_IS_BLACK_JACK_MESSAGE = "\n== %s IS BLACK JACK ==\n";
 
-    public static void printInitHandsMessage(List<Name> names) {
-        String namesForPrint = names.stream().map(Name::getName).collect(Collectors.joining(", "));
-        System.out.printf(INIT_MESSAGE_FORMAT, namesForPrint);
-    }
-
     public static void printParticipantInitHands(List<Name> names, Dealer dealer, Players players) {
         printInitHandsMessage(names);
         printNewLine();
-        System.out.printf(SHOW_ONE_HAND_FORMAT, dealer.getFirstHand().toString());
+        System.out.printf(SHOW_DEALER_ONE_HAND_FORMAT, dealer.getFirstHand().toString());
         for (Name name : names) {
             printPlayerHand(name, players);
         }
     }
 
+    public static void printInitHandsMessage(List<Name> names) {
+        String namesForPrint = names.stream().map(Name::getName).collect(Collectors.joining(", "));
+        System.out.printf(INIT_MESSAGE_FORMAT, namesForPrint);
+    }
+
     public static void printPlayerHand(Name name, Players players) {
         System.out.printf(SHOW_HAND_FORMAT, name.getName(), players.showHandByName(name));
     }
-
 
     public static boolean printIfMaxScoreOrBust(Players players, Name name) {
         if (players.isMaxScoreByName(name)) {
