@@ -9,6 +9,7 @@ public enum HitFlag {
     private static final String FLAG_INPUT_ERROR_MESSAGE = "예는 y, 아니오는 n을 입력해 주세요.";
 
     public static HitFlag fromCommand(String input) {
+        input = input.toLowerCase();
         validate(input);
         if (input.equals(HIT_FLAG)) {
             return HitFlag.Y;
