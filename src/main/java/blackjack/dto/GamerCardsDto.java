@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.card.CardGroup;
+import blackjack.domain.card.Card;
 import blackjack.domain.gamer.Gamer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,14 +15,14 @@ public class GamerCardsDto {
         this.cards = cards;
     }
 
-    public static GamerCardsDto of(String name, CardGroup cards) {
+    public static GamerCardsDto of(String name, List<Card> cards) {
         return new GamerCardsDto(name, CardDto.of(cards));
     }
 
     public static List<GamerCardsDto> of(List<Gamer> gamersCards) {
         List<GamerCardsDto> gamersCardsDto = new ArrayList<>();
         for (Gamer gamer : gamersCards) {
-            gamersCardsDto.add(of(gamer.getName(), gamer.getCardGroup()));
+            gamersCardsDto.add(of(gamer.getName(), gamer.getCards()));
         }
         return Collections.unmodifiableList(gamersCardsDto);
     }

@@ -2,6 +2,7 @@ package blackjack.domain.gamer;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardGroup;
+import java.util.List;
 
 public class Gamer {
     private static final String NAME_LENGTH_ERROR_MESSAGE = "이름은 최소 1글자, 최대 6글자로 입력해야 합니다.";
@@ -73,8 +74,8 @@ public class Gamer {
         return cardGroup.getScore();
     }
 
-    public CardGroup getCardGroup() {
-        return cardGroup;
+    public List<Card> getCards() {
+        return cardGroup.getCards();
     }
 
     public String getName() {

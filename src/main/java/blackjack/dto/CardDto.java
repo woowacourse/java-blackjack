@@ -1,7 +1,6 @@
 package blackjack.dto;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardGroup;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,9 +18,9 @@ public class CardDto {
         return new CardDto(card.getCardShape().getName(), card.getCardNumber().getName());
     }
 
-    public static List<CardDto> of(CardGroup cardGroup) {
+    public static List<CardDto> of(List<Card> cards) {
         List<CardDto> cardsDto = new ArrayList<>();
-        for (Card card : cardGroup.getCards()) {
+        for (Card card : cards) {
             addOpenCard(cardsDto, card);
         }
 

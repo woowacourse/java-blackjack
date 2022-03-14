@@ -49,11 +49,11 @@ public class BlackJackController {
     private void requestCardAddition(Player player) {
         if (InputView.requestCardAddition(player.getName())) {
             blackJack.addCardTo(player);
-            OutputView.printGamerCard(GamerCardsDto.of(player.getName(), player.getCardGroup()));
+            OutputView.printGamerCard(GamerCardsDto.of(player.getName(), player.getCards()));
             requestCardAdditionToPlayer(player);
             return;
         }
-        OutputView.printGamerCard(GamerCardsDto.of(player.getName(), player.getCardGroup()));
+        OutputView.printGamerCard(GamerCardsDto.of(player.getName(), player.getCards()));
     }
 
     private void requestCardAdditionToPlayer(Player player) {
