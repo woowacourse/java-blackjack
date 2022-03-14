@@ -1,6 +1,7 @@
 package blackjack.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
@@ -19,7 +20,11 @@ public class BlackJackResultTest {
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.ACE));
 
-        assertThat(BlackJackResult.findBlackJackResult(gamer)).isEqualTo(BlackJackResult.BLACK_JACK);
+        BlackJackResult blackJackResult = BlackJackResult.findBlackJackResult(gamer);
+        assertAll(
+                () -> assertThat(blackJackResult).isEqualTo(BlackJackResult.BLACK_JACK),
+                () -> assertThat(blackJackResult.getResult()).isInstanceOf(BlackJack.class)
+        );
     }
 
     @Test
@@ -30,7 +35,11 @@ public class BlackJackResultTest {
         gamer.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
         gamer.receiveCard(new Card(Suit.HEART, Denomination.TWO));
 
-        assertThat(BlackJackResult.findBlackJackResult(gamer)).isEqualTo(BlackJackResult.BUST);
+        BlackJackResult blackJackResult = BlackJackResult.findBlackJackResult(gamer);
+        assertAll(
+                () -> assertThat(blackJackResult).isEqualTo(BlackJackResult.BUST),
+                () -> assertThat(blackJackResult.getResult()).isInstanceOf(Lose.class)
+        );
     }
 
     @Test
@@ -40,7 +49,11 @@ public class BlackJackResultTest {
         gamer.receiveCard(new Card(Suit.DIAMOND, Denomination.JACK));
         gamer.receiveCard(new Card(Suit.SPADE, Denomination.JACK));
 
-        assertThat(BlackJackResult.findBlackJackResult(gamer)).isEqualTo(BlackJackResult.HIT);
+        BlackJackResult blackJackResult = BlackJackResult.findBlackJackResult(gamer);
+        assertAll(
+                () -> assertThat(blackJackResult).isEqualTo(BlackJackResult.HIT),
+                () -> assertThat(blackJackResult.getResult()).isInstanceOf(Keep.class)
+        );
     }
 
 }

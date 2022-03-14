@@ -24,7 +24,7 @@ public class ResultTest {
     @Test
     @DisplayName("승리 경우 베팅금을 그대로 받는다.")
     void calculateBetByWin() {
-        Result result = new Win();
+        Result result = new Keep();
         assertThat(result.calculateBet(1000)).isEqualTo(1000);
     }
 

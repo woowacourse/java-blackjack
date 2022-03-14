@@ -8,14 +8,16 @@ import java.util.function.Predicate;
 
 public enum BlackJackResult {
 
-    BLACK_JACK(player -> player.showCards().size() == Card.START_CARD_COUNT &&
+    BLACK_JACK(new BlackJack(), player -> player.showCards().size() == Card.START_CARD_COUNT &&
             player.calculateResult() == Gamer.LIMIT_GAMER_TOTAL_POINT),
-    BUST(player -> player.calculateResult() > Gamer.LIMIT_GAMER_TOTAL_POINT),
-    HIT(Player::isSatisfyReceiveCondition);
+    BUST(new Lose(), player -> player.calculateResult() > Gamer.LIMIT_GAMER_TOTAL_POINT),
+    HIT(new Keep(), Player::isSatisfyReceiveCondition);
 
+    private final Result result;
     private final Predicate<Player> predicate;
 
-    BlackJackResult(final Predicate<Player> predicate) {
+    BlackJackResult(final Result result, final Predicate<Player> predicate) {
+        this.result = result;
         this.predicate = predicate;
     }
 
@@ -24,5 +26,9 @@ public enum BlackJackResult {
                 .filter(value -> value.predicate.test(player))
                 .findFirst()
                 .orElse(HIT);
+    }
+
+    public Result getResult() {
+        return result;
     }
 }
