@@ -29,14 +29,18 @@ public class BlackJackController {
     private Participants getParticipants() {
         try {
             List<String> playerNames = InputView.inputPlayerNames();
-            List<Player> players = playerNames.stream()
-                .map(Player::new)
-                .collect(Collectors.toUnmodifiableList());
+            List<Player> players = createPlayers(playerNames);
             return new Participants(new Dealer(), players);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
             return getParticipants();
         }
+    }
+
+    private List<Player> createPlayers(List<String> playerNames) {
+        return playerNames.stream()
+                .map(Player::new)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private void doPlayerGame(BlackJackGame blackJackGame) {
