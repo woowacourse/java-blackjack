@@ -20,13 +20,13 @@ public class Participants {
 
     public List<Participant> findPlayers() {
         return participants.stream()
-                .filter(participant -> participant instanceof Player)
+                .filter(participant -> participant.isSameClass(Player.class))
                 .collect(Collectors.toUnmodifiableList());
     }
 
     public Participant findDealer() {
         return participants.stream()
-                .filter(participant -> participant instanceof Dealer)
+                .filter(participant -> participant.isSameClass(Dealer.class))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_DEALER_ERROR));
     }
