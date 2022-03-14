@@ -76,11 +76,10 @@ public class BlackJackGameController {
 	}
 
 	private boolean decideHitOrStay(Player player) {
-		String decision = inputDecision(player);
-		return !decision.equalsIgnoreCase(NO);
+		return inputDecision(player);
 	}
 
-	private String inputDecision(Player player) {
+	private boolean inputDecision(Player player) {
 		try {
 			return inputView.inputYesOrNo(player.getName());
 		} catch (IllegalArgumentException exception) {

@@ -12,7 +12,7 @@ public class Deck {
 		cards = new Stack<>();
 		Stream.of(CardDenomination.values())
 			.forEach(cardLetter -> Stream.of(CardSuit.values())
-				.forEach(type -> cards.add(new Card(cardLetter, type)))
+				.forEach(type -> cards.push(new Card(cardLetter, type)))
 			);
 	}
 
