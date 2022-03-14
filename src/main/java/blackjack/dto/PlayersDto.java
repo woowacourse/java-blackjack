@@ -9,7 +9,7 @@ public class PlayersDto {
 
     private final List<PlayerDto> value;
 
-    public PlayersDto(final List<PlayerDto> value) {
+    private PlayersDto(final List<PlayerDto> value) {
         this.value = value;
     }
 
@@ -20,9 +20,8 @@ public class PlayersDto {
             .collect(Collectors.toList()));
     }
 
-    public static PlayersDto getGamblersFrom(final Players players) {
-        final List<Player> gamblers = players.getGamblers();
-        return new PlayersDto(gamblers.stream()
+    public static PlayersDto from(final List<Player> players) {
+        return new PlayersDto(players.stream()
             .map(PlayerDto::from)
             .collect(Collectors.toList()));
     }

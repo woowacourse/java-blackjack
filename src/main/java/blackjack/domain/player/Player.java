@@ -8,6 +8,7 @@ import java.util.List;
 public abstract class Player {
 
     private static final int BURST_NUMBER = 21;
+
     protected final String name;
     protected final PlayingCards playingCards = new PlayingCards();
 

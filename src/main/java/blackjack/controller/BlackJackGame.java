@@ -38,7 +38,7 @@ public class BlackJackGame {
         return new Dealer();
     }
 
-    public List<Player> getGambler() {
+    private List<Player> getGambler() {
         final List<String> playerNames = inputView.scanPlayerNames();
         return playerNames.stream()
             .map(Gambler::new)
@@ -59,8 +59,8 @@ public class BlackJackGame {
 
     private void printSpreadCards(final Players players) {
         outputView.printSpreadInstruction(PlayersDto.from(players));
-        outputView.printSingleCardForDealer(PlayerDto.getDealerFrom(players));
-        outputView.printCardsForGambler(PlayersDto.getGamblersFrom(players));
+        outputView.printSingleCardForDealer(PlayerDto.from(players.getDealer()));
+        outputView.printCardsForGambler(PlayersDto.from(players.getGamblers()));
     }
 
     private void playGame(final Players players, final CardDeck cardDeck) {

@@ -36,7 +36,7 @@ class BlackJackGameTest {
 
         //when
         blackJackGame.spreadCards(players, cardDeck);
-        final int receivedCardsSize = PlayerDto.getDealerFrom(players).getPlayingCards().size();
+        final int receivedCardsSize = PlayerDto.from(players.getDealer()).getPlayingCards().size();
 
         //then
         assertThat(receivedCardsSize).isEqualTo(2);
@@ -50,7 +50,7 @@ class BlackJackGameTest {
 
         //when
         blackJackGame.spreadCards(players, cardDeck);
-        final int receivedCardsSize = PlayersDto.getGamblersFrom(players).getValue().get(0).getPlayingCards().size();
+        final int receivedCardsSize = PlayersDto.from(players.getGamblers()).getValue().get(0).getPlayingCards().size();
 
         //then
         assertThat(receivedCardsSize).isEqualTo(2);

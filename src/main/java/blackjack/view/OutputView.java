@@ -56,8 +56,9 @@ public class OutputView {
     }
 
     public void printCardAndScore(PlayersDto playersDto) {
-        playersDto.getValue()
-            .forEach(playerDto -> System.out.println(getCardAndScoreMessage(playerDto)));
+        for (PlayerDto playerDto : playersDto.getValue()) {
+            System.out.println(getCardAndScoreMessage(playerDto));
+        }
     }
 
     private String getCardAndScoreMessage(final PlayerDto playerDto) {
