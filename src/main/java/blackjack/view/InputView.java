@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
@@ -11,13 +12,13 @@ public class InputView {
 
     }
 
-    public static String inputNames() {
+    public static List<String> inputNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String text = SCANNER.nextLine();
         if (!text.matches("^[a-zA-Z가-힣]+(,[a-zA-Z가-힣]+)*")) {
             throw new IllegalArgumentException("잘못된 이름 형식입니다.");
         }
-        return text;
+        return List.of(text.split(","));
     }
 
     public static String chooseOptions(String message, String... options) {

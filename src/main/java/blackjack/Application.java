@@ -35,8 +35,8 @@ public class Application {
     }
 
     private static List<Name> names() {
-        String namesText = InputView.inputNames();
-        return List.of(namesText.split(",")).stream()
+        List<String> names = InputView.inputNames();
+        return names.stream()
             .map(Name::new)
             .collect(toUnmodifiableList());
     }
