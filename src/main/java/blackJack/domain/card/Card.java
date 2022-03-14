@@ -37,7 +37,7 @@ public class Card {
         return denomination == Denomination.ACE;
     }
 
-    public static List<Card> newCards() {
+    public static List<Card> newDeck() {
         return new LinkedList<>(CARDS);
     }
 

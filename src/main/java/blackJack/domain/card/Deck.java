@@ -10,7 +10,7 @@ public class Deck {
     private final Queue<Card> deck;
 
     public Deck() {
-        List<Card> cards = Card.newCards();
+        List<Card> cards = Card.newDeck();
         Collections.shuffle(cards);
         deck = new LinkedList<>(cards);
     }
