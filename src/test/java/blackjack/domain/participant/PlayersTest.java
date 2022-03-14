@@ -7,13 +7,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ParticipantsTest {
+class PlayersTest {
 
     @Test
     @DisplayName("플레이어가 아무도 없을 때 예외처리")
     void validateEmptyName() {
         Assertions.assertThatThrownBy(
-                () -> new Participants(new ArrayList<>())
+                () -> new Players(new ArrayList<>())
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -24,7 +24,7 @@ class ParticipantsTest {
         Player elsa = new Player("elsa", new ArrayList<>());
         List<Participant> players = Arrays.asList(pobi, elsa);
 
-        Participants participants = new Participants(players);
+        Players participants = new Players(players);
         participants.skipTurn();
         Participant nextPlayer = participants.getCurrentPlayer();
 
@@ -38,7 +38,7 @@ class ParticipantsTest {
         Player elsa = new Player("elsa", new ArrayList<>());
         List<Participant> players = Arrays.asList(pobi, elsa);
 
-        Participants participants = new Participants(players);
+        Players participants = new Players(players);
         participants.skipTurn();
         participants.skipTurn();
 

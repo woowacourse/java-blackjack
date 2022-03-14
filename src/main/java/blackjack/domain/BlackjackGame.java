@@ -7,7 +7,7 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.HoldingCard;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Player;
 import blackjack.dto.ParticipantDto;
 import java.util.ArrayList;
@@ -16,14 +16,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
-    private final Participants players;
+    private final Players players;
     private final Participant dealer;
     private final CardDeck cardDeck;
 
     public BlackjackGame(List<String> playersNames) {
         this.cardDeck = CardDeck.createNewCardDeck();
         this.dealer = new Dealer(List.of(cardDeck.drawCard()));
-        this.players = new Participants(createPlayers(playersNames));
+        this.players = new Players(createPlayers(playersNames));
     }
 
     private List<Participant> createPlayers(List<String> playersNames) {
@@ -68,7 +68,7 @@ public class BlackjackGame {
     public List<ParticipantDto> getParticipantsDto() {
         List<ParticipantDto> participantDtos = new ArrayList<>();
         participantDtos.add(ParticipantDto.of(dealer));
-        for (Participant player : players.getParticipants()) {
+        for (Participant player : players.getPlayers()) {
             participantDtos.add(ParticipantDto.of(player));
         }
         return participantDtos;

@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Participants {
-    private final List<Participant> participants;
+public class Players {
+    private final List<Participant> players;
     private int nowTurnIndex;
 
-    public Participants(List<Participant> participants) {
+    public Players(List<Participant> participants) {
         validateEmptyNames(participants);
-        this.participants = participants;
+        this.players = participants;
         this.nowTurnIndex = 0;
     }
 
@@ -23,7 +23,7 @@ public class Participants {
     }
 
     public boolean isFinished() {
-        return nowTurnIndex >= participants.size();
+        return nowTurnIndex >= players.size();
     }
 
     public void skipTurn() {
@@ -32,7 +32,7 @@ public class Participants {
 
     public Map<GameResult, Integer> getDealerGameResult(int dealerScore) {
         Map<GameResult, Integer> gameResult = new EnumMap<>(GameResult.class);
-        for (Participant participant : participants) {
+        for (Participant participant : players) {
             GameResult result = GameResult.compare(dealerScore, participant.calculateScore());
             gameResult.put(result, gameResult.getOrDefault(result, 0) + 1);
         }
@@ -41,7 +41,7 @@ public class Participants {
 
     public Map<String, GameResult> getPlayersGameResult(int dealerScore) {
         HashMap<String, GameResult> playersGameResult = new HashMap<>();
-        for (Participant participant : participants) {
+        for (Participant participant : players) {
             GameResult result = GameResult.compare(participant.calculateScore(), dealerScore);
             playersGameResult.put(participant.getName(), result);
         }
@@ -49,15 +49,15 @@ public class Participants {
     }
 
     public Participant getCurrentPlayer() {
-        return participants.get(nowTurnIndex);
+        return players.get(nowTurnIndex);
     }
 
     public String getCurrentPlayerName() {
         return getCurrentPlayer().getName();
     }
 
-    public List<Participant> getParticipants() {
-        return participants;
+    public List<Participant> getPlayers() {
+        return players;
     }
 
 }
