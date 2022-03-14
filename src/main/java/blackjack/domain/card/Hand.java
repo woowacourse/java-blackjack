@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import blackjack.service.BlackJackService;
 
@@ -59,5 +60,11 @@ public class Hand {
 
 	public List<Card> getCards() {
 		return new ArrayList<>(cards);
+	}
+
+	public List<String> getCardsInformation() {
+		return cards.stream()
+			.map(Card::getInformation)
+			.collect(Collectors.toList());
 	}
 }

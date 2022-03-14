@@ -3,8 +3,8 @@ package blackjack;
 import java.util.List;
 
 import blackjack.domain.RedrawChoice;
+import blackjack.domain.role.Role;
 import blackjack.dto.PlayerTurnDto;
-import blackjack.dto.TableStatusDto;
 import blackjack.service.BlackJackService;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -15,8 +15,8 @@ public class BlackJackApplication {
 		final BlackJackService blackJack = new BlackJackService();
 		blackJack.initBlackJack();
 		blackJack.joinPlayers(InputView.requestPlayerName());
-		TableStatusDto dealerStatus = blackJack.distributeCardToDealer();
-		List<TableStatusDto> playersStatus = blackJack.distributeCardToPlayers();
+		final Role dealerStatus = blackJack.distributeCardToDealer();
+		List<Role> playersStatus = blackJack.distributeCardToPlayers();
 		OutputView.printInitialStatus(dealerStatus, playersStatus);
 
 		while (true) {
@@ -25,7 +25,7 @@ public class BlackJackApplication {
 				break;
 			}
 			String answer = InputView.drawOneMoreCard(currentPlayer);
-			TableStatusDto playerStatus = blackJack.drawPlayer(RedrawChoice.of(answer),
+			final Role playerStatus = blackJack.drawPlayer(RedrawChoice.of(answer),
 				currentPlayer.getName());
 			OutputView.printPersonalHand(playerStatus);
 		}

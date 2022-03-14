@@ -3,11 +3,11 @@ package blackjack.view;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import blackjack.domain.role.Role;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerResultDto;
-import blackjack.dto.TableStatusDto;
 
 public class OutputView {
 
@@ -24,30 +24,30 @@ public class OutputView {
 	private static final String RECEIVED_ONE_MORE_CARD = "이하라 한장의 카드를 더 받았습니다.";
 	private static final String FAIL_TO_RECEIVE_ONE_MORE_CARD = "이상이라 카드를 더 받지 않았습니다.";
 
-	public static void printInitialStatus(final TableStatusDto dealerStatus, final List<TableStatusDto> playersStatus) {
+	public static void printInitialStatus(final Role dealerStatus, final List<Role> playersStatus) {
 		printNames(dealerStatus, playersStatus);
 		printHand(dealerStatus, playersStatus);
 	}
 
-	private static void printNames(final TableStatusDto dealerStatus, final List<TableStatusDto> tableStatuses) {
+	private static void printNames(final Role dealerStatus, final List<Role> tableStatuses) {
 		final String playerNames = tableStatuses.stream()
-			.map(TableStatusDto::getRoleName)
+			.map(Role::getName)
 			.collect(Collectors.joining(OUTPUT_CONTEXT_DISTRIBUTOR));
 
-		final String message = dealerStatus.getRoleName() + WITH + playerNames + DISTRIBUTED_TWO_CARDS;
+		final String message = dealerStatus.getName() + WITH + playerNames + DISTRIBUTED_TWO_CARDS;
 		System.out.print("\n");
 		System.out.println(message);
 	}
 
-	private static void printHand(TableStatusDto dealerStatus, List<TableStatusDto> playersStatus) {
+	private static void printHand(final Role dealerStatus, List<Role> playersStatus) {
 		printPersonalHand(dealerStatus);
 		playersStatus.forEach(OutputView::printPersonalHand);
 		System.out.print("\n");
 	}
 
-	public static void printPersonalHand(final TableStatusDto status) {
-		System.out.print(status.getRoleName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
-		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, status.getCards()));
+	public static void printPersonalHand(final Role roleStatus) {
+		System.out.print(roleStatus.getName() + ROLE_NAME_INFORMATION_DISTRIBUTOR);
+		System.out.println(String.join(OUTPUT_CONTEXT_DISTRIBUTOR, roleStatus.getCardsInformation()));
 	}
 
 	public static void printDealerStatus(DealerTurnDto dealerTurn) {

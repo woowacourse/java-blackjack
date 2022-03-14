@@ -18,7 +18,6 @@ import blackjack.domain.role.Role;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerResultDto;
-import blackjack.dto.TableStatusDto;
 
 public class Roles {
 
@@ -32,20 +31,18 @@ public class Roles {
 		dealer = new Dealer(new Hand(), DealerDrawChoice::chooseDraw);
 	}
 
-	public TableStatusDto distributeCardToDealer(final Deck deck) {
+	public Role distributeCardToDealer(final Deck deck) {
 		dealer.draw(deck.draw(), 1);
-		final TableStatusDto dealerStatus = TableStatusDto.from(dealer);
+		final Role dealerStatus = new Dealer(dealer.getHand(), DealerDrawChoice::chooseDraw);
 		dealer.draw(deck.draw(), 1);
 		return dealerStatus;
 	}
 
-	public List<TableStatusDto> distributeCardToPlayers(final Deck deck) {
-		List<TableStatusDto> playerStatuses = new ArrayList<>();
+	public List<Role> distributeCardToPlayers(final Deck deck) {
 		for (Role player : players) {
 			player.draw(deck.draw(), 2);
-			playerStatuses.add(TableStatusDto.from(player));
 		}
-		return playerStatuses;
+		return players;
 	}
 
 	public DealerTurnDto drawDealer(final Deck deck) {
@@ -62,15 +59,14 @@ public class Roles {
 			.collect(Collectors.toList());
 	}
 
-	public TableStatusDto drawPlayer(final Deck deck, final RedrawChoice answer, final String name) {
+	public Role drawPlayer(final Deck deck, final RedrawChoice answer, final String name) {
 		final Role currentPlayer = findPlayer(name);
 		if (answer == RedrawChoice.NO) {
-			TableStatusDto status = TableStatusDto.from(currentPlayer);
 			currentPlayer.stopDraw();
-			return status;
+			return currentPlayer;
 		}
 		currentPlayer.draw(deck.draw(), 1);
-		return TableStatusDto.from(currentPlayer);
+		return currentPlayer;
 	}
 
 	private Role findPlayer(final String name) {

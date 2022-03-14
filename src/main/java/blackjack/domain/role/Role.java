@@ -1,5 +1,7 @@
 package blackjack.domain.role;
 
+import java.util.List;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 
@@ -38,6 +40,10 @@ public abstract class Role {
 
 	public Hand getHand() {
 		return hand;
+	}
+
+	public List<String> getCardsInformation() {
+		return hand.getCardsInformation();
 	}
 
 	public boolean wantDraw() {

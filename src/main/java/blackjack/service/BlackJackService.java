@@ -4,10 +4,10 @@ import java.util.List;
 
 import blackjack.domain.RedrawChoice;
 import blackjack.domain.card.Deck;
+import blackjack.domain.role.Role;
 import blackjack.dto.DealerTurnDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.dto.PlayerTurnDto;
-import blackjack.dto.TableStatusDto;
 
 public class BlackJackService {
 
@@ -28,11 +28,11 @@ public class BlackJackService {
 		roles.joinPlayers(names);
 	}
 
-	public TableStatusDto distributeCardToDealer() {
+	public Role distributeCardToDealer() {
 		return roles.distributeCardToDealer(deck);
 	}
 
-	public List<TableStatusDto> distributeCardToPlayers() {
+	public List<Role> distributeCardToPlayers() {
 		return roles.distributeCardToPlayers(deck);
 	}
 
@@ -40,7 +40,7 @@ public class BlackJackService {
 		return PlayerTurnDto.from(roles.getCurrentPlayer());
 	}
 
-	public TableStatusDto drawPlayer(final RedrawChoice answer, final String name) {
+	public Role drawPlayer(final RedrawChoice answer, final String name) {
 		return roles.drawPlayer(deck, answer, name);
 	}
 
