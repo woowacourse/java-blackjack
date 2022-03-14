@@ -39,7 +39,7 @@ public class Gamers {
         }
     }
 
-    private void hitOrStayTo(Player gamer, Predicate<String> predicate, Consumer<Player> consumer) {
+    private void hitOrStayTo(final Player gamer, Predicate<String> predicate, Consumer<Player> consumer) {
         CardDeck deck = CardDeck.getInstance();
         while (canHit(gamer) && isHitSign(gamer, predicate)) {
             gamer.receive(deck.draw());
@@ -47,7 +47,7 @@ public class Gamers {
         }
     }
 
-    private boolean canHit(Player gamer) {
+    private boolean canHit(final Player gamer) {
         return !gamer.isBlackJack() && !gamer.isImpossibleHit();
     }
 

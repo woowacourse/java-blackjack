@@ -20,9 +20,9 @@ public class InputView {
         return Arrays.asList(names.split(NAME_DELIMITER));
     }
 
-    public static boolean inputHitOrStaySign(String name) {
+    public static boolean inputHitOrStaySign(final String name) {
         System.out.printf(DRAW_CARD_FORMAT, name);
-        String sign = scanner.nextLine();
+        final String sign = scanner.nextLine();
         return parseToBoolean(sign);
     }
 
