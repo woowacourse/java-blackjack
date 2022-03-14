@@ -4,6 +4,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.GameScoreBoard;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,6 +44,10 @@ public class BlackjackGame {
             return true;
         }
         return false;
+    }
+
+    public GameScoreBoard calculateGameScore() {
+        return GameScoreBoard.recordGameScore(dealer, players);
     }
 
     public List<Participant> getPlayers() {

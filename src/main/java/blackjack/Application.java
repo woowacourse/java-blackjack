@@ -19,9 +19,7 @@ public class Application {
         processPlayerTurn(blackjackGame.getPlayers(), deck, blackjackGame);
         processDealerTurn(blackjackGame.getDealer(), deck, blackjackGame);
         OutputView.printParticipantResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
-        GameScoreBoard result = GameScoreBoard.recordGameScore(blackjackGame.getDealer(),
-            blackjackGame.getPlayers());
-        OutputView.printBlackjackGameResult(result);
+        OutputView.printBlackjackGameResult(blackjackGame.calculateGameScore());
     }
 
     private static void processDealerTurn(Participant dealer, Deck deck, BlackjackGame blackjackGame) {
