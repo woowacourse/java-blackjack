@@ -1,8 +1,8 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.CardDeck;
-
 public class Dealer extends Player {
+    private static final int DEALER_GET_CARD_UPPER_BOUND = 17;
+
 
     private static final String NAME = "딜러";
 
@@ -11,7 +11,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    public boolean isFinished(final CardDeck cardDeck, final int getCardUpperBound) {
-        return playingCards.getCardSum() > getCardUpperBound;
+    public boolean isFinished() {
+        return playingCards.getCardSum() >= DEALER_GET_CARD_UPPER_BOUND;
     }
 }

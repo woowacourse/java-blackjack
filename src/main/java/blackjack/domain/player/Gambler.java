@@ -1,16 +1,14 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.CardDeck;
-
 public class Gambler extends Player {
+    private static final int GAMBLER_GET_CARD_UPPER_BOUND = 21;
 
     public Gambler(final String name) {
         super(name);
     }
 
     @Override
-    public boolean isFinished(final CardDeck cardDeck, final int getCardUpperBound) {
-        playingCards.addCard(cardDeck.pop());
-        return playingCards.getCardSum() > getCardUpperBound;
+    public boolean isFinished() {
+        return playingCards.getCardSum() >= GAMBLER_GET_CARD_UPPER_BOUND;
     }
 }

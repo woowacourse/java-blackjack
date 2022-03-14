@@ -3,7 +3,6 @@ package blackjack.view;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.domain.card.PlayingCard;
-import blackjack.domain.player.Player;
 import blackjack.dto.BlackJackResultDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayersDto;
@@ -11,7 +10,6 @@ import java.util.List;
 
 public class OutputView {
 
-    private static final String WITH_DEALER_NAME = "딜러와 ";
     private static final String COMMA_DELIMITER = ", ";
     private static final String SEPARATE_TWO_CARD = "에게 2장을 나누었습니다.";
     private static final String COLON_DELIMITER = ": ";
@@ -52,7 +50,7 @@ public class OutputView {
         System.out.println(playerDto.getName() + COLON_DELIMITER + getCardNames(playerDto.getPlayingCards()));
     }
 
-    public void printDealerAddCard(Player dealer) {
+    public void printDealerAddCard(PlayerDto dealer) {
         System.out.println();
         System.out.println(dealer.getName() + UNDER_SIXTEEN_INSTRUCTION);
     }

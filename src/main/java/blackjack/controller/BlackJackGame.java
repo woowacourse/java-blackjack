@@ -21,9 +21,6 @@ public class BlackJackGame {
 
     private static final int DEFAULT_SPREAD_COUNT_START_INDEX = 0;
     private static final int DEFAULT_SPREAD_COUNT_END_INDEX = 2;
-    private static final int BURST_CRITERIA = 21;
-    private static final int GAMBLER_GET_CARD_UPPER_BOUND = 21;
-    private static final int DEALER_GET_CARD_UPPER_BOUND = 16;
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
@@ -79,25 +76,30 @@ public class BlackJackGame {
     }
 
     private void playGame(Player gambler, CardDeck cardDeck) {
-        PlayerDto currentGamblerDto = PlayerDto.from(gambler);
-        while (isHit(currentGamblerDto) && !isBurst(gambler, cardDeck, GAMBLER_GET_CARD_UPPER_BOUND)) {
+        while (canGamblerReceiveCard(gambler, cardDeck)) {
             outputView.printCards(PlayerDto.from(gambler));
         }
         outputView.printCards(PlayerDto.from(gambler));
     }
 
-    private boolean isHit(final PlayerDto currentGamblerDto) {
-        return askHitOrStay(currentGamblerDto).equals(BlackJackCommand.YES);
+    private boolean canGamblerReceiveCard(final Player gambler, final CardDeck cardDeck) {
+        return isHit(gambler, cardDeck) && !gambler.isFinished() && !isBurst(gambler);
+    }
+
+    private boolean isHit(final Player gambler, final CardDeck cardDeck) {
+        if (askHitOrStay(PlayerDto.from(gambler)).equals(BlackJackCommand.YES)) {
+            gambler.receiveCard(cardDeck.pop());
+            return true;
+        }
+        return false;
     }
 
     private BlackJackCommand askHitOrStay(final PlayerDto currentGamblerDto) {
         return BlackJackCommand.from(inputView.scanHitOrStay(currentGamblerDto));
     }
 
-    private boolean isBurst(final Player player,
-                            final CardDeck cardDeck,
-                            final int getCardUpperBound) {
-        if (player.isFinished(cardDeck, getCardUpperBound)) {
+    private boolean isBurst(final Player player) {
+        if (player.isBurst()) {
             outputView.printBurst(PlayerDto.from(player));
             return true;
         }
@@ -105,10 +107,14 @@ public class BlackJackGame {
     }
 
     private void playGameForDealer(Dealer dealer, CardDeck cardDeck) {
-        while (!dealer.isFinished(cardDeck, DEALER_GET_CARD_UPPER_BOUND)) {
+        while (canDealerReceiveCard(dealer)) {
             dealer.receiveCard(cardDeck.pop());
-            outputView.printDealerAddCard(dealer);
+            outputView.printDealerAddCard(PlayerDto.from(dealer));
         }
+    }
+
+    private boolean canDealerReceiveCard(final Dealer dealer) {
+        return !dealer.isFinished() && !isBurst(dealer);
     }
 
     private void processResult(Players players) {

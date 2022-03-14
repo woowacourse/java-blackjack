@@ -41,4 +41,6 @@ public class BlackJackResultDto {
     public List<String> getGamblerResult() {
         return gamblerResult;
     }
+
+
 }

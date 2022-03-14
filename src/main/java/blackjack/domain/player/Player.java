@@ -1,13 +1,13 @@
 package blackjack.domain.player;
 
 import blackjack.domain.GameResult;
-import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.PlayingCard;
 import blackjack.domain.card.PlayingCards;
 import java.util.List;
 
 public abstract class Player {
 
+    private static final int BURST_NUMBER = 21;
     protected final String name;
     protected final PlayingCards playingCards = new PlayingCards();
 
@@ -19,7 +19,11 @@ public abstract class Player {
         playingCards.addCard(playingCard);
     }
 
-    public abstract boolean isFinished(final CardDeck cardDeck, final int getCardUpperBound);
+    public abstract boolean isFinished();
+
+    public boolean isBurst() {
+        return playingCards.getCardSum() > BURST_NUMBER;
+    }
 
     public GameResult compare(final Player player) {
         return GameResult.of(this.getSumOfCards(), player.getSumOfCards());
@@ -37,11 +41,4 @@ public abstract class Player {
         return playingCards.getPlayingCards();
     }
 
-    @Override
-    public String toString() {
-        return "Player{" +
-            "name='" + name + '\'' +
-            ", playingCards=" + playingCards +
-            '}';
-    }
 }
