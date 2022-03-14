@@ -30,11 +30,11 @@ class PlayersTest {
     @Test
     @DisplayName("중복된 이름들로 생성 시 예외를 발생시킨다.")
     void createExceptionByDuplication() {
-        final Player firstplayer =
+        final Player firstPlayer =
                 Player.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
-        final Player secondplayer =
+        final Player secondPlayer =
                 Player.createNewPlayer("user", createCards(Card.of(SPADE, TEN), Card.of(SPADE, SEVEN)));
-        final List<Player> players = Arrays.asList(firstplayer, secondplayer);
+        final List<Player> players = Arrays.asList(firstPlayer, secondPlayer);
 
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class)
