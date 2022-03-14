@@ -33,7 +33,7 @@ public class OutputView {
 
     public void printSpreadInstruction(PlayersDto PlayersDto) {
         System.out.println();
-        System.out.println(WITH_DEALER_NAME + PlayersDto.getValue()
+        System.out.println(PlayersDto.getValue()
             .stream()
             .map(PlayerDto::getName)
             .collect(joining(COMMA_DELIMITER)) + SEPARATE_TWO_CARD);

@@ -9,14 +9,13 @@ import blackjack.domain.cardGenerator.RandomCardGenerator;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import blackjack.dto.BlackJackResultDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayersDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class BlackJackGame {
 
@@ -28,13 +27,16 @@ public class BlackJackGame {
     private final OutputView outputView = new OutputView();
 
     public void start() {
-        final List<Player> gamblers = getGambler();
-        final Player dealer = new Dealer();
+        final Players players = new Players(getDealer(), getGambler());
         final CardDeck cardDeck = new CardDeck(new RandomCardGenerator());
 
-        spreadCards(gamblers, dealer, cardDeck);
-        playGame(gamblers, dealer, cardDeck);
-        processResult(dealer, gamblers);
+        spreadCards(players, cardDeck);
+        playGame(players, cardDeck);
+        processResult(players);
+    }
+
+    private Player getDealer() {
+        return new Dealer();
     }
 
     public List<Player> getGambler() {
@@ -44,36 +46,27 @@ public class BlackJackGame {
             .collect(toList());
     }
 
-    protected void spreadCards(List<Player> gamblers, Player dealer, CardDeck cardDeck) {
+    protected void spreadCards(final Players players, final CardDeck cardDeck) {
         for (int i = DEFAULT_SPREAD_COUNT_START_INDEX; i < DEFAULT_SPREAD_COUNT_END_INDEX; i++) {
-            spreadCard(gamblers, dealer, cardDeck);
+            spreadCard(players, cardDeck);
         }
-        printSpreadCards(dealer, gamblers);
+        printSpreadCards(players);
     }
 
-    private void spreadCard(final List<Player> gamblers, final Player dealer, final CardDeck cardDeck) {
-        Stream.concat(
-            gamblers.stream(),
-            Stream.of(dealer)
-        ).forEach(cardDeck::drawTo);
+
+    private void spreadCard(final Players players, final CardDeck cardDeck) {
+        players.receiveCard(cardDeck);
     }
 
-    private void printSpreadCards(Player dealer, List<Player> gamblers) {
-        outputView.printSpreadInstruction(PlayersDto.from(gamblers));
-        outputView.printSingleCardForDealer(PlayerDto.from(dealer));
-        outputView.printCardsForGambler(PlayersDto.from(gamblers));
+    private void printSpreadCards(final Players players) {
+        outputView.printSpreadInstruction(PlayersDto.from(players));
+        outputView.printSingleCardForDealer(PlayerDto.getDealerFrom(players));
+        outputView.printCardsForGambler(PlayersDto.getGamblersFrom(players));
     }
 
-    private List<Player> concatPlayers(final Player dealer, final List<Player> gamblers) {
-        return Stream.concat(
-            Stream.of(dealer),
-            gamblers.stream()
-        ).collect(Collectors.toList());
-    }
-
-    private void playGame(final List<Player> gamblers, final Player dealer, final CardDeck cardDeck) {
-        playGameForGambler(gamblers, cardDeck);
-        playGameForDealer(dealer, cardDeck);
+    private void playGame(final Players players, final CardDeck cardDeck) {
+        playGameForGambler(players.getGamblers(), cardDeck);
+        playGameForDealer(players.getDealer(), cardDeck);
     }
 
     private void playGameForGambler(final List<Player> gamblers, CardDeck cardDeck) {
@@ -120,10 +113,10 @@ public class BlackJackGame {
         }
     }
 
-    private void processResult(Player dealer, List<Player> gamblers) {
+    private void processResult(Players players) {
         outputView.printNewLine();
-        outputView.printCardAndScore(PlayersDto.from(concatPlayers(dealer, gamblers)));
-        final BlackJackResult result = BlackJackResult.of(dealer, gamblers);
+        outputView.printCardAndScore(PlayersDto.from(players));
+        final BlackJackResult result = BlackJackResult.of(players);
         outputView.printResult(BlackJackResultDto.from(result));
     }
 }

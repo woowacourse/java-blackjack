@@ -7,9 +7,9 @@ import blackjack.domain.cardGenerator.RandomCardGenerator;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
+import blackjack.domain.player.Players;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayersDto;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,18 +17,14 @@ import org.junit.jupiter.api.Test;
 
 class BlackJackGameTest {
 
-    List<Player> gamblers;
-    Player dealer;
-    CardDeck cardDeck;
+    private Players players;
+    private CardDeck cardDeck;
 
     @BeforeEach
-    void setUp() {
-        gamblers = new ArrayList<>();
-        gamblers.add(new Gambler("돌범"));
-        gamblers.add(new Gambler("리차드"));
-
-        dealer = new Dealer();
-
+    void setup() {
+        Player dealer = new Dealer();
+        final List<Player> gamblers = List.of(new Gambler("포비"), new Gambler("돌범"), new Gambler("리차드"));
+        players = new Players(dealer, gamblers);
         cardDeck = new CardDeck(new RandomCardGenerator());
     }
 
@@ -39,8 +35,8 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame();
 
         //when
-        blackJackGame.spreadCards(gamblers, dealer, cardDeck);
-        final int receivedCardsSize = PlayerDto.from(dealer).getPlayingCards().size();
+        blackJackGame.spreadCards(players, cardDeck);
+        final int receivedCardsSize = PlayerDto.getDealerFrom(players).getPlayingCards().size();
 
         //then
         assertThat(receivedCardsSize).isEqualTo(2);
@@ -53,8 +49,8 @@ class BlackJackGameTest {
         final BlackJackGame blackJackGame = new BlackJackGame();
 
         //when
-        blackJackGame.spreadCards(gamblers, dealer, cardDeck);
-        final int receivedCardsSize = PlayersDto.from(gamblers).getValue().get(0).getPlayingCards().size();
+        blackJackGame.spreadCards(players, cardDeck);
+        final int receivedCardsSize = PlayersDto.getGamblersFrom(players).getValue().get(0).getPlayingCards().size();
 
         //then
         assertThat(receivedCardsSize).isEqualTo(2);
