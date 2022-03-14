@@ -8,12 +8,14 @@ import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
 import blackjack.domain.entry.Players;
 
+import blackjack.dto.CardCountingResult;
 import blackjack.dto.FirstTurnCards;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackTable {
+
     private final Deck deck;
     private final Players players;
 
@@ -49,14 +51,15 @@ public class BlackjackTable {
             .collect(Collectors.toList());
     }
 
-    public Map<PlayerOutcome, List<Player>> getGameResult() {
-        return players.getGameResult();
-    }
-
-    public Map<Participant, Integer> getCardResult() {
+    public List<CardCountingResult> getCardCountingResult() {
         List<Participant> participants = players.getParticipant();
         return participants.stream()
-            .collect(Collectors.toMap(participant -> participant, Participant::countCards));
+            .map(this::toCardCountingResult)
+            .collect(Collectors.toList());
+    }
+
+    public Map<PlayerOutcome, List<Player>> getGameResult() {
+        return players.getGameResult();
     }
 
     private Dealer createDealer() {
@@ -65,7 +68,16 @@ public class BlackjackTable {
 
     private List<Player> toPlayers(List<String> names) {
         return names.stream()
-                .map(name -> new Player(name, HoldCards.initTwoCards(deck.draw(), deck.draw())))
-                .collect(Collectors.toList());
+            .map(name -> new Player(name, HoldCards.initTwoCards(deck.draw(), deck.draw())))
+            .collect(Collectors.toList());
     }
+
+    private CardCountingResult toCardCountingResult(Participant participant) {
+        return new CardCountingResult(
+            participant.getName(),
+            participant.getHoldCards().getCards(),
+            participant.countCards()
+        );
+    }
+
 }

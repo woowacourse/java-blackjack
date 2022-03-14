@@ -14,7 +14,7 @@ public class BlackjackGame {
         BlackjackTable blackjackTable = new BlackjackTable(InputView.inputNames());
         OutputView.printFirstTurnCards(blackjackTable.getFirstTurnCards());
         hit(blackjackTable);
-        OutputView.printCardResult(blackjackTable.getCardResult());
+        OutputView.printCardCountingResult(blackjackTable.getCardCountingResult());
         OutputView.printGameResult(blackjackTable.getGameResult());
     }
 

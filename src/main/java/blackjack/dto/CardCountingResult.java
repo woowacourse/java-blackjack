@@ -4,21 +4,28 @@ import blackjack.domain.card.Card;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FirstTurnCards {
-    private final String playerName;
-    private final List<String> cards;
+public class CardCountingResult {
 
-    public FirstTurnCards(String playerName, List<Card> cards) {
-        this.playerName = playerName;
+    private final String name;
+    private final List<String> cards;
+    private final int count;
+
+    public CardCountingResult(String playerName, List<Card> cards, int count) {
+        this.name = playerName;
         this.cards = toCardNames(cards);
+        this.count = count;
     }
 
-    public String getPlayerName() {
-        return playerName;
+    public String getName() {
+        return name;
     }
 
     public List<String> getCards() {
         return cards;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     private List<String> toCardNames(List<Card> cards) {

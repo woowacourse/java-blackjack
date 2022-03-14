@@ -10,13 +10,7 @@ public class PlayerCardResult {
 
     public PlayerCardResult(String playerName, List<Card> cards) {
         this.playerName = playerName;
-        this.cards = toName(cards);
-    }
-
-    private List<String> toName(List<Card> cards) {
-        return cards.stream()
-            .map(card -> card.getNumber().getName() + card.getSuit().getName())
-            .collect(Collectors.toList());
+        this.cards = toCardNames(cards);
     }
 
     public String getPlayerName() {
@@ -25,5 +19,11 @@ public class PlayerCardResult {
 
     public List<String> getCards() {
         return cards;
+    }
+
+    private List<String> toCardNames(List<Card> cards) {
+        return cards.stream()
+            .map(card -> card.getNumber().getName() + card.getSuit().getName())
+            .collect(Collectors.toList());
     }
 }
