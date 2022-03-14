@@ -6,8 +6,6 @@ import java.util.stream.Collectors;
 
 public class Gamblers {
 
-    public static final String JOIN_DELIMITER = ", ";
-
     private final List<Gambler> gamblers;
 
     private Gamblers(List<Gambler> gamblers) {
@@ -33,11 +31,11 @@ public class Gamblers {
             .filter(Gambler::isOneMoreCard)
             .collect(Collectors.toList());
     }
-    //TODO: List 전달로 수정
-    public String getGamblerNames() {
+
+    public List<String> getGamblerNames() {
         return gamblers.stream()
             .map(Gambler::getName)
-            .collect(Collectors.joining(JOIN_DELIMITER));
+            .collect(Collectors.toList());
     }
 
     public List<Gambler> getGamblers() {

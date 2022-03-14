@@ -18,7 +18,6 @@ public class Statistic {
         return new Statistic(dealer, gamblers);
     }
 
-
     public int getCountByGameResult(GameResult inputGameResult) {
         return (int) gamblerResult.values().stream()
             .filter(gameResult -> gameResult.equals(inputGameResult))

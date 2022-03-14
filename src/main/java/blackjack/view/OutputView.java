@@ -26,12 +26,13 @@ public class OutputView {
 
     public static void printInitCardState(Gamblers gamblers, Dealer dealer) {
         System.out.println();
-        System.out.printf(INIT_CARD_MESSAGE, dealer.getName(), gamblers.getGamblerNames());
+        String gamblerNames = String.join(JOIN_DELIMITER, gamblers.getGamblerNames());
+        System.out.printf(INIT_CARD_MESSAGE, dealer.getName(), gamblerNames);
         System.out.println();
     }
 
     public static void printPlayerCardState(Player player) {
-        System.out.printf(CARD_STATE_MESSAGE, player.getName(), gerCardList(player.getCards()));
+        System.out.printf(CARD_STATE_MESSAGE, player.getName(), printCardList(player.getCards()));
         System.out.println();
     }
 
@@ -77,8 +78,7 @@ public class OutputView {
         }
     }
 
-    //TODO: Controller 기능 분리
-    private static String gerCardList(Cards cards) {
+    private static String printCardList(Cards cards) {
         return cards.getCards().stream()
             .map(card -> card.getDenomination().getInitial() + card.getSymbol().getSymbolName())
             .collect(Collectors.joining(JOIN_DELIMITER));
@@ -99,7 +99,7 @@ public class OutputView {
     }
 
     private static void printPlayerCardPointState(Player player) {
-        System.out.printf(CARD_STATE_MESSAGE, player.getName(), gerCardList(player.getCards()));
+        System.out.printf(CARD_STATE_MESSAGE, player.getName(), printCardList(player.getCards()));
         System.out.printf(POINT_STATE_MESSAGE, player.getPoint());
         System.out.println();
     }
