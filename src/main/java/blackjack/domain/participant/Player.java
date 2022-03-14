@@ -17,11 +17,6 @@ public class Player extends Participant {
         return new Player(new Name(name));
     }
 
-    @Override
-    public boolean isReceivable() {
-        return calculateBestScore() <= BEST_SCORE;
-    }
-
     public Result judgeResult(int score) {
         if (isBusted(score) && isBusted(calculateBestScore()) || calculateBestScore() == score) {
             return Result.TIE;
@@ -38,5 +33,10 @@ public class Player extends Participant {
 
     private boolean isCloserToBestScore(int score) {
         return calculateBestScore() <= BEST_SCORE && calculateBestScore() > score;
+    }
+
+    @Override
+    public boolean isReceivable() {
+        return calculateBestScore() <= BEST_SCORE;
     }
 }

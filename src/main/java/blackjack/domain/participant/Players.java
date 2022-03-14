@@ -18,9 +18,9 @@ public class Players {
     }
 
     public static Players of(List<String> playerNames) {
-        return new Players(new ArrayList<>(playerNames.stream()
+        return new Players(playerNames.stream()
                         .map(Player::of)
-                        .collect(Collectors.toList())));
+                        .collect(Collectors.toList()));
     }
 
     public void receive(CardDeck cardDeck, int eachCount) {
