@@ -12,13 +12,13 @@ public enum PlayerOutcome {
     }
 
     public static PlayerOutcome match(int dealerTotal, int playerTotal) {
-        if (dealerTotal > Blackjack.BLACKJACK_NUMBER && playerTotal > Blackjack.BLACKJACK_NUMBER) {
+        if (dealerTotal > BlackjackGame.BLACKJACK_NUMBER && playerTotal > BlackjackGame.BLACKJACK_NUMBER) {
             return LOSE;
         }
-        if (dealerTotal > Blackjack.BLACKJACK_NUMBER) {
+        if (dealerTotal > BlackjackGame.BLACKJACK_NUMBER) {
             return WIN;
         }
-        if (playerTotal > Blackjack.BLACKJACK_NUMBER) {
+        if (playerTotal > BlackjackGame.BLACKJACK_NUMBER) {
             return LOSE;
         }
         return matchCards(dealerTotal, playerTotal);

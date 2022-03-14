@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.Blackjack;
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.Command;
 import blackjack.domain.entry.Participant;
 import blackjack.domain.entry.Player;
@@ -11,36 +11,36 @@ import java.util.List;
 
 public class BlackjackController {
     public void run() {
-        Blackjack blackjack = new Blackjack(InputView.inputNames());
-        List<Participant> participants = blackjack.getParticipant();
+        BlackjackGame blackjackGame = new BlackjackGame(InputView.inputNames());
+        List<Participant> participants = blackjackGame.getParticipant();
         OutputView.printPlayersDefaultCard(participants);
 
-        hit(blackjack);
+        hit(blackjackGame);
 
-        OutputView.printCardResult(blackjack.getCardResult(participants));
-        OutputView.printGameResult(blackjack.getGameResult());
+        OutputView.printCardResult(blackjackGame.getCardResult(participants));
+        OutputView.printGameResult(blackjackGame.getGameResult());
     }
 
-    private void hit(Blackjack blackjack) {
-        List<Player> players = blackjack.getPlayers();
+    private void hit(BlackjackGame blackjackGame) {
+        List<Player> players = blackjackGame.getPlayers();
         for (Player player : players) {
-            hitPlayer(blackjack, player);
+            hitPlayer(blackjackGame, player);
         }
-        hitDealer(blackjack);
+        hitDealer(blackjackGame);
     }
 
-    private void hitPlayer(Blackjack blackjack, Player player) {
+    private void hitPlayer(BlackjackGame blackjackGame, Player player) {
         Command command;
 
         do {
             command = Command.find(InputView.inputCommand(player));
-            blackjack.isHitThenReceiveCard(player, command);
+            blackjackGame.isHitThenReceiveCard(player, command);
             OutputView.printPlayerCards(player);
-        } while (blackjack.canHit(player, command));
+        } while (blackjackGame.canHit(player, command));
     }
 
-    private void hitDealer(Blackjack blackjack) {
-        while (blackjack.isDealerReceiveOneMoreCard()) {
+    private void hitDealer(BlackjackGame blackjackGame) {
+        while (blackjackGame.isDealerReceiveOneMoreCard()) {
             OutputView.printReceivingMoreCardOfDealer();
         }
     }
