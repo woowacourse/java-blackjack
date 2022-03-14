@@ -38,6 +38,10 @@ public abstract class Participant {
         return cards.isBlackJackPossibleCount() && calculateFinalScore() == BLACK_JACK;
     }
 
+    public boolean isBust() {
+        return calculateFinalScore() > BLACK_JACK;
+    }
+
     public int calculateFinalScore() {
         final int score = cards.calculateScore();
         if (cards.hasAce() && score + OTHER_SCORE_OF_ACE_DENOMINATION - Denomination.ACE.getScore() <= BLACK_JACK) {
