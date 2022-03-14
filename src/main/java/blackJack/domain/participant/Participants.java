@@ -37,12 +37,12 @@ public class Participants {
     }
 
     public void firstCardDispensing() {
-        distributeCard(dealer, INITIAL_CARD_COUNT);
-        players.forEach(player -> distributeCard(player, INITIAL_CARD_COUNT));
+        distributeCard(dealer);
+        players.forEach(this::distributeCard);
     }
 
-    public void distributeCard(Participant participant, int count) {
-        for (int i = 0; i < count; i++) {
+    public void distributeCard(Participant participant) {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             participant.receiveCard(Deck.getCard());
         }
     }
