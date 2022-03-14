@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack;
 
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.game.OutComeResult;
@@ -8,10 +8,10 @@ import blackjack.dto.GameResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BlackJackController {
+public class GameCommunicator {
     private final BlackJackGame blackJackGame;
 
-    public BlackJackController(final List<String> playerNames) {
+    public GameCommunicator(final List<String> playerNames) {
         blackJackGame = new BlackJackGame(playerNames);
     }
 
