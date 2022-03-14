@@ -11,8 +11,8 @@ import java.util.List;
 
 public class BlackJackController {
 
-    public static final String DEALER_NAME = "딜러";
-    BlackJack blackJack;
+    private static final String DEALER_NAME = "딜러";
+    private BlackJack blackJack;
 
     public void play() {
         String[] userNames = InputView.inputUsersName();

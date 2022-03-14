@@ -7,12 +7,12 @@ public class Dealer extends Participant {
     private static final int MIN_SUM_STANDARD = 16;
     public static final String DEALER_NAME = "딜러";
 
-    public boolean checkUnderSumStandard() {
-        return ScoreCalculator.cardSum(cards) <= MIN_SUM_STANDARD;
-    }
-
     public Dealer() {
         super(DEALER_NAME);
+    }
+
+    public boolean checkUnderSumStandard() {
+        return ScoreCalculator.cardSum(cards) <= MIN_SUM_STANDARD;
     }
 
     @Override

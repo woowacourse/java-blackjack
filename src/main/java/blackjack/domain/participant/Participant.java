@@ -12,14 +12,14 @@ public abstract class Participant {
     protected final List<Card> cards;
     protected final String name;
 
-    abstract public boolean isDealer();
-
-    abstract public boolean isUser();
-
     public Participant(String name) {
         this.name = name;
         cards = new ArrayList<>();
     }
+
+    abstract public boolean isDealer();
+
+    abstract public boolean isUser();
 
     public String getName() {
         return this.name;
