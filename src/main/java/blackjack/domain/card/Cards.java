@@ -18,7 +18,7 @@ public class Cards {
 
     private void validateSize() {
         if (value.size() != INIT_CARDS_SIZE) {
-            throw new IllegalArgumentException("카드의 개수는 2장이어야 합니다.");
+            throw new IllegalArgumentException("카드의 개수는 " + INIT_CARDS_SIZE + "장이어야 합니다.");
         }
     }
 
