@@ -3,8 +3,8 @@ package domain.participant;
 import domain.GameResult;
 import domain.HitThreshold;
 import domain.card.Card;
+
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public final class Dealer extends Participant {
     }
 
     public Map<String, List<GameResult>> getGameResultWithName(final List<GameResult> playersResult) {
-        return new LinkedHashMap<>(Map.of(name, GameResult.reverse(playersResult)));
+        return Map.of(name, GameResult.reverse(playersResult));
     }
 
     @Override
