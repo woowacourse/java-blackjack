@@ -101,9 +101,9 @@ public class BlackJackGame {
     private boolean isNotBurst(final Player player) {
         if (player.isBurst()) {
             outputView.printBurst(PlayerDto.from(player));
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     private void playGameForDealer(Dealer dealer, CardDeck cardDeck) {

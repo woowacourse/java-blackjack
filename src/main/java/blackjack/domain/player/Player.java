@@ -25,7 +25,7 @@ public abstract class Player {
     public abstract boolean isDealer();
 
     public boolean isBurst() {
-        return playingCards.getCardSum() <= BURST_NUMBER;
+        return playingCards.getCardSum() > BURST_NUMBER;
     }
 
     public GameResult compare(final Player player) {
